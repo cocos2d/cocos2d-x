@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -29,7 +29,8 @@
 #include <string>
 #include <stdint.h>
 
-#include "platform/CCPlatformMacros.h"
+#include "CCObject.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -38,17 +39,27 @@ class Node;
 /**
  *   Base class of all kinds of events.
  */
-class Event
+class Event : public Object
 {
+public:
+    enum class Type
+    {
+        TOUCH,
+        KEYBOARD,
+        ACCELERATION,
+        MOUSE,
+        CUSTOM
+    };
+    
 protected:
     /** Constructor */
-    Event(const std::string& type);
+    Event(Type type);
 public:
     /** Destructor */
     virtual ~Event();
 
     /** Gets the event type */
-	inline const std::string& getType() const { return _type; };
+	inline Type getType() const { return _type; };
     
     /** Stops propagation for current event */
     inline void stopPropagation() { _isStopped = true; };
@@ -67,7 +78,8 @@ protected:
     /** Sets current target */
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
-	std::string _type;     ///< Event type
+	Type _type;     ///< Event type
+    
     bool _isStopped;       ///< whether the event has been stopped.
     Node* _currentTarget;  ///< Current target
     

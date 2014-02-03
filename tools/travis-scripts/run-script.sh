@@ -5,15 +5,6 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 
-build_android()
-{
-    echo "Current dir: `pwd`"
-    pushd $1/proj.android
-    ln -s $COCOS2DX_ROOT/android_build_objs obj
-    ./build_native.sh
-    popd
-}
-
 if [ "$GEN_JSB"x = "YES"x ]; then
     # Re-generation of the javascript bindings can perform push of the new
     # version back to github.  We don't do this for pull requests, or if
@@ -51,23 +42,15 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Create a directory for temporary objects
     mkdir android_build_objs
 
-    # Build samples
-    echo "Building samples ..."
-    cd $COCOS2DX_ROOT/samples/Cpp
-    build_android HelloCpp
-    build_android TestCpp
-    build_android AssetsManagerTest
+    PROJECTS=("test-cpp" "test-javascript" "test-lua")
+    for i in ${PROJECTS[*]}; do
+        ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/tests/$i/proj.android/obj
+    done
 
-    cd $COCOS2DX_ROOT/samples/Javascript
-    build_android TestJavascript
-    build_android CocosDragonJS
-    build_android CrystalCraze
-    build_android MoonWarriors
-    build_android WatermelonWithMe
-
-    cd $COCOS2DX_ROOT/samples/Lua
-    build_android HelloLua
-    build_android TestLua
+    # Build all samples
+    echo "Building all samples ..."
+    cd $COCOS2DX_ROOT/build
+    ./android-build.py -n "NDK_BUG=0 -j10" all
 
     # Build template
     # echo "Building template ..."
@@ -80,7 +63,7 @@ elif [ "$PLATFORM"x = "nacl"x ]; then
     export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
     export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
     export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_arm_newlib/bin
-    cd $COCOS2DX_ROOT
+    cd $COCOS2DX_ROOT/build
     make -j4
 elif [ "$PLATFORM"x = "linux"x ]; then
     # Generate binding glue codes
@@ -88,15 +71,35 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
-    cd $COCOS2DX_ROOT
-    make -j4
+    cd $COCOS2DX_ROOT/build
+    mkdir -p linux-build
+    cd linux-build
+    cmake ../..
+    make -j10
+    # build template
+    echo "Building template projects for linux ..."
+    cd $COCOS2DX_ROOT/tools/project-creator
+    ./create_project.py -n MyGameCpp -k com.MyCompany.AwesomeGameCpp -l cpp -p $HOME
+    ./create_project.py -n MyGameLua -k com.MyCompany.AwesomeGameLua -l lua -p $HOME
+    cd $HOME/MyGameCpp
+    mkdir build
+    cd build
+    cmake ..
+    make -j10
+
+    cd $HOME/MyGameLua
+    mkdir build
+    cd build
+    cmake ..
+    make -j10
+
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
-    cd $COCOS2DX_ROOT
+    cd $COCOS2DX_ROOT/build
     export PYTHON=/usr/bin/python
     export LLVM=$HOME/bin/clang+llvm-3.2/bin
     export LLVM_ROOT=$LLVM

@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -25,15 +26,14 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRID_H__
 #define __EFFECTS_CCGRID_H__
 
-#include "cocoa/CCObject.h"
-#include "base_nodes/CCNode.h"
-#include "CCCamera.h"
+#include "CCObject.h"
+#include "CCNode.h"
 #include "ccTypes.h"
-#include "textures/CCTexture2D.h"
+#include "CCTexture2D.h"
 #include "CCDirector.h"
 #include "kazmath/mat4.h"
 #ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
+#include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 
 NS_CC_BEGIN
@@ -62,28 +62,28 @@ public:
      */
     virtual ~GridBase(void);
 
-    bool initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
     bool initWithSize(const Size& gridSize);
 
     /** whether or not the grid is active */
-    inline bool isActive(void) { return _active; }
-    void setActive(bool bActive);
+    inline bool isActive(void) const { return _active; }
+    void setActive(bool active);
 
     /** number of times that the grid will be reused */
-    inline int getReuseGrid(void) { return _reuseGrid; }
-    inline void setReuseGrid(int nReuseGrid) { _reuseGrid = nReuseGrid; }
+    inline int getReuseGrid(void) const { return _reuseGrid; }
+    inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
     /** size of the grid */
-    inline const Size& getGridSize(void) { return _gridSize; }
+    inline const Size& getGridSize(void) const { return _gridSize; }
     inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
     /** pixels between the grids */
-    inline const Point& getStep(void) { return _step; }
+    inline const Point& getStep(void) const { return _step; }
     inline void setStep(const Point& step) { _step = step; }
 
     /** is texture flipped */
-    inline bool isTextureFlipped(void) { return _isTextureFlipped; }
-    void setTextureFlipped(bool bFlipped);
+    inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
+    void setTextureFlipped(bool flipped);
 
     void beforeDraw(void);
     void afterDraw(Node *target);
@@ -115,7 +115,7 @@ class CC_DLL Grid3D : public GridBase
 {
 public:
     /** create one Grid */
-    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid */
     static Grid3D* create(const Size& gridSize);
     /**
@@ -178,7 +178,7 @@ class CC_DLL TiledGrid3D : public GridBase
 {
 public:
     /** create one Grid */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid */
     static TiledGrid3D* create(const Size& gridSize);
     /**

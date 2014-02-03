@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -46,7 +46,7 @@ EventListenerCustom* EventListenerCustom::create(const std::string& eventName, s
     return ret;
 }
 
-bool EventListenerCustom::init(const std::string& eventName, std::function<void(EventCustom*)>callback)
+bool EventListenerCustom::init(ListenerID listenerId, std::function<void(EventCustom*)>callback)
 {
     bool ret = false;
     
@@ -59,7 +59,7 @@ bool EventListenerCustom::init(const std::string& eventName, std::function<void(
         }
     };
     
-    if (EventListener::init(eventName, listener))
+    if (EventListener::init(EventListener::Type::CUSTOM, listenerId, listener))
     {
         ret = true;
     }
@@ -69,7 +69,7 @@ bool EventListenerCustom::init(const std::string& eventName, std::function<void(
 EventListenerCustom* EventListenerCustom::clone()
 {
     EventListenerCustom* ret = new EventListenerCustom();
-    if (ret && ret->init(_type, _onCustomEvent))
+    if (ret && ret->init(_listenerID, _onCustomEvent))
     {
         ret->autorelease();
     }
@@ -80,10 +80,10 @@ EventListenerCustom* EventListenerCustom::clone()
     return ret;
 }
 
-bool EventListenerCustom::checkAvaiable()
+bool EventListenerCustom::checkAvailable()
 {
     bool ret = false;
-    if (EventListener::checkAvaiable() && _onCustomEvent != nullptr)
+    if (EventListener::checkAvailable() && _onCustomEvent != nullptr)
     {
         ret = true;
     }

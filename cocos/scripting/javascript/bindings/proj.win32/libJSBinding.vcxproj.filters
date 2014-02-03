@@ -17,24 +17,6 @@
     <ClCompile Include="..\cocos2d_specifics.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocosjs_manual_conversions.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\js_bindings_ccbreader.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\js_bindings_chipmunk_auto_classes.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\js_bindings_chipmunk_functions.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\js_bindings_chipmunk_manual.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\js_bindings_chipmunk_registration.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\js_bindings_core.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -42,15 +24,6 @@
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\ScriptingCore.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\js_bindings_system_functions.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\js_bindings_system_registration.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\jsb_cocos2dx_extension_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\js_bindings_opengl.cpp">
@@ -65,45 +38,12 @@
     <ClCompile Include="..\jsb_opengl_functions.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\XMLHTTPRequest.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\jsb_websocket.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.cpp">
-      <Filter>generated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto.cpp">
       <Filter>generated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d_specifics.hpp">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocosjs_manual_conversions.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_ccbreader.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_chipmunk_auto_classes.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_chipmunk_auto_classes_registration.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_chipmunk_functions.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_chipmunk_functions_registration.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_chipmunk_manual.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_chipmunk_registration.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\js_bindings_config.h">
@@ -121,18 +61,6 @@
     <ClInclude Include="..\spidermonkey_specifics.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\js_bindings_system_functions.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_system_functions_registration.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\js_bindings_system_registration.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\jsb_cocos2dx_extension_manual.h">
-      <Filter>manual</Filter>
-    </ClInclude>
     <ClInclude Include="..\js_bindings_opengl.h">
       <Filter>manual</Filter>
     </ClInclude>
@@ -145,55 +73,40 @@
     <ClInclude Include="..\jsb_opengl_registration.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\XMLHTTPRequest.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\jsb_websocket.h">
-      <Filter>manual</Filter>
-    </ClInclude>
     <ClInclude Include="..\jsb_helper.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.hpp">
       <Filter>generated</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto.hpp">
-      <Filter>generated</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\js\jsb.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\jsb_chipmunk.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\jsb_cocos2d.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\jsb_cocos2d_extension.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\jsb_cocosbuilder.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\jsb_debugger.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\jsb_opengl.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\jsb_sys.js">
-      <Filter>js</Filter>
-    </None>
-    <None Include="..\js\main.debug.js">
-      <Filter>js</Filter>
-    </None>
     <None Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto_api.js">
       <Filter>generated</Filter>
     </None>
-    <None Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto_api.js">
-      <Filter>generated</Filter>
+    <None Include="..\..\script\jsb.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\..\script\jsb_chipmunk.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\..\script\jsb_cocos2d.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\..\script\jsb_cocos2d_extension.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\..\script\jsb_opengl.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\..\script\jsb_sys.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\..\script\jsb_debugger.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\..\script\jsb_cocosbuilder.js">
+      <Filter>js</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -8,8 +9,8 @@
  * assertions).
  */
 
-#ifndef mozilla_DebugOnly_h_
-#define mozilla_DebugOnly_h_
+#ifndef mozilla_DebugOnly_h
+#define mozilla_DebugOnly_h
 
 namespace mozilla {
 
@@ -74,4 +75,4 @@ class DebugOnly
 
 }
 
-#endif  /* mozilla_DebugOnly_h_ */
+#endif /* mozilla_DebugOnly_h */

@@ -1,0 +1,7 @@
+{
+    "rename":               [],
+    "remove":               ["wsocket.c",
+                             "wsocket.h"],
+    "replace_package_name": [],
+    "replace_project_name": ["../CMakeLists.txt"]
+}

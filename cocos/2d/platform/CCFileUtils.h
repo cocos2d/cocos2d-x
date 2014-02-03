@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,14 +27,14 @@ THE SOFTWARE.
 
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
+#include "CCValue.h"
+#include "CCData.h"
 
 NS_CC_BEGIN
 
-class Dictionary;
-class Array;
 /**
  * @addtogroup platform
  * @{
@@ -42,10 +43,7 @@ class Array;
 //! @brief  Helper class to handle file operations
 class CC_DLL FileUtils
 {
-    friend class Array;
-    friend class Dictionary;
 public:
-    
     /**
      *  Gets the instance of FileUtils.
      */
@@ -80,25 +78,36 @@ public:
     virtual void purgeCachedEntries();
     
     /**
+     *  Gets string from a file.
+     */
+    virtual std::string getStringFromFile(const std::string& filename);
+    
+    /**
+     *  Creates binary data from a file.
+     *  @return A data object.
+     */
+    virtual Data getDataFromFile(const std::string& filename);
+    
+    /**
      *  Gets resource file data
      *
      *  @param[in]  filename The resource file name which contains the path.
      *  @param[in]  pszMode The read mode of the file.
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
-     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* filename, const char* mode, unsigned long * size);
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size);
 
     /**
      *  Gets resource file data from a zip file.
      *
      *  @param[in]  filename The resource file name which contains the relative path of the zip file.
      *  @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
-     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     *  @return Upon success, a pointer to the data is returned, otherwise nullptr.
+     *  @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, unsigned long *size);
+    virtual unsigned char* getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size);
 
     
     /** Returns the fullpath for a given filename.
@@ -189,7 +198,7 @@ public:
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
-    virtual void setFilenameLookupDictionary(Dictionary* filenameLookupDict);
+    virtual void setFilenameLookupDictionary(const ValueMap& filenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -300,6 +309,27 @@ public:
     virtual void setPopupNotify(bool notify);
     virtual bool isPopupNotify();
 
+    /**
+     *  Converts the contents of a file to a ValueMap.
+     *  @note This method is used internally.
+     */
+    virtual ValueMap getValueMapFromFile(const std::string& filename);
+    
+    /**
+     *  Write a ValueMap to a plist file.
+     *  @note This method is used internally.
+     */
+    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
+    
+    /**
+     *  Converts the contents of a file to a ValueVector.
+     *  @note This method is used internally.
+     */
+    virtual ValueVector getValueVectorFromFile(const std::string& filename);
+
+    /** Returns the full path cache */
+    const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
+
 protected:
     /**
      *  The default constructor.
@@ -347,23 +377,6 @@ protected:
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename);
     
-    /**
-     *  Creates a dictionary by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual Dictionary* createDictionaryWithContentsOfFile(const std::string& filename);
-    
-    /**
-     *  Write a dictionary to a plist file.
-     *  @note This method is used internally.
-     */
-    virtual bool writeToFile(Dictionary *dict, const std::string& fullPath);
-    
-    /**
-     *  Creates an array by the contents of a file.
-     *  @note This method is used internally.
-     */
-    virtual Array* createArrayWithContentsOfFile(const std::string& filename);
     
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
@@ -372,7 +385,7 @@ protected:
      *
      *  @since v2.1
      */
-    Dictionary* _filenameLookupDict;
+    ValueMap _filenameLookupDict;
     
     /** 
      *  The vector contains resolution folders.
@@ -399,7 +412,7 @@ protected:
      *  The full path cache. When a file is found, it will be added into this cache. 
      *  This variable is used for improving the performance of file search.
      */
-    std::map<std::string, std::string> _fullPathCache;
+    std::unordered_map<std::string, std::string> _fullPathCache;
     
     /**
      *  The singleton pointer of FileUtils.

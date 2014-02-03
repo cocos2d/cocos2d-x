@@ -1,0 +1,153 @@
+{
+  "classname": "CCNode",
+  "name": null,
+  "canedit": true,
+  "objecttag": 10000,
+  "rotation": 0,
+  "scalex": 1,
+  "scaley": 1,
+  "visible": 1,
+  "x": 0,
+  "y": 0,
+  "zorder": 1,
+  "gameobjects": [
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10013,
+      "rotation": 0,
+      "scalex": 2,
+      "scaley": 2,
+      "visible": 1,
+      "x": 240,
+      "y": 160,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComSpriteSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCSprite",
+          "name": "CCSprite",
+          "file": null,
+          "fileData": {
+            "path": "Images/startMenuBG.png",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10014,
+      "rotation": 0,
+      "scalex": 0.500000238,
+      "scaley": 0.5062499,
+      "visible": 1,
+      "x": 0,
+      "y": 0,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "startMenu/startMenu_1.json",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10005,
+      "rotation": 0,
+      "scalex": -2,
+      "scaley": 2,
+      "visible": 1,
+      "x": 188.35035705566406,
+      "y": 43.945346832275391,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCParticleSystemQuad",
+          "name": "CCParticleSystemQuad",
+          "file": null,
+          "fileData": {
+            "path": "Particles/qipao01.plist",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "[Node]",
+      "canedit": true,
+      "objecttag": 10006,
+      "rotation": 0,
+      "scalex": 2,
+      "scaley": 2,
+      "visible": 1,
+      "x": 289.21835327148438,
+      "y": 45.547077178955078,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCParticleSystemQuad",
+          "name": "CCParticleSystemQuad",
+          "file": null,
+          "fileData": {
+            "path": "Particles/qipao01.plist",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    }
+  ],
+  "CanvasSize": {
+    "_height": 640,
+    "_width": 960
+  },
+  "Triggers": null,
+  "Version": "1.2.0.0",
+  "components": [
+    {
+      "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCScene",
+      "name": "CCScene",
+      "scenename": "BackgroundComponentTest"
+    },
+    {
+      "__type": "ComSimpleAudioSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCBackgroundAudio",
+      "name": "CCBackgroundAudio",
+      "file": null,
+      "fileData": {
+        "path": "Misc/music_logo.mp3",
+        "plistFile": null,
+        "resourceType": 0
+      },
+      "loop": 0
+    }
+  ]
+}

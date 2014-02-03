@@ -20,7 +20,7 @@
 
 /* Define to 1 if SpiderMonkey should support the ability to perform
    entirely too much GC.  */
-#define JS_GC_ZEAL 1
+/* #undef JS_GC_ZEAL */
 
 /* Define to 1 if the <endian.h> header is present and
    useable.  See jscpucfg.h.  */
@@ -38,8 +38,8 @@
    JS_HAVE_STDINT_H.  */
 #define JS_BYTES_PER_WORD 8
 
-/* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
-   correct. */
-#define JS_METHODJIT 1
+/* MOZILLA JSAPI version number components */
+#define MOZJS_MAJOR_VERSION 25
+#define MOZJS_MINOR_VERSION 0
 
 #endif /* js_config_h___ */

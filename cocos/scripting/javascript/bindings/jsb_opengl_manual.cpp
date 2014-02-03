@@ -31,7 +31,6 @@
 
 #include "jsb_opengl_manual.h"
 #include "js_manual_conversions.h"
-#include "cocosjs_manual_conversions.h"
 #include "js_bindings_core.h"
 #include "jsb_opengl_functions.h"
 
@@ -437,8 +436,8 @@ JSBool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(ok, cx, JS_FALSE, "JSB_glGetUniformfv: Error processing arguments");
 
     GLsizei length;
-    glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-    GLchar* namebuffer = new GLchar[length];
+    glGetProgramiv(arg0, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
+    GLchar* namebuffer = new GLchar[length+1];
     GLint size = -1;
     GLenum type = -1;
 
@@ -503,7 +502,10 @@ JSBool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
 
     JSObject *typedArray = NULL;
     if( utype == GL_FLOAT) {
-        GLfloat* param = new GLfloat[usize];
+        // FIXME: glew on windows will cause array overflow after invoking glGetUniformfv.
+        // It seems that glGetUniformfv re-assign the memeroy with a wrong size which is 4x than we pass in.
+        // For temporary solution, we allocate 4x array. 
+        GLfloat* param = new GLfloat[usize*4];
         glGetUniformfv(arg0, arg1, param);
 
         typedArray = JS_NewFloat32Array(cx, usize);
@@ -511,7 +513,10 @@ JSBool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
         memcpy( buffer, param, sizeof(float) * usize);
         CC_SAFE_DELETE_ARRAY(param);
     } else if( utype == GL_INT ) {
-        GLint* param = new GLint[usize];
+        // FIXME: glew on windows will cause array overflow after invoking glGetUniformfv.
+        // It seems that glGetUniformfv re-assign the memeroy with a wrong size which is 4x than we pass in.
+        // For temporary solution, we allocate 4x array. 
+        GLint* param = new GLint[usize*4];
         glGetUniformiv(arg0, arg1, param);
 
         typedArray = JS_NewInt32Array(cx, usize);

@@ -2,13 +2,13 @@
 #define __CCB_CCSEQUENCE_H__
 
 #include <string>
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
+
+#include "CCObject.h"
 #include "CCBSequenceProperty.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
-class CCBSequence : public Object
+class CCBSequence : public cocos2d::Object
 {
 public:
     CCBSequence();
@@ -45,7 +45,7 @@ private:
 };
 
 
-NS_CC_EXT_END
+}
 
 
 #endif // __CCB_CCSEQUENCE_H__

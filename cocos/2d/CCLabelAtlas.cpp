@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,16 +25,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
-#include "textures/CCTextureAtlas.h"
-#include "textures/CCTextureCache.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
+#include "CCTextureAtlas.h"
+#include "CCTextureCache.h"
+#include "CCDrawingPrimitives.h"
 #include "ccConfig.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/CCGLProgram.h"
-#include "shaders/ccGLStateCache.h"
+#include "CCShaderCache.h"
+#include "CCGLProgram.h"
+#include "ccGLStateCache.h"
 #include "CCDirector.h"
-#include "support/TransformUtils.h"
-#include "cocoa/CCInteger.h"
+#include "TransformUtils.h"
+#include "CCInteger.h"
 #include "platform/CCFileUtils.h"
 // external
 #include "kazmath/GL/matrix.h"
@@ -42,28 +43,42 @@ NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
 
-LabelAtlas* LabelAtlas::create(const char *string, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned int startCharMap)
+LabelAtlas* LabelAtlas::create()
 {
-    LabelAtlas *pRet = new LabelAtlas();
-    if(pRet && pRet->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
+    LabelAtlas* ret = new LabelAtlas();
+    if (ret)
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    else
+    {
+        CC_SAFE_RELEASE_NULL(ret);
+    }
+    
+    return ret;
 }
 
-bool LabelAtlas::initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    Texture2D *texture = TextureCache::getInstance()->addImage(charMapFile);
+    LabelAtlas* ret = new LabelAtlas();
+    if(ret && ret->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+bool LabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(charMapFile);
 	return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
 
-bool LabelAtlas::initWithString(const char *string, Texture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
-    CCASSERT(string != NULL, "");
-    if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, strlen(string)))
+    if (AtlasNode::initWithTexture(texture, itemWidth, itemHeight, static_cast<int>(string.size())))
     {
         _mapStartChar = startCharMap;
         this->setString(string);
@@ -72,7 +87,7 @@ bool LabelAtlas::initWithString(const char *string, Texture2D* texture, unsigned
     return false;
 }
 
-LabelAtlas* LabelAtlas::create(const char *string, const char *fntFile)
+LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& fntFile)
 {    
     LabelAtlas *ret = new LabelAtlas();
     if (ret)
@@ -90,30 +105,31 @@ LabelAtlas* LabelAtlas::create(const char *string, const char *fntFile)
     return ret;
 }
 
-bool LabelAtlas::initWithString(const char *theString, const char *fntFile)
+bool LabelAtlas::initWithString(const std::string& theString, const std::string& fntFile)
 {
-  std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
-  std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
-  Dictionary *dict = Dictionary::createWithContentsOfFile(pathStr.c_str());
-  
-  CCASSERT(((String*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
+    std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
+    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
     
-  std::string texturePathStr = relPathStr + ((String*)dict->objectForKey("textureFilename"))->getCString();
-  String *textureFilename = String::create(texturePathStr);
-  unsigned int width = ((String*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-  unsigned int height = ((String*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-  unsigned int startChar = ((String*)dict->objectForKey("firstChar"))->intValue();
-  
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr.c_str());
 
-  this->initWithString(theString, textureFilename->getCString(), width, height, startChar);
-    
-  return true;
+    CCASSERT(dict["version"].asInt() == 1, "Unsupported version. Upgrade cocos2d version");
+
+    std::string textureFilename = relPathStr + dict["textureFilename"].asString();
+
+    unsigned int width = dict["itemWidth"].asInt() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int height = dict["itemHeight"].asInt() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int startChar = dict["firstChar"].asInt();
+
+
+    this->initWithString(theString, textureFilename.c_str(), width, height, startChar);
+
+    return true;
 }
 
 //CCLabelAtlas - Atlas generation
 void LabelAtlas::updateAtlasValues()
 {
-    int n = _string.length();
+    ssize_t n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
@@ -128,9 +144,9 @@ void LabelAtlas::updateAtlasValues()
         itemHeightInPixels = _itemHeight;
     }
 
-    CCASSERT( n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
+    CCASSERT(n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
-    for(int i = 0; i < n; i++) {
+    for(ssize_t i = 0; i < n; i++) {
 
         unsigned char a = s[i] - _mapStartChar;
         float row = (float) (a % _itemsPerRow);
@@ -178,17 +194,17 @@ void LabelAtlas::updateAtlasValues()
     }
     if (n > 0 ){
         _textureAtlas->setDirty(true);
-        int totalQuads = _textureAtlas->getTotalQuads();
+        ssize_t totalQuads = _textureAtlas->getTotalQuads();
         if (n > totalQuads) {
-            _textureAtlas->increaseTotalQuadsWith(n - totalQuads);
+            _textureAtlas->increaseTotalQuadsWith(static_cast<int>(n - totalQuads));
         }
     }
 }
 
 //CCLabelAtlas - LabelProtocol
-void LabelAtlas::setString(const char *label)
+void LabelAtlas::setString(const std::string &label)
 {
-    int len = strlen(label);
+    ssize_t len = label.size();
     if (len > _textureAtlas->getTotalQuads())
     {
         _textureAtlas->resizeCapacity(len);
@@ -204,9 +220,9 @@ void LabelAtlas::setString(const char *label)
     _quadsToDraw = len;
 }
 
-const char* LabelAtlas::getString(void) const
+const std::string& LabelAtlas::getString(void) const
 {
-    return _string.c_str();
+    return _string;
 }
 
 //CCLabelAtlas - draw
@@ -224,5 +240,10 @@ void LabelAtlas::draw()
     ccDrawPoly(vertices, 4, true);
 }
 #endif
+
+std::string LabelAtlas::getDescription() const
+{
+    return StringUtils::format("<LabelAtlas | Tag = %d, Label = '%s'>", _tag, _string.c_str());
+}
 
 NS_CC_END

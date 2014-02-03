@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +25,7 @@ THE SOFTWARE.
 
 
 #include "CCImage.h"
+#include "CCData.h"
 
 #include <string>
 #include <ctype.h>
@@ -40,25 +42,21 @@ extern "C"
 #include "etc1.h"
 #include "jpeglib.h"
 }
-#include "third_party/common/s3tc/s3tc.h"
-#include "third_party/common/atitc/atitc.h"
-#if defined(__native_client__) || defined(EMSCRIPTEN)
-// TODO(sbc): I'm pretty sure all platforms should be including
-// webph headers in this way.
-#include "webp/decode.h"
-#else
+#include "s3tc.h"
+#include "atitc.h"
+#include "TGAlib.h"
+
 #include "decode.h"
-#endif
 
 #include "ccMacros.h"
-#include "platform/CCCommon.h"
+#include "CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "CCConfiguration.h"
-#include "support/ccUtils.h"
-#include "support/zip_support/ZipUtils.h"
+#include "ccUtils.h"
+#include "ZipUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCFileUtilsAndroid.h"
+#include "android/CCFileUtilsAndroid.h"
 #endif
 
 #define CC_GL_ATC_RGB_AMD                                          0x8C92
@@ -353,7 +351,7 @@ namespace
     typedef struct 
     {
         const unsigned char * data;
-        int size;
+        ssize_t size;
         int offset;
     }tImageSource;
     
@@ -378,28 +376,28 @@ namespace
 //////////////////////////////////////////////////////////////////////////
 
 Image::Image()
-: _data(0)
+: _data(nullptr)
 , _dataLen(0)
 , _width(0)
 , _height(0)
 , _fileType(Format::UNKOWN)
 , _renderFormat(Texture2D::PixelFormat::NONE)
 , _preMulti(false)
-, _hasPremultipliedAlpha(true)
 , _numberOfMipmaps(0)
+, _hasPremultipliedAlpha(true)
 {
 
 }
 
 Image::~Image()
 {
-    CC_SAFE_DELETE_ARRAY(_data);
+    CC_SAFE_FREE(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath)
+bool Image::initWithImageFile(const std::string& path)
 {
-    bool bRet = false;
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
+    bool ret = false;
+    _filePath = FileUtils::getInstance()->fullPathForFilename(path);
 
 #ifdef EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
@@ -409,7 +407,7 @@ bool Image::initWithImageFile(const char * strPath)
     SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
 
     int size = 4 * (iSurf->w * iSurf->h);
-    bRet = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
+    ret = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
 
     unsigned int *tmp = (unsigned int *)_data;
     int nrPixels = iSurf->w * iSurf->h;
@@ -421,39 +419,33 @@ bool Image::initWithImageFile(const char * strPath)
 
     SDL_FreeSurface(iSurf);
 #else
-    unsigned long bufferLen = 0;
-    unsigned char* buffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &bufferLen);
+    Data data = FileUtils::getInstance()->getDataFromFile(_filePath);
 
-    if (buffer != nullptr && bufferLen > 0)
+    if (!data.isNull())
     {
-        bRet = initWithImageData(buffer, bufferLen);
+        ret = initWithImageData(data.getBytes(), data.getSize());
     }
-
-    CC_SAFE_DELETE_ARRAY(buffer);
 #endif // EMSCRIPTEN
 
-    return bRet;
+    return ret;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath)
+bool Image::initWithImageFileThreadSafe(const std::string& fullpath)
 {
-    bool bRet = false;
-    unsigned long dataLen = 0;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::getInstance();
-    unsigned char *pBuffer = fileUitls->getFileDataForAsync(fullpath, "rb", &dataLen);
-#else
-    unsigned char *pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &dataLen);
-#endif
-    if (pBuffer != NULL && dataLen > 0)
+    bool ret = false;
+    _filePath = fullpath;
+
+    Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
+
+    if (!data.isNull())
     {
-        bRet = initWithImageData(pBuffer, dataLen);
+        ret = initWithImageData(data.getBytes(), data.getSize());
     }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
+
+    return ret;
 }
 
-bool Image::initWithImageData(const unsigned char * data, int dataLen)
+bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
 {
     bool ret = false;
     
@@ -462,16 +454,16 @@ bool Image::initWithImageData(const unsigned char * data, int dataLen)
         CC_BREAK_IF(! data || dataLen <= 0);
         
         unsigned char* unpackedData = nullptr;
-        int unpackedLen = 0;
+        ssize_t unpackedLen = 0;
         
         //detecgt and unzip the compress file
-        if (ZipUtils::ccIsCCZBuffer(data, dataLen))
+        if (ZipUtils::isCCZBuffer(data, dataLen))
         {
-            unpackedLen = ZipUtils::ccInflateCCZBuffer(data, dataLen, &unpackedData);
+            unpackedLen = ZipUtils::inflateCCZBuffer(data, dataLen, &unpackedData);
         }
-        else if (ZipUtils::ccIsGZipBuffer(data, dataLen))
+        else if (ZipUtils::isGZipBuffer(data, dataLen))
         {
-            unpackedLen = ZipUtils::ccInflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
+            unpackedLen = ZipUtils::inflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
         }
         else
         {
@@ -508,8 +500,22 @@ bool Image::initWithImageData(const unsigned char * data, int dataLen)
             ret = initWithATITCData(unpackedData, unpackedLen);
             break;
         default:
-            CCAssert(false, "unsupport image format!");
-            break;
+            {
+                // load and detect image format
+                tImageTGA* tgaData = tgaLoadBuffer(unpackedData, unpackedLen);
+                
+                if (tgaData != nullptr && tgaData->status == TGA_OK)
+                {
+                    ret = initWithTGAData(tgaData);
+                }
+                else
+                {
+                    CCAssert(false, "unsupport image format!");
+                }
+                
+                free(tgaData);
+                break;
+            }
         }
         
         if(unpackedData != data)
@@ -521,7 +527,7 @@ bool Image::initWithImageData(const unsigned char * data, int dataLen)
     return ret;
 }
 
-bool Image::isPng(const unsigned char * data, int dataLen)
+bool Image::isPng(const unsigned char * data, ssize_t dataLen)
 {
     if (dataLen <= 8)
     {
@@ -534,13 +540,13 @@ bool Image::isPng(const unsigned char * data, int dataLen)
 }
 
 
-bool Image::isEtc(const unsigned char * data, int dataLen)
+bool Image::isEtc(const unsigned char * data, ssize_t dataLen)
 {
     return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
 }
 
 
-bool Image::isS3TC(const unsigned char * data, int dataLen)
+bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
 {
 
     S3TCTexHeader *header = (S3TCTexHeader *)data;
@@ -553,7 +559,7 @@ bool Image::isS3TC(const unsigned char * data, int dataLen)
     return true;
 }
 
-bool Image::isATITC(const unsigned char *data, int dataLen)
+bool Image::isATITC(const unsigned char *data, ssize_t dataLen)
 {
     ATITCTexHeader *header = (ATITCTexHeader *)data;
     
@@ -565,7 +571,7 @@ bool Image::isATITC(const unsigned char *data, int dataLen)
     return true;
 }
 
-bool Image::isJpg(const unsigned char * data, int dataLen)
+bool Image::isJpg(const unsigned char * data, ssize_t dataLen)
 {
     if (dataLen <= 4)
     {
@@ -577,7 +583,7 @@ bool Image::isJpg(const unsigned char * data, int dataLen)
     return memcmp(data, JPG_SOI, 2) == 0;
 }
 
-bool Image::isTiff(const unsigned char * data, int dataLen)
+bool Image::isTiff(const unsigned char * data, ssize_t dataLen)
 {
     if (dataLen <= 4)
     {
@@ -591,7 +597,7 @@ bool Image::isTiff(const unsigned char * data, int dataLen)
         (memcmp(data, TIFF_MM, 2) == 0 && *(static_cast<const unsigned char*>(data) + 2) == 0 && *(static_cast<const unsigned char*>(data) + 3) == 42);
 }
 
-bool Image::isWebp(const unsigned char * data, int dataLen)
+bool Image::isWebp(const unsigned char * data, ssize_t dataLen)
 {
     if (dataLen <= 12)
     {
@@ -605,9 +611,9 @@ bool Image::isWebp(const unsigned char * data, int dataLen)
         && memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
 }
 
-bool Image::isPvr(const unsigned char * data, int dataLen)
+bool Image::isPvr(const unsigned char * data, ssize_t dataLen)
 {
-    if (dataLen < sizeof(PVRv2TexHeader) || dataLen < sizeof(PVRv3TexHeader))
+    if (static_cast<size_t>(dataLen) < sizeof(PVRv2TexHeader) || static_cast<size_t>(dataLen) < sizeof(PVRv3TexHeader))
     {
         return false;
     }
@@ -618,8 +624,7 @@ bool Image::isPvr(const unsigned char * data, int dataLen)
     return memcmp(&headerv2->pvrTag, gPVRTexIdentifier, strlen(gPVRTexIdentifier)) == 0 || CC_SWAP_INT32_BIG_TO_HOST(headerv3->version) == 0x50565203;
 }
 
-
-Image::Format Image::detectFormat(const unsigned char * data, int dataLen)
+Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
 {
     if (isPng(data, dataLen))
     {
@@ -731,7 +736,7 @@ namespace
     }
 }
 
-bool Image::initWithJpgData(const unsigned char * data, int dataLen)
+bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -792,11 +797,11 @@ bool Image::initWithJpgData(const unsigned char * data, int dataLen)
         _width  = cinfo.output_width;
         _height = cinfo.output_height;
         _preMulti = false;
-        row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
+        row_pointer[0] = static_cast<unsigned char*>(malloc(cinfo.output_width*cinfo.output_components * sizeof(unsigned char)));
         CC_BREAK_IF(! row_pointer[0]);
 
         _dataLen = cinfo.output_width*cinfo.output_height*cinfo.output_components;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(! _data);
 
         /* now actually read the jpeg into the raw buffer */
@@ -821,11 +826,14 @@ bool Image::initWithJpgData(const unsigned char * data, int dataLen)
         bRet = true;
     } while (0);
 
-    CC_SAFE_DELETE_ARRAY(row_pointer[0]);
+    if (row_pointer[0] != nullptr)
+    {
+        free(row_pointer[0]);
+    };
     return bRet;
 }
 
-bool Image::initWithPngData(const unsigned char * data, int dataLen)
+bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
 {
     // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
@@ -925,13 +933,13 @@ bool Image::initWithPngData(const unsigned char * data, int dataLen)
         }
 
         // read png data
-        png_uint_32 rowbytes;
+        png_size_t rowbytes;
         png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * _height );
 
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
 
         _dataLen = rowbytes * _height;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(!_data);
 
         for (unsigned short i = 0; i < _height; ++i)
@@ -944,7 +952,10 @@ bool Image::initWithPngData(const unsigned char * data, int dataLen)
 
         _preMulti = false;
 
-        CC_SAFE_FREE(row_pointers);
+        if (row_pointers != nullptr)
+        {
+            free(row_pointers);
+        };
 
         bRet = true;
     } while (0);
@@ -1066,7 +1077,7 @@ namespace
     }
 }
 
-bool Image::initWithTiffData(const unsigned char * data, int dataLen)
+bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 {
     bool bRet = false;
     do 
@@ -1102,7 +1113,7 @@ bool Image::initWithTiffData(const unsigned char * data, int dataLen)
         _height = h;
 
         _dataLen = npixels * sizeof (uint32);
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
         if (raster != NULL) 
@@ -1160,7 +1171,7 @@ namespace
     }
 }
 
-bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
+bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
 {
     int dataLength = 0, dataOffset = 0, dataSize = 0;
     int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
@@ -1187,7 +1198,8 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
     }
     
     if (! configuration->supportsNPOT() &&
-        (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
+        (static_cast<int>(header->width) != ccNextPOT(header->width)
+            || static_cast<int>(header->height) != ccNextPOT(header->height)))
     {
         CCLOG("cocos2d: ERROR: Loading an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
         return false;
@@ -1195,13 +1207,13 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
     
     if (!testFormatForPvr2TCSupport(formatFlags))
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", (int)formatFlags);
         return false;
     }
 
     if (v2_pixel_formathash.find(formatFlags) == v2_pixel_formathash.end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", (int)formatFlags);
         return false;
     }
     
@@ -1209,7 +1221,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
 
     if (it == Texture2D::getPixelFormatInfoMap().end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", (int)formatFlags);
         return false;
     }
 
@@ -1227,7 +1239,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
 
     //Move by size of header
     _dataLen = dataLen - sizeof(PVRv2TexHeader);
-    _data = new unsigned char[_dataLen];
+    _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     memcpy(_data, (unsigned char*)data + sizeof(PVRv2TexHeader), _dataLen);
 
     // Calculate the data size for each texture level and respect the minimum number of blocks
@@ -1286,9 +1298,9 @@ bool Image::initWithPVRv2Data(const unsigned char * data, int dataLen)
     return true;
 }
 
-bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
+bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 {
-    if (dataLen < sizeof(PVRv3TexHeader))
+    if (static_cast<size_t>(dataLen) < sizeof(PVRv3TexHeader))
     {
 		return false;
 	}
@@ -1349,7 +1361,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
 	int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
 	
     _dataLen = dataLen - (sizeof(PVRv3TexHeader) + header->metadataLength);
-    _data = new unsigned char[_dataLen];
+    _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     memcpy(_data, static_cast<const unsigned char*>(data) + sizeof(PVRv3TexHeader) + header->metadataLength, _dataLen);
 	
 	_numberOfMipmaps = header->numberOfMipmaps;
@@ -1395,11 +1407,11 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
         }
 		
 		dataSize = widthBlocks * heightBlocks * ((blockSize  * it->second.bpp) / 8);
-		int packetLength = _dataLen - dataOffset;
+		auto packetLength = _dataLen - dataOffset;
 		packetLength = packetLength > dataSize ? dataSize : packetLength;
 		
 		_mipmaps[i].address = _data + dataOffset;
-		_mipmaps[i].len = packetLength;
+		_mipmaps[i].len = static_cast<int>(packetLength);
 		
 		dataOffset += packetLength;
 		CCAssert(dataOffset <= _dataLen, "CCTexurePVR: Invalid lenght");
@@ -1412,7 +1424,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, int dataLen)
 	return true;
 }
 
-bool Image::initWithETCData(const unsigned char * data, int dataLen)
+bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
 {
     const etc1_byte* header = static_cast<const etc1_byte*>(data);
     
@@ -1436,7 +1448,7 @@ bool Image::initWithETCData(const unsigned char * data, int dataLen)
 #ifdef GL_ETC1_RGB8_OES
         _renderFormat = Texture2D::PixelFormat::ETC;
         _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
         return true;
 #endif
@@ -1451,18 +1463,101 @@ bool Image::initWithETCData(const unsigned char * data, int dataLen)
         _renderFormat = Texture2D::PixelFormat::RGB888;
         
         _dataLen =  _width * _height * bytePerPixel;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         
         if (etc1_decode_image(static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, static_cast<etc1_byte*>(_data), _width, _height, bytePerPixel, stride) != 0)
         {
             _dataLen = 0;
-            CC_SAFE_DELETE_ARRAY(_data);
+            if (_data != nullptr)
+            {
+                free(_data);
+            }
             return false;
         }
         
         return true;
     }
     return false;
+}
+
+bool Image::initWithTGAData(tImageTGA* tgaData)
+{
+    bool ret = false;
+    
+    do
+    {
+        CC_BREAK_IF(tgaData == nullptr);
+        
+        // tgaLoadBuffer only support type 2, 3, 10
+        if (2 == tgaData->type || 10 == tgaData->type)
+        {
+            // true color
+            // unsupport RGB555
+            if (tgaData->pixelDepth == 16)
+            {
+                _renderFormat = Texture2D::PixelFormat::RGB5A1;
+            }
+            else if(tgaData->pixelDepth == 24)
+            {
+                _renderFormat = Texture2D::PixelFormat::RGB888;
+            }
+            else if(tgaData->pixelDepth == 32)
+            {
+                _renderFormat = Texture2D::PixelFormat::RGBA8888;
+            }
+            else
+            {
+                CCLOG("Image WARNING: unsupport true color tga data pixel format. FILE: %s", _filePath.c_str());
+                break;
+            }
+        }
+        else if(3 == tgaData->type)
+        {
+            // gray
+            if (8 == tgaData->pixelDepth)
+            {
+                _renderFormat = Texture2D::PixelFormat::I8;
+            }
+            else
+            {
+                // actually this won't happen, if it happens, maybe the image file is not a tga
+                CCLOG("Image WARNING: unsupport gray tga data pixel format. FILE: %s", _filePath.c_str());
+                break;
+            }
+        }
+        
+        _width = tgaData->width;
+        _height = tgaData->height;
+        _data = tgaData->imageData;
+        _dataLen = _width * _height * tgaData->pixelDepth / 8;
+        _fileType = Format::TGA;
+        _preMulti = false;
+        ret = true;
+        
+    }while(false);
+    
+    if (ret)
+    {
+        const unsigned char tgaSuffix[] = ".tga";
+        for(int i = 0; i < 4; ++i)
+        {
+            if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
+            {
+                CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
+                break;
+            };
+        }
+    }
+    else
+    {
+        if (tgaData->imageData != nullptr)
+        {
+            free(tgaData->imageData);
+            _data = nullptr;
+        }
+    }
+    
+    return ret;
 }
 
 namespace
@@ -1474,7 +1569,7 @@ namespace
     }
 }
 
-bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
+bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 {
     
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
@@ -1484,7 +1579,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     /* load the .dds file */
     
     S3TCTexHeader *header = (S3TCTexHeader *)data;
-    unsigned char *pixelData = new unsigned char [dataLen - sizeof(S3TCTexHeader)];
+    unsigned char *pixelData = static_cast<unsigned char*>(malloc((dataLen - sizeof(S3TCTexHeader)) * sizeof(unsigned char)));
     memcpy((void *)pixelData, data + sizeof(S3TCTexHeader), dataLen - sizeof(S3TCTexHeader));
     
     _width = header->ddsd.width;
@@ -1501,7 +1596,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     if (Configuration::getInstance()->supportsS3TC())  //compressed data length
     {
         _dataLen = dataLen - sizeof(S3TCTexHeader);
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy((void *)_data,(void *)pixelData , _dataLen);
     }
     else                                               //decompressed data length
@@ -1516,7 +1611,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
             width >>= 1;
             height >>= 1;
         }
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     }
     
     /* load the mipmaps */
@@ -1587,13 +1682,16 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     
     /* end load the mipmaps */
     
-    CC_SAFE_DELETE_ARRAY(pixelData);
+    if (pixelData != nullptr)
+    {
+        free(pixelData);
+    };
     
     return true;
 }
 
 
-bool Image::initWithATITCData(const unsigned char *data, int dataLen)
+bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
 {
     /* load the .ktx file */
     ATITCTexHeader *header = (ATITCTexHeader *)data;
@@ -1627,7 +1725,7 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     if (Configuration::getInstance()->supportsATITC())  //compressed data length
     {
         _dataLen = dataLen - sizeof(ATITCTexHeader) - header->bytesOfKeyValueData - 4;
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy((void *)_data,(void *)pixelData , _dataLen);
     }
     else                                               //decompressed data length
@@ -1642,7 +1740,7 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
             width >>= 1;
             height >>= 1;
         }
-        _data = new unsigned char [_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     }
     
     /* load the mipmaps */
@@ -1722,12 +1820,12 @@ bool Image::initWithATITCData(const unsigned char *data, int dataLen)
     return true;
 }
 
-bool Image::initWithPVRData(const unsigned char * data, int dataLen)
+bool Image::initWithPVRData(const unsigned char * data, ssize_t dataLen)
 {
     return initWithPVRv2Data(data, dataLen) || initWithPVRv3Data(data, dataLen);
 }
 
-bool Image::initWithWebpData(const unsigned char * data, int dataLen)
+bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 {
 	bool bRet = false;
 	do
@@ -1742,17 +1840,17 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
         _width    = config.input.width;
         _height   = config.input.height;
         
-        int bufferSize = _width * _height * 4;
-        _data = new unsigned char[bufferSize];
+        _dataLen = _width * _height * 4;
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         
         config.output.u.RGBA.rgba = static_cast<uint8_t*>(_data);
         config.output.u.RGBA.stride = _width * 4;
-        config.output.u.RGBA.size = bufferSize;
+        config.output.u.RGBA.size = _dataLen;
         config.output.is_external_memory = 1;
         
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
         {
-            delete []_data;
+            free(_data);
             _data = NULL;
             break;
         }
@@ -1762,7 +1860,7 @@ bool Image::initWithWebpData(const unsigned char * data, int dataLen)
 	return bRet;
 }
 
-bool Image::initWithRawData(const unsigned char * data, int dataLen, int width, int height, int bitsPerComponent, bool preMulti)
+bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti)
 {
     bool bRet = false;
     do 
@@ -1777,7 +1875,7 @@ bool Image::initWithRawData(const unsigned char * data, int dataLen, int width, 
         // only RGBA8888 supported
         int bytesPerComponent = 4;
         _dataLen = height * width * bytesPerComponent;
-        _data = new unsigned char[_dataLen];
+        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(! _data);
         memcpy(_data, data, _dataLen);
 
@@ -1789,7 +1887,7 @@ bool Image::initWithRawData(const unsigned char * data, int dataLen, int width, 
 
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const std::string& filename, bool bIsToRGB)
 {
     //only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data
     if (isCompressed() || (_renderFormat != Texture2D::PixelFormat::RGB888 && _renderFormat != Texture2D::PixelFormat::RGBA8888))
@@ -1798,32 +1896,26 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
         return false;
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    assert(false);
-    return false;
-#else
     bool bRet = false;
 
     do 
     {
-        CC_BREAK_IF(NULL == pszFilePath);
 
-        std::string strFilePath(pszFilePath);
-        CC_BREAK_IF(strFilePath.size() <= 4);
+        CC_BREAK_IF(filename.size() <= 4);
 
-        std::string strLowerCasePath(strFilePath);
+        std::string strLowerCasePath(filename);
         for (unsigned int i = 0; i < strLowerCasePath.length(); ++i)
         {
-            strLowerCasePath[i] = tolower(strFilePath[i]);
+            strLowerCasePath[i] = tolower(filename[i]);
         }
 
         if (std::string::npos != strLowerCasePath.find(".png"))
         {
-            CC_BREAK_IF(!saveImageToPNG(pszFilePath, bIsToRGB));
+            CC_BREAK_IF(!saveImageToPNG(filename, bIsToRGB));
         }
         else if (std::string::npos != strLowerCasePath.find(".jpg"))
         {
-            CC_BREAK_IF(!saveImageToJPG(pszFilePath));
+            CC_BREAK_IF(!saveImageToJPG(filename));
         }
         else
         {
@@ -1834,24 +1926,21 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     } while (0);
 
     return bRet;
-#endif
 }
 #endif
 
-bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
+bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
     bool bRet = false;
     do 
     {
-        CC_BREAK_IF(NULL == filePath);
-
         FILE *fp;
         png_structp png_ptr;
         png_infop info_ptr;
         png_colorp palette;
         png_bytep *row_pointers;
 
-        fp = fopen(filePath, "wb");
+        fp = fopen(filePath.c_str(), "wb");
         CC_BREAK_IF(NULL == fp);
 
         png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -1921,7 +2010,7 @@ bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
         {
             if (isToRGB)
             {
-                unsigned char *pTempData = new unsigned char[_width * _height * 3];
+                unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char*)));
                 if (NULL == pTempData)
                 {
                     fclose(fp);
@@ -1949,7 +2038,10 @@ bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
                 free(row_pointers);
                 row_pointers = NULL;
 
-                CC_SAFE_DELETE_ARRAY(pTempData);
+                if (pTempData != nullptr)
+                {
+                    free(pTempData);
+                }
             } 
             else
             {
@@ -1978,13 +2070,11 @@ bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
     } while (0);
     return bRet;
 }
-bool Image::saveImageToJPG(const char * filePath)
+bool Image::saveImageToJPG(const std::string& filePath)
 {
     bool bRet = false;
     do 
     {
-        CC_BREAK_IF(NULL == filePath);
-
         struct jpeg_compress_struct cinfo;
         struct jpeg_error_mgr jerr;
         FILE * outfile;                 /* target file */
@@ -1995,7 +2085,7 @@ bool Image::saveImageToJPG(const char * filePath)
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        CC_BREAK_IF((outfile = fopen(filePath, "wb")) == NULL);
+        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == NULL);
         
         jpeg_stdio_dest(&cinfo, outfile);
 
@@ -2012,7 +2102,7 @@ bool Image::saveImageToJPG(const char * filePath)
 
         if (hasAlpha())
         {
-            unsigned char *pTempData = new unsigned char[_width * _height * 3];
+            unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
             if (NULL == pTempData)
             {
                 jpeg_finish_compress(&cinfo);
@@ -2037,7 +2127,10 @@ bool Image::saveImageToJPG(const char * filePath)
                 (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
             }
 
-            CC_SAFE_DELETE_ARRAY(pTempData);
+            if (pTempData != nullptr)
+            {
+                free(pTempData);
+            }
         } 
         else
         {

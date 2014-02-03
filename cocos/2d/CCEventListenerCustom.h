@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -33,21 +33,21 @@ class EventCustom;
 
 /**
  *  Usage:
- *        auto dispatcher = EventDispatcher::getInstance();
+ *        auto dispatcher = Director::getInstance()->getEventDispatcher();
  *     Adds a listener:
  *
- *        auto callback = [](CustomEvent* event){ do_some_thing(); };
- *        auto listener = CustomEventListener::create(callback);
+ *        auto callback = [](EventCustom* event){ do_some_thing(); };
+ *        auto listener = EventListenerCustom::create(callback);
  *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
  *
  *     Dispatchs a custom event:
  *
- *        Event event("your_event_type");
+ *        EventCustom event("your_event_type");
  *        dispatcher->dispatchEvent(&event);
  *
  *     Removes a listener
  *
- *        dispatcher->removeListener(listener);
+ *        dispatcher->removeEventListener(listener);
  */
 class EventListenerCustom : public EventListener
 {
@@ -59,7 +59,7 @@ public:
     static EventListenerCustom* create(const std::string& eventName, std::function<void(EventCustom*)> callback);
     
     /// Overrides
-    virtual bool checkAvaiable() override;
+    virtual bool checkAvailable() override;
     virtual EventListenerCustom* clone() override;
     
 protected:
@@ -67,9 +67,11 @@ protected:
     EventListenerCustom();
     
     /** Initializes event with type and callback function */
-    bool init(const std::string& eventName, std::function<void(EventCustom*)> callback);
+    bool init(ListenerID listenerId, std::function<void(EventCustom*)> callback);
     
     std::function<void(EventCustom*)> _onCustomEvent;
+    
+    friend class LuaEventListenerCustom;
 };
 
 NS_CC_END

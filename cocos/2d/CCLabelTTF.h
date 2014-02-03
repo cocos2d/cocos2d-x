@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
-
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
 
-#include "sprite_nodes/CCSprite.h"
-#include "textures/CCTexture2D.h"
+#include "CCTexture2D.h"
+#include "CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -66,48 +67,43 @@ public:
      * @lua NA
      */
     virtual ~LabelTTF();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    const char* description() const;
-    
+
     /** creates a LabelTTF with a font name and font size in points
      @since v2.0.1
      */
-    static LabelTTF * create(const char *string, const char *fontName, float fontSize);
+    static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize);
     
     /** creates a LabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
      @since v2.0.1
      */
-    static LabelTTF * create(const char *string, const char *fontName, float fontSize,
-                               const Size& dimensions, TextHAlignment hAlignment);
+    static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize,
+                             const Size& dimensions, TextHAlignment hAlignment);
   
     /** creates a Label from a fontname, alignment, dimension in points and font size in points
      @since v2.0.1
      */
-    static LabelTTF * create(const char *string, const char *fontName, float fontSize,
-                               const Size& dimensions, TextHAlignment hAlignment, 
-                               TextVAlignment vAlignment);
+    static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize,
+                             const Size& dimensions, TextHAlignment hAlignment,
+                             TextVAlignment vAlignment);
     
     
     /** Create a lable with string and a font definition*/
-    static LabelTTF * createWithFontDefinition(const char *string, FontDefinition &textDefinition);
+    static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
     /** initializes the LabelTTF with a font name and font size */
-    bool initWithString(const char *string, const char *fontName, float fontSize);
+    bool initWithString(const std::string& string, const std::string& fontName, float fontSize);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
-    bool initWithString(const char *string, const char *fontName, float fontSize,
+    bool initWithString(const std::string& string, const std::string& fontName, float fontSize,
                         const Size& dimensions, TextHAlignment hAlignment);
 
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
-    bool initWithString(const char *string, const char *fontName, float fontSize,
+    bool initWithString(const std::string& string, const std::string& fontName, float fontSize,
                         const Size& dimensions, TextHAlignment hAlignment, 
                         TextVAlignment vAlignment);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
-    bool initWithStringAndTextDefinition(const char *string, FontDefinition &textDefinition);
+    bool initWithStringAndTextDefinition(const std::string& string, FontDefinition &textDefinition);
     
     /** set the text definition used by this label */
     void setTextDefinition(const FontDefinition& theDefinition);
@@ -144,8 +140,8 @@ public:
     /** changes the string to render
     * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
     */
-    virtual void setString(const char *label);
-    virtual const char* getString(void) const;
+    virtual void setString(const std::string &label) override;
+    virtual const std::string& getString(void) const override;
     
     TextHAlignment getHorizontalAlignment() const;
     void setHorizontalAlignment(TextHAlignment alignment);
@@ -159,13 +155,18 @@ public:
     float getFontSize() const;
     void setFontSize(float fontSize);
     
-    const char* getFontName() const;
-    void setFontName(const char *fontName);
-    
-private:
-    bool updateTexture();
+    const std::string& getFontName() const;
+    void setFontName(const std::string& fontName);
+
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual std::string getDescription() const override;
+
 protected:
-    
+    bool updateTexture();
+
     /** set the text definition for this label */
     void _updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture = true);
     FontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
@@ -177,7 +178,7 @@ protected:
     /** The vertical alignment of the label */
     TextVAlignment _vAlignment;
     /** Font name used in the label */
-    std::string * _fontName;
+    std::string _fontName;
     /** Font size of the label */
     float _fontSize;
     /** label's string */
@@ -197,8 +198,6 @@ protected:
         
     /** font tint */
     Color3B   _textFillColor;
-
-    
 };
 
 

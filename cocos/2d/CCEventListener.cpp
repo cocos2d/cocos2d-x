@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -35,16 +35,18 @@ EventListener::~EventListener()
 	CCLOGINFO("In the destructor of EventListener. %p", this);
 }
 
-bool EventListener::init(const std::string& t, std::function<void(Event*)> callback)
+bool EventListener::init(Type t, ListenerID listenerID, std::function<void(Event*)> callback)
 {
     _onEvent = callback;
     _type = t;
+    _listenerID = listenerID;
     _isRegistered = false;
+    _paused = true;
     
     return true;
 }
 
-bool EventListener::checkAvaiable()
+bool EventListener::checkAvailable()
 { 
 	return (_onEvent != nullptr);
 }

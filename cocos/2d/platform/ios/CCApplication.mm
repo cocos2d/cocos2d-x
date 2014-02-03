@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,6 +24,8 @@
  ****************************************************************************/
 
 #import "CCApplication.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #import <UIKit/UIKit.h>
 
@@ -107,6 +110,9 @@ LanguageType Application::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"es"]){
         ret = LanguageType::SPANISH;
     }
+    else if ([languageCode isEqualToString:@"nl"]){
+        ret = LanguageType::DUTCH;
+    }
     else if ([languageCode isEqualToString:@"ru"]){
         ret = LanguageType::RUSSIAN;
     }
@@ -146,4 +152,10 @@ Application::Platform Application::getTargetPlatform()
     }
 }
 
+void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
+
+}
+
 NS_CC_END
+
+#endif // CC_PLATFORM_IOS

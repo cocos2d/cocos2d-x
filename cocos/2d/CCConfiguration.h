@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,12 +27,11 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "CCGL.h"
-#include "cocoa/CCString.h"
+#include "CCString.h"
+#include "CCValue.h"
 #include <string>
-
-
 
 NS_CC_BEGIN
 
@@ -116,32 +116,20 @@ public:
 
     bool init();
 
-	/** returns the value of a given key as a string.
-	 If the key is not found, it will return the default value */
-	const char* getCString(const char *key, const char *defaultValue = nullptr) const;
-
-	/** returns the value of a given key as a boolean.
-	 If the key is not found, it will return the default value */
-	bool getBool(const char *key, bool defaultValue = false) const;
-
-	/** returns the value of a given key as a double.
-	 If the key is not found, it will return the default value */
-	double getNumber(const char *key, double defaultValue = 0.0) const;
-
 	/** returns the value of a given key as a double */
-	Object * getObject(const char *key) const;
+	const Value& getValue(const std::string& key, const Value& defaultValue = Value::Null) const;
 
 	/** sets a new key/value pair  in the configuration dictionary */
-	void setObject(const char *key, Object *value);
+	void setValue(const std::string& key, const Value& value);
 
-	/** dumps the current configuration on the console */
-	void dumpInfo() const;
+    /** returns the Configuration info */
+    std::string getInfo() const;
 
 	/** gathers OpenGL / GPU information */
 	void gatherGPUInfo();
 
 	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added. */
-	void loadConfigFile(const char *filename);
+	void loadConfigFile(const std::string& filename);
 
 private:
     Configuration(void);
@@ -163,7 +151,7 @@ protected:
     GLint           _maxTextureUnits;
     char *          _glExtensions;
 	
-	Dictionary	*_valueDict;
+	ValueMap        _valueDict;
 };
 
 // end of global group

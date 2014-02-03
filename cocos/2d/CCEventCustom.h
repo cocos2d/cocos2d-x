@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -35,14 +35,17 @@ public:
     /** Constructor */
     EventCustom(const std::string& eventName);
     
-    /** Set user data */
+    /** Sets user data */
     inline void setUserData(void* data) { _userData = data; };
     
-    /** Get user data */
+    /** Gets user data */
     inline void* getUserData() const { return _userData; };
     
+    /** Gets event name */
+    inline const std::string& getEventName() const { return _eventName; };
 protected:
     void* _userData;       ///< User data
+    std::string _eventName;
 };
 
 NS_CC_END

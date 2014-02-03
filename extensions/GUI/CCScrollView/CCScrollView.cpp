@@ -24,6 +24,13 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
+#include "CCGLView.h"
+#include "platform/CCDevice.h"
+#include "CCActionInstant.h"
+#include "CCActionInterval.h"
+#include "CCActionTween.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #include <algorithm>
 
@@ -37,7 +44,8 @@ NS_CC_EXT_BEGIN
 
 static float convertDistanceFromPointToInch(float pointDis)
 {
-    float factor = ( EGLView::getInstance()->getScaleX() + EGLView::getInstance()->getScaleY() ) / 2;
+    auto glview = Director::getInstance()->getOpenGLView();
+    float factor = ( glview->getScaleX() + glview->getScaleY() ) / 2;
     return pointDis * factor / Device::getDPI();
 }
 
@@ -46,16 +54,17 @@ ScrollView::ScrollView()
 : _zoomScale(0.0f)
 , _minZoomScale(0.0f)
 , _maxZoomScale(0.0f)
-, _delegate(NULL)
+, _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
-, _container(NULL)
+, _container(nullptr)
 , _touchMoved(false)
 , _bounceable(false)
 , _clippingToBounds(false)
 , _touchLength(0.0f)
 , _minScale(0.0f)
 , _maxScale(0.0f)
+, _touchListener(nullptr)
 {
 
 }
@@ -103,14 +112,13 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            this->_container->ignoreAnchorPointForPosition(false);
-            this->_container->setAnchorPoint(Point(0.0f, 0.0f));
+            _container->ignoreAnchorPointForPosition(false);
+            _container->setAnchorPoint(Point(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
 
         setTouchEnabled(true);
-        setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
@@ -151,36 +159,45 @@ bool ScrollView::isNodeVisible(Node* node)
 
 void ScrollView::pause(Object* sender)
 {
-    _container->pauseSchedulerAndActions();
+    _container->pause();
 
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->pauseSchedulerAndActions();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->pause();
     }
 }
 
 void ScrollView::resume(Object* sender)
 {
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->resumeSchedulerAndActions();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->resume();
     }
 
-    _container->resumeSchedulerAndActions();
+    _container->resume();
 }
 
-void ScrollView::setTouchEnabled(bool e)
+bool ScrollView::isTouchEnabled() const
 {
-    Layer::setTouchEnabled(e);
-    if (!e)
+	return _touchListener != nullptr;
+}
+
+void ScrollView::setTouchEnabled(bool enabled)
+{
+    _eventDispatcher->removeEventListener(_touchListener);
+    _touchListener = nullptr;
+
+    if (enabled)
+    {
+        _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
+    else
     {
         _dragging = false;
         _touchMoved = false;
@@ -469,8 +486,6 @@ void ScrollView::updateInset()
  */
 void ScrollView::addChild(Node * child, int zOrder, int tag)
 {
-    child->ignoreAnchorPointForPosition(false);
-    child->setAnchorPoint(Point(0.0f, 0.0f));
     if (_container != child) {
         _container->addChild(child, zOrder, tag);
     } else {
@@ -478,54 +493,62 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
-void ScrollView::addChild(Node * child, int zOrder)
+void ScrollView::beforeDraw()
 {
-    this->addChild(child, zOrder, child->getTag());
-}
-
-void ScrollView::addChild(Node * child)
-{
-    this->addChild(child, child->getZOrder(), child->getTag());
+    _beforeDrawCommand.init(_globalZOrder);
+    _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
 }
 
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
-void ScrollView::beforeDraw()
+void ScrollView::onBeforeDraw()
 {
     if (_clippingToBounds)
     {
 		_scissorRestored = false;
         Rect frame = getViewRect();
-        if (EGLView::getInstance()->isScissorEnabled()) {
+        auto glview = Director::getInstance()->getOpenGLView();
+
+        if (glview->isScissorEnabled()) {
             _scissorRestored = true;
-            _parentScissorRect = EGLView::getInstance()->getScissorRect();
+            _parentScissorRect = glview->getScissorRect();
             //set the intersection of _parentScissorRect and frame as the new scissor rect
             if (frame.intersectsRect(_parentScissorRect)) {
                 float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
                 float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
                 float xx = MIN(frame.origin.x+frame.size.width, _parentScissorRect.origin.x+_parentScissorRect.size.width);
                 float yy = MIN(frame.origin.y+frame.size.height, _parentScissorRect.origin.y+_parentScissorRect.size.height);
-                EGLView::getInstance()->setScissorInPoints(x, y, xx-x, yy-y);
+                glview->setScissorInPoints(x, y, xx-x, yy-y);
             }
         }
         else {
             glEnable(GL_SCISSOR_TEST);
-            EGLView::getInstance()->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
         }
     }
+}
+
+void ScrollView::afterDraw()
+{
+    _afterDrawCommand.init(_globalZOrder);
+    _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
 }
 
 /**
  * retract what's done in beforeDraw so that there's no side effect to
  * other nodes.
  */
-void ScrollView::afterDraw()
+void ScrollView::onAfterDraw()
 {
     if (_clippingToBounds)
     {
         if (_scissorRestored) {//restore the parent's scissor rect
-            EGLView::getInstance()->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
+            auto glview = Director::getInstance()->getOpenGLView();
+
+            glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
         }
         else {
             glDisable(GL_SCISSOR_TEST);
@@ -542,25 +565,19 @@ void ScrollView::visit()
     }
 
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        this->transformAncestors();
-    }
 
 	this->transform();
     this->beforeDraw();
 
-	if(_children)
+	if (!_children.empty())
     {
 		int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
-			if ( child->getZOrder() < 0 )
+			Node *child = _children.at(i);
+			if ( child->getLocalZOrder() < 0 )
             {
 				child->visit();
 			}
@@ -572,12 +589,11 @@ void ScrollView::visit()
 		
 		// this draw
 		this->draw();
-		updateEventPriorityIndex();
         
 		// draw children zOrder >= 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			child->visit();
 		}
         
@@ -585,14 +601,9 @@ void ScrollView::visit()
     else
     {
 		this->draw();
-        updateEventPriorityIndex();
     }
 
     this->afterDraw();
-	if ( _grid && _grid->isActive())
-    {
-		_grid->afterDraw(this);
-    }
 
 	kmGLPopMatrix();
 }
@@ -609,7 +620,7 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (_touches.size() > 2 ||
         _touchMoved          ||
-        !frame.containsPoint(_container->convertToWorldSpace(_container->convertTouchToNodeSpace(touch))))
+        !frame.containsPoint(touch->getLocation()))
     {
         return false;
     }

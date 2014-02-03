@@ -1,12 +1,13 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this file,
- * You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Cross-platform lightweight thread local data wrappers. */
 
-#ifndef mozilla_ThreadLocal_h_
-#define mozilla_ThreadLocal_h_
+#ifndef mozilla_ThreadLocal_h
+#define mozilla_ThreadLocal_h
 
 #if defined(XP_WIN)
 // This file will get included in any file that wants to add a profiler mark.
@@ -28,6 +29,7 @@ __declspec(dllimport) unsigned long __stdcall TlsAlloc();
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
+#include "mozilla/NullPtr.h"
 
 namespace mozilla {
 
@@ -98,15 +100,15 @@ template<typename T>
 inline bool
 ThreadLocal<T>::init()
 {
-  MOZ_STATIC_ASSERT(sizeof(T) <= sizeof(void*),
-                    "mozilla::ThreadLocal can't be used for types larger than "
-                    "a pointer");
+  static_assert(sizeof(T) <= sizeof(void*),
+                "mozilla::ThreadLocal can't be used for types larger than "
+                "a pointer");
   MOZ_ASSERT(!initialized());
 #ifdef XP_WIN
   key = TlsAlloc();
   inited = key != 0xFFFFFFFFUL; // TLS_OUT_OF_INDEXES
 #else
-  inited = !pthread_key_create(&key, NULL);
+  inited = !pthread_key_create(&key, nullptr);
 #endif
   return inited;
 }
@@ -144,4 +146,4 @@ ThreadLocal<T>::set(const T value)
 
 } // namespace mozilla
 
-#endif // mozilla_ThreadLocal_h_
+#endif /* mozilla_ThreadLocal_h */

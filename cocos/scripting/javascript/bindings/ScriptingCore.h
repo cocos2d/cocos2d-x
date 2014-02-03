@@ -17,24 +17,22 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "spidermonkey_specifics.h"
+#include "js_manual_conversions.h"
 
 void js_log(const char *format, ...);
-
-using namespace cocos2d;
-using namespace std;
 
 typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 
 void registerDefaultClasses(JSContext* cx, JSObject* global);
 
 
-class SimpleRunLoop : public Object
+class SimpleRunLoop : public cocos2d::Object
 {
 public:
 	void update(float d);
 };
 
-class ScriptingCore : public ScriptEngineProtocol
+class ScriptingCore : public cocos2d::ScriptEngineProtocol
 {
 	JSRuntime *_rt;
 	JSContext *_cx;
@@ -54,13 +52,13 @@ public:
 		return pInstance;
 	};
 
-    virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
+    virtual cocos2d::ccScriptType getScriptType() { return cocos2d::kScriptTypeJavascript; };
 
     /**
      @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByObject(Object* pObj);
+    virtual void removeScriptObjectByObject(cocos2d::Object* pObj);
 
     /**
      @brief Execute script code contained in the given string.
@@ -87,11 +85,13 @@ public:
      */
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
 
-    virtual int sendEvent(ScriptEvent* message) override;
+    virtual int sendEvent(cocos2d::ScriptEvent* message) override;
+    
+    virtual bool parseConfig(ConfigType type, const std::string& str) override;
 
     virtual bool handleAssert(const char *msg) { return false; }
 
-    bool executeFunctionWithObjectData(Node *self, const char *name, JSObject *obj);
+    bool executeFunctionWithObjectData(cocos2d::Node *self, const char *name, JSObject *obj);
     JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
@@ -140,12 +140,12 @@ public:
     static void removeAllRoots(JSContext *cx);
 
 
-    int executeCustomTouchEvent(EventTouch::EventCode eventType,
-                                Touch *pTouch, JSObject *obj, jsval &retval);
-    int executeCustomTouchEvent(EventTouch::EventCode eventType,
-                                Touch *pTouch, JSObject *obj);
-    int executeCustomTouchesEvent(EventTouch::EventCode eventType,
-                                  const std::vector<Touch*>& touches, JSObject *obj);
+    int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
+                                cocos2d::Touch *pTouch, JSObject *obj, jsval &retval);
+    int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
+                                cocos2d::Touch *pTouch, JSObject *obj);
+    int executeCustomTouchesEvent(cocos2d::EventTouch::EventCode eventType,
+                                  const std::vector<cocos2d::Touch*>& touches, JSObject *obj);
 	/**
 	 * @return the global context
 	 */
@@ -189,7 +189,7 @@ public:
 	/**
 	 * enable the debug environment
 	 */
-	void debugProcessInput(string str);
+	void debugProcessInput(const std::string& str);
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return _debugGlobal; }
     JSObject* getGlobalObject() { return _global; }
@@ -205,129 +205,7 @@ public:
     int handleKeypadEvent(void* data);
 };
 
-// some utility functions
-// to native
-JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
-JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
-JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
-JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
-JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
-JSBool jsval_to_ccpoint(JSContext *cx, jsval v, Point* ret);
-JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret);
-JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret);
-JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret);
-JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret);
-JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret);
-JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *numPoints);
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret);
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret);
-JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret);
-JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** ret);
-JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, AffineTransform* ret);
-JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition* ret );
-
-// from native
-jsval int32_to_jsval( JSContext *cx, int32_t l);
-jsval uint32_to_jsval( JSContext *cx, uint32_t number );
-jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, const string& v);
-jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
-jsval ccpoint_to_jsval(JSContext* cx, const Point& v);
-jsval ccrect_to_jsval(JSContext* cx, const Rect& v);
-jsval ccsize_to_jsval(JSContext* cx, const Size& v);
-jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v);
-jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v);
-jsval cccolor3b_to_jsval(JSContext* cx, const Color3B& v);
-jsval ccdictionary_to_jsval(JSContext* cx, Dictionary *dict);
-jsval ccarray_to_jsval(JSContext* cx, Array *arr);
-jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v);
-jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t);
-jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t);
-
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
-
-// just a simple utility to avoid mem leaking when using JSString
-class JSStringWrapper
-{
-	JSString*	string;
-	const char*	buffer;
-public:
-	JSStringWrapper() {
-		buffer = NULL;
-	}
-	JSStringWrapper(JSString* str, JSContext* cx = NULL) {
-		set(str, cx);
-	}
-	JSStringWrapper(jsval val, JSContext* cx = NULL) {
-		set(val, cx);
-	}
-	~JSStringWrapper() {
-		if (buffer) {
-			//JS_free(ScriptingCore::getInstance()->getGlobalContext(), (void*)buffer);
-            delete[] buffer;
-		}
-	}
-	void set(jsval val, JSContext* cx) {
-		if (val.isString()) {
-			this->set(val.toString(), cx);
-		} else {
-			buffer = NULL;
-		}
-	}
-	void set(JSString* str, JSContext* cx) {
-		string = str;
-		if (!cx) {
-			cx = ScriptingCore::getInstance()->getGlobalContext();
-            
-		}
-        // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-        //buffer = JS_EncodeString(cx, string);
-        unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-        buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-	}
-	std::string get() {
-        return buffer;
-    }
-
-	operator std::string() {
-		return std::string(buffer);
-	}
-	operator char*() {
-		return (char*)buffer;
-	}
-private:
-	/* Copy and assignment are not supported. */
-    JSStringWrapper(const JSStringWrapper &another);
-    JSStringWrapper &operator=(const JSStringWrapper &another);
-};
-
-// wraps a function and "this" object
-class JSFunctionWrapper
-{
-    JSContext *_cx;
-    JSObject *_jsthis;
-    jsval _fval;
-public:
-    JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
-    : _cx(cx)
-    , _jsthis(jsthis)
-    , _fval(fval)
-    {
-        JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
-        JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
-    }
-    ~JSFunctionWrapper() {
-        JS_RemoveValueRoot(this->_cx, &this->_fval);
-        JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
-    }
-    JSBool invoke(unsigned int argc, jsval *argv, jsval &rval) {
-        return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
-    }
-private:
-    /* Copy and assignment are not supported. */
-    JSFunctionWrapper(const JSFunctionWrapper &another);
-    JSFunctionWrapper &operator=(const JSFunctionWrapper &another);
-};
 
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);

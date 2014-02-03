@@ -1,4 +1,5 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -8,11 +9,12 @@
  * construction.
  */
 
-#ifndef mozilla_RangedPtr_h_
-#define mozilla_RangedPtr_h_
+#ifndef mozilla_RangedPtr_h
+#define mozilla_RangedPtr_h
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
+#include "mozilla/NullPtr.h"
 #include "mozilla/Util.h"
 
 namespace mozilla {
@@ -59,7 +61,7 @@ class RangedPtr
 #ifdef DEBUG
       return RangedPtr<T>(p, rangeStart, rangeEnd);
 #else
-      return RangedPtr<T>(p, NULL, size_t(0));
+      return RangedPtr<T>(p, nullptr, size_t(0));
 #endif
     }
 
@@ -251,4 +253,4 @@ class RangedPtr
 
 } /* namespace mozilla */
 
-#endif  /* mozilla_RangedPtr_h_ */
+#endif /* mozilla_RangedPtr_h */

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -29,9 +29,15 @@
 
 NS_CC_BEGIN
 
-bool EventListenerKeyboard::checkAvaiable()
+const std::string EventListenerKeyboard::LISTENER_ID = "__cc_keyboard";
+
+bool EventListenerKeyboard::checkAvailable()
 {
-    CCASSERT(onKeyPressed && onKeyReleased, "");
+    if (onKeyPressed == nullptr && onKeyReleased == nullptr)
+    {
+        CCASSERT(false, "Invalid EventListenerKeyboard!");
+        return false;
+    }
     
     return true;
 }
@@ -88,7 +94,7 @@ bool EventListenerKeyboard::init()
         }
     };
     
-    if (EventListener::init(EventKeyboard::EVENT_TYPE, listener))
+    if (EventListener::init(Type::KEYBOARD, LISTENER_ID, listener))
     {
         return true;
     }

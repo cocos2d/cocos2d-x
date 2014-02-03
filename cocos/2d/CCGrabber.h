@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -26,7 +27,7 @@ THE SOFTWARE.
 #define __EFFECTS_CCGRABBER_H__
 
 #include "CCConfiguration.h"
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
@@ -59,7 +60,7 @@ public:
 protected:
     GLuint _FBO;
     GLint _oldFBO;
-    GLfloat    _oldClearColor[4];
+    GLfloat _oldClearColor[4];
 };
 
 // end of effects group

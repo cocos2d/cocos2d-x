@@ -2,7 +2,7 @@ ccb = ccb or {}
 
 function CCBReaderLoad(strFilePath,proxy,owner)
     if nil == proxy then
-        return
+        return nil
     end
 
     local ccbReader = proxy:createCCBReader()
@@ -17,7 +17,7 @@ function CCBReaderLoad(strFilePath,proxy,owner)
         local i = 1
         for i = 1,table.getn(ownerCallbackNames) do
             local callbackName =  ownerCallbackNames[i]
-            local callbackNode =  tolua.cast(ownerCallbackNodes[i],"Node")
+            local callbackNode =  tolua.cast(ownerCallbackNodes[i],"cc.Node")
 
             if "function" == type(owner[callbackName]) then
                 proxy:setCallback(callbackNode, owner[callbackName], ownerCallbackControlEvents[i])
@@ -33,7 +33,7 @@ function CCBReaderLoad(strFilePath,proxy,owner)
 
         for i = 1, table.getn(ownerOutletNames) do
             local outletName = ownerOutletNames[i]
-            local outletNode = tolua.cast(ownerOutletNodes[i],"Node")
+            local outletNode = tolua.cast(ownerOutletNodes[i],"cc.Node")
             owner[outletName] = outletNode
         end
     end
@@ -42,8 +42,8 @@ function CCBReaderLoad(strFilePath,proxy,owner)
     local animationManagersForNodes  = ccbReader:getAnimationManagersForNodes()
 
     for i = 1 , table.getn(nodesWithAnimationManagers) do
-        local innerNode = tolua.cast(nodesWithAnimationManagers[i], "Node")
-        local animationManager = tolua.cast(animationManagersForNodes[i], "CCBAnimationManager")
+        local innerNode = tolua.cast(nodesWithAnimationManagers[i], "cc.Node")
+        local animationManager = tolua.cast(animationManagersForNodes[i], "cc.CCBAnimationManager")
         local documentControllerName = animationManager:getDocumentControllerName()
         if "" == documentControllerName then
             
@@ -59,7 +59,7 @@ function CCBReaderLoad(strFilePath,proxy,owner)
 
         for i = 1,table.getn(documentCallbackNames) do
             local callbackName = documentCallbackNames[i]
-            local callbackNode = tolua.cast(documentCallbackNodes[i],"Node")
+            local callbackNode = tolua.cast(documentCallbackNodes[i],"cc.Node")
             if "" ~= documentControllerName and nil ~= ccb[documentControllerName] then
                 if "function" == type(ccb[documentControllerName][callbackName]) then
                     proxy:setCallback(callbackNode, ccb[documentControllerName][callbackName], documentCallbackControlEvents[i])
@@ -75,7 +75,7 @@ function CCBReaderLoad(strFilePath,proxy,owner)
 
         for i = 1, table.getn(documentOutletNames) do
             local outletName = documentOutletNames[i]
-            local outletNode = tolua.cast(documentOutletNodes[i],"Node")
+            local outletNode = tolua.cast(documentOutletNodes[i],"cc.Node")
             
             if nil ~= ccb[documentControllerName] then
                 ccb[documentControllerName][outletName] = tolua.cast(outletNode, proxy:getNodeTypeName(outletNode))
@@ -112,3 +112,10 @@ function CCBReaderLoad(strFilePath,proxy,owner)
 
     return node
 end
+
+
+local function CCBuilderReaderLoad(strFilePath,proxy,owner)
+    print("\n********** \n".."CCBuilderReaderLoad(strFilePath,proxy,owner)".." was deprecated please use ".. "CCBReaderLoad(strFilePath,proxy,owner)" .. " instead.\n**********")
+    return CCBReaderLoad(strFilePath,proxy,owner)
+end
+rawset(_G,"CCBuilderReaderLoad",CCBuilderReaderLoad)

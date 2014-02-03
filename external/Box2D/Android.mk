@@ -44,6 +44,7 @@ Dynamics/Joints/b2DistanceJoint.cpp \
 Dynamics/Joints/b2FrictionJoint.cpp \
 Dynamics/Joints/b2GearJoint.cpp \
 Dynamics/Joints/b2Joint.cpp \
+Dynamics/Joints/b2MotorJoint.cpp \
 Dynamics/Joints/b2MouseJoint.cpp \
 Dynamics/Joints/b2PrismaticJoint.cpp \
 Dynamics/Joints/b2PulleyJoint.cpp \

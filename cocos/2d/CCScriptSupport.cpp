@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,8 +28,8 @@
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {
-    cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine();
-    if (pEngine && pEngine->handleAssert(msg))
+    cocos2d::ScriptEngineProtocol* engine = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine();
+    if (engine && engine->handleAssert(msg))
     {
         return true;
     }
@@ -40,9 +41,9 @@ NS_CC_BEGIN
 // #pragma mark -
 // #pragma mark ScriptHandlerEntry
 
-ScriptHandlerEntry* ScriptHandlerEntry::create(int nHandler)
+ScriptHandlerEntry* ScriptHandlerEntry::create(int handler)
 {
-    ScriptHandlerEntry* entry = new ScriptHandlerEntry(nHandler);
+    ScriptHandlerEntry* entry = new ScriptHandlerEntry(handler);
     entry->autorelease();
     return entry;
 }
@@ -55,21 +56,21 @@ ScriptHandlerEntry::~ScriptHandlerEntry(void)
 // #pragma mark -
 // #pragma mark SchedulerScriptHandlerEntry
 
-SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
+SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int handler, float interval, bool paused)
 {
-    SchedulerScriptHandlerEntry* pEntry = new SchedulerScriptHandlerEntry(nHandler);
-    pEntry->init(fInterval, bPaused);
-    pEntry->autorelease();
-    return pEntry;
+    SchedulerScriptHandlerEntry* entry = new SchedulerScriptHandlerEntry(handler);
+    entry->init(interval, paused);
+    entry->autorelease();
+    return entry;
 }
 
-bool SchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
+bool SchedulerScriptHandlerEntry::init(float interval, bool paused)
 {
     _timer = new Timer();
-    _timer->initWithScriptHandler(_handler, fInterval);
+    _timer->initWithScriptHandler(_handler, interval);
     _timer->autorelease();
     _timer->retain();
-    _paused = bPaused;
+    _paused = paused;
     LUALOG("[LUA] ADD script schedule: %d, entryID: %d", _handler, _entryId);
     return true;
 }
@@ -84,15 +85,15 @@ SchedulerScriptHandlerEntry::~SchedulerScriptHandlerEntry(void)
 // #pragma mark -
 // #pragma mark TouchScriptHandlerEntry
 
-TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int nHandler,
-                                                             bool bIsMultiTouches,
-                                                             int nPriority,
-                                                             bool bSwallowsTouches)
+TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int handler,
+                                                             bool isMultiTouches,
+                                                             int priority,
+                                                             bool swallowsTouches)
 {
-    TouchScriptHandlerEntry* pEntry = new TouchScriptHandlerEntry(nHandler);
-    pEntry->init(bIsMultiTouches, nPriority, bSwallowsTouches);
-    pEntry->autorelease();
-    return pEntry;
+    TouchScriptHandlerEntry* entry = new TouchScriptHandlerEntry(handler);
+    entry->init(isMultiTouches, priority, swallowsTouches);
+    entry->autorelease();
+    return entry;
 }
 
 TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
@@ -101,11 +102,11 @@ TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
     LUALOG("[LUA] Remove touch event handler: %d", _handler);
 }
 
-bool TouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+bool TouchScriptHandlerEntry::init(bool isMultiTouches, int priority, bool swallowsTouches)
 {
-    _isMultiTouches = bIsMultiTouches;
-    _priority = nPriority;
-    _swallowsTouches = bSwallowsTouches;
+    _isMultiTouches = isMultiTouches;
+    _priority = priority;
+    _swallowsTouches = swallowsTouches;
     
     return true;
 }
@@ -113,7 +114,7 @@ bool TouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSw
 // #pragma mark -
 // #pragma mark ScriptEngineManager
 
-static ScriptEngineManager* s_pSharedScriptEngineManager = NULL;
+static ScriptEngineManager* s_pSharedScriptEngineManager = nullptr;
 
 
 ScriptEngineManager::~ScriptEngineManager(void)
@@ -121,10 +122,10 @@ ScriptEngineManager::~ScriptEngineManager(void)
     removeScriptEngine();
 }
 
-void ScriptEngineManager::setScriptEngine(ScriptEngineProtocol *pScriptEngine)
+void ScriptEngineManager::setScriptEngine(ScriptEngineProtocol *scriptEngine)
 {
     removeScriptEngine();
-    _scriptEngine = pScriptEngine;
+    _scriptEngine = scriptEngine;
 }
 
 void ScriptEngineManager::removeScriptEngine(void)
@@ -132,7 +133,7 @@ void ScriptEngineManager::removeScriptEngine(void)
     if (_scriptEngine)
     {
         delete _scriptEngine;
-        _scriptEngine = NULL;
+        _scriptEngine = nullptr;
     }
 }
 
@@ -150,7 +151,7 @@ void ScriptEngineManager::destroyInstance()
     if (s_pSharedScriptEngineManager)
     {
         delete s_pSharedScriptEngineManager;
-        s_pSharedScriptEngineManager = NULL;
+        s_pSharedScriptEngineManager = nullptr;
     }
 }
 

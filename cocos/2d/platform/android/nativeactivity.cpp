@@ -1,3 +1,30 @@
+/****************************************************************************
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "nativeactivity.h"
 
 #include <jni.h>
@@ -12,32 +39,41 @@
 #include <android/configuration.h>
 
 #include <pthread.h>
+#include <chrono>
 
 #include "CCDirector.h"
 #include "CCApplication.h"
 #include "CCEventType.h"
-#include "support/CCNotificationCenter.h"
 #include "CCFileUtilsAndroid.h"
 #include "jni/JniHelper.h"
 
-#include "CCEGLView.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
-#include "shaders/CCShaderCache.h"
-#include "textures/CCTextureCache.h"
-#include "event_dispatcher/CCEventDispatcher.h"
-#include "event_dispatcher/CCEventAcceleration.h"
-#include "event_dispatcher/CCEventKeyboard.h"
+#include "CCGLView.h"
+#include "CCDrawingPrimitives.h"
+#include "CCShaderCache.h"
+#include "CCTextureCache.h"
+#include "CCEventDispatcher.h"
+#include "CCEventAcceleration.h"
+#include "CCEventKeyboard.h"
+#include "CCEventCustom.h"
 
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
 #define LOG_RENDER_DEBUG(...)
 // #define LOG_RENDER_DEBUG(...)  ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
 #define LOG_EVENTS_DEBUG(...)
 // #define LOG_EVENTS_DEBUG(...)  ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+
+/* For debug builds, always enable the debug traces in this library */
+#ifndef NDEBUG
+#  define LOGV(...)  ((void)__android_log_print(ANDROID_LOG_VERBOSE, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+#else
+#  define LOGV(...)  ((void)0)
+#endif
 
 void cocos_android_app_init(struct android_app* app);
 
@@ -69,6 +105,9 @@ struct engine {
     struct saved_state state;
 };
 
+static bool isContentRectChanged = false;
+static std::chrono::steady_clock::time_point timeRectChanged;
+
 static struct engine engine;
 
 static char* editboxText = NULL;
@@ -76,29 +115,27 @@ extern EditTextCallback s_pfEditTextCallback;
 extern void* s_ctx;
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {	
-		jsize  size = env->GetArrayLength(text);
-		pthread_mutex_lock(&(engine.app->mutex));
-		if (size > 0) {
-			
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) { 
+        jsize  size = env->GetArrayLength(text);
+        pthread_mutex_lock(&(engine.app->mutex));
+        if (size > 0) {
+            jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
+            char* pBuf = (char*)malloc(size+1);
+            if (pBuf != NULL) {
+                memcpy(pBuf, data, size);
+                pBuf[size] = '\0';
+                editboxText = pBuf;
+            }
+            env->ReleaseByteArrayElements(text, data, 0);
 
-			jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
-			char* pBuf = (char*)malloc(size+1);
-			if (pBuf != NULL) {
-				memcpy(pBuf, data, size);
-				pBuf[size] = '\0';
-				editboxText = pBuf;				
-			}
-			env->ReleaseByteArrayElements(text, data, 0);
-			
-		} else {
-			char* pBuf = (char*)malloc(1);
-			pBuf[0] = '\0';
-			editboxText = pBuf;			
-		}
-		pthread_cond_broadcast(&engine.app->cond);
-		pthread_mutex_unlock(&(engine.app->mutex));
-	}
+        } else {
+            char* pBuf = (char*)malloc(1);
+            pBuf[0] = '\0';
+            editboxText = pBuf;
+        }
+        pthread_cond_broadcast(&engine.app->cond);
+        pthread_mutex_unlock(&(engine.app->mutex));
+    }
 }
 
 typedef struct cocos_dimensions {
@@ -106,17 +143,21 @@ typedef struct cocos_dimensions {
     int h;
 } cocos_dimensions;
 
-static void cocos_init(cocos_dimensions d, struct android_app* app) {
+static void cocos_init(cocos_dimensions d, struct android_app* app)
+{
     LOGI("cocos_init(...)");
     pthread_t thisthread = pthread_self();
     LOGI("pthread_self() = %X", thisthread);
 
     cocos2d::FileUtilsAndroid::setassetmanager(app->activity->assetManager);
 
-    if (!cocos2d::Director::getInstance()->getOpenGLView())
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if (!glview)
     {
-        cocos2d::EGLView *view = cocos2d::EGLView::getInstance();
-        view->setFrameSize(d.w, d.h);
+        glview = cocos2d::GLView::create("Android app");
+        glview->setFrameSize(d.w, d.h);
+        director->setOpenGLView(glview);
 
         cocos_android_app_init(app);
 
@@ -127,16 +168,19 @@ static void cocos_init(cocos_dimensions d, struct android_app* app) {
         cocos2d::GL::invalidateStateCache();
         cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
         cocos2d::DrawPrimitives::init();
-        cocos2d::TextureCache::reloadAllTextures();
-        cocos2d::NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
-        cocos2d::Director::getInstance()->setGLDefaultValues(); 
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
+
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
+        director->setGLDefaultValues();
     }
 }
 
 /**
  * Initialize an EGL context for the current display.
  */
-static cocos_dimensions engine_init_display(struct engine* engine) {
+static cocos_dimensions engine_init_display(struct engine* engine)
+{
     cocos_dimensions r;
     r.w = -1;
     r.h = -1;
@@ -209,6 +253,7 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
     r.w = w;
     r.h = h;
 
+
     return r;
 }
 
@@ -239,7 +284,8 @@ static void dispatch_pending_runnables() {
 /**
  * Just the current frame in the display.
  */
-static void engine_draw_frame(struct engine* engine) {
+static void engine_draw_frame(struct engine* engine)
+{
     LOG_RENDER_DEBUG("engine_draw_frame(...)");
     pthread_t thisthread = pthread_self();
     LOG_RENDER_DEBUG("pthread_self() = %X", thisthread);
@@ -257,14 +303,14 @@ static void engine_draw_frame(struct engine* engine) {
     /* // Just fill the screen with a color. */
     /* glClearColor(((float)engine->state.x)/engine->width, engine->state.angle, */
     /*         ((float)engine->state.y)/engine->height, 1); */
-    /* glClear(GL_COLOR_BUFFER_BIT); */	
-	
-	if (s_pfEditTextCallback && editboxText)
-	{
-		s_pfEditTextCallback(editboxText, s_ctx);
-		free(editboxText);
-		editboxText = NULL;
-	}	
+    /* glClear(GL_COLOR_BUFFER_BIT); */ 
+    
+    if (s_pfEditTextCallback && editboxText)
+    {
+        s_pfEditTextCallback(editboxText, s_ctx);
+        free(editboxText);
+        editboxText = NULL;
+    }   
 
     eglSwapBuffers(engine->display, engine->surface);
 }
@@ -272,7 +318,8 @@ static void engine_draw_frame(struct engine* engine) {
 /**
  * Tear down the EGL context currently associated with the display.
  */
-static void engine_term_display(struct engine* engine) {
+static void engine_term_display(struct engine* engine)
+{
     if (engine->display != EGL_NO_DISPLAY) {
         eglMakeCurrent(engine->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         if (engine->context != EGL_NO_CONTEXT) {
@@ -321,11 +368,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
 
             LOG_EVENTS_DEBUG("Event: Action DOWN x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -340,11 +386,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
 
             LOG_EVENTS_DEBUG("Event: Action POINTER DOWN x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -369,11 +414,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
             float yP = AMotionEvent_getY(event,0);
             LOG_EVENTS_DEBUG("Event: Action UP x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -387,11 +431,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
             float yP = AMotionEvent_getY(event,pointerIndex);
             LOG_EVENTS_DEBUG("Event: Action POINTER UP x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerIndex);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -422,18 +465,20 @@ static int32_t handle_key_input(AInputEvent *event)
 {
     if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
     {
+        auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+
         switch (AKeyEvent_getKeyCode(event))
         {
-        case AKEYCODE_BACK:	
+        case AKEYCODE_BACK: 
             {
                 cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
-                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+                dispatcher->dispatchEvent(&event);
             }
             return 1;
         case AKEYCODE_MENU:
             {
                 cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
-                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
+                dispatcher->dispatchEvent(&event);
             }
             return 1;
         default:
@@ -452,6 +497,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
     LOG_EVENTS_DEBUG("engine_handle_input(%X, %X), pthread_self() = %X", app, event, thisthread);
 
     struct engine* engine = (struct engine*)app->userData;
+
     if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
         engine->animating = 1;
         engine->state.x = AMotionEvent_getX(event, 0);
@@ -459,14 +505,14 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 
         return handle_touch_input(event);
     }
-	else
-		return handle_key_input(event);
+    else
+        return handle_key_input(event);
 
     return 0;
 }
 
-void enableAccelerometer(void) {
-    LOGI("enableAccelerometer()");
+void enableAccelerometerJni(void) {
+    LOGI("enableAccelerometerJni()");
 
     if (engine.accelerometerSensor != NULL) {
         ASensorEventQueue_enableSensor(engine.sensorEventQueue,
@@ -479,8 +525,8 @@ void enableAccelerometer(void) {
     }
 }
 
-void disableAccelerometer(void) {
-    LOGI("disableAccelerometer()");
+void disableAccelerometerJni(void) {
+    LOGI("disableAccelerometerJni()");
 
     if (engine.accelerometerSensor != NULL) {
         ASensorEventQueue_disableSensor(engine.sensorEventQueue,
@@ -488,8 +534,8 @@ void disableAccelerometer(void) {
     }
 }
 
-void setAccelerometerInterval(float interval) {
-    LOGI("setAccelerometerInterval(%f)", interval);
+void setAccelerometerIntervalJni(float interval) {
+    LOGI("setAccelerometerIntervalJni(%f)", interval);
         // We'd like to get 60 events per second (in us).
         ASensorEventQueue_setEventRate(engine.sensorEventQueue,
                                        engine.accelerometerSensor, interval * 1000000L);
@@ -498,7 +544,8 @@ void setAccelerometerInterval(float interval) {
 /**
  * Process the next main command.
  */
-static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
+static void engine_handle_cmd(struct android_app* app, int32_t cmd)
+{ 
     struct engine* engine = (struct engine*)app->userData;
     switch (cmd) {
         case APP_CMD_SAVE_STATE:
@@ -541,21 +588,41 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
         case APP_CMD_GAINED_FOCUS:
             if (cocos2d::Director::getInstance()->getOpenGLView()) {
                 cocos2d::Application::getInstance()->applicationWillEnterForeground();
-				engine->animating = 1;
+                engine->animating = 1;
             }
 
             break;
         case APP_CMD_LOST_FOCUS:
-            cocos2d::Application::getInstance()->applicationDidEnterBackground();
-            cocos2d::NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
-
-            // Also stop animating.
-            engine->animating = 0;
-            engine_draw_frame(engine);
+            {
+                cocos2d::Application::getInstance()->applicationDidEnterBackground();
+                cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+                // Also stop animating.
+                engine->animating = 0;
+                engine_draw_frame(engine);
+            }
             break;
     }
 }
 
+static void onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
+    timeRectChanged = std::chrono::steady_clock::now();
+    isContentRectChanged = true;
+}
+
+static void process_input(struct android_app* app, struct android_poll_source* source)
+{
+    AInputEvent* event = NULL;
+    while (AInputQueue_getEvent(app->inputQueue, &event) >= 0) {
+        LOGV("New input event: type=%d\n", AInputEvent_getType(event));
+        if (AInputQueue_preDispatchEvent(app->inputQueue, event)) {
+            continue;
+        }
+        int32_t handled = 0;
+        if (app->onInputEvent != NULL) handled = app->onInputEvent(app, event);
+        AInputQueue_finishEvent(app->inputQueue, event, handled);
+    }
+}
 /**
  * This is the main entry point of a native application that is using
  * android_native_app_glue.  It runs in its own thread, with its own
@@ -570,6 +637,7 @@ void android_main(struct android_app* state) {
     state->userData = &engine;
     state->onAppCmd = engine_handle_cmd;
     state->onInputEvent = engine_handle_input;
+    state->inputPollSource.process = process_input;
     engine.app = state;
 
     // Prepare to monitor accelerometer
@@ -583,6 +651,9 @@ void android_main(struct android_app* state) {
         // We are starting with a previous saved state; restore from it.
         engine.state = *(struct saved_state*)state->savedState;
     }
+
+    // Screen size change support
+    state->activity->callbacks->onContentRectChanged = onContentRectChanged;
 
     // loop waiting for stuff to do.
 
@@ -629,8 +700,8 @@ void android_main(struct android_app* state) {
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::EventAcceleration accEvent(acc);
-
-                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
+                            auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+                            dispatcher->dispatchEvent(&accEvent);
                         } else {
                             // ACONFIGURATION_ORIENTATION_LAND
                             // swap x and y parameters
@@ -640,8 +711,8 @@ void android_main(struct android_app* state) {
                             acc.z = event.acceleration.z/10;
                             acc.timestamp = 0;
                             cocos2d::EventAcceleration accEvent(acc);
-
-                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
+                            auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+                            dispatcher->dispatchEvent(&accEvent);
                         }
                     }
                 }
@@ -671,5 +742,22 @@ void android_main(struct android_app* state) {
         } else {
             LOG_RENDER_DEBUG("android_main : !engine.animating");
         }
+
+        // Check if screen size changed
+        if (isContentRectChanged) {
+            std::chrono::duration<int, std::milli> duration(
+                    std::chrono::duration_cast<std::chrono::duration<int, std::milli>>(std::chrono::steady_clock::now() - timeRectChanged));
+
+            // Wait about 30 ms to get new width and height. Without waiting we can get old values sometime
+            if (duration.count() > 30) {
+                isContentRectChanged = false;
+
+                int32_t newWidth = ANativeWindow_getWidth(engine.app->window);
+                int32_t newHeight = ANativeWindow_getHeight(engine.app->window);
+                cocos2d::Application::getInstance()->applicationScreenSizeChanged(newWidth, newHeight);
+            }
+        }
     }
 }
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

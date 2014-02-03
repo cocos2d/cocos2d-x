@@ -1,6 +1,7 @@
 #include "CCScrollViewLoader.h"
 
-
+using namespace cocos2d;
+using namespace cocos2d::extension;
 
 #define PROPERTY_CONTAINER "container"
 #define PROPERTY_DIRECTION "direction"
@@ -8,7 +9,7 @@
 #define PROPERTY_BOUNCES "bounces"
 #define PROPERTY_SCALE "scale"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void ScrollViewLoader::onHandlePropTypeSize(Node * pNode, Node * pParent, const char * pPropertyName, Size pSize, CCBReader * ccbReader) {
 	if(strcmp(pPropertyName, PROPERTY_CONTENTSIZE) == 0) {
@@ -53,4 +54,4 @@ void ScrollViewLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pPare
     }
 }
 
-NS_CC_EXT_END
+}

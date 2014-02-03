@@ -1,0 +1,18 @@
+{
+    "rename":               ["PROJECT_NAME.vcxproj",
+                             "PROJECT_NAME.vcxproj.filters",
+                             "PROJECT_NAME.vcxproj.user",
+                             "PROJECT_NAME.sln"],
+    "remove":               ["usocket.c",
+                             "usocket.h",
+                             "unix.c",
+                             "unix.h",
+                             "serial.c"],
+    "replace_package_name": [],
+    "replace_project_name": ["PROJECT_NAME.vcxproj",
+                             "PROJECT_NAME.vcxproj.filters",
+                             "PROJECT_NAME.vcxproj.user",
+                             "PROJECT_NAME.sln",
+                             "game.rc",
+                             "main.cpp"]
+}

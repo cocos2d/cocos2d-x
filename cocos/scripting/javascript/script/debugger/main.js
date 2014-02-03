@@ -10,26 +10,27 @@
  * debugging global.
  */
 
-//const Ci = Components.interfaces;
-//const Cc = Components.classes;
-//const CC = Components.Constructor;
-//const Cu = Components.utils;
-//const Cr = Components.results;
-//const DBG_STRINGS_URI = "chrome://global/locale/devtools/debugger.properties";
-//
-//Cu.import("resource://gre/modules/Services.jsm");
-//Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-//let wantLogging = Services.prefs.getBoolPref("devtools.debugger.log");
-//
-//Cu.import("resource://gre/modules/jsdebugger.jsm");
-//addDebuggerToGlobal(this);
-//
-//Cu.import("resource://gre/modules/commonjs/sdk/core/promise.js");
-//const { defer, resolve, reject, all } = Promise;
-//
-//Cu.import("resource://gre/modules/devtools/SourceMap.jsm");
-//
-//loadSubScript.call(this, "resource://gre/modules/devtools/DevToolsUtils.js");
+/*
+const Ci = Components.interfaces;
+const Cc = Components.classes;
+const CC = Components.Constructor;
+const Cu = Components.utils;
+const Cr = Components.results;
+const DBG_STRINGS_URI = "chrome://global/locale/devtools/debugger.properties";
+
+Cu.import("resource://gre/modules/Services.jsm");
+Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+let wantLogging = Services.prefs.getBoolPref("devtools.debugger.log");
+
+Cu.import("resource://gre/modules/jsdebugger.jsm");
+addDebuggerToGlobal(this);
+
+loadSubScript.call(this, "resource://gre/modules/commonjs/sdk/core/promise.js");
+
+Cu.import("resource://gre/modules/devtools/SourceMap.jsm");
+
+loadSubScript.call(this, "resource://gre/modules/devtools/DevToolsUtils.js");
+*/
 
 let wantLogging = true;
 let debuggerServer = null;
@@ -127,7 +128,7 @@ var DebuggerServer = {
   _initialized: false,
   _transportInitialized: false,
   xpcInspector: null,
-  _transport: null,
+  _transport: null, // James added
   // Number of currently open TCP connections.
   _socketConnections: 0,
   // Map of global actor names to actor constructors provided by extensions.
@@ -144,6 +145,13 @@ var DebuggerServer = {
    * connection.
    */
   _allowConnection: null,
+
+  /**
+   * The windowtype of the chrome window to use for actors that use the global
+   * window (i.e the global style editor). Set this to your main window type,
+   * for example "navigator:browser".
+   */
+  chromeWindowType: null,
 
   /**
    * Prompt the user to accept or decline the incoming connection. This is the
@@ -217,11 +225,11 @@ var DebuggerServer = {
   get initialized() this._initialized,
 
   /**
-   * Performs cleanup tasks before shutting down the debugger server, if no
-   * connections are currently open. Such tasks include clearing any actor
-   * constructors added at runtime. This method should be called whenever a
-   * debugger server is no longer useful, to avoid memory leaks. After this
-   * method returns, the debugger server must be initialized again before use.
+   * Performs cleanup tasks before shutting down the debugger server. Such tasks
+   * include clearing any actor constructors added at runtime. This method
+   * should be called whenever a debugger server is no longer useful, to avoid
+   * memory leaks. After this method returns, the debugger server must be
+   * initialized again before use.
    */
   destroy: function DS_destroy() {
     if (!this._initialized) {
@@ -302,6 +310,7 @@ var DebuggerServer = {
    * Install Firefox-specific actors.
    */
   addBrowserActors: function DS_addBrowserActors() {
+    this.chromeWindowType = "navigator:browser";
     this.addActors("resource://gre/modules/devtools/server/actors/webbrowser.js");
     this.addActors("resource://gre/modules/devtools/server/actors/script.js");
     this.addGlobalActor(this.ChromeDebuggerActor, "chromeDebugger");
@@ -313,6 +322,27 @@ var DebuggerServer = {
     this.addActors("resource://gre/modules/devtools/server/actors/styleeditor.js");
     this.addActors("resource://gre/modules/devtools/server/actors/webapps.js");
     this.registerModule("devtools/server/actors/inspector");
+    this.registerModule("devtools/server/actors/tracer");
+  },
+
+  /**
+   * Install tab actors in documents loaded in content childs
+   */
+  addChildActors: function () {
+    // In case of apps being loaded in parent process, DebuggerServer is already
+    // initialized and browser actors are already loaded,
+    // but childtab.js hasn't been loaded yet.
+    if (!("BrowserTabActor" in this)) {
+      this.addActors("resource://gre/modules/devtools/server/actors/webbrowser.js");
+      this.addActors("resource://gre/modules/devtools/server/actors/script.js");
+      this.addActors("resource://gre/modules/devtools/server/actors/webconsole.js");
+      this.addActors("resource://gre/modules/devtools/server/actors/gcli.js");
+      this.addActors("resource://gre/modules/devtools/server/actors/styleeditor.js");
+      this.registerModule("devtools/server/actors/inspector");
+    }
+    if (!("ContentTabActor" in DebuggerServer)) {
+      this.addActors("resource://gre/modules/devtools/server/actors/childtab.js");
+    }
   },
 
   /**
@@ -339,7 +369,6 @@ var DebuggerServer = {
     // }
 
     let flags = 0;
-
     try {
       let socket = new ServerSocket(aPort, flags, 4);
       socket.asyncListen(this);
@@ -381,16 +410,19 @@ var DebuggerServer = {
    * transport. This connection results in straightforward calls to the onPacket
    * handlers of each side.
    *
+   * @param aPrefix string [optional]
+   *    If given, all actors in this connection will have names starting
+   *    with |aPrefix + ':'|.
    * @returns a client-side DebuggerTransport for communicating with
-   *          the newly-created connection.
+   *    the newly-created connection.
    */
-  connectPipe: function DS_connectPipe() {
+  connectPipe: function DS_connectPipe(aPrefix) {
     this._checkInit();
 
     let serverTransport = new LocalDebuggerTransport;
     let clientTransport = new LocalDebuggerTransport(serverTransport);
     serverTransport.other = clientTransport;
-    let connection = this._onConnection(serverTransport);
+    let connection = this._onConnection(serverTransport, aPrefix);
 
     // I'm putting this here because I trust you.
     //
@@ -412,6 +444,22 @@ var DebuggerServer = {
     return clientTransport;
   },
 
+  /**
+   * In a content child process, create a new connection that exchanges
+   * nsIMessageSender messages with our parent process.
+   *
+   * @param aPrefix
+   *    The prefix we should use in our nsIMessageSender message names and
+   *    actor names. This connection will use messages named
+   *    "debug:<prefix>:packet", and all its actors will have names
+   *    beginning with "<prefix>:".
+   */
+  connectToParent: function(aPrefix, aMessageManager) {
+    this._checkInit();
+
+    let transport = new ChildDebuggerTransport(aMessageManager, aPrefix);
+    return this._onConnection(transport, aPrefix, true);
+  },
 
   // nsIServerSocketListener implementation
 
@@ -446,23 +494,36 @@ var DebuggerServer = {
   },
 
   /**
-   * Create a new debugger connection for the given transport.  Called
-   * after connectPipe() or after an incoming socket connection.
+   * Create a new debugger connection for the given transport. Called after
+   * connectPipe(), from connectToParent, or from an incoming socket
+   * connection handler.
+   *
+   * If present, |aForwardingPrefix| is a forwarding prefix that a parent
+   * server is using to recognizes messages intended for this server. Ensure
+   * that all our actors have names beginning with |aForwardingPrefix + ':'|.
+   * In particular, the root actor's name will be |aForwardingPrefix + ':root'|.
    */
-  _onConnection: function DS_onConnection(aTransport) {
-    log("DebuggerServer._onConnection....");
-
+  _onConnection: function DS_onConnection(aTransport, aForwardingPrefix, aNoRootActor = false) {
+    let connID;
     this._transport = aTransport;
-
-    let connID = "conn" + this._nextConnID++ + '.';
+    if (aForwardingPrefix) {
+      connID = aForwardingPrefix + ":";
+    } else {
+      connID = "conn" + this._nextConnID++ + '.';
+    }
     let conn = new DebuggerServerConnection(connID, aTransport);
     this._connections[connID] = conn;
 
     // Create a root actor for the connection and send the hello packet.
-    conn.rootActor = this.createRootActor(conn);
-    conn.addActor(conn.rootActor);
-
-    aTransport.send(conn.rootActor.sayHello());
+    if (!aNoRootActor) {
+      conn.rootActor = this.createRootActor(conn);
+      if (aForwardingPrefix)
+        conn.rootActor.actorID = aForwardingPrefix + ":root";
+      else
+        conn.rootActor.actorID = "root";
+      conn.addActor(conn.rootActor);
+      aTransport.send(conn.rootActor.sayHello());
+    }
     aTransport.ready();
 
     return conn;
@@ -676,6 +737,14 @@ function DebuggerServerConnection(aPrefix, aTransport)
 
   this._actorPool = new ActorPool(this);
   this._extraPools = [];
+
+  /*
+   * We can forward packets to other servers, if the actors on that server
+   * all use a distinct prefix on their names. This is a map from prefixes
+   * to transports: it maps a prefix P to a transport T if T conveys
+   * packets to the server whose actors' names all begin with P + ":".
+   */
+  this._forwardingPrefixes = new Map;
 }
 
 DebuggerServerConnection.prototype = {
@@ -788,6 +857,35 @@ DebuggerServerConnection.prototype = {
     };
   },
 
+  /* Forwarding packets to other transports based on actor name prefixes. */
+
+  /*
+   * Arrange to forward packets to another server. This is how we
+   * forward debugging connections to child processes.
+   *
+   * If we receive a packet for an actor whose name begins with |aPrefix|
+   * followed by ':', then we will forward that packet to |aTransport|.
+   *
+   * This overrides any prior forwarding for |aPrefix|.
+   *
+   * @param aPrefix string
+   *    The actor name prefix, not including the ':'.
+   * @param aTransport object
+   *    A packet transport to which we should forward packets to actors
+   *    whose names begin with |(aPrefix + ':').|
+   */
+  setForwarding: function(aPrefix, aTransport) {
+    this._forwardingPrefixes.set(aPrefix, aTransport);
+  },
+
+  /*
+   * Stop forwarding messages to actors whose names begin with
+   * |aPrefix+':'|. Such messages will now elicit 'noSuchActor' errors.
+   */
+  cancelForwarding: function(aPrefix) {
+    this._forwardingPrefixes.delete(aPrefix);
+  },
+
   // Transport hooks.
 
   /**
@@ -797,6 +895,24 @@ DebuggerServerConnection.prototype = {
    *        The incoming packet.
    */
   onPacket: function DSC_onPacket(aPacket) {
+    // If the actor's name begins with a prefix we've been asked to
+    // forward, do so.
+    //
+    // Note that the presence of a prefix alone doesn't indicate that
+    // forwarding is needed: in DebuggerServerConnection instances in child
+    // processes, every actor has a prefixed name.
+
+    if (this._forwardingPrefixes.size > 0) {
+      let colon = aPacket.to.indexOf(':');
+      if (colon >= 0) {
+        let forwardTo = this._forwardingPrefixes.get(aPacket.to.substring(0, colon));
+        if (forwardTo) {
+          forwardTo.send(aPacket);
+          return;
+        }
+      }
+    }
+
     let actor = this.getActor(aPacket.to);
     if (!actor) {
       this.transport.send({ from: aPacket.to ? aPacket.to : "root",
@@ -824,7 +940,6 @@ DebuggerServerConnection.prototype = {
     }
 
     var ret = null;
-    // log("actor.requestTypes: "+actor.requestTypes+", cb: "+actor.requestTypes[aPacket.type]);
     // Dispatch the request to the actor.
     if (actor.requestTypes && actor.requestTypes[aPacket.type]) {
       try {
@@ -851,18 +966,18 @@ DebuggerServerConnection.prototype = {
     }
 
     resolve(ret)
-      .then(null, (e) => {
-        return this._unknownError(
-          "error occurred while processing '" + aPacket.type,
-          e);
-      })
       .then(function (aResponse) {
         if (!aResponse.from) {
           aResponse.from = aPacket.to;
         }
         return aResponse;
       })
-      .then(this.transport.send.bind(this.transport));
+      .then(this.transport.send.bind(this.transport))
+      .then(null, (e) => {
+        return this._unknownError(
+          "error occurred while processing '" + aPacket.type,
+          e);
+      });
   },
 
   /**

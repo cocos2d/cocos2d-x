@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CCActionEaseEx.cpp" />
+    <ClCompile Include="..\CCActionFrame.cpp" />
+    <ClCompile Include="..\CCActionFrameEasing.cpp" />
+    <ClCompile Include="..\CCActionManagerEx.cpp" />
+    <ClCompile Include="..\CCActionNode.cpp" />
+    <ClCompile Include="..\CCActionObject.cpp" />
+    <ClCompile Include="..\CCArmature.cpp" />
+    <ClCompile Include="..\CCArmatureAnimation.cpp" />
+    <ClCompile Include="..\CCArmatureDataManager.cpp" />
+    <ClCompile Include="..\CCArmatureDefine.cpp" />
+    <ClCompile Include="..\CCBatchNode.cpp" />
+    <ClCompile Include="..\CCBone.cpp" />
+    <ClCompile Include="..\CCColliderDetector.cpp" />
+    <ClCompile Include="..\CCComAttribute.cpp" />
+    <ClCompile Include="..\CCComAudio.cpp" />
+    <ClCompile Include="..\CCComController.cpp" />
+    <ClCompile Include="..\CCComRender.cpp" />
+    <ClCompile Include="..\CCDataReaderHelper.cpp" />
+    <ClCompile Include="..\CCDatas.cpp" />
+    <ClCompile Include="..\CCDecorativeDisplay.cpp" />
+    <ClCompile Include="..\CCDisplayFactory.cpp" />
+    <ClCompile Include="..\CCDisplayManager.cpp" />
+    <ClCompile Include="..\CCInputDelegate.cpp" />
+    <ClCompile Include="..\CCProcessBase.cpp" />
+    <ClCompile Include="..\CCSGUIReader.cpp" />
+    <ClCompile Include="..\CCSkin.cpp" />
+    <ClCompile Include="..\CCSpriteFrameCacheHelper.cpp" />
+    <ClCompile Include="..\CCSSceneReader.cpp" />
+    <ClCompile Include="..\CCTransformHelp.cpp" />
+    <ClCompile Include="..\CCTween.cpp" />
+    <ClCompile Include="..\CCTweenFunction.cpp" />
+    <ClCompile Include="..\CCUtilMath.cpp" />
+    <ClCompile Include="..\DictionaryHelper.cpp" />
+    <ClCompile Include="..\ObjectFactory.cpp" />
+    <ClCompile Include="..\TriggerBase.cpp" />
+    <ClCompile Include="..\TriggerMng.cpp" />
+    <ClCompile Include="..\TriggerObj.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\external\json\document.h" />
+    <ClInclude Include="..\..\..\..\external\json\filestream.h" />
+    <ClInclude Include="..\..\..\..\external\json\internal\pow10.h" />
+    <ClInclude Include="..\..\..\..\external\json\internal\stack.h" />
+    <ClInclude Include="..\..\..\..\external\json\internal\strfunc.h" />
+    <ClInclude Include="..\..\..\..\external\json\prettywriter.h" />
+    <ClInclude Include="..\..\..\..\external\json\rapidjson.h" />
+    <ClInclude Include="..\..\..\..\external\json\reader.h" />
+    <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
+    <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\CCActionEaseEx.h" />
+    <ClInclude Include="..\CCActionFrame.h" />
+    <ClInclude Include="..\CCActionFrameEasing.h" />
+    <ClInclude Include="..\CCActionManagerEx.h" />
+    <ClInclude Include="..\CCActionNode.h" />
+    <ClInclude Include="..\CCActionObject.h" />
+    <ClInclude Include="..\CCArmature.h" />
+    <ClInclude Include="..\CCArmatureAnimation.h" />
+    <ClInclude Include="..\CCArmatureDataManager.h" />
+    <ClInclude Include="..\CCArmatureDefine.h" />
+    <ClInclude Include="..\CCBatchNode.h" />
+    <ClInclude Include="..\CCBone.h" />
+    <ClInclude Include="..\CCColliderDetector.h" />
+    <ClInclude Include="..\CCComAttribute.h" />
+    <ClInclude Include="..\CCComAudio.h" />
+    <ClInclude Include="..\CCComBase.h" />
+    <ClInclude Include="..\CCComController.h" />
+    <ClInclude Include="..\CCComRender.h" />
+    <ClInclude Include="..\CCDataReaderHelper.h" />
+    <ClInclude Include="..\CCDatas.h" />
+    <ClInclude Include="..\CCDecorativeDisplay.h" />
+    <ClInclude Include="..\CCDisplayFactory.h" />
+    <ClInclude Include="..\CCDisplayManager.h" />
+    <ClInclude Include="..\CCInputDelegate.h" />
+    <ClInclude Include="..\CCProcessBase.h" />
+    <ClInclude Include="..\CCSGUIReader.h" />
+    <ClInclude Include="..\CCSkin.h" />
+    <ClInclude Include="..\CCSpriteFrameCacheHelper.h" />
+    <ClInclude Include="..\CCSSceneReader.h" />
+    <ClInclude Include="..\CCTransformHelp.h" />
+    <ClInclude Include="..\CCTween.h" />
+    <ClInclude Include="..\CCTweenFunction.h" />
+    <ClInclude Include="..\CCUtilMath.h" />
+    <ClInclude Include="..\DictionaryHelper.h" />
+    <ClInclude Include="..\ObjectFactory.h" />
+    <ClInclude Include="..\TriggerBase.h" />
+    <ClInclude Include="..\TriggerMng.h" />
+    <ClInclude Include="..\TriggerObj.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B57CF53F-2E49-4031-9822-047CC0E6BDE2}</ProjectGuid>
+    <RootNamespace>libCocosStudio</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

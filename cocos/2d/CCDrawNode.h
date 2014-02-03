@@ -1,5 +1,6 @@
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +31,9 @@
 #ifndef __CCDRAWNODES_CCDRAW_NODE_H__
 #define __CCDRAWNODES_CCDRAW_NODE_H__
 
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -46,17 +48,6 @@ class CC_DLL DrawNode : public Node
 public:
     /** creates and initialize a DrawNode node */
     static DrawNode* create();
-    /**
-     * @js ctor
-     */
-    DrawNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~DrawNode();
-    
-    virtual bool init();
 
     /** draw a dot at a position, with a given radius and color */
     void drawDot(const Point &pos, float radius, const Color4F &color);
@@ -71,7 +62,16 @@ public:
     * In lua:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
     * @endcode
     */
-    void drawPolygon(Point *verts, unsigned int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
+    void drawPolygon(Point *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
+	
+    /** draw a triangle with color */
+    void drawTriangle(const Point &p1, const Point &p2, const Point &p3, const Color4F &color);
+
+    /** draw a cubic bezier curve with color and number of segments */
+    void drawCubicBezier(const Point& from, const Point& control1, const Point& control2, const Point& to, unsigned int segments, const Color4F &color);
+
+    /** draw a quadratic bezier curve with color and number of segments */
+    void drawQuadraticBezier(const Point& from, const Point& control, const Point& to, unsigned int segments, const Color4F &color);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -88,17 +88,17 @@ public:
     * @lua NA
     */
     void setBlendFunc(const BlendFunc &blendFunc);
-    
-    /** listen the event that coming to foreground on Android
-    * @js NA
-    * @lua NA
-    */
-    void listenBackToForeground(Object *obj);
 
+    void onDraw();
+    
     // Overrides
     virtual void draw() override;
 
 protected:
+    DrawNode();
+    virtual ~DrawNode();
+    virtual bool init();
+
     void ensureCapacity(int count);
     void render();
 
@@ -110,8 +110,12 @@ protected:
     V2F_C4B_T2F *_buffer;
 
     BlendFunc   _blendFunc;
+    CustomCommand _customCommand;
 
     bool        _dirty;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };
 
 NS_CC_END

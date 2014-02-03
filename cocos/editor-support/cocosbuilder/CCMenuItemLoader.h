@@ -1,9 +1,12 @@
 #ifndef _CCB_CCMENUITEMLOADER_H_
 #define _CCB_CCMENUITEMLOADER_H_
 
+#include "CCObject.h"
+#include "CCMenuItem.h"
+
 #include "CCLayerLoader.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
@@ -21,19 +24,19 @@ protected:
      * @js NA
      * @lua NA
      */
-    CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(MenuItem);
+    CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::MenuItem);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeBlock(Node * pNode, Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * ccbReader);
+    virtual void onHandlePropTypeBlock(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * ccbReader);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
+    virtual void onHandlePropTypeCheck(cocos2d::Node * pNode,cocos2d:: Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

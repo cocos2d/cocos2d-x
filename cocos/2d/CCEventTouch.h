@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,7 +26,7 @@
 #define __cocos2d_libs__TouchEvent__
 
 #include "CCEvent.h"
-#include "event_dispatcher/CCTouch.h"
+#include "CCTouch.h"
 #include <vector>
 
 NS_CC_BEGIN
@@ -36,7 +36,6 @@ NS_CC_BEGIN
 class EventTouch : public Event
 {
 public:
-    static const char* EVENT_TYPE;
     static const int MAX_TOUCHES = 5;
     
     enum class EventCode
@@ -47,11 +46,7 @@ public:
         CANCELLED
     };
 
-    EventTouch()
-    : Event(EVENT_TYPE)
-    {
-        _touches.reserve(MAX_TOUCHES);
-    }
+    EventTouch();
 
     EventCode getEventCode() { return _eventCode; };
     std::vector<Touch*> getTouches() { return _touches; };
@@ -65,7 +60,7 @@ private:
     EventCode _eventCode;
     std::vector<Touch*> _touches;
 
-    friend class EGLViewProtocol;
+    friend class GLViewProtocol;
 };
 
 

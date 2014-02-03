@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,7 +32,7 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include "platform/CCCommon.h"
+#include "CCConsole.h"
 #include "CCStdC.h"
 
 #ifndef CCASSERT
@@ -100,7 +101,7 @@ do { \
     CCASSERT(getShaderProgram(), "No shader program set for this node"); \
     { \
         getShaderProgram()->use(); \
-        getShaderProgram()->setUniformsForBuiltins(); \
+        getShaderProgram()->setUniformsForBuiltins(_modelViewTransform); \
     } \
 } while(0)
 

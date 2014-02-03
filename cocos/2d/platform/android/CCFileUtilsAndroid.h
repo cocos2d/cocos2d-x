@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,8 +25,11 @@
 #ifndef __CC_FILEUTILS_ANDROID_H__
 #define __CC_FILEUTILS_ANDROID_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "platform/CCFileUtils.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include <string>
 #include <vector>
@@ -55,19 +59,28 @@ public:
 
     /* override funtions */
     bool init();
-    virtual unsigned char* getFileData(const char* filename, const char* pszMode, unsigned long * pSize);
+
+    /** @deprecated Please use FileUtils::getDataFromFile or FileUtils::getStringFromFile instead. */
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
+
+    /**
+     *  Gets string from a file.
+     */
+    virtual std::string getStringFromFile(const std::string& filename) override;
+    
+    /**
+     *  Creates binary data from a file.
+     *  @return A data object.
+     */
+    virtual Data getDataFromFile(const std::string& filename) override;
 
     virtual std::string getWritablePath() const;
     virtual bool isFileExist(const std::string& strFilePath) const;
     virtual bool isAbsolutePath(const std::string& strPath) const;
     
-    /** This function is android specific. It is used for TextureCache::addImageAsync(). 
-     Don't use it in your codes.
-     */
-    unsigned char* getFileDataForAsync(const char* filename, const char* pszMode, unsigned long * pSize);
-    
 private:
-    unsigned char* doGetFileData(const char* filename, const char* pszMode, unsigned long * pSize, bool forAsync);
+    Data getData(const std::string& filename, bool forString);
+
     static AAssetManager* assetmanager;
 };
 
@@ -76,4 +89,6 @@ private:
 
 NS_CC_END
 
-#endif    // __CC_FILEUTILS_ANDROID_H__
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#endif // __CC_FILEUTILS_ANDROID_H__

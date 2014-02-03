@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,17 +26,17 @@
 #ifndef _CCLabelTextFormatter_h_
 #define _CCLabelTextFormatter_h_
 
-#include "CCLabelTextFormatProtocol.h"
-
 NS_CC_BEGIN
+
+class Label;
 
 class CC_DLL LabelTextFormatter
 {
 public:
     
-    static bool multilineText(LabelTextFormatProtocol *theLabel);
-    static bool alignText(LabelTextFormatProtocol *theLabel);
-    static bool createStringSprites(LabelTextFormatProtocol *theLabel);
+    static bool multilineText(Label *theLabel);
+    static bool alignText(Label *theLabel);
+    static bool createStringSprites(Label *theLabel);
 
 };
 

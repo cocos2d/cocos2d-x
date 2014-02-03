@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +26,15 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
+//typedef SSIZE_T ssize_t;
+// ssize_t was redefined as int in libwebsockets.h.
+// Therefore, to avoid conflict, we needs the same definition.
+typedef int ssize_t;
+
+#include "CCPlatformMacros.h"
 #include <float.h>
 
 // for math.h on win32 platform
@@ -52,6 +61,12 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <time.h>
 
+#ifndef M_PI
+  #define M_PI      3.14159265358
+#endif
+#ifndef M_PI_2
+  #define M_PI_2    1.57079632679
+#endif
 // for MIN MAX and sys/time.h on win32 platform
 #ifdef __MINGW32__
 #include <sys/time.h>
@@ -73,7 +88,9 @@ THE SOFTWARE.
 #endif
 
 #define _WINSOCKAPI_
-#define NOMINMAX
+#ifndef NOMINMAX
+  #define NOMINMAX
+#endif
 // Structure timeval has define in winsock.h, include windows.h for it.
 #include <Windows.h>
 
@@ -95,7 +112,22 @@ NS_CC_END
 
 #else
 
-#include <winsock.h>
+#undef _WINSOCKAPI_
+#include <winsock2.h>
+
+// Conflicted with math.h isnan
+#include <cmath>
+using std::isnan;
+
+inline int vsnprintf_s(char *buffer, size_t sizeOfBuffer, size_t count,
+                 const char *format, va_list argptr) {
+  return vsnprintf(buffer, sizeOfBuffer, format, argptr);
+}
+inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
+        const char *strSource) {
+    strcpy(strDestination, strSource);
+    return 0;
+}
 
 #endif // __MINGW32__
 
@@ -119,5 +151,12 @@ NS_CC_END
 #undef DELETE
 #endif
 
+#undef min
+#undef max
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #endif  // __CC_STD_C_H__
+
+
 

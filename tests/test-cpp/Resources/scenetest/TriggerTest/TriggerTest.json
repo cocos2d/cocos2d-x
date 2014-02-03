@@ -1,0 +1,319 @@
+{
+  "classname": "CCNode",
+  "name": null,
+  "canedit": true,
+  "objecttag": 10000,
+  "rotation": 0,
+  "scalex": 1,
+  "scaley": 1,
+  "visible": 1,
+  "x": 0,
+  "y": 0,
+  "zorder": 1,
+  "gameobjects": [
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "BK",
+      "canedit": false,
+      "objecttag": 10003,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 240,
+      "y": 160,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComSpriteSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCSprite",
+          "name": "CCSprite",
+          "file": null,
+          "fileData": {
+            "path": "Images/startMenuBG.png",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "blowFish",
+      "canedit": true,
+      "objecttag": 10007,
+      "rotation": 0,
+      "scalex": 0.3,
+      "scaley": 0.3,
+      "visible": 1,
+      "x": 410.20977783203125,
+      "y": 169.09091186523438,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCArmature",
+          "name": "CCArmature",
+          "file": null,
+          "fileData": {
+            "path": "fishes/blowFish/Blowfish.ExportJson",
+            "plistFile": null,
+            "resourceType": 0
+          },
+          "isShowColliderRect": false,
+          "selectedactionname": "Action0"
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "Butterflyfish",
+      "canedit": true,
+      "objecttag": 10008,
+      "rotation": 0,
+      "scalex": 0.25,
+      "scaley": 0.25,
+      "visible": 1,
+      "x": 412.5384521484375,
+      "y": 84.6153793334961,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCArmature",
+          "name": "CCArmature",
+          "file": null,
+          "fileData": {
+            "path": "fishes/Butterflyfish/Butterflyfish.ExportJson",
+            "plistFile": null,
+            "resourceType": 0
+          },
+          "isShowColliderRect": false,
+          "selectedactionname": "Action0"
+        }
+      ]
+    }
+  ],
+  "CanvasSize": {
+    "_height": 320,
+    "_width": 480
+  },
+  "Triggers": [
+    {
+      "actions": [
+        {
+          "classname": "TScaleTo",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10008
+            },
+            {
+              "key": "ScaleX",
+              "value": 0.6
+            },
+            {
+              "key": "ScaleY",
+              "value": 0.6
+            },
+            {
+              "key": "Duration",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10008
+            },
+            {
+              "key": "x",
+              "value": -500
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "events": [
+        {
+          "id": 4
+        }
+      ],
+      "id": 0
+    },
+    {
+      "actions": [
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "x",
+              "value": -500
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "events": [
+        {
+          "id": 0
+        }
+      ],
+      "id": 1
+    },
+    {
+      "actions": [
+        {
+          "classname": "TScaleTo",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "ScaleX",
+              "value": -0.3
+            },
+            {
+              "key": "ScaleY",
+              "value": 0.3
+            },
+            {
+              "key": "Duration",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "x",
+              "value": 1000
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "classname": "TriggerState",
+          "dataitems": [
+            {
+              "key": "ID",
+              "value": 2
+            },
+            {
+              "key": "State",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "classname": "NodeInRect",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "originX",
+              "value": 112
+            },
+            {
+              "key": "originY",
+              "value": 153
+            },
+            {
+              "key": "sizeWidth",
+              "value": 10
+            },
+            {
+              "key": "sizeHeight",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": 3
+        }
+      ],
+      "id": 2
+    }
+  ],
+  "Version": "1.2.0.0",
+  "components": [
+    {
+      "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCScene",
+      "name": "CCScene",
+      "scenename": "TriggerTest"
+    },
+    {
+      "__type": "ComSimpleAudioSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCBackgroundAudio",
+      "name": "CCBackgroundAudio",
+      "file": null,
+      "fileData": {
+        "path": null,
+        "plistFile": null,
+        "resourceType": 0
+      },
+      "loop": 0
+    }
+  ]
+}

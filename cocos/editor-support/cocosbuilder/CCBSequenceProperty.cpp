@@ -3,7 +3,7 @@
 using namespace cocos2d;
 using namespace std;
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 CCBSequenceProperty::CCBSequenceProperty()
 : _name("")
@@ -14,15 +14,11 @@ CCBSequenceProperty::CCBSequenceProperty()
 
 bool CCBSequenceProperty::init()
 {
-    _keyframes = new Array();
-    _keyframes->init();
-
     return true;
 }
 
 CCBSequenceProperty::~CCBSequenceProperty()
 {
-    CC_SAFE_RELEASE_NULL(_keyframes);
 }
 
 const char* CCBSequenceProperty::getName()
@@ -45,9 +41,9 @@ void CCBSequenceProperty::setType(int type)
     _type = type;
 }
 
-Array* CCBSequenceProperty::getKeyframes()
+cocos2d::Vector<CCBKeyframe*>& CCBSequenceProperty::getKeyframes()
 {
     return _keyframes;
 }
 
-NS_CC_EXT_END
+}

@@ -26,8 +26,10 @@
 #ifndef __CCSCROLLVIEW_H__
 #define __CCSCROLLVIEW_H__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "CCLayer.h"
+#include "CCEventListenerTouch.h"
+
+#include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -166,7 +168,8 @@ public:
      */
     void resume(Object* sender);
 
-
+    void setTouchEnabled(bool enabled);
+	bool isTouchEnabled() const;
     bool isDragging() const {return _dragging;}
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }
@@ -216,10 +219,6 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *event);
     
     // Overrides
-//    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual void setContentSize(const Size & size) override;
     virtual const Size& getContentSize() const override;
     /**
@@ -227,10 +226,9 @@ public:
      * @lua NA
      */
     virtual void visit() override;
+    
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node * child) override;
-    void setTouchEnabled(bool e) override;
 
 protected:
     /**
@@ -258,11 +256,13 @@ protected:
      * clip this view so that outside of the visible bounds can be hidden.
      */
     void beforeDraw();
+    void onBeforeDraw();
     /**
      * retract what's done in beforeDraw so that there's no side effect to
      * other nodes.
      */
     void afterDraw();
+    void onAfterDraw();
     /**
      * Zoom handling
      */
@@ -352,6 +352,12 @@ protected:
      */
     Rect _parentScissorRect;
     bool _scissorRestored;
+    
+    /** Touch listener */
+    EventListenerTouchOneByOne* _touchListener;
+    
+    CustomCommand _beforeDrawCommand;
+    CustomCommand _afterDrawCommand;
 };
 
 // end of GUI group

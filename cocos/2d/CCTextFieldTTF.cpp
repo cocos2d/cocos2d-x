@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,15 +26,15 @@ THE SOFTWARE.
 #include "CCTextFieldTTF.h"
 
 #include "CCDirector.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
 
-static int _calcCharCount(const char * pszText)
+static int _calcCharCount(const char * text)
 {
     int n = 0;
     char ch = 0;
-    while ((ch = *pszText))
+    while ((ch = *text))
     {
         CC_BREAK_IF(! ch);
 
@@ -41,7 +42,7 @@ static int _calcCharCount(const char * pszText)
         {
             ++n;
         }
-        ++pszText;
+        ++text;
     }
     return n;
 }
@@ -53,8 +54,8 @@ static int _calcCharCount(const char * pszText)
 TextFieldTTF::TextFieldTTF()
 : _delegate(0)
 , _charCount(0)
-, _inputText(new std::string)
-, _placeHolder(new std::string)   // prevent LabelTTF initWithString assertion
+, _inputText("")
+, _placeHolder("")   // prevent LabelTTF initWithString assertion
 , _secureTextEntry(false)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
@@ -62,67 +63,57 @@ TextFieldTTF::TextFieldTTF()
 
 TextFieldTTF::~TextFieldTTF()
 {
-    CC_SAFE_DELETE(_inputText);
-    CC_SAFE_DELETE(_placeHolder);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // static constructor
 //////////////////////////////////////////////////////////////////////////
 
-TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, TextHAlignment alignment, const char *fontName, float fontSize)
+TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize)
 {
-    TextFieldTTF *pRet = new TextFieldTTF();
-    if(pRet && pRet->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
+    TextFieldTTF *ret = new TextFieldTTF();
+    if(ret && ret->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
     {
-        pRet->autorelease();
-        if (placeholder)
+        ret->autorelease();
+        if (placeholder.size()>0)
         {
-            pRet->setPlaceHolder(placeholder);
+            ret->setPlaceHolder(placeholder);
         }
-        return pRet;
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
-TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize)
+TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
-    TextFieldTTF *pRet = new TextFieldTTF();
-    if(pRet && pRet->initWithString("", fontName, fontSize))
+    TextFieldTTF *ret = new TextFieldTTF();
+    if(ret && ret->initWithString("", fontName, fontSize))
     {
-        pRet->autorelease();
-        if (placeholder)
+        ret->autorelease();
+        if (placeholder.size()>0)
         {
-            pRet->setPlaceHolder(placeholder);
+            ret->setPlaceHolder(placeholder);
         }
-        return pRet;
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // initialize
 //////////////////////////////////////////////////////////////////////////
 
-bool TextFieldTTF::initWithPlaceHolder(const char *placeholder, const Size& dimensions, TextHAlignment alignment, const char *fontName, float fontSize)
+bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize)
 {
-    if (placeholder)
-    {
-        CC_SAFE_DELETE(_placeHolder);
-        _placeHolder = new std::string(placeholder);
-    }
-    return LabelTTF::initWithString(_placeHolder->c_str(), fontName, fontSize, dimensions, alignment);
+    _placeHolder = placeholder;
+    return LabelTTF::initWithString(_placeHolder, fontName, fontSize, dimensions, alignment);
 }
-bool TextFieldTTF::initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize)
+bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
-    if (placeholder)
-    {
-        CC_SAFE_DELETE(_placeHolder);
-        _placeHolder = new std::string(placeholder);
-    }
-    return LabelTTF::initWithString(_placeHolder->c_str(), fontName, fontSize);
+    _placeHolder = std::string(placeholder);
+    return LabelTTF::initWithString(_placeHolder, fontName, fontSize);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -131,32 +122,32 @@ bool TextFieldTTF::initWithPlaceHolder(const char *placeholder, const char *font
 
 bool TextFieldTTF::attachWithIME()
 {
-    bool bRet = IMEDelegate::attachWithIME();
-    if (bRet)
+    bool ret = IMEDelegate::attachWithIME();
+    if (ret)
     {
         // open keyboard
-        EGLView * pGlView = Director::getInstance()->getOpenGLView();
+        GLView * pGlView = Director::getInstance()->getOpenGLView();
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(true);
         }
     }
-    return bRet;
+    return ret;
 }
 
 bool TextFieldTTF::detachWithIME()
 {
-    bool bRet = IMEDelegate::detachWithIME();
-    if (bRet)
+    bool ret = IMEDelegate::detachWithIME();
+    if (ret)
     {
         // close keyboard
-        EGLView * pGlView = Director::getInstance()->getOpenGLView();
-        if (pGlView)
+        GLView * glView = Director::getInstance()->getOpenGLView();
+        if (glView)
         {
-            pGlView->setIMEKeyboardState(false);
+            glView->setIMEKeyboardState(false);
         }
     }
-    return bRet;
+    return ret;
 }
 
 bool TextFieldTTF::canAttachWithIME()
@@ -171,31 +162,31 @@ bool TextFieldTTF::canDetachWithIME()
 
 void TextFieldTTF::insertText(const char * text, int len)
 {
-    std::string sInsert(text, len);
+    std::string insert(text, len);
 
     // insert \n means input end
-    int nPos = sInsert.find('\n');
-    if ((int)sInsert.npos != nPos)
+    int pos = static_cast<int>(insert.find('\n'));
+    if ((int)insert.npos != pos)
     {
-        len = nPos;
-        sInsert.erase(nPos);
+        len = pos;
+        insert.erase(pos);
     }
 
     if (len > 0)
     {
-        if (_delegate && _delegate->onTextFieldInsertText(this, sInsert.c_str(), len))
+        if (_delegate && _delegate->onTextFieldInsertText(this, insert.c_str(), len))
         {
             // delegate doesn't want to insert text
             return;
         }
 
-        _charCount += _calcCharCount(sInsert.c_str());
-        std::string sText(*_inputText);
-        sText.append(sInsert);
-        setString(sText.c_str());
+        _charCount += _calcCharCount(insert.c_str());
+        std::string sText(_inputText);
+        sText.append(insert);
+        setString(sText);
     }
 
-    if ((int)sInsert.npos == nPos) {
+    if ((int)insert.npos == pos) {
         return;
     }
 
@@ -211,45 +202,44 @@ void TextFieldTTF::insertText(const char * text, int len)
 
 void TextFieldTTF::deleteBackward()
 {
-    int nStrLen = _inputText->length();
-    if (! nStrLen)
+    size_t len = _inputText.length();
+    if (! len)
     {
         // there is no string
         return;
     }
 
     // get the delete byte number
-    int nDeleteLen = 1;    // default, erase 1 byte
+    size_t deleteLen = 1;    // default, erase 1 byte
 
-    while(0x80 == (0xC0 & _inputText->at(nStrLen - nDeleteLen)))
+    while(0x80 == (0xC0 & _inputText.at(len - deleteLen)))
     {
-        ++nDeleteLen;
+        ++deleteLen;
     }
 
-    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText->c_str() + nStrLen - nDeleteLen, nDeleteLen))
+    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + len - deleteLen, static_cast<int>(deleteLen)))
     {
         // delegate doesn't wan't to delete backwards
         return;
     }
 
     // if all text deleted, show placeholder string
-    if (nStrLen <= nDeleteLen)
+    if (len <= deleteLen)
     {
-        CC_SAFE_DELETE(_inputText);
-        _inputText = new std::string;
+        _inputText = "";
         _charCount = 0;
-        LabelTTF::setString(_placeHolder->c_str());
+        LabelTTF::setString(_placeHolder);
         return;
     }
 
     // set new input text
-    std::string sText(_inputText->c_str(), nStrLen - nDeleteLen);
-    setString(sText.c_str());
+    std::string text(_inputText.c_str(), len - deleteLen);
+    setString(text);
 }
 
-const char * TextFieldTTF::getContentText()
+const std::string& TextFieldTTF::getContentText()
 {
-    return _inputText->c_str();
+    return _inputText;
 }
 
 void TextFieldTTF::draw()
@@ -258,7 +248,7 @@ void TextFieldTTF::draw()
     {
         return;
     }
-    if (_inputText->length())
+    if (_inputText.length())
     {
         LabelTTF::draw();
         return;
@@ -286,22 +276,20 @@ void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
 //////////////////////////////////////////////////////////////////////////
 
 // input text property
-void TextFieldTTF::setString(const char *text)
+void TextFieldTTF::setString(const std::string &text)
 {
     static char bulletString[] = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
     std::string displayText;
-    int length;
+    size_t length;
 
-    CC_SAFE_DELETE(_inputText);
-
-    if (text)
+    if (text.length()>0)
     {
-        _inputText = new std::string(text);
-        displayText = *_inputText;
+        _inputText = text;
+        displayText = _inputText;
         if (_secureTextEntry)
         {
             displayText = "";
-            length = _inputText->length();
+            length = _inputText.length();
             while (length)
             {
                 displayText.append(bulletString);
@@ -311,40 +299,39 @@ void TextFieldTTF::setString(const char *text)
     }
     else
     {
-        _inputText = new std::string;
+        _inputText = "";
     }
 
     // if there is no input text, display placeholder instead
-    if (! _inputText->length())
+    if (! _inputText.length())
     {
-        LabelTTF::setString(_placeHolder->c_str());
+        LabelTTF::setString(_placeHolder);
     }
     else
     {
-        LabelTTF::setString(displayText.c_str());
+        LabelTTF::setString(displayText);
     }
-    _charCount = _calcCharCount(_inputText->c_str());
+    _charCount = _calcCharCount(_inputText.c_str());
 }
 
-const char* TextFieldTTF::getString(void) const
+const std::string& TextFieldTTF::getString() const
 {
-    return _inputText->c_str();
+    return _inputText;
 }
 
 // place holder text property
-void TextFieldTTF::setPlaceHolder(const char * text)
+void TextFieldTTF::setPlaceHolder(const std::string& text)
 {
-    CC_SAFE_DELETE(_placeHolder);
-    _placeHolder = (text) ? new std::string(text) : new std::string;
-    if (! _inputText->length())
+    _placeHolder = text;
+    if (! _inputText.length())
     {
-        LabelTTF::setString(_placeHolder->c_str());
+        LabelTTF::setString(_placeHolder);
     }
 }
 
-const char * TextFieldTTF::getPlaceHolder(void)
+const std::string& TextFieldTTF::getPlaceHolder() const
 {
-    return _placeHolder->c_str();
+    return _placeHolder;
 }
 
 // secureTextEntry

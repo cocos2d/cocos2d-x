@@ -60,7 +60,6 @@ bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Point
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
         // Add background and slider sprites
         _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, Point(0.0f, 0.0f));
         _overlay=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, Point(0.0f, 0.0f));

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,6 +27,8 @@
 
 NS_CC_BEGIN
 
+const std::string EventListenerAcceleration::LISTENER_ID = "__cc_acceleration";
+
 EventListenerAcceleration::EventListenerAcceleration()
 {
 
@@ -37,7 +39,7 @@ EventListenerAcceleration::~EventListenerAcceleration()
     CCLOGINFO("In the destructor of AccelerationEventListener. %p", this);
 }
 
-EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(Acceleration*, Event* event)> callback)
+EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(Acceleration*, Event*)> callback)
 {
     EventListenerAcceleration* ret = new EventListenerAcceleration();
     if (ret && ret->init(callback))
@@ -59,7 +61,7 @@ bool EventListenerAcceleration::init(std::function<void(Acceleration*, Event* ev
         this->onAccelerationEvent(&accEvent->_acc, event);
     };
     
-    if (EventListener::init(EventAcceleration::EVENT_TYPE, listener))
+    if (EventListener::init(Type::ACCELERATION, LISTENER_ID, listener))
     {
         onAccelerationEvent = callback;
         return true;
@@ -84,7 +86,7 @@ EventListenerAcceleration* EventListenerAcceleration::clone()
     return ret;
 }
 
-bool EventListenerAcceleration::checkAvaiable()
+bool EventListenerAcceleration::checkAvailable()
 {
     CCASSERT(onAccelerationEvent, "");
     

@@ -2,8 +2,10 @@
 #define _CCB_CCMENULOADER_H_
 
 #include "CCLayerLoader.h"
+#include "CCObject.h"
+#include "CCMenu.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
@@ -22,9 +24,9 @@ public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Menu);
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Menu);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

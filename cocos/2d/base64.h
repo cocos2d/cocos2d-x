@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,7 +38,7 @@ namespace cocos2d {
 
 /** 
  * Decodes a 64base encoded memory. The decoded memory is
- * expected to be freed by the caller.
+ * expected to be freed by the caller by calling `free()`
  *
  * @returns the length of the out buffer
  *
@@ -47,7 +48,7 @@ int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char *
     
 /**
  * Encodes bytes into a 64base encoded memory with terminating '\0' character. 
- * The encoded memory is expected to be freed by the caller.
+ * The encoded memory is expected to be freed by the caller by calling `free()`
  *
  * @returns the length of the out buffer
  *

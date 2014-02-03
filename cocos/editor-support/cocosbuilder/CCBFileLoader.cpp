@@ -1,8 +1,9 @@
 #include "CCBFileLoader.h"
 
+using namespace cocos2d;
 
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 #define PROPERTY_CCBFILE "ccbFile"
 
@@ -14,4 +15,4 @@ void CCBFileLoader::onHandlePropTypeCCBFile(Node * pNode, Node * pParent, const 
     }
 }
 
-NS_CC_EXT_END
+}

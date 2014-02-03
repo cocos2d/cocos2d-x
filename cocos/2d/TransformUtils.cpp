@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TransformUtils.h"
-#include "cocoa/CCAffineTransform.h"
+#include "CCAffineTransform.h"
 
 namespace cocos2d {
 

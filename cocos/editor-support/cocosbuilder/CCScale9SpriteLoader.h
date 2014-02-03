@@ -3,9 +3,9 @@
 
 #include "CCNodeLoader.h"
 #include "CCScale9SpriteLoader.h"
-#include "../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
@@ -28,39 +28,45 @@ protected:
      * @js NA
      * @lua NA
      */
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Scale9Sprite);
+    virtual cocos2d::extension::Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
+        cocos2d::extension::Scale9Sprite* pNode = cocos2d::extension::Scale9Sprite::create();
+        
+        pNode->setAnchorPoint(cocos2d::Point(0,0));
+        
+        return pNode;
+    };
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * ccbReader);
+    virtual void onHandlePropTypeColor3(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Color3B pColor3B, CCBReader * ccbReader);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeByte(Node * pNode, Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);
+    virtual void onHandlePropTypeByte(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * ccbReader);
+    virtual void onHandlePropTypeBlendFunc(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::BlendFunc pBlendFunc, CCBReader * ccbReader);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * ccbReader);
+    virtual void onHandlePropTypeSpriteFrame(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::SpriteFrame * pSpriteFrame, CCBReader * ccbReader);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeSize(Node * pNode, Node * pParent, const char * pPropertyName, Size pSize, CCBReader * ccbReader);
+    virtual void onHandlePropTypeSize(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Size pSize, CCBReader * ccbReader);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * ccbReader);
+    virtual void onHandlePropTypeFloat(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, float pFloat, CCBReader * ccbReader);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

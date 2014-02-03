@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-Event::Event(const std::string& type)
+Event::Event(Type type)
 : _type(type)
 , _isStopped(false)
 , _currentTarget(nullptr)

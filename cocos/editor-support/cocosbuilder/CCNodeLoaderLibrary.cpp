@@ -15,9 +15,9 @@
 #include "CCParticleSystemQuadLoader.h"
 #include "CCScrollViewLoader.h"
 
+using namespace cocos2d;
 
-
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 NodeLoaderLibrary::NodeLoaderLibrary() {
 
@@ -102,4 +102,4 @@ NodeLoaderLibrary * NodeLoaderLibrary::newDefaultNodeLoaderLibrary() {
     return ccNodeLoaderLibrary;
 }
 
-NS_CC_EXT_END
+}

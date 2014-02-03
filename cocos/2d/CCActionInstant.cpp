@@ -1,7 +1,8 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011 Zynga Inc.
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -25,9 +26,9 @@
  ****************************************************************************/
 
 #include "CCActionInstant.h"
-#include "base_nodes/CCNode.h"
-#include "sprite_nodes/CCSprite.h"
-#include "script_support/CCScriptSupport.h"
+#include "CCNode.h"
+#include "CCSprite.h"
+#include "CCScriptSupport.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -61,13 +62,13 @@ void ActionInstant::update(float time) {
 
 Show* Show::create() 
 {
-    Show* pRet = new Show();
+    Show* ret = new Show();
 
-    if (pRet) {
-        pRet->autorelease();
+    if (ret) {
+        ret->autorelease();
     }
 
-    return pRet;
+    return ret;
 }
 
 void Show::update(float time) {
@@ -93,13 +94,13 @@ Show * Show::clone() const
 //
 Hide * Hide::create() 
 {
-    Hide *pRet = new Hide();
+    Hide *ret = new Hide();
 
-    if (pRet) {
-        pRet->autorelease();
+    if (ret) {
+        ret->autorelease();
     }
 
-    return pRet;
+    return ret;
 }
 
 void Hide::update(float time) {
@@ -125,14 +126,14 @@ Hide * Hide::clone() const
 //
 ToggleVisibility * ToggleVisibility::create()
 {
-    ToggleVisibility *pRet = new ToggleVisibility();
+    ToggleVisibility *ret = new ToggleVisibility();
 
-    if (pRet)
+    if (ret)
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
 
-    return pRet;
+    return ret;
 }
 
 void ToggleVisibility::update(float time) 
@@ -159,13 +160,13 @@ ToggleVisibility * ToggleVisibility::clone() const
 //
 RemoveSelf * RemoveSelf::create(bool isNeedCleanUp /*= true*/) 
 {
-	RemoveSelf *pRet = new RemoveSelf();
+	RemoveSelf *ret = new RemoveSelf();
 
-	if (pRet && pRet->init(isNeedCleanUp)) {
-		pRet->autorelease();
+	if (ret && ret->init(isNeedCleanUp)) {
+		ret->autorelease();
 	}
 
-	return pRet;
+	return ret;
 }
 
 bool RemoveSelf::init(bool isNeedCleanUp) {
@@ -198,15 +199,15 @@ RemoveSelf * RemoveSelf::clone() const
 
 FlipX *FlipX::create(bool x)
 {
-    FlipX *pRet = new FlipX();
+    FlipX *ret = new FlipX();
 
-    if (pRet && pRet->initWithFlipX(x)) {
-        pRet->autorelease();
-        return pRet;
+    if (ret && ret->initWithFlipX(x)) {
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool FlipX::initWithFlipX(bool x) {
@@ -238,15 +239,15 @@ FlipX * FlipX::clone() const
 
 FlipY * FlipY::create(bool y)
 {
-    FlipY *pRet = new FlipY();
+    FlipY *ret = new FlipY();
 
-    if (pRet && pRet->initWithFlipY(y)) {
-        pRet->autorelease();
-        return pRet;
+    if (ret && ret->initWithFlipY(y)) {
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool FlipY::initWithFlipY(bool y) {
@@ -279,15 +280,15 @@ FlipY * FlipY::clone() const
 
 Place* Place::create(const Point& pos)
 {
-    Place *pRet = new Place();
+    Place *ret = new Place();
 
-    if (pRet && pRet->initWithPosition(pos)) {
-        pRet->autorelease();
-        return pRet;
+    if (ret && ret->initWithPosition(pos)) {
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool Place::initWithPosition(const Point& pos) {
@@ -321,29 +322,29 @@ void Place::update(float time) {
 
 CallFunc * CallFunc::create(const std::function<void()> &func)
 {
-    CallFunc *pRet = new CallFunc();
+    CallFunc *ret = new CallFunc();
 
-    if (pRet && pRet->initWithFunction(func) ) {
-        pRet->autorelease();
-        return pRet;
+    if (ret && ret->initWithFunction(func) ) {
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 CallFunc * CallFunc::create(Object* selectorTarget, SEL_CallFunc selector) 
 {
-    CallFunc *pRet = new CallFunc();
+    CallFunc *ret = new CallFunc();
 
-    if (pRet && pRet->initWithTarget(selectorTarget)) {
-        pRet->_callFunc = selector;
-        pRet->autorelease();
-        return pRet;
+    if (ret && ret->initWithTarget(selectorTarget)) {
+        ret->_callFunc = selector;
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool CallFunc::initWithFunction(const std::function<void()> &func)
@@ -352,22 +353,22 @@ bool CallFunc::initWithFunction(const std::function<void()> &func)
     return true;
 }
 
-bool CallFunc::initWithTarget(Object* selectorTarget) {
-    if (selectorTarget) 
+bool CallFunc::initWithTarget(Object* target) {
+    if (target)
     {
-        selectorTarget->retain();
+        target->retain();
     }
 
-    if (_selectorTarget) 
+    if (_selectorTarget)
     {
         _selectorTarget->release();
     }
 
-    _selectorTarget = selectorTarget;
+    _selectorTarget = target;
     return true;
 }
 
-CallFunc::~CallFunc(void)
+CallFunc::~CallFunc()
 {
     CC_SAFE_RELEASE(_selectorTarget);
 }
@@ -421,22 +422,22 @@ CallFuncN * CallFuncN::create(const std::function<void(Node*)> &func)
     }
 
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 // XXX deprecated
 CallFuncN * CallFuncN::create(Object* selectorTarget, SEL_CallFuncN selector)
 {
-    CallFuncN *pRet = new CallFuncN();
+    CallFuncN *ret = new CallFuncN();
 
-    if (pRet && pRet->initWithTarget(selectorTarget, selector))
+    if (ret && ret->initWithTarget(selectorTarget, selector))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 void CallFuncN::execute() {
@@ -472,7 +473,7 @@ CallFuncN * CallFuncN::clone() const
     if( _selectorTarget) {
         a->initWithTarget(_selectorTarget, _callFuncN);
     }
-    else if( _function ){
+    else if( _functionN ){
         a->initWithFunction(_functionN);
     }
 
@@ -486,15 +487,15 @@ CallFuncN * CallFuncN::clone() const
 
 __CCCallFuncND * __CCCallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
 {
-    __CCCallFuncND* pRet = new __CCCallFuncND();
+    __CCCallFuncND* ret = new __CCCallFuncND();
     
-    if (pRet && pRet->initWithTarget(selectorTarget, selector, d)) {
-        pRet->autorelease();
-        return pRet;
+    if (ret && ret->initWithTarget(selectorTarget, selector, d)) {
+        ret->autorelease();
+        return ret;
     }
     
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool __CCCallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
@@ -535,7 +536,7 @@ __CCCallFuncND * __CCCallFuncND::clone() const
 // CallFuncO
 //
 __CCCallFuncO::__CCCallFuncO() :
-_object(NULL)
+_object(nullptr)
 {
 }
 
@@ -553,15 +554,15 @@ void __CCCallFuncO::execute()
 
 __CCCallFuncO * __CCCallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
 {
-    __CCCallFuncO *pRet = new __CCCallFuncO();
+    __CCCallFuncO *ret = new __CCCallFuncO();
     
-    if (pRet && pRet->initWithTarget(selectorTarget, selector, object)) {
-        pRet->autorelease();
-        return pRet;
+    if (ret && ret->initWithTarget(selectorTarget, selector, object)) {
+        ret->autorelease();
+        return ret;
     }
     
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool __CCCallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)

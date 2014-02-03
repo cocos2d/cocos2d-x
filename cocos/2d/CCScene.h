@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,8 +28,8 @@ THE SOFTWARE.
 #ifndef __CCSCENE_H__
 #define __CCSCENE_H__
 
-#include "base_nodes/CCNode.h"
-#include "physics/CCPhysicsWorld.h"
+#include "CCNode.h"
+#include "CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
@@ -52,43 +53,36 @@ class CC_DLL Scene : public Node
 public:
     /** creates a new Scene object */
     static Scene *create();
-#ifdef CC_USE_PHYSICS
-    static Scene *createWithPhysics();
-#endif
 
+    // Overrides
+    virtual Scene *getScene() override;
+
+    using Node::addChild;
+    virtual std::string getDescription() const override;
+
+protected:
     Scene();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~Scene();
-    
     bool init();
     
-#ifdef CC_USE_PHYSICS
+    friend class Node;
+    friend class SpriteBatchNode;
+    
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Scene);
+    
+#if CC_USE_PHYSICS
 public:
-    bool initWithPhysics();
-    
-    virtual void addChild(Node* child) override;
-    virtual void addChild(Node* child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
-    
-    /*
-     * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
-     */
     virtual void update(float delta) override;
-    
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
-    
+    static Scene *createWithPhysics();
 protected:
-    virtual void addChildToPhysicsWorld(Node* child);
-    
-protected:
+    bool initWithPhysics();
+    void addChildToPhysicsWorld(Node* child);
+
     PhysicsWorld* _physicsWorld;
 #endif // CC_USE_PHYSICS
-    
-    friend class Layer;
-    friend class SpriteBatchNode;
 };
 
 // end of scene group

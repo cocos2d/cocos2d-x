@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -196,13 +196,7 @@ public:
         KEY_SEARCH            = 0xFFAA
     };
     
-    static const char* EVENT_TYPE;
-    
-    EventKeyboard(KeyCode keyCode, bool isPressed)
-     : Event(EVENT_TYPE)
-     , _keyCode(keyCode)
-     , _isPressed(isPressed)
-    {};
+    EventKeyboard(KeyCode keyCode, bool isPressed);
     
 private:
     KeyCode _keyCode;

@@ -1,8 +1,8 @@
 [
 {
-    'mkfile' : 'cocos2dx/Android.mk',
-    'pathes' : ("cocos2dx/",),
-    'exclude' : ("cocos2dx/platform/android", "cocos2dx/platform/emscripten", "cocos2dx/platform/ios", "cocos2dx/platform/apple", "cocos2dx/platform/linux", "cocos2dx/platform/mac", "cocos2dx/platform/nacl", "cocos2dx/platform/qt5", "cocos2dx/platform/tizen", "cocos2dx/platform/win32", "cocos2dx/label_nodes/CCFontCache.cpp", "cocos2dx/base_nodes/CCGLBufferedNode.cpp","cocos2dx/support/user_default/CCUserDefault.cpp")
+    'mkfile' : 'cocos/2d/Android.mk',
+    'pathes' : ("cocos/2d/","cocos/base","cocos/math","cocos/physics","external/tinyxml2","external/unzip"),
+    'exclude' : ("cocos/2d/platform/android", "cocos/2d/platform/emscripten", "cocos/2d/platform/ios", "cocos/2d/platform/apple", "cocos/2d/platform/linux", "cocos/2d/platform/mac", "cocos/2d/platform/win32")
 },
 {
     'mkfile' : 'samples/Cpp/TestCpp/Android.mk',
@@ -20,9 +20,5 @@
 {
     'mkfile' : 'external/chipmunk/Android.mk',
     'pathes' : ("external/chipmunk/",),
-},
-{
-    'mkfile' : 'cocos2dx/platform/android/Android.mk',
-    'pathes' : ('cocos2dx/platform/android/',),
-},
+}
 ]

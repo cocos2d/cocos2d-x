@@ -1,4 +1,5 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -59,16 +60,16 @@
  * };
  */
 
-#ifndef mozilla_Endian_h_
-#define mozilla_Endian_h_
+#ifndef mozilla_Endian_h
+#define mozilla_Endian_h
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
 #include "mozilla/Compiler.h"
 #include "mozilla/DebugOnly.h"
-#include "mozilla/StandardInteger.h"
 #include "mozilla/TypeTraits.h"
 
+#include <stdint.h>
 #include <string.h>
 
 #if defined(_MSC_VER) && _MSC_VER >= 1300
@@ -636,4 +637,4 @@ class NativeEndian MOZ_FINAL : public detail::Endian<MOZ_NATIVE_ENDIANNESS>
 
 } /* namespace mozilla */
 
-#endif /* mozilla_Endian_h_ */
+#endif /* mozilla_Endian_h */

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,47 +23,27 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #include "platform/CCCommon.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 
 #import <UIKit/UIAlert.h>
+#include "CCDirector.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
-// XXX deprecated
-void CCLog(const char * pszFormat, ...)
-{
-    printf("cocos2d: ");
-    char szBuf[kMaxLogLen+1] = {0};
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
-    va_end(ap);
-    printf("%s", szBuf);
-    printf("\n");
-}
-
-void log(const char * pszFormat, ...)
-{
-    printf("cocos2d: ");
-    char szBuf[kMaxLogLen+1] = {0};
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
-    va_end(ap);
-    printf("%s", szBuf);
-    printf("\n");
-}
-
 // ios no MessageBox, use log instead
-void MessageBox(const char * pszMsg, const char * pszTitle)
+void MessageBox(const char * msg, const char * title)
 {
-    NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
-    NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
-    UIAlertView * messageBox = [[UIAlertView alloc] initWithTitle: title
-                                                          message: msg
+    NSString * tmpTitle = (title) ? [NSString stringWithUTF8String : title] : nil;
+    NSString * tmpMsg = (msg) ? [NSString stringWithUTF8String : msg] : nil;
+    UIAlertView * messageBox = [[UIAlertView alloc] initWithTitle: tmpTitle
+                                                          message: tmpMsg
                                                          delegate: nil
                                                 cancelButtonTitle: @"OK"
                                                 otherButtonTitles: nil];
@@ -70,9 +51,11 @@ void MessageBox(const char * pszMsg, const char * pszTitle)
     [messageBox show];
 }
 
-void LuaLog(const char * pszFormat)
+void LuaLog(const char * format)
 {
-    puts(pszFormat);
+    puts(format);
 }
 
 NS_CC_END
+
+#endif // CC_PLATFORM_IOS

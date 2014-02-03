@@ -1,0 +1,12 @@
+{
+    "rename":               ["PROJECT_NAME.xcodeproj"],
+    "remove":               ["PROJECT_NAME.xcodeproj/project.xcworkspace",
+                             "PROJECT_NAME.xcodeproj/xcuserdata",
+                             "wsocket.c",
+                             "wsocket.h"],
+    "replace_package_name": ["Info.plist"],
+    "replace_project_name": ["Info.plist",
+                             "ios/main.m",
+                             "ios/Prefix.pch",
+                             "PROJECT_NAME.xcodeproj/project.pbxproj"]
+}

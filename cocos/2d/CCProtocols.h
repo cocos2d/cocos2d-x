@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,7 +28,7 @@ THE SOFTWARE.
 #define __CCPROTOCOLS_H__
 
 #include "ccTypes.h"
-#include "textures/CCTexture2D.h"
+#include "CCTexture2D.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -35,10 +36,12 @@ NS_CC_BEGIN
 /**
  * RGBA protocol that affects Node's color and opacity
  */
-class CC_DLL RGBAProtocol
+class CC_DLL __RGBAProtocol
 {
 public:
-    /** 
+    virtual ~__RGBAProtocol() {}
+    
+    /**
      * Changes the color with R,G,B bytes
      *
      * @param color Example: Color3B(255,100,0) means R=255, G=100, B=0
@@ -46,7 +49,7 @@ public:
      * @lua NA
      */
     virtual void setColor(const Color3B& color) = 0;
-
+    
     /**
      * Returns color that is currently used.
      *
@@ -84,7 +87,7 @@ public:
      * @lua NA
      */
     virtual GLubyte getOpacity() const = 0;
-
+    
     /**
      * Changes the opacity.
      *
@@ -93,11 +96,11 @@ public:
      * @lua NA
      */
     virtual void setOpacity(GLubyte opacity) = 0;
-
+    
     // optional
-
+    
     /**
-     * Changes the OpacityModifyRGB property. 
+     * Changes the OpacityModifyRGB property.
      * If thie property is set to true, then the rendered color will be affected by opacity.
      * Normally, r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
      *
@@ -107,9 +110,9 @@ public:
      * @lua NA
      */
     virtual void setOpacityModifyRGB(bool value) = 0;
-
+    
     /**
-     * Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) 
+     * Returns whether or not the opacity will be applied using glColor(R,G,B,opacity)
      * or glColor(opacity, opacity, opacity, opacity)
      *
      * @return  Returns opacity modify flag.
@@ -125,19 +128,19 @@ public:
      */
     virtual bool isCascadeColorEnabled() const = 0;
     /**
-    * @js NA
-    * @lua NA
-    */
+     * @js NA
+     * @lua NA
+     */
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled) = 0;
     
-    /** 
-     *  recursive method that updates display color 
+    /**
+     *  recursive method that updates display color
      * @js NA
      * @lua NA
      */
     virtual void updateDisplayedColor(const Color3B& color) = 0;
     
-    /** 
+    /**
      *  whether or not opacity should be propagated to its children.
      * @js NA
      * @lua NA
@@ -165,6 +168,8 @@ public:
 class CC_DLL BlendProtocol
 {
 public:
+    virtual ~BlendProtocol() {}
+
     /**
      * Sets the source blending function.
      *
@@ -197,6 +202,7 @@ public:
 class CC_DLL TextureProtocol : public BlendProtocol
 {
 public:
+    virtual ~TextureProtocol() {}
     /**
      * Returns the currently used texture
      *
@@ -222,6 +228,8 @@ public:
 class CC_DLL LabelProtocol
 {
 public:
+    virtual ~LabelProtocol() {}
+
     /**
      * Sets a new label using a string
      *
@@ -229,7 +237,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void setString(const char *label) = 0;
+    virtual void setString(const std::string &label) = 0;
 
     /** 
      * Returns the string that is currently being used in this label 
@@ -238,7 +246,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual const char* getString() const = 0;
+    virtual const std::string& getString() const = 0;
 };
 
 /** 
@@ -247,7 +255,9 @@ public:
 class CC_DLL DirectorDelegate
 {
 public:
-    /** 
+    virtual ~DirectorDelegate() {}
+
+    /**
      * Will be called by Director when the projection is updated, and "custom" projection is used
      * @js NA
      * @lua NA

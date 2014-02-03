@@ -74,8 +74,6 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
         CCASSERT(minusSprite,   "Minus sprite must be not nil");
         CCASSERT(plusSprite,    "Plus sprite must be not nil");
         
-        setTouchEnabled(true);
-
         // Set the default values
         _autorepeat                         = true;
         _continuous                         = true;

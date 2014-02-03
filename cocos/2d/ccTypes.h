@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,32 +29,36 @@ THE SOFTWARE.
 #define __CCTYPES_H__
 
 #include <string>
-#include "cocoa/CCGeometry.h"
+#include "CCGeometry.h"
 #include "CCGL.h"
 
-
 NS_CC_BEGIN
+
+struct Color4B;
+struct Color4F;
 
 /** RGB color composed of bytes 3 bytes
 @since v3.0
  */
 struct Color3B
 {
-    Color3B(): r(0), g(0), b(0) {}
-    
-    Color3B(GLubyte _r, GLubyte _g, GLubyte _b)
-        : r(_r)
-        , g(_g)
-        , b(_b)
-    {}
-    
-    bool equals(const Color3B &other)
+    Color3B();
+    Color3B(GLubyte _r, GLubyte _g, GLubyte _b);
+    explicit Color3B(const Color4B& color);
+    explicit Color3B(const Color4F& color);
+
+    bool operator==(const Color3B& right) const;
+    bool operator==(const Color4B& right) const;
+    bool operator==(const Color4F& right) const;
+    bool operator!=(const Color3B& right) const;
+    bool operator!=(const Color4B& right) const;
+    bool operator!=(const Color4F& right) const;
+
+    bool equals(const Color3B& other)
     {
-        return (this->r == other.r &&
-                this->g == other.g &&
-                this->b == other.b);
+        return (*this == other);
     }
-    
+
     GLubyte r;
     GLubyte g;
     GLubyte b;
@@ -69,24 +74,22 @@ struct Color3B
     const static Color3B GRAY;
 };
 
-struct Color4F;
-
 /** RGBA color composed of 4 bytes
 @since v3.0
 */
 struct Color4B
 {
-    Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
-        : r(_r)
-        , g(_g)
-        , b(_b)
-        , a(_a)
-    {}
-    
-    Color4B(): r(0), g(0), b(0), a(0) {}
-    
-    // This function should use Color4F, so implement it in .cpp file.
-    explicit Color4B(const Color4F &color4F);
+    Color4B();
+    Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
+    explicit Color4B(const Color3B& color);
+    explicit Color4B(const Color4F& color);
+
+    bool operator==(const Color4B& right) const;
+    bool operator==(const Color3B& right) const;
+    bool operator==(const Color4F& right) const;
+    bool operator!=(const Color4B& right) const;
+    bool operator!=(const Color3B& right) const;
+    bool operator!=(const Color4F& right) const;
 
     GLubyte r;
     GLubyte g;
@@ -110,35 +113,21 @@ struct Color4B
 */
 struct Color4F
 {
-    Color4F(float _r, float _g, float _b, float _a)
-        : r(_r)
-        , g(_g)
-        , b(_b)
-        , a(_a)
-    {}
-    
-    explicit Color4F(const Color3B &color3B)
-        : r(color3B.r / 255.0f)
-        , g(color3B.g / 255.0f)
-        , b(color3B.b / 255.0f)
-        , a(1.f)
-    {}
-    
-    explicit Color4F(const Color4B &color4B)
-        : r(color4B.r / 255.0f)
-        , g(color4B.g / 255.0f)
-        , b(color4B.b / 255.0f)
-        , a(color4B.a / 255.0f)
-    {}
-    
-    Color4F(): r(0.f), g(0.f), b(0.f), a(0.f) {}
-    
+    Color4F();
+    Color4F(float _r, float _g, float _b, float _a);
+    explicit Color4F(const Color3B& color);
+    explicit Color4F(const Color4B& color);
+
+    bool operator==(const Color4F& right) const;
+    bool operator==(const Color3B& right) const;
+    bool operator==(const Color4B& right) const;
+    bool operator!=(const Color4F& right) const;
+    bool operator!=(const Color3B& right) const;
+    bool operator!=(const Color4B& right) const;
+
     bool equals(const Color4F &other)
     {
-        return (this->r == other.r &&
-                this->g == other.g &&
-                this->b == other.b &&
-                this->a == other.a);
+        return (*this == other);
     }
     
     GLfloat r;
@@ -329,6 +318,16 @@ struct BlendFunc
     const static BlendFunc ALPHA_NON_PREMULTIPLIED;
     //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
     const static BlendFunc ADDITIVE;
+
+    bool operator==(const BlendFunc &a) const
+    {
+        return src == a.src && dst == a.dst;
+    }
+
+    bool operator<(const BlendFunc &a) const
+    {
+        return src < a.src || (src < a.src && dst < a.dst);
+    }
 };
 
 // Label::VAlignment
@@ -472,6 +471,8 @@ public:
     
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
+
+extern const std::string STD_STRING_EMPTY;
 
 NS_CC_END
 

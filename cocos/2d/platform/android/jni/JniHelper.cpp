@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -213,6 +214,7 @@ namespace cocos2d {
         jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGD("Failed to find method id of %s", methodName);
+            pEnv->ExceptionClear();
             return false;
         }
 
@@ -247,6 +249,7 @@ namespace cocos2d {
         jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGD("Failed to find method id of %s", methodName);
+            pEnv->ExceptionClear();
             return false;
         }
 

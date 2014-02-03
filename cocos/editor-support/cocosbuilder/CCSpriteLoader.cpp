@@ -1,17 +1,19 @@
 #include "CCSpriteLoader.h"
 
+using namespace cocos2d;
+
 #define PROPERTY_FLIP "flip"
 #define PROPERTY_DISPLAYFRAME "displayFrame"
 #define PROPERTY_COLOR "color"
 #define PROPERTY_OPACITY "opacity"
 #define PROPERTY_BLENDFUNC "blendFunc"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void SpriteLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_DISPLAYFRAME) == 0) {
         if(pSpriteFrame != NULL) {
-            ((Sprite *)pNode)->setDisplayFrame(pSpriteFrame);
+            ((Sprite *)pNode)->setSpriteFrame(pSpriteFrame);
         } else {
             CCLOG("ERROR: SpriteFrame NULL");
         }
@@ -53,4 +55,4 @@ void SpriteLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const
     }
 }
 
-NS_CC_EXT_END
+}

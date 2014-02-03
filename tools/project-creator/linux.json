@@ -1,8 +1,0 @@
-{
-    "rename":               [],
-    "remove":               [],
-    "replace_package_name": [],
-    "replace_project_name": [".cproject",
-		                     ".project",
-						     "Makefile"]
-}

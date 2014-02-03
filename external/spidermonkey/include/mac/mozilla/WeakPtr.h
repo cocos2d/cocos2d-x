@@ -1,7 +1,8 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this file,
- * You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Weak pointer functionality, implemented as a mixin for use with any class. */
 
@@ -12,6 +13,9 @@
  * clear the pointer in the WeakReference without having to know about all of
  * the WeakPtrs to it and allows the WeakReference to live beyond the lifetime
  * of 'Foo'.
+ *
+ * AtomicSupportsWeakPtr can be used for a variant with an atomically updated
+ * reference counter.
  *
  * The overhead of WeakPtr is that accesses to 'Foo' becomes an additional
  * dereference, and an additional heap allocated pointer sized object shared
@@ -55,10 +59,11 @@
  * http://src.chromium.org/svn/trunk/src/base/memory/weak_ptr.h
  */
 
-#ifndef mozilla_WeakPtr_h_
-#define mozilla_WeakPtr_h_
+#ifndef mozilla_WeakPtr_h
+#define mozilla_WeakPtr_h
 
 #include "mozilla/Assertions.h"
+#include "mozilla/Atomics.h"
 #include "mozilla/NullPtr.h"
 #include "mozilla/RefPtr.h"
 #include "mozilla/TypeTraits.h"
@@ -71,8 +76,8 @@ template <typename T, class WeakReference> class SupportsWeakPtrBase;
 namespace detail {
 
 // This can live beyond the lifetime of the class derived from SupportsWeakPtrBase.
-template<class T>
-class WeakReference : public RefCounted<WeakReference<T> >
+template<class T, RefCountAtomicity Atomicity>
+class WeakReference : public RefCounted<WeakReference<T, Atomicity>, Atomicity>
 {
   public:
     explicit WeakReference(T* p) : ptr(p) {}
@@ -81,8 +86,8 @@ class WeakReference : public RefCounted<WeakReference<T> >
     }
 
   private:
-    friend class WeakPtrBase<T, WeakReference<T> >;
-    friend class SupportsWeakPtrBase<T, WeakReference<T> >;
+    friend class WeakPtrBase<T, WeakReference>;
+    friend class SupportsWeakPtrBase<T, WeakReference>;
     void detach() {
       ptr = nullptr;
     }
@@ -103,8 +108,8 @@ class SupportsWeakPtrBase
 
   protected:
     ~SupportsWeakPtrBase() {
-      MOZ_STATIC_ASSERT((IsBaseOf<SupportsWeakPtrBase<T, WeakReference>, T>::value),
-                        "T must derive from SupportsWeakPtrBase<T, WeakReference>");
+      static_assert(IsBaseOf<SupportsWeakPtrBase<T, WeakReference>, T>::value,
+                    "T must derive from SupportsWeakPtrBase<T, WeakReference>");
       if (weakRef)
         weakRef->detach();
     }
@@ -116,9 +121,29 @@ class SupportsWeakPtrBase
 };
 
 template <typename T>
-class SupportsWeakPtr : public SupportsWeakPtrBase<T, detail::WeakReference<T> >
+class SupportsWeakPtr
+  : public SupportsWeakPtrBase<T, detail::WeakReference<T, detail::NonAtomicRefCount> >
 {
 };
+
+template <typename T>
+class AtomicSupportsWeakPtr
+  : public SupportsWeakPtrBase<T, detail::WeakReference<T, detail::AtomicRefCount> >
+{
+};
+
+namespace detail {
+
+template <typename T>
+struct WeakReferenceCount
+{
+  static const RefCountAtomicity atomicity =
+    IsBaseOf<AtomicSupportsWeakPtr<T>, T>::value
+    ? AtomicRefCount
+    : NonAtomicRefCount;
+};
+
+}
 
 template <typename T, class WeakReference>
 class WeakPtrBase
@@ -152,9 +177,9 @@ class WeakPtrBase
 };
 
 template <typename T>
-class WeakPtr : public WeakPtrBase<T, detail::WeakReference<T> >
+class WeakPtr : public WeakPtrBase<T, detail::WeakReference<T, detail::WeakReferenceCount<T>::atomicity> >
 {
-    typedef WeakPtrBase<T, detail::WeakReference<T> > Base;
+    typedef WeakPtrBase<T, detail::WeakReference<T, detail::WeakReferenceCount<T>::atomicity> > Base;
   public:
     WeakPtr(const WeakPtr<T>& o) : Base(o) {}
     WeakPtr(const Base& o) : Base(o) {}
@@ -163,4 +188,4 @@ class WeakPtr : public WeakPtrBase<T, detail::WeakReference<T> >
 
 } // namespace mozilla
 
-#endif /* ifdef mozilla_WeakPtr_h_ */
+#endif /* mozilla_WeakPtr_h */

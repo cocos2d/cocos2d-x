@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="action">
+      <UniqueIdentifier>{d793b86c-0905-4c9b-b6bc-161e351c9eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature">
+      <UniqueIdentifier>{855f2366-3429-4f77-a080-a41a39c99270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components">
+      <UniqueIdentifier>{1a8c6b14-fb28-4485-8417-9b6838fbc4ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{42f1ce3f-46ab-4a16-a96e-9eb076c873f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader">
+      <UniqueIdentifier>{f8271f80-1663-4425-91c8-7365ec3af017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\animation">
+      <UniqueIdentifier>{48f28446-ffe4-4aa1-a34c-8968c3367ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\datas">
+      <UniqueIdentifier>{ad9b4fd1-dc17-4704-9c60-7709eb916f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\display">
+      <UniqueIdentifier>{55c682b3-7a48-4fab-ad5a-eb979f3c305e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\physics">
+      <UniqueIdentifier>{c6464479-e0ab-4afc-96fc-1ffc73e40232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\utils">
+      <UniqueIdentifier>{023e3440-1259-4981-ba54-24390d1df447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\rapidjson">
+      <UniqueIdentifier>{f1f20817-9232-4967-a4dd-77550e84e39b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\rapidjson\internal">
+      <UniqueIdentifier>{5149f922-cf29-4a4b-b604-f15c6e8856b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="trigger">
+      <UniqueIdentifier>{59eee6d9-bbfd-4193-be1d-6c18fc38f896}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CCComAttribute.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCComAudio.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCComController.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCComRender.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCInputDelegate.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DictionaryHelper.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSSceneReader.cpp">
+      <Filter>reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSGUIReader.cpp">
+      <Filter>reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCTween.cpp">
+      <Filter>armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCProcessBase.cpp">
+      <Filter>armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmatureAnimation.cpp">
+      <Filter>armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDatas.cpp">
+      <Filter>armature\datas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBatchNode.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDecorativeDisplay.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDisplayFactory.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDisplayManager.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSkin.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmatureDataManager.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmatureDefine.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDataReaderHelper.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSpriteFrameCacheHelper.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCTransformHelp.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCTweenFunction.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCUtilMath.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCColliderDetector.cpp">
+      <Filter>armature\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature.cpp">
+      <Filter>armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBone.cpp">
+      <Filter>armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionEaseEx.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionFrame.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionFrameEasing.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionManagerEx.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionNode.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionObject.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ObjectFactory.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerBase.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerMng.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerObj.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CCComAttribute.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComAudio.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComController.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComRender.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCInputDelegate.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DictionaryHelper.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSSceneReader.h">
+      <Filter>reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSGUIReader.h">
+      <Filter>reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCTween.h">
+      <Filter>armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCProcessBase.h">
+      <Filter>armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmatureAnimation.h">
+      <Filter>armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDatas.h">
+      <Filter>armature\datas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBatchNode.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDecorativeDisplay.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDisplayFactory.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDisplayManager.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSkin.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmatureDataManager.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmatureDefine.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDataReaderHelper.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSpriteFrameCacheHelper.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCTransformHelp.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCTweenFunction.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCUtilMath.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCColliderDetector.h">
+      <Filter>armature\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature.h">
+      <Filter>armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBone.h">
+      <Filter>armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\document.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\filestream.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\prettywriter.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\rapidjson.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\reader.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\stringbuffer.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\writer.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\internal\pow10.h">
+      <Filter>json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\internal\stack.h">
+      <Filter>json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\internal\strfunc.h">
+      <Filter>json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionEaseEx.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrame.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrameEasing.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionManagerEx.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionNode.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionObject.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ObjectFactory.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerBase.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerMng.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerObj.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComBase.h">
+      <Filter>components</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

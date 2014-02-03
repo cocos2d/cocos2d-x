@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2013 Chris Hannon
+ Copyright (c) 2013      Chris Hannon
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,11 +28,16 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
-#include "cocos-ext.h"
-#include "network/WebSocket.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
+#include "WebSocket.h"
+#include "HttpClient.h"
 #include <algorithm>
+#include <sstream>
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace network {
 
 //class declarations
 
@@ -41,7 +46,7 @@ NS_CC_EXT_BEGIN
  *		   Clients/endpoints may share the same impl to accomplish multiplexing on the same websocket
  */
 class SIOClientImpl : 
-	public Object, 
+	public cocos2d::Object, 
 	public WebSocket::Delegate
 {
 private: 
@@ -51,7 +56,7 @@ private:
 
 	WebSocket *_ws;
 
-	Dictionary* _clients;
+	Map<std::string, SIOClient*> _clients;
 
 public:
 	SIOClientImpl(const std::string& host, int port);
@@ -59,10 +64,10 @@ public:
 
 	static SIOClientImpl* create(const std::string& host, int port);
 	
-	virtual void onOpen(cocos2d::extension::WebSocket* ws);
-    virtual void onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data);
-    virtual void onClose(cocos2d::extension::WebSocket* ws);
-    virtual void onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error);
+	virtual void onOpen(WebSocket* ws);
+    virtual void onMessage(WebSocket* ws, const WebSocket::Data& data);
+    virtual void onClose(WebSocket* ws);
+    virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error);
 
 	void connect();
 	void disconnect();
@@ -93,9 +98,6 @@ SIOClientImpl::SIOClientImpl(const std::string& host, int port) :
 	_host(host),
 	_connected(false)
 {
-	_clients = Dictionary::create();
-	_clients->retain();
-
 	std::stringstream s;
 	s << host << ":" << port;
 	_uri = s.str();
@@ -105,9 +107,9 @@ SIOClientImpl::SIOClientImpl(const std::string& host, int port) :
 
 SIOClientImpl::~SIOClientImpl()
 {
-	if (_connected) disconnect();
+	if (_connected)
+        disconnect();
 
-	CC_SAFE_RELEASE(_clients);
 	CC_SAFE_DELETE(_ws);
 }
 
@@ -143,25 +145,20 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
         log("%s completed", response->getHttpRequest()->getTag());
     }
 
-	int statusCode = response->getResponseCode();
+	long statusCode = response->getResponseCode();
     char statusString[64] = {};
-    sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
-	log("response code: %d", statusCode);
+    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
+	log("response code: %ld", statusCode);
 
 	if (!response->isSucceed()) 
     {
         log("SIOClientImpl::handshake() failed");
         log("error buffer: %s", response->getErrorBuffer());
 
-		DictElement* el = NULL;
-
-		CCDICT_FOREACH(_clients, el) {
-
-			SIOClient* c = static_cast<SIOClient*>(el->getObject());
-			
-			c->getDelegate()->onError(c, response->getErrorBuffer());
-
-		}
+        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+        {
+            iter->second->getDelegate()->onError(iter->second, response->getErrorBuffer());
+        }
 
         return;
     }
@@ -180,24 +177,24 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
 
 	std::string res = s.str();
 	std::string sid;
-	int pos = 0;
+	size_t pos = 0;
 	int heartbeat = 0, timeout = 0;
 
 	pos = res.find(":");
-	if(pos >= 0)
+	if(pos != std::string::npos)
     {
 		sid = res.substr(0, pos);
 		res.erase(0, pos+1);
 	}
 
 	pos = res.find(":");
-    if(pos >= 0)
+    if(pos != std::string::npos)
     {
         heartbeat = atoi(res.substr(pos+1, res.size()).c_str());
     }
 
 	pos = res.find(":");
-    if(pos >= 0)
+    if(pos != std::string::npos)
     {
         timeout = atoi(res.substr(pos+1, res.size()).c_str());
     }
@@ -256,7 +253,7 @@ void SIOClientImpl::disconnect()
 
 	_connected = false;
 
-	SocketIO::instance()->removeSocket(_uri);
+	SocketIO::getInstance()->removeSocket(_uri);
 }
 
 SIOClientImpl* SIOClientImpl::create(const std::string& host, int port)
@@ -273,12 +270,12 @@ SIOClientImpl* SIOClientImpl::create(const std::string& host, int port)
 
 SIOClient* SIOClientImpl::getClient(const std::string& endpoint)
 {	
-	return static_cast<SIOClient*>(_clients->objectForKey(endpoint));
+	return _clients.at(endpoint);
 }
 
 void SIOClientImpl::addClient(const std::string& endpoint, SIOClient* client)
 {
-	_clients->setObject(client, endpoint); 
+	_clients.insert(endpoint, client);
 }
 
 void SIOClientImpl::connectToEndpoint(const std::string& endpoint)
@@ -292,13 +289,14 @@ void SIOClientImpl::connectToEndpoint(const std::string& endpoint)
 
 void SIOClientImpl::disconnectFromEndpoint(const std::string& endpoint)
 {
-	_clients->removeObjectForKey(endpoint);
+	_clients.erase(endpoint);
 
-	if(_clients->count() == 0 || endpoint == "/")
+	if (_clients.empty() || endpoint == "/")
     {
 		log("SIOClientImpl::disconnectFromEndpoint out of endpoints, checking for disconnect");
 		
-		if(_connected) this->disconnect();
+		if(_connected)
+            this->disconnect();
 	}
     else
     {
@@ -350,27 +348,23 @@ void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::strin
 	_ws->send(msg);
 }
 
-void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws)
+void SIOClientImpl::onOpen(WebSocket* ws)
 {
 	_connected = true;
 
-	SocketIO::instance()->addSocket(_uri, this);
+	SocketIO::getInstance()->addSocket(_uri, this);
 
-	DictElement* e = NULL;
-
-	CCDICT_FOREACH(_clients, e)
+    for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
     {
-		SIOClient *c = static_cast<SIOClient*>(e->getObject());
+        iter->second->onOpen();
+    }
 
-		c->onOpen();
-	}
-
-	Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9), false);
+	Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 	
 	log("SIOClientImpl::onOpen socket connected!");
 }
 
-void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data)
+void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 {
 	log("SIOClientImpl::onMessage received: %s", data.bytes);
 
@@ -379,21 +373,21 @@ void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::
 	std::string payload, msgid, endpoint, s_data, eventname;
 	payload = data.bytes;
 
-	int pos, pos2;
+	size_t pos, pos2;
 
 	pos = payload.find(":");
-	if(pos >=0 ) {
+	if(pos != std::string::npos ) {
 		payload.erase(0, pos+1);
 	}
 
 	pos = payload.find(":");
-	if(pos > 0 ) {
+	if(pos != std::string::npos ) {
 		msgid = atoi(payload.substr(0, pos+1).c_str());	
 	}
 	payload.erase(0, pos+1);
 
 	pos = payload.find(":");
-	if(pos >= 0)
+	if(pos != std::string::npos)
     {
 		endpoint = payload.substr(0, pos);
 		payload.erase(0, pos+1);
@@ -467,24 +461,20 @@ void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::
 	return;
 }
 
-void SIOClientImpl::onClose(cocos2d::extension::WebSocket* ws)
+void SIOClientImpl::onClose(WebSocket* ws)
 {
-	if(_clients->count() > 0)
+    if (!_clients.empty())
     {
-		DictElement *e;
-
-		CCDICT_FOREACH(_clients, e)
+        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
         {
-			SIOClient *c = static_cast<SIOClient *>(e->getObject());
-
-			c->receivedDisconnect();
-		}
-	}
+			iter->second->receivedDisconnect();
+        }
+    }
 
 	this->release();
 }
 
-void SIOClientImpl::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
+void SIOClientImpl::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
 {
 }
 
@@ -594,54 +584,56 @@ SocketIO *SocketIO::_inst = nullptr;
 
 SocketIO::SocketIO()
 {
-	_sockets = Dictionary::create();
-	_sockets->retain();
 }
 
 SocketIO::~SocketIO(void)
 {
-	CC_SAFE_RELEASE(_sockets);
-	delete _inst;	
 }
 
-SocketIO* SocketIO::instance()
+SocketIO* SocketIO::getInstance()
 {
-	if(!_inst) _inst = new SocketIO();
+	if (nullptr == _inst)
+        _inst = new SocketIO();
 	
 	return _inst;
 }
 
+void SocketIO::destroyInstance()
+{
+    CC_SAFE_DELETE(_inst);
+}
+    
 SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri)
 {
 	std::string host = uri;
 	int port = 0;
-    int pos = 0;
+    size_t pos = 0;
 
 	pos = host.find("//");
-	if (pos >= 0)
+	if (pos != std::string::npos)
     {
 		host.erase(0, pos+2);
 	}
 
 	pos = host.find(":");
-    if (pos >= 0)
+    if (pos != std::string::npos)
     {
         port = atoi(host.substr(pos+1, host.size()).c_str());
     }
 
 	pos = host.find("/", 0);
     std::string path = "/";
-    if (pos >= 0)
+    if (pos != std::string::npos)
     {
         path += host.substr(pos + 1, host.size());
     }
 
 	pos = host.find(":");
-    if (pos >= 0)
+    if (pos != std::string::npos)
     {
         host.erase(pos, host.size());
     }
-    else if ((pos = host.find("/"))>=0)
+    else if ((pos = host.find("/")) != std::string::npos)
     {
     	host.erase(pos, host.size());
     }
@@ -652,7 +644,7 @@ SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string&
 	SIOClientImpl* socket = nullptr;
 	SIOClient *c = nullptr;
 
-	socket = SocketIO::instance()->getSocket(s.str());
+	socket = SocketIO::getInstance()->getSocket(s.str());
 
 	if(socket == nullptr)
     {
@@ -685,17 +677,19 @@ SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string&
 
 SIOClientImpl* SocketIO::getSocket(const std::string& uri)
 {
-	return static_cast<SIOClientImpl*>(_sockets->objectForKey(uri)); 
+	return _sockets.at(uri);
 }
 
 void SocketIO::addSocket(const std::string& uri, SIOClientImpl* socket)
 {
-	_sockets->setObject(socket, uri); 
+	_sockets.insert(uri, socket);
 }
 
 void SocketIO::removeSocket(const std::string& uri)
 {
-	_sockets->removeObjectForKey(uri);
+	_sockets.erase(uri);
 }
 
-NS_CC_EXT_END
+}
+
+NS_CC_END

@@ -3,8 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef js_Date_h___
-#define js_Date_h___
+#ifndef js_Date_h
+#define js_Date_h
 
 #include "jstypes.h"
 
@@ -32,4 +32,4 @@ DayFromTime(double time);
 
 } // namespace JS
 
-#endif /* js_Date_h___ */
+#endif /* js_Date_h */
