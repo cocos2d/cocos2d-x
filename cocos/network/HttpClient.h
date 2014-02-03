@@ -1,6 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2012 greathqy
+ Copyright (c) 2012      greathqy
+ Copyright (c) 2012      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,13 +27,13 @@
 #ifndef __CCHTTPREQUEST_H__
 #define __CCHTTPREQUEST_H__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "network/HttpRequest.h"
+#include "network/HttpResponse.h"
+#include "network/HttpClient.h"
 
-#include "HttpRequest.h"
-#include "HttpResponse.h"
+NS_CC_BEGIN
 
-NS_CC_EXT_BEGIN
+namespace network {
 
 /**
  * @addtogroup Network
@@ -43,7 +44,7 @@ NS_CC_EXT_BEGIN
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
  */
-class HttpClient : public Object
+class HttpClient
 {
 public:
     /** Return the shared instance **/
@@ -99,19 +100,20 @@ private:
      * @return bool
      */
     bool lazyInitThreadSemphore();
+    void networkThread();
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
-    void dispatchResponseCallbacks(float delta);
+    void dispatchResponseCallbacks();
     
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
-    
-    // std::string reqId;
 };
 
 // end of Network group
 /// @}
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif //__CCHTTPREQUEST_H__

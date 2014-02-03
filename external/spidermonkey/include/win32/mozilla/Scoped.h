@@ -1,11 +1,13 @@
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this file,
- * You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* A number of structures to simplify scope-based RAII management. */
 
-#ifndef mozilla_Scoped_h_
-#define mozilla_Scoped_h_
+#ifndef mozilla_Scoped_h
+#define mozilla_Scoped_h
 
 /*
  * Resource Acquisition Is Initialization is a programming idiom used
@@ -52,6 +54,7 @@
 
 #include "mozilla/Attributes.h"
 #include "mozilla/GuardObjects.h"
+#include "mozilla/NullPtr.h"
 
 namespace mozilla {
 
@@ -193,7 +196,7 @@ template<typename T>
 struct ScopedFreePtrTraits
 {
     typedef T* type;
-    static T* empty() { return NULL; }
+    static T* empty() { return nullptr; }
     static void release(T* ptr) { free(ptr); }
 };
 SCOPED_TEMPLATE(ScopedFreePtr, ScopedFreePtrTraits)
@@ -256,7 +259,7 @@ template <typename T>
 struct TypeSpecificScopedPointerTraits
 {
     typedef T* type;
-    const static type empty() { return NULL; }
+    const static type empty() { return nullptr; }
     const static void release(type value)
     {
       if (value)
@@ -268,4 +271,4 @@ SCOPED_TEMPLATE(TypeSpecificScopedPointer, TypeSpecificScopedPointerTraits)
 
 } /* namespace mozilla */
 
-#endif // mozilla_Scoped_h_
+#endif /* mozilla_Scoped_h */

@@ -12,68 +12,39 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.cpp" />
-    <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\cocos2d_specifics.cpp" />
-    <ClCompile Include="..\cocosjs_manual_conversions.cpp" />
-    <ClCompile Include="..\jsb_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\jsb_opengl_functions.cpp" />
     <ClCompile Include="..\jsb_opengl_manual.cpp" />
     <ClCompile Include="..\jsb_opengl_registration.cpp" />
-    <ClCompile Include="..\jsb_websocket.cpp" />
-    <ClCompile Include="..\js_bindings_ccbreader.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_auto_classes.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_functions.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_manual.cpp" />
-    <ClCompile Include="..\js_bindings_chipmunk_registration.cpp" />
     <ClCompile Include="..\js_bindings_core.cpp" />
     <ClCompile Include="..\js_bindings_opengl.cpp" />
-    <ClCompile Include="..\js_bindings_system_functions.cpp" />
-    <ClCompile Include="..\js_bindings_system_registration.cpp" />
     <ClCompile Include="..\js_manual_conversions.cpp" />
     <ClCompile Include="..\ScriptingCore.cpp" />
-    <ClCompile Include="..\XMLHTTPRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.hpp" />
-    <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\cocos2d_specifics.hpp" />
-    <ClInclude Include="..\cocosjs_manual_conversions.h" />
-    <ClInclude Include="..\jsb_cocos2dx_extension_manual.h" />
     <ClInclude Include="..\jsb_helper.h" />
     <ClInclude Include="..\jsb_opengl_functions.h" />
     <ClInclude Include="..\jsb_opengl_manual.h" />
     <ClInclude Include="..\jsb_opengl_registration.h" />
-    <ClInclude Include="..\jsb_websocket.h" />
-    <ClInclude Include="..\js_bindings_ccbreader.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_auto_classes.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_auto_classes_registration.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_functions.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_functions_registration.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_manual.h" />
-    <ClInclude Include="..\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\js_bindings_config.h" />
     <ClInclude Include="..\js_bindings_core.h" />
     <ClInclude Include="..\js_bindings_opengl.h" />
-    <ClInclude Include="..\js_bindings_system_functions.h" />
-    <ClInclude Include="..\js_bindings_system_functions_registration.h" />
-    <ClInclude Include="..\js_bindings_system_registration.h" />
     <ClInclude Include="..\js_manual_conversions.h" />
     <ClInclude Include="..\ScriptingCore.h" />
     <ClInclude Include="..\spidermonkey_specifics.h" />
-    <ClInclude Include="..\XMLHTTPRequest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto_api.js" />
-    <None Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto_api.js" />
-    <None Include="..\js\jsb.js" />
-    <None Include="..\js\jsb_chipmunk.js" />
-    <None Include="..\js\jsb_cocos2d.js" />
-    <None Include="..\js\jsb_cocos2d_extension.js" />
-    <None Include="..\js\jsb_cocosbuilder.js" />
-    <None Include="..\js\jsb_debugger.js" />
-    <None Include="..\js\jsb_opengl.js" />
-    <None Include="..\js\jsb_sys.js" />
-    <None Include="..\js\main.debug.js" />
+    <None Include="..\..\script\jsb.js" />
+    <None Include="..\..\script\jsb_chipmunk.js" />
+    <None Include="..\..\script\jsb_cocos2d.js" />
+    <None Include="..\..\script\jsb_cocos2d_extension.js" />
+    <None Include="..\..\script\jsb_cocosbuilder.js" />
+    <None Include="..\..\script\jsb_debugger.js" />
+    <None Include="..\..\script\jsb_opengl.js" />
+    <None Include="..\..\script\jsb_sys.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{39379840-825A-45A0-B363-C09FFEF864BD}</ProjectGuid>
@@ -102,9 +73,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\2d\cocos2d_headers.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\2d\cocos2d_headers.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -126,7 +99,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;DEBUG;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\audio\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\auto-generated\js-bindings;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\scripting\auto-generated\js-bindings;$(EngineRoot)external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -137,7 +110,7 @@
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,7 +122,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(O
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\audio\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\auto-generated\js-bindings;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\scripting\auto-generated\js-bindings;$(EngineRoot)external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -161,7 +134,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(O
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

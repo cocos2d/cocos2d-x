@@ -1,9 +1,12 @@
 #ifndef _CCB_CCLABELBMFONTLOADER_H_
 #define _CCB_CCLABELBMFONTLOADER_H_
 
+#include "CCObject.h"
+#include "CCLabelBMFont.h"
+
 #include "CCNodeLoader.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
@@ -18,15 +21,15 @@ public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LabelBMFontLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(LabelBMFont);
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::LabelBMFont);
 
-    virtual void onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * ccbReader);
-    virtual void onHandlePropTypeByte(Node * pNode, Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);
-    virtual void onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * ccbReader);
-    virtual void onHandlePropTypeFntFile(Node * pNode, Node * pParent, const char * pPropertyName, const char* pFntFile, CCBReader * ccbReader);
-    virtual void onHandlePropTypeText(Node * pNode, Node * pParent, const char * pPropertyName, const char* pText, CCBReader * ccbReader);
+    virtual void onHandlePropTypeColor3(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Color3B pColor3B, CCBReader * ccbReader);
+    virtual void onHandlePropTypeByte(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);
+    virtual void onHandlePropTypeBlendFunc(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::BlendFunc pBlendFunc, CCBReader * ccbReader);
+    virtual void onHandlePropTypeFntFile(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, const char* pFntFile, CCBReader * ccbReader);
+    virtual void onHandlePropTypeText(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, const char* pText, CCBReader * ccbReader);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

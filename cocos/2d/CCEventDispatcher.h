@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,12 +25,13 @@
 #ifndef __CC_EVENT_DISPATCHER_H__
 #define __CC_EVENT_DISPATCHER_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include "CCEventListener.h"
+#include "CCEvent.h"
 
 #include <functional>
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <list>
 #include <vector>
 
@@ -39,6 +40,8 @@ NS_CC_BEGIN
 class Event;
 class EventTouch;
 class Node;
+class EventCustom;
+class EventListenerCustom;
 
 /**
 This class manages event listener subscriptions
@@ -49,15 +52,9 @@ event listeners can be added and removed even
 from within an EventListener, while events are being
 dispatched.
 */
-class EventDispatcher
+class EventDispatcher : public Object
 {
 public:
-    /** Gets the singleton of EventDispatcher */
-    static EventDispatcher* getInstance();
-
-    /** Destroys the singleton of EventDispatcher */
-    static void destroyInstance();
-    
     /** Adds a event listener for a specified event with the priority of scene graph.
      *  @param listener The listener of a specified event.
      *  @param node The priority of the listener is based on the draw order of this node.
@@ -74,16 +71,25 @@ public:
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
-    /** Remove a listener 
+    /** Adds a Custom event listener.
+     It will use a fixed priority of 1.
+     @return the generated event. Needed in order to remove the event from the dispather
+     */
+    EventListenerCustom* addCustomEventListener(const std::string &eventName, std::function<void(EventCustom*)> callback);
+
+    /** Remove a listener
      *  @param listener The specified event listener which needs to be removed.
      */
     void removeEventListener(EventListener* listener);
 
-    /** Removes all listeners with the same event type */
-    void removeListenersForEventType(const std::string& eventType);
-    
+    /** Removes all listeners with the same event listener type */
+    void removeEventListeners(EventListener::Type listenerType);
+
+    /** Removes all custom listeners with the same event name */
+    void removeCustomEventListeners(const std::string& customEventName);
+
     /** Removes all listeners */
-    void removeAllListeners();
+    void removeAllEventListeners();
 
     /** Sets listener's priority with fixed value. */
     void setPriority(EventListener* listener, int fixedPriority);
@@ -98,59 +104,148 @@ public:
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      */
-    void dispatchEvent(Event* event, bool forceSortListeners = false);
+    void dispatchEvent(Event* event);
 
-    void setDirtyForEventType(const std::string& eventType, bool isDirty);
-    
-    bool isDirtyForEventType(const std::string& eventType);
-    
-public:
+    /** Dispatches a Custom Event with a event name an optional user data */
+    void dispatchCustomEvent(const std::string &eventName, void *optionalUserData);
+
+    /** Constructor of EventDispatcher */
+    EventDispatcher();
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
 
-private:
-    struct EventListenerItem
+protected:
+    friend class Node;
+    
+    /** Sets the dirty flag for a node. */
+    void setDirtyForNode(Node* node);
+    
+    /** Notifys event dispatcher that the node has been paused. */
+    void pauseTarget(Node* node);
+    
+    /** Notifys event dispatcher that the node has been resumed. */
+    void resumeTarget(Node* node);
+    
+    /** Notifys event dispatcher that the node has been deleted. */
+    void cleanTarget(Node* node);
+    
+    /**
+     *  The vector to store event listeners with scene graph based priority and fixed priority.
+     */
+    class EventListenerVector
     {
-        int            fixedPriority;   // The higher the number, the higher the priority
-        Node*          node;            // Weak reference.
-        EventListener* listener;
-        ~EventListenerItem();
+    public:
+        EventListenerVector();
+        ~EventListenerVector();
+        size_t size() const;
+        bool empty() const;
+        
+        void push_back(EventListener* item);
+        void clearSceneGraphListeners();
+        void clearFixedListeners();
+        void clear();
+        
+        inline std::vector<EventListener*>* getFixedPriorityListeners() const { return _fixedListeners; };
+        inline std::vector<EventListener*>* getSceneGraphPriorityListeners() const { return _sceneGraphListeners; };
+        inline ssize_t getGt0Index() const { return _gt0Index; };
+        inline void setGt0Index(ssize_t index) { _gt0Index = index; };
+    private:
+        std::vector<EventListener*>* _fixedListeners;
+        std::vector<EventListener*>* _sceneGraphListeners;
+        ssize_t _gt0Index;
     };
     
-    /** Constructor of EventDispatcher */
-    EventDispatcher();
+    /** Adds an event listener with item
+     *  @note if it is dispatching event, the added operation will be delayed to the end of current dispatch
+     *  @see forceAddEventListener
+     */
+    void addEventListener(EventListener* listener);
     
-    /** Adds event listener with item */
-    void addEventListenerWithItem(EventListenerItem* item);
+    /** Force adding an event listener
+     *  @note force add an event listener which will ignore whether it's in dispatching.
+     *  @see addEventListener
+     */
+    void forceAddEventListener(EventListener* listener);
     
-    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
-    void dispatchTouchEvent(EventTouch* event);
+    /** Gets event the listener list for the event listener type. */
+    EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);
     
-    /** Gets event the listener list for the event type. */
-    std::vector<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);
+    /** Update dirty flag */
+    void updateDirtyFlagForSceneGraph();
     
-    /** Sorts the listeners of specified type by priority */
-    void sortAllEventListenerItemsForType(const std::string& eventType);
+    /** Removes all listeners with the same event listener ID */
+    void removeEventListenersForListenerID(const EventListener::ListenerID& listenerID);
     
-    /** Updates all listener items
+    /** Sort event listener */
+    void sortEventListeners(const EventListener::ListenerID& listenerID);
+    
+    /** Sorts the listeners of specified type by scene graph priority */
+    void sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID);
+    
+    /** Sorts the listeners of specified type by fixed priority */
+    void sortEventListenersOfFixedPriority(const EventListener::ListenerID& listenerID);
+    
+    /** Updates all listeners
      *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
      *  2) Adds all listener items that have been marked as 'added' when dispatching event.
      */
-    void updateListenerItems();
+    void updateListeners(Event* event);
 
-private:
-    /**
-     * Listeners map.
-     */
-    std::map<std::string, std::vector<EventListenerItem*>*> _listeners;
+    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
+    void dispatchTouchEvent(EventTouch* event);
+    
+    /** Associates node with event listener */
+    void associateNodeAndEventListener(Node* node, EventListener* listener);
+    
+    /** Dissociates node with event listener */
+    void dissociateNodeAndEventListener(Node* node, EventListener* listener);
+    
+    /** Dispatches event to listeners with a specified listener type */
+    void dispatchEventToListeners(EventListenerVector* listeners, std::function<bool(EventListener*)> onEvent);
     
     /// Priority dirty flag
-    std::map<std::string, bool> _priorityDirtyFlagMap;
+    enum class DirtyFlag
+    {
+        NONE = 0,
+        FIXED_PRIORITY = 1 << 0,
+        SCENE_GRAPH_PRIORITY = 1 << 1,
+        ALL = FIXED_PRIORITY | SCENE_GRAPH_PRIORITY
+    };
     
-    std::vector<EventListenerItem*> _toAddedListeners;
+    /** Sets the dirty flag for a specified listener ID */
+    void setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag);
     
-    int   _inDispatch;        ///< Whether it's in dispatching event
-    bool  _isEnabled;         ///< Whether to enable dispatching event
+    /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
+    void visitTarget(Node* node, bool isRootNode);
+    
+    /** Listeners map */
+    std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listeners;
+    
+    /** The map of dirty flag */
+    std::unordered_map<EventListener::ListenerID, DirtyFlag> _priorityDirtyFlagMap;
+    
+    /** The map of node and event listeners */
+    std::unordered_map<Node*, std::vector<EventListener*>*> _nodeListenersMap;
+    
+    /** The map of node and its event priority */
+    std::unordered_map<Node*, int> _nodePriorityMap;
+    
+    /** key: Global Z Order, value: Sorted Nodes */
+    std::unordered_map<float, std::vector<Node*>> _globalZOrderNodeMap;
+    
+    /** The listeners to be added after dispatching event */
+    std::vector<EventListener*> _toAddedListeners;
+    
+    /** The nodes were associated with scene graph based priority listeners */
+    std::set<Node*> _dirtyNodes;
+    
+    /** Whether the dispatcher is dispatching event */
+    int _inDispatch;
+    
+    /** Whether to enable dispatching event */
+    bool _isEnabled;
+    
+    int _nodePriorityIndex;
 };
 
 

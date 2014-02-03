@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,44 +27,67 @@
 #define __cocos2d_libs__CCTouchEventListener__
 
 #include "CCEventListener.h"
-#include "event_dispatcher/CCTouch.h"
+#include "CCTouch.h"
 
 #include <vector>
 
 NS_CC_BEGIN
 
-class EventListenerTouch : public EventListener
+class EventListenerTouchOneByOne : public EventListener
 {
 public:
-    static EventListenerTouch* create(Touch::DispatchMode mode);
+    static const std::string LISTENER_ID;
+    
+    static EventListenerTouchOneByOne* create();
+    
+    virtual ~EventListenerTouchOneByOne();
+    
+    void setSwallowTouches(bool needSwallow);
     
     /// Overrides
-    virtual EventListenerTouch* clone() override;
-    virtual bool checkAvaiable() override;
-    
-    virtual ~EventListenerTouch();
-    
-private:
-    EventListenerTouch();
-    bool init(Touch::DispatchMode mode);
-    
+    virtual EventListenerTouchOneByOne* clone() override;
+    virtual bool checkAvailable() override;
+    //
+
 public:
     std::function<bool(Touch*, Event*)> onTouchBegan;
     std::function<void(Touch*, Event*)> onTouchMoved;
     std::function<void(Touch*, Event*)> onTouchEnded;
     std::function<void(Touch*, Event*)> onTouchCancelled;
     
+private:
+    EventListenerTouchOneByOne();
+    bool init();
+    
+    std::vector<Touch*> _claimedTouches;
+    bool _needSwallow;
+    
+    friend class EventDispatcher;
+};
+
+
+class EventListenerTouchAllAtOnce : public EventListener
+{
+public:
+    static const std::string LISTENER_ID;
+    
+    static EventListenerTouchAllAtOnce* create();
+    virtual ~EventListenerTouchAllAtOnce();
+    
+    /// Overrides
+    virtual EventListenerTouchAllAtOnce* clone() override;
+    virtual bool checkAvailable() override;
+    //
+public:
     std::function<void(const std::vector<Touch*>&, Event*)> onTouchesBegan;
     std::function<void(const std::vector<Touch*>&, Event*)> onTouchesMoved;
     std::function<void(const std::vector<Touch*>&, Event*)> onTouchesEnded;
     std::function<void(const std::vector<Touch*>&, Event*)> onTouchesCancelled;
     
-    void setSwallowTouches(bool needSwallow);
-    
 private:
-    std::vector<Touch*> _claimedTouches;
-    bool _needSwallow;
-    Touch::DispatchMode _dispatchMode;
+    EventListenerTouchAllAtOnce();
+    bool init();
+private:
     
     friend class EventDispatcher;
 };

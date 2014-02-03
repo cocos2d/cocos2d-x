@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CC_TEXT_FIELD_H__
 #define __CC_TEXT_FIELD_H__
 
-#include "label_nodes/CCLabelTTF.h"
-#include "text_input_node/CCIMEDelegate.h"
+#include "CCLabelTTF.h"
+#include "CCIMEDelegate.h"
 
 NS_CC_BEGIN
 
@@ -40,6 +41,8 @@ class TextFieldTTF;
 class CC_DLL TextFieldDelegate
 {
 public:
+    virtual ~TextFieldDelegate() {}
+
     /**
     @brief    If the sender doesn't want to attach to the IME, return true;
     */
@@ -109,13 +112,13 @@ public:
     //char * description();
 
     /** creates a TextFieldTTF from a fontname, alignment, dimension and font size */
-    static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, TextHAlignment alignment, const char *fontName, float fontSize);
+    static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
     /** creates a LabelTTF from a fontname and font size */
-    static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
+    static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name, alignment, dimension and font size */
-    bool initWithPlaceHolder(const char *placeholder, const Size& dimensions, TextHAlignment alignment, const char *fontName, float fontSize);
+    bool initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name and font size */
-    bool initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
+    bool initWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
 
     /**
     @brief    Open keyboard and receive input text.
@@ -147,21 +150,21 @@ public:
 
     // input text property
 public:
-    virtual void setString(const char *text);
-    virtual const char* getString(void) const;
+    virtual void setString(const std::string& text) override;
+    virtual const std::string& getString() const override;
 protected:
     TextFieldDelegate * _delegate;
     int _charCount;
     
-    std::string * _inputText;
+    std::string _inputText;
 
     // place holder text property
     // place holder text displayed when there is no text in the text field.
 public:
-    virtual void setPlaceHolder(const char * text);
-    virtual const char * getPlaceHolder(void);
+    virtual void setPlaceHolder(const std::string& text);
+    virtual const std::string& getPlaceHolder(void) const;
 protected:
-    std::string * _placeHolder;
+    std::string _placeHolder;
     Color3B _colorSpaceHolder;
 public:
     virtual void setSecureTextEntry(bool value);
@@ -176,11 +179,11 @@ protected:
     // IMEDelegate interface
     //////////////////////////////////////////////////////////////////////////
 
-    virtual bool canAttachWithIME();
-    virtual bool canDetachWithIME();
-    virtual void insertText(const char * text, int len);
-    virtual void deleteBackward();
-    virtual const char * getContentText();
+    virtual bool canAttachWithIME() override;
+    virtual bool canDetachWithIME() override;
+    virtual void insertText(const char * text, int len) override;
+    virtual void deleteBackward() override;
+    virtual const std::string& getContentText() override;
 private:
     class LengthStack;
     LengthStack * _lens;

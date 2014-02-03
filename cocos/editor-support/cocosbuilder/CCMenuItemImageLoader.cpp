@@ -1,12 +1,12 @@
 #include "CCMenuItemImageLoader.h"
 
-
+using namespace cocos2d;
 
 #define PROPERTY_NORMALDISPLAYFRAME "normalSpriteFrame"
 #define PROPERTY_SELECTEDDISPLAYFRAME "selectedSpriteFrame"
 #define PROPERTY_DISABLEDDISPLAYFRAME "disabledSpriteFrame"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void MenuItemImageLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_NORMALDISPLAYFRAME) == 0) {
@@ -26,4 +26,4 @@ void MenuItemImageLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pPare
     }
 }
 
-NS_CC_EXT_END
+}

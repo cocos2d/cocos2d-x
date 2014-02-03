@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -36,14 +36,16 @@ class Event;
 class EventListenerKeyboard : public EventListener
 {
 public:
+    static const std::string LISTENER_ID;
+    
     static EventListenerKeyboard* create();
     
     /// Overrides
     virtual EventListenerKeyboard* clone() override;
-    virtual bool checkAvaiable() override;
+    virtual bool checkAvailable() override;
     
-    std::function<void(EventKeyboard::KeyCode, Event* event)> onKeyPressed;
-    std::function<void(EventKeyboard::KeyCode, Event* event)> onKeyReleased;
+    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyPressed;
+    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyReleased;
 private:
     EventListenerKeyboard();
     bool init();

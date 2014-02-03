@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,6 +26,10 @@
 
 NS_CC_BEGIN
 
-const char* EventTouch::EVENT_TYPE = "TouchEvent";
+EventTouch::EventTouch()
+: Event(Type::TOUCH)
+{
+    _touches.reserve(MAX_TOUCHES);
+}
 
 NS_CC_END

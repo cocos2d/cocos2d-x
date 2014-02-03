@@ -1,3 +1,31 @@
+/****************************************************************************
+Copyright (c) 2011      Laschweinski
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
 #include <string.h>
 
 #include <algorithm>
@@ -7,7 +35,7 @@
 #include <fontconfig/fontconfig.h>
 
 #include "platform/CCFileUtils.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #define __CC_PLATFORM_IMAGE_CPP__
 #include "platform/CCImageCommon_cpp.h"
 #include "platform/CCImage.h"
@@ -426,23 +454,21 @@ static BitmapDC& sharedBitmapDC()
 }
 
 bool Image::initWithString(
-		const char * pText,
-		int nWidth/* = 0*/,
-		int nHeight/* = 0*/,
-		TextAlign eAlignMask/* = kAlignCenter*/,
-		const char * pFontName/* = nil*/,
-		int nSize/* = 0*/)
+		const char * text,
+		int width/* = 0*/,
+		int height/* = 0*/,
+		TextAlign alignMask/* = kAlignCenter*/,
+		const char * fontName/* = nil*/,
+		int size/* = 0*/)
 {
-	bool bRet = false;
+	bool ret = false;
 	do
-	{
-		CC_BREAK_IF(! pText);
+    {
+		CC_BREAK_IF(!text || 0 == strlen(text));
 
 		BitmapDC &dc = sharedBitmapDC();
 
-		//const char* pFullFontName = FileUtils::getInstance()->fullPathFromRelativePath(pFontName);
-
-		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
+		CC_BREAK_IF(! dc.getBitmap(text, width, height, alignMask, fontName, size));
 
 		// assign the dc._data to _data in order to save time
 		_data = dc._data;
@@ -454,13 +480,15 @@ bool Image::initWithString(
 		_preMulti = true;
         _dataLen = _width * _height * 4;
 
-		bRet = true;
+		ret = true;
 
 		dc.reset();
 	}while (0);
 
 	//do nothing
-	return bRet;
+	return ret;
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX

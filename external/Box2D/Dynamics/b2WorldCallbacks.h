@@ -36,15 +36,15 @@ struct b2Manifold;
 class b2DestructionListener
 {
 public:
-    virtual ~b2DestructionListener() {}
+	virtual ~b2DestructionListener() {}
 
-    /// Called when any joint is about to be destroyed due
-    /// to the destruction of one of its attached bodies.
-    virtual void SayGoodbye(b2Joint* joint) = 0;
+	/// Called when any joint is about to be destroyed due
+	/// to the destruction of one of its attached bodies.
+	virtual void SayGoodbye(b2Joint* joint) = 0;
 
-    /// Called when any fixture is about to be destroyed due
-    /// to the destruction of its parent body.
-    virtual void SayGoodbye(b2Fixture* fixture) = 0;
+	/// Called when any fixture is about to be destroyed due
+	/// to the destruction of its parent body.
+	virtual void SayGoodbye(b2Fixture* fixture) = 0;
 };
 
 /// Implement this class to provide collision filtering. In other words, you can implement
@@ -52,11 +52,11 @@ public:
 class b2ContactFilter
 {
 public:
-    virtual ~b2ContactFilter() {}
+	virtual ~b2ContactFilter() {}
 
-    /// Return true if contact calculations should be performed between these two shapes.
-    /// @warning for performance reasons this is only called when the AABBs begin to overlap.
-    virtual bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB);
+	/// Return true if contact calculations should be performed between these two shapes.
+	/// @warning for performance reasons this is only called when the AABBs begin to overlap.
+	virtual bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB);
 };
 
 /// Contact impulses for reporting. Impulses are used instead of forces because
@@ -64,9 +64,9 @@ public:
 /// match up one-to-one with the contact points in b2Manifold.
 struct b2ContactImpulse
 {
-    float32 normalImpulses[b2_maxManifoldPoints];
-    float32 tangentImpulses[b2_maxManifoldPoints];
-    int32 count;
+	float32 normalImpulses[b2_maxManifoldPoints];
+	float32 tangentImpulses[b2_maxManifoldPoints];
+	int32 count;
 };
 
 /// Implement this class to get contact information. You can use these results for
@@ -81,41 +81,41 @@ struct b2ContactImpulse
 class b2ContactListener
 {
 public:
-    virtual ~b2ContactListener() {}
+	virtual ~b2ContactListener() {}
 
-    /// Called when two fixtures begin to touch.
-    virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
+	/// Called when two fixtures begin to touch.
+	virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
 
-    /// Called when two fixtures cease to touch.
-    virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
+	/// Called when two fixtures cease to touch.
+	virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
 
-    /// This is called after a contact is updated. This allows you to inspect a
-    /// contact before it goes to the solver. If you are careful, you can modify the
-    /// contact manifold (e.g. disable contact).
-    /// A copy of the old manifold is provided so that you can detect changes.
-    /// Note: this is called only for awake bodies.
-    /// Note: this is called even when the number of contact points is zero.
-    /// Note: this is not called for sensors.
-    /// Note: if you set the number of contact points to zero, you will not
-    /// get an EndContact callback. However, you may get a BeginContact callback
-    /// the next step.
-    virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
-    {
-        B2_NOT_USED(contact);
-        B2_NOT_USED(oldManifold);
-    }
+	/// This is called after a contact is updated. This allows you to inspect a
+	/// contact before it goes to the solver. If you are careful, you can modify the
+	/// contact manifold (e.g. disable contact).
+	/// A copy of the old manifold is provided so that you can detect changes.
+	/// Note: this is called only for awake bodies.
+	/// Note: this is called even when the number of contact points is zero.
+	/// Note: this is not called for sensors.
+	/// Note: if you set the number of contact points to zero, you will not
+	/// get an EndContact callback. However, you may get a BeginContact callback
+	/// the next step.
+	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(oldManifold);
+	}
 
-    /// This lets you inspect a contact after the solver is finished. This is useful
-    /// for inspecting impulses.
-    /// Note: the contact manifold does not include time of impact impulses, which can be
-    /// arbitrarily large if the sub-step is small. Hence the impulse is provided explicitly
-    /// in a separate data structure.
-    /// Note: this is only called for contacts that are touching, solid, and awake.
-    virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
-    {
-        B2_NOT_USED(contact);
-        B2_NOT_USED(impulse);
-    }
+	/// This lets you inspect a contact after the solver is finished. This is useful
+	/// for inspecting impulses.
+	/// Note: the contact manifold does not include time of impact impulses, which can be
+	/// arbitrarily large if the sub-step is small. Hence the impulse is provided explicitly
+	/// in a separate data structure.
+	/// Note: this is only called for contacts that are touching, solid, and awake.
+	virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(impulse);
+	}
 };
 
 /// Callback class for AABB queries.
@@ -123,11 +123,11 @@ public:
 class b2QueryCallback
 {
 public:
-    virtual ~b2QueryCallback() {}
+	virtual ~b2QueryCallback() {}
 
-    /// Called for each fixture found in the query AABB.
-    /// @return false to terminate the query.
-    virtual bool ReportFixture(b2Fixture* fixture) = 0;
+	/// Called for each fixture found in the query AABB.
+	/// @return false to terminate the query.
+	virtual bool ReportFixture(b2Fixture* fixture) = 0;
 };
 
 /// Callback class for ray casts.
@@ -135,21 +135,21 @@ public:
 class b2RayCastCallback
 {
 public:
-    virtual ~b2RayCastCallback() {}
+	virtual ~b2RayCastCallback() {}
 
-    /// Called for each fixture found in the query. You control how the ray cast
-    /// proceeds by returning a float:
-    /// return -1: ignore this fixture and continue
-    /// return 0: terminate the ray cast
-    /// return fraction: clip the ray to this point
-    /// return 1: don't clip the ray and continue
-    /// @param fixture the fixture hit by the ray
-    /// @param point the point of initial intersection
-    /// @param normal the normal vector at the point of intersection
-    /// @return -1 to filter, 0 to terminate, fraction to clip the ray for
-    /// closest hit, 1 to continue
-    virtual float32 ReportFixture(    b2Fixture* fixture, const b2Vec2& point,
-                                    const b2Vec2& normal, float32 fraction) = 0;
+	/// Called for each fixture found in the query. You control how the ray cast
+	/// proceeds by returning a float:
+	/// return -1: ignore this fixture and continue
+	/// return 0: terminate the ray cast
+	/// return fraction: clip the ray to this point
+	/// return 1: don't clip the ray and continue
+	/// @param fixture the fixture hit by the ray
+	/// @param point the point of initial intersection
+	/// @param normal the normal vector at the point of intersection
+	/// @return -1 to filter, 0 to terminate, fraction to clip the ray for
+	/// closest hit, 1 to continue
+	virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
+									const b2Vec2& normal, float32 fraction) = 0;
 };
 
 #endif

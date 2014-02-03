@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,6 +27,10 @@
 
 NS_CC_BEGIN
 
-const char* EventKeyboard::EVENT_TYPE = "KeyboardEvent";
+EventKeyboard::EventKeyboard(KeyCode keyCode, bool isPressed)
+: Event(Type::KEYBOARD)
+, _keyCode(keyCode)
+, _isPressed(isPressed)
+{}
 
 NS_CC_END

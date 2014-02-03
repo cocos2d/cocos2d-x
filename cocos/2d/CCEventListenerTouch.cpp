@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -30,46 +30,41 @@
 
 NS_CC_BEGIN
 
-EventListenerTouch::EventListenerTouch()
+const std::string EventListenerTouchOneByOne::LISTENER_ID = "__cc_touch_one_by_one";
+
+EventListenerTouchOneByOne::EventListenerTouchOneByOne()
 : onTouchBegan(nullptr)
 , onTouchMoved(nullptr)
 , onTouchEnded(nullptr)
 , onTouchCancelled(nullptr)
-, onTouchesBegan(nullptr)
-, onTouchesMoved(nullptr)
-, onTouchesEnded(nullptr)
-, onTouchesCancelled(nullptr)
 , _needSwallow(false)
-, _dispatchMode(Touch::DispatchMode::ALL_AT_ONCE)
 {
 }
 
-EventListenerTouch::~EventListenerTouch()
+EventListenerTouchOneByOne::~EventListenerTouchOneByOne()
 {
-    CCLOGINFO("In the destructor of TouchEventListener, %p", this);
+    CCLOGINFO("In the destructor of EventListenerTouchOneByOne, %p", this);
 }
 
-bool EventListenerTouch::init(Touch::DispatchMode mode)
+bool EventListenerTouchOneByOne::init()
 {
-    if (EventListener::init(EventTouch::EVENT_TYPE, nullptr))
+    if (EventListener::init(Type::TOUCH_ONE_BY_ONE, LISTENER_ID, nullptr))
     {
-        _dispatchMode = mode;
         return true;
     }
     
     return false;
 }
 
-void EventListenerTouch::setSwallowTouches(bool needSwallow)
+void EventListenerTouchOneByOne::setSwallowTouches(bool needSwallow)
 {
-    CCASSERT(_dispatchMode == Touch::DispatchMode::ONE_BY_ONE, "Swallow touches only available in OneByOne mode.");
     _needSwallow = needSwallow;
 }
 
-EventListenerTouch* EventListenerTouch::create(Touch::DispatchMode mode)
+EventListenerTouchOneByOne* EventListenerTouchOneByOne::create()
 {
-    auto ret = new EventListenerTouch();
-    if (ret && ret->init(mode))
+    auto ret = new EventListenerTouchOneByOne();
+    if (ret && ret->init())
     {
         ret->autorelease();
     }
@@ -80,38 +75,21 @@ EventListenerTouch* EventListenerTouch::create(Touch::DispatchMode mode)
     return ret;
 }
 
-bool EventListenerTouch::checkAvaiable()
+bool EventListenerTouchOneByOne::checkAvailable()
 {
-    if (_dispatchMode == Touch::DispatchMode::ALL_AT_ONCE)
+    if (onTouchBegan == nullptr)
     {
-        if (onTouchesBegan == nullptr && onTouchesMoved == nullptr
-            && onTouchesEnded == nullptr && onTouchesCancelled == nullptr)
-        {
-            CCASSERT(false, "Invalid TouchEventListener.");
-            return false;
-        }
-    }
-    else if (_dispatchMode == Touch::DispatchMode::ONE_BY_ONE)
-    {
-        if (onTouchBegan == nullptr && onTouchMoved == nullptr
-            && onTouchEnded == nullptr && onTouchCancelled == nullptr)
-        {
-            CCASSERT(false, "Invalid TouchEventListener.");
-            return false;
-        }
-    }
-    else
-    {
-        CCASSERT(false, "");
+        CCASSERT(false, "Invalid EventListenerTouchOneByOne!");
+        return false;
     }
     
     return true;
 }
 
-EventListenerTouch* EventListenerTouch::clone()
+EventListenerTouchOneByOne* EventListenerTouchOneByOne::clone()
 {
-    auto ret = new EventListenerTouch();
-    if (ret && ret->init(_dispatchMode))
+    auto ret = new EventListenerTouchOneByOne();
+    if (ret && ret->init())
     {
         ret->autorelease();
         
@@ -119,14 +97,81 @@ EventListenerTouch* EventListenerTouch::clone()
         ret->onTouchMoved = onTouchMoved;
         ret->onTouchEnded = onTouchEnded;
         ret->onTouchCancelled = onTouchCancelled;
+        
+        ret->_claimedTouches = _claimedTouches;
+        ret->_needSwallow = _needSwallow;
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+/////////
+
+const std::string EventListenerTouchAllAtOnce::LISTENER_ID = "__cc_touch_all_at_once";
+
+EventListenerTouchAllAtOnce::EventListenerTouchAllAtOnce()
+: onTouchesBegan(nullptr)
+, onTouchesMoved(nullptr)
+, onTouchesEnded(nullptr)
+, onTouchesCancelled(nullptr)
+{
+}
+
+EventListenerTouchAllAtOnce::~EventListenerTouchAllAtOnce()
+{
+    CCLOGINFO("In the destructor of EventListenerTouchAllAtOnce, %p", this);
+}
+
+bool EventListenerTouchAllAtOnce::init()
+{
+    if (EventListener::init(Type::TOUCH_ALL_AT_ONCE, LISTENER_ID, nullptr))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+EventListenerTouchAllAtOnce* EventListenerTouchAllAtOnce::create()
+{
+    auto ret = new EventListenerTouchAllAtOnce();
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+bool EventListenerTouchAllAtOnce::checkAvailable()
+{
+    if (onTouchesBegan == nullptr && onTouchesMoved == nullptr
+        && onTouchesEnded == nullptr && onTouchesCancelled == nullptr)
+    {
+        CCASSERT(false, "Invalid EventListenerTouchAllAtOnce!");
+        return false;
+    }
+    
+    return true;
+}
+
+EventListenerTouchAllAtOnce* EventListenerTouchAllAtOnce::clone()
+{
+    auto ret = new EventListenerTouchAllAtOnce();
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+        
         ret->onTouchesBegan = onTouchesBegan;
         ret->onTouchesMoved = onTouchesMoved;
         ret->onTouchesEnded = onTouchesEnded;
         ret->onTouchesCancelled = onTouchesCancelled;
-        
-        ret->_claimedTouches = _claimedTouches;
-        ret->_dispatchMode = _dispatchMode;
-        ret->_needSwallow = _needSwallow;
     }
     else
     {

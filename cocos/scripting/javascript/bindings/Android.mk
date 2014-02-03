@@ -2,50 +2,43 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := scriptingcore-spidermonkey
+LOCAL_MODULE := cocos_jsb_static
 
-LOCAL_MODULE_FILENAME := libscriptingcore-spidermonkey
+LOCAL_MODULE_FILENAME := libcocos2dxjsb
 
 LOCAL_SRC_FILES := ScriptingCore.cpp \
                    cocos2d_specifics.cpp \
-                   jsb_cocos2dx_extension_manual.cpp \
                    js_manual_conversions.cpp \
-                   cocosjs_manual_conversions.cpp \
-                   js_bindings_chipmunk_manual.cpp \
-                   js_bindings_chipmunk_functions.cpp \
-                   js_bindings_chipmunk_auto_classes.cpp \
-                   js_bindings_chipmunk_registration.cpp \
-                   js_bindings_system_functions.cpp \
-                   js_bindings_system_registration.cpp \
-                   js_bindings_ccbreader.cpp \
                    js_bindings_core.cpp \
                    js_bindings_opengl.cpp \
                    jsb_opengl_functions.cpp \
                    jsb_opengl_manual.cpp \
                    jsb_opengl_registration.cpp \
-                   ../../auto-generated/js-bindings/jsb_cocos2dx_auto.cpp \
-                   ../../auto-generated/js-bindings/jsb_cocos2dx_extension_auto.cpp \
-                   XMLHTTPRequest.cpp \
-                   jsb_websocket.cpp
+                   ../../auto-generated/js-bindings/jsb_cocos2dx_auto.cpp
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
 LOCAL_EXPORT_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
-                    $(LOCAL_PATH)/../../../CocosDenshion/include \
-                    $(LOCAL_PATH)/../../auto-generated/js-bindings
+                    $(LOCAL_PATH)/../../../audio/include \
+                    $(LOCAL_PATH)/../../../storage \
+                    $(LOCAL_PATH)/../../auto-generated/js-bindings \
+                    $(LOCAL_PATH)/../../../../extensions \
+                    $(LOCAL_PATH)/../../../editor-support/spine \
+                    $(LOCAL_PATH)/../../../editor-support
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                           $(LOCAL_PATH)/../../auto-generated/js-bindings
+                           $(LOCAL_PATH)/../../auto-generated/js-bindings \
+                           $(LOCAL_PATH)/../../../audio/include 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := spidermonkey_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
-
-LOCAL_LDLIBS := -landroid
-LOCAL_LDLIBS += -llog
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spidermonkey_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,scripting/javascript/spidermonkey-android)
-$(call import-module,extensions)
+$(call import-module,spidermonkey/prebuilt/android)
+$(call import-module,2d)
+$(call import-module,audio/android)

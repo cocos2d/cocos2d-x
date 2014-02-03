@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,10 +26,8 @@
 
 NS_CC_BEGIN
 
-const char* EventAcceleration::EVENT_TYPE = "AccelerometerEvent";
-
 EventAcceleration::EventAcceleration(Acceleration acc)
-: Event(EVENT_TYPE)
+: Event(Type::ACCELERATION)
 , _acc(acc)
 {
 }

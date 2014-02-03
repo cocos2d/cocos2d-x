@@ -38,7 +38,7 @@
 #define Decimal_h
 
 #include "mozilla/Assertions.h"
-#include "mozilla/StandardInteger.h"
+#include <stdint.h>
 #include "mozilla/Types.h"
 
 #include <string>

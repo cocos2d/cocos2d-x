@@ -23,14 +23,48 @@ How to start a new game
 -----------------------
 
 1. Download the code from [cocos2d download site][4]
-
-2. Run the `create-multi-platform-projects.py` script
+2. Enter `tools/project-creator`
+3. Run the `create_project.py` script
 
 Example:
 
-	$ cd cocos2d-x
-	$ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
-    $ cd projects/mygame
+    $ cd cocos2d-x/tools/project-creator
+    $ ./create_project.py -n mygame -k com.your_company.mygame -l cpp -p /home/mygame
+    $ cd /home/mygame
+
+### Build new project for android ###
+
+    $ cd proj.android
+    $ ./build_native.py
+
+### Build new project for ios & osx ###
+
+* Enter *proj.ios_mac* folder, open *mygame.xcodeproj*
+* Select ios or osx targets in scheme toolbar
+
+### Build new project for linux ###
+
+if you never run cocos2d-x on linux, you need to install all dependences by the
+script in **cocos2d/build/install-deps-linux.sh**
+
+    $ cd cocos2d/build
+    $ ./install-deps-linux.sh
+    $ ../..
+
+Then
+
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ make -j4
+    
+Run
+
+    $ bin/mygame
+
+### Build new project for win32 ###
+
+* Enter *proj.win32*, open *mygame.sln* by vs2012
 
 
 Main features
@@ -56,7 +90,7 @@ Main features
    * Motion Streak
    * Render To Texture
    * Touch/Accelerometer on mobile devices
-   * Touch/Mouse/Keyboard on desktop 
+   * Touch/Mouse/Keyboard on desktop
    * Sound Engine support (CocosDenshion library) based on OpenAL
    * Integrated Slow motion/Fast forward
    * Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more
@@ -69,7 +103,7 @@ Build Requirements
 ------------------
 
 * Mac OS X 10.7+, Xcode 4.6+
-* or Ubuntu 13.04+
+* or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 
 
@@ -79,9 +113,6 @@ Runtime Requirements
   * Android 2.3+ for Android games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
-  * Tizen 2.2+
-  * Emscripten
-  * Google Native Client
 
 
 Running Tests
@@ -92,28 +123,39 @@ Select the test you want from Xcode Scheme chooser.
 * For OS X / iOS
 
 ```
-$ cd cocos2d-x/samples
+$ cd cocos2d-x/build
 $ open samples.xcodeproj
 ```
 
 * For Linux
 
 ```
-$ cd cocos2d-x
-$ ./make-all-linux-projects.sh
+$ cd cocos2d-x/build
+$ ./install-deps-linux.sh
+$ cmake ..
+$ make
 ```
 
-or open the `cocos2d-x/cocos2dx-qt5.pro` file using QT Creator 5.
+Run Samples
+
+```
+$ bin/hellocpp/hellocpp
+or
+$ bin/testlua/testlua
+```
+
+      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
+      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
 
 * For Windows
 
-Open the `cocos2d-x/cocos2d-win32.vc2012.sln`
+Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 
 * For Android
 
 ```
-$ cd cocos2d-x/samples/Cpp/HelloCpp/proj.android
-$ ./build_native.sh
+$ cd cocos2d-x/build
+$ python ./android-build.py hellocpp
 ```
 
 Import HelloCpp Android project using Eclipse(released with Android SDK). The path to be imported is `cocos2d-x/samples/Cpp/HelloCpp/proj.android`.

@@ -1,6 +1,6 @@
 #include "CCLabelTTFLoader.h"
 
-
+using namespace cocos2d;
 
 #define PROPERTY_COLOR "color"
 #define PROPERTY_OPACITY "opacity"
@@ -12,7 +12,7 @@
 #define PROPERTY_STRING "string"
 #define PROPERTY_DIMENSIONS "dimensions"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void LabelTTFLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_COLOR) == 0) {
@@ -80,4 +80,4 @@ void LabelTTFLoader::onHandlePropTypeSize(Node * pNode, Node * pParent, const ch
     }
 }
 
-NS_CC_EXT_END
+}

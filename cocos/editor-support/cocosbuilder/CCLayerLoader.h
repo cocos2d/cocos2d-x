@@ -3,7 +3,7 @@
 
 #include "CCNodeLoader.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
@@ -18,11 +18,11 @@ public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LayerLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Layer);
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Layer);
 
-    virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
+    virtual void onHandlePropTypeCheck(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };
 
-NS_CC_EXT_END
+}
 
 #endif

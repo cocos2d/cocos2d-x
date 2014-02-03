@@ -1,10 +1,8 @@
 #ifndef _CCB_CCBMEMBERVARIABLEASSIGNER_H_
 #define _CCB_CCBMEMBERVARIABLEASSIGNER_H_
 
-#include "cocos2d.h"
-#include "CCBValue.h"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 #define CCB_MEMBERVARIABLEASSIGNER_GLUE(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) \
     if (pTarget == TARGET && 0 == strcmp(pMemberVariableName, (MEMBERVARIABLENAME))) { \
@@ -41,7 +39,7 @@ class CCBMemberVariableAssigner {
          *  @param node                 The member variable.
          *  @return Whether the assignment was successful.
          */
-        virtual bool onAssignCCBMemberVariable(Object* target, const char* memberVariableName, Node* node) = 0;
+        virtual bool onAssignCCBMemberVariable(cocos2d::Object* target, const char* memberVariableName, cocos2d::Node* node) = 0;
 
         /**
          *  The callback function of assigning custom properties.
@@ -51,9 +49,9 @@ class CCBMemberVariableAssigner {
          *  @param value                The value of the property.
          *  @return Whether the assignment was successful.
          */
-        virtual bool onAssignCCBCustomProperty(Object* target, const char* memberVariableName, CCBValue* value) { return false; };
+        virtual bool onAssignCCBCustomProperty(cocos2d::Object* target, const char* memberVariableName, const cocos2d::Value& value) { return false; };
 };
 
-NS_CC_EXT_END
+}
 
 #endif

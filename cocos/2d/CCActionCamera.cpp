@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -25,22 +26,22 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionCamera.h"
-#include "base_nodes/CCNode.h"
-#include "CCCamera.h"
+#include "CCNode.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN
 //
 // CameraAction
 //
+ActionCamera::ActionCamera()
+{
+    kmVec3Fill(&_center, 0, 0, 0);
+    kmVec3Fill(&_eye, 0, 0, FLT_EPSILON);
+    kmVec3Fill(&_up, 0, 1, 0);
+}
 void ActionCamera::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-    
-    Camera *camera = target->getCamera();
-    camera->getCenter(&_centerXOrig, &_centerYOrig, &_centerZOrig);
-    camera->getEye(&_eyeXOrig, &_eyeYOrig, &_eyeZOrig);
-    camera->getUp(&_upXOrig, &_upYOrig, &_upZOrig);
 }
 
 ActionCamera* ActionCamera::clone() const
@@ -56,20 +57,88 @@ ActionCamera * ActionCamera::reverse() const
     // FIXME: This conversion isn't safe.
     return (ActionCamera*)ReverseTime::create(const_cast<ActionCamera*>(this));
 }
+
+void ActionCamera::restore()
+{
+    kmVec3Fill(&_center, 0, 0, 0);
+    kmVec3Fill(&_eye, 0, 0, FLT_EPSILON);
+    kmVec3Fill(&_up, 0, 1, 0);
+}
+
+void ActionCamera::setEye(const kmVec3& eye)
+{
+    _eye = eye;
+    updateTransform();
+}
+
+void ActionCamera::setEye(float x, float y, float z)
+{
+    kmVec3Fill(&_eye, x, y, z);
+    updateTransform();
+}
+
+void ActionCamera::setCenter(const kmVec3& center)
+{
+    _center = center;
+    updateTransform();
+}
+
+void ActionCamera::setUp(const kmVec3& up)
+{
+    _up = up;
+    updateTransform();
+}
+
+void ActionCamera::updateTransform()
+{
+    kmMat4 lookupMatrix;
+    kmMat4LookAt(&lookupMatrix, &_eye, &_center, &_up);
+
+    Point anchorPoint = _target->getAnchorPointInPoints();
+
+    bool needsTranslation = !anchorPoint.equals(Point::ZERO);
+
+    kmMat4 mv;
+    kmMat4Identity(&mv);
+
+    if(needsTranslation) {
+        kmMat4 t;
+        kmMat4Translation(&t, anchorPoint.x, anchorPoint.y, 0);
+        kmMat4Multiply(&mv, &mv, &t);
+    }
+
+    kmMat4Multiply(&mv, &mv, &lookupMatrix);
+
+    if(needsTranslation) {
+        kmMat4 t;
+        kmMat4Translation(&t, -anchorPoint.x, -anchorPoint.y, 0);
+        kmMat4Multiply(&mv, &mv, &t);
+    }
+
+    // XXX FIXME TODO
+    // Using the AdditionalTransform is a complete hack.
+    // This should be done by multipliying the lookup-Matrix with the Node's MV matrix
+    // And then setting the result as the new MV matrix
+    // But that operation needs to be done after all the 'updates'.
+    // So the Director should emit an 'director_after_update' event.
+    // And this object should listen to it
+    _target->setAdditionalTransform(mv);
+}
+
 //
 // OrbitCamera
 //
 
 OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {
-    OrbitCamera * pRet = new OrbitCamera();
-    if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
+    OrbitCamera * obitCamera = new OrbitCamera();
+    if(obitCamera->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
     {
-        pRet->autorelease();
-        return pRet;
+        obitCamera->autorelease();
+        return obitCamera;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(obitCamera);
+    return nullptr;
 }
 
 OrbitCamera* OrbitCamera::clone() const
@@ -101,7 +170,8 @@ bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, flo
 
 void OrbitCamera::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(target);
+    ActionCamera::startWithTarget(target);
+
     float r, zenith, azimuth;
     this->sphericalRadius(&r, &zenith, &azimuth);
     if( isnan(_radius) )
@@ -117,30 +187,25 @@ void OrbitCamera::startWithTarget(Node *target)
 
 void OrbitCamera::update(float dt)
 {
-    float r = (_radius + _deltaRadius * dt) * Camera::getZEye();
+    float r = (_radius + _deltaRadius * dt) * FLT_EPSILON;
     float za = _radZ + _radDeltaZ * dt;
     float xa = _radX + _radDeltaX * dt;
 
-    float i = sinf(za) * cosf(xa) * r + _centerXOrig;
-    float j = sinf(za) * sinf(xa) * r + _centerYOrig;
-    float k = cosf(za) * r + _centerZOrig;
+    float i = sinf(za) * cosf(xa) * r + _center.x;
+    float j = sinf(za) * sinf(xa) * r + _center.y;
+    float k = cosf(za) * r + _center.z;
 
-    _target->getCamera()->setEye(i,j,k);
+    setEye(i,j,k);
 }
 
 void OrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimuth)
 {
-    float ex, ey, ez, cx, cy, cz, x, y, z;
     float r; // radius
     float s;
 
-    Camera* pCamera = _target->getCamera();
-    pCamera->getEye(&ex, &ey, &ez);
-    pCamera->getCenter(&cx, &cy, &cz);
-
-    x = ex-cx;
-    y = ey-cy;
-    z = ez-cz;
+    float x = _eye.x - _center.x;
+    float y = _eye.y - _center.y;
+    float z = _eye.z - _center.z;
 
     r = sqrtf( powf(x,2) + powf(y,2) + powf(z,2));
     s = sqrtf( powf(x,2) + powf(y,2));
@@ -155,7 +220,7 @@ void OrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimut
     else
         *azimuth = asinf(y/s);
 
-    *newRadius = r / Camera::getZEye();                
+    *newRadius = r / FLT_EPSILON;
 }
 
 NS_CC_END

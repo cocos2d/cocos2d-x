@@ -1,14 +1,36 @@
-/*
- * FileUtilsLinux.cpp
- *
- *  Created on: Aug 9, 2011
- *      Author: laschweinski
- */
+/****************************************************************************
+Copyright (c) 2011      Laschweinski
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
 #include "CCFileUtilsLinux.h"
 #include "platform/CCCommon.h"
 #include "ccMacros.h"
 #include "CCApplication.h"
-#include "cocoa/CCString.h"
+#include "CCString.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -49,7 +71,7 @@ bool FileUtilsLinux::init()
     fullpath[length] = '\0';
     std::string appPath = fullpath;
     _defaultResRootPath = appPath.substr(0, appPath.find_last_of("/"));
-    _defaultResRootPath += "/../../../Resources/";
+    _defaultResRootPath += "/Resources/";
 
     // Set writable path to $XDG_CONFIG_HOME or ~/.config/<app name>/ if $XDG_CONFIG_HOME not exists.
     const char* xdg_config_path = getenv("XDG_CONFIG_HOME");
@@ -96,3 +118,5 @@ bool FileUtilsLinux::isFileExist(const std::string& strFilePath) const
 }
 
 NS_CC_END
+
+#endif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX

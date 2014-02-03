@@ -1028,7 +1028,7 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
         while(acc < file_info.size_file_extra)
         {
             uLong headerId;
-                                                uLong dataSize;
+            uLong dataSize;
 
             if (unz64local_getShort(&s->z_filefunc, s->filestream,&headerId) != UNZ_OK)
                 err=UNZ_ERRNO;
@@ -1039,33 +1039,33 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
             /* ZIP64 extra fields */
             if (headerId == 0x0001)
             {
-                                                        uLong uL;
+                uLong uL2;
 
-                                                                if(file_info.uncompressed_size == (ZPOS64_T)(unsigned long)-1)
-                                                                {
-                                                                        if (unz64local_getLong64(&s->z_filefunc, s->filestream,&file_info.uncompressed_size) != UNZ_OK)
-                                                                                        err=UNZ_ERRNO;
-                                                                }
+                if (file_info.uncompressed_size == (ZPOS64_T)(unsigned long)-1)
+                {
+                    if (unz64local_getLong64(&s->z_filefunc, s->filestream,&file_info.uncompressed_size) != UNZ_OK)
+                        err=UNZ_ERRNO;
+                    }
 
-                                                                if(file_info.compressed_size == (ZPOS64_T)(unsigned long)-1)
-                                                                {
-                                                                        if (unz64local_getLong64(&s->z_filefunc, s->filestream,&file_info.compressed_size) != UNZ_OK)
-                                                                                  err=UNZ_ERRNO;
-                                                                }
+                if (file_info.compressed_size == (ZPOS64_T)(unsigned long)-1)
+                {
+                    if (unz64local_getLong64(&s->z_filefunc, s->filestream,&file_info.compressed_size) != UNZ_OK)
+                        err=UNZ_ERRNO;
+                }
 
-                                                                if(file_info_internal.offset_curfile == (ZPOS64_T)(unsigned long)-1)
-                                                                {
-                                                                        /* Relative Header offset */
-                                                                        if (unz64local_getLong64(&s->z_filefunc, s->filestream,&file_info_internal.offset_curfile) != UNZ_OK)
-                                                                                err=UNZ_ERRNO;
-                                                                }
+                if (file_info_internal.offset_curfile == (ZPOS64_T)(unsigned long)-1)
+                {
+                    /* Relative Header offset */
+                    if (unz64local_getLong64(&s->z_filefunc, s->filestream,&file_info_internal.offset_curfile) != UNZ_OK)
+                        err=UNZ_ERRNO;
+                }
 
-                                                                if(file_info.disk_num_start == (unsigned long)-1)
-                                                                {
-                                                                        /* Disk Start Number */
-                                                                        if (unz64local_getLong(&s->z_filefunc, s->filestream,&uL) != UNZ_OK)
-                                                                                err=UNZ_ERRNO;
-                                                                }
+                if(file_info.disk_num_start == (unsigned long)-1)
+                {
+                    /* Disk Start Number */
+                    if (unz64local_getLong(&s->z_filefunc, s->filestream, &uL2) != UNZ_OK)
+                        err=UNZ_ERRNO;
+                }
 
             }
             else

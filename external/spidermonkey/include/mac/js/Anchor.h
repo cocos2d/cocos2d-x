@@ -6,8 +6,8 @@
 
 /* JS::Anchor implementation. */
 
-#ifndef js_Anchor_h___
-#define js_Anchor_h___
+#ifndef js_Anchor_h
+#define js_Anchor_h
 
 #include "mozilla/Attributes.h"
 
@@ -159,4 +159,4 @@ inline Anchor<T>::~Anchor()
 
 } // namespace JS
 
-#endif /* js_Anchor_h___ */
+#endif /* js_Anchor_h */

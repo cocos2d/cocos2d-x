@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2013 James Chen
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -30,15 +30,19 @@
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
 
-#include "ExtensionMacros.h"
-#include "cocos2d.h"
+#include "CCPlatformMacros.h"
+#include "CCStdC.h"
 #include <list>
+#include <string>
+#include <vector>
 
 struct libwebsocket;
 struct libwebsocket_context;
 struct libwebsocket_protocols;
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace network {
 
 class WsThreadHelper;
 class WsMessage;
@@ -61,9 +65,9 @@ public:
      */
     struct Data
     {
-        Data():bytes(NULL), len(0), isBinary(false){}
+        Data():bytes(nullptr), len(0), issued(0), isBinary(false){}
         char* bytes;
-        int len;
+        ssize_t len, issued;
         bool isBinary;
     };
     
@@ -111,7 +115,7 @@ public:
      */
     bool init(const Delegate& delegate,
               const std::string& url,
-              const std::vector<std::string>* protocols = NULL);
+              const std::vector<std::string>* protocols = nullptr);
     
     /**
      *  @brief Sends string data to websocket server.
@@ -144,7 +148,7 @@ private:
     int onSocketCallback(struct libwebsocket_context *ctx,
                          struct libwebsocket *wsi,
                          int reason,
-                         void *user, void *in, size_t len);
+                         void *user, void *in, ssize_t len);
     
 private:
 	State        _readyState;
@@ -152,6 +156,10 @@ private:
     unsigned int _port;
     std::string  _path;
     
+    ssize_t _pendingFrameDataLen;
+    ssize_t _currentDataLen;
+    char *_currentData;
+
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
     
@@ -162,6 +170,8 @@ private:
     struct libwebsocket_protocols* _wsProtocols;
 };
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */

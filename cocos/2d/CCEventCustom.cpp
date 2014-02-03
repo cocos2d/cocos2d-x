@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,12 +23,15 @@
  ****************************************************************************/
 
 #include "CCEventCustom.h"
+#include "ccMacros.h"
+#include <functional>
 
 NS_CC_BEGIN
 
 EventCustom::EventCustom(const std::string& eventName)
-: Event(eventName)
+: Event(Type::CUSTOM)
 , _userData(nullptr)
+, _eventName(eventName)
 {
 }
 

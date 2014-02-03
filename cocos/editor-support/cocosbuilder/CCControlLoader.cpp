@@ -1,7 +1,9 @@
 #include "CCControlLoader.h"
 
+using namespace cocos2d;
+using namespace cocos2d::extension;
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 #define PROPERTY_ENABLED "enabled"
 #define PROPERTY_SELECTED "selected"
@@ -25,4 +27,4 @@ void ControlLoader::onHandlePropTypeBlockControl(Node * pNode, Node * pParent, c
     }
 }
 
-NS_CC_EXT_END
+}

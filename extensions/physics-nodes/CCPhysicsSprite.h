@@ -19,11 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 #ifndef __PHYSICSNODES_CCPHYSICSSPRITE_H__
 #define __PHYSICSNODES_CCPHYSICSSPRITE_H__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "CCSprite.h"
+#include "extensions/ExtensionMacros.h"
 
 struct cpBody;
 class b2Body;
@@ -111,7 +112,7 @@ public:
     virtual void setPosition(const Point &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
-    virtual const AffineTransform& getNodeToParentTransform() const override;
+    virtual const kmMat4& getNodeToParentTransform() const override;
 
 protected:
     const Point& getPosFromPhysics() const;
@@ -125,8 +126,6 @@ protected:
     // box2d specific
     b2Body  *_pB2Body;
     float   _PTMRatio;
-    
-
 };
 
 NS_CC_EXT_END

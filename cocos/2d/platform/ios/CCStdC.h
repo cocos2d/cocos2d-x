@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +26,10 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+#include "CCPlatformMacros.h"
 #include <float.h>
 #include <math.h>
 #include <string.h>
@@ -44,4 +48,5 @@ THE SOFTWARE.
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
 
+#endif // CC_PLATFORM_IOS
 #endif  // __CC_STD_C_H__

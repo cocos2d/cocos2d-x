@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +25,9 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #ifndef __MINGW32__
 
 NS_CC_BEGIN
@@ -44,3 +48,5 @@ int gettimeofday(struct timeval * val, struct timezone *)
 NS_CC_END
 
 #endif // __MINGW32__
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

@@ -9,12 +9,13 @@
  * an address that leads to a safe crash when dereferenced.
  */
 
-#ifndef mozilla_Poison_h_
-#define mozilla_Poison_h_
+#ifndef mozilla_Poison_h
+#define mozilla_Poison_h
 
 #include "mozilla/Assertions.h"
-#include "mozilla/StandardInteger.h"
 #include "mozilla/Types.h"
+
+#include <stdint.h>
 
 MOZ_BEGIN_EXTERN_C
 
@@ -36,11 +37,11 @@ inline uintptr_t mozPoisonValue()
  */
 inline void mozWritePoison(void* aPtr, size_t aSize)
 {
-  MOZ_ASSERT((uintptr_t)aPtr % sizeof(uintptr_t) == 0, "bad alignment");
-  MOZ_ASSERT(aSize >= sizeof(uintptr_t), "poisoning this object has no effect");
   const uintptr_t POISON = mozPoisonValue();
   char* p = (char*)aPtr;
   char* limit = p + aSize;
+  MOZ_ASSERT((uintptr_t)aPtr % sizeof(uintptr_t) == 0, "bad alignment");
+  MOZ_ASSERT(aSize >= sizeof(uintptr_t), "poisoning this object has no effect");
   for (; p < limit; p += sizeof(uintptr_t)) {
     *((uintptr_t*)p) = POISON;
   }
@@ -58,4 +59,4 @@ extern MFBT_DATA uintptr_t gMozillaPoisonSize;
 
 MOZ_END_EXTERN_C
 
-#endif /* mozilla_Poison_h_ */
+#endif /* mozilla_Poison_h */

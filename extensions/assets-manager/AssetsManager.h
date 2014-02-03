@@ -30,7 +30,7 @@
 #include <mutex>
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -95,6 +95,7 @@ public:
      */
     virtual bool checkUpdate();
     
+    using Node::update;
     /* @brief Download new package if there is a new version, and uncompress downloaded zip file.
      *        Ofcourse it will set search path that stores downloaded files.
      */
@@ -141,6 +142,12 @@ public:
      */
     void setDelegate(AssetsManagerDelegateProtocol *delegate);
     
+    /**
+     * @js NA
+     * @lua NA
+     */
+    AssetsManagerDelegateProtocol* getDelegate() const { return _delegate ;}
+    
     /** @brief Sets connection time out in seconds
      */
     void setConnectionTimeout(unsigned int timeout);
@@ -159,40 +166,7 @@ protected:
     bool uncompress();
     bool createDirectory(const char *path);
     void setSearchPath();
-    void sendErrorMessage(ErrorCode code);
     void downloadAndUncompress();
-    
-private:
-    typedef struct _Message
-    {
-    public:
-        _Message() : what(0), obj(NULL){}
-        unsigned int what; // message type
-        void* obj;
-    } Message;
-    
-    class Helper : public cocos2d::Object
-    {
-    public:
-        /**
-         * @js ctor
-         */
-        Helper();
-        /**
-         * @js NA
-         * @lua NA
-         */
-        ~Helper();
-        
-        virtual void update(float dt);
-        void sendMessage(Message *msg);
-        
-    private:
-        void handleUpdateSucceed(Message *msg);
-        
-        std::list<Message*> *_messageQueue;
-        std::mutex _messageQueueMutex;
-    };
 
 private:
     /** @brief Initializes storage path.
@@ -217,7 +191,6 @@ private:
     
     void *_curl;
 
-    Helper *_schedule;
     unsigned int _connectionTimeout;
     
     AssetsManagerDelegateProtocol *_delegate; 
@@ -231,6 +204,8 @@ private:
 
 class AssetsManagerDelegateProtocol
 {
+public:
+    virtual ~AssetsManagerDelegateProtocol(){};
 public:
     /* @brief Call back function for error
        @param errorCode Type of error

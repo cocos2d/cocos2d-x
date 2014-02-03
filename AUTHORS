@@ -10,6 +10,7 @@ Core Developers:
     Qingkui Hu (samuele3hu)
     Huabing Xu (dabingnn)
     Bo Yu (boyu0)
+    Wenhai Lin(Dhilan007)
 
 
 Developers:
@@ -92,6 +93,9 @@ Developers:
     martell
         use tinyxml2 to replace libxml2
         Added Mingw-crt Support without breaking VS SDK
+        CMake support for windows.
+        Added support for x64 target of windows.
+        Added Dutch Language support.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -354,6 +358,7 @@ Developers:
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
+        DrawNode supports to draw triangle, quad bezier, cubic bezier.
 
     Jianghua (jxhgzs)
         Adding an additional transform for CCNode.
@@ -400,6 +405,7 @@ Developers:
     Zecken (gelldur)
         Fixing a profiling compilation error in CCParticleBatchNode.
         Fixing linking errors for TestCPP with libcurl on linux.
+        Fixing a bug that crash was triggered if there is not `textureFileName`section in particle plist file.
 
     flamingo (flaming0)
         Null pointer check in order to prevent crashes.
@@ -505,6 +511,8 @@ Developers:
         
     Lee, Jae-Hong (pyrasis)
         Maintainer of tizen port.
+        localStorageGetItem crashes when column text is NULL.
+        fix image bug on Android
 
     lumendes
         Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
@@ -516,6 +524,7 @@ Developers:
         Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
         fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
+        Fixed a bug that Websocket doesn't support send/receive data which larger than 4096 bytes.
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
@@ -592,9 +601,14 @@ Developers:
         Prevent nullptr access in AssetsManager
         [Android] re-introduce Cocos2dxHelper.runOnGLThread(Runnable)
         [Android] added EGL_RENDERABLE_TYPE to OpenGL attributes
+        Android: add xlargeScreens="true" to supports-screens
+        Trigger onKeyReleased only after the key has been released.
+        Makes Colors are now comparable and explicit convertible
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
+        Configuration of VAO in runtime
+        Add setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
         
     metadao
         make create_project.py more pythonic and fix some typoes
@@ -610,6 +624,7 @@ Developers:
         Added support of passing array to cc.Sequence.create and cc.Spawn.create.
         Fixed a bug that sys.localStorage.getItem() does not support non-ascii string.
         Fixed a memory leak in XMLHttpRequest.
+        Fixed a bug that wrong convention to jsval in cccolor4f_to_jsval and cccolor3b_to_jsval.
     
     Keita Obo (ktaobo)
         Avoid unnecessary object duplication for Scale9Sprite.
@@ -617,6 +632,109 @@ Developers:
     jimmystar
         Fixed a bug that cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
         
+    XiaoLongHan (kpkhxlgy0)
+        Fixed a bug that outside of keyboard can't be responded to close keyboard when using EditBox.
+        
+    lettas
+        A fix for multi-platform template.
+        
+    HoGarfield (garfield_ho)
+        Fixed a bug that CCBReader can't play sequence automatically in JSB.
+        Could not set next animation in CCBAnimationCompleted callback.
+        Fixed missing to add JSAutoCompartment when invoking JS functions from C++.
+        CCBReader: To set anchor point to 0,0 when created by loader
+        
+    lite3
+        Fixed a bug that Node's anchor point was changed after being added to ScrollView.
+        
+    superrad
+        Clear NoSuchMethodError Exception when JniHelper fails to find methodID
+        
+    Nite Luo (darkdukey)
+        Added Mouse Support For Desktop Platforms.
+        
+    ledyba
+        Fixed a bug that EventListeners can't be removed sometimes.
+        Fixed a bug that the data size has to be specified when parsing XML using TinyXML.
+        Closed X display after getting DPI on Linux.
+        
+    Luis Parravicini (luisparravicini)
+        Fixed typos in create_project.py.
+        
+    xhcnb
+        Device::setAccelerometerEnabled needs to be invoked before adding ACC listener.
+        Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
+        
+    bopohaa
+        Fixed a bug that Webp test crashes.
+        
+    lajos
+        FontTest isn't rendered correctly with custom TTF font on Mac platform.
+        
+    hulefei
+        Added gui namespace before SEL_TouchEvent.
+        
+    zhiqiangxu
+        Fixed a logic error in ControlUtils::RectUnion.
+        Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
+        
+    yinkaile (2youyouo2)
+        Maintainer of Armature Bone Animation.
+        
+    dmurtagh
+        Fixed a bug that UserDefault::getDoubleForKey() doesn't pass default value to Java.
+        
+    seobyeongky
+        Updates spine runtime.
+        Fixed a potential bug in Data's copy constructor. 
+        
+    luocker
+        Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
+        
+    omersaeed
+        Fix a bug that game will crash if connection breaks during download using AssetManager.
+        
+    SBKarr
+        AngelCode binary file format support for LabelBMFont.
+        
+    zarelaky
+        OpenAL context isn't destroyed correctly on mac and ios.
+        
+    kicktheken (Kenneth Chan)
+        Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
+        
+    andyque
+        Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
+        Fixed a bug that move assignment operator doesn't clear previous content bug.
+        Fixed the compile error of Map's getRandomObject.
+        
+    daltomi
+        Fixed a typo in Director class.
+        Removed an unnecessary boolean flag in CCFontAtlasCache.cpp.
+        
+    v1ctor
+        ControlSlider supports to set selected thumb sprite.
+        ControlButton supports to set scale ratio of touchdown state
+        
+    akof1314
+        TestCpp works by using CMake and mingw on Windows.
+        
+    Pisces000221
+        Corrected a few mistakes in the README file of project-creator.
+        Corrected a mistake in README.
+        
+    hbbalfred
+        Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
+        
+    liang8305
+        Use multiple processes according the number of cores to build android project
+        
+    pandamicro
+        Exposed SAXParser to JS, it is used for parsing XML in JS.
+        
+    hanjukim
+        Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
+    
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

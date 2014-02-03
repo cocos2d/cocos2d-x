@@ -1,12 +1,10 @@
 #ifndef _CCB_CCBSELECTORRESOLVER_H_
 #define _CCB_CCBSELECTORRESOLVER_H_
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
-#include "../GUI/CCControlExtension/CCInvocation.h"
+#include "extensions//GUI/CCControlExtension/CCInvocation.h"
 
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 #define CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
     return menu_selector(METHOD); \
@@ -27,9 +25,9 @@ class CCBSelectorResolver {
      * @lua NA
      */
     virtual ~CCBSelectorResolver() {};
-    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object * pTarget, const char* pSelectorName) = 0;
-    virtual SEL_CallFuncN onResolveCCBCCCallFuncSelector(Object * pTarget, const char* pSelectorName) { return NULL; };
-    virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName) = 0;
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget, const char* pSelectorName) = 0;
+    virtual cocos2d::SEL_CallFuncN onResolveCCBCCCallFuncSelector(cocos2d::Object * pTarget, const char* pSelectorName) { return NULL; };
+    virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char* pSelectorName) = 0;
 };
 
 
@@ -43,6 +41,6 @@ public:
     virtual CCBSelectorResolver * createNew() = 0;
 };
 
-NS_CC_EXT_END
+}
 
 #endif

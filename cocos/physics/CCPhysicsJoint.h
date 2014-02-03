@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,37 +22,52 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
-
 #ifndef __CCPHYSICS_JOINT_H__
 #define __CCPHYSICS_JOINT_H__
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
+#include "ccConfig.h"
+#if CC_USE_PHYSICS
+
+#include "CCObject.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN
 
 class PhysicsBody;
+class PhysicsWorld;
 class PhysicsJointInfo;
 class PhysicsBodyInfo;
 
 /*
  * @brief An PhysicsJoint object connects two physics bodies together.
  */
-class PhysicsJoint : public Object
+class PhysicsJoint
 {
 protected:
     PhysicsJoint();
     virtual ~PhysicsJoint() = 0;
 
 public:
-    PhysicsBody* getBodyA() { return _bodyA; }
-    PhysicsBody* getBodyB() { return _bodyB; }
-    inline int getTag() { return _tag; }
+    inline PhysicsBody* getBodyA() const { return _bodyA; }
+    inline PhysicsBody* getBodyB() const { return _bodyB; }
+    inline PhysicsWorld* getWorld() const { return _world; }
+    inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
-    inline bool isEnable() { return _enable; }
+    inline bool isEnabled() const { return _enable; }
+    /** Enable/Disable the joint */
     void setEnable(bool enable);
+    inline bool isCollisionEnabled() const { return _collisionEnable; }
+    /** Enable/disable the collision between two bodies */
+    void setCollisionEnable(bool enable);
+    /** Remove the joint from the world */
+    void removeFormWorld();
+    /** Distory the joint*/
+    static void destroy(PhysicsJoint* joint);
+    
+    /** Set the max force between two bodies */
+    void setMaxForce(float force);
+    /** Get the max force setting */
+    float getMaxForce() const;
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
@@ -60,17 +75,22 @@ protected:
     /**
      * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
      */
-    PhysicsBodyInfo* bodyInfo(PhysicsBody* body) const;
+    PhysicsBodyInfo* getBodyInfo(PhysicsBody* body) const;
+    Node* getBodyNode(PhysicsBody* body) const;
     
 protected:
     PhysicsBody* _bodyA;
     PhysicsBody* _bodyB;
+    PhysicsWorld* _world;
     PhysicsJointInfo* _info;
     bool _enable;
+    bool _collisionEnable;
+    bool _destoryMark;
     int _tag;
     
     friend class PhysicsBody;
     friend class PhysicsWorld;
+    friend class PhysicsDebugDraw;
 };
 
 /*
@@ -79,46 +99,14 @@ protected:
 class PhysicsJointFixed : public PhysicsJoint
 {
 public:
-    PhysicsJointFixed* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
     
 protected:
-    PhysicsJointFixed();
-    virtual ~PhysicsJointFixed();
-};
-
-/*
- * @brief A sliding joint allows the two bodies to slide along a chosen axis.
- */
-class PhysicsJointSliding : public PhysicsJoint
-{
-public:
-    PhysicsJointSliding* create(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
-    
-protected:
-    bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
-    
-protected:
-    PhysicsJointSliding();
-    virtual ~PhysicsJointSliding();
-};
-
-/*
- * @brief A spring joint connects the two bodies with a spring whose length is the initial distance between the two bodies.
- */
-class PhysicsJointSpring : public PhysicsJoint
-{
-public:
-    PhysicsJointSpring* create();
-    
-protected:
-    bool init();
-    
-protected:
-    PhysicsJointSpring();
-    virtual ~PhysicsJointSpring();
+    PhysicsJointFixed() {}
+    virtual ~PhysicsJointFixed() {}
 };
 
 /*
@@ -127,14 +115,24 @@ protected:
 class PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    PhysicsJointLimit* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
+    
+    Point getAnchr1() const;
+    void setAnchr1(const Point& anchr1);
+    Point getAnchr2() const;
+    void setAnchr2(const Point& anchr2);
+    float getMin() const;
+    void setMin(float min);
+    float getMax() const;
+    void setMax(float max);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float min, float max);
     
 protected:
-    PhysicsJointLimit();
-    virtual ~PhysicsJointLimit();
+    PhysicsJointLimit() {}
+    virtual ~PhysicsJointLimit() {}
 };
 
 /*
@@ -143,18 +141,177 @@ protected:
 class PhysicsJointPin : public PhysicsJoint
 {
 public:
-    static PhysicsJointPin* create(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr);
+    
+protected:
+    PhysicsJointPin() {}
+    virtual ~PhysicsJointPin() {}
+};
+
+/** Set the fixed distance with two bodies */
+class PhysicsJointDistance : public PhysicsJoint
+{
+public:
+    static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
+    
+    float getDistance() const;
+    void setDistance(float distance);
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2);
     
 protected:
-    PhysicsJointPin();
-    virtual ~PhysicsJointPin();
+    PhysicsJointDistance() {}
+    virtual ~PhysicsJointDistance() {}
+};
+
+/** Connecting two physics bodies together with a spring. */
+class PhysicsJointSpring : public PhysicsJoint
+{
+public:
+    static PhysicsJointSpring* construct(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float stiffness, float damping);
+    Point getAnchr1() const;
+    void setAnchr1(const Point& anchr1);
+    Point getAnchr2() const;
+    void setAnchr2(const Point& anchr2);
+    float getRestLength() const;
+    void setRestLength(float restLength);
+    float getStiffness() const;
+    void setStiffness(float stiffness);
+    float getDamping() const;
+    void setDamping(float damping);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& anchr1, const Point& anchr2, float stiffness, float damping);
+    
+protected:
+    PhysicsJointSpring() {}
+    virtual ~PhysicsJointSpring() {}
+};
+
+/** Attach body a to a line, and attach body b to a dot */
+class PhysicsJointGroove : public PhysicsJoint
+{
+public:
+    static PhysicsJointGroove* construct(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr2);
+    
+    Point getGrooveA() const;
+    void setGrooveA(const Point& grooveA);
+    Point getGrooveB() const;
+    void setGrooveB(const Point& grooveB);
+    Point getAnchr2() const;
+    void setAnchr2(const Point& anchr2);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, const Point& grooveA, const Point& grooveB, const Point& anchr);
+    
+protected:
+    PhysicsJointGroove() {}
+    virtual ~PhysicsJointGroove() {}
+};
+
+/** Likes a spring joint, but works with rotary */
+class PhysicsJointRotarySpring : public PhysicsJoint
+{
+public:
+    static PhysicsJointRotarySpring* construct(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping);
+    
+    float getRestAngle() const;
+    void setRestAngle(float restAngle);
+    float getStiffness() const;
+    void setStiffness(float stiffness);
+    float getDamping() const;
+    void setDamping(float damping);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping);
+    
+protected:
+    PhysicsJointRotarySpring() {}
+    virtual ~PhysicsJointRotarySpring() {}
+};
+
+/** Likes a limit joint, but works with rotary */
+class PhysicsJointRotaryLimit : public PhysicsJoint
+{
+public:
+    static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b, float min, float max);
+    static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b);
+    
+    float getMin() const;
+    void setMin(float min);
+    float getMax() const;
+    void setMax(float max);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, float min, float max);
+    
+protected:
+    PhysicsJointRotaryLimit() {}
+    virtual ~PhysicsJointRotaryLimit() {}
+};
+
+/** Works like a socket wrench. */
+class PhysicsJointRatchet : public PhysicsJoint
+{
+public:
+    static PhysicsJointRatchet* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
+    
+    float getAngle() const;
+    void setAngle(float angle);
+    float getPhase() const;
+    void setPhase(float phase);
+    float getRatchet() const;
+    void setRatchet(float ratchet);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
+    
+protected:
+    PhysicsJointRatchet() {}
+    virtual ~PhysicsJointRatchet() {}
+};
+
+/** Keeps the angular velocity ratio of a pair of bodies constant. */
+class PhysicsJointGear : public PhysicsJoint
+{
+public:
+    static PhysicsJointGear* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratio);
+    
+    float getPhase() const;
+    void setPhase(float phase);
+    float getRatio() const;
+    void setRatio(float ratchet);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, float phase, float ratio);
+    
+protected:
+    PhysicsJointGear() {}
+    virtual ~PhysicsJointGear() {}
+};
+
+/** Keeps the relative angular velocity of a pair of bodies constant */
+class PhysicsJointMotor : public PhysicsJoint
+{
+public:
+    static PhysicsJointMotor* construct(PhysicsBody* a, PhysicsBody* b, float rate);
+    
+    float getRate() const;
+    void setRate(float rate);
+    
+protected:
+    bool init(PhysicsBody* a, PhysicsBody* b, float rate);
+    
+protected:
+    PhysicsJointMotor() {}
+    virtual ~PhysicsJointMotor() {}
 };
 
 NS_CC_END
 
-#endif // __CCPHYSICS_JOINT_H__
-
 #endif // CC_USE_PHYSICS
+#endif // __CCPHYSICS_JOINT_H__

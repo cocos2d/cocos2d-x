@@ -1,5 +1,6 @@
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +22,15 @@
  */
 
 #include "CCDrawNode.h"
-#include "shaders/CCShaderCache.h"
+#include "CCShaderCache.h"
 #include "CCGL.h"
-#include "support/CCNotificationCenter.h"
 #include "CCEventType.h"
+#include "CCConfiguration.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "CCDirector.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -100,7 +106,7 @@ DrawNode::DrawNode()
 , _vbo(0)
 , _bufferCapacity(0)
 , _bufferCount(0)
-, _buffer(NULL)
+, _buffer(nullptr)
 , _dirty(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -109,35 +115,32 @@ DrawNode::DrawNode()
 DrawNode::~DrawNode()
 {
     free(_buffer);
-    _buffer = NULL;
+    _buffer = nullptr;
     
     glDeleteBuffers(1, &_vbo);
     _vbo = 0;
     
-#if CC_TEXTURE_ATLAS_USE_VAO      
-    glDeleteVertexArrays(1, &_vao);
-    GL::bindVAO(0);
-    _vao = 0;
-#endif
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glDeleteVertexArrays(1, &_vao);
+        GL::bindVAO(0);
+        _vao = 0;
+    }
 }
 
 DrawNode* DrawNode::create()
 {
-    DrawNode* pRet = new DrawNode();
-    if (pRet && pRet->init())
+    DrawNode* ret = new DrawNode();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
     
-    return pRet;
+    return ret;
 }
 
 void DrawNode::ensureCapacity(int count)
@@ -159,10 +162,11 @@ bool DrawNode::init()
     
     ensureCapacity(512);
     
-#if CC_TEXTURE_ATLAS_USE_VAO    
-    glGenVertexArrays(1, &_vao);
-    GL::bindVAO(_vao);
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glGenVertexArrays(1, &_vao);
+        GL::bindVAO(_vao);
+    }
     
     glGenBuffers(1, &_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -179,9 +183,10 @@ bool DrawNode::init()
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-#if CC_TEXTURE_ATLAS_USE_VAO 
-    GL::bindVAO(0);
-#endif
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(0);
+    }
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -189,10 +194,12 @@ bool DrawNode::init()
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Need to listen the event only when not use batchnode, because it will use VBO
-    NotificationCenter::getInstance()->addObserver(this,
-                                                   callfuncO_selector(DrawNode::listenBackToForeground),
-                                                   EVNET_COME_TO_FOREGROUND,
-                                                   NULL);
+    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+    /** listen the event that coming to foreground on Android */
+        this->init();
+    });
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
     
     return true;
@@ -206,21 +213,24 @@ void DrawNode::render()
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
         _dirty = false;
     }
-#if CC_TEXTURE_ATLAS_USE_VAO     
-    GL::bindVAO(_vao);
-#else
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(_vao);
+    }
+    else
+    {
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    // vertex
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        // vertex
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
     
-    // color
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+        // color
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
     
-    // texcood
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-#endif
+        // texcood
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
+    }
 
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -231,9 +241,16 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void DrawNode::onDraw()
+{
     CC_NODE_DRAW_SETUP();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-
+    
     render();
 }
 
@@ -331,13 +348,15 @@ void DrawNode::drawSegment(const Point &from, const Point &to, float radius, con
 	_dirty = true;
 }
 
-void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
+void DrawNode::drawPolygon(Point *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
 {
+    CCASSERT(count >= 0, "invalid count value");
+
     struct ExtrudeVerts {Vertex2F offset, n;};
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
 	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
 	
-	for(unsigned int i = 0; i < count; i++)
+	for (int i = 0; i < count; i++)
     {
 		Vertex2F v0 = __v2f(verts[(i-1+count)%count]);
 		Vertex2F v1 = __v2f(verts[i]);
@@ -353,15 +372,15 @@ void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fill
 	
 	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
 	
-	unsigned int triangle_count = 3*count - 2;
-	unsigned int vertex_count = 3*triangle_count;
+	auto triangle_count = 3*count - 2;
+	auto vertex_count = 3*triangle_count;
     ensureCapacity(vertex_count);
 	
 	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 	V2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	float inset = (outline == false ? 0.5 : 0.0);
-	for(unsigned int i = 0; i < count-2; i++)
+	for (int i = 0; i < count-2; i++)
     {
 		Vertex2F v0 = v2fsub(__v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
 		Vertex2F v1 = v2fsub(__v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
@@ -376,7 +395,7 @@ void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fill
 		*cursor++ = tmp;
 	}
 	
-	for(unsigned int i = 0; i < count; i++)
+	for(int i = 0; i < count; i++)
     {
 		int j = (i+1)%count;
 		Vertex2F v0 = __v2f(verts[i]);
@@ -437,6 +456,86 @@ void DrawNode::drawPolygon(Point *verts, unsigned int count, const Color4F &fill
     free(extrude);
 }
 
+void DrawNode::drawTriangle(const Point &p1, const Point &p2, const Point &p3, const Color4F &color)
+{
+    unsigned int vertex_count = 2*3;
+    ensureCapacity(vertex_count);
+
+    Color4B col = Color4B(color);
+    V2F_C4B_T2F a = {Vertex2F(p1.x, p1.y), col, Tex2F(0.0, 0.0) };
+    V2F_C4B_T2F b = {Vertex2F(p2.x, p2.y), col, Tex2F(0.0,  0.0) };
+    V2F_C4B_T2F c = {Vertex2F(p3.x, p3.y), col, Tex2F(0.0,  0.0) };
+
+    V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+    V2F_C4B_T2F_Triangle triangle = {a, b, c};
+    triangles[0] = triangle;
+
+    _bufferCount += vertex_count;
+    _dirty = true;
+}
+
+void DrawNode::drawCubicBezier(const Point& from, const Point& control1, const Point& control2, const Point& to, unsigned int segments, const Color4F &color)
+{
+    unsigned int vertex_count = (segments + 1) * 3;
+    ensureCapacity(vertex_count);
+
+    Tex2F texCoord = Tex2F(0.0, 0.0);
+    Color4B col = Color4B(color);
+    Vertex2F vertex;
+    Vertex2F firstVertex = Vertex2F(from.x, from.y);
+    Vertex2F lastVertex = Vertex2F(to.x, to.y);
+
+    float t = 0;
+    for(unsigned int i = segments + 1; i > 0; i--)
+    {
+        float x = powf(1 - t, 3) * from.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * to.x;
+        float y = powf(1 - t, 3) * from.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * to.y;
+        vertex = Vertex2F(x, y);
+
+        V2F_C4B_T2F a = {firstVertex, col, texCoord };
+        V2F_C4B_T2F b = {lastVertex, col, texCoord };
+        V2F_C4B_T2F c = {vertex, col, texCoord };
+        V2F_C4B_T2F_Triangle triangle = {a, b, c};
+        ((V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount))[0] = triangle;
+
+        lastVertex = vertex;
+        t += 1.0f / segments;
+        _bufferCount += 3;
+    }
+    _dirty = true;
+}
+
+void DrawNode::drawQuadraticBezier(const Point& from, const Point& control, const Point& to, unsigned int segments, const Color4F &color)
+{
+    unsigned int vertex_count = (segments + 1) * 3;
+    ensureCapacity(vertex_count);
+
+    Tex2F texCoord = Tex2F(0.0, 0.0);
+    Color4B col = Color4B(color);
+    Vertex2F vertex;
+    Vertex2F firstVertex = Vertex2F(from.x, from.y);
+    Vertex2F lastVertex = Vertex2F(to.x, to.y);
+
+    float t = 0;
+    for(unsigned int i = segments + 1; i > 0; i--)
+    {
+        float x = powf(1 - t, 2) * from.x + 2.0f * (1 - t) * t * control.x + t * t * to.x;
+        float y = powf(1 - t, 2) * from.y + 2.0f * (1 - t) * t * control.y + t * t * to.y;
+        vertex = Vertex2F(x, y);
+
+        V2F_C4B_T2F a = {firstVertex, col, texCoord };
+        V2F_C4B_T2F b = {lastVertex, col, texCoord };
+        V2F_C4B_T2F c = {vertex, col, texCoord };
+        V2F_C4B_T2F_Triangle triangle = {a, b, c};
+        ((V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount))[0] = triangle;
+
+        lastVertex = vertex;
+        t += 1.0f / segments;
+        _bufferCount += 3;
+    }
+    _dirty = true;
+}
+
 void DrawNode::clear()
 {
     _bufferCount = 0;
@@ -451,13 +550,6 @@ const BlendFunc& DrawNode::getBlendFunc() const
 void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
-}
-
-/** listen the event that coming to foreground on Android
- */
-void DrawNode::listenBackToForeground(Object *obj)
-{
-    init();
 }
 
 NS_CC_END

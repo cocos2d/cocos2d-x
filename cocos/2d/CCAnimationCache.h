@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,9 +27,9 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_CACHE_H__
 #define __CC_ANIMATION_CACHE_H__
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCDictionary.h"
-
+#include "CCObject.h"
+#include "CCMap.h"
+#include "CCValue.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -76,35 +77,36 @@ public:
 
     /** Adds a Animation with a name.
     */
-    void addAnimation(Animation *animation, const char * name);
+    void addAnimation(Animation *animation, const std::string& name);
 
     /** Deletes a Animation from the cache.
      
      */
-    void removeAnimation(const char* name);
+    void removeAnimation(const std::string& name);
     /** @deprecated. Use removeAnimation() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const char* name){ removeAnimation(name);}
+    CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const std::string& name){ removeAnimation(name);}
 
     /** Returns a Animation that was previously added.
     If the name is not found it will return nil.
     You should retain the returned copy if you are going to use it.
     */
-    Animation* getAnimation(const char* name);
+    Animation* getAnimation(const std::string& name);
     /**
      @deprecated. Use getAnimation() instead
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const char* name){ return getAnimation(name); }
+    CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const std::string& name){ return getAnimation(name); }
 
     /** Adds an animation from an NSDictionary
      Make sure that the frames were previously loaded in the SpriteFrameCache.
+     @param plist The path of the relative file,it use to find the plist path for load SpriteFrames.
      @since v1.1
      */
-    void addAnimationsWithDictionary(Dictionary* dictionary);
+    void addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist);
 
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the SpriteFrameCache.
@@ -112,15 +114,15 @@ public:
      * @js addAnimations
      * @lua addAnimations
      */
-    void addAnimationsWithFile(const char* plist);
+    void addAnimationsWithFile(const std::string& plist);
 
 private:
-    void parseVersion1(Dictionary* animations);
-    void parseVersion2(Dictionary* animations);
+    void parseVersion1(const ValueMap& animations);
+    void parseVersion2(const ValueMap& animations);
 
 private:
-    Dictionary* _animations;
-    static AnimationCache* s_pSharedAnimationCache;
+    Map<std::string, Animation*> _animations;
+    static AnimationCache* s_sharedAnimationCache;
 };
 
 // end of sprite_nodes group

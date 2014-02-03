@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{811C0DAB-7B96-4BD3-A154-B7572B58E4AB}</ProjectGuid>
+    <RootNamespace>libCocosBuilder</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)extensions;$(EngineRoot)cocos\audio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)extensions;$(EngineRoot)cocos\audio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CCBAnimationManager.cpp" />
+    <ClCompile Include="..\CCBFileLoader.cpp" />
+    <ClCompile Include="..\CCBKeyframe.cpp" />
+    <ClCompile Include="..\CCBReader.cpp" />
+    <ClCompile Include="..\CCBSequence.cpp" />
+    <ClCompile Include="..\CCBSequenceProperty.cpp" />
+    <ClCompile Include="..\CCControlButtonLoader.cpp" />
+    <ClCompile Include="..\CCControlLoader.cpp" />
+    <ClCompile Include="..\CCLabelBMFontLoader.cpp" />
+    <ClCompile Include="..\CCLabelTTFLoader.cpp" />
+    <ClCompile Include="..\CCLayerColorLoader.cpp" />
+    <ClCompile Include="..\CCLayerGradientLoader.cpp" />
+    <ClCompile Include="..\CCLayerLoader.cpp" />
+    <ClCompile Include="..\CCMenuItemImageLoader.cpp" />
+    <ClCompile Include="..\CCMenuItemLoader.cpp" />
+    <ClCompile Include="..\CCNode+CCBRelativePositioning.cpp" />
+    <ClCompile Include="..\CCNodeLoader.cpp" />
+    <ClCompile Include="..\CCNodeLoaderLibrary.cpp" />
+    <ClCompile Include="..\CCParticleSystemQuadLoader.cpp" />
+    <ClCompile Include="..\CCScale9SpriteLoader.cpp" />
+    <ClCompile Include="..\CCScrollViewLoader.cpp" />
+    <ClCompile Include="..\CCSpriteLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CCBAnimationManager.h" />
+    <ClInclude Include="..\CCBFileLoader.h" />
+    <ClInclude Include="..\CCBKeyframe.h" />
+    <ClInclude Include="..\CCBMemberVariableAssigner.h" />
+    <ClInclude Include="..\CCBReader.h" />
+    <ClInclude Include="..\CCBSelectorResolver.h" />
+    <ClInclude Include="..\CCBSequence.h" />
+    <ClInclude Include="..\CCBSequenceProperty.h" />
+    <ClInclude Include="..\CCControlButtonLoader.h" />
+    <ClInclude Include="..\CCControlLoader.h" />
+    <ClInclude Include="..\CCLabelBMFontLoader.h" />
+    <ClInclude Include="..\CCLabelTTFLoader.h" />
+    <ClInclude Include="..\CCLayerColorLoader.h" />
+    <ClInclude Include="..\CCLayerGradientLoader.h" />
+    <ClInclude Include="..\CCLayerLoader.h" />
+    <ClInclude Include="..\CCMenuItemImageLoader.h" />
+    <ClInclude Include="..\CCMenuItemLoader.h" />
+    <ClInclude Include="..\CCMenuLoader.h" />
+    <ClInclude Include="..\CCNode+CCBRelativePositioning.h" />
+    <ClInclude Include="..\CCNodeLoader.h" />
+    <ClInclude Include="..\CCNodeLoaderLibrary.h" />
+    <ClInclude Include="..\CCNodeLoaderListener.h" />
+    <ClInclude Include="..\CCParticleSystemQuadLoader.h" />
+    <ClInclude Include="..\CCScale9SpriteLoader.h" />
+    <ClInclude Include="..\CCScrollViewLoader.h" />
+    <ClInclude Include="..\CCSpriteLoader.h" />
+    <ClInclude Include="..\CocosBuilder.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

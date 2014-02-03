@@ -35,7 +35,6 @@
 NS_CC_EXT_BEGIN
 
 class TableView;
-class ArrayForObjectSorting;
 
 /**
  * Sole purpose of this delegate is to single touch event in this version.
@@ -106,7 +105,7 @@ public:
      * @param idx the index of a cell to get a size
      * @return size of a cell at given index
      */
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx) {
+    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) {
         return cellSizeForTable(table);
     };
     /**
@@ -124,13 +123,13 @@ public:
      * @param idx index to search for a cell
      * @return cell found at idx
      */
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx) = 0;
+    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) = 0;
     /**
      * Returns number of cells in a given table view.
      *
      * @return number of cells
      */
-    virtual unsigned int numberOfCellsInTableView(TableView *table) = 0;
+    virtual ssize_t numberOfCellsInTableView(TableView *table) = 0;
 
 };
 
@@ -149,6 +148,10 @@ public:
         TOP_DOWN,
         BOTTOM_UP
     };
+    
+    /** Empty contructor of TableView */
+    static TableView* create();
+    
     /**
      * An intialized table view object
      *
@@ -229,19 +232,19 @@ public:
      *
      * @param idx index to find a cell
      */
-    void updateCellAtIndex(unsigned int idx);
+    void updateCellAtIndex(ssize_t idx);
     /**
      * Inserts a new cell at a given index
      *
      * @param idx location to insert
      */
-    void insertCellAtIndex(unsigned int idx);
+    void insertCellAtIndex(ssize_t idx);
     /**
      * Removes a cell at a given index
      *
      * @param idx index to find a cell
      */
-    void removeCellAtIndex(unsigned int idx);
+    void removeCellAtIndex(ssize_t idx);
     /**
      * reloads data from data source.  the view will be refreshed.
      */
@@ -259,7 +262,7 @@ public:
      * @param idx index
      * @return a cell at a given index
      */
-    TableViewCell *cellAtIndex(unsigned int idx);
+    TableViewCell *cellAtIndex(ssize_t idx);
 
     // Overrides
     virtual void scrollViewDidScroll(ScrollView* view) override;
@@ -270,6 +273,17 @@ public:
     virtual void onTouchCancelled(Touch *pTouch, Event *pEvent) override;
 
 protected:
+    long __indexFromOffset(Point offset);
+    long _indexFromOffset(Point offset);
+    Point __offsetFromIndex(ssize_t index);
+    Point _offsetFromIndex(ssize_t index);
+
+    void _moveCellOutOfSight(TableViewCell *cell);
+    void _setIndexForCell(ssize_t index, TableViewCell *cell);
+    void _addCellIfNecessary(TableViewCell * cell);
+
+    void _updateCellPositions();
+
 
     TableViewCell *_touchedCell;
     /**
@@ -280,7 +294,7 @@ protected:
     /**
      * index set to query the indexes of the cells used.
      */
-    std::set<unsigned int>* _indices;
+    std::set<ssize_t>* _indices;
 
     /**
      * vector with all cell positions
@@ -290,11 +304,11 @@ protected:
     /**
      * cells that are currently in the table
      */
-    ArrayForObjectSorting* _cellsUsed;
+    Vector<TableViewCell*> _cellsUsed;
     /**
      * free list of cells
      */
-    ArrayForObjectSorting* _cellsFreed;
+    Vector<TableViewCell*> _cellsFreed;
     /**
      * weak link to the data source object
      */
@@ -304,18 +318,10 @@ protected:
      */
     TableViewDelegate* _tableViewDelegate;
 
-	Direction _oldDirection;
+    Direction _oldDirection;
 
-    int __indexFromOffset(Point offset);
-    unsigned int _indexFromOffset(Point offset);
-    Point __offsetFromIndex(unsigned int index);
-    Point _offsetFromIndex(unsigned int index);
+    bool _isUsedCellsDirty;
 
-    void _moveCellOutOfSight(TableViewCell *cell);
-    void _setIndexForCell(unsigned int index, TableViewCell *cell);
-    void _addCellIfNecessary(TableViewCell * cell);
-
-    void _updateCellPositions();
 public:
     void _updateContentSize();
 

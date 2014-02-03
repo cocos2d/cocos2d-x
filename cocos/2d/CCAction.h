@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,9 +28,9 @@ THE SOFTWARE.
 #ifndef __ACTIONS_CCACTION_H__
 #define __ACTIONS_CCACTION_H__
 
-#include "cocoa/CCObject.h"
-#include "cocoa/CCGeometry.h"
-#include "platform/CCPlatformMacros.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -47,19 +48,10 @@ public:
     /// Default tag used for all the actions
     static const int INVALID_TAG = -1;
     /**
-     * @js ctor
-     */
-    Action(void);
-    /**
      * @js NA
      * @lua NA
      */
-    virtual ~Action(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    const char* description() const;
+    virtual std::string description() const;
 
 	/** returns a clone of action */
 	virtual Action* clone() const = 0;
@@ -68,7 +60,7 @@ public:
 	virtual Action* reverse() const = 0;
 
     //! return true if the action has finished
-    virtual bool isDone(void) const;
+    virtual bool isDone() const;
 
     //! called before the action start. It will also set the target.
     virtual void startWithTarget(Node *target);
@@ -77,7 +69,7 @@ public:
     called after the action has finished. It will set the 'target' to nil.
     IMPORTANT: You should never call "[action stop]" manually. Instead, use: "target->stopAction(action);"
     */
-    virtual void stop(void);
+    virtual void stop();
 
     //! called every frame with it's delta time. DON'T override unless you know what you are doing.
     virtual void step(float dt);
@@ -92,22 +84,25 @@ public:
     */
     virtual void update(float time);
     
-    inline Node* getTarget(void) const { return _target; }
+    inline Node* getTarget() const { return _target; }
     /** The action will modify the target properties. */
     inline void setTarget(Node *target) { _target = target; }
     
-    inline Node* getOriginalTarget(void) const { return _originalTarget; }
+    inline Node* getOriginalTarget() const { return _originalTarget; }
     /** Set the original target, since target can be nil.
     Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
     The target is 'assigned', it is not 'retained'.
     @since v0.8.2
     */
-    inline void setOriginalTarget(Node *pOriginalTarget) { _originalTarget = pOriginalTarget; }
+    inline void setOriginalTarget(Node *originalTarget) { _originalTarget = originalTarget; }
 
-    inline int getTag(void) const { return _tag; }
-    inline void setTag(int nTag) { _tag = nTag; }
+    inline int getTag() const { return _tag; }
+    inline void setTag(int tag) { _tag = tag; }
 
 protected:
+    Action();
+    virtual ~Action();
+
     Node    *_originalTarget;
     /** The "target".
     The target will be set with the 'startWithTarget' method.
@@ -117,6 +112,9 @@ protected:
     Node    *_target;
     /** The action tag. An identifier of the action */
     int     _tag;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Action);
 };
 
 /** 
@@ -131,19 +129,8 @@ protected:
 class CC_DLL FiniteTimeAction : public Action
 {
 public:
-    /**
-     * @js ctor
-     */
-    FiniteTimeAction()
-	: _duration(0)
-    {}
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~FiniteTimeAction(){}
     //! get duration in seconds of the action
-    inline float getDuration(void) const { return _duration; }
+    inline float getDuration() const { return _duration; }
     //! set duration in seconds of the action
     inline void setDuration(float duration) { _duration = duration; }
 
@@ -154,8 +141,16 @@ public:
 	virtual FiniteTimeAction* clone() const override = 0;
 
 protected:
+    FiniteTimeAction()
+	: _duration(0)
+    {}
+    virtual ~FiniteTimeAction(){}
+
     //! duration in seconds
     float _duration;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(FiniteTimeAction);
 };
 
 class ActionInterval;
@@ -171,25 +166,14 @@ class CC_DLL Speed : public Action
 {
 public:
     /** create the action */
-    static Speed* create(ActionInterval* pAction, float fSpeed);
-    /**
-     * @js ctor
-     */
-    Speed();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Speed(void);
+    static Speed* create(ActionInterval* action, float speed);
 
     inline float getSpeed(void) const { return _speed; }
     /** alter the speed of the inner function in runtime */
-    inline void setSpeed(float fSpeed) { _speed = fSpeed; }
+    inline void setSpeed(float speed) { _speed = speed; }
 
-    /** initializes the action */
-    bool initWithAction(ActionInterval *pAction, float fSpeed);
 
-    void setInnerAction(ActionInterval *pAction);
+    void setInnerAction(ActionInterval *action);
 
     inline ActionInterval* getInnerAction() const { return _innerAction; }
 
@@ -201,11 +185,19 @@ public:
     virtual void startWithTarget(Node* target) override;
     virtual void stop() override;
     virtual void step(float dt) override;
-    virtual bool isDone(void) const  override;
+    virtual bool isDone() const  override;
 
 protected:
+    Speed();
+    virtual ~Speed(void);
+    /** initializes the action */
+    bool initWithAction(ActionInterval *action, float speed);
+
     float _speed;
     ActionInterval *_innerAction;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Speed);
 };
 
 /** 
@@ -230,29 +222,39 @@ public:
      *              with no boundary.
      */
     static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
+
+    inline bool isBoundarySet() const { return _boundarySet; }
+    /** alter behavior - turn on/off boundary */
+    inline void setBoudarySet(bool value) { _boundarySet = value; }
+
+    //
+    // Override
+    //
+	virtual Follow* clone() const override;
+	virtual Follow* reverse() const override;
+    virtual void step(float dt) override;
+    virtual bool isDone() const override;
+    virtual void stop() override;
+
+protected:
     /**
      * @js ctor
      */
     Follow()
-		: _followedNode(NULL)
-        , _boundarySet(false)
-        , _boundaryFullyCovered(false)        
-        , _leftBoundary(0.0)
-        , _rightBoundary(0.0)
-        , _topBoundary(0.0)
-        , _bottomBoundary(0.0)
-		, _worldRect(Rect::ZERO)
+    : _followedNode(nullptr)
+    , _boundarySet(false)
+    , _boundaryFullyCovered(false)
+    , _leftBoundary(0.0)
+    , _rightBoundary(0.0)
+    , _topBoundary(0.0)
+    , _bottomBoundary(0.0)
+    , _worldRect(Rect::ZERO)
     {}
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~Follow(void);
-    
-    inline bool isBoundarySet(void) const { return _boundarySet; }
-    /** alter behavior - turn on/off boundary */
-    inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
-
+    virtual ~Follow();
     /**
      * Initializes the action with a set boundary or with no boundary.
      *
@@ -262,16 +264,6 @@ public:
      */
     bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
 
-    //
-    // Override
-    //
-	virtual Follow* clone() const override;
-	virtual Follow* reverse() const override;
-    virtual void step(float dt) override;
-    virtual bool isDone(void) const override;
-    virtual void stop(void) override;
-
-protected:
     // node to follow
     Node *_followedNode;
 
@@ -292,6 +284,8 @@ protected:
     float _bottomBoundary;
 	Rect _worldRect;
 
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Follow);
 };
 
 // end of actions group

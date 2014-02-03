@@ -4,8 +4,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef jsclist_h___
-#define jsclist_h___
+#ifndef jsclist_h
+#define jsclist_h
 
 #include "jstypes.h"
 
@@ -104,4 +104,4 @@ typedef struct JSCListStr {
 #define JS_INIT_STATIC_CLIST(_l) \
     {(_l), (_l)}
 
-#endif /* jsclist_h___ */
+#endif /* jsclist_h */

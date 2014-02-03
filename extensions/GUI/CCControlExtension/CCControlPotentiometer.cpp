@@ -26,7 +26,6 @@
  */
 
 #include "CCControlPotentiometer.h"
-#include "cocos2d.h"
 
 NS_CC_EXT_BEGIN
 
@@ -76,8 +75,6 @@ bool ControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite*
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
-
         setProgressTimer(progressTimer);
         setThumbSprite(thumbSprite);
         thumbSprite->setPosition(progressTimer->getPosition());

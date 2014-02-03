@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,15 +26,17 @@
 #ifndef __HTTP_REQUEST_H__
 #define __HTTP_REQUEST_H__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "CCPlatformMacros.h"
+#include "CCObject.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace network {
 
 class HttpClient;
 class HttpResponse;
-typedef void (Object::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
-#define httpresponse_selector(_SELECTOR) (cocos2d::extension::SEL_HttpResponse)(&_SELECTOR)
+typedef void (cocos2d::Object::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
+#define httpresponse_selector(_SELECTOR) (cocos2d::network::SEL_HttpResponse)(&_SELECTOR)
 
 /** 
  @brief defines the object which users must packed for HttpClient::send(HttpRequest*) method.
@@ -41,7 +44,7 @@ typedef void (Object::*SEL_HttpResponse)(HttpClient* client, HttpResponse* respo
  @since v2.0.2
  */
 
-class HttpRequest : public Object
+class HttpRequest : public cocos2d::Object
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
@@ -81,7 +84,7 @@ public:
     };
     
     /** Override autorelease method to avoid developers to call it */
-    Object* autorelease(void)
+    cocos2d::Object* autorelease(void)
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
                  therefore, autorelease is forbidden here");
@@ -124,10 +127,13 @@ public:
     /** Get the request data pointer back */
     inline char* getRequestData()
     {
-        return &(_requestData.front());
+        if(_requestData.size() != 0)
+            return &(_requestData.front());
+
+        return nullptr;
     }
     /** Get the size of request data back */
-    inline int getRequestDataSize()
+    inline ssize_t getRequestDataSize()
     {
         return _requestData.size();
     }
@@ -163,12 +169,12 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Object* pTarget, SEL_CallFuncND pSelector)
+    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(cocos2d::Object* pTarget, cocos2d::SEL_CallFuncND pSelector)
     {
         setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
     }
 
-    inline void setResponseCallback(Object* pTarget, SEL_HttpResponse pSelector)
+    inline void setResponseCallback(cocos2d::Object* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -179,7 +185,7 @@ public:
         }
     }    
     /** Get the target of callback selector funtion, mainly used by HttpClient */
-    inline Object* getTarget()
+    inline cocos2d::Object* getTarget()
     {
         return _pTarget;
     }
@@ -192,7 +198,7 @@ public:
         _prxy( SEL_HttpResponse cb ) :_cb(cb) {}
         ~_prxy(){};
         operator SEL_HttpResponse() const { return _cb; }
-        CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
+        CC_DEPRECATED_ATTRIBUTE operator cocos2d::SEL_CallFuncND()   const { return (cocos2d::SEL_CallFuncND) _cb; }
     protected:
         SEL_HttpResponse _cb;
     };
@@ -221,12 +227,14 @@ protected:
     std::string                 _url;            /// target url that this request is sent to
     std::vector<char>           _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    Object*          _pTarget;        /// callback target of pSelector function
+    cocos2d::Object*          _pTarget;        /// callback target of pSelector function
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
     void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers
 };
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif //__HTTP_REQUEST_H__

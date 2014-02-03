@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <EngineRoot>$(MSBuildThisFileDirectory)..\..\</EngineRoot>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\2d;$(EngineRoot)cocos\2d\renderer;$(EngineRoot)cocos\gui;$(EngineRoot)cocos\base;$(EngineRoot)cocos\physics;$(EngineRoot)cocos\math\kazmath\include;$(EngineRoot)cocos\2d\platform\win32;$(EngineRoot)cocos\2d\platform\desktop;$(EngineRoot)external\glfw3\include\win32;$(EngineRoot)external\win32-specific\gles\include\OGLES</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="EngineRoot">
+      <Value>$(EngineRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

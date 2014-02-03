@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +25,9 @@ THE SOFTWARE.
 
 #ifndef __CCGL_H__
 #define __CCGL_H__
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
@@ -61,5 +65,7 @@ extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
 #define glBindVertexArrayOES glBindVertexArrayOESEXT
 #define glDeleteVertexArraysOES glDeleteVertexArraysOESEXT
 
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #endif // __CCGL_H__

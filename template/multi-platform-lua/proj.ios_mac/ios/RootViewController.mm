@@ -24,7 +24,8 @@
  ****************************************************************************/
 
 #import "RootViewController.h"
-
+#import "cocos2d.h"
+#import "EAGLView.h"
 
 @implementation RootViewController
 
@@ -66,6 +67,14 @@
 
 - (BOOL) shouldAutorotate {
     return YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+	CGSize s = CGSizeMake([[CCEAGLView sharedEGLView] getWidth], [[CCEAGLView sharedEGLView] getHeight]);
+
+	cocos2d::Application::getInstance()->applicationScreenSizeChanged((int) s.width, (int) s.height);
 }
 
 //fix not hide status on ios7

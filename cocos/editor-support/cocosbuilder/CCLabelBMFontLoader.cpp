@@ -1,8 +1,8 @@
 #include "CCLabelBMFontLoader.h"
 
+using namespace cocos2d;
 
-
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 #define PROPERTY_COLOR "color"
 #define PROPERTY_OPACITY "opacity"
@@ -50,4 +50,4 @@ void LabelBMFontLoader::onHandlePropTypeText(Node * pNode, Node * pParent, const
     }
 }
 
-NS_CC_EXT_END
+}

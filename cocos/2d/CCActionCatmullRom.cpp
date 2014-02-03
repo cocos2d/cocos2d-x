@@ -1,11 +1,8 @@
 /*
- * Copyright (c) 2010-2012 cocos2d-x.org
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- *
  * Copyright (c) 2008 Radu Gruian
- *
  * Copyright (c) 2011 Vit Valentin
- *
+ * Copyright (c) 2012 cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,27 +40,27 @@ NS_CC_BEGIN;
  *  Implementation of PointArray
  */
 
-PointArray* PointArray::create(unsigned int capacity)
+PointArray* PointArray::create(ssize_t capacity)
 {
-    PointArray* ret = new PointArray();
-    if (ret)
+    PointArray* pointArray = new PointArray();
+    if (pointArray)
     {
-        if (ret->initWithCapacity(capacity))
+        if (pointArray->initWithCapacity(capacity))
         {
-            ret->autorelease();
+            pointArray->autorelease();
         }
         else 
         {
-            delete ret;
-            ret = NULL;
+            delete pointArray;
+            pointArray = nullptr;
         }
     }
 
-    return ret;
+    return pointArray;
 }
 
 
-bool PointArray::initWithCapacity(unsigned int capacity)
+bool PointArray::initWithCapacity(ssize_t capacity)
 {
     _controlPoints = new vector<Point*>();
     
@@ -99,7 +96,7 @@ PointArray::~PointArray()
     delete _controlPoints;
 }
 
-PointArray::PointArray() :_controlPoints(NULL){}
+PointArray::PointArray() :_controlPoints(nullptr){}
 
 const std::vector<Point*>* PointArray::getControlPoints() const
 {
@@ -108,7 +105,7 @@ const std::vector<Point*>* PointArray::getControlPoints() const
 
 void PointArray::setControlPoints(vector<Point*> *controlPoints)
 {
-    CCASSERT(controlPoints != NULL, "control points should not be NULL");
+    CCASSERT(controlPoints != nullptr, "control points should not be nullptr");
     
     // delete old points
     vector<Point*>::iterator iter;
@@ -126,19 +123,19 @@ void PointArray::addControlPoint(Point controlPoint)
     _controlPoints->push_back(new Point(controlPoint.x, controlPoint.y));
 }
 
-void PointArray::insertControlPoint(Point &controlPoint, unsigned int index)
+void PointArray::insertControlPoint(Point &controlPoint, ssize_t index)
 {
     Point *temp = new Point(controlPoint.x, controlPoint.y);
     _controlPoints->insert(_controlPoints->begin() + index, temp);
 }
 
-Point PointArray::getControlPointAtIndex(unsigned int index)
+Point PointArray::getControlPointAtIndex(ssize_t index)
 {
     index = MIN(_controlPoints->size()-1, MAX(index, 0));
     return *(_controlPoints->at(index));
 }
 
-void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, unsigned int index)
+void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, ssize_t index)
 {
 
     Point *temp = _controlPoints->at(index);
@@ -146,15 +143,15 @@ void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, unsigned int 
     temp->y = controlPoint.y;
 }
 
-void PointArray::removeControlPointAtIndex(unsigned int index)
+void PointArray::removeControlPointAtIndex(ssize_t index)
 {
     vector<Point*>::iterator iter = _controlPoints->begin() + index;
-    Point* pRemovedPoint = *iter;
+    Point* removedPoint = *iter;
     _controlPoints->erase(iter);
-    delete pRemovedPoint;
+    delete removedPoint;
 }
 
-unsigned int PointArray::count() const
+ssize_t PointArray::count() const
 {
     return _controlPoints->size();
 }
@@ -163,7 +160,7 @@ PointArray* PointArray::reverse() const
 {
     vector<Point*> *newArray = new vector<Point*>();
     vector<Point*>::reverse_iterator iter;
-    Point *point = NULL;
+    Point *point = nullptr;
     for (iter = _controlPoints->rbegin(); iter != _controlPoints->rend(); ++iter)
     {
         point = *iter;
@@ -177,11 +174,11 @@ PointArray* PointArray::reverse() const
 
 void PointArray::reverseInline()
 {
-    unsigned long l = _controlPoints->size();
-    Point *p1 = NULL;
-    Point *p2 = NULL;
-    int x, y;
-    for (unsigned int i = 0; i < l/2; ++i)
+    size_t l = _controlPoints->size();
+    Point *p1 = nullptr;
+    Point *p2 = nullptr;
+    float x, y;
+    for (size_t i = 0; i < l/2; ++i)
     {
         p1 = _controlPoints->at(i);
         p2 = _controlPoints->at(l-i-1);
@@ -261,7 +258,7 @@ CardinalSplineTo::~CardinalSplineTo()
 }
 
 CardinalSplineTo::CardinalSplineTo()
-: _points(NULL)
+: _points(nullptr)
 , _deltaT(0.f)
 , _tension(0.f)
 {
@@ -291,7 +288,7 @@ CardinalSplineTo* CardinalSplineTo::clone() const
 
 void CardinalSplineTo::update(float time)
 {
-    unsigned int p;
+    ssize_t p;
     float lt;
 	
 	// eg.
@@ -383,7 +380,7 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
 	// convert "absolutes" to "diffs"
 	//
     Point p = copyConfig->getControlPointAtIndex(0);
-    for (unsigned int i = 1; i < copyConfig->count(); ++i)
+    for (ssize_t i = 1; i < copyConfig->count(); ++i)
     {
         Point current = copyConfig->getControlPointAtIndex(i);
         Point diff = current - p;
@@ -405,7 +402,7 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     p = -p;
     pReverse->insertControlPoint(p, 0);
     
-    for (unsigned int i = 1; i < pReverse->count(); ++i)
+    for (ssize_t i = 1; i < pReverse->count(); ++i)
     {
         Point current = pReverse->getControlPointAtIndex(i);
         current = -current;
@@ -475,8 +472,8 @@ CatmullRomTo* CatmullRomTo::clone() const
 
 CatmullRomTo* CatmullRomTo::reverse() const
 {
-    PointArray *pReverse = _points->reverse();
-    return CatmullRomTo::create(_duration, pReverse);
+    PointArray *reverse = _points->reverse();
+    return CatmullRomTo::create(_duration, reverse);
 }
 
 
@@ -528,7 +525,7 @@ CatmullRomBy* CatmullRomBy::reverse() const
 	// convert "absolutes" to "diffs"
 	//
     Point p = copyConfig->getControlPointAtIndex(0);
-    for (unsigned int i = 1; i < copyConfig->count(); ++i)
+    for (ssize_t i = 1; i < copyConfig->count(); ++i)
     {
         Point current = copyConfig->getControlPointAtIndex(i);
         Point diff = current - p;
@@ -540,27 +537,27 @@ CatmullRomBy* CatmullRomBy::reverse() const
 
 	// convert to "diffs" to "reverse absolute"
 
-    PointArray *pReverse = copyConfig->reverse();
+    PointArray *reverse = copyConfig->reverse();
 
 	// 1st element (which should be 0,0) should be here too
 
-    p = pReverse->getControlPointAtIndex(pReverse->count()-1);
-    pReverse->removeControlPointAtIndex(pReverse->count()-1);
+    p = reverse->getControlPointAtIndex(reverse->count()-1);
+    reverse->removeControlPointAtIndex(reverse->count()-1);
 
     p = -p;
-    pReverse->insertControlPoint(p, 0);
+    reverse->insertControlPoint(p, 0);
 
-    for (unsigned int i = 1; i < pReverse->count(); ++i)
+    for (ssize_t i = 1; i < reverse->count(); ++i)
     {
-        Point current = pReverse->getControlPointAtIndex(i);
+        Point current = reverse->getControlPointAtIndex(i);
         current = -current;
         Point abs = current + p;
-        pReverse->replaceControlPoint(abs, i);
+        reverse->replaceControlPoint(abs, i);
 
         p = abs;
     }
 
-    return CatmullRomBy::create(_duration, pReverse);
+    return CatmullRomBy::create(_duration, reverse);
 }
 
 NS_CC_END;

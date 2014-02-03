@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,10 +24,7 @@
  ****************************************************************************/
 
 #include "CCFont.h"
-#include "support/ccUTF8.h"
-
-#include "CCFontFNT.h"
-#include "CCFontFreeType.h"
+#include "ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +33,9 @@ const char * Font::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM
 const char * Font::_glyphNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
 
-Font::Font() : _usedGlyphs(GlyphCollection::ASCII), _customGlyphs(nullptr)
+Font::Font() : 
+_usedGlyphs(GlyphCollection::ASCII)
+, _customGlyphs(nullptr)
 {
 }
 
@@ -73,16 +73,19 @@ void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customG
             break;
             
         default:
-            
-            int lenght = strlen(customGlyphs);
-            _customGlyphs = new char [lenght + 2];
-            memcpy(_customGlyphs, customGlyphs, lenght);
-            
-            _customGlyphs[lenght]   = 0;
-            _customGlyphs[lenght+1] = 0;
+            if (customGlyphs)
+            {
+                size_t lenght = strlen(customGlyphs);
+                _customGlyphs = new char [lenght + 2];
+                memcpy(_customGlyphs, customGlyphs, lenght);
+
+                _customGlyphs[lenght]   = 0;
+                _customGlyphs[lenght+1] = 0;
+            }           
             
             break;
     }
+    _usedGlyphs = glyphs;
 }
 
 const char * Font::getCurrentGlyphCollection() const
@@ -97,17 +100,7 @@ const char * Font::getCurrentGlyphCollection() const
     }
 }
 
-Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
-{
-    return FontFreeType::create(fntName, fontSize, glyphs, customGlyphs);
-}
-
-Font* Font::createWithFNT(const char* fntFilePath)
-{
-   return FontFNT::create(fntFilePath);
-}
-
-unsigned short int  * Font::getUTF16Text(const char *text, int &outNumLetters) const
+unsigned short* Font::getUTF16Text(const char *text, int &outNumLetters) const
 {
     unsigned short* utf16String = cc_utf8_to_utf16(text);
     
@@ -123,7 +116,7 @@ int Font::getUTF16TextLenght(unsigned short int *text) const
      return cc_wcslen(text);
 }
 
-unsigned short int  * Font::trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const
+unsigned short * Font::trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const
 {
     if ( newBegin < 0 || newEnd <= 0 )
         return 0;
@@ -147,11 +140,6 @@ unsigned short int  * Font::trimUTF16Text(unsigned short int *text, int newBegin
     
     // done
     return trimmedString;
-}
-
-Rect Font::getRectForChar(unsigned short theChar) const
-{
-    return Rect::ZERO;
 }
 
 NS_CC_END

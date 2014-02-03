@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2009      lhunath (Maarten Billemont)
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright 2009 lhunath (Maarten Billemont)
-
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,7 +43,7 @@ public:
      * @lua NA
      */
     virtual ~ActionTweenDelegate() {}
-    virtual void updateTweenAction(float value, const char* key) = 0;
+    virtual void updateTweenAction(float value, const std::string& key) = 0;
 };
 
 /** ActionTween
@@ -69,9 +70,9 @@ class CC_DLL ActionTween : public ActionInterval
 {
 public:
     /** creates an initializes the action with the property name (key), and the from and to parameters. */
-    static ActionTween* create(float duration, const char* key, float from, float to);
+    static ActionTween* create(float duration, const std::string& key, float from, float to);
     /** initializes the action with the property name (key), and the from and to parameters. */
-    bool initWithDuration(float duration, const char* key, float from, float to);
+    bool initWithDuration(float duration, const std::string& key, float from, float to);
 
     // Overrides
     void startWithTarget(Node *target) override;

@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
- 
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,8 +27,9 @@ THE SOFTWARE.
 
 #include "CCAction.h"
 #include "CCActionInterval.h"
-#include "base_nodes/CCNode.h"
+#include "CCNode.h"
 #include "CCDirector.h"
+#include "CCString.h"
 
 NS_CC_BEGIN
 //
@@ -35,8 +37,8 @@ NS_CC_BEGIN
 //
 
 Action::Action()
-:_originalTarget(NULL)
-,_target(NULL)
+:_originalTarget(nullptr)
+,_target(nullptr)
 ,_tag(Action::INVALID_TAG)
 {
 }
@@ -46,9 +48,9 @@ Action::~Action()
     CCLOGINFO("deallocing Action: %p - tag: %i", this, _tag);
 }
 
-const char* Action::description() const
+std::string Action::description() const
 {
-    return String::createWithFormat("<Action | Tag = %d>", _tag)->getCString();
+    return StringUtils::format("<Action | Tag = %d", _tag);
 }
 
 void Action::startWithTarget(Node *aTarget)
@@ -58,7 +60,7 @@ void Action::startWithTarget(Node *aTarget)
 
 void Action::stop()
 {
-    _target = NULL;
+    _target = nullptr;
 }
 
 bool Action::isDone() const
@@ -83,7 +85,7 @@ void Action::update(float time)
 //
 Speed::Speed()
 : _speed(0.0)
-, _innerAction(NULL)
+, _innerAction(nullptr)
 {
 }
 
@@ -92,24 +94,24 @@ Speed::~Speed()
     CC_SAFE_RELEASE(_innerAction);
 }
 
-Speed* Speed::create(ActionInterval* pAction, float fSpeed)
+Speed* Speed::create(ActionInterval* action, float speed)
 {
-    Speed *pRet = new Speed();
-    if (pRet && pRet->initWithAction(pAction, fSpeed))
+    Speed *ret = new Speed();
+    if (ret && ret->initWithAction(action, speed))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
-bool Speed::initWithAction(ActionInterval *pAction, float fSpeed)
+bool Speed::initWithAction(ActionInterval *action, float speed)
 {
-    CCASSERT(pAction != NULL, "");
-    pAction->retain();
-    _innerAction = pAction;
-    _speed = fSpeed;    
+    CCASSERT(action != nullptr, "");
+    action->retain();
+    _innerAction = action;
+    _speed = speed;
     return true;
 }
 
@@ -150,12 +152,12 @@ Speed *Speed::reverse() const
 	return Speed::create(_innerAction->reverse(), _speed);
 }
 
-void Speed::setInnerAction(ActionInterval *pAction)
+void Speed::setInnerAction(ActionInterval *action)
 {
-    if (_innerAction != pAction)
+    if (_innerAction != action)
     {
         CC_SAFE_RELEASE(_innerAction);
-        _innerAction = pAction;
+        _innerAction = action;
         CC_SAFE_RETAIN(_innerAction);
     }
 }
@@ -168,16 +170,16 @@ Follow::~Follow()
     CC_SAFE_RELEASE(_followedNode);
 }
 
-Follow* Follow::create(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
+Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 {
-    Follow *pRet = new Follow();
-    if (pRet && pRet->initWithTarget(pFollowedNode, rect))
+    Follow *follow = new Follow();
+    if (follow && follow->initWithTarget(followedNode, rect))
     {
-        pRet->autorelease();
-        return pRet;
+        follow->autorelease();
+        return follow;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(follow);
+    return nullptr;
 }
 
 Follow* Follow::clone() const
@@ -194,12 +196,12 @@ Follow* Follow::reverse() const
     return clone();
 }
 
-bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
+bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 {
-    CCASSERT(pFollowedNode != NULL, "");
+    CCASSERT(followedNode != nullptr, "");
  
-    pFollowedNode->retain();
-    _followedNode = pFollowedNode;
+    followedNode->retain();
+    _followedNode = followedNode;
 	_worldRect = rect;
     if (rect.equals(Rect::ZERO))
     {
@@ -273,7 +275,7 @@ bool Follow::isDone() const
 
 void Follow::stop()
 {
-    _target = NULL;
+    _target = nullptr;
     Action::stop();
 }
 

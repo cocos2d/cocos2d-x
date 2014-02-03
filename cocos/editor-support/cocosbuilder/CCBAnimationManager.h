@@ -1,22 +1,26 @@
 #ifndef __CCB_CCBANIMATION_MANAGER_H__
 #define __CCB_CCBANIMATION_MANAGER_H__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
-#include "CCBSequence.h"
-#include "CCBValue.h"
-#include "CCBSequenceProperty.h"
-#include "GUI/CCControlExtension/CCControl.h"
+#include "CCMap.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
+#include "CCActionEase.h"
 
-NS_CC_EXT_BEGIN
+#include "extensions/ExtensionMacros.h"
+#include "CCBSequence.h"
+#include "CCBSequenceProperty.h"
+#include "extensions/GUI/CCControlExtension/CCControl.h"
+
+namespace cocosbuilder {
 
 class CCBAnimationManagerDelegate
 {
 public:
+    virtual ~CCBAnimationManagerDelegate() {}
     virtual void completedAnimationSequenceNamed(const char *name) = 0;
 };
 
-class CCBAnimationManager : public Object
+class CCBAnimationManager : public cocos2d::Object
 {
 public:
     bool _jsControlled;
@@ -31,54 +35,56 @@ public:
     ~CCBAnimationManager();
 
 
-    Object *_owner;
+    cocos2d::Object *_owner;
     
     virtual bool init();
     
-    Array* getSequences();
-    void setSequences(Array* seq);
+    cocos2d::Vector<CCBSequence*>& getSequences();
+    void setSequences(const cocos2d::Vector<CCBSequence*>& seq);
 
     
     int getAutoPlaySequenceId();
     void setAutoPlaySequenceId(int autoPlaySequenceId);
     
-    Node* getRootNode();
-    void setRootNode(Node* pRootNode); // weak reference    
+    cocos2d::Node* getRootNode();
+    void setRootNode(cocos2d::Node* pRootNode); // weak reference    
     
 
-    void addDocumentCallbackNode(Node *node);
+    void addDocumentCallbackNode(cocos2d::Node *node);
     void addDocumentCallbackName(std::string name);
-    void addDocumentCallbackControlEvents(Control::EventType eventType);
+    void addDocumentCallbackControlEvents(cocos2d::extension::Control::EventType eventType);
     
-    void addDocumentOutletNode(Node *node);
+    void addDocumentOutletNode(cocos2d::Node *node);
     void addDocumentOutletName(std::string name);
 
     void setDocumentControllerName(const std::string &name);
     
     std::string getDocumentControllerName();
-    Array* getDocumentCallbackNames();
-    Array* getDocumentCallbackNodes();
-    Array* getDocumentCallbackControlEvents();
+    cocos2d::ValueVector& getDocumentCallbackNames();
+    cocos2d::Vector<cocos2d::Node*>& getDocumentCallbackNodes();
+    cocos2d::ValueVector& getDocumentCallbackControlEvents();
     
-    Array* getDocumentOutletNames();
-    Array* getDocumentOutletNodes();
+    cocos2d::ValueVector& getDocumentOutletNames();
+    cocos2d::Vector<cocos2d::Node*>& getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
     
-    Array* getKeyframeCallbacks();
+    cocos2d::ValueVector& getKeyframeCallbacks();
     
-    const Size& getRootContainerSize();
-    void setRootContainerSize(const Size &rootContainerSize);
+    const cocos2d::Size& getRootContainerSize();
+    void setRootContainerSize(const cocos2d::Size &rootContainerSize);
     
     CCBAnimationManagerDelegate* getDelegate();
     void setDelegate(CCBAnimationManagerDelegate* pDelegate); // retain
     
     const char* getRunningSequenceName();
     
-    const Size& getContainerSize(Node* pNode);
+    const cocos2d::Size& getContainerSize(cocos2d::Node* pNode);
     
-    void addNode(Node *pNode, Dictionary *pSeq);
-    void setBaseValue(Object *pValue, Node *pNode, const char *propName);
-    void moveAnimationsFromNode(Node* fromNode, Node* toNode);
+    void addNode(cocos2d::Node *pNode, const std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>& seq);
+    void setBaseValue(const cocos2d::Value& value, cocos2d::Node *pNode, const std::string& propName);
+    void setObject(cocos2d::Object* obj, cocos2d::Node *pNode, const std::string& propName);
+    
+    void moveAnimationsFromNode(cocos2d::Node* fromNode, cocos2d::Node* toNode);
 
     /** @deprecated This interface will be deprecated sooner or later.*/
     CC_DEPRECATED_ATTRIBUTE void runAnimations(const char *pName, float fTweenDuration);
@@ -94,16 +100,16 @@ public:
      * when this function bound to js ,the second param are callfunc_selector
      * @lua NA
      */
-    void setAnimationCompletedCallback(Object *target, SEL_CallFunc callbackFunc);
+    void setAnimationCompletedCallback(cocos2d::Object *target, cocos2d::SEL_CallFunc callbackFunc);
 
     void debug();
     /**
      * @js setCallFuncForJSCallbackNamed
      */
-    void setCallFunc(CallFunc *callFunc, const std::string &callbackNamed);
+    void setCallFunc(cocos2d::CallFunc *callFunc, const std::string &callbackNamed);
 
-    Object* actionForCallbackChannel(CCBSequenceProperty* channel);
-    Object* actionForSoundChannel(CCBSequenceProperty* channel);
+    cocos2d::Object* actionForCallbackChannel(CCBSequenceProperty* channel);
+    cocos2d::Object* actionForSoundChannel(CCBSequenceProperty* channel);
 
 	// return -1 if timeline not exsit
     int getSequenceId(const char* pSequenceName);
@@ -112,55 +118,59 @@ public:
     float getSequenceDuration(const char* pSequenceName);
     
 private:
-    Object* getBaseValue(Node *pNode, const char* propName);
+    const cocos2d::Value& getBaseValue(cocos2d::Node *pNode, const std::string& propName);
+    Object* getObject(cocos2d::Node *pNode, const std::string& propName);
+    
     CCBSequence* getSequence(int nSequenceId);
-    ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *propName, Node *pNode);
-    void setAnimatedProperty(const char *propName, Node *pNode, Object *pValue, float fTweenDuraion);
-    void setFirstFrame(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
-    ActionInterval* getEaseAction(ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
-    void runAction(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
+    cocos2d::ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const std::string& propName, cocos2d::Node *pNode);
+    void setAnimatedProperty(const std::string& propName,cocos2d::Node *pNode, const cocos2d::Value& value, Object* obj, float fTweenDuraion);
+    void setFirstFrame(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
+    cocos2d::ActionInterval* getEaseAction(cocos2d::ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
+    void runAction(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
     
 private:
-    Array *_sequences;
-    Dictionary *_nodeSequences;
-    Dictionary *_baseValues;
+    cocos2d::Vector<CCBSequence*> _sequences;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>> _nodeSequences;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Value>> _baseValues;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Object*>> _objects;
+    
     int _autoPlaySequenceId;
     
-    Node *_rootNode;
+    cocos2d::Node *_rootNode;
     
-    Size _rootContainerSize;
+    cocos2d::Size _rootContainerSize;
     
     CCBAnimationManagerDelegate *_delegate;
     CCBSequence *_runningSequence;
     
-    Array *_documentOutletNames;
-    Array *_documentOutletNodes;
-    Array *_documentCallbackNames;
-    Array *_documentCallbackNodes;
-    Array *_documentCallbackControlEvents;
-    Array *_keyframeCallbacks;
-    Dictionary *_keyframeCallFuncs;
+    cocos2d::ValueVector _documentOutletNames;
+    cocos2d::Vector<cocos2d::Node*> _documentOutletNodes;
+    cocos2d::ValueVector _documentCallbackNames;
+    cocos2d::Vector<cocos2d::Node*> _documentCallbackNodes;
+    cocos2d::ValueVector _documentCallbackControlEvents;
+    cocos2d::ValueVector _keyframeCallbacks;
+    cocos2d::Map<std::string, cocos2d::CallFunc*> _keyframeCallFuncs;
     
     std::string _documentControllerName;
     std::string _lastCompletedSequenceName;
     
-    SEL_CallFunc _animationCompleteCallbackFunc;
-    Object *_target;
+    cocos2d::SEL_CallFunc _animationCompleteCallbackFunc;
+    cocos2d::Object *_target;
 };
 
-class CCBSetSpriteFrame : public ActionInstant
+class CCBSetSpriteFrame : public cocos2d::ActionInstant
 {
 public:
     /** creates a Place action with a position */
-    static CCBSetSpriteFrame* create(SpriteFrame *pSpriteFrame);
+    static CCBSetSpriteFrame* create(cocos2d::SpriteFrame *pSpriteFrame);
     /**
      * @js NA
      * @lua NA
      */
     ~CCBSetSpriteFrame();
     
-    bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
+    bool initWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame);
 
     // Overrides
     virtual void update(float time) override;
@@ -168,11 +178,11 @@ public:
 	virtual CCBSetSpriteFrame* reverse() const override;
 
 private:
-    SpriteFrame *_spriteFrame;
+    cocos2d::SpriteFrame *_spriteFrame;
 };
 
 
-class CCBSoundEffect : public ActionInstant
+class CCBSoundEffect : public cocos2d::ActionInstant
 {
 public:
     static CCBSoundEffect* actionWithSoundFile(const std::string &file, float pitch, float pan, float gain);
@@ -194,7 +204,7 @@ private:
 };
 
 
-class CCBRotateTo : public ActionInterval
+class CCBRotateTo : public cocos2d::ActionInterval
 {
 public:
     static CCBRotateTo* create(float fDuration, float fAngle);
@@ -204,7 +214,7 @@ public:
     virtual void update(float time) override;
 	virtual CCBRotateTo* clone() const override;
 	virtual CCBRotateTo* reverse() const override;
-    virtual void startWithTarget(Node *pNode) override;
+    virtual void startWithTarget(cocos2d::Node *pNode) override;
 
 private:
     float _startAngle;
@@ -213,14 +223,14 @@ private:
 };
 
 
-class CCBRotateXTo: public ActionInterval
+class CCBRotateXTo: public cocos2d::ActionInterval
 {
 public:
     static CCBRotateXTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
 
     // Overrides
-    virtual void startWithTarget(Node *pNode) override;
+    virtual void startWithTarget(cocos2d::Node *pNode) override;
 	virtual CCBRotateXTo* clone() const override;
 	virtual CCBRotateXTo* reverse() const override;
     virtual void update(float time) override;
@@ -232,14 +242,14 @@ private:
 };
 
 
-class CCBRotateYTo: public ActionInterval
+class CCBRotateYTo: public cocos2d::ActionInterval
 {
 public:
     static CCBRotateYTo* create(float fDuration, float fAngle);
     bool initWithDuration(float fDuration, float fAngle);
 
     // Override
-    virtual void startWithTarget(Node *pNode) override;
+    virtual void startWithTarget(cocos2d::Node *pNode) override;
 	virtual CCBRotateYTo* clone() const override;
 	virtual CCBRotateYTo* reverse() const override;
     virtual void update(float time) override;
@@ -251,10 +261,10 @@ private:
 };
 
 
-class CCBEaseInstant : public ActionEase
+class CCBEaseInstant : public cocos2d::ActionEase
 {
 public:
-    static CCBEaseInstant* create(ActionInterval *pAction);
+    static CCBEaseInstant* create(cocos2d::ActionInterval *pAction);
 
 	virtual CCBEaseInstant* clone() const override;
 	virtual CCBEaseInstant* reverse() const override;
@@ -262,6 +272,6 @@ public:
 };
 
 
-NS_CC_EXT_END
+}
 
 #endif // __CCB_CCBANIMATION_MANAGER_H__

@@ -1,3 +1,5 @@
+require "CocoStudio"
+
 cc = cc or {}
 
 cc.DIRECTOR_PROJECTION_2D = 0
@@ -68,7 +70,7 @@ function cc.pCross(self,other)
 end
 
 function cc.pDot(self,other)
-    return self.x * other.x - self.y * other.y
+    return self.x * other.x + self.y * other.y
 end
 
 function cc.pToAngleSelf(self)
@@ -139,11 +141,11 @@ end
 function cc.pUnrotate(pt1, pt2)
     return { x = pt1.x * pt2.x + pt1.y * pt2.y, pt1.y * pt2.x - pt1.x * pt2.y }
 end
-
+--Calculates the square length of pt
 function cc.pLengthSQ(pt)
-    return cc.pDot(pt)
+    return cc.pDot(pt,pt)
 end
-
+--Calculates the square distance between pt1 and pt2
 function cc.pDistanceSQ(pt1,pt2)
     return cc.pLengthSQ(cc.pSub(pt1,pt2))
 end
@@ -291,4 +293,89 @@ function cc.c4f( _r,_g,_b,_a )
     return { r = _r, g = _g, b = _b, a = _a }
 end
 
+--Vertex2F
+function cc.vertex2F(_x,_y)
+    return { x = _x, y = _y }
+end
 
+--Vertex3F
+function cc.Vertex3F(_x,_y,_z)
+    return { x = _x, y = _y, z = _z }
+end
+
+--Tex2F
+function cc.tex2F(_u,_v)
+    return { u = _u, v = _v }
+end
+
+--PointSprite
+function cc.PointSprite(_pos,_color,_size)
+    return { pos = _pos, color = _color, size = _size }
+end
+
+--Quad2
+function cc.Quad2(_tl,_tr,_bl,_br)
+    return { tl = _tl, tr = _tr, bl = _bl, br = _br }
+end
+
+--Quad3
+function cc.Quad3(_tl, _tr, _bl, _br)
+    return { tl = _tl, tr = _tr, bl = _bl, br = _br }
+end
+
+--V2F_C4B_T2F
+function cc.V2F_C4B_T2F(_vertices, _colors, _texCoords)
+    return { vertices = _vertices, colors = _colors, texCoords = _texCoords }
+end
+
+--V2F_C4F_T2F
+function cc.V2F_C4F_T2F(_vertices, _colors, _texCoords)
+    return { vertices = _vertices, colors = _colors, texCoords = _texCoords }
+end
+
+--V3F_C4B_T2F
+function cc.V3F_C4B_T2F(_vertices, _colors, _texCoords)
+    return { vertices = _vertices, colors = _colors, texCoords = _texCoords }
+end
+
+--V2F_C4B_T2F_Quad
+function cc.V2F_C4B_T2F_Quad(_bl, _br, _tl, _tr)
+    return { bl = _bl, br = _br, tl = _tl, tr = _tr }
+end
+
+--V3F_C4B_T2F_Quad
+function cc.V3F_C4B_T2F_Quad(_tl, _bl, _tr, _br)
+    return { tl = _tl, bl = _bl, tr = _tr, br = _br }
+end
+
+--V2F_C4F_T2F_Quad
+function cc.V2F_C4F_T2F_Quad(_bl, _br, _tl, _tr)
+    return { bl = _bl, br = _br, tl = _tl, tr = _tr }
+end
+
+--T2F_Quad
+function cc.T2F_Quad(_bl, _br, _tl, _tr)
+    return { bl = _bl, br = _br, tl = _tl, tr = _tr }
+end
+
+--AnimationFrameData
+function cc.AnimationFrameData( _texCoords, _delay, _size)
+    return { texCoords = _texCoords, delay = _delay, size = _size }
+end
+
+--PhysicsMaterial
+function cc.PhysicsMaterial(_density, _restitution, _friction)
+	return { density = _density, restitution = _restitution, friction = _friction }
+end
+
+local ConfigType = 
+{
+    NONE = 0,
+    COCOSTUDIO = 1,
+}
+
+function __onParseConfig(configType,jasonStr)
+    if configType == ConfigType.COCOSTUDIO then
+        ccs.TriggerMng.getInstance():parse(jasonStr)
+    end
+end

@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -39,6 +40,10 @@ NS_CC_BEGIN
 class CC_DLL ParticleFire : public ParticleSystemQuad
 {
 public:
+    static ParticleFire* create();
+    static ParticleFire* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -49,16 +54,20 @@ public:
      */
     virtual ~ParticleFire(){}
     bool init(){ return initWithTotalParticles(250); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleFire* create();
-    static ParticleFire* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleFire);
 };
 
 //! @brief A fireworks particle system
 class CC_DLL ParticleFireworks : public ParticleSystemQuad
 {
 public:
+    static ParticleFireworks* create();
+    static ParticleFireworks* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -69,16 +78,21 @@ public:
      */
     virtual ~ParticleFireworks(){}
     bool init(){ return initWithTotalParticles(1500); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleFireworks* create();
-    static ParticleFireworks* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleFireworks);
+
 };
 
 //! @brief A sun particle system
 class CC_DLL ParticleSun : public ParticleSystemQuad
 {
 public:
+    static ParticleSun* create();
+    static ParticleSun* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -89,16 +103,21 @@ public:
      */
     virtual ~ParticleSun(){}
     bool init(){ return initWithTotalParticles(350); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleSun* create();
-    static ParticleSun* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleSun);
+
 };
 
 //! @brief A galaxy particle system
 class CC_DLL ParticleGalaxy : public ParticleSystemQuad
 {
 public:
+    static ParticleGalaxy* create();
+    static ParticleGalaxy* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -109,16 +128,21 @@ public:
      */
     virtual ~ParticleGalaxy(){}
     bool init(){ return initWithTotalParticles(200); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleGalaxy* create();
-    static ParticleGalaxy* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleGalaxy);
+
 };
 
 //! @brief A flower particle system
 class CC_DLL ParticleFlower : public ParticleSystemQuad
 {
 public:
+    static ParticleFlower* create();
+    static ParticleFlower* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -129,16 +153,20 @@ public:
      */
     virtual ~ParticleFlower(){}
     bool init(){ return initWithTotalParticles(250); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleFlower* create();
-    static ParticleFlower* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleFlower);
 };
 
 //! @brief A meteor particle system
 class CC_DLL ParticleMeteor : public ParticleSystemQuad
 {
 public:
+    static ParticleMeteor * create();
+    static ParticleMeteor* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -149,16 +177,20 @@ public:
      */
     virtual ~ParticleMeteor(){}
     bool init(){ return initWithTotalParticles(150); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
-    static ParticleMeteor * create();
-    static ParticleMeteor* createWithTotalParticles(unsigned int numberOfParticles);
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleMeteor);
 };
 
 //! @brief An spiral particle system
 class CC_DLL ParticleSpiral : public ParticleSystemQuad
 {
 public:
+    static ParticleSpiral* create();
+    static ParticleSpiral* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -169,16 +201,21 @@ public:
      */
     virtual ~ParticleSpiral(){}
     bool init(){ return initWithTotalParticles(500); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleSpiral* create();
-    static ParticleSpiral* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleSpiral);
+
 };
 
 //! @brief An explosion particle system
 class CC_DLL ParticleExplosion : public ParticleSystemQuad
 {
 public:
+    static ParticleExplosion* create();
+    static ParticleExplosion* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -189,16 +226,20 @@ public:
      */
     virtual ~ParticleExplosion(){}
     bool init(){ return initWithTotalParticles(700); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleExplosion* create();
-    static ParticleExplosion* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleExplosion);
 };
 
 //! @brief An smoke particle system
 class CC_DLL ParticleSmoke : public ParticleSystemQuad
 {
 public:
+    static ParticleSmoke* create();
+    static ParticleSmoke* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -209,16 +250,20 @@ public:
      */
     virtual ~ParticleSmoke(){}
     bool init(){ return initWithTotalParticles(200); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleSmoke* create();
-    static ParticleSmoke* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleSmoke);
 };
 
 //! @brief An snow particle system
 class CC_DLL ParticleSnow : public ParticleSystemQuad
 {
 public:
+    static ParticleSnow* create();
+    static ParticleSnow* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -229,16 +274,20 @@ public:
      */
     virtual ~ParticleSnow(){}
     bool init(){ return initWithTotalParticles(700); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleSnow* create();
-    static ParticleSnow* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleSnow);
 };
 
 //! @brief A rain particle system
 class CC_DLL ParticleRain : public ParticleSystemQuad
 {
 public:
+    static ParticleRain* create();
+    static ParticleRain* createWithTotalParticles(int numberOfParticles);
+
+protected:
     /**
      * @js ctor
      */
@@ -249,10 +298,10 @@ public:
      */
     virtual ~ParticleRain(){}
     bool init(){ return initWithTotalParticles(1000); }
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    
-    static ParticleRain* create();
-    static ParticleRain* createWithTotalParticles(unsigned int numberOfParticles);
+    virtual bool initWithTotalParticles(int numberOfParticles);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleRain);
 };
 
 // end of particle_nodes group

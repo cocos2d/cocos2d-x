@@ -14,6 +14,10 @@ var cc = cc || {};
         cc.AnimationCache.destroyInstance();
     };
 
+    cc.TextureCache.getInstance = function() {
+        return cc.Director.getInstance().getTextureCache();
+    };
+
     // Deprecated member functions
     cc.Action.prototype.copy = function() {
         logW("cc.Action.copy", "cc.Action.clone");

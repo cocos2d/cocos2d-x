@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +26,10 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
+#include "CCPlatformMacros.h"
 
 #include <float.h>
 #include <math.h>
@@ -50,5 +54,7 @@ THE SOFTWARE.
 #define sqrtf sqrt
 #define cosf cos
 #define sinf sin
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #endif  // __CC_STD_C_H__

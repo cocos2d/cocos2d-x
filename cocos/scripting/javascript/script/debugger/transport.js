@@ -11,6 +11,8 @@
  * An adapter that handles data transfers between the debugger client and
  * server. It can work with both nsIPipe and nsIServerSocket transports so
  * long as the properly created input and output streams are specified.
+ * (However, for intra-process connections, LocalDebuggerTransport, below,
+ * is more efficient than using an nsIPipe pair with DebuggerTransport.)
  *
  * @param aInput nsIInputStream
  *        The input stream.
@@ -20,12 +22,12 @@
  * Given a DebuggerTransport instance dt:
  * 1) Set dt.hooks to a packet handler object (described below).
  * 2) Call dt.ready() to begin watching for input packets.
- * 3) Send packets as you please, and handle incoming packets passed to 
- *    hook.onPacket.
+ * 3) Call dt.send() to send packets as you please, and handle incoming
+ *    packets passed to hook.onPacket.
  * 4) Call dt.close() to close the connection, and disengage from the event
  *    loop.
  *
- * A packet handler object is an object with two methods:
+ * A packet handler is an object with two methods:
  *
  * - onPacket(packet) - called when we have received a complete packet.
  *   |Packet| is the parsed form of the packet --- a JavaScript value, not
@@ -226,10 +228,11 @@ LocalDebuggerTransport.prototype = {
   send: function LDT_send(aPacket) {
     let serial = this._serial.count++;
     if (wantLogging) {
-      if (aPacket.to) {
-        dumpn("Packet " + serial + " sent to " + uneval(aPacket.to));
-      } else if (aPacket.from) {
+      /* Check 'from' first, as 'echo' packets have both. */
+      if (aPacket.from) {
         dumpn("Packet " + serial + " sent from " + uneval(aPacket.from));
+      } else if (aPacket.to) {
+        dumpn("Packet " + serial + " sent to " + uneval(aPacket.to));
       }
     }
     this._deepFreeze(aPacket);
@@ -259,7 +262,11 @@ LocalDebuggerTransport.prototype = {
       other.close();
     }
     if (this.hooks) {
-      this.hooks.onClosed();
+      try {
+        this.hooks.onClosed();
+      } catch(ex) {
+        Components.utils.reportError(ex);
+      }
       this.hooks = null;
     }
   },
@@ -284,5 +291,52 @@ LocalDebuggerTransport.prototype = {
         this._deepFreeze(o[prop]);
       }
     }
+  }
+};
+
+/**
+ * A transport for the debugging protocol that uses nsIMessageSenders to
+ * exchange packets with servers running in child processes.
+ *
+ * In the parent process, |aSender| should be the nsIMessageSender for the
+ * child process. In a child process, |aSender| should be the child process
+ * message manager, which sends packets to the parent.
+ *
+ * aPrefix is a string included in the message names, to distinguish
+ * multiple servers running in the same child process.
+ *
+ * This transport exchanges messages named 'debug:<prefix>:packet', where
+ * <prefix> is |aPrefix|, whose data is the protocol packet.
+ */
+function ChildDebuggerTransport(aSender, aPrefix) {
+  this._sender = aSender.QueryInterface(Components.interfaces.nsIMessageSender);
+  this._messageName = "debug:" + aPrefix + ":packet";
+}
+
+/*
+ * To avoid confusion, we use 'message' to mean something that
+ * nsIMessageSender conveys, and 'packet' to mean a remote debugging
+ * protocol packet.
+ */
+ChildDebuggerTransport.prototype = {
+  constructor: ChildDebuggerTransport,
+
+  hooks: null,
+
+  ready: function () {
+    this._sender.addMessageListener(this._messageName, this);
+  },
+
+  close: function () {
+    this._sender.removeMessageListener(this._messageName, this);
+    this.hooks.onClosed();
+  },
+
+  receiveMessage: function ({data}) {
+    this.hooks.onPacket(data);
+  },
+
+  send: function (packet) {
+    this._sender.sendAsyncMessage(this._messageName, packet);
   }
 };

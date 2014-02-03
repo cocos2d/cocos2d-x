@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_FRAMEWORK_COMPONENT_H__
 #define __CC_FRAMEWORK_COMPONENT_H__
 
-#include "cocoa/CCObject.h"
+#include "CCObject.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -55,13 +55,13 @@ public:
      */
     virtual void onExit();
     virtual void update(float delta);
-    virtual void serialize(void* r);
+    virtual bool serialize(void* r);
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
     static Component* create(void);
     
-    const char* getName() const;
-    void setName(const char *pName);
+    const std::string& getName() const;
+    void setName(const std::string& name);
     
     void setOwner(Node *pOwner);
     Node* getOwner() const;

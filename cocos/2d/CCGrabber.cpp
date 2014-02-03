@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -24,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCGrabber.h"
 #include "ccMacros.h"
-#include "textures/CCTexture2D.h"
+#include "CCTexture2D.h"
 
 NS_CC_BEGIN
 

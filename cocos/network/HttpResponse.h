@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,18 +26,18 @@
 #ifndef __HTTP_RESPONSE__
 #define __HTTP_RESPONSE__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
-#include "HttpRequest.h"
+#include "network/HttpRequest.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace network {
 
 /** 
  @brief defines the object which users will receive at onHttpCompleted(sender, HttpResponse) callback
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
-class HttpResponse : public Object
+class HttpResponse : public cocos2d::Object
 {
 public:
     /** Constructor, it's used by HttpClient internal, users don't need to create HttpResponse manually
@@ -67,7 +68,7 @@ public:
     }
     
     /** Override autorelease method to prevent developers from calling it */
-    Object* autorelease(void)
+    cocos2d::Object* autorelease(void)
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
                         therefore, autorelease is forbidden here");
@@ -108,7 +109,7 @@ public:
     /** Get the http response errorCode
      *  I know that you want to see http 200 :)
      */
-    inline int getResponseCode()
+    inline long getResponseCode()
     {
         return _responseCode;
     }
@@ -151,7 +152,7 @@ public:
     
     /** Set the http response errorCode
      */
-    inline void setResponseCode(int value)
+    inline void setResponseCode(long value)
     {
         _responseCode = value;
     }
@@ -173,11 +174,13 @@ protected:
     bool                _succeed;       /// to indecate if the http reqeust is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
-    int                 _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
+    long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
     
 };
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif //__HTTP_RESPONSE_H__

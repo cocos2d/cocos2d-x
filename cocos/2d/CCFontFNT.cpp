@@ -1,24 +1,45 @@
-//
-//  CCFontFNT.cpp
-//  cocos2d_libs
-//
-//  Created by Carlo Morgantini on 7/24/13.
-//
-//
+/****************************************************************************
+ Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCFontFNT.h"
 #include "CCFontAtlas.h"
+#include "CCLabelBMFont.h"
+#include "CCDirector.h"
+#include "CCTextureCache.h"
+#include "ccUTF8.h"
 
 NS_CC_BEGIN
 
-FontFNT * FontFNT::create(const char* fntFilePath)
+FontFNT * FontFNT::create(const std::string& fntFilePath)
 {
     CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
     if (!newConf)
         return nullptr;
     
     // add the texture
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
+    Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(newConf->getAtlasName());
     if (!tempTexture)
     {
         delete newConf;
@@ -32,17 +53,16 @@ FontFNT * FontFNT::create(const char* fntFilePath)
         delete newConf;
         return nullptr;
     }
-    
+    tempFont->autorelease();
     return tempFont;
 }
 
 FontFNT::~FontFNT()
 {
-    if (_configuration)
-        _configuration->release();
+
 }
 
-Size * FontFNT::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const
+int * FontFNT::getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const
 {
     if (!text)
         return 0;
@@ -52,37 +72,19 @@ Size * FontFNT::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters
     if (!outNumLetters)
         return 0;
     
-    Size *sizes = new Size[outNumLetters];
+    int *sizes = new int[outNumLetters];
     if (!sizes)
         return 0;
     
     for (int c = 0; c < outNumLetters; ++c)
     {
-        int advance = 0;
-        int kerning = 0;
-        
-        advance = getAdvanceForChar(text[c]);
-        
         if (c < (outNumLetters-1))
-            kerning = getHorizontalKerningForChars(text[c], text[c+1]);
-        
-        sizes[c].width = (advance + kerning);
+            sizes[c] = getHorizontalKerningForChars(text[c], text[c+1]);
+        else
+            sizes[c] = 0;
     }
     
     return sizes;
-}
-
-int  FontFNT::getAdvanceForChar(unsigned short theChar) const
-{
-    tFontDefHashElement *element = nullptr;
-    
-    // unichar is a short, and an int is needed on HASH_FIND_INT
-    unsigned int key = theChar;
-    HASH_FIND_INT(_configuration->_fontDefDictionary, &key, element);
-    if (! element)
-        return -1;
-    
-    return element->fontDef.xAdvance;
 }
 
 int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
@@ -102,28 +104,6 @@ int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned sh
     return ret;
 }
 
-Rect FontFNT::getRectForCharInternal(unsigned short theChar) const
-{
-    Rect retRect;
-    ccBMFontDef fontDef;
-    tFontDefHashElement *element = nullptr;
-    unsigned int key = theChar;
-    
-    HASH_FIND_INT(_configuration->_fontDefDictionary, &key, element);
-    
-    if (element)
-    {
-        retRect = element->fontDef.rect;
-    }
-    
-    return retRect;
-}
-
-Rect FontFNT::getRectForChar(unsigned short theChar) const
-{
-    return getRectForCharInternal(theChar);
-}
-
 FontAtlas * FontFNT::createFontAtlas()
 {
     FontAtlas *tempAtlas = new FontAtlas(*this);
@@ -134,7 +114,7 @@ FontAtlas * FontFNT::createFontAtlas()
     if (!_configuration->_fontDefDictionary)
         return nullptr;
     
-    int numGlyphs = _configuration->_characterSet->size();
+    size_t numGlyphs = _configuration->_characterSet->size();
     if (!numGlyphs)
         return nullptr;
     
@@ -174,16 +154,15 @@ FontAtlas * FontFNT::createFontAtlas()
         //carloX: only one texture supported FOR NOW
         tempDefinition.textureID = 0;
         
-        tempDefinition.anchorX = 0.5f;
-        tempDefinition.anchorY = 0.5f;
-        
+        tempDefinition.validDefinition = true;
+        tempDefinition.xAdvance = fontDef.xAdvance;
         // add the new definition
         tempAtlas->addLetterDefinition(tempDefinition);
     }
     
     // add the texture (only one texture for now)
     
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
+    Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName());
     if (!tempTexture)
         return 0;
     

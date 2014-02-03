@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,27 +25,28 @@
 #ifndef _CCFontAtlas_h_
 #define _CCFontAtlas_h_
 
-#include <map>
+#include <unordered_map>
+#include "CCPlatformMacros.h"
+#include "CCObject.h"
 
 NS_CC_BEGIN
 
 //fwd
 class Font;
+class Texture2D;
 
 struct FontLetterDefinition
 {
     unsigned short  letteCharUTF16;
-    float           U;
-    float           V;
-    float           width;
-    float           height;
-    float           offsetX;
-    float           offsetY;
-    int             textureID;
-    float           commonLineHeight;
-    float           anchorX;
-    float           anchorY;
-    bool            validDefinition;
+    float U;
+    float V;
+    float width;
+    float height;
+    float offsetX;
+    float offsetY;
+    int textureID;
+    bool validDefinition;
+    int xAdvance;
 };
 
 class CC_DLL FontAtlas : public Object
@@ -63,21 +65,32 @@ public:
     void addLetterDefinition(const FontLetterDefinition &letterDefinition);
     bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition);
     
+    bool prepareLetterDefinitions(unsigned short  *utf16String);
+
     void  addTexture(Texture2D &texture, int slot);
     float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
     
-    Texture2D                 & getTexture(int slot);
-    Font                      & getFont() const;
+    Texture2D& getTexture(int slot);
+    const Font* getFont() const;
     
 private:
-    
-    void relaseTextures();
-    std::map<int, Texture2D *>                      _atlasTextures;
-    std::map<unsigned short, FontLetterDefinition>  _fontLetterDefinitions;
-    float                                           _commonLineHeight;
-    Font &                                          _font;
 
+    void relaseTextures();
+    std::unordered_map<int, Texture2D*> _atlasTextures;
+    std::unordered_map<unsigned short, FontLetterDefinition> _fontLetterDefinitions;
+    float _commonLineHeight;
+    Font * _font;
+
+    // Dynamic GlyphCollection related stuff
+    int _currentPage;
+    unsigned char *_currentPageData;
+    int _currentPageDataSize;
+    float _currentPageOrigX;
+    float _currentPageOrigY;
+    float _currentPageLineHeight;
+    float _letterPadding;
+    bool  _makeDistanceMap;
 };
 
 

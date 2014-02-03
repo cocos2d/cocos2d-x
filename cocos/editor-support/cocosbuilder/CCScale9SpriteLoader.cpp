@@ -1,6 +1,7 @@
 #include "CCScale9SpriteLoader.h"
 
-
+using namespace cocos2d;
+using namespace cocos2d::extension;
 
 #define PROPERTY_CONTENTSIZE "contentSize"
 #define PROPERTY_SPRITEFRAME "spriteFrame"
@@ -13,7 +14,7 @@
 #define PROPERTY_INSETRIGHT "insetRight"
 #define PROPERTY_INSETBOTTOM "insetBottom"
 
-NS_CC_EXT_BEGIN
+namespace cocosbuilder {
 
 void Scale9SpriteLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_SPRITEFRAME) == 0) {
@@ -72,4 +73,4 @@ void Scale9SpriteLoader::onHandlePropTypeFloat(Node * pNode, Node * pParent, con
     }
 }
 
-NS_CC_EXT_END
+}
