@@ -84,7 +84,7 @@ public:
 		wchar_t * pwszBuffer = NULL;
 		do 
 		{
-			if (nString.size() < 0)
+			if (nString.size() == 0)
 			{
 				break;
 			}
