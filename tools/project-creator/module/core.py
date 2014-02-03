@@ -179,8 +179,7 @@ class CocosProject:
         self.step = 0
 
         #begin copy engine
-        print("###begin copy engine")
-        print("waitting copy cocos2d ...")
+        print("> Copying cocos2d files...")
         dstPath = os.path.join(self.context["dst_project_path"],"cocos2d")
         for index in range(len(fileList)):
             srcfile = os.path.join(self.cocos_root,fileList[index])
@@ -201,14 +200,19 @@ class CocosProject:
             self.step = self.step + 1
             if self.callbackfun and self.step%int(self.totalStep/50) == 0:
                 self.callbackfun(self.step,self.totalStep,fileList[index])
-        print("cocos2d\t\t: Done!")
+        print("< done")
         # call process_proj from each platform's script folder
+
+        print ("")
+        print("> Creating project files...")
         for platform in self.platforms_list:
             self.__processPlatformProjects(platform)
+        print("< done")
 
-        print ("###New project has been created in this path: ")
+        print ("")
+        print ("A new project was created in:")
         print (self.context["dst_project_path"].replace("\\", "/"))
-        print ("Have Fun!")
+
         return True
 
     def __processPlatformProjects(self, platform):
@@ -262,7 +266,7 @@ class CocosProject:
                 replaceString(os.path.join(proj_path, dst), self.context["src_project_name"], self.context["dst_project_name"])
 
         # done!
-        showMsg = "proj.%s\t\t: Done!" % platform
+        showMsg = ">> Creating proj.%s... OK" % platform
         self.step += 1
         if self.callbackfun:
             self.callbackfun(self.step,self.totalStep,showMsg)
