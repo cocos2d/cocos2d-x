@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013      Chris Hannon
+ Created by Chris Hannon 2013 http://www.channon.us
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -443,6 +443,7 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 				}
 
 				c->fireEvent(eventname, payload);
+				c->getDelegate()->eventFired(c, eventname, payload);
 			}
 			
 			break;
@@ -603,7 +604,7 @@ void SocketIO::destroyInstance()
     CC_SAFE_DELETE(_inst);
 }
     
-SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri)
+SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& delegate)
 {
 	std::string host = uri;
 	int port = 0;

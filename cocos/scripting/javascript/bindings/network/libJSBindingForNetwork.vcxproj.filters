@@ -17,12 +17,18 @@
     <ClCompile Include="XMLHTTPRequest.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="jsb_socketio.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jsb_websocket.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="XMLHTTPRequest.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="jsb_socketio.h">
       <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>
