@@ -86,6 +86,8 @@ CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float f
                                const CCSize &dimensions, CCTextAlignment hAlignment, 
                                CCVerticalTextAlignment vAlignment)
 {
+    if (dimensions.width > 0 || dimensions.height > 0 )
+        return;
     CCLabelTTF *pRet = new CCLabelTTF();
     if(pRet && pRet->initWithString(string, fontName, fontSize, dimensions, hAlignment, vAlignment))
     {
@@ -238,6 +240,8 @@ CCSize CCLabelTTF::getDimensions()
 
 void CCLabelTTF::setDimensions(const CCSize &dim)
 {
+    if (dim.width > 0 || dim.height > 0 )
+        return;
     if (dim.width != m_tDimensions.width || dim.height != m_tDimensions.height)
     {
         m_tDimensions = dim;
