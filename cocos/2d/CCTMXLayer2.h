@@ -265,8 +265,6 @@ protected:
     Texture2D *_texture;
 
     GLuint _buffersVBO[3]; //0: vertex, 1: tex coords,  2: indices
-    GLushort* _indices;
-    GLfloat *_vertices;
 
     Sprite *_reusedTile;
     Size _screenGridSize;
