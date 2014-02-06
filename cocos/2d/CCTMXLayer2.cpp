@@ -180,12 +180,13 @@ void TMXLayer2::onDraw()
 
             float left, right, top, bottom;
 
-            if(!tile
+            if(true || !tile
                || baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width
                || baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height
                )
             {
-                left = right = top = bottom = 0;
+                left = bottom = 0;
+                top = right = 1;
             }
             else
             {
@@ -208,11 +209,13 @@ void TMXLayer2::onDraw()
 
     glUnmapBuffer(GL_ARRAY_BUFFER);
 
-    _modelViewTransform.mat[12] += baseTile.x * _mapTileSize.width;
-    _modelViewTransform.mat[13] += baseTile.y * _mapTileSize.height;
+    kmMat4 tempMV = _modelViewTransform;
+
+    tempMV.mat[12] += (baseTile.x * _mapTileSize.width);
+    tempMV.mat[13] += (baseTile.y * _mapTileSize.height);
 
     getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+    getShaderProgram()->setUniformsForBuiltins(tempMV);
 
     glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, 1, 1, 1, 1);
 
