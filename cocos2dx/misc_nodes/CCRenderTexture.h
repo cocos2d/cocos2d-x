@@ -82,11 +82,26 @@ public:
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static CCRenderTexture * create(int w, int h);
 
+    /** initializes a RenderTexture object with width and height (width and height are not scaled) in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    static CCRenderTexture * createNoScale(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+
+    /** creates a RenderTexture object with width and height (width and height are not scaled) in Points and a pixel format, only RGB and RGBA formats are valid */
+    static CCRenderTexture * createNoScale(int w, int h, CCTexture2DPixelFormat eFormat);
+
+    /** creates a RenderTexture object with width and height (width and height are not scaled) in Points, pixel format is RGBA8888 */
+    static CCRenderTexture * createNoScale(int w, int h);
+
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
 
+    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    bool initWithWidthAndHeightEx(int w, int h, CCTexture2DPixelFormat eFormat, bool bShouldScale);
+
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
     bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    bool initWithWidthAndHeightEx(int w, int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat, bool bShouldScale);
 
     /** starts grabbing */
     void begin();
