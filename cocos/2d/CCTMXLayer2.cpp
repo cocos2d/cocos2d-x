@@ -154,8 +154,8 @@ void TMXLayer2::onDraw()
     GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
     Point trans = convertToWorldSpace(Point::ZERO);
-    Point baseTile = Point(floor(trans.x / (_mapTileSize.width)),
-                                       floor(trans.y / (_mapTileSize.height)));
+    Point baseTile = Point(floor(-trans.x / (_mapTileSize.width)),
+                                       floor(-trans.y / (_mapTileSize.height)));
 
     log("base (%.1f,%.1f)", baseTile.x, baseTile.y);
 
@@ -171,7 +171,11 @@ void TMXLayer2::onDraw()
 
 			int tileidx = (_layerSize.height - (baseTile.y + y) - 1) * _layerSize.width + baseTile.x + x;
 //			int tileidx = (_layerSize.height - y - 1) * _layerSize.width + x;
-			unsigned int tile = _tiles[tileidx];
+
+			unsigned int tile = 0;
+            if(tileidx >=0)
+                tile = _tiles[tileidx];
+
 
 			int screenidx = (y * (_screenGridSize.width)) + x;
 			Rect tileTexture = _tileSet->rectForGID(tile & kFlippedMask);
@@ -180,13 +184,12 @@ void TMXLayer2::onDraw()
 
             float left, right, top, bottom;
 
-            if(true || !tile
+            if(!tile
                || baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width
                || baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height
                )
             {
-                left = bottom = 0;
-                top = right = 1;
+                left = bottom = top = right = 0;
             }
             else
             {
@@ -209,13 +212,11 @@ void TMXLayer2::onDraw()
 
     glUnmapBuffer(GL_ARRAY_BUFFER);
 
-    kmMat4 tempMV = _modelViewTransform;
-
-    tempMV.mat[12] += (baseTile.x * _mapTileSize.width);
-    tempMV.mat[13] += (baseTile.y * _mapTileSize.height);
+    _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
+    _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
 
     getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(tempMV);
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
 
     glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, 1, 1, 1, 1);
 
@@ -337,6 +338,7 @@ void TMXLayer2::setupTiles()
 
     _screenGridSize.width = (ceil(screenSize.width / (_mapTileSize.width)) + 1);
     _screenGridSize.height = (ceil(screenSize.height / (_mapTileSize.height)) + 1);
+
     _screenTileCount = _screenGridSize.width * _screenGridSize.height;
 
     setupVBO();
