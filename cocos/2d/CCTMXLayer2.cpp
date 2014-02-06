@@ -4,6 +4,8 @@ Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
+Copyright (c) 2011 HKASoftware
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,6 +26,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+/*
+ Code based on HKTMXTiledMap by HKASoftware http://hkasoftware.com
+ 
+ Further info:
+ http://www.cocos2d-iphone.org/forums/topic/hktmxtiledmap/
+
+ */
 #include "CCTMXLayer2.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
@@ -157,25 +167,16 @@ void TMXLayer2::onDraw()
     Point baseTile = Point(floor(-trans.x / (_mapTileSize.width)),
                                        floor(-trans.y / (_mapTileSize.height)));
 
-    log("base (%.1f,%.1f)", baseTile.x, baseTile.y);
-
     Size texSize = _tileSet->_imageSize;
 	for (int y=0; y < _screenGridSize.height; y++)
 	{
-//		if (baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height)
-//			continue;
 		for (int x=0; x < _screenGridSize.width; x++)
 		{
-//			if (baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width)
-//				continue;
-
 			int tileidx = (_layerSize.height - (baseTile.y + y) - 1) * _layerSize.width + baseTile.x + x;
-//			int tileidx = (_layerSize.height - y - 1) * _layerSize.width + x;
 
 			unsigned int tile = 0;
             if(tileidx >=0)
                 tile = _tiles[tileidx];
-
 
 			int screenidx = (y * (_screenGridSize.width)) + x;
 			Rect tileTexture = _tileSet->rectForGID(tile & kFlippedMask);
@@ -234,30 +235,32 @@ void TMXLayer2::onDraw()
 
 void TMXLayer2::setupIndices()
 {
-    _indices = (GLushort *)malloc( _screenTileCount * 6 * sizeof(GLushort) );
+    GLushort *indices = (GLushort *)malloc( _screenTileCount * 6 * sizeof(GLushort) );
 
     for( int i=0; i < _screenTileCount; i++)
     {
-        _indices[i*6+0] = i*4+0;
-        _indices[i*6+1] = i*4+1;
-        _indices[i*6+2] = i*4+2;
+        indices[i*6+0] = i*4+0;
+        indices[i*6+1] = i*4+1;
+        indices[i*6+2] = i*4+2;
 
         // inverted index. issue #179
-        _indices[i*6+3] = i*4+3;
-        _indices[i*6+4] = i*4+2;
-        _indices[i*6+5] = i*4+1;        
+        indices[i*6+3] = i*4+3;
+        indices[i*6+4] = i*4+2;
+        indices[i*6+5] = i*4+1;
     }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _screenTileCount * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices[0]) * _screenTileCount * 6, indices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    free(indices);
 }
 
 void TMXLayer2::setupVertices()
 {
-    _vertices = (GLfloat *)malloc( _screenTileCount * 4 * 2 * sizeof(GLfloat) );
+    GLfloat *vertices = (GLfloat *)malloc( _screenTileCount * 4 * 2 * sizeof(GLfloat) );
 
-    GLfloat *tilePtr = _vertices;
+    GLfloat *tilePtr = vertices;
     for (int y=0; y < _screenGridSize.height; y++)
     {
         GLfloat ypos_0 = _mapTileSize.height * y;
@@ -279,8 +282,10 @@ void TMXLayer2::setupVertices()
     }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_vertices[0]) * _screenTileCount * 4 * 2, _vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertices[0]) * _screenTileCount * 4 * 2, vertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    free(vertices);
 }
 
 void TMXLayer2::setupVBO()
