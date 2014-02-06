@@ -211,6 +211,7 @@ protected:
     Sprite* reusedTileWithRect(Rect rect);
     void setupTileSprite(Sprite* sprite, Point pos, int gid);
     void setupIndices();
+    void setupVertices();
     void setupVBO();
 
     Point getPositionForIsoAt(const Point& pos);
@@ -262,13 +263,14 @@ protected:
 
     //
     Texture2D *_texture;
-    V3F_C4B_T2F_Quad* _allQuads;
-    V3F_C4B_T2F_Quad* _quadsToRender;
+
+    GLuint _buffersVBO[3]; //0: vertex, 1: tex coords,  2: indices
     GLushort* _indices;
-    GLuint _VAOname;
-    GLuint _buffersVBO[2]; //0: vertex  1: indices
+    GLfloat *_vertices;
+
     Sprite *_reusedTile;
-    ssize_t _totalTiles;
+    Size _screenGridSize;
+    int _screenTileCount;
 };
 
 // end of tilemap_parallax_nodes group

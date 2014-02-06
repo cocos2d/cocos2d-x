@@ -288,7 +288,12 @@ TMXOrthoTest::TMXOrthoTest()
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
-    
+
+//    auto scale = ScaleBy::create(10, 0.1);
+//    auto back = scale->reverse();
+//    auto seq = Sequence::create(scale, back, NULL);
+//    auto repeat = RepeatForever::create(seq);
+//    map->runAction(repeat);
 
 //    float x, y, z;
 //    map->getCamera()->getEye(&x, &y, &z);

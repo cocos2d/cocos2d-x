@@ -51,8 +51,6 @@ THE SOFTWARE.
 #include "CCUserDefault.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
-#include "kazmath/kazmath.h"
-#include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "platform/CCImage.h"
 #include "CCGLView.h"
@@ -63,6 +61,9 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCFrustum.h"
 #include "CCConsole.h"
+
+#include "kazmath/kazmath.h"
+#include "kazmath/GL/matrix.h"
 
 /**
  Position of the FPS

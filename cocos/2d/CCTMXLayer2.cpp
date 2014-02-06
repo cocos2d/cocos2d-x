@@ -35,6 +35,9 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
 
+#include "kazmath/kazmath.h"
+#include "kazmath/GL/matrix.h"
+
 NS_CC_BEGIN
 
 
@@ -92,10 +95,6 @@ bool TMXLayer2::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *l
     _useAutomaticVertexZ = false;
     _vertexZvalue = 0;
 
-    _allQuads = (struct V3F_C4B_T2F_Quad*)malloc( sizeof(_allQuads[0]) * totalNumberOfTiles );
-    _quadsToRender = (struct V3F_C4B_T2F_Quad*)malloc( sizeof(_allQuads[0]) * totalNumberOfTiles );
-    _indices = (GLushort *)malloc( totalNumberOfTiles * 6 * sizeof(GLushort) );
-
     // shader, and other stuff
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
@@ -120,8 +119,6 @@ TMXLayer2::TMXLayer2()
 
 TMXLayer2::~TMXLayer2()
 {
-    free(_allQuads);
-    free(_quadsToRender);
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_texture);
 
@@ -143,44 +140,99 @@ void TMXLayer2::draw()
 
 void TMXLayer2::onDraw()
 {
-    //
-    // Using VBO without VAO
-    //
-
-    CC_NODE_DRAW_SETUP();
-
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
     GL::bindTexture2D( _texture->getName() );
 
-#define kQuadSize sizeof(_allQuads[0].bl)
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-
-    // XXX: update is done in draw... perhaps it should be done in a timer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_allQuads[0]) * _totalTiles, _allQuads, GL_DYNAMIC_DRAW);
-
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-
     // vertices
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
-
-    // colors
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
     // tex coords
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+    GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
-    glDrawElements(GL_TRIANGLES, (GLsizei)_totalTiles*6, GL_UNSIGNED_SHORT, 0);
+    Point trans = convertToWorldSpace(Point::ZERO);
+    Point baseTile = Point(floor(trans.x / (_mapTileSize.width)),
+                                       floor(trans.y / (_mapTileSize.height)));
 
+    log("base (%.1f,%.1f)", baseTile.x, baseTile.y);
+
+    Size texSize = _tileSet->_imageSize;
+	for (int y=0; y < _screenGridSize.height; y++)
+	{
+//		if (baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height)
+//			continue;
+		for (int x=0; x < _screenGridSize.width; x++)
+		{
+//			if (baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width)
+//				continue;
+
+			int tileidx = (_layerSize.height - (baseTile.y + y) - 1) * _layerSize.width + baseTile.x + x;
+//			int tileidx = (_layerSize.height - y - 1) * _layerSize.width + x;
+			unsigned int tile = _tiles[tileidx];
+
+			int screenidx = (y * (_screenGridSize.width)) + x;
+			Rect tileTexture = _tileSet->rectForGID(tile & kFlippedMask);
+
+			GLfloat *texbase = texcoords + screenidx * 4 * 2;
+
+            float left, right, top, bottom;
+
+            if(!tile
+               || baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width
+               || baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height
+               )
+            {
+                left = right = top = bottom = 0;
+            }
+            else
+            {
+                left   = (tileTexture.origin.x / texSize.width);
+                right  = left + (tileTexture.size.width / texSize.width);
+                bottom = (tileTexture.origin.y / texSize.height);
+                top    = bottom + (tileTexture.size.height / texSize.height);
+            }
+
+            texbase[0] = left;
+            texbase[1] = top;
+            texbase[2] = right;
+            texbase[3] = top;
+            texbase[4] = left;
+            texbase[5] = bottom;
+            texbase[6] = right;
+            texbase[7] = bottom;
+		}
+	}
+
+    glUnmapBuffer(GL_ARRAY_BUFFER);
+
+    _modelViewTransform.mat[12] += baseTile.x * _mapTileSize.width;
+    _modelViewTransform.mat[13] += baseTile.y * _mapTileSize.height;
+
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+
+    glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, 1, 1, 1, 1);
+
+    // indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
+
+    glDrawElements(GL_TRIANGLES, _screenTileCount * 6, GL_UNSIGNED_SHORT, NULL);
+
+    // cleanup
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 void TMXLayer2::setupIndices()
 {
-    for( int i=0; i < _totalTiles; i++)
+    _indices = (GLushort *)malloc( _screenTileCount * 6 * sizeof(GLushort) );
+
+    for( int i=0; i < _screenTileCount; i++)
     {
         _indices[i*6+0] = i*4+0;
         _indices[i*6+1] = i*4+1;
@@ -191,19 +243,56 @@ void TMXLayer2::setupIndices()
         _indices[i*6+4] = i*4+2;
         _indices[i*6+5] = i*4+1;        
     }
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _screenTileCount * 6, _indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void TMXLayer2::setupVertices()
+{
+    _vertices = (GLfloat *)malloc( _screenTileCount * 4 * 2 * sizeof(GLfloat) );
+
+    GLfloat *tilePtr = _vertices;
+    for (int y=0; y < _screenGridSize.height; y++)
+    {
+        GLfloat ypos_0 = _mapTileSize.height * y;
+        GLfloat ypos_1 = _mapTileSize.height * (y+1);
+        for (int x=0; x < _screenGridSize.width; x++, tilePtr += 4 * 2)
+        {
+            GLfloat xpos_0 = _mapTileSize.width * x;
+            GLfloat xpos_1 = _mapTileSize.width * (x+1);
+            // define the points of a quad here; we'll use the index buffer to make them triangles
+            tilePtr[0] = xpos_0;
+            tilePtr[1] = ypos_0;
+            tilePtr[2] = xpos_1;
+            tilePtr[3] = ypos_0;
+            tilePtr[4] = xpos_0;
+            tilePtr[5] = ypos_1;
+            tilePtr[6] = xpos_1;
+            tilePtr[7] = ypos_1;
+        }
+    }
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[0]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_vertices[0]) * _screenTileCount * 4 * 2, _vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void TMXLayer2::setupVBO()
 {
-    glGenBuffers(2, &_buffersVBO[0]);
+    glGenBuffers(3, &_buffersVBO[0]);
 
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_allQuads[0]) * _totalTiles, _allQuads, GL_DYNAMIC_DRAW);
+    // Vertex
+    setupVertices();
+
+    // Tex Coords
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
+    glBufferData(GL_ARRAY_BUFFER, _screenTileCount * 4 * 2 * sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalTiles * 6, _indices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    // Indices
+    setupIndices();
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -241,27 +330,12 @@ void TMXLayer2::setupTiles()
     // Parse cocos2d properties
     this->parseInternalProperties();
 
-    for (int y=0; y < _layerSize.height; y++)
-    {
-        for (int x=0; x < _layerSize.width; x++)
-        {
-            int pos = static_cast<int>(x + _layerSize.width * y);
-            int gid = _tiles[ pos ];
+    Size screenSize = Director::getInstance()->getWinSize();
 
-            // gid are stored in little endian.
-//            gid = ntohl(gid);
+    _screenGridSize.width = (ceil(screenSize.width / (_mapTileSize.width)) + 1);
+    _screenGridSize.height = (ceil(screenSize.height / (_mapTileSize.height)) + 1);
+    _screenTileCount = _screenGridSize.width * _screenGridSize.height;
 
-            // XXX: gid == 0 --> empty tile
-            if (gid != 0) 
-            {
-                this->appendTileForGID(gid, Point(x, y));
-            }
-        }
-    }
-
-    _totalTiles = _layerSize.height * _layerSize.width;
-
-    setupIndices();
     setupVBO();
 }
 
@@ -269,24 +343,6 @@ void TMXLayer2::setupTiles()
 // since lot's of assumptions are no longer true
 void TMXLayer2::appendTileForGID(int gid, const Point& pos)
 {
-    if (gid != 0 && (static_cast<int>((gid & kFlippedMask)) - _tileSet->_firstGid) >= 0)
-    {
-        Rect rect = _tileSet->rectForGID(gid);
-        rect = CC_RECT_PIXELS_TO_POINTS(rect);
-
-        ssize_t z = (ssize_t)(pos.x + pos.y * _layerSize.width);
-
-        Sprite *sprite = reusedTileWithRect(rect);
-
-        setupTileSprite(sprite ,pos ,gid);
-
-        // don't add it using the "standard" way.
-        sprite->setDirty(true);
-        sprite->updateTransform();
-        V3F_C4B_T2F_Quad quad = sprite->getQuad();
-
-        _allQuads[z] = quad;
-    }
 }
 
 Sprite* TMXLayer2::reusedTileWithRect(Rect rect)
