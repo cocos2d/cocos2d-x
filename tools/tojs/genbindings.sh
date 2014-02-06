@@ -27,8 +27,13 @@ if [ -z "${NDK_ROOT+aaa}" ]; then
 fi
 
 if [ -z "${PYTHON_BIN+aaa}" ]; then
-# ... if PYTHON_BIN is not set, use "/usr/bin/python2.7"
-    PYTHON_BIN="/usr/bin/python2.7"
+# ... if PYTHON_BIN is not set, try to find it via 'which' and if it fails fallback to /usr/bin
+    set +e
+    PYTHON_BIN=`which python2.7`
+    set -e
+    if [ -z "${PYTHON_BIN}" ]; then
+      PYTHON_BIN="/usr/bin/python2.7"
+    fi
 fi
 
 # find current dir
