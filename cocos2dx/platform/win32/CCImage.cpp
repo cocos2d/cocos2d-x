@@ -152,25 +152,26 @@ public:
 						pwszBuffer = NULL;
 					}
 				}
-				if (fontPath.size() > 0)
-					m_curFontPath = fontPath;
-				else
-					m_curFontPath.clear();
-				// register temp font
-				if (m_curFontPath.size() > 0)
+			}
+			if (fontPath.size() > 0)
+				m_curFontPath = fontPath;
+			else
+				m_curFontPath.clear();
+			// register temp font
+			if (m_curFontPath.size() > 0)
+			{
+				wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
+				if (pwszBuffer)
 				{
-					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
-					if (pwszBuffer)
+					if(AddFontResource(pwszBuffer))
 					{
-						if(AddFontResource(pwszBuffer))
-						{
-							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-						}						
-						delete [] pwszBuffer;
-						pwszBuffer = NULL;
-					}
+						SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+					}						
+					delete [] pwszBuffer;
+					pwszBuffer = NULL;
 				}
-            }
+			}
+            
             m_hFont = NULL;
 
             // disable Cleartype
