@@ -15,44 +15,50 @@ public:
     void Close();
 
     /**
-    @brief ²¥·ÅÉùÒôÎÄ¼ş
-    @param pFileName ²¥·ÅµÄÉùÒôÎÄ¼şÃû³Æ£¬ĞèÒª°üº¬ÎÄ¼şµÄÂ·¾¶
-    @param nTimes    ²¥·ÅÉùÒôÎÄ¼şµÄÑ­»·´ÎÊı£¬Ä¬ÈÏÖµÎª 1£¬¼´²¥·ÅÒ»´Î
+    @brief æ’­æ”¾å£°éŸ³æ–‡ä»¶
+    @param pFileName æ’­æ”¾çš„å£°éŸ³æ–‡ä»¶åç§°ï¼Œéœ€è¦åŒ…å«æ–‡ä»¶çš„è·¯å¾„
+    @param nTimes    æ’­æ”¾å£°éŸ³æ–‡ä»¶çš„å¾ªç¯æ¬¡æ•°ï¼Œé»˜è®¤å€¼ä¸º 1ï¼Œå³æ’­æ”¾ä¸€æ¬¡
     */
     void Open(const char* pFileName, UINT uId);
 
     void Play(UINT uTimes = 1);
 
     /**
-    @brief ÔİÍ£²¥·ÅÉùÒô
+    @brief æš‚åœæ’­æ”¾å£°éŸ³
     */
     void Pause();
 
     /**
-    @brief ¼ÌĞø²¥·ÅÉùÒô
+    @brief ç»§ç»­æ’­æ”¾å£°éŸ³
     */
     void Resume();
 
     /**
-    @brief Í£Ö¹²¥·ÅÉùÒô
+    @brief åœæ­¢æ’­æ”¾å£°éŸ³
     */
     void Stop();
 
     /**
-    @brief ÖØĞÂ²¥·Å
+    @brief é‡æ–°æ’­æ”¾
     */
     void Rewind();
 
     /**
-    @brief »ñÈ¡²¥·ÅÆ÷µ±Ç°ÊÇ·ñÕıÔÚ²¥·ÅÖĞ
+    @brief è·å–æ’­æ”¾å™¨å½“å‰æ˜¯å¦æ­£åœ¨æ’­æ”¾ä¸­
     */
     bool IsPlaying();
 
     /**
-    @brief »ñÈ¡µ±Ç°²¥·ÅµÄÒôĞ§ ID
-    @return µ±Ç°²¥·ÅµÄÒôĞ§ID
+    @brief è·å–å½“å‰æ’­æ”¾çš„éŸ³æ•ˆ ID
+    @return å½“å‰æ’­æ”¾çš„éŸ³æ•ˆID
     */
     UINT GetSoundID();
+
+    // @volume value ranges from 0 .. 1000
+    void SetVolume(UINT volume);
+
+    // @return value ranges from 0 .. 1000
+    UINT GetVolume() const;
 
 private:
     friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
