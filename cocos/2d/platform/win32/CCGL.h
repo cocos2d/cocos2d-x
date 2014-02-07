@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __CCGL_H__
 #define __CCGL_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "GL/glew.h"
 
 #define CC_GL_DEPTH24_STENCIL8		GL_DEPTH24_STENCIL8
@@ -35,5 +38,7 @@ THE SOFTWARE.
 #define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
 #define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
 #define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #endif // __CCGL_H__

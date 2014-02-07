@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 #include "platform/CCDevice.h"
 #include "CCActionInstant.h"
 #include "CCActionInterval.h"
@@ -44,7 +44,8 @@ NS_CC_EXT_BEGIN
 
 static float convertDistanceFromPointToInch(float pointDis)
 {
-    float factor = ( EGLView::getInstance()->getScaleX() + EGLView::getInstance()->getScaleY() ) / 2;
+    auto glview = Director::getInstance()->getOpenGLView();
+    float factor = ( glview->getScaleX() + glview->getScaleY() ) / 2;
     return pointDis * factor / Device::getDPI();
 }
 
@@ -508,21 +509,23 @@ void ScrollView::onBeforeDraw()
     {
 		_scissorRestored = false;
         Rect frame = getViewRect();
-        if (EGLView::getInstance()->isScissorEnabled()) {
+        auto glview = Director::getInstance()->getOpenGLView();
+
+        if (glview->isScissorEnabled()) {
             _scissorRestored = true;
-            _parentScissorRect = EGLView::getInstance()->getScissorRect();
+            _parentScissorRect = glview->getScissorRect();
             //set the intersection of _parentScissorRect and frame as the new scissor rect
             if (frame.intersectsRect(_parentScissorRect)) {
                 float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
                 float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
                 float xx = MIN(frame.origin.x+frame.size.width, _parentScissorRect.origin.x+_parentScissorRect.size.width);
                 float yy = MIN(frame.origin.y+frame.size.height, _parentScissorRect.origin.y+_parentScissorRect.size.height);
-                EGLView::getInstance()->setScissorInPoints(x, y, xx-x, yy-y);
+                glview->setScissorInPoints(x, y, xx-x, yy-y);
             }
         }
         else {
             glEnable(GL_SCISSOR_TEST);
-            EGLView::getInstance()->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
         }
     }
 }
@@ -543,7 +546,9 @@ void ScrollView::onAfterDraw()
     if (_clippingToBounds)
     {
         if (_scissorRestored) {//restore the parent's scissor rect
-            EGLView::getInstance()->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
+            auto glview = Director::getInstance()->getOpenGLView();
+
+            glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
         }
         else {
             glDisable(GL_SCISSOR_TEST);

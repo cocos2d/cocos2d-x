@@ -1,3 +1,10 @@
+cocos2d-x-3.0rc0 Feb.?? 2014
+[All]
+     [NEW]          Adds Dutch Language support.
+
+     [FIX]          EGLView improvements: renamed to GLView, no longer a singleton, easier to customize
+     [FIX]          Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo.
+
 cocos2d-x-3.0beta2 Jan.24 2014
 [All]
      [NEW]          Full screen support for desktop platforms.
@@ -11,8 +18,7 @@ cocos2d-x-3.0beta2 Jan.24 2014
      [NEW]          Node: Added `setGlobalZOrder()`. Useful to change the Node's render order. Node::setZOrder() -> Node::setLocalZOrder()
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
      
-     [FIX]          Uses EventDispatcher to access event in LUA testcase.
-     [FIX]          Exposes SAXParser class to JS, it is used for parsing XML in JS.
+     [FIX]          event->stopPropagation can't work for EventListenerTouchAllAtOnce.
      [FIX]          Uses unified `desktop/CCEGLView.h/cpp` for desktop platforms (windows, mac, linux).
      [FIX]          Bindings-generator supports Windows again and remove dependency of LLVM since we only need binary(libclang.so/dll).
      [FIX]          Removes unused files for MAC platform after using glfw3 to create opengl context.
@@ -820,7 +826,7 @@ cocos2d-2.0-x-2.0.2 @Aug.30 2012
     Refactor  #1399: adjust directory structure
     Refactor  #1402: improve static creator function names to avoid confusion
     Refactor  #1413: improve CCTouch::getLocation(), getDelta() which returns OpenGL coordinates directly
-    Refactor  #1437: change the return type of CCApplication::sharedApplication() and CCEGLView::sharedOpenGLView() to a pointer
+    Refactor  #1437: change the return type of CCApplication::sharedApplication() and CCGLView::sharedOpenGLView() to a pointer
     Refactor  #1441: put hd and iPad resources of TestCpp into separate directories
     Refactor  #1442: use CREATE_FUNC to replace LAYER_CREATE_FUNC and SCENE_CREATE_FUNC
  [iOS]
@@ -854,7 +860,7 @@ cocos2d-2.0-rc2-x-2.0.1 @Jun.28 2012
     Bug       #1293: fix a bug that CCDirector::getFrames() returns wrong value
     Bug       #1296: fix a logical error in CCTMXTiledMap::tilesetForLayer()
     Bug       #1300: fix a typo of CC_ENABLE_CACHE_TEXTTURE_DATA
-    Bug       #1301: apply scissor with points in CCEGLView::sharedOpenGLView().setScissorInPoints()
+    Bug       #1301: apply scissor with points in CCGLView::sharedOpenGLView().setScissorInPoints()
     Bug       #1302: change the parameter type of CCMenu::setHandlerPriority to signed int
     Bug       #1308: fix a logical bug in CCTouchDispatcher
     Bug       #1326: fix a bug that the compilation of HelloLua and testjs project was broken after synchronizing to rc2

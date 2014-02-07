@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __CCPLATFORMDEFINE_H__
 #define __CCPLATFORMDEFINE_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #include <assert.h>
 
 #define CC_DLL 
@@ -47,6 +50,6 @@ THE SOFTWARE.
 #endif
 #endif
 
-
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #endif /* __CCPLATFORMDEFINE_H__*/
