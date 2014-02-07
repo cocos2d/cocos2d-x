@@ -240,27 +240,33 @@ int TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile)
     switch (_layerOrientation)
     {
         case TMXOrientationOrtho:
-            if( baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width
-               || baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height)
+            x += baseTile.x;
+            y += baseTile.y;
+
+            if( x < 0 || x >= _layerSize.width
+               || y < 0 || y >= _layerSize.height)
                 tileidx = -1;
             else
-                tileidx = (_layerSize.height - (baseTile.y + y) - 1) * _layerSize.width + baseTile.x + x;
+                tileidx = (_layerSize.height - y - 1) * _layerSize.width + x;
             break;
 
         case TMXOrientationIso:
-            x += baseTile.x;
-            y -= baseTile.y*2 + 1;
 
-            int xx = x + (y-1) / 2;
-            int yy = y/2 - x;
+            x += baseTile.x;
+            y -= baseTile.y*2;
+
+            int xx = x + y/2;
+            int yy = (y+1)/2 - x;
 
             if( xx < 0 || xx >= _layerSize.width
                || yy < 0 || yy >= _layerSize.height )
                 tileidx = -1;
             else
                 tileidx = xx + _layerSize.width * yy;
+
             break;
     }
+
 
     return tileidx;
 }
@@ -405,6 +411,8 @@ void TMXLayer2::setupTiles()
         case TMXOrientationIso:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
             _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
+//            _screenGridSize.width = 3;
+//            _screenGridSize.height = 4;
             break;
         case TMXOrientationHex:
             break;
