@@ -159,6 +159,9 @@
     <ClCompile Include="lua_extensions.c">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
+    <ClCompile Include="debugger.c">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.hpp">
@@ -303,6 +306,9 @@
       <Filter>cocos2dx_support\socket</Filter>
     </ClInclude>
     <ClInclude Include="lua_extensions.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="debugger.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>

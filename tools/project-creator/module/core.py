@@ -93,7 +93,7 @@ class CocosProject:
         parser.add_option("-l", "--language",metavar="PROGRAMMING_NAME",
                             type="choice",
                             choices=["cpp", "lua", "javascript"],
-                            help="Major programming language you want to use, should be [cpp | lua | javascript]")
+                            help="Major programming language you want to use, should be [cpp | lua | javascript ]")
         parser.add_option("-p", "--path", metavar="PROJECT_PATH",help="Set generate project path for project")
         parser.add_option("-r", "--runtime",action="store_true", help="create runtime project")
 
@@ -152,7 +152,11 @@ class CocosProject:
         elif ("lua" == self.context["language"]):
             self.context["src_project_name"] = "HelloLua"
             self.context["src_package_name"] = "org.cocos2dx.hellolua"
-            self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua")
+            if runtime:
+                self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua-runtime")
+            else:
+                self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua")
+
             if runtime:
                 print("lua language no runtime model")
                 return False
@@ -216,7 +220,6 @@ class CocosProject:
                 self.callbackfun(self.step,self.totalStep,fileList[index])
         print("< done")
         # call process_proj from each platform's script folder
-
         print ("")
         print("> Creating project files...")
         for platform in self.platforms_list:
