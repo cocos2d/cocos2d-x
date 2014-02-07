@@ -76,11 +76,14 @@ struct timeval
 #include <WinSock2.h>
 #endif
 
+#ifndef _TIME_ZONE_DEFINED
+#define _TIME_ZONE_DEFINED
 struct timezone
 {
     int tz_minuteswest;
     int tz_dsttime;
 };
+#endif
 
 int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 

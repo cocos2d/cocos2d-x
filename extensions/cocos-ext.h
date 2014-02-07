@@ -41,6 +41,10 @@
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#include "network/WebSocket.h"
+#endif
+
 #include "CocoStudio/Armature/CCArmature.h"
 #include "CocoStudio/Armature/CCBone.h"
 #include "CocoStudio/Armature/animation/CCArmatureAnimation.h"

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libBox2D", "external\Box2D\proj.wp8\Box2D.vcxproj", "{79FC91D4-974C-4BC7-8E8C-79E194437DE7}"
 EndProject
@@ -55,6 +55,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "networking", "networking", "{6EDE80D5-0CED-41BE-9ACE-877992D52892}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcurl", "cocos2dx\platform\third_party\winrt\libcurl\proj.wp8\libcurl.vcxproj", "{BF4854E9-C02B-49FE-B9DD-D6373D3BB0EF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libwebsockets", "cocos2dx\platform\third_party\winrt\libwebsockets\proj.wp8\libwebsockets.vcxproj", "{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -506,6 +508,28 @@ Global
 		{BF4854E9-C02B-49FE-B9DD-D6373D3BB0EF}.Release|x64.Build.0 = Release|x64
 		{BF4854E9-C02B-49FE-B9DD-D6373D3BB0EF}.Release|x86.ActiveCfg = Release|Win32
 		{BF4854E9-C02B-49FE-B9DD-D6373D3BB0EF}.Release|x86.Build.0 = Release|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|ARM.ActiveCfg = Debug|ARM
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|ARM.Build.0 = Debug|ARM
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|Win32.Build.0 = Debug|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|x64.ActiveCfg = Debug|x64
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|x64.Build.0 = Debug|x64
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|x86.ActiveCfg = Debug|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Debug|x86.Build.0 = Debug|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|Any CPU.ActiveCfg = Release|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|ARM.ActiveCfg = Release|ARM
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|ARM.Build.0 = Release|ARM
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|Win32.ActiveCfg = Release|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|Win32.Build.0 = Release|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|x64.ActiveCfg = Release|x64
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|x64.Build.0 = Release|x64
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|x86.ActiveCfg = Release|Win32
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -532,5 +556,6 @@ Global
 		{D90B344F-2FBB-489E-B668-271AE7B196D6} = {A1783562-3D26-4598-9975-A07F0DA14B3D}
 		{A4834EEA-6196-4053-94DB-FE9F3A75F67C} = {A1783562-3D26-4598-9975-A07F0DA14B3D}
 		{BF4854E9-C02B-49FE-B9DD-D6373D3BB0EF} = {6EDE80D5-0CED-41BE-9ACE-877992D52892}
+		{3AFA1C7F-A08E-4AA1-AE03-89C7D302C5FA} = {6EDE80D5-0CED-41BE-9ACE-877992D52892}
 	EndGlobalSection
 EndGlobal
