@@ -78,12 +78,12 @@ void JSStudioEventListenerWrapper::eventCallbackFunc(Object* sender,int eventTyp
     }
 }
 
-static JSBool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::Widget* cobj = (gui::Widget *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -97,18 +97,18 @@ static JSBool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t
         
         cobj->addTouchEventListener(tmpObj, toucheventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::CheckBox* cobj = (gui::CheckBox *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -122,18 +122,18 @@ static JSBool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t ar
 
         cobj->addEventListenerCheckBox(tmpObj, checkboxselectedeventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::Slider* cobj = (gui::Slider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -147,18 +147,18 @@ static JSBool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc
 
         cobj->addEventListenerSlider(tmpObj, sliderpercentchangedselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::TextField* cobj = (gui::TextField *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -172,18 +172,18 @@ static JSBool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t a
 
         cobj->addEventListenerTextField(tmpObj, textfieldeventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::PageView* cobj = (gui::PageView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -197,18 +197,18 @@ static JSBool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t ar
 
         cobj->addEventListenerPageView(tmpObj, pagevieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::ListView* cobj = (gui::ListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -222,57 +222,58 @@ static JSBool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t ar
 
         cobj->addEventListenerListView(tmpObj, listvieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 1) {
-        jsval *argv = JS_ARGV(cx, vp);
+        JS::CallArgs argv = CallArgsFromVp(argc, vp);
 
-        JSObject *tmp;
+        JS::RootedObject tmp(cx);
         JS::RootedValue jsleft(cx), jstop(cx),jsright(cx),jsbottom(cx);
         double left, top,right,bottom;
-        JSBool ok = argv[0].isObject() &&
+        bool ok = argv[0].isObject() &&
             JS_ValueToObject(cx, argv[0], &tmp) &&
             JS_GetProperty(cx, tmp, "left", &jsleft) &&
             JS_GetProperty(cx, tmp, "top", &jstop) &&
             JS_GetProperty(cx, tmp, "right", &jsright) &&
-            JS_GetProperty(cx, tmp, "bottom", &jsbottom) &&
-            JS_ValueToNumber(cx, jsleft, &left) &&
-            JS_ValueToNumber(cx, jstop, &top) &&
-            JS_ValueToNumber(cx, jsright, &right) &&
-            JS_ValueToNumber(cx, jsbottom, &bottom);
+            JS_GetProperty(cx, tmp, "bottom", &jsbottom);
+        
+        left = jsleft.toNumber();
+        top = jstop.toNumber();
+        right = jsright.toNumber();
+        bottom = jsbottom.toNumber();
 
-        JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+        JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
         cobj->setMargin(gui::Margin(left,top,right,bottom));
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     gui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 0) {
         JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
-        if (!tmp) return JS_FALSE;
+        if (!tmp) return false;
         gui::Margin margin = cobj->getMargin();
-        JSBool ok = JS_DefineProperty(cx, tmp, "left", DOUBLE_TO_JSVAL(margin.left), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        bool ok = JS_DefineProperty(cx, tmp, "left", DOUBLE_TO_JSVAL(margin.left), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "top", DOUBLE_TO_JSVAL(margin.top), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "right", DOUBLE_TO_JSVAL(margin.right), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "bottom", DOUBLE_TO_JSVAL(margin.bottom), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -282,12 +283,12 @@ static JSBool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc
         }
         else
         {
-            return JS_FALSE;
+            return false;
         }
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
 extern JSObject* jsb_cocos2d_gui_Widget_prototype;
