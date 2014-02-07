@@ -104,13 +104,6 @@ static Point s_tCurPos = Point::ZERO;
 TestController::TestController()
 : _beginPos(Point::ZERO)
 {
-    // add close menu
-    auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
-    auto menu =Menu::create(closeItem, NULL);
-
-    menu->setPosition( Point::ZERO );
-    closeItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
-
     // add menu items for tests
     _itemMenu = Menu::create();
     for (int i = 0; i < g_testCount; ++i)
@@ -129,8 +122,6 @@ TestController::TestController()
     _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
     _itemMenu->setPosition(s_tCurPos);
     addChild(_itemMenu);
-
-    addChild(menu, 1);
 
     // Register Touch Event
     auto listener = EventListenerTouchOneByOne::create();
@@ -166,14 +157,6 @@ void TestController::menuCallback(Object * sender)
         scene->runThisTest();
         scene->release();
     }
-}
-
-void TestController::closeCallback(Object * sender)
-{
-    Director::getInstance()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
 }
 
 bool TestController::onTouchBegan(Touch* touch, Event  *event)
