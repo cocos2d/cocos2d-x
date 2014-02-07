@@ -284,9 +284,9 @@ TMXOrthoTest::TMXOrthoTest()
     //addChild(color, -1);
 
     // riq
-//    auto map = TMXTiledMap2::create("TileMaps/iso-test1.tmx");
+    auto map = TMXTiledMap2::create("TileMaps/iso-test1.tmx");
 //    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test2.tmx");
-    auto map = TMXTiledMap::create("TileMaps/orthogonal-test-vertexz.tmx");
+//    auto map = TMXTiledMap::create("TileMaps/orthogonal-test-vertexz.tmx");
 
     addChild(map, 0, kTagTileMap);
     
