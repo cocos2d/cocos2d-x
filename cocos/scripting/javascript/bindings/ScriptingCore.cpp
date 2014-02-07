@@ -309,7 +309,7 @@ bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
     JS::RootedValue nsval(cx);
-    JSObject *ns;
+    JS::RootedObject ns(cx);
     JS_GetProperty(cx, global, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);
@@ -388,7 +388,7 @@ void ScriptingCore::string_report(jsval val) {
     } else if (JSVAL_IS_NUMBER(val)) {
         double number;
         if (false ==
-            JS_ValueToNumber(this->getGlobalContext(), val, &number)) {
+            JS::ToNumber(this->getGlobalContext(), JS::RootedValue(_cx, val), &number)) {
             LOGD("val : return number could not be converted");
         } else {
             LOGD("val : return number =\n%f", number);
@@ -445,8 +445,8 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
 static JSPrincipals shellTrustedPrincipals = { 1 };
 
 static bool
-CheckObjectAccess(JSContext *cx, js::HandleObject obj, js::HandleId id, JSAccessMode mode,
-                  js::MutableHandleValue vp)
+CheckObjectAccess(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JSAccessMode mode,
+                  JS::MutableHandleValue vp)
 {
     return true;
 }
@@ -480,7 +480,9 @@ void ScriptingCore::createGlobalContext() {
     
     this->_cx = JS_NewContext(_rt, 8192);
     
-    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
+    // Removed in Firefox v27
+//    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
+    JS::ContextOptionsRef(_cx).setTypeInference(true);
     
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
@@ -533,8 +535,8 @@ bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
     
     JSAutoCompartment ac(cx, global);
     
-    js::RootedScript script(cx);
-    js::RootedObject obj(cx, global);
+    JS::RootedScript script(cx);
+    JS::RootedObject obj(cx, global);
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
@@ -674,7 +676,7 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 2 && argv[1].isString()) {
             JSString* globalName = JSVAL_TO_STRING(argv[1]);
             JSStringWrapper name(globalName);
-//            js::RootedObject* rootedGlobal = globals[name];
+//            JS::RootedObject* rootedGlobal = globals[name];
             JSObject* debugObj = ScriptingCore::getInstance()->getDebugGlobal();
             if (debugObj) {
                 res = ScriptingCore::getInstance()->runScript(path.get(), debugObj);
@@ -873,8 +875,9 @@ int ScriptingCore::handleTouchesEvent(void* data)
     
     for (auto& touch : touches)
     {
-        jsval jsret;
-        getJSTouchObject(this->_cx, touch, jsret);
+        jsval jsval;
+        getJSTouchObject(this->_cx, touch, jsval);
+        JS::RootedValue jsret(_cx, jsval);
         if (!JS_SetElement(this->_cx, jsretArr, count, &jsret))
         {
             break;
@@ -1057,7 +1060,8 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
     {
         jsval jsret;
         getJSTouchObject(this->_cx, touch, jsret);
-        if (!JS_SetElement(this->_cx, jsretArr, count, &jsret)) {
+        JS::RootedValue jsval(_cx, jsret);
+        if (!JS_SetElement(this->_cx, jsretArr, count, &jsval)) {
             break;
         }
         ++count;
@@ -1413,8 +1417,8 @@ void ScriptingCore::enableDebugger()
         _debugGlobal = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
         JS_AddObjectRoot(_cx, &_debugGlobal);
-        
-        JS_WrapObject(_cx, &_debugGlobal);
+        JS::RootedObject rootedDebugObj(_cx, _debugGlobal);
+        JS_WrapObject(_cx, &rootedDebugObj);
         JSAutoCompartment ac(_cx, _debugGlobal);
         // these are used in the debug program
         JS_DefineFunction(_cx, _debugGlobal, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -1469,7 +1473,7 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug)
 
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
 {
-    JSClass *klass = JS_GetClass(obj);
+    const JSClass *klass = JS_GetClass(obj);
     unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
     if ( idx >= slots )
         return false;
@@ -1481,7 +1485,7 @@ bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
 
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
 {
-    JSClass *klass = JS_GetClass(obj);
+    const JSClass *klass = JS_GetClass(obj);
     unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
     if ( idx >= slots )
         return false;

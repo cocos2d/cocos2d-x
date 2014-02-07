@@ -284,7 +284,7 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
                 
                 for( uint32_t i=0; i< len;i++ )
                 {
-                    jsval valarg;
+                    JS::RootedValue valarg(cx);
                     JS_GetElement(cx, arg2, i, &valarg);
                     std::string protocol;
                     do {
@@ -389,8 +389,8 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     
     // make the class enumerable in the registered namespace
-    bool found;
-    JS_SetPropertyAttributes(cx, global, "WebSocket", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+//FIXME:    bool found;
+//    JS_SetPropertyAttributes(cx, global, "WebSocket", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
 
 
