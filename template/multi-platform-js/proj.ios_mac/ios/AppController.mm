@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "AppController.h"
 #import "cocos2d.h"
-#import "EAGLView.h"
+#import "CCEAGLView.h"
 #import "AppDelegate.h"
 
 #import "RootViewController.h"
