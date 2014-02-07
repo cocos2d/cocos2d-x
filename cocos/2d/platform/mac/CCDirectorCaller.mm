@@ -23,6 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #import "CCDirectorCaller.h"
 #include "CCDirector.h"
 #include "CCAutoreleasePool.h"
@@ -200,3 +203,5 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 @end
+
+#endif //s CC_TARGET_PLATFORM == CC_PLATFORM_MAC

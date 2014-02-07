@@ -631,7 +631,7 @@ color3B = Color3B::WHITE;
 	| Director::sharedDirector() | Director::getInstance() |
 	| FileUtils::sharedFileUtils | FileUtils::getInstance |
 	| FileUtils::purgeFileUtils | FileUtils::destroyInstance |
-	| EGLView::sharedOpenGLView | EGLView::getInstance |
+	| GLView::sharedOpenGLView | GLView::getInstance |
 	| ShaderCache::sharedShaderCache | ShaderCache::getInstance |
 	| ShaderCache::purgeSharedShaderCache | ShaderCache::destroyInstance |
 	| AnimationCache::sharedAnimationCache | AnimationCache::getInstance |
