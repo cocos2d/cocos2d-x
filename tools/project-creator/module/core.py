@@ -156,10 +156,6 @@ class CocosProject:
                 self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua-runtime")
             else:
                 self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua")
-
-            if runtime:
-                print("lua language no runtime model")
-                return False
         elif ("javascript" == self.context["language"]):
             self.context["src_project_name"] = "HelloJavascript"
             self.context["src_package_name"] = "org.cocos2dx.hellojavascript"

@@ -334,14 +334,15 @@ void GLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
     }
 }
 
-void EGLViewEventHandler::OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int width, int height)
+void GLViewEventHandler::OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int width, int height)
 {	
-	if(Director::getInstance()->getOpenGLView())
+	auto view = Director::getInstance()->getOpenGLView();
+	if(view && view->getResolutionPolicy() != ResolutionPolicy::UNKNOWN)
 	{
-		Size resSize=EGLView::getInstance()->getDesignResolutionSize();
-		ResolutionPolicy resPolicy=EGLView::getInstance()->getResolutionPolicy();
-		EGLView::getInstance()->setFrameSize(width, height);
- 		EGLView::getInstance()->setDesignResolutionSize(resSize.width, resSize.height, resPolicy);
+		Size resSize=view->getDesignResolutionSize();
+		ResolutionPolicy resPolicy=view->getResolutionPolicy();
+		view->setFrameSize(width, height);
+ 		view->setDesignResolutionSize(resSize.width, resSize.height, resPolicy);
 		Director::getInstance()->setViewport();
 	}
 }
@@ -445,7 +446,7 @@ bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoo
     glfwSetKeyCallback(_mainWindow, GLViewEventHandler::onGLFWKeyCallback);
     glfwSetWindowPosCallback(_mainWindow, GLViewEventHandler::onGLFWWindowPosCallback);
     glfwSetFramebufferSizeCallback(_mainWindow, GLViewEventHandler::onGLFWframebuffersize);
-	glfwSetWindowSizeCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowSizeFunCallback);
+	glfwSetWindowSizeCallback(_mainWindow, GLViewEventHandler::OnGLFWWindowSizeFunCallback);
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
     
