@@ -81,6 +81,18 @@ public:
      */
     void clear();
     
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    /**
+     * Whether the pool is doing `clear` operation.
+     */
+    bool isClearing() const { return _isClearing; };
+#endif
+    
+    /**
+     * Checks whether the pool contains the specified object.
+     */
+    bool contains(Object* object) const;
+
     /**
      * Dump the objects that are put into autorelease pool. It is used for debugging.
      *
@@ -102,6 +114,13 @@ private:
      */
     std::vector<Object*> _managedObjectArray;
     std::string _name;
+    
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    /**
+     *  The flag for checking whether the pool is doing `clear` operation.
+     */
+    bool _isClearing;
+#endif
 };
 
 class CC_DLL PoolManager
@@ -127,6 +146,8 @@ public:
      */
     AutoreleasePool *getCurrentPool() const;
 
+    bool isObjectInPools(Object* obj) const;
+
     /**
      * @js NA
      * @lua NA
@@ -142,7 +163,7 @@ private:
     
     static PoolManager* s_singleInstance;
     
-    std::stack<AutoreleasePool*> _releasePoolStack;
+    std::deque<AutoreleasePool*> _releasePoolStack;
     AutoreleasePool *_curReleasePool;
 };
 

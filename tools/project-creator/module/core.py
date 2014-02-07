@@ -85,7 +85,7 @@ class CocosProject:
         # set the parser to parse input params
         # the correspond variable name of "-x, --xxx" is parser.xxx
         parser = OptionParser(
-            usage="Usage: %prog -n <PROJECT_NAME> -k <PACKAGE_NAME> -l <cpp|lua|javascript|jsruntime> -p <PROJECT_PATH>\n\
+            usage="Usage: %prog -n <PROJECT_NAME> -k <PACKAGE_NAME> -l <cpp|lua|javascript> -p <PROJECT_PATH>\n\
             Sample: %prog -n MyGame -k com.MyCompany.AwesomeGame -l javascript -p c:/mycompany"
         )
         parser.add_option("-n", "--name", metavar="PROJECT_NAME",help="Set a project name")
@@ -93,7 +93,7 @@ class CocosProject:
         parser.add_option("-l", "--language",metavar="PROGRAMMING_NAME",
                             type="choice",
                             choices=["cpp", "lua", "javascript"],
-                            help="Major programming language you want to use, should be [cpp | lua | javascript ]")
+                            help="Major programming language you want to use, should be [cpp | lua | javascript]")
         parser.add_option("-p", "--path", metavar="PROJECT_PATH",help="Set generate project path for project")
         parser.add_option("-r", "--runtime",action="store_true", help="create runtime project")
 
@@ -118,7 +118,7 @@ class CocosProject:
         Arg:
             projectName: Project name, like this: "helloworld".
             packageName: It's used for android platform,like this:"com.cocos2dx.helloworld".
-            language: There have three languages can be choice: [cpp | lua | javascript | jsruntime], like this:"javascript".
+            language: There have three languages can be choice: [cpp | lua | javascript], like this:"javascript".
             projectPath: The path of generate project.
             callbackfun: It's new project callback function.There have four Params.
                         As follow:
@@ -193,8 +193,7 @@ class CocosProject:
         self.step = 0
 
         #begin copy engine
-        print("###begin copy engine")
-        print("waitting copy cocos2d ...")
+        print("> Copying cocos2d files...")
         dstPath = os.path.join(self.context["dst_project_runtime_path"],"cocos2d")
         for index in range(len(fileList)):
             srcfile = os.path.join(self.cocos_root,fileList[index])
@@ -215,14 +214,19 @@ class CocosProject:
             self.step = self.step + 1
             if self.callbackfun and self.step%int(self.totalStep/50) == 0:
                 self.callbackfun(self.step,self.totalStep,fileList[index])
-        print("cocos2d\t\t: Done!")
+        print("< done")
         # call process_proj from each platform's script folder
+
+        print ("")
+        print("> Creating project files...")
         for platform in self.platforms_list:
             self.__processPlatformProjects(platform)
+        print("< done")
 
-        print ("###New project has been created in this path: ")
+        print ("")
+        print ("A new project was created in:")
         print (self.context["dst_project_path"].replace("\\", "/"))
-        print ("Have Fun!")
+
         return True
 
     def __processPlatformProjects(self, platform):
@@ -276,7 +280,7 @@ class CocosProject:
                 replaceString(os.path.join(proj_path, dst), self.context["src_project_name"], self.context["dst_project_name"])
 
         # done!
-        showMsg = "proj.%s\t\t: Done!" % platform
+        showMsg = ">> Creating proj.%s... OK" % platform
         self.step += 1
         if self.callbackfun:
             self.callbackfun(self.step,self.totalStep,showMsg)

@@ -46,7 +46,7 @@
 
 #include "js_bindings_config.h"
 
-#if DEBUG
+#if COCOS2D_DEBUG
 #define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)
 #else
 #define TRACE_DEBUGGER_SERVER(...)
@@ -512,78 +512,63 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
-void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext* cx)
-{
-	if (!path) {
-		return ;
-	}
-
-	cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
-
-	if (global == NULL) {
-		global = _global;
-	}
-	if (cx == NULL) {
-		cx = _cx;
-	}
-
-	JSAutoCompartment ac(cx, global);
-
-	js::RootedScript script(cx);
-	js::RootedObject obj(cx, global);
-
-	// a) check jsc file first
-	std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-
-	Data data = futil->getDataFromFile(byteCodePath);
-
-	if (!data.isNull())
-	{
-		script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
-	}
-
-	// b) no jsc file, check js file
-	if (!script)
-	{
-		/* Clear any pending exception from previous failed decoding.  */
-		ReportException(cx);
-
-		std::string fullPath = futil->fullPathForFilename(path);
-		JS::CompileOptions options(cx);
-		options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-		std::string jsFileContent = futil->getStringFromFile(fullPath);
-		if (!jsFileContent.empty())
-		{
-			script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
-		}
-#else
-		script = JS::Compile(cx, obj, options, fullPath.c_str());
-#endif
-	}
-	if (script) {
-		filename_script[path] = script;
-	}
-}
-
 JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
-{ 
-	if (global == NULL) {
-		global = _global;
-	}
-	if (cx == NULL) {
-		cx = _cx;
-	}
-	if (!filename_script[path])
-	{
-		compileScript(path,global,cx );
-	}
-	JSScript * script = filename_script[path];
+{
+    if (!path) {
+        return false;
+    }
+    
+    
+    cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
+
+    if (global == NULL) {
+        global = _global;
+    }
+    if (cx == NULL) {
+        cx = _cx;
+    }
+    
+    JSAutoCompartment ac(cx, global);
+    
+    js::RootedScript script(cx);
+    js::RootedObject obj(cx, global);
+    
+    // a) check jsc file first
+    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+
+    Data data = futil->getDataFromFile(byteCodePath);
+    
+    if (!data.isNull())
+    {
+        script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
+    }
+    
+    // b) no jsc file, check js file
+    if (!script)
+    {
+        /* Clear any pending exception from previous failed decoding.  */
+        ReportException(cx);
+        
+        std::string fullPath = futil->fullPathForFilename(path);
+        JS::CompileOptions options(cx);
+        options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
+        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        std::string jsFileContent = futil->getStringFromFile(fullPath);
+        if (!jsFileContent.empty())
+        {
+            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
+        }
+#else
+        script = JS::Compile(cx, obj, options, fullPath.c_str());
+#endif
+    }
+    
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;
-        JSAutoCompartment ac(cx, global);
+        filename_script[path] = script;
+
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             cocos2d::log("(evaluatedOK == JS_FALSE)");
@@ -719,7 +704,7 @@ JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
     // JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
     // Mac and Simulator versions were compiled with DEBUG.
-#if DEBUG
+#if COCOS2D_DEBUG
 //    JSContext *_cx = ScriptingCore::getInstance()->getGlobalContext();
 //    JSRuntime *rt = JS_GetRuntime(_cx);
 //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
@@ -1423,6 +1408,9 @@ void ScriptingCore::enableDebugger()
         JS_SetDebugMode(_cx, JS_TRUE);
         
         _debugGlobal = NewGlobalObject(_cx, true);
+        // Adds the debugger object to root, otherwise it may be collected by GC.
+        JS_AddObjectRoot(_cx, &_debugGlobal);
+        
         JS_WrapObject(_cx, &_debugGlobal);
         JSAutoCompartment ac(_cx, _debugGlobal);
         // these are used in the debug program

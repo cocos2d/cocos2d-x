@@ -155,6 +155,11 @@ public:
         EVENT_MOUSE_SCROLL,
         
         EVENT_SPINE,
+        
+        EVENT_PHYSICS_CONTACT_BEGIN,
+        EVENT_PHYSICS_CONTACT_PRESOLVE,
+        EVENT_PHYSICS_CONTACT_POSTSOLVE,
+        EVENT_PHYSICS_CONTACT_SEPERATE,
     };
     
     typedef int Handler;
