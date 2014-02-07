@@ -1,6 +1,6 @@
 #import "RootViewController.h"
 #import "cocos2d.h"
-#import "EAGLView.h"
+#import "CCEAGLView.h"
 
 @implementation RootViewController
 

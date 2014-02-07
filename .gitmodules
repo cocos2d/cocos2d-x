@@ -4,12 +4,12 @@
 [submodule "cocos/scripting/auto-generated"]
 	path = cocos/scripting/auto-generated
 	url = git://github.com/cocos2d-x/bindings-auto-generated.git
-[submodule "samples/Javascript/Shared"]
-	path = samples/Javascript/Shared
-	url = git://github.com/cocos2d/cocos2d-js-tests.git
 [submodule "tools/cocos2d-console"]
 	path = tools/cocos2d-console
 	url = git://github.com/cocos2d/cocos2d-console.git
 [submodule "plugin"]
 	path = plugin
 	url = https://github.com/cocos2d-x/plugin-x.git
+[submodule "tests/test-javascript/tests"]
+	path = tests/test-javascript/tests
+	url = git://github.com/cocos2d/cocos2d-js-tests.git

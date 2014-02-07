@@ -324,7 +324,8 @@ void Layout::onBeforeVisitScissor()
 {
     Rect clippingRect = getClippingRect();
     glEnable(GL_SCISSOR_TEST);
-    EGLView::getInstance()->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+    auto glview = Director::getInstance()->getOpenGLView();
+    glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
 }
 
 void Layout::onAfterVisitScissor()

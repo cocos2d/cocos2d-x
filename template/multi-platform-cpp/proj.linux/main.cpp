@@ -11,7 +11,5 @@ int main(int argc, char **argv)
 {
     // create the application instance
     AppDelegate app;
-    EGLView eglView;
-    eglView.init("Cocos2d-x Game",900,640);
     return Application::getInstance()->run();
 }

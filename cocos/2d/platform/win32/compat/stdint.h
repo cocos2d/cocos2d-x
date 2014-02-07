@@ -29,12 +29,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifndef _MSC_STDINT_H_ // [
+#define _MSC_STDINT_H_
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #ifndef _MSC_VER // [
 #error "Use this header only with Microsoft Visual C++ compilers!"
 #endif // _MSC_VER ]
-
-#ifndef _MSC_STDINT_H_ // [
-#define _MSC_STDINT_H_
 
 #if _MSC_VER > 1000
 #pragma once
@@ -243,5 +246,6 @@ typedef uint64_t  uintmax_t;
 
 #endif // __STDC_CONSTANT_MACROS ]
 
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #endif // _MSC_STDINT_H_ ]
