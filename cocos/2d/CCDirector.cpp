@@ -55,7 +55,7 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "platform/CCImage.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 #include "CCConfiguration.h"
 #include "CCEventDispatcher.h"
 #include "CCEventCustom.h"
@@ -365,7 +365,7 @@ float Director::getDeltaTime() const
 {
 	return _deltaTime;
 }
-void Director::setOpenGLView(EGLView *openGLView)
+void Director::setOpenGLView(GLView *openGLView)
 {
     CCASSERT(openGLView, "opengl view should not be null");
 
@@ -376,9 +376,10 @@ void Director::setOpenGLView(EGLView *openGLView)
 		conf->gatherGPUInfo();
         CCLOG("%s\n",conf->getInfo().c_str());
 
-        // EAGLView is not a Object
-        delete _openGLView; // [openGLView_ release]
+        if(_openGLView)
+            _openGLView->release();
         _openGLView = openGLView;
+        _openGLView->retain();
 
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
@@ -941,7 +942,8 @@ void Director::createStatsLabel()
      Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
      a factor of design resolution ratio of 480x320 is also needed.
      */
-    float factor = EGLView::getInstance()->getDesignResolutionSize().height / 320.0f;
+    auto glview = Director::getInstance()->getOpenGLView();
+    float factor = glview->getDesignResolutionSize().height / 320.0f;
 
     _FPSLabel = LabelAtlas::create();
     _FPSLabel->retain();

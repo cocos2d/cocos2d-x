@@ -95,6 +95,7 @@ Developers:
         Added Mingw-crt Support without breaking VS SDK
         CMake support for windows.
         Added support for x64 target of windows.
+        Added Dutch Language support.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android

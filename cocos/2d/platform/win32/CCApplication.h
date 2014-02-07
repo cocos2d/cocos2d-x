@@ -25,6 +25,9 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_WIN32_H__
 #define __CC_APPLICATION_WIN32_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
@@ -100,5 +103,7 @@ protected:
 };
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #endif    // __CC_APPLICATION_WIN32_H__

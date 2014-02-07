@@ -23,6 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #define __CC_PLATFORM_IMAGE_CPP__
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #if _MSC_VER
 #include <cctype>
 #endif
@@ -440,3 +444,5 @@ bool Image::initWithString(
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
