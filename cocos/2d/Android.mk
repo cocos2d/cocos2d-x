@@ -111,7 +111,7 @@ cocos2d.cpp \
 TGAlib.cpp \
 TransformUtils.cpp \
 ZipUtils.cpp \
-platform/CCEGLViewProtocol.cpp \
+platform/CCGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \

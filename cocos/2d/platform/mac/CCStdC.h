@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #include "CCPlatformMacros.h"
 #include <float.h>
 #include <math.h>
@@ -44,5 +47,7 @@ THE SOFTWARE.
 #ifndef MAX
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #endif  // __CC_STD_C_H__

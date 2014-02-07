@@ -25,6 +25,8 @@
 
 #import "CCApplication.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #import <UIKit/UIKit.h>
 
 #import "CCGeometry.h"
@@ -155,3 +157,5 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 }
 
 NS_CC_END
+
+#endif // CC_PLATFORM_IOS

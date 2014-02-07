@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libchipmunk", "..\external\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "..\extensions\proj.win32\libExtensions.vcxproj", "{21B2C324-891F-48EA-AD1A-5AE13DE12E28}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCpp", "..\samples\test-cpp\proj.win32\TestCpp.vcxproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCpp", "..\tests\test-cpp\proj.win32\TestCpp.vcxproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCocosBuilder", "..\cocos\editor-support\cocosbuilder\proj.win32\libCocosBuilder.vcxproj", "{811C0DAB-7B96-4BD3-A154-B7572B58E4AB}"
 EndProject
@@ -25,13 +25,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos\editor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBinding", "..\cocos\scripting\javascript\bindings\proj.win32\libJSBinding.vcxproj", "{39379840-825A-45A0-B363-C09FFEF864BD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestJavascript", "..\samples\test-javascript\proj.win32\TestJavascript.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestJavascript", "..\tests\test-javascript\proj.win32\TestJavascript.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libLocalStorage", "..\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj", "{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "..\cocos\scripting\lua\bindings\liblua.vcxproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLua", "..\samples\test-lua\proj.win32\TestLua.win32.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLua", "..\tests\test-lua\proj.win32\TestLua.win32.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForBuilder", "..\cocos\scripting\javascript\bindings\cocosbuilder\libJSBindingForBuilder.vcxproj", "{F9DA0FC1-651B-457B-962E-A4D61CEBF5FD}"
 EndProject
