@@ -1,11 +1,10 @@
-#include "cocos2d.h"
 #include "cocos2d_specifics.hpp"
+#include "cocos2d.h"
 #include <typeinfo>
 #include "js_bindings_config.h"
 #include "jsb_cocos2dx_auto.hpp"
 
 using namespace cocos2d;
-
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
 schedTarget_proxy_t *_schedObj_target_ht = NULL;

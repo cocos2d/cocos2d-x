@@ -2,6 +2,7 @@
 #define __SPIDERMONKEY_SPECIFICS_H__
 
 #include "jsapi.h"
+#include "jsfriendapi.h"
 #include "uthash.h"
 #include <unordered_map>
 

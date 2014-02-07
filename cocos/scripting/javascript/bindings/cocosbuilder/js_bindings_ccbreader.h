@@ -8,7 +8,6 @@
 #ifndef __JS_BINDINGS_CCBREADER_H__
 #define __JS_BINDINGS_CCBREADER_H__
 
-#include "jsapi.h"
 #include "cocosbuilder_specifics.hpp"
 #include "cocosbuilder/CocosBuilder.h"
 

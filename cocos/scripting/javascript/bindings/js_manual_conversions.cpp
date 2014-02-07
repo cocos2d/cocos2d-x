@@ -3,8 +3,6 @@
 //  Copyright (c) 2012 Zynga Inc. All rights reserved.
 //
 
-#include "jsapi.h"
-#include "jsfriendapi.h"
 #include "ScriptingCore.h"
 #include "js_bindings_config.h"
 #include "js_manual_conversions.h"

@@ -22,12 +22,11 @@
  * THE SOFTWARE.
  */
 
+#include "jsapi.h"
+#include "jsfriendapi.h"
 #include "extensions/cocos-ext.h"
 #include "js_bindings_config.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
-
-#include "jsapi.h"
-#include "jsfriendapi.h"
 
 #include "js_bindings_chipmunk_manual.h"
 #include "js_manual_conversions.h"

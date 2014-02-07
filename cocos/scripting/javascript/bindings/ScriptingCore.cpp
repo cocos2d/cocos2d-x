@@ -6,14 +6,8 @@
 //  Copyright (c) 2012 Zynga Inc. All rights reserved.
 //
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <vector>
-#include <map>
 #include "ScriptingCore.h"
+
 // Removed in Firefox v27, use 'js/OldDebugAPI.h' instead
 //#include "jsdbgapi.h"
 #include "js/OldDebugAPI.h"
@@ -33,6 +27,13 @@
 #endif
 
 #include <thread>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <vector>
+#include <map>
 
 #ifdef ANDROID
 #include <android/log.h>
