@@ -141,7 +141,7 @@ const Size& GLViewProtocol::getDesignResolutionSize() const
     return _designResolutionSize;
 }
 
-const ResolutionPolicy& EGLViewProtocol::getResolutionPolicy() const
+const ResolutionPolicy& GLViewProtocol::getResolutionPolicy() const
 {
 	return _resolutionPolicy;
 }
