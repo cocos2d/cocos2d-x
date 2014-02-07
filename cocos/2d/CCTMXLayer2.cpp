@@ -181,7 +181,7 @@ void TMXLayer2::onDraw()
                 tile = _tiles[tileidx];
 
             // vertices are sorted from top to bottom to support overlapping, so we need to convert 'y' to the new index
-            int screenidx = ((_screenGridSize.height-y-1) * (_screenGridSize.width)) + x;
+            int screenidx = ((y+1) * (_screenGridSize.width)) + x;
             GLfloat *texbase = texcoords + screenidx * 4 * 2;
 
             float left, right, top, bottom;
@@ -248,8 +248,11 @@ int TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile)
             break;
 
         case TMXOrientationIso:
-            int xx = x + ((y+1)/2) - 2;
-            int yy = y/2 +1 - x;
+            x += baseTile.x;
+            y -= baseTile.y*2 + 1;
+
+            int xx = x + (y-1) / 2;
+            int yy = y/2 - x;
 
             if( xx < 0 || xx >= _layerSize.width
                || yy < 0 || yy >= _layerSize.height )
@@ -296,7 +299,6 @@ void TMXLayer2::setupVertices()
     {
         for (int x=0; x < _screenGridSize.width; x++, tilePtr += 4 * 2)
         {
-
             GLfloat xpos0, xpos1, ypos0, ypos1;
 
             setVerticesForPos(x, y, &xpos0, &xpos1, &ypos0, &ypos1);
@@ -331,9 +333,9 @@ void TMXLayer2::setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, 
             *ypos1 = *ypos0 + _tileSet->_tileSize.height;
             break;
         case TMXOrientationIso:
-            *xpos0 = _mapTileSize.width * x + _mapTileSize.width/2 * (y%2);
+            *xpos0 = _mapTileSize.width * x - _mapTileSize.width/2 * (y%2);
             *xpos1 = *xpos0 + _tileSet->_tileSize.width;
-            *ypos0 = _mapTileSize.height * y / 2;
+            *ypos0 = _mapTileSize.height * (y-1) / 2;
             *ypos1 = *ypos0 + _tileSet->_tileSize.height;
             break;
         case TMXOrientationHex:
@@ -390,19 +392,19 @@ void TMXLayer2::setupTiles()
     //CFByteOrder o = CFByteOrderGetCurrent();
 
     // Parse cocos2d properties
-    this->parseInternalProperties();
+//    this->parseInternalProperties();
 
     Size screenSize = Director::getInstance()->getWinSize();
 
     switch (_layerOrientation)
     {
         case TMXOrientationOrtho:
-            _screenGridSize.width = (ceil(screenSize.width / (_mapTileSize.width)) + 1);
-            _screenGridSize.height = (ceil(screenSize.height / (_mapTileSize.height)) + 1);
+            _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 1;
+            _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 1;
             break;
         case TMXOrientationIso:
-            _screenGridSize.width = (ceil(screenSize.width / (_mapTileSize.width)) + 1);
-            _screenGridSize.height = (ceil(screenSize.height / (_mapTileSize.height/2)) + 1);
+            _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
+            _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
             break;
         case TMXOrientationHex:
             break;
@@ -427,32 +429,32 @@ void TMXLayer2::parseInternalProperties()
 {
     // if cc_vertex=automatic, then tiles will be rendered using vertexz
 
-    auto vertexz = getProperty("cc_vertexz");
-    if (!vertexz.isNull())
-    {
-        std::string vertexZStr = vertexz.asString();
-        // If "automatic" is on, then parse the "cc_alpha_func" too
-        if (vertexZStr == "automatic")
-        {
-            _useAutomaticVertexZ = true;
-            auto alphaFuncVal = getProperty("cc_alpha_func");
-            float alphaFuncValue = alphaFuncVal.asFloat();
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
-
-            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-
-            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-            
-            // use shader program to set uniform
-            getShaderProgram()->use();
-            getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
-            CHECK_GL_ERROR_DEBUG();
-        }
-        else
-        {
-            _vertexZvalue = vertexz.asInt();
-        }
-    }
+//    auto vertexz = getProperty("cc_vertexz");
+//    if (!vertexz.isNull())
+//    {
+//        std::string vertexZStr = vertexz.asString();
+//        // If "automatic" is on, then parse the "cc_alpha_func" too
+//        if (vertexZStr == "automatic")
+//        {
+//            _useAutomaticVertexZ = true;
+//            auto alphaFuncVal = getProperty("cc_alpha_func");
+//            float alphaFuncValue = alphaFuncVal.asFloat();
+//            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
+//
+//            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+//
+//            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+//            
+//            // use shader program to set uniform
+//            getShaderProgram()->use();
+//            getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
+//            CHECK_GL_ERROR_DEBUG();
+//        }
+//        else
+//        {
+//            _vertexZvalue = vertexz.asInt();
+//        }
+//    }
 }
 
 
