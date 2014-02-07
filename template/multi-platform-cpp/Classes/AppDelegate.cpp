@@ -14,10 +14,12 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
-    auto eglView = EGLView::getInstance();
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLView::create("My Game");
+        director->setOpenGLView(glview);
+    }
 
-    director->setOpenGLView(eglView);
-	
     // turn on display FPS
     director->setDisplayStats(true);
 

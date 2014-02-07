@@ -44,7 +44,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
 
     PROJECTS=("test-cpp" "test-javascript" "test-lua")
     for i in ${PROJECTS[*]}; do
-        ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/samples/$i/proj.android/obj
+        ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/tests/$i/proj.android/obj
     done
 
     # Build all samples

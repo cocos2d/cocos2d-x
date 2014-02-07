@@ -23,6 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #import "CCApplication.h"
 #import <Cocoa/Cocoa.h>
 #include <algorithm>
@@ -30,7 +33,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCDirector.h"
 #import "CCDirectorCaller.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -54,12 +57,12 @@ int Application::run()
     {
         return 0;
     }
-    EGLView* pMainWnd = EGLView::getInstance();
+    GLView* glview = Director::getInstance()->getOpenGLView();
     
-    while (!pMainWnd->windowShouldClose())
+    while (!glview->windowShouldClose())
     {
         Director::getInstance()->mainLoop();
-        pMainWnd->pollEvents();
+        glview->pollEvents();
     }
 
     /* Only work on Desktop
@@ -192,3 +195,5 @@ const std::string& Application::getStartupScriptFilename(void)
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC

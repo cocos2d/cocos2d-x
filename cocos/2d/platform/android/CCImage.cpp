@@ -23,7 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-//#define COCOS2D_DEBUG 1
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #define __CC_PLATFORM_IMAGE_CPP__
 #include "platform/CCImageCommon_cpp.h"
@@ -246,3 +247,5 @@ extern "C"
         env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC._data);
     }
 };
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
