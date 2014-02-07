@@ -304,7 +304,7 @@ extern JSObject* jsb_cocosbuilder_CCBAnimationManager_prototype;
 
 void register_CCBuilderReader(JSContext *cx, JSObject *obj) {
     JS::RootedValue  nsval(cx);
-	JSObject *ns;
+    JS::RootedObject ns(cx);
 	JS_GetProperty(cx, obj, "cc", &nsval);
 	if (nsval == JSVAL_VOID) {
 		ns = JS_NewObject(cx, NULL, NULL, NULL);

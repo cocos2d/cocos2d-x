@@ -499,7 +499,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JSObject* globalObj)
 
 void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
     JS::RootedValue nsval(cx);
-	JSObject *ns;
+	JS::RootedObject ns(cx);
 	JS_GetProperty(cx, obj, "cc", &nsval);
 	if (nsval == JSVAL_VOID) {
 		ns = JS_NewObject(cx, NULL, NULL, NULL);
@@ -514,7 +514,7 @@ void register_CCPhysicsSprite(JSContext *cx, JSObject *obj) {
 
 void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj) {
     JS::RootedValue nsval(cx);
-    JSObject *ns;
+    JS::RootedObject ns(cx);
     JS_GetProperty(cx, obj, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);
@@ -529,8 +529,8 @@ void register_CCPhysicsDebugNode(JSContext *cx, JSObject *obj) {
 
 bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 {
-	JSObject *jsobj;
-	bool ok = JS_ValueToObject( cx, vp, &jsobj );
+    JS::RootedObject jsobj(cx);
+	bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
 	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
@@ -546,10 +546,10 @@ bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 	JSB_PRECONDITION( ok, "Error obtaining point properties");
 	
 	double l, b, r, t;
-	ok &= JS_ValueToNumber(cx, vall, &l);
-	ok &= JS_ValueToNumber(cx, valb, &b);
-	ok &= JS_ValueToNumber(cx, valr, &r);
-	ok &= JS_ValueToNumber(cx, valt, &t);
+	ok &= JS::ToNumber(cx, vall, &l);
+	ok &= JS::ToNumber(cx, valb, &b);
+	ok &= JS::ToNumber(cx, valr, &r);
+	ok &= JS::ToNumber(cx, valt, &t);
 	JSB_PRECONDITION( ok, "Error converting value to numbers");
 	
 	ret->l = l;
@@ -582,8 +582,8 @@ jsval cpBB_to_jsval(JSContext *cx, cpBB bb )
 bool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *numVerts)
 {
 	// Parsing sequence
-	JSObject *jsobj;
-	bool ok = JS_ValueToObject( cx, vp, &jsobj );
+    JS::RootedObject jsobj(cx);
+	bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &jsobj );
 	JSB_PRECONDITION( ok, "Error converting value to object");
 	
 	JSB_PRECONDITION( jsobj && JS_IsArrayObject( cx, jsobj),  "Object must be an array");
@@ -596,11 +596,11 @@ bool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *numV
 	cpVect *array = (cpVect*)malloc( sizeof(cpVect) * len/2);
 	
 	for( uint32_t i=0; i< len;i++ ) {
-		jsval valarg;
+        JS::RootedValue valarg(cx);
 		JS_GetElement(cx, jsobj, i, &valarg);
 
 		double value;
-		ok = JS_ValueToNumber(cx, valarg, &value);
+		ok = JS::ToNumber(cx, valarg, &value);
 		JSB_PRECONDITION( ok, "Error converting value to nsobject");
 		
 		if(i%2==0)
@@ -1177,7 +1177,8 @@ bool __jsb_cpArbiter_getBodies(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter
 	cpBody *bodyB;
 	cpArbiterGetBodies(arbiter, &bodyA, &bodyB);
 	
-	jsval valA, valB;
+    JS::RootedValue valA(cx);
+    JS::RootedValue valB(cx);
 	if( is_oo ) {
 		valA = c_class_to_jsval(cx, bodyA, JSB_cpBody_object, JSB_cpBody_class, "cpArbiter");
 		valB = c_class_to_jsval(cx, bodyB, JSB_cpBody_object, JSB_cpBody_class, "cpArbiter");
@@ -1186,7 +1187,7 @@ bool __jsb_cpArbiter_getBodies(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter
 		valB = opaque_to_jsval(cx, bodyB);		
 	}
 	
-	JSObject *jsobj = JS_NewArrayObject(cx, 2, NULL);
+    JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, 2, NULL));
 	JS_SetElement(cx, jsobj, 0, &valA);
 	JS_SetElement(cx, jsobj, 1, &valB);
 	
@@ -1232,7 +1233,8 @@ bool __jsb_cpArbiter_getShapes(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter
 	cpShape *shapeB;
 	cpArbiterGetShapes(arbiter, &shapeA, &shapeB);
 
-	jsval valA, valB;
+    JS::RootedValue valA(cx);
+    JS::RootedValue valB(cx);
 	if( is_oo ) {
 		valA = c_class_to_jsval(cx, shapeA, JSB_cpShape_object, JSB_cpShape_class, "cpShape");
 		valB = c_class_to_jsval(cx, shapeB, JSB_cpShape_object, JSB_cpShape_class, "cpShape");
@@ -1241,7 +1243,7 @@ bool __jsb_cpArbiter_getShapes(JSContext *cx, jsval *vp, jsval *argvp, cpArbiter
 		valB = opaque_to_jsval(cx, shapeB);
 	}
 	
-	JSObject *jsobj = JS_NewArrayObject(cx, 2, NULL);
+    JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, 2, NULL));
 	JS_SetElement(cx, jsobj, 0, &valA);
 	JS_SetElement(cx, jsobj, 1, &valB);
 	
@@ -1286,12 +1288,12 @@ bool JSB_cpBody_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION2(argc==2, cx, false, "Invalid number of arguments");
 	JSObject *jsobj = JS_NewObject(cx, JSB_cpBody_class, JSB_cpBody_object, NULL);
-	jsval *argvp = JS_ARGV(cx,vp);
+    JS::CallArgs argvp = JS::CallArgsFromVp(argc, vp);
 	bool ok = true;
 	double m; double i;
 	
-	ok &= JS_ValueToNumber( cx, *argvp++, &m );
-	ok &= JS_ValueToNumber( cx, *argvp++, &i );
+	ok &= JS::ToNumber( cx, argvp[0], &m );
+	ok &= JS::ToNumber( cx, argvp[1], &i );
 	JSB_PRECONDITION(ok, "Error processing arguments");
 	
 	cpBody *ret_body = NULL;
@@ -1356,9 +1358,9 @@ bool JSB_cpBody_getUserData(JSContext *cx, uint32_t argc, jsval *vp)
 static
 bool __jsb_cpBody_setUserData(JSContext *cx, jsval *vp, jsval *argvp, cpBody *body)
 {
-	JSObject *jsobj;
+    JS::RootedObject jsobj(cx);
 
-	bool ok = JS_ValueToObject(cx, *argvp++, &jsobj);
+	bool ok = JS_ValueToObject(cx, JS::RootedValue(cx, *argvp), &jsobj);
 
 	JSB_PRECONDITION(ok, "Error parsing arguments");
 	
@@ -1425,7 +1427,7 @@ bool JSB_cpMomentForPoly(JSContext *cx, uint32_t argc, jsval *vp)
 	int numVerts;
 	double m;
 	
-	ok &= JS_ValueToNumber(cx, *argvp++, &m);
+	ok &= JS::ToNumber(cx, JS::RootedValue(cx, *argvp++), &m);
 	ok &= jsval_to_array_of_cpvect( cx, *argvp++, &verts, &numVerts);
 	ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &offset );
 
@@ -1566,8 +1568,8 @@ void JSB_cpBase_createClass(JSContext *cx, JSObject* globalObj, const char* name
 	};
 	
 	JSB_cpBase_object = JS_InitClass(cx, globalObj, NULL, JSB_cpBase_class, JSB_cpBase_constructor,0,properties,funcs,NULL,st_funcs);
-	bool found;
-	JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+//	bool found;
+//	JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
 
 // Manual "methods"

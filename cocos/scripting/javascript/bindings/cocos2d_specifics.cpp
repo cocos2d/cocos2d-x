@@ -630,7 +630,7 @@ bool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
                 ok &= jsval_to_ccvector(cx, argv[0], &arg0);
                 JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
             }
-            ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[1]), &arg1);
             JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 			ret = cocos2d::Animation::createWithSpriteFrames(arg0, arg1);
 		} else if (argc == 3) {
@@ -640,7 +640,7 @@ bool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
                 JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
             }
 			unsigned int loops;
-			ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+			ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[1]), &arg1);
 			ok &= jsval_to_uint32(cx, argv[2], &loops);
             JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 			ret = cocos2d::Animation::create(arg0, arg1, loops);
@@ -786,7 +786,7 @@ JSObject* getObjectFromNamespace(JSContext* cx, JSObject *ns, const char *name) 
 	JS::RootedValue out(cx);
     bool ok = true;
 	if (JS_GetProperty(cx, ns, name, &out) == true) {
-		JSObject *obj;
+        JS::RootedObject obj(cx);
 		ok &= JS_ValueToObject(cx, out, &obj);
         JSB_PRECONDITION2(ok, cx, NULL, "Error processing arguments");
 	}
@@ -1386,7 +1386,7 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double delay;
         if( argc >= 2 ) {
-            ok &= JS_ValueToNumber(cx, argv[1], &delay );
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[1]), &delay );
             JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         }
         
@@ -1461,7 +1461,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 
     	double interval = 0.0;
         if( argc >= 2 ) {
-            ok &= JS_ValueToNumber(cx, argv[1], &interval );
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[1]), &interval );
         }
         
         //
@@ -1469,7 +1469,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double repeat = 0.0;
         if( argc >= 3 ) {
-            ok &= JS_ValueToNumber(cx, argv[2], &repeat );
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[2]), &repeat );
         }
         
         //
@@ -1477,7 +1477,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double delay = 0.0;
         if( argc >= 4 ) {
-            ok &= JS_ValueToNumber(cx, argv[3], &delay );
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[3]), &delay );
         }
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1864,7 +1864,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         
     	double interval = 0;
         if( argc >= 3 ) {
-            ok &= JS_ValueToNumber(cx, argv[2], &interval );
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[2]), &interval );
         }
         
         //
@@ -1872,7 +1872,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double repeat = kRepeatForever;
         if( argc >= 4 ) {
-            ok &= JS_ValueToNumber(cx, argv[3], &repeat );
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[3]), &repeat );
         }
         
         //
@@ -1880,7 +1880,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         double delay = 0;
         if( argc >= 5 ) {
-            ok &= JS_ValueToNumber(cx, argv[4], &delay );
+            ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[4]), &delay );
         }
         
         bool paused = false;
@@ -2143,9 +2143,9 @@ bool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 		return true;
 	} if (argc == 2) {
         double x;
-        ok &= JS_ValueToNumber(cx, argv[0], &x );
+        ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[0]), &x );
         double y;
-        ok &= JS_ValueToNumber(cx, argv[1], &y );
+        ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[1]), &y );
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         cobj->setPosition(Point(x,y));
@@ -2175,9 +2175,9 @@ bool js_cocos2dx_CCNode_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
 		return true;
 	} if (argc == 2) {
         double width;
-        ok &= JS_ValueToNumber(cx, argv[0], &width );
+        ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[0]), &width );
         double height;
-        ok &= JS_ValueToNumber(cx, argv[1], &height );
+        ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[1]), &height );
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         cobj->setContentSize(Size(width,height));
@@ -2190,7 +2190,7 @@ bool js_cocos2dx_CCNode_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool js_cocos2dx_CCNode_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
     bool ok = true;
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
@@ -2207,9 +2207,9 @@ bool js_cocos2dx_CCNode_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
 		return true;
 	} if (argc == 2) {
         double x;
-        ok &= JS_ValueToNumber(cx, argv[0], &x );
+        ok &= JS::ToNumber(cx, argv[0], &x );
         double y;
-        ok &= JS_ValueToNumber(cx, argv[1], &y );
+        ok &= JS::ToNumber(cx, argv[1], &y );
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
         cobj->setAnchorPoint(Point(x,y));
@@ -2272,11 +2272,11 @@ bool js_cocos2dx_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
 
 template<class T>
 bool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
-	jsval *argv = JS_ARGV(cx, vp);
+	JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
 
     if (argc == 2) {
         double t;
-        if( ! JS_ValueToNumber(cx, argv[0], &t) ) {
+        if( ! JS::ToNumber(cx, argv[0], &t) ) {
             return false;
         }
         
@@ -2318,19 +2318,19 @@ bool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 
 template<class T>
 bool js_CardinalSplineActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
-	jsval *argv = JS_ARGV(cx, vp);
+	JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     
     if (argc == 3) {
         double dur;
-        ok &= JS_ValueToNumber(cx, argv[0], &dur);
+        ok &= JS::ToNumber(cx, argv[0], &dur);
         
         int num;
         Point *arr;
         ok &= jsval_to_ccarray_of_CCPoint(cx, argv[1], &arr, &num);
         
         double ten;
-        ok &= JS_ValueToNumber(cx, argv[2], &ten);
+        ok &= JS::ToNumber(cx, argv[2], &ten);
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
@@ -2369,12 +2369,12 @@ bool js_CardinalSplineActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
 
 template<class T>
 bool js_CatmullRomActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
-	jsval *argv = JS_ARGV(cx, vp);
+	JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     
     if (argc == 2) {
         double dur;
-        ok &= JS_ValueToNumber(cx, argv[0], &dur);
+        ok &= JS::ToNumber(cx, argv[0], &dur);
         
         int num;
         Point *arr;
@@ -2642,14 +2642,14 @@ bool js_cocos2dx_ccpSub(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool js_cocos2dx_ccpMult(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
+	JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
 	if (argc == 2) {
         cocos2d::Point arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
         
 		double arg1;
-		ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+		ok &= JS::ToNumber(cx, argv[1], &arg1);
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 		
@@ -3404,7 +3404,7 @@ bool js_cocos2dx_CCLayer_setAccelerometerInterval(JSContext *cx, uint32_t argc, 
     {
         jsval* argv = JS_ARGV(cx, vp);
         double interval = 0.0;
-        JS_ValueToNumber(cx, argv[0], &interval);
+        JS::ToNumber(cx, JS::RootedValue(cx, argv[0]), &interval);
         
         Device::setAccelerometerInterval(interval);
         
@@ -3454,25 +3454,25 @@ bool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *vp)
     TEST_NATIVE_OBJECT(cx, cobj)
 
     if ( argc == 4) {
-        jsval *argvp = JS_ARGV(cx,vp);
+        JS::CallArgs argvp = JS::CallArgsFromVp(argc ,vp);
         bool ok = true;
-        JSObject *argArray = NULL;
+        JS::RootedObject argArray(cx);
         Color4F argFillColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
         double argWidth = 0.0;
         Color4F argBorderColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
 
         // Points
-        ok &= JS_ValueToObject(cx, *argvp++, &argArray);
+        ok &= JS_ValueToObject(cx, argvp[0], &argArray);
         JSB_PRECONDITION2( (argArray && JS_IsArrayObject(cx, argArray)) , cx, false, "Vertex should be anArray object");
 
         // Color 4F
-        ok &= jsval_to_cccolor4f(cx, *argvp++, &argFillColor);
+        ok &= jsval_to_cccolor4f(cx, argvp[1], &argFillColor);
 
         // Width
-        ok &= JS_ValueToNumber( cx, *argvp++, &argWidth );
+        ok &= JS::ToNumber( cx, argvp[2], &argWidth );
 
         // Color Border (4F)
-        ok &= jsval_to_cccolor4f(cx, *argvp++, &argBorderColor);
+        ok &= jsval_to_cccolor4f(cx, argvp[3], &argBorderColor);
 
         JSB_PRECONDITION2(ok, cx, false, "Error parsing arguments");
 
@@ -3485,7 +3485,7 @@ bool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *vp)
             Point p;
 
             for( uint32_t i=0; i<l; i++ ) {
-                jsval pointvp;
+                JS::RootedValue pointvp(cx);
                 ok &= JS_GetElement(cx, argArray, i, &pointvp);
                 JSB_PRECONDITION2(ok, cx, false, "JS_GetElement fails.");
                 
@@ -3506,8 +3506,8 @@ bool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 static bool jsval_to_string_vector(JSContext* cx, jsval v, std::vector<std::string>& ret) {
-    JSObject *jsobj;
-    bool ok = JS_ValueToObject( cx, v, &jsobj );
+    JS::RootedObject jsobj(cx);
+    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, v), &jsobj );
     JSB_PRECONDITION2( ok, cx, false, "Error converting value to object");
 	JSB_PRECONDITION2( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
     
@@ -3515,7 +3515,7 @@ static bool jsval_to_string_vector(JSContext* cx, jsval v, std::vector<std::stri
     JS_GetArrayLength(cx, jsobj, &len);
 
     for (uint32_t i=0; i < len; i++) {
-        jsval elt;
+        JS::RootedValue elt(cx);
         if (JS_GetElement(cx, jsobj, i, &elt)) {
             
             if (JSVAL_IS_STRING(elt))
@@ -3532,11 +3532,11 @@ static bool jsval_to_string_vector(JSContext* cx, jsval v, std::vector<std::stri
 
 static jsval string_vector_to_jsval(JSContext* cx, const std::vector<std::string>& arr) {
     
-    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0, NULL));
     
     int i = 0;
     for(std::vector<std::string>::const_iterator iter = arr.begin(); iter != arr.end(); ++iter, ++i) {
-        jsval arrElement = c_string_to_jsval(cx, iter->c_str());
+        JS::RootedValue arrElement(cx, c_string_to_jsval(cx, iter->c_str()));
         if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
             break;
         }
@@ -3685,7 +3685,7 @@ static bool js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile(JSContext *
 
 bool js_cocos2dx_CCGLProgram_setUniformLocationWith4f(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
 	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
@@ -3697,24 +3697,24 @@ bool js_cocos2dx_CCGLProgram_setUniformLocationWith4f(JSContext *cx, uint32_t ar
     double arg3;
     double arg4;
     ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-    ok &= JS_ValueToNumber(cx, argv[1], &arg1);
+    ok &= JS::ToNumber(cx, argv[1], &arg1);
     
     if(argc == 2) {
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         cobj->setUniformLocationWith1f(arg0, arg1);
     }
 	if (argc == 3) {
-        ok &= JS_ValueToNumber(cx, argv[2], &arg2);
+        ok &= JS::ToNumber(cx, argv[2], &arg2);
 		JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 		cobj->setUniformLocationWith2f(arg0, arg1, arg2);
 	}
     if(argc == 4) {
-        ok &= JS_ValueToNumber(cx, argv[3], &arg3);
+        ok &= JS::ToNumber(cx, argv[3], &arg3);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 		cobj->setUniformLocationWith3f(arg0, arg1, arg2, arg3);
     }
     if(argc == 5) {
-        ok &= JS_ValueToNumber(cx, argv[4], &arg4);
+        ok &= JS::ToNumber(cx, argv[4], &arg4);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 		cobj->setUniformLocationWith4f(arg0, arg1, arg2, arg3, arg4);
     }
@@ -3861,9 +3861,9 @@ bool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, js
 	if (argc == 0) {
 		std::vector<Sprite*> ret = cobj->getDescendants();
 		
-		JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+        JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0, NULL));
 		size_t vSize = ret.size();
-		jsval jsret;
+        JS::RootedValue jsret(cx);
 		for (size_t i = 0; i < vSize; i++)
 		{
 			proxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, ret[i]);
@@ -4075,7 +4075,7 @@ void __JSSAXDelegator::textHandler(void *ctx, const char *ch, int len) {
 }
 
 bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
-    JSObject *tmp;
+    JS::RootedObject tmp(cx);
     JS::RootedValue js_fontFilePath(cx);
     JS::RootedValue js_fontSize(cx);
     JS::RootedValue js_glyphs(cx);
@@ -4087,14 +4087,14 @@ bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
     bool distanceFieldEnable;
 
     bool ok = v.isObject() &&
-        JS_ValueToObject(cx, v, &tmp) &&
+        JS_ValueToObject(cx, JS::RootedValue(cx, v), &tmp) &&
         JS_GetProperty(cx, tmp, "fontFilePath", &js_fontFilePath) &&
         JS_GetProperty(cx, tmp, "fontSize", &js_fontSize) &&
         JS_GetProperty(cx, tmp, "glyphs", &js_glyphs) &&
         JS_GetProperty(cx, tmp, "customGlyphs", &js_customGlyphs) &&
         JS_GetProperty(cx, tmp, "distanceFieldEnable", &js_distanceFieldEnable) &&
-        JS_ValueToNumber(cx, js_fontSize, &fontSize) &&
-        JS_ValueToNumber(cx, js_glyphs, &glyphs) &&
+        JS::ToNumber(cx, js_fontSize, &fontSize) &&
+        JS::ToNumber(cx, js_glyphs, &glyphs) &&
         JS_ValueToBoolean(cx,js_distanceFieldEnable,&distanceFieldEnable) &&
         jsval_to_std_string(cx,js_fontFilePath,&ret->fontFilePath) &&
         jsval_to_std_string(cx,js_customGlyphs,&customGlyphs);
@@ -4144,7 +4144,7 @@ bool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
         TextHAlignment alignment = TextHAlignment(arg2);
-        cocos2d::Label* ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment);
+        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment);
         jsval jsret = JSVAL_NULL;
         if (ret) {
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
@@ -4159,7 +4159,7 @@ bool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
         TextHAlignment alignment = TextHAlignment(arg2);
-        cocos2d::Label* ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment, arg3);
+        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment, arg3);
         jsval jsret = JSVAL_NULL;
         if (ret) {
             js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
@@ -4202,7 +4202,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
     JS::RootedValue nsval(cx);
-	JSObject *ns;
+    JS::RootedObject ns(cx);
 	JS_GetProperty(cx, global, "cc", &nsval);
 	if (nsval == JSVAL_VOID) {
 		ns = JS_NewObject(cx, NULL, NULL, NULL);
