@@ -11,9 +11,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-JSBool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp);
 
 #ifdef __cplusplus
 }
