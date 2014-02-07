@@ -79,7 +79,7 @@ def main():
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
     print "git clean -xdf"    
-   
+    os.system("git clean -xdf")
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/merge"
     os.system(git_fetch_pr)
@@ -106,18 +106,17 @@ def main():
     os.system("cd " + os.environ['WORKSPACE']);
     os.mkdir("android_build_objs")
     #add symbol link
-    PROJECTS=["Cpp/HelloCpp","Cpp/TestCpp","Cpp/SimpleGame","Cpp/AssetsManagerTest",
-            "Javascript/TestJavascript","Javascript/CocosDragonJS","Javascript/CrystalCraze",
-            "Javascript/MoonWarriors","Javascript/WatermelonWithMe","Lua/HelloLua","Lua/TestLua"]
+    PROJECTS=["test_cpp",
+            "test-javascript","test-lua"]
     print platform.system()
     if(platform.system() == 'Darwin'):
         for item in PROJECTS:
-          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/samples/"+item+"/proj.android/obj"  
+          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"  
           os.system(cmd)
     elif(platform.system() == 'Windows'):
         for item in PROJECTS:
           p = item.replace("/", os.sep)
-          cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"samples"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
+          cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
           print cmd
           os.system(cmd)
  
