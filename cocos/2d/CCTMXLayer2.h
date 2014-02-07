@@ -213,16 +213,13 @@ protected:
     void setupIndices();
     void setupVertices();
     void setupVBO();
-
-    Point getPositionForIsoAt(const Point& pos);
-    Point getPositionForOrthoAt(const Point& pos);
-    Point getPositionForHexAt(const Point& pos);
+    void setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1);
+    int getTileIndex(int x, int y, Point base);
 
     Point calculateLayerOffset(const Point& offset);
 
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
-    float getVertexZForPos(const Point& pos);
 
     void onDraw();
 

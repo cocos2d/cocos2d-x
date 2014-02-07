@@ -164,36 +164,37 @@ void TMXLayer2::onDraw()
     GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
     Point trans = convertToWorldSpace(Point::ZERO);
-    Point baseTile = Point(floor(-trans.x / (_mapTileSize.width)),
-                                       floor(-trans.y / (_mapTileSize.height)));
+    Point baseTile = Point(
+                           floor(-trans.x / (_mapTileSize.width)),
+                           floor(-trans.y / (_mapTileSize.height)));
+
 
     Size texSize = _tileSet->_imageSize;
-	for (int y=0; y < _screenGridSize.height; y++)
-	{
-		for (int x=0; x < _screenGridSize.width; x++)
-		{
-			int tileidx = (_layerSize.height - (baseTile.y + y) - 1) * _layerSize.width + baseTile.x + x;
+    for (int y=0; y < _screenGridSize.height; y++)
+    {
+        for (int x=0; x < _screenGridSize.width; x++)
+        {
+            int tileidx = getTileIndex(x, y, baseTile);
 
-			unsigned int tile = 0;
+            unsigned int tile = 0;
             if(tileidx >=0)
                 tile = _tiles[tileidx];
 
-			int screenidx = (y * (_screenGridSize.width)) + x;
-			Rect tileTexture = _tileSet->rectForGID(tile & kFlippedMask);
-
-			GLfloat *texbase = texcoords + screenidx * 4 * 2;
+            // vertices are sorted from top to bottom to support overlapping, so we need to convert 'y' to the new index
+            int screenidx = ((_screenGridSize.height-y-1) * (_screenGridSize.width)) + x;
+            GLfloat *texbase = texcoords + screenidx * 4 * 2;
 
             float left, right, top, bottom;
 
-            if(!tile
-               || baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width
-               || baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height
-               )
+            if(!tile)
             {
-                left = bottom = top = right = 0;
+                left = bottom = 0;
+                top = right = 0;
             }
             else
             {
+                Rect tileTexture = _tileSet->rectForGID(tile);
+
                 left   = (tileTexture.origin.x / texSize.width);
                 right  = left + (tileTexture.size.width / texSize.width);
                 bottom = (tileTexture.origin.y / texSize.height);
@@ -208,8 +209,8 @@ void TMXLayer2::onDraw()
             texbase[5] = bottom;
             texbase[6] = right;
             texbase[7] = bottom;
-		}
-	}
+        }
+    }
 
     glUnmapBuffer(GL_ARRAY_BUFFER);
 
@@ -231,6 +232,34 @@ void TMXLayer2::onDraw()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	CC_INCREMENT_GL_DRAWS(1);
+}
+
+int TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile)
+{
+    int tileidx = -1;
+    switch (_layerOrientation)
+    {
+        case TMXOrientationOrtho:
+            if( baseTile.x + x < 0 || baseTile.x + x >= _layerSize.width
+               || baseTile.y + y < 0 || baseTile.y + y >= _layerSize.height)
+                tileidx = -1;
+            else
+                tileidx = (_layerSize.height - (baseTile.y + y) - 1) * _layerSize.width + baseTile.x + x;
+            break;
+
+        case TMXOrientationIso:
+            int xx = x + ((y+1)/2) - 2;
+            int yy = y/2 +1 - x;
+
+            if( xx < 0 || xx >= _layerSize.width
+               || yy < 0 || yy >= _layerSize.height )
+                tileidx = -1;
+            else
+                tileidx = xx + _layerSize.width * yy;
+            break;
+    }
+
+    return tileidx;
 }
 
 void TMXLayer2::setupIndices()
@@ -261,23 +290,26 @@ void TMXLayer2::setupVertices()
     GLfloat *vertices = (GLfloat *)malloc( _screenTileCount * 4 * 2 * sizeof(GLfloat) );
 
     GLfloat *tilePtr = vertices;
-    for (int y=0; y < _screenGridSize.height; y++)
+
+    // top to bottom sorting to support overlapping
+    for (int y=_screenGridSize.height-1; y >=0; y--)
     {
-        GLfloat ypos_0 = _mapTileSize.height * y;
-        GLfloat ypos_1 = _mapTileSize.height * (y+1);
         for (int x=0; x < _screenGridSize.width; x++, tilePtr += 4 * 2)
         {
-            GLfloat xpos_0 = _mapTileSize.width * x;
-            GLfloat xpos_1 = _mapTileSize.width * (x+1);
+
+            GLfloat xpos0, xpos1, ypos0, ypos1;
+
+            setVerticesForPos(x, y, &xpos0, &xpos1, &ypos0, &ypos1);
+
             // define the points of a quad here; we'll use the index buffer to make them triangles
-            tilePtr[0] = xpos_0;
-            tilePtr[1] = ypos_0;
-            tilePtr[2] = xpos_1;
-            tilePtr[3] = ypos_0;
-            tilePtr[4] = xpos_0;
-            tilePtr[5] = ypos_1;
-            tilePtr[6] = xpos_1;
-            tilePtr[7] = ypos_1;
+            tilePtr[0] = xpos0;
+            tilePtr[1] = ypos0;
+            tilePtr[2] = xpos1;
+            tilePtr[3] = ypos0;
+            tilePtr[4] = xpos0;
+            tilePtr[5] = ypos1;
+            tilePtr[6] = xpos1;
+            tilePtr[7] = ypos1;
         }
     }
 
@@ -286,6 +318,27 @@ void TMXLayer2::setupVertices()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     free(vertices);
+}
+
+void TMXLayer2::setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1)
+{
+    switch (_layerOrientation)
+    {
+        case TMXOrientationOrtho:
+            *xpos0 = _mapTileSize.width * x;
+            *xpos1 = *xpos0 + _tileSet->_tileSize.width;
+            *ypos0 = _mapTileSize.height * y;
+            *ypos1 = *ypos0 + _tileSet->_tileSize.height;
+            break;
+        case TMXOrientationIso:
+            *xpos0 = _mapTileSize.width * x + _mapTileSize.width/2 * (y%2);
+            *xpos1 = *xpos0 + _tileSet->_tileSize.width;
+            *ypos0 = _mapTileSize.height * y / 2;
+            *ypos1 = *ypos0 + _tileSet->_tileSize.height;
+            break;
+        case TMXOrientationHex:
+            break;
+    }
 }
 
 void TMXLayer2::setupVBO()
@@ -341,92 +394,25 @@ void TMXLayer2::setupTiles()
 
     Size screenSize = Director::getInstance()->getWinSize();
 
-    _screenGridSize.width = (ceil(screenSize.width / (_mapTileSize.width)) + 1);
-    _screenGridSize.height = (ceil(screenSize.height / (_mapTileSize.height)) + 1);
+    switch (_layerOrientation)
+    {
+        case TMXOrientationOrtho:
+            _screenGridSize.width = (ceil(screenSize.width / (_mapTileSize.width)) + 1);
+            _screenGridSize.height = (ceil(screenSize.height / (_mapTileSize.height)) + 1);
+            break;
+        case TMXOrientationIso:
+            _screenGridSize.width = (ceil(screenSize.width / (_mapTileSize.width)) + 1);
+            _screenGridSize.height = (ceil(screenSize.height / (_mapTileSize.height/2)) + 1);
+            break;
+        case TMXOrientationHex:
+            break;
+    }
 
     _screenTileCount = _screenGridSize.width * _screenGridSize.height;
 
     setupVBO();
 }
 
-// used only when parsing the map. useless after the map was parsed
-// since lot's of assumptions are no longer true
-void TMXLayer2::appendTileForGID(int gid, const Point& pos)
-{
-}
-
-Sprite* TMXLayer2::reusedTileWithRect(Rect rect)
-{
-    if (! _reusedTile)
-    {
-        _reusedTile = Sprite::createWithTexture(_texture, rect);
-        _reusedTile->retain();
-    }
-    else
-    {
-		// Re-init the sprite
-        _reusedTile->setTextureRect(rect, false, rect.size);
-    }
-
-    return _reusedTile;
-}
-
-void TMXLayer2::setupTileSprite(Sprite* sprite, Point pos, int gid)
-{
-    sprite->setPosition(getPositionAt(pos));
-    sprite->setVertexZ((float)getVertexZForPos(pos));
-    sprite->setAnchorPoint(Point::ZERO);
-    sprite->setOpacity(_opacity);
-
-    //issue 1264, flip can be undone as well
-    sprite->setFlippedX(false);
-    sprite->setFlippedY(false);
-    sprite->setRotation(0.0f);
-    sprite->setAnchorPoint(Point(0,0));
-
-    // Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
-    if (gid & kTMXTileDiagonalFlag)
-    {
-        // put the anchor in the middle for ease of rotation.
-        sprite->setAnchorPoint(Point(0.5f,0.5f));
-        sprite->setPosition(Point(getPositionAt(pos).x + sprite->getContentSize().height/2,
-                                  getPositionAt(pos).y + sprite->getContentSize().width/2 ) );
-
-        int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
-
-        // handle the 4 diagonally flipped states.
-        if (flag == kTMXTileHorizontalFlag)
-        {
-            sprite->setRotation(90.0f);
-        }
-        else if (flag == kTMXTileVerticalFlag)
-        {
-            sprite->setRotation(270.0f);
-        }
-        else if (flag == (kTMXTileVerticalFlag | kTMXTileHorizontalFlag) )
-        {
-            sprite->setRotation(90.0f);
-            sprite->setFlippedX(true);
-        }
-        else
-        {
-            sprite->setRotation(270.0f);
-            sprite->setFlippedX(true);
-        }
-    }
-    else
-    {
-        if (gid & kTMXTileHorizontalFlag)
-        {
-            sprite->setFlippedX(true);
-        }
-
-        if (gid & kTMXTileVerticalFlag)
-        {
-            sprite->setFlippedY(true);
-        }
-    }
-}
 
 // TMXLayer2 - Properties
 Value TMXLayer2::getProperty(const std::string& propertyName) const
@@ -470,67 +456,6 @@ void TMXLayer2::parseInternalProperties()
 }
 
 
-int TMXLayer2::getTileGIDAt(const Point& pos, ccTMXTileFlags* flags/* = nullptr*/)
-{
-    CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer2: invalid position");
-    CCASSERT(_tiles && _atlasIndexArray, "TMXLayer2: the tiles map has been released");
-
-    int idx = static_cast<int>((pos.x + pos.y * _layerSize.width));
-    // Bits on the far end of the 32-bit global tile ID are used for tile flags
-    int tile = _tiles[idx];
-
-    // issue1264, flipped tiles can be changed dynamically
-    if (flags) 
-    {
-        *flags = (ccTMXTileFlags)(tile & kFlipedAll);
-    }
-    
-    return (tile & kFlippedMask);
-}
-
-// TMXLayer2 - atlasIndex and Z
-static inline int compareInts(const void * a, const void * b)
-{
-    return ((*(int*)a) - (*(int*)b));
-}
-
-ssize_t TMXLayer2::atlasIndexForExistantZ(int z)
-{
-    int key=z;
-    int *item = (int*)bsearch((void*)&key, (void*)&_atlasIndexArray->arr[0], _atlasIndexArray->num, sizeof(void*), compareInts);
-
-    CCASSERT(item, "TMX atlas index not found. Shall not happen");
-
-    ssize_t index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
-    return index;
-}
-
-ssize_t TMXLayer2::atlasIndexForNewZ(int z)
-{
-    // XXX: This can be improved with a sort of binary search
-    ssize_t i=0;
-    for (i=0; i< _atlasIndexArray->num ; i++) 
-    {
-        ssize_t val = (size_t) _atlasIndexArray->arr[i];
-        if (z < val)
-        {
-            break;
-        }
-    } 
-    
-    return i;
-}
-
-// TMXLayer2 - adding / remove tiles
-void TMXLayer2::setTileGID(int gid, const Point& pos)
-{
-    setTileGID(gid, pos, (ccTMXTileFlags)0);
-}
-
-void TMXLayer2::setTileGID(int gid, const Point& pos, ccTMXTileFlags flags)
-{
-}
-
 
 //CCTMXLayer2 - obtaining positions, offset
 Point TMXLayer2::calculateLayerOffset(const Point& pos)
@@ -552,80 +477,6 @@ Point TMXLayer2::calculateLayerOffset(const Point& pos)
     return ret;    
 }
 
-Point TMXLayer2::getPositionAt(const Point& pos)
-{
-    Point ret = Point::ZERO;
-    switch (_layerOrientation)
-    {
-    case TMXOrientationOrtho:
-        ret = getPositionForOrthoAt(pos);
-        break;
-    case TMXOrientationIso:
-        ret = getPositionForIsoAt(pos);
-        break;
-    case TMXOrientationHex:
-        ret = getPositionForHexAt(pos);
-        break;
-    }
-    ret = CC_POINT_PIXELS_TO_POINTS( ret );
-    return ret;
-}
-
-Point TMXLayer2::getPositionForOrthoAt(const Point& pos)
-{
-    return Point(pos.x * _mapTileSize.width,
-                            (_layerSize.height - pos.y - 1) * _mapTileSize.height);
-}
-
-Point TMXLayer2::getPositionForIsoAt(const Point& pos)
-{
-    return Point(_mapTileSize.width /2 * (_layerSize.width + pos.x - pos.y - 1),
-                             _mapTileSize.height /2 * ((_layerSize.height * 2 - pos.x - pos.y) - 2));
-}
-
-Point TMXLayer2::getPositionForHexAt(const Point& pos)
-{
-    float diffY = 0;
-    if ((int)pos.x % 2 == 1)
-    {
-        diffY = -_mapTileSize.height/2 ;
-    }
-
-    Point xy = Point(pos.x * _mapTileSize.width*3/4,
-                            (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
-    return xy;
-}
-
-float TMXLayer2::getVertexZForPos(const Point& pos)
-{
-    float ret = 0;
-    float maxVal = 0;
-    if (_useAutomaticVertexZ)
-    {
-        switch (_layerOrientation) 
-        {
-        case TMXOrientationIso:
-            maxVal = _layerSize.width + _layerSize.height;
-            ret = -(maxVal - (pos.x + pos.y));
-            break;
-        case TMXOrientationOrtho:
-            ret = -(_layerSize.height-pos.y);
-            break;
-        case TMXOrientationHex:
-            CCASSERT(false, "TMX Hexa zOrder not supported");
-            break;
-        default:
-            CCASSERT(false, "TMX invalid value");
-            break;
-        }
-    } 
-    else
-    {
-        ret = _vertexZvalue;
-    }
-    
-    return ret;
-}
 
 std::string TMXLayer2::getDescription() const
 {

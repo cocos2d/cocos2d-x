@@ -283,7 +283,8 @@ TMXOrthoTest::TMXOrthoTest()
     //auto color = LayerColor::create( Color4B(64,64,64,255) );
     //addChild(color, -1);
 
-    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test2.tmx");
+    auto map = TMXTiledMap2::create("TileMaps/iso-test.tmx");
+//    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test2.tmx");
     addChild(map, 0, kTagTileMap);
     
     Size CC_UNUSED s = map->getContentSize();
