@@ -4,13 +4,24 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef jsdbgapi_h
-#define jsdbgapi_h
+#ifndef js_OldDebugAPI_h
+#define js_OldDebugAPI_h
+
 /*
  * JS debugger API.
  */
 
-#include "jsprvtd.h"
+#include "mozilla/NullPtr.h"
+ 
+#include "jsbytecode.h"
+
+#include "js/CallArgs.h"
+#include "js/TypeDecls.h"
+
+class JSAtom;
+class JSFreeOp;
+
+namespace js { class StackFrame; }
 
 namespace JS {
 
@@ -34,20 +45,67 @@ extern JS_PUBLIC_API(void)
 FreeStackDescription(JSContext *cx, StackDescription *desc);
 
 extern JS_PUBLIC_API(char *)
-FormatStackDump(JSContext *cx, char *buf,
-                    JSBool showArgs, JSBool showLocals,
-                    JSBool showThisProps);
+FormatStackDump(JSContext *cx, char *buf, bool showArgs, bool showLocals, bool showThisProps);
 
 }
 
 # ifdef DEBUG
-JS_FRIEND_API(void) js_DumpValue(const js::Value &val);
+JS_FRIEND_API(void) js_DumpValue(const JS::Value &val);
 JS_FRIEND_API(void) js_DumpId(jsid id);
-JS_FRIEND_API(void) js_DumpStackFrame(JSContext *cx, js::StackFrame *start = NULL);
+JS_FRIEND_API(void) js_DumpStackFrame(JSContext *cx, js::StackFrame *start = nullptr);
 # endif
 
 JS_FRIEND_API(void)
 js_DumpBacktrace(JSContext *cx);
+
+typedef enum JSTrapStatus {
+    JSTRAP_ERROR,
+    JSTRAP_CONTINUE,
+    JSTRAP_RETURN,
+    JSTRAP_THROW,
+    JSTRAP_LIMIT
+} JSTrapStatus;
+
+typedef JSTrapStatus
+(* JSTrapHandler)(JSContext *cx, JSScript *script, jsbytecode *pc, JS::Value *rval,
+                  JS::Value closure);
+
+typedef JSTrapStatus
+(* JSInterruptHook)(JSContext *cx, JSScript *script, jsbytecode *pc, JS::Value *rval,
+                    void *closure);
+
+typedef JSTrapStatus
+(* JSDebuggerHandler)(JSContext *cx, JSScript *script, jsbytecode *pc, JS::Value *rval,
+                      void *closure);
+
+typedef JSTrapStatus
+(* JSThrowHook)(JSContext *cx, JSScript *script, jsbytecode *pc, JS::Value *rval,
+                void *closure);
+
+typedef bool
+(* JSWatchPointHandler)(JSContext *cx, JSObject *obj, jsid id, JS::Value old,
+                        JS::Value *newp, void *closure);
+
+/* called just after script creation */
+typedef void
+(* JSNewScriptHook)(JSContext  *cx,
+                    const char *filename,  /* URL of script */
+                    unsigned   lineno,     /* first line */
+                    JSScript   *script,
+                    JSFunction *fun,
+                    void       *callerdata);
+
+/* called just before script destruction */
+typedef void
+(* JSDestroyScriptHook)(JSFreeOp *fop,
+                        JSScript *script,
+                        void     *callerdata);
+
+typedef void
+(* JSSourceHandler)(const char *filename, unsigned lineno, const jschar *str,
+                    size_t length, void **listenerTSData, void *closure);
+
+
 
 extern JS_PUBLIC_API(JSCompartment *)
 JS_EnterCompartmentOfScript(JSContext *cx, JSScript *target);
@@ -60,7 +118,7 @@ JS_DecompileScript(JSContext *cx, JSScript *script, const char *name, unsigned i
  * be able to support compartment-wide debugging.
  */
 extern JS_PUBLIC_API(void)
-JS_SetRuntimeDebugMode(JSRuntime *rt, JSBool debug);
+JS_SetRuntimeDebugMode(JSRuntime *rt, bool debug);
 
 /*
  * Debug mode is a compartment-wide mode that enables a debugger to attach
@@ -73,42 +131,42 @@ JS_SetRuntimeDebugMode(JSRuntime *rt, JSBool debug);
  */
 
 /* Get current state of debugging mode. */
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_GetDebugMode(JSContext *cx);
 
 /*
  * Turn on/off debugging mode for all compartments. This returns false if any code
  * from any of the runtime's compartments is running or on the stack.
  */
-JS_FRIEND_API(JSBool)
-JS_SetDebugModeForAllCompartments(JSContext *cx, JSBool debug);
+JS_FRIEND_API(bool)
+JS_SetDebugModeForAllCompartments(JSContext *cx, bool debug);
 
 /*
  * Turn on/off debugging mode for a single compartment. This should only be
  * used when no code from this compartment is running or on the stack in any
  * thread.
  */
-JS_FRIEND_API(JSBool)
-JS_SetDebugModeForCompartment(JSContext *cx, JSCompartment *comp, JSBool debug);
+JS_FRIEND_API(bool)
+JS_SetDebugModeForCompartment(JSContext *cx, JSCompartment *comp, bool debug);
 
 /*
  * Turn on/off debugging mode for a context's compartment.
  */
-JS_FRIEND_API(JSBool)
-JS_SetDebugMode(JSContext *cx, JSBool debug);
+JS_FRIEND_API(bool)
+JS_SetDebugMode(JSContext *cx, bool debug);
 
 /* Turn on single step mode. */
-extern JS_PUBLIC_API(JSBool)
-JS_SetSingleStepMode(JSContext *cx, JSScript *script, JSBool singleStep);
+extern JS_PUBLIC_API(bool)
+JS_SetSingleStepMode(JSContext *cx, JSScript *script, bool singleStep);
 
 /* The closure argument will be marked. */
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetTrap(JSContext *cx, JSScript *script, jsbytecode *pc,
-           JSTrapHandler handler, jsval closure);
+           JSTrapHandler handler, JS::Value closure);
 
 extern JS_PUBLIC_API(void)
 JS_ClearTrap(JSContext *cx, JSScript *script, jsbytecode *pc,
-             JSTrapHandler *handlerp, jsval *closurep);
+             JSTrapHandler *handlerp, JS::Value *closurep);
 
 extern JS_PUBLIC_API(void)
 JS_ClearScriptTraps(JSRuntime *rt, JSScript *script);
@@ -116,27 +174,24 @@ JS_ClearScriptTraps(JSRuntime *rt, JSScript *script);
 extern JS_PUBLIC_API(void)
 JS_ClearAllTrapsForCompartment(JSContext *cx);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetInterrupt(JSRuntime *rt, JSInterruptHook handler, void *closure);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_ClearInterrupt(JSRuntime *rt, JSInterruptHook *handlerp, void **closurep);
 
 /************************************************************************/
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetWatchPoint(JSContext *cx, JSObject *obj, jsid id,
                  JSWatchPointHandler handler, JSObject *closure);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_ClearWatchPoint(JSContext *cx, JSObject *obj, jsid id,
                    JSWatchPointHandler *handlerp, JSObject **closurep);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_ClearWatchPointsForObject(JSContext *cx, JSObject *obj);
-
-extern JS_PUBLIC_API(JSBool)
-JS_ClearAllWatchPoints(JSContext *cx);
 
 /************************************************************************/
 
@@ -150,7 +205,7 @@ JS_LineNumberToPC(JSContext *cx, JSScript *script, unsigned lineno);
 extern JS_PUBLIC_API(jsbytecode *)
 JS_EndPC(JSContext *cx, JSScript *script);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_GetLinePCs(JSContext *cx, JSScript *script,
               unsigned startLine, unsigned maxLines,
               unsigned* count, unsigned** lines, jsbytecode*** pcs);
@@ -158,7 +213,7 @@ JS_GetLinePCs(JSContext *cx, JSScript *script,
 extern JS_PUBLIC_API(unsigned)
 JS_GetFunctionArgumentCount(JSContext *cx, JSFunction *fun);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_FunctionHasLocalNames(JSContext *cx, JSFunction *fun);
 
 /*
@@ -230,9 +285,8 @@ JS_GetScriptIsSelfHosted(JSScript *script);
 /************************************************************************/
 
 /*
- * Hook setters for script creation and destruction, see jsprvtd.h for the
- * typedefs.  These macros provide binary compatibility and newer, shorter
- * synonyms.
+ * Hook setters for script creation and destruction.  These macros provide
+ * binary compatibility and newer, shorter synonyms.
  */
 #define JS_SetNewScriptHook     JS_SetNewScriptHookProc
 #define JS_SetDestroyScriptHook JS_SetDestroyScriptHookProc
@@ -247,11 +301,11 @@ JS_SetDestroyScriptHook(JSRuntime *rt, JSDestroyScriptHook hook,
 /************************************************************************/
 
 typedef struct JSPropertyDesc {
-    jsval           id;         /* primary id, atomized string, or int */
-    jsval           value;      /* property value */
+    JS::Value       id;         /* primary id, atomized string, or int */
+    JS::Value       value;      /* property value */
     uint8_t         flags;      /* flags, see below */
     uint8_t         spare;      /* unused */
-    jsval           alias;      /* alias id if JSPD_ALIAS flag */
+    JS::Value       alias;      /* alias id if JSPD_ALIAS flag */
 } JSPropertyDesc;
 
 #define JSPD_ENUMERATE  0x01    /* visible to for/in loop */
@@ -260,7 +314,7 @@ typedef struct JSPropertyDesc {
 #define JSPD_ALIAS      0x08    /* property has an alias id */
 #define JSPD_EXCEPTION  0x40    /* exception occurred fetching the property, */
                                 /* value is exception */
-#define JSPD_ERROR      0x80    /* native getter returned JS_FALSE without */
+#define JSPD_ERROR      0x80    /* native getter returned false without */
                                 /* throwing an exception */
 
 typedef struct JSPropertyDescArray {
@@ -270,7 +324,7 @@ typedef struct JSPropertyDescArray {
 
 typedef struct JSScopeProperty JSScopeProperty;
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_GetPropertyDescArray(JSContext *cx, JSObject *obj, JSPropertyDescArray *pda);
 
 extern JS_PUBLIC_API(void)
@@ -358,8 +412,8 @@ class JS_PUBLIC_API(JSBrokenFrameIterator)
  * or function call: just before execution begins and just after it finishes.
  * In both cases the 'current' frame is that of the executing code.
  *
- * The 'before' param is JS_TRUE for the hook invocation before the execution
- * and JS_FALSE for the invocation after the code has run.
+ * The 'before' param is true for the hook invocation before the execution
+ * and false for the invocation after the code has run.
  *
  * The 'ok' param is significant only on the post execution invocation to
  * signify whether or not the code completed 'normally'.
@@ -373,14 +427,14 @@ class JS_PUBLIC_API(JSBrokenFrameIterator)
  * in 'closure' to cause the 'after' invocation to be called with the same
  * 'closure' value as the 'before'.
  *
- * Returning NULL in the 'before' hook will cause the 'after' hook *not* to
+ * Returning nullptr in the 'before' hook will cause the 'after' hook *not* to
  * be called.
  */
 typedef void *
 (* JSInterpreterHook)(JSContext *cx, JSAbstractFramePtr frame, bool isConstructing,
-                      JSBool before, JSBool *ok, void *closure);
+                      bool before, bool *ok, void *closure);
 
-typedef JSBool
+typedef bool
 (* JSDebugErrorHook)(JSContext *cx, const char *message, JSErrorReport *report,
                      void *closure);
 
@@ -407,22 +461,22 @@ typedef struct JSDebugHooks {
 
 /************************************************************************/
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetDebuggerHandler(JSRuntime *rt, JSDebuggerHandler hook, void *closure);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetSourceHandler(JSRuntime *rt, JSSourceHandler handler, void *closure);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetExecuteHook(JSRuntime *rt, JSInterpreterHook hook, void *closure);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetCallHook(JSRuntime *rt, JSInterpreterHook hook, void *closure);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetThrowHook(JSRuntime *rt, JSThrowHook hook, void *closure);
 
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_SetDebugErrorHook(JSRuntime *rt, JSDebugErrorHook hook, void *closure);
 
 /************************************************************************/
@@ -433,11 +487,11 @@ JS_GetGlobalDebugHooks(JSRuntime *rt);
 /**
  * Add various profiling-related functions as properties of the given object.
  */
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_DefineProfilingFunctions(JSContext *cx, JSObject *obj);
 
 /* Defined in vm/Debugger.cpp. */
-extern JS_PUBLIC_API(JSBool)
+extern JS_PUBLIC_API(bool)
 JS_DefineDebuggerObject(JSContext *cx, JSObject *obj);
 
 extern JS_PUBLIC_API(void)
@@ -452,8 +506,13 @@ JS_DumpPCCounts(JSContext *cx, JSScript *script);
 extern JS_PUBLIC_API(void)
 JS_DumpCompartmentPCCounts(JSContext *cx);
 
+namespace js {
+extern JS_FRIEND_API(bool)
+CanCallContextDebugHandler(JSContext *cx);
+}
+
 /* Call the context debug handler on the topmost scripted frame. */
-extern JS_FRIEND_API(JSBool)
+extern JS_FRIEND_API(bool)
 js_CallContextDebugHandler(JSContext *cx);
 
-#endif /* jsdbgapi_h */
+#endif /* js_OldDebugAPI_h */
