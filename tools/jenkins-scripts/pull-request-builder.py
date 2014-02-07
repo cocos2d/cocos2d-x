@@ -40,19 +40,19 @@ def main():
     action = payload['action']
     print 'action: ' + action
 
-    pr = payload['pull_request']
+    #pr = payload['pull_request']
     
-    url = pr['html_url']
+    url = payload['html_url']
     print "url:" + url
     pr_desc = '<h3><a href='+ url + '> pr#' + str(pr_num) + ' is '+ action +'</a></h3>'
     
 
 
     #get statuses url
-    statuses_url = pr['statuses_url']
+    statuses_url = payload['statuses_url']
 
     #get pr target branch
-    branch = pr['base']['ref']
+    branch = payload['branch']
 
     #set commit status to pending
     #target_url = os.environ['BUILD_URL']
@@ -62,21 +62,7 @@ def main():
     target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
     set_description(pr_desc, target_url)
-    
-    if(action == 'closed'):
-        print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
-        return(0)
-  
-    r = requests.get(pr['url']+"/commits")
-    commits = r.json()
-    last_commit = commits[len(commits)-1]
-    message = last_commit['commit']['message']
-
-    pattern = re.compile("\[ci(\s+)skip\]", re.I)
-    result = pattern.search(message)
-    if result is not None:
-        print 'skip build for pull request #' + str(pr_num)
-        return(0)
+ 
     
     data = {"state":"pending", "target_url":target_url}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
@@ -92,12 +78,10 @@ def main():
     os.system("git checkout develop")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
-    print "git clean -xdf"
-    os.system("git clean -xdf")
-    
+    print "git clean -xdf"    
    
     #fetch pull request to local repo
-    git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
+    git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/merge"
     os.system(git_fetch_pr)
  
     #checkout
@@ -138,18 +122,16 @@ def main():
           os.system(cmd)
  
     #build
-    #TODO: support android-mac build currently
-    #TODO: add android-windows7 build
     #TODO: add android-linux build
-    #TODO: add ios build
     #TODO: add mac build
-    #TODO: add win32 build
     node_name = os.environ['NODE_NAME']
     if(branch == 'develop'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
         ret = os.system("python build/android-build.py -n -j10 all")
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
+      elif(node_name == 'ios_mac'):
+        ret = os.system("tools/jenkins-scripts/ios-build.sh")
     elif(branch == 'master'):
       if(platform.system() == 'Darwin'):
         ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")
