@@ -29,6 +29,12 @@ function TextureCacheDeprecated.destroyInstance(self)
 end
 rawset(cc.TextureCache,"destroyInstance",TextureCacheDeprecated.destroyInstance)
 
+function TextureCacheDeprecated.dumpCachedTextureInfo(self)
+    deprecatedTip("self:dumpCachedTextureInfo","self:getCachedTextureInfo")
+    return print(self:getCachedTextureInfo())
+end
+rawset(cc.TextureCache,"dumpCachedTextureInfo",TextureCacheDeprecated.dumpCachedTextureInfo)
+
 local CCTextureCacheDeprecated = { }
 function CCTextureCacheDeprecated.sharedTextureCache()
     deprecatedTip("CCTextureCache:sharedTextureCache","CCTextureCache:getInstance")

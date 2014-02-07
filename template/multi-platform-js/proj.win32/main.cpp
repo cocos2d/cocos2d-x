@@ -1,6 +1,5 @@
 #include "main.h"
 #include "AppDelegate.h"
-#include "CCEGLView.h"
 
 USING_NS_CC;
 
@@ -24,9 +23,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    EGLView eglView;
-    eglView.init("TestCPP",900,640);
-
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE

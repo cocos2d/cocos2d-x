@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 Object::Object()
 : _luaID(0)
-, _reference(1) // when the object is created, the reference count of it is 1
+, _referenceCount(1) // when the object is created, the reference count of it is 1
 {
     static unsigned int uObjectCount = 0;
 
@@ -63,14 +63,61 @@ Object* Object::autorelease()
     return this;
 }
 
-bool Object::isSingleReference() const
+
+
+void Object::release()
 {
-    return _reference == 1;
+    CCASSERT(_referenceCount > 0, "reference count should greater than 0");
+    --_referenceCount;
+    
+    if (_referenceCount == 0)
+    {
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+        auto poolManager = PoolManager::getInstance();
+        if (!poolManager->getCurrentPool()->isClearing() && poolManager->isObjectInPools(this))
+        {
+            // Trigger an assert if the reference count is 0 but the object is still in autorelease pool.
+            // This happens when 'autorelease/release' were not used in pairs with 'new/retain'.
+            //
+            // Wrong usage (1):
+            //
+            // auto obj = Node::create();   // Ref = 1, but it's an autorelease object which means it was in the autorelease pool.
+            // obj->autorelease();   // Wrong: If you wish to invoke autorelease several times, you should retain `obj` first.
+            //
+            // Wrong usage (2):
+            //
+            // auto obj = Node::create();
+            // obj->release();   // Wrong: obj is an autorelease object, it will be released when clearing current pool.
+            //
+            // Correct usage (1):
+            //
+            // auto obj = Node::create();
+            //                     |-   new Node();     // `new` is the pair of the `autorelease` of next line
+            //                     |-   autorelease();  // The pair of `new Node`.
+            //
+            // obj->retain();
+            // obj->autorelease();  // This `autorelease` is the pair of `retain` of previous line.
+            //
+            // Correct usage (2):
+            //
+            // auto obj = Node::create();
+            // obj->retain();
+            // obj->release();   // This `release` is the pair of `retain` of previous line.
+            CCASSERT(false, "The reference shouldn't be 0 because it is still in autorelease pool.");
+        }
+#endif
+        delete this;
+    }
 }
 
-unsigned int Object::retainCount() const
+bool Object::isSingleReference() const
 {
-    return _reference;
+    return _referenceCount == 1;
+}
+
+unsigned int Object::getReferenceCount() const
+{
+    return _referenceCount;
 }
 
 bool Object::isEqual(const Object *object)

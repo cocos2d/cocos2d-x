@@ -148,7 +148,7 @@ tolua_lerror:
 #endif
 }
 
-int tolua_Cocos2d_CCSkeletonAnimation_registerScriptHandler00(lua_State* tolua_S)
+int tolua_Cocos2d_CCSkeletonAnimation_registerSpineEventHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -170,12 +170,12 @@ int tolua_Cocos2d_CCSkeletonAnimation_registerScriptHandler00(lua_State* tolua_S
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'registerSpineEventHandler'.",&tolua_err);
     return 0;
 #endif
 }
 
-int tolua_Cocos2d_CCSkeletonAnimation_unregisterScriptHandler00(lua_State* tolua_S)
+int tolua_Cocos2d_CCSkeletonAnimation_unregisterSpineEventHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -322,8 +322,8 @@ static void extendCCSkeletonAnimation(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "create", lua_cocos2dx_CCSkeletonAnimation_createWithFile);
-        tolua_function(L, "registerScriptHandler", tolua_Cocos2d_CCSkeletonAnimation_registerScriptHandler00);
-        tolua_function(L, "unregisterScriptHandler", tolua_Cocos2d_CCSkeletonAnimation_unregisterScriptHandler00);
+        tolua_function(L, "registerSpineEventHandler", tolua_Cocos2d_CCSkeletonAnimation_registerSpineEventHandler00);
+        tolua_function(L, "unregisterSpineEventHandler", tolua_Cocos2d_CCSkeletonAnimation_unregisterSpineEventHandler00);
         tolua_function(L, "setBlendFunc", tolua_spine_SkeletoneAnimation_setBlendFunc);
         tolua_function(L, "setTimeScale", tolua_Cocos2d_CCSkeletonAnimation_setTimeScale00);
         tolua_function(L, "setDebugSlots", tolua_Cocos2d_CCSkeletonAnimation_setDebugSlots00);
