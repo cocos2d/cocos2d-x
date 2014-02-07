@@ -95,6 +95,7 @@ Developers:
         Added Mingw-crt Support without breaking VS SDK
         CMake support for windows.
         Added support for x64 target of windows.
+        Added Dutch Language support.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -510,6 +511,8 @@ Developers:
         
     Lee, Jae-Hong (pyrasis)
         Maintainer of tizen port.
+        localStorageGetItem crashes when column text is NULL.
+        fix image bug on Android
 
     lumendes
         Updating spine-runtime to EsotericSoftware/spine-runtimes@5f90386.
@@ -725,6 +728,12 @@ Developers:
         
     liang8305
         Use multiple processes according the number of cores to build android project
+        
+    pandamicro
+        Exposed SAXParser to JS, it is used for parsing XML in JS.
+        
+    hanjukim
+        Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
     
 Retired Core Developers:
     WenSheng Yang

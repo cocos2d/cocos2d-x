@@ -290,7 +290,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
             break;
 
         case kShaderType_PositionTextureColorAlphaTest:
-            p->initWithVertexShaderByteArray(ccPositionTextureColor_noMVP_vert, ccPositionTextureColorAlphaTest_frag);
+            p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);

@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __CCPLATFORMDEFINE_H__
 #define __CCPLATFORMDEFINE_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "android/log.h"
 
 #define CC_DLL
@@ -58,5 +61,7 @@ THE SOFTWARE.
 #define NULL    ((void *)0)
 #endif
 #endif
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #endif /* __CCPLATFORMDEFINE_H__*/

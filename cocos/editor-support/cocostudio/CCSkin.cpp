@@ -216,7 +216,7 @@ kmMat4 Skin::getNodeToWorldTransformAR() const
     displayTransform.mat[12] = anchorPoint.x;
     displayTransform.mat[13] = anchorPoint.y;
 
-    return TransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
 void Skin::draw()
