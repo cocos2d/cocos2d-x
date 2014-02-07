@@ -1,10 +1,12 @@
 #ifndef __XMLHTTPHELPER_H__
 #define __XMLHTTPHELPER_H__
 
+#include "jsapi.h"
+#include "jsfriendapi.h"
+
 #include <typeinfo>
 #include <string>
 #include <memory>
-#include "jsapi.h"
 
 //#pragma mark - Helpful Macros
 

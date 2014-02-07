@@ -26,14 +26,13 @@
 #ifndef __js_bindings_chipmunk_manual
 #define __js_bindings_chipmunk_manual
 
+#include "jsapi.h"
 #include "js_bindings_config.h"
 #include "js_manual_conversions.h"
 #include "ScriptingCore.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
 #include "chipmunk.h"
-#include "jsapi.h"
-
 #include "js_bindings_chipmunk_auto_classes.h"
 
 // Free Functions

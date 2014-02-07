@@ -9,15 +9,17 @@
 #ifndef __SCRIPTING_CORE_H__
 #define __SCRIPTING_CORE_H__
 
-#include <assert.h>
-#include <memory>
+
+#include "jsapi.h"
+#include "jsfriendapi.h"
 #include "cocos2d.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
-#include "jsapi.h"
-#include "jsfriendapi.h"
 #include "spidermonkey_specifics.h"
 #include "js_manual_conversions.h"
+
+#include <assert.h>
+#include <memory>
 
 void js_log(const char *format, ...);
 

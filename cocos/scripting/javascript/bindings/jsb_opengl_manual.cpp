@@ -26,9 +26,6 @@
 #include "js_bindings_config.h"
 #ifdef JSB_INCLUDE_OPENGL
 
-#include "jsapi.h"
-#include "jsfriendapi.h"
-
 #include "jsb_opengl_manual.h"
 #include "js_manual_conversions.h"
 #include "js_bindings_core.h"
