@@ -11,6 +11,7 @@
 #include "js_bindings_config.h"
 #include "cocos2d.h"
 #include "spidermonkey_specifics.h"
+#include "chipmunk.h"
 
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
