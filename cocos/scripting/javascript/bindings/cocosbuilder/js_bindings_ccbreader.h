@@ -54,7 +54,7 @@ protected:
 };
 
 void register_CCBuilderReader(JSContext *cx, JSObject *global);
-JSBool js_CocosBuilder_Run(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_CocosBuilder_Run(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif /* __JS_BINDINGS_CCBREADER_H__ */
 

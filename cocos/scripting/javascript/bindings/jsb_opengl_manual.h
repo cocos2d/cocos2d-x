@@ -43,7 +43,7 @@
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 // forward declaration of new functions
-JSBool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 #endif // JSB_INCLUDE_OPENGL

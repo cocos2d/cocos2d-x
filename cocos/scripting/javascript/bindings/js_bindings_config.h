@@ -50,7 +50,7 @@
 		if( ! JS_IsExceptionPending( globalContext ) ) {						\
 			JS_ReportError( globalContext, __VA_ARGS__ );							\
 		}																		\
-		return JS_FALSE;														\
+		return false;														\
 	}																			\
 } while(0)
 #define JSB_PRECONDITION2( condition, context, ret_value, ...) do {             \

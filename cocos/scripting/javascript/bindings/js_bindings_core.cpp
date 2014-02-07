@@ -161,8 +161,8 @@ void jsb_set_c_proxy_for_jsobject( JSObject *jsobj, void *handle, unsigned long 
 
 //#pragma mark Do Nothing - Callbacks
 
-JSBool JSB_do_nothing(JSContext *cx, uint32_t argc, jsval *vp)
+bool JSB_do_nothing(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
+	return true;
 }

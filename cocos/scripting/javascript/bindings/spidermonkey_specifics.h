@@ -75,7 +75,7 @@ do { \
 #define TEST_NATIVE_OBJECT(cx, native_obj) \
 if (!native_obj) { \
 	JS_ReportError(cx, "Invalid Native Object"); \
-	return JS_FALSE; \
+	return false; \
 }
 
 #endif
