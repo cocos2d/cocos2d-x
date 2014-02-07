@@ -4,9 +4,7 @@
 * Script version: v0.5
 */
 #include "js_bindings_config.h"
-//#ifdef JSB_INCLUDE_SYSTEM
-
-//#include "LocalStorage.h"
+#include "jsapi.h"
 
 #ifdef __cplusplus
 extern "C" {
