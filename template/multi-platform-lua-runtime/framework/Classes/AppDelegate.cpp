@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
+#include "cocos2d.h"
 
 using namespace CocosDenshion;
 
@@ -20,9 +21,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-    director->setOpenGLView(EGLView::getInstance());
+	auto glview = director->getOpenGLView();
+	if(!glview) {
+		glview = GLView::createWithRect("Test Lua", Rect(0,0,900,640));
+		director->setOpenGLView(glview);
+	}
 
-    EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     director->setDisplayStats(true);

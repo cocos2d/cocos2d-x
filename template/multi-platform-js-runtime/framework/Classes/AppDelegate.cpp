@@ -26,8 +26,12 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *director = Director::getInstance();
-    director->setOpenGLView(EGLView::getInstance());
+    auto director = Director::getInstance();
+	auto glview = director->getOpenGLView();
+	if(!glview) {
+		glview = GLView::createWithRect("Test Lua", Rect(0,0,900,640));
+		director->setOpenGLView(glview);
+	}
 
     // turn on display FPS
     director->setDisplayStats(true);

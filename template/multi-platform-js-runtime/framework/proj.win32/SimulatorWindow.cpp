@@ -241,7 +241,9 @@ void createSimulator(const char* viewName, float width, float height, float fram
 		return;
 	}
 
-	g_eglView = new EGLView();
+	g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
+	auto director = Director::getInstance();
+	director->setOpenGLView(g_eglView);
 	g_landscape = false;
 	g_screenSize.width = width;
 	g_screenSize.height = height;
@@ -250,7 +252,6 @@ void createSimulator(const char* viewName, float width, float height, float fram
 		g_landscape = true;
 	}
 
-	g_eglView->init(viewName,width,height,frameZoomFactor);
 	initScreenSize();
 	HWND hWnd=glfwGetWin32Window(g_eglView->getWindow());
 	HMENU hMenu = LoadMenu(GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_MENU_COCOS));
