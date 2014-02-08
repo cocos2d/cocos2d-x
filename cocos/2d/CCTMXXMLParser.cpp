@@ -82,11 +82,11 @@ TMXTilesetInfo::~TMXTilesetInfo()
     CCLOGINFO("deallocing TMXTilesetInfo: %p", this);
 }
 
-Rect TMXTilesetInfo::rectForGID(int gid)
+Rect TMXTilesetInfo::getRectForGID(uint32_t gid)
 {
     Rect rect;
     rect.size = _tileSize;
-    gid &= kFlippedMask;
+    gid &= kTMXFlippedMask;
     gid = gid - _firstGid;
     int max_x = (int)((_imageSize.width - _margin*2 + _spacing) / (_tileSize.width + _spacing));
     //    int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);

@@ -141,7 +141,7 @@ TMXTilesetInfo * TMXTiledMap2::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapIn
                         {
                             // Optimization: quick return
                             // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                            if( (gid & kFlippedMask) >= tileset->_firstGid )
+                            if( (gid & kTMXFlippedMask) >= tileset->_firstGid )
                                 return tileset;
                         }
                     }

@@ -240,7 +240,7 @@ void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords) const
             }
             else
             {
-                Rect tileTexture = _tileSet->rectForGID(tile);
+                Rect tileTexture = _tileSet->getRectForGID(tile);
 
                 left   = (tileTexture.origin.x / texSize.width);
                 right  = left + (tileTexture.size.width / texSize.width);
