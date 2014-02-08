@@ -65,26 +65,19 @@ TMXLayer2 * TMXLayer2::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerIn
 }
 bool TMXLayer2::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {    
-    // XXX: is 35% a good estimate ?
-    Size size = layerInfo->_layerSize;
-    int totalNumberOfTiles = size.width * size.height;
 
-    Texture2D *texture = nullptr;
     if( tilesetInfo )
     {
-        texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
-        texture->retain();
+        _texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage);
+        _texture->retain();
     }
-
-    _texture = texture;
 
     // layerInfo
     _layerName = layerInfo->_name;
-    _layerSize = size;
+    _layerSize = layerInfo->_layerSize;
     _tiles = layerInfo->_tiles;
-    _opacity = layerInfo->_opacity;
+    setOpacity( layerInfo->_opacity );
     setProperties(layerInfo->getProperties());
-    _contentScaleFactor = Director::getInstance()->getContentScaleFactor(); 
 
     // tilesetInfo
     _tileSet = tilesetInfo;
@@ -98,46 +91,28 @@ bool TMXLayer2::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *l
     Point offset = this->calculateLayerOffset(layerInfo->_offset);
     this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
 
-    _atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
-
     this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
-
-    _useAutomaticVertexZ = false;
-    _vertexZvalue = 0;
 
     // shader, and other stuff
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
 
     return true;
 }
 
 TMXLayer2::TMXLayer2()
 :_layerName("")
-,_opacity(0)
-,_vertexZvalue(0)
-,_useAutomaticVertexZ(false)
-,_atlasIndexArray(nullptr)
-,_contentScaleFactor(1.0f)
 ,_layerSize(Size::ZERO)
 ,_mapTileSize(Size::ZERO)
 ,_tiles(nullptr)
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
-,_reusedTile(nullptr)
+,_lastPosition(Point(-1000,-1000))
 {}
 
 TMXLayer2::~TMXLayer2()
 {
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_texture);
-
-    if (_atlasIndexArray)
-    {
-        ccCArrayFree(_atlasIndexArray);
-        _atlasIndexArray = nullptr;
-    }
-
     CC_SAFE_DELETE_ARRAY(_tiles);
 }
 
@@ -161,13 +136,84 @@ void TMXLayer2::onDraw()
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+    
 
     Point trans = convertToWorldSpace(Point::ZERO);
-    Point baseTile = Point(
-                           floor(-trans.x / (_mapTileSize.width)),
-                           floor(-trans.y / (_mapTileSize.height)));
+    Point baseTile = Point( floor(-trans.x / (_mapTileSize.width)), floor(-trans.y / (_mapTileSize.height)));
 
+    if( !baseTile.equals(_lastPosition) ) {
+        updateTexCoords(baseTile);
+        _lastPosition = baseTile;
+    }
+
+    _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
+    _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
+
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+
+    glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
+
+    // indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
+    glDrawElements(GL_TRIANGLES, _screenTileCount * 6, GL_UNSIGNED_SHORT, NULL);
+
+    // cleanup
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	CC_INCREMENT_GL_DRAWS(1);
+}
+
+int TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile)
+{
+    int tileidx = -1;
+    switch (_layerOrientation)
+    {
+        case TMXOrientationOrtho:
+        {
+            x += baseTile.x;
+            y += baseTile.y;
+
+            if( x < 0 || x >= _layerSize.width
+               || y < 0 || y >= _layerSize.height)
+                tileidx = -1;
+            else
+                tileidx = (_layerSize.height - y - 1) * _layerSize.width + x;
+            break;
+        }
+
+        case TMXOrientationIso:
+        {
+            x += baseTile.x;
+            y -= baseTile.y*2;
+
+            int xx = x + y/2;
+            int yy = (y+1)/2 - x;
+
+            if( xx < 0 || xx >= _layerSize.width
+               || yy < 0 || yy >= _layerSize.height )
+                tileidx = -1;
+            else
+                tileidx = xx + _layerSize.width * yy;
+            break;
+        }
+
+        default:
+        {
+            log("unsupported orientation format");
+            CCASSERT(false, "ouch");
+            break;
+        }
+    }
+
+
+    return tileidx;
+}
+
+void TMXLayer2::updateTexCoords(const Point& baseTile)
+{
+    GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
     Size texSize = _tileSet->_imageSize;
     for (int y=0; y < _screenGridSize.height; y++)
@@ -211,64 +257,7 @@ void TMXLayer2::onDraw()
             texbase[7] = bottom;
         }
     }
-
     glUnmapBuffer(GL_ARRAY_BUFFER);
-
-    _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
-    _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
-
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
-
-    glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, 1, 1, 1, 1);
-
-    // indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
-
-    glDrawElements(GL_TRIANGLES, _screenTileCount * 6, GL_UNSIGNED_SHORT, NULL);
-
-    // cleanup
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	CC_INCREMENT_GL_DRAWS(1);
-}
-
-int TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile)
-{
-    int tileidx = -1;
-    switch (_layerOrientation)
-    {
-        case TMXOrientationOrtho:
-            x += baseTile.x;
-            y += baseTile.y;
-
-            if( x < 0 || x >= _layerSize.width
-               || y < 0 || y >= _layerSize.height)
-                tileidx = -1;
-            else
-                tileidx = (_layerSize.height - y - 1) * _layerSize.width + x;
-            break;
-
-        case TMXOrientationIso:
-
-            x += baseTile.x;
-            y -= baseTile.y*2;
-
-            int xx = x + y/2;
-            int yy = (y+1)/2 - x;
-
-            if( xx < 0 || xx >= _layerSize.width
-               || yy < 0 || yy >= _layerSize.height )
-                tileidx = -1;
-            else
-                tileidx = xx + _layerSize.width * yy;
-
-            break;
-    }
-
-
-    return tileidx;
 }
 
 void TMXLayer2::setupIndices()
@@ -277,11 +266,17 @@ void TMXLayer2::setupIndices()
 
     for( int i=0; i < _screenTileCount; i++)
     {
+        //
+        // +-------+
+        // |       |
+        // |       |
+        // |       |
+        // +-------+
+
         indices[i*6+0] = i*4+0;
         indices[i*6+1] = i*4+1;
         indices[i*6+2] = i*4+2;
 
-        // inverted index. issue #179
         indices[i*6+3] = i*4+3;
         indices[i*6+4] = i*4+2;
         indices[i*6+5] = i*4+1;
@@ -374,12 +369,6 @@ void TMXLayer2::releaseMap()
         delete [] _tiles;
         _tiles = nullptr;
     }
-
-    if (_atlasIndexArray)
-    {
-        ccCArrayFree(_atlasIndexArray);
-        _atlasIndexArray = nullptr;
-    }
 }
 
 // TMXLayer2 - setup Tiles
@@ -389,10 +378,8 @@ void TMXLayer2::setupTiles()
     _tileSet->_imageSize = _texture->getContentSizeInPixels();
 
     // By default all the tiles are aliased
-    // pros:
-    //  - easier to render
-    // cons:
-    //  - difficult to scale / rotate / etc.
+    // pros: easier to render
+    // cons: difficult to scale / rotate / etc.
     _texture->setAliasTexParameters();
 
     //CFByteOrder o = CFByteOrderGetCurrent();
@@ -411,8 +398,6 @@ void TMXLayer2::setupTiles()
         case TMXOrientationIso:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
             _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
-//            _screenGridSize.width = 3;
-//            _screenGridSize.height = 4;
             break;
         case TMXOrientationHex:
             break;
@@ -435,36 +420,12 @@ Value TMXLayer2::getProperty(const std::string& propertyName) const
 
 void TMXLayer2::parseInternalProperties()
 {
-    // if cc_vertex=automatic, then tiles will be rendered using vertexz
-
-//    auto vertexz = getProperty("cc_vertexz");
-//    if (!vertexz.isNull())
-//    {
-//        std::string vertexZStr = vertexz.asString();
-//        // If "automatic" is on, then parse the "cc_alpha_func" too
-//        if (vertexZStr == "automatic")
-//        {
-//            _useAutomaticVertexZ = true;
-//            auto alphaFuncVal = getProperty("cc_alpha_func");
-//            float alphaFuncValue = alphaFuncVal.asFloat();
-//            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
-//
-//            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-//
-//            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-//            
-//            // use shader program to set uniform
-//            getShaderProgram()->use();
-//            getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
-//            CHECK_GL_ERROR_DEBUG();
-//        }
-//        else
-//        {
-//            _vertexZvalue = vertexz.asInt();
-//        }
-//    }
+    auto vertexz = getProperty("cc_vertexz");
+    if (!vertexz.isNull())
+    {
+        log("cc_vertexz is not supported in TMXLayer2. Use TMXLayer instead");
+    }
 }
-
 
 
 //CCTMXLayer2 - obtaining positions, offset

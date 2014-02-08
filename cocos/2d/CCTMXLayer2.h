@@ -116,9 +116,6 @@ public:
      */
     virtual ~TMXLayer2();
 
-    /** initializes a TMXLayer2 with a tileset info, a layer info and a map info */
-    bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-
     /** dealloc the map that contains the tile position from memory.
     Unless you want to know at runtime the tiles positions, you can safely call this method.
     If you are going to call layer->tileGIDAt() then, don't release the map
@@ -207,14 +204,15 @@ public:
 
 protected:
 
+    bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void appendTileForGID(int gid, const Point& pos);
-    Sprite* reusedTileWithRect(Rect rect);
     void setupTileSprite(Sprite* sprite, Point pos, int gid);
     void setupIndices();
     void setupVertices();
     void setupVBO();
     void setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1);
     int getTileIndex(int x, int y, Point base);
+    void updateTexCoords(const Point& baseTile);
 
     Point calculateLayerOffset(const Point& offset);
 
@@ -232,19 +230,7 @@ protected:
     
     //! name of the layer
     std::string _layerName;
-    //! TMX Layer supports opacity
-    unsigned char        _opacity;
-    
-    //! Only used when vertexZ is used
-    int _vertexZvalue;
-    bool _useAutomaticVertexZ;
 
-    //! used for optimization
-    ccCArray *_atlasIndexArray;
-    
-    // used for retina display
-    float _contentScaleFactor;
-    
     /** size of the layer in tiles */
     Size _layerSize;
     /** size of the map's tile (could be different from the tile's size) */
@@ -263,9 +249,9 @@ protected:
 
     GLuint _buffersVBO[3]; //0: vertex, 1: tex coords,  2: indices
 
-    Sprite *_reusedTile;
     Size _screenGridSize;
     int _screenTileCount;
+    Point _lastPosition;
 };
 
 // end of tilemap_parallax_nodes group
