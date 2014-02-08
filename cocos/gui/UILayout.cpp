@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "CCDirector.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -210,18 +210,18 @@ void Layout::stencilClippingVisit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
     
-    _groupCommand.init(0,_vertexZ);
+    _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
     
     renderer->pushGroup(_groupCommand.getRenderQueueID());
     
-    _beforeVisitCmdStencil.init(0,_vertexZ);
+    _beforeVisitCmdStencil.init(_globalZOrder);
     _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
     _clippingStencil->visit();
     
-    _afterDrawStencilCmd.init(0,_vertexZ);
+    _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
     
@@ -235,7 +235,7 @@ void Layout::stencilClippingVisit()
         {
             auto node = _children.at(i);
             
-            if ( node && node->getZOrder() < 0 )
+            if ( node && node->getLocalZOrder() < 0 )
                 node->visit();
             else
                 break;
@@ -251,7 +251,7 @@ void Layout::stencilClippingVisit()
         this->draw();
     }
     
-    _afterVisitCmdStencil.init(0,_vertexZ);
+    _afterVisitCmdStencil.init(_globalZOrder);
     _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
     renderer->addCommand(&_afterVisitCmdStencil);
     
@@ -324,7 +324,8 @@ void Layout::onBeforeVisitScissor()
 {
     Rect clippingRect = getClippingRect();
     glEnable(GL_SCISSOR_TEST);
-    EGLView::getInstance()->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+    auto glview = Director::getInstance()->getOpenGLView();
+    glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
 }
 
 void Layout::onAfterVisitScissor()
@@ -336,13 +337,13 @@ void Layout::scissorClippingVisit()
 {
     Renderer* renderer = Director::getInstance()->getRenderer();
 
-    _beforeVisitCmdScissor.init(0, _vertexZ);
+    _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
     Node::visit();
     
-    _afterVisitCmdScissor.init(0, _vertexZ);
+    _afterVisitCmdScissor.init(_globalZOrder);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
     renderer->addCommand(&_afterVisitCmdScissor);
 }
@@ -651,14 +652,14 @@ void Layout::addBackGroundImage()
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::Scale9Sprite::create();
-        _backGroundImage->setZOrder(-1);
+        _backGroundImage->setLocalZOrder(-1);
         Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = Sprite::create();
-        _backGroundImage->setZOrder(-1);
+        _backGroundImage->setLocalZOrder(-1);
         Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));

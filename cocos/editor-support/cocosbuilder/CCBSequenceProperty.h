@@ -1,7 +1,8 @@
 #ifndef __CCB_SEQUENCE_PROPERTY_H__
 #define __CCB_SEQUENCE_PROPERTY_H__
 
-#include "cocos2d.h"
+#include "CCObject.h"
+#include "CCVector.h"
 #include "CCBKeyframe.h"
 
 namespace cocosbuilder {

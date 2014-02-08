@@ -331,7 +331,7 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(Widget*widg
         widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
     }
     int z = DICTOOL->getIntValue_json(options, "ZOrder");
-    widget->setZOrder(z);
+    widget->setLocalZOrder(z);
 }
 
 void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(Widget *widget, const rapidjson::Value&options)
@@ -1062,7 +1062,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
         widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
     }
     int z = DICTOOL->getIntValue_json(options, "ZOrder");
-    widget->setZOrder(z);
+    widget->setLocalZOrder(z);
 
 	bool layout = DICTOOL->checkObjectExist_json(options, "layoutParameter");
 	if (layout)

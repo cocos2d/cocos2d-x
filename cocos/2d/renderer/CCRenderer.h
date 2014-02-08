@@ -36,19 +36,40 @@
 NS_CC_BEGIN
 
 class EventListenerCustom;
+class QuadCommand;
 
-typedef std::vector<RenderCommand*> RenderQueue;
+/** Class that knows how to sort the Commands.
+ Since the commands that have z==0 are "pushed back" in
+ the correct order, the only Commands that need to be sorted, 
+ are the ones that have z <0 and z >0.
+ And that is what this class does.
+*/
+class RenderQueue {
+
+public:
+    void push_back(RenderCommand* command);
+    ssize_t size() const;
+    void sort();
+    RenderCommand* operator[](ssize_t index) const;
+    void clear();
+
+protected:
+    std::vector<RenderCommand*> _queueNegZ;
+    std::vector<RenderCommand*> _queue0;
+    std::vector<RenderCommand*> _queuePosZ;
+};
 
 struct RenderStackElement
 {
     int renderQueueID;
-    size_t currentIndex;
+    ssize_t currentIndex;
 };
 
 class Renderer
 {
 public:
     static const int VBO_SIZE = 65536 / 6;
+    static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
 
     Renderer();
     ~Renderer();
@@ -75,18 +96,20 @@ protected:
     void mapBuffers();
 
     void drawBatchedQuads();
+
     //Draw the previews queued quads and flush previous context
     void flush();
+
+    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
     std::stack<int> _commandGroupStack;
     
     std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
-    int _lastMaterialID;
+    uint32_t _lastMaterialID;
 
-    size_t _firstCommand;
-    size_t _lastCommand;
+    std::vector<QuadCommand*> _batchedQuadCommands;
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
     GLushort _indices[6 * VBO_SIZE];

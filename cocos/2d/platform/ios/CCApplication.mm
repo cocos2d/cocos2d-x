@@ -25,6 +25,8 @@
 
 #import "CCApplication.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #import <UIKit/UIKit.h>
 
 #import "CCGeometry.h"
@@ -108,6 +110,9 @@ LanguageType Application::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"es"]){
         ret = LanguageType::SPANISH;
     }
+    else if ([languageCode isEqualToString:@"nl"]){
+        ret = LanguageType::DUTCH;
+    }
     else if ([languageCode isEqualToString:@"ru"]){
         ret = LanguageType::RUSSIAN;
     }
@@ -152,3 +157,5 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 }
 
 NS_CC_END
+
+#endif // CC_PLATFORM_IOS

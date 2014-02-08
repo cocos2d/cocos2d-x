@@ -22,14 +22,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include <Cocoa/Cocoa.h>
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #include "platform/CCCommon.h"
 
+#include "CCDirector.h"
+#include "CCGLView.h"
+
+#define GLFW_EXPOSE_NATIVE_NSGL
+#define GLFW_EXPOSE_NATIVE_COCOA
+#include "glfw3native.h"
+
 #include <stdarg.h>
 #include <stdio.h>
-#import "EAGLView.h"
-
+#include <Cocoa/Cocoa.h>
 
 NS_CC_BEGIN
 
@@ -50,7 +58,8 @@ void MessageBox(const char * msg, const char * title)
 	[alert setInformativeText:tmpTitle];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
-	NSWindow *window = [[CCEAGLView sharedEGLView] window];
+    GLView* glview = Director::getInstance()->getOpenGLView();
+    id window = glfwGetCocoaWindow(glview->getWindow());
 	[alert beginSheetModalForWindow:window
 					  modalDelegate:[window delegate]
 					 didEndSelector:nil
@@ -58,3 +67,6 @@ void MessageBox(const char * msg, const char * title)
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+

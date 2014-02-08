@@ -1,8 +1,8 @@
 #ifndef __JS_COCOS2D_X_SPECIFICS_H__
 #define __JS_COCOS2D_X_SPECIFICS_H__
 
-#include "jsapi.h"
 #include "ScriptingCore.h"
+#include "platform/CCSAXParser.h"
 
 class JSScheduleWrapper;
 
@@ -197,6 +197,45 @@ private:
     bool _needUnroot;
     cocos2d::EventListenerTouchOneByOne*  _touchListenerOneByOne;
     cocos2d::EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
+};
+
+
+class CC_DLL __JSSAXDelegator: public cocos2d::SAXDelegator
+{
+public:
+    static __JSSAXDelegator* getInstance() {
+		static __JSSAXDelegator* pInstance = NULL;
+        if (pInstance == NULL) {
+            pInstance = new __JSSAXDelegator();
+        }
+		return pInstance;
+	};
+    
+    ~__JSSAXDelegator();
+    
+    cocos2d::SAXParser* getParser();
+    
+    std::string parse(const std::string& path);
+    
+    bool preloadPlist(const std::string& path) {
+        return true;
+    }
+    
+    std::string getList(const std::string& path) {
+        return path;
+    }
+    
+    // implement pure virtual methods of SAXDelegator
+    void startElement(void *ctx, const char *name, const char **atts);
+    void endElement(void *ctx, const char *name);
+    void textHandler(void *ctx, const char *ch, int len);
+
+private:
+    cocos2d::SAXParser _parser;
+    JSObject* _obj;
+    std::string _result;
+    bool _isStoringCharacters;
+    std::string _currentValue;
 };
 
 

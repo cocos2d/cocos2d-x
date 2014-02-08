@@ -386,7 +386,7 @@ void TextureCache::removeUnusedTextures()
 {
     for( auto it=_textures.cbegin(); it!=_textures.cend(); /* nothing */) {
         Texture2D *tex = it->second;
-        if( tex->retainCount() == 1 ) {
+        if( tex->getReferenceCount() == 1 ) {
             CCLOG("cocos2d: TextureCache: removing unused texture: %s", it->first.c_str());
 
             tex->release();
@@ -485,7 +485,7 @@ std::string TextureCache::getCachedTextureInfo() const
         count++;
         snprintf(buftmp,sizeof(buftmp)-1,"\"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB\n",
                it->first.c_str(),
-               (long)tex->retainCount(),
+               (long)tex->getReferenceCount(),
                (long)tex->getName(),
                (long)tex->getPixelsWide(),
                (long)tex->getPixelsHigh(),

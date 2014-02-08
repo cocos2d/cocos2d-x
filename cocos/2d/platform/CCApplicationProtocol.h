@@ -33,6 +33,8 @@ NS_CC_BEGIN
  * @{
  */
 
+class EAGLView;
+
 class CC_DLL ApplicationProtocol
 {
 public:

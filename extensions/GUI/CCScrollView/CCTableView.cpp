@@ -23,7 +23,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "cocos2d.h"
 #include "CCTableView.h"
 #include "CCTableViewCell.h"
 

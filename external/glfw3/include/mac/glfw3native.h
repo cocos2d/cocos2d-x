@@ -1,7 +1,6 @@
 /*************************************************************************
- * GLFW - An OpenGL library
- * API version: 3.0
- * WWW:         http://www.glfw.org/
+ * GLFW 3.0 - www.glfw.org
+ * A library for OpenGL, window and input
  *------------------------------------------------------------------------
  * Copyright (c) 2002-2006 Marcus Geelnard
  * Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
@@ -41,7 +40,7 @@ extern "C" {
 
 /*! @defgroup native Native access
  *
- *  **By using the native API, you assert that you know what you are doing and
+ *  **By using the native API, you assert that you know what you're doing and
  *  how to fix problems caused by using it.  If you don't, you shouldn't be
  *  using it.**
  *

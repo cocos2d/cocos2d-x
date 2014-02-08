@@ -7,7 +7,7 @@ set(PLATFORM_SRC
   platform/win32/CCFileUtilsWin32.cpp
   platform/win32/CCCommon.cpp
   platform/win32/CCApplication.cpp
-  platform/win32/CCEGLView.cpp
+  platform/win32/CCGLView.cpp
   platform/win32/CCImage.cpp
   platform/win32/CCDevice.cpp
 )
@@ -21,7 +21,7 @@ set(PLATFORM_SRC
   platform/linux/CCFileUtilsLinux.cpp
   platform/linux/CCCommon.cpp
   platform/linux/CCApplication.cpp
-  platform/linux/CCEGLView.cpp
+  platform/desktop/CCGLView.cpp
   platform/linux/CCImage.cpp
   platform/linux/CCDevice.cpp
 )
@@ -67,16 +67,14 @@ set(COCOS2D_SRC
   CCFont.cpp
   CCFontAtlas.cpp
   CCFontAtlasCache.cpp
-  CCFontAtlasFactory.cpp
-  CCFontDefinition.cpp
   CCFontFNT.cpp
   CCFontFreeType.cpp
+  CCFontCharMap.cpp
   CCLabel.cpp
   CCLabelAtlas.cpp
   CCLabelBMFont.cpp
   CCLabelTTF.cpp
   CCLabelTextFormatter.cpp
-  CCTextImage.cpp
   CCLayer.cpp
   CCScene.cpp
   CCTransition.cpp
@@ -136,7 +134,7 @@ set(COCOS2D_SRC
   CCDeprecated.cpp
   platform/CCSAXParser.cpp
   platform/CCThread.cpp
-  platform/CCEGLViewProtocol.cpp
+  platform/CCGLViewProtocol.cpp
   platform/CCFileUtils.cpp
   ../../external/edtaa3func/edtaa3func.cpp
   renderer/CCCustomCommand.cpp
@@ -144,6 +142,7 @@ set(COCOS2D_SRC
   renderer/CCGroupCommand.cpp
   renderer/CCMaterialManager.cpp
   renderer/CCQuadCommand.cpp
+  renderer/CCBatchCommand.cpp
   renderer/CCRenderCommand.cpp
   renderer/CCRenderer.cpp
   renderer/CCRenderMaterial.cpp

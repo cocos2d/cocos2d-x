@@ -22,12 +22,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#import <Foundation/Foundation.h>
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #import "CCDirectorCaller.h"
-#import "CCDirector.h"
-#import "EAGLView.h"
-#import "CCEventDispatcherMac.h"
+#include "CCDirector.h"
 #include "CCAutoreleasePool.h"
+
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
 static id s_sharedDirectorCaller;
 
@@ -81,8 +85,7 @@ static id s_sharedDirectorCaller;
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	cocos2d::Director::getInstance()->drawScene();
-	cocos2d::PoolManager::sharedPoolManager()->pop();
-	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
+    cocos2d::PoolManager::getInstance()->getCurrentPool()->clear();
 	
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 	
@@ -115,20 +118,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     // All we do here is tell the display it needs a refresh
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-	// get the opengl view
-	CCEAGLView *openGLView = [CCEAGLView sharedEGLView];
-	[openGLView lockOpenGLContext];
-    
 	// run the main cocos2d loop
 	cocos2d::Director::getInstance()->mainLoop();
-    
-	// flush buffer (this line is very important!)
-	[[openGLView openGLContext] flushBuffer];
-	
-	[openGLView unlockOpenGLContext];
-    
-	// send any queued events
-	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
     
 	[pool release];
 }
@@ -212,3 +203,5 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 @end
+
+#endif //s CC_TARGET_PLATFORM == CC_PLATFORM_MAC

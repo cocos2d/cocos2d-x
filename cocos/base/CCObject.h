@@ -71,14 +71,12 @@ class CC_DLL Object
 {
 public:
     /// object id, ScriptSupport need public _ID
-    unsigned int        _ID;
+    unsigned int _ID;
     /// Lua reference id
-    int                 _luaID;
+    int _luaID;
 protected:
     /// count of references
-    unsigned int        _reference;
-    /// count of autorelease
-    unsigned int        _autoReleaseCount;
+    unsigned int _referenceCount;
 public:
     /**
      * Constructor
@@ -105,14 +103,7 @@ public:
      * @see retain, autorelease
      * @js NA
      */
-    inline void release()
-    {
-        CCASSERT(_reference > 0, "reference count should greater than 0");
-        --_reference;
-
-        if (_reference == 0)
-            delete this;
-    }
+    void release();
 
     /**
      * Retains the ownership.
@@ -124,8 +115,8 @@ public:
      */
     inline void retain()
     {
-        CCASSERT(_reference > 0, "reference count should greater than 0");
-        ++_reference;
+        CCASSERT(_referenceCount > 0, "reference count should greater than 0");
+        ++_referenceCount;
     }
 
     /**
@@ -152,7 +143,7 @@ public:
      * @returns Whether the object's reference count is 1.
      * @js NA
      */
-    bool isSingleReference() const;
+    CC_DEPRECATED_ATTRIBUTE bool isSingleReference() const;
 
     /**
      * Returns the object's current reference count.
@@ -160,7 +151,8 @@ public:
      * @returns The object's reference count.
      * @js NA
      */
-    unsigned int retainCount() const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int retainCount() const { return getReferenceCount(); };
+    unsigned int getReferenceCount() const;
 
     /**
      * Returns a boolean value that indicates whether this object and a given

@@ -24,12 +24,12 @@ How to start a new game
 
 1. Download the code from [cocos2d download site][4]
 2. Enter `tools/project-creator`
-3. Run the `create-projects.py` script
+3. Run the `create_project.py` script
 
 Example:
 
     $ cd cocos2d-x/tools/project-creator
-    $ ./project-creator.py -n mygame -k com.your_company.mygame -l cpp -p /home/mygame
+    $ ./create_project.py -n mygame -k com.your_company.mygame -l cpp -p /home/mygame
     $ cd /home/mygame
 
 ### Build new project for android ###

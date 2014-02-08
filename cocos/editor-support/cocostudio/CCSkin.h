@@ -25,9 +25,11 @@ THE SOFTWARE.
 #ifndef __CCSKIN_H__
 #define __CCSKIN_H__
 
+#include "CCSprite.h"
+#include "renderer/CCQuadCommand.h"
+
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
-#include "renderer/CCQuadCommand.h"
 
 namespace cocostudio {
 

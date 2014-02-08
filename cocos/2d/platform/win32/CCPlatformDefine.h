@@ -25,6 +25,9 @@ THE SOFTWARE.
 #ifndef __CCPLATFORMDEFINE_H__
 #define __CCPLATFORMDEFINE_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #ifdef __MINGW32__
 #include <string.h>
 #endif
@@ -55,6 +58,6 @@ THE SOFTWARE.
 #endif
 #endif
 
-
+#endif //s CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #endif /* __CCPLATFORMDEFINE_H__*/

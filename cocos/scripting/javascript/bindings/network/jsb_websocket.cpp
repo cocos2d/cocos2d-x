@@ -169,13 +169,13 @@ void js_cocos2dx_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (WebSocket)", obj);
 }
 
-JSBool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
 	if(argc == 1){
         do
@@ -218,28 +218,28 @@ JSBool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval 
         
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 
-		return JS_TRUE;
+		return true;
 	}
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_TRUE;
+	return true;
 }
 
-JSBool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
+bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
 	if(argc == 0){
 		cobj->close();
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
+		return true;
 	}
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
+	return false;
 }
 
-JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     
@@ -249,8 +249,8 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 		std::string url;
 		
 		do {
-			JSBool ok = jsval_to_std_string(cx, argv[0], &url);
-			JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error processing arguments");
+			bool ok = jsval_to_std_string(cx, argv[0], &url);
+			JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
 		} while (0);
         
 		JSObject *obj = JS_NewObject(cx, js_cocos2dx_websocket_class, js_cocos2dx_websocket_prototype, NULL);
@@ -268,14 +268,14 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
             {
                 std::string protocol;
                 do {
-                    JSBool ok = jsval_to_std_string(cx, argv[1], &protocol);
-                    JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error processing arguments");
+                    bool ok = jsval_to_std_string(cx, argv[1], &protocol);
+                    JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
                 } while (0);
                 protocols.push_back(protocol);
             }
             else if (argv[1].isObject())
             {
-                JSBool ok = JS_TRUE;
+                bool ok = true;
                 JSObject* arg2 = JSVAL_TO_OBJECT(argv[1]);
                 JSB_PRECONDITION(JS_IsArrayObject( cx, arg2 ),  "Object must be an array");
                 
@@ -284,12 +284,12 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
                 
                 for( uint32_t i=0; i< len;i++ )
                 {
-                    jsval valarg;
+                    JS::RootedValue valarg(cx);
                     JS_GetElement(cx, arg2, i, &valarg);
                     std::string protocol;
                     do {
                         ok = jsval_to_std_string(cx, valarg, &protocol);
-                        JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error processing arguments");
+                        JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
                     } while (0);
                     
                     protocols.push_back(protocol);
@@ -315,26 +315,26 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
         JS_AddNamedObjectRoot(cx, &p->obj, "WebSocket");
         
         JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
-		return JS_TRUE;
+		return true;
 	}
     
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
+	return false;
 }
 
-static JSBool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
     JSObject* jsobj = obj.get();
 	js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
 	WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
     if (cobj) {
         vp.set(INT_TO_JSVAL((int)cobj->getReadyState()));
-        return JS_TRUE;
+        return true;
     } else {
         JS_ReportError(cx, "Error: WebSocket instance is invalid.");
-        return JS_FALSE;
+        return false;
     }
 }
 
@@ -389,8 +389,8 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     
     // make the class enumerable in the registered namespace
-    JSBool found;
-    JS_SetPropertyAttributes(cx, global, "WebSocket", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+//FIXME:    bool found;
+//    JS_SetPropertyAttributes(cx, global, "WebSocket", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
 
 

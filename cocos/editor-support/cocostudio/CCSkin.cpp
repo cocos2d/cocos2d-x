@@ -22,10 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCSpriteFrame.h"
+#include "CCSpriteFrameCache.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
+
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmature.h"
+
 
 using namespace cocos2d;
 
@@ -197,7 +203,7 @@ void Skin::updateTransform()
 
 kmMat4 Skin::getNodeToWorldTransform() const
 {
-    return TransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(), _transform);
 }
 
 kmMat4 Skin::getNodeToWorldTransformAR() const
@@ -210,7 +216,7 @@ kmMat4 Skin::getNodeToWorldTransformAR() const
     displayTransform.mat[12] = anchorPoint.x;
     displayTransform.mat[13] = anchorPoint.y;
 
-    return TransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
 void Skin::draw()
@@ -219,7 +225,7 @@ void Skin::draw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
     //TODO implement z order
-    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
     Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 }
 

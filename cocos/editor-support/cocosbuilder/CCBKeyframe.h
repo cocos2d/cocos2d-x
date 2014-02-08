@@ -1,7 +1,9 @@
 #ifndef __CCB_KEYFRAME_H__
 #define __CCB_KEYFRAME_H__
 
-#include "cocos2d.h"
+#include "CCObject.h"
+#include "CCValue.h"
+
 
 namespace cocosbuilder {
 

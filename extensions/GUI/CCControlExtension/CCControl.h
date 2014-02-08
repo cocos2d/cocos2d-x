@@ -31,10 +31,9 @@
 #define __CCCONTROL_H__
 
 #include "CCControlUtils.h"
-#include "cocos2d.h"
+#include "CCLayer.h"
 
 NS_CC_EXT_BEGIN
-
 
 
 class Invocation;

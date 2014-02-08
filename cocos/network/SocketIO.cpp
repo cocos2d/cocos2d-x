@@ -28,9 +28,12 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
 #include "WebSocket.h"
 #include "HttpClient.h"
 #include <algorithm>
+#include <sstream>
 
 NS_CC_BEGIN
 

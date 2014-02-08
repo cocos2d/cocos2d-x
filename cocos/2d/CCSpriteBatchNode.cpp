@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCLayer.h"
 #include "CCScene.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
@@ -99,7 +99,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 
     _descendants.reserve(capacity);
     
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -179,7 +179,7 @@ void SpriteBatchNode::reorderChild(Node *child, int zOrder)
     CCASSERT(child != nullptr, "the child should not be null");
     CCASSERT(_children.contains(child), "Child doesn't belong to Sprite");
 
-    if (zOrder == child->getZOrder())
+    if (zOrder == child->getLocalZOrder())
     {
         return;
     }
@@ -277,7 +277,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
     {
         bool needNewIndex=true;
 
-        if (array.at(0)->getZOrder() >= 0)
+        if (array.at(0)->getLocalZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -294,7 +294,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
 
         for(const auto &child: array) {
             Sprite* sp = static_cast<Sprite*>(child);
-            if (needNewIndex && sp->getZOrder() >= 0)
+            if (needNewIndex && sp->getLocalZOrder() >= 0)
             {
                 oldIndex = sprite->getAtlasIndex();
                 sprite->setAtlasIndex(*curIndex);
@@ -356,18 +356,13 @@ void SpriteBatchNode::draw()
     for(const auto &child: _children)
         child->updateTransform();
 
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
-    _quadCommand.init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              _shaderProgram,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    _batchCommand.init(
+                       _globalZOrder,
+                       _shaderProgram,
+                       _blendFunc,
+                       _textureAtlas,
+                       _modelViewTransform);
+    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)
@@ -396,7 +391,7 @@ ssize_t SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, ssize_t index)
     auto& children = parent->getChildren();
     for(const auto &child: children) {
         Sprite* sp = static_cast<Sprite*>(child);
-        if (sp && (sp->getZOrder() < 0))
+        if (sp && (sp->getLocalZOrder() < 0))
         {
             index = rebuildIndexInOrder(sp, index);
         }
@@ -411,7 +406,7 @@ ssize_t SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, ssize_t index)
 
     for(const auto &child: children) {
         Sprite* sp = static_cast<Sprite*>(child);
-        if (sp && (sp->getZOrder() >= 0))
+        if (sp && (sp->getLocalZOrder() >= 0))
         {
             index = rebuildIndexInOrder(sp, index);
         }
@@ -492,7 +487,7 @@ ssize_t SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
     else
     {
         // previous & sprite belong to the same branch
-        if ((prev->getZOrder() < 0 && nZ < 0) || (prev->getZOrder() >= 0 && nZ >= 0))
+        if ((prev->getLocalZOrder() < 0 && nZ < 0) || (prev->getLocalZOrder() >= 0 && nZ >= 0))
         {
             return highestAtlasIndexInChild(prev) + 1;
         }

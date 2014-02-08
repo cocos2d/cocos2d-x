@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 //typedef SSIZE_T ssize_t;
 // ssize_t was redefined as int in libwebsockets.h.
 // Therefore, to avoid conflict, we needs the same definition.
@@ -151,5 +154,9 @@ inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
 #undef min
 #undef max
 
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #endif  // __CC_STD_C_H__
+
+
 

@@ -68,18 +68,18 @@ class RefCounted
 
   public:
     // Compatibility with nsRefPtr.
-    void AddRef() {
+    void AddRef() const {
       MOZ_ASSERT(refCnt >= 0);
       ++refCnt;
     }
 
-    void Release() {
+    void Release() const {
       MOZ_ASSERT(refCnt > 0);
       if (0 == --refCnt) {
 #ifdef DEBUG
         refCnt = detail::DEAD;
 #endif
-        delete static_cast<T*>(this);
+        delete static_cast<const T*>(this);
       }
     }
 
@@ -93,7 +93,7 @@ class RefCounted
     }
 
   private:
-    typename Conditional<Atomicity == AtomicRefCount, Atomic<int>, int>::Type refCnt;
+    mutable typename Conditional<Atomicity == AtomicRefCount, Atomic<int>, int>::Type refCnt;
 };
 
 }

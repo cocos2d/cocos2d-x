@@ -44,8 +44,8 @@ THE SOFTWARE.
 #include "CCEventListenerAcceleration.h"
 #include "platform/CCDevice.h"
 #include "CCScene.h"
-#include "CCCustomCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -565,7 +565,7 @@ void LayerColor::updateColor()
 
 void LayerColor::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
