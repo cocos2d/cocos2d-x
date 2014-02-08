@@ -477,19 +477,16 @@ void CCHttpClient::send(CCHttpRequest* request)
     ++s_asyncRequestCount;
     
     request->retain();
-        
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 	pthread_mutex_lock(&s_requestQueueMutex);
 	s_requestQueue->addObject(request);
 	pthread_mutex_unlock(&s_requestQueueMutex);
 	// Notify thread start to work
 	pthread_cond_signal(&s_SleepCondition);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	create_task([this] {
-		pthread_mutex_lock(&s_requestQueueMutex); //Get request task from queue
-		CCHttpRequest* req = dynamic_cast<CCHttpRequest*>(s_requestQueue->objectAtIndex(0));
-		s_requestQueue->removeObjectAtIndex(0);
-		sendRequest(req);	
-		pthread_mutex_unlock(&s_requestQueueMutex);
+#else
+	create_task([this,request] {
+		sendRequest(request);	
 	});
 #endif
 }

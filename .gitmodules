@@ -28,3 +28,6 @@
 [submodule "cocos2dx/platform/third_party/winrt/libwebsockets"]
 	path = cocos2dx/platform/third_party/winrt/libwebsockets
 	url = https://github.com/martell/libwebsockets.git
+[submodule "cocos2dx/platform/third_party/winrt/openssl"]
+	path = cocos2dx/platform/third_party/winrt/openssl
+	url = https://github.com/martell/OpenSSL-WP8.git
