@@ -4,16 +4,14 @@
 * Script version: v0.5
 */
 #include "js_bindings_config.h"
-//#ifdef JSB_INCLUDE_SYSTEM
-
-//#include "LocalStorage.h"
+#include "jsapi.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-JSBool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp);
 
 #ifdef __cplusplus
 }

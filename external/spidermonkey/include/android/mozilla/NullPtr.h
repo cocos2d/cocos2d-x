@@ -12,8 +12,6 @@
 #ifndef mozilla_NullPtr_h
 #define mozilla_NullPtr_h
 
-#include "mozilla/Compiler.h"
-
 #if defined(__clang__)
 #  ifndef __has_extension
 #    define __has_extension __has_feature
@@ -23,6 +21,7 @@
 #  endif
 #elif defined(__GNUC__)
 #  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
+#    include "mozilla/Compiler.h"
 #    if MOZ_GCC_VERSION_AT_LEAST(4, 6, 0)
 #      define MOZ_HAVE_CXX11_NULLPTR
 #    endif
