@@ -108,6 +108,8 @@ TMXLayer2::TMXLayer2()
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
 ,_lastPosition(Point(-1000,-1000))
+,_firstTileToDraw(100000)
+,_lastTileToDraw(0)
 {}
 
 TMXLayer2::~TMXLayer2()
@@ -160,13 +162,20 @@ void TMXLayer2::onDraw()
 
     // indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
-    glDrawElements(GL_TRIANGLES, _screenTileCount * 6, GL_UNSIGNED_SHORT, NULL);
+
+    // draw:
+    int toDraw = (_lastTileToDraw - _firstTileToDraw) + 1;
+
+    if(toDraw > 0) {
+        glDrawElements(GL_TRIANGLES, toDraw * 6, GL_UNSIGNED_SHORT, (GLvoid*)(_firstTileToDraw*6*sizeof(GLushort)));
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,toDraw*6);
+    }
+
 
     // cleanup
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_screenTileCount*6);
 }
 
 ssize_t TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile) const
@@ -215,8 +224,11 @@ ssize_t TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile) const
     return tileidx;
 }
 
-void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords) const
+void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
 {
+    _firstTileToDraw = _screenTileCount;
+    _lastTileToDraw = 0;
+
     Size texSize = _tileSet->_imageSize;
     for (int y=0; y < _screenGridSize.height; y++)
     {
@@ -241,6 +253,9 @@ void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords) const
             }
             else
             {
+                _firstTileToDraw = std::min(screenidx, _firstTileToDraw);
+                _lastTileToDraw = std::max(screenidx, _lastTileToDraw);
+
                 Rect tileTexture = _tileSet->getRectForGID(tile);
 
                 left   = (tileTexture.origin.x / texSize.width);
