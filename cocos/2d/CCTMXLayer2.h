@@ -205,7 +205,7 @@ protected:
     void setupVBO();
     void setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1);
     ssize_t getTileIndex(int x, int y, Point base) const;
-    void updateTexCoords(const Point& baseTile, GLfloat *texcoords) const;
+    void updateTexCoords(const Point& baseTile, GLfloat *texcoords);
 
     Point calculateLayerOffset(const Point& offset);
 
@@ -236,6 +236,8 @@ protected:
     int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
     ValueMap _properties;
+    int _firstTileToDraw;
+    int _lastTileToDraw;
 
     //
     Texture2D *_texture;
