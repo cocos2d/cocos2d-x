@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 /*
  Code based on HKTMXTiledMap by HKASoftware http://hkasoftware.com
+ Adapted (and rewritten) for cocos2d-x needs
  
  Further info:
  http://www.cocos2d-iphone.org/forums/topic/hktmxtiledmap/
@@ -165,7 +166,7 @@ void TMXLayer2::onDraw()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_screenTileCount*6);
 }
 
 ssize_t TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile) const
