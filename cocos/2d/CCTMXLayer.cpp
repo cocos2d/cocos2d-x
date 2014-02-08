@@ -338,7 +338,7 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
     return tile;
 }
 
-int TMXLayer::getTileGIDAt(const Point& pos, ccTMXTileFlags* flags/* = nullptr*/)
+int TMXLayer::getTileGIDAt(const Point& pos, TMXTileFlags* flags/* = nullptr*/)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -350,7 +350,7 @@ int TMXLayer::getTileGIDAt(const Point& pos, ccTMXTileFlags* flags/* = nullptr*/
     // issue1264, flipped tiles can be changed dynamically
     if (flags) 
     {
-        *flags = (ccTMXTileFlags)(tile & kFlipedAll);
+        *flags = (TMXTileFlags)(tile & kFlipedAll);
     }
     
     return (tile & kFlippedMask);
@@ -485,16 +485,16 @@ ssize_t TMXLayer::atlasIndexForNewZ(int z)
 // TMXLayer - adding / remove tiles
 void TMXLayer::setTileGID(int gid, const Point& pos)
 {
-    setTileGID(gid, pos, (ccTMXTileFlags)0);
+    setTileGID(gid, pos, (TMXTileFlags)0);
 }
 
-void TMXLayer::setTileGID(int gid, const Point& pos, ccTMXTileFlags flags)
+void TMXLayer::setTileGID(int gid, const Point& pos, TMXTileFlags flags)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
     CCASSERT(gid == 0 || gid >= _tileSet->_firstGid, "TMXLayer: invalid gid" );
 
-    ccTMXTileFlags currentFlags;
+    TMXTileFlags currentFlags;
     int currentGID = getTileGIDAt(pos, &currentFlags);
 
     if (currentGID != gid || currentFlags != flags) 

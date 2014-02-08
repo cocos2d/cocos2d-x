@@ -116,17 +116,10 @@ public:
      */
     virtual ~TMXLayer2();
 
-    /** dealloc the map that contains the tile position from memory.
-    Unless you want to know at runtime the tiles positions, you can safely call this method.
-    If you are going to call layer->tileGIDAt() then, don't release the map
-    */
-    void releaseMap();
-
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
-     This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
      */
-    int getTileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE int tileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr){
+    int getTileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr);
+    CC_DEPRECATED_ATTRIBUTE int tileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
@@ -143,7 +136,7 @@ public:
      Use withFlags if the tile flags need to be changed as well
      */
 
-    void setTileGID(int gid, const Point& tileCoordinate, ccTMXTileFlags flags);
+    void setTileGID(int gid, const Point& tileCoordinate, TMXTileFlags flags);
 
     /** removes a tile at given tile coordinate */
     void removeTileAt(const Point& tileCoordinate);
@@ -174,8 +167,8 @@ public:
      * @js NA
      * @lua NA
      */
-    inline int* getTiles() const { return _tiles; };
-    inline void setTiles(int* tiles) { _tiles = tiles; };
+    uint32_t* getTiles() const { return _tiles; };
+    void setTiles(uint32_t* tiles) { _tiles = tiles; };
     
     /** Tileset information for the layer */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
@@ -206,13 +199,13 @@ protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void appendTileForGID(int gid, const Point& pos);
-    void setupTileSprite(Sprite* sprite, Point pos, int gid);
+    void setupTileSprite(Sprite* sprite, Point pos, uint32_t gid);
     void setupIndices();
     void setupVertices();
     void setupVBO();
     void setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1);
-    int getTileIndex(int x, int y, Point base);
-    void updateTexCoords(const Point& baseTile);
+    ssize_t getTileIndex(int x, int y, Point base) const;
+    void updateTexCoords(const Point& baseTile, GLfloat *texcoords) const;
 
     Point calculateLayerOffset(const Point& offset);
 
@@ -236,7 +229,7 @@ protected:
     /** size of the map's tile (could be different from the tile's size) */
     Size _mapTileSize;
     /** pointer to the map of tiles */
-    int* _tiles;
+    uint32_t* _tiles;
     /** Tileset information for the layer */
     TMXTilesetInfo* _tileSet;
     /** Layer orientation, which is the same as the map orientation */

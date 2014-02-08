@@ -136,20 +136,23 @@ void TMXLayer2::onDraw()
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    
 
     Point trans = convertToWorldSpace(Point::ZERO);
     Point baseTile = Point( floor(-trans.x / (_mapTileSize.width)), floor(-trans.y / (_mapTileSize.height)));
 
     if( !baseTile.equals(_lastPosition) ) {
-        updateTexCoords(baseTile);
+
+        GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        updateTexCoords(baseTile, texcoords);
         _lastPosition = baseTile;
+        glUnmapBuffer(GL_ARRAY_BUFFER);
     }
 
+    getShaderProgram()->use();
+
+    // Draws in "world" coordinates, since the vertices are always displayed.
     _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
     _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
-
-    getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
 
     glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
@@ -165,7 +168,7 @@ void TMXLayer2::onDraw()
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
-int TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile)
+ssize_t TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile) const
 {
     int tileidx = -1;
     switch (_layerOrientation)
@@ -211,18 +214,16 @@ int TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile)
     return tileidx;
 }
 
-void TMXLayer2::updateTexCoords(const Point& baseTile)
+void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords) const
 {
-    GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-
     Size texSize = _tileSet->_imageSize;
     for (int y=0; y < _screenGridSize.height; y++)
     {
         for (int x=0; x < _screenGridSize.width; x++)
         {
-            int tileidx = getTileIndex(x, y, baseTile);
+            ssize_t tileidx = getTileIndex(x, y, baseTile);
 
-            unsigned int tile = 0;
+            uint32_t tile = 0;
             if(tileidx >=0)
                 tile = _tiles[tileidx];
 
@@ -247,17 +248,36 @@ void TMXLayer2::updateTexCoords(const Point& baseTile)
                 top    = bottom + (tileTexture.size.height / texSize.height);
             }
 
-            texbase[0] = left;
-            texbase[1] = top;
-            texbase[2] = right;
-            texbase[3] = top;
-            texbase[4] = left;
-            texbase[5] = bottom;
-            texbase[6] = right;
-            texbase[7] = bottom;
+            if (tile & kTMXTileVerticalFlag)
+                std::swap(top,bottom);
+
+            if (tile & kTMXTileHorizontalFlag)
+                std::swap(left,right);
+
+            if (tile & kTMXTileDiagonalFlag)
+            {
+                texbase[0] = left;
+                texbase[1] = top;
+                texbase[2] = left;
+                texbase[3] = bottom;
+                texbase[4] = right;
+                texbase[5] = top;
+                texbase[6] = right;
+                texbase[7] = bottom;
+            }
+            else
+            {
+                texbase[0] = left;
+                texbase[1] = top;
+                texbase[2] = right;
+                texbase[3] = top;
+                texbase[4] = left;
+                texbase[5] = bottom;
+                texbase[6] = right;
+                texbase[7] = bottom;
+            }
         }
     }
-    glUnmapBuffer(GL_ARRAY_BUFFER);
 }
 
 void TMXLayer2::setupIndices()
@@ -266,13 +286,6 @@ void TMXLayer2::setupIndices()
 
     for( int i=0; i < _screenTileCount; i++)
     {
-        //
-        // +-------+
-        // |       |
-        // |       |
-        // |       |
-        // +-------+
-
         indices[i*6+0] = i*4+0;
         indices[i*6+1] = i*4+1;
         indices[i*6+2] = i*4+2;
@@ -360,15 +373,6 @@ void TMXLayer2::setupVBO()
     setupIndices();
 
     CHECK_GL_ERROR_DEBUG();
-}
-
-void TMXLayer2::releaseMap()
-{
-    if (_tiles)
-    {
-        delete [] _tiles;
-        _tiles = nullptr;
-    }
 }
 
 // TMXLayer2 - setup Tiles

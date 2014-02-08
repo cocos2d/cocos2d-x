@@ -1341,33 +1341,33 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
     //blue diamond 
     auto tileCoord = Point(1,10);
     int flags;
-    unsigned int GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    unsigned int GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Vertical
     if( flags & kTMXTileVerticalFlag )
         flags &= ~kTMXTileVerticalFlag;
     else
         flags |= kTMXTileVerticalFlag;
-    layer->setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags);
+    layer->setTileGID(GID ,tileCoord, (TMXTileFlags)flags);
 
 
     tileCoord = Point(1,8);    
-    GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Vertical
     if( flags & kTMXTileVerticalFlag )
         flags &= ~kTMXTileVerticalFlag;
     else
         flags |= kTMXTileVerticalFlag;    
-    layer->setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags);
+    layer->setTileGID(GID ,tileCoord, (TMXTileFlags)flags);
 
 
     tileCoord = Point(2,8);
-    GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Horizontal
     if( flags & kTMXTileHorizontalFlag )
         flags &= ~kTMXTileHorizontalFlag;
     else
         flags |= kTMXTileHorizontalFlag;    
-    layer->setTileGID(GID, tileCoord, (ccTMXTileFlags)flags);    
+    layer->setTileGID(GID, tileCoord, (TMXTileFlags)flags);    
 }
 //------------------------------------------------------------------
 //
