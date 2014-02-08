@@ -58,6 +58,7 @@
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
+#include "mozilla/Move.h"
 #include "mozilla/NullPtr.h"
 
 #ifdef __cplusplus
@@ -116,6 +117,36 @@ class LinkedListElement
         isSentinel(false)
     { }
 
+    LinkedListElement(LinkedListElement<T>&& other)
+      : isSentinel(other.isSentinel)
+    {
+      if (!other.isInList()) {
+        next = this;
+        prev = this;
+        return;
+      }
+
+      MOZ_ASSERT(other.next->prev == &other);
+      MOZ_ASSERT(other.prev->next == &other);
+
+      /*
+       * Initialize |this| with |other|'s prev/next pointers, and adjust those
+       * element to point to this one.
+       */
+      next = other.next;
+      prev = other.prev;
+
+      next->prev = this;
+      prev->next = this;
+
+      /*
+       * Adjust |other| so it doesn't think it's in a list.  This makes it
+       * safely destructable.
+       */
+      other.next = &other;
+      other.prev = &other;
+    }
+
     ~LinkedListElement() {
       if (!isSentinel && isInList())
         remove();
@@ -148,8 +179,8 @@ class LinkedListElement
      * linked list when you call setNext(); otherwise, this method will assert.
      */
     void setNext(T* elem) {
-        MOZ_ASSERT(isInList());
-        setNextUnsafe(elem);
+      MOZ_ASSERT(isInList());
+      setNextUnsafe(elem);
     }
 
     /*
@@ -252,8 +283,8 @@ class LinkedListElement
     }
 
   private:
-    LinkedListElement& operator=(const LinkedList<T>& other) MOZ_DELETE;
-    LinkedListElement(const LinkedList<T>& other) MOZ_DELETE;
+    LinkedListElement& operator=(const LinkedListElement<T>& other) MOZ_DELETE;
+    LinkedListElement(const LinkedListElement<T>& other) MOZ_DELETE;
 };
 
 template<typename T>
@@ -264,6 +295,10 @@ class LinkedList
 
   public:
     LinkedList() : sentinel(LinkedListElement<T>::NODE_KIND_SENTINEL) { }
+
+    LinkedList(LinkedList<T>&& other)
+      : sentinel(mozilla::Move(other.sentinel))
+    { }
 
     ~LinkedList() {
       MOZ_ASSERT(isEmpty());
@@ -361,7 +396,7 @@ class LinkedList
       for (slow = sentinel.next,
            fast1 = sentinel.next->next,
            fast2 = sentinel.next->next->next;
-           slow != sentinel && fast1 != sentinel && fast2 != sentinel;
+           slow != &sentinel && fast1 != &sentinel && fast2 != &sentinel;
            slow = slow->next, fast1 = fast2->next, fast2 = fast1->next)
       {
         MOZ_ASSERT(slow != fast1);
@@ -372,7 +407,7 @@ class LinkedList
       for (slow = sentinel.prev,
            fast1 = sentinel.prev->prev,
            fast2 = sentinel.prev->prev->prev;
-           slow != sentinel && fast1 != sentinel && fast2 != sentinel;
+           slow != &sentinel && fast1 != &sentinel && fast2 != &sentinel;
            slow = slow->prev, fast1 = fast2->prev, fast2 = fast1->prev)
       {
         MOZ_ASSERT(slow != fast1);
@@ -384,14 +419,14 @@ class LinkedList
        * isSentinel == true.
        */
       for (const LinkedListElement<T>* elem = sentinel.next;
-           elem != sentinel;
+           elem != &sentinel;
            elem = elem->next)
       {
         MOZ_ASSERT(!elem->isSentinel);
       }
 
       /* Check that the next/prev pointers match up. */
-      const LinkedListElement<T>* prev = sentinel;
+      const LinkedListElement<T>* prev = &sentinel;
       const LinkedListElement<T>* cur = sentinel.next;
       do {
           MOZ_ASSERT(cur->prev == prev);
@@ -399,7 +434,7 @@ class LinkedList
 
           prev = cur;
           cur = cur->next;
-      } while (cur != sentinel);
+      } while (cur != &sentinel);
 #endif /* ifdef DEBUG */
     }
 
