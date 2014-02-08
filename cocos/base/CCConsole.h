@@ -73,7 +73,8 @@ class CC_DLL Console
 public:
     struct Command {
         const char *name;
-        std::function<void(int, const char*)> callback;
+        const char *help;
+        std::function<void(int, const std::string&)> callback;
     };
 
     /** Constructor */
@@ -105,12 +106,14 @@ protected:
     void addClient();
 
     // Add commands here
-    void commandHelp(int fd, const char *command);
-    void commandExit(int fd, const char *command);
-    void commandSceneGraph(int fd, const char *command);
-    void commandFileUtilsDump(int fd, const char *command);
-    void commandConfig(int fd, const char *command);
-    void commandTextures(int fd, const char *command);
+    void commandHelp(int fd, const std::string &args);
+    void commandExit(int fd, const std::string &args);
+    void commandSceneGraph(int fd, const std::string &args);
+    void commandFileUtils(int fd, const std::string &args);
+    void commandConfig(int fd, const std::string &args);
+    void commandTextures(int fd, const std::string &args);
+    void commandResolution(int fd, const std::string &args);
+    void commandProjection(int fd, const std::string &args);
 
     // file descriptor: socket, console, etc.
     int _listenfd;
