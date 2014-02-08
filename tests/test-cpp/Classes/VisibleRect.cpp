@@ -1,7 +1,4 @@
 /****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2011      Zynga Inc.
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -31,8 +28,9 @@ Rect VisibleRect::s_visibleRect;
 
 void VisibleRect::lazyInit()
 {
-//    if (s_visibleRect.size.width == 0.0f && s_visibleRect.size.height == 0.0f)
-        s_visibleRect = Director::getInstance()->getOpenGLView()->getVisibleRect();
+    // no lazy init
+    // Useful if we change the resolution in runtime
+    s_visibleRect = Director::getInstance()->getOpenGLView()->getVisibleRect();
 }
 
 Rect VisibleRect::getVisibleRect()
