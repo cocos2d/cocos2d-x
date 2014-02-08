@@ -140,6 +140,8 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         {
             if (!breakLineWithoutSpace && !iscjk_unicode(character))
             {
+                last_word.push_back(character);
+                
                 int found = cc_utf8_find_last_not_char(multiline_string, ' ');
                 if (found != -1)
                     cc_utf8_trim_ws(&multiline_string);
