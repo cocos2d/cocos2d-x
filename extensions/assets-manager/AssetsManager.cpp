@@ -338,7 +338,7 @@ bool AssetsManager::uncompress()
             
             size_t index=fileNameStr.find("/",startIndex);
             
-            while(index!=-1)
+            while(index!=string::npos)
             {
                 string dir=_storagePath+fileNameStr.substr(0,index);
                 
@@ -503,7 +503,7 @@ bool AssetsManager::downLoad()
     
     size_t index=fileNameStr.find("/",startIndex);
     
-    while(index!=-1)
+    while(index!=string::npos)
     {
         string dir=_storagePath+fileNameStr.substr(0,index);
         
