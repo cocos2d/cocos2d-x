@@ -50,7 +50,7 @@
 		if( ! JS_IsExceptionPending( globalContext ) ) {						\
 			JS_ReportError( globalContext, __VA_ARGS__ );							\
 		}																		\
-		return JS_FALSE;														\
+		return false;														\
 	}																			\
 } while(0)
 #define JSB_PRECONDITION2( condition, context, ret_value, ...) do {             \
@@ -86,33 +86,6 @@
 #ifndef JSB_REPRESENT_LONGLONG_AS_STR
 #define JSB_REPRESENT_LONGLONG_AS_STR 1
 #endif // JSB_REPRESENT_LONGLONG_AS_STR
-
-
-/** @def JSB_INCLUDE_NS
- Whether or not it should include JS bindings for basic NS* / Cocoa / CocoaTouch objects.
- It should be enabled in order to support bindings for any objective-c projects.
- Not needed for pure C projects.
- Enabled by default.
- */
-#ifndef JSB_INCLUDE_NS
-#define JSB_INCLUDE_NS 1
-#endif // JSB_INCLUDE_NS
-
-
-/** @def JSB_INCLUDE_COCOS2D
- Whether or not it should include JS bindings for cocos2d.
- */
-#ifndef JSB_INCLUDE_COCOS2D
-#define JSB_INCLUDE_COCOS2D 1
-
-#include "cocos2d.h"
-#if defined(__CC_PLATFORM_IOS)
-#define JSB_INCLUDE_COCOS2D_IOS 1
-#elif defined(__CC_PLATFORM_MAC)
-#define JSB_INCLUDE_COCOS2D_MAC 1
-#endif
-
-#endif // JSB_INCLUDE_COCOS2D
 
 
 /** @def JSB_INCLUDE_CHIPMUNK

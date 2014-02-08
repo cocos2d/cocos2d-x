@@ -6,15 +6,12 @@
 //  Copyright (c) 2012 Zynga Inc. All rights reserved.
 //
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <vector>
-#include <map>
 #include "ScriptingCore.h"
-#include "jsdbgapi.h"
+
+// Removed in Firefox v27, use 'js/OldDebugAPI.h' instead
+//#include "jsdbgapi.h"
+#include "js/OldDebugAPI.h"
+
 #include "cocos2d.h"
 #include "local-storage/LocalStorage.h"
 #include "cocos2d_specifics.hpp"
@@ -30,6 +27,13 @@
 #endif
 
 #include <thread>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <vector>
+#include <map>
 
 #ifdef ANDROID
 #include <android/log.h>
@@ -80,7 +84,7 @@ static std::unordered_map<std::string, JSScript*> filename_script;
 // port ~> socket map
 static std::unordered_map<int,int> ports_sockets;
 // name ~> globals
-static std::unordered_map<std::string, js::RootedObject*> globals;
+static std::unordered_map<std::string, JS::RootedObject*> globals;
 
 static void ReportException(JSContext *cx)
 {
@@ -215,12 +219,12 @@ void js_log(const char *format, ...) {
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES 1
 
-JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
+bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
     {
         JS_ReportError(cx, "Invalid number of arguments in __getPlatform");
-        return JS_FALSE;
+        return false;
     }
 
     JSString * platform;
@@ -237,15 +241,15 @@ JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 
     JS_SET_RVAL(cx, vp, ret);
 
-    return JS_TRUE;
+    return true;
 };
 
-JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
+bool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
     {
         JS_ReportError(cx, "Invalid number of arguments in __getVersion");
-        return JS_FALSE;
+        return false;
     }
 
     char version[256];
@@ -255,15 +259,15 @@ JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
     jsval ret = STRING_TO_JSVAL(js_version);
     JS_SET_RVAL(cx, vp, ret);
 
-    return JS_TRUE;
+    return true;
 };
 
-JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
+bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
     {
         JS_ReportError(cx, "Invalid number of arguments in __getOS");
-        return JS_FALSE;
+        return false;
     }
 
     JSString * os;
@@ -292,21 +296,21 @@ JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     jsval ret = STRING_TO_JSVAL(os);
     JS_SET_RVAL(cx, vp, ret);
 
-    return JS_TRUE;
+    return true;
 };
 
-JSBool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
+bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	JSB_PRECONDITION2(argc==0, cx, JS_FALSE, "Invalid number of arguments in executeScript");
+	JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments in executeScript");
     ScriptingCore::getInstance()->reset();
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
+	return true;
 };
 
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
     JS::RootedValue nsval(cx);
-    JSObject *ns;
+    JS::RootedObject ns(cx);
     JS_GetProperty(cx, global, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);
@@ -371,8 +375,8 @@ void ScriptingCore::string_report(jsval val) {
         LOGD("val : (JSVAL_IS_NULL(val)");
         // return 1;
     } else if ((JSVAL_IS_BOOLEAN(val)) &&
-               (JS_FALSE == (JSVAL_TO_BOOLEAN(val)))) {
-        LOGD("val : (return value is JS_FALSE");
+               (false == (JSVAL_TO_BOOLEAN(val)))) {
+        LOGD("val : (return value is false");
         // return 1;
     } else if (JSVAL_IS_STRING(val)) {
         JSString *str = JS_ValueToString(this->getGlobalContext(), val);
@@ -384,8 +388,8 @@ void ScriptingCore::string_report(jsval val) {
         }
     } else if (JSVAL_IS_NUMBER(val)) {
         double number;
-        if (JS_FALSE ==
-            JS_ValueToNumber(this->getGlobalContext(), val, &number)) {
+        if (false ==
+            JS::ToNumber(this->getGlobalContext(), JS::RootedValue(_cx, val), &number)) {
             LOGD("val : return number could not be converted");
         } else {
             LOGD("val : return number =\n%f", number);
@@ -393,7 +397,7 @@ void ScriptingCore::string_report(jsval val) {
     }
 }
 
-JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *filename, JSContext* cx, JSObject* global)
+bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *filename, JSContext* cx, JSObject* global)
 {
     if (cx == NULL)
         cx = _cx;
@@ -405,14 +409,14 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
     if (script)
     {
-        JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
-        if (JS_FALSE == evaluatedOK)
+        bool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
+        if (false == evaluatedOK)
         {
-            fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
+            fprintf(stderr, "(evaluatedOK == false)\n");
         }
         return evaluatedOK;
     }
-    return JS_FALSE;
+    return false;
 }
 
 void ScriptingCore::start() {
@@ -441,11 +445,11 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
 
 static JSPrincipals shellTrustedPrincipals = { 1 };
 
-static JSBool
-CheckObjectAccess(JSContext *cx, js::HandleObject obj, js::HandleId id, JSAccessMode mode,
-                  js::MutableHandleValue vp)
+static bool
+CheckObjectAccess(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JSAccessMode mode,
+                  JS::MutableHandleValue vp)
 {
-    return JS_TRUE;
+    return true;
 }
 
 static JSSecurityCallbacks securityCallbacks = {
@@ -477,7 +481,9 @@ void ScriptingCore::createGlobalContext() {
     
     this->_cx = JS_NewContext(_rt, 8192);
     
-    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
+    // Removed in Firefox v27
+//    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
+    JS::ContextOptionsRef(_cx).setTypeInference(true);
     
 //    JS_SetVersion(this->_cx, JSVERSION_LATEST);
     
@@ -512,7 +518,7 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
-JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
+bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 {
     if (!path) {
         return false;
@@ -530,8 +536,8 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     JSAutoCompartment ac(cx, global);
     
-    js::RootedScript script(cx);
-    js::RootedObject obj(cx, global);
+    JS::RootedScript script(cx);
+    JS::RootedObject obj(cx, global);
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
@@ -564,14 +570,14 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 #endif
     }
     
-    JSBool evaluatedOK = false;
+    bool evaluatedOK = false;
     if (script) {
         jsval rval;
         filename_script[path] = script;
 
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
-        if (JS_FALSE == evaluatedOK) {
-            cocos2d::log("(evaluatedOK == JS_FALSE)");
+        if (false == evaluatedOK) {
+            cocos2d::log("(evaluatedOK == false)");
             JS_ReportPendingException(cx);
         }
     }
@@ -627,7 +633,7 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
 };
 
 
-JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
+bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 {
     if (argc > 0) {
         JSString *string = NULL;
@@ -637,7 +643,7 @@ JSBool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
             js_log("%s", wrapper.get());
         }
     }
-    return JS_TRUE;
+    return true;
 }
 
 
@@ -656,28 +662,28 @@ void ScriptingCore::removeScriptObjectByObject(Object* pObj)
 }
 
 
-JSBool ScriptingCore::setReservedSpot(uint32_t i, JSObject *obj, jsval value) {
+bool ScriptingCore::setReservedSpot(uint32_t i, JSObject *obj, jsval value) {
     JS_SetReservedSlot(obj, i, value);
-    return JS_TRUE;
+    return true;
 }
 
-JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
+bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 1) {
         jsval* argv = JS_ARGV(cx, vp);
         JSString* str = JS_ValueToString(cx, argv[0]);
         JSStringWrapper path(str);
-        JSBool res = false;
+        bool res = false;
         if (argc == 2 && argv[1].isString()) {
             JSString* globalName = JSVAL_TO_STRING(argv[1]);
             JSStringWrapper name(globalName);
-//            js::RootedObject* rootedGlobal = globals[name];
+//            JS::RootedObject* rootedGlobal = globals[name];
             JSObject* debugObj = ScriptingCore::getInstance()->getDebugGlobal();
             if (debugObj) {
                 res = ScriptingCore::getInstance()->runScript(path.get(), debugObj);
             } else {
                 JS_ReportError(cx, "Invalid global object: %s", name.get());
-                return JS_FALSE;
+                return false;
             }
         } else {
             JSObject* glob = JS::CurrentGlobalOrNull(cx);
@@ -685,14 +691,14 @@ JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         }
         return res;
     }
-    return JS_TRUE;
+    return true;
 }
 
-JSBool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
+bool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSRuntime *rt = JS_GetRuntime(cx);
     JS_GC(rt);
-    return JS_TRUE;
+    return true;
 }
 
 //static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
@@ -700,7 +706,7 @@ JSBool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 //    CCLOG("Root: '%s' at %p", name, addr);
 //}
 
-JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
+bool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
     // JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
     // Mac and Simulator versions were compiled with DEBUG.
@@ -710,33 +716,33 @@ JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
 //    JS_DumpHeap(rt, stdout, NULL, JSTRACE_OBJECT, NULL, 2, NULL);
 #endif
-    return JS_TRUE;
+    return true;
 }
 
-JSBool ScriptingCore::addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
+bool ScriptingCore::addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 1) {
         JSObject *o = NULL;
-        if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
-            if (JS_AddNamedObjectRoot(cx, &o, "from-js") == JS_FALSE) {
+        if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == true) {
+            if (JS_AddNamedObjectRoot(cx, &o, "from-js") == false) {
                 LOGD("something went wrong when setting an object to the root");
             }
         }
-        return JS_TRUE;
+        return true;
     }
-    return JS_FALSE;
+    return false;
 }
 
-JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
+bool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 1) {
         JSObject *o = NULL;
-        if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
+        if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == true) {
             JS_RemoveObjectRoot(cx, &o);
         }
-        return JS_TRUE;
+        return true;
     }
-    return JS_FALSE;
+    return false;
 }
 
 void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
@@ -870,8 +876,9 @@ int ScriptingCore::handleTouchesEvent(void* data)
     
     for (auto& touch : touches)
     {
-        jsval jsret;
-        getJSTouchObject(this->_cx, touch, jsret);
+        jsval jsval;
+        getJSTouchObject(this->_cx, touch, jsval);
+        JS::RootedValue jsret(_cx, jsval);
         if (!JS_SetElement(this->_cx, jsretArr, count, &jsret))
         {
             break;
@@ -937,10 +944,10 @@ bool ScriptingCore::executeFunctionWithObjectData(Node *self, const char *name, 
     return false;
 }
 
-JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc /* = 0 */, jsval *vp /* = NULL */, jsval* retVal /* = NULL */)
+bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc /* = 0 */, jsval *vp /* = NULL */, jsval* retVal /* = NULL */)
 {
-    JSBool bRet = JS_FALSE;
-    JSBool hasAction;
+    bool bRet = false;
+    bool hasAction;
     JSContext* cx = this->_cx;
     JS::RootedValue temp_retval(cx);
     JSObject* obj = JSVAL_TO_OBJECT(owner);
@@ -1005,7 +1012,7 @@ int ScriptingCore::handleKeypadEvent(void* data)
 
 	if (p)
     {
-        JSBool ret = JS_FALSE;
+        bool ret = false;
         switch(action)
         {
         case EventKeyboard::KeyCode::KEY_BACKSPACE:
@@ -1054,7 +1061,8 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
     {
         jsval jsret;
         getJSTouchObject(this->_cx, touch, jsret);
-        if (!JS_SetElement(this->_cx, jsretArr, count, &jsret)) {
+        JS::RootedValue jsval(_cx, jsret);
+        if (!JS_SetElement(this->_cx, jsretArr, count, &jsval)) {
             break;
         }
         ++count;
@@ -1167,7 +1175,7 @@ bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
     jsval args[2];
     args[0] = int32_to_jsval(_cx, static_cast<int>(type));
     args[1] = std_string_to_jsval(_cx, str);
-    return (JS_TRUE == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global), "__onParseConfig", 2, args));
+    return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global), "__onParseConfig", 2, args));
 }
 
 #pragma mark - Debug
@@ -1225,7 +1233,7 @@ static bool NS_ProcessNextEvent()
     return true;
 }
 
-JSBool JSBDebug_enterNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
+bool JSBDebug_enterNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
 {
     enum {
         NS_OK = 0,
@@ -1247,26 +1255,26 @@ JSBool JSBDebug_enterNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
              "nested event didn't unwind properly");
     
     JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
-    return JS_TRUE;
+    return true;
 }
 
-JSBool JSBDebug_exitNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
+bool JSBDebug_exitNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
 {
     if (s_nestedLoopLevel > 0) {
         --s_nestedLoopLevel;
     } else {
         JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(0));
-        return JS_TRUE;
+        return true;
     }
     
     JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
-    return JS_TRUE;
+    return true;
 }
 
-JSBool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
+bool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
 {
     JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
-    return JS_TRUE;
+    return true;
 }
 
 //#pragma mark - Debugger
@@ -1387,7 +1395,7 @@ static void serverEntryPoint(void)
 	} // while(true)
 }
 
-JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
+bool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
 {
     if (argc == 1) {
         jsval* argv = JS_ARGV(cx, vp);
@@ -1396,7 +1404,7 @@ JSBool JSBDebug_BufferWrite(JSContext* cx, unsigned argc, jsval* vp)
         outData.append(strWrapper.get());
         _clientSocketWriteAndClearString(outData);
     }
-    return JS_TRUE;
+    return true;
 }
 
 void ScriptingCore::enableDebugger()
@@ -1405,13 +1413,13 @@ void ScriptingCore::enableDebugger()
     {
         JSAutoCompartment ac0(_cx, _global);
         
-        JS_SetDebugMode(_cx, JS_TRUE);
+        JS_SetDebugMode(_cx, true);
         
         _debugGlobal = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
         JS_AddObjectRoot(_cx, &_debugGlobal);
-        
-        JS_WrapObject(_cx, &_debugGlobal);
+        JS::RootedObject rootedDebugObj(_cx, _debugGlobal);
+        JS_WrapObject(_cx, &rootedDebugObj);
         JSAutoCompartment ac(_cx, _debugGlobal);
         // these are used in the debug program
         JS_DefineFunction(_cx, _debugGlobal, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -1426,7 +1434,7 @@ void ScriptingCore::enableDebugger()
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(_global);
         jsval outval;
-        JSBool ok = JS_CallFunctionName(_cx, _debugGlobal, "_prepareDebugger", 1, &argv, &outval);
+        bool ok = JS_CallFunctionName(_cx, _debugGlobal, "_prepareDebugger", 1, &argv, &outval);
         if (!ok) {
             JS_ReportPendingException(_cx);
         }
@@ -1450,7 +1458,7 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug)
         return NULL;
     }
     JSAutoCompartment ac(cx, glob);
-    JSBool ok = JS_TRUE;
+    bool ok = true;
     ok = JS_InitStandardClasses(cx, glob);
     if (ok)
         JS_InitReflect(cx, glob);
@@ -1464,28 +1472,28 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug)
     return glob;
 }
 
-JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
+bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
 {
-    JSClass *klass = JS_GetClass(obj);
+    const JSClass *klass = JS_GetClass(obj);
     unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
     if ( idx >= slots )
-        return JS_FALSE;
+        return false;
 
     JS_SetReservedSlot(obj, idx, value);
 
-    return JS_TRUE;
+    return true;
 }
 
-JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
+bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
 {
-    JSClass *klass = JS_GetClass(obj);
+    const JSClass *klass = JS_GetClass(obj);
     unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
     if ( idx >= slots )
-        return JS_FALSE;
+        return false;
 
     ret = JS_GetReservedSlot(obj, idx);
 
-    return JS_TRUE;
+    return true;
 }
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)
