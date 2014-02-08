@@ -44,7 +44,7 @@ namespace GL {
 
 /** vertex attrib flags */
 enum {
-    VERTEX_ATTRIB_FLAT_NONE       = 0,
+    VERTEX_ATTRIB_FLAG_NONE       = 0,
 
     VERTEX_ATTRIB_FLAG_POSITION   = 1 << 0,
     VERTEX_ATTRIB_FLAG_COLOR      = 1 << 1,
