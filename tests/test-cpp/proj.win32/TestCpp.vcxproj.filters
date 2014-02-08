@@ -1,0 +1,1352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ActionsTest">
+      <UniqueIdentifier>{3268b622-4a28-47bd-b9f0-2adefbc776aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TransitionsTest">
+      <UniqueIdentifier>{fc7ad25e-4776-41a9-bbd0-a6754065bf1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\EffectsTest">
+      <UniqueIdentifier>{ce4cea9b-77e2-4c61-9d73-17bfac7b901d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ClickAndMoveTest">
+      <UniqueIdentifier>{f3b74bc8-ac04-4441-8302-4faea4476164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\RotateWorldTest">
+      <UniqueIdentifier>{ab08059e-6970-412b-8806-e6209793cbf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ParticleTest">
+      <UniqueIdentifier>{09e77100-49e9-4a50-82ad-b95e618d4cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ActionsEaseTest">
+      <UniqueIdentifier>{59114e2d-2034-48e4-8a08-38fb2555a99b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\MotionStreakTest">
+      <UniqueIdentifier>{31a5d34e-5f46-40e9-9d9c-f4b7bf5ad501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\DrawPrimitivesTest">
+      <UniqueIdentifier>{ee46e8fa-9658-4cc2-9cb4-35c85ca23d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ShaderTest">
+      <UniqueIdentifier>{964fdbe8-9573-4bff-8a8f-8c2c0ce24d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TouchesTest">
+      <UniqueIdentifier>{aa804242-766a-4fec-87c8-58045adeca9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\MenuTest">
+      <UniqueIdentifier>{430d407a-c55c-4ae9-9951-0ee78301d30e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ActionManagerTest">
+      <UniqueIdentifier>{b50ed360-a894-4416-ac6e-c6003b3ce9c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\LayerTest">
+      <UniqueIdentifier>{ce855efc-30b4-4a13-8ee3-9fb3636de7a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SceneTest">
+      <UniqueIdentifier>{f3284734-423f-435b-af70-4c2d29dded5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ParallaxTest">
+      <UniqueIdentifier>{525c4381-0aa6-4cc3-aeb4-c2d7348af831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TileMapTest">
+      <UniqueIdentifier>{5fe4e8bb-fa91-4fde-bacd-58ce9682b375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\IntervalTest">
+      <UniqueIdentifier>{7886aba8-80dc-4196-93d1-10f5f58aa1bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\LabelTest">
+      <UniqueIdentifier>{f4cf91c1-7de0-4bef-9950-d5fedc823350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SpriteTest">
+      <UniqueIdentifier>{3c1f5bbc-a48b-42d6-900f-da7ba3e2e885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SchedulerTest">
+      <UniqueIdentifier>{66f44cbe-74cb-4e30-8230-a4991e274f52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\RenderTextureTest">
+      <UniqueIdentifier>{5e825b03-67b5-4bb0-a8f7-ad1fe860165d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\EffectsAdvancedTest">
+      <UniqueIdentifier>{6eeb2da8-4ecb-4602-9ac5-80caabe39ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\KeypadTest">
+      <UniqueIdentifier>{34e82723-7a60-4bed-ba19-de427c04d212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\CocosDenshionTest">
+      <UniqueIdentifier>{a786a2de-3545-4fdc-9884-5a8c68bf8eb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\PerformanceTest">
+      <UniqueIdentifier>{2013787a-dc87-456f-bf75-33c4cac37af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ZwoptexTest">
+      <UniqueIdentifier>{4505301c-1a9d-46e4-8362-7f5572c7a7e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\CurlTest">
+      <UniqueIdentifier>{6a365fa7-888d-46bf-9c63-0f1dd507339e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TextInputTest">
+      <UniqueIdentifier>{9c6d3e16-37f6-47b1-9729-847b7fcf3316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UserDefaultTest">
+      <UniqueIdentifier>{ee5dc87f-91dc-4c57-a46c-049029a23a4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\BugsTest">
+      <UniqueIdentifier>{33d3a425-5956-4faa-b582-56cf7e900fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\BugsTest\Bug-458">
+      <UniqueIdentifier>{0aa8d144-25b7-4782-9b2e-703eb2f2f7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Texture2dTest">
+      <UniqueIdentifier>{9d82adbc-4931-4e09-9ced-14330f1df797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\FontTest">
+      <UniqueIdentifier>{04b21bb0-6735-40f6-9b95-90cdf4b3b2d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\CurrentLanguageTest">
+      <UniqueIdentifier>{2c810374-bc6e-47c1-83af-502d65a318cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TextureCacheTest">
+      <UniqueIdentifier>{1cf546eb-abc6-4b66-a85e-66a68f82b536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\AccelerometerTest">
+      <UniqueIdentifier>{0a4490ab-a3f5-4ccf-9b5d-ce03d80d4004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest">
+      <UniqueIdentifier>{897838bb-90e6-492d-adcb-e719415c37b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest">
+      <UniqueIdentifier>{54bf5401-2f85-482c-b272-1af67facaed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest">
+      <UniqueIdentifier>{bdb14357-5f6b-4eae-8004-af6539f5d71b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker">
+      <UniqueIdentifier>{c4c3ece6-16a2-4795-a04f-ef5f34502695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest">
+      <UniqueIdentifier>{decc4f82-255c-4607-b837-ddebfca7e96a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest">
+      <UniqueIdentifier>{8eaa1432-0ee2-46d9-9717-40a71efb3fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\NotificationCenterTest">
+      <UniqueIdentifier>{73050120-a703-4a41-a797-54b3fe4c6997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest">
+      <UniqueIdentifier>{2a3d945a-4162-4f91-8178-47f4608b4932}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\ButtonTest">
+      <UniqueIdentifier>{084ad29d-9eac-4f8e-8910-5279a6d9b0b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder">
+      <UniqueIdentifier>{fb280225-2a4a-4192-b30f-46b9d4fcb65b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\LabelTest">
+      <UniqueIdentifier>{262bbe18-e1f5-4b56-b933-cd8090bc274c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\MenuTest">
+      <UniqueIdentifier>{7a4ffce0-ab4c-438f-a6ae-b1133f5ebac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest">
+      <UniqueIdentifier>{354a7552-e7c8-43c0-8290-56e85127e4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\SpriteTest">
+      <UniqueIdentifier>{b4e53419-9636-415c-af0b-5454bb147769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TestHeader">
+      <UniqueIdentifier>{becce610-4d2e-4263-bbef-168b9c644de0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest">
+      <UniqueIdentifier>{232a0aa0-fa5a-45b3-9b01-ffb5687acf49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\NodeTest">
+      <UniqueIdentifier>{74b8b965-89eb-43a5-9996-856a9e4b6326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ActionsProgressTest">
+      <UniqueIdentifier>{d7f1c4af-37e8-441a-bbe0-dc63f64a0403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Box2DTest">
+      <UniqueIdentifier>{5fa4bd78-0a13-41c1-84f7-f84e3997da9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Box2DTestBed">
+      <UniqueIdentifier>{c6700e2e-5837-4051-8de8-6ccf6e580402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Box2DTestBed\Tests">
+      <UniqueIdentifier>{17c1844a-dd68-4ed5-a368-383253473518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\MutiTouchTest">
+      <UniqueIdentifier>{b3be049f-74ff-44a5-8895-0766e4807671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\NetworkTest">
+      <UniqueIdentifier>{28e8af6a-0e73-4069-bdf4-735138ed886d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\TableViewTest">
+      <UniqueIdentifier>{2603ae57-b062-4281-9daf-c925634eaeb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest">
+      <UniqueIdentifier>{08850f9d-e7e5-4bca-ae90-cf8df391479f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest">
+      <UniqueIdentifier>{7e809230-9bb5-45bb-a26c-b5cdd1390914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ChipmunkTest">
+      <UniqueIdentifier>{0a728d21-a3d4-4d32-9d6d-f0fd078cbaa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ClippingNodeTest">
+      <UniqueIdentifier>{b79f4701-6fe2-4996-83c5-0567bcf90287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest">
+      <UniqueIdentifier>{e8752620-8414-4f43-a572-5fa82650f223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\FileUtilsTest">
+      <UniqueIdentifier>{a4c2111f-cf9f-492c-884d-3de24715adce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\EditBoxTest">
+      <UniqueIdentifier>{18a69e7e-8ca7-475a-bfbb-7296baab16ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest">
+      <UniqueIdentifier>{0ef55f53-411a-4661-b5d5-13930da52e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SpineTest">
+      <UniqueIdentifier>{60df7835-5770-44bb-b5c7-24c9aa34da88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TexturePackerEncryptionTest">
+      <UniqueIdentifier>{4031c3bb-97f8-4b43-91e5-48dd94ca2d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\DataVisitorTest">
+      <UniqueIdentifier>{8049d378-12f7-46ba-ba96-091f3c0a4600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ConfigurationTest">
+      <UniqueIdentifier>{81ec2355-7efd-49e0-b6cb-b1bba23fbbc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\Scale9SpriteTest">
+      <UniqueIdentifier>{3d73aa04-d66e-43d3-921f-b867a753c113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioArmatureTest">
+      <UniqueIdentifier>{a6e7d28e-46a3-46c4-9735-b39e96f776f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioComponentsTest">
+      <UniqueIdentifier>{e0b48846-7f17-4abe-80a7-93cc7bf8b4a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest">
+      <UniqueIdentifier>{70cc5629-4a9a-494d-b126-6043d311031a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\NewEventDispatcherTest">
+      <UniqueIdentifier>{0b414789-7971-4a4c-86e3-40cc00936684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\PhysicsTest">
+      <UniqueIdentifier>{a83cb042-e3d6-4d3b-a4f6-30a4b3fcb3e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest">
+      <UniqueIdentifier>{9daecd38-37c6-4216-a999-86077af83beb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest">
+      <UniqueIdentifier>{493fcd85-c749-482d-9404-905e99aa0103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest">
+      <UniqueIdentifier>{2e08949f-bf73-4fdc-85e8-34b8c69aa978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest">
+      <UniqueIdentifier>{c57c0453-a096-44d7-830b-1cf24c712cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest">
+      <UniqueIdentifier>{01097388-e538-4081-8e16-d1ff3a86292a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest">
+      <UniqueIdentifier>{fadff96e-c19a-41f5-a755-547cf1f8a5fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest">
+      <UniqueIdentifier>{73c268e8-3872-49d6-9204-1e679ff72a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest">
+      <UniqueIdentifier>{6e7f1d2a-c8c1-4f48-826f-930bc8a0556e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest">
+      <UniqueIdentifier>{305e1c54-9321-49f7-8672-46d1286dbe83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest">
+      <UniqueIdentifier>{df6e9468-93f7-472d-be1d-d274d7de677e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest">
+      <UniqueIdentifier>{dedcabba-959c-40e3-9959-7ccf4e31c792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest">
+      <UniqueIdentifier>{5caf2179-ae22-4040-8bac-17e9f22efbf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest">
+      <UniqueIdentifier>{24f044ee-09a6-406b-98d7-8d5d759e5bb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\KeyboardTest">
+      <UniqueIdentifier>{8d7d37cd-5cc2-4a7d-9bd2-7b5c928adbb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\InputTest">
+      <UniqueIdentifier>{8e8124bd-adb2-4a8f-8727-9868a9c42d80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ConsoleTest">
+      <UniqueIdentifier>{709f8a27-ecc2-4fe2-abd2-f13da4b70fe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\NewRendererTest">
+      <UniqueIdentifier>{688e201c-77fe-4665-931e-e508a58141f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest">
+      <UniqueIdentifier>{160da6f0-a0f1-4a53-8e5e-cf0a63ee82a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest">
+      <UniqueIdentifier>{c4dbbfb3-0e91-492f-bbbf-f03fb26f3f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UnitTest">
+      <UniqueIdentifier>{1821914f-c088-4946-8c1e-19ab57b5eabc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode">
+      <UniqueIdentifier>{5ff3af4e-0610-480b-b297-8f407e12f369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ReleasePoolTest">
+      <UniqueIdentifier>{f71fab28-32be-45c9-a941-9a22b5a59e51}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\controller.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\testBasic.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActionsTest\ActionsTest.cpp">
+      <Filter>Classes\ActionsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TransitionsTest\TransitionsTest.cpp">
+      <Filter>Classes\TransitionsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EffectsTest\EffectsTest.cpp">
+      <Filter>Classes\EffectsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ClickAndMoveTest\ClickAndMoveTest.cpp">
+      <Filter>Classes\ClickAndMoveTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RotateWorldTest\RotateWorldTest.cpp">
+      <Filter>Classes\RotateWorldTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ParticleTest\ParticleTest.cpp">
+      <Filter>Classes\ParticleTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActionsEaseTest\ActionsEaseTest.cpp">
+      <Filter>Classes\ActionsEaseTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MotionStreakTest\MotionStreakTest.cpp">
+      <Filter>Classes\MotionStreakTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp">
+      <Filter>Classes\DrawPrimitivesTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ShaderTest\ShaderTest.cpp">
+      <Filter>Classes\ShaderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TouchesTest\Ball.cpp">
+      <Filter>Classes\TouchesTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TouchesTest\Paddle.cpp">
+      <Filter>Classes\TouchesTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TouchesTest\TouchesTest.cpp">
+      <Filter>Classes\TouchesTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MenuTest\MenuTest.cpp">
+      <Filter>Classes\MenuTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActionManagerTest\ActionManagerTest.cpp">
+      <Filter>Classes\ActionManagerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LayerTest\LayerTest.cpp">
+      <Filter>Classes\LayerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SceneTest\SceneTest.cpp">
+      <Filter>Classes\SceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ParallaxTest\ParallaxTest.cpp">
+      <Filter>Classes\ParallaxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileMapTest\TileMapTest.cpp">
+      <Filter>Classes\TileMapTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IntervalTest\IntervalTest.cpp">
+      <Filter>Classes\IntervalTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LabelTest\LabelTest.cpp">
+      <Filter>Classes\LabelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SpriteTest\SpriteTest.cpp">
+      <Filter>Classes\SpriteTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SchedulerTest\SchedulerTest.cpp">
+      <Filter>Classes\SchedulerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RenderTextureTest\RenderTextureTest.cpp">
+      <Filter>Classes\RenderTextureTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp">
+      <Filter>Classes\EffectsAdvancedTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\KeypadTest\KeypadTest.cpp">
+      <Filter>Classes\KeypadTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CocosDenshionTest\CocosDenshionTest.cpp">
+      <Filter>Classes\CocosDenshionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
+      <Filter>Classes\ZwoptexTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
+      <Filter>Classes\CurlTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TextInputTest\TextInputTest.cpp">
+      <Filter>Classes\TextInputTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UserDefaultTest\UserDefaultTest.cpp">
+      <Filter>Classes\UserDefaultTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-1159.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-1174.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-350.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-422.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-624.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-886.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-899.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-914.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\BugsTest.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-458\Bug-458.cpp">
+      <Filter>Classes\BugsTest\Bug-458</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-458\QuestionContainerSprite.cpp">
+      <Filter>Classes\BugsTest\Bug-458</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Texture2dTest\Texture2dTest.cpp">
+      <Filter>Classes\Texture2dTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FontTest\FontTest.cpp">
+      <Filter>Classes\FontTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp">
+      <Filter>Classes\CurrentLanguageTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TextureCacheTest\TextureCacheTest.cpp">
+      <Filter>Classes\TextureCacheTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AccelerometerTest\AccelerometerTest.cpp">
+      <Filter>Classes\AccelerometerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ExtensionsTest.cpp">
+      <Filter>Classes\ExtensionsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp">
+      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.cpp">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.cpp">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.cpp">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.cpp">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NodeTest\NodeTest.cpp">
+      <Filter>Classes\NodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActionsProgressTest\ActionsProgressTest.cpp">
+      <Filter>Classes\ActionsProgressTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Box2DTest\Box2dTest.cpp">
+      <Filter>Classes\Box2DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Box2DTestBed\Box2dView.cpp">
+      <Filter>Classes\Box2DTestBed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Box2DTestBed\GLES-Render.cpp">
+      <Filter>Classes\Box2DTestBed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Box2DTestBed\Test.cpp">
+      <Filter>Classes\Box2DTestBed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Box2DTestBed\TestEntries.cpp">
+      <Filter>Classes\Box2DTestBed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp">
+      <Filter>Classes\MutiTouchTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\VisibleRect.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp">
+      <Filter>Classes\ChipmunkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp">
+      <Filter>Classes\ClippingNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp">
+      <Filter>Classes\FileUtilsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp">
+      <Filter>Classes\SpineTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp">
+      <Filter>Classes\TexturePackerEncryptionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp">
+      <Filter>Classes\DataVisitorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp">
+      <Filter>Classes\ConfigurationTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BaseTest.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp">
+      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp">
+      <Filter>Classes\LabelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioArmatureTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\GameOverScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
+    <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp">
+      <Filter>Classes\NewEventDispatcherTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp">
+      <Filter>Classes\PhysicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\KeyboardTest\KeyboardTest.cpp">
+      <Filter>Classes\KeyboardTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\InputTest\MouseTest.cpp">
+      <Filter>Classes\InputTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp">
+      <Filter>Classes\ConsoleTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp">
+      <Filter>Classes\NewRendererTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UnitTest\UnitTest.cpp">
+      <Filter>Classes\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp">
+      <Filter>Classes\ReleasePoolTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\controller.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\testBasic.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\testResource.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tests.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActionsTest\ActionsTest.h">
+      <Filter>Classes\ActionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TransitionsTest\TransitionsTest.h">
+      <Filter>Classes\TransitionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EffectsTest\EffectsTest.h">
+      <Filter>Classes\EffectsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ClickAndMoveTest\ClickAndMoveTest.h">
+      <Filter>Classes\ClickAndMoveTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RotateWorldTest\RotateWorldTest.h">
+      <Filter>Classes\RotateWorldTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ParticleTest\ParticleTest.h">
+      <Filter>Classes\ParticleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActionsEaseTest\ActionsEaseTest.h">
+      <Filter>Classes\ActionsEaseTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MotionStreakTest\MotionStreakTest.h">
+      <Filter>Classes\MotionStreakTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h">
+      <Filter>Classes\DrawPrimitivesTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShaderTest\ShaderTest.h">
+      <Filter>Classes\ShaderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchesTest\Ball.h">
+      <Filter>Classes\TouchesTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchesTest\Paddle.h">
+      <Filter>Classes\TouchesTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchesTest\TouchesTest.h">
+      <Filter>Classes\TouchesTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MenuTest\MenuTest.h">
+      <Filter>Classes\MenuTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActionManagerTest\ActionManagerTest.h">
+      <Filter>Classes\ActionManagerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LayerTest\LayerTest.h">
+      <Filter>Classes\LayerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SceneTest\SceneTest.h">
+      <Filter>Classes\SceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ParallaxTest\ParallaxTest.h">
+      <Filter>Classes\ParallaxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileMapTest\TileMapTest.h">
+      <Filter>Classes\TileMapTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IntervalTest\IntervalTest.h">
+      <Filter>Classes\IntervalTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LabelTest\LabelTest.h">
+      <Filter>Classes\LabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpriteTest\SpriteTest.h">
+      <Filter>Classes\SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SchedulerTest\SchedulerTest.h">
+      <Filter>Classes\SchedulerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RenderTextureTest\RenderTextureTest.h">
+      <Filter>Classes\RenderTextureTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h">
+      <Filter>Classes\EffectsAdvancedTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\KeypadTest\KeypadTest.h">
+      <Filter>Classes\KeypadTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CocosDenshionTest\CocosDenshionTest.h">
+      <Filter>Classes\CocosDenshionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
+      <Filter>Classes\ZwoptexTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TextInputTest\TextInputTest.h">
+      <Filter>Classes\TextInputTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UserDefaultTest\UserDefaultTest.h">
+      <Filter>Classes\UserDefaultTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-1159.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-1174.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-350.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-422.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-624.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-886.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-899.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-914.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\BugsTest.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-458\Bug-458.h">
+      <Filter>Classes\BugsTest\Bug-458</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-458\QuestionContainerSprite.h">
+      <Filter>Classes\BugsTest\Bug-458</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Texture2dTest\Texture2dTest.h">
+      <Filter>Classes\Texture2dTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FontTest\FontTest.h">
+      <Filter>Classes\FontTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.h">
+      <Filter>Classes\CurrentLanguageTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TextureCacheTest\TextureCacheTest.h">
+      <Filter>Classes\TextureCacheTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AccelerometerTest\AccelerometerTest.h">
+      <Filter>Classes\AccelerometerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ExtensionsTest.h">
+      <Filter>Classes\ExtensionsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h">
+      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\LabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\LabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NodeTest\NodeTest.h">
+      <Filter>Classes\NodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActionsProgressTest\ActionsProgressTest.h">
+      <Filter>Classes\ActionsProgressTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTest\Box2dTest.h">
+      <Filter>Classes\Box2DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Box2dView.h">
+      <Filter>Classes\Box2DTestBed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\GLES-Render.h">
+      <Filter>Classes\Box2DTestBed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Test.h">
+      <Filter>Classes\Box2DTestBed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\AddPair.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ApplyForce.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\BodyTypes.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Breakable.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Bridge.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\BulletTest.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Cantilever.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Car.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Chain.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\CharacterCollision.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\CollisionFiltering.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\CollisionProcessing.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\CompoundShapes.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Confined.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ContinuousTest.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\DistanceTest.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Dominos.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\DumpShell.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\DynamicTreeTest.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\EdgeShapes.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\EdgeTest.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Gears.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\OneSidedPlatform.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Pinball.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\PolyCollision.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\PolyShapes.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Prismatic.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Pulleys.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Pyramid.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\RayCast.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Revolute.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Rope.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\RopeJoint.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\SensorTest.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ShapeEditing.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\SliderCrank.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\SphereStack.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\TheoJansen.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Tiles.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\TimeOfImpact.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Tumbler.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\VaryingFriction.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\VaryingRestitution.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\VerticalStack.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Web.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h">
+      <Filter>Classes\MutiTouchTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\VisibleRect.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h">
+      <Filter>Classes\ChipmunkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h">
+      <Filter>Classes\ClippingNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h">
+      <Filter>Classes\FileUtilsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h">
+      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpineTest\SpineTest.h">
+      <Filter>Classes\SpineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h">
+      <Filter>Classes\TexturePackerEncryptionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h">
+      <Filter>Classes\DataVisitorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h">
+      <Filter>Classes\ConfigurationTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseTest.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h">
+      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LabelTest\LabelTestNew.h">
+      <Filter>Classes\LabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioArmatureTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\GameOverScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
+    <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h">
+      <Filter>Classes\NewEventDispatcherTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h">
+      <Filter>Classes\PhysicsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\KeyboardTest\KeyboardTest.h">
+      <Filter>Classes\KeyboardTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InputTest\MouseTest.h">
+      <Filter>Classes\InputTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConvexHull.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConveyorBelt.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Mobile.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\MobileBalanced.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\MotorJoint.h">
+      <Filter>Classes\Box2DTestBed\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h">
+      <Filter>Classes\ConsoleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h">
+      <Filter>Classes\NewRendererTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UnitTest\UnitTest.h">
+      <Filter>Classes\UnitTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h">
+      <Filter>Classes\ReleasePoolTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

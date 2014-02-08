@@ -31,13 +31,13 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "CCInteger.h"
 #include "CCBool.h"
-#include "cocos2d.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
+extern const char* cocos2dVersion();
 
 Configuration* Configuration::s_sharedConfiguration = nullptr;
 
@@ -75,7 +75,7 @@ bool Configuration::init()
     _valueDict["cocos2d.x.compiled_with_gl_state_cache"] = Value(true);
 #endif
 
-#ifdef DEBUG
+#if COCOS2D_DEBUG
 	_valueDict["cocos2d.x.build_type"] = Value("DEBUG");
 #else
     _valueDict["cocos2d.x.build_type"] = Value("RELEASE");
@@ -146,7 +146,7 @@ void Configuration::gatherGPUInfo()
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
 	_valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
-    
+
     CHECK_GL_ERROR_DEBUG();
 }
 

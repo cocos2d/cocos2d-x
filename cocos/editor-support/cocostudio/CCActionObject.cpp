@@ -25,6 +25,10 @@ THE SOFTWARE.
 #include "cocostudio/CCActionObject.h"
 #include "cocostudio/DictionaryHelper.h"
 
+#include "CCDirector.h"
+#include "CCScheduler.h"
+#include "CCActionInstant.h"
+
 using namespace cocos2d;
 
 namespace cocostudio {

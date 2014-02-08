@@ -24,7 +24,7 @@ namespace mozilla {
 
 /** Set the contents of |t| to 0. */
 template<typename T>
-static void
+static MOZ_ALWAYS_INLINE void
 PodZero(T* t)
 {
   memset(t, 0, sizeof(T));
@@ -32,7 +32,7 @@ PodZero(T* t)
 
 /** Set the contents of |nelem| elements starting at |t| to 0. */
 template<typename T>
-static void
+static MOZ_ALWAYS_INLINE void
 PodZero(T* t, size_t nelem)
 {
   /*
@@ -58,7 +58,7 @@ static void PodZero(T (&t)[N], size_t nelem) MOZ_DELETE;
 
 /** Set the contents of the array |t| to zero. */
 template <class T, size_t N>
-static void
+static MOZ_ALWAYS_INLINE void
 PodArrayZero(T (&t)[N])
 {
   memset(t, 0, N * sizeof(T));
@@ -69,7 +69,7 @@ PodArrayZero(T (&t)[N])
  * overlap.
  */
 template<typename T>
-static void
+static MOZ_ALWAYS_INLINE void
 PodAssign(T* dst, const T* src)
 {
   MOZ_ASSERT(dst != src);
@@ -83,7 +83,7 @@ PodAssign(T* dst, const T* src)
  * overlap!
  */
 template<typename T>
-MOZ_ALWAYS_INLINE static void
+static MOZ_ALWAYS_INLINE void
 PodCopy(T* dst, const T* src, size_t nelem)
 {
   MOZ_ASSERT(dst != src);
@@ -103,7 +103,7 @@ PodCopy(T* dst, const T* src, size_t nelem)
 }
 
 template<typename T>
-MOZ_ALWAYS_INLINE static void
+static MOZ_ALWAYS_INLINE void
 PodCopy(volatile T* dst, const volatile T* src, size_t nelem)
 {
   MOZ_ASSERT(dst != src);
@@ -127,7 +127,7 @@ PodCopy(volatile T* dst, const volatile T* src, size_t nelem)
  * The arrays must not overlap!
  */
 template <class T, size_t N>
-static void
+static MOZ_ALWAYS_INLINE void
 PodArrayCopy(T (&dst)[N], const T (&src)[N])
 {
   PodCopy(dst, src, N);
@@ -138,7 +138,7 @@ PodArrayCopy(T (&dst)[N], const T (&src)[N])
  * |len| elements at |two|.
  */
 template<typename T>
-MOZ_ALWAYS_INLINE static bool
+static MOZ_ALWAYS_INLINE bool
 PodEqual(const T* one, const T* two, size_t len)
 {
   if (len < 128) {

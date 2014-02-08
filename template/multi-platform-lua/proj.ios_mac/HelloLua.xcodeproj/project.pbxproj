@@ -55,6 +55,8 @@
 		15A8A4851834C73500142BE0 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A41F1834BDA200142BE0 /* libCocosDenshion Mac.a */; };
 		15A8A4861834C73500142BE0 /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4231834BDA200142BE0 /* libluabindings Mac.a */; };
 		15A8A4881834C90F00142BE0 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4871834C90E00142BE0 /* libcurl.dylib */; };
+		15FFA0FD1894DDEF00C96D45 /* mobdebug.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15FFA0FC1894DDEF00C96D45 /* mobdebug.lua */; };
+		15FFA0FE1894DDEF00C96D45 /* mobdebug.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15FFA0FC1894DDEF00C96D45 /* mobdebug.lua */; };
 		1AC3622F16D47C5C000847F2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622316D47C5C000847F2 /* background.mp3 */; };
 		1AC3623016D47C5C000847F2 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622416D47C5C000847F2 /* background.ogg */; };
 		1AC3623116D47C5C000847F2 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622516D47C5C000847F2 /* crop.png */; };
@@ -246,6 +248,7 @@
 		15A8A4631834C6AD00142BE0 /* StudioConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = StudioConstants.lua; path = ../cocos2d/cocos/scripting/lua/script/StudioConstants.lua; sourceTree = "<group>"; };
 		15A8A4871834C90E00142BE0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos2d/cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		15FFA0FC1894DDEF00C96D45 /* mobdebug.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mobdebug.lua; sourceTree = "<group>"; };
 		1AC3622316D47C5C000847F2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../Resources/background.mp3; sourceTree = "<group>"; };
 		1AC3622416D47C5C000847F2 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = ../Resources/background.ogg; sourceTree = "<group>"; };
 		1AC3622516D47C5C000847F2 /* crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crop.png; path = ../Resources/crop.png; sourceTree = "<group>"; };
@@ -509,6 +512,7 @@
 		F293BC4615EB859D00256477 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15FFA0FC1894DDEF00C96D45 /* mobdebug.lua */,
 				1AC3622316D47C5C000847F2 /* background.mp3 */,
 				1AC3622416D47C5C000847F2 /* background.ogg */,
 				1AC3622516D47C5C000847F2 /* crop.png */,
@@ -707,6 +711,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A8A4711834C6AD00142BE0 /* DeprecatedEnum.lua in Resources */,
+				15FFA0FE1894DDEF00C96D45 /* mobdebug.lua in Resources */,
 				5023814817EBBCE400990C9B /* background.mp3 in Resources */,
 				5023814917EBBCE400990C9B /* background.ogg in Resources */,
 				5023814A17EBBCE400990C9B /* crop.png in Resources */,
@@ -769,6 +774,7 @@
 				15A8A46A1834C6AD00142BE0 /* Cocos2dConstants.lua in Resources */,
 				1AC3623616D47C5C000847F2 /* hello.lua in Resources */,
 				5091733917ECE17A00D62437 /* Icon-58.png in Resources */,
+				15FFA0FD1894DDEF00C96D45 /* mobdebug.lua in Resources */,
 				15A8A4641834C6AD00142BE0 /* AudioEngine.lua in Resources */,
 				1AC3623716D47C5C000847F2 /* hello2.lua in Resources */,
 				1AC3623816D47C5C000847F2 /* land.png in Resources */,

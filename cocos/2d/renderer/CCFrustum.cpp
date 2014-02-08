@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFrustum.h"
+#include "renderer/CCFrustum.h"
 #include "CCConsole.h"
 
 #include <stdlib.h>

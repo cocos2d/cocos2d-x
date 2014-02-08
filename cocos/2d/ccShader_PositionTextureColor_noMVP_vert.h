@@ -38,7 +38,7 @@ varying vec2 v_texCoord;							\n\
 													\n\
 void main()											\n\
 {													\n\
-    gl_Position = CC_PMatrix * a_position;                       \n\
+    gl_Position = CC_PMatrix * a_position;          \n\
 	v_fragmentColor = a_color;						\n\
 	v_texCoord = a_texCoord;						\n\
 }													\n\

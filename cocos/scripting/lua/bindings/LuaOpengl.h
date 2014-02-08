@@ -36,7 +36,7 @@ extern "C" {
 
 class GLNode:public cocos2d::Node
 {
-    virtual void draw();
+    virtual void draw() override;
 };
 
 TOLUA_API int tolua_opengl_open(lua_State* tolua_S);

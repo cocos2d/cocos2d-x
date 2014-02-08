@@ -22,10 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "cocos2d.h"
+
 #include "CCFontAtlas.h"
-#include "CCFont.h"
 #include "CCFontFreeType.h"
+#include "ccUTF8.h"
+#include "CCDirector.h"
 
 #define  PAGE_WIDTH 1024
 #define  PAGE_HEIGHT 1024
@@ -37,10 +38,9 @@ _font(&theFont),
 _currentPageData(nullptr)
 {
     _font->retain();
-    _makeDistanceMap = _font->isDistanceFieldEnabled();
 
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
-    if (fontTTf && fontTTf->isDynamicGlyphCollection())
+    if (fontTTf)
     {
         _currentPageLineHeight = _font->getFontMaxHeight();
         _commonLineHeight = _currentPageLineHeight * 0.8f;
@@ -48,23 +48,24 @@ _currentPageData(nullptr)
         _currentPage = 0;
         _currentPageOrigX = 0;
         _currentPageOrigY = 0;
-        _letterPadding = 5;
-    
+        _letterPadding = 0;
+
+        _makeDistanceMap = fontTTf->isDistanceFieldEnabled();
         if(_makeDistanceMap)
         {
-            _commonLineHeight += 2 * Font::DistanceMapSpread;
-            _letterPadding += 2 * Font::DistanceMapSpread;
-            _currentPageDataSize = (PAGE_WIDTH * PAGE_HEIGHT * 1);
+            _commonLineHeight += 2 * FontFreeType::DistanceMapSpread;
+            _letterPadding += 2 * FontFreeType::DistanceMapSpread;    
         }
-        else
-        {
-            _currentPageDataSize = (PAGE_WIDTH * PAGE_HEIGHT * 1);
-        }
+        _currentPageDataSize = (PAGE_WIDTH * PAGE_HEIGHT * 1);
 
         _currentPageData = new unsigned char[_currentPageDataSize];       
         memset(_currentPageData, 0, _currentPageDataSize);  
         addTexture(*tex,0);
         tex->release();
+    }
+    else
+    {
+        _makeDistanceMap = false;
     }
 }
 
@@ -100,6 +101,7 @@ bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontL
     }
     else
     {
+        outDefinition.validDefinition = false;
         return false;
     }
 }
@@ -114,6 +116,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     std::unordered_map<unsigned short, FontLetterDefinition> fontDefs;
     int length = cc_wcslen(utf16String);
 
+    float offsetAdjust = _letterPadding / 2;
     //find out new letter
     for (int i = 0; i < length; ++i)
     {
@@ -128,31 +131,28 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
             Rect tempRect;           
 
             FontLetterDefinition tempDef;
-            tempDef.offsetX = 0;
-            tempDef.anchorX = 0.0f;
-            tempDef.anchorY = 1.0f;
 
-            if (!fontTTf->getBBOXFotChar(utf16String[i], tempRect))
+            if (!fontTTf->getBBOXFotChar(utf16String[i], tempRect,tempDef.xAdvance))
             {
                 tempDef.validDefinition = false;
                 tempDef.letteCharUTF16   = utf16String[i];
-                tempDef.commonLineHeight = 0;
                 tempDef.width            = 0;
                 tempDef.height           = 0;
                 tempDef.U                = 0;
-                tempDef.V                = 0;            
+                tempDef.V                = 0;
+                tempDef.offsetX          = 0;
                 tempDef.offsetY          = 0;
                 tempDef.textureID        = 0;
+                tempDef.xAdvance         = 0;
             }
             else
             {
                 tempDef.validDefinition = true;
                 tempDef.letteCharUTF16   = utf16String[i];
-                tempDef.width            = tempRect.size.width  + _letterPadding;
-                tempDef.height           = _currentPageLineHeight - 1;             
-                tempDef.offsetY          = tempRect.origin.y;
-                tempDef.commonLineHeight = _currentPageLineHeight;
-                        
+                tempDef.width            = tempRect.size.width + _letterPadding;
+                tempDef.height           = tempRect.size.height + _letterPadding;
+                tempDef.offsetX          = tempRect.origin.x + offsetAdjust;
+                tempDef.offsetY          = _commonLineHeight + tempRect.origin.y - offsetAdjust;
             } 
             fontDefs[utf16String[i]] = tempDef;
         }       
@@ -161,14 +161,14 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     Size _pageContentSize = Size(PAGE_WIDTH,PAGE_HEIGHT);
     float scaleFactor = CC_CONTENT_SCALE_FACTOR();
     float glyphWidth;
-    Texture2D::PixelFormat  pixelFormat = _makeDistanceMap ? Texture2D::PixelFormat::A8 : Texture2D::PixelFormat::A8;
+    Texture2D::PixelFormat  pixelFormat = Texture2D::PixelFormat::A8;
+    
 
     for(auto it = fontDefs.begin(); it != fontDefs.end(); it++)
     {
         if(it->second.validDefinition)
         {
-            _currentPageOrigX += _letterPadding;
-            glyphWidth = it->second.width - _letterPadding;
+            glyphWidth = it->second.width;
 
             if (_currentPageOrigX + glyphWidth > PAGE_WIDTH)
             {
@@ -190,9 +190,9 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                     tex->release();
                 }
             }
-            _font->renderCharAt(it->second.letteCharUTF16,_currentPageOrigX,_currentPageOrigY,_currentPageData,PAGE_WIDTH);
+            fontTTf->renderCharAt(it->second.letteCharUTF16,_currentPageOrigX,_currentPageOrigY,_currentPageData,PAGE_WIDTH);
 
-            it->second.U                = _currentPageOrigX - 1;
+            it->second.U                = _currentPageOrigX;
             it->second.V                = _currentPageOrigY;
             it->second.textureID        = _currentPage;
             // take from pixels to points
@@ -205,7 +205,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
             glyphWidth = 0;       
        
         _fontLetterDefinitions[it->second.letteCharUTF16] = it->second;
-        _currentPageOrigX += glyphWidth;
+        _currentPageOrigX += glyphWidth + 1;
     }
     if(fontDefs.size() > 0)
         _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, PAGE_WIDTH, PAGE_HEIGHT, _pageContentSize );
@@ -230,8 +230,6 @@ float FontAtlas::getCommonLineHeight() const
 
 void  FontAtlas::setCommonLineHeight(float newHeight)
 {
-    if(_makeDistanceMap)
-        newHeight += 2 * Font::DistanceMapSpread;
     _commonLineHeight = newHeight;
 }
 

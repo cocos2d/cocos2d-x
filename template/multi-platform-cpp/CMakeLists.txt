@@ -48,12 +48,14 @@ set(GAME_SRC
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 include_directories(
+  /usr/local/include/GLFW
   ${COCOS2D_ROOT}
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/audio/include
   ${COCOS2D_ROOT}/cocos/2d
   ${COCOS2D_ROOT}/cocos/2d/renderer
   ${COCOS2D_ROOT}/cocos/2d/platform
+  ${COCOS2D_ROOT}/cocos/2d/platform/desktop
   ${COCOS2D_ROOT}/cocos/2d/platform/linux
   ${COCOS2D_ROOT}/cocos/base
   ${COCOS2D_ROOT}/cocos/physics
@@ -65,8 +67,6 @@ include_directories(
   ${COCOS2D_ROOT}/external/jpeg/include/linux
   ${COCOS2D_ROOT}/external/tiff/include/linux
   ${COCOS2D_ROOT}/external/webp/include/linux
-  ${COCOS2D_ROOT}/external/glfw3/include/linux
-  ${COCOS2D_ROOT}/external/curl/include/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/tinyxml2
   ${COCOS2D_ROOT}/external/unzip
   ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
@@ -80,7 +80,6 @@ link_directories(
   ${COCOS2D_ROOT}/external/tiff/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/webp/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/freetype2/prebuilt/linux/${ARCH_DIR}
-  ${COCOS2D_ROOT}/external/curl/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
 

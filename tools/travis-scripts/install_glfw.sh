@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GLFW_VERSION="3.0.2"
+GLFW_VERSION="3.0.4"
 GLFW_SOURCE="https://codeload.github.com/glfw/glfw/tar.gz/${GLFW_VERSION}"
 GLFW_ZIP="glfw${GLFW_VERSION}.tar.gz"
 GLFW_INSTALL="glfw_install"
@@ -46,9 +46,6 @@ install_glfw()
   clean_tmp_file
 }
 
-GLFW_INSTALLED=$(whereis libglfw |grep libglfw.so)
-if [ "$GLFW_INSTALLED"x = ""x ]; then
-  install_glfw
-else
-  echo "libglfw has been installed, skip..."
-fi
+
+install_glfw
+

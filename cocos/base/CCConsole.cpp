@@ -50,7 +50,7 @@
 #include "CCScheduler.h"
 #include "CCScene.h"
 #include "CCPlatformConfig.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "CCTextureCache.h"
 
@@ -144,24 +144,7 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 // Free functions to log
 //
 
-// XXX: Deprecated
-void CCLog(const char * format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(format, args);
-    va_end(args);
-}
-
-void log(const char * format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(format, args);
-    va_end(args);
-}
-
-void log(const char *format, va_list args)
+static void _log(const char *format, va_list args)
 {
     char buf[MAX_LOG_LENGTH];
 
@@ -175,10 +158,8 @@ void log(const char *format, va_list args)
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
-    OutputDebugStringA("\n");
-    
     WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), buf, sizeof(buf), NULL, FALSE);
-    printf("%s\n", buf);
+    printf("%s", buf);
 
 #else
     // Linux, Mac, iOS, etc
@@ -189,6 +170,22 @@ void log(const char *format, va_list args)
     Director::getInstance()->getConsole()->log(buf);
 }
 
+// XXX: Deprecated
+void CCLog(const char * format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    _log(format, args);
+    va_end(args);
+}
+
+void log(const char * format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    _log(format, args);
+    va_end(args);
+}
 
 //
 // Console code
@@ -392,7 +389,7 @@ void Console::commandTextures(int fd, const char *command)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [&](){
-        mydprintf(fd, "%s", TextureCache::getInstance()->getCachedTextureInfo().c_str());
+        mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
     }
                                         );
 }
@@ -517,7 +514,7 @@ void Console::loop()
     timeout.tv_sec = 0;
 
     /* 0.016 seconds. Wake up once per frame at 60PFS */
-    timeout.tv_usec = 016000;
+    timeout.tv_usec = 16000;
 
     while(!_endThread) {
 

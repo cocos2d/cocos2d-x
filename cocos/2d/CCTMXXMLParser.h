@@ -250,8 +250,9 @@ public:
     inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
 
     /// properties
-    inline ValueMap getProperties() const { return _properties; };
-    inline void setProperties(ValueMap properties) {
+    inline const ValueMap& getProperties() const { return _properties; }
+    inline ValueMap& getProperties() { return _properties; }
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     

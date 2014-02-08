@@ -25,6 +25,10 @@
 
 #include "CCFontFNT.h"
 #include "CCFontAtlas.h"
+#include "CCLabelBMFont.h"
+#include "CCDirector.h"
+#include "CCTextureCache.h"
+#include "ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +62,7 @@ FontFNT::~FontFNT()
 
 }
 
-Size * FontFNT::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const
+int * FontFNT::getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const
 {
     if (!text)
         return 0;
@@ -68,37 +72,19 @@ Size * FontFNT::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters
     if (!outNumLetters)
         return 0;
     
-    Size *sizes = new Size[outNumLetters];
+    int *sizes = new int[outNumLetters];
     if (!sizes)
         return 0;
     
     for (int c = 0; c < outNumLetters; ++c)
     {
-        int advance = 0;
-        int kerning = 0;
-        
-        advance = getAdvanceForChar(text[c]);
-        
         if (c < (outNumLetters-1))
-            kerning = getHorizontalKerningForChars(text[c], text[c+1]);
-        
-        sizes[c].width = (advance + kerning);
+            sizes[c] = getHorizontalKerningForChars(text[c], text[c+1]);
+        else
+            sizes[c] = 0;
     }
     
     return sizes;
-}
-
-int  FontFNT::getAdvanceForChar(unsigned short theChar) const
-{
-    tFontDefHashElement *element = nullptr;
-    
-    // unichar is a short, and an int is needed on HASH_FIND_INT
-    unsigned int key = theChar;
-    HASH_FIND_INT(_configuration->_fontDefDictionary, &key, element);
-    if (! element)
-        return -1;
-    
-    return element->fontDef.xAdvance;
 }
 
 int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
@@ -116,28 +102,6 @@ int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned sh
     }
     
     return ret;
-}
-
-Rect FontFNT::getRectForCharInternal(unsigned short theChar) const
-{
-    Rect retRect;
-    ccBMFontDef fontDef;
-    tFontDefHashElement *element = nullptr;
-    unsigned int key = theChar;
-    
-    HASH_FIND_INT(_configuration->_fontDefDictionary, &key, element);
-    
-    if (element)
-    {
-        retRect = element->fontDef.rect;
-    }
-    
-    return retRect;
-}
-
-Rect FontFNT::getRectForChar(unsigned short theChar) const
-{
-    return getRectForCharInternal(theChar);
 }
 
 FontAtlas * FontFNT::createFontAtlas()
@@ -190,9 +154,8 @@ FontAtlas * FontFNT::createFontAtlas()
         //carloX: only one texture supported FOR NOW
         tempDefinition.textureID = 0;
         
-        tempDefinition.anchorX = 0.5f;
-        tempDefinition.anchorY = 0.5f;
         tempDefinition.validDefinition = true;
+        tempDefinition.xAdvance = fontDef.xAdvance;
         // add the new definition
         tempAtlas->addLetterDefinition(tempDefinition);
     }

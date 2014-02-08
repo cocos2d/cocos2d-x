@@ -26,8 +26,11 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
+
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "CCShaderCache.h"
+#include "CCDirector.h"
 
 using namespace cocos2d;
 
@@ -153,7 +156,7 @@ void BatchNode::draw()
 void BatchNode::generateGroupCommand()
 {
     Renderer* renderer = Director::getInstance()->getRenderer();
-    _groupCommand->init(0,_vertexZ);
+    _groupCommand->init(_globalZOrder);
     renderer->addCommand(_groupCommand);
 
     renderer->pushGroup(_groupCommand->getRenderQueueID());

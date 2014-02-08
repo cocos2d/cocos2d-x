@@ -143,7 +143,7 @@ public:
     //! Update zorder
     void updateZOrder();
 
-    virtual void setZOrder(int zOrder) override;
+    virtual void setLocalZOrder(int zOrder) override;
 
     Tween *getTween();
 

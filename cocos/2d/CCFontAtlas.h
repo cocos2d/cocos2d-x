@@ -26,11 +26,14 @@
 #define _CCFontAtlas_h_
 
 #include <unordered_map>
+#include "CCPlatformMacros.h"
+#include "CCObject.h"
 
 NS_CC_BEGIN
 
 //fwd
 class Font;
+class Texture2D;
 
 struct FontLetterDefinition
 {
@@ -42,10 +45,8 @@ struct FontLetterDefinition
     float offsetX;
     float offsetY;
     int textureID;
-    float commonLineHeight;
-    float anchorX;
-    float anchorY;
     bool validDefinition;
+    int xAdvance;
 };
 
 class CC_DLL FontAtlas : public Object

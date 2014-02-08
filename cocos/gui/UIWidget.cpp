@@ -255,7 +255,7 @@ Widget* Widget::getChildByName(const char *name)
     
 void Widget::addNode(Node* node)
 {
-    addNode(node, node->getZOrder(), node->getTag());
+    addNode(node, node->getLocalZOrder(), node->getTag());
 }
 
 void Widget::addNode(Node * node, int zOrder)
@@ -1040,7 +1040,7 @@ void Widget::copyProperties(Widget *widget)
     setBright(widget->isBright());
     setTouchEnabled(widget->isTouchEnabled());
     _touchPassedEnabled = false;
-    setZOrder(widget->getZOrder());
+    setLocalZOrder(widget->getLocalZOrder());
     setTag(widget->getTag());
     setName(widget->getName());
     setActionTag(widget->getActionTag());

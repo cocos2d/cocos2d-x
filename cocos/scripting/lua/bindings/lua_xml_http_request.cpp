@@ -270,7 +270,7 @@ void LuaMinXmlHttpRequest::getByteData(unsigned char* byteData)
 /* function to regType */
 static void lua_reg_xml_http_request(lua_State* L)
 {
-    tolua_usertype(L, "XMLHttpRequest");
+    tolua_usertype(L, "cc.XMLHttpRequest");
 }
 
 static int lua_collect_xml_http_request (lua_State* L)
@@ -296,7 +296,7 @@ static int lua_cocos2dx_XMLHttpRequest_constructor(lua_State* L)
         self->autorelease();
         int ID =  self? (int)self->_ID : -1;
         int* luaID = self? &self->_luaID : NULL;
-        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)self, "XMLHttpRequest");
+        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)self, "cc.XMLHttpRequest");
         return 1;
     }
     
@@ -316,7 +316,7 @@ static int lua_get_XMLHttpRequest_responseType(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -345,7 +345,7 @@ static int lua_set_XMLHttpRequest_responseType(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -388,7 +388,7 @@ static int lua_get_XMLHttpRequest_withCredentials(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -417,7 +417,7 @@ static int lua_set_XMLHttpRequest_withCredentials(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -457,7 +457,7 @@ static int lua_get_XMLHttpRequest_timeout(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -486,7 +486,7 @@ static int lua_set_XMLHttpRequest_timeout(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -526,7 +526,7 @@ static int lua_get_XMLHttpRequest_readyState(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -555,7 +555,7 @@ static int lua_get_XMLHttpRequest_status(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -584,7 +584,7 @@ static int lua_get_XMLHttpRequest_statusText(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -613,7 +613,7 @@ static int lua_get_XMLHttpRequest_responseText(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -640,7 +640,7 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -711,7 +711,7 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -796,7 +796,7 @@ static int lua_cocos2dx_XMLHttpRequest_send(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -855,7 +855,7 @@ static int lua_cocos2dx_XMLHttpRequest_setRequestHeader(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -902,7 +902,7 @@ static int lua_cocos2dx_XMLHttpRequest_getAllResponseHeaders(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -948,7 +948,7 @@ static int lua_cocos2dx_XMLHttpRequest_getResponseHeader(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -1002,7 +1002,7 @@ static int lua_cocos2dx_XMLHttpRequest_registerScriptHandler(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -1046,7 +1046,7 @@ static int lua_cocos2dx_XMLHttpRequest_unregisterScriptHandler(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
@@ -1082,9 +1082,9 @@ TOLUA_API int register_xml_http_request(lua_State* L)
 {
     tolua_open(L);
     lua_reg_xml_http_request(L);
-    tolua_module(L,NULL,0);
-    tolua_beginmodule(L,NULL);
-      tolua_cclass(L,"XMLHttpRequest","XMLHttpRequest","Object",lua_collect_xml_http_request);
+    tolua_module(L,"cc",0);
+    tolua_beginmodule(L,"cc");
+      tolua_cclass(L,"XMLHttpRequest","cc.XMLHttpRequest","cc.Object",lua_collect_xml_http_request);
       tolua_beginmodule(L,"XMLHttpRequest");
         tolua_variable(L, "responseType", lua_get_XMLHttpRequest_responseType, lua_set_XMLHttpRequest_responseType);
         tolua_variable(L, "withCredentials", lua_get_XMLHttpRequest_withCredentials, lua_set_XMLHttpRequest_withCredentials);

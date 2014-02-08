@@ -8,6 +8,23 @@ import os, os.path
 import shutil
 from optparse import OptionParser
 
+def get_num_of_cpu():
+	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
+	'''
+	try:
+		platform = sys.platform
+		if platform == 'win32':
+			if 'NUMBER_OF_PROCESSORS' in os.environ:
+				return int(os.environ['NUMBER_OF_PROCESSORS'])
+			else:
+				return 1
+		else:
+			from numpy.distutils import cpuinfo
+			return cpuinfo.cpu._getNCPUs()
+	except Exception:
+		print "Can't know cpuinfo, use default 1 cpu"
+		return 1
+
 def check_environment_variables_sdk():
     ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building
     '''
@@ -61,11 +78,13 @@ def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,and
         ndk_module_path = 'NDK_MODULE_PATH=%s;%s/external;%s/cocos' % (cocos_root, cocos_root, cocos_root)
     else:
         ndk_module_path = 'NDK_MODULE_PATH=%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root)
-
+	
+    num_of_cpu = get_num_of_cpu()
+	
     if ndk_build_param == None:
-        command = '%s -C %s %s' % (ndk_path, app_android_root, ndk_module_path)
+        command = '%s -j%d -C %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_module_path)
     else:
-        command = '%s -C %s %s %s' % (ndk_path, app_android_root, ''.join(str(e) for e in ndk_build_param), ndk_module_path)
+        command = '%s -j%d -C %s %s %s' % (ndk_path, num_of_cpu, app_android_root, ''.join(str(e) for e in ndk_build_param), ndk_module_path)
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
     elif android_platform is not None:

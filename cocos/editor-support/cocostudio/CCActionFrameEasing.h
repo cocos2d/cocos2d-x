@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __ActionFrameEasing_H__
 #define __ActionFrameEasing_H__
 
-#include "cocos2d.h"
+#include "CCObject.h"
 
 namespace cocostudio {
 
