@@ -16,21 +16,25 @@ def main():
     #get pull number
     pr_num = payload['number']
     print 'pr_num:' + str(pr_num)
-
+    payload_forword = {"number":pr_num}
+    
     #build for pull request action 'open' and 'synchronize', skip 'close'
     action = payload['action']
     print 'action: ' + action
-
-    pr = payload['pull_request']
+    payload_forword['action'] = action
     
+    pr = payload['pull_request']
     url = pr['html_url']
     print "url:" + url
+    payload_forword['html_url'] = url
     
     #get statuses url
     statuses_url = pr['statuses_url']
+    payload_forword['statuses_url'] = statuses_url
 
     #get pr target branch
     branch = pr['base']['ref']
+    payload_forword['branch'] = branch
 
     #set commit status to pending
     target_url = os.environ['BUILD_URL']
@@ -59,10 +63,10 @@ def main():
     except:
         traceback.print_exc()
 
-    job_trigger_url = os.environ['JOB_TRIGGER_URL']
+    job_trigger_url = os.environ['JOB_TRIGGER_URL']+access_token
     #send trigger and payload
     post_data = {'payload':""}
-    post_data['payload']= payload_str
+    post_data['payload']= json.dumps(payload_forword)
     requests.post(job_trigger_url, data=post_data)
 
     return(0)
