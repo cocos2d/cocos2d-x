@@ -1009,6 +1009,64 @@ end
 
 
 --------------------------------------------------------
+----- LabelTTFCJKWrappingTest
+--------------------------------------------------------
+local LabelTTFCJKWrappingTest = {}
+function LabelTTFCJKWrappingTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New Label + .TTF")
+    Helper.subtitleLabel:setString(
+        "New Label with CJK + ASCII characters\n"
+        .. "Characters should stay in the correct position")
+
+    local size = cc.Director:getInstance():getVisibleSize()
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/wt021.ttf"
+    ttfConfig.fontSize = 50
+    ttfConfig.glyphs = cc.GLYPHCOLLECTION_DYNAMIC
+    ttfConfig.customGlyphs = nil
+    ttfConfig.distanceFieldEnabled = true
+    
+    local drawNode = cc.DrawNode:create()
+    drawNode:setAnchorPoint(cc.p(0, 0))
+    layer:addChild(drawNode)
+    drawNode:drawSegment(
+        cc.p(size.width * 0.1, size.height * 0.8),
+        cc.p(size.width * 0.1, 0), 1, cc.c4f(1, 0, 0, 1))
+    drawNode:drawSegment(
+        cc.p(size.width * 0.85, size.height * 0.8),
+        cc.p(size.width * 0.85, 0), 1, cc.c4f(1, 0, 0, 1))
+    
+    local label1 = cc.Label:createWithTTF(
+        ttfConfig, "你好，Cocos2d-x v3的New Label。",
+        cc.TEXT_ALIGNMENT_LEFT, size.width * 0.75)
+    label1:setColor(cc.c3b(128, 255, 255))
+    label1:setPosition(cc.p(size.width * 0.1, size.height * 0.6))
+    label1:setAnchorPoint(cc.p(0, 0.5))
+    layer:addChild(label1)
+    
+    local label2 = cc.Label:createWithTTF(
+        ttfConfig, "早上好，Cocos2d-x v3的New Label。",
+        cc.TEXT_ALIGNMENT_LEFT, size.width * 0.75)
+    label2:setColor(cc.c3b(255, 128, 255))
+    label2:setPosition(cc.p(size.width * 0.1, size.height * 0.4))
+    label2:setAnchorPoint(cc.p(0, 0.5))
+    layer:addChild(label2)
+    
+    local label3 = cc.Label:createWithTTF(
+        ttfConfig, "美好的一天啊美好的一天啊美好的一天啊",
+        cc.TEXT_ALIGNMENT_LEFT, size.width * 0.75)
+    label3:setColor(cc.c3b(255, 255, 128))
+    label3:setPosition(cc.p(size.width * 0.1, size.height * 0.2))
+    label3:setAnchorPoint(cc.p(0, 0.5))
+    layer:addChild(label3)
+
+    return layer
+end
+
+
+--------------------------------------------------------
 ----- LabelTTFFontsTestNew
 --------------------------------------------------------
 local LabelTTFFontsTestNew = {}
@@ -1262,6 +1320,7 @@ function LabelTestNew()
         LabelFNTBounds.create,
         LabelTTFLongLineWrapping.create,
         LabelTTFDynamicAlignment.create,
+        LabelTTFCJKWrappingTest.create,
         LabelTTFFontsTestNew.create,
         LabelBMFontTestNew.create,
         LabelTTFDistanceField.create,
