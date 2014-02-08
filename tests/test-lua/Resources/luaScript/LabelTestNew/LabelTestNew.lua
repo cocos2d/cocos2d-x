@@ -1009,7 +1009,7 @@ end
 
 
 --------------------------------------------------------
------ LabelCJKASCIITest
+----- LabelTTFCJKWrappingTest
 --------------------------------------------------------
 local LabelTTFCJKWrappingTest = {}
 function LabelTTFCJKWrappingTest.create()
