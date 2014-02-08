@@ -151,7 +151,15 @@ void GLViewProtocol::setFrameSize(float width, float height)
     _designResolutionSize = _screenSize = Size(width, height);
 }
 
-Size  GLViewProtocol::getVisibleSize() const
+Rect GLViewProtocol::getVisibleRect() const
+{
+    Rect ret;
+    ret.size = getVisibleSize();
+    ret.origin = getVisibleOrigin();
+    return ret;
+}
+
+Size GLViewProtocol::getVisibleSize() const
 {
     if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
