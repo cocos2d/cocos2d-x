@@ -238,9 +238,9 @@ class EndianUtils
     {
       DebugOnly<const uint8_t*> byteDestPtr = static_cast<const uint8_t*>(dest);
       DebugOnly<const uint8_t*> byteSrcPtr = static_cast<const uint8_t*>(src);
-      MOZ_ASSERT((byteDestPtr < byteSrcPtr &&
+      MOZ_ASSERT((byteDestPtr <= byteSrcPtr &&
                   byteDestPtr + count <= byteSrcPtr) ||
-                 (byteSrcPtr < byteDestPtr &&
+                 (byteSrcPtr <= byteDestPtr &&
                   byteSrcPtr + count <= byteDestPtr));
     }
 

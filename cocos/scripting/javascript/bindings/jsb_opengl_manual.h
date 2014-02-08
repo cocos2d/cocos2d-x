@@ -31,6 +31,7 @@
 
 //#include <Availability.h>
 #include "jsapi.h"
+#include "jsfriendapi.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -43,7 +44,7 @@
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 // forward declaration of new functions
-JSBool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp);
+bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 #endif // JSB_INCLUDE_OPENGL
