@@ -103,7 +103,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(Configurati
 xcopy /Y /Q "$(Configuration).win32\*.dll" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libcurl_imp.lib;mozjs-25.0.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl_imp.lib;mozjs-27.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -159,7 +159,7 @@ xcopy /Y /Q "$(EngineRoot)external\spidermonkey\prebuilt\win32\*.*" "$(Configura
 xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(Configuration).win32"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libcurl_imp.lib;mozjs-25.0.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl_imp.lib;mozjs-27.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
