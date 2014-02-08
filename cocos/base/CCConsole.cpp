@@ -29,6 +29,7 @@
 #include <functional>
 #include <cctype>
 #include <locale>
+#include <sstream>
 
 #include <stdio.h>
 #include <time.h>
@@ -56,6 +57,7 @@
 #include "platform/CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "CCTextureCache.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -246,6 +248,8 @@ Console::Console()
             }
         } },
         { "help", "Print this message", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) },
+        { "projection", "[2d | 3d] Changes or print the current projection", std::bind(&Console::commandProjection, this, std::placeholders::_1, std::placeholders::_2) },
+        { "resolution", "[width height | ] Changes or print the window resolution", std::bind(&Console::commandResolution, this, std::placeholders::_1, std::placeholders::_2) },
         { "scene graph", "Print the scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
         { "texture", "[flush | ] Flush or print the TextureCache info", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
     };
@@ -420,6 +424,90 @@ void Console::commandConfig(int fd, const std::string& args)
         mydprintf(fd, "%s", Configuration::getInstance()->getInfo().c_str());
     }
                                         );
+}
+
+void Console::commandResolution(int fd, const std::string& args)
+{
+    if(args.length()==0) {
+        auto director = Director::getInstance();
+        Size points = director->getWinSize();
+        Size pixels = director->getWinSizeInPixels();
+        auto glview = director->getOpenGLView();
+        Size design = glview->getDesignResolutionSize();
+        ResolutionPolicy res = glview->getResolutionPolicy();
+        Rect visibleRect = glview->getVisibleRect();
+
+        mydprintf(fd, "Window Size:\n"
+                        "\t%d x %d (points)\n"
+                        "\t%d x %d (pixels)\n"
+                        "\t%d x %d (design resolution)\n"
+                        "Resolution Policy: %d\n"
+                        "Visible Rect:\n"
+                        "\torigin: %d x %d\n"
+                        "\tsize: %d x %d",
+                  (int)points.width, (int)points.height,
+                  (int)pixels.width, (int)pixels.height,
+                  (int)design.width, (int)design.height,
+                  (int)res,
+                  (int)visibleRect.origin.x, (int)visibleRect.origin.y,
+                  (int)visibleRect.size.width, (int)visibleRect.size.height
+                  );
+
+    } else {
+        int width, height, policy;
+
+        std::istringstream stream( args );
+        stream >> width >> height>> policy;
+
+        Scheduler *sched = Director::getInstance()->getScheduler();
+        sched->performFunctionInCocosThread( [&](){
+            Director::getInstance()->getOpenGLView()->setDesignResolutionSize(width, height, static_cast<ResolutionPolicy>(policy));
+        } );
+    }
+}
+
+void Console::commandProjection(int fd, const std::string& args)
+{
+    auto director = Director::getInstance();
+    Scheduler *sched = director->getScheduler();
+
+    if(args.length()==0)
+    {
+        char buf[20];
+        auto proj = director->getProjection();
+        switch (proj) {
+            case cocos2d::Director::Projection::_2D:
+                sprintf(buf,"2d");
+                break;
+            case cocos2d::Director::Projection::_3D:
+                sprintf(buf,"3d");
+                break;
+            case cocos2d::Director::Projection::CUSTOM:
+                sprintf(buf,"custom");
+                break;
+
+            default:
+                sprintf(buf,"unknown");
+                break;
+        }
+        mydprintf(fd, "Current projection: %s", buf);
+    }
+    else if( args.compare("2d") == 0)
+    {
+        sched->performFunctionInCocosThread( [&](){
+            director->setProjection(Director::Projection::_2D);
+        } );
+    }
+    else if( args.compare("3d") == 0)
+    {
+        sched->performFunctionInCocosThread( [&](){
+            director->setProjection(Director::Projection::_3D);
+        } );
+    }
+    else
+    {
+        mydprintf(fd, "Unsupported argument: '%s'. Supported arguments: '2d' or '3d'", args.c_str());
+    }
 }
 
 void Console::commandTextures(int fd, const std::string& args)
