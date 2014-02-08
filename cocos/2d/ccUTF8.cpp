@@ -171,6 +171,11 @@ bool isspace_unicode(unsigned short ch)
     ||  ch == 0x205F || ch == 0x3000;
 }
 
+bool ischinese_unicode(unsigned short ch)
+{
+    return ch >= 0x4E00 && ch <= 0x9FBF;
+}
+
 void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 {
     int len = static_cast<int>(str->size());
