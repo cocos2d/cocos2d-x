@@ -227,31 +227,31 @@ Console::Console()
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
-        { "config", "prints the Configuration object", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
-        { "debug msg", "[on | off] Whether or not to forward the debug messages on the console", [&](int fd, const std::string& args) {
+        { "config", "Print the Configuration object", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
+        { "debugmsg", "Whether or not to forward the debug messages on the console. Args: [on | off]", [&](int fd, const std::string& args) {
             if( args.compare("on")==0 || args.compare("off")==0) {
                 _sendDebugStrings = (args.compare("on") == 0);
             } else {
-                mydprintf(fd, "Supported arguments: 'on' or 'off'\n");
+                mydprintf(fd, "Debug message is: %s\n", _sendDebugStrings ? "on" : "off");
             }
         } },
         { "exit", "Close connection to the console", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
-        { "fileutils", "[flush | ] Flush or print the FileUtils info", std::bind(&Console::commandFileUtils, this, std::placeholders::_1, std::placeholders::_2) },
-        { "fps", "[on | off] Turn on|off the FPS", [](int fd, const std::string& args) {
+        { "fileutils", "Flush or print the FileUtils info. Args: [flush | ] ", std::bind(&Console::commandFileUtils, this, std::placeholders::_1, std::placeholders::_2) },
+        { "fps", "Turn on / off the FPS. Args: [on | off] ", [](int fd, const std::string& args) {
             if( args.compare("on")==0 || args.compare("off")==0) {
                 bool state = (args.compare("on") == 0);
                 Director *dir = Director::getInstance();
                 Scheduler *sched = dir->getScheduler();
                 sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, state));
             } else {
-                mydprintf(fd, "Supported arguments: 'on' or 'off'\n");
+                mydprintf(fd, "FPS is: %s\n", Director::getInstance()->isDisplayStats() ? "on" : "off");
             }
         } },
         { "help", "Print this message", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) },
-        { "projection", "[2d | 3d] Changes or print the current projection", std::bind(&Console::commandProjection, this, std::placeholders::_1, std::placeholders::_2) },
-        { "resolution", "[width height | ] Changes or print the window resolution", std::bind(&Console::commandResolution, this, std::placeholders::_1, std::placeholders::_2) },
-        { "scene graph", "Print the scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
-        { "texture", "[flush | ] Flush or print the TextureCache info", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
+        { "projection", "Change or print the current projection. Args: [2d | 3d] ", std::bind(&Console::commandProjection, this, std::placeholders::_1, std::placeholders::_2) },
+        { "resolution", "Change or print the window resolution. Args: [width height resolution_policy | ] ", std::bind(&Console::commandResolution, this, std::placeholders::_1, std::placeholders::_2) },
+        { "scenegraph", "Print the scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
+        { "texture", "Flush or print the TextureCache info. Args: [flush | ] ", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
     };
 
     _maxCommands = sizeof(commands)/sizeof(commands[0]);
@@ -372,18 +372,25 @@ void Console::commandHelp(int fd, const std::string &args)
     const char help[] = "\nAvailable commands:\n";
     write(fd, help, sizeof(help));
     for(int i=0; i<_maxCommands; ++i) {
-        write(fd,"\t",1);
-        write(fd, _commands[i].name, strlen(_commands[i].name));
-        write(fd,"\n",1);
+        mydprintf(fd, "\t%s", _commands[i].name);
+        ssize_t tabs = strlen(_commands[i].name) / 8;
+        tabs = 3 - tabs;
+        for(int j=0;j<tabs;j++){
+            mydprintf(fd, "\t");
+        }
+        mydprintf(fd,"%s\n", _commands[i].help);
     }
 
     // User commands
     for(int i=0; i<_maxUserCommands; ++i) {
-        write(fd,"\t",1);
-        write(fd, _userCommands[i].name, strlen(_userCommands[i].name));
-        write(fd,"\n",1);
+        mydprintf(fd, "\t%s", _userCommands[i].name);
+        ssize_t tabs = strlen(_userCommands[i].name) / 8;
+        tabs = 3 - tabs;
+        for(int j=0;j<tabs;j++){
+            mydprintf(fd, "\t");
+        }
+        mydprintf(fd,"%s\n", _userCommands[i].help);
     }
-
 }
 
 void Console::commandExit(int fd, const std::string &args)
