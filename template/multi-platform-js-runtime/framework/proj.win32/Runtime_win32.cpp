@@ -93,7 +93,7 @@ string getProjSearchPath()
 {
 	extern std::string getCurAppPath(void);
 	string searchPath = getCurAppPath();
-	searchPath += "/../..";
+	searchPath += "/../../..";
 	char fuldir[_MAX_PATH_]={0};
 	_fullpath(fuldir,searchPath.c_str(),_MAX_PATH_);
 	return fuldir;
@@ -104,7 +104,7 @@ vector<string> getSearchPath()
 	extern std::string getCurAppPath(void);
 	vector<string> searchPathArray;
 	string searchPathRes = getCurAppPath();
-	searchPathRes += "/HelloJavascriptRes";
+	searchPathRes += "/Resources";
 	searchPathArray.push_back(getProjSearchPath());
 	searchPathArray.push_back(searchPathRes);
 	return searchPathArray;

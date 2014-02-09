@@ -71,7 +71,7 @@ def check_ant_variables():
     ''' Checking the environment ANT, which will be used for package
     '''
     try:
-        ANT_PATH = os.environ['ANT']
+        ANT_PATH = os.environ['ANT_PATH']
     except Exception:
         print "ANT_PATH not defined. Please define ANT_PATH in your environment"
         sys.exit(1)

@@ -45,10 +45,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\runtime\win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\runtime\HelloJavascript\win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\runtime\win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\runtime\HelloJavascript\win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -113,9 +113,9 @@ xcopy /Y /Q "$(Configuration).win32\*.dll" "$(OutDir)"</Command>
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\HelloJavascriptRes" rd /s /q "$(OutDir)\HelloJavascriptRes"
-mkdir "$(OutDir)\HelloJavascriptRes"
-xcopy "$(EngineRoot)cocos\scripting\javascript\script\*.js" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command>
+if exist "$(OutDir)\Resources" rd /s /q "$(OutDir)\Resources"
+mkdir "$(OutDir)\Resources"
+xcopy "$(EngineRoot)cocos\scripting\javascript\script\*.js" "$(OutDir)\Resources\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -168,9 +168,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(Configurati
     </Link>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\HelloJavascriptRes" rd /s /q "$(OutDir)\HelloJavascriptRes"
-mkdir "$(OutDir)\HelloJavascriptRes"
-xcopy "$(EngineRoot)cocos\scripting\javascript\script\*.js" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command>
+if exist "$(OutDir)\Resources" rd /s /q "$(OutDir)\Resources"
+mkdir "$(OutDir)\Resources"
+xcopy "$(EngineRoot)cocos\scripting\javascript\script\*.js" "$(OutDir)\Resources\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
