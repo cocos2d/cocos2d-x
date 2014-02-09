@@ -255,7 +255,7 @@ public:
 		vector<std::string> fileInfoList = searchFileList(_jsSearchPath,"*.js","runtime|framework|");
 		for (unsigned i = 0; i < fileInfoList.size(); i++)
 		{
-			//ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(_jsSearchPath.length(),-1).c_str());
+			ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(_jsSearchPath.length(),-1).c_str());
 		}
 
 		if (!FileUtils::getInstance()->isFileExist(_dotwaitFile))
