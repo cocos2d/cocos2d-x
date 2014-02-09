@@ -45,6 +45,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCocosBuilder", "..\cocos
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForBuilder", "..\cocos2d\cocos\scripting\javascript\bindings\cocosbuilder\libJSBindingForBuilder.vcxproj", "{F9DA0FC1-651B-457B-962E-A4D61CEBF5FD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestJavascript", "..\..\..\..\tests\test-javascript\proj.win32\TestJavascript.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -103,6 +105,10 @@ Global
 		{F9DA0FC1-651B-457B-962E-A4D61CEBF5FD}.Debug|Win32.Build.0 = Debug|Win32
 		{F9DA0FC1-651B-457B-962E-A4D61CEBF5FD}.Release|Win32.ActiveCfg = Release|Win32
 		{F9DA0FC1-651B-457B-962E-A4D61CEBF5FD}.Release|Win32.Build.0 = Release|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.Build.0 = Debug|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.ActiveCfg = Release|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

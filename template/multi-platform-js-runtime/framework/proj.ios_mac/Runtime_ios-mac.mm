@@ -23,5 +23,6 @@ string getDotWaitFilePath()
 	string dotwaitFile;
     dotwaitFile = getProjSearchPath();
     dotwaitFile += "/.wait";
+    return dotwaitFile;
 }
 
