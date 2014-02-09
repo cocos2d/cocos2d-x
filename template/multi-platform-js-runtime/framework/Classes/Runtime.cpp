@@ -291,6 +291,9 @@ void StartRuntime()
 #ifdef COCOS2D_DEBUG
 	ScriptingCore::getInstance()->start();
 	ScriptingCore::getInstance()->enableDebugger();
+	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+	ScriptingCore::getInstance()->runScript("jsb.js");
 	ConnectWaiter::getInstance().waitDebugConnect();
 #else
 	ScriptingCore::getInstance()->start();
