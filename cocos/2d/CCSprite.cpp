@@ -499,6 +499,8 @@ void Sprite::setTextureCoords(Rect rect)
 
 void Sprite::updateTransform(void)
 {
+    CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
+
 #if CC_USE_PHYSICS
     if (updatePhysicsTransform())
     {
