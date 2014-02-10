@@ -247,8 +247,13 @@ It should work same as apples CFSwapInt32LittleToHost(..)
  Increments the GL Draws counts by one.
  The number of calls per frame are displayed on the screen when the Director's stats are enabled.
  */
-extern unsigned int CC_DLL g_uNumberOfDraws;
-#define CC_INCREMENT_GL_DRAWS(__n__) g_uNumberOfDraws += __n__
+#define CC_INCREMENT_GL_DRAWS(__n__) Director::getInstance()->getRenderer()->addDrawnBatches(__n__)
+#define CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(__drawcalls__, __vertices__) \
+    do {                                                                \
+        auto __renderer__ = Director::getInstance()->getRenderer();     \
+        __renderer__->addDrawnBatches(__drawcalls__);                   \
+        __renderer__->addDrawnVertices(__vertices__);                   \
+    } while(0)
 
 /*******************/
 /** Notifications **/

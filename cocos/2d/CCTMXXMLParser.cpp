@@ -82,11 +82,11 @@ TMXTilesetInfo::~TMXTilesetInfo()
     CCLOGINFO("deallocing TMXTilesetInfo: %p", this);
 }
 
-Rect TMXTilesetInfo::rectForGID(int gid)
+Rect TMXTilesetInfo::getRectForGID(uint32_t gid)
 {
     Rect rect;
     rect.size = _tileSize;
-    gid &= kFlippedMask;
+    gid &= kTMXFlippedMask;
     gid = gid - _firstGid;
     int max_x = (int)((_imageSize.width - _margin*2 + _spacing) / (_tileSize.width + _spacing));
     //    int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
@@ -425,9 +425,9 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            int tilesAmount = layerSize.width*layerSize.height;
+            ssize_t tilesAmount = layerSize.width*layerSize.height;
 
-            int *tiles = (int *) malloc(tilesAmount*sizeof(int));
+            uint32_t *tiles = (uint32_t*) malloc(tilesAmount*sizeof(uint32_t));
             // set all value to -1
             memset(tiles, 0xFF, tilesAmount*sizeof(int));
             
@@ -435,10 +435,14 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
              * When we load tiles, we can do this:
              * tiles[tilesAmount - tiles[tilesAmount - 1] - 1] = tileNum;
              * --tiles[tilesAmount - 1];
-             * We do this because we can easily contorl how much tiles we loaded without add a "curTilesAmount" into class member.
+             * We do this because we can easily control how much tiles we loaded without add a "curTilesAmount" into class member.
              */
             if (tilesAmount > 1)
             {
+                // XXX FIXME
+                // Compiler will generate a "implicit conversion loses integer..."
+                // Don't fix the warning. We need to fix the code instead. why we are using 'tiles' to store the amount of tiles.
+                // Isn't it better to have a variable with the length ?
                 tiles[tilesAmount - 1] = tilesAmount - 2;
             }
 
@@ -685,11 +689,11 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
                     return;
                 }
                 
-                layer->_tiles = reinterpret_cast<int*>(deflated);
+                layer->_tiles = reinterpret_cast<uint32_t*>(deflated);
             }
             else
             {
-                layer->_tiles = reinterpret_cast<int*>(buffer);
+                layer->_tiles = reinterpret_cast<uint32_t*>(buffer);
             }
             
             tmxMapInfo->setCurrentString("");

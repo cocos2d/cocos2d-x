@@ -1101,11 +1101,11 @@ void PhysicsDemoOneWayPlatform::onEnter()
     this->addChild(ball);
     
     auto contactListener = EventListenerPhysicsContactWithBodies::create(platform->getPhysicsBody(), ball->getPhysicsBody());
-    contactListener->onContactBegin = CC_CALLBACK_2(PhysicsDemoOneWayPlatform::onContactBegin, this);
+    contactListener->onContactBegin = CC_CALLBACK_1(PhysicsDemoOneWayPlatform::onContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
-bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const PhysicsContact& contact)
+bool PhysicsDemoOneWayPlatform::onContactBegin(PhysicsContact& contact)
 {
     return contact.getContactData()->normal.y < 0;
 }

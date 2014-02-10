@@ -602,7 +602,7 @@ void LayerColor::onDraw()
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 }
 
 std::string LayerColor::getDescription() const
