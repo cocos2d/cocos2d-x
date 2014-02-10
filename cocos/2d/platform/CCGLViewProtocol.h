@@ -138,6 +138,7 @@ public:
      */
     virtual const Size&  getDesignResolutionSize() const;
 
+	virtual const ResolutionPolicy& getResolutionPolicy() const;
     /**
      * Set opengl view port rectangle with points.
      */

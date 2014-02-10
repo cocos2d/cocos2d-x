@@ -2009,6 +2009,10 @@
 		B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
+		C0619CA71896872300872C26 /* debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0619CA51896872300872C26 /* debugger.c */; };
+		C0619CA81896872300872C26 /* debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = C0619CA51896872300872C26 /* debugger.c */; };
+		C0619CA91896872300872C26 /* debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0619CA61896872300872C26 /* debugger.h */; };
+		C0619CAA1896872300872C26 /* debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = C0619CA61896872300872C26 /* debugger.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -3235,6 +3239,8 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		C0619CA51896872300872C26 /* debugger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debugger.c; sourceTree = "<group>"; };
+		C0619CA61896872300872C26 /* debugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debugger.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3628,6 +3634,8 @@
 		1A3B1F4A180E88C200497A22 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
+				C0619CA51896872300872C26 /* debugger.c */,
+				C0619CA61896872300872C26 /* debugger.h */,
 				15A71DA21892291500F30AC0 /* lua_extensions.c */,
 				15A71DA31892291500F30AC0 /* lua_extensions.h */,
 				15A71D3B18921E6900F30AC0 /* socket */,
@@ -6021,6 +6029,7 @@
 				158E06E1181F6796008E01F6 /* lua_xml_http_request.h in Headers */,
 				1A2C78B5181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */,
 				15A71D7118921E6900F30AC0 /* luasocket_buffer.h in Headers */,
+				C0619CAA1896872300872C26 /* debugger.h in Headers */,
 				B362C3B51872BADF00F0BDF4 /* lua_cocos2dx_physics_manual.hpp in Headers */,
 				15A71D6D18921E6900F30AC0 /* luasocket.h in Headers */,
 				15A71D8118921E6900F30AC0 /* select.h in Headers */,
@@ -6075,6 +6084,7 @@
 				158E06E0181F6796008E01F6 /* lua_xml_http_request.h in Headers */,
 				1A2C78B3181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */,
 				15A71D7018921E6900F30AC0 /* luasocket_buffer.h in Headers */,
+				C0619CA91896872300872C26 /* debugger.h in Headers */,
 				B362C3B31872BADC00F0BDF4 /* lua_cocos2dx_physics_manual.hpp in Headers */,
 				15A71D6C18921E6900F30AC0 /* luasocket.h in Headers */,
 				15A71D8018921E6900F30AC0 /* select.h in Headers */,
@@ -7392,6 +7402,7 @@
 				1A8C5651180E8D0D00EF57C3 /* tolua_push.c in Sources */,
 				1A8C5653180E8D0D00EF57C3 /* tolua_to.c in Sources */,
 				15D6E846182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */,
+				C0619CA81896872300872C26 /* debugger.c in Sources */,
 				15A71D5F18921E6900F30AC0 /* auxiliar.c in Sources */,
 				15A71D6F18921E6900F30AC0 /* luasocket_buffer.c in Sources */,
 				15F4C8831875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */,
@@ -7448,6 +7459,7 @@
 				1A8C5650180E8D0D00EF57C3 /* tolua_push.c in Sources */,
 				1A8C5652180E8D0D00EF57C3 /* tolua_to.c in Sources */,
 				15D6E845182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */,
+				C0619CA71896872300872C26 /* debugger.c in Sources */,
 				15A71D5E18921E6900F30AC0 /* auxiliar.c in Sources */,
 				15A71D6E18921E6900F30AC0 /* luasocket_buffer.c in Sources */,
 				15F4C8821875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */,

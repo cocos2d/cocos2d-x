@@ -141,6 +141,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClCompile Include="CCLuaStack.cpp" />
     <ClCompile Include="CCLuaValue.cpp" />
     <ClCompile Include="Cocos2dxLuaLoader.cpp" />
+    <ClCompile Include="debugger.c" />
     <ClCompile Include="LuaBasicConversions.cpp" />
     <ClCompile Include="LuaOpengl.cpp" />
     <ClCompile Include="LuaScriptHandlerMgr.cpp" />
@@ -190,6 +191,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClInclude Include="CCLuaStack.h" />
     <ClInclude Include="CCLuaValue.h" />
     <ClInclude Include="Cocos2dxLuaLoader.h" />
+    <ClInclude Include="debugger.h" />
     <ClInclude Include="LuaBasicConversions.h" />
     <ClInclude Include="LuaOpengl.h" />
     <ClInclude Include="LuaScriptHandlerMgr.h" />

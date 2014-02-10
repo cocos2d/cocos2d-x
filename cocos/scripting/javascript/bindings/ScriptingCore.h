@@ -107,6 +107,12 @@ public:
 	bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
 
 	/**
+	 * will compile the specified string
+	 * @param string The path of the script to be run
+	 */
+	void compileScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
+
+	/**
 	 * will run the specified string
 	 * @param string The path of the script to be run
 	 */
