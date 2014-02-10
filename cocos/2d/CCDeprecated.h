@@ -976,7 +976,7 @@ CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionUnKnown       = Resolu
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag
 #define kCCTMXTileDiagonalFlag        kTMXTileDiagonalFlag
 #define kCCFlipedAll                  kFlipedAll
-#define kCCFlippedMask                kFlippedMask
+#define kCCFlippedMask                kTMXFlippedMask
 
 
 /** use log() instead */

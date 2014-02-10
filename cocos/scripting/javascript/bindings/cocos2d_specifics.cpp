@@ -2233,7 +2233,7 @@ bool js_cocos2dx_CCTMXLayer_tileFlagsAt(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		cocos2d::Point arg0;
 		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-		cocos2d::ccTMXTileFlags flags = kTMXTileHorizontalFlag;
+		cocos2d::TMXTileFlags flags = kTMXTileHorizontalFlag;
 		jsval jsret;
         jsret = UINT_TO_JSVAL((uint32_t)flags);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -2250,15 +2250,15 @@ bool js_cocos2dx_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 	if (argc == 0) {
-        int* ret = cobj->getTiles();
+        uint32_t* ret = cobj->getTiles();
         Size size = cobj->getLayerSize();
         int count = size.width * size.height;
-        JSObject* array = JS_NewInt32Array(cx, count);
+        JSObject* array = JS_NewUint32Array(cx, count);
         if (NULL == array) {
             JS_ReportError(cx, "Can't allocate enough memory.");
             return false;
         }
-        int32_t* bufdata = (int32_t*)JS_GetArrayBufferViewData(array);
+        uint32_t* bufdata = (uint32_t*)JS_GetArrayBufferViewData(array);
         memcpy(bufdata, ret, count*sizeof(int32_t));
         JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
 		return true;
@@ -3428,7 +3428,7 @@ bool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval *
     TEST_NATIVE_OBJECT(cx, cobj)
     if (argc == 1)
     {
-        ccTMXTileFlags flags;
+        TMXTileFlags flags;
         Point arg0;
         ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");

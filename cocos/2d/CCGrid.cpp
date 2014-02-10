@@ -32,7 +32,9 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CCGL.h"
+#include "renderer/CCRenderer.h"
 #include "TransformUtils.h"
+
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
 
@@ -346,7 +348,7 @@ void Grid3D::blit(void)
 
     glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, _indices);
 #endif // EMSCRIPTEN
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
 }
 
 void Grid3D::calculateVertexPoints(void)
@@ -563,7 +565,7 @@ void TiledGrid3D::blit(void)
 #endif // EMSCRIPTEN
 
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
 }
 
 void TiledGrid3D::calculateVertexPoints(void)
