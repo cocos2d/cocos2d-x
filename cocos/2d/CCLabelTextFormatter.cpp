@@ -107,26 +107,41 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             startOfLine = startOfWord;
             isStartOfLine  = true;
         }
-
-        // Whitespace.
-        if (isspace_unicode(character))
+        
+        // 1) Whitespace.
+        // 2) This character is non-CJK, but the last character is CJK
+        if (isspace_unicode(character) ||
+            !last_word.empty() && iscjk_unicode(last_word.back()) && !iscjk_unicode(character))
         {
-            last_word.push_back(character);
+            // if current character is white space, put it into the current word
+            if (isspace_unicode(character)) last_word.push_back(character);
             multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
             last_word.clear();
             isStartOfWord = false;
             startOfWord = -1;
+            // put the CJK character in the last word
+            // and put the non-CJK(ASCII) character in the current word
+            if (!isspace_unicode(character)) last_word.push_back(character);
             continue;
+        }
+        
+        // CJK characters.
+        if (iscjk_unicode(character))
+        {
+            multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+            last_word.clear();
+            isStartOfWord = false;
+            startOfWord = -1;
         }
 
         float posRight = (info->position.x + info->contentSize.width) * scalsX;
         // Out of bounds.
         if (posRight - startOfLine > lineWidth)
         {
-            if (!breakLineWithoutSpace)
+            if (!breakLineWithoutSpace && !iscjk_unicode(character))
             {
                 last_word.push_back(character);
-
+                
                 int found = cc_utf8_find_last_not_char(multiline_string, ' ');
                 if (found != -1)
                     cc_utf8_trim_ws(&multiline_string);
@@ -145,6 +160,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
                 cc_utf8_trim_ws(&last_word);
 
                 last_word.push_back('\n');
+                
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
                 isStartOfWord = false;
