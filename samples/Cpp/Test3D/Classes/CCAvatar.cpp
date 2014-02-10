@@ -61,16 +61,17 @@ void MaterialTestLayer::setUpScene()
     _scene->addChild(_sm);
     _sm->retain();
 
+	
     //create fish
 	_fish = NULL;
 	_fish = C3DSprite::create("shayu");
-	_fish->loadFromFile("fish/shayunew/shayu.ckb", true);
+	_fish->loadFromFile("fish/shayu.ckb", true);
 	_fish->setScale(2.0f);
 	C3DAnimationClip* idleClip = _fish->addAnimationClip("idle",0,600,0,1.0f);
 	_fish->playAnimationClip("idle");
 	_fish->setPosition(15.0f, 10.0f, 0.0f);
-	//_scene->addChild(_fish);
-    _fish->retain();
+	_scene->addChild(_fish);
+   
    
 	//////////////////////////////////////////////////////////////////////////
 }

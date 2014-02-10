@@ -1,0 +1,65 @@
+material 
+{
+
+	technique 0
+	{
+
+		pass 0
+		{
+			//vertexShader = shaders/textured.vsh
+			//fragmentShader = shaders/textured.fsh
+			vertexShader = shaders/reflect-diffuse.vsh
+			fragmentShader = shaders/reflect-diffuse.fsh
+			u_reflectColor = 0.937, 1, 0.431, 1
+			//u_reflectColor = 1, 1, 1, 1
+			defines = SKINNING_JOINT_COUNT 32
+
+			sampler u_diffuseTexture
+			{
+				path = fish/shayu_j2.png
+				mipmap = true
+				wrapS = REPEAT
+				wrapT = REPEAT
+				minFilter = LINEAR_MIPMAP_LINEAR
+				magFilter = LINEAR
+			}
+			samplerCube cubeMap
+			{
+				path_left = demo/skybox/left.jpg
+				path_right = demo/skybox/right.jpg
+				path_top = demo/skybox/top.jpg
+				path_bottom = demo/skybox/bottom.jpg
+				path_front = demo/skybox/front.jpg
+				path_back = demo/skybox/back.jpg
+				
+				//path_left = demo/skybox/redsky_north.jpg
+				//path_right = demo/skybox/redsky_south.jpg
+				//path_top = demo/skybox/redsky_up.jpg
+				//path_bottom = demo/skybox/redsky_down.jpg
+				//path_front = demo/skybox/redsky_east.jpg
+				//path_back = demo/skybox/redsky_west.jpg
+				
+				//path_left = demo/skybox/back6.jpg
+				//path_right = demo/skybox/right6.jpg
+				//path_top = demo/skybox/up6.jpg
+				//path_bottom = demo/skybox/down6.jpg
+				//path_front = demo/skybox/front6.jpg
+				//path_back = demo/skybox/back6.jpg
+			}
+
+			renderState 
+			{
+				cullFace = true
+				depthTest = true
+				depthWrite = true
+				blend = true
+				srcBlend = SRC_ALPHA
+				dstBlend = ONE_MINUS_SRC_ALPHA
+			}
+
+		}
+
+	}
+
+}
+
