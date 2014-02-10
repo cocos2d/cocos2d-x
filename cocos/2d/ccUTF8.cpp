@@ -171,6 +171,18 @@ bool isspace_unicode(unsigned short ch)
     ||  ch == 0x205F || ch == 0x3000;
 }
 
+bool iscjk_unicode(unsigned short ch)
+{
+    return (ch >= 0x4E00 && ch <= 0x9FBF)   // CJK Unified Ideographs
+        || (ch >= 0x2E80 && ch <= 0x2FDF)   // CJK Radicals Supplement & Kangxi Radicals
+        || (ch >= 0x2FF0 && ch <= 0x30FF)   // Ideographic Description Characters, CJK Symbols and Punctuation & Japanese
+        || (ch >= 0x3100 && ch <= 0x31BF)   // Korean
+        || (ch >= 0xAC00 && ch <= 0xD7AF)   // Hangul Syllables
+        || (ch >= 0xF900 && ch <= 0xFAFF)   // CJK Compatibility Ideographs
+        || (ch >= 0xFE30 && ch <= 0xFE4F)   // CJK Compatibility Forms
+        || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other exiensions
+}
+
 void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 {
     int len = static_cast<int>(str->size());
