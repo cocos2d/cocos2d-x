@@ -13,7 +13,7 @@ Notice: The best project path is an English path without spaces.
 To use this, open the terminal and type:
 ```
 	$ cd cocos2d-x/tools/project-creator
-	$ ./project-creator.py --help
-	$ ./project-creator.py -n mygame -k com.your_company.mygame -l cpp -p /home/mygame
+	$ ./create_project.py --help
+	$ ./create_project.py -n mygame -k com.your_company.mygame -l cpp -p /home/mygame
 	$ cd /home/mygame
 ```

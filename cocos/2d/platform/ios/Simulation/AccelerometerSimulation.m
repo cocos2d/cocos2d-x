@@ -26,6 +26,8 @@ THE SOFTWARE.
 
 #import "AccelerometerSimulation.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 // when compiling to ARM (iPhone device), hide everything and use system defaults
 // if you wish to use simulation mode even on the device, remove the #if/#endif
 #if !TARGET_CPU_ARM
@@ -263,4 +265,6 @@ static CCAccelerometerSimulation *sharedAccelerometer = NULL;
 }
 @end
 
-#endif
+#endif // !TARGET_CPU_ARM
+
+#endif // CC_PLATFORM_IOS

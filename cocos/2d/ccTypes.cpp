@@ -107,9 +107,9 @@ Color4B::Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
 {}
 
 Color4B::Color4B(const Color3B& color)
-: r(color.r * 255)
-, g(color.g * 255)
-, b(color.b * 255)
+: r(color.r)
+, g(color.g)
+, b(color.b)
 , a(255)
 {}
 

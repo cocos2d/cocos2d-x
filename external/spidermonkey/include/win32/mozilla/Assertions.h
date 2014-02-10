@@ -180,7 +180,7 @@ __declspec(noreturn) __inline void MOZ_NoReturn() {}
 #  ifdef __cplusplus
 #    define MOZ_REALLY_CRASH() \
        do { \
-         __debugbreak(); \
+         ::__debugbreak(); \
          *((volatile int*) NULL) = 123; \
          ::TerminateProcess(::GetCurrentProcess(), 3); \
          ::MOZ_NoReturn(); \

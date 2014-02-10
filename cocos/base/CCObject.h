@@ -103,14 +103,7 @@ public:
      * @see retain, autorelease
      * @js NA
      */
-    inline void release()
-    {
-        CCASSERT(_referenceCount > 0, "reference count should greater than 0");
-        --_referenceCount;
-
-        if (_referenceCount == 0)
-            delete this;
-    }
+    void release();
 
     /**
      * Retains the ownership.
