@@ -518,70 +518,85 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
+void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext* cx)
+{
+	if (!path) {
+		return ;
+	}
+
+	cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
+
+	if (global == NULL) {
+		global = _global;
+	}
+	if (cx == NULL) {
+		cx = _cx;
+	}
+
+	JSAutoCompartment ac(cx, global);
+
+	JS::RootedScript script(cx);
+	JS::RootedObject obj(cx, global);
+
+	// a) check jsc file first
+	std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+
+	Data data = futil->getDataFromFile(byteCodePath);
+
+	if (!data.isNull())
+	{
+		script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
+	}
+
+	// b) no jsc file, check js file
+	if (!script)
+	{
+		/* Clear any pending exception from previous failed decoding.  */
+		ReportException(cx);
+
+		std::string fullPath = futil->fullPathForFilename(path);
+		JS::CompileOptions options(cx);
+		options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+		std::string jsFileContent = futil->getStringFromFile(fullPath);
+		if (!jsFileContent.empty())
+		{
+			script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
+		}
+#else
+		script = JS::Compile(cx, obj, options, fullPath.c_str());
+#endif
+	}
+	if (script) {
+		filename_script[path] = script;
+	}
+}
+
 bool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 {
-    if (!path) {
-        return false;
-    }
-    
-    
-    cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
-
-    if (global == NULL) {
-        global = _global;
-    }
-    if (cx == NULL) {
-        cx = _cx;
-    }
-    
-    JSAutoCompartment ac(cx, global);
-    
-    JS::RootedScript script(cx);
-    JS::RootedObject obj(cx, global);
-    
-    // a) check jsc file first
-    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-
-    Data data = futil->getDataFromFile(byteCodePath);
-    
-    if (!data.isNull())
-    {
-        script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
-    }
-    
-    // b) no jsc file, check js file
-    if (!script)
-    {
-        /* Clear any pending exception from previous failed decoding.  */
-        ReportException(cx);
-        
-        std::string fullPath = futil->fullPathForFilename(path);
-        JS::CompileOptions options(cx);
-        options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
-        
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        std::string jsFileContent = futil->getStringFromFile(fullPath);
-        if (!jsFileContent.empty())
-        {
-            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
-        }
-#else
-        script = JS::Compile(cx, obj, options, fullPath.c_str());
-#endif
-    }
-    
-    bool evaluatedOK = false;
-    if (script) {
-        jsval rval;
-        filename_script[path] = script;
-
-        evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
-        if (false == evaluatedOK) {
-            cocos2d::log("(evaluatedOK == false)");
-            JS_ReportPendingException(cx);
-        }
-    }
-    return evaluatedOK;
+	if (global == NULL) {
+		global = _global;
+	}
+	if (cx == NULL) {
+		cx = _cx;
+	}
+	if (!filename_script[path])
+	{
+		compileScript(path,global,cx );
+	}
+	JSScript * script = filename_script[path];
+	bool evaluatedOK = false;
+	if (script) {
+		jsval rval;
+		JSAutoCompartment ac(cx, global);
+		evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
+		if (false == evaluatedOK) {
+			cocos2d::log("(evaluatedOK == JS_FALSE)");
+			JS_ReportPendingException(cx);
+		}
+	}
+	return evaluatedOK;
 }
 
 void ScriptingCore::reset()
