@@ -63,7 +63,7 @@ def main():
     except:
         traceback.print_exc()
 
-    job_trigger_url = os.environ['JOB_TRIGGER_URL']+access_token
+    job_trigger_url = os.environ['JOB_TRIGGER_URL']
     #send trigger and payload
     post_data = {'payload':""}
     post_data['payload']= json.dumps(payload_forword)

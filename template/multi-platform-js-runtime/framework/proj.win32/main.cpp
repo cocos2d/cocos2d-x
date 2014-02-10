@@ -24,7 +24,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-	createSimulator("TestCPP",960,640);
+	createSimulator("HelloJavascript",960,640);
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE

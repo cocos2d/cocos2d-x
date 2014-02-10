@@ -168,10 +168,10 @@ ConsoleCustomCommand::ConsoleCustomCommand()
     _console = Director::getInstance()->getConsole();
 
     static struct Console::Command commands[] = {
-        {"hello", [](int fd, const char* command) {
-            const char msg[] = "how are you?\nYou typed: ";
+        {"hello", "This is just a user generated command", [](int fd, const std::string& args) {
+            const char msg[] = "how are you?\nArguments passed: ";
             write(fd, msg, sizeof(msg));
-            write(fd, command, strlen(command));
+            write(fd, args.c_str(), args.length());
             write(fd, "\n",1);
         }},
     };

@@ -37,6 +37,10 @@ THE SOFTWARE.
  */
 
 #include "CCDrawingPrimitives.h"
+
+#include <string.h>
+#include <cmath>
+
 #include "ccTypes.h"
 #include "ccMacros.h"
 #include "CCGL.h"
@@ -45,8 +49,7 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
 #include "CCActionCatmullRom.h"
-#include <string.h>
-#include <cmath>
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 #ifndef M_PI
@@ -144,7 +147,7 @@ void drawPoint( const Point& point )
 
     glDrawArrays(GL_POINTS, 0, 1);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,1);
 }
 
 void drawPoints( const Point *points, unsigned int numberOfPoints )
@@ -191,7 +194,7 @@ void drawPoints( const Point *points, unsigned int numberOfPoints )
 
     CC_SAFE_DELETE_ARRAY(newPoints);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
 
@@ -217,7 +220,7 @@ void drawLine( const Point& origin, const Point& destination )
 #endif // EMSCRIPTEN
     glDrawArrays(GL_LINES, 0, 2);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,2);
 }
 
 void drawRect( Point origin, Point destination )
@@ -289,7 +292,7 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
         CC_SAFE_DELETE_ARRAY(newPoli);
     }
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
 void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
@@ -333,7 +336,7 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 
     CC_SAFE_DELETE_ARRAY(newPoli);
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
 void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
@@ -377,7 +380,7 @@ void drawCircle( const Point& center, float radius, float angle, unsigned int se
 
     ::free( vertices );
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+additionalSegment);
 }
 
 void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
@@ -423,7 +426,7 @@ void drawSolidCircle( const Point& center, float radius, float angle, unsigned i
     
     ::free( vertices );
     
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
 void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
@@ -462,7 +465,7 @@ void drawQuadBezier(const Point& origin, const Point& control, const Point& dest
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
 void drawCatmullRom( PointArray *points, unsigned int segments )
@@ -519,7 +522,7 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 
     CC_SAFE_DELETE_ARRAY(vertices);
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
 void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
@@ -553,7 +556,7 @@ void drawCubicBezier(const Point& origin, const Point& control1, const Point& co
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
 void setDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )

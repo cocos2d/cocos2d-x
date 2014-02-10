@@ -118,6 +118,11 @@ public:
     virtual Point getVisibleOrigin() const;
 
     /**
+     * Get the visible rectangle of opengl viewport.
+     */
+    virtual Rect getVisibleRect() const;
+
+    /**
      * Set the design resolution size.
      * @param width Design resolution width.
      * @param height Design resolution height.
@@ -133,6 +138,7 @@ public:
      */
     virtual const Size&  getDesignResolutionSize() const;
 
+    /** Returns current resolution policy */
 	virtual const ResolutionPolicy& getResolutionPolicy() const;
     /**
      * Set opengl view port rectangle with points.
@@ -177,7 +183,6 @@ public:
      * Get scale factor of the vertical direction.
      */
     float getScaleY() const;
-
 
 protected:
     void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[]);

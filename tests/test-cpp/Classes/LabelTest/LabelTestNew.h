@@ -287,6 +287,19 @@ private:
 };
 
 
+class LabelTTFCJKWrappingTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFCJKWrappingTest);
+
+    LabelTTFCJKWrappingTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+};
+
+
 class LabelTTFFontsTestNew : public AtlasDemoNew
 {
 public:

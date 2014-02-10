@@ -62,7 +62,8 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, con
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexCount);
+
 
     CHECK_GL_ERROR_DEBUG();
 
@@ -89,7 +90,7 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
-    CC_INCREMENT_GL_DRAWS(2);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,vertexCount*2);
 
     CHECK_GL_ERROR_DEBUG();
 
@@ -120,7 +121,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexCount);
 
     CHECK_GL_ERROR_DEBUG();
 
@@ -157,7 +158,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
     // Draw the axis line
     DrawSegment(center,center+radius*axis,color);
 
-    CC_INCREMENT_GL_DRAWS(2);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,vertexCount*2);
 
     CHECK_GL_ERROR_DEBUG();
 
@@ -180,7 +181,7 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 
     glDrawArrays(GL_LINES, 0, 2);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,2);
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -214,7 +215,7 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
     glDrawArrays(GL_POINTS, 0, 1);
     //    glPointSize(1.0f);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,1);
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -243,7 +244,7 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
     glDrawArrays(GL_LINE_LOOP, 0, 8);
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,8);
 
     CHECK_GL_ERROR_DEBUG();
 }

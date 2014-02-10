@@ -6,6 +6,7 @@ set(LUABINDING_SRC
   auto-generated/lua-bindings/lua_cocos2dx_spine_auto.cpp
   auto-generated/lua-bindings/lua_cocos2dx_physics_auto.cpp
   lua/bindings/tolua_fix.c
+  lua/bindings/debugger.c
   lua/bindings/CCLuaBridge.cpp
   lua/bindings/CCLuaEngine.cpp
   lua/bindings/CCLuaStack.cpp
