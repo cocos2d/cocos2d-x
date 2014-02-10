@@ -138,6 +138,7 @@ public:
      */
     virtual const Size&  getDesignResolutionSize() const;
 
+    /** Returns current resolution policy */
 	virtual const ResolutionPolicy& getResolutionPolicy() const;
     /**
      * Set opengl view port rectangle with points.
@@ -182,9 +183,6 @@ public:
      * Get scale factor of the vertical direction.
      */
     float getScaleY() const;
-
-    /** returns the current Resolution policy */
-    ResolutionPolicy getResolutionPolicy() const { return _resolutionPolicy; }
 
 protected:
     void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[]);
