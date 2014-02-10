@@ -3,9 +3,6 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
-#include "CCTMXLayer2.h"
-#include "CCTMXTiledMap2.h"
-
 enum 
 {
     kTagTileMap = 1,
@@ -33,8 +30,6 @@ static int sceneIdx = -1;
 #define MAX_LAYER    29
 
 static std::function<Layer*()> createFunctions[] = {
-    CLN(TMXOrthoTest),
-
     CLN(TMXIsoZorder),
     CLN(TMXOrthoZorder),
     CLN(TMXIsoVertexZ),
@@ -283,21 +278,18 @@ TMXOrthoTest::TMXOrthoTest()
     //auto color = LayerColor::create( Color4B(64,64,64,255) );
     //addChild(color, -1);
 
-    // riq
-    auto map = TMXTiledMap2::create("TileMaps/iso-test1.tmx");
-//    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test2.tmx");
-//    auto map = TMXTiledMap::create("TileMaps/orthogonal-test-vertexz.tmx");
+    auto map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
 
     addChild(map, 0, kTagTileMap);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
-//    auto scale = ScaleBy::create(10, 0.1);
-//    auto back = scale->reverse();
-//    auto seq = Sequence::create(scale, back, NULL);
-//    auto repeat = RepeatForever::create(seq);
-//    map->runAction(repeat);
+    auto scale = ScaleBy::create(10, 0.1);
+    auto back = scale->reverse();
+    auto seq = Sequence::create(scale, back, NULL);
+    auto repeat = RepeatForever::create(seq);
+    map->runAction(repeat);
 
 //    float x, y, z;
 //    map->getCamera()->getEye(&x, &y, &z);
