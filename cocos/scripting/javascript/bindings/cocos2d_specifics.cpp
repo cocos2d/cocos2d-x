@@ -2250,15 +2250,15 @@ bool js_cocos2dx_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
 	cocos2d::TMXLayer* cobj = (cocos2d::TMXLayer *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 	if (argc == 0) {
-        int* ret = cobj->getTiles();
+        uint32_t* ret = cobj->getTiles();
         Size size = cobj->getLayerSize();
         int count = size.width * size.height;
-        JSObject* array = JS_NewInt32Array(cx, count);
+        JSObject* array = JS_NewUint32Array(cx, count);
         if (NULL == array) {
             JS_ReportError(cx, "Can't allocate enough memory.");
             return false;
         }
-        int32_t* bufdata = (int32_t*)JS_GetArrayBufferViewData(array);
+        uint32_t* bufdata = (uint32_t*)JS_GetArrayBufferViewData(array);
         memcpy(bufdata, ret, count*sizeof(int32_t));
         JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
 		return true;
