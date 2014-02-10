@@ -124,8 +124,11 @@ ScriptEngineManager::~ScriptEngineManager(void)
 
 void ScriptEngineManager::setScriptEngine(ScriptEngineProtocol *scriptEngine)
 {
-    removeScriptEngine();
-    _scriptEngine = scriptEngine;
+	if (_scriptEngine != scriptEngine)
+	{
+		removeScriptEngine();
+		_scriptEngine = scriptEngine;
+	}
 }
 
 void ScriptEngineManager::removeScriptEngine(void)
