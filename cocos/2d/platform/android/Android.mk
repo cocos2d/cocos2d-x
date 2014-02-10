@@ -10,7 +10,7 @@ LOCAL_SRC_FILES := \
 CCApplication.cpp \
 CCCommon.cpp \
 CCDevice.cpp \
-CCEGLView.cpp \
+CCGLView.cpp \
 CCFileUtilsAndroid.cpp \
 CCImage.cpp \
 nativeactivity.cpp \

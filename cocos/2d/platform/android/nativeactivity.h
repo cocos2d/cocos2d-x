@@ -24,6 +24,9 @@ THE SOFTWARE.
 #ifndef __COCOSNATIVEACTIVITY_H__
 #define __COCOSNATIVEACTIVITY_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 /**
  * This is the interface to the Android native activity
  */
@@ -31,5 +34,7 @@ THE SOFTWARE.
 void enableAccelerometerJni(void);
 void disableAccelerometerJni(void);
 void setAccelerometerIntervalJni(float interval);
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #endif // __COCOSNATIVEACTIVITY_H__

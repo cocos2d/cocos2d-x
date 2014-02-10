@@ -22,6 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #include "CCDevice.h"
 #include "ccTypes.h"
 #include "CCEventDispatcher.h"
@@ -174,3 +179,5 @@ void Device::setAccelerometerInterval(float interval)
 
 
 NS_CC_END
+
+#endif // CC_PLATFORM_IOS

@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __PLATFORM_MAC_CCGL_H__
 #define __PLATFORM_MAC_CCGL_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <OpenGL/glext.h>
@@ -42,3 +45,5 @@ THE SOFTWARE.
 
 
 #endif // __PLATFORM_MAC_CCGL_H__
+
+#endif //s CC_TARGET_PLATFORM == CC_PLATFORM_MAC
