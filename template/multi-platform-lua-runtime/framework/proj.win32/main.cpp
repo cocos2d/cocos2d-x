@@ -25,7 +25,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-	createSimulator("TestCPP",960,640);
+	createSimulator("HelloLua",960,640);
 
     int ret = Application::getInstance()->run();
 
