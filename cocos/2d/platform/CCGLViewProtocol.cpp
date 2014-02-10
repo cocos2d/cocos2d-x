@@ -141,10 +141,6 @@ const Size& GLViewProtocol::getDesignResolutionSize() const
     return _designResolutionSize;
 }
 
-const ResolutionPolicy& GLViewProtocol::getResolutionPolicy() const
-{
-	return _resolutionPolicy;
-}
 const Size& GLViewProtocol::getFrameSize() const
 {
     return _screenSize;
