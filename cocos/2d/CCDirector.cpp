@@ -970,9 +970,9 @@ void Director::createStatsLabel()
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     _drawnVerticesLabel->setPosition(Point(0, 51*factor) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Point(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Point(12*factor, 34*factor) + CC_DIRECTOR_STATS_POSITION);
     _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Point(12*factor,0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)
