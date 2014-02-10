@@ -96,10 +96,9 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto s = Director::getInstance()->getWinSize();
 
     // Title
-    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1, TAG_TITLE);
-    label->setPosition(Point(s.width/2, s.height-32));
-    label->setColor(Color3B(255,255,40));
+    label->setPosition(Point(s.width/2, s.height-50));
 
     // Subtitle
     std::string strSubTitle = subtitle();

@@ -10,6 +10,7 @@
 #include "PerformanceRendererTest.h"
 #include "PerformanceContainerTest.h"
 #include "PerformanceEventDispatcherTest.h"
+#include "PerformanceScenarioTest.h"
 
 enum
 {
@@ -32,9 +33,12 @@ struct {
     { "Renderer Perf Test",[](Object*sender){runRendererTest();} },
     { "Container Perf Test", [](Object* sender ) { runContainerPerformanceTest(); } },
     { "EventDispatcher Perf Test", [](Object* sender ) { runEventDispatcherPerformanceTest(); } },
+    { "Scenario Perf Test", [](Object* sender ) { runScenarioTest(); } },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);
+
+Point PerformanceMainLayer::_CurrentPos = Point::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -48,7 +52,7 @@ void PerformanceMainLayer::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     _itemMenu = Menu::create();
-    _itemMenu->setPosition( Point::ZERO );
+    _itemMenu->setPosition(_CurrentPos);
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_testMax; ++i)
@@ -101,6 +105,7 @@ void PerformanceMainLayer::onTouchMoved(Touch* touches, Event  *event)
     
     _itemMenu->setPosition(nextPos);
     _beginPos = touchLocation;
+    _CurrentPos = nextPos;
 }
 
 void PerformanceMainLayer::onMouseScroll(Event *event)
@@ -124,6 +129,7 @@ void PerformanceMainLayer::onMouseScroll(Event *event)
     }
     
     _itemMenu->setPosition(nextPos);
+    _CurrentPos = nextPos;
 }
 
 ////////////////////////////////////////////////////////
