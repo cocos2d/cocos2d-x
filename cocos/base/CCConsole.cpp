@@ -26,6 +26,10 @@
 
 #include <thread>
 #include <algorithm>
+#include <functional>
+#include <cctype>
+#include <locale>
+#include <sstream>
 
 #include <stdio.h>
 #include <time.h>
@@ -53,8 +57,30 @@
 #include "platform/CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "CCTextureCache.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
+
+
+//
+// Trimming functions were taken from: http://stackoverflow.com/a/217605
+//
+// trim from start
+static std::string &ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+    return s;
+}
+
+// trim from end
+static std::string &rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+    return s;
+}
+
+// trim from both ends
+static std::string &trim(std::string &s) {
+    return ltrim(rtrim(s));
+}
 
 
 // helper free functions
@@ -201,28 +227,31 @@ Console::Console()
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
-        { "config", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
-        { "debug msg on", [&](int fd, const char* command) {
-            _sendDebugStrings = true;
+        { "config", "Print the Configuration object", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
+        { "debugmsg", "Whether or not to forward the debug messages on the console. Args: [on | off]", [&](int fd, const std::string& args) {
+            if( args.compare("on")==0 || args.compare("off")==0) {
+                _sendDebugStrings = (args.compare("on") == 0);
+            } else {
+                mydprintf(fd, "Debug message is: %s\n", _sendDebugStrings ? "on" : "off");
+            }
         } },
-        { "debug msg off", [&](int fd, const char* command) {
-            _sendDebugStrings = false;
+        { "exit", "Close connection to the console", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
+        { "fileutils", "Flush or print the FileUtils info. Args: [flush | ] ", std::bind(&Console::commandFileUtils, this, std::placeholders::_1, std::placeholders::_2) },
+        { "fps", "Turn on / off the FPS. Args: [on | off] ", [](int fd, const std::string& args) {
+            if( args.compare("on")==0 || args.compare("off")==0) {
+                bool state = (args.compare("on") == 0);
+                Director *dir = Director::getInstance();
+                Scheduler *sched = dir->getScheduler();
+                sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, state));
+            } else {
+                mydprintf(fd, "FPS is: %s\n", Director::getInstance()->isDisplayStats() ? "on" : "off");
+            }
         } },
-        { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
-        { "fileutils dump", std::bind(&Console::commandFileUtilsDump, this, std::placeholders::_1, std::placeholders::_2) },
-        { "fps on", [](int fd, const char* command) {
-            Director *dir = Director::getInstance();
-            Scheduler *sched = dir->getScheduler();
-            sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, true));
-        } },
-        { "fps off", [](int fd, const char* command) {
-            Director *dir = Director::getInstance();
-            Scheduler *sched = dir->getScheduler();
-            sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, false));
-        } },
-        { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) },
-        { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
-        { "textures", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
+        { "help", "Print this message", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) },
+        { "projection", "Change or print the current projection. Args: [2d | 3d] ", std::bind(&Console::commandProjection, this, std::placeholders::_1, std::placeholders::_2) },
+        { "resolution", "Change or print the window resolution. Args: [width height resolution_policy | ] ", std::bind(&Console::commandResolution, this, std::placeholders::_1, std::placeholders::_2) },
+        { "scenegraph", "Print the scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
+        { "texture", "Flush or print the TextureCache info. Args: [flush | ] ", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
     };
 
     _maxCommands = sizeof(commands)/sizeof(commands[0]);
@@ -338,45 +367,64 @@ void Console::setUserCommands(Command *commands, int numberOfCommands)
 // commands
 //
 
-void Console::commandHelp(int fd, const char* command)
+void Console::commandHelp(int fd, const std::string &args)
 {
     const char help[] = "\nAvailable commands:\n";
     write(fd, help, sizeof(help));
     for(int i=0; i<_maxCommands; ++i) {
-        write(fd,"\t",1);
-        write(fd, _commands[i].name, strlen(_commands[i].name));
-        write(fd,"\n",1);
+        mydprintf(fd, "\t%s", _commands[i].name);
+        ssize_t tabs = strlen(_commands[i].name) / 8;
+        tabs = 3 - tabs;
+        for(int j=0;j<tabs;j++){
+            mydprintf(fd, "\t");
+        }
+        mydprintf(fd,"%s\n", _commands[i].help);
     }
 
     // User commands
     for(int i=0; i<_maxUserCommands; ++i) {
-        write(fd,"\t",1);
-        write(fd, _userCommands[i].name, strlen(_userCommands[i].name));
-        write(fd,"\n",1);
+        mydprintf(fd, "\t%s", _userCommands[i].name);
+        ssize_t tabs = strlen(_userCommands[i].name) / 8;
+        tabs = 3 - tabs;
+        for(int j=0;j<tabs;j++){
+            mydprintf(fd, "\t");
+        }
+        mydprintf(fd,"%s\n", _userCommands[i].help);
     }
-
 }
 
-void Console::commandExit(int fd, const char *command)
+void Console::commandExit(int fd, const std::string &args)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
     close(fd);
 }
 
-void Console::commandSceneGraph(int fd, const char *command)
+void Console::commandSceneGraph(int fd, const std::string &args)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&printSceneGraphBoot, fd) );
 }
 
-void Console::commandFileUtilsDump(int fd, const char *command)
+void Console::commandFileUtils(int fd, const std::string &args)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
-    sched->performFunctionInCocosThread( std::bind(&printFileUtils, fd) );
+
+    if( args.compare("flush") == 0 )
+    {
+        FileUtils::getInstance()->purgeCachedEntries();
+    }
+    else if( args.length()==0)
+    {
+        sched->performFunctionInCocosThread( std::bind(&printFileUtils, fd) );
+    }
+    else
+    {
+        mydprintf(fd, "Unsupported argument: '%s'. Supported arguments: 'flush' or nothing", args.c_str());
+    }
 }
 
-void Console::commandConfig(int fd, const char *command)
+void Console::commandConfig(int fd, const std::string& args)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [&](){
@@ -385,13 +433,112 @@ void Console::commandConfig(int fd, const char *command)
                                         );
 }
 
-void Console::commandTextures(int fd, const char *command)
+void Console::commandResolution(int fd, const std::string& args)
+{
+    if(args.length()==0) {
+        auto director = Director::getInstance();
+        Size points = director->getWinSize();
+        Size pixels = director->getWinSizeInPixels();
+        auto glview = director->getOpenGLView();
+        Size design = glview->getDesignResolutionSize();
+        ResolutionPolicy res = glview->getResolutionPolicy();
+        Rect visibleRect = glview->getVisibleRect();
+
+        mydprintf(fd, "Window Size:\n"
+                        "\t%d x %d (points)\n"
+                        "\t%d x %d (pixels)\n"
+                        "\t%d x %d (design resolution)\n"
+                        "Resolution Policy: %d\n"
+                        "Visible Rect:\n"
+                        "\torigin: %d x %d\n"
+                        "\tsize: %d x %d",
+                  (int)points.width, (int)points.height,
+                  (int)pixels.width, (int)pixels.height,
+                  (int)design.width, (int)design.height,
+                  (int)res,
+                  (int)visibleRect.origin.x, (int)visibleRect.origin.y,
+                  (int)visibleRect.size.width, (int)visibleRect.size.height
+                  );
+
+    } else {
+        int width, height, policy;
+
+        std::istringstream stream( args );
+        stream >> width >> height>> policy;
+
+        Scheduler *sched = Director::getInstance()->getScheduler();
+        sched->performFunctionInCocosThread( [&](){
+            Director::getInstance()->getOpenGLView()->setDesignResolutionSize(width, height, static_cast<ResolutionPolicy>(policy));
+        } );
+    }
+}
+
+void Console::commandProjection(int fd, const std::string& args)
+{
+    auto director = Director::getInstance();
+    Scheduler *sched = director->getScheduler();
+
+    if(args.length()==0)
+    {
+        char buf[20];
+        auto proj = director->getProjection();
+        switch (proj) {
+            case cocos2d::Director::Projection::_2D:
+                sprintf(buf,"2d");
+                break;
+            case cocos2d::Director::Projection::_3D:
+                sprintf(buf,"3d");
+                break;
+            case cocos2d::Director::Projection::CUSTOM:
+                sprintf(buf,"custom");
+                break;
+
+            default:
+                sprintf(buf,"unknown");
+                break;
+        }
+        mydprintf(fd, "Current projection: %s", buf);
+    }
+    else if( args.compare("2d") == 0)
+    {
+        sched->performFunctionInCocosThread( [&](){
+            director->setProjection(Director::Projection::_2D);
+        } );
+    }
+    else if( args.compare("3d") == 0)
+    {
+        sched->performFunctionInCocosThread( [&](){
+            director->setProjection(Director::Projection::_3D);
+        } );
+    }
+    else
+    {
+        mydprintf(fd, "Unsupported argument: '%s'. Supported arguments: '2d' or '3d'", args.c_str());
+    }
+}
+
+void Console::commandTextures(int fd, const std::string& args)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
-    sched->performFunctionInCocosThread( [&](){
-        mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+
+    if( args.compare("flush")== 0)
+    {
+        sched->performFunctionInCocosThread( [&](){
+            Director::getInstance()->getTextureCache()->removeAllTextures();
+        }
+                                            );
     }
-                                        );
+    else if(args.length()==0)
+    {
+        sched->performFunctionInCocosThread( [&](){
+            mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+        }
+                                            );
+    }
+    else
+    {
+        mydprintf(fd, "Unsupported argument: '%s'. Supported arguments: 'flush' or nothing", args.c_str());
+    }
 }
 
 
@@ -403,12 +550,19 @@ bool Console::parseCommand(int fd)
 
     bool found=false;
     for(int i=0; i < _maxCommands; ++i) {
-        if( strncmp(_buffer, _commands[i].name,strlen(_commands[i].name)) == 0 ) {
+        ssize_t commandLen = strlen(_commands[i].name);
+        if( strncmp(_buffer, _commands[i].name,commandLen) == 0 ) {
             // XXX TODO FIXME
             // Ideally this loop should execute the function in the cocos2d according to a variable
             // But clang crashes in runtime when doing that (bug in clang, not in the code).
             // So, unfortunately, the only way to fix it was to move that logic to the callback itself
-            _commands[i].callback(fd, _buffer);
+
+            std::string args;
+            if(strlen(_buffer) >= commandLen+2) {
+                args = std::string(&_buffer[commandLen]+1);
+                args = trim(args);
+            }
+            _commands[i].callback(fd, args);
             found = true;
             break;
         }
@@ -416,8 +570,14 @@ bool Console::parseCommand(int fd)
 
     // user commands
     for(int i=0; i < _maxUserCommands && !found; ++i) {
-        if( strncmp(_buffer, _userCommands[i].name,strlen(_userCommands[i].name)) == 0 ) {
-            _userCommands[i].callback(fd, _buffer);
+        ssize_t commandLen = strlen(_userCommands[i].name);
+        if( strncmp(_buffer, _userCommands[i].name,commandLen) == 0 ) {
+            std::string args;
+            if(strlen(_buffer) >= commandLen+2) {
+                args = std::string(&_buffer[commandLen]+1);
+                args = trim(args);
+            }
+            _userCommands[i].callback(fd, args);
             found = true;
             break;
         }

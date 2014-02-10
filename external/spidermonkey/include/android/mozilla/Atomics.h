@@ -17,6 +17,8 @@
 #define mozilla_Atomics_h
 
 #include "mozilla/Assertions.h"
+#include "mozilla/Attributes.h"
+#include "mozilla/Compiler.h"
 #include "mozilla/TypeTraits.h"
 
 #include <stdint.h>
@@ -26,34 +28,16 @@
  * does not have <atomic>.  So be sure to check for <atomic> support
  * along with C++0x support.
  */
-#if defined(__clang__)
+#if defined(__clang__) || defined(__GNUC__)
    /*
-    * clang doesn't like libstdc++'s version of <atomic> before GCC 4.7,
-    * due to the loose typing of the __sync_* family of functions done by
-    * GCC.  We do not have a particularly good way to detect this sort of
-    * case at this point, so just assume that if we're on a Linux system,
-    * we can't use the system's <atomic>.
-    *
-    * OpenBSD uses an old libstdc++ 4.2.1 and thus doesnt have <atomic>.
+    * Clang doesn't like <atomic> from libstdc++ before 4.7 due to the
+    * loose typing of the atomic builtins. GCC 4.5 and 4.6 lacks inline
+    * definitions for unspecialized std::atomic and causes linking errors.
+    * Therefore, we require at least 4.7.0 for using libstdc++.
     */
-#  if !defined(__linux__) && !defined(__OpenBSD__) && \
-      (__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)) && \
-      __has_include(<atomic>)
+#  if MOZ_USING_LIBSTDCXX && MOZ_LIBSTDCXX_VERSION_AT_LEAST(4, 7, 0)
 #    define MOZ_HAVE_CXX11_ATOMICS
-#  endif
-/*
- * Android uses a different C++ standard library that does not provide
- * support for <atomic>.
- *
- * GCC 4.5.x and 4.6.x's unspecialized std::atomic template doesn't include
- * inline definitions for the functions declared therein.  This oversight
- * leads to linking errors when using atomic enums.  We therefore require
- * GCC 4.7 or higher.
- */
-#elif defined(__GNUC__) && !defined(__ANDROID__)
-#  include "mozilla/Compiler.h"
-#  if (defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L) && \
-      MOZ_GCC_VERSION_AT_LEAST(4, 7, 0)
+#  elif MOZ_USING_LIBCXX
 #    define MOZ_HAVE_CXX11_ATOMICS
 #  endif
 #elif defined(_MSC_VER) && _MSC_VER >= 1700
@@ -845,8 +829,8 @@ class AtomicBase
     typename Intrinsics::ValueType mValue;
 
   public:
-    AtomicBase() : mValue() {}
-    AtomicBase(T aInit) { Intrinsics::store(mValue, aInit); }
+    MOZ_CONSTEXPR AtomicBase() : mValue() {}
+    MOZ_CONSTEXPR AtomicBase(T aInit) : mValue(aInit) {}
 
     operator T() const { return Intrinsics::load(mValue); }
 
@@ -889,8 +873,8 @@ class AtomicBaseIncDec : public AtomicBase<T, Order>
     typedef typename detail::AtomicBase<T, Order> Base;
 
   public:
-    AtomicBaseIncDec() : Base() {}
-    AtomicBaseIncDec(T aInit) : Base(aInit) {}
+    MOZ_CONSTEXPR AtomicBaseIncDec() : Base() {}
+    MOZ_CONSTEXPR AtomicBaseIncDec(T aInit) : Base(aInit) {}
 
     using Base::operator=;
 
@@ -943,8 +927,8 @@ class Atomic<T, Order, typename EnableIf<IsIntegral<T>::value>::Type>
     typedef typename detail::AtomicBaseIncDec<T, Order> Base;
 
   public:
-    Atomic() : Base() {}
-    Atomic(T aInit) : Base(aInit) {}
+    MOZ_CONSTEXPR Atomic() : Base() {}
+    MOZ_CONSTEXPR Atomic(T aInit) : Base(aInit) {}
 
     using Base::operator=;
 
@@ -972,8 +956,8 @@ class Atomic<T*, Order> : public detail::AtomicBaseIncDec<T*, Order>
     typedef typename detail::AtomicBaseIncDec<T*, Order> Base;
 
   public:
-    Atomic() : Base() {}
-    Atomic(T* aInit) : Base(aInit) {}
+    MOZ_CONSTEXPR Atomic() : Base() {}
+    MOZ_CONSTEXPR Atomic(T* aInit) : Base(aInit) {}
 
     using Base::operator=;
 
@@ -1000,8 +984,8 @@ class Atomic<T, Order, typename EnableIf<IsEnum<T>::value>::Type>
     typedef typename detail::AtomicBase<T, Order> Base;
 
   public:
-    Atomic() : Base() {}
-    Atomic(T aInit) : Base(aInit) {}
+    MOZ_CONSTEXPR Atomic() : Base() {}
+    MOZ_CONSTEXPR Atomic(T aInit) : Base(aInit) {}
 
     using Base::operator=;
 
