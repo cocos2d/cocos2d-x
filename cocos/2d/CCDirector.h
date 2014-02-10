@@ -35,8 +35,9 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCVector.h"
 #include "CCGL.h"
-#include "kazmath/mat4.h"
 #include "CCLabelAtlas.h"
+
+#include "kazmath/mat4.h"
 
 
 NS_CC_BEGIN
@@ -122,8 +123,8 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~Director(void);
-    virtual bool init(void);
+    virtual ~Director();
+    virtual bool init();
 
     // attribute
 
@@ -440,7 +441,8 @@ protected:
     
     LabelAtlas *_FPSLabel;
     LabelAtlas *_SPFLabel;
-    LabelAtlas *_drawsLabel;
+    LabelAtlas *_drawnBatchesLabel;
+    LabelAtlas *_drawnVerticesLabel;
     
     /** Whether or not the Director is paused */
     bool _paused;
@@ -479,9 +481,6 @@ protected:
     
     /* content scale factor */
     float _contentScaleFactor;
-
-    /* store the fps string */
-    char *_FPS;
 
     /* This object will be visited after the scene. Useful to hook a notification node */
     Node *_notificationNode;

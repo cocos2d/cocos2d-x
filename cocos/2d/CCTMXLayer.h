@@ -110,8 +110,8 @@ public:
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
      */
-    int getTileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE int tileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr){
+    uint32_t getTileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr);
+    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Point& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
@@ -119,7 +119,7 @@ public:
     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
     If a tile is already placed at that position, then it will be removed.
     */
-    void setTileGID(int gid, const Point& tileCoordinate);
+    void setTileGID(uint32_t gid, const Point& tileCoordinate);
 
     /** sets the tile gid (gid = tile global id) at a given tile coordinate.
      The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -128,7 +128,7 @@ public:
      Use withFlags if the tile flags need to be changed as well
      */
 
-    void setTileGID(int gid, const Point& tileCoordinate, ccTMXTileFlags flags);
+    void setTileGID(uint32_t gid, const Point& tileCoordinate, TMXTileFlags flags);
 
     /** removes a tile at given tile coordinate */
     void removeTileAt(const Point& tileCoordinate);
@@ -159,8 +159,8 @@ public:
      * @js NA
      * @lua NA
      */
-    inline int* getTiles() const { return _tiles; };
-    inline void setTiles(int* tiles) { _tiles = tiles; };
+    uint32_t* getTiles() const { return _tiles; };
+    void setTiles(uint32_t* tiles) { _tiles = tiles; };
     
     /** Tileset information for the layer */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
@@ -200,9 +200,9 @@ private:
     Point calculateLayerOffset(const Point& offset);
 
     /* optimization methods */
-    Sprite* appendTileForGID(int gid, const Point& pos);
-    Sprite* insertTileForGID(int gid, const Point& pos);
-    Sprite* updateTileForGID(int gid, const Point& pos);
+    Sprite* appendTileForGID(uint32_t gid, const Point& pos);
+    Sprite* insertTileForGID(uint32_t gid, const Point& pos);
+    Sprite* updateTileForGID(uint32_t gid, const Point& pos);
 
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
@@ -236,7 +236,7 @@ protected:
     /** size of the map's tile (could be different from the tile's size) */
     Size _mapTileSize;
     /** pointer to the map of tiles */
-    int* _tiles;
+    uint32_t* _tiles;
     /** Tileset information for the layer */
     TMXTilesetInfo* _tileSet;
     /** Layer orientation, which is the same as the map orientation */

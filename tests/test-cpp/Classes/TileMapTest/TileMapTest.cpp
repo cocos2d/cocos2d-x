@@ -14,6 +14,160 @@ Layer* restartTileMapAction();
 
 //------------------------------------------------------------------
 //
+// TileDemo
+//
+//------------------------------------------------------------------
+
+enum
+{
+    IDC_NEXT = 100,
+    IDC_BACK,
+    IDC_RESTART
+};
+
+static int sceneIdx = -1;
+
+#define MAX_LAYER    29
+
+static std::function<Layer*()> createFunctions[] = {
+    CLN(TMXIsoZorder),
+    CLN(TMXOrthoZorder),
+    CLN(TMXIsoVertexZ),
+    CLN(TMXOrthoVertexZ),
+    CLN(TMXOrthoTest),
+    CLN(TMXOrthoTest2),
+    CLN(TMXOrthoTest3),
+    CLN(TMXOrthoTest4),
+    CLN(TMXIsoTest),
+    CLN(TMXIsoTest1),
+    CLN(TMXIsoTest2),
+    CLN(TMXUncompressedTest),
+    CLN(TMXHexTest),
+    CLN(TMXReadWriteTest),
+    CLN(TMXTilesetTest),
+    CLN(TMXOrthoObjectsTest),
+    CLN(TMXIsoObjectsTest),
+    CLN(TMXResizeTest),
+    CLN(TMXIsoMoveLayer),
+    CLN(TMXOrthoMoveLayer),
+    CLN(TMXOrthoFlipTest),
+    CLN(TMXOrthoFlipRunTimeTest),
+    CLN(TMXOrthoFromXMLTest),
+    CLN(TMXOrthoXMLFormatTest),
+    CLN(TileMapTest),
+    CLN(TileMapEditTest),
+    CLN(TMXBug987),
+    CLN(TMXBug787),
+    CLN(TMXGIDObjectsTest),
+
+};
+
+Layer* createTileMalayer(int nIndex)
+{
+    return createFunctions[nIndex]();
+}
+
+Layer* nextTileMapAction()
+{
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
+
+    return createTileMalayer(sceneIdx);
+}
+
+Layer* backTileMapAction()
+{
+    sceneIdx--;
+    int total = MAX_LAYER;
+    if( sceneIdx < 0 )
+        sceneIdx += total;
+
+    return createTileMalayer(sceneIdx);
+}
+
+Layer* restartTileMapAction()
+{
+    return createTileMalayer(sceneIdx);
+}
+
+
+TileDemo::TileDemo(void)
+: BaseTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(TileDemo::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+TileDemo::~TileDemo(void)
+{
+}
+
+std::string TileDemo::title() const
+{
+    return "No title";
+}
+
+std::string TileDemo::subtitle() const
+{
+    return "drag the screen";
+}
+
+void TileDemo::onEnter()
+{
+    BaseTest::onEnter();
+}
+
+void TileDemo::restartCallback(Object* sender)
+{
+    auto s = new TileMapTestScene();
+    s->addChild(restartTileMapAction());
+
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void TileDemo::nextCallback(Object* sender)
+{
+    auto s = new TileMapTestScene();
+    s->addChild( nextTileMapAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void TileDemo::backCallback(Object* sender)
+{
+    auto s = new TileMapTestScene();
+    s->addChild( backTileMapAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
+{
+    auto touch = touches[0];
+
+    auto diff = touch->getDelta();
+    auto node = getChildByTag(kTagTileMap);
+    auto currentPos = node->getPosition();
+    node->setPosition(currentPos + diff);
+}
+
+void TileMapTestScene::runThisTest()
+{
+    auto layer = nextTileMapAction();
+    addChild(layer);
+
+    // fix bug #486, #419.
+    // "test" is the default value in Director::setGLDefaultValues()
+    // but TransitionTest may setDepthTest(false), we should revert it here
+    Director::getInstance()->setDepthTest(true);
+
+    Director::getInstance()->replaceScene(this);
+}
+
+//------------------------------------------------------------------
+//
 // TileMapTest
 //
 //------------------------------------------------------------------
@@ -125,17 +279,17 @@ TMXOrthoTest::TMXOrthoTest()
     //addChild(color, -1);
 
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
+
     addChild(map, 0, kTagTileMap);
     
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
-    
-    auto& children = map->getChildren();
 
-    for(const auto &obj : children) {
-        auto child = static_cast<SpriteBatchNode*>(obj);
-        child->getTexture()->setAntiAliasTexParameters();
-    }
+    auto scale = ScaleBy::create(10, 0.1);
+    auto back = scale->reverse();
+    auto seq = Sequence::create(scale, back, NULL);
+    auto repeat = RepeatForever::create(seq);
+    map->runAction(repeat);
 
 //    float x, y, z;
 //    map->getCamera()->getEye(&x, &y, &z);
@@ -1179,33 +1333,33 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
     //blue diamond 
     auto tileCoord = Point(1,10);
     int flags;
-    unsigned int GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    unsigned int GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Vertical
     if( flags & kTMXTileVerticalFlag )
         flags &= ~kTMXTileVerticalFlag;
     else
         flags |= kTMXTileVerticalFlag;
-    layer->setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags);
+    layer->setTileGID(GID ,tileCoord, (TMXTileFlags)flags);
 
 
     tileCoord = Point(1,8);    
-    GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Vertical
     if( flags & kTMXTileVerticalFlag )
         flags &= ~kTMXTileVerticalFlag;
     else
         flags |= kTMXTileVerticalFlag;    
-    layer->setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags);
+    layer->setTileGID(GID ,tileCoord, (TMXTileFlags)flags);
 
 
     tileCoord = Point(2,8);
-    GID = layer->getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags);
+    GID = layer->getTileGIDAt(tileCoord, (TMXTileFlags*)&flags);
     // Horizontal
     if( flags & kTMXTileHorizontalFlag )
         flags &= ~kTMXTileHorizontalFlag;
     else
         flags |= kTMXTileHorizontalFlag;    
-    layer->setTileGID(GID, tileCoord, (ccTMXTileFlags)flags);    
+    layer->setTileGID(GID, tileCoord, (TMXTileFlags)flags);    
 }
 //------------------------------------------------------------------
 //
@@ -1337,158 +1491,9 @@ std::string TMXBug787::subtitle() const
 
 //------------------------------------------------------------------
 //
-// TileDemo
+// TMXGIDObjectsTest
 //
 //------------------------------------------------------------------
-
-enum
-{
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
-
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    29
-
-static std::function<Layer*()> createFunctions[] = {
-    CLN(TMXIsoZorder),
-    CLN(TMXOrthoZorder),
-    CLN(TMXIsoVertexZ),
-    CLN(TMXOrthoVertexZ),
-    CLN(TMXOrthoTest),
-    CLN(TMXOrthoTest2),
-    CLN(TMXOrthoTest3),
-    CLN(TMXOrthoTest4),
-    CLN(TMXIsoTest),
-    CLN(TMXIsoTest1),
-    CLN(TMXIsoTest2),
-    CLN(TMXUncompressedTest),
-    CLN(TMXHexTest),
-    CLN(TMXReadWriteTest),
-    CLN(TMXTilesetTest),
-    CLN(TMXOrthoObjectsTest),
-    CLN(TMXIsoObjectsTest),
-    CLN(TMXResizeTest),
-    CLN(TMXIsoMoveLayer),
-    CLN(TMXOrthoMoveLayer),
-    CLN(TMXOrthoFlipTest),
-    CLN(TMXOrthoFlipRunTimeTest),
-    CLN(TMXOrthoFromXMLTest),
-    CLN(TMXOrthoXMLFormatTest),
-    CLN(TileMapTest),
-    CLN(TileMapEditTest),
-    CLN(TMXBug987),
-    CLN(TMXBug787),
-    CLN(TMXGIDObjectsTest),
-    
-};
-
-Layer* createTileMalayer(int nIndex)
-{
-    return createFunctions[nIndex]();
-}
-
-Layer* nextTileMapAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    return createTileMalayer(sceneIdx);
-}
-
-Layer* backTileMapAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    return createTileMalayer(sceneIdx);
-}
-
-Layer* restartTileMapAction()
-{
-    return createTileMalayer(sceneIdx);
-} 
-
-
-TileDemo::TileDemo(void)
-: BaseTest()
-{
-    auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesMoved = CC_CALLBACK_2(TileDemo::onTouchesMoved, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-}
-
-TileDemo::~TileDemo(void)
-{
-}
-
-std::string TileDemo::title() const
-{
-    return "No title";
-}
-
-std::string TileDemo::subtitle() const
-{
-    return "drag the screen";
-}
-
-void TileDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void TileDemo::restartCallback(Object* sender)
-{
-    auto s = new TileMapTestScene();
-    s->addChild(restartTileMapAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TileDemo::nextCallback(Object* sender)
-{
-    auto s = new TileMapTestScene();
-    s->addChild( nextTileMapAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TileDemo::backCallback(Object* sender)
-{
-    auto s = new TileMapTestScene();
-    s->addChild( backTileMapAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
-{
-    auto touch = touches[0];
-    
-    auto diff = touch->getDelta();
-    auto node = getChildByTag(kTagTileMap);
-    auto currentPos = node->getPosition();
-    node->setPosition(currentPos + diff);
-}
-
-void TileMapTestScene::runThisTest()
-{
-    auto layer = nextTileMapAction();
-    addChild(layer);
-
-    // fix bug #486, #419. 
-    // "test" is the default value in Director::setGLDefaultValues()
-    // but TransitionTest may setDepthTest(false), we should revert it here
-    Director::getInstance()->setDepthTest(true);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
 TMXGIDObjectsTest::TMXGIDObjectsTest()
 {
     auto map = TMXTiledMap::create("TileMaps/test-object-layer.tmx");
