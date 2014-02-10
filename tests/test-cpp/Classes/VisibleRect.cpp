@@ -36,7 +36,7 @@ void VisibleRect::lazyInit()
 Rect VisibleRect::getVisibleRect()
 {
     lazyInit();
-    return Rect(s_visibleRect.origin.x, s_visibleRect.origin.y, s_visibleRect.size.width, s_visibleRect.size.height);
+    return s_visibleRect;
 }
 
 Point VisibleRect::left()
