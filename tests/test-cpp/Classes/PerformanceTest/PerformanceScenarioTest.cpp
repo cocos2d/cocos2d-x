@@ -72,6 +72,9 @@ std::string ScenarioMenuLayer::subtitle() const
 static const int parStepNumber = 500;
 void ScenarioTest::performTests()
 {
+    auto s = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
+
     auto tilemap = TileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
     tilemap->releaseMap();
     
@@ -80,11 +83,16 @@ void ScenarioTest::performTests()
     
     // Anti Aliased images
     tilemap->getTexture()->setAntiAliasTexParameters();
+    tilemap->setPosition(origin);
     
     this->addChild(tilemap);
-    
-    auto s = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
+
+    auto goUp = MoveBy::create(4, Point(0, -500) );
+    auto goDown = goUp->reverse();
+    auto go = MoveBy::create(8, Point(-2200,0) );
+    auto goBack = go->reverse();
+    auto seq = Sequence::create(goUp, go, goDown, goBack, NULL);
+    tilemap->runAction( (RepeatForever::create(seq) ));
     
     _spriteLabel = LabelTTF::create("Sprites : 0", "Arial", 15);
     _spriteLabel->setAnchorPoint(Point(0.0f, 0.5f));
