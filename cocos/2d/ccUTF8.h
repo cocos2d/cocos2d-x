@@ -42,6 +42,17 @@ CC_DLL void cc_utf8_trim_ws(std::vector<unsigned short>* str);
 CC_DLL bool isspace_unicode(unsigned short ch);
 
 /**
+ * Whether the character is a Chinese/Japanese/Korean character.
+ *
+ * @param ch    the unicode character
+ * @returns     whether the character is a Chinese character.
+ *
+ * @see http://www.searchtb.com/2012/04/chinese_encode.html
+ * @see http://tieba.baidu.com/p/748765987
+ * */
+CC_DLL bool iscjk_unicode(unsigned short ch);
+
+/**
  * Returns the length of the string in characters.
  *
  * @param p     pointer to the start of a UTF-8 encoded string.
