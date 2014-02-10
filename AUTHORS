@@ -725,6 +725,7 @@ Developers:
         
     hbbalfred
         Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
+        Fixed a bug that cc.BuilderReader.load( path, null, parentSize ); was not allowed.
         
     liang8305
         Use multiple processes according the number of cores to build android project
