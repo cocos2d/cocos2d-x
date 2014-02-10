@@ -110,35 +110,33 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         
         // 1) Whitespace.
         // 2) This character is non-CJK, but the last character is CJK
-        if (isspace_unicode(character) ||
-            !last_word.empty() && iscjk_unicode(last_word.back()) && !iscjk_unicode(character))
+        bool isspace = isspace_unicode(character);
+        bool isCJK = false;
+        if(!isspace)
+        {
+            isCJK = iscjk_unicode(character);
+        }
+
+        if (isspace ||
+            !last_word.empty() && iscjk_unicode(last_word.back()) && !isCJK)
         {
             // if current character is white space, put it into the current word
-            if (isspace_unicode(character)) last_word.push_back(character);
+            if (isspace) last_word.push_back(character);
             multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
             last_word.clear();
             isStartOfWord = false;
             startOfWord = -1;
             // put the CJK character in the last word
             // and put the non-CJK(ASCII) character in the current word
-            if (!isspace_unicode(character)) last_word.push_back(character);
+            if (!isspace) last_word.push_back(character);
             continue;
         }
         
-        // CJK characters.
-        if (iscjk_unicode(character))
-        {
-            multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-            last_word.clear();
-            isStartOfWord = false;
-            startOfWord = -1;
-        }
-
         float posRight = (info->position.x + info->contentSize.width) * scalsX;
         // Out of bounds.
         if (posRight - startOfLine > lineWidth)
         {
-            if (!breakLineWithoutSpace && !iscjk_unicode(character))
+            if (!breakLineWithoutSpace && !isCJK)
             {
                 last_word.push_back(character);
                 
