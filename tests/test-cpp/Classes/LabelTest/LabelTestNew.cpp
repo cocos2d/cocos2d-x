@@ -63,6 +63,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFColor),
     CL(LabelTTFFontsTestNew),
     CL(LabelTTFDynamicAlignment),
+    CL(LabelTTFCJKWrappingTest),
     CL(LabelTTFUnicodeNew),
     CL(LabelBMFontTestNew),
     CL(LabelTTFDistanceField),
@@ -1069,6 +1070,56 @@ std::string LabelTTFDynamicAlignment::title() const
 std::string LabelTTFDynamicAlignment::subtitle() const
 {
     return "Uses the new Label with TTF. Testing alignment";
+}
+
+//
+// NewLabelTTF Chinese/Japanese/Korean wrapping test
+//
+LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+    
+    auto drawNode = DrawNode::create();
+    drawNode->setAnchorPoint(Point(0, 0));
+    this->addChild(drawNode);
+    drawNode->drawSegment(
+        Point(size.width * 0.1, size.height * 0.8),
+        Point(size.width * 0.1, 0), 1, Color4F(1, 0, 0, 1));
+    drawNode->drawSegment(
+        Point(size.width * 0.85, size.height * 0.8),
+        Point(size.width * 0.85, 0), 1, Color4F(1, 0, 0, 1));
+    
+    TTFConfig ttfConfig("fonts/wt021.ttf", 50, GlyphCollection::DYNAMIC);
+    auto label1 = Label::createWithTTF(ttfConfig,
+        "你好，Cocos2d-x v3的New Label。", TextHAlignment::LEFT, size.width * 0.75);
+    label1->setColor(Color3B(128, 255, 255));
+    label1->setPosition(Point(size.width * 0.1, size.height * 0.6));
+    label1->setAnchorPoint(Point(0, 0.5));
+    this->addChild(label1);
+    
+    auto label2 = Label::createWithTTF(ttfConfig,
+        "早上好，Cocos2d-x v3的New Label。", TextHAlignment::LEFT, size.width * 0.75);
+    label2->setColor(Color3B(255, 128, 255));
+    label2->setPosition(Point(size.width * 0.1, size.height * 0.4));
+    label2->setAnchorPoint(Point(0, 0.5));
+    this->addChild(label2);
+    auto label3 = Label::createWithTTF(ttfConfig,
+        "美好的一天啊美好的一天啊美好的一天啊", TextHAlignment::LEFT, size.width * 0.75);
+    label3->setColor(Color3B(255, 255, 128));
+    label3->setPosition(Point(size.width * 0.1, size.height * 0.2));
+    label3->setAnchorPoint(Point(0, 0.5));
+    this->addChild(label3);
+}
+
+std::string LabelTTFCJKWrappingTest::title() const
+{
+    return "New Label + .TTF";
+}
+
+std::string LabelTTFCJKWrappingTest::subtitle() const
+{
+    return "New Label with CJK + ASCII characters\n"
+        "Characters should stay in the correct position";
 }
 
 //
