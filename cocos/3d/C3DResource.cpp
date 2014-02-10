@@ -1,5 +1,5 @@
 #include "C3DResource.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 #include "C3DResourcePool.h"
 #include "StringTool.h"
 
@@ -50,12 +50,12 @@ void C3DResource::setState(C3DResource::State state)
     _state = state;
 }
 
-bool C3DResource::load(C3DElementNode* node)
+bool C3DResource::load(ElementNode* node)
 {
     return false;
 }
 
-bool C3DResource::save(C3DElementNode* node)
+bool C3DResource::save(ElementNode* node)
 {
     return false;
 }

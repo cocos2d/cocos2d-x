@@ -1,8 +1,8 @@
 #ifndef C3DAABB_H_
 #define C3DAABB_H_
 
-#include "math/Vector3.h"
-#include "math/Matrix.h"
+#include "Vector3.h"
+#include "C3DMatrix.h"
 
 namespace cocos2d
 {

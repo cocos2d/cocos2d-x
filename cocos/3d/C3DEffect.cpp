@@ -1,6 +1,6 @@
 #include "Base.h"
 #include "C3DEffect.h"
-#include "C3DStream.h"
+#include "Stream.h"
 #include "C3DTexture.h"
 #include "C3DSampler.h"
 #include "C3DRenderState.h"
@@ -96,7 +96,7 @@ void replaceIncludes(const char* source, std::string& out)
             std::string includeStr = str.substr(startQuote, len);
             directoryPath.append(includeStr);
 
-            char* includedSource = C3DStreamManager::readAll(directoryPath.c_str());
+            char* includedSource = StreamManager::readAll(directoryPath.c_str());
             if (includedSource == nullptr)
             {
                 //LOG_ERROR_VARG("Compile failed for shader '%s' invalid filepath.", directoryPath.c_str());
@@ -118,7 +118,7 @@ void replaceIncludes(const char* source, std::string& out)
 }
 
 bool C3DEffect::load(ElementNode* node)
-{
+{	
     C3DResource::load(node);
 
     const char* vshPath = node->getElement("vertexShader");
@@ -131,12 +131,12 @@ bool C3DEffect::load(ElementNode* node)
 
 
     // Read source from file.
-    char* vshSource = C3DStreamManager::readAll(vshPath);
+    char* vshSource = StreamManager::readAll(vshPath);
     if (vshSource == nullptr)
     {  
         return false;
     }
-    char* fshSource = C3DStreamManager::readAll(fshPath);
+    char* fshSource = StreamManager::readAll(fshPath);
     if (fshSource == nullptr)
     {
         SAFE_DELETE_ARRAY(vshSource);    

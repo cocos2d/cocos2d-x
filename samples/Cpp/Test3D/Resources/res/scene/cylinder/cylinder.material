@@ -1,0 +1,31 @@
+material texturedflat
+{
+	u_time = 0.0
+    technique
+    {
+        pass
+        {
+            vertexShader = shaders/tunnel.vsh
+            fragmentShader = shaders/tunnel.fsh
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+
+            sampler u_diffuseTexture
+            {
+                path = scene/cylinder/cylinder.png
+                mipmap = false
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = LINEAR
+                magFilter = LINEAR
+            }
+
+            renderState
+            {
+                cullFace = false
+                depthTest = true
+				blend = false
+            }
+        }
+    }
+}

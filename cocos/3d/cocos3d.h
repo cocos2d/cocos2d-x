@@ -1,10 +1,10 @@
 #ifndef __cocos3d_h__
 #define __cocos3d_h__
 
-#include "math/Vector2.h"
-#include "math/Vector3.h"
-#include "math/Vector4.h"
-#include "EnumDef.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+
 #include "C3DLayer.h"
 #include "C3DSprite.h"
 
@@ -29,6 +29,6 @@
 
 #include "C3DSampler.h"
 
-#include "math/Quaternion.h"
+#include "C3DQuaternion.h"
 
 #endif

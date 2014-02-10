@@ -5,8 +5,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAudio", "..\cocos\audio\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\cocos\2d\cocos2d.vcxproj", "{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp", "..\samples\Cpp\HelloCpp\proj.win32\HelloCpp.vcxproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libBox2D", "..\external\Box2D\proj.win32\Box2D.vcxproj", "{929480E7-23C0-4DF6-8456-096D71547116}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libchipmunk", "..\external\chipmunk\proj.win32\chipmunk.vcxproj", "{207BC7A9-CCF1-4F2F-A04D-45F72242AE25}"
@@ -65,6 +63,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForLocalStorage
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForGui", "..\cocos\scripting\javascript\bindings\gui\libJSBindingForGui.vcxproj", "{9A844C88-97E8-4E2D-B09A-E138C67D338B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineDemo", "..\samples\Cpp\EngineDemo\proj.win32\EngineDemo.vcxproj", "{67DE2137-AE3D-4B87-A34E-E83EF5A8064A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test3D", "..\samples\Cpp\Test3D\proj.win32\HelloCpp.vcxproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForSpine", "..\cocos\scripting\javascript\bindings\spine\libJSBindingForSpine.vcxproj", "{E78CDC6B-F37D-48D2-AD91-1DB549497E32}"
 EndProject
 Global
@@ -81,10 +82,6 @@ Global
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Debug|Win32.Build.0 = Debug|Win32
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|Win32.ActiveCfg = Release|Win32
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|Win32.Build.0 = Release|Win32
-		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.Build.0 = Debug|Win32
-		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.ActiveCfg = Release|Win32
-		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.Build.0 = Release|Win32
 		{929480E7-23C0-4DF6-8456-096D71547116}.Debug|Win32.ActiveCfg = Debug|Win32
 		{929480E7-23C0-4DF6-8456-096D71547116}.Debug|Win32.Build.0 = Debug|Win32
 		{929480E7-23C0-4DF6-8456-096D71547116}.Release|Win32.ActiveCfg = Release|Win32
@@ -197,6 +194,14 @@ Global
 		{9A844C88-97E8-4E2D-B09A-E138C67D338B}.Debug|Win32.Build.0 = Debug|Win32
 		{9A844C88-97E8-4E2D-B09A-E138C67D338B}.Release|Win32.ActiveCfg = Release|Win32
 		{9A844C88-97E8-4E2D-B09A-E138C67D338B}.Release|Win32.Build.0 = Release|Win32
+		{67DE2137-AE3D-4B87-A34E-E83EF5A8064A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{67DE2137-AE3D-4B87-A34E-E83EF5A8064A}.Debug|Win32.Build.0 = Debug|Win32
+		{67DE2137-AE3D-4B87-A34E-E83EF5A8064A}.Release|Win32.ActiveCfg = Release|Win32
+		{67DE2137-AE3D-4B87-A34E-E83EF5A8064A}.Release|Win32.Build.0 = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.Build.0 = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.ActiveCfg = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.Build.0 = Release|Win32
 		{E78CDC6B-F37D-48D2-AD91-1DB549497E32}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E78CDC6B-F37D-48D2-AD91-1DB549497E32}.Debug|Win32.Build.0 = Debug|Win32
 		{E78CDC6B-F37D-48D2-AD91-1DB549497E32}.Release|Win32.ActiveCfg = Release|Win32

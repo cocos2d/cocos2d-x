@@ -1,6 +1,6 @@
 #ifndef NODE_H_
 #define NODE_H_
-#include "math/Matrix.h"
+#include "C3DMatrix.h"
 #include "Transform.h"
 #include <string>
 #include <vector>

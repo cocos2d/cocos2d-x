@@ -1,0 +1,63 @@
+material texturedflat
+{
+    u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+
+    sampler u_diffuseTexture
+    {
+        path = scene/1/ChangJing_DiMian.png
+        mipmap = false
+        wrapS = CLAMP
+        wrapT = CLAMP
+        minFilter = LINEAR
+        magFilter = LINEAR
+    }
+
+    technique
+    {
+		sampler u_normalTexture
+		{
+			path = 2.5D/fish/normal/Fish_01_N.png
+			mipmap = true
+			wrapS = CLAMP
+			wrapT = CLAMP
+			minFilter = LINEAR_MIPMAP_LINEAR
+			magFilter = LINEAR
+		}
+		pass
+        {
+			u_worldMatrix = WORLD_MATRIX
+			u_inverseTransposeWorldMatrix = INVERSE_TRANSPOSE_WORLD_MATRIX
+			u_diffuseColor = 0.7, 0.7, 0.7, 1.0
+			u_transColor = 0.65, 0.5, 0.3
+			u_specularPower = 5.0, 5.0, 5.0, 150.0;
+            vertexShader = shaders/textured.vsh
+            fragmentShader = shaders/textured.fsh
+			defines = MAXDIRLIGHT 1
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+				depthWrite = true
+				blend = false
+            }
+        }
+    }
+
+    technique _castshadow
+    {
+        pass
+        {
+            vertexShader = shaders/textured.vsh
+            fragmentShader = shaders/writedepth.fsh
+
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+				depthWrite = true
+				blend = false
+            }
+        }
+    }
+
+}

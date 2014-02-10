@@ -3,12 +3,12 @@
 #include "Base.h"
 #include "cocos2d.h"
 #include "C3DSprite.h"
-#include "math/Vector2.h"
-#include "math/Vector4.h"
+#include "Vector2.h"
+#include "Vector4.h"
 
 #include "C3DScene.h"
 
-#include "touch_dispatcher/CCTouch.h"
+//#include "touch_dispatcher/CCTouch.h"
 
 #include <map>
 
@@ -107,20 +107,23 @@ void C3DLayer::draw(void)
 
 long C3DLayer::getAbsoluteTime()
 {
-    struct cocos2d::cc_timeval now;
-    if (cocos2d::CCTime::gettimeofdayCocos2d(&now, NULL) != 0)
+    struct timeval now;
+    if (cocos2d::gettimeofday(&now, nullptr) != 0)
     {
+		CCLOG("error in gettimeofday");
         return 0 ;
     }
 
     return now.tv_sec*1000;
+	
 }
 
 long C3DLayer::getGameTime()
 {
-    struct cocos2d::cc_timeval now;
-    if (cocos2d::CCTime::gettimeofdayCocos2d(&now, NULL) != 0)
+    struct timeval now;
+    if (cocos2d::gettimeofday(&now, nullptr) != 0)
     {
+		CCLOG("error in gettimeofday");
         return 0 ;
     }
 
@@ -129,7 +132,7 @@ long C3DLayer::getGameTime()
 
 void C3DLayer::initialize()
 {   
-    _scene = cocos3d::C3DScene::createScene(this);
+    _scene = cocos2d::C3DScene::createScene(this);
         
     _initialized = true;    
 }
@@ -272,7 +275,7 @@ unsigned int C3DLayer::getHeight() const
 
 void C3DLayer::showBoundingBox(bool bShow)
 {
-    this->getScene()->showBoundingBox(bShow);
+    this->getScene3D()->showBoundingBox(bShow);
 }
 
 C3DLayer* C3DLayer::getMainLayer()

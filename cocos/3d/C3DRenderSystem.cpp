@@ -3,7 +3,7 @@
 #include "C3DLayer.h"
 #include "C3DScene.h"
 
-#include "math/Vector4.h"
+#include "Vector4.h"
 #include "C3DRenderBlock.h"
 #include "C3DViewport.h"
 #include "C3DEffect.h"

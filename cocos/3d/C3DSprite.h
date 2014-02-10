@@ -5,7 +5,6 @@
 #include <vector>
 #include <map>
 #include <string>
-#include "EnumDef.h"
 #include "C3DNode.h"
 #include <string>
 #include "cocos2d.h"

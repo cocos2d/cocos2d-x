@@ -1,7 +1,7 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include "base/Transform.h"
+#include "Transform.h"
 #include "C3DNode.h"
 
 #include "C3DAABB.h"

@@ -1,10 +1,10 @@
 #ifndef MATERIALPARAMETER_H_
 #define MATERIALPARAMETER_H_
 
-#include "math/Vector2.h"
-#include "math/Vector3.h"
-#include "math/Vector4.h"
-#include "math/Matrix.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "C3DMatrix.h"
 
 #include "C3DEffect.h"
 #include "cocos2d.h"

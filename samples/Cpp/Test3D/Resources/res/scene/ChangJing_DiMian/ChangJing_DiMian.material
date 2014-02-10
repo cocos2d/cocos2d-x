@@ -1,0 +1,44 @@
+material texturedflat
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = shaders/textured.vsh
+            fragmentShader = shaders/textured.fsh
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_worldMatrix = WORLD_MATRIX
+			u_inverseTransposeWorldMatrix = INVERSE_TRANSPOSE_WORLD_MATRIX
+            u_diffuseColor = 1.0, 1.0, 1.0, 1.0
+            
+			defines = MASKLAYER
+            sampler u_diffuseTexture
+            {
+                path = scene/ChangJing_DiMian/ChangJing_DiMian.png
+                mipmap = false
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = LINEAR
+                magFilter = LINEAR
+            }
+            sampler u_maskTexture
+            {
+                path = scene/ChangJing_DiMian/ChangJing01_ZheZhao.png
+                mipmap = false
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = LINEAR
+                magFilter = LINEAR
+            }
+
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+                depthWrite = true
+				blend = false
+            }
+        }
+    }
+}

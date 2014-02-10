@@ -1,0 +1,51 @@
+Particle particle system
+{
+	particleCountMax = 0
+
+	Render particle render
+	{
+		vertexShader = shaders/particle.vsh
+		fragmentShader = shaders/particle.fsh
+		texture = particles/notexture.png
+		srcBlend = SRC_ALPHA
+		dstBlend = ONE
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 0
+		ellipsoid = true
+		sizeStartMin = 0
+		sizeStartMax = 0
+		ageMin = 0
+		ageMax = 0
+		position = 0,0,0
+		positionVar = 0,0,0
+		velocity = 0,0,0
+		velocityVar = 0,0,0
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+			TransformPSA
+			{
+			   name = transformPSA1
+			   
+			   endSize = 5.0
+			   sizeRate = 1.0		
+			
+			}			
+			
+	}
+
+}
+

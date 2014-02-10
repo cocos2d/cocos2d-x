@@ -1,0 +1,38 @@
+material test
+{
+    technique
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = shaders/particle.vsh
+            fragmentShader = shaders/particle.fsh
+
+            u_projectionMatrix = VIEW_PROJECTION_MATRIX
+            
+            defines = USE_TEXTURE
+            // samplers
+            sampler u_texture
+            {
+                path = ParticleEditorTemplate/smoke.png                
+                mipmap = false
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = LINEAR
+                magFilter = LINEAR
+            }
+
+            
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest =  false
+
+                blend = true
+                srcBlend = SRC_ALPHA
+                dstBlend = ONE
+            }
+        }
+    }
+}
