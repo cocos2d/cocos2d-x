@@ -320,7 +320,7 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
         // tile not created yet. create it
         if (! tile) 
         {
-            Rect rect = _tileSet->rectForGID(gid);
+            Rect rect = _tileSet->getRectForGID(gid);
             rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
             tile = Sprite::createWithTexture(this->getTexture(), rect);
@@ -338,30 +338,30 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
     return tile;
 }
 
-int TMXLayer::getTileGIDAt(const Point& pos, ccTMXTileFlags* flags/* = nullptr*/)
+uint32_t TMXLayer::getTileGIDAt(const Point& pos, TMXTileFlags* flags/* = nullptr*/)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
 
-    int idx = static_cast<int>((pos.x + pos.y * _layerSize.width));
+    ssize_t idx = static_cast<int>((pos.x + pos.y * _layerSize.width));
     // Bits on the far end of the 32-bit global tile ID are used for tile flags
-    int tile = _tiles[idx];
+    uint32_t tile = _tiles[idx];
 
     // issue1264, flipped tiles can be changed dynamically
     if (flags) 
     {
-        *flags = (ccTMXTileFlags)(tile & kFlipedAll);
+        *flags = (TMXTileFlags)(tile & kTMXFlipedAll);
     }
     
-    return (tile & kFlippedMask);
+    return (tile & kTMXFlippedMask);
 }
 
 // TMXLayer - adding helper methods
-Sprite * TMXLayer::insertTileForGID(int gid, const Point& pos)
+Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Point& pos)
 {
-    if (gid != 0 && (static_cast<int>((gid & kFlippedMask)) - _tileSet->_firstGid) >= 0)
+    if (gid != 0 && (static_cast<int>((gid & kTMXFlippedMask)) - _tileSet->_firstGid) >= 0)
     {
-        Rect rect = _tileSet->rectForGID(gid);
+        Rect rect = _tileSet->getRectForGID(gid);
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
         
         intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
@@ -397,9 +397,9 @@ Sprite * TMXLayer::insertTileForGID(int gid, const Point& pos)
     return nullptr;
 }
 
-Sprite * TMXLayer::updateTileForGID(int gid, const Point& pos)    
+Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Point& pos)
 {
-    Rect rect = _tileSet->rectForGID(gid);
+    Rect rect = _tileSet->getRectForGID(gid);
     rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
     int z = (int)(pos.x + pos.y * _layerSize.width);
 
@@ -419,11 +419,11 @@ Sprite * TMXLayer::updateTileForGID(int gid, const Point& pos)
 
 // used only when parsing the map. useless after the map was parsed
 // since lot's of assumptions are no longer true
-Sprite * TMXLayer::appendTileForGID(int gid, const Point& pos)
+Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Point& pos)
 {
-    if (gid != 0 && (static_cast<int>((gid & kFlippedMask)) - _tileSet->_firstGid) >= 0)
+    if (gid != 0 && (static_cast<int>((gid & kTMXFlippedMask)) - _tileSet->_firstGid) >= 0)
     {
-        Rect rect = _tileSet->rectForGID(gid);
+        Rect rect = _tileSet->getRectForGID(gid);
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
         
         intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
@@ -483,23 +483,23 @@ ssize_t TMXLayer::atlasIndexForNewZ(int z)
 }
 
 // TMXLayer - adding / remove tiles
-void TMXLayer::setTileGID(int gid, const Point& pos)
+void TMXLayer::setTileGID(uint32_t gid, const Point& pos)
 {
-    setTileGID(gid, pos, (ccTMXTileFlags)0);
+    setTileGID(gid, pos, (TMXTileFlags)0);
 }
 
-void TMXLayer::setTileGID(int gid, const Point& pos, ccTMXTileFlags flags)
+void TMXLayer::setTileGID(uint32_t gid, const Point& pos, TMXTileFlags flags)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
     CCASSERT(gid == 0 || gid >= _tileSet->_firstGid, "TMXLayer: invalid gid" );
 
-    ccTMXTileFlags currentFlags;
-    int currentGID = getTileGIDAt(pos, &currentFlags);
+    TMXTileFlags currentFlags;
+    uint32_t currentGID = getTileGIDAt(pos, &currentFlags);
 
     if (currentGID != gid || currentFlags != flags) 
     {
-        int gidAndFlags = gid | flags;
+        uint32_t gidAndFlags = gid | flags;
 
         // setting gid=0 is equal to remove the tile
         if (gid == 0)
@@ -518,7 +518,7 @@ void TMXLayer::setTileGID(int gid, const Point& pos, ccTMXTileFlags flags)
             Sprite *sprite = static_cast<Sprite*>(getChildByTag(z));
             if (sprite)
             {
-                Rect rect = _tileSet->rectForGID(gid);
+                Rect rect = _tileSet->getRectForGID(gid);
                 rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
                 sprite->setTextureRect(rect, false, rect.size);

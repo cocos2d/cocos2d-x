@@ -1017,7 +1017,7 @@ void MySprite::onDraw()
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     CHECK_GL_ERROR_DEBUG();
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 }
 //------------------------------------------------------------------
 //
