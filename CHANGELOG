@@ -2,6 +2,7 @@ cocos2d-x-3.0rc0 Feb.?? 2014
 [All]
      [NEW]          Adds Dutch Language support.
      [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
+     [NEW]          Director: Displays 'Vertices drawn' in the stats. Useful to measure performance.
 
      [FIX]          A string which only contains CJK characters can't make a line-break when it's needed.
      [FIX]          EGLView improvements: renamed to GLView, no longer a singleton, easier to customize
