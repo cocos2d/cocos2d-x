@@ -51,8 +51,6 @@ THE SOFTWARE.
 #include "CCUserDefault.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
-#include "kazmath/kazmath.h"
-#include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "platform/CCImage.h"
 #include "CCGLView.h"
@@ -64,6 +62,9 @@ THE SOFTWARE.
 #include "renderer/CCFrustum.h"
 #include "CCConsole.h"
 
+#include "kazmath/kazmath.h"
+#include "kazmath/GL/matrix.h"
+
 /**
  Position of the FPS
  
@@ -74,8 +75,6 @@ THE SOFTWARE.
 #endif
 
 using namespace std;
-
-unsigned int g_uNumberOfDraws = 0;
 
 NS_CC_BEGIN
 // XXX it should be a Director ivar. Move it there once support for multiple directors is added
@@ -121,11 +120,8 @@ bool Director::init(void)
     // FPS
     _accumDt = 0.0f;
     _frameRate = 0.0f;
-    _FPSLabel = nullptr;
-    _SPFLabel = nullptr;
-    _drawsLabel = nullptr;
+    _FPSLabel = _SPFLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = _frames = 0;
-    _FPS = new char[10];
     _lastUpdate = new struct timeval;
 
     // paused ?
@@ -174,7 +170,8 @@ Director::~Director(void)
 
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_SPFLabel);
-    CC_SAFE_RELEASE(_drawsLabel);
+    CC_SAFE_RELEASE(_drawnVerticesLabel);
+    CC_SAFE_RELEASE(_drawnBatchesLabel);
 
     CC_SAFE_RELEASE(_runningScene);
     CC_SAFE_RELEASE(_notificationNode);
@@ -195,8 +192,6 @@ Director::~Director(void)
 
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
-    // delete fps string
-    delete []_FPS;
 
     s_SharedDirector = nullptr;
 }
@@ -746,7 +741,8 @@ void Director::purgeDirector()
 
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_SPFLabel);
-    CC_SAFE_RELEASE_NULL(_drawsLabel);
+    CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
+    CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
     CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
@@ -855,33 +851,33 @@ void Director::showStats()
     ++_frames;
     _accumDt += _deltaTime;
     
-    if (_displayStats)
+    if (_displayStats && _FPSLabel && _SPFLabel && _drawnBatchesLabel && _drawnVerticesLabel)
     {
-        if (_FPSLabel && _SPFLabel && _drawsLabel)
+        if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
-            {
-                sprintf(_FPS, "%.3f", _secondsPerFrame);
-                _SPFLabel->setString(_FPS);
-                
-                _frameRate = _frames / _accumDt;
-                _frames = 0;
-                _accumDt = 0;
-                
-                sprintf(_FPS, "%.1f", _frameRate);
-                _FPSLabel->setString(_FPS);
-                
-                sprintf(_FPS, "%4lu", (unsigned long)g_uNumberOfDraws);
-                _drawsLabel->setString(_FPS);
-            }
+            char buffer[30];
+            sprintf(buffer, "%.3f", _secondsPerFrame);
+            _SPFLabel->setString(buffer);
             
-            _drawsLabel->visit();
-            _FPSLabel->visit();
-            _SPFLabel->visit();
+            _frameRate = _frames / _accumDt;
+            _frames = 0;
+            _accumDt = 0;
+            
+            sprintf(buffer, "%.1f", _frameRate);
+            _FPSLabel->setString(buffer);
+            
+            sprintf(buffer, "%4lu", (unsigned long)_renderer->getDrawnBatches());
+            _drawnBatchesLabel->setString(buffer);
+
+            sprintf(buffer, "%5lu", (unsigned long)_renderer->getDrawnVertices());
+            _drawnVerticesLabel->setString(buffer);
         }
-    }    
-    
-    g_uNumberOfDraws = 0;
+
+        _drawnVerticesLabel->visit();
+        _drawnBatchesLabel->visit();
+        _FPSLabel->visit();
+        _SPFLabel->visit();
+    }
 }
 
 void Director::calculateMPF()
@@ -908,7 +904,8 @@ void Director::createStatsLabel()
     {
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_SPFLabel);
-        CC_SAFE_RELEASE_NULL(_drawsLabel);
+        CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
+        CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
         _textureCache->removeTextureForKey("/cc_fps_images");
         FileUtils::getInstance()->purgeCachedEntries();
     }
@@ -957,17 +954,25 @@ void Director::createStatsLabel()
     _SPFLabel->initWithString("0.000", texture, 12, 32, '.');
     _SPFLabel->setScale(factor);
 
-    _drawsLabel = LabelAtlas::create();
-    _drawsLabel->retain();
-    _drawsLabel->setIgnoreContentScaleFactor(true);
-    _drawsLabel->initWithString("000", texture, 12, 32, '.');
-    _drawsLabel->setScale(factor);
+    _drawnBatchesLabel = LabelAtlas::create();
+    _drawnBatchesLabel->retain();
+    _drawnBatchesLabel->setIgnoreContentScaleFactor(true);
+    _drawnBatchesLabel->initWithString("000", texture, 12, 32, '.');
+    _drawnBatchesLabel->setScale(factor);
+
+    _drawnVerticesLabel = LabelAtlas::create();
+    _drawnVerticesLabel->retain();
+    _drawnVerticesLabel->setIgnoreContentScaleFactor(true);
+    _drawnVerticesLabel->initWithString("00000", texture, 12, 32, '.');
+    _drawnVerticesLabel->setScale(factor);
+
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    _drawsLabel->setPosition(Point(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
+    _drawnVerticesLabel->setPosition(Point(0, 51*factor) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Point(12*factor, 34*factor) + CC_DIRECTOR_STATS_POSITION);
     _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Point(12*factor,0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)
