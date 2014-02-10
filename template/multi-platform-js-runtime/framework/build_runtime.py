@@ -152,7 +152,7 @@ class BuildRuntime:
             print ("Can't find Mac target")
             return False
 
-        macFolder = os.path.join(self.projectPath, "..", "..", "runtime", "mac")
+        macFolder = os.path.join(self.projectPath, "..", "..", "runtime",self.projectName, "mac")
         if os.path.isdir(macFolder):
             shutil.rmtree(macFolder)
 
@@ -240,7 +240,7 @@ class BuildRuntime:
             print ("Can't find iOS target")
             return False
 
-        iosFolder = os.path.join(self.projectPath, "..", "..", "runtime", "ios")
+        iosFolder = os.path.join(self.projectPath, "..", "..", "runtime", self.projectName, "ios")
         if os.path.isdir(iosFolder):
             filelist = os.listdir(iosFolder)
             for filename in filelist:
@@ -252,10 +252,10 @@ class BuildRuntime:
             "xcodebuild",
             "-project",
             projectPath,
-            "-configuration",
-            "Debug",
             "-target",
             targetName,
+            "-configuration",
+            "Debug",
             "-sdk",
             "iphonesimulator",
             "CONFIGURATION_BUILD_DIR=%s" % (iosFolder)
