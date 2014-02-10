@@ -13,17 +13,30 @@ import re
 from contextlib import contextmanager
 
 
-def _check_environment_variables():
+def _check_ndk_root_env():
     ''' Checking the environment NDK_ROOT, which will be used for building
     '''
 
     try:
         NDK_ROOT = os.environ['NDK_ROOT']
     except Exception:
-        print "NDK_ROOT not defined. Please define NDK_ROOT in your environment"
+        print "NDK_ROOT not defined. Please define NDK_ROOT in your environment."
         sys.exit(1)
 
     return NDK_ROOT
+
+def _check_python_bin_env():
+    ''' Checking the environment PYTHON_BIN, which will be used for building
+    '''
+
+    try:
+        PYTHON_BIN = os.environ['PYTHON_BIN']
+    except Exception:
+        print "PYTHON_BIN not defined, use current python."
+        PYTHON_BIN = sys.executable
+
+    return PYTHON_BIN
+
 
 class CmdError(Exception):
     pass
@@ -46,9 +59,10 @@ def main():
 
     cur_platform= '??'
     llvm_path = '??'
-    ndk_root = _check_environment_variables()
+    ndk_root = _check_ndk_root_env()
     # del the " in the path
     ndk_root = re.sub(r"\"", "", ndk_root)
+    python_bin = _check_python_bin_env()
 
     platform = sys.platform
     if platform == 'win32':
@@ -116,7 +130,6 @@ def main():
                     'cocos2dx_spine.ini' : ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'), \
                     }
         target = 'spidermonkey'
-        python_bin = sys.executable
         generator_py = '%s/generator.py' % cxx_generator_root
         for key in cmd_args.keys():
             args = cmd_args[key]
