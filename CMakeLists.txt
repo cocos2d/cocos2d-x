@@ -40,6 +40,7 @@ option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" OFF)
 option(BUILD_GUI "Build GUI library" ON)
 option(BUILD_NETWORK "Build network library" ON)
+option(BUILD_STORAGE "Build storage library" ON)
 option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
@@ -56,6 +57,7 @@ option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" ON)
 option(BUILD_GUI "Build GUI library" ON)
 option(BUILD_NETWORK "Build network library" ON)
+option(BUILD_STORAGE "Build storage library" ON)
 option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
@@ -235,6 +237,11 @@ add_subdirectory(cocos/base)
 
 # cocos 2d library
 add_subdirectory(cocos/2d)
+
+if(BUILD_STORAGE)
+# cocos storage
+add_subdirectory(cocos/storage)
+endif(BUILD_STORAGE)
 
 if(BUILD_GUI)
 # gui
