@@ -120,7 +120,7 @@ bool Director::init(void)
     // FPS
     _accumDt = 0.0f;
     _frameRate = 0.0f;
-    _FPSLabel = _SPFLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
+    _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = _frames = 0;
     _lastUpdate = new struct timeval;
 
@@ -169,7 +169,6 @@ Director::~Director(void)
     CCLOGINFO("deallocing Director: %p", this);
 
     CC_SAFE_RELEASE(_FPSLabel);
-    CC_SAFE_RELEASE(_SPFLabel);
     CC_SAFE_RELEASE(_drawnVerticesLabel);
     CC_SAFE_RELEASE(_drawnBatchesLabel);
 
@@ -740,7 +739,6 @@ void Director::purgeDirector()
     stopAnimation();
 
     CC_SAFE_RELEASE_NULL(_FPSLabel);
-    CC_SAFE_RELEASE_NULL(_SPFLabel);
     CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
     CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
     CC_SAFE_DELETE(_cullingFrustum);
@@ -851,32 +849,29 @@ void Director::showStats()
     ++_frames;
     _accumDt += _deltaTime;
     
-    if (_displayStats && _FPSLabel && _SPFLabel && _drawnBatchesLabel && _drawnVerticesLabel)
+    if (_displayStats && _FPSLabel && _drawnBatchesLabel && _drawnVerticesLabel)
     {
         if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
             char buffer[30];
-            sprintf(buffer, "%.3f", _secondsPerFrame);
-            _SPFLabel->setString(buffer);
-            
+
             _frameRate = _frames / _accumDt;
             _frames = 0;
             _accumDt = 0;
-            
-            sprintf(buffer, "%.1f", _frameRate);
+
+            sprintf(buffer, "%.1f / %.3f", _frameRate, _secondsPerFrame);
             _FPSLabel->setString(buffer);
             
-            sprintf(buffer, "%4lu", (unsigned long)_renderer->getDrawnBatches());
+            sprintf(buffer, "GL calls:%6lu", (unsigned long)_renderer->getDrawnBatches());
             _drawnBatchesLabel->setString(buffer);
 
-            sprintf(buffer, "%5lu", (unsigned long)_renderer->getDrawnVertices());
+            sprintf(buffer, "GL verts:%6lu", (unsigned long)_renderer->getDrawnVertices());
             _drawnVerticesLabel->setString(buffer);
         }
 
         _drawnVerticesLabel->visit();
         _drawnBatchesLabel->visit();
         _FPSLabel->visit();
-        _SPFLabel->visit();
     }
 }
 
@@ -900,10 +895,9 @@ void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
 
-    if (_FPSLabel && _SPFLabel)
+    if (_FPSLabel)
     {
         CC_SAFE_RELEASE_NULL(_FPSLabel);
-        CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
         CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
         _textureCache->removeTextureForKey("/cc_fps_images");
@@ -930,49 +924,37 @@ void Director::createStatsLabel()
      We want to use an image which is stored in the file named ccFPSImage.c 
      for any design resolutions and all resource resolutions. 
      
-     To achieve this,
-     
-     Firstly, we need to ignore 'contentScaleFactor' in 'AtlasNode' and 'LabelAtlas'.
+     To achieve this, we need to ignore 'contentScaleFactor' in 'AtlasNode' and 'LabelAtlas'.
      So I added a new method called 'setIgnoreContentScaleFactor' for 'AtlasNode',
      this is not exposed to game developers, it's only used for displaying FPS now.
-     
-     Secondly, the size of this image is 480*320, to display the FPS label with correct size, 
-     a factor of design resolution ratio of 480x320 is also needed.
      */
-    auto glview = Director::getInstance()->getOpenGLView();
-    float factor = glview->getDesignResolutionSize().height / 320.0f;
+    float scaleFactor = 1 / CC_CONTENT_SCALE_FACTOR();
 
     _FPSLabel = LabelAtlas::create();
     _FPSLabel->retain();
     _FPSLabel->setIgnoreContentScaleFactor(true);
     _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
-    _FPSLabel->setScale(factor);
-
-    _SPFLabel = LabelAtlas::create();
-    _SPFLabel->retain();
-    _SPFLabel->setIgnoreContentScaleFactor(true);
-    _SPFLabel->initWithString("0.000", texture, 12, 32, '.');
-    _SPFLabel->setScale(factor);
+    _FPSLabel->setScale(scaleFactor);
 
     _drawnBatchesLabel = LabelAtlas::create();
     _drawnBatchesLabel->retain();
     _drawnBatchesLabel->setIgnoreContentScaleFactor(true);
     _drawnBatchesLabel->initWithString("000", texture, 12, 32, '.');
-    _drawnBatchesLabel->setScale(factor);
+    _drawnBatchesLabel->setScale(scaleFactor);
 
     _drawnVerticesLabel = LabelAtlas::create();
     _drawnVerticesLabel->retain();
     _drawnVerticesLabel->setIgnoreContentScaleFactor(true);
     _drawnVerticesLabel->initWithString("00000", texture, 12, 32, '.');
-    _drawnVerticesLabel->setScale(factor);
+    _drawnVerticesLabel->setScale(scaleFactor);
 
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    _drawnVerticesLabel->setPosition(Point(0, 51*factor) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Point(12*factor, 34*factor) + CC_DIRECTOR_STATS_POSITION);
-    _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Point(12*factor,0)+CC_DIRECTOR_STATS_POSITION);
+    const int height_spacing = 11;
+    _drawnVerticesLabel->setPosition(Point(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Point(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Point(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)
