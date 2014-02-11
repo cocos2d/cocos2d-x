@@ -301,3 +301,42 @@ void StartRuntime()
 #endif
 }
 
+
+
+
+// SimulatorConfig
+SimulatorConfig *SimulatorConfig::s_sharedInstance = NULL;
+SimulatorConfig *SimulatorConfig::getInstance(void)
+{
+	if (!s_sharedInstance)
+	{
+		s_sharedInstance = new SimulatorConfig();
+	}
+	return s_sharedInstance;
+}
+
+SimulatorConfig::SimulatorConfig(void)
+{
+	m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 3Gs (480x320)", 480, 320));
+	m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 4 (960x640)", 960, 640));
+	m_screenSizeArray.push_back(SimulatorScreenSize("iPhone 5 (1136x640)", 1136, 640));
+	m_screenSizeArray.push_back(SimulatorScreenSize("iPad (1024x768)", 1024, 768));
+	m_screenSizeArray.push_back(SimulatorScreenSize("iPad Retina (2048x1536)", 2048, 1536));
+	m_screenSizeArray.push_back(SimulatorScreenSize("Android (800x480)", 800, 480));
+	m_screenSizeArray.push_back(SimulatorScreenSize("Android (854x480)", 854, 480));
+	m_screenSizeArray.push_back(SimulatorScreenSize("Android (960x540)", 960, 540));
+	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1024x600)", 1024, 600));
+	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x720)", 1280, 720));
+	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x800)", 1280, 800));
+	m_screenSizeArray.push_back(SimulatorScreenSize("Android (1920x1080)", 1920, 1080));
+}
+
+int SimulatorConfig::getScreenSizeCount(void)
+{
+	return (int)m_screenSizeArray.size();
+}
+
+const SimulatorScreenSize SimulatorConfig::getScreenSize(int index)
+{
+	return m_screenSizeArray.at(index);
+}
