@@ -27,6 +27,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
         exit 0
     fi
     export NDK_ROOT=$HOME/bin/android-ndk
+    export PYTHON_BIN=/usr/bin/python
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 elif [ "$PLATFORM"x = "android"x ]; then
