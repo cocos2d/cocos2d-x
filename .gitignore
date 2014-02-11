@@ -104,3 +104,8 @@ tags
 /lib
 /build/linux-build
 
+# Cmake files
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
