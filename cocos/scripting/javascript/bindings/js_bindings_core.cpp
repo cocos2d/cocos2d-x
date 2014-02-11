@@ -24,14 +24,11 @@
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
 
-
 // cocos2d + chipmunk registration files
 #include "chipmunk/js_bindings_chipmunk_registration.h"
-
+#include "cocos2d.h"
 
 //#pragma mark - Hash
-
-using namespace cocos2d;
 
 typedef struct _hashJSObject
 {
@@ -161,8 +158,8 @@ void jsb_set_c_proxy_for_jsobject( JSObject *jsobj, void *handle, unsigned long 
 
 //#pragma mark Do Nothing - Callbacks
 
-JSBool JSB_do_nothing(JSContext *cx, uint32_t argc, jsval *vp)
+bool JSB_do_nothing(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
+	return true;
 }

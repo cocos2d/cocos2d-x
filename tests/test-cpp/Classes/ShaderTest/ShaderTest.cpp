@@ -220,7 +220,8 @@ void ShaderNode::onDraw()
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
+
 }
 
 /// ShaderMonjori
@@ -565,7 +566,7 @@ void SpriteBlur::onDraw()
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 }
 
 void SpriteBlur::setBlurSize(float f)
