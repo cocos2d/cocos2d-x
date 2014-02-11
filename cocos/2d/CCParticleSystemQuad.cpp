@@ -468,11 +468,10 @@ void ParticleSystemQuad::setTotalParticles(int tp)
             _indices = indicesNew;
 
             // Clear the memory
-            // XXX: Bug? If the quads are cleared, then drawing doesn't work... WHY??? XXX
             memset(_particles, 0, particlesSize);
             memset(_quads, 0, quadsSize);
             memset(_indices, 0, indicesSize);
-
+            
             _allocatedParticles = tp;
         }
         else
@@ -506,6 +505,10 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         {
             setupVBO();
         }
+        
+        // fixed http://www.cocos2d-x.org/issues/3990
+        // Updates texture coords.
+        setTexture(_texture);
     }
     else
     {
