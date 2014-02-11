@@ -164,11 +164,16 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 			switch (wmId)
 			{
 			case ID_FILE_EXIT:
+				exit(0);
 				break;
 
 			case ID_VIEW_PORTRAIT:
 			case ID_VIEW_LANDSCAPE:
 				onViewChangeOrientation(wmId);
+				break;
+
+			case ID_CONTROL_RELOAD:
+				ReloadScript();
 				break;
 
 			case ID_HELP_ABOUT:
