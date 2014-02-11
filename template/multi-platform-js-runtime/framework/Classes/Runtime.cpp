@@ -231,6 +231,11 @@ void startScript()
 	ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
 }
 
+void ReloadScript()
+{
+    
+}
+
 class ConnectWaiter: public Object
 {
 public:
