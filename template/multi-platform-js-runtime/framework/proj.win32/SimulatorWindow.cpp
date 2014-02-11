@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "glfw3native.h"
 #include "resource.h"
+#include "Runtime.h"
 
 #include <string>
 #include <vector>
@@ -40,47 +41,17 @@ CCSize g_screenSize;
 GLView* g_eglView=NULL;
 INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-typedef struct _SimulatorScreenSize {
-	string title;
-	int width;
-	int height;
-
-	_SimulatorScreenSize(const string title_, int width_, int height_)
-	{
-		title  = title_;
-		width  = width_;
-		height = height_;
-	}
-} SimulatorScreenSize;
-typedef vector<SimulatorScreenSize> ScreenSizeArray;
-ScreenSizeArray _screenSizeArray;
-
-
-void initScreenSize()
-{
-	_screenSizeArray.push_back(SimulatorScreenSize("iPhone 3Gs (480x320)", 480, 320));
-	_screenSizeArray.push_back(SimulatorScreenSize("iPhone 4 (960x640)", 960, 640));
-	_screenSizeArray.push_back(SimulatorScreenSize("iPhone 5 (1136x640)", 1136, 640));
-	_screenSizeArray.push_back(SimulatorScreenSize("iPad (1024x768)", 1024, 768));
-	_screenSizeArray.push_back(SimulatorScreenSize("iPad Retina (2048x1536)", 2048, 1536));
-	_screenSizeArray.push_back(SimulatorScreenSize("Android (800x480)", 800, 480));
-	_screenSizeArray.push_back(SimulatorScreenSize("Android (854x480)", 854, 480));
-	_screenSizeArray.push_back(SimulatorScreenSize("Android (960x540)", 960, 540));
-	_screenSizeArray.push_back(SimulatorScreenSize("Android (1024x600)", 1024, 600));
-	_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x720)", 1280, 720));
-	_screenSizeArray.push_back(SimulatorScreenSize("Android (1280x800)", 1280, 800));
-	_screenSizeArray.push_back(SimulatorScreenSize("Android (1920x1080)", 1920, 1080));
-}
 
 void createViewMenu()
 {
 	HMENU menu = GetMenu(glfwGetWin32Window(g_eglView->getWindow()));
 	HMENU viewMenu = GetSubMenu(menu, 1);
 
-	for (int i = _screenSizeArray.size() - 1; i >= 0; --i)
+	for (int i = SimulatorConfig::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
 	{
+		SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
 		wstring menuName;
-		menuName.assign(_screenSizeArray[i].title.begin(), _screenSizeArray[i].title.end());
+		menuName.assign(size.title.begin(), size.title.end());
 
 		MENUITEMINFO item;
 		ZeroMemory(&item, sizeof(item));
@@ -120,11 +91,13 @@ void updateMenu()
 		height = w;
 	}
 
-	int count = (int)_screenSizeArray.size();
+	int count = SimulatorConfig::getInstance()->getScreenSizeCount();
 	for (int i = 0; i < count; ++i)
 	{
 		bool bSel = false;
-		if (_screenSizeArray[i].width == width && _screenSizeArray[i].height == height)
+
+		SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
+		if (size.width == width && size.height == height)
 		{
 			bSel = true;
 		}
@@ -163,10 +136,11 @@ void onViewChangeOrientation(int viewMenuID)
 void onViewChangeFrameSize(int viewMenuID)
 {
 	int index = viewMenuID - ID_VIEW_SIZE;
-	if (index >= 0 && index < _screenSizeArray.size())
+	if (index >= 0 && index < SimulatorConfig::getInstance()->getScreenSizeCount())
 	{
-		g_screenSize.width = _screenSizeArray[index].width;
-		g_screenSize.height = _screenSizeArray[index].height;
+		SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(index);
+		g_screenSize.width = size.width;
+		g_screenSize.height = size.height;
 		updateView();	
 	}
 }
@@ -201,7 +175,7 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 				onHelpAbout();
 
 			default:
-				if (wmId >= ID_VIEW_SIZE && wmId <= ID_VIEW_SIZE + _screenSizeArray.size() - 1)
+				if (wmId >= ID_VIEW_SIZE && wmId <= ID_VIEW_SIZE + SimulatorConfig::getInstance()->getScreenSizeCount() - 1)
 				{
 					onViewChangeFrameSize(wmId);
 					break;
@@ -252,7 +226,6 @@ void createSimulator(const char* viewName, float width, float height, float fram
 		g_landscape = true;
 	}
 
-	initScreenSize();
 	HWND hWnd=glfwGetWin32Window(g_eglView->getWindow());
 	HMENU hMenu = LoadMenu(GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_MENU_COCOS));
 	SetMenu(hWnd, hMenu);
