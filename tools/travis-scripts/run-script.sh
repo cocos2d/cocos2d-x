@@ -5,6 +5,9 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 
+export NDK_ROOT=$HOME/bin/android-ndk
+export PYTHON_BIN=/usr/bin/python
+
 if [ "$GEN_JSB"x = "YES"x ]; then
     # Re-generation of the javascript bindings can perform push of the new
     # version back to github.  We don't do this for pull requests, or if
@@ -26,7 +29,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
         echo "GH_USER not set"
         exit 0
     fi
-    export NDK_ROOT=$HOME/bin/android-ndk
+
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 elif [ "$PLATFORM"x = "android"x ]; then
