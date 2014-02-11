@@ -101,7 +101,6 @@ protected:
     void loop();
     ssize_t readline(int fd);
     bool parseCommand(int fd);
-    void sendPrompt(int fd);
     void addClient();
 
     // Add commands here
