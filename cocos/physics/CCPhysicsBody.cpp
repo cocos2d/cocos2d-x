@@ -345,7 +345,7 @@ void PhysicsBody::setPosition(Point position)
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
 }
 
 Point PhysicsBody::getPosition() const
