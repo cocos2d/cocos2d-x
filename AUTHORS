@@ -459,6 +459,7 @@ Developers:
         
     seagullua
         Fixes the font rendering on Windows
+        Fixed a bug that screen will be flickering when switching to a new activity
         
     xhcnb
         Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
