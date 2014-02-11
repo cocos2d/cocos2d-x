@@ -4011,6 +4011,7 @@
 "cocos/scripting/javascript/bindings/js_manual_conversions.h",
 "cocos/scripting/javascript/bindings/jsb_opengl_functions.h",
 "cocos/scripting/javascript/bindings/js_bindings_opengl.h",
+"cocos/storage/CMakeLists.txt",
 "cocos/storage/local-storage/LocalStorageAndroid.cpp",
 "cocos/storage/local-storage/proj.win32/libLocalStorage.vcxproj",
 "cocos/storage/local-storage/proj.win32/libLocalStorage.vcxproj.user",

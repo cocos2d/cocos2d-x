@@ -107,6 +107,9 @@ add_subdirectory(${COCOS2D_ROOT}/cocos/base)
 # cocos 2d library
 add_subdirectory(${COCOS2D_ROOT}/cocos/2d)
 
+# cocos storage
+add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
+
 # gui
 add_subdirectory(${COCOS2D_ROOT}/cocos/gui)
 
@@ -141,6 +144,7 @@ endif()
 target_link_libraries(${APP_NAME}
   gui
   network
+  storage
   spine
   cocostudio
   cocosbuilder
