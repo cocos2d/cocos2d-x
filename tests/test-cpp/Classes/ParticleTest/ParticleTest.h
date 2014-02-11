@@ -193,7 +193,7 @@ public:
 class Issue870 : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void updateQuads(float dt);
@@ -205,7 +205,7 @@ private:
 class Issue1201 : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -213,7 +213,7 @@ public:
 class ParticleBatchHybrid : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     void switchRender(float dt);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -225,7 +225,7 @@ private:
 class ParticleBatchMultipleEmitters : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -233,7 +233,7 @@ public:
 class ParticleReorder : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     void reorderParticles(float dt);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -244,7 +244,7 @@ private:
 class MultipleParticleSystems : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void update(float dt);
@@ -253,8 +253,8 @@ public:
 class MultipleParticleSystemsBatched : public ParticleDemo
 {
 public:
-    virtual void onEnter();
-    virtual void update(float dt);
+    virtual void onEnter() override;
+    virtual void update(float dt) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
@@ -264,8 +264,8 @@ private:
 class AddAndDeleteParticleSystems : public ParticleDemo
 {
 public:
-    virtual void onEnter();
-    virtual void update(float dt);
+    virtual void onEnter() override;
+    virtual void update(float dt) override;
     void removeSystem(float dt);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -276,9 +276,9 @@ private:
 class ReorderParticleSystems : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     void reorderSystem(float time);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
@@ -288,7 +288,7 @@ private:
 class PremultipliedAlphaTest : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -296,7 +296,15 @@ public:
 class PremultipliedAlphaTest2 : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class Issue3990 : public ParticleDemo
+{
+public:
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
