@@ -12,6 +12,7 @@
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
 #include "mozilla/Casting.h"
+#include "mozilla/Types.h"
 
 #include <stdint.h>
 
@@ -56,6 +57,30 @@ static_assert((DoubleExponentBits & DoubleSignificandBits) == 0,
 
 static_assert((DoubleSignBit | DoubleExponentBits | DoubleSignificandBits) ==
               ~uint64_t(0),
+              "all bits accounted for");
+
+/*
+ * Ditto for |float| that must be a 32-bit double format number type, compatible
+ * with the IEEE-754 standard.
+ */
+static_assert(sizeof(float) == sizeof(uint32_t), "float must be 32bits");
+
+const unsigned FloatExponentBias = 127;
+const unsigned FloatExponentShift = 23;
+
+const uint32_t FloatSignBit         = 0x80000000UL;
+const uint32_t FloatExponentBits    = 0x7F800000UL;
+const uint32_t FloatSignificandBits = 0x007FFFFFUL;
+
+static_assert((FloatSignBit & FloatExponentBits) == 0,
+              "sign bit doesn't overlap exponent bits");
+static_assert((FloatSignBit & FloatSignificandBits) == 0,
+              "sign bit doesn't overlap significand bits");
+static_assert((FloatExponentBits & FloatSignificandBits) == 0,
+              "exponent bits don't overlap significand bits");
+
+static_assert((FloatSignBit | FloatExponentBits | FloatSignificandBits) ==
+              ~uint32_t(0),
               "all bits accounted for");
 
 /** Determines whether a double is NaN. */
@@ -115,7 +140,12 @@ IsNegativeZero(double d)
   return bits == DoubleSignBit;
 }
 
-/** Returns the exponent portion of the double. */
+/**
+ * Returns the exponent portion of the double.
+ *
+ * Zero is not special-cased, so ExponentComponent(0.0) is
+ * -int_fast16_t(DoubleExponentBias).
+ */
 static MOZ_ALWAYS_INLINE int_fast16_t
 ExponentComponent(double d)
 {
@@ -190,7 +220,13 @@ DoubleIsInt32(double d, int32_t* i)
 static MOZ_ALWAYS_INLINE double
 UnspecifiedNaN()
 {
-  return SpecificNaN(0, 0xfffffffffffffULL);
+  /*
+   * If we can use any quiet NaN, we might as well use the all-ones NaN,
+   * since it's cheap to materialize on common platforms (such as x64, where
+   * this value can be represented in a 32-bit signed immediate field, allowing
+   * it to be stored to memory in a single instruction).
+   */
+  return SpecificNaN(1, 0xfffffffffffffULL);
 }
 
 /**
@@ -205,6 +241,46 @@ DoublesAreIdentical(double d1, double d2)
     return IsNaN(d2);
   return BitwiseCast<uint64_t>(d1) == BitwiseCast<uint64_t>(d2);
 }
+
+/** Determines whether a float is NaN. */
+static MOZ_ALWAYS_INLINE bool
+IsFloatNaN(float f)
+{
+  /*
+   * A float is NaN if all exponent bits are 1 and the significand contains at
+   * least one non-zero bit.
+   */
+  uint32_t bits = BitwiseCast<uint32_t>(f);
+  return (bits & FloatExponentBits) == FloatExponentBits &&
+         (bits & FloatSignificandBits) != 0;
+}
+
+/** Constructs a NaN value with the specified sign bit and significand bits. */
+static MOZ_ALWAYS_INLINE float
+SpecificFloatNaN(int signbit, uint32_t significand)
+{
+  MOZ_ASSERT(signbit == 0 || signbit == 1);
+  MOZ_ASSERT((significand & ~FloatSignificandBits) == 0);
+  MOZ_ASSERT(significand & FloatSignificandBits);
+
+  float f = BitwiseCast<float>((signbit ? FloatSignBit : 0) |
+                                 FloatExponentBits |
+                                 significand);
+  MOZ_ASSERT(IsFloatNaN(f));
+  return f;
+}
+
+/**
+ * Returns true if the given value can be losslessly represented as an IEEE-754
+ * single format number, false otherwise.  All NaN values are considered
+ * representable (notwithstanding that the exact bit pattern of a double format
+ * NaN value can't be exactly represented in single format).
+ *
+ * This function isn't inlined to avoid buggy optimizations by MSVC.
+ */
+MOZ_WARN_UNUSED_RESULT
+extern MFBT_API bool
+IsFloat32Representable(double x);
 
 } /* namespace mozilla */
 

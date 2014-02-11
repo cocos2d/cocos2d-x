@@ -32,6 +32,7 @@
 #include "CCGeometry.h"
 #include "CCEventListenerCustom.h"
 #include "CCEvent.h"
+#include "CCEventCustom.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +59,7 @@ typedef struct PhysicsContactData
 /**
  * @brief Contact infomation. it will created automatically when two shape contact with each other. and it will destoried automatically when two shape separated.
  */
-class PhysicsContact : public Event
+class PhysicsContact : public EventCustom
 {
 public:
     
@@ -85,7 +86,7 @@ public:
     inline void setData(void* data) { _data = data; }
     /** get the event code */
     EventCode getEventCode() const { return _eventCode; };
-    
+
 private:
     static PhysicsContact* construct(PhysicsShape* a, PhysicsShape* b);
     bool init(PhysicsShape* a, PhysicsShape* b);
@@ -99,7 +100,7 @@ private:
     inline bool resetResult() { bool ret = _result; _result = true; return ret; }
     
     void generateContactData();
-    
+
 private:
     PhysicsContact();
     ~PhysicsContact();
@@ -201,20 +202,20 @@ public:
     /*
      * @brief it will called at two shapes start to contact, and only call it once.
      */
-    std::function<bool(EventCustom* event, const PhysicsContact& contact)> onContactBegin;
+    std::function<bool(PhysicsContact& contact)> onContactBegin;
     /*
      * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision this step or true to process it normally. Additionally, you may override collision values, elasticity, or surface velocity values.
      */
-    std::function<bool(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve)> onContactPreSolve;
+    std::function<bool(PhysicsContact& contact, PhysicsContactPreSolve& solve)> onContactPreSolve;
     /*
      * @brief Two shapes are touching and their collision response has been processed. You can retrieve the collision impulse or kinetic energy at this time if you want to use it to calculate sound volumes or damage amounts. See cpArbiter for more info
      */
-    std::function<void(EventCustom* event, const PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
+    std::function<void(PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
     /*
      * @brief it will called at two shapes separated, and only call it once.
      * onContactBegin and onContactSeperate will called in pairs.
      */
-    std::function<void(EventCustom* event, const PhysicsContact& contact)> onContactSeperate;
+    std::function<void(PhysicsContact& contact)> onContactSeperate;
     
 protected:
     bool init();

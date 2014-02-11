@@ -202,6 +202,7 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _useA8Shader(useA8Shader)
 , _fontSize(0)
 , _uniformEffectColor(0)
+,_currNumLines(-1)
 {
     _cascadeColorEnabled = true;
 }
@@ -433,10 +434,11 @@ void Label::alignText()
         _textureAtlas->removeAllQuads();  
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
     LabelTextFormatter::createStringSprites(this);    
-    if(_width > 0 && LabelTextFormatter::multilineText(this) )      
+    if(_width > 0 && _contentSize.width > _width && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
     
-    LabelTextFormatter::alignText(this);
+    if(_currNumLines > 0)
+        LabelTextFormatter::alignText(this);
   
     int strLen = cc_wcslen(_currentUTF16String);
     for(const auto &child : _children) {
@@ -519,6 +521,7 @@ bool Label::setCurrentString(unsigned short *stringToSet)
     }
     //
     _currentUTF16String  = stringToSet;
+    computeStringNumLines();
     // compute the advances
     return computeHorizontalKernings(stringToSet);
 }
@@ -711,25 +714,30 @@ int Label::getCommonLineHeight() const
 // string related stuff
 int Label::getStringNumLines() const
 {
+    return _currNumLines;
+}
+
+void Label::computeStringNumLines()
+{
     int quantityOfLines = 1;
     
     unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : -1;
     if (stringLen < 1)
-        return stringLen;
-    if (stringLen == 0)
-        return (-1);
+    {
+        _currNumLines = stringLen;
+        return;
+    }
     
     // count number of lines
     for (unsigned int i = 0; i < stringLen - 1; ++i)
     {
-        unsigned short c = _currentUTF16String[i];
-        if (c == '\n')
+        if (_currentUTF16String[i] == '\n')
         {
             quantityOfLines++;
         }
     }
     
-    return quantityOfLines;
+    _currNumLines = quantityOfLines;
 }
 
 int Label::getStringLenght() const
