@@ -6,6 +6,7 @@ LOCAL_MODULE    := cocos_lua_static
 LOCAL_MODULE_FILENAME := liblua
 
 LOCAL_SRC_FILES := CCLuaBridge.cpp \
+		  debugger.c \
           CCLuaEngine.cpp \
           CCLuaStack.cpp \
           CCLuaValue.cpp \
