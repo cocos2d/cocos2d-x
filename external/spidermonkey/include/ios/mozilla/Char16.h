@@ -9,16 +9,11 @@
 #ifndef mozilla_Char16_h
 #define mozilla_Char16_h
 
-#include "mozilla/Assertions.h"
-
 /*
  * C11 and C++11 introduce a char16_t type and support for UTF-16 string and
  * character literals. C++11's char16_t is a distinct builtin type. C11's
  * char16_t is a typedef for uint_least16_t. Technically, char16_t is a 16-bit
  * code unit of a Unicode code point, not a "character".
- *
- * For now, Char16.h only supports C++ because we don't want mix different C
- * and C++ definitions of char16_t in the same code base.
  */
 
 #ifdef _MSC_VER
@@ -26,19 +21,51 @@
     * C++11 says char16_t is a distinct builtin type, but Windows's yvals.h
     * typedefs char16_t as an unsigned short. We would like to alias char16_t
     * to Windows's 16-bit wchar_t so we can declare UTF-16 literals as constant
-    * expressions (and pass char16_t pointers to Windows APIs). We #define our
-    * char16_t as a macro to override yval.h's typedef of the same name.
+    * expressions (and pass char16_t pointers to Windows APIs). We #define
+    * _CHAR16T here in order to prevent yvals.h from overriding our char16_t
+    * typedefs, which we set to wchar_t for C++ code and to unsigned short for
+    * C code.
+    *
+    * In addition, #defining _CHAR16T will prevent yvals.h from defining a
+    * char32_t type, so we have to undo that damage here and provide our own,
+    * which is identical to the yvals.h type.
     */
 #  define MOZ_UTF16_HELPER(s) L##s
-#  include <yvals.h>
-#  define char16_t wchar_t
+#  define _CHAR16T
+#  ifdef __cplusplus
+     typedef wchar_t char16_t;
+#  else
+     typedef unsigned short char16_t;
+#  endif
+   typedef unsigned int char32_t;
 #elif defined(__cplusplus) && \
       (__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__))
    /* C++11 has a builtin char16_t type. */
 #  define MOZ_UTF16_HELPER(s) u##s
+   /**
+    * This macro is used to distinguish when char16_t would be a distinct
+    * typedef from wchar_t.
+    */
+#  define MOZ_CHAR16_IS_NOT_WCHAR
+#elif !defined(__cplusplus)
+#  if defined(WIN32)
+#    include <yvals.h>
+     typedef wchar_t char16_t;
+#  else
+     /**
+      * We can't use the stdint.h uint16_t type here because including
+      * stdint.h will break building some of our C libraries, such as
+      * sqlite.
+      */
+     typedef unsigned short char16_t;
+#  endif
 #else
 #  error "Char16.h requires C++11 (or something like it) for UTF-16 support."
 #endif
+
+/* This is a temporary hack until bug 927728 is fixed. */
+#define __PRUNICHAR__
+typedef char16_t PRUnichar;
 
 /*
  * Macro arguments used in concatenation or stringification won't be expanded.
@@ -50,8 +77,12 @@
  */
 #define MOZ_UTF16(s) MOZ_UTF16_HELPER(s)
 
+#if defined(__cplusplus) && \
+    (__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__))
 static_assert(sizeof(char16_t) == 2, "Is char16_t type 16 bits?");
+static_assert(char16_t(-1) > char16_t(0), "Is char16_t type unsigned?");
 static_assert(sizeof(MOZ_UTF16('A')) == 2, "Is char literal 16 bits?");
 static_assert(sizeof(MOZ_UTF16("")[0]) == 2, "Is string char 16 bits?");
+#endif
 
 #endif /* mozilla_Char16_h */

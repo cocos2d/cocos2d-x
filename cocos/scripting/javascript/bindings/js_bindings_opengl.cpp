@@ -8,10 +8,10 @@ void GLNode::draw() {
     if( proxy ) {
         JSObject *jsObj = proxy->obj;
         if (jsObj) {
-            JSBool found;
+            bool found;
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                     JS_HasProperty(cx, jsObj, "draw", &found);
-            if (found == JS_TRUE) {
+            if (found == true) {
                 JS::RootedValue rval(cx);
                 JS::RootedValue fval(cx);
                 jsval *argv = NULL; unsigned argc=0;
@@ -27,7 +27,7 @@ void GLNode::draw() {
 JSClass  *js_cocos2dx_GLNode_class;
 JSObject *js_cocos2dx_GLNode_prototype;
 
-JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 
     if (argc == 0) {
@@ -53,16 +53,16 @@ JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 
         JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLNode");
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-    return JS_FALSE;
+    return false;
 }
 
 void js_cocos2dx_GLNode_finalize(JSFreeOp *fop, JSObject *obj) {
 }
 
-static JSBool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     GLNode *nobj = new GLNode();
@@ -70,10 +70,10 @@ static JSBool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     nobj->autorelease();
     JS_AddNamedObjectRoot(cx, &p->obj, "GLNode");
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
-    return JS_TRUE;
+    return true;
 }
 
-JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     GLNode* ret = new GLNode();
     jsval jsret;
@@ -86,7 +86,7 @@ JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
         }
     } while (0);
     JS_SET_RVAL(cx, vp, jsret);
-    return JS_TRUE;
+    return true;
 }
 
 extern JSObject* jsb_cocos2d_Node_prototype;
@@ -128,8 +128,8 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
         NULL, // no static properties
         st_funcs);
     // make the class enumerable in the registered namespace
-    JSBool found;
-    JS_SetPropertyAttributes(cx, global, "GLNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+//    bool found;
+//    JS_SetPropertyAttributes(cx, global, "GLNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
     TypeTest<GLNode> t;

@@ -45,7 +45,7 @@ void JSB_register_opengl(JSContext *_cx, JSObject *object)
 	JS_SetProperty(_cx, object, "gl", openglVal);
 
     JS::RootedValue nsval(_cx);
-	JSObject *ccns;
+    JS::RootedObject ccns(_cx);
 	JS_GetProperty(_cx, object, "cc", &nsval);
 	if (nsval == JSVAL_VOID) {
 		ccns = JS_NewObject(_cx, NULL, NULL, NULL);

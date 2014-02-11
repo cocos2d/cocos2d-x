@@ -9,15 +9,17 @@
 #ifndef __SCRIPTING_CORE_H__
 #define __SCRIPTING_CORE_H__
 
-#include <assert.h>
-#include <memory>
+
+#include "jsapi.h"
+#include "jsfriendapi.h"
 #include "cocos2d.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
-#include "jsapi.h"
-#include "jsfriendapi.h"
 #include "spidermonkey_specifics.h"
 #include "js_manual_conversions.h"
+
+#include <assert.h>
+#include <memory>
 
 void js_log(const char *format, ...);
 
@@ -92,7 +94,7 @@ public:
     virtual bool handleAssert(const char *msg) { return false; }
 
     bool executeFunctionWithObjectData(cocos2d::Node *self, const char *name, JSObject *obj);
-    JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
+    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
@@ -102,13 +104,13 @@ public:
 	 * @param outVal The jsval that will hold the return value of the evaluation.
 	 * Can be NULL.
 	 */
-	JSBool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
+	bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
 
 	/**
 	 * will run the specified string
 	 * @param string The path of the script to be run
 	 */
-	JSBool runScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
+	bool runScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
 
 	/**
 	 * initialize everything
@@ -166,14 +168,14 @@ public:
 	 * @param argc
 	 * @param vp
 	 */
-	static JSBool log(JSContext *cx, uint32_t argc, jsval *vp);
+	static bool log(JSContext *cx, uint32_t argc, jsval *vp);
 
-	JSBool setReservedSpot(uint32_t i, JSObject *obj, jsval value);
+	bool setReservedSpot(uint32_t i, JSObject *obj, jsval value);
 
 	/**
 	 * run a script from script :)
 	 */
-	static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
+	static bool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
 
 	/**
 	 * Force a cycle of GC
@@ -181,10 +183,10 @@ public:
 	 * @param argc
 	 * @param vp
 	 */
-	static JSBool forceGC(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
-	static JSBool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
+	static bool forceGC(JSContext *cx, uint32_t argc, jsval *vp);
+	static bool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
+	static bool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
+	static bool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
 
 	/**
 	 * enable the debug environment
@@ -207,8 +209,8 @@ public:
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 
-JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
-JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
+bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
+bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);

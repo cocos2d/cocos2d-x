@@ -2,6 +2,7 @@
 #define __SPIDERMONKEY_SPECIFICS_H__
 
 #include "jsapi.h"
+#include "jsfriendapi.h"
 #include "uthash.h"
 #include <unordered_map>
 
@@ -75,7 +76,7 @@ do { \
 #define TEST_NATIVE_OBJECT(cx, native_obj) \
 if (!native_obj) { \
 	JS_ReportError(cx, "Invalid Native Object"); \
-	return JS_FALSE; \
+	return false; \
 }
 
 #endif
