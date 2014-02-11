@@ -163,7 +163,7 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     
-    bool onContactBegin(EventCustom* event, const PhysicsContact& contact);
+    bool onContactBegin(PhysicsContact& contact);
 };
 
 class PhysicsDemoSlice : public PhysicsDemo

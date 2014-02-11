@@ -1175,11 +1175,10 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
             {
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 
-                self->onContactBegin = [handler](EventCustom* event, const PhysicsContact& contact) -> bool{
+                self->onContactBegin = [handler](PhysicsContact& contact) -> bool{
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "cc.EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
-                    bool ret = stack->executeFunctionByHandler(handler, 2);
+                    stack->pushObject(&contact, "cc.PhysicsContact");
+                    bool ret = stack->executeFunctionByHandler(handler, 1);
                     stack->clean();
                     
                     return ret;
@@ -1190,12 +1189,11 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
             {
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 
-                self->onContactPreSolve = [handler](EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve) -> bool{
+                self->onContactPreSolve = [handler](PhysicsContact& contact, PhysicsContactPreSolve& solve) -> bool{
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "cc.EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
-                    tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPreSolve*>(&solve), "cc.PhysicsContactPreSolve");
-                    bool ret = stack->executeFunctionByHandler(handler, 3);
+                    stack->pushObject(&contact, "cc.PhysicsContact");
+                    tolua_pushusertype(stack->getLuaState(), &solve, "cc.PhysicsContactPreSolve");
+                    bool ret = stack->executeFunctionByHandler(handler, 2);
                     stack->clean();
                     
                     return ret;
@@ -1206,12 +1204,11 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
             {
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 
-                self->onContactPostSolve = [handler](EventCustom* event, const PhysicsContact& contact, const PhysicsContactPostSolve& solve){
+                self->onContactPostSolve = [handler](PhysicsContact& contact, const PhysicsContactPostSolve& solve){
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "cc.EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
+                    stack->pushObject(&contact, "cc.PhysicsContact");
                     tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPostSolve*>(&solve), "cc.PhysicsContactPostSolve");
-                    stack->executeFunctionByHandler(handler, 3);
+                    stack->executeFunctionByHandler(handler, 2);
                     stack->clean();
                 };
             }
@@ -1220,11 +1217,10 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
             {
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 
-                self->onContactSeperate = [handler](EventCustom* event, const PhysicsContact& contact){
+                self->onContactSeperate = [handler](PhysicsContact& contact){
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "cc.EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
-                    stack->executeFunctionByHandler(handler, 2);
+                    stack->pushObject(&contact, "cc.PhysicsContact");
+                    stack->executeFunctionByHandler(handler, 1);
                     stack->clean();
                 };
             }

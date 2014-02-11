@@ -840,7 +840,7 @@ CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameColor;
 CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNamePosition;
 CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameTexCoord;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAT_NONE;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAG_NONE;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
@@ -976,7 +976,7 @@ CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionUnKnown       = Resolu
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag
 #define kCCTMXTileDiagonalFlag        kTMXTileDiagonalFlag
 #define kCCFlipedAll                  kFlipedAll
-#define kCCFlippedMask                kFlippedMask
+#define kCCFlippedMask                kTMXFlippedMask
 
 
 /** use log() instead */
