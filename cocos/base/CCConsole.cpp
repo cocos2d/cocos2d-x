@@ -99,6 +99,12 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 	return write(sock, buf, strlen(buf));
 }
 
+static void sendPrompt(int fd)
+{
+    const char prompt[] = "\n> ";
+    write(fd, prompt, sizeof(prompt));
+}
+
 static int printSceneGraph(int fd, Node* node, int level)
 {
     int total = 1;
@@ -119,6 +125,7 @@ static void printSceneGraphBoot(int fd)
     auto scene = Director::getInstance()->getRunningScene();
     int total = printSceneGraph(fd, scene, 0);
     mydprintf(fd, "Total Nodes: %d\n", total);
+    sendPrompt(fd);
 }
 
 static void printFileUtils(int fd)
@@ -145,6 +152,7 @@ static void printFileUtils(int fd)
     for( const auto &item : cache) {
         mydprintf(fd, "%s -> %s\n", item.first.c_str(), item.second.c_str());
     }
+    sendPrompt(fd);
 }
 
 
@@ -598,11 +606,7 @@ bool Console::parseCommand(int fd)
 //
 // Helpers
 //
-void Console::sendPrompt(int fd)
-{
-    const char prompt[] = "\n> ";
-    write(fd, prompt, sizeof(prompt));
-}
+
 
 ssize_t Console::readline(int fd)
 {
