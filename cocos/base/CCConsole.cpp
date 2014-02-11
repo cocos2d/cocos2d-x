@@ -101,7 +101,7 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 
 static void sendPrompt(int fd)
 {
-    const char prompt[] = "\n> ";
+    const char prompt[] = "> ";
     write(fd, prompt, sizeof(prompt));
 }
 
