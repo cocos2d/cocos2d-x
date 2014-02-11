@@ -74,6 +74,7 @@ include_directories(
   ${COCOS2D_ROOT}/external/unzip
   ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
   ${COCOS2D_ROOT}/external/freetype2/include/linux
+  ${COCOS2D_ROOT}/external/websockets/include/linux
   ${COCOS2D_ROOT}/external/linux-specific/fmod/include/${ARCH_DIR}
 )
 
@@ -83,6 +84,7 @@ link_directories(
   ${COCOS2D_ROOT}/external/tiff/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/webp/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/freetype2/prebuilt/linux/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/websockets/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
 
