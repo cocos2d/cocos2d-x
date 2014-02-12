@@ -97,7 +97,7 @@ bool CCComponentContainer::remove(const char *pName)
         com->onExit();
         com->setOwner(NULL);
         HASH_DEL(m_pComponents->m_pElements, pElement);
-		pElement->getObject()->release();
+        pElement->getObject()->release();
         CC_SAFE_DELETE(pElement);
         bRet = true;
     } while(0);
