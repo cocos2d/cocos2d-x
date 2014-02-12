@@ -33,6 +33,16 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    NSString *nsFormat = [NSString stringWithFormat:@"%@", [NSString stringWithCString:pszFormat encoding:NSUTF8StringEncoding]];
+    
+    va_list ap;
+    va_start(ap, pszFormat);
+    NSString *stringArgs = [[NSString alloc] initWithFormat:nsFormat arguments:ap];
+    va_end(ap);
+    
+    NSLog( @"Cocos2d: %@\n", stringArgs );
+#else
     printf("Cocos2d: ");
     char szBuf[kMaxLogLen+1] = {0};
     va_list ap;
@@ -41,6 +51,7 @@ void CCLog(const char * pszFormat, ...)
     va_end(ap);
     printf("%s", szBuf);
     printf("\n");
+#endif
 }
 
 // ios no MessageBox, use CCLog instead
