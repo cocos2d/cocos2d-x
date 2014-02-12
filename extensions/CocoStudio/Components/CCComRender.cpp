@@ -55,7 +55,11 @@ void CCComRender::onEnter()
 
 void CCComRender::onExit()
 {
-	m_pRender = NULL;
+	if (m_pOwner != NULL)
+	{
+		m_pOwner->removeChild(m_pRender, true);
+		m_pRender = NULL;
+	}
 }
 
 cocos2d::CCNode* CCComRender::getNode()
@@ -66,6 +70,14 @@ cocos2d::CCNode* CCComRender::getNode()
 void CCComRender::setNode(cocos2d::CCNode *pNode)
 {
 	m_pRender = pNode;
+	if (pNode != NULL)
+	{
+		m_pRender->retain();
+	}
+	else
+	{
+		m_pRender->release();
+	}
 }
 
 bool CCComRender::serialize(void* r)
