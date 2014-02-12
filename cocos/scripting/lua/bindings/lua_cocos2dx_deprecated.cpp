@@ -106,7 +106,7 @@ bool array_to_valuevector_deprecated(Array& array,ValueVector& valueVec)
 #define deprecatedFunctionTip(oldFun,newFun) CCLOG("%s was deprecated please use %s instead ",oldFun, newFun)
 static int tolua_Cocos2d_CCPoint_new00(lua_State* tolua_S)
 {
-    deprecatedClassTip("CCPoint");
+//    deprecatedClassTip("CCPoint");
     
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -132,7 +132,7 @@ tolua_lerror:
 
 static int tolua_Cocos2d_CCPoint_new00_local(lua_State* tolua_S)
 {
-    deprecatedClassTip("CCPoint");
+//    deprecatedClassTip("CCPoint");
     
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -183,7 +183,7 @@ tolua_lerror:
 
 static int tolua_Cocos2d_CCPoint_new01_local(lua_State* tolua_S)
 {
-    deprecatedClassTip("CCPoint");
+//    deprecatedClassTip("CCPoint");
     
     tolua_Error tolua_err;
     if (
@@ -197,8 +197,10 @@ static int tolua_Cocos2d_CCPoint_new01_local(lua_State* tolua_S)
     {
         float x = ((float)  tolua_tonumber(tolua_S,2,0));
         float y = ((float)  tolua_tonumber(tolua_S,3,0));
-        Point tolua_ret(x,y);
-        point_to_luaval(tolua_S, tolua_ret);
+        Point* tolua_ret = (Point*)  Mtolua_new((Point)(x,y));
+        tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPoint");
+        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        //point_to_luaval(tolua_S, tolua_ret);
     }
     return 1;
 tolua_lerror:
