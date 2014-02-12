@@ -1316,7 +1316,7 @@ bool CCNode::removeComponent(const char *pName)
 
 bool CCNode::removeComponent(CCComponent *pComponent)
 {
-	return m_pComponentContainer->remove(pComponent);
+    return m_pComponentContainer->remove(pComponent);
 }
 
 void CCNode::removeAllComponents()
