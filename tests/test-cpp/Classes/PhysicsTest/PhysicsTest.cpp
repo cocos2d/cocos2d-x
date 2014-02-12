@@ -16,7 +16,7 @@ namespace
         CL(PhysicsDemoPump),
         CL(PhysicsDemoOneWayPlatform),
         CL(PhysicsDemoSlice),
-		CL(PhysicsDemoBug3988), 
+        CL(PhysicsDemoBug3988), 
 #else
         CL(PhysicsDemoDisabled),
 #endif
