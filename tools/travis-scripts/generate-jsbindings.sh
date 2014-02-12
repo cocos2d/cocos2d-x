@@ -8,7 +8,7 @@
 # Dependencies
 #
 # For bindings generator:
-# (see ../../../tojs/genbindings.sh and ../../../tolua/genbindings.sh
+# (see ../../../tojs/genbindings.py and ../../../tolua/genbindings.py
 # ... for the defaults used if the environment is not customized)
 #
 #  * $PYTHON_BIN
@@ -47,12 +47,12 @@ generate_bindings_glue_codes()
 {
     echo "Create auto-generated jsbinding glue codes."
     pushd "$TOJS_ROOT"
-    ./genbindings.sh
+    ./genbindings.py
     popd
 
     echo "Create auto-generated luabinding glue codes."
     pushd "$TOLUA_ROOT"
-    ./genbindings.sh
+    ./genbindings.py
     popd
 }
 
