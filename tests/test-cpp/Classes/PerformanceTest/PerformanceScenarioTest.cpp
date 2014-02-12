@@ -69,44 +69,47 @@ std::string ScenarioMenuLayer::subtitle() const
 // ScenarioTest
 //
 ////////////////////////////////////////////////////////
-static const int parStepNumber = 500;
+int ScenarioTest::_initParticleNum = 500;
+int ScenarioTest::_parStepNum = 500;
+int ScenarioTest::_initSpriteNum = 2000;
+int ScenarioTest::_spriteStepNum = 500;
+int ScenarioTest::_initParsysNum = 10;
+int ScenarioTest::_parsysStepNum = 5;
+
 void ScenarioTest::performTests()
 {
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(ScenarioTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    _particleNumber = _initParticleNum;
+
+    // get the window size & origin position
     auto s = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
 
-    auto tilemap = TileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
-    tilemap->releaseMap();
-    
-    // change the transform anchor to 0,0 (optional)
-    tilemap->setAnchorPoint( Point(0, 0) );
-    
-    // Anti Aliased images
-    tilemap->getTexture()->setAntiAliasTexParameters();
-    tilemap->setPosition(origin);
-    
-    this->addChild(tilemap);
+    // add tile map
+    _map1 = TMXTiledMap::create("TileMaps/iso-test.tmx");
+    _map1->setAnchorPoint( Point(0.5, 0.5) );
+    _map1->setPosition(origin);
+    this->addChild(_map1);
 
-    auto goUp = MoveBy::create(4, Point(0, -500) );
-    auto goDown = goUp->reverse();
-    auto go = MoveBy::create(8, Point(-2200,0) );
-    auto goBack = go->reverse();
-    auto seq = Sequence::create(goUp, go, goDown, goBack, NULL);
-    tilemap->runAction( (RepeatForever::create(seq) ));
-    
-    _spriteLabel = LabelTTF::create("Sprites : 0", "Arial", 15);
-    _spriteLabel->setAnchorPoint(Point(0.0f, 0.5f));
-    addChild(_spriteLabel, 10);
-    _spriteLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 60));
+    _map2 = TMXTiledMap::create("TileMaps/iso-test2.tmx");
+    _map2->setAnchorPoint( Point(0.5, 0.5) );
+    _map2->setPosition(origin);
+    this->addChild(_map2);
 
+    // add toggle menu item
     MenuItemFont::setFontSize(20);
     _itemToggle = MenuItemToggle::createWithCallback(nullptr,
                                                     MenuItemFont::create( "Add/Remove Sprite" ),
                                                     MenuItemFont::create( "Add/Remove Particle"),
+                                                    MenuItemFont::create( "Add/Remove Particle System"),
                                                     NULL);
     _itemToggle->setAnchorPoint(Point(0.0f, 0.5f));
     _itemToggle->setPosition(Point(origin.x, origin.y + s.height / 2));
 
+    // add decrease & increase menu item
     MenuItemFont::setFontSize(65);
     auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
 		int idx = _itemToggle->getSelectedIndex();
@@ -116,6 +119,9 @@ void ScenarioTest::performTests()
             break;
         case 1:
             removeParticles();
+            break;
+        case 2:
+            removeParticleSystem();
             break;
         default:
             break;
@@ -127,10 +133,13 @@ void ScenarioTest::performTests()
 		int idx = _itemToggle->getSelectedIndex();
         switch (idx) {
         case 0:
-            addNewSprites();
+            addNewSprites(_spriteStepNum);
             break;
         case 1:
             addParticles();
+            break;
+        case 2:
+            addParticleSystem(_parsysStepNum);
             break;
         default:
             break;
@@ -143,22 +152,51 @@ void ScenarioTest::performTests()
     menu->setPosition(Point(0.0f, 0.0f));
     addChild(menu, 10);
 
-    _particleNumber = parStepNumber;
-    createParticle();
-
-    char str[25] = { 0 };
+    
+    // add tip labels
+    _spriteLabel = LabelTTF::create("Sprites : 0", "Arial", 15);
+    _spriteLabel->setAnchorPoint(Point(0.0f, 0.5f));
+    addChild(_spriteLabel, 10);
+    _spriteLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 70));
+    
+    char str[32] = { 0 };
     sprintf(str, "Particles : %d", _particleNumber);
     _particleLabel = LabelTTF::create(str, "Arial", 15);
     _particleLabel->setAnchorPoint(Point(0.0f, 0.5f));
     addChild(_particleLabel, 10);
-    _particleLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 30));
+    _particleLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 45));
+    
+    _parsysLabel = LabelTTF::create("Particle System : 0", "Arial", 15);
+    _parsysLabel->setAnchorPoint(Point(0.0f, 0.5f));
+    addChild(_parsysLabel, 10);
+    _parsysLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 20));
+
+    // add sprites
+    addNewSprites(_initSpriteNum);
+    
+    // add particle system
+    addParticleSystem(_initParsysNum);
+}
+
+void ScenarioTest::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
+{
+    auto touch = touches[0];
+    
+    auto diff = touch->getDelta();
+    auto currentPos1 = _map1->getPosition();
+    _map1->setPosition(currentPos1 + diff);
+    
+    auto currentPos2 = _map2->getPosition();
+    _map2->setPosition(currentPos2 + diff);
 }
 
 void ScenarioTest::addParticles()
 {
-    _particleNumber += parStepNumber;
+    _particleNumber += _parStepNum;
 
-    createParticle();
+    for (auto par : _parsysArray) {
+        par->setTotalParticles(_particleNumber);
+    }
 
     char str[25] = { 0 };
     sprintf(str, "Particles : %d", _particleNumber);
@@ -171,89 +209,27 @@ void ScenarioTest::removeParticles()
         return;
     }
     
-    int removeNum = MIN(_particleNumber, parStepNumber);
+    int removeNum = MIN(_particleNumber, _parStepNum);
     _particleNumber -= removeNum;
 
-    createParticle();
+    for (auto par : _parsysArray) {
+        par->setTotalParticles(_particleNumber);
+    }
 
     char str[25] = { 0 };
     sprintf(str, "Particles : %d", _particleNumber);
     _particleLabel->setString(str);
 }
 
-static const int kTagParticleSystem = 567;
-void ScenarioTest::createParticle()
+void ScenarioTest::addNewSprites(int num)
 {
-    removeChildByTag(kTagParticleSystem, true);
+    auto s = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
 
-    auto _particle = ParticleSystemQuad::createWithTotalParticles(_particleNumber);
-    _particle->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
-    addChild(_particle, 15, kTagParticleSystem);
-
-    auto s = Director::getInstance()->getWinSize();
-
-    // duration
-    _particle->setDuration(-1);
-    
-    // gravity
-    _particle->setGravity(Point(0,-90));
-    
-    // angle
-    _particle->setAngle(90);
-    _particle->setAngleVar(0);
-    
-    // radial
-    _particle->setRadialAccel(0);
-    _particle->setRadialAccelVar(0);
-    
-    // speed of particles
-    _particle->setSpeed(180);
-    _particle->setSpeedVar(50);
-    
-    // emitter position
-    _particle->setPosition(Point(s.width/2, 100));
-    _particle->setPosVar(Point(s.width/2,0));
-    
-    // life of particles
-    _particle->setLife(2.0f);
-    _particle->setLifeVar(1);
-    
-    // emits per frame
-    _particle->setEmissionRate(_particle->getTotalParticles() /_particle->getLife());
-    
-    // color of particles
-    Color4F startColor(0.5f, 0.5f, 0.5f, 1.0f);
-    _particle->setStartColor(startColor);
-    
-    Color4F startColorVar(0.5f, 0.5f, 0.5f, 1.0f);
-    _particle->setStartColorVar( startColorVar);
-    
-    Color4F endColor(0.1f, 0.1f, 0.1f, 0.2f);
-    _particle->setEndColor(endColor);
-    
-    Color4F endColorVar(0.1f, 0.1f, 0.1f, 0.2f);
-    _particle->setEndColorVar(endColorVar);
-    
-    // size, in pixels
-    _particle->setEndSize(4.0f);
-    _particle->setStartSize(4.0f);
-    _particle->setEndSizeVar(0);
-    _particle->setStartSizeVar(0);
-    
-    // additive
-    _particle->setBlendAdditive(false);
-}
-
-static const int spriteNumStep = 5;
-void ScenarioTest::addNewSprites()
-{
-    for (int i = 0; i < spriteNumStep; ++i) {
+    for (int i = 0; i < num; ++i) {
         int idx = (int)(CCRANDOM_0_1() * 1400.0f / 100.0f);
         int x = (idx%5) * 85;
         int y = (idx/5) * 121;
-        
-        auto s = Director::getInstance()->getVisibleSize();
-        auto origin = Director::getInstance()->getVisibleOrigin();
 
         auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(x,y,85,121) );
         addChild( sprite );
@@ -295,7 +271,7 @@ void ScenarioTest::removeSprites()
         return;
     }
 
-    int removeNum = MIN(number, spriteNumStep);
+    int removeNum = MIN(number, _spriteStepNum);
     for (int i = 0; i < removeNum; ++i) {
         auto sprite = _spriteArray.getRandomObject();
         removeChild(sprite);
@@ -305,6 +281,64 @@ void ScenarioTest::removeSprites()
     char str[20] = {0};
     sprintf(str, "Sprites : %d", (int)_spriteArray.size());
     _spriteLabel->setString(str);
+}
+
+static const std::string _particleFiles[] = {
+    "Particles/BoilingFoam.plist",
+    "Particles/Galaxy.plist",
+    "Particles/SmallSun.plist",
+    "Particles/lines.plist",
+    "Particles/Comet.plist",
+    "Particles/LavaFlow.plist",
+    "Particles/SpinningPeas.plist",
+    "Particles/Flower.plist",
+    "Particles/Phoenix.plist",
+    "Particles/debian.plist",
+};
+void ScenarioTest::addParticleSystem(int num)
+{
+    int filesSize = sizeof(_particleFiles) / sizeof(std::string);
+    auto s = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
+
+    for (int i = 0; i < num; ++i)
+    {
+        float randomIdx = CCRANDOM_0_1();
+        int idx = (filesSize - 1) * randomIdx;
+        std::string fileName = _particleFiles[idx];
+        auto par = ParticleSystemQuad::create(fileName);
+
+        float randomx = CCRANDOM_0_1();
+        float randomy = CCRANDOM_0_1();
+        par->setPosition(origin + Point(s.width * randomx, s.height * randomy));
+        par->setTotalParticles(_particleNumber);
+        addChild(par, 9);
+
+        _parsysArray.pushBack(par);
+    }
+
+    char str[40] = {0};
+    sprintf(str, "Particle System : %d", (int)_parsysArray.size());
+    _parsysLabel->setString(str);
+}
+
+void ScenarioTest::removeParticleSystem()
+{
+    int number = _parsysArray.size();
+    if (number <= 0) {
+        return;
+    }
+    
+    int removeNum = MIN(number, _parsysStepNum);
+    for (int i = 0; i < removeNum; ++i) {
+        auto par = _parsysArray.getRandomObject();
+        removeChild(par);
+        _parsysArray.eraseObject(par);
+    }
+    
+    char str[40] = {0};
+    sprintf(str, "Particle System : %d", (int)_parsysArray.size());
+    _parsysLabel->setString(str);
 }
 
 std::string ScenarioTest::title() const

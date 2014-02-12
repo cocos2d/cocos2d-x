@@ -30,21 +30,37 @@ public:
     virtual std::string title() const override;
     virtual void performTests();
 
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+
     static Scene* scene();
 
 private:
-    void createParticle();
-    void addNewSprites();
+    void addNewSprites(int num);
     void removeSprites();
 
     void addParticles();
     void removeParticles();
 
+    void addParticleSystem(int num);
+    void removeParticleSystem();
+
 private:
+    static int _initParticleNum;
+    static int _parStepNum;
+    static int _initSpriteNum;
+    static int _spriteStepNum;
+    static int _initParsysNum;
+    static int _parsysStepNum;
+
+    TMXTiledMap* _map1;
+    TMXTiledMap* _map2;
+
     MenuItemToggle* _itemToggle;
     Vector<Sprite*> _spriteArray;
+    Vector<ParticleSystemQuad*> _parsysArray;
     LabelTTF* _spriteLabel;
     LabelTTF* _particleLabel;
+    LabelTTF* _parsysLabel;
     int _particleNumber;
 };
 
