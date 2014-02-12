@@ -231,7 +231,7 @@ void startScript()
 	ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
 }
 
-void ReloadScript()
+void reloadScript()
 {
     
 }
@@ -285,7 +285,7 @@ private:
 	string _jsSearchPath;
 };
 
-void StartRuntime()
+void startRuntime()
 {	
 	vector<string> searchPathArray;
 	searchPathArray = getSearchPath();
