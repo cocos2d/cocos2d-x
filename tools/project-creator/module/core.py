@@ -58,7 +58,7 @@ class CocosProject:
         self.platforms= {
             "cpp" : ["ios_mac", "android", "win32", "linux"],
             "lua" : ["ios_mac", "android", "win32", "linux"],
-            "javascript" : ["ios_mac", "android", "win32"]
+            "javascript" : ["ios_mac", "android", "win32", "linux"]
         }
         self.context = {
             "language": None,

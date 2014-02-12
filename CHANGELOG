@@ -4,6 +4,7 @@ cocos2d-x-3.0rc0 Feb.?? 2014
      [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
      [NEW]          Director: Displays 'Vertices drawn' in the stats. Useful to measure performance.
      [NEW]          Using python to automatically generate script bindings codes.
+     [NEW]          Linux javascript bindings support.
      
      [FIX]          Node::setRotation() moves opposite when node has a physics body.
      [FIX]          A string which only contains CJK characters can't make a line-break when it's needed.

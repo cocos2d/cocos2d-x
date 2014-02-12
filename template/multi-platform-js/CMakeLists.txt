@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-set(APP_NAME HelloLua)
+set(APP_NAME HelloJavascript)
 project (${APP_NAME})
 
 include(cocos2d/build/BuildHelpers.CMakeLists.txt)
@@ -49,9 +49,8 @@ set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 include_directories(
   /usr/local/include/GLFW
   Classes
-  ${COCOS2D_ROOT}/cocos/scripting/lua/bindings
-  ${COCOS2D_ROOT}/external/lua/lua
-  ${COCOS2D_ROOT}/external/lua/tolua
+  ${COCOS2D_ROOT}/cocos/scripting/auto-generated/js-bindings
+  ${COCOS2D_ROOT}/cocos/scripting/javascript/bindings
   ${COCOS2D_ROOT}
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/audio/include
@@ -138,14 +137,8 @@ add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocosbuilder)
 add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocostudio)
 
 ## Scripting
-# lua
-add_subdirectory(${COCOS2D_ROOT}/external/lua/lua)
-
-# tolua
-add_subdirectory(${COCOS2D_ROOT}/external/lua/tolua)
-
-# luabinding
-add_subdirectory(${COCOS2D_ROOT}/cocos/scripting/lua)
+# jsbinding
+add_subdirectory(${COCOS2D_ROOT}/cocos/scripting/javascript)
 
 # add the executable
 add_executable(${APP_NAME}
@@ -159,7 +152,7 @@ set(FMOD_LIB "fmodex")
 endif()
 
 target_link_libraries(${APP_NAME}
-  luabinding
+  jsbinding
   gui
   network
   storage
@@ -179,6 +172,6 @@ set_target_properties(${APP_NAME} PROPERTIES
 pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua/script ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/javascript/script ${APP_BIN_DIR}/Resources
   )
 

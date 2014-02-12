@@ -90,6 +90,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd $COCOS2DX_ROOT/tools/project-creator
     ./create_project.py -n MyGameCpp -k com.MyCompany.AwesomeGameCpp -l cpp -p $HOME
     ./create_project.py -n MyGameLua -k com.MyCompany.AwesomeGameLua -l lua -p $HOME
+    ./create_project.py -n MyGameJs -k com.MyCompany.AwesomeGameJs -l javascript -p $HOME
     cd $HOME/MyGameCpp
     mkdir build
     cd build
@@ -97,6 +98,12 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     make -j10
 
     cd $HOME/MyGameLua
+    mkdir build
+    cd build
+    cmake ..
+    make -j10
+
+    cd $HOME/MyGameJs
     mkdir build
     cd build
     cmake ..
