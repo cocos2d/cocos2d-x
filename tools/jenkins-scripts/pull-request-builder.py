@@ -93,20 +93,14 @@ def main():
     os.system(git_update_submodule)
 
     # Generate binding glue codes
-    if(branch == 'develop'):
-      if(platform.system() == 'Darwin'):
-        os.system("tools/jenkins-scripts/gen_jsb.sh")
-      elif(platform.system() == 'Windows'):
-        os.chdir("tools/jenkins-scripts")
-        os.system("gen_jsb_win32.bat")
-        os.chdir("../..")
+    os.system("python tools/jenkins-scripts/gen_jsb.py")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']
     os.system("cd " + os.environ['WORKSPACE']);
     os.mkdir("android_build_objs")
     #add symbol link
-    PROJECTS=["test_cpp",
+    PROJECTS=["test-cpp",
             "test-javascript","test-lua"]
     print platform.system()
     if(platform.system() == 'Darwin'):
