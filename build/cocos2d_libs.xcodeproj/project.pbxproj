@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		A03F2E8E178141C1006731B9 /* build-all-libs Mac */ = {
+		A03F2E8E178141C1006731B9 /* build all libs Mac */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all-libs Mac" */;
+			buildConfigurationList = A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build all libs Mac" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -21,12 +21,12 @@
 				A03F2E95178141D1006731B9 /* PBXTargetDependency */,
 				A03F2E97178141D1006731B9 /* PBXTargetDependency */,
 			);
-			name = "build-all-libs Mac";
+			name = "build all libs Mac";
 			productName = "build-all";
 		};
-		A07A4E0B178386390073F6A7 /* build-all-libs iOS */ = {
+		A07A4E0B178386390073F6A7 /* build all libs iOS */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-libs iOS" */;
+			buildConfigurationList = A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build all libs iOS" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -38,7 +38,7 @@
 				A07A504F178389710073F6A7 /* PBXTargetDependency */,
 				1A6FB4FF17854AD600CDF010 /* PBXTargetDependency */,
 			);
-			name = "build-all-libs iOS";
+			name = "build all libs iOS";
 			productName = "build-all-libs iOS";
 		};
 /* End PBXAggregateTarget section */
@@ -7039,7 +7039,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A03F2E8E178141C1006731B9 /* build-all-libs Mac */,
+				A03F2E8E178141C1006731B9 /* build all libs Mac */,
 				1551A33E158F2AB200E66CFE /* cocos2dx Mac */,
 				A03F2FC117814595006731B9 /* cocos2dx-extensions Mac */,
 				A03F2B781780BD04006731B9 /* chipmunk Mac */,
@@ -7047,7 +7047,7 @@
 				A03F2E9817814268006731B9 /* CocosDenshion Mac */,
 				A03F31E81781479B006731B9 /* jsbindings Mac */,
 				1A6FB50417854BC200CDF010 /* luabindings Mac */,
-				A07A4E0B178386390073F6A7 /* build-all-libs iOS */,
+				A07A4E0B178386390073F6A7 /* build all libs iOS */,
 				A07A4C241783777C0073F6A7 /* cocos2dx iOS */,
 				A07A4E111783867C0073F6A7 /* cocos2dx-extensions iOS */,
 				A07A4EFD178387670073F6A7 /* chipmunk iOS */,
@@ -8829,7 +8829,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all-libs Mac" */ = {
+		A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build all libs Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A03F2E90178141C1006731B9 /* Debug */,
@@ -8874,7 +8874,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-libs iOS" */ = {
+		A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build all libs iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4E0D178386390073F6A7 /* Debug */,

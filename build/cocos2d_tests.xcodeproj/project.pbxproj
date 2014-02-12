@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		A035ACBB1782469700987F6C /* build-all-tests Mac */ = {
+		A035ACBB1782469700987F6C /* build all tests Mac */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build-all-tests Mac" */;
+			buildConfigurationList = A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build all tests Mac" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -17,12 +17,12 @@
 				A035ACC0178246BD00987F6C /* PBXTargetDependency */,
 				A035ACC2178246BD00987F6C /* PBXTargetDependency */,
 			);
-			name = "build-all-tests Mac";
+			name = "build all tests Mac";
 			productName = "build-all-tests";
 		};
-		A07A517B1783A1CC0073F6A7 /* build-all-tests iOS */ = {
+		A07A517B1783A1CC0073F6A7 /* build all tests iOS */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A07A517C1783A1CC0073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-tests iOS" */;
+			buildConfigurationList = A07A517C1783A1CC0073F6A7 /* Build configuration list for PBXAggregateTarget "build all tests iOS" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -30,7 +30,7 @@
 				A01E17E61784C3EB00B0CA4A /* PBXTargetDependency */,
 				A07A526D1783AB980073F6A7 /* PBXTargetDependency */,
 			);
-			name = "build-all-tests iOS";
+			name = "build all tests iOS";
 			productName = "build-all-tests iOS";
 		};
 /* End PBXAggregateTarget section */
@@ -3334,11 +3334,11 @@
 			);
 			projectRoot = "";
 			targets = (
-				A035ACBB1782469700987F6C /* build-all-tests Mac */,
+				A035ACBB1782469700987F6C /* build all tests Mac */,
 				1D6058900D05DD3D006BFB54 /* Test cpp Mac */,
 				A035A5441782290400987F6C /* Test JavaScript Mac */,
 				1A6FB7821785614200CDF010 /* Test lua Mac */,
-				A07A517B1783A1CC0073F6A7 /* build-all-tests iOS */,
+				A07A517B1783A1CC0073F6A7 /* build all tests iOS */,
 				A07A517F1783A1D20073F6A7 /* Test cpp iOS */,
 				A01E16C01784C06E00B0CA4A /* Test JavaScript iOS */,
 				1A11982D178538E400D62A44 /* Test lua iOS */,
@@ -4712,7 +4712,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build-all-tests Mac" */ = {
+		A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build all tests Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A035ACBD1782469800987F6C /* Debug */,
@@ -4721,7 +4721,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A07A517C1783A1CC0073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-tests iOS" */ = {
+		A07A517C1783A1CC0073F6A7 /* Build configuration list for PBXAggregateTarget "build all tests iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A517D1783A1CC0073F6A7 /* Debug */,
