@@ -3,7 +3,7 @@
 //
 
 var cc = cc || {};
-
+var window = window || this;
 /**
  * Device type
  * @constant
@@ -847,3 +847,63 @@ cc.VisibleRect = {
         return this._right;
     }
 };
+
+var _windowTimeIntervalId = 0;
+var _windowTimeFunHash = {};
+var WindowTimeFun = cc.Class.extend({
+    _code: null,
+    _intervalId: 0,
+    ctor: function (code) {
+        this._intervalId = _windowTimeIntervalId++;
+        this._code = code;
+    },
+    fun: function () {
+        if (!this._code) return;
+        var code = this._code;
+        if (typeof code == "string") {
+            Function(code)();
+        }
+        else if (typeof code == "function") {
+            code();
+        }
+    }
+});
+
+/**
+ * overwrite window's setTimeout
+ @param {String|Function} code
+ @param {number} delay
+ @return {number}
+ */
+var setTimeout = function (code, delay) {
+    var target = new WindowTimeFun(code);
+    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, 0, 0, false);
+    _windowTimeFunHash[target._intervalId] = target;
+    return target._intervalId;
+};
+
+/**
+ * overwrite window's setInterval
+ @param {String|Function} code
+ @param {number} delay
+ @return {number}
+ */
+var setInterval = function (code, delay) {
+    var target = new WindowTimeFun(code);
+    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
+    _windowTimeFunHash[target._intervalId] = target;
+    return target._intervalId;
+};
+
+/**
+ * overwrite window's clearInterval
+ @param {number} intervalId
+ */
+var clearInterval = function (intervalId) {
+    var target = _windowTimeFunHash[intervalId];
+    if (target) {
+        cc.Director.getInstance().getScheduler().unscheduleCallbackForTarget(target, target.fun);
+        delete _windowTimeFunHash[intervalId];
+    }
+};
+var clearTimeout = clearInterval;
