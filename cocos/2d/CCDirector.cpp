@@ -846,27 +846,38 @@ void Director::resume()
 // updates the FPS every frame
 void Director::showStats()
 {
+    static unsigned long prevCalls = 0;
+    static unsigned long prevVerts = 0;
+
     ++_frames;
     _accumDt += _deltaTime;
     
     if (_displayStats && _FPSLabel && _drawnBatchesLabel && _drawnVerticesLabel)
     {
+        char buffer[30];
+
         if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            char buffer[30];
-
             _frameRate = _frames / _accumDt;
             _frames = 0;
             _accumDt = 0;
 
             sprintf(buffer, "%.1f / %.3f", _frameRate, _secondsPerFrame);
             _FPSLabel->setString(buffer);
-            
-            sprintf(buffer, "GL calls:%6lu", (unsigned long)_renderer->getDrawnBatches());
-            _drawnBatchesLabel->setString(buffer);
+        }
 
-            sprintf(buffer, "GL verts:%6lu", (unsigned long)_renderer->getDrawnVertices());
+        auto currentCalls = (unsigned long)_renderer->getDrawnBatches();
+        auto currentVerts = (unsigned long)_renderer->getDrawnVertices();
+        if( currentCalls != prevCalls ) {
+            sprintf(buffer, "GL calls:%6lu", currentCalls);
+            _drawnBatchesLabel->setString(buffer);
+            prevCalls = currentCalls;
+        }
+
+        if( currentVerts != prevVerts) {
+            sprintf(buffer, "GL verts:%6lu", currentVerts);
             _drawnVerticesLabel->setString(buffer);
+            prevVerts = currentVerts;
         }
 
         _drawnVerticesLabel->visit();
