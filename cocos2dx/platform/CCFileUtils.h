@@ -30,6 +30,10 @@ THE SOFTWARE.
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
+#include "../cocoa/CCInteger.h"
+#include "../cocoa/CCBool.h"
+#include "../cocoa/CCFloat.h"
+#include "../cocoa/CCDouble.h"
 
 NS_CC_BEGIN
 
