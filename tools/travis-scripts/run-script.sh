@@ -5,8 +5,13 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 
-export NDK_ROOT=$HOME/bin/android-ndk
-export PYTHON_BIN=/usr/bin/python
+if [ -z "$NDK_ROOT" ]; then
+    export NDK_ROOT=$HOME/bin/android-ndk
+fi
+
+if [ -z "$PYTHON_BIN" ]; then
+    export PYTHON_BIN=/usr/bin/python
+fi
 
 if [ "$GEN_JSB"x = "YES"x ]; then
     # Re-generation of the javascript bindings can perform push of the new
@@ -74,6 +79,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
+    echo "Building cocos2d-x"
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
