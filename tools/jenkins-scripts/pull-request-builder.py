@@ -100,7 +100,7 @@ def main():
     os.system("cd " + os.environ['WORKSPACE']);
     os.mkdir("android_build_objs")
     #add symbol link
-    PROJECTS=["test_cpp",
+    PROJECTS=["test-cpp",
             "test-javascript","test-lua"]
     print platform.system()
     if(platform.system() == 'Darwin'):
