@@ -174,6 +174,7 @@ elseif(APPLE)
 else()
   include_directories(
     /usr/include
+    /usr/include/GLFW
     /usr/local/include/GLFW
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/fmod/include/${ARCH_DIR}
   )
