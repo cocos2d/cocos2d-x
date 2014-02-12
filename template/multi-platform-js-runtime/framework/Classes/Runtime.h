@@ -31,9 +31,9 @@ using namespace std;
 
 #define _MAX_PATH_ 512
 
-void StartRuntime();
+void startRuntime();
 
-void ReloadScript();
+void reloadScript();
 
 // SimulatorConfig
 typedef struct _SimulatorScreenSize {

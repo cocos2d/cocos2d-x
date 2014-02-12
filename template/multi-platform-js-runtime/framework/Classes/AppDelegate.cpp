@@ -51,7 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
     
-	StartRuntime();
+	startRuntime();
     return true;
 }
 
