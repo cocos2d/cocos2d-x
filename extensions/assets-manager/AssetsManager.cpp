@@ -434,6 +434,7 @@ bool AssetsManager::uncompress()
     }
     
     CCLOG("end uncompressing");
+    unzClose(zipfile);
     
     return true;
 }
