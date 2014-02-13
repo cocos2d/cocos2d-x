@@ -121,6 +121,7 @@ bool CCComponentContainer::remove(CCComponent *pCom)
                 HASH_DEL(m_pComponents->m_pElements, pElement);
                 pElement->getObject()->release();
                 CC_SAFE_DELETE(pElement);
+                break;
             }
         }
         bRet = true;
