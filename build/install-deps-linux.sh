@@ -3,6 +3,11 @@
 # Change directory to the location of this script
 cd $(dirname ${BASH_SOURCE[0]})
 
+if [ ! $(command -v apt-get) ]; then
+  echo "Not a .deb package system. Please install dependencies manually"
+  exit 0
+fi
+
 DEPENDS='libx11-dev'
 DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
@@ -15,6 +20,7 @@ DEPENDS+=' libcurl4-gnutls-dev'
 DEPENDS+=' libfontconfig1-dev'
 DEPENDS+=' libsqlite3-dev'
 DEPENDS+=' libglew*-dev'
+DEPENDS+=' libssl-dev'
 
 MISSING=
 echo "Checking for missing packages ..."

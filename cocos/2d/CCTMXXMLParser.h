@@ -71,13 +71,13 @@ enum {
     TMXPropertyTile
 };
 
-typedef enum ccTMXTileFlags_ {
-    kTMXTileHorizontalFlag        = 0x80000000,
-    kTMXTileVerticalFlag            = 0x40000000,
-    kTMXTileDiagonalFlag            = 0x20000000,
-    kFlipedAll                    = (kTMXTileHorizontalFlag|kTMXTileVerticalFlag|kTMXTileDiagonalFlag),
-    kFlippedMask                    = ~(kFlipedAll)
-} ccTMXTileFlags;
+typedef enum TMXTileFlags_ {
+    kTMXTileHorizontalFlag  = 0x80000000,
+    kTMXTileVerticalFlag    = 0x40000000,
+    kTMXTileDiagonalFlag    = 0x20000000,
+    kTMXFlipedAll           = (kTMXTileHorizontalFlag|kTMXTileVerticalFlag|kTMXTileDiagonalFlag),
+    kTMXFlippedMask         = ~(kTMXFlipedAll)
+} TMXTileFlags;
 
 // Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
 
@@ -105,10 +105,10 @@ public:
     void setProperties(ValueMap properties);
     ValueMap& getProperties();
 
-    ValueMap           _properties;
+    ValueMap            _properties;
     std::string         _name;
     Size                _layerSize;
-    int                 *_tiles;
+    uint32_t            *_tiles;
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
@@ -147,7 +147,7 @@ public:
      * @lua NA
      */
     virtual ~TMXTilesetInfo();
-    Rect rectForGID(int gid);
+    Rect getRectForGID(uint32_t gid);
 };
 
 /** @brief TMXMapInfo contains the information about the map like:

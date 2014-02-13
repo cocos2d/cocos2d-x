@@ -128,6 +128,7 @@ class CocosFileList:
             Save content to file with json format.
         """
         f = open(fileName,"w")
+        self.fileList.sort()
         content = "[\n\"%s\"\n]" % ("\",\n\"".join(self.fileList))
         f.write(content)
         f.close()
