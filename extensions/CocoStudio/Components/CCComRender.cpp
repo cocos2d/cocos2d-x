@@ -42,7 +42,7 @@ CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
 
 CCComRender::~CCComRender(void)
 {
-    m_pRender = NULL;
+    CC_SAFE_RELEASE_NULL(m_pRender);
 }
 
 void CCComRender::onEnter()
@@ -58,7 +58,6 @@ void CCComRender::onExit()
     if (m_pOwner != NULL)
     {
         m_pOwner->removeChild(m_pRender, true);
-        m_pRender = NULL;
     }
 }
 
@@ -69,14 +68,15 @@ cocos2d::CCNode* CCComRender::getNode()
 
 void CCComRender::setNode(cocos2d::CCNode *pNode)
 {
-    m_pRender = pNode;
+	if (m_pRender != NULL)
+	{
+		m_pRender->release();
+		m_pRender = NULL;
+	}
     if (pNode != NULL)
-    {
-        m_pRender->retain();
-    }
-    else
-    {
-        m_pRender->release();
+    {		
+		m_pRender = pNode;
+        m_pRender->retain();    
     }
 }
 
