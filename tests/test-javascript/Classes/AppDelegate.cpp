@@ -12,6 +12,7 @@
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
 #include "gui/jsb_cocos2dx_gui_manual.h"
+#include "spine/jsb_cocos2dx_spine_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "cocosbuilder/cocosbuilder_specifics.hpp"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
@@ -108,6 +109,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
     sc->addRegisterCallback(register_all_cocos2dx_spine);
+    sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
     
     sc->start();
     
