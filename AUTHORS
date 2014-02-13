@@ -739,6 +739,9 @@ Developers:
         
     hanjukim
         Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
+        
+    bagobor
+        Fixed a memory leak in AssetsManager::uncompress.
     
 Retired Core Developers:
     WenSheng Yang
