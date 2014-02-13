@@ -141,7 +141,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                         {
                             // Optimization: quick return
                             // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                            if( (gid & kFlippedMask) >= tileset->_firstGid )
+                            if( (gid & kTMXFlippedMask) >= tileset->_firstGid )
                                 return tileset;
                         }
                     }
@@ -244,6 +244,16 @@ Value TMXTiledMap::getPropertiesForGID(int GID) const
         return _tileProperties.at(GID);
     
     return Value();
+}
+
+bool TMXTiledMap::getPropertiesForGID(int GID, Value** value)
+{
+    if (_tileProperties.find(GID) != _tileProperties.end()) {
+        *value = &_tileProperties.at(GID);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 std::string TMXTiledMap::getDescription() const

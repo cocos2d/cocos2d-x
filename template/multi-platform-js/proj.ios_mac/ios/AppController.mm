@@ -1,8 +1,32 @@
+/****************************************************************************
+ Copyright (c) 2013      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #import <UIKit/UIKit.h>
 #import "AppController.h"
 #import "cocos2d.h"
-#import "EAGLView.h"
+#import "CCEAGLView.h"
 #import "AppDelegate.h"
 
 #import "RootViewController.h"
@@ -21,7 +45,7 @@ static AppDelegate s_sharedApplication;
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    CCEAGLView *__glView = [CCEAGLView viewWithFrame: [window bounds]
+    CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
                                      pixelFormat: kEAGLColorFormatRGBA8
                                      depthFormat: GL_DEPTH_COMPONENT16 //_OES
                               preserveBackbuffer: NO
@@ -29,12 +53,12 @@ static AppDelegate s_sharedApplication;
                                    multiSampling: NO
                                  numberOfSamples: 0 ];
     
-    [__glView setMultipleTouchEnabled:YES];
+    [eaglView setMultipleTouchEnabled:YES];
 
     // Use RootViewController manage CCEAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
-    viewController.view = __glView;
+    viewController.view = eaglView;
 
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
@@ -51,6 +75,10 @@ static AppDelegate s_sharedApplication;
     [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
+    
+    // IMPORTANT: Setting the GLView should be done after creating the RootViewController
+    cocos2d::GLView *glview = cocos2d::GLView::createWithEAGLView(eaglView);
+    cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     cocos2d::Application::getInstance()->run();
     return YES;

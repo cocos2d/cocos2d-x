@@ -58,7 +58,7 @@ class CocosProject:
         self.platforms= {
             "cpp" : ["ios_mac", "android", "win32", "linux"],
             "lua" : ["ios_mac", "android", "win32", "linux"],
-            "javascript" : ["ios_mac", "android", "win32"]
+            "javascript" : ["ios_mac", "android", "win32", "linux"]
         }
         self.context = {
             "language": None,
@@ -68,6 +68,7 @@ class CocosProject:
             "dst_package_name": None,
             "src_project_path": None,
             "dst_project_path": None,
+            "dst_project_runtime_path": None,
             "cocos_file_list":None,
             "script_dir": None
         }
@@ -92,8 +93,9 @@ class CocosProject:
         parser.add_option("-l", "--language",metavar="PROGRAMMING_NAME",
                             type="choice",
                             choices=["cpp", "lua", "javascript"],
-                            help="Major programming language you want to use, should be [cpp | lua | javascript]")
+                            help="Major programming language you want to use, should be [cpp | lua | javascript ]")
         parser.add_option("-p", "--path", metavar="PROJECT_PATH",help="Set generate project path for project")
+        parser.add_option("-r", "--runtime",action="store_true", help="create runtime project")
 
         # parse the params
         (opts, args) = parser.parse_args()
@@ -109,9 +111,9 @@ class CocosProject:
         if not opts.path:
             parser.error("-p or --path is not specified")
 
-        return opts.name, opts.package, opts.language, opts.path
+        return opts.name, opts.package, opts.language, opts.runtime, opts.path
 
-    def createPlatformProjects(self, projectName, packageName, language, projectPath, callbackfun = None):
+    def createPlatformProjects(self, projectName, packageName, language, runtime, projectPath, callbackfun = None):
         """ Create a plantform project.
         Arg:
             projectName: Project name, like this: "helloworld".
@@ -134,6 +136,7 @@ class CocosProject:
         self.context["dst_package_name"] = packageName
         self.context["language"] = language
         self.context["dst_project_path"] = os.path.join(projectPath,projectName)
+        self.context["dst_project_runtime_path"] = self.context["dst_project_path"]
         self.context["script_dir"] = os.path.abspath(os.path.dirname(__file__))
         self.context["cocos_file_list"] = os.path.join(self.context["script_dir"], "cocos_files.json")
 
@@ -143,14 +146,23 @@ class CocosProject:
             self.context["src_project_name"] = "HelloCpp"
             self.context["src_package_name"] = "org.cocos2dx.hellocpp"
             self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-cpp")
+            if runtime:
+                print("cpp language no runtime model")
+                return False
         elif ("lua" == self.context["language"]):
             self.context["src_project_name"] = "HelloLua"
             self.context["src_package_name"] = "org.cocos2dx.hellolua"
-            self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua")
+            if runtime:
+                self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua-runtime")
+            else:
+                self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua")
         elif ("javascript" == self.context["language"]):
             self.context["src_project_name"] = "HelloJavascript"
             self.context["src_package_name"] = "org.cocos2dx.hellojavascript"
-            self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-js")
+            if runtime:
+                self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-js-runtime")
+            else:
+                self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-js")
         else:
             print ("Your language parameter doesn\'t exist." \
                 "Check correct language option\'s parameter")
@@ -164,6 +176,8 @@ class CocosProject:
         else:
             shutil.copytree(self.context["src_project_path"], self.context["dst_project_path"], True)
 
+        if runtime:
+            self.context["dst_project_runtime_path"] = os.path.join(self.context["dst_project_path"], "framework")
         # check cocos engine exist
 
         if not os.path.exists(self.context["cocos_file_list"]):
@@ -180,7 +194,7 @@ class CocosProject:
 
         #begin copy engine
         print("> Copying cocos2d files...")
-        dstPath = os.path.join(self.context["dst_project_path"],"cocos2d")
+        dstPath = os.path.join(self.context["dst_project_runtime_path"],"cocos2d")
         for index in range(len(fileList)):
             srcfile = os.path.join(self.cocos_root,fileList[index])
             dstfile = os.path.join(dstPath,fileList[index])
@@ -202,7 +216,6 @@ class CocosProject:
                 self.callbackfun(self.step,self.totalStep,fileList[index])
         print("< done")
         # call process_proj from each platform's script folder
-
         print ("")
         print("> Creating project files...")
         for platform in self.platforms_list:
@@ -222,7 +235,7 @@ class CocosProject:
         """
 
         # determine proj_path
-        proj_path = os.path.join(self.context["dst_project_path"], "proj." + platform)
+        proj_path = os.path.join(self.context["dst_project_runtime_path"], "proj." + platform)
         java_package_path = ""
 
         # read json config file for the current platform
@@ -278,6 +291,6 @@ class CocosProject:
 # print sys.argv
 if __name__ == '__main__':
     project = CocosProject()
-    name, package, language, path = project.checkParams()
-    project.createPlatformProjects(name, package, language, path)
+    name, package, language, runtime, path = project.checkParams()
+    project.createPlatformProjects(name, package, language, runtime, path)
 
