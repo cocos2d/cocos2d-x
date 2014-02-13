@@ -372,6 +372,24 @@ void Console::stop()
 
 bool Console::addCommand(struct Command cmd)
 {
+    for(int i = 0; i < _maxCommands; ++i) 
+    {
+        ssize_t commandLen = strlen(_commands[i].name);
+        if( strncmp(cmd.name, _commands[i].name,commandLen) == 0 ) 
+        {
+            cocos2d::log("CCConsole warning:repeat add command: %s",cmd.name );
+            return false;
+        }
+    }
+    for(int i = 0; i < _userCmdSize; ++i)
+    {
+        ssize_t commandLen = strlen(_userCommands[i].name);
+        if( strncmp(cmd.name, _userCommands[i].name,commandLen) == 0 ) 
+        {
+            cocos2d::log("CCConsole warning:repeat add command: %s",cmd.name );
+            return false;
+        }
+    }
     if(_userCmdSize > _maxUserCommands - 1)
     {
         struct Command* newBuffer = (struct Command *)calloc(_maxUserCommands + 64, sizeof(struct Command));
