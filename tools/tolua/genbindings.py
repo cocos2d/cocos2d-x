@@ -86,7 +86,7 @@ def main():
     elif os.path.isdir(x64_llvm_path):
         llvm_path = x64_llvm_path
     else:
-        print 'llvm toochain not found!'
+        print 'llvm toolchain not found!'
         print 'path: %s or path: %s are not valid! ' % (x86_llvm_path, x64_llvm_path)
         sys.exit(1)
 
@@ -146,13 +146,13 @@ def main():
                 _run_cmd('dos2unix *')
 
         print '---------------------------------'
-        print 'Generating bindings succeeds.'
+        print 'Generating lua bindings succeeds.'
         print '---------------------------------'
 
     except Exception as e:
         if e.__class__.__name__ == 'CmdError':
             print '---------------------------------'
-            print 'Generating bindings fails.'
+            print 'Generating lua bindings fails.'
             print '---------------------------------'
             sys.exit(1)
         else:
