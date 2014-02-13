@@ -84,11 +84,11 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 			float positionX = DICTOOL->getFloatValue_json(actionFrameDic, "positionx");
 			float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
 			ActionMoveFrame* actionFrame = new ActionMoveFrame();
-            actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setPosition(Point(positionX, positionY));
 			auto cActionArray = _frameArray.at((int)kKeyframeMove);
 			cActionArray->pushBack(actionFrame);
+			actionFrame->release();
 		}
 
 		bool existScale = DICTOOL->checkObjectExist_json(actionFrameDic,"scalex");
@@ -97,12 +97,12 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 			float scaleX = DICTOOL->getFloatValue_json(actionFrameDic, "scalex");
 			float scaleY = DICTOOL->getFloatValue_json(actionFrameDic, "scaley");
 			ActionScaleFrame* actionFrame = new ActionScaleFrame();
-            actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setScaleX(scaleX);
 			actionFrame->setScaleY(scaleY);
 			auto cActionArray = _frameArray.at((int)kKeyframeScale);
 			cActionArray->pushBack(actionFrame);
+			actionFrame->release();			
 		}
 
 		bool existRotation = DICTOOL->checkObjectExist_json(actionFrameDic,"rotation");
@@ -110,11 +110,11 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 		{
 			float rotation = DICTOOL->getFloatValue_json(actionFrameDic, "rotation");
 			ActionRotationFrame* actionFrame = new ActionRotationFrame();
-            actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setRotation(rotation);
 			auto cActionArray = _frameArray.at((int)kKeyframeRotate);
 			cActionArray->pushBack(actionFrame);
+			actionFrame->release();
 		}
 
 		bool existOpacity = DICTOOL->checkObjectExist_json(actionFrameDic,"opacity");
@@ -122,11 +122,11 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 		{
 			int opacity = DICTOOL->getIntValue_json(actionFrameDic, "opacity");
 			ActionFadeFrame* actionFrame = new ActionFadeFrame();
-            actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setOpacity(opacity);
 			auto cActionArray = _frameArray.at((int)kKeyframeTint);
 			cActionArray->pushBack(actionFrame);
+			actionFrame->release();
 		}
 
 		bool existColor = DICTOOL->checkObjectExist_json(actionFrameDic,"colorr");
@@ -136,11 +136,11 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 			int colorG = DICTOOL->getIntValue_json(actionFrameDic, "colorg");
 			int colorB = DICTOOL->getIntValue_json(actionFrameDic, "colorb");
 			ActionTintFrame* actionFrame = new ActionTintFrame();
-            actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setColor(Color3B(colorR,colorG,colorB));
 			auto cActionArray = _frameArray.at((int)kKeyframeFade);
 			cActionArray->pushBack(actionFrame);
+			actionFrame->release();
 		}
 	}
 	initActionNodeFromRoot(root);
