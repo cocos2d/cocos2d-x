@@ -20,7 +20,7 @@ DEPENDS+=' libcurl4-gnutls-dev'
 DEPENDS+=' libfontconfig1-dev'
 DEPENDS+=' libsqlite3-dev'
 DEPENDS+=' libglew*-dev'
-DEPENDS+=' libsqlite3-dev'
+DEPENDS+=' libssl-dev'
 
 MISSING=
 echo "Checking for missing packages ..."
