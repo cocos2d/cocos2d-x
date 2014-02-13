@@ -13,7 +13,27 @@ if [ -z "$PYTHON_BIN" ]; then
     export PYTHON_BIN=/usr/bin/python
 fi
 
-if [ "$GEN_JSB"x = "YES"x ]; then
+
+if [ "$GEN_COCOS_FILES"x = "YES"x ]; then
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        exit 0
+    fi
+    if [ -z "${GH_EMAIL}" ]; then
+        echo "GH_EMAIL not set"
+        exit 0
+    fi
+    if [ -z "${GH_USER}" ]; then
+        echo "GH_USER not set"
+        exit 0
+    fi
+    if [ -z "${GH_PASSWORD}" ]; then
+        echo "GH_USER not set"
+        exit 0
+    fi
+
+    cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-cocosfiles.sh
+elif [ "$GEN_JSB"x = "YES"x ]; then
     # Re-generation of the javascript bindings can perform push of the new
     # version back to github.  We don't do this for pull requests, or if
     # GH_USER/GH_EMAIL/GH_PASSWORD environment variables are not set correctly
@@ -44,6 +64,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT
 
@@ -78,6 +99,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
     echo "Building cocos2d-x"
     cd $COCOS2DX_ROOT/build
@@ -114,6 +136,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT/build
     export PYTHON=/usr/bin/python
@@ -123,6 +146,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
 elif [ "$PLATFORM"x = "ios"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT
     xctool/xctool.sh -project samples/Cpp/HelloCpp/proj.ios/HelloCpp.xcodeproj -scheme HelloCpp test
