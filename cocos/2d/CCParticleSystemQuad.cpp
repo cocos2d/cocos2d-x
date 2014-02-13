@@ -527,6 +527,7 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         _totalParticles = tp;
     }
     
+    _emissionRate = _totalParticles / _life;
     resetSystem();
 }
 
