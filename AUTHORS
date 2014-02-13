@@ -742,6 +742,7 @@ Developers:
         
     bagobor
         Fixed a memory leak in AssetsManager::uncompress.
+        Code format fix and small optimizations in cocostudio/CCActionNode.cpp.
     
 Retired Core Developers:
     WenSheng Yang
