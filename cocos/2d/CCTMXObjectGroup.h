@@ -95,6 +95,7 @@ public:
         _objects = objects;
     };
     
+    CCPoint getPointByName(const char* objectName);
 protected:
     /** name of the group */
     std::string _groupName;
