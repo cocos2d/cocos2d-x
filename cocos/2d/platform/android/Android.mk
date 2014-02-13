@@ -12,7 +12,6 @@ CCCommon.cpp \
 CCDevice.cpp \
 CCGLView.cpp \
 CCFileUtilsAndroid.cpp \
-CCImage.cpp \
 nativeactivity.cpp \
 jni/DPIJni.cpp \
 jni/IMEJni.cpp \
