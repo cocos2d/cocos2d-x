@@ -446,10 +446,10 @@ Image* RenderTexture::newImage(bool fliimage)
             break;
         }
 
-        this->begin();
+        this->onBegin();
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
-        this->end();
+        this->onEnd();
 
         if ( fliimage ) // -- flip is only required when saving image to file
         {
