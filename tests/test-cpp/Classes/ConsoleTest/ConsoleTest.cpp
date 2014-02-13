@@ -175,7 +175,7 @@ ConsoleCustomCommand::ConsoleCustomCommand()
             write(fd, "\n",1);
         }},
     };
-    _console->setUserCommands(&commands[0],1);
+    _console->addCommand(commands[0]);
 }
 
 ConsoleCustomCommand::~ConsoleCustomCommand()
