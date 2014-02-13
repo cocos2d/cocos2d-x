@@ -92,7 +92,7 @@ public:
     void stop();
 
     /** add custom command */
-    bool addCommand(struct Command cmd);
+    bool addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
 
