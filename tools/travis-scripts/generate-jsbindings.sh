@@ -39,7 +39,7 @@ if [ "$PLATFORM"x = "ios"x ]; then
     cd Cheetah-2.4.4
     sudo python setup.py install 2> /dev/null > /dev/null
     popd
-else
+elif [ $(command -v apt-get) ]; then
     sudo apt-get --force-yes --yes install python-yaml python-cheetah
 fi
 
