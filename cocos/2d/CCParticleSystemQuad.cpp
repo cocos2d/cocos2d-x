@@ -200,6 +200,16 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
         quads[i].tr.texCoords.v = top;
     }
 }
+
+void ParticleSystemQuad::updateTexCoords()
+{
+    if (_texture)
+    {
+        const Size& s = _texture->getContentSize();
+        initTexCoordsWithRect(Rect(0, 0, s.width, s.height));
+    }
+}
+
 void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect)
 {
     // Only update the texture if is different from the current one
@@ -210,11 +220,13 @@ void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect
 
     this->initTexCoordsWithRect(rect);
 }
+
 void ParticleSystemQuad::setTexture(Texture2D* texture)
 {
     const Size& s = texture->getContentSize();
     this->setTextureWithRect(texture, Rect(0, 0, s.width, s.height));
 }
+
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
     CCASSERT(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
@@ -508,7 +520,7 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         
         // fixed http://www.cocos2d-x.org/issues/3990
         // Updates texture coords.
-        setTexture(_texture);
+        updateTexCoords();
     }
     else
     {
