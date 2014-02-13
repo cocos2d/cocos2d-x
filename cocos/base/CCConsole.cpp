@@ -370,7 +370,7 @@ void Console::stop()
     }
 }
 
-bool Console::addCommand(struct Command cmd)
+bool Console::addCommand(const Command& cmd)
 {
     for(int i = 0; i < _maxCommands; ++i) 
     {
@@ -392,10 +392,9 @@ bool Console::addCommand(struct Command cmd)
     }
     if(_userCmdSize > _maxUserCommands - 1)
     {
-        struct Command* newBuffer = (struct Command *)calloc(_maxUserCommands + 64, sizeof(struct Command));
+        struct Command* newBuffer = (struct Command *)realloc(_userCommands, (_maxUserCommands + 64) * sizeof(struct Command));
         if(newBuffer)
         {
-             memcpy(newBuffer, _userCommands, _maxUserCommands * sizeof(struct Command));
              _userCommands = newBuffer;
              _maxUserCommands += 64;
         
