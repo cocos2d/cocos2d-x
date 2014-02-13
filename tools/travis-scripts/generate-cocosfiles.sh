@@ -94,7 +94,7 @@ git checkout -b "$COCOS_BRANCH"
 git commit -m "$COMMITTAG : updating tools/project-creator/module/cocos_files.json"
 #Set remotes
 git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git 2> /dev/null > /dev/null
-# 4. In Cocos2D-X repo, Push the commit with updated submodule to "master" of the cocos2d-x repository
+# 4. In Cocos2D-X repo, Push the commit to cocos2d-x repository
 echo "Pushing to Robot's repo ..."
 git push -fq upstream "$COCOS_BRANCH" 2> /dev/null
 
