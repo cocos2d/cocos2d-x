@@ -32,6 +32,7 @@
 #include <sstream>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <fcntl.h>
 
@@ -231,6 +232,7 @@ Console::Console()
 , _endThread(false)
 , _userCommands(nullptr)
 , _maxUserCommands(0)
+, _userCmdSize(0)
 , _sendDebugStrings(false)
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
@@ -267,6 +269,10 @@ Console::Console()
 	{
 		_commands[i] = commands[i];
 	}
+
+    _userCommands = (Command *)calloc(64, sizeof(Command));
+    _maxUserCommands = 64;
+
 }
 
 Console::~Console()
@@ -364,12 +370,34 @@ void Console::stop()
     }
 }
 
-void Console::setUserCommands(Command *commands, int numberOfCommands)
+bool Console::addCommand(struct Command cmd)
 {
-    _userCommands = commands;
-    _maxUserCommands = numberOfCommands;
-}
+    if(_userCmdSize > _maxUserCommands - 1)
+    {
+        struct Command* newBuffer = (struct Command *)calloc(_maxUserCommands + 64, sizeof(struct Command));
+        if(newBuffer)
+        {
+             memcpy(newBuffer, _userCommands, _maxUserCommands * sizeof(struct Command));
+             _userCommands = newBuffer;
+             _maxUserCommands += 64;
+        
+        }
+        else 
+        {
+             cocos2d::log("CCConsole error:fail to alloc new command buffer");
+             return false;
+        }
+    }
 
+    if((_userCommands != nullptr) && (_userCmdSize <= _maxUserCommands - 1))
+    {
+        _userCommands[_userCmdSize] = cmd;
+        _userCmdSize ++;
+        return true;
+    }
+    return false;
+
+}
 
 //
 // commands
