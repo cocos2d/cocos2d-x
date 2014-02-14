@@ -111,7 +111,7 @@ jsval spbone_to_jsval(JSContext* cx, spBone& v)
     return JSVAL_NULL;
 }
 
-jsval spSkeleton_to_jsval(JSContext* cx, spSkeleton& v)
+jsval spskeleton_to_jsval(JSContext* cx, spSkeleton& v)
 {
     JSObject* tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
@@ -137,9 +137,8 @@ jsval spattachment_to_jsval(JSContext* cx, spAttachment& v)
     JSObject* tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     
-    bool ok = JS_DefineProperty(cx, tmp, "r", c_string_to_jsval(cx, v.name), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "type", INT_TO_JSVAL(v.type), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);/* &&
-    JS_DefineProperty(cx, tmp, "vtable", OBJECT_TO_JSVAL(v.vtable), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT)*/
+    bool ok = JS_DefineProperty(cx, tmp, "name", c_string_to_jsval(cx, v.name), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "type", INT_TO_JSVAL(v.type), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok)
     {
@@ -157,9 +156,9 @@ jsval spslotdata_to_jsval(JSContext* cx, spSlotData& v)
     bool ok = JS_DefineProperty(cx, tmp, "name", c_string_to_jsval(cx, v.name), NULL, NULL,  JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "attachmentName", c_string_to_jsval(cx, v.attachmentName), NULL, NULL,  JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "r", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "g", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "g", DOUBLE_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(v.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(v.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "additiveBlending", INT_TO_JSVAL(v.additiveBlending), NULL, NULL,  JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "boneData", spbonedata_to_jsval(cx, v.boneData), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
@@ -177,11 +176,11 @@ jsval spslot_to_jsval(JSContext* cx, spSlot& v)
     if (!tmp) return JSVAL_NULL;
     
     bool ok = JS_DefineProperty(cx, tmp, "r", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-     JS_DefineProperty(cx, tmp, "g", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-     JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-     JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(v.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+     JS_DefineProperty(cx, tmp, "g", DOUBLE_TO_JSVAL(v.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+     JS_DefineProperty(cx, tmp, "b", DOUBLE_TO_JSVAL(v.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+     JS_DefineProperty(cx, tmp, "a", DOUBLE_TO_JSVAL(v.a), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
      JS_DefineProperty(cx, tmp, "bone", spbone_to_jsval(cx, *v.bone), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-     JS_DefineProperty(cx, tmp, "skeleton", spSkeleton_to_jsval(cx, *v.skeleton), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+     JS_DefineProperty(cx, tmp, "skeleton", spskeleton_to_jsval(cx, *v.skeleton), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
      JS_DefineProperty(cx, tmp, "attachment", spattachment_to_jsval(cx, *v.attachment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
      JS_DefineProperty(cx, tmp, "data", spslotdata_to_jsval(cx, *v.data), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
         
@@ -193,14 +192,12 @@ jsval spslot_to_jsval(JSContext* cx, spSlot& v)
     return JSVAL_NULL;
 }
 
-jsval spTimeline_to_jsval(JSContext* cx, spTimeline& v)
+jsval sptimeline_to_jsval(JSContext* cx, spTimeline& v)
 {
     JSObject* tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     
-    // i have no idea to transition void* to jsval
-    bool ok = JS_DefineProperty(cx, tmp, "type", int32_to_jsval(cx, v.type), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);/* &&
-        JS_DefineProperty(cx, tmp, "vtable", OBJECT_TO_JSVAL(v.vtable), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);*/
+    bool ok = JS_DefineProperty(cx, tmp, "type", int32_to_jsval(cx, v.type), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok)
     {
@@ -210,7 +207,7 @@ jsval spTimeline_to_jsval(JSContext* cx, spTimeline& v)
     return JSVAL_NULL;
 }
 
-jsval spAnimationState_to_jsval(JSContext* cx, spAnimationState& v)
+jsval spanimationstate_to_jsval(JSContext* cx, spAnimationState& v)
 {
     JSObject* tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
@@ -226,7 +223,7 @@ jsval spAnimationState_to_jsval(JSContext* cx, spAnimationState& v)
     return JSVAL_NULL;
 }
 
-jsval spAnimation_to_jsval(JSContext* cx, spAnimation& v)
+jsval spanimation_to_jsval(JSContext* cx, spAnimation& v)
 {
     JSObject* tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
@@ -234,7 +231,7 @@ jsval spAnimation_to_jsval(JSContext* cx, spAnimation& v)
     bool ok = JS_DefineProperty(cx, tmp, "duration", DOUBLE_TO_JSVAL(v.duration), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "timelineCount", INT_TO_JSVAL(v.timelineCount), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "name", c_string_to_jsval(cx, v.name), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "timelines", spTimeline_to_jsval(cx, **v.timelines), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineProperty(cx, tmp, "timelines", sptimeline_to_jsval(cx, **v.timelines), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok)
     {
@@ -244,18 +241,18 @@ jsval spAnimation_to_jsval(JSContext* cx, spAnimation& v)
     return JSVAL_NULL;
 }
 
-jsval spTrackEntry_to_jsval(JSContext* cx, spTrackEntry& v)
+jsval sptrackentry_to_jsval(JSContext* cx, spTrackEntry& v)
 {
     JSObject* tmp = JS_NewObject(cx, NULL, NULL, NULL);
     if (!tmp) return JSVAL_NULL;
     
     jsval nextVal = JSVAL_NULL;
     if (v.next)
-        nextVal = spTrackEntry_to_jsval(cx, *v.next);
+        nextVal = sptrackentry_to_jsval(cx, *v.next);
     
     jsval previousVal = JSVAL_NULL;
     if (v.previous)
-        previousVal = spTrackEntry_to_jsval(cx, *v.previous);
+        previousVal = sptrackentry_to_jsval(cx, *v.previous);
     
     bool ok = JS_DefineProperty(cx, tmp, "delay", DOUBLE_TO_JSVAL(v.delay), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "time", DOUBLE_TO_JSVAL(v.time), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -264,7 +261,7 @@ jsval spTrackEntry_to_jsval(JSContext* cx, spTrackEntry& v)
     JS_DefineProperty(cx, tmp, "timeScale", DOUBLE_TO_JSVAL(v.timeScale), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "mixTime", DOUBLE_TO_JSVAL(v.mixTime), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "mixDuration", DOUBLE_TO_JSVAL(v.mixDuration), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "animation", spAnimation_to_jsval(cx, *v.animation), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "animation", spanimation_to_jsval(cx, *v.animation), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "next", nextVal, NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "previous", previousVal, NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
@@ -282,7 +279,7 @@ bool jsb_cocos2dx_spine_findBone(JSContext *cx, uint32_t argc, jsval *vp)
 	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
+    spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 	if (argc == 1) {
 		const char* arg0;
@@ -311,7 +308,7 @@ bool jsb_cocos2dx_spine_findSlot(JSContext *cx, uint32_t argc, jsval *vp)
 	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
+    spine::Skeleton* cobj = (spine::Skeleton *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 	if (argc == 1) {
 		const char* arg0;
@@ -322,7 +319,7 @@ bool jsb_cocos2dx_spine_findSlot(JSContext *cx, uint32_t argc, jsval *vp)
         do {
             if (ret)
             {
-                
+                jsret = spslot_to_jsval(cx, *ret);
             }
         } while (0);
         
@@ -331,6 +328,37 @@ bool jsb_cocos2dx_spine_findSlot(JSContext *cx, uint32_t argc, jsval *vp)
 	}
     
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
+
+bool jsb_cocos2dx_spine_getAttachment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    spine::Skeleton* cobj = (spine::Skeleton*)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
+    if (argc == 2) {
+        const char* arg0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        const char* arg1;
+        std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+        spAttachment* ret = cobj->getAttachment(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret)
+            {
+                jsret = spattachment_to_jsval(cx, *ret);
+            }
+        } while(0);
+        
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 
@@ -351,7 +379,7 @@ bool jsb_cocos2dx_spine_getCurrent(JSContext *cx, uint32_t argc, jsval *vp)
         do {
             if (ret)
             {
-                jsret = spTrackEntry_to_jsval(cx, *ret);
+                jsret = sptrackentry_to_jsval(cx, *ret);
             }
         } while (0);
         
@@ -364,7 +392,7 @@ bool jsb_cocos2dx_spine_getCurrent(JSContext *cx, uint32_t argc, jsval *vp)
         do {
             if (ret)
             {
-                jsret = spTrackEntry_to_jsval(cx, *ret);
+                jsret = sptrackentry_to_jsval(cx, *ret);
             }
         } while (0);
         
@@ -401,7 +429,7 @@ bool jsb_cocos2dx_spine_setAnimation(JSContext *cx, uint32_t argc, jsval *vp)
         do {
             if (ret)
             {
-                jsret = spTrackEntry_to_jsval(cx, *ret);
+                jsret = sptrackentry_to_jsval(cx, *ret);
             }
         } while(0);
         
@@ -439,7 +467,7 @@ bool jsb_cocos2dx_spine_addAnimation(JSContext *cx, uint32_t argc, jsval *vp)
         do {
             if (ret)
             {
-                jsret = spTrackEntry_to_jsval(cx, *ret);
+                jsret = sptrackentry_to_jsval(cx, *ret);
             }
         } while(0);
         
@@ -465,7 +493,7 @@ bool jsb_cocos2dx_spine_addAnimation(JSContext *cx, uint32_t argc, jsval *vp)
         do {
             if (ret)
             {
-                jsret = spTrackEntry_to_jsval(cx, *ret);
+                jsret = sptrackentry_to_jsval(cx, *ret);
             }
         } while(0);
         
@@ -539,12 +567,14 @@ static bool jsb_cocos2dx_spine_setAnimationListener(JSContext *cx, uint32_t argc
     return false;
 }
 
+extern JSObject* jsb_spine_Skeleton_prototype;
 extern JSObject* jsb_spine_SkeletonAnimation_prototype;
 
 void register_all_cocos2dx_spine_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "findBone", jsb_cocos2dx_spine_findBone, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "findSlot", jsb_cocos2dx_spine_findSlot, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "findBone", jsb_cocos2dx_spine_findBone, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "findSlot", jsb_cocos2dx_spine_findSlot, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_spine_Skeleton_prototype, "getAttachment", jsb_cocos2dx_spine_getAttachment, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "getCurrent", jsb_cocos2dx_spine_getCurrent, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "setAnimation", jsb_cocos2dx_spine_setAnimation, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_spine_SkeletonAnimation_prototype, "addAnimation", jsb_cocos2dx_spine_addAnimation, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
