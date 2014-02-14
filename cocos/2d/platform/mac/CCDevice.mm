@@ -26,20 +26,29 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "CCImageCommon_cpp.h"
+#include "platform/CCDevice.h"
 #include <Foundation/Foundation.h>
 #include <Cocoa/Cocoa.h>
-#include "CCDirector.h"
-#include "ccMacros.h"
-#include "CCImage.h"
-#include "CCFileUtils.h"
-#include "CCTexture2D.h"
 #include <string>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "ccTypes.h"
 
 NS_CC_BEGIN
+
+int Device::getDPI()
+{
+//TODO: 
+    return 160;
+}
+
+void Device::setAccelerometerEnabled(bool isEnabled)
+{
+
+}
+
+void Device::setAccelerometerInterval(float interval)
+{
+
+}
 
 typedef struct
 {
@@ -50,10 +59,10 @@ typedef struct
     unsigned char*  data;
 } tImageInfo;
 
-static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, const char * fontName, int size, tImageInfo* info, cocos2d::Color3B* strokeColor)
+static bool _initWithString(const char * text, Device::TextAlign align, const char * fontName, int size, tImageInfo* info, Color3B* strokeColor)
 {
     bool ret = false;
-
+    
 	CCASSERT(text, "Invalid pText");
 	CCASSERT(info, "Invalid pInfo");
 	
@@ -62,10 +71,10 @@ static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, 
 		
 		// font
 		NSFont *font = [[NSFontManager sharedFontManager]
-						 fontWithFamily:[NSString stringWithUTF8String:fontName]
+                        fontWithFamily:[NSString stringWithUTF8String:fontName]
 						traits:NSUnboldFontMask | NSUnitalicFontMask
-						 weight:0
-						 size:size];
+                        weight:0
+                        size:size];
 		
 		if (font == nil) {
 			font = [[NSFontManager sharedFontManager]
@@ -89,20 +98,20 @@ static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, 
 		unsigned horiFlag = (int)align & 0x0f;
 		unsigned vertFlag = ((int)align >> 4) & 0x0f;
 		NSTextAlignment textAlign = (2 == horiFlag) ? NSRightTextAlignment
-			: (3 == horiFlag) ? NSCenterTextAlignment
-			: NSLeftTextAlignment;
+        : (3 == horiFlag) ? NSCenterTextAlignment
+        : NSLeftTextAlignment;
 		
 		NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
 		[paragraphStyle setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
 		[paragraphStyle setLineBreakMode:NSLineBreakByCharWrapping];
 		[paragraphStyle setAlignment:textAlign];
-
+        
 		// attribute
 		NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
 											 foregroundColor,NSForegroundColorAttributeName,
 											 font, NSFontAttributeName,
 											 paragraphStyle, NSParagraphStyleAttributeName, nil];
-
+        
 		// linebreak
 		if (info->width > 0) {
 			if ([string sizeWithAttributes:tokenAttributesDict].width > info->width) {
@@ -124,29 +133,29 @@ static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, 
 				string = lineBreak;
 			}
 		}
-
+        
 		NSAttributedString *stringWithAttributes =[[[NSAttributedString alloc] initWithString:string
-										 attributes:tokenAttributesDict] autorelease];
-				
+                                                                                   attributes:tokenAttributesDict] autorelease];
+        
 		NSSize realDimensions = [stringWithAttributes size];
 		// Mac crashes if the width or height is 0
 		CC_BREAK_IF(realDimensions.width <= 0 || realDimensions.height <= 0);
-				
+        
 		CGSize dimensions = CGSizeMake(info->width, info->height);
 		
-	
+        
 		if(dimensions.width <= 0 && dimensions.height <= 0) {
 			dimensions.width = realDimensions.width;
 			dimensions.height = realDimensions.height;
 		} else if (dimensions.height <= 0) {
 			dimensions.height = realDimensions.height;
 		}
-
+        
 		NSInteger POTWide = dimensions.width;
 		NSInteger POTHigh = MAX(dimensions.height, realDimensions.height);
 		unsigned char*			data;
 		//Alignment
-			
+        
 		CGFloat xPadding = 0;
 		switch (textAlign) {
 			case NSLeftTextAlignment: xPadding = 0; break;
@@ -154,7 +163,7 @@ static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, 
 			case NSRightTextAlignment: xPadding = dimensions.width-realDimensions.width; break;
 			default: break;
 		}
-
+        
 		// 1: TOP
 		// 2: BOTTOM
 		// 3: CENTER
@@ -166,7 +175,7 @@ static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, 
 		NSRect textRect = NSMakeRect(xPadding, POTHigh - dimensions.height + yPadding, realDimensions.width, realDimensions.height);
 		//Disable antialias
 		
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		
 		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
         
@@ -175,7 +184,7 @@ static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, 
         // patch for mac retina display and lableTTF
         [[NSAffineTransform transform] set];
 		
-		//[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, offsetY)]; // draw at offset position	
+		//[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, offsetY)]; // draw at offset position
 		[stringWithAttributes drawInRect:textRect];
 		//[stringWithAttributes drawInRect:textRect withAttributes:tokenAttributesDict];
 		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
@@ -202,36 +211,25 @@ static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, 
     return ret;
 }
 
-bool Image::initWithString(
-	const char *    text,
-	int             width,
-	int             height,
-	TextAlign       alignMask,
-	const char *    fontName,
-	int             size)
+Data Device::getTextureDataForText(const char * text,const FontDefinition& textDefinition,TextAlign align,int &width,int &height)
 {
-    tImageInfo info = {0};
-    info.width = width;
-    info.height = height;
-	
-    if (! _initWithString(text, alignMask, fontName, size, &info, nullptr)) //pStrokeColor))
-    {
-        return false;
-    }
-    _height = (short)info.height;
-    _width = (short)info.width;
-    _renderFormat = Texture2D::PixelFormat::RGBA8888;
-    _preMulti = info.isPremultipliedAlpha;
-	if (_data) {
-		CC_SAFE_DELETE_ARRAY(_data);
-	}
-    _data = info.data;
-    _dataLen = _width * _height * 4;
-
-    return true;
+    Data ret;
+    do {
+        tImageInfo info = {0};
+        info.width = textDefinition._dimensions.width;
+        info.height = textDefinition._dimensions.height;
+        
+        if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, nullptr)) //pStrokeColor))
+        {
+            break;
+        }
+        height = (short)info.height;
+        widht = (short)info.width;
+        ret.fastSet(info.data,width * height * 4);
+    } while (0);
+    
+    return ret;
 }
-
-
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
