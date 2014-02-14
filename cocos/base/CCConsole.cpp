@@ -403,26 +403,6 @@ void Console::commandHelp(int fd, const std::string &args)
         }
         mydprintf(fd,"%s\n", cmd.help);
     } 
-    // for(int i=0; i<_maxCommands; ++i) {
-    //     mydprintf(fd, "\t%s", _commands[i].name);
-    //     ssize_t tabs = strlen(_commands[i].name) / 8;
-    //     tabs = 3 - tabs;
-    //     for(int j=0;j<tabs;j++){
-    //         mydprintf(fd, "\t");
-    //     }
-    //     mydprintf(fd,"%s\n", _commands[i].help);
-    // }
-
-    // // User commands
-    // for(int i=0; i<_userCmdSize; ++i) {
-    //     mydprintf(fd, "\t%s", _userCommands[i].name);
-    //     ssize_t tabs = strlen(_userCommands[i].name) / 8;
-    //     tabs = 3 - tabs;
-    //     for(int j=0;j<tabs;j++){
-    //         mydprintf(fd, "\t");
-    //     }
-    //     mydprintf(fd,"%s\n", _userCommands[i].help);
-    // }
 }
 
 void Console::commandExit(int fd, const std::string &args)
