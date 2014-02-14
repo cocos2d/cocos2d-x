@@ -224,7 +224,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
             break;
         }
         height = (short)info.height;
-        widht = (short)info.width;
+        width = (short)info.width;
         ret.fastSet(info.data,width * height * 4);
     } while (0);
     
