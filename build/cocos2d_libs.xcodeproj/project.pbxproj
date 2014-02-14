@@ -3170,12 +3170,8 @@
 		74AC8DF0EA49A124E1B11681 /* CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer.h; sourceTree = "<group>"; };
 		74AC8EB8FE47EED9B30B7106 /* CCRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCRenderer.cpp; sourceTree = "<group>"; };
 		74AC8F4F7D9E52FCB522B647 /* CCRenderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderCommand.h; sourceTree = "<group>"; };
-		85D37C3818AC5E03007CDAFA /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_spine_manual.cpp; sourceTree = "<group>"; };
 		85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_spine_manual.h; sourceTree = "<group>"; };
-		85D37C3B18AC5E03007CDAFA /* libJSBindingForSpine.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = libJSBindingForSpine.vcxproj; sourceTree = "<group>"; };
-		85D37C3C18AC5E03007CDAFA /* libJSBindingForSpine.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = libJSBindingForSpine.vcxproj.filters; sourceTree = "<group>"; };
-		85D37C3D18AC5E03007CDAFA /* libJSBindingForSpine.vcxproj.user */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = libJSBindingForSpine.vcxproj.user; sourceTree = "<group>"; };
 		A0053F46189B2BEA0035A564 /* Android.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		A0053F47189B2BEA0035A564 /* CCApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
 		A0053F48189B2BEA0035A564 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -5565,12 +5561,8 @@
 		85D37C3718AC5E03007CDAFA /* spine */ = {
 			isa = PBXGroup;
 			children = (
-				85D37C3818AC5E03007CDAFA /* Android.mk */,
 				85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */,
 				85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */,
-				85D37C3B18AC5E03007CDAFA /* libJSBindingForSpine.vcxproj */,
-				85D37C3C18AC5E03007CDAFA /* libJSBindingForSpine.vcxproj.filters */,
-				85D37C3D18AC5E03007CDAFA /* libJSBindingForSpine.vcxproj.user */,
 			);
 			path = spine;
 			sourceTree = "<group>";
