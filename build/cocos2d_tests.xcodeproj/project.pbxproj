@@ -643,6 +643,8 @@
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1E17D09D070004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		FAD4705118A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAD4704F18A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp */; };
+		FAD4705218A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAD4704F18A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1505,6 +1507,8 @@
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		FAD4704F18A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceScenarioTest.cpp; sourceTree = "<group>"; };
+		FAD4705018A5CF1E004DC0C2 /* PerformanceScenarioTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceScenarioTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2673,6 +2677,8 @@
 		1A92D52D18975EA5002F2C16 /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
+				FAD4704F18A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp */,
+				FAD4705018A5CF1E004DC0C2 /* PerformanceScenarioTest.h */,
 				1A92D52E18975EA5002F2C16 /* PerformanceAllocTest.cpp */,
 				1A92D52F18975EA5002F2C16 /* PerformanceAllocTest.h */,
 				1A92D53018975EA5002F2C16 /* PerformanceContainerTest.cpp */,
@@ -3825,6 +3831,7 @@
 				1A92D68D18975EA6002F2C16 /* TileMapTest.cpp in Sources */,
 				1A92D60D18975EA6002F2C16 /* UIWidgetAddNodeTest.cpp in Sources */,
 				1A92D5DF18975EA5002F2C16 /* ArmatureScene.cpp in Sources */,
+				FAD4705118A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp in Sources */,
 				1A92D62918975EA6002F2C16 /* HttpClientTest.cpp in Sources */,
 				1A92D61F18975EA6002F2C16 /* CCControlSliderTest.cpp in Sources */,
 				1A92D61D18975EA6002F2C16 /* CCControlSceneManager.cpp in Sources */,
@@ -4042,6 +4049,7 @@
 				1A92D66A18975EA6002F2C16 /* PerformanceTest.cpp in Sources */,
 				1A92D64418975EA6002F2C16 /* LabelTest.cpp in Sources */,
 				1A92D5FC18975EA6002F2C16 /* UILayoutTest.cpp in Sources */,
+				FAD4705218A5CF1E004DC0C2 /* PerformanceScenarioTest.cpp in Sources */,
 				1A92D62218975EA6002F2C16 /* CCControlStepperTest.cpp in Sources */,
 				1A92D5FA18975EA6002F2C16 /* UILabelTest.cpp in Sources */,
 				1A92D67618975EA6002F2C16 /* RotateWorldTest.cpp in Sources */,
