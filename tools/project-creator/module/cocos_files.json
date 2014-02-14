@@ -901,6 +901,8 @@
 "cocos/scripting/javascript/bindings/proj.win32/libJSBinding.vcxproj.user",
 "cocos/scripting/javascript/bindings/spidermonkey_specifics.h",
 "cocos/scripting/javascript/bindings/spine/Android.mk",
+"cocos/scripting/javascript/bindings/spine/jsb_cocos2dx_spine_manual.cpp",
+"cocos/scripting/javascript/bindings/spine/jsb_cocos2dx_spine_manual.h",
 "cocos/scripting/javascript/bindings/spine/libJSBindingForSpine.vcxproj",
 "cocos/scripting/javascript/bindings/spine/libJSBindingForSpine.vcxproj.filters",
 "cocos/scripting/javascript/bindings/spine/libJSBindingForSpine.vcxproj.user",
