@@ -306,6 +306,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="cocos2d.cpp" />
     <ClCompile Include="platform\CCGLViewProtocol.cpp" />
     <ClCompile Include="platform\CCFileUtils.cpp" />
+    <ClCompile Include="platform\CCImage.cpp" />
     <ClCompile Include="platform\CCSAXParser.cpp" />
     <ClCompile Include="platform\CCThread.cpp" />
     <ClCompile Include="platform\desktop\CCGLView.cpp" />
@@ -313,7 +314,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="platform\win32\CCCommon.cpp" />
     <ClCompile Include="platform\win32\CCDevice.cpp" />
     <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp" />
-    <ClCompile Include="platform\win32\CCImage.cpp" />
     <ClCompile Include="platform\win32\CCStdC.cpp" />
     <ClCompile Include="renderer\CCBatchCommand.cpp" />
     <ClCompile Include="renderer\CCCustomCommand.cpp" />
@@ -508,7 +508,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="platform\CCGLViewProtocol.h" />
     <ClInclude Include="platform\CCFileUtils.h" />
     <ClInclude Include="platform\CCImage.h" />
-    <ClInclude Include="platform\CCImageCommon_cpp.h" />
     <ClInclude Include="platform\CCSAXParser.h" />
     <ClInclude Include="platform\CCThread.h" />
     <ClInclude Include="platform\desktop\CCGLView.h" />
