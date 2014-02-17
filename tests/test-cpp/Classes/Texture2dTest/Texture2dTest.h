@@ -52,6 +52,17 @@ public:
     virtual void onEnter();
 };
 
+class TextureRefresher : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureRefresher);
+    virtual std::string title() const override;
+    virtual void onEnter();
+    
+private:
+    Texture2D* _textureRefreshed;
+    void refreshTexture();
+};
 
 class TextureTGA : public TextureDemo
 {

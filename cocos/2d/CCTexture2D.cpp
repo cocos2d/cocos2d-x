@@ -603,7 +603,11 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
     
-
+    if(glIsTexture(_name))
+    {
+        GL::deleteTexture(_name);
+        _name = 0;
+    }
 
     glGenTextures(1, &_name);
     GL::bindTexture2D(_name);

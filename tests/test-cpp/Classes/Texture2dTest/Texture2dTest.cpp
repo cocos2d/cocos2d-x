@@ -36,6 +36,7 @@ enum {
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(TextureRefresher),
     CL(TexturePVRv3Premult),
 
     CL(TextureMemoryAlloc),
@@ -241,6 +242,35 @@ void TextureTGA::onEnter()
 std::string TextureTGA::title() const
 {
     return "TGA Test";
+}
+
+std::string TextureRefresher::title() const
+{
+    return "Texture Refresh Test";
+}
+
+void TextureRefresher::onEnter()
+{
+    TextureDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    
+    std::string fileName = "Images/grossini.png";
+    
+    auto img = Sprite::create(fileName);
+    _textureRefreshed = img->getTexture();
+    ImageFileTextureReloader::addImageTexture(_textureRefreshed,fileName);
+    img->setPosition(Point( s.width/2.0f, s.height/2.0f));
+    this->addChild(img);
+    log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+
+    auto item = MenuItemFont::create("Reload Texture", CC_CALLBACK_0(TextureRefresher::refreshTexture, this));
+    auto menu = Menu::create( item, nullptr);
+    addChild(menu);
+}
+
+void TextureRefresher::refreshTexture()
+{
+    ImageFileTextureReloader::reloadTexture(_textureRefreshed);
 }
 
 //------------------------------------------------------------------

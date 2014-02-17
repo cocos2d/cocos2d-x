@@ -690,5 +690,72 @@ void VolatileTextureMgr::reloadAllTextures()
 
 #endif // CC_ENABLE_CACHE_TEXTURE_DATA
 
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+
+std::map<Texture2D*, ImageFileTextureReloader::TextureImageFileData> ImageFileTextureReloader::_imageFileTextures;
+
+void ImageFileTextureReloader::addImageTexture(Texture2D* tt, std::string& imageFileName)
+{
+    if(nullptr == tt)
+    {
+        CCLOGERROR("Try to Add Null Texture2D to ImageFileTextureReloader");
+        return;
+    }
+    if(_imageFileTextures.find(tt) != _imageFileTextures.end())
+    {
+        CCLOGERROR("Texture2D of file %s has been existed in the ImageFileTextureReloader list.", imageFileName.c_str());
+        return;
+    }
+    TextureImageFileData data;
+    data._imageFile = imageFileName;
+    data._pixelFormat = tt->getPixelFormat();
+    _imageFileTextures.insert(std::make_pair(tt, data));
+}
+
+void ImageFileTextureReloader::removeTexture(Texture2D* tt)
+{
+    if(nullptr == tt || _imageFileTextures.find(tt) == _imageFileTextures.end())
+    {
+        CCLOGERROR("Can not find Texture2D in the ImageFileTextureReloader list");
+        return;
+    }
+    _imageFileTextures.erase(tt);
+}
+
+void ImageFileTextureReloader::reloadTexture(Texture2D* tt)
+{
+    if(nullptr == tt || _imageFileTextures.find(tt) == _imageFileTextures.end())
+    {
+        CCLOGERROR("Can not find Texture2D in the ImageFileTextureReloader list");
+        return;
+    }
+
+    const TextureImageFileData& vt = _imageFileTextures[tt];
+    Image* image = new Image();
+                
+    Data data = FileUtils::getInstance()->getDataFromFile(vt._imageFile);
+                
+    if (image && image->initWithImageData(data.getBytes(), data.getSize()))
+    {
+        Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
+        Texture2D::setDefaultAlphaPixelFormat(vt._pixelFormat);
+        tt->initWithImage(image);
+        Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
+    }
+                
+    CC_SAFE_RELEASE(image);
+
+}
+
+void ImageFileTextureReloader::reloadAllTextures()
+{
+    for(auto iter : _imageFileTextures)
+    {
+        reloadTexture(iter.first);
+    }
+}
+
+#endif //CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+
 NS_CC_END
 
