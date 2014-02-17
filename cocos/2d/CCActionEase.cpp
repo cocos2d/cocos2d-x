@@ -784,8 +784,7 @@ EaseBackIn* EaseBackIn::clone() const
 
 void EaseBackIn::update(float time)
 {
-    float overshoot = 1.70158f;
-    _inner->update(time * time * ((overshoot + 1) * time - overshoot));
+    _inner->update(tweenfunc::backEaseIn(time));
 }
 
 ActionEase* EaseBackIn::reverse() const
@@ -826,10 +825,7 @@ EaseBackOut* EaseBackOut::clone() const
 
 void EaseBackOut::update(float time)
 {
-    float overshoot = 1.70158f;
-
-    time = time - 1;
-    _inner->update(time * time * ((overshoot + 1) * time + overshoot) + 1);
+    _inner->update(tweenfunc::backEaseOut(time));
 }
 
 ActionEase* EaseBackOut::reverse() const
@@ -870,18 +866,7 @@ EaseBackInOut* EaseBackInOut::clone() const
 
 void EaseBackInOut::update(float time)
 {
-    float overshoot = 1.70158f * 1.525f;
-
-    time = time * 2;
-    if (time < 1)
-    {
-        _inner->update((time * time * ((overshoot + 1) * time - overshoot)) / 2);
-    }
-    else
-    {
-        time = time - 2;
-        _inner->update((time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1);
-    }
+    _inner->update(tweenfunc::backEaseInOut(time));
 }
 
 EaseBackInOut* EaseBackInOut::reverse() const
