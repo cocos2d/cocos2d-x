@@ -1,6 +1,6 @@
 require "luaScript/PerformanceTest/PerformanceSpriteTest"
 
-local MAX_COUNT     = 7
+local MAX_COUNT     = 6
 local LINE_SPACE    = 40
 local kItemTagBasic = 1000
 
@@ -11,8 +11,7 @@ local testsName =
     "PerformanceSpriteTest",
     "PerformanceTextureTest",
     "PerformanceTouchesTest",
-    "PerformanceStructOrLuaTable",
-    "PerformanceTableConversionV3",
+    "PerformanceFuncRelateWithTable",
 }
 
 local s = cc.Director:getInstance():getWinSize()
@@ -1653,15 +1652,14 @@ local function runTouchesTest()
     return pNewscene
 end
 
-
-local function runStructOrLuaTableTest()
+local function runFuncRelateWithTable()
     -- body
     local newscene  = cc.Scene:create()
     local layer     = cc.Layer:create()
     local s         = cc.Director:getInstance():getWinSize()
     local scheduler = cc.Director:getInstance():getScheduler()
     local scheduleEntryID = 0
-    local pushNum = 1500
+    local quantityOfNodes = 10000
     local socket = require("socket")
     local maxTime = 0.0
     local minTime = 99999
@@ -1671,7 +1669,7 @@ local function runStructOrLuaTableTest()
     local numberOfCalls = 0
 
     local function GetTitle()
-        return "Struct or LuaTable Performance Test"
+        return "Func Releated Table Performance Test"
     end
     
     local function GetSubtitle()
@@ -1699,279 +1697,19 @@ local function runStructOrLuaTableTest()
 
     --"+","-" Menu
     local function onDecrease()
-        pushNum = pushNum - 100
-        if pushNum == 0 then
-            pushNum = 100
+        quantityOfNodes = quantityOfNodes - 100
+        if quantityOfNodes == 0 then
+            quantityOfNodes = 100
         end
         local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
-        local  strNum = string.format("%d", pushNum)
+        local  strNum = string.format("%d", quantityOfNodes)
         numLabel:setString(strNum)    
     end
 
     local function onIncrease()
-        pushNum = pushNum + 100
+        quantityOfNodes = quantityOfNodes + 100
         local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
-        local  strNum = string.format("%d", pushNum)
-        numLabel:setString(strNum)  
-    end
-
-    cc.MenuItemFont:setFontSize(65)
-    local decrease = cc.MenuItemFont:create(" - ")
-    decrease:registerScriptTapHandler(onDecrease)
-    decrease:setColor(cc.c3b(0,200,20))
-    local increase = cc.MenuItemFont:create(" + ")
-    increase:registerScriptTapHandler(onIncrease)
-    increase:setColor(cc.c3b(0,200,20))
-        
-    local menuAddOrSub = cc.Menu:create()
-    menuAddOrSub:addChild(decrease)
-    menuAddOrSub:addChild(increase)
-    menuAddOrSub:alignItemsHorizontally()
-    menuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
-    layer:addChild(menuAddOrSub,1)
-
-    --num
-    local numLabel = cc.LabelTTF:create("10000", "Marker Felt", 30)
-    numLabel:setColor(cc.c3b(0,200,20))
-    numLabel:setPosition(cc.p(s.width/2, s.height/2-15))
-    layer:addChild(numLabel, 1, NodeChildrenTestParam.kTagInfoLayer)
-
-    --struct lua_table
-    local function toggleCallback(tag, sender)
-        decrease:setEnabled(true)
-        increase:setEnabled(true)
-        layer:unscheduleUpdate()
-        scheduler:unscheduleScriptEntry(scheduleEntryID)
-        initVar()
-    end
-
-    cc.MenuItemFont:setFontSize(18)
-    local structItem  = cc.MenuItemFont:create("push struct object")
-    local tableItem   = cc.MenuItemFont:create("push table  object")
-    local toggleItem  = cc.MenuItemToggle:create(structItem)
-    toggleItem:registerScriptTapHandler(toggleCallback)
-    toggleItem:addSubItem(tableItem)
-    toggleItem:setAnchorPoint(cc.p(0.0, 0.5))
-    toggleItem:setPosition(cc.p(VisibleRect:left()))
-    local menuStructOrTable = cc.Menu:create(toggleItem)
-    menuStructOrTable:setPosition(cc.p(0,0))
-    layer:addChild(menuStructOrTable)
-
-    --setPosition,getPosition,Point
-    local setPositionItem = cc.MenuItemFont:create("setPosition")
-    local getPositionItem = cc.MenuItemFont:create("getPosition")
-    local pointItem       = cc.MenuItemFont:create("object")
-    local funcToggleItem  = cc.MenuItemToggle:create(setPositionItem)
-    funcToggleItem:addSubItem(getPositionItem)
-    funcToggleItem:addSubItem(pointItem)
-    funcToggleItem:setAnchorPoint(cc.p(0.0, 0.5))
-    funcToggleItem:setPosition(cc.p(VisibleRect:leftBottom().x, VisibleRect:leftBottom().y + 30))
-    local funcMenu = cc.Menu:create(funcToggleItem)
-    funcMenu:setPosition(cc.p(0, 0))
-    layer:addChild(funcMenu)
-
-    local performanceObject = cc.PerformanceStuctAndTable:create()
-    performanceObject:retain()
-
-    local function step(dt)
-        print(string.format("push num: %d, avg1:%f, avg2:%f,min:%f, max:%f, total: %f, calls: %d",pushNum, averageTime1, averageTime2, minTime, maxTime, totalTime, numberOfCalls))
-    end
-
-    local function profileEnd(startTime)
-        local duration = socket.gettime() - startTime
-        totalTime = totalTime + duration
-        averageTime1 = (averageTime1 + duration) / 2
-        averageTime2 = totalTime / numberOfCalls
-
-        if maxTime < duration then
-            maxTime = duration
-        end
-
-        if minTime > duration then
-            minTime = duration
-        end
-    end
-
-    local function callSetPositionSturct()
-        numberOfCalls = numberOfCalls + 1
-        local startTime = socket.gettime()
-        for i=1,pushNum do
-            performanceObject:setPositionStruct(CCPoint(1,2))
-        end
-        profileEnd(startTime)
-    end
-
-    local function callGetPositionStruct()
-        numberOfCalls = numberOfCalls + 1
-        local startTime = socket.gettime()
-        for i=1,pushNum do
-            local pt =performanceObject:getPositionStruct()
-        end
-        profileEnd(startTime)
-    end
-
-    local function callPointStruct( ... )
-        numberOfCalls = numberOfCalls + 1
-        local startTime = socket.gettime()
-        for i=1,pushNum do
-            local pt = CCPoint(1,2)
-        end
-        profileEnd(startTime)
-    end
-
-    local function callSetPositionTable()
-        numberOfCalls = numberOfCalls + 1
-        local startTime = socket.gettime()
-        for i=1,pushNum do
-            performanceObject:setPositionTable(cc.p(1,2))
-        end
-        profileEnd(startTime)
-    end
-
-    local function callGetPositionTable()
-        numberOfCalls = numberOfCalls + 1
-        local startTime = socket.gettime()
-        for i=1,pushNum do
-            local pt = performanceObject:getPositionTable()
-        end
-        profileEnd(startTime)
-    end
-
-    local function callTableObject()
-        numberOfCalls = numberOfCalls + 1
-        local startTime = socket.gettime()
-        for i=1,pushNum do
-            local pt = cc.p(1,2)
-        end
-        profileEnd(startTime)
-    end
-
-    local function update(dt)
-        local selectedItem = toggleItem:getSelectedIndex()
-        local funcSelected = funcToggleItem:getSelectedIndex()
-        if 0 == selectedItem then
-            if 0 == funcSelected then
-                callSetPositionSturct()
-            elseif 1 == funcSelected then
-                callGetPositionStruct()
-            elseif 2 == funcSelected then
-                callPointStruct()
-            end
-        elseif 1 == selectedItem then
-            if 0 == funcSelected then
-                callSetPositionTable()
-            elseif 1 == funcSelected then
-                callGetPositionTable()
-            elseif 2 == funcSelected then
-                callTableObject()
-            end
-        end
-    end
-
-    local function onNodeEvent(tag)
-        if tag == "exit" then
-            self:unscheduleUpdate()
-            scheduler:unscheduleScriptEntry(scheduleEntryID)
-        end
-    end
-
-    layer:registerScriptHandler(onNodeEvent)
-
-
-    local function startCallback()
-        initVar()
-        decrease:setEnabled(false)
-        increase:setEnabled(false)
-        layer:unscheduleUpdate()
-        layer:scheduleUpdateWithPriorityLua(update, 0)
-        scheduler:unscheduleScriptEntry(scheduleEntryID)
-        scheduleEntryID = scheduler:scheduleScriptFunc(step,2,false)
-    end
-
-    local function stopCallback()
-        decrease:setEnabled(true)
-        increase:setEnabled(true)
-        layer:unscheduleUpdate()
-        scheduler:unscheduleScriptEntry(scheduleEntryID)
-    end
-    local startItem = cc.MenuItemFont:create("start")
-    startItem:registerScriptTapHandler(startCallback)
-    local stopItem  = cc.MenuItemFont:create("stop")
-    stopItem:registerScriptTapHandler(stopCallback)
-    local startAndStop = cc.Menu:create(startItem,stopItem)
-    startAndStop:alignItemsVertically()
-    startAndStop:setPosition(VisibleRect:right().x - 50, VisibleRect:right().y)
-    layer:addChild(startAndStop)
-
-    --back menu
-    local menu = cc.Menu:create()
-    CreatePerfomBasicLayerMenu(menu)
-    menu:setPosition(cc.p(0, 0))
-    layer:addChild(menu)
-
-    newscene:addChild(layer)
-    return newscene
-end
-
-
-local function runTableConversionV3()
-    -- body
-    local newscene  = cc.Scene:create()
-    local layer     = cc.Layer:create()
-    local s         = cc.Director:getInstance():getWinSize()
-    local scheduler = cc.Director:getInstance():getScheduler()
-    local scheduleEntryID = 0
-    local pushNum = 1500
-    local socket = require("socket")
-    local maxTime = 0.0
-    local minTime = 99999
-    local averageTime1 = 0.0
-    local averageTime2 = 0.0
-    local totalTime    = 0.0
-    local numberOfCalls = 0
-
-    local function GetTitle()
-        return "Table Conversion Performance Test"
-    end
-    
-    local function GetSubtitle()
-        return "See console for results"
-    end
-
-    local function initVar()
-        maxTime = 0.0
-        minTime = 99999
-        averageTime1 = 0.0
-        averageTime2 = 0.0
-        totalTime    = 0.0
-        numberOfCalls = 0
-    end
-
-    --Title
-    local title = cc.LabelTTF:create(GetTitle(), "Arial", 28)
-    layer:addChild(title, 1)
-    title:setPosition(cc.p(s.width/2, s.height-32))
-    title:setColor(cc.c3b(255,255,40)) 
-    --Subtitle
-    local subTitle = cc.LabelTTF:create(GetSubtitle(), "Thonburi", 16)
-    layer:addChild(subTitle, 1)
-    subTitle:setPosition(cc.p(s.width/2, s.height-80))
-
-    --"+","-" Menu
-    local function onDecrease()
-        pushNum = pushNum - 100
-        if pushNum == 0 then
-            pushNum = 100
-        end
-        local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
-        local  strNum = string.format("%d", pushNum)
-        numLabel:setString(strNum)    
-    end
-
-    local function onIncrease()
-        pushNum = pushNum + 100
-        local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
-        local  strNum = string.format("%d", pushNum)
+        local  strNum = string.format("%d", quantityOfNodes)
         numLabel:setString(strNum)  
     end
 
@@ -2000,9 +1738,11 @@ local function runTableConversionV3()
     cc.MenuItemFont:setFontSize(18)
     local setPositionItem = cc.MenuItemFont:create("setPosition")
     local getPositionItem = cc.MenuItemFont:create("getPosition")
+    local getAnchorPointItem = cc.MenuItemFont:create("getAnchorPoint")
     local pointItem       = cc.MenuItemFont:create("object")
     local funcToggleItem  = cc.MenuItemToggle:create(setPositionItem)
     funcToggleItem:addSubItem(getPositionItem)
+    funcToggleItem:addSubItem(getAnchorPointItem)
     funcToggleItem:addSubItem(pointItem)
     funcToggleItem:setAnchorPoint(cc.p(0.0, 0.5))
     funcToggleItem:setPosition(cc.p(VisibleRect:left()))
@@ -2014,7 +1754,7 @@ local function runTableConversionV3()
     layer:addChild(testNode)
 
     local function step(dt)
-        print(string.format("push num: %d, avg1:%f, avg2:%f,min:%f, max:%f, total: %f, calls: %d",pushNum, averageTime1, averageTime2, minTime, maxTime, totalTime, numberOfCalls))
+        print(string.format("push num: %d, avg1:%f, avg2:%f,min:%f, max:%f, total: %f, calls: %d",quantityOfNodes, averageTime1, averageTime2, minTime, maxTime, totalTime, numberOfCalls))
     end
 
     local function profileEnd(startTime)
@@ -2035,7 +1775,7 @@ local function runTableConversionV3()
     local function callSetPosition()
         numberOfCalls = numberOfCalls + 1
         local startTime = socket.gettime()
-        for i=1,pushNum do
+        for i=1,quantityOfNodes do
             testNode:setPosition(cc.p(1,2))
         end
         profileEnd(startTime)
@@ -2044,8 +1784,17 @@ local function runTableConversionV3()
     local function callGetPosition()
         numberOfCalls = numberOfCalls + 1
         local startTime = socket.gettime()
-        for i=1,pushNum do
+        for i=1,quantityOfNodes do
             local x,y = testNode:getPosition()
+        end
+        profileEnd(startTime)
+    end
+
+    local function callGetAnchorPoint()
+        numberOfCalls = numberOfCalls + 1
+        local startTime = socket.gettime()
+        for i=1,quantityOfNodes do
+            local anchorPoint = testNode:getAnchorPoint()
         end
         profileEnd(startTime)
     end
@@ -2053,7 +1802,7 @@ local function runTableConversionV3()
     local function callTableObject()
         numberOfCalls = numberOfCalls + 1
         local startTime = socket.gettime()
-        for i=1,pushNum do
+        for i=1,quantityOfNodes do
             local pt = cc.p(1,2)
         end
         profileEnd(startTime)
@@ -2067,13 +1816,15 @@ local function runTableConversionV3()
         elseif 1 == funcSelected then
             callGetPosition()
         elseif 2 == funcSelected then
+            callGetAnchorPoint()
+        elseif 3 == funcSelected then
             callTableObject()
         end
     end
 
     local function onNodeEvent(tag)
         if tag == "exit" then
-            self:unscheduleUpdate()
+            layer:unscheduleUpdate()
             scheduler:unscheduleScriptEntry(scheduleEntryID)
         end
     end
@@ -2085,6 +1836,7 @@ local function runTableConversionV3()
         initVar()
         decrease:setEnabled(false)
         increase:setEnabled(false)
+        funcToggleItem:setEnabled(false)
         layer:unscheduleUpdate()
         layer:scheduleUpdateWithPriorityLua(update, 0)
         scheduler:unscheduleScriptEntry(scheduleEntryID)
@@ -2094,6 +1846,7 @@ local function runTableConversionV3()
     local function stopCallback()
         decrease:setEnabled(true)
         increase:setEnabled(true)
+        funcToggleItem:setEnabled(true)
         layer:unscheduleUpdate()
         scheduler:unscheduleScriptEntry(scheduleEntryID)
     end
@@ -2127,8 +1880,7 @@ local CreatePerformancesTestTable =
     runSpriteTest,
     runTextureTest,
     runTouchesTest,
-    runStructOrLuaTableTest,
-    runTableConversionV3,    
+    runFuncRelateWithTable,    
 }
 
 local function CreatePerformancesTestScene(nPerformanceNo)
