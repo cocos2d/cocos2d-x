@@ -235,7 +235,7 @@ void DrawNode::render()
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
     CHECK_GL_ERROR_DEBUG();
 }
 

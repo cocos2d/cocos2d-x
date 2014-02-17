@@ -16,6 +16,7 @@ namespace
         CL(PhysicsDemoPump),
         CL(PhysicsDemoOneWayPlatform),
         CL(PhysicsDemoSlice),
+        CL(PhysicsDemoBug3988), 
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -1101,11 +1102,11 @@ void PhysicsDemoOneWayPlatform::onEnter()
     this->addChild(ball);
     
     auto contactListener = EventListenerPhysicsContactWithBodies::create(platform->getPhysicsBody(), ball->getPhysicsBody());
-    contactListener->onContactBegin = CC_CALLBACK_2(PhysicsDemoOneWayPlatform::onContactBegin, this);
+    contactListener->onContactBegin = CC_CALLBACK_1(PhysicsDemoOneWayPlatform::onContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
-bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const PhysicsContact& contact)
+bool PhysicsDemoOneWayPlatform::onContactBegin(PhysicsContact& contact)
 {
     return contact.getContactData()->normal.y < 0;
 }
@@ -1217,6 +1218,33 @@ std::string PhysicsDemoSlice::title() const
 std::string PhysicsDemoSlice::subtitle() const
 {
     return "click and drag to slice up the block";
+}
+
+
+void PhysicsDemoBug3988::onEnter()
+{
+    PhysicsDemo::onEnter();
+    _scene->toggleDebug();
+	_scene->getPhysicsWorld()->setGravity(Vect::ZERO);
+
+	auto ball  = Sprite::create("Images/YellowSquare.png");
+	ball->setPosition(VisibleRect::center() - Point(100, 0));
+	ball->setRotation(30.0f);
+	this->addChild(ball);
+
+	auto physicsBall = makeBox(VisibleRect::center() + Point(100, 0), Size(100, 100));
+	physicsBall->setRotation(30.0f);
+	this->addChild(physicsBall);
+}
+
+std::string PhysicsDemoBug3988::title() const
+{
+    return "Bug3988";
+}
+
+std::string PhysicsDemoBug3988::subtitle() const
+{
+    return "All the Rectangles should have same rotation angle";
 }
 
 #endif // ifndef CC_USE_PHYSICS

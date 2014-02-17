@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCGL.h"
 #include "CCConfiguration.h"
+#include "renderer/CCRenderer.h"
+
 // support
 #include "CCTexture2D.h"
 #include "CCString.h"
@@ -697,7 +699,8 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
+
     CHECK_GL_ERROR_DEBUG();
 }
 

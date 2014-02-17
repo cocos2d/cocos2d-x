@@ -2,8 +2,19 @@ if(WIN32)
   set(PLATFORM_SRC
     WebSocket.cpp
   )
+
   set(PLATFORM_LINK
     websockets
+  )
+elseif(NOT APPLE)
+  set(PLATFORM_SRC
+    WebSocket.cpp
+  )
+
+  set(PLATFORM_LINK
+    websockets
+    ssl
+    crypto
   )
 endif()
 

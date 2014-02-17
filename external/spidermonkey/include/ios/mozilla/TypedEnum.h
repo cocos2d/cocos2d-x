@@ -28,7 +28,7 @@
 #  endif
 #elif defined(__GNUC__)
 #  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-#    if MOZ_GCC_VERSION_AT_LEAST(4, 5, 1)
+#    if MOZ_GCC_VERSION_AT_LEAST(4, 6, 3)
 #      define MOZ_HAVE_CXX11_ENUM_TYPE
 #      define MOZ_HAVE_CXX11_STRONG_ENUMS
 #    endif
@@ -72,7 +72,7 @@
  * strongly-typed enumeration feature of C++11 ("enum class").  If supported
  * by the compiler, an enum defined using these macros will not be implicitly
  * converted to any other type, and its enumerators will be scoped using the
- * enumeration name.  Place MOZ_BEGIN_ENUM_CLASS(EnumName, type) in place of
+ * enumeration name.  Place MOZ_BEGIN_ENUM_CLASS(EnumName [, type]) in place of
  * "enum EnumName {", and MOZ_END_ENUM_CLASS(EnumName) in place of the closing
  * "};".  For example,
  *
@@ -87,10 +87,9 @@
  * fail.  In other compilers, Enum itself will actually be defined as a class,
  * and some implicit conversions will fail while others will succeed.
  *
- * The type argument specifies the underlying type for the enum where
- * supported, as with MOZ_ENUM_TYPE().  For simplicity, it is currently
- * mandatory.  As with MOZ_ENUM_TYPE(), it will do nothing on compilers that do
- * not support it.
+ * The optional type argument specifies the underlying type for the enum where
+ * supported, as with MOZ_ENUM_TYPE().  As with MOZ_ENUM_TYPE(), it will do
+ * nothing on compilers that do not support it.
  *
  * MOZ_{BEGIN,END}_ENUM_CLASS doesn't work for defining enum classes nested
  * inside classes.  To define an enum class nested inside another class, use
@@ -114,7 +113,12 @@
    * All compilers that support strong enums also support an explicit
    * underlying type, so no extra check is needed.
    */
-#  define MOZ_BEGIN_NESTED_ENUM_CLASS(Name, type) \
+
+   /* Single-argument form. */
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER1(Name) \
+     enum class Name {
+   /* Two-argument form. */
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER2(Name, type) \
      enum class Name : type {
 #  define MOZ_END_NESTED_ENUM_CLASS(Name) \
      };
@@ -154,8 +158,17 @@
     *   {
     *     return Enum::A;
     *   }
-    */\
-#  define MOZ_BEGIN_NESTED_ENUM_CLASS(Name, type) \
+    */
+
+   /* Single-argument form. */
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER1(Name) \
+     class Name \
+     { \
+       public: \
+         enum Enum \
+         {
+   /* Two-argument form. */
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER2(Name, type) \
      class Name \
      { \
        public: \
@@ -226,7 +239,36 @@
      inline int& operator<<=(int&, const Name::Enum&) MOZ_DELETE; \
      inline int& operator>>=(int&, const Name::Enum&) MOZ_DELETE;
 #endif
-#  define MOZ_BEGIN_ENUM_CLASS(Name, type) MOZ_BEGIN_NESTED_ENUM_CLASS(Name, type)
+
+   /*
+    * Count the number of arguments passed to MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS,
+    * very carefully tiptoeing around an MSVC bug where it improperly expands
+    * __VA_ARGS__ as a single token in argument lists. See these URLs for
+    * details:
+    *
+    *   http://connect.microsoft.com/VisualStudio/feedback/details/380090/variadic-macro-replacement
+    *   http://cplusplus.co.il/2010/07/17/variadic-macro-to-count-number-of-arguments/#comment-644
+    */
+#  define MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL2(_1, _2, count, ...) \
+     count
+#  define MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL(args) \
+     MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL2 args
+#  define MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS(...) \
+     MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS_IMPL((__VA_ARGS__, 2, 1, 0))
+   /* Pick the right helper macro to invoke. */
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER2(count) \
+    MOZ_BEGIN_NESTED_ENUM_CLASS_HELPER##count
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER1(count) \
+     MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER2(count)
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER(count) \
+     MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER1(count)
+   /* The actual macro. */
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS_GLUE(x, y) x y
+#  define MOZ_BEGIN_NESTED_ENUM_CLASS(...) \
+     MOZ_BEGIN_NESTED_ENUM_CLASS_GLUE(MOZ_BEGIN_NESTED_ENUM_CLASS_CHOOSE_HELPER(MOZ_COUNT_BEGIN_ENUM_CLASS_ARGS(__VA_ARGS__)), \
+                                      (__VA_ARGS__))
+
+#  define MOZ_BEGIN_ENUM_CLASS(...) MOZ_BEGIN_NESTED_ENUM_CLASS(__VA_ARGS__)
 #  define MOZ_END_ENUM_CLASS(Name) \
      MOZ_END_NESTED_ENUM_CLASS(Name) \
      MOZ_FINISH_NESTED_ENUM_CLASS(Name)
