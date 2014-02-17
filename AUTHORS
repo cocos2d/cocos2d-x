@@ -749,6 +749,9 @@ Developers:
         
     justmao945
         Corrected the definition of CMake variables.
+        
+    maksqwe
+        Fixed string size check in BitmapDC::utf8ToUtf16 on win32 and assert condition in TriggerMng.
     
 Retired Core Developers:
     WenSheng Yang
