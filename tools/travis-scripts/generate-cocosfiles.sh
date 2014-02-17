@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 COCOSFILES_CREATOR_ROOT=$COCOS2DX_ROOT/tools/project-creator/config-create
-COMMITTAG="[AUTO]"
+COMMITTAG="[AUTO][ci skip]"
 
 # Exit on error
 set -e

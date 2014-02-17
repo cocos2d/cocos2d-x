@@ -138,8 +138,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     
     _title = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(_title, 1);
-    _title->setPosition(Point(s.width/2, s.height-32));
-    _title->setColor(Color3B(255,255,40));
+    _title->setPosition(Point(s.width/2, s.height-50));
 
     while(_quantityNodes < nodes)
         onIncrease(this);
