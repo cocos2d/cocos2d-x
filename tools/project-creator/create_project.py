@@ -86,7 +86,7 @@ def checkParams(context):
                           "linux",
                           "marmalade",
                           "tizen",
-						  "wp8-xaml"]
+                          "wp8-xaml"]
     elif ("lua" == context["language"]):
         context["src_project_name"] = "HelloLua"
         context["src_package_name"] = "org.cocos2dx.hellolua"
