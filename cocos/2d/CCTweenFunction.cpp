@@ -511,6 +511,38 @@ float easeInOut(float time, float rate)
     }
 }
     
+float quadraticIn(float time)
+{
+    return   powf(time,2);
+}
+    
+float quadraticOut(float time)
+{
+    return -time*(time-2);
+}
+    
+float quadraticInOut(float time)
+{
+    
+    float resultTime = time;
+    time = time*2;
+    if (time < 1)
+    {
+        resultTime = time * time * 0.5f;
+    }
+    else
+    {
+        --time;
+        resultTime = -0.5f * (time * (time - 2) - 1);
+    }
+    return resultTime;
+}
+    
+float bezieratFunction( float a, float b, float c, float d, float t )
+{
+    return (powf(1-t,3) * a + 3*t*(powf(1-t,2))*b + 3*powf(t,2)*(1-t)*c + powf(t,3)*d );
+}
+    
 }
 
 NS_CC_END

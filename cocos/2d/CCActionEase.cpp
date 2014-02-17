@@ -875,10 +875,7 @@ EaseBackInOut* EaseBackInOut::reverse() const
 }
 
 
-static inline float bezieratFunction( float a, float b, float c, float d, float t )
-{
-	return (powf(1-t,3) * a + 3*t*(powf(1-t,2))*b + 3*powf(t,2)*(1-t)*c + powf(t,3)*d );
-}
+
 
 EaseBezierAction* EaseBezierAction::create(cocos2d::ActionInterval* action)
 {
@@ -918,7 +915,7 @@ EaseBezierAction* EaseBezierAction::clone() const
 
 void EaseBezierAction::update(float time)
 {
-	_inner->update(bezieratFunction(_p0,_p1,_p2,_p3,time));
+	_inner->update(tweenfunc::bezieratFunction(_p0,_p1,_p2,_p3,time));
 }
 
 EaseBezierAction* EaseBezierAction::reverse() const
@@ -958,9 +955,10 @@ EaseQuadraticActionIn* EaseQuadraticActionIn::clone() const
 	a->autorelease();
 	return a;
 }
+
 void EaseQuadraticActionIn::update(float time)
 {
-	_inner->update(powf(time,2));
+	_inner->update(tweenfunc::quadraticIn(time));
 }
 
 EaseQuadraticActionIn* EaseQuadraticActionIn::reverse() const
@@ -1001,7 +999,7 @@ EaseQuadraticActionOut* EaseQuadraticActionOut::clone() const
 
 void EaseQuadraticActionOut::update(float time)
 {	
-	_inner->update(-time*(time-2));
+	_inner->update(tweenfunc::quadraticOut(time));
 }
 
 EaseQuadraticActionOut* EaseQuadraticActionOut::reverse() const
@@ -1042,19 +1040,7 @@ EaseQuadraticActionInOut* EaseQuadraticActionInOut::clone() const
 
 void EaseQuadraticActionInOut::update(float time)
 {
-	float resultTime = time;
-	time = time*2;
-	if (time < 1)
-	{
-		resultTime = time * time * 0.5f;
-	}
-	else
-	{
-		--time;
-		resultTime = -0.5f * (time * (time - 2) - 1);
-	}
-
-	_inner->update(resultTime);
+	_inner->update(tweenfunc::quadraticInOut(time));
 }
 
 EaseQuadraticActionInOut* EaseQuadraticActionInOut::reverse() const
@@ -1095,7 +1081,7 @@ EaseQuarticActionIn* EaseQuarticActionIn::clone() const
 
 void EaseQuarticActionIn::update(float time)
 {
-	_inner->update(powf(time,4.0f));
+	_inner->update(tweenfunc::quartEaseIn(time));
 }
 
 EaseQuarticActionIn* EaseQuarticActionIn::reverse() const
@@ -1136,8 +1122,7 @@ EaseQuarticActionOut* EaseQuarticActionOut::clone() const
 
 void EaseQuarticActionOut::update(float time)
 {
-	float tempTime = time -1;	
-	_inner->update(1- powf(tempTime,4.0f));
+    _inner->update(tweenfunc::quartEaseOut(time));
 }
 
 EaseQuarticActionOut* EaseQuarticActionOut::reverse() const
@@ -1178,16 +1163,7 @@ EaseQuarticActionInOut* EaseQuarticActionInOut::clone() const
 
 void EaseQuarticActionInOut::update(float time)
 {
-	float tempTime = time * 2;
-	if (tempTime < 1)
-		tempTime =  powf(tempTime,4.0f) * 0.5f;
-	else
-	{
-		tempTime -= 2;
-		tempTime = 1 - powf(tempTime,4.0f)* 0.5f;
-	}
-
-	_inner->update(tempTime);
+	_inner->update(tweenfunc::quartEaseInOut(time));
 }
 
 EaseQuarticActionInOut* EaseQuarticActionInOut::reverse() const
