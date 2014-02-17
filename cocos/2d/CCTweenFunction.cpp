@@ -30,6 +30,18 @@ NS_CC_BEGIN
 #define M_PI_X_2 (float)M_PI * 2.0f
 #endif
 
+TweenFunction::TweenFunction()
+:_rate(0.0f)
+{
+    
+}
+
+TweenFunction::TweenFunction(float rate)
+:_rate(rate)
+{
+    
+}
+
 
 float TweenFunction::tweenTo(float time, TweenType type, float *easingParam)
 {
@@ -475,6 +487,10 @@ float TweenFunction::customEase(float time, float *easingParam)
     return time;
 }
 
+float TweenFunction::easeIn(float time) const
+{
+    return powf(time, _rate);
+}
     
 
 NS_CC_END

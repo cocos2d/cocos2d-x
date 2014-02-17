@@ -32,6 +32,7 @@ THE SOFTWARE.
  */
 
 #include "CCActionEase.h"
+#include "CCTweenFunction.h"
 
 NS_CC_BEGIN
 
@@ -137,7 +138,9 @@ EaseIn* EaseIn::clone() const
 
 void EaseIn::update(float time)
 {
-    _inner->update(powf(time, _rate));
+    TweenFunction funObj(_rate);
+    _tweenFunction = &TweenFunction::easeIn;
+    _inner->update(_tweenFunction(funObj,time));
 }
 
 EaseIn* EaseIn::reverse() const

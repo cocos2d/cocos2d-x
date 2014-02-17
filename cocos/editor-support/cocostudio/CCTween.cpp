@@ -478,7 +478,8 @@ float Tween::updateFrameData(float currentPercent)
     TweenType tweenType = (_frameTweenEasing != Linear) ? _frameTweenEasing : _tweenEasing;
     if (tweenType != cocos2d::TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
     {
-        currentPercent = TweenFunction::tweenTo(currentPercent, tweenType, _from->easingParams);
+        TweenFunction funcObj;
+        currentPercent = funcObj.tweenTo(currentPercent, tweenType, _from->easingParams);
     }
 
     return currentPercent;
