@@ -63,6 +63,9 @@ public: \
 
 namespace cocostudio {
 
+using cocos2d::TweenFunction;
+using cocos2d::TweenType;
+
 /**
  * The base node include a lot of attributes.
  * @js NA

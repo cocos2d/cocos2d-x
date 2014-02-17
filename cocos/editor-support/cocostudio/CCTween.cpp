@@ -33,6 +33,8 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+using cocos2d::Linear;
+
 Tween *Tween::create(Bone *bone)
 {
     Tween *pTween = new Tween();
@@ -280,7 +282,7 @@ void Tween::updateHandler()
         percent = updateFrameData(percent);
     }
 
-    if(_frameTweenEasing != TWEEN_EASING_MAX)
+    if(_frameTweenEasing != cocos2d::TWEEN_EASING_MAX)
     {
         tweenNodeTo(percent);
     }
@@ -474,7 +476,7 @@ float Tween::updateFrameData(float currentPercent)
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
      */
     TweenType tweenType = (_frameTweenEasing != Linear) ? _frameTweenEasing : _tweenEasing;
-    if (tweenType != TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
+    if (tweenType != cocos2d::TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
     {
         currentPercent = TweenFunction::tweenTo(currentPercent, tweenType, _from->easingParams);
     }
