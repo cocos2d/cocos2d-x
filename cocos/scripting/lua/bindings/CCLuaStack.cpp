@@ -105,7 +105,7 @@ int lua_print(lua_State * luastate)
         if (i!=nargs)
             t += "\t";
     }
-    log("[LUA-print] %s", t.c_str());
+    CCLOG("[LUA-print] %s", t.c_str());
 
     return 0;
 }
@@ -157,7 +157,6 @@ bool LuaStack::init(void)
     register_all_cocos2dx_extension(_state);
     register_all_cocos2dx_deprecated(_state);
     register_cocos2dx_extension_CCBProxy(_state);
-    register_cocos2dx_PerformanceStuctAndTable(_state);
     tolua_opengl_open(_state);
     register_all_cocos2dx_gui(_state);
     register_all_cocos2dx_studio(_state);
