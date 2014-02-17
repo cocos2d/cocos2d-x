@@ -23,13 +23,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTweenFunction.h"
-#include "cocostudio/CCUtilMath.h"
+
+NS_CC_BEGIN
 
 #ifndef M_PI_X_2
 #define M_PI_X_2 (float)M_PI * 2.0f
 #endif
 
-namespace cocostudio {
 
 float TweenFunction::tweenTo(float time, TweenType type, float *easingParam)
 {
@@ -475,5 +475,6 @@ float TweenFunction::customEase(float time, float *easingParam)
     return time;
 }
 
+    
 
-}
+NS_CC_END

@@ -30,6 +30,9 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+using cocos2d::TweenType;
+using cocos2d::TweenFunction;
+
 enum AnimationType
 {
     SINGLE_FRAME = -4,          //! the animation just have one frame
