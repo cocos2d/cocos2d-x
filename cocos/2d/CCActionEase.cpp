@@ -628,27 +628,6 @@ EaseElasticInOut* EaseElasticInOut::reverse() const
 // EaseBounce
 //
 
-float EaseBounce::bounceTime(float time)
-{
-    if (time < 1 / 2.75)
-    {
-        return 7.5625f * time * time;
-    } else 
-    if (time < 2 / 2.75)
-    {
-        time -= 1.5f / 2.75f;
-        return 7.5625f * time * time + 0.75f;
-    } else
-    if(time < 2.5 / 2.75)
-    {
-        time -= 2.25f / 2.75f;
-        return 7.5625f * time * time + 0.9375f;
-    }
-
-    time -= 2.625f / 2.75f;
-    return 7.5625f * time * time + 0.984375f;
-}
-
 //
 // EaseBounceIn
 //
@@ -682,8 +661,7 @@ EaseBounceIn* EaseBounceIn::clone() const
 
 void EaseBounceIn::update(float time)
 {
-    float newT = 1 - bounceTime(1 - time);
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseIn(time));
 }
 
 EaseBounce* EaseBounceIn::reverse() const
@@ -724,8 +702,7 @@ EaseBounceOut* EaseBounceOut::clone() const
 
 void EaseBounceOut::update(float time)
 {
-    float newT = bounceTime(time);
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseOut(time));
 }
 
 EaseBounce* EaseBounceOut::reverse() const
@@ -766,18 +743,7 @@ EaseBounceInOut* EaseBounceInOut::clone() const
 
 void EaseBounceInOut::update(float time)
 {
-    float newT = 0;
-    if (time < 0.5f)
-    {
-        time = time * 2;
-        newT = (1 - bounceTime(1 - time)) * 0.5f;
-    }
-    else
-    {
-        newT = bounceTime(time * 2 - 1) * 0.5f + 0.5f;
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseInOut(time));
 }
 
 EaseBounceInOut* EaseBounceInOut::reverse() const
