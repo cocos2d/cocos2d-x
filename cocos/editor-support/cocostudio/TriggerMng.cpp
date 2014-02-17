@@ -106,7 +106,7 @@ void TriggerMng::parse(const rapidjson::Value &root)
 
 cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
 {
-    CCAssert(event >= 0, "Argument must be larger than 0");
+    CCASSERT(event != 0, "Argument must be larger than 0");
     
     auto iter = _eventTriggers.find(event);
     if (iter == _eventTriggers.end())
@@ -129,7 +129,7 @@ TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 bool TriggerMng::add(unsigned int event, TriggerObj *obj)
 {
     bool ret = false;
-    CCAssert(obj != nullptr, "Argument must be non-nil");
+    CCASSERT(obj != nullptr, "Argument must be non-nil");
     do
     {
         auto iterator = _eventTriggers.find(event);
@@ -170,7 +170,7 @@ void TriggerMng::removeAll(void)
 bool TriggerMng::remove(unsigned int event)
 {
     bool bRet = false;
-    CCAssert(event >= 0, "event must be larger than 0");
+    CCASSERT(event != 0, "event must be larger than 0");
     do 
     {
         auto iterator = _eventTriggers.find(event);
@@ -194,8 +194,8 @@ bool TriggerMng::remove(unsigned int event)
 bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
 {
 	bool bRet = false;
-	CCAssert(event >= 0, "event must be larger than 0");
-	CCAssert(Obj != 0, "TriggerObj must be not 0");
+	CCASSERT(event != 0, "event must be larger than 0");
+	CCASSERT(Obj != 0, "TriggerObj must be not 0");
 	do 
 	{
         auto iterator = _eventTriggers.find(event);
