@@ -1512,11 +1512,8 @@
 		1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3C842184F14F700CF29B5 /* CCValue.cpp */; };
 		1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
 		1AE3C847184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
-		2986667A18B1B079000E39CA /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667618B1B079000E39CA /* CCActionEaseEx.cpp */; };
-		2986667B18B1B079000E39CA /* CCActionEaseEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667718B1B079000E39CA /* CCActionEaseEx.h */; };
 		2986667C18B1B079000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		2986667D18B1B079000E39CA /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
-		2986667E18B1B23D000E39CA /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667618B1B079000E39CA /* CCActionEaseEx.cpp */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
@@ -2794,8 +2791,6 @@
 		1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		1AE3C842184F14F700CF29B5 /* CCValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCValue.cpp; path = ../base/CCValue.cpp; sourceTree = "<group>"; };
 		1AE3C843184F14F700CF29B5 /* CCValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCValue.h; path = ../base/CCValue.h; sourceTree = "<group>"; };
-		2986667618B1B079000E39CA /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
-		2986667718B1B079000E39CA /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
@@ -3703,8 +3698,6 @@
 		1A570046180BC59A0088DEC7 /* actions */ = {
 			isa = PBXGroup;
 			children = (
-				2986667618B1B079000E39CA /* CCActionEaseEx.cpp */,
-				2986667718B1B079000E39CA /* CCActionEaseEx.h */,
 				2986667818B1B079000E39CA /* CCTweenFunction.cpp */,
 				2986667918B1B079000E39CA /* CCTweenFunction.h */,
 				1A570047180BC5A10088DEC7 /* CCAction.cpp */,
@@ -6201,7 +6194,6 @@
 				2986667D18B1B079000E39CA /* CCTweenFunction.h in Headers */,
 				46A160431807A5D4005B8026 /* SimpleAudioEngine.h in Headers */,
 				46A1604B1807A5D4005B8026 /* CocosDenshion.h in Headers */,
-				2986667B18B1B079000E39CA /* CCActionEaseEx.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7562,7 +7554,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2986667A18B1B079000E39CA /* CCActionEaseEx.cpp in Sources */,
 				46A1604F1807A5D4005B8026 /* SimpleAudioEngine_objc.m in Sources */,
 				46A1604A1807A5D4005B8026 /* CDXMacOSXSupport.mm in Sources */,
 				2986667C18B1B079000E39CA /* CCTweenFunction.cpp in Sources */,
@@ -7644,7 +7635,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */,
-				2986667E18B1B23D000E39CA /* CCActionEaseEx.cpp in Sources */,
 				2AC795E318628746005EC8E1 /* SkeletonBounds.cpp in Sources */,
 				2AC795E418628746005EC8E1 /* Event.cpp in Sources */,
 				2AC795E518628746005EC8E1 /* EventData.cpp in Sources */,
