@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		A03F2E8E178141C1006731B9 /* build-all-libs Mac */ = {
+		A03F2E8E178141C1006731B9 /* build all libs Mac */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all-libs Mac" */;
+			buildConfigurationList = A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build all libs Mac" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -21,12 +21,12 @@
 				A03F2E95178141D1006731B9 /* PBXTargetDependency */,
 				A03F2E97178141D1006731B9 /* PBXTargetDependency */,
 			);
-			name = "build-all-libs Mac";
+			name = "build all libs Mac";
 			productName = "build-all";
 		};
-		A07A4E0B178386390073F6A7 /* build-all-libs iOS */ = {
+		A07A4E0B178386390073F6A7 /* build all libs iOS */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-libs iOS" */;
+			buildConfigurationList = A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build all libs iOS" */;
 			buildPhases = (
 			);
 			dependencies = (
@@ -38,7 +38,7 @@
 				A07A504F178389710073F6A7 /* PBXTargetDependency */,
 				1A6FB4FF17854AD600CDF010 /* PBXTargetDependency */,
 			);
-			name = "build-all-libs iOS";
+			name = "build all libs iOS";
 			productName = "build-all-libs iOS";
 		};
 /* End PBXAggregateTarget section */
@@ -1543,6 +1543,9 @@
 		373B9129187891F400198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		3774879F1869BA8C00EDF837 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */; };
+		3E26D40518ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
+		3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
+		3E26D40818ACB63900834404 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40718ACB63900834404 /* CCDevice.mm */; };
 		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
 		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
 		3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
@@ -1726,10 +1729,8 @@
 		46A1704F1807CC1C005B8026 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AC81807B038005B8026 /* CCApplication.h */; };
 		46A170501807CC1C005B8026 /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AC91807B038005B8026 /* CCApplication.mm */; };
 		46A170511807CC1C005B8026 /* CCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACA1807B038005B8026 /* CCCommon.mm */; };
-		46A170521807CC1C005B8026 /* CCDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACB1807B038005B8026 /* CCDevice.cpp */; };
 		46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16ACC1807B038005B8026 /* CCDirectorCaller.h */; };
 		46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */; };
-		46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD31807B038005B8026 /* CCImage.mm */; };
 		46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD41807B038005B8026 /* CCPlatformDefine.h */; };
 		46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD51807B038005B8026 /* CCStdC.h */; };
 		46A170A91807CE9D005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
@@ -1964,6 +1965,10 @@
 		74AC8E2CDB69E1FDBFCFBD78 /* CCRenderCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8F4F7D9E52FCB522B647 /* CCRenderCommand.h */; };
 		74AC8E3E7D85FB595242AAEC /* CCMaterialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC800F4905C8827A44EED3 /* CCMaterialManager.h */; };
 		74AC8EE0C2AAB82783F47089 /* CCFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC840F2F17ED6D0163669F /* CCFrustum.h */; };
+		85D37C4118AC6306007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */; };
+		85D37C4318AC6323007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */; };
+		85D37C4418AC6376007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */; };
+		85D37C4518AC6379007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */; };
 		A023FA34185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
 		A023FA35185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
 		A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
@@ -2816,6 +2821,8 @@
 		37936A3D1869B76800E974DD /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		37936A401869B7B200E974DD /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
+		3E26D40418ACB5D100834404 /* CCImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
+		3E26D40718ACB63900834404 /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_gui_auto.cpp; sourceTree = "<group>"; };
 		3EEF8BCC1839F390005E8A6C /* jsb_cocos2dx_gui_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_gui_auto.hpp; sourceTree = "<group>"; };
 		3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_gui_manual.cpp; path = gui/jsb_cocos2dx_gui_manual.cpp; sourceTree = "<group>"; };
@@ -3079,10 +3086,8 @@
 		46A16AC81807B038005B8026 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16AC91807B038005B8026 /* CCApplication.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCApplication.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16ACA1807B038005B8026 /* CCCommon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCCommon.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		46A16ACB1807B038005B8026 /* CCDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
 		46A16ACC1807B038005B8026 /* CCDirectorCaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirectorCaller.h; sourceTree = "<group>"; };
 		46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDirectorCaller.mm; sourceTree = "<group>"; };
-		46A16AD31807B038005B8026 /* CCImage.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		46A16AD41807B038005B8026 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		46A16AD51807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		46A16E1B1807C948005B8026 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos/2d/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -3165,6 +3170,8 @@
 		74AC8DF0EA49A124E1B11681 /* CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer.h; sourceTree = "<group>"; };
 		74AC8EB8FE47EED9B30B7106 /* CCRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCRenderer.cpp; sourceTree = "<group>"; };
 		74AC8F4F7D9E52FCB522B647 /* CCRenderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderCommand.h; sourceTree = "<group>"; };
+		85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_spine_manual.cpp; sourceTree = "<group>"; };
+		85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_spine_manual.h; sourceTree = "<group>"; };
 		A0053F46189B2BEA0035A564 /* Android.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		A0053F47189B2BEA0035A564 /* CCApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
 		A0053F48189B2BEA0035A564 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -3519,6 +3526,7 @@
 		1A2C78BA181A1257004E5527 /* bindings */ = {
 			isa = PBXGroup;
 			children = (
+				85D37C3718AC5E03007CDAFA /* spine */,
 				3EEF8BD01839F5A7005E8A6C /* gui */,
 				1A2C78BC181A1257004E5527 /* chipmunk */,
 				1A2C78CB181A1257004E5527 /* cocos2d_specifics.cpp */,
@@ -5315,6 +5323,7 @@
 		46A16A5A1807B038005B8026 /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				3E26D40418ACB5D100834404 /* CCImage.cpp */,
 				A0053F45189B2BEA0035A564 /* android */,
 				A0053FA7189B2BEA0035A564 /* win32 */,
 				A0053FB5189B2BEA0035A564 /* linux */,
@@ -5388,14 +5397,13 @@
 		46A16AC71807B038005B8026 /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				3E26D40718ACB63900834404 /* CCDevice.mm */,
 				46A16AC81807B038005B8026 /* CCApplication.h */,
 				46A16AC91807B038005B8026 /* CCApplication.mm */,
 				46A16ACA1807B038005B8026 /* CCCommon.mm */,
-				46A16ACB1807B038005B8026 /* CCDevice.cpp */,
 				46A16ACC1807B038005B8026 /* CCDirectorCaller.h */,
 				46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */,
 				1A0DB7351823828F0025743D /* CCGL.h */,
-				46A16AD31807B038005B8026 /* CCImage.mm */,
 				46A16AD41807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AD51807B038005B8026 /* CCStdC.h */,
 			);
@@ -5548,6 +5556,15 @@
 				74AC8CC6504014E3A59C55B2 /* CCRenderMaterial.h */,
 			);
 			path = renderer;
+			sourceTree = "<group>";
+		};
+		85D37C3718AC5E03007CDAFA /* spine */ = {
+			isa = PBXGroup;
+			children = (
+				85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */,
+				85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */,
+			);
+			path = spine;
 			sourceTree = "<group>";
 		};
 		A0053F45189B2BEA0035A564 /* android */ = {
@@ -6260,6 +6277,7 @@
 				1A2C7876181A11EC004E5527 /* jsb_cocos2dx_auto.hpp in Headers */,
 				1A2C7882181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp in Headers */,
 				1A2C791B181A1257004E5527 /* js_bindings_chipmunk_manual.h in Headers */,
+				85D37C4518AC6379007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */,
 				2AFCB8221863D68B00EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6756,6 +6774,7 @@
 				1A2C789C181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp in Headers */,
 				1A2C794E181A1257004E5527 /* jsb_opengl_manual.h in Headers */,
 				1A2C7968181A1257004E5527 /* ScriptingCore.h in Headers */,
+				85D37C4118AC6306007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */,
 				1A2C795C181A1257004E5527 /* js_bindings_system_registration.h in Headers */,
 				1A2C794A181A1257004E5527 /* jsb_opengl_functions.h in Headers */,
 				1A2C7926181A1257004E5527 /* cocosbuilder_specifics.hpp in Headers */,
@@ -7039,7 +7058,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A03F2E8E178141C1006731B9 /* build-all-libs Mac */,
+				A03F2E8E178141C1006731B9 /* build all libs Mac */,
 				1551A33E158F2AB200E66CFE /* cocos2dx Mac */,
 				A03F2FC117814595006731B9 /* cocos2dx-extensions Mac */,
 				A03F2B781780BD04006731B9 /* chipmunk Mac */,
@@ -7047,7 +7066,7 @@
 				A03F2E9817814268006731B9 /* CocosDenshion Mac */,
 				A03F31E81781479B006731B9 /* jsbindings Mac */,
 				1A6FB50417854BC200CDF010 /* luabindings Mac */,
-				A07A4E0B178386390073F6A7 /* build-all-libs iOS */,
+				A07A4E0B178386390073F6A7 /* build all libs iOS */,
 				A07A4C241783777C0073F6A7 /* cocos2dx iOS */,
 				A07A4E111783867C0073F6A7 /* cocos2dx-extensions iOS */,
 				A07A4EFD178387670073F6A7 /* chipmunk iOS */,
@@ -7069,7 +7088,6 @@
 				2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */,
 				2AC795DE1862870F005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
 				46A170501807CC1C005B8026 /* CCApplication.mm in Sources */,
-				46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */,
 				46A170CC1807CEBB005B8026 /* ray2.c in Sources */,
 				460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */,
 				46A170CA1807CEBB005B8026 /* plane.c in Sources */,
@@ -7078,7 +7096,6 @@
 				46A1701D1807CBFC005B8026 /* CCFileUtils.cpp in Sources */,
 				46A170EF1807CECA005B8026 /* CCPhysicsWorld.cpp in Sources */,
 				46A170C71807CEBB005B8026 /* mat3.c in Sources */,
-				46A170521807CC1C005B8026 /* CCDevice.cpp in Sources */,
 				46A170231807CBFC005B8026 /* CCSAXParser.cpp in Sources */,
 				46A170ED1807CECA005B8026 /* CCPhysicsShape.cpp in Sources */,
 				46A170C51807CEB0005B8026 /* aabb.c in Sources */,
@@ -7094,6 +7111,7 @@
 				46A170511807CC1C005B8026 /* CCCommon.mm in Sources */,
 				46A1701B1807CBFC005B8026 /* CCGLViewProtocol.cpp in Sources */,
 				46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */,
+				3E26D40818ACB63900834404 /* CCDevice.mm in Sources */,
 				46A170151807CBFC005B8026 /* CCLock.cpp in Sources */,
 				A04583F2189053B500E32FE8 /* CCGLView.cpp in Sources */,
 				46A170C91807CEBB005B8026 /* neon_matrix_impl.c in Sources */,
@@ -7185,6 +7203,7 @@
 				1A570282180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
 				1A570286180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
 				1A57028A180BCC900088DEC7 /* CCSpriteFrameCache.cpp in Sources */,
+				3E26D40518ACB5D100834404 /* CCImage.cpp in Sources */,
 				1A570292180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
 				1A570296180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				1A57029D180BCD890088DEC7 /* base64.cpp in Sources */,
@@ -7604,6 +7623,7 @@
 				1A2C792F181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp in Sources */,
 				1A2C7965181A1257004E5527 /* ScriptingCore.cpp in Sources */,
 				1A2C790D181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
+				85D37C4418AC6376007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */,
 				1A2C7913181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */,
 				1A2C7933181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
 				1A2C7947181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */,
@@ -7835,6 +7855,7 @@
 				1AD71EE2180E26E600808F54 /* SlotData.cpp in Sources */,
 				1AD71EE6180E26E600808F54 /* spine-cocos2dx.cpp in Sources */,
 				1AAF536B180E3374000584C8 /* HttpClient.cpp in Sources */,
+				3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */,
 				1AAF5373180E3374000584C8 /* SocketIO.cpp in Sources */,
 				1AAF5377180E3374000584C8 /* WebSocket.cpp in Sources */,
 				1AAF5850180E40B9000584C8 /* LocalStorage.cpp in Sources */,
@@ -8057,6 +8078,7 @@
 				1A2C7930181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp in Sources */,
 				1A2C7966181A1257004E5527 /* ScriptingCore.cpp in Sources */,
 				1A2C790E181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
+				85D37C4318AC6323007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */,
 				1A2C7914181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */,
 				1A2C7934181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
 				1A2C7948181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */,
@@ -8829,7 +8851,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build-all-libs Mac" */ = {
+		A03F2E8F178141C1006731B9 /* Build configuration list for PBXAggregateTarget "build all libs Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A03F2E90178141C1006731B9 /* Debug */,
@@ -8874,7 +8896,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build-all-libs iOS" */ = {
+		A07A4E0C178386390073F6A7 /* Build configuration list for PBXAggregateTarget "build all libs iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4E0D178386390073F6A7 /* Debug */,

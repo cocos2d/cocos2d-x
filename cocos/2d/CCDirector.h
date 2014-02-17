@@ -440,7 +440,6 @@ protected:
     float _frameRate;
     
     LabelAtlas *_FPSLabel;
-    LabelAtlas *_SPFLabel;
     LabelAtlas *_drawnBatchesLabel;
     LabelAtlas *_drawnVerticesLabel;
     
