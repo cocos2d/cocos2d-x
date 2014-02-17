@@ -38,6 +38,42 @@ Layer* restartEaseAction();
 
 //------------------------------------------------------------------
 //
+// SpriteDemo
+//
+//------------------------------------------------------------------
+void EaseSpriteDemo::centerSprites(unsigned int numberOfSprites)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    if( numberOfSprites == 0 )
+    {
+        _tamara->setVisible(false);
+        _kathia->setVisible(false);
+        _grossini->setVisible(false);
+    }
+    else if ( numberOfSprites == 1 )
+    {
+        _tamara->setVisible(false);
+        _kathia->setVisible(false);
+        _grossini->setPosition(Point(s.width/2, s.height/2));
+    }
+    else if( numberOfSprites == 2 )
+    {
+        _kathia->setPosition( Point(s.width/3, s.height/2));
+        _tamara->setPosition( Point(2*s.width/3, s.height/2));
+        _grossini->setVisible(false);
+    }
+    else if( numberOfSprites == 3 )
+    {
+        _grossini->setPosition( Point(s.width/2, s.height/2));
+        _tamara->setPosition( Point(s.width/4, s.height/2));
+        _kathia->setPosition( Point(3 * s.width/4, s.height/2));
+    }
+}
+
+
+//------------------------------------------------------------------
+//
 // SpriteEase
 //
 //------------------------------------------------------------------
@@ -73,6 +109,7 @@ void SpriteEase::onEnter()
 
     schedule(schedule_selector(SpriteEase::testStopAction), 6.25f);
 }
+
 
 void SpriteEase::testStopAction(float dt)
 {
@@ -481,6 +518,68 @@ std::string SpriteEaseBackInOut::title() const
 
 //------------------------------------------------------------------
 //
+// SpriteEaseBezier
+//
+//------------------------------------------------------------------
+
+void SpriteEaseBezier::onEnter()
+{
+    EaseSpriteDemo::onEnter();
+    
+    auto s = Director::getInstance()->getWinSize();
+    
+    //
+    // startPosition can be any coordinate, but since the movement
+    // is relative to the Bezier curve, make it (0,0)
+    //
+    
+    centerSprites(3);
+    
+    // sprite 1
+    ccBezierConfig bezier;
+    bezier.controlPoint_1 = Point(0, s.height/2);
+    bezier.controlPoint_2 = Point(300, -s.height/2);
+    bezier.endPosition = Point(300,100);
+    
+    auto bezierForward = BezierBy::create(3, bezier);
+    auto bezierEaseForward = EaseBezierAction::create(bezierForward);
+    bezierEaseForward->setBezierParamer(0.5, 0.5, 1.0, 1.0);
+    
+    auto bezierEaseBack = bezierEaseForward->reverse();
+    auto rep = RepeatForever::create(Sequence::create( bezierEaseForward, bezierEaseBack, NULL));
+    
+    
+    // sprite 2
+    _tamara->setPosition(Point(80,160));
+	ccBezierConfig bezier2;
+    bezier2.controlPoint_1 = Point(100, s.height/2);
+    bezier2.controlPoint_2 = Point(200, -s.height/2);
+    bezier2.endPosition = Point(240,160);
+    
+    auto bezierTo1 = BezierTo::create(2, bezier2);
+    auto bezierEaseTo1 = EaseBezierAction::create(bezierTo1);
+    bezierEaseTo1->setBezierParamer(0.5, 0.5, 1.0, 1.0);
+    
+    // sprite 3
+    _kathia->setPosition(Point(400,160));
+    auto bezierTo2 = BezierTo::create(2, bezier2);
+    auto bezierEaseTo2 = EaseBezierAction::create(bezierTo2);
+    bezierEaseTo2->setBezierParamer(0.0, 0.5, -5.0, 1.0);
+
+    
+    _grossini->runAction( rep);
+    _tamara->runAction(bezierEaseTo1);
+    _kathia->runAction(bezierTo2);
+    
+}
+
+std::string SpriteEaseBezier::title()const
+{
+    return "SpriteEaseBezier action";
+}
+
+//------------------------------------------------------------------
+//
 // SpeedTest
 //
 //------------------------------------------------------------------
@@ -547,7 +646,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    13
+#define MAX_LAYER    14
 
 Layer* createEaseLayer(int nIndex)
 {
@@ -565,7 +664,8 @@ Layer* createEaseLayer(int nIndex)
         case 9: return new SpriteEaseBounceInOut();
         case 10: return new SpriteEaseBack();
         case 11: return new SpriteEaseBackInOut();
-        case 12: return new SpeedTest();
+        case 12: return new SpriteEaseBezier();
+        case 13: return new SpeedTest();
     }
 
 

@@ -47,7 +47,9 @@ public:
 
     virtual std::string title() const override;
     virtual void onEnter();
-
+    
+    void centerSprites(unsigned int numberOfSprites);
+    
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
@@ -141,6 +143,13 @@ public:
     virtual std::string title() const override;
 };
 
+class SpriteEaseBezier : public EaseSpriteDemo
+{
+public:
+    void onEnter();
+    virtual std::string title() const override;
+};
+
 class SpeedTest : public EaseSpriteDemo
 {
 public:
@@ -155,5 +164,6 @@ class ActionsEaseTestScene : public TestScene
 public:
     virtual void runThisTest();
 };
+
 
 #endif
