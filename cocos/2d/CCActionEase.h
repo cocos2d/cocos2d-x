@@ -32,6 +32,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Object;
+class TweenFunction;
 
 /**
  * @addtogroup actions
@@ -65,7 +66,7 @@ protected:
 
     /** The inner action */
     ActionInterval *_inner;
-    std::function<float(float)> tweenFunction;
+    std::function<float(const TweenFunction&, float)> _tweenFunction;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ActionEase);
