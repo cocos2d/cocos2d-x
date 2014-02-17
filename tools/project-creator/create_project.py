@@ -154,9 +154,10 @@ def processPlatformProjects(platform):
     for i in range(0, len(data["rename"])):
         tmp = data["rename"][i].replace("PACKAGE_PATH", java_package_path)
         src = tmp.replace("PROJECT_NAME", context["src_project_name"])
-        dst = tmp.replace("PROJECT_NAME", context["dst_project_name"])
         if (platform == "wp8-xaml"):
             dst = replaceLastNameInPath(tmp)
+        else:
+            dst = tmp.replace("PROJECT_NAME", context["dst_project_name"])
         if (os.path.exists(proj_path + src) == True):
             os.rename(proj_path + src, proj_path + dst)
 
