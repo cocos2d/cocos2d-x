@@ -425,7 +425,6 @@ private:
 class CC_DLL EaseBounce : public ActionEase
 {
 public:
-    float bounceTime(float time);
 
     // Overrides
 	virtual EaseBounce* clone() const override = 0;
