@@ -297,7 +297,6 @@ bool Console::listenOnTCP(int port)
     char serv[30];
 
     snprintf(serv, sizeof(serv)-1, "%d", port );
-    serv[sizeof(serv)-1]=0;
 
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_flags = AI_PASSIVE;
@@ -614,7 +613,7 @@ ssize_t Console::readline(int fd)
 
     for( n=1; n<maxlen; n++ ) {
         if( (rc = read(fd, &c, 1 )) ==1 ) {
-            if( c=='\n' )
+            if( c=='\n' || c=='\r')
             {
                 break;
             }
