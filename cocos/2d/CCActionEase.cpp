@@ -138,9 +138,7 @@ EaseIn* EaseIn::clone() const
 
 void EaseIn::update(float time)
 {
-    TweenFunction funObj(_rate);
-    _tweenFunction = &TweenFunction::easeIn;
-    _inner->update(_tweenFunction(funObj,time));
+    _inner->update(tweenfunc::easeIn(time, _rate));
 }
 
 EaseIn* EaseIn::reverse() const
