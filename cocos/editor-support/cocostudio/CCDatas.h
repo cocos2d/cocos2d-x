@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "CCNode.h"
 #include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCTweenFunction.h"
+#include "CCTweenFunction.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\

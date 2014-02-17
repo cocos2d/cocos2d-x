@@ -65,6 +65,7 @@ protected:
 
     /** The inner action */
     ActionInterval *_inner;
+    std::function<float(float)> tweenFunction;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ActionEase);

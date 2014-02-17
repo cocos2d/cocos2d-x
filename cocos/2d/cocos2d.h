@@ -51,6 +51,7 @@ THE SOFTWARE.
 #include "CCActionInstant.h"
 #include "CCActionTween.h"
 #include "CCActionCatmullRom.h"
+#include "CCTweenFunction.h"
 
 // base_nodes
 #include "CCNode.h"
