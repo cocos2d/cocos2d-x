@@ -178,7 +178,7 @@ EaseOut* EaseOut::clone() const
 
 void EaseOut::update(float time)
 {
-    _inner->update(powf(time, 1 / _rate));
+    _inner->update(tweenfunc::easeOut(time, _rate));
 }
 
 EaseOut* EaseOut::reverse() const
@@ -218,15 +218,7 @@ EaseInOut* EaseInOut::clone() const
 
 void EaseInOut::update(float time)
 {
-    time *= 2;
-    if (time < 1)
-    {
-        _inner->update(0.5f * powf(time, _rate));
-    }
-    else
-    {
-        _inner->update(1.0f - 0.5f * powf(2-time, _rate));
-    }
+    _inner->update(tweenfunc::easeInOut(time, _rate));
 }
 
 // InOut and OutIn are symmetrical
