@@ -561,19 +561,26 @@ bool Console::parseCommand(int fd)
     auto r = readline(fd);
     if(r < 1)
     {
+        const char err[] = "Unknown error!\n";
+        sendPrompt(fd);
+        write(fd, err, sizeof(err));
         return false;
     }
     std::string cmdLine;
 
     std::vector<std::string> args;
     cmdLine = std::string(_buffer);
+   
     args = split(cmdLine, ' ');
     if(args.empty())
     {
+        const char err[] = "Unknown command. Type 'help' for options\n";
+        write(fd, err, sizeof(err));
+        sendPrompt(fd);
         return false;
     }
 
-    auto it = _commands.find(args[0]);
+    auto it = _commands.find(trim(args[0]));
     if(it != _commands.end())
     {
         std::string args2;
@@ -583,7 +590,7 @@ bool Console::parseCommand(int fd)
             {
                 args2 += ' ';
             }
-            args2 += args[i];
+            args2 += trim(args[i]);
             
         }
         auto cmd = it->second;
@@ -613,11 +620,10 @@ ssize_t Console::readline(int fd)
 
     for( n=1; n<maxlen; n++ ) {
         if( (rc = read(fd, &c, 1 )) ==1 ) {
-            if( c=='\n' || c=='\r')
-            {
+            *ptr++ = c;
+            if(c == '\n') {
                 break;
             }
-            *ptr++ = c;
         } else if( rc == 0 ) {
             return 0;
         } else if( errno == EINTR ) {
