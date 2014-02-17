@@ -178,7 +178,7 @@ EaseOut* EaseOut::clone() const
 
 void EaseOut::update(float time)
 {
-    _inner->update(powf(time, 1 / _rate));
+    _inner->update(tweenfunc::easeOut(time, _rate));
 }
 
 EaseOut* EaseOut::reverse() const
@@ -218,15 +218,7 @@ EaseInOut* EaseInOut::clone() const
 
 void EaseInOut::update(float time)
 {
-    time *= 2;
-    if (time < 1)
-    {
-        _inner->update(0.5f * powf(time, _rate));
-    }
-    else
-    {
-        _inner->update(1.0f - 0.5f * powf(2-time, _rate));
-    }
+    _inner->update(tweenfunc::easeInOut(time, _rate));
 }
 
 // InOut and OutIn are symmetrical
@@ -267,7 +259,7 @@ EaseExponentialIn* EaseExponentialIn::clone() const
 
 void EaseExponentialIn::update(float time)
 {
-    _inner->update(time == 0 ? 0 : powf(2, 10 * (time/1 - 1)) - 1 * 0.001f);
+    _inner->update(tweenfunc::expoEaseIn(time));
 }
 
 ActionEase * EaseExponentialIn::reverse() const
@@ -307,7 +299,7 @@ EaseExponentialOut* EaseExponentialOut::clone() const
 
 void EaseExponentialOut::update(float time)
 {
-    _inner->update(time == 1 ? 1 : (-powf(2, -10 * time / 1) + 1));
+    _inner->update(tweenfunc::expoEaseOut(time));
 }
 
 ActionEase* EaseExponentialOut::reverse() const
@@ -348,17 +340,7 @@ EaseExponentialInOut* EaseExponentialInOut::clone() const
 
 void EaseExponentialInOut::update(float time)
 {
-    time /= 0.5f;
-    if (time < 1)
-    {
-        time = 0.5f * powf(2, 10 * (time - 1));
-    }
-    else
-    {
-        time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
-    }
-
-    _inner->update(time);
+    _inner->update(tweenfunc::expoEaseInOut(time));
 }
 
 EaseExponentialInOut* EaseExponentialInOut::reverse() const
@@ -399,7 +381,7 @@ EaseSineIn* EaseSineIn::clone() const
 
 void EaseSineIn::update(float time)
 {
-    _inner->update(-1 * cosf(time * (float)M_PI_2) + 1);
+    _inner->update(tweenfunc::sineEaseIn(time));
 }
 
 ActionEase* EaseSineIn::reverse() const
@@ -440,7 +422,7 @@ EaseSineOut* EaseSineOut::clone() const
 
 void EaseSineOut::update(float time)
 {
-    _inner->update(sinf(time * (float)M_PI_2));
+    _inner->update(tweenfunc::sineEaseOut(time));
 }
 
 ActionEase* EaseSineOut::reverse(void) const
@@ -481,7 +463,7 @@ EaseSineInOut* EaseSineInOut::clone() const
 
 void EaseSineInOut::update(float time)
 {
-    _inner->update(-0.5f * (cosf((float)M_PI * time) - 1));
+    _inner->update(tweenfunc::sineEaseInOut(time));
 }
 
 EaseSineInOut* EaseSineInOut::reverse() const
@@ -542,19 +524,7 @@ EaseElasticIn* EaseElasticIn::clone() const
 
 void EaseElasticIn::update(float time)
 {
-    float newT = 0;
-    if (time == 0 || time == 1)
-    {
-        newT = time;
-    }
-    else
-    {
-        float s = _period / 4;
-        time = time - 1;
-        newT = -powf(2, 10 * time) * sinf((time - s) * M_PI_X_2 / _period);
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::elasticEaseIn(time, NULL));
 }
 
 EaseElastic* EaseElasticIn::reverse() const
@@ -600,18 +570,7 @@ EaseElasticOut* EaseElasticOut::clone() const
 
 void EaseElasticOut::update(float time)
 {
-    float newT = 0;
-    if (time == 0 || time == 1)
-    {
-        newT = time;
-    }
-    else
-    {
-        float s = _period / 4;
-        newT = powf(2, -10 * time) * sinf((time - s) * M_PI_X_2 / _period) + 1;
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::elasticEaseOut(time, NULL));
 }
 
 EaseElastic* EaseElasticOut::reverse() const
@@ -657,33 +616,7 @@ EaseElasticInOut* EaseElasticInOut::clone() const
 
 void EaseElasticInOut::update(float time)
 {
-    float newT = 0;
-    if (time == 0 || time == 1)
-    {
-        newT = time;
-    }
-    else
-    {
-        time = time * 2;
-        if ( _period == 0)
-        {
-            _period = 0.3f * 1.5f;
-        }
-
-        float s = _period / 4;
-
-        time = time - 1;
-        if (time < 0)
-        {
-            newT = -0.5f * powf(2, 10 * time) * sinf((time -s) * M_PI_X_2 / _period);
-        }
-        else
-        {
-            newT = powf(2, -10 * time) * sinf((time - s) * M_PI_X_2 / _period) * 0.5f + 1;
-        }
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::elasticEaseInOut(time, NULL));
 }
 
 EaseElasticInOut* EaseElasticInOut::reverse() const
@@ -694,27 +627,6 @@ EaseElasticInOut* EaseElasticInOut::reverse() const
 //
 // EaseBounce
 //
-
-float EaseBounce::bounceTime(float time)
-{
-    if (time < 1 / 2.75)
-    {
-        return 7.5625f * time * time;
-    } else 
-    if (time < 2 / 2.75)
-    {
-        time -= 1.5f / 2.75f;
-        return 7.5625f * time * time + 0.75f;
-    } else
-    if(time < 2.5 / 2.75)
-    {
-        time -= 2.25f / 2.75f;
-        return 7.5625f * time * time + 0.9375f;
-    }
-
-    time -= 2.625f / 2.75f;
-    return 7.5625f * time * time + 0.984375f;
-}
 
 //
 // EaseBounceIn
@@ -749,8 +661,7 @@ EaseBounceIn* EaseBounceIn::clone() const
 
 void EaseBounceIn::update(float time)
 {
-    float newT = 1 - bounceTime(1 - time);
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseIn(time));
 }
 
 EaseBounce* EaseBounceIn::reverse() const
@@ -791,8 +702,7 @@ EaseBounceOut* EaseBounceOut::clone() const
 
 void EaseBounceOut::update(float time)
 {
-    float newT = bounceTime(time);
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseOut(time));
 }
 
 EaseBounce* EaseBounceOut::reverse() const
@@ -833,18 +743,7 @@ EaseBounceInOut* EaseBounceInOut::clone() const
 
 void EaseBounceInOut::update(float time)
 {
-    float newT = 0;
-    if (time < 0.5f)
-    {
-        time = time * 2;
-        newT = (1 - bounceTime(1 - time)) * 0.5f;
-    }
-    else
-    {
-        newT = bounceTime(time * 2 - 1) * 0.5f + 0.5f;
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseInOut(time));
 }
 
 EaseBounceInOut* EaseBounceInOut::reverse() const
@@ -885,8 +784,7 @@ EaseBackIn* EaseBackIn::clone() const
 
 void EaseBackIn::update(float time)
 {
-    float overshoot = 1.70158f;
-    _inner->update(time * time * ((overshoot + 1) * time - overshoot));
+    _inner->update(tweenfunc::backEaseIn(time));
 }
 
 ActionEase* EaseBackIn::reverse() const
@@ -927,10 +825,7 @@ EaseBackOut* EaseBackOut::clone() const
 
 void EaseBackOut::update(float time)
 {
-    float overshoot = 1.70158f;
-
-    time = time - 1;
-    _inner->update(time * time * ((overshoot + 1) * time + overshoot) + 1);
+    _inner->update(tweenfunc::backEaseOut(time));
 }
 
 ActionEase* EaseBackOut::reverse() const
@@ -971,18 +866,7 @@ EaseBackInOut* EaseBackInOut::clone() const
 
 void EaseBackInOut::update(float time)
 {
-    float overshoot = 1.70158f * 1.525f;
-
-    time = time * 2;
-    if (time < 1)
-    {
-        _inner->update((time * time * ((overshoot + 1) * time - overshoot)) / 2);
-    }
-    else
-    {
-        time = time - 2;
-        _inner->update((time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1);
-    }
+    _inner->update(tweenfunc::backEaseInOut(time));
 }
 
 EaseBackInOut* EaseBackInOut::reverse() const
@@ -991,10 +875,7 @@ EaseBackInOut* EaseBackInOut::reverse() const
 }
 
 
-static inline float bezieratFunction( float a, float b, float c, float d, float t )
-{
-	return (powf(1-t,3) * a + 3*t*(powf(1-t,2))*b + 3*powf(t,2)*(1-t)*c + powf(t,3)*d );
-}
+
 
 EaseBezierAction* EaseBezierAction::create(cocos2d::ActionInterval* action)
 {
@@ -1034,7 +915,7 @@ EaseBezierAction* EaseBezierAction::clone() const
 
 void EaseBezierAction::update(float time)
 {
-	_inner->update(bezieratFunction(_p0,_p1,_p2,_p3,time));
+	_inner->update(tweenfunc::bezieratFunction(_p0,_p1,_p2,_p3,time));
 }
 
 EaseBezierAction* EaseBezierAction::reverse() const
@@ -1074,9 +955,10 @@ EaseQuadraticActionIn* EaseQuadraticActionIn::clone() const
 	a->autorelease();
 	return a;
 }
+
 void EaseQuadraticActionIn::update(float time)
 {
-	_inner->update(powf(time,2));
+	_inner->update(tweenfunc::quadraticIn(time));
 }
 
 EaseQuadraticActionIn* EaseQuadraticActionIn::reverse() const
@@ -1117,7 +999,7 @@ EaseQuadraticActionOut* EaseQuadraticActionOut::clone() const
 
 void EaseQuadraticActionOut::update(float time)
 {	
-	_inner->update(-time*(time-2));
+	_inner->update(tweenfunc::quadraticOut(time));
 }
 
 EaseQuadraticActionOut* EaseQuadraticActionOut::reverse() const
@@ -1158,19 +1040,7 @@ EaseQuadraticActionInOut* EaseQuadraticActionInOut::clone() const
 
 void EaseQuadraticActionInOut::update(float time)
 {
-	float resultTime = time;
-	time = time*2;
-	if (time < 1)
-	{
-		resultTime = time * time * 0.5f;
-	}
-	else
-	{
-		--time;
-		resultTime = -0.5f * (time * (time - 2) - 1);
-	}
-
-	_inner->update(resultTime);
+	_inner->update(tweenfunc::quadraticInOut(time));
 }
 
 EaseQuadraticActionInOut* EaseQuadraticActionInOut::reverse() const
@@ -1211,7 +1081,7 @@ EaseQuarticActionIn* EaseQuarticActionIn::clone() const
 
 void EaseQuarticActionIn::update(float time)
 {
-	_inner->update(powf(time,4.0f));
+	_inner->update(tweenfunc::quartEaseIn(time));
 }
 
 EaseQuarticActionIn* EaseQuarticActionIn::reverse() const
@@ -1252,8 +1122,7 @@ EaseQuarticActionOut* EaseQuarticActionOut::clone() const
 
 void EaseQuarticActionOut::update(float time)
 {
-	float tempTime = time -1;	
-	_inner->update(1- powf(tempTime,4.0f));
+    _inner->update(tweenfunc::quartEaseOut(time));
 }
 
 EaseQuarticActionOut* EaseQuarticActionOut::reverse() const
@@ -1294,16 +1163,7 @@ EaseQuarticActionInOut* EaseQuarticActionInOut::clone() const
 
 void EaseQuarticActionInOut::update(float time)
 {
-	float tempTime = time * 2;
-	if (tempTime < 1)
-		tempTime =  powf(tempTime,4.0f) * 0.5f;
-	else
-	{
-		tempTime -= 2;
-		tempTime = 1 - powf(tempTime,4.0f)* 0.5f;
-	}
-
-	_inner->update(tempTime);
+	_inner->update(tweenfunc::quartEaseInOut(time));
 }
 
 EaseQuarticActionInOut* EaseQuarticActionInOut::reverse() const
@@ -1344,7 +1204,7 @@ EaseQuinticActionIn* EaseQuinticActionIn::clone() const
 
 void EaseQuinticActionIn::update(float time)
 {
-	_inner->update(powf(time,5.0f));
+	_inner->update(tweenfunc::quintEaseIn(time));
 }
 
 EaseQuinticActionIn* EaseQuinticActionIn::reverse() const
@@ -1385,8 +1245,7 @@ EaseQuinticActionOut* EaseQuinticActionOut::clone() const
 
 void EaseQuinticActionOut::update(float time)
 {
-	float tempTime = time -1;	
-	_inner->update(1 + powf(tempTime,5.0f));
+	_inner->update(tweenfunc::quintEaseOut(time));
 }
 
 EaseQuinticActionOut* EaseQuinticActionOut::reverse() const
@@ -1427,16 +1286,7 @@ EaseQuinticActionInOut* EaseQuinticActionInOut::clone() const
 
 void EaseQuinticActionInOut::update(float time)
 {
-	float tempTime = time * 2;
-	if (tempTime < 1)
-		tempTime =  powf(tempTime,5.0f) * 0.5f;
-	else
-	{
-		tempTime -= 2;
-		tempTime = 1 + powf(tempTime,5.0f)* 0.5f;
-	}
-
-	_inner->update(tempTime);
+	_inner->update(tweenfunc::quintEaseInOut(time));
 }
 
 EaseQuinticActionInOut* EaseQuinticActionInOut::reverse() const
@@ -1477,7 +1327,7 @@ EaseCircleActionIn* EaseCircleActionIn::clone() const
 
 void EaseCircleActionIn::update(float time)
 {
-	_inner->update(1-sqrt(1-powf(time,2.0f)));
+	_inner->update(tweenfunc::circEaseIn(time));
 }
 
 EaseCircleActionIn* EaseCircleActionIn::reverse() const
@@ -1518,8 +1368,7 @@ EaseCircleActionOut* EaseCircleActionOut::clone() const
 
 void EaseCircleActionOut::update(float time)
 {
-	float tempTime = time - 1;
-	_inner->update(sqrt(1-powf(tempTime,2.0f)));
+	_inner->update(tweenfunc::circEaseOut(time));
 }
 
 EaseCircleActionOut* EaseCircleActionOut::reverse() const
@@ -1560,16 +1409,7 @@ EaseCircleActionInOut* EaseCircleActionInOut::clone() const
 
 void EaseCircleActionInOut::update(float time)
 {
-	float tempTime = time * 2;
-	if (tempTime < 1)
-		tempTime =  (1- sqrt(1 - powf(tempTime,2.0f))) * 0.5f;
-	else
-	{
-		tempTime -= 2;
-		tempTime = (1+ sqrt(1 - powf(tempTime,2.0f))) * 0.5f;
-	}
-
-	_inner->update(time);
+	_inner->update(tweenfunc::circEaseInOut(time));
 }
 
 EaseCircleActionInOut* EaseCircleActionInOut::reverse() const
@@ -1610,7 +1450,7 @@ EaseCubicActionIn* EaseCubicActionIn::clone() const
 
 void EaseCubicActionIn::update(float time)
 {
-	_inner->update(powf(time,3.0f));
+	_inner->update(tweenfunc::cubicEaseIn(time));
 }
 
 EaseCubicActionIn* EaseCubicActionIn::reverse() const
@@ -1651,8 +1491,7 @@ EaseCubicActionOut* EaseCubicActionOut::clone() const
 
 void EaseCubicActionOut::update(float time)
 {
-	time -= 1;
-	_inner->update(1+powf(time,3.0f));
+	_inner->update(tweenfunc::cubicEaseOut(time));
 }
 
 EaseCubicActionOut* EaseCubicActionOut::reverse() const
@@ -1693,15 +1532,7 @@ EaseCubicActionInOut* EaseCubicActionInOut::clone() const
 
 void EaseCubicActionInOut::update(float time)
 {
-	float tempTime = time * 2;
-	if (tempTime < 1)
-		tempTime =  powf(tempTime,3.0f) * 0.5f;
-	else
-	{
-		tempTime -= 2;
-		tempTime = 1 + powf(tempTime,3.0f)* 0.5f;
-	}
-	_inner->update(time);
+	_inner->update(tweenfunc::cubicEaseInOut(time));
 }
 
 EaseCubicActionInOut* EaseCubicActionInOut::reverse() const

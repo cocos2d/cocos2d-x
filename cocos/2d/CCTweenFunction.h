@@ -85,6 +85,14 @@ namespace tweenfunc {
     
     //tween functions for CCActionEase
     float easeIn(float time, float rate);
+    float easeOut(float time, float rate);
+    float easeInOut(float time, float rate);
+    
+    float bezieratFunction( float a, float b, float c, float d, float t );
+    
+    float quadraticIn(float time);
+    float quadraticOut(float time);
+    float quadraticInOut(float time);
     
     
     float tweenTo(float time, TweenType type, float *easingParam);
