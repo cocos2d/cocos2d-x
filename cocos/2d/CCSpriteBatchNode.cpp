@@ -541,8 +541,9 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     {
         auto next = std::next(it);
 
+        Sprite *spr = nullptr;
         for(; next != _descendants.end(); ++next) {
-            Sprite *spr = *next;
+            spr = *next;
             spr->setAtlasIndex( spr->getAtlasIndex() - 1 );
         }
 
@@ -649,10 +650,11 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     child->setAtlasIndex(z);
 
     // XXX: optimize with a binary search
-    auto it = std::begin(_descendants);
-    for(const auto &sprite: _descendants) {
-        if(sprite->getAtlasIndex() >= z)
-            std::next(it);
+    auto it = _descendants.begin();
+    for (; it != _descendants.end(); ++it)
+    {
+        if((*it)->getAtlasIndex() >= z)
+            break;
     }
 
     _descendants.insert(it, child);
