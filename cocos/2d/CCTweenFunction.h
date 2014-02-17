@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCTWEENFUNCTION_H__
 
 #include "CCPlatformMacros.h"
+#include "ccMacros.h"
 #include <math.h>
 
 NS_CC_BEGIN
@@ -86,55 +87,61 @@ enum TweenType
 class  TweenFunction
 {
 public:
-
-    static float tweenTo(float time, TweenType type, float *easingParam);
-
-    static float linear(float time);
+    TweenFunction(float rate);
+    TweenFunction();
+    
+    float tweenTo(float time, TweenType type, float *easingParam);
+    
+    float linear(float time);
     
     //tween functions for CCActionEase
-    static float easeIn(float time);
-
-    static float sineEaseIn(float time);
-    static float sineEaseOut(float time);
-    static float sineEaseInOut(float time);
-
-    static float quadEaseIn(float time);
-    static float quadEaseOut(float time);
-    static float quadEaseInOut(float time);
-
-    static float cubicEaseIn(float time);
-    static float cubicEaseOut(float time);
-    static float cubicEaseInOut(float time);
-
-    static float quartEaseIn(float time);
-    static float quartEaseOut(float time);
-    static float quartEaseInOut(float time);
-
-    static float quintEaseIn(float time);
-    static float quintEaseOut(float time);
-    static float quintEaseInOut(float time);
-
-    static float expoEaseIn(float time);
-    static float expoEaseOut(float time);
-    static float expoEaseInOut(float time);
-
-    static float circEaseIn(float time);
-    static float circEaseOut(float time);
-    static float circEaseInOut(float time);
-
-    static float elasticEaseIn(float time, float *easingParam);
-    static float elasticEaseOut(float time, float *easingParam);
-    static float elasticEaseInOut(float time, float *easingParam);
-
-    static float backEaseIn(float time);
-    static float backEaseOut(float time);
-    static float backEaseInOut(float time);
-
-    static float bounceEaseIn(float time);
-    static float bounceEaseOut(float time);
-    static float bounceEaseInOut(float time);
-
-    static float customEase(float time, float *easingParam);
+    float easeIn(float time) const;
+    
+    float sineEaseIn(float time);
+    float sineEaseOut(float time);
+    float sineEaseInOut(float time);
+    
+    float quadEaseIn(float time);
+    float quadEaseOut(float time);
+    float quadEaseInOut(float time);
+    
+    float cubicEaseIn(float time);
+    float cubicEaseOut(float time);
+    float cubicEaseInOut(float time);
+    
+    float quartEaseIn(float time);
+    float quartEaseOut(float time);
+    float quartEaseInOut(float time);
+    
+    float quintEaseIn(float time);
+    float quintEaseOut(float time);
+    float quintEaseInOut(float time);
+    
+    float expoEaseIn(float time);
+    float expoEaseOut(float time);
+    float expoEaseInOut(float time);
+    
+    float circEaseIn(float time);
+    float circEaseOut(float time);
+    float circEaseInOut(float time);
+    
+    float elasticEaseIn(float time, float *easingParam);
+    float elasticEaseOut(float time, float *easingParam);
+    float elasticEaseInOut(float time, float *easingParam);
+    
+    float backEaseIn(float time);
+    float backEaseOut(float time);
+    float backEaseInOut(float time);
+    
+    float bounceEaseIn(float time);
+    float bounceEaseOut(float time);
+    float bounceEaseInOut(float time);
+    
+    float customEase(float time, float *easingParam);
+    
+private:
+    DISALLOW_COPY_AND_ASSIGN(TweenFunction);
+    float _rate;
 };
 
 
