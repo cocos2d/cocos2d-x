@@ -712,6 +712,74 @@ std::string SpriteEaseQuarticInOut::title()const
 {
     return "SpriteEaseQuarticInOut action";
 }
+
+//------------------------------------------------------------------
+//
+// SpriteEaseQuintic
+//
+//------------------------------------------------------------------
+
+void SpriteEaseQuintic::onEnter()
+{
+    EaseSpriteDemo::onEnter();
+    
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
+    
+    auto move_ease_in = EaseQuinticActionIn::create(move->clone() );
+    auto move_ease_in_back = move_ease_in->reverse();
+    
+    auto move_ease_out = EaseQuinticActionOut::create(move->clone() );
+    auto move_ease_out_back = move_ease_out->reverse();
+    
+    auto delay = DelayTime::create(0.25f);
+    
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
+    
+    _grossini->runAction( RepeatForever::create(seq1));
+    _tamara->runAction( RepeatForever::create(seq2));
+    _kathia->runAction( RepeatForever::create(seq3));
+}
+
+std::string SpriteEaseQuintic::title()const
+{
+    return "SpriteEaseQuintic action";
+}
+
+
+//------------------------------------------------------------------
+//
+// SpriteEaseQuinticInOut
+//
+//------------------------------------------------------------------
+
+void SpriteEaseQuinticInOut::onEnter()
+{
+    EaseSpriteDemo::onEnter();
+    
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
+    
+    auto move_ease = EaseQuinticActionInOut::create(move->clone() );
+    auto move_ease_back = move_ease->reverse();
+    
+    auto delay = DelayTime::create(0.25f);
+    
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
+    
+    this->positionForTwo();
+    
+    _grossini->runAction( RepeatForever::create(seq1));
+    _tamara->runAction( RepeatForever::create(seq2));
+}
+
+std::string SpriteEaseQuinticInOut::title()const
+{
+    return "SpriteEaseQuinticInOut action";
+}
 //------------------------------------------------------------------
 //
 // SpeedTest
@@ -780,7 +848,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    18
+#define MAX_LAYER    20
 
 Layer* createEaseLayer(int nIndex)
 {
@@ -803,6 +871,8 @@ Layer* createEaseLayer(int nIndex)
         case 14: return new SpriteEaseQuadraticInOut();
         case 15: return new SpriteEaseQuartic();
         case 16: return new SpriteEaseQuarticInOut();
+        case 17: return new SpriteEaseQuintic();
+        case 18: return new SpriteEaseQuinticInOut();
         case MAX_LAYER-1: return new SpeedTest();
     }
 
