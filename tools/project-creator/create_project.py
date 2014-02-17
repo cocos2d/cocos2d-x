@@ -158,7 +158,7 @@ def processPlatformProjects(platform):
         if (platform == "wp8-xaml"):
             dst = replaceLastNameInPath(tmp)
         if (os.path.exists(proj_path + src) == True):
-            os.rename(proj_path + src, proj_path + dst)		
+            os.rename(proj_path + src, proj_path + dst)
 
     # remove useless files and folders
     for i in range(0, len(data["remove"])):
