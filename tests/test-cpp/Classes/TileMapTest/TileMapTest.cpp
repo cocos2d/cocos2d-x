@@ -423,7 +423,11 @@ void TMXOrthoTest4::removeSprite(float dt)
     auto s = layer->getLayerSize();
 
     auto sprite = layer->getTileAt( Point(s.width-1,0) );
+    auto sprite2 = layer->getTileAt(Point(s.width-1, s.height-1));
     layer->removeChild(sprite, true);
+    auto sprite3 = layer->getTileAt(Point(2, s.height-1));
+    layer->removeChild(sprite3, true);
+    layer->removeChild(sprite2, true);
 }
 
 std::string TMXOrthoTest4::title() const
