@@ -615,6 +615,38 @@ std::string SpriteEaseQuadratic::title() const
 
 //------------------------------------------------------------------
 //
+// SpriteEaseQuadraticInOut
+//
+//------------------------------------------------------------------
+
+void SpriteEaseQuadraticInOut::onEnter()
+{
+    EaseSpriteDemo::onEnter();
+    
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
+    
+    auto move_ease = EaseQuadraticActionInOut::create(move->clone() );
+    auto move_ease_back = move_ease->reverse();
+    
+    auto delay = DelayTime::create(0.25f);
+    
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
+    
+    this->positionForTwo();
+    
+    _grossini->runAction( RepeatForever::create(seq1));
+    _tamara->runAction( RepeatForever::create(seq2));
+}
+
+std::string SpriteEaseQuadraticInOut::title()const
+{
+    return "SpriteEaseQuadraticInOut action";
+}
+
+//------------------------------------------------------------------
+//
 // SpeedTest
 //
 //------------------------------------------------------------------
@@ -681,7 +713,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    15
+#define MAX_LAYER    16
 
 Layer* createEaseLayer(int nIndex)
 {
@@ -701,7 +733,8 @@ Layer* createEaseLayer(int nIndex)
         case 11: return new SpriteEaseBackInOut();
         case 12: return new SpriteEaseBezier();
         case 13: return new SpriteEaseQuadratic();
-        case 14: return new SpeedTest();
+        case 14: return new SpriteEaseQuadraticInOut();
+        case MAX_LAYER-1: return new SpeedTest();
     }
 
 
