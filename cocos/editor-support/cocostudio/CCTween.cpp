@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "cocostudio/CCBone.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCTweenFunction.h"
 #include "cocostudio/CCTransformHelp.h"
 
 

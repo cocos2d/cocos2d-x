@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCTweenFunction.h"
+#include "CCTweenFunction.h"
 #include "cocostudio/CCUtilMath.h"
 
 #ifndef M_PI_X_2
