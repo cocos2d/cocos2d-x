@@ -31,71 +31,66 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-enum TweenType
-{
-    CUSTOM_EASING = -1,
-
-    Linear,
-
-    Sine_EaseIn,
-    Sine_EaseOut,
-    Sine_EaseInOut,
-
-
-    Quad_EaseIn,
-    Quad_EaseOut,
-    Quad_EaseInOut,
-
-    Cubic_EaseIn,
-    Cubic_EaseOut,
-    Cubic_EaseInOut,
-
-    Quart_EaseIn,
-    Quart_EaseOut,
-    Quart_EaseInOut,
-
-    Quint_EaseIn,
-    Quint_EaseOut,
-    Quint_EaseInOut,
-
-    Expo_EaseIn,
-    Expo_EaseOut,
-    Expo_EaseInOut,
-
-    Circ_EaseIn,
-    Circ_EaseOut,
-    Circ_EaseInOut,
-
-    Elastic_EaseIn,
-    Elastic_EaseOut,
-    Elastic_EaseInOut,
-
-    Back_EaseIn,
-    Back_EaseOut,
-    Back_EaseInOut,
-
-    Bounce_EaseIn,
-    Bounce_EaseOut,
-    Bounce_EaseInOut,
-
-    TWEEN_EASING_MAX = 10000
-};
-/**
-*   @js NA
-*   @lua NA
-*/
-class  TweenFunction
-{
-public:
-    TweenFunction(float rate);
-    TweenFunction();
+namespace tweenfunc {
+    enum TweenType
+    {
+        CUSTOM_EASING = -1,
+        
+        Linear,
+        
+        Sine_EaseIn,
+        Sine_EaseOut,
+        Sine_EaseInOut,
+        
+        
+        Quad_EaseIn,
+        Quad_EaseOut,
+        Quad_EaseInOut,
+        
+        Cubic_EaseIn,
+        Cubic_EaseOut,
+        Cubic_EaseInOut,
+        
+        Quart_EaseIn,
+        Quart_EaseOut,
+        Quart_EaseInOut,
+        
+        Quint_EaseIn,
+        Quint_EaseOut,
+        Quint_EaseInOut,
+        
+        Expo_EaseIn,
+        Expo_EaseOut,
+        Expo_EaseInOut,
+        
+        Circ_EaseIn,
+        Circ_EaseOut,
+        Circ_EaseInOut,
+        
+        Elastic_EaseIn,
+        Elastic_EaseOut,
+        Elastic_EaseInOut,
+        
+        Back_EaseIn,
+        Back_EaseOut,
+        Back_EaseInOut,
+        
+        Bounce_EaseIn,
+        Bounce_EaseOut,
+        Bounce_EaseInOut,
+        
+        TWEEN_EASING_MAX = 10000
+    };
+    
+    
+    //tween functions for CCActionEase
+    float easeIn(float time, float rate);
+    
     
     float tweenTo(float time, TweenType type, float *easingParam);
     
     float linear(float time);
     
-    //tween functions for CCActionEase
-    float easeIn(float time) const;
     
     float sineEaseIn(float time);
     float sineEaseOut(float time);
@@ -138,12 +133,7 @@ public:
     float bounceEaseInOut(float time);
     
     float customEase(float time, float *easingParam);
-    
-private:
-    DISALLOW_COPY_AND_ASSIGN(TweenFunction);
-    float _rate;
-};
-
+}
 
 NS_CC_END
 

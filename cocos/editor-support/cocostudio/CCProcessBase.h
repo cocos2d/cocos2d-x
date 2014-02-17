@@ -30,8 +30,6 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-using cocos2d::TweenType;
-using cocos2d::TweenFunction;
 
 enum AnimationType
 {
@@ -158,7 +156,7 @@ protected:
     AnimationType _loopType;
 
     //! The tween easing effect
-    TweenType _tweenEasing;
+    cocos2d::tweenfunc::TweenType _tweenEasing;
 
     //! The animation update speed
     float _animationInternal;
