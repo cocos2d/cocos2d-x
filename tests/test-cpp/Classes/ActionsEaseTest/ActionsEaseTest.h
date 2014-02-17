@@ -207,6 +207,19 @@ public:
     virtual std::string title() const override;
 };
 
+class SpriteEaseCubic : public EaseSpriteDemo
+{
+public:
+    void onEnter();
+    virtual std::string title() const override;
+};
+
+class SpriteEaseCubicInOut : public EaseSpriteDemo
+{
+public:
+    void onEnter();
+    virtual std::string title() const override;
+};
 class SpeedTest : public EaseSpriteDemo
 {
 public:
