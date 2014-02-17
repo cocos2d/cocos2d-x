@@ -126,7 +126,8 @@ public:
 #endif // CC_ENABLE_BOX2D_INTEGRATION
 
 protected:
-    void updatePosFromPhysics();
+    void updatePositionFromPhysics();
+    void updateRotationFromPhysics();
 };
 
 NS_CC_EXT_END
