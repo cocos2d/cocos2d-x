@@ -15,6 +15,8 @@ public:
 protected:
     Point _beginPos;
     Menu* _itemMenu;
+    
+    static Point _CurrentPos;
 };
 
 class PerformBasicLayer : public Layer

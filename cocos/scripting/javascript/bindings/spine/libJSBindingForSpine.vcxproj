@@ -12,9 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_spine_auto.cpp" />
+    <ClCompile Include="jsb_cocos2dx_spine_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_spine_auto.hpp" />
+    <ClInclude Include="jsb_cocos2dx_spine_manual.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_spine_auto_api.js" />

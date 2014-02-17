@@ -142,10 +142,9 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pSubMenu->setPosition(Point(s.width/2, 80));
     addChild(pSubMenu, 2);
 
-    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-32));
-    label->setColor(Color3B(255,255,40));
+    label->setPosition(Point(s.width/2, s.height-50));
 
     updateQuantityLabel();
     createParticleSystem();
