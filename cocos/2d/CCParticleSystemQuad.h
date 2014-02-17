@@ -136,6 +136,9 @@ protected:
     /** initializes the texture with a rectangle measured Points */
     void initTexCoordsWithRect(const Rect& rect);
     
+    /** Updates texture coords */
+    void updateTexCoords();
+    
     // Overrides
     /**
      * @js NA

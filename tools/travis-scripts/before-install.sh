@@ -43,7 +43,9 @@ install_nacl_sdk()
     nacl_sdk/naclsdk update --force pepper_canary
 }
 
-if [ "$GEN_JSB"x = "YES"x ]; then
+if [ "$GEN_COCOS_FILES"x = "YES"x ]; then
+    exit 0
+elif [ "$GEN_JSB"x = "YES"x ]; then
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         exit 0
     fi

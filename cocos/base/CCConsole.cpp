@@ -99,6 +99,12 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 	return write(sock, buf, strlen(buf));
 }
 
+static void sendPrompt(int fd)
+{
+    const char prompt[] = "> ";
+    write(fd, prompt, sizeof(prompt));
+}
+
 static int printSceneGraph(int fd, Node* node, int level)
 {
     int total = 1;
@@ -119,6 +125,7 @@ static void printSceneGraphBoot(int fd)
     auto scene = Director::getInstance()->getRunningScene();
     int total = printSceneGraph(fd, scene, 0);
     mydprintf(fd, "Total Nodes: %d\n", total);
+    sendPrompt(fd);
 }
 
 static void printFileUtils(int fd)
@@ -145,6 +152,7 @@ static void printFileUtils(int fd)
     for( const auto &item : cache) {
         mydprintf(fd, "%s -> %s\n", item.first.c_str(), item.second.c_str());
     }
+    sendPrompt(fd);
 }
 
 
@@ -451,7 +459,7 @@ void Console::commandResolution(int fd, const std::string& args)
                         "Resolution Policy: %d\n"
                         "Visible Rect:\n"
                         "\torigin: %d x %d\n"
-                        "\tsize: %d x %d",
+                        "\tsize: %d x %d\n",
                   (int)points.width, (int)points.height,
                   (int)pixels.width, (int)pixels.height,
                   (int)design.width, (int)design.height,
@@ -459,6 +467,7 @@ void Console::commandResolution(int fd, const std::string& args)
                   (int)visibleRect.origin.x, (int)visibleRect.origin.y,
                   (int)visibleRect.size.width, (int)visibleRect.size.height
                   );
+        sendPrompt(fd);
 
     } else {
         int width, height, policy;
@@ -497,7 +506,7 @@ void Console::commandProjection(int fd, const std::string& args)
                 sprintf(buf,"unknown");
                 break;
         }
-        mydprintf(fd, "Current projection: %s", buf);
+        mydprintf(fd, "Current projection: %s\n", buf);
     }
     else if( args.compare("2d") == 0)
     {
@@ -513,7 +522,7 @@ void Console::commandProjection(int fd, const std::string& args)
     }
     else
     {
-        mydprintf(fd, "Unsupported argument: '%s'. Supported arguments: '2d' or '3d'", args.c_str());
+        mydprintf(fd, "Unsupported argument: '%s'. Supported arguments: '2d' or '3d'\n", args.c_str());
     }
 }
 
@@ -532,6 +541,7 @@ void Console::commandTextures(int fd, const std::string& args)
     {
         sched->performFunctionInCocosThread( [&](){
             mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+            sendPrompt(fd);
         }
                                             );
     }
@@ -596,11 +606,7 @@ bool Console::parseCommand(int fd)
 //
 // Helpers
 //
-void Console::sendPrompt(int fd)
-{
-    const char prompt[] = "\n> ";
-    write(fd, prompt, sizeof(prompt));
-}
+
 
 ssize_t Console::readline(int fd)
 {

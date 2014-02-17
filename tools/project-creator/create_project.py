@@ -28,8 +28,8 @@ import sys
 def commandCreate():
         from module.core import CocosProject
         project = CocosProject()
-        name, package, language, path = project.checkParams()
-        project.createPlatformProjects(name, package, language, path)
+        name, package, language, runtime, path = project.checkParams()
+        project.createPlatformProjects(name, package, language, runtime, path)
 
 
 # ------------ main --------------

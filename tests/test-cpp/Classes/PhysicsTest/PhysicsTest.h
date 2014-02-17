@@ -184,5 +184,16 @@ private:
     int _sliceTag;
 };
 
+class PhysicsDemoBug3988 : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsDemoBug3988);
+
+    void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+
 #endif
 #endif
