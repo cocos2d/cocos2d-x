@@ -127,12 +127,12 @@ void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *bone, const std::str
     }
 }
 
-static JSBool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::ArmatureAnimation* cobj = (cocostudio::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -146,18 +146,18 @@ static JSBool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *
 
         cobj->setMovementEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::movementCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
         
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::ArmatureAnimation* cobj = (cocostudio::ArmatureAnimation *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -171,18 +171,18 @@ static JSBool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx,
 
         cobj->setFrameEventCallFunc(CC_CALLBACK_0(JSArmatureWrapper::frameCallbackFunc, tmpObj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
+static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::ArmatureDataManager* cobj = (cocostudio::ArmatureDataManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 3) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -198,7 +198,7 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
 
         cobj->addArmatureFileInfoAsync(ret.c_str(), tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
 
     if(argc == 5){
@@ -221,32 +221,31 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
 
         cobj->addArmatureFileInfoAsync(imagePath.c_str(), plistPath.c_str(), configFilePath.c_str(), tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-JSBool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::ColliderBody* cobj = (cocostudio::ColliderBody *)(proxy ? proxy->ptr : nullptr);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 0) {
         const std::vector<cocos2d::Point>& ret = cobj->getCalculatedVertexList();
-        JSObject *jsretArr = JS_NewArrayObject(cx, 0, nullptr);
+        JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0, nullptr));
         jsval jsret;
         //CCObject* obj;
         int i = 0;
-        for(std::vector<cocos2d::Point>::const_iterator it = ret.begin(); it != ret.end(); it++)
+        for(const auto& point : ret)
         {
-            const cocos2d::Point& point = *it;
             JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
             if (!tmp) break;
-            JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(point.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+            bool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(point.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                 JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(point.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-            jsval jsTmp = OBJECT_TO_JSVAL(tmp);
+            JS::RootedValue jsTmp(cx, OBJECT_TO_JSVAL(tmp));
             if(!ok || !JS_SetElement(cx, jsretArr, i, &jsTmp))
             {
                 break;
@@ -255,11 +254,11 @@ JSBool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, ui
         }
         jsret = OBJECT_TO_JSVAL(jsretArr);
         JS_SET_RVAL(cx, vp, jsret);
-        return JS_TRUE;
+        return true;
     }
 
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-    return JS_FALSE;
+    return false;
 }
 
 extern JSObject* jsb_cocostudio_ArmatureAnimation_prototype;

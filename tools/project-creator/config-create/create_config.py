@@ -104,7 +104,7 @@ class CocosFileList:
                             self.__bExclude(item)
                         ):
                             continue
-                print(relativePath)
+                # print(relativePath)
                 self.fileList.append(relativePath)
 
     def __bExclude(self, item):
@@ -128,6 +128,7 @@ class CocosFileList:
             Save content to file with json format.
         """
         f = open(fileName,"w")
+        self.fileList.sort()
         content = "[\n\"%s\"\n]" % ("\",\n\"".join(self.fileList))
         f.write(content)
         f.close()
@@ -139,10 +140,10 @@ if __name__ == '__main__':
     cocos_root =os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
     cocos_file_path =os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "module", "cocos_files.json"))
     cocos_file_ingore =os.path.abspath(os.path.join(os.path.dirname(__file__), "config.gitingore"))
-    print ("begin list files")
+    # print ("begin list files")
     cocosObj = CocosFileList()
     cocosObj.readIngoreFile(cocos_file_ingore)
     cocosObj.parseFileList(cocos_root)
     cocosObj.writeFileList(cocos_file_path)
-    print ("had list files to cocos_file_list.json")
+    # print ("had list files to cocos_file_list.json")
 

@@ -9,6 +9,7 @@
 #ifndef mozilla_Vector_h
 #define mozilla_Vector_h
 
+#include "mozilla/Alignment.h"
 #include "mozilla/AllocPolicy.h"
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
@@ -19,7 +20,7 @@
 #include "mozilla/ReentrancyGuard.h"
 #include "mozilla/TemplateLib.h"
 #include "mozilla/TypeTraits.h"
-#include "mozilla/Util.h"
+#include "mozilla/Util.h" // for PointerRangeSize
 
 #include <new> // for placement new
 
@@ -85,7 +86,7 @@ struct VectorImpl
     template<typename U>
     static inline void moveConstruct(T* dst, const U* srcbeg, const U* srcend) {
       for (const U* p = srcbeg; p < srcend; ++p, ++dst)
-        new(dst) T(Move(*p));
+        new(dst) T(OldMove(*p));
     }
 
     /*
@@ -114,7 +115,7 @@ struct VectorImpl
       T* dst = newbuf;
       T* src = v.beginNoCheck();
       for (; src < v.endNoCheck(); ++dst, ++src)
-        new(dst) T(Move(*src));
+        new(dst) T(OldMove(*src));
       VectorImpl::destroy(v.beginNoCheck(), v.endNoCheck());
       v.free_(v.mBegin);
       v.mBegin = newbuf;
@@ -547,8 +548,8 @@ class VectorBase : private AllocPolicy
     void swap(ThisVector& other);
 
   private:
-    VectorBase(const ThisVector&) MOZ_DELETE;
-    void operator=(const ThisVector&) MOZ_DELETE;
+    VectorBase(const VectorBase&) MOZ_DELETE;
+    void operator=(const VectorBase&) MOZ_DELETE;
 };
 
 /* This does the re-entrancy check plus several other sanity checks. */
@@ -565,14 +566,15 @@ template<typename T, size_t N, class AP, class TV>
 MOZ_ALWAYS_INLINE
 VectorBase<T, N, AP, TV>::VectorBase(AP ap)
   : AP(ap),
-    mBegin(static_cast<T*>(storage.addr())),
     mLength(0),
     mCapacity(sInlineCapacity)
 #ifdef DEBUG
   , mReserved(sInlineCapacity),
     entered(false)
 #endif
-{}
+{
+  mBegin = static_cast<T*>(storage.addr());
+}
 
 /* Move constructor. */
 template<typename T, size_t N, class AllocPolicy, class TV>

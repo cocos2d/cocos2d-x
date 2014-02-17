@@ -171,6 +171,7 @@ private:
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
     void resetCurrentString();
+    void computeStringNumLines();
 
     Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);
 
@@ -201,6 +202,7 @@ private:
     GLuint _uniformEffectColor;
 
     CustomCommand _customCommand;
+    int           _currNumLines;
 };
 
 

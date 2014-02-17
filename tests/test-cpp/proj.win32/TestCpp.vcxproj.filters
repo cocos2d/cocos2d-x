@@ -730,6 +730,9 @@
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1346,6 +1349,9 @@
       <Filter>Classes\ReleasePoolTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
   </ItemGroup>

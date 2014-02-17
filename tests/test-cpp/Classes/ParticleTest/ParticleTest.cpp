@@ -958,7 +958,7 @@ enum
 
 static int sceneIdx = -1;
 
-#define MAX_LAYER    44
+#define MAX_LAYER    45
 
 Layer* createParticleLayer(int nIndex)
 {
@@ -1009,6 +1009,7 @@ Layer* createParticleLayer(int nIndex)
         case 41: return new ReorderParticleSystems();
         case 42: return new PremultipliedAlphaTest();
         case 43: return new PremultipliedAlphaTest2();
+        case 44: return new Issue3990();
         default:
             break;
     }
@@ -1889,9 +1890,43 @@ std::string PremultipliedAlphaTest2::subtitle() const
     return "Arrows should be faded";
 }
 
+
+// Issue3990
+
+void Issue3990::onEnter()
+{
+    ParticleDemo::onEnter();
+    
+	_color->setColor(Color3B::BLACK);
+    this->removeChild(_background, true);
+    _background = NULL;
+    
+    _emitter = ParticleSystemQuad::create("Particles/Spiral.plist");
+    
+    _emitter->setPositionType(ParticleSystem::PositionType::GROUPED);
+    _emitter->setTotalParticles(1000);
+    
+    _emitter->setPosition(VisibleRect::center());
+    
+    _emitter->retain();
+    this->addChild(_emitter ,10);
+}
+
+std::string Issue3990::title() const
+{
+    return "Issue3990, setTotalParticle should work";
+}
+
+std::string Issue3990::subtitle() const
+{
+    return "Show '998' or '999' at bottom right side";
+}
+
+//
 void ParticleTestScene::runThisTest()
 {
     addChild(nextParticleAction());
 
     Director::getInstance()->replaceScene(this);
 }
+
