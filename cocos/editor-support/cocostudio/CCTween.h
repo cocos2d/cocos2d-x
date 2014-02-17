@@ -27,12 +27,13 @@ THE SOFTWARE.
 #define __CCTWEEN_H__
 
 #include "cocostudio/CCProcessBase.h"
-#include "cocostudio/CCTweenFunction.h"
+#include "CCTweenFunction.h"
 
 namespace cocostudio {
 
 class Bone;
 class ArmatureAnimation;
+using cocos2d::tweenfunc::TweenType;
 
 /**
  *  @js NA
@@ -132,7 +133,7 @@ protected:
 
     Bone *_bone;                    //! A weak reference to the Bone
 
-    TweenType _frameTweenEasing;  //! Dedermine which tween effect current frame use
+    cocos2d::tweenfunc::TweenType _frameTweenEasing;  //! Dedermine which tween effect current frame use
 
     int _betweenDuration;           //! Current key frame will last _betweenDuration frames
     int _totalDuration;

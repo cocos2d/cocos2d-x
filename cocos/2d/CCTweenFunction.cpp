@@ -22,170 +22,179 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCTweenFunction.h"
-#include "cocostudio/CCUtilMath.h"
+#include "CCTweenFunction.h"
+
+NS_CC_BEGIN
+
+namespace tweenfunc {
+    
 
 #ifndef M_PI_X_2
 #define M_PI_X_2 (float)M_PI * 2.0f
 #endif
 
-namespace cocostudio {
 
-float TweenFunction::tweenTo(float time, TweenType type, float *easingParam)
+
+
+float tweenTo(float time, TweenType type, float *easingParam)
 {
     float delta = 0;
 
     switch (type)
     {
-    case CUSTOM_EASING:
-        delta = customEase(time, easingParam);
-        break;
-
-    case Linear:
-        delta = linear(time);
-        break;
-
-    case Sine_EaseIn:
-        delta = sineEaseIn(time);
-        break;
-    case Sine_EaseOut:
-        delta = sineEaseOut(time);
-        break;
-    case Sine_EaseInOut:
-        delta = sineEaseInOut(time);
-        break;
-
-    case Quad_EaseIn:
-        delta = quadEaseIn(time);
-        break;
-    case Quad_EaseOut:
-        delta = quadEaseOut(time);
-        break;
-    case Quad_EaseInOut:
-        delta = quadEaseInOut(time);
-        break;
-
-    case Cubic_EaseIn:
-        delta = cubicEaseIn(time);
-        break;
-    case Cubic_EaseOut:
-        delta = cubicEaseOut(time);
-        break;
-    case Cubic_EaseInOut:
-        delta = cubicEaseInOut(time);
-        break;
-
-    case Quart_EaseIn:
-        delta = quartEaseIn(time);
-        break;
-    case Quart_EaseOut:
-        delta = quartEaseOut(time);
-        break;
-    case Quart_EaseInOut:
-        delta = quartEaseInOut(time);
-        break;
-
-    case Quint_EaseIn:
-        delta = quintEaseIn(time);
-        break;
-    case Quint_EaseOut:
-        delta = quintEaseOut(time);
-        break;
-    case Quint_EaseInOut:
-        delta = quintEaseInOut(time);
-        break;
-
-    case Expo_EaseIn:
-        delta = expoEaseIn(time);
-        break;
-    case Expo_EaseOut:
-        delta = expoEaseOut(time);
-        break;
-    case Expo_EaseInOut:
-        delta = expoEaseInOut(time);
-        break;
-
-    case Circ_EaseIn:
-        delta = circEaseIn(time);
-        break;
-    case Circ_EaseOut:
-        delta = circEaseOut(time);
-        break;
-    case Circ_EaseInOut:
-        delta = circEaseInOut(time);
-        break;
-
-    case Elastic_EaseIn:
-        delta = elasticEaseIn(time, easingParam);
-        break;
-    case Elastic_EaseOut:
-        delta = elasticEaseOut(time, easingParam);
-        break;
-    case Elastic_EaseInOut:
-        delta = elasticEaseInOut(time, easingParam);
-        break;
-
-
-    case Back_EaseIn:
-        delta = backEaseIn(time);
-        break;
-    case Back_EaseOut:
-        delta = backEaseOut(time);
-        break;
-    case Back_EaseInOut:
-        delta = backEaseInOut(time);
-        break;
-
-    case Bounce_EaseIn:
-        delta = bounceEaseIn(time);
-        break;
-    case Bounce_EaseOut:
-        delta = bounceEaseOut(time);
-        break;
-    case Bounce_EaseInOut:
-        delta = bounceEaseInOut(time);
-        break;
-
-    default:
-        delta = sineEaseInOut(time);
-        break;
+        case CUSTOM_EASING:
+            delta = customEase(time, easingParam);
+            break;
+            
+        case Linear:
+            delta = linear(time);
+            break;
+            
+        case Sine_EaseIn:
+            delta = sineEaseIn(time);
+            break;
+        case Sine_EaseOut:
+            delta = sineEaseOut(time);
+            break;
+        case Sine_EaseInOut:
+            delta = sineEaseInOut(time);
+            break;
+            
+        case Quad_EaseIn:
+            delta = quadEaseIn(time);
+            break;
+        case Quad_EaseOut:
+            delta = quadEaseOut(time);
+            break;
+        case Quad_EaseInOut:
+            delta = quadEaseInOut(time);
+            break;
+            
+        case Cubic_EaseIn:
+            delta = cubicEaseIn(time);
+            break;
+        case Cubic_EaseOut:
+            delta = cubicEaseOut(time);
+            break;
+        case Cubic_EaseInOut:
+            delta = cubicEaseInOut(time);
+            break;
+            
+        case Quart_EaseIn:
+            delta = quartEaseIn(time);
+            break;
+        case Quart_EaseOut:
+            delta = quartEaseOut(time);
+            break;
+        case Quart_EaseInOut:
+            delta = quartEaseInOut(time);
+            break;
+            
+        case Quint_EaseIn:
+            delta = quintEaseIn(time);
+            break;
+        case Quint_EaseOut:
+            delta = quintEaseOut(time);
+            break;
+        case Quint_EaseInOut:
+            delta = quintEaseInOut(time);
+            break;
+            
+        case Expo_EaseIn:
+            delta = expoEaseIn(time);
+            break;
+        case Expo_EaseOut:
+            delta = expoEaseOut(time);
+            break;
+        case Expo_EaseInOut:
+            delta = expoEaseInOut(time);
+            break;
+            
+        case Circ_EaseIn:
+            delta = circEaseIn(time);
+            break;
+        case Circ_EaseOut:
+            delta = circEaseOut(time);
+            break;
+        case Circ_EaseInOut:
+            delta = circEaseInOut(time);
+            break;
+            
+        case Elastic_EaseIn:
+            delta = elasticEaseIn(time, easingParam);
+            break;
+        case Elastic_EaseOut:
+            delta = elasticEaseOut(time, easingParam);
+            break;
+        case Elastic_EaseInOut:
+            delta = elasticEaseInOut(time, easingParam);
+            break;
+            
+            
+        case Back_EaseIn:
+            delta = backEaseIn(time);
+            break;
+        case Back_EaseOut:
+            delta = backEaseOut(time);
+            break;
+        case Back_EaseInOut:
+            delta = backEaseInOut(time);
+            break;
+            
+        case Bounce_EaseIn:
+            delta = bounceEaseIn(time);
+            break;
+        case Bounce_EaseOut:
+            delta = bounceEaseOut(time);
+            break;
+        case Bounce_EaseInOut:
+            delta = bounceEaseInOut(time);
+            break;
+            
+        default:
+            delta = sineEaseInOut(time);
+            break;
     }
 
     return delta;
 }
 
 // Linear
-float TweenFunction::linear(float time)
+float linear(float time)
 {
     return time;
 }
 
 
 // Sine Ease
-float TweenFunction::sineEaseIn(float time)
+float sineEaseIn(float time)
 {
     return -1 * cosf(time * (float)M_PI_2) + 1;
 }
-float TweenFunction::sineEaseOut(float time)
+    
+float sineEaseOut(float time)
 {
     return sinf(time * (float)M_PI_2);
 }
-float TweenFunction::sineEaseInOut(float time)
+    
+float sineEaseInOut(float time)
 {
     return -0.5f * (cosf((float)M_PI * time) - 1);
 }
 
 
 // Quad Ease
-float TweenFunction::quadEaseIn(float time)
+float quadEaseIn(float time)
 {
     return time * time;
 }
-float TweenFunction::quadEaseOut(float time)
+    
+float quadEaseOut(float time)
 {
     return -1 * time * (time - 2);
 }
-float TweenFunction::quadEaseInOut(float time)
+    
+float quadEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -197,16 +206,16 @@ float TweenFunction::quadEaseInOut(float time)
 
 
 // Cubic Ease
-float TweenFunction::cubicEaseIn(float time)
+float cubicEaseIn(float time)
 {
     return time * time * time;
 }
-float TweenFunction::cubicEaseOut(float time)
+float cubicEaseOut(float time)
 {
     time -= 1;
     return (time * time * time + 1);
 }
-float TweenFunction::cubicEaseInOut(float time)
+float cubicEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -217,16 +226,18 @@ float TweenFunction::cubicEaseInOut(float time)
 
 
 // Quart Ease
-float TweenFunction::quartEaseIn(float time)
+float quartEaseIn(float time)
 {
     return time * time * time * time;
 }
-float TweenFunction::quartEaseOut(float time)
+    
+float quartEaseOut(float time)
 {
     time -= 1;
     return -(time * time * time * time - 1);
 }
-float TweenFunction::quartEaseInOut(float time)
+    
+float quartEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -237,16 +248,18 @@ float TweenFunction::quartEaseInOut(float time)
 
 
 // Quint Ease
-float TweenFunction::quintEaseIn(float time)
+float quintEaseIn(float time)
 {
     return time * time * time * time * time;
 }
-float TweenFunction::quintEaseOut(float time)
+    
+float quintEaseOut(float time)
 {
     time -=1;
     return (time * time * time * time * time + 1);
 }
-float TweenFunction::quintEaseInOut(float time)
+    
+float quintEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -257,15 +270,15 @@ float TweenFunction::quintEaseInOut(float time)
 
 
 // Expo Ease
-float TweenFunction::expoEaseIn(float time)
+float expoEaseIn(float time)
 {
     return time == 0 ? 0 : powf(2, 10 * (time/1 - 1)) - 1 * 0.001f;
 }
-float TweenFunction::expoEaseOut(float time)
+float expoEaseOut(float time)
 {
     return time == 1 ? 1 : (-powf(2, -10 * time / 1) + 1);
 }
-float TweenFunction::expoEaseInOut(float time)
+float expoEaseInOut(float time)
 {
     time /= 0.5f;
     if (time < 1)
@@ -282,16 +295,16 @@ float TweenFunction::expoEaseInOut(float time)
 
 
 // Circ Ease
-float TweenFunction::circEaseIn(float time)
+float circEaseIn(float time)
 {
     return -1 * (sqrt(1 - time * time) - 1);
 }
-float TweenFunction::circEaseOut(float time)
+float circEaseOut(float time)
 {
     time = time - 1;
     return sqrt(1 - time * time);
 }
-float TweenFunction::circEaseInOut(float time)
+float circEaseInOut(float time)
 {
     time = time * 2;
     if (time < 1)
@@ -302,7 +315,7 @@ float TweenFunction::circEaseInOut(float time)
 
 
 // Elastic Ease
-float TweenFunction::elasticEaseIn(float time, float *easingParam)
+float elasticEaseIn(float time, float *easingParam)
 {
     float period = 0.3f;
 
@@ -325,7 +338,7 @@ float TweenFunction::elasticEaseIn(float time, float *easingParam)
 
     return newT;
 }
-float TweenFunction::elasticEaseOut(float time, float *easingParam)
+float elasticEaseOut(float time, float *easingParam)
 {
     float period = 0.3f;
 
@@ -347,7 +360,7 @@ float TweenFunction::elasticEaseOut(float time, float *easingParam)
 
     return newT;
 }
-float TweenFunction::elasticEaseInOut(float time, float *easingParam)
+float elasticEaseInOut(float time, float *easingParam)
 {
     float period = 0.3f;
 
@@ -386,19 +399,19 @@ float TweenFunction::elasticEaseInOut(float time, float *easingParam)
 
 
 // Back Ease
-float TweenFunction::backEaseIn(float time)
+float backEaseIn(float time)
 {
     float overshoot = 1.70158f;
     return time * time * ((overshoot + 1) * time - overshoot);
 }
-float TweenFunction::backEaseOut(float time)
+float backEaseOut(float time)
 {
     float overshoot = 1.70158f;
 
     time = time - 1;
     return time * time * ((overshoot + 1) * time + overshoot) + 1;
 }
-float TweenFunction::backEaseInOut(float time)
+float backEaseInOut(float time)
 {
     float overshoot = 1.70158f * 1.525f;
 
@@ -422,32 +435,32 @@ float bounceTime(float time)
     if (time < 1 / 2.75)
     {
         return 7.5625f * time * time;
-    } else 
-        if (time < 2 / 2.75)
-        {
-            time -= 1.5f / 2.75f;
-            return 7.5625f * time * time + 0.75f;
-        } else
-            if(time < 2.5 / 2.75)
-            {
-                time -= 2.25f / 2.75f;
-                return 7.5625f * time * time + 0.9375f;
-            }
+    }
+    else if (time < 2 / 2.75)
+    {
+        time -= 1.5f / 2.75f;
+        return 7.5625f * time * time + 0.75f;
+    }
+    else if(time < 2.5 / 2.75)
+    {
+        time -= 2.25f / 2.75f;
+        return 7.5625f * time * time + 0.9375f;
+    }
 
-            time -= 2.625f / 2.75f;
-            return 7.5625f * time * time + 0.984375f;
+    time -= 2.625f / 2.75f;
+    return 7.5625f * time * time + 0.984375f;
 }
-float TweenFunction::bounceEaseIn(float time)
+float bounceEaseIn(float time)
 {
     return 1 - bounceTime(1 - time);
 }
 
-float TweenFunction::bounceEaseOut(float time)
+float bounceEaseOut(float time)
 {
     return bounceTime(time);
 }
 
-float TweenFunction::bounceEaseInOut(float time)
+float bounceEaseInOut(float time)
 {
     float newT = 0;
     if (time < 0.5f)
@@ -465,7 +478,7 @@ float TweenFunction::bounceEaseInOut(float time)
 
 
 // Custom Ease
-float TweenFunction::customEase(float time, float *easingParam)
+float customEase(float time, float *easingParam)
 {
     if (easingParam)
     {
@@ -475,5 +488,61 @@ float TweenFunction::customEase(float time, float *easingParam)
     return time;
 }
 
-
+float easeIn(float time, float rate)
+{
+    return powf(time, rate);
 }
+
+float easeOut(float time, float rate)
+{
+    return powf(time, 1 / rate);
+}
+    
+float easeInOut(float time, float rate)
+{
+    time *= 2;
+    if (time < 1)
+    {
+        return 0.5f * powf(time, rate);
+    }
+    else
+    {
+        return (1.0f - 0.5f * powf(2 - time, rate));
+    }
+}
+    
+float quadraticIn(float time)
+{
+    return   powf(time,2);
+}
+    
+float quadraticOut(float time)
+{
+    return -time*(time-2);
+}
+    
+float quadraticInOut(float time)
+{
+    
+    float resultTime = time;
+    time = time*2;
+    if (time < 1)
+    {
+        resultTime = time * time * 0.5f;
+    }
+    else
+    {
+        --time;
+        resultTime = -0.5f * (time * (time - 2) - 1);
+    }
+    return resultTime;
+}
+    
+float bezieratFunction( float a, float b, float c, float d, float t )
+{
+    return (powf(1-t,3) * a + 3*t*(powf(1-t,2))*b + 3*powf(t,2)*(1-t)*c + powf(t,3)*d );
+}
+    
+}
+
+NS_CC_END
