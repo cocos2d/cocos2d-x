@@ -746,6 +746,9 @@ Developers:
         
     ucchen
         Exposed the missing data structures of Spine to JS.
+        
+    justmao945
+        Corrected the definition of CMake variables.
     
 Retired Core Developers:
     WenSheng Yang
