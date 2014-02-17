@@ -183,7 +183,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
 
     int durationTween = _movementData->durationTween == 0 ? _rawDuration : _movementData->durationTween;
 
-    TweenType tweenEasing = _movementData->tweenEasing;
+    cocos2d::tweenfunc::TweenType tweenEasing = _movementData->tweenEasing;
     loop = (loop < 0) ? _movementData->loop : loop;
 
     _onMovementList = false;

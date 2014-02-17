@@ -63,9 +63,6 @@ public: \
 
 namespace cocostudio {
 
-using cocos2d::TweenFunction;
-using cocos2d::TweenType;
-
 /**
  * The base node include a lot of attributes.
  * @js NA
@@ -337,7 +334,7 @@ public:
     int frameID;
     int duration;                //! The frame will last duration frames
 
-    TweenType tweenEasing;     //! Every frame's tween easing effect
+    cocos2d::tweenfunc::TweenType tweenEasing;     //! Every frame's tween easing effect
     int easingParamNumber;
     float *easingParams;
 
@@ -440,7 +437,7 @@ public:
     * Which tween easing effect the movement use
     * TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
     */
-    TweenType tweenEasing;
+    cocos2d::tweenfunc::TweenType tweenEasing;
 
     /**
     * @brief	save movment bone data

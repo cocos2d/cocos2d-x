@@ -26,24 +26,17 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+namespace tweenfunc {
+    
+
 #ifndef M_PI_X_2
 #define M_PI_X_2 (float)M_PI * 2.0f
 #endif
 
-TweenFunction::TweenFunction()
-:_rate(0.0f)
-{
-    
-}
-
-TweenFunction::TweenFunction(float rate)
-:_rate(rate)
-{
-    
-}
 
 
-float TweenFunction::tweenTo(float time, TweenType type, float *easingParam)
+
+float tweenTo(float time, TweenType type, float *easingParam)
 {
     float delta = 0;
 
@@ -167,37 +160,37 @@ float TweenFunction::tweenTo(float time, TweenType type, float *easingParam)
 }
 
 // Linear
-float TweenFunction::linear(float time)
+float linear(float time)
 {
     return time;
 }
 
 
 // Sine Ease
-float TweenFunction::sineEaseIn(float time)
+float sineEaseIn(float time)
 {
     return -1 * cosf(time * (float)M_PI_2) + 1;
 }
-float TweenFunction::sineEaseOut(float time)
+float sineEaseOut(float time)
 {
     return sinf(time * (float)M_PI_2);
 }
-float TweenFunction::sineEaseInOut(float time)
+float sineEaseInOut(float time)
 {
     return -0.5f * (cosf((float)M_PI * time) - 1);
 }
 
 
 // Quad Ease
-float TweenFunction::quadEaseIn(float time)
+float quadEaseIn(float time)
 {
     return time * time;
 }
-float TweenFunction::quadEaseOut(float time)
+float quadEaseOut(float time)
 {
     return -1 * time * (time - 2);
 }
-float TweenFunction::quadEaseInOut(float time)
+float quadEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -209,16 +202,16 @@ float TweenFunction::quadEaseInOut(float time)
 
 
 // Cubic Ease
-float TweenFunction::cubicEaseIn(float time)
+float cubicEaseIn(float time)
 {
     return time * time * time;
 }
-float TweenFunction::cubicEaseOut(float time)
+float cubicEaseOut(float time)
 {
     time -= 1;
     return (time * time * time + 1);
 }
-float TweenFunction::cubicEaseInOut(float time)
+float cubicEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -229,16 +222,16 @@ float TweenFunction::cubicEaseInOut(float time)
 
 
 // Quart Ease
-float TweenFunction::quartEaseIn(float time)
+float quartEaseIn(float time)
 {
     return time * time * time * time;
 }
-float TweenFunction::quartEaseOut(float time)
+float quartEaseOut(float time)
 {
     time -= 1;
     return -(time * time * time * time - 1);
 }
-float TweenFunction::quartEaseInOut(float time)
+float quartEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -249,16 +242,16 @@ float TweenFunction::quartEaseInOut(float time)
 
 
 // Quint Ease
-float TweenFunction::quintEaseIn(float time)
+float quintEaseIn(float time)
 {
     return time * time * time * time * time;
 }
-float TweenFunction::quintEaseOut(float time)
+float quintEaseOut(float time)
 {
     time -=1;
     return (time * time * time * time * time + 1);
 }
-float TweenFunction::quintEaseInOut(float time)
+float quintEaseInOut(float time)
 {
     time = time*2;
     if (time < 1)
@@ -269,15 +262,15 @@ float TweenFunction::quintEaseInOut(float time)
 
 
 // Expo Ease
-float TweenFunction::expoEaseIn(float time)
+float expoEaseIn(float time)
 {
     return time == 0 ? 0 : powf(2, 10 * (time/1 - 1)) - 1 * 0.001f;
 }
-float TweenFunction::expoEaseOut(float time)
+float expoEaseOut(float time)
 {
     return time == 1 ? 1 : (-powf(2, -10 * time / 1) + 1);
 }
-float TweenFunction::expoEaseInOut(float time)
+float expoEaseInOut(float time)
 {
     time /= 0.5f;
     if (time < 1)
@@ -294,16 +287,16 @@ float TweenFunction::expoEaseInOut(float time)
 
 
 // Circ Ease
-float TweenFunction::circEaseIn(float time)
+float circEaseIn(float time)
 {
     return -1 * (sqrt(1 - time * time) - 1);
 }
-float TweenFunction::circEaseOut(float time)
+float circEaseOut(float time)
 {
     time = time - 1;
     return sqrt(1 - time * time);
 }
-float TweenFunction::circEaseInOut(float time)
+float circEaseInOut(float time)
 {
     time = time * 2;
     if (time < 1)
@@ -314,7 +307,7 @@ float TweenFunction::circEaseInOut(float time)
 
 
 // Elastic Ease
-float TweenFunction::elasticEaseIn(float time, float *easingParam)
+float elasticEaseIn(float time, float *easingParam)
 {
     float period = 0.3f;
 
@@ -337,7 +330,7 @@ float TweenFunction::elasticEaseIn(float time, float *easingParam)
 
     return newT;
 }
-float TweenFunction::elasticEaseOut(float time, float *easingParam)
+float elasticEaseOut(float time, float *easingParam)
 {
     float period = 0.3f;
 
@@ -359,7 +352,7 @@ float TweenFunction::elasticEaseOut(float time, float *easingParam)
 
     return newT;
 }
-float TweenFunction::elasticEaseInOut(float time, float *easingParam)
+float elasticEaseInOut(float time, float *easingParam)
 {
     float period = 0.3f;
 
@@ -398,19 +391,19 @@ float TweenFunction::elasticEaseInOut(float time, float *easingParam)
 
 
 // Back Ease
-float TweenFunction::backEaseIn(float time)
+float backEaseIn(float time)
 {
     float overshoot = 1.70158f;
     return time * time * ((overshoot + 1) * time - overshoot);
 }
-float TweenFunction::backEaseOut(float time)
+float backEaseOut(float time)
 {
     float overshoot = 1.70158f;
 
     time = time - 1;
     return time * time * ((overshoot + 1) * time + overshoot) + 1;
 }
-float TweenFunction::backEaseInOut(float time)
+float backEaseInOut(float time)
 {
     float overshoot = 1.70158f * 1.525f;
 
@@ -434,32 +427,32 @@ float bounceTime(float time)
     if (time < 1 / 2.75)
     {
         return 7.5625f * time * time;
-    } else 
-        if (time < 2 / 2.75)
-        {
-            time -= 1.5f / 2.75f;
-            return 7.5625f * time * time + 0.75f;
-        } else
-            if(time < 2.5 / 2.75)
-            {
-                time -= 2.25f / 2.75f;
-                return 7.5625f * time * time + 0.9375f;
-            }
+    }
+    else if (time < 2 / 2.75)
+    {
+        time -= 1.5f / 2.75f;
+        return 7.5625f * time * time + 0.75f;
+    }
+    else if(time < 2.5 / 2.75)
+    {
+        time -= 2.25f / 2.75f;
+        return 7.5625f * time * time + 0.9375f;
+    }
 
-            time -= 2.625f / 2.75f;
-            return 7.5625f * time * time + 0.984375f;
+    time -= 2.625f / 2.75f;
+    return 7.5625f * time * time + 0.984375f;
 }
-float TweenFunction::bounceEaseIn(float time)
+float bounceEaseIn(float time)
 {
     return 1 - bounceTime(1 - time);
 }
 
-float TweenFunction::bounceEaseOut(float time)
+float bounceEaseOut(float time)
 {
     return bounceTime(time);
 }
 
-float TweenFunction::bounceEaseInOut(float time)
+float bounceEaseInOut(float time)
 {
     float newT = 0;
     if (time < 0.5f)
@@ -477,7 +470,7 @@ float TweenFunction::bounceEaseInOut(float time)
 
 
 // Custom Ease
-float TweenFunction::customEase(float time, float *easingParam)
+float customEase(float time, float *easingParam)
 {
     if (easingParam)
     {
@@ -487,10 +480,11 @@ float TweenFunction::customEase(float time, float *easingParam)
     return time;
 }
 
-float TweenFunction::easeIn(float time) const
+float easeIn(float time, float rate)
 {
-    return powf(time, _rate);
+    return powf(time, rate);
 }
-    
+
+}
 
 NS_CC_END
