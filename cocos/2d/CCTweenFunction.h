@@ -25,11 +25,10 @@ THE SOFTWARE.
 #ifndef __CCTWEENFUNCTION_H__
 #define __CCTWEENFUNCTION_H__
 
-
-#include "cocostudio/CCArmatureDefine.h"
+#include "CCPlatformMacros.h"
 #include <math.h>
 
-namespace cocostudio {
+NS_CC_BEGIN
 
 enum TweenType
 {
@@ -91,6 +90,9 @@ public:
     static float tweenTo(float time, TweenType type, float *easingParam);
 
     static float linear(float time);
+    
+    //tween functions for CCActionEase
+    static float easeIn(float time);
 
     static float sineEaseIn(float time);
     static float sineEaseOut(float time);
@@ -136,6 +138,6 @@ public:
 };
 
 
-}
+NS_CC_END
 
 #endif /*__CCTWEENFUNCTION_H__*/
