@@ -328,7 +328,7 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, Ref *target, long key,
 void Scheduler::unschedule(Ref *target, long key)
 {
     // explicity handle nil arguments when removing an object
-    if (target == nullptr || key != 0)
+    if (target == nullptr || key == 0)
     {
         return;
     }
@@ -459,7 +459,6 @@ void Scheduler::appendIn(_listEntry **list, const ccSchedulerFunc& callback, Ref
 
 void Scheduler::scheduleUpdate(const ccSchedulerFunc& callback, Ref *target, int priority, bool paused)
 {
-
     tHashUpdateEntry *hashElement = nullptr;
     HASH_FIND_PTR(_hashForUpdates, &target, hashElement);
     if (hashElement)
