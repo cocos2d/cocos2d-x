@@ -540,8 +540,6 @@
 "cocos/editor-support/cocosbuilder/proj.win32/libCocosBuilder.vcxproj.filters",
 "cocos/editor-support/cocosbuilder/proj.win32/libCocosBuilder.vcxproj.user",
 "cocos/editor-support/cocostudio/Android.mk",
-"cocos/editor-support/cocostudio/CCActionEaseEx.cpp",
-"cocos/editor-support/cocostudio/CCActionEaseEx.h",
 "cocos/editor-support/cocostudio/CCActionFrame.cpp",
 "cocos/editor-support/cocostudio/CCActionFrame.h",
 "cocos/editor-support/cocostudio/CCActionFrameEasing.cpp",

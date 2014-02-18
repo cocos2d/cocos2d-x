@@ -12,6 +12,7 @@ CCAction.cpp \
 CCActionCamera.cpp \
 CCActionCatmullRom.cpp \
 CCActionEase.cpp \
+CCTweenFunction.cpp \
 CCActionGrid.cpp \
 CCActionGrid3D.cpp \
 CCActionInstant.cpp \
