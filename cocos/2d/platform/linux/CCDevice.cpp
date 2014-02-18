@@ -411,7 +411,7 @@ public:
 		int txtHeight = iMaxLineHeight;
 		iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 
-		_data = new unsigned char[iMaxLineWidth * iMaxLineHeight * 4];
+		_data = (unsigned char*)malloc(sizeof(unsigned char) * (iMaxLineWidth * iMaxLineHeight * 4));
 		memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
 
 		int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);

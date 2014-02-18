@@ -948,7 +948,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         }
         png_read_image(png_ptr, row_pointers);
 
-        png_read_end(png_ptr, NULL);
+        png_read_end(png_ptr, nullptr);
 
         _preMulti = false;
 
@@ -1094,7 +1094,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
             tiffMapProc,
             tiffUnmapProc);
 
-        CC_BREAK_IF(NULL == tif);
+        CC_BREAK_IF(nullptr == tif);
 
         uint32 w = 0, h = 0;
         uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
@@ -1116,7 +1116,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
-        if (raster != NULL) 
+        if (raster != nullptr) 
         {
            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
            {
@@ -1851,7 +1851,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
         {
             free(_data);
-            _data = NULL;
+            _data = nullptr;
             break;
         }
         
@@ -1941,21 +1941,21 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         png_bytep *row_pointers;
 
         fp = fopen(filePath.c_str(), "wb");
-        CC_BREAK_IF(NULL == fp);
+        CC_BREAK_IF(nullptr == fp);
 
-        png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
 
-        if (NULL == png_ptr)
+        if (nullptr == png_ptr)
         {
             fclose(fp);
             break;
         }
 
         info_ptr = png_create_info_struct(png_ptr);
-        if (NULL == info_ptr)
+        if (nullptr == info_ptr)
         {
             fclose(fp);
-            png_destroy_write_struct(&png_ptr, NULL);
+            png_destroy_write_struct(&png_ptr, nullptr);
             break;
         }
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
@@ -1987,14 +1987,14 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         png_set_packing(png_ptr);
 
         row_pointers = (png_bytep *)malloc(_height * sizeof(png_bytep));
-        if(row_pointers == NULL)
+        if(row_pointers == nullptr)
         {
             fclose(fp);
             png_destroy_write_struct(&png_ptr, &info_ptr);
             break;
         }
 
-        if (hasAlpha())
+        if (!hasAlpha())
         {
             for (int i = 0; i < (int)_height; i++)
             {
@@ -2004,14 +2004,14 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
             png_write_image(png_ptr, row_pointers);
 
             free(row_pointers);
-            row_pointers = NULL;
+            row_pointers = nullptr;
         }
         else
         {
             if (isToRGB)
             {
                 unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char*)));
-                if (NULL == pTempData)
+                if (nullptr == pTempData)
                 {
                     fclose(fp);
                     png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -2036,7 +2036,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
                 png_write_image(png_ptr, row_pointers);
 
                 free(row_pointers);
-                row_pointers = NULL;
+                row_pointers = nullptr;
 
                 if (pTempData != nullptr)
                 {
@@ -2053,14 +2053,14 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
                 png_write_image(png_ptr, row_pointers);
 
                 free(row_pointers);
-                row_pointers = NULL;
+                row_pointers = nullptr;
             }
         }
 
         png_write_end(png_ptr, info_ptr);
 
         png_free(png_ptr, palette);
-        palette = NULL;
+        palette = nullptr;
 
         png_destroy_write_struct(&png_ptr, &info_ptr);
 
@@ -2085,7 +2085,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == NULL);
+        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == nullptr);
         
         jpeg_stdio_dest(&cinfo, outfile);
 
@@ -2103,7 +2103,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         if (hasAlpha())
         {
             unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
-            if (NULL == pTempData)
+            if (nullptr == pTempData)
             {
                 jpeg_finish_compress(&cinfo);
                 jpeg_destroy_compress(&cinfo);
