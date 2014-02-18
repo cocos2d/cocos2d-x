@@ -985,10 +985,7 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    char key[30] = {0};
-    sprintf(key, "%p", selector);
-    
-    return _scheduler->isScheduled(this, key);
+    return _scheduler->isScheduled(this, schedule_selector_to_key(selector));
 }
 
 void Node::scheduleUpdate()
@@ -1036,12 +1033,10 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
 {
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
-    char key[30] = {0};
-    sprintf(key, "%p", selector);
-    log("Node::schedule key: %s", key);
+
     _scheduler->schedule([=](float dt){
         (this->*selector)(dt);
-    }, this, key, interval , repeat, delay, !_running);
+    }, this, schedule_selector_to_key(selector), interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1054,11 +1049,8 @@ void Node::unschedule(SEL_SCHEDULE selector)
     // explicit nil handling
     if (selector == 0)
         return;
-
-    char key[30] = {0};
-    sprintf(key, "%p", selector);
     
-    _scheduler->unschedule(this, key);
+    _scheduler->unschedule(this, schedule_selector_to_key(selector));
 }
 
 void Node::unscheduleAllSelectors()

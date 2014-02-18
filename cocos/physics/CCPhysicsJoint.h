@@ -33,6 +33,7 @@
 
 NS_CC_BEGIN
 
+class Node;
 class PhysicsBody;
 class PhysicsWorld;
 class PhysicsJointInfo;

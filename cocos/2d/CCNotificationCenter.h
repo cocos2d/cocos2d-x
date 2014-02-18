@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include "CCRef.h"
 #include "CCArray.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 

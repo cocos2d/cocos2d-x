@@ -33,6 +33,7 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 #include "CCAction.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 

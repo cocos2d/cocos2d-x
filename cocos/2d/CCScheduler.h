@@ -28,12 +28,13 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include "CCRef.h"
-#include "CCVector.h"
-#include "uthash.h"
-
 #include <functional>
 #include <mutex>
+
+#include "CCRef.h"
+#include "CCVector.h"
+#include "ccTypes.h"
+#include "uthash.h"
 
 NS_CC_BEGIN
 
@@ -42,6 +43,7 @@ NS_CC_BEGIN
  * @{
  */
 
+long schedule_selector_to_key(SEL_SCHEDULE selector);
 
 typedef std::function<void(float)> ccSchedulerFunc;
 //
@@ -53,7 +55,7 @@ class CC_DLL Timer : public Ref
 {
 public:
     /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static Timer* create(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float seconds = 0.0f);
+    static Timer* create(const ccSchedulerFunc& callback, Ref *target, long key, float seconds = 0.0f);
     /** Allocates a timer with a script callback function and an interval in seconds. 
      * @js NA
      * @lua NA
@@ -63,7 +65,7 @@ public:
     Timer(void);
 
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithTarget(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float seconds, unsigned int repeat, float delay);
+    bool initWithTarget(const ccSchedulerFunc& callback, Ref *target, long key, float seconds, unsigned int repeat, float delay);
     /** Initializes a timer with a script callback function and an interval in seconds. */
     bool initWithScriptHandler(int handler, float seconds);
 
@@ -76,7 +78,7 @@ public:
      * @lua NA
      */
     inline const ccSchedulerFunc& getCallback() const { return _callback; };
-    inline const std::string& getKey() const { return _key; };
+    inline long getKey() const { return _key; };
     
     /** triggers the timer */
     void update(float dt);
@@ -93,7 +95,7 @@ protected:
     float _delay;
     float _interval;
     ccSchedulerFunc _callback;
-    std::string _key;
+    long _key;
     int _scriptHandler;
 };
 
@@ -160,10 +162,10 @@ public:
 
      @since v0.99.3, repeat and delay added in v1.1
      */
-    void schedule(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float interval, unsigned int repeat, float delay, bool paused);
+    void schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, unsigned int repeat, float delay, bool paused);
 
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
-    void schedule(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float interval, bool paused);
+    void schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, bool paused);
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
@@ -174,13 +176,13 @@ public:
     /** Checks whether a selector for a given taget is scheduled.
      @since v3.0.0
      */
-    bool isScheduled(Ref *target, const std::string& key);
+    bool isScheduled(Ref *target, long key);
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
      @since v0.99.3
      */
-    void unschedule(Ref *target, const std::string& key);
+    void unschedule(Ref *target, long key);
 
     /** Unschedules the update selector for a given target
      @since v0.99.3

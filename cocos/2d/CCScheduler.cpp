@@ -37,6 +37,16 @@ using namespace std;
 
 NS_CC_BEGIN
 
+long schedule_selector_to_key(SEL_SCHEDULE selector)
+{
+    static union{
+        SEL_SCHEDULE func;
+        long key;
+    };
+    func = selector;
+    return key;
+}
+
 // data structures
 
 // A list double-linked list used for "updates with priority"
@@ -83,11 +93,12 @@ Timer::Timer()
 , _delay(0.0f)
 , _interval(0.0f)
 , _callback(nullptr)
+, _key(0)
 , _scriptHandler(0)
 {
 }
 
-Timer* Timer::create(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float seconds/* = 0 */)
+Timer* Timer::create(const ccSchedulerFunc& callback, Ref *target, long key, float seconds/* = 0 */)
 {
     Timer *timer = new Timer();
 
@@ -116,7 +127,7 @@ bool Timer::initWithScriptHandler(int handler, float seconds)
     return true;
 }
 
-bool Timer::initWithTarget(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float seconds, unsigned int repeat, float delay)
+bool Timer::initWithTarget(const ccSchedulerFunc& callback, Ref *target, long key, float seconds, unsigned int repeat, float delay)
 {
     _target = target;
     _callback = callback;
@@ -144,7 +155,7 @@ void Timer::update(float dt)
             _elapsed += dt;
             if (_elapsed >= _interval)
             {
-                if (_target && !_key.empty() && _callback)
+                if (_target && _key != 0 && _callback)
                 {
                     _callback(_elapsed);
                 }
@@ -165,7 +176,7 @@ void Timer::update(float dt)
             {
                 if( _elapsed >= _delay )
                 {
-                    if (_target && !_key.empty() && _callback)
+                    if (_target && _key != 0 && _callback)
                     {
                         _callback(_elapsed);
                     }
@@ -186,7 +197,7 @@ void Timer::update(float dt)
             {
                 if (_elapsed >= _interval)
                 {
-                    if (_target && !_key.empty() && _callback)
+                    if (_target && _key != 0 && _callback)
                     {
                         _callback(_elapsed);
                     }
@@ -257,15 +268,15 @@ void Scheduler::removeHashElement(_hashSelectorEntry *element)
 
 }
 
-void Scheduler::schedule(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float interval, bool paused)
+void Scheduler::schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, bool paused)
 {
     this->schedule(callback, target, key, interval, kRepeatForever, 0.0f, paused);
 }
 
-void Scheduler::schedule(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float interval, unsigned int repeat, float delay, bool paused)
+void Scheduler::schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCASSERT(target, "Argument target must be non-nullptr");
-    CCASSERT(!key.empty(), "key should not be empty!");
+    CCASSERT(key != 0, "key should not be empty!");
 
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
@@ -314,10 +325,10 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, Ref *target, const std
     timer->release();
 }
 
-void Scheduler::unschedule(Ref *target, const std::string& key)
+void Scheduler::unschedule(Ref *target, long key)
 {
     // explicity handle nil arguments when removing an object
-    if (target == nullptr || key.empty())
+    if (target == nullptr || key != 0)
     {
         return;
     }
@@ -479,9 +490,9 @@ void Scheduler::scheduleUpdate(const ccSchedulerFunc& callback, Ref *target, int
     }
 }
 
-bool Scheduler::isScheduled(Ref *target, const std::string& key)
+bool Scheduler::isScheduled(Ref *target, long key)
 {
-    CCASSERT(!key.empty(), "Argument key must be empty");
+    CCASSERT(key != 0, "Argument key must be empty");
     CCASSERT(target, "Argument target must be non-nullptr");
     
     tHashTimerEntry *element = nullptr;

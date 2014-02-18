@@ -474,6 +474,22 @@ public:
 
 extern const std::string STD_STRING_EMPTY;
 
+class Node;
+
+typedef void (Ref::*SEL_CallFunc)();
+typedef void (Ref::*SEL_CallFuncN)(Node*);
+typedef void (Ref::*SEL_CallFuncND)(Node*, void*);
+typedef void (Ref::*SEL_CallFuncO)(Ref*);
+typedef void (Ref::*SEL_MenuHandler)(Ref*);
+typedef void (Ref::*SEL_SCHEDULE)(float);
+
+#define callfunc_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFunc>(&_SELECTOR)
+#define callfuncN_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncN>(&_SELECTOR)
+#define callfuncND_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncND>(&_SELECTOR)
+#define callfuncO_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncO>(&_SELECTOR)
+#define menu_selector(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
+#define schedule_selector(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
+
 NS_CC_END
 
 #endif //__CCTYPES_H__

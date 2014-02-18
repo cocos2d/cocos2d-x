@@ -34,6 +34,8 @@
 #include "CCVector.h"
 
 NS_CC_BEGIN
+
+class Node;
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;

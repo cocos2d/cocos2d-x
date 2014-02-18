@@ -30,6 +30,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Node;
+
 class CC_DLL Component : public Ref
 {
 protected:

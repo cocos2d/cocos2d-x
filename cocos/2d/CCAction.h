@@ -34,6 +34,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Node;
 /**
  * @addtogroup actions
  * @{
