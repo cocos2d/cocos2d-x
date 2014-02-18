@@ -470,7 +470,6 @@ void Console::commandResolution(int fd, const std::string& args)
                   (int)visibleRect.origin.x, (int)visibleRect.origin.y,
                   (int)visibleRect.size.width, (int)visibleRect.size.height
                   );
-        sendPrompt(fd);
 
     } else {
         int width, height, policy;
