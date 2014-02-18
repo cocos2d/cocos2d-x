@@ -326,7 +326,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         dim.height += shadowStrokePaddingY;
         
         
-        unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
+        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * (int)(dim.width * dim.height * 4));
         memset(data, 0, (int)(dim.width * dim.height * 4));
         
         // draw text
@@ -341,7 +341,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         if (!context)
         {
             CGColorSpaceRelease(colorSpace);
-            delete[] data;
+            CC_SAFE_FREE(data);
             break;
         }
         
