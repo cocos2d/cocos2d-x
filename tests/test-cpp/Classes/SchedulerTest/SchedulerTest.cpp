@@ -435,7 +435,7 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         auto director = Director::getInstance();
-        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+//james        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
     
     SchedulerTestLayer::onExit();
@@ -969,11 +969,11 @@ void TwoSchedulers::onEnter()
     // Create a new scheduler, and link it to the main scheduler
     sched1 = new Scheduler();
 
-    defaultScheduler->scheduleUpdateForTarget(sched1, 0, false);
+//james    defaultScheduler->scheduleUpdateForTarget(sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager1 = new ActionManager();
-    sched1->scheduleUpdateForTarget(actionManager1, 0, false);
+//james    sched1->scheduleUpdateForTarget(actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
     {
@@ -995,11 +995,11 @@ void TwoSchedulers::onEnter()
 
     // Create a new scheduler, and link it to the main scheduler
     sched2 = new Scheduler();;
-    defaultScheduler->scheduleUpdateForTarget(sched2, 0, false);
+//james    defaultScheduler->scheduleUpdateForTarget(sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager2 = new ActionManager();
-    sched2->scheduleUpdateForTarget(actionManager2, 0, false);
+//james    sched2->scheduleUpdateForTarget(actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
         auto sprite = Sprite::create("Images/grossinis_sister2.png");

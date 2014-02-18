@@ -42,6 +42,8 @@ NS_CC_BEGIN
  * @{
  */
 
+
+typedef std::function<void(float)> ccSchedulerFunc;
 //
 // Timer
 //
@@ -50,39 +52,32 @@ NS_CC_BEGIN
 class CC_DLL Timer : public Ref
 {
 public:
-    /** Allocates a timer with a target and a selector. */
-    static Timer* create(Ref *target, SEL_SCHEDULE selector);
     /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static Timer* create(Ref *target, SEL_SCHEDULE selector, float seconds);
+    static Timer* create(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float seconds = 0.0f);
     /** Allocates a timer with a script callback function and an interval in seconds. 
      * @js NA
      * @lua NA
      */
     static Timer* createWithScriptHandler(int handler, float seconds);
 
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Ref *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Ref *target, SEL_SCHEDULE selector, float seconds) { return Timer::create(target, selector, seconds); }
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int handler, float seconds) { return Timer::createWithScriptHandler(handler, seconds); }
-
     Timer(void);
 
-    /** Initializes a timer with a target and a selector. */
-    bool initWithTarget(Ref *target, SEL_SCHEDULE selector);
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithTarget(Ref *target, SEL_SCHEDULE selector, float seconds, unsigned int repeat, float delay);
+    bool initWithTarget(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float seconds, unsigned int repeat, float delay);
     /** Initializes a timer with a script callback function and an interval in seconds. */
     bool initWithScriptHandler(int handler, float seconds);
 
     /** get interval in seconds */
-    float getInterval() const;
+    inline float getInterval() const { return _interval; };
     /** set interval in seconds */
-    void setInterval(float interval);
+    inline void setInterval(float interval) { _interval = interval; };
     /**
      * @js NA
      * @lua NA
      */
-    SEL_SCHEDULE getSelector() const;
-
+    inline const ccSchedulerFunc& getCallback() const { return _callback; };
+    inline const std::string& getKey() const { return _key; };
+    
     /** triggers the timer */
     void update(float dt);
     
@@ -97,8 +92,8 @@ protected:
     unsigned int _repeat; //0 = once, 1 is 2 x executed
     float _delay;
     float _interval;
-    SEL_SCHEDULE _selector;
-    
+    ccSchedulerFunc _callback;
+    std::string _key;
     int _scriptHandler;
 };
 
@@ -165,32 +160,32 @@ public:
 
      @since v0.99.3, repeat and delay added in v1.1
      */
-    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
+    void schedule(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float interval, unsigned int repeat, float delay, bool paused);
 
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
-    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
+    void schedule(const ccSchedulerFunc& callback, Ref *target, const std::string& key, float interval, bool paused);
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
      @since v0.99.3
      */
-    void scheduleUpdateForTarget(Ref *target, int priority, bool paused);
+    void scheduleUpdate(const ccSchedulerFunc& callback, Ref *target, int priority, bool paused);
     
     /** Checks whether a selector for a given taget is scheduled.
      @since v3.0.0
      */
-    bool isScheduledForTarget(SEL_SCHEDULE selector, Ref *target);
+    bool isScheduled(Ref *target, const std::string& key);
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
      @since v0.99.3
      */
-    void unscheduleSelector(SEL_SCHEDULE selector, Ref *target);
+    void unschedule(Ref *target, const std::string& key);
 
     /** Unschedules the update selector for a given target
      @since v0.99.3
      */
-    void unscheduleUpdateForTarget(const Ref *target);
+    void unscheduleUpdate(Ref *target);
 
     /** Unschedules all selectors for a given target.
      This also includes the "update" selector.
@@ -272,8 +267,8 @@ protected:
 
     // update specific
 
-    void priorityIn(struct _listEntry **list, Ref *target, int priority, bool paused);
-    void appendIn(struct _listEntry **list, Ref *target, bool paused);
+    void priorityIn(struct _listEntry **list, const ccSchedulerFunc& callback, Ref *target, int priority, bool paused);
+    void appendIn(struct _listEntry **list, const ccSchedulerFunc& callback, Ref *target, bool paused);
 
 
     float _timeScale;

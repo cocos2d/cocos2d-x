@@ -985,7 +985,10 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    return _scheduler->isScheduledForTarget(selector, this);
+    char key[30] = {0};
+    sprintf(key, "%p", selector);
+    
+    return _scheduler->isScheduled(this, key);
 }
 
 void Node::scheduleUpdate()
@@ -995,19 +998,23 @@ void Node::scheduleUpdate()
 
 void Node::scheduleUpdateWithPriority(int priority)
 {
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
     unscheduleUpdate();
     _updateScriptHandler = nHandler;
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
 {
-    _scheduler->unscheduleUpdateForTarget(this);
+    _scheduler->unscheduleUpdate(this);
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
@@ -1029,8 +1036,12 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
 {
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
-
-    _scheduler->scheduleSelector(selector, this, interval , repeat, delay, !_running);
+    char key[30] = {0};
+    sprintf(key, "%p", selector);
+    log("Node::schedule key: %s", key);
+    _scheduler->schedule([=](float dt){
+        (this->*selector)(dt);
+    }, this, key, interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1044,7 +1055,10 @@ void Node::unschedule(SEL_SCHEDULE selector)
     if (selector == 0)
         return;
 
-    _scheduler->unscheduleSelector(selector, this);
+    char key[30] = {0};
+    sprintf(key, "%p", selector);
+    
+    _scheduler->unschedule(this, key);
 }
 
 void Node::unscheduleAllSelectors()

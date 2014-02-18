@@ -24,7 +24,7 @@ TimeElapsed::~TimeElapsed(void)
 
 bool TimeElapsed::init()
 {
-	_scheduler->scheduleSelector(schedule_selector(TimeElapsed::update), this, 0.0f , kRepeatForever, 0.0f, false);
+//james	_scheduler->scheduleSelector(schedule_selector(TimeElapsed::update), this, 0.0f , kRepeatForever, 0.0f, false);
     return true;
 }
 
@@ -49,7 +49,7 @@ void TimeElapsed::serialize(const rapidjson::Value &val)
 
 void TimeElapsed::removeAll()
 {
-	_scheduler->unscheduleUpdateForTarget(this);
+//james	_scheduler->unscheduleUpdateForTarget(this);
 }
 
 void TimeElapsed::update(float dt)

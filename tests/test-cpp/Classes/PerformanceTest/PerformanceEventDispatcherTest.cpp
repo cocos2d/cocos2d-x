@@ -207,7 +207,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
         auto sched = director->getScheduler();
         
         CC_PROFILER_PURGE_ALL();
-        sched->scheduleSelector(schedule_selector(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
+//james        sched->scheduleSelector(schedule_selector(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
         
         this->unscheduleUpdate();
         this->scheduleUpdate();
@@ -225,7 +225,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
-        sched->unscheduleSelector(schedule_selector(PerformanceEventDispatcherScene::dumpProfilerInfo), this);
+//james        sched->unscheduleSelector(schedule_selector(PerformanceEventDispatcherScene::dumpProfilerInfo), this);
         
         this->unscheduleUpdate();
         this->_startItem->setEnabled(true);

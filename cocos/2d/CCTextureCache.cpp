@@ -123,7 +123,10 @@ void TextureCache::addImageAsync(const std::string &path, std::function<void(Tex
 
     if (0 == _asyncRefCount)
     {
-        Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
+        char key[30] = {0};
+        sprintf(key, "%p", schedule_selector(TextureCache::addImageAsyncCallBack));
+        
+        Director::getInstance()->getScheduler()->schedule(CC_CALLBACK_1(TextureCache::addImageAsyncCallBack, this), this, key, 0, false);
     }
 
     ++_asyncRefCount;
@@ -277,7 +280,10 @@ void TextureCache::addImageAsyncCallBack(float dt)
         --_asyncRefCount;
         if (0 == _asyncRefCount)
         {
-            Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this);
+            char key[30] = {0};
+            sprintf(key, "%p", schedule_selector(TextureCache::addImageAsyncCallBack));
+            
+            Director::getInstance()->getScheduler()->unschedule(this, key);
         }
     }
 }

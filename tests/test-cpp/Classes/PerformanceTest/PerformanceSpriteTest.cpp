@@ -596,7 +596,7 @@ void SpriteMainScene::onEnter()
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
-        sched->scheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this, 0.2f, false);
+//james        sched->scheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this, 0.2f, false);
         
     }
 }
@@ -608,7 +608,7 @@ void SpriteMainScene::onExit()
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
-        sched->unscheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this );
+//james        sched->unscheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this );
     }
     
     Scene::onExit();
@@ -674,7 +674,7 @@ void  SpriteMainScene::endAutoTest()
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
     
-    sched->unscheduleSelector( SEL_SCHEDULE( &SpriteMainScene::updateAutoTest ), this );
+//james    sched->unscheduleSelector( SEL_SCHEDULE( &SpriteMainScene::updateAutoTest ), this );
 }
 
 void  SpriteMainScene::nextAutoTest()
@@ -713,7 +713,7 @@ void  SpriteMainScene::finishAutoTest()
     SpriteMainScene::_s_autoTest = false;
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
-    sched->unscheduleSelector( SEL_SCHEDULE( &SpriteMainScene::updateAutoTest ), this);
+//james    sched->unscheduleSelector( SEL_SCHEDULE( &SpriteMainScene::updateAutoTest ), this);
     
     auto autoTestMenu = dynamic_cast<Menu*>(getChildByTag(kTagAutoTestMenu));
     if (nullptr != autoTestMenu)

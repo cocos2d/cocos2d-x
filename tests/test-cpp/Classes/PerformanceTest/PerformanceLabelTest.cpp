@@ -350,19 +350,19 @@ void LabelMainScene::onEnter()
     
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
-    sched->scheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateText), this, 0.0f, false);
+//james    sched->scheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateText), this, 0.0f, false);
 
     _vecFPS.clear();
     _executeTimes = 0;
-    sched->scheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateAutoTest), this, 0.2f, false);
+//james    sched->scheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateAutoTest), this, 0.2f, false);
 }
 
 void LabelMainScene::onExit()
 {
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
-    sched->unscheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateText), this );
-    sched->unscheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateAutoTest), this );
+//james    sched->unscheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateText), this );
+//james    sched->unscheduleSelector(SEL_SCHEDULE(&LabelMainScene::updateAutoTest), this );
     
     Scene::onExit();
 }

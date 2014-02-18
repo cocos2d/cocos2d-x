@@ -134,6 +134,7 @@ protected:
     struct _hashElement    *_targets;
     struct _hashElement    *_currentTarget;
     bool            _currentTargetSalvaged;
+    friend class Director;
 };
 
 // end of actions group
