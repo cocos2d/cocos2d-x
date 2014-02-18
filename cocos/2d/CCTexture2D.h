@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCRef.h"
 #include "CCGeometry.h"
 #include "ccTypes.h"
+#include "CCScriptProperty.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -434,6 +435,8 @@ protected:
     GLProgram* _shaderProgram;
 
     static const PixelFormatInfoMap _pixelFormatInfoTables;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 

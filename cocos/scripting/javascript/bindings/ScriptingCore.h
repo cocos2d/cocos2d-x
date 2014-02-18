@@ -60,7 +60,7 @@ public:
      @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByObject(cocos2d::Ref* pObj);
+    virtual void removeScriptObjectByObject(cocos2d::ScriptProperty* obj);
 
     /**
      @brief Execute script code contained in the given string.

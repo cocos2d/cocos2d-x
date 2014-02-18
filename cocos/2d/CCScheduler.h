@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCVector.h"
 #include "ccTypes.h"
 #include "uthash.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -330,6 +331,8 @@ protected:
     // Used for "perform Function"
     std::vector<std::function<void()>> _functionsToPerform;
     std::mutex _performMutex;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of global group

@@ -28,6 +28,7 @@
 #include "CCPlatformMacros.h"
 #include "CCEventListener.h"
 #include "CCEvent.h"
+#include "CCScriptProperty.h"
 
 #include <functional>
 #include <string>
@@ -246,6 +247,8 @@ protected:
     bool _isEnabled;
     
     int _nodePriorityIndex;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 

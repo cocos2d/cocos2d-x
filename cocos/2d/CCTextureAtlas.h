@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "CCRef.h"
 #include "ccConfig.h"
+#include "CCScriptProperty.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -242,6 +243,8 @@ protected:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundlistener;
 #endif
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of textures group

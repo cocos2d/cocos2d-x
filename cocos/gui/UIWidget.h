@@ -72,7 +72,10 @@ typedef enum
     POSITION_PERCENT
 }PositionType;
 
-typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
+    
+class Widget;
+
+typedef void (Ref::*SEL_TouchEvent)(Widget*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 /**
 *   @js NA

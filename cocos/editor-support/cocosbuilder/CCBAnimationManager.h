@@ -108,8 +108,8 @@ public:
      */
     void setCallFunc(cocos2d::CallFunc *callFunc, const std::string &callbackNamed);
 
-    cocos2d::Ref* actionForCallbackChannel(CCBSequenceProperty* channel);
-    cocos2d::Ref* actionForSoundChannel(CCBSequenceProperty* channel);
+    cocos2d::Sequence* actionForCallbackChannel(CCBSequenceProperty* channel);
+    cocos2d::Sequence* actionForSoundChannel(CCBSequenceProperty* channel);
 
 	// return -1 if timeline not exsit
     int getSequenceId(const char* pSequenceName);

@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCSpriteFrame.h"
 #include "CCVector.h"
+#include "CCScriptProperty.h"
 
 #include <string>
 
@@ -120,6 +121,8 @@ protected:
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(AnimationFrame);
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
@@ -250,6 +253,8 @@ protected:
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Animation);
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of sprite_nodes group

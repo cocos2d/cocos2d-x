@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCAction.h"
 #include "CCVector.h"
 #include "CCRef.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -135,6 +136,8 @@ protected:
     struct _hashElement    *_targets;
     struct _hashElement    *_currentTarget;
     bool            _currentTargetSalvaged;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of actions group

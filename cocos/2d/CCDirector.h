@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "CCVector.h"
 #include "CCGL.h"
 #include "CCLabelAtlas.h"
-
+#include "CCScriptProperty.h"
 #include "kazmath/mat4.h"
 
 
@@ -492,6 +492,8 @@ protected:
     
     // GLViewProtocol will recreate stats labels to fit visible rect
     friend class GLViewProtocol;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /** 

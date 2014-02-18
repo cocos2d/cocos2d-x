@@ -615,7 +615,7 @@ ActionInterval* CCBAnimationManager::getEaseAction(ActionInterval *pAction, CCBK
     }
 }
 
-Ref*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* channel) {
+Sequence*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* channel) {
   
     float lastKeyframeTime = 0;
     
@@ -701,10 +701,10 @@ Ref*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* channel
     }
     if(actions.size() < 1) return nullptr;
     
-    return (Ref *) Sequence::create(actions);
+    return Sequence::create(actions);
 }
 
-Ref*  CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel) {
+Sequence*  CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel) {
     
     float lastKeyframeTime = 0;
     

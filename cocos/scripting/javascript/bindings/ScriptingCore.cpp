@@ -662,11 +662,11 @@ bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 }
 
 
-void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
+void ScriptingCore::removeScriptObjectByObject(ScriptProperty* pObj)
 {
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    void *ptr = (void*)pObj;
+    void *ptr = (void*)pObj->_owner;
     nproxy = jsb_get_native_proxy(ptr);
     if (nproxy) {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -1459,7 +1459,7 @@ void ScriptingCore::enableDebugger()
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
-        scheduler->scheduleUpdateForTarget(this->_runLoop, 0, false);
+        scheduler->scheduleUpdate(CC_CALLBACK_1(SimpleRunLoop::update, this->_runLoop), this->_runLoop, 0, false);
     }
 }
 

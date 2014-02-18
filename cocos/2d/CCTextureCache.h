@@ -45,6 +45,7 @@ THE SOFTWARE.
     #include "platform/CCImage.h"
     #include <list>
 #endif
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -246,6 +247,8 @@ protected:
     Texture2D::TexParams      _texParams;
     std::string               _text;
     FontDefinition            _fontDefinition;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 class VolatileTextureMgr

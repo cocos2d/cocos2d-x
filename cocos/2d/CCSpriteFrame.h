@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCRef.h"
 #include "CCGeometry.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -152,6 +153,8 @@ protected:
     Size _originalSizeInPixels;
     Texture2D *_texture;
     std::string  _textureFilename;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of sprite_nodes group

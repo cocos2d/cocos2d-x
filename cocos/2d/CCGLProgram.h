@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 #include "ccMacros.h"
 #include "CCRef.h"
-
+#include "CCScriptProperty.h"
 #include "CCGL.h"
 #include "kazmath/kazmath.h"
 
@@ -260,6 +260,8 @@ private:
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }
     } _flags;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of shaders group

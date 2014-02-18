@@ -86,6 +86,9 @@ public:
      * @return LayoutParameterType
      */
     LayoutParameterType getLayoutType() const;
+    
+public:
+    ScriptProperty _scriptProperty;
 protected:
     Margin _margin;
     LayoutParameterType _layoutParameterType;

@@ -26,8 +26,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __PLATFORM_CCNODE_H__
-#define __PLATFORM_CCNODE_H__
+#ifndef __CCNODE_H__
+#define __CCNODE_H__
 
 #include "ccMacros.h"
 #include "CCAffineTransform.h"
@@ -41,6 +41,7 @@
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
 #include "kazmath/kazmath.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -1508,9 +1509,10 @@ protected:
     Color3B     _realColor;
     bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
-
+    
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 //#pragma mark - NodeRGBA
@@ -1558,4 +1560,4 @@ private:
 
 NS_CC_END
 
-#endif // __PLATFORM_CCNODE_H__
+#endif // __CCNODE_H__

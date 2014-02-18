@@ -6,4 +6,36 @@
 //
 //
 
-#include "ScriptProperty.h"
+#include "CCScriptProperty.h"
+#include "CCScriptSupport.h"
+
+NS_CC_BEGIN
+
+ScriptProperty::ScriptProperty()
+: _luaID(0)
+, _owner(nullptr)
+{
+    static unsigned int uObjectCount = 0;
+    _ID = ++uObjectCount;
+}
+
+ScriptProperty::~ScriptProperty()
+{
+    // if the object is referenced by Lua engine, remove it
+    if (_luaID)
+    {
+        CCASSERT(_owner != nullptr, "Owner should not be nullptr.");
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
+    }
+    else
+    {
+        ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (pEngine != nullptr && pEngine->getScriptType() == kScriptTypeJavascript)
+        {
+            CCASSERT(_owner != nullptr, "Owner should not be nullptr.");
+            pEngine->removeScriptObjectByObject(this);
+        }
+    }
+}
+
+NS_CC_END

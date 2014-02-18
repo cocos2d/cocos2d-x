@@ -6,7 +6,7 @@
 #include "CCNode.h"
 #include "CCData.h"
 #include "CCMap.h"
-
+#include "CCScriptProperty.h"
 #include "CCBSequence.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
@@ -394,6 +394,8 @@ private:
     std::string _CCBRootPath;
     
     bool _jsControlled;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of effects group

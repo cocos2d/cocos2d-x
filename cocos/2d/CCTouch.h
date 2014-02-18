@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "CCRef.h"
 #include "CCGeometry.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -94,6 +95,8 @@ private:
     Point _startPoint;
     Point _point;
     Point _prevPoint;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of input group

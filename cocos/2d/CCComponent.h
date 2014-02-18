@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCRef.h"
 #include <string>
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -72,6 +73,8 @@ protected:
     Node *_owner;
     std::string _name;
     bool _enabled;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 NS_CC_END

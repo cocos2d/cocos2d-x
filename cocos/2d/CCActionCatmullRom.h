@@ -132,6 +132,8 @@ public:
 private:
     /** Array that contains the control points */
     std::vector<Point*> *_controlPoints;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /** Cardinal Spline path.

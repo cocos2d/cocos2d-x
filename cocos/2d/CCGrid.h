@@ -35,6 +35,7 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -103,6 +104,8 @@ protected:
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
     Director::Projection _directorProjection;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /**

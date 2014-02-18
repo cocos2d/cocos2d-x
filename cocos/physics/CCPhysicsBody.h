@@ -32,6 +32,7 @@
 #include "CCGeometry.h"
 #include "CCPhysicsShape.h"
 #include "CCVector.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -330,6 +331,8 @@ protected:
     friend class PhysicsShape;
     friend class PhysicsJoint;
     friend class Node;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 NS_CC_END

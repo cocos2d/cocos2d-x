@@ -75,6 +75,10 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
             return NULL;
         }
         
+        if (native_obj->_scriptProperty._owner == nullptr)
+        {
+            native_obj->_scriptProperty._owner = native_obj;
+        }
         JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
         proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG

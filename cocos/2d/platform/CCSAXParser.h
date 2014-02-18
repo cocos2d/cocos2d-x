@@ -26,6 +26,7 @@
 
 #include "CCPlatformConfig.h"
 #include "platform/CCCommon.h"
+#include "CCScriptProperty.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -108,6 +109,8 @@ public:
      * @lua NA
      */
     static void textHandler(void *ctx, const CC_XML_CHAR *name, int len);
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of platform group

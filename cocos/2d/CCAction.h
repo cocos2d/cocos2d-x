@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "CCRef.h"
 #include "CCGeometry.h"
-#include "CCPlatformMacros.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -116,6 +116,7 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Action);
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /** 

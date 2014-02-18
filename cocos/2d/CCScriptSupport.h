@@ -31,9 +31,12 @@
 #include "CCEventTouch.h"
 #include "CCEventKeyboard.h"
 #include "CCSet.h"
+#include "CCScriptProperty.h"
+
 #include <map>
 #include <string>
 #include <list>
+
 
 typedef struct lua_State lua_State;
 
@@ -373,7 +376,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void removeScriptObjectByObject(Ref* obj) = 0;
+    virtual void removeScriptObjectByObject(ScriptProperty* obj) = 0;
     
     /** Remove script function handler, only LuaEngine class need to implement this function. 
      * @js NA
