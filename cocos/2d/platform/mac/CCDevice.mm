@@ -112,24 +112,37 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 											 font, NSFontAttributeName,
 											 paragraphStyle, NSParagraphStyleAttributeName, nil];
         
-		// linebreak
+        // linebreak
 		if (info->width > 0) {
 			if ([string sizeWithAttributes:tokenAttributesDict].width > info->width) {
 				NSMutableString *lineBreak = [[[NSMutableString alloc] init] autorelease];
 				NSUInteger length = [string length];
 				NSRange range = NSMakeRange(0, 1);
-				NSUInteger width = 0;
+                CGSize textSize;
 				NSUInteger lastBreakLocation = 0;
+                NSUInteger insertCount = 0;
 				for (NSUInteger i = 0; i < length; i++) {
 					range.location = i;
 					NSString *character = [string substringWithRange:range];
 					[lineBreak appendString:character];
-					if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) { lastBreakLocation = i; }
-					width = [lineBreak sizeWithAttributes:tokenAttributesDict].width;
-					if (width > info->width) {
-						[lineBreak insertString:@"\r\n" atIndex:(lastBreakLocation > 0) ? lastBreakLocation : [lineBreak length] - 1];
+					if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) {
+                        lastBreakLocation = i + insertCount;
+                    }
+                    textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
+                    if(textSize.height > info->height)
+                        break;
+					if (textSize.width > info->width) {
+                        if(lastBreakLocation > 0) {
+                            [lineBreak insertString:@"\r" atIndex:lastBreakLocation];
+                            lastBreakLocation = 0;
+                        }
+                        else {
+                            [lineBreak insertString:@"\r" atIndex:[lineBreak length] - 1];
+                        }
+                        insertCount += 1;
 					}
 				}
+                
 				string = lineBreak;
 			}
 		}
@@ -194,7 +207,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 		
 		NSUInteger textureSize = POTWide*POTHigh*4;
 		
-		unsigned char* dataNew = new unsigned char[textureSize];
+		unsigned char* dataNew = (unsigned char*)malloc(sizeof(unsigned char) * textureSize);
 		if (dataNew) {
 			memcpy(dataNew, data, textureSize);
 			// output params
