@@ -99,7 +99,7 @@ public:
 
 protected:
     void loop();
-    ssize_t readline(int fd);
+    ssize_t readline(int fd, char *buf, int maxlen);
     bool parseCommand(int fd);
     
     void addClient();
@@ -124,8 +124,6 @@ protected:
 
     bool _running;
     bool _endThread;
-
-    char _buffer[512];
 
     std::map<std::string, Command> _commands;
 

@@ -30,7 +30,6 @@
 #include <cctype>
 #include <locale>
 #include <sstream>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -558,7 +557,8 @@ void Console::commandTextures(int fd, const std::string& args)
 
 bool Console::parseCommand(int fd)
 {
-    auto r = readline(fd);
+    char buf[512];
+    auto r = readline(fd, buf, sizeof(buf)-1);
     if(r < 1)
     {
         const char err[] = "Unknown error!\n";
@@ -569,7 +569,7 @@ bool Console::parseCommand(int fd)
     std::string cmdLine;
 
     std::vector<std::string> args;
-    cmdLine = std::string(_buffer);
+    cmdLine = std::string(buf);
    
     args = split(cmdLine, ' ');
     if(args.empty())
@@ -595,7 +595,7 @@ bool Console::parseCommand(int fd)
         }
         auto cmd = it->second;
         cmd.callback(fd, args2);
-    }else if(strcmp(_buffer, "\r\n") != 0) {
+    }else if(strcmp(buf, "\r\n") != 0) {
         const char err[] = "Unknown command. Type 'help' for options\n";
         write(fd, err, sizeof(err));
     }
@@ -610,15 +610,12 @@ bool Console::parseCommand(int fd)
 //
 
 
-ssize_t Console::readline(int fd)
+ssize_t Console::readline(int fd, char* ptr, int maxlen)
 {
-    int maxlen = sizeof(_buffer)-1;
     ssize_t n, rc;
-    char c, *ptr;
+    char c;
 
-    ptr = _buffer;
-
-    for( n=1; n<maxlen; n++ ) {
+    for( n=1; n<maxlen-1; n++ ) {
         if( (rc = read(fd, &c, 1 )) ==1 ) {
             *ptr++ = c;
             if(c == '\n') {
