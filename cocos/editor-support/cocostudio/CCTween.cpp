@@ -476,7 +476,7 @@ float Tween::updateFrameData(float currentPercent)
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
      */
     TweenType tweenType = (_frameTweenEasing != Linear) ? _frameTweenEasing : _tweenEasing;
-    if (tweenType != ::cocos2d::tweenfunc::TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
+    if (tweenType != cocos2d::tweenfunc::TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
     {
         currentPercent = cocos2d::tweenfunc::tweenTo(currentPercent, tweenType, _from->easingParams);
     }
