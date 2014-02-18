@@ -769,6 +769,7 @@ void TMXOrthoObjectsTest::onDraw()
     kmGLLoadMatrix(&_modelViewTransform);
     
     auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
+    auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Group 1");
 
     auto& objects = group->getObjects();
@@ -777,17 +778,17 @@ void TMXOrthoObjectsTest::onDraw()
     {
         ValueMap& dict = obj.asValueMap();
         
-        float x = dict["x"].asFloat();
-        float y = dict["y"].asFloat();
-        float width = dict["width"].asFloat();
-        float height = dict["height"].asFloat();
+        float x = dict["position_x"].asFloat();
+        float y = dict["position_y"].asFloat();
+        float width = dict["size_width"].asFloat();
+        float height = dict["size_height"].asFloat();
         
         glLineWidth(3);
         
-        DrawPrimitives::drawLine( Point(x, y), Point((x+width), y) );
-        DrawPrimitives::drawLine( Point((x+width), y), Point((x+width), (y+height)) );
-        DrawPrimitives::drawLine( Point((x+width), (y+height)), Point(x, (y+height)) );
-        DrawPrimitives::drawLine( Point(x, (y+height)), Point(x, y) );
+        DrawPrimitives::drawLine( pos + Point(x, y), pos + Point((x+width), y) );
+        DrawPrimitives::drawLine( pos + Point((x+width), y), pos + Point((x+width), (y+height)) );
+        DrawPrimitives::drawLine( pos + Point((x+width), (y+height)), pos + Point(x, (y+height)) );
+        DrawPrimitives::drawLine( pos + Point(x, (y+height)), pos + Point(x, y) );
         
         glLineWidth(1);
     }
@@ -842,23 +843,24 @@ void TMXIsoObjectsTest::onDraw()
     kmGLLoadMatrix(&_modelViewTransform);
     
     auto map = (TMXTiledMap*) getChildByTag(kTagTileMap);
+    auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Group 1");
 
     auto& objects = group->getObjects();
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
-        float x = dict["x"].asFloat();
-        float y = dict["y"].asFloat();
-        float width = dict["width"].asFloat();
-        float height = dict["height"].asFloat();
+        float x = dict["positon_x"].asFloat();
+        float y = dict["positon_y"].asFloat();
+        float width = dict["size_width"].asFloat();
+        float height = dict["size_height"].asFloat();
         
         glLineWidth(3);
         
-        DrawPrimitives::drawLine( Point(x,y), Point(x+width,y) );
-        DrawPrimitives::drawLine( Point(x+width,y), Point(x+width,y+height) );
-        DrawPrimitives::drawLine( Point(x+width,y+height), Point(x,y+height) );
-        DrawPrimitives::drawLine( Point(x,y+height), Point(x,y) );
+        DrawPrimitives::drawLine( pos + Point(x,y), pos + Point(x+width,y) );
+        DrawPrimitives::drawLine( pos + Point(x+width,y), pos + Point(x+width,y+height) );
+        DrawPrimitives::drawLine( pos + Point(x+width,y+height), pos + Point(x,y+height) );
+        DrawPrimitives::drawLine( pos + Point(x,y+height), pos + Point(x,y) );
         
         glLineWidth(1);
     }
@@ -1525,6 +1527,7 @@ void TMXGIDObjectsTest::onDraw()
     kmGLLoadMatrix(&_modelViewTransform);
     
     auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
+    auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Layer 1");
     
     auto& objects = group->getObjects();
@@ -1532,17 +1535,17 @@ void TMXGIDObjectsTest::onDraw()
     {
         ValueMap& dict = obj.asValueMap();
         
-        float x = dict["x"].asFloat();
-        float y = dict["y"].asFloat();
-        float width = dict["width"].asFloat();
-        float height = dict["height"].asFloat();
+        float x = dict["position_x"].asFloat();
+        float y = dict["position_y"].asFloat();
+        float width = dict["size_width"].asFloat();
+        float height = dict["size_height"].asFloat();
         
         glLineWidth(3);
         
-        DrawPrimitives::drawLine(Point(x, y), Point(x + width, y));
-        DrawPrimitives::drawLine(Point(x + width, y), Point(x + width, y + height));
-        DrawPrimitives::drawLine(Point(x + width,y + height), Point(x,y + height));
-        DrawPrimitives::drawLine(Point(x,y + height), Point(x,y));
+        DrawPrimitives::drawLine(pos + Point(x, y), pos + Point(x + width, y));
+        DrawPrimitives::drawLine(pos + Point(x + width, y), pos + Point(x + width, y + height));
+        DrawPrimitives::drawLine(pos + Point(x + width,y + height), pos + Point(x,y + height));
+        DrawPrimitives::drawLine(pos + Point(x,y + height), pos + Point(x,y));
         
         glLineWidth(1);
     }
