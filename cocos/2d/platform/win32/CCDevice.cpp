@@ -412,7 +412,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
         CC_BREAK_IF(! dc.drawText(text, size, align));
 
         int dataLen = size.cx * size.cy * 4;
-        unsigned char* dataBuf = new unsigned char[dataLen];
+        unsigned char* dataBuf = (unsigned char*)malloc(sizeof(unsigned char) * dataLen);
         CC_BREAK_IF(! dataBuf);
 
         struct
