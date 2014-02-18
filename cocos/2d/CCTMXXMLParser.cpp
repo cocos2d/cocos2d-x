@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ZipUtils.h"
 #include "base64.h"
+#include "CCDirector.h"
 
 using namespace std;
 
@@ -487,16 +488,21 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // But X and Y since they need special treatment
         // X
-
-        int x = attributeDict["x"].asInt() + (int)objectGroup->getPositionOffset().x;
-        dict["x"] = Value(x);
-
+        int x = attributeDict["x"].asInt();
         // Y
-        int y = attributeDict["y"].asInt() + (int)objectGroup->getPositionOffset().y;
-
-        // Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
-        y = (int)(_mapSize.height * _tileSize.height) - y - attributeDict["height"].asInt();
-        dict["y"] = Value(y);
+        int y = attributeDict["y"].asInt();
+        
+        Point p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().x - attributeDict["height"].asInt());
+        p = CC_POINT_PIXELS_TO_POINTS(p);
+        dict["position_x"] = Value(p.x);
+        dict["position_y"] = Value(p.y);
+        
+        int width = attributeDict["width"].asInt();
+        int height = attributeDict["height"].asInt();
+        Size s(width, height);
+        s = CC_SIZE_PIXELS_TO_POINTS(s);
+        dict["size_width"] = Value(s.width);
+        dict["size_height"] = Value(s.height);
 
         // Add the object to the objectGroup
         objectGroup->getObjects().push_back(Value(dict));
