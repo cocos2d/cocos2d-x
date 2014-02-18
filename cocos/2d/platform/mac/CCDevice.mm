@@ -207,7 +207,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 		
 		NSUInteger textureSize = POTWide*POTHigh*4;
 		
-		unsigned char* dataNew = new unsigned char[textureSize];
+		unsigned char* dataNew = (unsigned char*)malloc(sizeof(unsigned char) * textureSize);
 		if (dataNew) {
 			memcpy(dataNew, data, textureSize);
 			// output params
