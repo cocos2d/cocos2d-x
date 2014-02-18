@@ -299,6 +299,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCTransitionPageTurn.cpp" />
     <ClCompile Include="CCTransitionProgress.cpp" />
     <ClCompile Include="ccTypes.cpp" />
+    <ClCompile Include="CCTweenFunction.cpp" />
     <ClCompile Include="CCUserDefault.cpp" />
     <ClCompile Include="ccUTF8.cpp" />
     <ClCompile Include="ccUtils.cpp" />
@@ -497,6 +498,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCTransitionPageTurn.h" />
     <ClInclude Include="CCTransitionProgress.h" />
     <ClInclude Include="ccTypes.h" />
+    <ClInclude Include="CCTweenFunction.h" />
     <ClInclude Include="CCUserDefault.h" />
     <ClInclude Include="ccUTF8.h" />
     <ClInclude Include="ccUtils.h" />
