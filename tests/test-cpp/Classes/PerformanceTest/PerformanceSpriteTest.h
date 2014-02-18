@@ -51,9 +51,9 @@ public:
     {
     }
 
-    virtual void restartCallback(Object* sender);
-    virtual void nextCallback(Object* sender);
-    virtual void backCallback(Object* sender);
+    virtual void restartCallback(Ref* sender);
+    virtual void nextCallback(Ref* sender);
+    virtual void backCallback(Ref* sender);
     virtual void showCurrentTest();
 };
 
@@ -67,9 +67,9 @@ public:
     void initWithSubTest(int nSubTest, int nNodes);
     void updateNodes();
 
-    void testNCallback(Object* sender);
-    void onIncrease(Object* sender);
-    void onDecrease(Object* sender);
+    void testNCallback(Ref* sender);
+    void onIncrease(Ref* sender);
+    void onDecrease(Ref* sender);
 
     virtual void doTest(Sprite* sprite) = 0;
 
@@ -79,7 +79,7 @@ public:
     virtual void onEnter();
     virtual void onExit();
     void  updateAutoTest(float dt);
-    void  onAutoTest(Object* sender);
+    void  onAutoTest(Ref* sender);
 
     static bool _s_autoTest;
     static int  _s_nSpriteCurCase;

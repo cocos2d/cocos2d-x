@@ -43,7 +43,7 @@ NS_CC_BEGIN
 /** @brief TMXObjectGroup represents the TMX object group.
 @since v0.99.0
 */
-class CC_DLL TMXObjectGroup : public Object
+class CC_DLL TMXObjectGroup : public Ref
 {
 public:
     /**

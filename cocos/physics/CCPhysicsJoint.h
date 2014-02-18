@@ -28,7 +28,7 @@
 #include "ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 NS_CC_BEGIN

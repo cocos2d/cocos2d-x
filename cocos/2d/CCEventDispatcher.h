@@ -52,7 +52,7 @@ event listeners can be added and removed even
 from within an EventListener, while events are being
 dispatched.
 */
-class EventDispatcher : public Object
+class EventDispatcher : public Ref
 {
 public:
     /** Adds a event listener for a specified event with the priority of scene graph.

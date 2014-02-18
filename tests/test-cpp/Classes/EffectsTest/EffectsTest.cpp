@@ -414,12 +414,12 @@ void TextLayer::newScene()
     s->release();
 }
 
-void TextLayer::restartCallback(Object* sender)
+void TextLayer::restartCallback(Ref* sender)
 {
     newScene();
 }
 
-void TextLayer::nextCallback(Object* sender)
+void TextLayer::nextCallback(Ref* sender)
 {
     // update the action index
     actionIdx++;
@@ -428,7 +428,7 @@ void TextLayer::nextCallback(Object* sender)
     newScene();
 }
 
-void TextLayer::backCallback(Object* sender)
+void TextLayer::backCallback(Ref* sender)
 {
     // update the action index
     actionIdx--;

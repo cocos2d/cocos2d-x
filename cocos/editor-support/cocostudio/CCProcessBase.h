@@ -49,7 +49,7 @@ enum AnimationType
  *  @js NA
  *  @lua NA
  */
-class  ProcessBase : public cocos2d::Object
+class  ProcessBase : public cocos2d::Ref
 {
 public:
     ProcessBase(void);

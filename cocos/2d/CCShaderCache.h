@@ -46,7 +46,7 @@ class GLProgram;
  Singleton that stores manages GL shaders
  @since v2.0
  */
-class CC_DLL ShaderCache : public Object 
+class CC_DLL ShaderCache : public Ref 
 {
 public:
     /**

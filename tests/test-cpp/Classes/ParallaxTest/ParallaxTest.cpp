@@ -301,7 +301,7 @@ void ParallaxDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void ParallaxDemo::restartCallback(Object* sender)
+void ParallaxDemo::restartCallback(Ref* sender)
 {
     auto s = new ParallaxTestScene();
     s->addChild(restartParallaxAction()); 
@@ -310,7 +310,7 @@ void ParallaxDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void ParallaxDemo::nextCallback(Object* sender)
+void ParallaxDemo::nextCallback(Ref* sender)
 {
     auto s = new ParallaxTestScene();
     s->addChild( nextParallaxAction() );
@@ -318,7 +318,7 @@ void ParallaxDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void ParallaxDemo::backCallback(Object* sender)
+void ParallaxDemo::backCallback(Ref* sender)
 {
     auto s = new ParallaxTestScene();
     s->addChild( backParallaxAction() );

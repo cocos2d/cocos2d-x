@@ -43,7 +43,7 @@ NS_CC_BEGIN
 typedef struct _listEntry
 {
     struct _listEntry   *prev, *next;
-    Object            *target;        // not retained (retained by hashUpdateEntry)
+    Ref                 *target;        // not retained (retained by hashUpdateEntry)
     int                 priority;
     bool                paused;
     bool                markedForDeletion; // selector will no longer be called and entry will be removed at end of the next tick
@@ -53,7 +53,7 @@ typedef struct _hashUpdateEntry
 {
     tListEntry          **list;        // Which list does it belong to ?
     tListEntry          *entry;        // entry in the list
-    Object            *target;        // hash key (retained)
+    Ref                 *target;        // hash key (retained)
     UT_hash_handle      hh;
 } tHashUpdateEntry;
 
@@ -61,9 +61,9 @@ typedef struct _hashUpdateEntry
 typedef struct _hashSelectorEntry
 {
     ccArray             *timers;
-    Object            *target;    // hash key (retained)
-    int        timerIndex;
-    Timer             *currentTimer;
+    Ref                 *target;    // hash key (retained)
+    int                 timerIndex;
+    Timer               *currentTimer;
     bool                currentTimerSalvaged;
     bool                paused;
     UT_hash_handle      hh;
@@ -85,7 +85,7 @@ Timer::Timer()
 {
 }
 
-Timer* Timer::create(Object *target, SEL_SCHEDULE selector)
+Timer* Timer::create(Ref *target, SEL_SCHEDULE selector)
 {
     Timer *timer = new Timer();
 
@@ -95,7 +95,7 @@ Timer* Timer::create(Object *target, SEL_SCHEDULE selector)
     return timer;
 }
 
-Timer* Timer::create(Object *target, SEL_SCHEDULE selector, float seconds)
+Timer* Timer::create(Ref *target, SEL_SCHEDULE selector, float seconds)
 {
     Timer *timer = new Timer();
 
@@ -124,12 +124,12 @@ bool Timer::initWithScriptHandler(int handler, float seconds)
     return true;
 }
 
-bool Timer::initWithTarget(Object *target, SEL_SCHEDULE selector)
+bool Timer::initWithTarget(Ref *target, SEL_SCHEDULE selector)
 {
     return initWithTarget(target, selector, 0, kRepeatForever, 0.0f);
 }
 
-bool Timer::initWithTarget(Object *target, SEL_SCHEDULE selector, float seconds, unsigned int repeat, float delay)
+bool Timer::initWithTarget(Ref *target, SEL_SCHEDULE selector, float seconds, unsigned int repeat, float delay)
 {
     _target = target;
     _selector = selector;
@@ -271,7 +271,7 @@ Scheduler::~Scheduler(void)
 void Scheduler::removeHashElement(_hashSelectorEntry *element)
 {
 
-	cocos2d::Object *target = element->target;
+	Ref *target = element->target;
 
     ccArrayFree(element->timers);
     HASH_DEL(_hashForTimers, element);
@@ -284,12 +284,12 @@ void Scheduler::removeHashElement(_hashSelectorEntry *element)
 
 }
 
-void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float interval, bool paused)
+void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
 {
     this->scheduleSelector(selector, target, interval, kRepeatForever, 0.0f, paused);
 }
 
-void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float interval, unsigned int repeat, float delay, bool paused)
+void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCASSERT(selector, "Argument selector must be non-nullptr");
     CCASSERT(target, "Argument target must be non-nullptr");
@@ -341,7 +341,7 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float in
     pTimer->release();    
 }
 
-void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Object *target)
+void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Ref *target)
 {
     // explicity handle nil arguments when removing an object
     if (target == 0 || selector == 0)
@@ -395,7 +395,7 @@ void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Object *target)
     }
 }
 
-void Scheduler::priorityIn(tListEntry **list, Object *target, int priority, bool paused)
+void Scheduler::priorityIn(tListEntry **list, Ref *target, int priority, bool paused)
 {
     tListEntry *listElement = (tListEntry *)malloc(sizeof(*listElement));
 
@@ -452,7 +452,7 @@ void Scheduler::priorityIn(tListEntry **list, Object *target, int priority, bool
     HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
-void Scheduler::appendIn(_listEntry **list, Object *target, bool paused)
+void Scheduler::appendIn(_listEntry **list, Ref *target, bool paused)
 {
     tListEntry *listElement = (tListEntry *)malloc(sizeof(*listElement));
 
@@ -471,7 +471,7 @@ void Scheduler::appendIn(_listEntry **list, Object *target, bool paused)
     HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
-void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool paused)
+void Scheduler::scheduleUpdateForTarget(Ref *target, int priority, bool paused)
 {
 
     tHashUpdateEntry *hashElement = nullptr;
@@ -504,7 +504,7 @@ void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool pause
     }
 }
 
-bool Scheduler::isScheduledForTarget(SEL_SCHEDULE selector, Object *target)
+bool Scheduler::isScheduledForTarget(SEL_SCHEDULE selector, Ref *target)
 {
     CCASSERT(selector, "Argument selector must be non-nullptr");
     CCASSERT(target, "Argument target must be non-nullptr");
@@ -550,7 +550,7 @@ void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
         free(element->entry);
 
         // hash entry
-        Object* target = element->target;
+        Ref* target = element->target;
         HASH_DEL(_hashForUpdates, element);
         free(element);
 
@@ -560,7 +560,7 @@ void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
     }
 }
 
-void Scheduler::unscheduleUpdateForTarget(const Object *target)
+void Scheduler::unscheduleUpdateForTarget(const Ref* target)
 {
     if (target == nullptr)
     {
@@ -633,7 +633,7 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
     _scriptHandlerEntries.clear();
 }
 
-void Scheduler::unscheduleAllForTarget(Object *target)
+void Scheduler::unscheduleAllForTarget(Ref *target)
 {
     // explicit nullptr handling
     if (target == nullptr)
@@ -689,7 +689,7 @@ void Scheduler::unscheduleScriptEntry(unsigned int scheduleScriptEntryID)
     }
 }
 
-void Scheduler::resumeTarget(Object *target)
+void Scheduler::resumeTarget(Ref *target)
 {
     CCASSERT(target != nullptr, "");
 
@@ -711,7 +711,7 @@ void Scheduler::resumeTarget(Object *target)
     }
 }
 
-void Scheduler::pauseTarget(Object *target)
+void Scheduler::pauseTarget(Ref *target)
 {
     CCASSERT(target != nullptr, "");
 
@@ -733,7 +733,7 @@ void Scheduler::pauseTarget(Object *target)
     }
 }
 
-bool Scheduler::isTargetPaused(Object *target)
+bool Scheduler::isTargetPaused(Ref *target)
 {
     CCASSERT( target != nullptr, "target must be non nil" );
 
@@ -756,14 +756,14 @@ bool Scheduler::isTargetPaused(Object *target)
     return false;  // should never get here
 }
 
-Vector<Object*> Scheduler::pauseAllTargets()
+Vector<Ref*> Scheduler::pauseAllTargets()
 {
     return pauseAllTargetsWithMinPriority(PRIORITY_SYSTEM);
 }
 
-Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
+Vector<Ref*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
 {
-    Vector<Object*> idsWithSelectors(50);
+    Vector<Ref*> idsWithSelectors(50);
 
     // Custom Selectors
     for(tHashTimerEntry *element = _hashForTimers; element != nullptr;
@@ -808,7 +808,7 @@ Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
     return idsWithSelectors;
 }
 
-void Scheduler::resumeTargets(const Vector<Object*>& targetsToResume)
+void Scheduler::resumeTargets(const Vector<Ref*>& targetsToResume)
 {
     for(const auto &obj : targetsToResume) {
         this->resumeTarget(obj);

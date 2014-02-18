@@ -39,7 +39,7 @@ namespace cocostudio {
  *  @js NA
  *  @lua NA
  */
-class  DecorativeDisplay: public cocos2d::Object
+class  DecorativeDisplay: public cocos2d::Ref
 {
 public:
     static DecorativeDisplay *create();

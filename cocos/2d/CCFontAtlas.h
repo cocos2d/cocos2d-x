@@ -27,7 +27,7 @@
 
 #include <unordered_map>
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -49,7 +49,7 @@ struct FontLetterDefinition
     int xAdvance;
 };
 
-class CC_DLL FontAtlas : public Object
+class CC_DLL FontAtlas : public Ref
 {
 public:
     /**

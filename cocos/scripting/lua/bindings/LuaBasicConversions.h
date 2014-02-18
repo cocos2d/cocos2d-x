@@ -226,7 +226,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
             continue;
         
 
-        if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+        if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
             std::string typeName = typeid(*obj).name();
             auto iter = g_luaType.find(typeName);
@@ -256,7 +256,7 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
     {
         std::string key = iter->first;
         T obj = iter->second;
-        if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+        if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
             std::string name = typeid(*obj).name();
             auto typeIter = g_luaType.find(name);

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRID_H__
 #define __EFFECTS_CCGRID_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCNode.h"
 #include "ccTypes.h"
 #include "CCTexture2D.h"
@@ -49,7 +49,7 @@ class GLProgram;
 
 /** Base class for other
 */
-class CC_DLL GridBase : public Object
+class CC_DLL GridBase : public Ref
 {
 public:
     /** create one Grid */

@@ -29,19 +29,19 @@ class HelloCocosBuilderLayer
 
         void openTest(const char * pCCBFileName, const char * nodeName = NULL, cocosbuilder::NodeLoader * nodeLoader = NULL);
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
-        virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, const cocos2d::Value& pCCBValue);
+        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Ref * pTarget, const char * pSelectorName);
+        virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Ref * pTarget, const char * pSelectorName);
+        virtual bool onAssignCCBMemberVariable(cocos2d::Ref * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
+        virtual bool onAssignCCBCustomProperty(Ref* pTarget, const char* pMemberVariableName, const cocos2d::Value& pCCBValue);
         virtual void onNodeLoaded(cocos2d::Node * node, cocosbuilder::NodeLoader * nodeLoader);
 
-        void onMenuTestClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-        void onSpriteTestClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-        void onButtonTestClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-        void onAnimationsTestClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-        void onParticleSystemTestClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-        void onScrollViewTestClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-        void onTimelineCallbackSoundClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
+        void onMenuTestClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+        void onSpriteTestClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+        void onButtonTestClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+        void onAnimationsTestClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+        void onParticleSystemTestClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+        void onScrollViewTestClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+        void onTimelineCallbackSoundClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
 
     private:
         cocos2d::Sprite * mBurstSprite;

@@ -15,7 +15,7 @@ USING_NS_CC_EXT;
 
 
 class JSB_ScrollViewDelegate
-: public Object
+: public Ref
 , public ScrollViewDelegate
 {
 public:
@@ -101,7 +101,7 @@ static bool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc, j
 #define KEY_TABLEVIEW_DELEGATE     "TableViewDelegate"
 
 class JSB_TableViewDelegate
-: public Object
+: public Ref
 , public TableViewDelegate
 {
 public:
@@ -230,7 +230,7 @@ static bool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, js
 }
 
 class JSB_TableViewDataSource
-: public Object
+: public Ref
 , public TableViewDataSource
 {
 public:
@@ -490,7 +490,7 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
 }
 
 class JSB_EditBoxDelegate
-: public Object
+: public Ref
 , public EditBoxDelegate
 {
 public:
@@ -595,7 +595,7 @@ static bool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsva
 
 
 
-class JSB_ControlButtonTarget : public Object
+class JSB_ControlButtonTarget : public Ref
 {
 public:
     JSB_ControlButtonTarget()
@@ -626,7 +626,7 @@ public:
         }
     }
     
-    virtual void onEvent(Object *controlButton, Control::EventType event)
+    virtual void onEvent(Ref *controlButton, Control::EventType event)
     {
         js_proxy_t * p;
         JS_GET_PROXY(p, controlButton);

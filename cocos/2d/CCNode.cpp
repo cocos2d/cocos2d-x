@@ -492,7 +492,7 @@ void Node::setOrderOfArrival(int orderOfArrival)
     _orderOfArrival = orderOfArrival;
 }
 
-void Node::setUserObject(Object *pUserObject)
+void Node::setUserObject(Ref *pUserObject)
 {
     CC_SAFE_RETAIN(pUserObject);
     CC_SAFE_RELEASE(_userObject);

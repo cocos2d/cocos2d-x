@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "CCAction.h"
 #include "CCVector.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -53,7 +53,7 @@ struct _hashElement;
  
  @since v0.8
  */
-class CC_DLL ActionManager : public Object
+class CC_DLL ActionManager : public Ref
 {
 public:
     /**

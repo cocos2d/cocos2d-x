@@ -310,7 +310,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     }
 }
 
-void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Object *target, SEL_SCHEDULE selector)
+void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Ref *target, SEL_SCHEDULE selector)
 {
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
@@ -448,7 +448,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         }
 
 
-        Object *target = pAsyncStruct->target;
+        Ref* target = pAsyncStruct->target;
         SEL_SCHEDULE selector = pAsyncStruct->selector;
 
         --_asyncRefCount;

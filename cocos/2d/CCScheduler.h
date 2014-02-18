@@ -28,7 +28,7 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCVector.h"
 #include "uthash.h"
 
@@ -47,29 +47,29 @@ NS_CC_BEGIN
 //
 /** @brief Light-weight timer */
 //
-class CC_DLL Timer : public Object
+class CC_DLL Timer : public Ref
 {
 public:
     /** Allocates a timer with a target and a selector. */
-    static Timer* create(Object *target, SEL_SCHEDULE selector);
+    static Timer* create(Ref *target, SEL_SCHEDULE selector);
     /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static Timer* create(Object *target, SEL_SCHEDULE selector, float seconds);
+    static Timer* create(Ref *target, SEL_SCHEDULE selector, float seconds);
     /** Allocates a timer with a script callback function and an interval in seconds. 
      * @js NA
      * @lua NA
      */
     static Timer* createWithScriptHandler(int handler, float seconds);
 
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
-    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector, float seconds) { return Timer::create(target, selector, seconds); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Ref *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
+    CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Ref *target, SEL_SCHEDULE selector, float seconds) { return Timer::create(target, selector, seconds); }
     CC_DEPRECATED_ATTRIBUTE static Timer* timerWithScriptHandler(int handler, float seconds) { return Timer::createWithScriptHandler(handler, seconds); }
 
     Timer(void);
 
     /** Initializes a timer with a target and a selector. */
-    bool initWithTarget(Object *target, SEL_SCHEDULE selector);
+    bool initWithTarget(Ref *target, SEL_SCHEDULE selector);
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithTarget(Object *target, SEL_SCHEDULE selector, float seconds, unsigned int repeat, float delay);
+    bool initWithTarget(Ref *target, SEL_SCHEDULE selector, float seconds, unsigned int repeat, float delay);
     /** Initializes a timer with a script callback function and an interval in seconds. */
     bool initWithScriptHandler(int handler, float seconds);
 
@@ -89,7 +89,7 @@ public:
     inline int getScriptHandler() const { return _scriptHandler; };
 
 protected:
-    Object *_target;
+    Ref *_target;
     float _elapsed;
     bool _runForever;
     bool _useDelay;
@@ -121,7 +121,7 @@ There are 2 different types of callbacks (selectors):
 The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
 
 */
-class CC_DLL Scheduler : public Object
+class CC_DLL Scheduler : public Ref
 {
 public:
     // Priority level reserved for system services.
@@ -165,38 +165,38 @@ public:
 
      @since v0.99.3, repeat and delay added in v1.1
      */
-    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float interval, unsigned int repeat, float delay, bool paused);
+    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
 
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
-    void scheduleSelector(SEL_SCHEDULE selector, Object *target, float interval, bool paused);
+    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
      @since v0.99.3
      */
-    void scheduleUpdateForTarget(Object *target, int priority, bool paused);
+    void scheduleUpdateForTarget(Ref *target, int priority, bool paused);
     
     /** Checks whether a selector for a given taget is scheduled.
      @since v3.0.0
      */
-    bool isScheduledForTarget(SEL_SCHEDULE selector, Object *target);
+    bool isScheduledForTarget(SEL_SCHEDULE selector, Ref *target);
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
      @since v0.99.3
      */
-    void unscheduleSelector(SEL_SCHEDULE selector, Object *target);
+    void unscheduleSelector(SEL_SCHEDULE selector, Ref *target);
 
     /** Unschedules the update selector for a given target
      @since v0.99.3
      */
-    void unscheduleUpdateForTarget(const Object *target);
+    void unscheduleUpdateForTarget(const Ref *target);
 
     /** Unschedules all selectors for a given target.
      This also includes the "update" selector.
      @since v0.99.3
      */
-    void unscheduleAllForTarget(Object *target);
+    void unscheduleAllForTarget(Ref *target);
 
     /** Unschedules all selectors from all targets.
      You should NEVER call this method, unless you know what you are doing.
@@ -226,39 +226,39 @@ public:
      If the target is not present, nothing happens.
      @since v0.99.3
      */
-    void pauseTarget(Object *target);
+    void pauseTarget(Ref *target);
 
     /** Resumes the target.
      The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
      If the target is not present, nothing happens.
      @since v0.99.3
      */
-    void resumeTarget(Object *target);
+    void resumeTarget(Ref *target);
 
     /** Returns whether or not the target is paused
     @since v1.0.0
     * In js: var isTargetPaused(var jsObject)
     * @lua NA 
     */
-    bool isTargetPaused(Object *target);
+    bool isTargetPaused(Ref *target);
 
     /** Pause all selectors from all targets.
       You should NEVER call this method, unless you know what you are doing.
      @since v2.0.0
       */
-    Vector<Object*> pauseAllTargets();
+    Vector<Ref*> pauseAllTargets();
 
     /** Pause all selectors from all targets with a minimum priority.
       You should only call this with kPriorityNonSystemMin or higher.
       @since v2.0.0
       */
-    Vector<Object*> pauseAllTargetsWithMinPriority(int minPriority);
+    Vector<Ref*> pauseAllTargetsWithMinPriority(int minPriority);
 
     /** Resume selectors on a set of targets.
      This can be useful for undoing a call to pauseAllSelectors.
      @since v2.0.0
       */
-    void resumeTargets(const Vector<Object*>& targetsToResume);
+    void resumeTargets(const Vector<Ref*>& targetsToResume);
 
     /** calls a function on the cocos2d thread. Useful when you need to call a cocos2d function from another thread.
      This function is thread safe.
@@ -272,8 +272,8 @@ protected:
 
     // update specific
 
-    void priorityIn(struct _listEntry **list, Object *target, int priority, bool paused);
-    void appendIn(struct _listEntry **list, Object *target, bool paused);
+    void priorityIn(struct _listEntry **list, Ref *target, int priority, bool paused);
+    void appendIn(struct _listEntry **list, Ref *target, bool paused);
 
 
     float _timeScale;

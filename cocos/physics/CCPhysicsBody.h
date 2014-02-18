@@ -28,7 +28,7 @@
 #include "ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 #include "CCPhysicsShape.h"
 #include "CCVector.h"
@@ -51,7 +51,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
-class PhysicsBody : public Object
+class PhysicsBody : public Ref
 {
 public:
     /** create a body with defult mass and moment. */
@@ -291,7 +291,7 @@ protected:
     virtual void setPosition(Point position);
     virtual void setRotation(float rotation);
     
-    virtual void update(float delta) override;
+    void update(float delta);
     
     void removeJoint(PhysicsJoint* joint);
     

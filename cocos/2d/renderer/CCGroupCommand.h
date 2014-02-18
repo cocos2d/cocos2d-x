@@ -33,7 +33,7 @@
 
 NS_CC_BEGIN
 
-class GroupCommandManager : public Object
+class GroupCommandManager : public Ref
 {
 public:
     static GroupCommandManager* getInstance();

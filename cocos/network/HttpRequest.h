@@ -27,7 +27,7 @@
 #define __HTTP_REQUEST_H__
 
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +35,7 @@ namespace network {
 
 class HttpClient;
 class HttpResponse;
-typedef void (cocos2d::Object::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
+typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
 #define httpresponse_selector(_SELECTOR) (cocos2d::network::SEL_HttpResponse)(&_SELECTOR)
 
 /** 
@@ -44,7 +44,7 @@ typedef void (cocos2d::Object::*SEL_HttpResponse)(HttpClient* client, HttpRespon
  @since v2.0.2
  */
 
-class HttpRequest : public cocos2d::Object
+class HttpRequest : public cocos2d::Ref
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
@@ -84,7 +84,7 @@ public:
     };
     
     /** Override autorelease method to avoid developers to call it */
-    cocos2d::Object* autorelease(void)
+    cocos2d::Ref* autorelease(void)
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
                  therefore, autorelease is forbidden here");
@@ -169,12 +169,12 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(cocos2d::Object* pTarget, cocos2d::SEL_CallFuncND pSelector)
+    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(cocos2d::Ref* pTarget, cocos2d::SEL_CallFuncND pSelector)
     {
         setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
     }
 
-    inline void setResponseCallback(cocos2d::Object* pTarget, SEL_HttpResponse pSelector)
+    inline void setResponseCallback(cocos2d::Ref* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -185,7 +185,7 @@ public:
         }
     }    
     /** Get the target of callback selector funtion, mainly used by HttpClient */
-    inline cocos2d::Object* getTarget()
+    inline cocos2d::Ref* getTarget()
     {
         return _pTarget;
     }
@@ -227,7 +227,7 @@ protected:
     std::string                 _url;            /// target url that this request is sent to
     std::vector<char>           _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    cocos2d::Object*          _pTarget;        /// callback target of pSelector function
+    cocos2d::Ref*          _pTarget;        /// callback target of pSelector function
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
     void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers

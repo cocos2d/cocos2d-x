@@ -25,7 +25,7 @@
 #ifndef __CCINTEGER_H__
 #define __CCINTEGER_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "platform/CCCommon.h"
 
 NS_CC_BEGIN
@@ -35,7 +35,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL __Integer : public Object, public Clonable
+class CC_DLL __Integer : public Ref, public Clonable
 {
 public:
     static __Integer* create(int v)

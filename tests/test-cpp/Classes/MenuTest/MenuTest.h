@@ -46,14 +46,14 @@ public:
     void onTouchMoved(Touch *touch, Event * event);
 
     void allowTouches(float dt);
-    void menuCallback(Object* sender);
-    void menuCallbackConfig(Object* sender);
-    void menuCallbackDisabled(Object* sender);
-    void menuCallback2(Object* sender);
-    void menuCallbackPriorityTest(Object* sender);
-    void menuCallbackBugsTest(Object *pSender);
-    void onQuit(Object* sender);
-    void menuMovingCallback(Object *pSender);
+    void menuCallback(Ref* sender);
+    void menuCallbackConfig(Ref* sender);
+    void menuCallbackDisabled(Ref* sender);
+    void menuCallback2(Ref* sender);
+    void menuCallbackPriorityTest(Ref* sender);
+    void menuCallbackBugsTest(Ref *pSender);
+    void onQuit(Ref* sender);
+    void menuMovingCallback(Ref *pSender);
 
     //CREATE_NODE(MenuLayer1);
 };
@@ -72,9 +72,9 @@ public:
     ~MenuLayer2();
 
 public:
-    void menuCallback(Object* sender);
-    void menuCallbackOpacity(Object* sender);
-    void menuCallbackAlign(Object* sender);
+    void menuCallback(Ref* sender);
+    void menuCallbackOpacity(Ref* sender);
+    void menuCallbackAlign(Ref* sender);
 
     //CREATE_NODE(MenuLayer2);
 };
@@ -98,8 +98,8 @@ public:
     ~MenuLayer4();
 
 public:
-    void menuCallback(Object* sender);
-    void backCallback(Object* sender);
+    void menuCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
     //CREATE_NODE(MenuLayer4);
 };
@@ -109,9 +109,9 @@ class BugsTest : public Layer
 public:
     BugsTest();
     
-    void issue1410MenuCallback(Object *pSender);
-    void issue1410v2MenuCallback(Object *pSender);
-    void backMenuCallback(Object *pSender);
+    void issue1410MenuCallback(Ref *pSender);
+    void issue1410v2MenuCallback(Ref *pSender);
+    void backMenuCallback(Ref *pSender);
 };
 
 class RemoveMenuItemWhenMove : public Layer
@@ -122,7 +122,7 @@ public:
     bool onTouchBegan(Touch  *touch, Event  *event);
     void onTouchMoved(Touch  *touch, Event  *event);
     
-    void goBack(Object *pSender);
+    void goBack(Ref *pSender);
     
 private:
     MenuItemFont *item;

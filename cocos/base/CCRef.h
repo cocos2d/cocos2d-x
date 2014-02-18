@@ -23,16 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCOBJECT_H__
-#define __CCOBJECT_H__
+#ifndef __CCREF_H__
+#define __CCREF_H__
 
 #include "CCDataVisitor.h"
 #include "ccMacros.h"
 #include "CCConsole.h"
-
-#ifdef EMSCRIPTEN
-#include <GLES2/gl2.h>
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -41,14 +37,14 @@ NS_CC_BEGIN
  * @{
  */
 
-class Object;
+class Ref;
 class Node;
 
-/** Interface that defines how to clone an object */
+/** Interface that defines how to clone an Ref */
 class CC_DLL Clonable
 {
 public:
-	/** returns a copy of the object */
+	/** returns a copy of the Ref */
     virtual Clonable* clone() const = 0;
     /**
      * @js NA
@@ -56,10 +52,10 @@ public:
      */
 	virtual ~Clonable() {};
 
-    /** returns a copy of the object.
+    /** returns a copy of the Ref.
      @deprecated Use clone() instead
      */
-    CC_DEPRECATED_ATTRIBUTE Object* copy() const
+    CC_DEPRECATED_ATTRIBUTE Ref* copy() const
     {
         // use "clone" instead
         CC_ASSERT(false);
@@ -67,37 +63,29 @@ public:
     }
 };
 
-class CC_DLL Object
+class CC_DLL Ref
 {
-public:
-    /// object id, ScriptSupport need public _ID
-    unsigned int _ID;
-    /// Lua reference id
-    int _luaID;
-protected:
-    /// count of references
-    unsigned int _referenceCount;
 public:
     /**
      * Constructor
      *
-     * The object's reference count is 1 after construction.
+     * The Ref's reference count is 1 after construction.
      * @js NA
      */
-    Object();
+    Ref();
     
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~Object();
+    virtual ~Ref();
     
     /**
      * Release the ownership immediately.
      *
-     * This decrements the object's reference count.
+     * This decrements the Ref's reference count.
      *
-     * If the reference count reaches 0 after the descrement, this object is
+     * If the reference count reaches 0 after the descrement, this Ref is
      * destructed.
      *
      * @see retain, autorelease
@@ -108,7 +96,7 @@ public:
     /**
      * Retains the ownership.
      *
-     * This increases the object's reference count.
+     * This increases the Ref's reference count.
      *
      * @see release, autorelease
      * @js NA
@@ -122,71 +110,43 @@ public:
     /**
      * Release the ownership sometime soon automatically.
      *
-     * This descrements the object's reference count at the end of current
+     * This descrements the Ref's reference count at the end of current
      * autorelease pool block.
      *
-     * If the reference count reaches 0 after the descrement, this object is
+     * If the reference count reaches 0 after the descrement, this Ref is
      * destructed.
      *
-     * @returns The object itself.
+     * @returns The Ref itself.
      *
      * @see AutoreleasePool, retain, release
      * @js NA
      * @lua NA
      */
-    Object* autorelease();
+    Ref* autorelease();
 
     /**
-     * Returns a boolean value that indicates whether there is only one
-     * reference to the object. That is, whether the reference count is 1.
+     * Returns the Ref's current reference count.
      *
-     * @returns Whether the object's reference count is 1.
+     * @returns The Ref's reference count.
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE bool isSingleReference() const;
-
-    /**
-     * Returns the object's current reference count.
-     *
-     * @returns The object's reference count.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE unsigned int retainCount() const { return getReferenceCount(); };
     unsigned int getReferenceCount() const;
 
-    /**
-     * Returns a boolean value that indicates whether this object and a given
-     * object are equal.
-     *
-     * @param object    The object to be compared to this object.
-     *
-     * @returns True if this object and @p object are equal, otherwise false.
-     * @js NA
-     * @lua NA
-     */
-    virtual bool isEqual(const Object* object);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void acceptVisitor(DataVisitor &visitor);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
+protected:
+    /// count of references
+    unsigned int _referenceCount;
     
     friend class AutoreleasePool;
 };
 
 
-typedef void (Object::*SEL_SCHEDULE)(float);
-typedef void (Object::*SEL_CallFunc)();
-typedef void (Object::*SEL_CallFuncN)(Node*);
-typedef void (Object::*SEL_CallFuncND)(Node*, void*);
-typedef void (Object::*SEL_CallFuncO)(Object*);
-typedef void (Object::*SEL_MenuHandler)(Object*);
-typedef int (Object::*SEL_Compare)(Object*);
+typedef void (Ref::*SEL_SCHEDULE)(float);
+typedef void (Ref::*SEL_CallFunc)();
+typedef void (Ref::*SEL_CallFuncN)(Node*);
+typedef void (Ref::*SEL_CallFuncND)(Node*, void*);
+typedef void (Ref::*SEL_CallFuncO)(Ref*);
+typedef void (Ref::*SEL_MenuHandler)(Ref*);
+typedef int (Ref::*SEL_Compare)(Ref*);
 
 #define schedule_selector(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
 #define callfunc_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFunc>(&_SELECTOR)
@@ -208,4 +168,4 @@ typedef int (Object::*SEL_Compare)(Object*);
 
 NS_CC_END
 
-#endif // __CCOBJECT_H__
+#endif // __CCREF_H__

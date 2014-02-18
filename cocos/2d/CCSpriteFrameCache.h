@@ -37,7 +37,7 @@ THE SOFTWARE.
 
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCValue.h"
 #include "CCMap.h"
 #include <set>
@@ -56,7 +56,7 @@ class Sprite;
  It saves in a cache the sprite frames.
  @since v0.9
  */
-class CC_DLL SpriteFrameCache : public Object
+class CC_DLL SpriteFrameCache : public Ref
 {
 public:
     /** Returns the shared instance of the Sprite Frame cache */

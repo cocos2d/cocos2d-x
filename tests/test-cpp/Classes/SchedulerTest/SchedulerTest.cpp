@@ -68,7 +68,7 @@ void SchedulerTestLayer::onEnter()
     BaseTest::onEnter();
 }
 
-void SchedulerTestLayer::backCallback(Object* sender)
+void SchedulerTestLayer::backCallback(Ref* sender)
 {
     auto scene = new SchedulerTestScene();
     auto layer = backSchedulerTest();
@@ -78,7 +78,7 @@ void SchedulerTestLayer::backCallback(Object* sender)
     scene->release();
 }
 
-void SchedulerTestLayer::nextCallback(Object* sender)
+void SchedulerTestLayer::nextCallback(Ref* sender)
 {
     auto scene = new SchedulerTestScene();
     auto layer = nextSchedulerTest();
@@ -88,7 +88,7 @@ void SchedulerTestLayer::nextCallback(Object* sender)
     scene->release();
 }
 
-void SchedulerTestLayer::restartCallback(Object* sender)
+void SchedulerTestLayer::restartCallback(Ref* sender)
 {
     auto scene = new SchedulerTestScene();
     auto layer = restartSchedulerTest();
@@ -658,7 +658,7 @@ void SchedulerUpdate::removeUpdates(float dt)
 
     for (auto& c : children)
     {
-        auto obj = static_cast<Object*>(c);
+        auto obj = static_cast<Ref*>(c);
         auto node = static_cast<Node*>(obj);
         
         if (! node)
@@ -834,7 +834,7 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(Object* sender, Control::EventType controlEvent)
+void SchedulerTimeScale::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
     ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
     float scale;
@@ -926,7 +926,7 @@ ControlSlider *TwoSchedulers::sliderCtl()
     return slider;
 }
 
-void TwoSchedulers::sliderAction(Object* sender, Control::EventType controlEvent)
+void TwoSchedulers::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
     float scale;
 

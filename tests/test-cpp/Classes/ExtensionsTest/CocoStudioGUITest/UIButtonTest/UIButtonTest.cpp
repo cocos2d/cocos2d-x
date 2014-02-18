@@ -52,7 +52,7 @@ bool UIButtonTest::init()
     return false;
 }
 
-void UIButtonTest::touchEvent(Object *pSender, TouchEventType type)
+void UIButtonTest::touchEvent(Ref *pSender, TouchEventType type)
 {
     switch (type)
     {
@@ -130,7 +130,7 @@ bool UIButtonTest_Scale9::init()
     return false;
 }
 
-void UIButtonTest_Scale9::touchEvent(Object *pSender, TouchEventType type)
+void UIButtonTest_Scale9::touchEvent(Ref *pSender, TouchEventType type)
 {
     switch (type)
     {
@@ -204,7 +204,7 @@ bool UIButtonTest_PressedAction::init()
     return false;
 }
 
-void UIButtonTest_PressedAction::touchEvent(Object *pSender, TouchEventType type)
+void UIButtonTest_PressedAction::touchEvent(Ref *pSender, TouchEventType type)
 {
     switch (type)
     {
@@ -279,7 +279,7 @@ bool UIButtonTest_Title::init()
 }
 
 
-void UIButtonTest_Title::touchEvent(Object *pSender, TouchEventType type)
+void UIButtonTest_Title::touchEvent(Ref *pSender, TouchEventType type)
 {
     switch (type)
     {
