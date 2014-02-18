@@ -26,6 +26,7 @@
 #define __CCFLOAT_H__
 
 #include "CCRef.h"
+#include "CCDataVisitor.h"
 
 NS_CC_BEGIN
 

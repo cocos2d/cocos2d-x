@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include <string>
 #include <functional>
 #include <sstream>
-
+#include "CCArray.h"
 #include "CCRef.h"
 
 NS_CC_BEGIN

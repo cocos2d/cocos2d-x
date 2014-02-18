@@ -26,6 +26,7 @@
 #define __CCINTEGER_H__
 
 #include "CCRef.h"
+#include "CCDataVisitor.h"
 #include "platform/CCCommon.h"
 
 NS_CC_BEGIN

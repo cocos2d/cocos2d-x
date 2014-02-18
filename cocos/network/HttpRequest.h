@@ -26,7 +26,9 @@
 #ifndef __HTTP_REQUEST_H__
 #define __HTTP_REQUEST_H__
 
-#include "CCPlatformMacros.h"
+#include <string>
+#include <vector>
+#include "ccMacros.h"
 #include "CCRef.h"
 
 NS_CC_BEGIN

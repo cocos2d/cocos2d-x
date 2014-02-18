@@ -69,7 +69,7 @@ ActionNode::~ActionNode()
 	_frameArray.clear();
 }
 
-void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
+void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 {
 	setActionTag(DICTOOL->getIntValue_json(dic, "ActionTag"));
 	int actionFrameCount = DICTOOL->getArrayCount_json(dic, "actionframelist");

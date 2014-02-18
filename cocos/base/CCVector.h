@@ -251,7 +251,7 @@ public:
         
         for (ssize_t i = 0; i < s; i++)
         {
-            if (!this->at(i)->isEqual(other.at(i)))
+            if (this->at(i) != other.at(i))
             {
                 return false;
             }

@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "ccCArray.h"
 #endif
 
+#include "CCDataVisitor.h"
 
 #if CC_USE_ARRAY_VECTOR
 /**

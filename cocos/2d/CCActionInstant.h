@@ -259,7 +259,7 @@ public:
 
     /** creates the action with the callback
 
-     typedef void (Object::*SEL_CallFunc)();
+     typedef void (Ref::*SEL_CallFunc)();
 	 @deprecated Use the std::function API instead.
      * @js NA
      * @lua NA
@@ -301,7 +301,7 @@ protected:
     virtual ~CallFunc();
 
 	/** initializes the action with the callback
-     typedef void (Object::*SEL_CallFunc)();
+     typedef void (Ref::*SEL_CallFunc)();
      @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
@@ -342,7 +342,7 @@ public:
 
     /** creates the action with the callback 
 
-    typedef void (Object::*SEL_CallFuncN)(Node*);
+    typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
     */
     CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Ref* target, SEL_CallFuncN selector);
@@ -361,7 +361,7 @@ protected:
 
     /** initializes the action with the callback
 
-     typedef void (Object::*SEL_CallFuncN)(Node*);
+     typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
@@ -419,7 +419,7 @@ class CC_DLL __CCCallFuncO : public CallFunc
 public:
     /** creates the action with the callback
      
-     typedef void (Object::*SEL_CallFuncO)(Ref*);
+     typedef void (Ref::*SEL_CallFuncO)(Ref*);
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Ref* target, SEL_CallFuncO selector, Ref* object);
     //
@@ -436,7 +436,7 @@ protected:
     virtual ~__CCCallFuncO();
     /** initializes the action with the callback
 
-     typedef void (Object::*SEL_CallFuncO)(Ref*);
+     typedef void (Ref::*SEL_CallFuncO)(Ref*);
      */
     bool initWithTarget(Ref* target, SEL_CallFuncO selector, Ref* object);
     

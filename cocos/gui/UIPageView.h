@@ -37,7 +37,7 @@ typedef enum
     PAGEVIEW_EVENT_TURNING,
 }PageViewEventType;
 
-typedef void (Object::*SEL_PageViewEvent)(Ref*, PageViewEventType);
+typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
 typedef enum {

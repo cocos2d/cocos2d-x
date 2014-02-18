@@ -36,7 +36,7 @@ typedef enum
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-typedef void (Object::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
+typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
 /**

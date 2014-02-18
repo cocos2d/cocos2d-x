@@ -26,9 +26,7 @@ THE SOFTWARE.
 #ifndef __CCREF_H__
 #define __CCREF_H__
 
-#include "CCDataVisitor.h"
-#include "ccMacros.h"
-#include "CCConsole.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -101,11 +99,7 @@ public:
      * @see release, autorelease
      * @js NA
      */
-    inline void retain()
-    {
-        CCASSERT(_referenceCount > 0, "reference count should greater than 0");
-        ++_referenceCount;
-    }
+    void retain();
 
     /**
      * Release the ownership sometime soon automatically.

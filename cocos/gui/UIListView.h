@@ -48,7 +48,7 @@ typedef enum
     LISTVIEW_ONSELECTEDITEM
 }ListViewEventType;
 
-typedef void (Object::*SEL_ListViewEvent)(Ref*,ListViewEventType);
+typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
 class ListView : public ScrollView

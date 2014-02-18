@@ -846,7 +846,7 @@ void Scheduler::update(float dt)
     {
         if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            entry->target->update(dt);
+//FIXME:james            entry->target->update(dt);
         }
     }
 
@@ -855,7 +855,7 @@ void Scheduler::update(float dt)
     {
         if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            entry->target->update(dt);
+//FIXME:james            entry->target->update(dt);
         }
     }
 
@@ -864,7 +864,7 @@ void Scheduler::update(float dt)
     {
         if ((! entry->paused) && (! entry->markedForDeletion))
         {
-            entry->target->update(dt);
+//FIXME:james            entry->target->update(dt);
         }
     }
 

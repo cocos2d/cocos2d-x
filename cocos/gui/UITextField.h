@@ -94,7 +94,7 @@ typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-typedef void (Object::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
+typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 /** class UITextField : public Widget
