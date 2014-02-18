@@ -961,5 +961,34 @@ void Scheduler::update(float dt)
     }
 }
 
+//OLD METHODS:
+void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
+{
+    this->schedule([=](float dt){
+        (this->*selector)(dt);
+    }, this, schedule_selector_to_key(selector), interval , repeat, delay, paused);
+}
+
+void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
+{
+    this->schedule([=](float dt){
+        (this->*selector)(dt);
+    }, this, schedule_selector_to_key(selector), interval, paused);
+}
+
+void Scheduler::scheduleUpdateForTarget(Ref *target, int priority, bool paused)
+{
+    CCASSERT(false, "Please use scheduleUpdate instead.");
+}
+
+bool Scheduler::isScheduledForTarget(SEL_SCHEDULE selector, Ref *target)
+{
+    return this->isScheduled(target, schedule_selector_to_key(selector));
+}
+
+void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Ref *target)
+{
+    this->unschedule(target, schedule_selector_to_key(selector));
+}
 
 NS_CC_END

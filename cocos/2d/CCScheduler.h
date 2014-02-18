@@ -195,6 +195,41 @@ public:
      */
     void unscheduleAllForTarget(Ref *target);
 
+    // OLD METHODS
+    /** The scheduled method will be called every 'interval' seconds.
+     If paused is true, then it won't be called until it is resumed.
+     If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdateForTarget:' instead.
+     If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
+     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
+     delay is the amount of time the action will wait before it'll start
+     
+     @since v0.99.3, repeat and delay added in v1.1
+     */
+    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
+    
+    /** calls scheduleSelector with kRepeatForever and a 0 delay */
+    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
+    
+    CC_DEPRECATED_ATTRIBUTE void scheduleUpdateForTarget(Ref *target, int priority, bool paused);
+    
+    /** Checks whether a selector for a given taget is scheduled.
+     @since v3.0.0
+     */
+    bool isScheduledForTarget(SEL_SCHEDULE selector, Ref *target);
+    
+    /** Unschedule a selector for a given target.
+     If you want to unschedule the "update", use unscheudleUpdateForTarget.
+     @since v0.99.3
+     */
+    void unscheduleSelector(SEL_SCHEDULE selector, Ref *target);
+    
+    /** Unschedules the update selector for a given target
+     @since v0.99.3
+     */
+    void unscheduleUpdateForTarget(Ref *target) { unscheduleUpdate(target); };
+    
+    ///
+    
     /** Unschedules all selectors from all targets.
      You should NEVER call this method, unless you know what you are doing.
 
