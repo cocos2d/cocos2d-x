@@ -1614,6 +1614,24 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     }
     
+    /* if hardware supports s3tc, set pixelformat before loading mipmaps, to support non-mipmapped textures  */
+    if (Configuration::getInstance()->supportsS3TC())
+    {   //decode texture throught hardware
+        
+        if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
+        }
+        else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
+        }
+        else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
+        }
+    }
+    
     /* load the mipmaps */
     
     int encodeOffset = 0;
@@ -1629,20 +1647,6 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
                 
         if (Configuration::getInstance()->supportsS3TC())
         {   //decode texture throught hardware
-            
-            if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
-            {
-                _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
-            }
-            else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
-            {
-                _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
-            }
-            else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
-            {
-                _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
-            }
-
             _mipmaps[i].address = (unsigned char *)_data + encodeOffset;
             _mipmaps[i].len = size;
         }
