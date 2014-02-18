@@ -30,8 +30,8 @@
 #include <cctype>
 #include <locale>
 #include <sstream>
-
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <fcntl.h>
 
@@ -61,7 +61,7 @@
 
 NS_CC_BEGIN
 
-
+//TODO: these general utils should be in a seperate class
 //
 // Trimming functions were taken from: http://stackoverflow.com/a/217605
 //
@@ -80,6 +80,22 @@ static std::string &rtrim(std::string &s) {
 // trim from both ends
 static std::string &trim(std::string &s) {
     return ltrim(rtrim(s));
+}
+
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, elems);
+    return elems;
 }
 
 
@@ -229,8 +245,6 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
-, _userCommands(nullptr)
-, _maxUserCommands(0)
 , _sendDebugStrings(false)
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
@@ -262,10 +276,10 @@ Console::Console()
         { "texture", "Flush or print the TextureCache info. Args: [flush | ] ", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
     };
 
-    _maxCommands = sizeof(commands)/sizeof(commands[0]);
-	for (int i = 0; i < _maxCommands; ++i)
+     ;
+	for (int i = 0; i < sizeof(commands)/sizeof(commands[0]); ++i)
 	{
-		_commands[i] = commands[i];
+		_commands.insert ( std::pair<std::string,Command>(commands[i].name,commands[i]) );
 	}
 }
 
@@ -282,7 +296,6 @@ bool Console::listenOnTCP(int port)
     char serv[30];
 
     snprintf(serv, sizeof(serv)-1, "%d", port );
-    serv[sizeof(serv)-1]=0;
 
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_flags = AI_PASSIVE;
@@ -364,12 +377,10 @@ void Console::stop()
     }
 }
 
-void Console::setUserCommands(Command *commands, int numberOfCommands)
+void Console::addCommand(const Command& cmd)
 {
-    _userCommands = commands;
-    _maxUserCommands = numberOfCommands;
+    _commands[cmd.name]=cmd;
 }
-
 
 //
 // commands
@@ -379,26 +390,17 @@ void Console::commandHelp(int fd, const std::string &args)
 {
     const char help[] = "\nAvailable commands:\n";
     write(fd, help, sizeof(help));
-    for(int i=0; i<_maxCommands; ++i) {
-        mydprintf(fd, "\t%s", _commands[i].name);
-        ssize_t tabs = strlen(_commands[i].name) / 8;
+    for(auto it=_commands.begin();it!=_commands.end();++it)
+    {
+        auto cmd = it->second;
+        mydprintf(fd, "\t%s", cmd.name);
+        ssize_t tabs = strlen(cmd.name) / 8;
         tabs = 3 - tabs;
         for(int j=0;j<tabs;j++){
-            mydprintf(fd, "\t");
+             mydprintf(fd, "\t");
         }
-        mydprintf(fd,"%s\n", _commands[i].help);
-    }
-
-    // User commands
-    for(int i=0; i<_maxUserCommands; ++i) {
-        mydprintf(fd, "\t%s", _userCommands[i].name);
-        ssize_t tabs = strlen(_userCommands[i].name) / 8;
-        tabs = 3 - tabs;
-        for(int j=0;j<tabs;j++){
-            mydprintf(fd, "\t");
-        }
-        mydprintf(fd,"%s\n", _userCommands[i].help);
-    }
+        mydprintf(fd,"%s\n", cmd.help);
+    } 
 }
 
 void Console::commandExit(int fd, const std::string &args)
@@ -437,6 +439,7 @@ void Console::commandConfig(int fd, const std::string& args)
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [&](){
         mydprintf(fd, "%s", Configuration::getInstance()->getInfo().c_str());
+        sendPrompt(fd);
     }
                                         );
 }
@@ -467,7 +470,6 @@ void Console::commandResolution(int fd, const std::string& args)
                   (int)visibleRect.origin.x, (int)visibleRect.origin.y,
                   (int)visibleRect.size.width, (int)visibleRect.size.height
                   );
-        sendPrompt(fd);
 
     } else {
         int width, height, policy;
@@ -554,46 +556,45 @@ void Console::commandTextures(int fd, const std::string& args)
 
 bool Console::parseCommand(int fd)
 {
-    auto r = readline(fd);
+    char buf[512];
+    auto r = readline(fd, buf, sizeof(buf)-1);
     if(r < 1)
+    {
+        const char err[] = "Unknown error!\n";
+        sendPrompt(fd);
+        write(fd, err, sizeof(err));
         return false;
+    }
+    std::string cmdLine;
 
-    bool found=false;
-    for(int i=0; i < _maxCommands; ++i) {
-        ssize_t commandLen = strlen(_commands[i].name);
-        if( strncmp(_buffer, _commands[i].name,commandLen) == 0 ) {
-            // XXX TODO FIXME
-            // Ideally this loop should execute the function in the cocos2d according to a variable
-            // But clang crashes in runtime when doing that (bug in clang, not in the code).
-            // So, unfortunately, the only way to fix it was to move that logic to the callback itself
-
-            std::string args;
-            if(strlen(_buffer) >= commandLen+2) {
-                args = std::string(&_buffer[commandLen]+1);
-                args = trim(args);
-            }
-            _commands[i].callback(fd, args);
-            found = true;
-            break;
-        }
+    std::vector<std::string> args;
+    cmdLine = std::string(buf);
+   
+    args = split(cmdLine, ' ');
+    if(args.empty())
+    {
+        const char err[] = "Unknown command. Type 'help' for options\n";
+        write(fd, err, sizeof(err));
+        sendPrompt(fd);
+        return false;
     }
 
-    // user commands
-    for(int i=0; i < _maxUserCommands && !found; ++i) {
-        ssize_t commandLen = strlen(_userCommands[i].name);
-        if( strncmp(_buffer, _userCommands[i].name,commandLen) == 0 ) {
-            std::string args;
-            if(strlen(_buffer) >= commandLen+2) {
-                args = std::string(&_buffer[commandLen]+1);
-                args = trim(args);
+    auto it = _commands.find(trim(args[0]));
+    if(it != _commands.end())
+    {
+        std::string args2;
+        for(int i = 1; i < args.size(); ++i)
+        {   
+            if(i > 1)
+            {
+                args2 += ' ';
             }
-            _userCommands[i].callback(fd, args);
-            found = true;
-            break;
+            args2 += trim(args[i]);
+            
         }
-    }
-
-    if(!found && strcmp(_buffer, "\r\n")!=0) {
+        auto cmd = it->second;
+        cmd.callback(fd, args2);
+    }else if(strcmp(buf, "\r\n") != 0) {
         const char err[] = "Unknown command. Type 'help' for options\n";
         write(fd, err, sizeof(err));
     }
@@ -608,19 +609,17 @@ bool Console::parseCommand(int fd)
 //
 
 
-ssize_t Console::readline(int fd)
+ssize_t Console::readline(int fd, char* ptr, int maxlen)
 {
-    int maxlen = sizeof(_buffer)-1;
     ssize_t n, rc;
-    char c, *ptr;
+    char c;
 
-    ptr = _buffer;
-
-    for( n=1; n<maxlen; n++ ) {
+    for( n=1; n<maxlen-1; n++ ) {
         if( (rc = read(fd, &c, 1 )) ==1 ) {
             *ptr++ = c;
-            if( c=='\n' )
+            if(c == '\n') {
                 break;
+            }
         } else if( rc == 0 ) {
             return 0;
         } else if( errno == EINTR ) {
