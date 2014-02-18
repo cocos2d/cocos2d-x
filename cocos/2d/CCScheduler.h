@@ -160,16 +160,17 @@ public:
      repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
      delay is the amount of time the action will wait before it'll start
 
-     @since v0.99.3, repeat and delay added in v1.1
+     @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, unsigned int repeat, float delay, bool paused);
 
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
     void schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, bool paused);
+    
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
-     @since v0.99.3
+     @since v3.0
      */
     void scheduleUpdate(const ccSchedulerFunc& callback, Ref *target, int priority, bool paused);
     
@@ -180,18 +181,18 @@ public:
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
-     @since v0.99.3
+     @since v3.0
      */
     void unschedule(Ref *target, long key);
 
     /** Unschedules the update selector for a given target
-     @since v0.99.3
+     @since v3.0
      */
     void unscheduleUpdate(Ref *target);
 
     /** Unschedules all selectors for a given target.
      This also includes the "update" selector.
-     @since v0.99.3
+     @since v3.0
      */
     void unscheduleAllForTarget(Ref *target);
 

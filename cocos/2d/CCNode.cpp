@@ -1046,8 +1046,8 @@ void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
 
 void Node::unschedule(SEL_SCHEDULE selector)
 {
-    // explicit nil handling
-    if (selector == 0)
+    // explicit null handling
+    if (selector == nullptr)
         return;
     
     _scheduler->unschedule(this, schedule_selector_to_key(selector));

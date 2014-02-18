@@ -435,7 +435,9 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         auto director = Director::getInstance();
-//james        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+        director->getScheduler()->scheduleUpdate([director](float dt){
+            director->getActionManager()->update(dt);
+        }, director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
     
     SchedulerTestLayer::onExit();
@@ -969,11 +971,15 @@ void TwoSchedulers::onEnter()
     // Create a new scheduler, and link it to the main scheduler
     sched1 = new Scheduler();
 
-//james    defaultScheduler->scheduleUpdateForTarget(sched1, 0, false);
+    defaultScheduler->scheduleUpdate([this](float dt){
+        this->sched1->update(dt);
+    }, sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager1 = new ActionManager();
-//james    sched1->scheduleUpdateForTarget(actionManager1, 0, false);
+    sched1->scheduleUpdate([this](float dt){
+        this->actionManager1->update(dt);
+    }, actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
     {
@@ -995,11 +1001,15 @@ void TwoSchedulers::onEnter()
 
     // Create a new scheduler, and link it to the main scheduler
     sched2 = new Scheduler();;
-//james    defaultScheduler->scheduleUpdateForTarget(sched2, 0, false);
+    defaultScheduler->scheduleUpdate([this](float dt){
+        this->sched2->update(dt);
+    }, sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager2 = new ActionManager();
-//james    sched2->scheduleUpdateForTarget(actionManager2, 0, false);
+    sched2->scheduleUpdate([this](float dt){
+        this->actionManager2->update(dt);
+    }, actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
         auto sprite = Sprite::create("Images/grossinis_sister2.png");

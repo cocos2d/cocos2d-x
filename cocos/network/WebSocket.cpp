@@ -122,7 +122,7 @@ WsThreadHelper::WsThreadHelper()
     _UIWsMessageQueue = new std::list<WsMessage*>();
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
     
-//james    Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
 }
 
 WsThreadHelper::~WsThreadHelper()

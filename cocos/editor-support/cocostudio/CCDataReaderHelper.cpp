@@ -363,7 +363,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 
     if (0 == _asyncRefCount)
     {
-//james		Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
+        Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
     }
 
     ++_asyncRefCount;
@@ -466,7 +466,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         if (0 == _asyncRefCount)
         {
             _asyncRefTotalCount = 0;
-//james            Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this);
+            Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this);
         }
     }
 }

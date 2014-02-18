@@ -122,19 +122,19 @@ public:
      */
     void resumeTargets(const Vector<Node*>& targetsToResume);
 
+    void update(float dt);
+    
 protected:
     // declared in ActionManager.m
 
     void removeActionAtIndex(ssize_t index, struct _hashElement *element);
     void deleteHashElement(struct _hashElement *element);
     void actionAllocWithHashElement(struct _hashElement *element);
-    void update(float dt);
 
 protected:
     struct _hashElement    *_targets;
     struct _hashElement    *_currentTarget;
     bool            _currentTargetSalvaged;
-    friend class Director;
 };
 
 // end of actions group

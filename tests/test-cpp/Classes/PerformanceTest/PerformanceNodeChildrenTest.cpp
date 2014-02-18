@@ -78,7 +78,7 @@ void NodeChildrenMenuLayer::onExitTransitionDidStart()
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
 
-//james    sched->unscheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this);
+    sched->unscheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this);
 }
 
 void NodeChildrenMenuLayer::onEnterTransitionDidFinish()
@@ -87,7 +87,7 @@ void NodeChildrenMenuLayer::onEnterTransitionDidFinish()
     auto sched = director->getScheduler();
 
     CC_PROFILER_PURGE_ALL();
-//james    sched->scheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this, 2, false);
+    sched->scheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this, 2, false);
 }
 
 

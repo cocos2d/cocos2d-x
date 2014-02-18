@@ -197,7 +197,7 @@ void PerformceAllocScene::onExitTransitionDidStart()
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
 
-//james    sched->unscheduleSelector(SEL_SCHEDULE(&PerformceAllocScene::dumpProfilerInfo), this);
+    sched->unscheduleSelector(SEL_SCHEDULE(&PerformceAllocScene::dumpProfilerInfo), this);
 }
 
 void PerformceAllocScene::onEnterTransitionDidFinish()
@@ -208,7 +208,7 @@ void PerformceAllocScene::onEnterTransitionDidFinish()
     auto sched = director->getScheduler();
 
     CC_PROFILER_PURGE_ALL();
-//james    sched->scheduleSelector(SEL_SCHEDULE(&PerformceAllocScene::dumpProfilerInfo), this, 2, false);
+    sched->scheduleSelector(SEL_SCHEDULE(&PerformceAllocScene::dumpProfilerInfo), this, 2, false);
 }
 
 void PerformceAllocScene::dumpProfilerInfo(float dt)
