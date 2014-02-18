@@ -431,7 +431,7 @@ float Label::getScaleX() const
 
 void Label::alignText()
 {
-    for (auto batchNode:_batchNodes)
+    for (const auto& batchNode:_batchNodes)
     {
         batchNode->getTextureAtlas()->removeAllQuads();
     }
@@ -673,11 +673,13 @@ void Label::onDraw()
     }
 
     for(const auto &child: _children)
+    {
         child->updateTransform();
+    }
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    for (auto batchNode:_batchNodes)
+    for (const auto& batchNode:_batchNodes)
     {
         batchNode->getTextureAtlas()->drawQuads();
     }
