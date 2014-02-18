@@ -78,10 +78,7 @@ public:
 
     ~BitmapDC(void)
     {
-        if (_data)
-        {
-            delete [] _data;
-        }
+        CC_SAFE_FREE(_data);
     }
 
     bool getBitmapFromJavaShadowStroke(	const char *text,
@@ -222,7 +219,7 @@ extern "C"
         cocos2d::BitmapDC& bitmapDC = cocos2d::sharedBitmapDC();
         bitmapDC._width = width;
         bitmapDC._height = height;
-        bitmapDC._data = new unsigned char[size];
+        bitmapDC._data = (unsigned char*)malloc(sizeof(unsigned char) * size);
         env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC._data);
     }
 };
