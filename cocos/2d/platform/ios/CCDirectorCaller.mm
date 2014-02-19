@@ -26,7 +26,8 @@
 #import <OpenGLES/EAGL.h>
 #import "CCDirectorCaller.h"
 #import "CCDirector.h"
-#import "EAGLView.h"
+#import "CCGLView.h"
+#import "CCEAGLView.h"
 
 static id s_sharedDirectorCaller;
 
@@ -94,7 +95,7 @@ static id s_sharedDirectorCaller;
                       
 -(void) doCaller: (id) sender
 {
-    [EAGLContext setCurrentContext: [[CCEAGLView sharedEGLView] context]];
+    [EAGLContext setCurrentContext: [(CCEAGLView*)cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView() context]];
     cocos2d::Director::getInstance()->mainLoop();
 }
 
