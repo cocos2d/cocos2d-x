@@ -616,7 +616,7 @@ function UISliderTest:initExtend()
 
     local function percentChangedEvent(sender,eventType)
         if eventType == ccs.SliderEventType.percent_changed then
-            local slider = tolua.cast(sender,"UISlider")
+            local slider = tolua.cast(sender,"Slider")
             local percent = "Percent " .. slider:getPercent()
             self._displayValueLabel:setText(percent)
         end
@@ -678,7 +678,7 @@ function UISliderScale9Test:initExtend()
 
     local function percentChangedEvent(sender,eventType)
         if eventType == ccs.SliderEventType.percent_changed then
-            local slider = tolua.cast(sender,"UISlider")
+            local slider = tolua.cast(sender,"Slider")
             local percent = "Percent " .. slider:getPercent()
             self._displayValueLabel:setText(percent)
         end

@@ -301,14 +301,10 @@ TextField* TextField::create()
     return NULL;
 }
 
-bool TextField::init()
+void TextField::onEnter()
 {
-    if (Widget::init())
-    {
-        setUpdateEnabled(true);
-        return true;
-    }
-    return false;
+    Widget::onEnter();
+    scheduleUpdate();
 }
 
 void TextField::initRenderer()

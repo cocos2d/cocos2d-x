@@ -5,7 +5,7 @@ class ActionManager:public CCObject
    virtual ~ActionManager();
 
    static ActionManager* shareManager();
-   static void purgeActionManager();
+   static void purge();
    ActionObject* getActionByName(const char* jsonName,const char* actionName);
    ActionObject* playActionByName(const char* jsonName,const char* actionName);
    void releaseActions();

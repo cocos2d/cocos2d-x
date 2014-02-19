@@ -28,8 +28,8 @@ function SceneEditorTestLayer:createGameScene()
     self._curNode:setPosition(ccp((winSize.width - 480 * scale) / 2, (winSize.height - 320 * scale) / 2))
 
     local function menuCloseCallback( sender )
-        SceneReader:sharedSceneReader():purgeSceneReader()
-        ActionManager:purgeActionManager()
+        SceneReader:sharedSceneReader():purge()
+        ActionManager:purge()
         TriggerMng.destroyInstance()
         local scene = CocoStudioTest()
         if scene ~= nil then

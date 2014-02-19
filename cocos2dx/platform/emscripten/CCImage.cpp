@@ -36,7 +36,6 @@
 #include <map>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
-#include <net/arpa/inet.h>
 
 #define szFont_kenning 2
 

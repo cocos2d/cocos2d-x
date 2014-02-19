@@ -37,7 +37,6 @@ _touchEnabled(false),
 _touchPassedEnabled(false),
 _focus(false),
 _brightStyle(BRIGHT_NONE),
-_updateEnabled(false),
 _touchStartPos(CCPointZero),
 _touchMovePos(CCPointZero),
 _touchEndPos(CCPointZero),
@@ -116,6 +115,7 @@ void Widget::onEnter()
 
 void Widget::onExit()
 {
+    unscheduleUpdate();
     CCNodeRGBA::onExit();
 }
     
@@ -643,28 +643,6 @@ bool Widget::isTouchEnabled() const
     return _touchEnabled;
 }
 
-void Widget::setUpdateEnabled(bool enable)
-{
-    if (enable == _updateEnabled)
-    {
-        return;
-    }
-    _updateEnabled = enable;
-    if (enable)
-    {
-        scheduleUpdate();
-    }
-    else
-    {
-        unscheduleUpdate();
-    }
-}
-
-bool Widget::isUpdateEnabled()
-{
-    return _updateEnabled;
-}
-
 bool Widget::isFocused() const
 {
     return _focus;
@@ -750,11 +728,15 @@ void Widget::didNotSelectSelf()
 
 bool Widget::onTouchBegan(CCTouch *touch, CCEvent *unused_event)
 {
-    _touchStartPos = touch->getLocation();
-    _hitted = isEnabled()
-            & isTouchEnabled()
-            & hitTest(_touchStartPos)
-            & clippingParentAreaContainPoint(_touchStartPos);
+    _hitted = false;
+    if (isEnabled() && isTouchEnabled())
+    {
+        _touchStartPos = touch->getLocation();
+        if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
+        {
+            _hitted = true;
+        }
+    }
     if (!_hitted)
     {
         return false;
@@ -807,11 +789,6 @@ void Widget::onTouchCancelled(CCTouch *touch, CCEvent *unused_event)
     cancelUpEvent();
 }
 
-void Widget::onTouchLongClicked(const CCPoint &touchPoint)
-{
-    longClickEvent();
-}
-
 void Widget::pushDownEvent()
 {
     if (_touchEventListener && _touchEventSelector)
@@ -842,11 +819,6 @@ void Widget::cancelUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
-}
-
-void Widget::longClickEvent()
-{
-    
 }
 
 void Widget::addTouchEventListener(CCObject *target, SEL_TouchEvent selector)
@@ -1089,7 +1061,6 @@ void Widget::copyProperties(Widget *widget)
     setTouchEnabled(widget->isTouchEnabled());
     _touchPassedEnabled = false;
     setZOrder(widget->getZOrder());
-    setUpdateEnabled(widget->isUpdateEnabled());
     setTag(widget->getTag());
     setName(widget->getName());
     setActionTag(widget->getActionTag());
