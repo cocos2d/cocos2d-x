@@ -143,6 +143,7 @@ public:
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
+    virtual void visit() override;
     virtual void draw(void) override;
     virtual void onDraw();
 
@@ -203,6 +204,8 @@ private:
 
     CustomCommand _customCommand;
     int           _currNumLines;
+
+    std::vector<SpriteBatchNode*> _batchNodes;
 };
 
 

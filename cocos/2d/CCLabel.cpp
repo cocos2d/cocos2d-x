@@ -205,6 +205,7 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 ,_currNumLines(-1)
 {
     _cascadeColorEnabled = true;
+    _batchNodes.push_back(this);
 }
 
 Label::~Label()
@@ -430,9 +431,23 @@ float Label::getScaleX() const
 
 void Label::alignText()
 {
-    if(_textureAtlas)
-        _textureAtlas->removeAllQuads();  
+    for (const auto& batchNode:_batchNodes)
+    {
+        batchNode->getTextureAtlas()->removeAllQuads();
+    }
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
+    auto textures = _fontAtlas->getTextures();
+    if (textures.size() > _batchNodes.size())
+    {
+        for (int index = _batchNodes.size(); index < textures.size(); ++index)
+        {
+            auto batchNode = SpriteBatchNode::createWithTexture(textures[index]);
+            batchNode->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+            batchNode->setPosition(Point::ZERO);
+            Node::addChild(batchNode,0,Node::INVALID_TAG);
+            _batchNodes.push_back(batchNode);
+        }
+    }
     LabelTextFormatter::createStringSprites(this);    
     if(_width > 0 && _contentSize.width > _width && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
@@ -443,7 +458,7 @@ void Label::alignText()
     int strLen = cc_wcslen(_currentUTF16String);
     for(const auto &child : _children) {
         int tag = child->getTag();
-        if(tag < 0 || tag >= strLen)
+        if(tag >= strLen)
             SpriteBatchNode::removeChild(child, true);
     }
 
@@ -470,7 +485,8 @@ void Label::alignText()
            
             updateSpriteWithLetterDefinition(_reusedLetter,_lettersInfo[ctr].def,&_fontAtlas->getTexture(_lettersInfo[ctr].def.textureID));
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
-            insertQuadFromSprite(_reusedLetter,vaildIndex++);
+            int index = _batchNodes[_lettersInfo[ctr].def.textureID]->getTextureAtlas()->getTotalQuads();
+            _batchNodes[_lettersInfo[ctr].def.textureID]->insertQuadFromSprite(_reusedLetter,index);
         }     
     }
 
@@ -562,7 +578,7 @@ Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const F
         SpriteFrame *frame = SpriteFrame::createWithTexture(theTexture, uvRect);
         if (frame)
         {
-            spriteToUpdate->setBatchNode(this);
+            spriteToUpdate->setBatchNode(_batchNodes[theDefinition.textureID]);
             spriteToUpdate->setSpriteFrame(frame);                                       
         }     
         
@@ -644,7 +660,7 @@ void Label::onDraw()
     CC_PROFILER_START("CCSpriteBatchNode - draw");
 
     // Optimization: Fast Dispatch
-    if( _textureAtlas->getTotalQuads() == 0 )
+    if( _batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0 )
     {
         return;
     }
@@ -657,11 +673,16 @@ void Label::onDraw()
     }
 
     for(const auto &child: _children)
+    {
         child->updateTransform();
+    }
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    _textureAtlas->drawQuads();
+    for (const auto& batchNode:_batchNodes)
+    {
+        batchNode->getTextureAtlas()->drawQuads();
+    }
 
     CC_PROFILER_STOP("CCSpriteBatchNode - draw");
 }
@@ -671,6 +692,23 @@ void Label::draw()
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void Label::visit()
+{
+    if (! _visible)
+    {
+        return;
+    }
+    
+    kmGLPushMatrix();
+
+    transform();
+    draw();
+
+    kmGLPopMatrix();
+
+    setOrderOfArrival(0);
 }
 
 ///// PROTOCOL STUFF
