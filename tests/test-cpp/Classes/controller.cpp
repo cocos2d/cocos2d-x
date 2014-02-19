@@ -10,10 +10,11 @@
 #include "tests.h"
 
 
-struct {
+typedef struct _Controller{
 	const char *test_name;
 	std::function<TestScene*()> callback;
-} g_aTestNames[] = {
+} Controller;
+Controller g_aTestNames[] = {
 
     //
     // TESTS MUST BE ORDERED ALPHABETICALLY
@@ -96,7 +97,7 @@ struct {
 };
 
 static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
-
+static Controller *currentController = nullptr;
 #define LINE_SPACE          40
 
 static Point s_tCurPos = Point::ZERO;
@@ -229,4 +230,37 @@ void TestController::onMouseScroll(Event *event)
 
     _itemMenu->setPosition(nextPos);
     s_tCurPos   = nextPos;
+}
+
+void TestController::addConsoleAutoTest()
+{
+    auto _console = Director::getInstance()->getConsole();
+    
+    static struct Console::Command autotest = {
+        "autotest", 
+        "testcpp auto test command", 
+        [](int fd, const std::string& args) 
+        {
+            for(int i = 0; i < g_testCount; i++)
+            {
+                if(args.compare(g_aTestNames[i].test_name)== 0)
+                {
+                    // create the test scene and run it
+                    auto scene = g_aTestNames[i].callback();
+
+                    if (scene)
+                    {
+                        currentController = &g_aTestNames[i];
+                        Scheduler *sched = Director::getInstance()->getScheduler();
+                        sched->performFunctionInCocosThread( [&](){
+                            currentController->callback()->runThisTest();
+                            currentController->callback()->release();
+                        } );
+                    }
+                }
+            }
+        }
+        
+    };
+    _console->addCommand(autotest);
 }
