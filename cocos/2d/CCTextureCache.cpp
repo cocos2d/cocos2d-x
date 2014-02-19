@@ -694,7 +694,7 @@ void VolatileTextureMgr::reloadAllTextures()
 
 std::map<Texture2D*, ImageFileTextureReloader::TextureImageFileData> ImageFileTextureReloader::_imageFileTextures;
 
-void ImageFileTextureReloader::addImageTexture(Texture2D* tt, std::string& imageFileName)
+void ImageFileTextureReloader::addImageTexture(Texture2D* tt, const std::string& imageFileName)
 {
     if(nullptr == tt)
     {
@@ -731,20 +731,36 @@ void ImageFileTextureReloader::reloadTexture(Texture2D* tt)
     }
 
     const TextureImageFileData& vt = _imageFileTextures[tt];
+
+    reloadByImageFileData(vt, tt);
+}
+
+void ImageFileTextureReloader::reloadTexture(const std::string &imageFileName)
+{
+    for(auto item : _imageFileTextures)
+    {
+        if(item.second._imageFile == imageFileName)
+        {
+            reloadByImageFileData(item.second,item.first);
+        }
+    }
+}
+
+void ImageFileTextureReloader::reloadByImageFileData(const ImageFileTextureReloader::TextureImageFileData &imageData, Texture2D* tt)
+{
     Image* image = new Image();
-                
-    Data data = FileUtils::getInstance()->getDataFromFile(vt._imageFile);
-                
+    
+    Data data = FileUtils::getInstance()->getDataFromFile(imageData._imageFile);
+    
     if (image && image->initWithImageData(data.getBytes(), data.getSize()))
     {
         Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
-        Texture2D::setDefaultAlphaPixelFormat(vt._pixelFormat);
+        Texture2D::setDefaultAlphaPixelFormat(imageData._pixelFormat);
         tt->initWithImage(image);
         Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
     }
-                
+    
     CC_SAFE_RELEASE(image);
-
 }
 
 void ImageFileTextureReloader::reloadAllTextures()
