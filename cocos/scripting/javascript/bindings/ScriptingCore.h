@@ -218,8 +218,28 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 
-js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
-js_proxy_t* jsb_get_native_proxy(void* nativeObj);
+template <class T>
+js_proxy_t* jsb_new_proxy(T* nativeObj, JSObject* jsObj)
+{
+    js_proxy_t* p = nullptr;
+    JS_NEW_PROXY(p, nativeObj, jsObj);
+    
+    if (nativeObj->_scriptProperty._owner == nullptr)
+    {
+        nativeObj->_scriptProperty._owner = nativeObj;
+    }
+    
+    return p;
+}
+
+template <class T>
+js_proxy_t* jsb_get_native_proxy(T* nativeObj)
+{
+    js_proxy_t* p = nullptr;
+    JS_GET_PROXY(p, nativeObj);
+    return p;
+}
+
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 

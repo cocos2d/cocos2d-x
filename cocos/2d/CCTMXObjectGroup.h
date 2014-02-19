@@ -29,9 +29,9 @@ THE SOFTWARE.
 #define __CCTMX_OBJECT_GROUP_H__
 
 #include "CCGeometry.h"
-#include "CCString.h"
-#include "CCArray.h"
 #include "CCValue.h"
+#include "CCRef.h"
+#include "CCScriptProperty.h"
 
 NS_CC_BEGIN
 
@@ -104,6 +104,8 @@ protected:
     ValueMap _properties;
     /** array of the objects */
     ValueVector _objects;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of tilemap_parallax_nodes group

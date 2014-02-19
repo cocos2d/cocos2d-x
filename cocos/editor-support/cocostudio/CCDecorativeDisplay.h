@@ -34,6 +34,10 @@ THE SOFTWARE.
 #include "cocostudio/CCColliderDetector.h"
 #endif
 
+namespace cocos2d {
+    class Node;
+}
+
 namespace cocostudio {
 /**
  *  @js NA
@@ -49,15 +53,7 @@ public:
 
     virtual bool init();
 
-    virtual void setDisplay(cocos2d::Node *display) 
-    { 
-        if (_display != display)
-        {
-            CC_SAFE_RETAIN(display);
-            CC_SAFE_RELEASE(_display);
-            _display = display; 
-        }
-    }
+    virtual void setDisplay(cocos2d::Node *display);
     virtual cocos2d::Node *getDisplay() const { return _display; }
 
     virtual void setDisplayData(DisplayData *data)
@@ -90,6 +86,8 @@ protected:
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     ColliderDetector *_colliderDetector;
 #endif
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 }

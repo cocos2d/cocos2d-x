@@ -106,6 +106,8 @@ private:
     bool                              _withCredentialsValue;
     std::unordered_map<std::string, std::string>          _httpHeader;
     std::unordered_map<std::string, std::string>          _requestHeader;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 #endif

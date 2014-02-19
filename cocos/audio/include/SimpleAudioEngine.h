@@ -27,19 +27,9 @@ THE SOFTWARE.
 #ifndef _SIMPLE_AUDIO_ENGINE_H_
 #define _SIMPLE_AUDIO_ENGINE_H_
 
-#include <stddef.h>
-#include "Export.h"
-#include <typeinfo>
-#include <ctype.h>
-#include <string.h>
-
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#define CC_DEPRECATED_ATTRIBUTE __declspec(deprecated)
-#else
-#define CC_DEPRECATED_ATTRIBUTE
-#endif
+#include "ccMacros.h"
+#include "CCPlatformMacros.h"
+#include "CCScriptProperty.h"
 
 namespace CocosDenshion {
 
@@ -50,7 +40,7 @@ namespace CocosDenshion {
                   to release allocated resources.
  */
 
-class EXPORT_DLL SimpleAudioEngine
+class CC_DLL SimpleAudioEngine
 {
 public:
     /**
@@ -231,6 +221,8 @@ public:
     @param pszFilePath        The path of the effect file
     */
     virtual void unloadEffect(const char* pszFilePath);
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 } // end of namespace CocosDenshion

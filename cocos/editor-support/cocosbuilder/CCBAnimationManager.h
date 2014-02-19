@@ -5,6 +5,7 @@
 #include "CCActionInterval.h"
 #include "CCActionInstant.h"
 #include "CCActionEase.h"
+#include "CCScriptProperty.h"
 
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
@@ -157,6 +158,8 @@ private:
     
     cocos2d::SEL_CallFunc _animationCompleteCallbackFunc;
     cocos2d::Ref *_target;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 class CCBSetSpriteFrame : public cocos2d::ActionInstant

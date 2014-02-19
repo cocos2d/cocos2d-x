@@ -1652,7 +1652,6 @@
 		460E47D818080914000CDD6D /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168631807AF4E005B8026 /* CCTableView.h */; };
 		460E47D918080914000CDD6D /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168641807AF4E005B8026 /* CCTableViewCell.cpp */; };
 		460E47DA18080914000CDD6D /* CCTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168651807AF4E005B8026 /* CCTableViewCell.h */; };
-		46A160421807A5D4005B8026 /* Export.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE11807A56F005B8026 /* Export.h */; };
 		46A160431807A5D4005B8026 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE21807A56F005B8026 /* SimpleAudioEngine.h */; };
 		46A160441807A5D4005B8026 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FF41807A56F005B8026 /* CDAudioManager.h */; };
 		46A160451807A5D4005B8026 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FF51807A56F005B8026 /* CDAudioManager.m */; };
@@ -1666,7 +1665,6 @@
 		46A1604D1807A5D4005B8026 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FFD1807A56F005B8026 /* SimpleAudioEngine.mm */; };
 		46A1604E1807A5D4005B8026 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FFE1807A56F005B8026 /* SimpleAudioEngine_objc.h */; };
 		46A1604F1807A5D4005B8026 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FFF1807A56F005B8026 /* SimpleAudioEngine_objc.m */; };
-		46A160501807A5EB005B8026 /* Export.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE11807A56F005B8026 /* Export.h */; };
 		46A160511807A5EB005B8026 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE21807A56F005B8026 /* SimpleAudioEngine.h */; };
 		46A160521807A5EB005B8026 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE41807A56F005B8026 /* CDAudioManager.h */; };
 		46A160531807A5EB005B8026 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FE51807A56F005B8026 /* CDAudioManager.m */; };
@@ -2835,7 +2833,6 @@
 		3EEF8BD21839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_cocos2dx_gui_manual.h; path = gui/jsb_cocos2dx_gui_manual.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		46A15FE21807A56F005B8026 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
 		46A15FE41807A56F005B8026 /* CDAudioManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		46A15FE51807A56F005B8026 /* CDAudioManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
@@ -3188,7 +3185,6 @@
 		A0053F4D189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		A0053F4E189B2BEA0035A564 /* CCGLView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLView.cpp; sourceTree = "<group>"; };
 		A0053F4F189B2BEA0035A564 /* CCGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGLView.h; sourceTree = "<group>"; };
-		A0053F50189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		A0053F52189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = nativeactivity.cpp; sourceTree = "<group>"; };
@@ -3200,7 +3196,6 @@
 		A0053FAC189B2BEA0035A564 /* CCFileUtilsWin32.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsWin32.cpp; sourceTree = "<group>"; };
 		A0053FAD189B2BEA0035A564 /* CCFileUtilsWin32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsWin32.h; sourceTree = "<group>"; };
 		A0053FAE189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		A0053FAF189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		A0053FB0189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		A0053FB1189B2BEA0035A564 /* CCStdC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		A0053FB2189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
@@ -3211,7 +3206,6 @@
 		A0053FBA189B2BEA0035A564 /* CCFileUtilsLinux.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsLinux.cpp; sourceTree = "<group>"; };
 		A0053FBB189B2BEA0035A564 /* CCFileUtilsLinux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsLinux.h; sourceTree = "<group>"; };
 		A0053FBC189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		A0053FBD189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		A0053FBE189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		A0053FBF189B2BEA0035A564 /* CCStdC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		A0053FC0189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
@@ -4885,7 +4879,6 @@
 		46A15FE01807A56F005B8026 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				46A15FE11807A56F005B8026 /* Export.h */,
 				46A15FE21807A56F005B8026 /* SimpleAudioEngine.h */,
 			);
 			path = include;
@@ -5588,7 +5581,6 @@
 				A0053F4D189B2BEA0035A564 /* CCGL.h */,
 				A0053F4E189B2BEA0035A564 /* CCGLView.cpp */,
 				A0053F4F189B2BEA0035A564 /* CCGLView.h */,
-				A0053F50189B2BEA0035A564 /* CCImage.cpp */,
 				A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */,
 				A0053F52189B2BEA0035A564 /* CCStdC.h */,
 				A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */,
@@ -5607,7 +5599,6 @@
 				A0053FAC189B2BEA0035A564 /* CCFileUtilsWin32.cpp */,
 				A0053FAD189B2BEA0035A564 /* CCFileUtilsWin32.h */,
 				A0053FAE189B2BEA0035A564 /* CCGL.h */,
-				A0053FAF189B2BEA0035A564 /* CCImage.cpp */,
 				A0053FB0189B2BEA0035A564 /* CCPlatformDefine.h */,
 				A0053FB1189B2BEA0035A564 /* CCStdC.cpp */,
 				A0053FB2189B2BEA0035A564 /* CCStdC.h */,
@@ -5625,7 +5616,6 @@
 				A0053FBA189B2BEA0035A564 /* CCFileUtilsLinux.cpp */,
 				A0053FBB189B2BEA0035A564 /* CCFileUtilsLinux.h */,
 				A0053FBC189B2BEA0035A564 /* CCGL.h */,
-				A0053FBD189B2BEA0035A564 /* CCImage.cpp */,
 				A0053FBE189B2BEA0035A564 /* CCPlatformDefine.h */,
 				A0053FBF189B2BEA0035A564 /* CCStdC.cpp */,
 				A0053FC0189B2BEA0035A564 /* CCStdC.h */,
@@ -6205,7 +6195,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46A160421807A5D4005B8026 /* Export.h in Headers */,
 				46A160471807A5D4005B8026 /* CDOpenALSupport.h in Headers */,
 				46A160461807A5D4005B8026 /* CDConfig.h in Headers */,
 				46A160491807A5D4005B8026 /* CDXMacOSXSupport.h in Headers */,
@@ -6755,7 +6744,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46A160501807A5EB005B8026 /* Export.h in Headers */,
 				46A1605A1807A5EB005B8026 /* SimpleAudioEngine_objc.h in Headers */,
 				46A160551807A5EB005B8026 /* CDOpenALSupport.h in Headers */,
 				46A160541807A5EB005B8026 /* CDConfig.h in Headers */,

@@ -28,10 +28,11 @@ THE SOFTWARE.
 #ifndef __CCSHADERCACHE_H__
 #define __CCSHADERCACHE_H__
 
+#include "CCRef.h"
+#include "CCScriptProperty.h"
+
 #include <string>
 #include <unordered_map>
-
-#include "CCDictionary.h"
 
 NS_CC_BEGIN
 
@@ -95,6 +96,8 @@ private:
 
 //    Dictionary* _programs;
     std::unordered_map<std::string, GLProgram*> _programs;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of shaders group

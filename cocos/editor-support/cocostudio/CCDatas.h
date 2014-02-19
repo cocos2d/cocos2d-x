@@ -30,7 +30,8 @@ THE SOFTWARE.
 #include "CCVector.h"
 #include "CCMap.h"
 #include "CCAffineTransform.h"
-#include "CCNode.h"
+#include "CCScriptProperty.h"
+
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCTweenFunction.h"
 
@@ -119,6 +120,7 @@ public:
     bool isUseColorInfo;    //! Whether or not this frame have the color changed Info
     int a, r, g, b;
 
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
@@ -158,6 +160,8 @@ public:
 
     DisplayType displayType;	//! mark which type your display is
     std::string displayName;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
@@ -183,6 +187,8 @@ public:
     void copy(DisplayData *displayData);
 public:
     BaseData skinData;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /**
@@ -203,6 +209,7 @@ public:
      * @lua NA
      */
     virtual ~ArmatureDisplayData() {}
+    
 };
 
 /**
@@ -258,6 +265,8 @@ public:
     std::string parentName;     //! the bone parent's name
     cocos2d::Vector<DisplayData*> displayDataList;    //! save DisplayData informations for the Bone
     cocos2d::AffineTransform boneDataTransform;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
@@ -290,6 +299,8 @@ public:
     std::string name;
     cocos2d::Map<std::string, BoneData*> boneDataDic;
     float dataVersion;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 enum BlendType
@@ -355,6 +366,8 @@ public:
     std::string strMovement;
     std::string strSound;
     std::string strSoundEffect;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /**
@@ -387,6 +400,8 @@ public:
     std::string name;    //! bone name
 
     cocos2d::Vector<FrameData*> frameList;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /**
@@ -445,6 +460,8 @@ public:
     * @value	MovementBoneData *
     */
     cocos2d::Map<std::string, MovementBoneData*> movBoneDataDic;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
@@ -477,6 +494,8 @@ public:
     std::string name;
     cocos2d::Map<std::string, MovementData*> movementDataDic;
     std::vector<std::string> movementNames;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
@@ -505,6 +524,8 @@ public:
     virtual void addVertex(cocos2d::Point &vertex);
 public:
     std::vector<cocos2d::Point> vertexList;	//! Save contour vertex info, vertex saved in a Point
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
@@ -545,6 +566,8 @@ public:
     std::string name;	//! The texture's name
 
     cocos2d::Vector<ContourData*> contourDataList;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 

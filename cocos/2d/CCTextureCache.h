@@ -207,6 +207,8 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -247,8 +249,6 @@ protected:
     Texture2D::TexParams      _texParams;
     std::string               _text;
     FontDefinition            _fontDefinition;
-    
-    CC_CLASS_SUPPORT_SCRIPT
 };
 
 class VolatileTextureMgr

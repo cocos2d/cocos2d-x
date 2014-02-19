@@ -759,28 +759,6 @@ bool js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate(JSContext *cx, uint32_t
     return false;
 }
 
-bool js_cocos2dx_swap_native_object(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 2) {
-		// get the native object from the second object to the first object
-		jsval *argv = JS_ARGV(cx, vp);
-		JSObject *one = JSVAL_TO_OBJECT(argv[0]);
-		JSObject *two = JSVAL_TO_OBJECT(argv[1]);
-		js_proxy_t *jsproxy = jsb_get_js_proxy(two);
-		void *ptrTwo = (jsproxy ? jsproxy->ptr : NULL);
-		if (jsproxy) {
-			js_proxy_t *nproxy = jsb_get_native_proxy(ptrTwo);
-			if (nproxy) {
-                JS_RemoveObjectRoot(cx, &jsproxy->obj);
-				jsb_remove_proxy(nproxy, jsproxy);
-                jsproxy = jsb_new_proxy(ptrTwo, one);
-                JS_AddNamedObjectRoot(cx, &jsproxy->obj, typeid(*((Ref*)jsproxy->ptr)).name());
-			}
-		}
-	}
-	return true;
-}
-
 JSObject* getObjectFromNamespace(JSContext* cx, JSObject *ns, const char *name) {
 	JS::RootedValue out(cx);
     bool ok = true;
@@ -4211,7 +4189,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 		JS_ValueToObject(cx, nsval, &ns);
 	}
 
-	JS_DefineFunction(cx, global, "__associateObjWithNative", js_cocos2dx_swap_native_object, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
 	JSObject *tmpObj;

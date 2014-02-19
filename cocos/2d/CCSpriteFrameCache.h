@@ -40,6 +40,8 @@ THE SOFTWARE.
 #include "CCRef.h"
 #include "CCValue.h"
 #include "CCMap.h"
+#include "CCScriptProperty.h"
+
 #include <set>
 #include <string>
 
@@ -165,6 +167,8 @@ protected:
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of sprite_nodes group

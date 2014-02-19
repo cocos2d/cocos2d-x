@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __ActionObject_H__
 #define __ActionObject_H__
 
+#include "CCScriptProperty.h"
 #include "CCActionNode.h"
 #include "cocostudio/DictionaryHelper.h"
 
@@ -163,7 +164,7 @@ public:
 	/*scheduler update function*/
 	void simulationActionUpdate(float dt);
 protected:
-	cocos2d::Vector<ActionNode*> _actionNodeList;/*actionnode*/
+	cocos2d::Vector<ActionNode*> _actionNodeList;
 	std::string _name;
 	bool _loop;
 	bool _bPause;
@@ -173,6 +174,8 @@ protected:
 	cocos2d::Scheduler *_pScheduler;
 	cocos2d::CallFunc *_CallBack;
 	float _fTotalTime;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 }

@@ -200,6 +200,8 @@ private:
     bool _autoLoadSpriteFile;
 
     std::unordered_map<std::string, RelativeData> _relativeDatas;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 

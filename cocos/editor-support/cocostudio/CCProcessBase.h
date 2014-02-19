@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
+#include "CCScriptProperty.h"
 
 namespace cocostudio {
 
@@ -175,6 +176,8 @@ protected:
 
 
     bool _isLoopBack;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 }

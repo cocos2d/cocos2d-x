@@ -39,12 +39,6 @@ Ref::~Ref()
 {
 }
 
-Ref* Ref::autorelease()
-{
-    PoolManager::getInstance()->getCurrentPool()->addObject(this);
-    return this;
-}
-
 void Ref::retain()
 {
     CCASSERT(_referenceCount > 0, "reference count should greater than 0");
@@ -94,6 +88,12 @@ void Ref::release()
 #endif
         delete this;
     }
+}
+
+Ref* Ref::autorelease()
+{
+    PoolManager::getInstance()->getCurrentPool()->addObject(this);
+    return this;
 }
 
 unsigned int Ref::getReferenceCount() const

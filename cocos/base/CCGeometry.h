@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include <functional>
 
 #include "CCPlatformMacros.h"
-#include "CCRef.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN

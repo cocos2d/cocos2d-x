@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
+#include "CCScriptProperty.h"
 
 #ifndef PT_RATIO
 #define PT_RATIO 32
@@ -123,6 +124,8 @@ private:
     ContourData *_contourData;
 
     friend class ColliderDetector;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /*
@@ -192,6 +195,8 @@ public:
 
 protected:
     bool _active;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 }

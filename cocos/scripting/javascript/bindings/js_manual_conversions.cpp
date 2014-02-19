@@ -1274,7 +1274,10 @@ bool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret)
 
 jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
 {
-    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    //FIXME:james
+    CCASSERT(false, "");
+    return JSVAL_NULL;
+/*    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
     Ref* obj;
     int i = 0;
@@ -1319,11 +1322,15 @@ jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
         }
         ++i;
     }
-    return OBJECT_TO_JSVAL(jsretArr);
+    return OBJECT_TO_JSVAL(jsretArr);*/
 }
 
 jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
 {
+    //FIXME:james
+    CCASSERT(false, "");
+    return JSVAL_NULL;
+    /*
     JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
     DictElement* pElement = NULL;
     CCDICT_FOREACH(dict, pElement)
@@ -1369,6 +1376,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
         }
     }
     return OBJECT_TO_JSVAL(jsRet);
+     */
 }
 
 bool jsval_to_ccdictionary(JSContext* cx, jsval v, __Dictionary** ret)

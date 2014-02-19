@@ -281,7 +281,7 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T
         T obj = iter->second;
         
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Ref>(cx, obj);
+        js_proxy_t* jsproxy = js_get_or_create_proxy(cx, obj);
         if (jsproxy) {
             element = OBJECT_TO_JSVAL(jsproxy->obj);
         }

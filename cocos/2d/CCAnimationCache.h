@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "CCRef.h"
 #include "CCMap.h"
 #include "CCValue.h"
+#include "CCScriptProperty.h"
+
 #include <string>
 
 NS_CC_BEGIN
@@ -123,6 +125,8 @@ private:
 private:
     Map<std::string, Animation*> _animations;
     static AnimationCache* s_sharedAnimationCache;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of sprite_nodes group

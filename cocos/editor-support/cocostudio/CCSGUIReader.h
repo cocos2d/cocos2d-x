@@ -59,6 +59,7 @@ protected:
     std::string m_strFilePath;
     cocos2d::ValueMap _fileDesignSizes;
     
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 class WidgetPropertiesReader : public cocos2d::Ref

@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "CCRef.h"
 #include "CCTexture2D.h"
+#include "CCScriptProperty.h"
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1
@@ -198,6 +199,8 @@ private:
     bool isEtc(const unsigned char * data, ssize_t dataLen);
     bool isS3TC(const unsigned char * data,ssize_t dataLen);
     bool isATITC(const unsigned char *data, ssize_t dataLen);
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of platform group

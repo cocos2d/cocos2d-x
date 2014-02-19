@@ -25,13 +25,15 @@ THE SOFTWARE.
 #ifndef __CC_FILEUTILS_H__
 #define __CC_FILEUTILS_H__
 
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "CCValue.h"
 #include "CCData.h"
+#include "CCScriptProperty.h"
+
+#include <string>
+#include <vector>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
@@ -419,6 +421,7 @@ protected:
      */
     static FileUtils* s_sharedFileUtils;
     
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of platform group

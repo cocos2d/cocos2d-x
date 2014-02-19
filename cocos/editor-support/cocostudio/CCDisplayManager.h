@@ -151,6 +151,8 @@ protected:
     bool _visible;
 
     Bone *_bone;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 }

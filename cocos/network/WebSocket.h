@@ -32,6 +32,8 @@
 
 #include "CCPlatformMacros.h"
 #include "CCStdC.h"
+#include "CCScriptProperty.h"
+
 #include <list>
 #include <string>
 #include <vector>
@@ -168,6 +170,8 @@ private:
     Delegate* _delegate;
     int _SSLConnection;
     struct libwebsocket_protocols* _wsProtocols;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 }

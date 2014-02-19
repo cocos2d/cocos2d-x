@@ -21,10 +21,12 @@ ScriptProperty::ScriptProperty()
 
 ScriptProperty::~ScriptProperty()
 {
+    if (nullptr == _owner)
+        return;
+    
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
-        CCASSERT(_owner != nullptr, "Owner should not be nullptr.");
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
     }
     else

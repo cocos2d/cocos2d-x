@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCActionObject.h"
 #include "cocostudio/DictionaryHelper.h"
+#include "CCScriptProperty.h"
 
 namespace cocostudio {
 
@@ -104,6 +105,8 @@ public:
 
 protected:
 	std::unordered_map<std::string, cocos2d::Vector<ActionObject*>> _actionDic;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 }

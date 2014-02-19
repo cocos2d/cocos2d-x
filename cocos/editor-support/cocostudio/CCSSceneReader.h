@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCSSCENEREADER_H__
 
 #include "cocostudio/DictionaryHelper.h"
-
+#include "CCScriptProperty.h"
 
 namespace cocostudio {
 
@@ -56,6 +56,8 @@ private:
     static SceneReader* s_sharedReader;
     std::function<void(cocos2d::Ref* obj, void* doc)> _fnSelector;
 	cocos2d::Node*      _node;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 

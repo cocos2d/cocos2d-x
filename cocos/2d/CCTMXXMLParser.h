@@ -29,11 +29,12 @@ THE SOFTWARE.
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
 
-#include "CCArray.h"
 #include "CCGeometry.h"
 #include "platform/CCSAXParser.h"
 #include "CCVector.h"
 #include "CCValue.h"
+#include "CCScriptProperty.h"
+
 #include <string>
 
 NS_CC_BEGIN
@@ -113,6 +114,8 @@ public:
     unsigned char       _opacity;
     bool                _ownTiles;
     Point               _offset;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /** @brief TMXTilesetInfo contains the information about the tilesets like:
@@ -148,6 +151,8 @@ public:
      */
     virtual ~TMXTilesetInfo();
     Rect getRectForGID(uint32_t gid);
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 /** @brief TMXMapInfo contains the information about the map like:
@@ -314,6 +319,8 @@ protected:
     ValueMapIntKey _tileProperties;
     int _currentFirstGID;
     bool _recordFirstGID;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of tilemap_parallax_nodes group

@@ -26,14 +26,15 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_PROTOCOL_H__
 #define __CC_APPLICATION_PROTOCOL_H__
 
+#include "CCPlatformMacros.h"
+#include "CCScriptProperty.h"
+
 NS_CC_BEGIN
 
 /**
  * @addtogroup platform
  * @{
  */
-
-class EAGLView;
 
 class CC_DLL ApplicationProtocol
 {
@@ -106,6 +107,8 @@ public:
      * @lua NA
      */
     virtual Platform getTargetPlatform() = 0;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 // end of platform group

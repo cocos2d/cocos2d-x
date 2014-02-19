@@ -31,6 +31,7 @@
 #include "CCVector.h"
 #include "CCRef.h"
 #include "CCGeometry.h"
+#include "CCScriptProperty.h"
 
 #include <list>
 
@@ -202,6 +203,8 @@ protected:
     friend class PhysicsJoint;
     friend class PhysicsWorldCallback;
     friend class PhysicsDebugDraw;
+    
+    CC_CLASS_SUPPORT_SCRIPT
 };
 
 
