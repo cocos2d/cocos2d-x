@@ -60,6 +60,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFAlignmentNew),
     CL(LabelFNTBounds),
     CL(LabelTTFLongLineWrapping),
+    CL(LabelTTFLargeText),
     CL(LabelTTFColor),
     CL(LabelTTFFontsTestNew),
     CL(LabelTTFDynamicAlignment),
@@ -976,6 +977,29 @@ std::string LabelTTFLongLineWrapping::title() const
 std::string LabelTTFLongLineWrapping::subtitle() const
 {
     return "Uses the new Label with TTF. Testing auto-wrapping";
+}
+
+LabelTTFLargeText::LabelTTFLargeText()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    // Long sentence
+    TTFConfig ttfConfig("fonts/wt021.ttf",36,GlyphCollection::DYNAMIC);
+    std::string text = FileUtils::getInstance()->getStringFromFile("commonly_used_words.txt");
+    auto label = Label::createWithTTF(ttfConfig,text, TextHAlignment::CENTER, size.width);
+    label->setPosition( Point(size.width/2, size.height/2) );
+    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    addChild(label);
+}
+
+std::string LabelTTFLargeText::title() const
+{
+    return "New Label + .TTF";
+}
+
+std::string LabelTTFLargeText::subtitle() const
+{
+    return "Uses the new Label with TTF. Testing large text";
 }
 
 LabelTTFColor::LabelTTFColor()
