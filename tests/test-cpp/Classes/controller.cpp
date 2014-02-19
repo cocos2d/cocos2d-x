@@ -243,7 +243,7 @@ void TestController::addConsoleAutoTest()
         {
             for(int i = 0; i < g_testCount; i++)
             {
-                if(args.compare(g_aTestNames[i].test_name)== 0)
+                if(args == g_aTestNames[i].test_name)
                 {
                     // create the test scene and run it
                     auto scene = g_aTestNames[i].callback();
