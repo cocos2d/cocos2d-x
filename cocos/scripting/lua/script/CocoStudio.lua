@@ -12,7 +12,7 @@ function ccs.sendTriggerEvent(event)
 
     for i = 1, table.getn(triggerObjArr) do
         local triObj = triggerObjArr[i]
-        if nil ~= triObj and triObj.detect then
+        if nil ~= triObj and triObj:detect() then
             triObj:done()
         end
     end
@@ -112,7 +112,7 @@ function ccs.TriggerObj:detect()
     local obj = nil
     for i = 1 , table.getn(self._cons) do
         obj = self._cons[i]
-        if nil ~= obj and obj.detect then
+        if nil ~= obj and nil ~= obj.detect then
             ret = ret and obj:detect()
         end
     end
@@ -164,7 +164,7 @@ function ccs.TriggerObj:serialize(jsonValue)
             local subDict = cons[i]
             local className = subDict["classname"]
             if nil ~= className then
-                local obj = ObjectFactory.getInstance():createObject(className)
+                local obj = ccs.ObjectFactory.getInstance():createObject(className)
                 assert(nil ~= obj, string.format("class named %s can not implement!",className))
                 obj:serialize(subDict)
                 obj:init()
