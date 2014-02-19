@@ -5,26 +5,27 @@ set(JSBINDING_SRC
   ../auto-generated/js-bindings/jsb_cocos2dx_spine_auto.cpp
   ../auto-generated/js-bindings/jsb_cocos2dx_extension_auto.cpp  
   ../auto-generated/js-bindings/jsb_cocos2dx_studio_auto.cpp
-  bindings/cocos2d_specifics.cpp
-  bindings/jsb_opengl_functions.cpp
-  bindings/js_manual_conversions.cpp
-  bindings/js_bindings_core.cpp
-  bindings/jsb_opengl_manual.cpp
   bindings/ScriptingCore.cpp
+  bindings/cocos2d_specifics.cpp
+  bindings/js_bindings_core.cpp
   bindings/js_bindings_opengl.cpp
+  bindings/js_manual_conversions.cpp
+  bindings/jsb_opengl_functions.cpp
+  bindings/jsb_opengl_manual.cpp
   bindings/jsb_opengl_registration.cpp
   bindings/chipmunk/js_bindings_chipmunk_auto_classes.cpp
-  bindings/extension/jsb_cocos2dx_extension_manual.cpp
   bindings/chipmunk/js_bindings_chipmunk_functions.cpp
-  bindings/gui/jsb_cocos2dx_gui_manual.cpp
   bindings/chipmunk/js_bindings_chipmunk_manual.cpp
-  bindings/localstorage/js_bindings_system_functions.cpp
   bindings/chipmunk/js_bindings_chipmunk_registration.cpp
-  bindings/localstorage/js_bindings_system_registration.cpp
   bindings/cocosbuilder/js_bindings_ccbreader.cpp
-  bindings/network/jsb_websocket.cpp
   bindings/cocostudio/jsb_cocos2dx_studio_manual.cpp
+  bindings/extension/jsb_cocos2dx_extension_manual.cpp
+  bindings/gui/jsb_cocos2dx_gui_manual.cpp
+  bindings/localstorage/js_bindings_system_functions.cpp
+  bindings/localstorage/js_bindings_system_registration.cpp
   bindings/network/XMLHTTPRequest.cpp
+  bindings/network/jsb_websocket.cpp
+  bindings/spine/jsb_cocos2dx_spine_manual.cpp
 )
 
 include_directories(

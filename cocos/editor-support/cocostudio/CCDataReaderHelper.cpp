@@ -743,12 +743,12 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
         {
             if( movementXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
-                movementData->tweenEasing = tweenEasing == 2 ? Sine_EaseInOut : (TweenType)tweenEasing;
+                movementData->tweenEasing = tweenEasing == 2 ? cocos2d::tweenfunc::Sine_EaseInOut : (TweenType)tweenEasing;
             }
         }
         else
         {
-            movementData->tweenEasing  = Linear;
+            movementData->tweenEasing  = cocos2d::tweenfunc::Linear;
         }
     }
 
@@ -1072,12 +1072,12 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
         {
             if( frameXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
-                frameData->tweenEasing = tweenEasing == 2 ? Sine_EaseInOut : (TweenType)tweenEasing;
+                frameData->tweenEasing = tweenEasing == 2 ? cocos2d::tweenfunc::Sine_EaseInOut : (cocos2d::tweenfunc::TweenType)tweenEasing;
             }
         }
         else
         {
-            frameData->tweenEasing  = Linear;
+            frameData->tweenEasing  = cocos2d::tweenfunc::Linear;
         }
     }
 
@@ -1461,7 +1461,7 @@ MovementData *DataReaderHelper::decodeMovement(const rapidjson::Value& json, Dat
     {
         movementData->scale = DICTOOL->getFloatValue_json(json, A_MOVEMENT_SCALE, 1.0f);
     }
-	movementData->tweenEasing =  (TweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
+	movementData->tweenEasing =  (TweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, cocos2d::tweenfunc::Linear));
 
     const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != nullptr)
@@ -1557,7 +1557,7 @@ FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo 
 
     decodeNode(frameData, json, dataInfo);
 
-	frameData->tweenEasing = (TweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
+	frameData->tweenEasing = (TweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, cocos2d::tweenfunc::Linear));
 	frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
 	frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, BlendFunc::ALPHA_NON_PREMULTIPLIED.src));
 	frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst));

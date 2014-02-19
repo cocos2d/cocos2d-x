@@ -78,10 +78,6 @@ public:
 
     ~BitmapDC(void)
     {
-        if (_data)
-        {
-            delete [] _data;
-        }
     }
 
     bool getBitmapFromJavaShadowStroke(	const char *text,
@@ -115,11 +111,11 @@ public:
            // Do a full lookup for the font path using FileUtils in case the given font name is a relative path to a font file asset,
            // or the path has been mapped to a different location in the app package:
            std::string fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(pFontName);
-        
-		   // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
-		   // requires this portion of the path to be omitted for assets inside the app package.
-		   if (fullPathOrFontName.find("assets/") == 0)
-		   {
+            
+           // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
+           // requires this portion of the path to be omitted for assets inside the app package.
+           if (fullPathOrFontName.find("assets/") == 0)
+           {
                fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));	// Chop out the 'assets/' portion of the path.
            }
 
@@ -163,7 +159,6 @@ public:
     int _width;
     int _height;
     unsigned char *_data;
-    JNIEnv *env;
 };
 
 static BitmapDC& sharedBitmapDC()
@@ -222,7 +217,7 @@ extern "C"
         cocos2d::BitmapDC& bitmapDC = cocos2d::sharedBitmapDC();
         bitmapDC._width = width;
         bitmapDC._height = height;
-        bitmapDC._data = new unsigned char[size];
+        bitmapDC._data = (unsigned char*)malloc(sizeof(unsigned char) * size);
         env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC._data);
     }
 };
