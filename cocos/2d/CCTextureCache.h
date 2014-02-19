@@ -270,8 +270,6 @@ private:
 
 #endif
 
-
-#define CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD 1
 #if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
 
 class ImageFileTextureReloader

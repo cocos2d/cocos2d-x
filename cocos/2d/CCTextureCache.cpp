@@ -253,6 +253,9 @@ void TextureCache::addImageAsyncCallBack(float dt)
             // cache the texture file name
             VolatileTextureMgr::addImageTexture(texture, filename);
 #endif
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+            ImageFileTextureReloader::addImageTexture(texture, filename);
+#endif
             // cache the texture. retain it, since it is added in the map
             _textures.insert( std::make_pair(filename, texture) );
             texture->retain();
@@ -317,6 +320,9 @@ Texture2D * TextureCache::addImage(const std::string &path)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                 // cache the texture file name
                 VolatileTextureMgr::addImageTexture(texture, fullpath);
+#endif
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+                ImageFileTextureReloader::addImageTexture(texture, fullpath);
 #endif
                 // texture already retained, no need to re-retain it
                 _textures.insert( std::make_pair(fullpath, texture) );

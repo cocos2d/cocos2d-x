@@ -44,10 +44,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "platform/CCDevice.h"
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "CCTextureCache.h"
-#endif
+#include "CCTextureCache.h"
 
 NS_CC_BEGIN
 
@@ -437,6 +434,9 @@ Texture2D::~Texture2D()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::removeTexture(this);
+#endif
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+    ImageFileTextureReloader::removeTexture(this);
 #endif
 
     CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
