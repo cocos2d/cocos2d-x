@@ -274,6 +274,12 @@ Console::Console()
         { "resolution", "Change or print the window resolution. Args: [width height resolution_policy | ] ", std::bind(&Console::commandResolution, this, std::placeholders::_1, std::placeholders::_2) },
         { "scenegraph", "Print the scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
         { "texture", "Flush or print the TextureCache info. Args: [flush | ] ", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
+        { "pause", "pause all scheduled timers, the draw rate will be 4 FPS to reduce CPU consumption ", std::bind(&Console::commandPause, this, std::placeholders::_1, std::placeholders::_2) },
+        { "resume", "resume all scheduled timers", std::bind(&Console::commandResume, this, std::placeholders::_1, std::placeholders::_2) },
+        { "stopanimation", "Stops the animation. Nothing will be drawn.", std::bind(&Console::commandStopAnimation, this, std::placeholders::_1, std::placeholders::_2) },
+        { "startanimation", "Restart the animation again, Call this function only if [stopAnimation] was called earlier ", std::bind(&Console::commandStartAnimation, this, std::placeholders::_1, std::placeholders::_2) },
+    
+
     };
 
      ;
@@ -551,6 +557,37 @@ void Console::commandTextures(int fd, const std::string& args)
     {
         mydprintf(fd, "Unsupported argument: '%s'. Supported arguments: 'flush' or nothing", args.c_str());
     }
+}
+
+void Console::commandPause(int fd, const std::string& args)
+{
+    Scheduler *sched = Director::getInstance()->getScheduler();
+    sched->performFunctionInCocosThread( [&](){
+            Director::getInstance()->pause();
+        }
+                                        );
+}
+
+void Console::commandResume(int fd, const std::string& args)
+{
+    auto director = Director::getInstance();
+    director->resume();
+}
+
+
+void Console::commandStopAnimation(int fd, const std::string& args)
+{
+    Scheduler *sched = Director::getInstance()->getScheduler();
+    sched->performFunctionInCocosThread( [&](){
+            Director::getInstance()->stopAnimation();
+        }
+                                        );
+}
+
+void Console::commandStartAnimation(int fd, const std::string& args)
+{
+   auto director = Director::getInstance();
+    director->startAnimation();
 }
 
 
