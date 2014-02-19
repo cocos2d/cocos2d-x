@@ -23,13 +23,12 @@ function TMoveBy:done()
     if nil == node then
         return
     end
-
     local  actionBy = cc.MoveBy:create(self._duration, cc.p(self._x, self._y))
     if nil == actionBy then
         return
     end
 
-    if false == self._reverse then
+    if true == self._reverse then
         local actionByBack = actionBy:reverse()
         node:runAction(cc.Sequence:create(actionBy, actionByBack))
     else
@@ -60,6 +59,8 @@ function TMoveBy:serialize(value)
 end
 
 function TMoveBy:removeAll()
+    local node = ccs.SceneReader:getInstance():getNodeByTag(self._tag)
+    node:getActionManager():removeAllActions()
     print("TMoveBy::removeAll")
 end
 
@@ -118,5 +119,54 @@ function TScaleTo:removeAll()
     print("TScaleTo::removeAll")
 end
 
+
+local TriggerState = class("TriggerState")
+TriggerState._id  = -1
+TriggerState._state = 0
+
+function TriggerState:ctor()
+    self._id    = -1
+    self._state = 0
+end
+
+function TriggerState:init()
+    return true
+end
+
+function TriggerState:done()
+    local obj = ccs.TriggerMng.getInstance():getTriggerObj(self._id)
+    if nil ~= obj then
+        if self._state == 0 then
+            obj:setEnable(false)
+        elseif self._state == 1 then
+            obj:setEnable(true)
+        elseif self._state == 2 then
+            ccs.TriggerMng.getInstance():removeTriggerObj(self._id)
+        end
+    end
+end
+
+function TriggerState:serialize(value)
+    local dataItems = value["dataitems"]
+    if nil ~= dataItems then
+        local count = table.getn(dataItems)
+        for i = 1, count do
+            local subDict =  dataItems[i]
+            local key = subDict["key"]
+            if key == "ID" then
+                self._id = subDict["value"]
+            elseif key == "State" then
+                self._state = subDict["value"]
+            end
+        end
+    end
+end
+
+function TriggerState:removeAll()
+    print("TriggerState::removeAll")
+end
+
+
 ccs.registerTriggerClass("TScaleTo",TScaleTo.new)
 ccs.registerTriggerClass("TMoveBy",TMoveBy.new)
+ccs.registerTriggerClass("TriggerState",TriggerState.new)

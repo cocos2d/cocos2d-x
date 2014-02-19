@@ -30,6 +30,7 @@ endif()
 set(COCOS2D_SRC
   CCAction.cpp
   CCActionCamera.cpp
+  CCTweenFunction.cpp
   CCActionEase.cpp
   CCActionGrid.cpp
   CCActionGrid3D.cpp

@@ -32,6 +32,7 @@ THE SOFTWARE.
  */
 
 #include "CCActionEase.h"
+#include "CCTweenFunction.h"
 
 NS_CC_BEGIN
 
@@ -137,7 +138,7 @@ EaseIn* EaseIn::clone() const
 
 void EaseIn::update(float time)
 {
-    _inner->update(powf(time, _rate));
+    _inner->update(tweenfunc::easeIn(time, _rate));
 }
 
 EaseIn* EaseIn::reverse() const
@@ -177,7 +178,7 @@ EaseOut* EaseOut::clone() const
 
 void EaseOut::update(float time)
 {
-    _inner->update(powf(time, 1 / _rate));
+    _inner->update(tweenfunc::easeOut(time, _rate));
 }
 
 EaseOut* EaseOut::reverse() const
@@ -217,15 +218,7 @@ EaseInOut* EaseInOut::clone() const
 
 void EaseInOut::update(float time)
 {
-    time *= 2;
-    if (time < 1)
-    {
-        _inner->update(0.5f * powf(time, _rate));
-    }
-    else
-    {
-        _inner->update(1.0f - 0.5f * powf(2-time, _rate));
-    }
+    _inner->update(tweenfunc::easeInOut(time, _rate));
 }
 
 // InOut and OutIn are symmetrical
@@ -266,7 +259,7 @@ EaseExponentialIn* EaseExponentialIn::clone() const
 
 void EaseExponentialIn::update(float time)
 {
-    _inner->update(time == 0 ? 0 : powf(2, 10 * (time/1 - 1)) - 1 * 0.001f);
+    _inner->update(tweenfunc::expoEaseIn(time));
 }
 
 ActionEase * EaseExponentialIn::reverse() const
@@ -306,7 +299,7 @@ EaseExponentialOut* EaseExponentialOut::clone() const
 
 void EaseExponentialOut::update(float time)
 {
-    _inner->update(time == 1 ? 1 : (-powf(2, -10 * time / 1) + 1));
+    _inner->update(tweenfunc::expoEaseOut(time));
 }
 
 ActionEase* EaseExponentialOut::reverse() const
@@ -347,17 +340,7 @@ EaseExponentialInOut* EaseExponentialInOut::clone() const
 
 void EaseExponentialInOut::update(float time)
 {
-    time /= 0.5f;
-    if (time < 1)
-    {
-        time = 0.5f * powf(2, 10 * (time - 1));
-    }
-    else
-    {
-        time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
-    }
-
-    _inner->update(time);
+    _inner->update(tweenfunc::expoEaseInOut(time));
 }
 
 EaseExponentialInOut* EaseExponentialInOut::reverse() const
@@ -398,7 +381,7 @@ EaseSineIn* EaseSineIn::clone() const
 
 void EaseSineIn::update(float time)
 {
-    _inner->update(-1 * cosf(time * (float)M_PI_2) + 1);
+    _inner->update(tweenfunc::sineEaseIn(time));
 }
 
 ActionEase* EaseSineIn::reverse() const
@@ -439,7 +422,7 @@ EaseSineOut* EaseSineOut::clone() const
 
 void EaseSineOut::update(float time)
 {
-    _inner->update(sinf(time * (float)M_PI_2));
+    _inner->update(tweenfunc::sineEaseOut(time));
 }
 
 ActionEase* EaseSineOut::reverse(void) const
@@ -480,7 +463,7 @@ EaseSineInOut* EaseSineInOut::clone() const
 
 void EaseSineInOut::update(float time)
 {
-    _inner->update(-0.5f * (cosf((float)M_PI * time) - 1));
+    _inner->update(tweenfunc::sineEaseInOut(time));
 }
 
 EaseSineInOut* EaseSineInOut::reverse() const
@@ -541,19 +524,7 @@ EaseElasticIn* EaseElasticIn::clone() const
 
 void EaseElasticIn::update(float time)
 {
-    float newT = 0;
-    if (time == 0 || time == 1)
-    {
-        newT = time;
-    }
-    else
-    {
-        float s = _period / 4;
-        time = time - 1;
-        newT = -powf(2, 10 * time) * sinf((time - s) * M_PI_X_2 / _period);
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::elasticEaseIn(time, NULL));
 }
 
 EaseElastic* EaseElasticIn::reverse() const
@@ -599,18 +570,7 @@ EaseElasticOut* EaseElasticOut::clone() const
 
 void EaseElasticOut::update(float time)
 {
-    float newT = 0;
-    if (time == 0 || time == 1)
-    {
-        newT = time;
-    }
-    else
-    {
-        float s = _period / 4;
-        newT = powf(2, -10 * time) * sinf((time - s) * M_PI_X_2 / _period) + 1;
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::elasticEaseOut(time, NULL));
 }
 
 EaseElastic* EaseElasticOut::reverse() const
@@ -656,33 +616,7 @@ EaseElasticInOut* EaseElasticInOut::clone() const
 
 void EaseElasticInOut::update(float time)
 {
-    float newT = 0;
-    if (time == 0 || time == 1)
-    {
-        newT = time;
-    }
-    else
-    {
-        time = time * 2;
-        if ( _period == 0)
-        {
-            _period = 0.3f * 1.5f;
-        }
-
-        float s = _period / 4;
-
-        time = time - 1;
-        if (time < 0)
-        {
-            newT = -0.5f * powf(2, 10 * time) * sinf((time -s) * M_PI_X_2 / _period);
-        }
-        else
-        {
-            newT = powf(2, -10 * time) * sinf((time - s) * M_PI_X_2 / _period) * 0.5f + 1;
-        }
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::elasticEaseInOut(time, NULL));
 }
 
 EaseElasticInOut* EaseElasticInOut::reverse() const
@@ -693,27 +627,6 @@ EaseElasticInOut* EaseElasticInOut::reverse() const
 //
 // EaseBounce
 //
-
-float EaseBounce::bounceTime(float time)
-{
-    if (time < 1 / 2.75)
-    {
-        return 7.5625f * time * time;
-    } else 
-    if (time < 2 / 2.75)
-    {
-        time -= 1.5f / 2.75f;
-        return 7.5625f * time * time + 0.75f;
-    } else
-    if(time < 2.5 / 2.75)
-    {
-        time -= 2.25f / 2.75f;
-        return 7.5625f * time * time + 0.9375f;
-    }
-
-    time -= 2.625f / 2.75f;
-    return 7.5625f * time * time + 0.984375f;
-}
 
 //
 // EaseBounceIn
@@ -748,8 +661,7 @@ EaseBounceIn* EaseBounceIn::clone() const
 
 void EaseBounceIn::update(float time)
 {
-    float newT = 1 - bounceTime(1 - time);
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseIn(time));
 }
 
 EaseBounce* EaseBounceIn::reverse() const
@@ -790,8 +702,7 @@ EaseBounceOut* EaseBounceOut::clone() const
 
 void EaseBounceOut::update(float time)
 {
-    float newT = bounceTime(time);
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseOut(time));
 }
 
 EaseBounce* EaseBounceOut::reverse() const
@@ -832,18 +743,7 @@ EaseBounceInOut* EaseBounceInOut::clone() const
 
 void EaseBounceInOut::update(float time)
 {
-    float newT = 0;
-    if (time < 0.5f)
-    {
-        time = time * 2;
-        newT = (1 - bounceTime(1 - time)) * 0.5f;
-    }
-    else
-    {
-        newT = bounceTime(time * 2 - 1) * 0.5f + 0.5f;
-    }
-
-    _inner->update(newT);
+    _inner->update(tweenfunc::bounceEaseInOut(time));
 }
 
 EaseBounceInOut* EaseBounceInOut::reverse() const
@@ -884,8 +784,7 @@ EaseBackIn* EaseBackIn::clone() const
 
 void EaseBackIn::update(float time)
 {
-    float overshoot = 1.70158f;
-    _inner->update(time * time * ((overshoot + 1) * time - overshoot));
+    _inner->update(tweenfunc::backEaseIn(time));
 }
 
 ActionEase* EaseBackIn::reverse() const
@@ -926,10 +825,7 @@ EaseBackOut* EaseBackOut::clone() const
 
 void EaseBackOut::update(float time)
 {
-    float overshoot = 1.70158f;
-
-    time = time - 1;
-    _inner->update(time * time * ((overshoot + 1) * time + overshoot) + 1);
+    _inner->update(tweenfunc::backEaseOut(time));
 }
 
 ActionEase* EaseBackOut::reverse() const
@@ -970,23 +866,678 @@ EaseBackInOut* EaseBackInOut::clone() const
 
 void EaseBackInOut::update(float time)
 {
-    float overshoot = 1.70158f * 1.525f;
-
-    time = time * 2;
-    if (time < 1)
-    {
-        _inner->update((time * time * ((overshoot + 1) * time - overshoot)) / 2);
-    }
-    else
-    {
-        time = time - 2;
-        _inner->update((time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1);
-    }
+    _inner->update(tweenfunc::backEaseInOut(time));
 }
 
 EaseBackInOut* EaseBackInOut::reverse() const
 {
     return EaseBackInOut::create(_inner->reverse());
+}
+
+
+
+
+EaseBezierAction* EaseBezierAction::create(cocos2d::ActionInterval* action)
+{
+	EaseBezierAction *ret = new EaseBezierAction();
+	if (ret)
+	{  
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+void EaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p3)
+{
+	_p0 = p0;
+	_p1 = p1;
+	_p2 = p2;
+	_p3 = p3;
+}
+
+EaseBezierAction* EaseBezierAction::clone() const
+{
+	// no copy constructor
+	auto a = new EaseBezierAction();
+	a->initWithAction(_inner->clone());
+	a->setBezierParamer(_p0,_p1,_p2,_p3);
+	a->autorelease();
+	return a;
+}
+
+void EaseBezierAction::update(float time)
+{
+	_inner->update(tweenfunc::bezieratFunction(_p0,_p1,_p2,_p3,time));
+}
+
+EaseBezierAction* EaseBezierAction::reverse() const
+{
+	EaseBezierAction* reverseAction = EaseBezierAction::create(_inner->reverse());
+	reverseAction->setBezierParamer(_p3,_p2,_p1,_p0);
+	return reverseAction;
+}
+
+//
+// EaseQuadraticActionIn
+//
+
+EaseQuadraticActionIn* EaseQuadraticActionIn::create(ActionInterval* action)
+{
+	EaseQuadraticActionIn *ret = new EaseQuadraticActionIn();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuadraticActionIn* EaseQuadraticActionIn::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuadraticActionIn();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuadraticActionIn::update(float time)
+{
+	_inner->update(tweenfunc::quadraticIn(time));
+}
+
+EaseQuadraticActionIn* EaseQuadraticActionIn::reverse() const
+{
+	return EaseQuadraticActionIn::create(_inner->reverse());
+}
+
+//
+// EaseQuadraticActionOut
+//
+
+EaseQuadraticActionOut* EaseQuadraticActionOut::create(ActionInterval* action)
+{
+	EaseQuadraticActionOut *ret = new EaseQuadraticActionOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuadraticActionOut* EaseQuadraticActionOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuadraticActionOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuadraticActionOut::update(float time)
+{	
+	_inner->update(tweenfunc::quadraticOut(time));
+}
+
+EaseQuadraticActionOut* EaseQuadraticActionOut::reverse() const
+{
+	return EaseQuadraticActionOut::create(_inner->reverse());
+}
+
+//
+// EaseQuadraticActionInOut
+//
+
+EaseQuadraticActionInOut* EaseQuadraticActionInOut::create(ActionInterval* action)
+{
+	EaseQuadraticActionInOut *ret = new EaseQuadraticActionInOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuadraticActionInOut* EaseQuadraticActionInOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuadraticActionInOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuadraticActionInOut::update(float time)
+{
+	_inner->update(tweenfunc::quadraticInOut(time));
+}
+
+EaseQuadraticActionInOut* EaseQuadraticActionInOut::reverse() const
+{
+	return EaseQuadraticActionInOut::create(_inner->reverse());
+}
+
+//
+// EaseQuarticActionIn
+//
+
+EaseQuarticActionIn* EaseQuarticActionIn::create(ActionInterval* action)
+{
+	EaseQuarticActionIn *ret = new EaseQuarticActionIn();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuarticActionIn* EaseQuarticActionIn::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuarticActionIn();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuarticActionIn::update(float time)
+{
+	_inner->update(tweenfunc::quartEaseIn(time));
+}
+
+EaseQuarticActionIn* EaseQuarticActionIn::reverse() const
+{
+	return EaseQuarticActionIn::create(_inner->reverse());
+}
+
+//
+// EaseQuarticActionOut
+//
+
+EaseQuarticActionOut* EaseQuarticActionOut::create(ActionInterval* action)
+{
+	EaseQuarticActionOut *ret = new EaseQuarticActionOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuarticActionOut* EaseQuarticActionOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuarticActionOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuarticActionOut::update(float time)
+{
+    _inner->update(tweenfunc::quartEaseOut(time));
+}
+
+EaseQuarticActionOut* EaseQuarticActionOut::reverse() const
+{
+	return EaseQuarticActionOut::create(_inner->reverse());
+}
+
+//
+// EaseQuarticActionInOut
+//
+
+EaseQuarticActionInOut* EaseQuarticActionInOut::create(ActionInterval* action)
+{
+	EaseQuarticActionInOut *ret = new EaseQuarticActionInOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuarticActionInOut* EaseQuarticActionInOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuarticActionInOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuarticActionInOut::update(float time)
+{
+	_inner->update(tweenfunc::quartEaseInOut(time));
+}
+
+EaseQuarticActionInOut* EaseQuarticActionInOut::reverse() const
+{
+	return EaseQuarticActionInOut::create(_inner->reverse());
+}
+
+//
+// EaseQuinticActionIn
+//
+
+EaseQuinticActionIn* EaseQuinticActionIn::create(ActionInterval* action)
+{
+	EaseQuinticActionIn *ret = new EaseQuinticActionIn();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuinticActionIn* EaseQuinticActionIn::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuinticActionIn();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuinticActionIn::update(float time)
+{
+	_inner->update(tweenfunc::quintEaseIn(time));
+}
+
+EaseQuinticActionIn* EaseQuinticActionIn::reverse() const
+{
+	return EaseQuinticActionIn::create(_inner->reverse());
+}
+
+//
+// EaseQuinticActionOut
+//
+
+EaseQuinticActionOut* EaseQuinticActionOut::create(ActionInterval* action)
+{
+	EaseQuinticActionOut *ret = new EaseQuinticActionOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuinticActionOut* EaseQuinticActionOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuinticActionOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuinticActionOut::update(float time)
+{
+	_inner->update(tweenfunc::quintEaseOut(time));
+}
+
+EaseQuinticActionOut* EaseQuinticActionOut::reverse() const
+{
+	return EaseQuinticActionOut::create(_inner->reverse());
+}
+
+//
+// EaseQuinticActionInOut
+//
+
+EaseQuinticActionInOut* EaseQuinticActionInOut::create(ActionInterval* action)
+{
+	EaseQuinticActionInOut *ret = new EaseQuinticActionInOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseQuinticActionInOut* EaseQuinticActionInOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseQuinticActionInOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseQuinticActionInOut::update(float time)
+{
+	_inner->update(tweenfunc::quintEaseInOut(time));
+}
+
+EaseQuinticActionInOut* EaseQuinticActionInOut::reverse() const
+{
+	return EaseQuinticActionInOut::create(_inner->reverse());
+}
+
+//
+// EaseCircleActionIn
+//
+
+EaseCircleActionIn* EaseCircleActionIn::create(ActionInterval* action)
+{
+	EaseCircleActionIn *ret = new EaseCircleActionIn();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseCircleActionIn* EaseCircleActionIn::clone() const
+{
+	// no copy constructor
+	auto a = new EaseCircleActionIn();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseCircleActionIn::update(float time)
+{
+	_inner->update(tweenfunc::circEaseIn(time));
+}
+
+EaseCircleActionIn* EaseCircleActionIn::reverse() const
+{
+	return EaseCircleActionIn::create(_inner->reverse());
+}
+
+//
+// EaseCircleActionOut
+//
+
+EaseCircleActionOut* EaseCircleActionOut::create(ActionInterval* action)
+{
+	EaseCircleActionOut *ret = new EaseCircleActionOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseCircleActionOut* EaseCircleActionOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseCircleActionOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseCircleActionOut::update(float time)
+{
+	_inner->update(tweenfunc::circEaseOut(time));
+}
+
+EaseCircleActionOut* EaseCircleActionOut::reverse() const
+{
+	return EaseCircleActionOut::create(_inner->reverse());
+}
+
+//
+// EaseCircleActionInOut
+//
+
+EaseCircleActionInOut* EaseCircleActionInOut::create(ActionInterval* action)
+{
+	EaseCircleActionInOut *ret = new EaseCircleActionInOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseCircleActionInOut* EaseCircleActionInOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseCircleActionInOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseCircleActionInOut::update(float time)
+{
+	_inner->update(tweenfunc::circEaseInOut(time));
+}
+
+EaseCircleActionInOut* EaseCircleActionInOut::reverse() const
+{
+	return EaseCircleActionInOut::create(_inner->reverse());
+}
+
+//
+// EaseCubicActionIn
+//
+
+EaseCubicActionIn* EaseCubicActionIn::create(ActionInterval* action)
+{
+	EaseCubicActionIn *ret = new EaseCubicActionIn();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseCubicActionIn* EaseCubicActionIn::clone() const
+{
+	// no copy constructor
+	auto a = new EaseCubicActionIn();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseCubicActionIn::update(float time)
+{
+	_inner->update(tweenfunc::cubicEaseIn(time));
+}
+
+EaseCubicActionIn* EaseCubicActionIn::reverse() const
+{
+	return EaseCubicActionIn::create(_inner->reverse());
+}
+
+//
+// EaseCubicActionOut
+//
+
+EaseCubicActionOut* EaseCubicActionOut::create(ActionInterval* action)
+{
+	EaseCubicActionOut *ret = new EaseCubicActionOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseCubicActionOut* EaseCubicActionOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseCubicActionOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseCubicActionOut::update(float time)
+{
+	_inner->update(tweenfunc::cubicEaseOut(time));
+}
+
+EaseCubicActionOut* EaseCubicActionOut::reverse() const
+{
+	return EaseCubicActionOut::create(_inner->reverse());
+}
+
+//
+// EaseCubicActionInOut
+//
+
+EaseCubicActionInOut* EaseCubicActionInOut::create(ActionInterval* action)
+{
+	EaseCubicActionInOut *ret = new EaseCubicActionInOut();
+	if (ret)
+	{
+		if (ret->initWithAction(action))
+		{
+			ret->autorelease();
+		}
+		else
+		{
+			CC_SAFE_RELEASE_NULL(ret);
+		}
+	}
+
+	return ret; 
+}
+
+EaseCubicActionInOut* EaseCubicActionInOut::clone() const
+{
+	// no copy constructor
+	auto a = new EaseCubicActionInOut();
+	a->initWithAction(_inner->clone());
+	a->autorelease();
+	return a;
+}
+
+void EaseCubicActionInOut::update(float time)
+{
+	_inner->update(tweenfunc::cubicEaseInOut(time));
+}
+
+EaseCubicActionInOut* EaseCubicActionInOut::reverse() const
+{
+	return EaseCubicActionInOut::create(_inner->reverse());
 }
 
 NS_CC_END
