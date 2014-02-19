@@ -702,7 +702,7 @@ local function PhysicsDemoOneWayPlatform()
       ball:getPhysicsBody():setMass(1.0);
       layer:addChild(ball);
 
-      local function onContactBegin(event, contact)
+      local function onContactBegin(contact)
         return contact:getContactData().normal.y < 0;
       end
       local contactListener = cc.EventListenerPhysicsContactWithBodies:create(platform:getPhysicsBody(), ball:getPhysicsBody());

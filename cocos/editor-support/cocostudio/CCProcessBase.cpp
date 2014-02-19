@@ -37,7 +37,7 @@ ProcessBase::ProcessBase(void)
     , _currentPercent(0.0f)
     , _rawDuration(0)
     , _loopType(ANIMATION_LOOP_BACK)
-    , _tweenEasing(Linear)
+    , _tweenEasing(cocos2d::tweenfunc::Linear)
     , _animationInternal(1/60.0f)
     , _durationTween(0)
     , _currentFrame(0)
@@ -83,7 +83,7 @@ void ProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEa
      *  When changing end, m_iTotalFrames will be setted to _durationTween
      */
     _nextFrameIndex = durationTo;
-    _tweenEasing = (TweenType)tweenEasing;
+    _tweenEasing = (cocos2d::tweenfunc::TweenType)tweenEasing;
 
 }
 

@@ -34,6 +34,7 @@ loadSubScript.call(this, "resource://gre/modules/devtools/DevToolsUtils.js");
 
 let wantLogging = true;
 let debuggerServer = null;
+const promptConnections = true;
 
 function dumpn(str) {
   if (wantLogging) {
@@ -154,6 +155,19 @@ var DebuggerServer = {
   chromeWindowType: null,
 
   /**
+   * Set that to a function that will be called anytime a new connection
+   * is opened or one is closed.
+   */
+  onConnectionChange: null,
+
+  _fireConnectionChange: function(aWhat) {
+    if (this.onConnectionChange &&
+        typeof this.onConnectionChange === "function") {
+      this.onConnectionChange(aWhat);
+    }
+  },
+
+  /**
    * Prompt the user to accept or decline the incoming connection. This is the
    * default implementation that products embedding the debugger server may
    * choose to override.
@@ -249,9 +263,12 @@ var DebuggerServer = {
     this.closeListener();
     this.globalActorFactories = {};
     this.tabActorFactories = {};
-    delete this._allowConnection;
+    this._allowConnection = null;
     this._transportInitialized = false;
     this._initialized = false;
+
+    this._fireConnectionChange("closed");
+
     dumpn("Debugger server is shut down.");
   },
 
@@ -309,8 +326,8 @@ var DebuggerServer = {
   /**
    * Install Firefox-specific actors.
    */
-  addBrowserActors: function DS_addBrowserActors() {
-    this.chromeWindowType = "navigator:browser";
+  addBrowserActors: function(aWindowType) {
+    this.chromeWindowType = aWindowType ? aWindowType : "navigator:browser";
     this.addActors("resource://gre/modules/devtools/server/actors/webbrowser.js");
     this.addActors("resource://gre/modules/devtools/server/actors/script.js");
     this.addGlobalActor(this.ChromeDebuggerActor, "chromeDebugger");
@@ -322,7 +339,9 @@ var DebuggerServer = {
     this.addActors("resource://gre/modules/devtools/server/actors/styleeditor.js");
     this.addActors("resource://gre/modules/devtools/server/actors/webapps.js");
     this.registerModule("devtools/server/actors/inspector");
+    this.registerModule("devtools/server/actors/webgl");
     this.registerModule("devtools/server/actors/tracer");
+    this.registerModule("devtools/server/actors/device");
   },
 
   /**
@@ -339,19 +358,21 @@ var DebuggerServer = {
       this.addActors("resource://gre/modules/devtools/server/actors/gcli.js");
       this.addActors("resource://gre/modules/devtools/server/actors/styleeditor.js");
       this.registerModule("devtools/server/actors/inspector");
+      this.registerModule("devtools/server/actors/webgl");
     }
-    if (!("ContentTabActor" in DebuggerServer)) {
+    if (!("ContentAppActor" in DebuggerServer)) {
       this.addActors("resource://gre/modules/devtools/server/actors/childtab.js");
     }
   },
 
   /**
-   * Listens on the given port for remote debugger connections.
+   * Listens on the given port or socket file for remote debugger connections.
    *
-   * @param aPort int
-   *        The port to listen on.
+   * @param aPortOrPath int, string
+   *        If given an integer, the port to listen on.
+   *        Otherwise, the path to the unix socket domain file to listen on.
    */
-  openListener: function DS_openListener(aPort) {
+  openListener: function DS_openListener(aPortOrPath) {
     // if (!Services.prefs.getBoolPref("devtools.debugger.remote-enabled")) {
     //   return false;
     // }
@@ -370,11 +391,16 @@ var DebuggerServer = {
 
     let flags = 0;
     try {
-      let socket = new ServerSocket(aPort, flags, 4);
-      socket.asyncListen(this);
-      this._listener = socket;
+      let backlog = 4;
+      let socket;
+      let port = Number(aPortOrPath);
+      if (port) {
+        socket = new ServerSocket(port, flags, 4);
+        socket.asyncListen(this);
+        this._listener = socket;
+      }
     } catch (e) {
-      dumpn("Could not start debugging listener on port " + aPort + ": " + e);
+      dumpn("Could not start debugging listener on '" + aPortOrPath + "': " + e);
       throw "Cr.NS_ERROR_NOT_AVAILABLE";
     }
     this._socketConnections++;
@@ -465,7 +491,7 @@ var DebuggerServer = {
 
   onSocketAccepted:
   makeInfallible(function DS_onSocketAccepted(aSocket, aTransport) {
-    if (!this._allowConnection()) {
+    if (promptConnections && !this._allowConnection()) {
       return;
     }
     dumpn("New debugging connection on " + aTransport.host + ":" + aTransport.port);
@@ -525,7 +551,7 @@ var DebuggerServer = {
       aTransport.send(conn.rootActor.sayHello());
     }
     aTransport.ready();
-
+    this._fireConnectionChange("opened");
     return conn;
   },
 
@@ -534,6 +560,7 @@ var DebuggerServer = {
    */
   _connectionClosed: function DS_connectionClosed(aConnection) {
     delete this._connections[aConnection.prefix];
+    this._fireConnectionChange("closed");
   },
 
   // DebuggerServer extension API.
@@ -738,6 +765,15 @@ function DebuggerServerConnection(aPrefix, aTransport)
   this._actorPool = new ActorPool(this);
   this._extraPools = [];
 
+  // Responses to a given actor must be returned the the client
+  // in the same order as the requests that they're replying to, but
+  // Implementations might finish serving requests in a different
+  // order.  To keep things in order we generate a promise for each
+  // request, chained to the promise for the request before it.
+  // This map stores the latest request promise in the chain, keyed
+  // by an actor ID string.
+  this._actorResponses = new Map;
+
   /*
    * We can forward packets to other servers, if the actors on that server
    * all use a distinct prefix on their names. This is a map from prefixes
@@ -847,13 +883,12 @@ DebuggerServerConnection.prototype = {
   },
 
   _unknownError: function DSC__unknownError(aPrefix, aError) {
-    let errorString = safeErrorString(aError);
-    errorString += "\n" + aError.stack;
+    let errorString = aPrefix + ": " + safeErrorString(aError);
     // Cu.reportError(errorString);
     dumpn(errorString);
     return {
       error: "unknownError",
-      message: (aPrefix + "': " + errorString)
+      message: errorString
     };
   },
 
@@ -916,7 +951,8 @@ DebuggerServerConnection.prototype = {
     let actor = this.getActor(aPacket.to);
     if (!actor) {
       this.transport.send({ from: aPacket.to ? aPacket.to : "root",
-                            error: "noSuchActor" });
+                            error: "noSuchActor",
+                            message: "No such actor for ID: " + aPacket.to });
       return;
     }
 
@@ -950,7 +986,7 @@ DebuggerServerConnection.prototype = {
           "error occurred while processing '" + aPacket.type,
           e));
       } finally {
-        delete this.currentPacket;
+        this.currentPacket = undefined;
       }
     } else {
       ret = { error: "unrecognizedPacketType",
@@ -965,19 +1001,23 @@ DebuggerServerConnection.prototype = {
       return;
     }
 
-    resolve(ret)
-      .then(function (aResponse) {
-        if (!aResponse.from) {
-          aResponse.from = aPacket.to;
-        }
-        return aResponse;
-      })
-      .then(this.transport.send.bind(this.transport))
-      .then(null, (e) => {
-        return this._unknownError(
-          "error occurred while processing '" + aPacket.type,
-          e);
-      });
+    let pendingResponse = this._actorResponses.get(actor.actorID) || resolve(null);
+    let response = pendingResponse.then(() => {
+      return ret;
+    }).then(aResponse => {
+      if (!aResponse.from) {
+        aResponse.from = aPacket.to;
+      }
+      this.transport.send(aResponse);
+    }).then(null, (e) => {
+      let errorPacket = this._unknownError(
+        "error occurred while processing '" + aPacket.type,
+        e);
+      errorPacket.from = aPacket.to;
+      this.transport.send(errorPacket);
+    });
+
+    this._actorResponses.set(actor.actorID, response);
   },
 
   /**

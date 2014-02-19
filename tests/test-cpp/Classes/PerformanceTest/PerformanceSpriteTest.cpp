@@ -450,10 +450,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(subMenu, 2);
 
     // add title label
-    auto label = LabelTTF::create(title(), "Arial", 40);
+    auto label = LabelTTF::create(title(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-32));
-    label->setColor(Color3B(255,255,40));
+    label->setPosition(Point(s.width/2, s.height-50));
 
 
     // subtitle
