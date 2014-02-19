@@ -95,8 +95,9 @@ static id s_sharedDirectorCaller;
                       
 -(void) doCaller: (id) sender
 {
-    [EAGLContext setCurrentContext: [(CCEAGLView*)cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView() context]];
-    cocos2d::Director::getInstance()->mainLoop();
+    cocos2d::Director* director = cocos2d::Director::getInstance();
+    [EAGLContext setCurrentContext: [(CCEAGLView*)director->getOpenGLView()->getEAGLView() context]];
+    director->mainLoop();
 }
 
 @end
