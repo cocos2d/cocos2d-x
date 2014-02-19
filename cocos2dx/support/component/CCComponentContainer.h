@@ -45,6 +45,7 @@ public:
     virtual CCComponent* get(const char *pName) const;
     virtual bool add(CCComponent *pCom);
     virtual bool remove(const char *pName);
+    virtual bool remove(CCComponent *pCom);
     virtual void removeAll();
     virtual void visit(float fDelta);
 public:

@@ -58,6 +58,7 @@ Developers:
     martell
         use tinyxml2 to replace libxml2
         Added Mingw-crt Support without breaking VS SDK
+        Adds emscripten support for Windows Host
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -458,6 +459,10 @@ Developers:
         
     seagullua
         Fixes the font rendering on Windows
+        Fixed a bug that screen will be flickering when switching to a new activity
+        
+    xhcnb
+        Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
 
 Retired Core Developers:
     WenSheng Yang

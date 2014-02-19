@@ -1,4 +1,20 @@
-cocos2d-x-2.2.2 ???
+cocos2d-x-2.2.3 @?.? ????
+[Android]
+     [FIX]    Screen will be flickering when switching to a new activity.
+
+[WP8 | WinRT]
+     [FIX]    Using the correct resolution policy in CCEGLView::UpdateWindowSize.
+
+[JSBindings]
+     [NEW]    Adds 'setTimeout' and 'setInterval' for JSB.
+
+[Emscripten]
+     [NEW]    Adds emscripten support for Windows Host.
+
+[LuaBindings]
+     [FIX]    CCComponent class wasn't exposed to LUA.
+
+cocos2d-x-2.2.2 @Jan.07 2014
 [Windows8 & WinPhone8]
      [FIX]    Updated WinRT and WP8 to pass App Certification tests
      [FIX]    Updated to latest version of ANGLE
