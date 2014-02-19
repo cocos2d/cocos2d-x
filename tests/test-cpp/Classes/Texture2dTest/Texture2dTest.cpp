@@ -254,13 +254,11 @@ void TextureRefresher::onEnter()
     TextureDemo::onEnter();
     auto s = Director::getInstance()->getWinSize();
     
-    std::string fileName = "Images/grossini.png";
-    
-    auto img = Sprite::create(fileName);
+    _textureFileName= "Images/grossini.png";
+    auto img = Sprite::create(_textureFileName);
     _textureRefreshed = img->getTexture();
-    ImageFileTextureReloader::addImageTexture(_textureRefreshed,fileName);
     img->setPosition(Point( s.width/2.0f, s.height/2.0f));
-    this->addChild(img);
+    this->addChild(img);    
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
 
     auto item = MenuItemFont::create("Reload Texture", CC_CALLBACK_0(TextureRefresher::refreshTexture, this));
@@ -270,7 +268,9 @@ void TextureRefresher::onEnter()
 
 void TextureRefresher::refreshTexture()
 {
-    ImageFileTextureReloader::reloadTexture(_textureRefreshed);
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+    ImageFileTextureReloader::reloadTexture(_textureFileName);
+#endif
 }
 
 //------------------------------------------------------------------

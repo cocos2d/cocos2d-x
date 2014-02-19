@@ -61,6 +61,7 @@ public:
     
 private:
     Texture2D* _textureRefreshed;
+    std::string _textureFileName;
     void refreshTexture();
 };
 
