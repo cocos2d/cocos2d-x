@@ -6,10 +6,12 @@
 #define __JS_MANUAL_CONVERSIONS_H__
 
 #include "jsapi.h"
+#include "jsfriendapi.h"
 #include "js_bindings_core.h"
 #include "js_bindings_config.h"
 #include "cocos2d.h"
 #include "spidermonkey_specifics.h"
+#include "chipmunk.h"
 
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
@@ -38,7 +40,7 @@ public:
     JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval);
     ~JSFunctionWrapper();
 
-    JSBool invoke(unsigned int argc, jsval *argv, jsval &rval);
+    bool invoke(unsigned int argc, jsval *argv, jsval &rval);
 private:
     JSContext *_cx;
     JSObject *_jsthis;
@@ -47,50 +49,50 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(JSFunctionWrapper);
 };
 
-JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **out );
-JSBool jsval_to_int( JSContext *cx, jsval vp, int *out);
-JSBool jsval_to_uint( JSContext *cx, jsval vp, unsigned int *out);
-JSBool jsval_to_c_class( JSContext *cx, jsval vp, void **out_native, struct jsb_c_proxy_s **out_proxy);
+bool jsval_to_opaque( JSContext *cx, jsval vp, void **out );
+bool jsval_to_int( JSContext *cx, jsval vp, int *out);
+bool jsval_to_uint( JSContext *cx, jsval vp, unsigned int *out);
+bool jsval_to_c_class( JSContext *cx, jsval vp, void **out_native, struct jsb_c_proxy_s **out_proxy);
 /** converts a jsval (JS string) into a char */
-JSBool jsval_to_charptr( JSContext *cx, jsval vp, const char **out);
+bool jsval_to_charptr( JSContext *cx, jsval vp, const char **out);
 
 jsval opaque_to_jsval( JSContext *cx, void* opaque);
 jsval c_class_to_jsval( JSContext *cx, void* handle, JSObject* object, JSClass *klass, const char* class_name);
 
 /* Converts a char ptr into a jsval (using JS string) */
 jsval charptr_to_jsval( JSContext *cx, const char *str);
-JSBool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, void **data, JSArrayBufferViewType t);
-JSBool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count, GLvoid **data );
+bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, jsval vp, GLsizei *count, void **data, JSArrayBufferViewType t);
+bool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count, GLvoid **data );
 
 // some utility functions
 // to native
-JSBool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *ret );
-JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
-JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
-JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
-JSBool jsval_to_long( JSContext *cx, jsval vp, long *out);
-JSBool jsval_to_ulong( JSContext *cx, jsval vp, unsigned long *out);
-JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
-JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
-JSBool jsval_to_ccpoint(JSContext *cx, jsval v, cocos2d::Point* ret);
-JSBool jsval_to_ccrect(JSContext *cx, jsval v, cocos2d::Rect* ret);
-JSBool jsval_to_ccsize(JSContext *cx, jsval v, cocos2d::Size* ret);
-JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, cocos2d::Color4B* ret);
-JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, cocos2d::Color4F* ret);
-JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, cocos2d::Color3B* ret);
-JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, cocos2d::Point **points, int *numPoints);
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, cocos2d::__Array** ret);
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, cocos2d::__Dictionary** ret);
-JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, cocos2d::Acceleration* ret);
-JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array** ret);
+bool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *ret );
+bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
+bool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
+bool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
+bool jsval_to_long( JSContext *cx, jsval vp, long *out);
+bool jsval_to_ulong( JSContext *cx, jsval vp, unsigned long *out);
+bool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
+bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
+bool jsval_to_ccpoint(JSContext *cx, jsval v, cocos2d::Point* ret);
+bool jsval_to_ccrect(JSContext *cx, jsval v, cocos2d::Rect* ret);
+bool jsval_to_ccsize(JSContext *cx, jsval v, cocos2d::Size* ret);
+bool jsval_to_cccolor4b(JSContext *cx, jsval v, cocos2d::Color4B* ret);
+bool jsval_to_cccolor4f(JSContext *cx, jsval v, cocos2d::Color4F* ret);
+bool jsval_to_cccolor3b(JSContext *cx, jsval v, cocos2d::Color3B* ret);
+bool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, cocos2d::Point **points, int *numPoints);
+bool jsval_to_ccarray(JSContext* cx, jsval v, cocos2d::__Array** ret);
+bool jsval_to_ccdictionary(JSContext* cx, jsval v, cocos2d::__Dictionary** ret);
+bool jsval_to_ccacceleration(JSContext* cx,jsval v, cocos2d::Acceleration* ret);
+bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array** ret);
 
 // forward declaration
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 
 template <class T>
-JSBool jsvals_variadic_to_ccvector( JSContext *cx, jsval *vp, int argc, cocos2d::Vector<T>* ret)
+bool jsvals_variadic_to_ccvector( JSContext *cx, jsval *vp, int argc, cocos2d::Vector<T>* ret)
 {
-    JSBool ok = JS_TRUE;
+    bool ok = true;
 
     for (int i = 0; i < argc; i++)
     {
@@ -106,29 +108,31 @@ JSBool jsvals_variadic_to_ccvector( JSContext *cx, jsval *vp, int argc, cocos2d:
         vp++;
     }
 
-    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     return ok;
 }
 
-JSBool jsvals_variadic_to_ccvaluevector( JSContext *cx, jsval *vp, int argc, cocos2d::ValueVector* ret);
+bool jsvals_variadic_to_ccvaluevector( JSContext *cx, jsval *vp, int argc, cocos2d::ValueVector* ret);
 
-JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, cocos2d::AffineTransform* ret);
-JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, cocos2d::FontDefinition* ret );
+bool jsval_to_ccaffinetransform(JSContext* cx, jsval v, cocos2d::AffineTransform* ret);
+bool jsval_to_FontDefinition( JSContext *cx, jsval vp, cocos2d::FontDefinition* ret );
 
 template <class T>
-JSBool jsval_to_ccvector(JSContext* cx, jsval v, cocos2d::Vector<T>* ret)
+bool jsval_to_ccvector(JSContext* cx, jsval v, cocos2d::Vector<T>* ret)
 {
-    JSObject *jsobj;
-    JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
-    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
-    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    JS::RootedObject jsobj(cx);
+    JS::RootedValue jsval(cx, v);
+
+    bool ok = jsval.isObject() && JS_ValueToObject( cx, jsval, &jsobj );
+    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
     
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
 
     for (uint32_t i=0; i < len; i++)
     {
-        jsval value;
+        JS::RootedValue value(cx);
         if (JS_GetElement(cx, jsobj, i, &value))
         {
             CCASSERT(value.isObject(), "the element in Vector isn't a native object.");
@@ -144,29 +148,29 @@ JSBool jsval_to_ccvector(JSContext* cx, jsval v, cocos2d::Vector<T>* ret)
         }
     }
 
-    return JS_TRUE;
+    return true;
 }
 
-JSBool jsval_to_ccvalue(JSContext* cx, jsval v, cocos2d::Value* ret);
-JSBool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret);
-JSBool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* ret);
-JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret);
-JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret);
-JSBool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret);
-JSBool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret);
+bool jsval_to_ccvalue(JSContext* cx, jsval v, cocos2d::Value* ret);
+bool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret);
+bool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* ret);
+bool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret);
+bool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret);
+bool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret);
+bool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret);
 
 template <class T>
-JSBool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string, T>* ret)
+bool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::string, T>* ret)
 {
     if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
     {
-        return JS_TRUE;
+        return true;
     }
     
     JSObject* tmp = JSVAL_TO_OBJECT(v);
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
-        return JS_FALSE;
+        return false;
     }
     
     JSObject* it = JS_NewPropertyIterator(cx, tmp);
@@ -176,7 +180,7 @@ JSBool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::strin
         jsid idp;
         jsval key;
         if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
-            return JS_FALSE; // error
+            return false; // error
         }
         
         if (key == JSVAL_VOID) {
@@ -206,7 +210,7 @@ JSBool jsval_to_ccmap_string_key(JSContext *cx, jsval v, cocos2d::Map<std::strin
         }
     }
     
-    return JS_TRUE;
+    return true;
 }
 
 // from native
@@ -230,7 +234,7 @@ jsval ccacceleration_to_jsval(JSContext* cx, const cocos2d::Acceleration& v);
 jsval ccaffinetransform_to_jsval(JSContext* cx, const cocos2d::AffineTransform& t);
 jsval FontDefinition_to_jsval(JSContext* cx, const cocos2d::FontDefinition& t);
 
-JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *out );
+bool jsval_to_CGPoint( JSContext *cx, jsval vp, cpVect *out );
 jsval CGPoint_to_jsval( JSContext *cx, cpVect p );
 
 #define cpVect_to_jsval CGPoint_to_jsval
@@ -248,7 +252,7 @@ jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
     int i = 0;
     for (const auto& obj : v)
     {
-        jsval arrElement;
+        JS::RootedValue arrElement(cx);
         
         //First, check whether object is associated with js object.
         js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Object>(cx, obj);

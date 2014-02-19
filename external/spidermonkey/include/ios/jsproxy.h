@@ -7,11 +7,29 @@
 #ifndef jsproxy_h
 #define jsproxy_h
 
-#include "jsapi.h"
+#include "mozilla/Maybe.h"
+
 #include "jsfriendapi.h"
+
+#include "js/CallNonGenericMethod.h"
+#include "js/Class.h"
 
 namespace js {
 
+using JS::AutoIdVector;
+using JS::CallArgs;
+using JS::HandleId;
+using JS::HandleObject;
+using JS::HandleValue;
+using JS::IsAcceptableThis;
+using JS::MutableHandle;
+using JS::MutableHandleObject;
+using JS::MutableHandleValue;
+using JS::NativeImpl;
+using JS::PrivateValue;
+using JS::Value;
+
+class RegExpGuard;
 class JS_FRIEND_API(Wrapper);
 
 /*
@@ -49,7 +67,7 @@ class JS_FRIEND_API(Wrapper);
  */
 class JS_FRIEND_API(BaseProxyHandler)
 {
-    void *mFamily;
+    const void *mFamily;
     bool mHasPrototype;
     bool mHasPolicy;
   protected:
@@ -58,7 +76,7 @@ class JS_FRIEND_API(BaseProxyHandler)
     void setHasPolicy(bool aHasPolicy) { mHasPolicy = aHasPolicy; }
 
   public:
-    explicit BaseProxyHandler(void *family);
+    explicit BaseProxyHandler(const void *family);
     virtual ~BaseProxyHandler();
 
     bool hasPrototype() {
@@ -69,8 +87,11 @@ class JS_FRIEND_API(BaseProxyHandler)
         return mHasPolicy;
     }
 
-    inline void *family() {
+    inline const void *family() {
         return mFamily;
+    }
+    static size_t offsetOfFamily() {
+        return offsetof(BaseProxyHandler, mFamily);
     }
 
     virtual bool isOuterWindow() {
@@ -106,12 +127,13 @@ class JS_FRIEND_API(BaseProxyHandler)
     /* ES5 Harmony fundamental proxy traps. */
     virtual bool preventExtensions(JSContext *cx, HandleObject proxy) = 0;
     virtual bool getPropertyDescriptor(JSContext *cx, HandleObject proxy, HandleId id,
-                                       PropertyDescriptor *desc, unsigned flags) = 0;
+                                       MutableHandle<JSPropertyDescriptor> desc,
+                                       unsigned flags) = 0;
     virtual bool getOwnPropertyDescriptor(JSContext *cx, HandleObject proxy,
-                                          HandleId id, PropertyDescriptor *desc,
+                                          HandleId id, MutableHandle<JSPropertyDescriptor> desc,
                                           unsigned flags) = 0;
     virtual bool defineProperty(JSContext *cx, HandleObject proxy, HandleId id,
-                                PropertyDescriptor *desc) = 0;
+                                MutableHandle<JSPropertyDescriptor> desc) = 0;
     virtual bool getOwnPropertyNames(JSContext *cx, HandleObject proxy,
                                      AutoIdVector &props) = 0;
     virtual bool delete_(JSContext *cx, HandleObject proxy, HandleId id, bool *bp) = 0;
@@ -144,7 +166,13 @@ class JS_FRIEND_API(BaseProxyHandler)
                                      uint32_t index, MutableHandleValue vp, bool *present);
     virtual bool getPrototypeOf(JSContext *cx, HandleObject proxy, MutableHandleObject protop);
 
-    /* See comment for weakmapKeyDelegateOp in jsclass.h. */
+    // These two hooks must be overridden, or not overridden, in tandem -- no
+    // overriding just one!
+    virtual bool watch(JSContext *cx, JS::HandleObject proxy, JS::HandleId id,
+                       JS::HandleObject callable);
+    virtual bool unwatch(JSContext *cx, JS::HandleObject proxy, JS::HandleId id);
+
+    /* See comment for weakmapKeyDelegateOp in js/Class.h. */
     virtual JSObject *weakmapKeyDelegate(JSObject *proxy);
 };
 
@@ -157,17 +185,17 @@ class JS_FRIEND_API(BaseProxyHandler)
 class JS_PUBLIC_API(DirectProxyHandler) : public BaseProxyHandler
 {
   public:
-    explicit DirectProxyHandler(void *family);
+    explicit DirectProxyHandler(const void *family);
 
     /* ES5 Harmony fundamental proxy traps. */
     virtual bool preventExtensions(JSContext *cx, HandleObject proxy) MOZ_OVERRIDE;
     virtual bool getPropertyDescriptor(JSContext *cx, HandleObject proxy, HandleId id,
-                                       PropertyDescriptor *desc, unsigned flags) MOZ_OVERRIDE;
+                                       MutableHandle<JSPropertyDescriptor> desc, unsigned flags) MOZ_OVERRIDE;
     virtual bool getOwnPropertyDescriptor(JSContext *cx, HandleObject proxy,
-                                          HandleId id, PropertyDescriptor *desc,
+                                          HandleId id, MutableHandle<JSPropertyDescriptor> desc,
                                           unsigned flags) MOZ_OVERRIDE;
     virtual bool defineProperty(JSContext *cx, HandleObject proxy, HandleId id,
-                                PropertyDescriptor *desc) MOZ_OVERRIDE;
+                                MutableHandle<JSPropertyDescriptor> desc) MOZ_OVERRIDE;
     virtual bool getOwnPropertyNames(JSContext *cx, HandleObject proxy,
                                      AutoIdVector &props) MOZ_OVERRIDE;
     virtual bool delete_(JSContext *cx, HandleObject proxy, HandleId id,
@@ -204,8 +232,6 @@ class JS_PUBLIC_API(DirectProxyHandler) : public BaseProxyHandler
                                    unsigned indent) MOZ_OVERRIDE;
     virtual bool regexp_toShared(JSContext *cx, HandleObject proxy,
                                  RegExpGuard *g) MOZ_OVERRIDE;
-    virtual bool defaultValue(JSContext *cx, HandleObject obj, JSType hint,
-                              MutableHandleValue vp) MOZ_OVERRIDE;
     virtual JSObject *weakmapKeyDelegate(JSObject *proxy);
 };
 
@@ -216,14 +242,15 @@ class Proxy
     /* ES5 Harmony fundamental proxy traps. */
     static bool preventExtensions(JSContext *cx, HandleObject proxy);
     static bool getPropertyDescriptor(JSContext *cx, HandleObject proxy, HandleId id,
-                                      PropertyDescriptor *desc, unsigned flags);
+                                      MutableHandle<JSPropertyDescriptor> desc, unsigned flags);
     static bool getPropertyDescriptor(JSContext *cx, HandleObject proxy, unsigned flags, HandleId id,
                                       MutableHandleValue vp);
     static bool getOwnPropertyDescriptor(JSContext *cx, HandleObject proxy, HandleId id,
-                                         PropertyDescriptor *desc, unsigned flags);
+                                         MutableHandle<JSPropertyDescriptor> desc, unsigned flags);
     static bool getOwnPropertyDescriptor(JSContext *cx, HandleObject proxy, unsigned flags, HandleId id,
                                          MutableHandleValue vp);
-    static bool defineProperty(JSContext *cx, HandleObject proxy, HandleId id, PropertyDescriptor *desc);
+    static bool defineProperty(JSContext *cx, HandleObject proxy, HandleId id,
+                               MutableHandle<JSPropertyDescriptor> desc);
     static bool defineProperty(JSContext *cx, HandleObject proxy, HandleId id, HandleValue v);
     static bool getOwnPropertyNames(JSContext *cx, HandleObject proxy, AutoIdVector &props);
     static bool delete_(JSContext *cx, HandleObject proxy, HandleId id, bool *bp);
@@ -254,32 +281,27 @@ class Proxy
     static bool defaultValue(JSContext *cx, HandleObject obj, JSType hint, MutableHandleValue vp);
     static bool getPrototypeOf(JSContext *cx, HandleObject proxy, MutableHandleObject protop);
 
+    static bool watch(JSContext *cx, JS::HandleObject proxy, JS::HandleId id,
+                      JS::HandleObject callable);
+    static bool unwatch(JSContext *cx, JS::HandleObject proxy, JS::HandleId id);
+
+    /* IC entry path for handling __noSuchMethod__ on access. */
+    static bool callProp(JSContext *cx, HandleObject proxy, HandleObject reveiver, HandleId id,
+                         MutableHandleValue vp);
+
     static JSObject * const LazyProto;
 };
 
-inline bool IsObjectProxyClass(const Class *clasp)
-{
-    return clasp == js::ObjectProxyClassPtr || clasp == js::OuterWindowProxyClassPtr;
-}
-
-inline bool IsFunctionProxyClass(const Class *clasp)
-{
-    return clasp == js::FunctionProxyClassPtr;
-}
+// Use these in places where you don't want to #include vm/ProxyObject.h.
+extern JS_FRIEND_DATA(const js::Class* const) CallableProxyClassPtr;
+extern JS_FRIEND_DATA(const js::Class* const) UncallableProxyClassPtr;
+extern JS_FRIEND_DATA(const js::Class* const) OuterWindowProxyClassPtr;
 
 inline bool IsProxyClass(const Class *clasp)
 {
-    return IsObjectProxyClass(clasp) || IsFunctionProxyClass(clasp);
-}
-
-inline bool IsObjectProxy(JSObject *obj)
-{
-    return IsObjectProxyClass(GetObjectClass(obj));
-}
-
-inline bool IsFunctionProxy(JSObject *obj)
-{
-    return IsFunctionProxyClass(GetObjectClass(obj));
+    return clasp == CallableProxyClassPtr ||
+           clasp == UncallableProxyClassPtr ||
+           clasp == OuterWindowProxyClassPtr;
 }
 
 inline bool IsProxy(JSObject *obj)
@@ -342,14 +364,42 @@ SetProxyExtra(JSObject *obj, size_t n, const Value &extra)
     SetReservedSlot(obj, PROXY_EXTRA_SLOT + n, extra);
 }
 
-enum ProxyCallable {
-    ProxyNotCallable = false,
-    ProxyIsCallable = true
+class MOZ_STACK_CLASS ProxyOptions {
+  public:
+    ProxyOptions() : callable_(false),
+                     singleton_(false),
+                     forceForegroundFinalization_(false)
+    {}
+
+    bool callable() const { return callable_; }
+    ProxyOptions &setCallable(bool flag) {
+        callable_ = flag;
+        return *this;
+    }
+
+    bool singleton() const { return singleton_; }
+    ProxyOptions &setSingleton(bool flag) {
+        singleton_ = flag;
+        return *this;
+    }
+
+    bool forceForegroundFinalization() const {
+        return forceForegroundFinalization_;
+    }
+    ProxyOptions &setForceForegroundFinalization(bool flag) {
+        forceForegroundFinalization_ = true;
+        return *this;
+    }
+
+  private:
+    bool callable_;
+    bool singleton_;
+    bool forceForegroundFinalization_;
 };
 
 JS_FRIEND_API(JSObject *)
 NewProxyObject(JSContext *cx, BaseProxyHandler *handler, HandleValue priv,
-               JSObject *proto, JSObject *parent, ProxyCallable callable = ProxyNotCallable);
+               JSObject *proto, JSObject *parent, const ProxyOptions &options = ProxyOptions());
 
 JSObject *
 RenewProxyObject(JSContext *cx, JSObject *obj, BaseProxyHandler *handler, Value priv);
@@ -361,7 +411,7 @@ class JS_FRIEND_API(AutoEnterPolicy)
     AutoEnterPolicy(JSContext *cx, BaseProxyHandler *handler,
                     HandleObject wrapper, HandleId id, Action act, bool mayThrow)
 #ifdef DEBUG
-        : context(NULL)
+        : context(nullptr)
 #endif
     {
         allow = handler->hasPolicy() ? handler->enter(cx, wrapper, id, act, &rv)
@@ -372,8 +422,8 @@ class JS_FRIEND_API(AutoEnterPolicy)
         // * The policy set rv to false, indicating that we should throw.
         // * The caller did not instruct us to ignore exceptions.
         // * The policy did not throw itself.
-        if (!allow && !rv && mayThrow && !JS_IsExceptionPending(cx))
-            reportError(cx, id);
+        if (!allow && !rv && mayThrow)
+            reportErrorIfExceptionIsNotPending(cx, id);
     }
 
     virtual ~AutoEnterPolicy() { recordLeave(); }
@@ -384,10 +434,10 @@ class JS_FRIEND_API(AutoEnterPolicy)
     // no-op constructor for subclass
     AutoEnterPolicy()
 #ifdef DEBUG
-        : context(NULL)
+        : context(nullptr)
 #endif
         {};
-    void reportError(JSContext *cx, jsid id);
+    void reportErrorIfExceptionIsNotPending(JSContext *cx, jsid id);
     bool allow;
     bool rv;
 

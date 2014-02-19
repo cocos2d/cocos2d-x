@@ -18,8 +18,8 @@ endif(DEBUG_MODE)
 set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
-set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-std=c99")
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 if(USE_CHIPMUNK)
   message("Using chipmunk ...")
@@ -71,6 +71,8 @@ include_directories(
   ${COCOS2D_ROOT}/external/unzip
   ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
   ${COCOS2D_ROOT}/external/freetype2/include/linux
+  ${COCOS2D_ROOT}/external/websockets/include/linux
+  ${COCOS2D_ROOT}/external/spidermonkey/include/linux
   ${COCOS2D_ROOT}/external/linux-specific/fmod/include/${ARCH_DIR}
 )
 
@@ -80,6 +82,8 @@ link_directories(
   ${COCOS2D_ROOT}/external/tiff/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/webp/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/freetype2/prebuilt/linux/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/websockets/prebuilt/linux/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/spidermonkey/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
 
@@ -106,6 +110,9 @@ add_subdirectory(${COCOS2D_ROOT}/cocos/base)
 
 # cocos 2d library
 add_subdirectory(${COCOS2D_ROOT}/cocos/2d)
+
+# cocos storage
+add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
 
 # gui
 add_subdirectory(${COCOS2D_ROOT}/cocos/gui)
@@ -141,6 +148,7 @@ endif()
 target_link_libraries(${APP_NAME}
   gui
   network
+  storage
   spine
   cocostudio
   cocosbuilder

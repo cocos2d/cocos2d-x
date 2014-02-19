@@ -583,7 +583,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
             {
                 auto l = fixedPriorityListeners->at(i);
                 
-                if (!l->isPaused() && l->isRegistered() && onEvent(fixedPriorityListeners->at(i)))
+                if (!l->isPaused() && l->isRegistered() && onEvent(l))
                 {
                     shouldStopPropagation = true;
                     break;
@@ -643,28 +643,28 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     sortEventListeners(EventListenerTouchOneByOne::LISTENER_ID);
     sortEventListeners(EventListenerTouchAllAtOnce::LISTENER_ID);
     
-    auto oneByOnelisteners = getListeners(EventListenerTouchOneByOne::LISTENER_ID);
-    auto allAtOncelisteners = getListeners(EventListenerTouchAllAtOnce::LISTENER_ID);
+    auto oneByOneListeners = getListeners(EventListenerTouchOneByOne::LISTENER_ID);
+    auto allAtOnceListeners = getListeners(EventListenerTouchAllAtOnce::LISTENER_ID);
     
     // If there aren't any touch listeners, return directly.
-    if (nullptr == oneByOnelisteners && nullptr == allAtOncelisteners)
+    if (nullptr == oneByOneListeners && nullptr == allAtOnceListeners)
         return;
     
-    bool isNeedsMutableSet = (oneByOnelisteners && allAtOncelisteners);
+    bool isNeedsMutableSet = (oneByOneListeners && allAtOnceListeners);
     
-    std::vector<Touch*> orignalTouches = event->getTouches();
-    std::vector<Touch*> mutableTouches(orignalTouches.size());
-    std::copy(orignalTouches.begin(), orignalTouches.end(), mutableTouches.begin());
+    std::vector<Touch*> originalTouches = event->getTouches();
+    std::vector<Touch*> mutableTouches(originalTouches.size());
+    std::copy(originalTouches.begin(), originalTouches.end(), mutableTouches.begin());
 
     //
     // process the target handlers 1st
     //
-    if (oneByOnelisteners)
+    if (oneByOneListeners)
     {
         auto mutableTouchesIter = mutableTouches.begin();
-        auto touchesIter = orignalTouches.begin();
+        auto touchesIter = originalTouches.begin();
         
-        for (; touchesIter != orignalTouches.end(); ++touchesIter)
+        for (; touchesIter != originalTouches.end(); ++touchesIter)
         {
             bool isSwallowed = false;
 
@@ -755,7 +755,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             };
             
             //
-            dispatchEventToListeners(oneByOnelisteners, onTouchEvent);
+            dispatchEventToListeners(oneByOneListeners, onTouchEvent);
             if (event->isStopped())
             {
                 return;
@@ -769,7 +769,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     //
     // process standard handlers 2nd
     //
-    if (allAtOncelisteners && mutableTouches.size() > 0)
+    if (allAtOnceListeners && mutableTouches.size() > 0)
     {
         
         auto onTouchesEvent = [&](EventListener* l) -> bool{
@@ -821,7 +821,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             return false;
         };
         
-        dispatchEventToListeners(allAtOncelisteners, onTouchesEvent);
+        dispatchEventToListeners(allAtOnceListeners, onTouchesEvent);
         if (event->isStopped())
         {
             return;
@@ -891,11 +891,7 @@ void EventDispatcher::updateListeners(Event* event)
         {
             _priorityDirtyFlagMap.erase(listenersIter->first);
             delete listenersIter->second;
-            listenersIter =  _listeners.erase(listenersIter);
-        }
-        else
-        {
-            ++listenersIter;
+            _listeners.erase(listenersIter);
         }
     };
     
@@ -981,14 +977,14 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     visitTarget(rootNode, true);
     
     // After sort: priority < 0, > 0
-    auto sceneGraphlisteners = listeners->getSceneGraphPriorityListeners();
-    std::sort(sceneGraphlisteners->begin(), sceneGraphlisteners->end(), [this](const EventListener* l1, const EventListener* l2) {
+    auto sceneGraphListeners = listeners->getSceneGraphPriorityListeners();
+    std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
         return _nodePriorityMap[l1->getSceneGraphPriority()] > _nodePriorityMap[l2->getSceneGraphPriority()];
     });
     
 #if DUMP_LISTENER_ITEM_PRIORITY_INFO
     log("-----------------------------------");
-    for (auto& l : *sceneGraphlisteners)
+    for (auto& l : *sceneGraphListeners)
     {
         log("listener priority: node ([%s]%p), priority (%d)", typeid(*l->_node).name(), l->_node, _nodePriorityMap[l->_node]);
     }
@@ -1003,14 +999,14 @@ void EventDispatcher::sortEventListenersOfFixedPriority(const EventListener::Lis
         return;
     
     // After sort: priority < 0, > 0
-    auto fixedlisteners = listeners->getFixedPriorityListeners();
-    std::sort(fixedlisteners->begin(), fixedlisteners->end(), [](const EventListener* l1, const EventListener* l2) {
+    auto fixedListeners = listeners->getFixedPriorityListeners();
+    std::sort(fixedListeners->begin(), fixedListeners->end(), [](const EventListener* l1, const EventListener* l2) {
         return l1->getFixedPriority() < l2->getFixedPriority();
     });
     
     // FIXME: Should use binary search
     int index = 0;
-    for (auto& listener : *fixedlisteners)
+    for (auto& listener : *fixedListeners)
     {
         if (listener->getFixedPriority() >= 0)
             break;
@@ -1021,7 +1017,7 @@ void EventDispatcher::sortEventListenersOfFixedPriority(const EventListener::Lis
     
 #if DUMP_LISTENER_ITEM_PRIORITY_INFO
     log("-----------------------------------");
-    for (auto& l : *fixedlisteners)
+    for (auto& l : *fixedListeners)
     {
         log("listener priority: node (%p), fixed (%d)", l->_node, l->_fixedPriority);
     }    

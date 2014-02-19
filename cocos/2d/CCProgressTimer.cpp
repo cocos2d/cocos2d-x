@@ -538,16 +538,16 @@ void ProgressTimer::onDraw()
         if (!_reverseDirection) 
         {
             glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
-        } 
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_vertexDataCount);
+        }
         else 
         {
             glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
             glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
             // 2 draw calls
-            CC_INCREMENT_GL_DRAWS(1);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,_vertexDataCount);
         }
     }
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ProgressTimer::draw()

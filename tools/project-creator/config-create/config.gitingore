@@ -11,6 +11,7 @@ Thumbs.db
 /linux-build
 /samples
 /template
+/tests
 
 # Ignore files build by Visual Studio
 win32-msvc-vs201*-x86

@@ -143,14 +143,8 @@ void RenderTextureSave::saveImage(cocos2d::Object *sender)
     _target->saveToFile(png, Image::Format::PNG);
     _target->saveToFile(jpg, Image::Format::JPG);
     
-
-    auto image = _target->newImage();
-
-    auto tex = Director::getInstance()->getTextureCache()->addImage(image, png);
-
-    CC_SAFE_DELETE(image);
-
-    auto sprite = Sprite::createWithTexture(tex);
+    std::string fileName = FileUtils::getInstance()->getWritablePath() + jpg;
+    auto sprite = Sprite::create(fileName);
 
     sprite->setScale(0.3f);
     addChild(sprite);
