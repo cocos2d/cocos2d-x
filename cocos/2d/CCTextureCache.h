@@ -270,6 +270,32 @@ private:
 
 #endif
 
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+
+class ImageFileTextureReloader
+{
+    struct TextureImageFileData
+    {
+        std::string _imageFile;
+        Texture2D::PixelFormat _pixelFormat;
+    };
+    
+private:
+    static std::map<Texture2D*, TextureImageFileData> _imageFileTextures;
+    
+public:
+    static void addImageTexture(Texture2D* tt, const std::string& imageFileName);
+    static void removeTexture(Texture2D* tt);
+    static void reloadTexture(Texture2D* tt);
+    static void reloadTexture(const std::string& imageFileName);
+    static void reloadAllTextures();
+protected:
+    static void reloadByImageFileData(const TextureImageFileData& imageData, Texture2D* tt);
+};
+
+#endif //CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+
+
 // end of textures group
 /// @}
 

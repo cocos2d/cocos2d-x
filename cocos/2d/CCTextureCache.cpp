@@ -253,6 +253,9 @@ void TextureCache::addImageAsyncCallBack(float dt)
             // cache the texture file name
             VolatileTextureMgr::addImageTexture(texture, filename);
 #endif
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+            ImageFileTextureReloader::addImageTexture(texture, filename);
+#endif
             // cache the texture. retain it, since it is added in the map
             _textures.insert( std::make_pair(filename, texture) );
             texture->retain();
@@ -317,6 +320,9 @@ Texture2D * TextureCache::addImage(const std::string &path)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                 // cache the texture file name
                 VolatileTextureMgr::addImageTexture(texture, fullpath);
+#endif
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+                ImageFileTextureReloader::addImageTexture(texture, fullpath);
 #endif
                 // texture already retained, no need to re-retain it
                 _textures.insert( std::make_pair(fullpath, texture) );
@@ -689,6 +695,89 @@ void VolatileTextureMgr::reloadAllTextures()
 }
 
 #endif // CC_ENABLE_CACHE_TEXTURE_DATA
+
+#if CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
+
+std::map<Texture2D*, ImageFileTextureReloader::TextureImageFileData> ImageFileTextureReloader::_imageFileTextures;
+
+void ImageFileTextureReloader::addImageTexture(Texture2D* tt, const std::string& imageFileName)
+{
+    if(nullptr == tt)
+    {
+        CCLOGERROR("Try to Add Null Texture2D to ImageFileTextureReloader");
+        return;
+    }
+    if(_imageFileTextures.find(tt) != _imageFileTextures.end())
+    {
+        CCLOGERROR("Texture2D of file %s has been existed in the ImageFileTextureReloader list.", imageFileName.c_str());
+        return;
+    }
+    TextureImageFileData data;
+    data._imageFile = imageFileName;
+    data._pixelFormat = tt->getPixelFormat();
+    _imageFileTextures.insert(std::make_pair(tt, data));
+}
+
+void ImageFileTextureReloader::removeTexture(Texture2D* tt)
+{
+    if(nullptr == tt || _imageFileTextures.find(tt) == _imageFileTextures.end())
+    {
+        CCLOGERROR("Can not find Texture2D in the ImageFileTextureReloader list");
+        return;
+    }
+    _imageFileTextures.erase(tt);
+}
+
+void ImageFileTextureReloader::reloadTexture(Texture2D* tt)
+{
+    if(nullptr == tt || _imageFileTextures.find(tt) == _imageFileTextures.end())
+    {
+        CCLOGERROR("Can not find Texture2D in the ImageFileTextureReloader list");
+        return;
+    }
+
+    const TextureImageFileData& vt = _imageFileTextures[tt];
+
+    reloadByImageFileData(vt, tt);
+}
+
+void ImageFileTextureReloader::reloadTexture(const std::string &imageFileName)
+{
+    for(auto item : _imageFileTextures)
+    {
+        if(item.second._imageFile == imageFileName)
+        {
+            reloadByImageFileData(item.second,item.first);
+        }
+    }
+}
+
+void ImageFileTextureReloader::reloadByImageFileData(const ImageFileTextureReloader::TextureImageFileData &imageData, Texture2D* tt)
+{
+    Image* image = new Image();
+    
+    Data data = FileUtils::getInstance()->getDataFromFile(imageData._imageFile);
+    
+    if (image && image->initWithImageData(data.getBytes(), data.getSize()))
+    {
+        Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
+        Texture2D::setDefaultAlphaPixelFormat(imageData._pixelFormat);
+        tt->initWithImage(image);
+        Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
+    }
+    
+    CC_SAFE_RELEASE(image);
+}
+
+void ImageFileTextureReloader::reloadAllTextures()
+{
+    for(auto iter : _imageFileTextures)
+    {
+        reloadTexture(iter.first);
+    }
+}
+
+#endif //CC_ENABLE_IMAGE_FILE_TEXTURE_RELOAD
 
 NS_CC_END
 
