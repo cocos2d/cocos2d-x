@@ -9,6 +9,11 @@
 #include "testResource.h"
 #include "tests.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#include <unistd.h>
+#else
+#include <io.h>
+#endif
 
 typedef struct _Controller{
 	const char *test_name;
@@ -238,9 +243,22 @@ void TestController::addConsoleAutoTest()
     
     static struct Console::Command autotest = {
         "autotest", 
-        "testcpp auto test command", 
+        "testcpp autotest command, use -h to list available tests", 
         [](int fd, const std::string& args) 
         {
+            if(args == "help" || args == "-h")
+            {
+                const char msg[] = "available tests: ";
+                write(fd, msg, sizeof(msg));
+                write(fd, "\n",1);
+                for(int i = 0; i < g_testCount; i++)
+                {
+                    write(fd, "\t",1);
+                    write(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1);
+                    write(fd, "\n",1);
+                }
+                return;
+            }
             for(int i = 0; i < g_testCount; i++)
             {
                 if(args == g_aTestNames[i].test_name)
