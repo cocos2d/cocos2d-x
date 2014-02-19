@@ -1559,7 +1559,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
         }
         
         tmpCobj->setPriority(arg0);
-        cobj->getScheduler()->scheduleUpdateForTarget(tmpCobj, arg0, !cobj->isRunning());
+        cobj->getScheduler()->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCobj), tmpCobj, arg0, !cobj->isRunning());
         
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
@@ -1658,7 +1658,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
             JSScheduleWrapper::setTargetForJSObject(obj, tmpCobj);
         }
         
-        cobj->getScheduler()->scheduleUpdateForTarget(tmpCobj, 0, !cobj->isRunning());
+        cobj->getScheduler()->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCobj), tmpCobj, 0, !cobj->isRunning());
         
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
@@ -1776,7 +1776,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
             JSScheduleWrapper::setTargetForJSObject(tmpObj, tmpCObj);
         }
         tmpCObj->setPriority(arg1);
-        sched->scheduleUpdateForTarget(tmpCObj, arg1, paused);
+        sched->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCObj), tmpCObj, arg1, paused);
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;

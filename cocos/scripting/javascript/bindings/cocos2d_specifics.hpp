@@ -135,7 +135,7 @@ public:
     void pause();
     
     void scheduleFunc(float dt);
-    virtual void update(float dt);
+    void update(float dt);
     
     Ref* getTarget();
     void setTarget(Ref* pTarget);
