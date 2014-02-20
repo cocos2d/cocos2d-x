@@ -5,6 +5,8 @@
 #include <string>
 
 // test inclues
+#include "AppDelegate.h"
+#include "BaseTest.h"
 #include "controller.h"
 #include "testResource.h"
 #include "tests.h"
@@ -260,6 +262,15 @@ void TestController::addConsoleAutoTest()
                 }
                 const char help_main[] = "\tmain, return to main menu\n";
                 write(fd, help_main, sizeof(help_main));
+
+                const char help_next[] = "\tnext, run next test\n";
+                write(fd, help_next, sizeof(help_next));
+                
+                const char help_back[] = "\tback, run prev test\n";
+                write(fd, help_back, sizeof(help_back));
+                
+                const char help_restart[] = "\trestart, restart current test\n";
+                write(fd, help_restart, sizeof(help_restart));
                 return;
             }
             if(args == "main")
@@ -276,6 +287,47 @@ void TestController::addConsoleAutoTest()
                 } );
                 return;
             }
+            const char msg_notest[] = "autotest: can't detect running test.\n";
+            AppDelegate* app = (AppDelegate *)Application::getInstance();
+            BaseTest* currentTest = app->getCurrentTest();
+            if(args == "next")
+            {
+                if(currentTest != nullptr)
+                {
+                    currentTest->nextCallback(nullptr);
+                }
+                else
+                {
+                    write(fd, msg_notest, sizeof(msg_notest));
+                }
+                return;
+            }
+            if(args == "back")
+            {
+                if(currentTest != nullptr)
+                {
+                    currentTest->backCallback(nullptr);
+                }
+                else
+                {
+                    write(fd, msg_notest, sizeof(msg_notest));
+                }
+                return;
+            }
+
+            if(args == "restart")
+            {
+                if(currentTest != nullptr)
+                {
+                    currentTest->restartCallback(nullptr);
+                }
+                else
+                {
+                    write(fd, msg_notest, sizeof(msg_notest));
+                }
+                return;
+            }
+
             for(int i = 0; i < g_testCount; i++)
             {
                 if(args == g_aTestNames[i].test_name)
