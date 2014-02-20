@@ -61,21 +61,21 @@ ShaderTestDemo2::ShaderTestDemo2()
     
 }
 
-void ShaderTestDemo2::backCallback(Object* sender)
+void ShaderTestDemo2::backCallback(Ref* sender)
 {
     auto s = ShaderTestScene2::create();
     s->addChild( ShaderTest2::backAction() );
     Director::getInstance()->replaceScene(s);
 }
 
-void ShaderTestDemo2::nextCallback(Object* sender)
+void ShaderTestDemo2::nextCallback(Ref* sender)
 {
     auto s = ShaderTestScene2::create();
     s->addChild( ShaderTest2::nextAction() );
     Director::getInstance()->replaceScene(s);
 }
 
-void ShaderTestDemo2::restartCallback(Object* sender)
+void ShaderTestDemo2::restartCallback(Ref* sender)
 {
     auto s = ShaderTestScene2::create();
     s->addChild(ShaderTest2::restartAction());    
@@ -113,7 +113,7 @@ public:
     void setBackgroundNotification();
 
     void draw();
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(Ref *obj);
     
 protected:
     virtual void buildCustomUniforms() = 0;

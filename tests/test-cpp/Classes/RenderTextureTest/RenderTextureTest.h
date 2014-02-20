@@ -13,9 +13,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 };
 
 class RenderTextureSave : public RenderTextureTest
@@ -27,8 +27,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
-    void clearImage(Object *pSender);
-    void saveImage(Object *pSender);
+    void clearImage(Ref *pSender);
+    void saveImage(Ref *pSender);
 
 private:
     RenderTexture *_target;
@@ -113,7 +113,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void touched(Object* sender);
+    void touched(Ref* sender);
 };
 
 class SpriteRenderTextureBug : public RenderTextureTest

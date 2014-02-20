@@ -31,8 +31,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class Object;
-
 /**
  * @addtogroup actions
  * @{

@@ -191,7 +191,7 @@ void WebSocketTestLayer::onError(network::WebSocket* ws, const network::WebSocke
     }
 }
 
-void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
+void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
     auto scene = new ExtensionsTestScene();
     scene->runThisTest();
@@ -199,7 +199,7 @@ void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 }
 
 // Menu Callbacks
-void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
+void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Ref *sender)
 {
     if (_wsiSendText->getReadyState() == network::WebSocket::State::OPEN)
     {
@@ -214,7 +214,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
     }
 }
 
-void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
+void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Ref *sender)
 {
     if (_wsiSendBinary->getReadyState() == network::WebSocket::State::OPEN)
     {

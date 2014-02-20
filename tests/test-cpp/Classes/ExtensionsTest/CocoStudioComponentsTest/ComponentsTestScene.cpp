@@ -81,7 +81,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         root->addChild(player, 1, 1);
         
 
-        auto itemBack = MenuItemFont::create("Back", [](Object* sender){
+        auto itemBack = MenuItemFont::create("Back", [](Ref* sender){
         	auto scene = new ExtensionsTestScene();
             scene->runThisTest();
             scene->release();

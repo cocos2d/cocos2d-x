@@ -55,7 +55,7 @@ AutoreleasePool::~AutoreleasePool()
     PoolManager::getInstance()->pop();
 }
 
-void AutoreleasePool::addObject(Object* object)
+void AutoreleasePool::addObject(Ref* object)
 {
     _managedObjectArray.push_back(object);
 }
@@ -75,7 +75,7 @@ void AutoreleasePool::clear()
 #endif
 }
 
-bool AutoreleasePool::contains(Object* object) const
+bool AutoreleasePool::contains(Ref* object) const
 {
     for (const auto& obj : _managedObjectArray)
     {
@@ -91,7 +91,7 @@ void AutoreleasePool::dump()
     CCLOG("%20s%20s%20s", "Object pointer", "Object id", "reference count");
     for (const auto &obj : _managedObjectArray)
     {
-        CCLOG("%20p%20u%20u\n", obj, obj->_ID, obj->getReferenceCount());
+        CCLOG("%20p%20u\n", obj, obj->getReferenceCount());
     }
 }
 
@@ -145,7 +145,7 @@ AutoreleasePool* PoolManager::getCurrentPool() const
     return _curReleasePool;
 }
 
-bool PoolManager::isObjectInPools(Object* obj) const
+bool PoolManager::isObjectInPools(Ref* obj) const
 {
     for (const auto& pool : _releasePoolStack)
     {

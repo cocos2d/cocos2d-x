@@ -28,7 +28,7 @@ typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 void registerDefaultClasses(JSContext* cx, JSObject* global);
 
 
-class SimpleRunLoop : public cocos2d::Object
+class SimpleRunLoop : public cocos2d::Ref
 {
 public:
 	void update(float d);
@@ -60,7 +60,7 @@ public:
      @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByObject(cocos2d::Object* pObj);
+    virtual void removeScriptObjectByObject(cocos2d::Ref* obj);
 
     /**
      @brief Execute script code contained in the given string.

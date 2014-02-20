@@ -38,7 +38,7 @@ public:
     ControlStepper* makeControlStepper();
 
     /** Callback for the change value. */
-    void valueChanged(Object *sender, Control::EventType controlEvent);
+    void valueChanged(Ref *sender, Control::EventType controlEvent);
 protected:
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _displayValueLabel, DisplayValueLabel)
     CONTROL_SCENE_CREATE_FUNC(ControlStepperTest)

@@ -822,7 +822,7 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
                 
                 if (lua_isuserdata(L, -1))
                 {
-                    Object* obj = static_cast<Object*>(tolua_tousertype(L, -1, NULL) );
+                    Ref* obj = static_cast<Ref*>(tolua_tousertype(L, -1, NULL) );
                     if (NULL != obj)
                     {
                         arr->addObject(obj);
@@ -925,7 +925,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
             {
                 if (lua_isuserdata(L, -1))
                 {
-                    Object* obj = static_cast<Object*>(tolua_tousertype(L, -1, NULL) );
+                    Ref* obj = static_cast<Ref*>(tolua_tousertype(L, -1, NULL) );
                     if (NULL != obj)
                     {
                         //get the key to string
@@ -1079,7 +1079,7 @@ bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
                 ok = false;
                 break;
             }
-            Object* obj = static_cast<Object*>(tolua_tousertype(L, i + 2, nullptr));
+            Ref* obj = static_cast<Ref*>(tolua_tousertype(L, i + 2, nullptr));
             array->addObject(obj);
         }
     }
@@ -1827,7 +1827,7 @@ void array_to_luaval(lua_State* L,Array* inValue)
     if (nullptr == L || nullptr == inValue)
         return;
     
-    Object* obj = nullptr;
+    Ref* obj = nullptr;
     
     std::string className = "";
     String* strVal = nullptr;
@@ -1849,7 +1849,7 @@ void array_to_luaval(lua_State* L,Array* inValue)
         if (g_luaType.end() != iter)
         {
             className = iter->second;
-            if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+            if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
             {
                 lua_pushnumber(L, (lua_Number)indexTable);                
                 int ID = (obj) ? (int)obj->_ID : -1;
@@ -1939,7 +1939,7 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         if (g_luaType.end() != iter)
         {
             className = iter->second;
-            if ( nullptr != dynamic_cast<cocos2d::Object *>(element->getObject()))
+            if ( nullptr != dynamic_cast<cocos2d::Ref *>(element->getObject()))
             {
                 lua_pushstring(L, element->getStrKey());
                 int ID = (element->getObject()) ? (int)element->getObject()->_ID : -1;

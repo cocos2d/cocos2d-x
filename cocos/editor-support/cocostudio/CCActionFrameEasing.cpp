@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include <math.h>
 #include "cocostudio/CCActionFrameEasing.h"
 #include "cocostudio/DictionaryHelper.h"
+#include "CCStdC.h"
+
 namespace cocostudio {
 
 #ifndef M_PI_X_2

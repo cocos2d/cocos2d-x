@@ -136,7 +136,7 @@ renderer/CCRenderMaterial.cpp \
 ../base/CCDictionary.cpp \
 ../base/CCGeometry.cpp \
 ../base/CCNS.cpp \
-../base/CCObject.cpp \
+../base/CCRef.cpp \
 ../base/CCSet.cpp \
 ../base/CCString.cpp \
 ../base/CCValue.cpp \

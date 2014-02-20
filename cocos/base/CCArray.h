@@ -31,12 +31,13 @@ THE SOFTWARE.
 #if CC_USE_ARRAY_VECTOR
 #include <vector>
 #include <algorithm>
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccMacros.h"
 #else
 #include "ccCArray.h"
 #endif
 
+#include "CCDataVisitor.h"
 
 #if CC_USE_ARRAY_VECTOR
 /**
@@ -167,13 +168,13 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 
 #define CCARRAY_FOREACH(__array__, __object__)                                                                         \
     if ((__array__) && (__array__)->data->num > 0)                                                                     \
-    for(Object** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
+    for(Ref** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
     __arr__ <= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                             \
     __arr__++)
 
 #define CCARRAY_FOREACH_REVERSE(__array__, __object__)                                                                  \
     if ((__array__) && (__array__)->data->num > 0)                                                                      \
-    for(Object** __arr__ = (__array__)->data->arr + (__array__)->data->num-1, **__end__ = (__array__)->data->arr;     \
+    for(Ref** __arr__ = (__array__)->data->arr + (__array__)->data->num-1, **__end__ = (__array__)->data->arr;     \
     __arr__ >= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                              \
     __arr__--)
 
@@ -181,7 +182,7 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #define CCARRAY_VERIFY_TYPE(__array__, __type__)                                                                 \
     do {                                                                                                         \
         if ((__array__) && (__array__)->data->num > 0)                                                           \
-            for(Object** __arr__ = (__array__)->data->arr,                                                     \
+            for(Ref** __arr__ = (__array__)->data->arr,                                                     \
                 **__end__ = (__array__)->data->arr + (__array__)->data->num-1; __arr__ <= __end__; __arr__++)    \
                 CCASSERT(dynamic_cast<__type__>(*__arr__), "element type is wrong!");                            \
     } while(false)
@@ -198,7 +199,7 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        Object* child;                                                \
+        Ref* child;                                                \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
             elementType pNode = static_cast<elementType>(child);      \
@@ -215,7 +216,7 @@ while(false)
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        Object* child;                                                \
+        Ref* child;                                                \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
             elementType pNode = static_cast<elementType>(child);      \
@@ -231,7 +232,7 @@ while(false)
 
 NS_CC_BEGIN
 
-class CC_DLL __Array : public Object, public Clonable
+class CC_DLL __Array : public Ref, public Clonable
 {
 public:
 
@@ -243,11 +244,11 @@ public:
     /** Create an array with objects 
      * @js NA
      */
-    static __Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
+    static __Array* create(Ref* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Create an array with one object 
      * @js NA
      */
-    static __Array* createWithObject(Object* object);
+    static __Array* createWithObject(Ref* object);
     /** Create an array with a default capacity 
      * @js NA
      */
@@ -286,12 +287,12 @@ public:
      * @js NA
      * @lua NA
      */
-    bool initWithObject(Object* object);
+    bool initWithObject(Ref* object);
     /** Initializes an array with some objects 
      * @js NA
      * @lua NA
      */
-    bool initWithObjects(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
+    bool initWithObjects(Ref* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Initializes an array with capacity 
      * @js NA
      * @lua NA
@@ -331,17 +332,17 @@ public:
      * @js NA
      * @lua NA
      */
-    ssize_t getIndexOfObject(Object* object) const;
+    ssize_t getIndexOfObject(Ref* object) const;
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE ssize_t indexOfObject(Object* object) const { return getIndexOfObject(object); }
+    CC_DEPRECATED_ATTRIBUTE ssize_t indexOfObject(Ref* object) const { return getIndexOfObject(object); }
 
     /** Returns an element with a certain index 
      * @js NA
      * @lua NA
      */
-    Object* getObjectAtIndex(ssize_t index)
+    Ref* getObjectAtIndex(ssize_t index)
     {
         CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
 #if CC_USE_ARRAY_VECTOR
@@ -350,11 +351,11 @@ public:
         return data->arr[index];
 #endif
     }
-    CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(ssize_t index) { return getObjectAtIndex(index); }
+    CC_DEPRECATED_ATTRIBUTE Ref* objectAtIndex(ssize_t index) { return getObjectAtIndex(index); }
     /** Returns the last element of the array 
      * @js NA
      */
-    Object* getLastObject()
+    Ref* getLastObject()
     {
 #if CC_USE_ARRAY_VECTOR
         return data.back().get();
@@ -368,20 +369,20 @@ public:
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE Object* lastObject() { return getLastObject(); }
+    CC_DEPRECATED_ATTRIBUTE Ref* lastObject() { return getLastObject(); }
     /** Returns a random element 
      * @js NA
      * @lua NA
      */
-    Object* getRandomObject();
+    Ref* getRandomObject();
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE Object* randomObject() { return getRandomObject(); }
+    CC_DEPRECATED_ATTRIBUTE Ref* randomObject() { return getRandomObject(); }
     /** Returns a Boolean value that indicates whether object is present in array. 
      * @js NA
      */
-    bool containsObject(Object* object) const;
+    bool containsObject(Ref* object) const;
     /** @since 1.1 
      * @js NA
      */
@@ -391,7 +392,7 @@ public:
     /** Add a certain object 
      * @js NA
      */
-    void addObject(Object* object);
+    void addObject(Ref* object);
     /**
      * @js NA
      */
@@ -402,17 +403,17 @@ public:
     /** Insert a certain object at a certain index 
      * @js NA
      */
-    void insertObject(Object* object, ssize_t index);
+    void insertObject(Ref* object, ssize_t index);
     /** sets a certain object at a certain index 
      * @js NA
      * @lua NA
      */
-    void setObject(Object* object, ssize_t index);
+    void setObject(Ref* object, ssize_t index);
     /** sets a certain object at a certain index without retaining. Use it with caution 
      * @js NA
      * @lua NA
      */
-    void fastSetObject(Object* object, ssize_t index)
+    void fastSetObject(Ref* object, ssize_t index)
     {
 #if CC_USE_ARRAY_VECTOR
         setObject(object, index);
@@ -444,7 +445,7 @@ public:
     /** Remove a certain object 
      * @js NA
      */
-    void removeObject(Object* object, bool releaseObj = true);
+    void removeObject(Ref* object, bool releaseObj = true);
     /** Remove an element with a certain index 
      * @js NA
      */
@@ -460,7 +461,7 @@ public:
     /** Fast way to remove a certain object 
      * @js NA
      */
-    void fastRemoveObject(Object* object);
+    void fastRemoveObject(Ref* object);
     /** Fast way to remove an element with a certain index 
      * @js NA
      */
@@ -471,7 +472,7 @@ public:
     /** Swap two elements 
      * @js NA
      */
-    void exchangeObject(Object* object1, Object* object2);
+    void exchangeObject(Ref* object1, Ref* object2);
     /** Swap two elements with certain indexes 
      * @js NA
      */
@@ -480,7 +481,7 @@ public:
     /** Replace object at index with another object. 
      * @js NA
      */
-    void replaceObjectAtIndex(ssize_t index, Object* object, bool releaseObject = true);
+    void replaceObjectAtIndex(ssize_t index, Ref* object, bool releaseObject = true);
 
     /** Revers the array 
      * @js NA
@@ -531,12 +532,12 @@ public:
      * @js NA
      * @lua NA
      */
-    Object** begin() { return &data->arr[0]; }
+    Ref** begin() { return &data->arr[0]; }
     /**
      * @js NA
      * @lua NA
      */
-    Object** end() { return &data->arr[data->num]; }
+    Ref** end() { return &data->arr[data->num]; }
 
     ccArray* data;
 

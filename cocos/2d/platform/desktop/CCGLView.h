@@ -26,14 +26,14 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_DESKTOP_H__
 #define __CC_EGLVIEW_DESKTOP_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "platform/CCCommon.h"
 #include "platform/CCGLViewProtocol.h"
 #include "glfw3.h"
 
 NS_CC_BEGIN
 
-class CC_DLL GLView : public Object, public GLViewProtocol
+class CC_DLL GLView : public Ref, public GLViewProtocol
 {
 public:
     static GLView* create(const std::string& viewName);

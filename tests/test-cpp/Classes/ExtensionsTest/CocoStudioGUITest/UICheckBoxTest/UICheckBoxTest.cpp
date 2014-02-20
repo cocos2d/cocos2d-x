@@ -56,7 +56,7 @@ bool UICheckBoxTest::init()
     return false;
 }
 
-void UICheckBoxTest::selectedEvent(Object* pSender,CheckBoxEventType type)
+void UICheckBoxTest::selectedEvent(Ref* pSender,CheckBoxEventType type)
 {
     switch (type)
     {

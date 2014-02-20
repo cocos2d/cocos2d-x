@@ -60,7 +60,7 @@ THE SOFTWARE.
 // cocoa
 #include "CCAffineTransform.h"
 #include "CCDictionary.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCArray.h"
 #include "CCVector.h"
 #include "CCMap.h"

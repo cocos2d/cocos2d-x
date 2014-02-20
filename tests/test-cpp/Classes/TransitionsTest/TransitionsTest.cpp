@@ -298,7 +298,7 @@ TestLayer1::~TestLayer1(void)
 
 }
 
-void TestLayer1::restartCallback(Object* sender)
+void TestLayer1::restartCallback(Ref* sender)
 {
     auto s = new TransitionsTestScene();
 
@@ -314,7 +314,7 @@ void TestLayer1::restartCallback(Object* sender)
     }    
 }
 
-void TestLayer1::nextCallback(Object* sender)
+void TestLayer1::nextCallback(Ref* sender)
 {
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
@@ -333,7 +333,7 @@ void TestLayer1::nextCallback(Object* sender)
     }
 }
 
-void TestLayer1::backCallback(Object* sender)
+void TestLayer1::backCallback(Ref* sender)
 {
     s_nSceneIdx--;
     int total = MAX_LAYER;
@@ -427,7 +427,7 @@ TestLayer2::~TestLayer2()
 
 }
 
-void TestLayer2::restartCallback(Object* sender)
+void TestLayer2::restartCallback(Ref* sender)
 {
     auto s = new TransitionsTestScene();
 
@@ -443,7 +443,7 @@ void TestLayer2::restartCallback(Object* sender)
     }
 }
 
-void TestLayer2::nextCallback(Object* sender)
+void TestLayer2::nextCallback(Ref* sender)
 {
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
@@ -462,7 +462,7 @@ void TestLayer2::nextCallback(Object* sender)
     }
 }
 
-void TestLayer2::backCallback(Object* sender)
+void TestLayer2::backCallback(Ref* sender)
 {
     s_nSceneIdx--;
     int total = MAX_LAYER;

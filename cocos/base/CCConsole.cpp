@@ -270,10 +270,12 @@ Console::Console()
             }
         } },
         { "help", "Print this message", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) },
-        { "projection", "Change or print the current projection. Args: [2d | 3d] ", std::bind(&Console::commandProjection, this, std::placeholders::_1, std::placeholders::_2) },
-        { "resolution", "Change or print the window resolution. Args: [width height resolution_policy | ] ", std::bind(&Console::commandResolution, this, std::placeholders::_1, std::placeholders::_2) },
+        { "projection", "Change or print the current projection. Args: [2d | 3d]", std::bind(&Console::commandProjection, this, std::placeholders::_1, std::placeholders::_2) },
+        { "resolution", "Change or print the window resolution. Args: [width height resolution_policy | ]", std::bind(&Console::commandResolution, this, std::placeholders::_1, std::placeholders::_2) },
         { "scenegraph", "Print the scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
         { "texture", "Flush or print the TextureCache info. Args: [flush | ] ", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
+        { "director", "director commands, type -h or [director help] to list supported directives", std::bind(&Console::commandDirector, this, std::placeholders::_1, std::placeholders::_2) },
+
     };
 
      ;
@@ -553,6 +555,46 @@ void Console::commandTextures(int fd, const std::string& args)
     }
 }
 
+
+void Console::commandDirector(int fd, const std::string& args)
+{
+     auto director = Director::getInstance();
+    if(args =="help" || args == "-h")
+    {
+        const char help[] = "available director directives:\n"
+                            "\tpause, pause all scheduled timers, the draw rate will be 4 FPS to reduce CPU consumption\n"
+                            "\tresume, resume all scheduled timers\n"
+                            "\tstop, Stops the animation. Nothing will be drawn.\n"
+                            "\tstart, Restart the animation again, Call this function only if [director stop] was called earlier\n";
+         write(fd, help, sizeof(help) - 1);
+    }
+    else if(args == "pause")
+    {
+        Scheduler *sched = director->getScheduler();
+            sched->performFunctionInCocosThread( [&](){
+            Director::getInstance()->pause();
+        }
+                                        );
+
+    }
+    else if(args == "resume")
+    {
+        director->resume();
+    }
+    else if(args == "stop")
+    {
+        Scheduler *sched = director->getScheduler();
+        sched->performFunctionInCocosThread( [&](){
+            Director::getInstance()->stopAnimation();
+        }
+                                        );
+    }
+    else if(args == "start")
+    {
+        director->startAnimation();
+    }
+
+}
 
 bool Console::parseCommand(int fd)
 {

@@ -34,7 +34,7 @@ namespace cocostudio {
 class ObjectFactory
 {
 public:
-    typedef cocos2d::Object* (*Instance)(void);
+    typedef cocos2d::Ref* (*Instance)(void);
     struct TInfo
     {
         TInfo(void);
@@ -49,7 +49,7 @@ public:
 
     static ObjectFactory* getInstance();
     static void destroyInstance();
-    cocos2d::Object* createObject(const std::string &name);
+    cocos2d::Ref* createObject(const std::string &name);
     cocos2d::Component* createComponent(const std::string &name);
     void registerType(const TInfo &t);
     void removeAll();

@@ -157,7 +157,7 @@ bool ScrollView::isNodeVisible(Node* node)
     return viewRect.intersectsRect(node->getBoundingBox());
 }
 
-void ScrollView::pause(Object* sender)
+void ScrollView::pause(Ref* sender)
 {
     _container->pause();
 
@@ -167,7 +167,7 @@ void ScrollView::pause(Object* sender)
     }
 }
 
-void ScrollView::resume(Object* sender)
+void ScrollView::resume(Ref* sender)
 {
     auto& children = _container->getChildren();
     for(const auto &child : children) {

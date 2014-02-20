@@ -10,7 +10,7 @@ public:
 
     void reset();
     void check(Node* target);
-    void menuCallback(Object* sender);
+    void menuCallback(Ref* sender);
 };
 
 #endif // __BUG_422_H__

@@ -22,7 +22,7 @@ public:
 	virtual void runThisTest();
 
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Object* pSender);
+	virtual void MainMenuCallback(Ref* pSender);
 };
 
 enum {
@@ -55,9 +55,9 @@ public:
 	virtual std::string title() const;
 	virtual std::string subtitle() const;
 
-    virtual void restartCallback(Object* pSender);
-	virtual void nextCallback(Object* pSender);
-	virtual void backCallback(Object* pSender);
+    virtual void restartCallback(Ref* pSender);
+	virtual void nextCallback(Ref* pSender);
+	virtual void backCallback(Ref* pSender);
 
     // overrides
     virtual void onEnter() override;
@@ -76,7 +76,7 @@ public:
 	virtual void onEnter();
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-    virtual void restartCallback(Object* pSender);
+    virtual void restartCallback(Ref* pSender);
 
 	void dataLoaded(float percent);
 };
@@ -111,8 +111,8 @@ public:
 	virtual void onEnter();
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-    virtual void onIncrease(Object* pSender);
-    virtual void onDecrease(Object* pSender);
+    virtual void onIncrease(Ref* pSender);
+    virtual void onDecrease(Ref* pSender);
     virtual void addArmature(int number);
     virtual void addArmatureToParent(cocostudio::Armature *armature);
     virtual void removeArmatureFromParent(int tag);
@@ -344,7 +344,7 @@ public:
     virtual std::string subtitle() const override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
-    void changeMountCallback(Object* pSender);
+    void changeMountCallback(Ref* pSender);
     virtual cocostudio::Armature *createMount(const char *name, Point position);
 
 private:

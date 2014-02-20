@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_TOUCH_H__
 #define __CC_TOUCH_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 NS_CC_BEGIN
@@ -36,7 +36,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Touch : public Object
+class CC_DLL Touch : public Ref
 {
 public:
     /** how the touches are dispathced */
