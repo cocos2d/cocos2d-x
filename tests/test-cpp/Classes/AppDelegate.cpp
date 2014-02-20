@@ -107,6 +107,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto scene = Scene::create();
     auto layer = new TestController();
+    layer->addConsoleAutoTest();
     layer->autorelease();
 
     scene->addChild(layer);
