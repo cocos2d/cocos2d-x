@@ -43,6 +43,42 @@ namespace PhoneDirect3DXamlAppInterop
         private String m_strText = "";
         private String m_strPlaceholder = "";
         private bool bIsFocus = false;
+        private int m_inputFlag = 0;
+        private Control m_textinput = null;
+
+        public void initTextinput(int maxLen, int inputMode)
+        {
+            if (m_inputFlag == 0)
+            {
+                // kEditBoxInputFlagPassword      
+                PasswordBox pwdBox = new PasswordBox();
+                pwdBox.MaxLength = maxLen < 0 ? 0 : maxLen;
+                pwdBox.Password = m_strText;
+                pwdBox.GotFocus += pwdBox_GotFocus;
+                m_textinput = pwdBox;
+            } 
+            else
+            {                
+                TextBox textbox = new TextBox();
+                textbox.MaxLength = maxLen < 0 ? 0 : maxLen;
+                SetInputScope(textbox, inputMode);
+                textbox.TextChanged += textinput_TextChanged;
+                textbox.GotFocus += textinput_GotFocus;
+                textbox.LostFocus += textinput_LostFocus;
+                m_textinput = textbox;
+            }
+            m_textinput.Margin = new System.Windows.Thickness(0, 0, 220, 0);
+            m_textinput.Height = 72.0;
+            m_textinput.TabIndex = 0;
+            m_textinput.VerticalAlignment = VerticalAlignment.Top;
+            m_textinput.KeyDown += OnKeyDownHandler;                        
+            this.LayoutRoot.Children.Add(m_textinput);
+        }
+
+        void pwdBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ((PasswordBox)m_textinput).SelectAll();
+        }
 
         public EditBox(EditBoxImpl editboxImpl, String strPlaceholder, String strText, int maxLen, int inputMode, int inputFlag)
         {
@@ -50,35 +86,37 @@ namespace PhoneDirect3DXamlAppInterop
             InitializeComponent();
             m_strText = strText;
             m_strPlaceholder = strPlaceholder;
-            SetInputScope(inputMode);
-            SetInputFlag(inputFlag);
-            this.textinput.TabIndex = 0;
-            this.textinput.MaxLength = maxLen < 0 ? 0 : maxLen;
-            this.textinput.GotFocus += textinput_GotFocus;
-            this.textinput.LostFocus += textinput_LostFocus;
+            m_inputFlag = inputFlag;
+            initTextinput(maxLen, inputMode);
             this.Loaded += EditBox_Loaded;
         }
 
         void EditBox_Loaded(object sender, RoutedEventArgs e)
         {
-            this.textinput.Focus();
+            m_textinput.Focus();
         }
 
         void textinput_LostFocus(object sender, RoutedEventArgs e)
         {
+            // TextBox.LostFocus
+            TextBox curBox = (TextBox)m_textinput;
             bIsFocus = false;
-            m_strText = this.textinput.Text;
-            if (this.textinput.Text == "")
+            m_strText = curBox.Text;
+            string strText = "";
+            strText = curBox.Text;
+            if (strText == "" && m_inputFlag != 0)
             {
-                this.textinput.Text = m_strPlaceholder;
+                curBox.Text = m_strPlaceholder;
             }                
         }
 
         void textinput_GotFocus(object sender, RoutedEventArgs e)
         {
+            // TextBox.GotFocus
+            TextBox curBox = (TextBox)m_textinput;
             bIsFocus = true;
-            this.textinput.Text = m_strText;
-            this.textinput.Select(this.textinput.Text.Length, 0);
+            curBox.Text = m_strText;
+            curBox.Select(curBox.Text.Length, 0);
         }
 
         private void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
@@ -96,7 +134,7 @@ namespace PhoneDirect3DXamlAppInterop
 
         private void Done_Click(object sender, RoutedEventArgs e)
         {
-            m_editBoxImpl.OnSelectText(sender, m_strText);
+            m_editBoxImpl.OnSelectText(sender, m_inputFlag == 0 ? ((PasswordBox)m_textinput).Password : m_strText);
             ((Grid)this.Parent).Children.Remove(this);
         }
 
@@ -107,12 +145,14 @@ namespace PhoneDirect3DXamlAppInterop
 
         private void textinput_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // TextBox.textinput_TextChanged
             if (bIsFocus)
-                m_strText = this.textinput.Text;
+                m_strText = ((TextBox)m_textinput).Text;
         }
 
-        private void SetInputScope(int inputMode)
+        private void SetInputScope(TextBox curBox, int inputMode)
         {
+            // TextBox.SetInputScope
             InputScope inputScope = new InputScope();
             InputScopeName name = new InputScopeName();
 
@@ -145,26 +185,7 @@ namespace PhoneDirect3DXamlAppInterop
             }
 
             inputScope.Names.Add(name);
-            this.textinput.InputScope = inputScope;
-        }
-
-        private void SetInputFlag(int inputFlag)
-        {
-            InputScope inputScope = this.textinput.InputScope;
-            InputScopeName name = new InputScopeName();
-            
-            switch (inputFlag)
-            {
-                case 0:// kEditBoxInputFlagPassword
-                    name.NameValue = InputScopeNameValue.Password;
-                    break;
-                default:
-                    name.NameValue = InputScopeNameValue.Default;
-                    break;
-            }
-
-            inputScope.Names.Add(name);
-            this.textinput.InputScope = inputScope;
+            curBox.InputScope = inputScope;
         }
     }
 }
