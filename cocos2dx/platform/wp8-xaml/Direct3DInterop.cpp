@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "Direct3DInterop.h"
 #include "Direct3DContentProvider.h"
+#include "proj.wp8/EditBoxEvent.h"
 
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
@@ -33,6 +34,7 @@ using namespace Windows::Phone::Graphics::Interop;
 using namespace Windows::Phone::Input::Interop;
 using namespace Windows::Graphics::Display;
 using namespace DirectX;
+using namespace PhoneDirect3DXamlAppComponent;
 
 namespace PhoneDirect3DXamlAppComponent
 {
@@ -118,6 +120,13 @@ void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ a
     std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
     mInputEvents.push(e);
+}
+
+void Direct3DInterop::OnEditboxEvent(Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler)
+{
+	std::lock_guard<std::mutex> guard(mMutex);
+	std::shared_ptr<EditBoxEvent> e(new EditBoxEvent(sender, args, handler));
+	mInputEvents.push(e);
 }
 
 void Direct3DInterop::ProcessEvents()
