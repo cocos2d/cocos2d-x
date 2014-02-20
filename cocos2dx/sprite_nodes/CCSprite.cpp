@@ -452,14 +452,27 @@ void CCSprite::updateTransform(void)
 {
     CCAssert(m_pobBatchNode, "updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
+    unsigned int totalQuads = 0;
+    ccV3F_C4B_T2F_Quad* quad = NULL;
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
+
+        if (m_pobTextureAtlas){
+            unsigned int capacity = m_pobTextureAtlas->getCapacity();
+            CCAssert(m_uAtlasIndex >= 0 && m_uAtlasIndex < capacity, "updateTransform: Invalid m_uAtlasIndex");
+
+            totalQuads = m_pobTextureAtlas->getTotalQuads();
+            quad = &((m_pobTextureAtlas->getQuads())[m_uAtlasIndex]);
+        }
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !m_bVisible || ( m_pParent && m_pParent != m_pobBatchNode && ((CCSprite*)m_pParent)->m_bShouldBeHidden) )
         {
             m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
             m_bShouldBeHidden = true;
+            if (m_pobTextureAtlas){
+                quad->br.vertices = quad->bl.vertices = quad->tr.vertices = quad->tl.vertices = vertex3(0,0,0);
+            }
         }
         else 
         {
@@ -509,14 +522,40 @@ void CCSprite::updateTransform(void)
             m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
             m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
             m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+            if (m_pobTextureAtlas){
+                quad->br.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
+                quad->bl.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
+                quad->tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
+                quad->tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+            }
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (m_pobTextureAtlas)
-		{
-            m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+        {
+            // Use the quad reference to update directly instead of using "m_pQuads[index] = *quad;"
+            // By doing this we can have some performance improvement on case
+            // PerformanceTest->NodeChildrenTest->B-IterateSpriteSheet(15000 nodes).
+            // The fps can be improved to 16 from the old 12.
+            // The key is the 2 level search of m_sQuad.bl.vertices,
+            // so here we define one temporary variable, and assign it to
+            // other elements of ccV3F_C4B_T2F_Quad struct to
+            // reduce the 2 level search operation.
+
+            quad->bl.colors = m_sQuad.bl.colors;
+            quad->br.colors = m_sQuad.br.colors;
+            quad->tl.colors = m_sQuad.tl.colors;
+            quad->tr.colors = m_sQuad.tr.colors;
+            quad->br.texCoords = m_sQuad.br.texCoords;
+            quad->bl.texCoords = m_sQuad.bl.texCoords;
+            quad->tr.texCoords = m_sQuad.tr.texCoords;
+            quad->tl.texCoords = m_sQuad.tl.texCoords;
+            m_pobTextureAtlas->setDirty(true);
+            if (totalQuads < (m_uAtlasIndex + 1)){
+                m_pobTextureAtlas->increaseTotalQuadsWith(m_uAtlasIndex + 1 - totalQuads);
+            }
         }
-		
+
         m_bRecursiveDirty = false;
         setDirty(false);
     }
@@ -888,13 +927,13 @@ bool CCSprite::isFlipY(void)
 void CCSprite::updateColor(void)
 {
     ccColor4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
-    
+
     // special opacity for premultiplied textures
-	if (m_bOpacityModifyRGB)
+    if (m_bOpacityModifyRGB)
     {
-		color4.r *= _displayedOpacity/255.0f;
-		color4.g *= _displayedOpacity/255.0f;
-		color4.b *= _displayedOpacity/255.0f;
+        color4.r *= _displayedOpacity/255.0f;
+        color4.g *= _displayedOpacity/255.0f;
+        color4.b *= _displayedOpacity/255.0f;
     }
 
     m_sQuad.bl.colors = color4;
@@ -907,7 +946,36 @@ void CCSprite::updateColor(void)
     {
         if (m_uAtlasIndex != CCSpriteIndexNotInitialized)
         {
-            m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+            // Use the quad reference to update directly instead of using "m_pQuads[index] = *quad;"
+            // By doing this we can have some performance improvement on case
+            // PerformanceTest->NodeChildrenTest->B-IterateSpriteSheet(15000 nodes).
+            // The fps can be improved to 16 from the old 12.
+            // The key is the 2 level search of m_sQuad.bl.colors,
+            // so here we define one temporary variable, and assign it to
+            // other elements of ccV3F_C4B_T2F_Quad struct to
+            // reduce the 2 level search operation.
+            unsigned int capacity = m_pobTextureAtlas->getCapacity();
+            CCAssert( m_uAtlasIndex >= 0 && m_uAtlasIndex < capacity, "updateColor: Invalid m_uAtlasIndex");
+
+            ccV3F_C4B_T2F_Quad* quad = &((m_pobTextureAtlas->getQuads())[m_uAtlasIndex]);
+            quad->bl.colors = color4;
+            quad->br.colors = color4;
+            quad->tl.colors = color4;
+            quad->tr.colors = color4;
+            quad->br.texCoords = m_sQuad.br.texCoords;
+            quad->bl.texCoords = m_sQuad.bl.texCoords;
+            quad->tr.texCoords = m_sQuad.tr.texCoords;
+            quad->tl.texCoords = m_sQuad.tl.texCoords;
+            quad->br.vertices = m_sQuad.br.vertices;
+            quad->bl.vertices = m_sQuad.bl.vertices;
+            quad->tr.vertices = m_sQuad.tr.vertices;
+            quad->tl.vertices = m_sQuad.tl.vertices;
+            m_pobTextureAtlas->setDirty(true);
+
+            unsigned int totalQuads = m_pobTextureAtlas->getTotalQuads();
+            if (totalQuads < (m_uAtlasIndex + 1)){
+                m_pobTextureAtlas->increaseTotalQuadsWith(m_uAtlasIndex + 1 - totalQuads);
+            }
         }
         else
         {
