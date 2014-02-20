@@ -39,7 +39,6 @@ SubmissionInfo
 # Ignore files build by ndk and eclipse
 libs/
 bin/
-obj/
 gen/
 assets/
 local.properties
@@ -112,3 +111,4 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # CTags
 tags
+/projects/
