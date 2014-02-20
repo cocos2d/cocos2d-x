@@ -517,7 +517,8 @@ bool __Array::initWithObjects(Ref* object, ...)
     do
     {
         CC_BREAK_IF(object == nullptr);
-
+        CC_BREAK_IF(!initWithCapacity(1));
+        
         va_list args;
         va_start(args, object);
 
