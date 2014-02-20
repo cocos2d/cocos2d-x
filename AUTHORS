@@ -716,6 +716,7 @@ Developers:
     daltomi
         Fixed a typo in Director class.
         Removed an unnecessary boolean flag in CCFontAtlasCache.cpp.
+        Used 'cbegin/cend', 'const std::string' where it's reasonable.
         
     v1ctor
         ControlSlider supports to set selected thumb sprite.
