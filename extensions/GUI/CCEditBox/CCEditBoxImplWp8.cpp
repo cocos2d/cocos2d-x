@@ -77,20 +77,18 @@ void CCEditBoxImplWp8::openKeyboard()
 		strncpy(pText, text.c_str(), 100);
 
 	EditBoxDelegate^ editBoxDelegate = ref new EditBoxDelegate();
-	editBoxDelegate->GlobalCallback->OnReceivedText += ref new Windows::Foundation::EventHandler<Platform::String^>(
+	Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler = ref new Windows::Foundation::EventHandler<Platform::String^>(
 		[this](Platform::Object^ sender, Platform::String^ arg)
 	{
 		setText(PlatformStringTostring(arg).c_str());
-		if (m_pDelegate != NULL) 
+		if (m_pDelegate != NULL) {
 			m_pDelegate->editBoxTextChanged(m_pEditBox, getText());
+			m_pDelegate->editBoxEditingDidEnd(m_pEditBox);
+			m_pDelegate->editBoxReturn(m_pEditBox);
+		}
 	});
 
-	editBoxDelegate->GlobalCallback->openEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength);
-
-	if (m_pDelegate != NULL) {
-		m_pDelegate->editBoxEditingDidEnd(m_pEditBox);
-		m_pDelegate->editBoxReturn(m_pEditBox);
-	}
+	editBoxDelegate->GlobalCallback->openEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, m_eEditBoxInputMode, m_eEditBoxInputFlag, receiveHandler);
 }
 
 bool CCEditBoxImplWp8::initWithSize( const CCSize& size )
