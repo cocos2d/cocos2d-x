@@ -51,7 +51,7 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Object *sender, Control::EventType controlEvent)
+void EditBox::touchDownAction(Ref *sender, Control::EventType controlEvent)
 {
     _editBoxImpl->openKeyboard();
 }

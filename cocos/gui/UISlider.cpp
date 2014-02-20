@@ -391,7 +391,7 @@ float Slider::getPercentWithBallPos(float px)
     return (((px-(-_barLength/2.0f))/_barLength)*100.0f);
 }
 
-void Slider::addEventListenerSlider(Object *target, SEL_SlidPercentChangedEvent selector)
+void Slider::addEventListenerSlider(Ref *target, SEL_SlidPercentChangedEvent selector)
 {
     _sliderEventListener = target;
     _sliderEventSelector = selector;

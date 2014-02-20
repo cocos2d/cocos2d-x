@@ -30,7 +30,7 @@ extern "C" {
 }
 
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccMacros.h"
 #include "CCActionInstant.h"
 #include <vector>
@@ -44,7 +44,7 @@ class ScheduleHandlerDelegate;
 typedef std::vector<ScheduleHandlerDelegate*> VecShedule;
 typedef std::map<cocos2d::Node*,VecShedule> MapNodeSchedules;
 
-class ScheduleHandlerDelegate:public cocos2d::Object
+class ScheduleHandlerDelegate:public cocos2d::Ref
 {
 public:
     ScheduleHandlerDelegate():_isUpdateSchedule(false)

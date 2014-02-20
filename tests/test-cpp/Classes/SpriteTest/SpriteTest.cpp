@@ -189,7 +189,7 @@ void SpriteTestDemo::onEnter()
     BaseTest::onEnter();  
 }
 
-void SpriteTestDemo::restartCallback(Object* sender)
+void SpriteTestDemo::restartCallback(Ref* sender)
 {
     auto s = new SpriteTestScene();
     s->addChild(restartSpriteTestAction()); 
@@ -198,7 +198,7 @@ void SpriteTestDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void SpriteTestDemo::nextCallback(Object* sender)
+void SpriteTestDemo::nextCallback(Ref* sender)
 {
     auto s = new SpriteTestScene();
     s->addChild( nextSpriteTestAction() );
@@ -206,7 +206,7 @@ void SpriteTestDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void SpriteTestDemo::backCallback(Object* sender)
+void SpriteTestDemo::backCallback(Ref* sender)
 {
     auto s = new SpriteTestScene();
     s->addChild( backSpriteTestAction() );

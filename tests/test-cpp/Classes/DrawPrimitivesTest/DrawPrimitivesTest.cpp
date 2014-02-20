@@ -71,7 +71,7 @@ void BaseLayer::onEnter()
     BaseTest::onEnter();
 }
 
-void BaseLayer::restartCallback(cocos2d::Object *pSender)
+void BaseLayer::restartCallback(cocos2d::Ref *pSender)
 {
     auto s = new DrawPrimitivesTestScene();
     s->addChild(restartAction());
@@ -80,7 +80,7 @@ void BaseLayer::restartCallback(cocos2d::Object *pSender)
     s->release();
 }
 
-void BaseLayer::nextCallback(cocos2d::Object *pSender)
+void BaseLayer::nextCallback(cocos2d::Ref *pSender)
 {
     auto s = new DrawPrimitivesTestScene();;
     s->addChild(nextAction());
@@ -89,7 +89,7 @@ void BaseLayer::nextCallback(cocos2d::Object *pSender)
     s->release();
 }
 
-void BaseLayer::backCallback(cocos2d::Object *pSender)
+void BaseLayer::backCallback(cocos2d::Ref *pSender)
 {
     auto s = new DrawPrimitivesTestScene();
     s->addChild(backAction());

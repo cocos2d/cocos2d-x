@@ -663,7 +663,7 @@ void ControlButton::setOpacity(GLubyte opacity)
     Control::setOpacity(opacity);
 //    _opacity = opacity;
 //    
-//    Object* child;
+//    Ref* child;
 //    Array* children=getChildren();
 //    CCARRAY_FOREACH(children, child)
 //    {

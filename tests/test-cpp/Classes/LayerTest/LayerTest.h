@@ -18,9 +18,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter();
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 };
 
 class LayerTestCascadingOpacityA : public LayerTest
@@ -114,7 +114,7 @@ public:
     void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void toggleItem(cocos2d::Object *sender);
+    void toggleItem(cocos2d::Ref *sender);
 };
 
 class LayerGradientTest2 : public LayerTest
@@ -140,7 +140,7 @@ class LayerIgnoreAnchorPointPos : public LayerTest
 public:
     CREATE_FUNC(LayerIgnoreAnchorPointPos);
     virtual void onEnter();
-    void onToggle(Object* pObject);
+    void onToggle(Ref* pObject);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -150,7 +150,7 @@ class LayerIgnoreAnchorPointRot : public LayerTest
 public:
     CREATE_FUNC(LayerIgnoreAnchorPointRot);
     virtual void onEnter();
-    void onToggle(Object* pObject);
+    void onToggle(Ref* pObject);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -160,7 +160,7 @@ class LayerIgnoreAnchorPointScale : public LayerTest
 public:
     CREATE_FUNC(LayerIgnoreAnchorPointScale);
     virtual void onEnter();
-    void onToggle(Object* pObject);
+    void onToggle(Ref* pObject);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

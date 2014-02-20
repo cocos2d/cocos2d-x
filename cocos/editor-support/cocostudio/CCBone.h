@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "cocostudio/CCTween.h"
 #include "cocostudio/CCDecorativeDisplay.h"
 #include "cocostudio/CCDisplayManager.h"
+#include "CCNode.h"
 
 namespace cocostudio {
-
 
 class Armature;
 

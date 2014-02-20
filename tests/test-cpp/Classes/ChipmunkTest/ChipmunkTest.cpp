@@ -76,7 +76,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     
 }
 
-void ChipmunkTestLayer::toggleDebugCallback(Object* sender)
+void ChipmunkTestLayer::toggleDebugCallback(Ref* sender)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     _debugLayer->setVisible(! _debugLayer->isVisible());
@@ -164,7 +164,7 @@ void ChipmunkTestLayer::createResetButton()
     this->addChild(menu, -1);
 }
 
-void ChipmunkTestLayer::reset(Object* sender)
+void ChipmunkTestLayer::reset(Ref* sender)
 {
     auto s = new ChipmunkAccelTouchTestScene();
     auto child = new ChipmunkTestLayer();

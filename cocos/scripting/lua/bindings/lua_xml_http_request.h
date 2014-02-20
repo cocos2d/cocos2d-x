@@ -37,7 +37,7 @@ extern "C" {
 
 #include "network/HttpClient.h"
 
-class LuaMinXmlHttpRequest : public cocos2d::Object
+class LuaMinXmlHttpRequest : public cocos2d::Ref
 {
 public:
     enum class ResponseType

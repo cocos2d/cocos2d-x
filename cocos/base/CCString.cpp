@@ -203,7 +203,7 @@ __Array* __String::componentsSeparatedByString(const char *delimiter)
     return result;
 }
 
-bool __String::isEqual(const Object* pObject)
+bool __String::isEqual(const Ref* pObject)
 {
     bool bRet = false;
     const __String* pStr = dynamic_cast<const __String*>(pObject);

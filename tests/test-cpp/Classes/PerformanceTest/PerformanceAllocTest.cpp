@@ -112,7 +112,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		quantityOfNodes -= kNodesIncrease;
 		if( quantityOfNodes < 0 )
 			quantityOfNodes = 0;
@@ -124,7 +124,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
         srand(0);
 	});
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		quantityOfNodes += kNodesIncrease;
 		if( quantityOfNodes > kMaxNodes )
 			quantityOfNodes = kMaxNodes;

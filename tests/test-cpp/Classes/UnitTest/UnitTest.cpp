@@ -64,7 +64,7 @@ std::string UnitTestDemo::subtitle() const
     return "";
 }
 
-void UnitTestDemo::restartCallback(Object* sender)
+void UnitTestDemo::restartCallback(Ref* sender)
 {
     auto s = new UnitTestScene();
     s->addChild( restartAction() );
@@ -72,7 +72,7 @@ void UnitTestDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void UnitTestDemo::nextCallback(Object* sender)
+void UnitTestDemo::nextCallback(Ref* sender)
 {
     auto s = new UnitTestScene();
     s->addChild( nextAction() );
@@ -80,7 +80,7 @@ void UnitTestDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void UnitTestDemo::backCallback(Object* sender)
+void UnitTestDemo::backCallback(Ref* sender)
 {
     auto s = new UnitTestScene();
     s->addChild( backAction() );

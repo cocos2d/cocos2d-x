@@ -2,7 +2,7 @@
 
 using namespace cocos2d;
 
-class TestObject : public Object
+class TestObject : public Ref
 {
 public:
     TestObject() : _name(""){}

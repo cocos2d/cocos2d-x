@@ -53,7 +53,7 @@ ActionManagerEx::~ActionManagerEx()
 	_actionDic.clear();
 }
 
-void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::Value &dic,Object* root)
+void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root)
 {
 	std::string path = jsonName;
 	ssize_t pos = path.find_last_of("/");
