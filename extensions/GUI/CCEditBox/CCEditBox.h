@@ -410,7 +410,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void touchDownAction(Object *sender, Control::EventType controlEvent);
+    void touchDownAction(Ref *sender, Control::EventType controlEvent);
     
 protected:
     EditBoxImpl*      _editBoxImpl;

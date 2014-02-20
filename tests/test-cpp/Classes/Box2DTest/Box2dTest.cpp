@@ -121,7 +121,7 @@ void Box2DTestLayer::initPhysics()
 
 void Box2DTestLayer::createResetButton()
 {
-    auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [](Object *sender) {
+    auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [](Ref *sender) {
 		auto s = new Box2DTestScene();
 		auto child = new Box2DTestLayer();
 		s->addChild(child);

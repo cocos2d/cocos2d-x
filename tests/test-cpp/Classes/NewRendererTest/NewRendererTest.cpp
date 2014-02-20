@@ -104,7 +104,7 @@ void MultiSceneTest::onEnter()
     BaseTest::onEnter();
 }
 
-void MultiSceneTest::restartCallback(Object *sender)
+void MultiSceneTest::restartCallback(Ref *sender)
 {
     auto s = new NewRendererTestScene();
     s->addChild(restartTest());
@@ -113,7 +113,7 @@ void MultiSceneTest::restartCallback(Object *sender)
     s->release();
 }
 
-void MultiSceneTest::nextCallback(Object *sender)
+void MultiSceneTest::nextCallback(Ref *sender)
 {
     auto s = new NewRendererTestScene();
     s->addChild(nextTest());
@@ -122,7 +122,7 @@ void MultiSceneTest::nextCallback(Object *sender)
     s->release();
 }
 
-void MultiSceneTest::backCallback(Object *sender)
+void MultiSceneTest::backCallback(Ref *sender)
 {
     auto s = new NewRendererTestScene();
     s->addChild(prevTest());

@@ -84,7 +84,7 @@ bool UIPageViewTest::init()
     return false;
 }
 
-void UIPageViewTest::pageViewEvent(Object *pSender, PageViewEventType type)
+void UIPageViewTest::pageViewEvent(Ref *pSender, PageViewEventType type)
 {
     switch (type)
     {

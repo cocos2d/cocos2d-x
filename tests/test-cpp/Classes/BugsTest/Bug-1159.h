@@ -9,7 +9,7 @@ public:
     virtual bool init();
     virtual void onExit();
     static Scene* scene();
-    void callBack(Object* sender);
+    void callBack(Ref* sender);
 
     CREATE_FUNC(Bug1159Layer);
 };

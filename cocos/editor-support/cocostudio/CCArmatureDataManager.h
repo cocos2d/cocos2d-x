@@ -42,7 +42,7 @@ struct RelativeData
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
-class  ArmatureDataManager : public cocos2d::Object
+class  ArmatureDataManager : public cocos2d::Ref
 {
 public:
 	/** @deprecated Use getInstance() instead */
@@ -141,7 +141,7 @@ public:
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
-    void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
@@ -152,7 +152,7 @@ public:
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
-    void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name

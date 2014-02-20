@@ -82,24 +82,24 @@ bool ControlScene::init()
     return false;
 }
 
-void ControlScene::toExtensionsMainLayer(Object* sender)
+void ControlScene::toExtensionsMainLayer(Ref* sender)
 {
     auto scene = new ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
 
-void ControlScene::previousCallback(Object* sender)
+void ControlScene::previousCallback(Ref* sender)
 {
     Director::getInstance()->replaceScene(ControlSceneManager::sharedControlSceneManager()->previousControlScene());
 }
 
-void ControlScene::restartCallback(Object* sender)
+void ControlScene::restartCallback(Ref* sender)
 {
     Director::getInstance()->replaceScene(ControlSceneManager::sharedControlSceneManager()->currentControlScene());
 }
 
-void ControlScene::nextCallback(Object* sender)
+void ControlScene::nextCallback(Ref* sender)
 {
     Director::getInstance()->replaceScene(ControlSceneManager::sharedControlSceneManager()->nextControlScene());
 }

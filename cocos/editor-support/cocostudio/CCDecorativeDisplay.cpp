@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCDecorativeDisplay.h"
+#include "CCNode.h"
 
 using namespace cocos2d;
 
@@ -66,4 +67,14 @@ bool DecorativeDisplay::init()
     return true;
 }
 
+void DecorativeDisplay::setDisplay(cocos2d::Node *display)
+{
+    if (_display != display)
+    {
+        CC_SAFE_RETAIN(display);
+        CC_SAFE_RELEASE(_display);
+        _display = display;
+    }
+}
+    
 }

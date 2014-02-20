@@ -49,7 +49,7 @@ class NodeGrid;
 /** @brief TransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
 */
-class CC_DLL TransitionEaseScene// : public Object
+class CC_DLL TransitionEaseScene// : public Ref
 {
 public:
     virtual ~TransitionEaseScene() {}

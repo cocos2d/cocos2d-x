@@ -48,7 +48,7 @@ namespace cocostudio {
  *  @js NA
  *  @lua NA
  */
-class  DataReaderHelper : cocos2d::Object
+class  DataReaderHelper : cocos2d::Ref
 {
 protected:
 
@@ -64,7 +64,7 @@ protected:
 		std::string    fileContent;
 		ConfigType     configType;
 		std::string    baseFilePath;
-		cocos2d::Object       *target;
+		cocos2d::Ref       *target;
 		cocos2d::SEL_SCHEDULE   selector;
 		bool           autoLoadSpriteFile;
 
@@ -110,7 +110,7 @@ public:
     ~DataReaderHelper();
 
     void addDataFromFile(const std::string& filePath);
-    void addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     void addDataAsyncCallBack(float dt);
 

@@ -104,7 +104,7 @@ bool ActionObject::isPlaying()
 	return _bPlaying;
 }
 
-void ActionObject::initWithDictionary(const rapidjson::Value& dic, Object* root)
+void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 {
 	setName(DICTOOL->getStringValue_json(dic, "name"));
 	setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));

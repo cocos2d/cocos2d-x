@@ -29,7 +29,7 @@
 #if CC_USE_PHYSICS
 
 #include "CCVector.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 #include <list>

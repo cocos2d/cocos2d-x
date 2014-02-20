@@ -587,7 +587,7 @@ bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** ret
             JSObject* obj = JSVAL_TO_OBJECT(*vp);
             p = jsb_get_js_proxy(obj);
             if (p) {
-                pArray->addObject((Object*)p->ptr);
+                pArray->addObject((Ref*)p->ptr);
             }
         }
         // next
@@ -831,7 +831,7 @@ bool jsval_to_ccarray(JSContext* cx, jsval v, __Array** ret)
                 js_proxy_t *proxy;
                 JSObject *tmp = JSVAL_TO_OBJECT(value);
                 proxy = jsb_get_js_proxy(tmp);
-                cocos2d::Object* cobj = (cocos2d::Object *)(proxy ? proxy->ptr : NULL);
+                cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
                 // Don't test it.
                 //TEST_NATIVE_OBJECT(cx, cobj)
                 if (cobj) {
@@ -1276,14 +1276,14 @@ jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
 {
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
-    Object* obj;
+    Ref* obj;
     int i = 0;
     CCARRAY_FOREACH(arr, obj)
     {
         JS::RootedValue arrElement(cx);
         
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Object>(cx, obj);
+        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Ref>(cx, obj);
         if (jsproxy) {
             arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
@@ -1329,9 +1329,9 @@ jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
     CCDICT_FOREACH(dict, pElement)
     {
         JS::RootedValue dictElement(cx);
-        Object* obj = pElement->getObject();
+        Ref* obj = pElement->getObject();
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Object>(cx, obj);
+        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Ref>(cx, obj);
         if (jsproxy) {
             dictElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
@@ -1416,7 +1416,7 @@ bool jsval_to_ccdictionary(JSContext* cx, jsval v, __Dictionary** ret)
             js_proxy_t *proxy;
             tmp = JSVAL_TO_OBJECT(value);
             proxy = jsb_get_js_proxy(tmp);
-            cocos2d::Object* cobj = (cocos2d::Object *)(proxy ? proxy->ptr : NULL);
+            cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
             // Don't test it.
             //TEST_NATIVE_OBJECT(cx, cobj)
             if (cobj) {

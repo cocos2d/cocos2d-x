@@ -3,12 +3,12 @@
 
 #include <string>
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCBSequenceProperty.h"
 
 namespace cocosbuilder {
 
-class CCBSequence : public cocos2d::Object
+class CCBSequence : public cocos2d::Ref
 {
 public:
     CCBSequence();

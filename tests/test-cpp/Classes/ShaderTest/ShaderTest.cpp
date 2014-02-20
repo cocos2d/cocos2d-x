@@ -64,7 +64,7 @@ ShaderTestDemo::ShaderTestDemo()
 
 }
 
-void ShaderTestDemo::backCallback(Object* sender)
+void ShaderTestDemo::backCallback(Ref* sender)
 {
     auto s = new ShaderTestScene();
     s->addChild( backAction() );
@@ -72,7 +72,7 @@ void ShaderTestDemo::backCallback(Object* sender)
     s->release();
 }
 
-void ShaderTestDemo::nextCallback(Object* sender)
+void ShaderTestDemo::nextCallback(Ref* sender)
 {
     auto s = new ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
@@ -90,7 +90,7 @@ std::string ShaderTestDemo::subtitle() const
     return "";
 }
 
-void ShaderTestDemo::restartCallback(Object* sender)
+void ShaderTestDemo::restartCallback(Ref* sender)
 {
     auto s = new ShaderTestScene();
     s->addChild(restartAction()); 
@@ -636,7 +636,7 @@ bool ShaderBlur::init()
     return false;
 }
 
-void ShaderBlur::sliderAction(Object* sender, Control::EventType controlEvent)
+void ShaderBlur::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
     ControlSlider* pSlider = (ControlSlider*)sender;
     _blurSprite->setBlurSize(pSlider->getValue());

@@ -32,7 +32,7 @@ bool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 
     if (argc == 0) {
         GLNode* cobj = new GLNode();
-        cocos2d::Object *_ccobj = dynamic_cast<cocos2d::Object *>(cobj);
+        cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
         if (_ccobj) {
             _ccobj->autorelease();
         }

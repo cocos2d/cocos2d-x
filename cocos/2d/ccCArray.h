@@ -44,7 +44,7 @@ THE SOFTWARE.
 #define CC_ARRAY_H
 
 #include "ccMacros.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -61,7 +61,7 @@ __object__=__array__->arr[0]; for(ssize_t i=0, num=__array__->num; i<num; i++, _
 
 typedef struct _ccArray {
 	ssize_t num, max;
-	Object** arr;
+	Ref** arr;
 } ccArray;
 
 /** Allocates and initializes a new array with specified capacity */
@@ -80,16 +80,16 @@ void ccArrayEnsureExtraCapacity(ccArray *arr, ssize_t extra);
 void ccArrayShrink(ccArray *arr);
 
 /** Returns index of first occurrence of object, NSNotFound if object not found. */
-ssize_t ccArrayGetIndexOfObject(ccArray *arr, Object* object);
+ssize_t ccArrayGetIndexOfObject(ccArray *arr, Ref* object);
 
 /** Returns a Boolean value that indicates whether object is present in array. */
-bool ccArrayContainsObject(ccArray *arr, Object* object);
+bool ccArrayContainsObject(ccArray *arr, Ref* object);
 
 /** Appends an object. Behavior undefined if array doesn't have enough capacity. */
-void ccArrayAppendObject(ccArray *arr, Object* object);
+void ccArrayAppendObject(ccArray *arr, Ref* object);
 
 /** Appends an object. Capacity of arr is increased if needed. */
-void ccArrayAppendObjectWithResize(ccArray *arr, Object* object);
+void ccArrayAppendObjectWithResize(ccArray *arr, Ref* object);
 
 /** Appends objects from plusArr to arr. 
  Behavior undefined if arr doesn't have enough capacity. */
@@ -99,7 +99,7 @@ void ccArrayAppendArray(ccArray *arr, ccArray *plusArr);
 void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr);
 
 /** Inserts an object at index */
-void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, ssize_t index);
+void ccArrayInsertObjectAtIndex(ccArray *arr, Ref* object, ssize_t index);
 
 /** Swaps two objects */
 void ccArraySwapObjectsAtIndexes(ccArray *arr, ssize_t index1, ssize_t index2);
@@ -116,11 +116,11 @@ void ccArrayRemoveObjectAtIndex(ccArray *arr, ssize_t index, bool releaseObj = t
  Behavior undefined if index outside [0, num-1]. */
 void ccArrayFastRemoveObjectAtIndex(ccArray *arr, ssize_t index);
 
-void ccArrayFastRemoveObject(ccArray *arr, Object* object);
+void ccArrayFastRemoveObject(ccArray *arr, Ref* object);
 
 /** Searches for the first occurrence of object and removes it. If object is not
  found the function has no effect. */
-void ccArrayRemoveObject(ccArray *arr, Object* object, bool releaseObj = true);
+void ccArrayRemoveObject(ccArray *arr, Ref* object, bool releaseObj = true);
 
 /** Removes from arr all objects in minusArr. For each object in minusArr, the
  first matching instance in arr will be removed. */

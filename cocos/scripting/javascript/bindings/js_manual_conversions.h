@@ -255,7 +255,7 @@ jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
         JS::RootedValue arrElement(cx);
         
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Object>(cx, obj);
+        js_proxy_t* jsproxy = js_get_or_create_proxy(cx, obj);
         if (jsproxy) {
             arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
@@ -281,7 +281,7 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T
         T obj = iter->second;
         
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Object>(cx, obj);
+        js_proxy_t* jsproxy = js_get_or_create_proxy(cx, obj);
         if (jsproxy) {
             element = OBJECT_TO_JSVAL(jsproxy->obj);
         }

@@ -40,7 +40,7 @@ bool Bug458Layer::init()
     return false;
 }
 
-void Bug458Layer::selectAnswer(Object* sender)
+void Bug458Layer::selectAnswer(Ref* sender)
 {
     log("Selected");
 }
