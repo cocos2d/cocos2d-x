@@ -44,22 +44,27 @@
 		<link>
 			<name>Classes</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/projects/HelloCpp/Classes</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
 		</link>
 		<link>
 			<name>cocos2dx</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/cocos2dx</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos2d/cocos</locationURI>
 		</link>
 		<link>
 			<name>extensions</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/extensions</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos2d/extensions</locationURI>
 		</link>
 		<link>
 			<name>scripting</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/scripting</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos2d/cocos/scripting</locationURI>
+		</link>
+		<link>
+			<name>libcocos2d</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos2d/cocos/2d/platform/android/java/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
