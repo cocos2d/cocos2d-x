@@ -63,7 +63,7 @@ public:
 protected:
     Scene();
     virtual ~Scene();
-    bool init();
+    virtual bool init() override;
     
     friend class Node;
     friend class SpriteBatchNode;
