@@ -1584,11 +1584,11 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
     
     _width = header->ddsd.width;
     _height = header->ddsd.height;
-    _numberOfMipmaps = header->ddsd.DUMMYUNIONNAMEN2.mipMapCount;
+    _numberOfMipmaps = MAX(1, header->ddsd.DUMMYUNIONNAMEN2.mipMapCount); //if dds header reports 0 mipmaps, set to 1 to force correct software decoding (if needed).
     _dataLen = 0;
     int blockSize = (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC) ? 8 : 16;
     
-    /* caculate the dataLen */
+    /* calculate the dataLen */
     
     int width = _width;
     int height = _height;
@@ -1630,6 +1630,8 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
         {
             _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
         }
+    } else { //will software decode
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
     }
     
     /* load the mipmaps */
@@ -1657,7 +1659,6 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 
             int bytePerPixel = 4;
             unsigned int stride = width * bytePerPixel;
-            _renderFormat = Texture2D::PixelFormat::RGBA8888;
 
             std::vector<unsigned char> decodeImageData(stride * height);
             if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
