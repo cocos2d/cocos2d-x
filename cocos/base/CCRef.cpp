@@ -32,15 +32,17 @@ NS_CC_BEGIN
 
 Ref::Ref()
 : _referenceCount(1) // when the Ref is created, the reference count of it is 1
-, _luaID(0)
 {
+#if CC_ENABLE_SCRIPT_BINDING
     static unsigned int uObjectCount = 0;
-    
+    _luaID = 0;
     _ID = ++uObjectCount;
+#endif
 }
 
 Ref::~Ref()
 {
+#if CC_ENABLE_SCRIPT_BINDING
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
@@ -54,6 +56,7 @@ Ref::~Ref()
             pEngine->removeScriptObjectByObject(this);
         }
     }
+#endif
 }
 
 void Ref::retain()
