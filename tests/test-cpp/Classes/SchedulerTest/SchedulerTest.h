@@ -79,7 +79,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    Vector<Ref*> _pausedTargets;
+    std::set<void*> _pausedTargets;
 };
 
 class SchedulerPauseResumeAllUser : public SchedulerTestLayer
@@ -99,7 +99,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    Vector<Ref*> _pausedTargets;
+    std::set<void*> _pausedTargets;
 };
 
 class SchedulerUnscheduleAll : public SchedulerTestLayer

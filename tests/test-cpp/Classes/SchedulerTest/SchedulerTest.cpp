@@ -248,14 +248,9 @@ void SchedulerPauseResumeAll::pause(float dt)
     log("Pausing");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargets();
-    
-    int c = _pausedTargets.size();
-    
-    if (c > 2)
-    {
-        // should have only 2 items: ActionManager, self
-        log("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
-    }
+
+    // should have only 2 items: ActionManager, self
+    CCASSERT(_pausedTargets.size() == 2, "Error: pausedTargets should have only 2 items");
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
