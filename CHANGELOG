@@ -7,6 +7,7 @@ cocos2d-x-3.0rc0 Feb.?? 2014
      [NEW]          Using python to automatically generate script bindings codes.
      [NEW]          Linux javascript bindings support.
      
+     [FIX]          s3tc compressed textures with no mipmaps fail to be loaded.
      [FIX]          Get rid of 'Object', rename it to 'Ref', delete non-reference stuff 'isEqual' and 'update'.
      [FIX]          Merge cocostudio/CCActionXxx to CCAction.
      [FIX]          Supports 'setTimeout' and 'setInterval' in JSB.
