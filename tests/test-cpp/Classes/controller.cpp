@@ -14,6 +14,7 @@
 #else
 #include <io.h>
 #endif
+#include "cocostudio/CocoStudio.h"
 
 typedef struct _Controller{
 	const char *test_name;
@@ -248,7 +249,7 @@ void TestController::addConsoleAutoTest()
         {
             if(args == "help" || args == "-h")
             {
-                const char msg[] = "available tests: ";
+                const char msg[] = "usage: autotest ActionsTest\n\tavailable tests: ";
                 write(fd, msg, sizeof(msg));
                 write(fd, "\n",1);
                 for(int i = 0; i < g_testCount; i++)
@@ -257,7 +258,23 @@ void TestController::addConsoleAutoTest()
                     write(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1);
                     write(fd, "\n",1);
                 }
+                const char help_main[] = "\tmain, return to main menu\n";
+                write(fd, help_main, sizeof(help_main));
                 return;
+            }
+            if(args == "main")
+            {
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&]()
+                {
+                    auto scene = Scene::create();
+                    auto layer = new TestController();
+                    scene->addChild(layer);
+                    layer->release();
+                    Director::getInstance()->replaceScene(scene);
+                    cocostudio::ArmatureDataManager::destroyInstance();
+                } );
+                
             }
             for(int i = 0; i < g_testCount; i++)
             {
