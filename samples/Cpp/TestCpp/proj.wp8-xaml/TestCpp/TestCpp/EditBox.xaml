@@ -10,7 +10,7 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneSemitransparentBrush}">
-        <TextBox KeyDown="OnKeyDownHandler" Height="72" x:Name="textinput"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,220,0" TextChanged="textinput_TextChanged"/>
+        <!--<TextBox KeyDown="OnKeyDownHandler" Height="72" x:Name="textinput"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,220,0" TextChanged="textinput_TextChanged"/>-->
         <!-- comment TextBox and uncomment PasswordBox to use PasswordBox -->
         <!--<PasswordBox KeyDown="OnKeyDownHandler" Height="72" x:Name="textinput"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,220,0" TextChanged="textinput_TextChanged"/>-->
         <Button Content="Done"  VerticalAlignment="Top" Width="108" Background="{StaticResource PhoneChromeBrush}" HorizontalAlignment="Right" Margin="0,0,120,0" Click="Done_Click"/>
