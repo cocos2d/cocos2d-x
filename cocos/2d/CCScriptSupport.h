@@ -62,7 +62,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~ScriptHandlerEntry(void);
+    virtual ~ScriptHandlerEntry();
     
     int getHandler(void) {
         return _handler;
@@ -103,7 +103,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~SchedulerScriptHandlerEntry(void);
+    virtual ~SchedulerScriptHandlerEntry();
     /**
      * @js NA
      * @lua NA
@@ -162,7 +162,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~TouchScriptHandlerEntry(void);
+    virtual ~TouchScriptHandlerEntry();
     /**
      * @js NA
      * @lua NA
