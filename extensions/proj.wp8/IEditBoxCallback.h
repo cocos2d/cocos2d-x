@@ -26,14 +26,15 @@ THE SOFTWARE.
 #define __IEditBoxCALLBACK_H__
 
 using namespace Platform;
+using namespace Windows::Foundation;
 
 namespace PhoneDirect3DXamlAppComponent
-{
+{	
+	
 	public interface class IEditBoxCallback
 	{
 	public:
-		void openEditBox(String^ strPlaceHolder, String^ strText, int maxLength);
-		event Windows::Foundation::EventHandler<Platform::String^>^ OnReceivedText;
+		void openEditBox(String^ strPlaceHolder, String^ strText, int maxLength, int inputMode, int inputFlag, EventHandler<String^>^ receiveHandler);
 	};
 }
 

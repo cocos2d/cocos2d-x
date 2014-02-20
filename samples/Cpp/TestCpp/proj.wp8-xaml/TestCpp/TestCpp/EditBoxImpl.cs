@@ -34,7 +34,7 @@ namespace PhoneDirect3DXamlAppInterop
 {
     public class EditBoxImpl : IEditBoxCallback
     {
-        public event EventHandler<String> OnReceivedText;
+        private event EventHandler<String> m_receiveHandler;
         private MainPage m_mainPage = null;
         private Direct3DInterop m_d3dInterop = null;
 
@@ -48,11 +48,12 @@ namespace PhoneDirect3DXamlAppInterop
             m_d3dInterop = d3dInterop;
         }
 
-        public void openEditBox(String strPlaceHolder, string strText, int maxLength)
+        public void openEditBox(String strPlaceHolder, string strText, int maxLength, int inputMode, int inputFlag, EventHandler<String> receiveHandler)
         {
+            m_receiveHandler = receiveHandler;
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                EditBox editbox = new EditBox(this, strPlaceHolder, strText, maxLength);   
+                EditBox editbox = new EditBox(this, strPlaceHolder, strText, maxLength, inputMode, inputFlag);   
                 if (m_mainPage != null)
                 {
                     m_mainPage.PresentUserControl(editbox);
@@ -62,9 +63,9 @@ namespace PhoneDirect3DXamlAppInterop
 
         public void OnSelectText(object sender, String str)
         {
-            if (m_d3dInterop != null && OnReceivedText != null)
+            if (m_d3dInterop != null && m_receiveHandler != null)
             {
-                m_d3dInterop.OnEditboxEvent(sender, str, OnReceivedText);
+                m_d3dInterop.OnEditboxEvent(sender, str, m_receiveHandler);
             }
         }
     }

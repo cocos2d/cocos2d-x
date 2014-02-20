@@ -44,12 +44,14 @@ namespace PhoneDirect3DXamlAppInterop
         private String m_strPlaceholder = "";
         private bool bIsFocus = false;
 
-        public EditBox(EditBoxImpl editboxImpl, String strPlaceholder, String strText, int maxLen)
+        public EditBox(EditBoxImpl editboxImpl, String strPlaceholder, String strText, int maxLen, int inputMode, int inputFlag)
         {
             m_editBoxImpl = editboxImpl;
             InitializeComponent();
             m_strText = strText;
             m_strPlaceholder = strPlaceholder;
+            SetInputScope(inputMode);
+            SetInputFlag(inputFlag);
             this.textinput.TabIndex = 0;
             this.textinput.MaxLength = maxLen < 0 ? 0 : maxLen;
             this.textinput.GotFocus += textinput_GotFocus;
@@ -107,6 +109,62 @@ namespace PhoneDirect3DXamlAppInterop
         {
             if (bIsFocus)
                 m_strText = this.textinput.Text;
+        }
+
+        private void SetInputScope(int inputMode)
+        {
+            InputScope inputScope = new InputScope();
+            InputScopeName name = new InputScopeName();
+
+            switch (inputMode)
+            {
+                case 0:// kEditBoxInputModeAny
+                    name.NameValue = InputScopeNameValue.Default;
+                    break;
+                case 1:// kEditBoxInputModeEmailAddr
+                    name.NameValue = InputScopeNameValue.EmailNameOrAddress;
+                    break;
+                case 2:// kEditBoxInputModeNumeric
+                    name.NameValue = InputScopeNameValue.Number;
+                    break;
+                case 3:// kEditBoxInputModePhoneNumber
+                    name.NameValue = InputScopeNameValue.TelephoneNumber;
+                    break;
+                case 4:// kEditBoxInputModeUrl
+                    name.NameValue = InputScopeNameValue.Url;
+                    break;
+                case 5:// kEditBoxInputModeDecimal
+                    name.NameValue = InputScopeNameValue.Digits;
+                    break;
+                case 6:// kEditBoxInputModeSingleLine
+                    name.NameValue = InputScopeNameValue.Default;
+                    break;
+                default:
+                    name.NameValue = InputScopeNameValue.Default;
+                    break;
+            }
+
+            inputScope.Names.Add(name);
+            this.textinput.InputScope = inputScope;
+        }
+
+        private void SetInputFlag(int inputFlag)
+        {
+            InputScope inputScope = this.textinput.InputScope;
+            InputScopeName name = new InputScopeName();
+            
+            switch (inputFlag)
+            {
+                case 0:// kEditBoxInputFlagPassword
+                    name.NameValue = InputScopeNameValue.Password;
+                    break;
+                default:
+                    name.NameValue = InputScopeNameValue.Default;
+                    break;
+            }
+
+            inputScope.Names.Add(name);
+            this.textinput.InputScope = inputScope;
         }
     }
 }
