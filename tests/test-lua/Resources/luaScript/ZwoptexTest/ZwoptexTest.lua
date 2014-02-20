@@ -27,8 +27,8 @@ local function ZwoptexGenericTest()
         sprite1:setPosition(cc.p( s.width/2-80, s.height/2))
         ret:addChild(sprite1)
 
-        sprite1:setFlipX(false)
-        sprite1:setFlipY(false)
+        sprite1:setFlippedX(false)
+        sprite1:setFlippedY(false)
 
         local layer2 = cc.LayerColor:create(cc.c4b(255, 0, 0, 255), 85, 121)
         layer2:setPosition(cc.p(s.width/2+80 - (85.0 * 0.5), s.height/2 - (121.0 * 0.5)))
@@ -38,8 +38,8 @@ local function ZwoptexGenericTest()
         sprite2:setPosition(cc.p( s.width/2 + 80, s.height/2))
         ret:addChild(sprite2)
 
-        sprite2:setFlipX(false)
-        sprite2:setFlipY(false)
+        sprite2:setFlippedX(false)
+        sprite2:setFlippedY(false)
 
         local function flipSprites(dt)
             counter = counter + 1
@@ -62,10 +62,10 @@ local function ZwoptexGenericTest()
                 fy = true
             end
 
-            sprite1:setFlipX(fx)
-            sprite2:setFlipX(fx)
-            sprite1:setFlipY(fy)
-            sprite2:setFlipY(fy)
+            sprite1:setFlippedX(fx)
+            sprite2:setFlippedX(fx)
+            sprite1:setFlippedY(fy)
+            sprite2:setFlippedY(fy)
 
             spriteFrameIndex = spriteFrameIndex + 1
             if spriteFrameIndex > 14 then

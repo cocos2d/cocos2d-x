@@ -56,7 +56,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public Object
+class WsThreadHelper : public Ref
 {
 public:
     WsThreadHelper();

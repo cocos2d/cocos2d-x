@@ -121,7 +121,7 @@ void TestCocosNodeDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void TestCocosNodeDemo::restartCallback(Object* sender)
+void TestCocosNodeDemo::restartCallback(Ref* sender)
 {
     auto s = new CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
@@ -130,7 +130,7 @@ void TestCocosNodeDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void TestCocosNodeDemo::nextCallback(Object* sender)
+void TestCocosNodeDemo::nextCallback(Ref* sender)
 {
     auto s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
@@ -138,7 +138,7 @@ void TestCocosNodeDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void TestCocosNodeDemo::backCallback(Object* sender)
+void TestCocosNodeDemo::backCallback(Ref* sender)
 {
     auto s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );

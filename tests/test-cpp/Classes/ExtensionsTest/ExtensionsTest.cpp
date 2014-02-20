@@ -32,11 +32,11 @@ enum
 
 static struct {
 	const char *name;
-	std::function<void(Object* sender)> callback;
+	std::function<void(Ref* sender)> callback;
 } g_extensionsTests[] = {
-	{ "NotificationCenterTest", [](Object* sender) { runNotificationCenterTest(); }
+	{ "NotificationCenterTest", [](Ref* sender) { runNotificationCenterTest(); }
 	},
-    { "Scale9SpriteTest", [](Object* sender) {
+    { "Scale9SpriteTest", [](Ref* sender) {
             auto scene = new S9SpriteTestScene();
             if (scene)
             {
@@ -45,12 +45,12 @@ static struct {
             }
         }
 	},
-	{ "CCControlButtonTest", [](Object *sender){
+	{ "CCControlButtonTest", [](Ref *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
 		auto scene = pManager->currentControlScene();
 		Director::getInstance()->replaceScene(scene);
 	}},
-	{ "CocosBuilderTest", [](Object *sender) {
+	{ "CocosBuilderTest", [](Ref *sender) {
 		auto scene = new CocosBuilderTestScene();
 		if (scene)
 		{
@@ -59,34 +59,34 @@ static struct {
 		}
 	}},
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
-	{ "HttpClientTest", [](Object *sender){ runHttpClientTest();}
+	{ "HttpClientTest", [](Ref *sender){ runHttpClientTest();}
 	},
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	{ "WebSocketTest", [](Object *sender){ runWebSocketTest();}
+	{ "WebSocketTest", [](Ref *sender){ runWebSocketTest();}
 	},
-	{ "SocketIOTest", [](Object *sender){ runSocketIOTest();}
+	{ "SocketIOTest", [](Ref *sender){ runSocketIOTest();}
 	},
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
-	{ "EditBoxTest", [](Object *sender){ runEditBoxTest();}
+	{ "EditBoxTest", [](Ref *sender){ runEditBoxTest();}
 	},
 #endif
-	{ "TableViewTest", [](Object *sender){ runTableViewTest();}
+	{ "TableViewTest", [](Ref *sender){ runTableViewTest();}
 	},
-	{ "CocoStudioArmatureTest", [](Object *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
+	{ "CocoStudioArmatureTest", [](Ref *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
 	                                       scene->runThisTest();
 	                                       scene->release();
 	}
 	},
-    { "CocoStudioComponentsTest", [](Object *sender) { runComponentsTestLayerTest(); }
+    { "CocoStudioComponentsTest", [](Ref *sender) { runComponentsTestLayerTest(); }
     },
-	{ "CocoStudioSceneTest", [](Object *sender) { SceneEditorTestScene *scene = new SceneEditorTestScene();
+	{ "CocoStudioSceneTest", [](Ref *sender) { SceneEditorTestScene *scene = new SceneEditorTestScene();
 	                                       scene->runThisTest();
 	                                       scene->release();
  }
 	},
-    { "CocoStudioGUITest", [](Object *sender)
+    { "CocoStudioGUITest", [](Ref *sender)
         {
             CocosGUITestScene* pScene = new CocosGUITestScene();
             pScene->runThisTest();

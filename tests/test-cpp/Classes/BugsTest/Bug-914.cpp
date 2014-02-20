@@ -77,7 +77,7 @@ void Bug914Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event * eve
     onTouchesMoved(touches, event);
 }
 
-void Bug914Layer::restart(Object* sender)
+void Bug914Layer::restart(Ref* sender)
 {
     Director::getInstance()->replaceScene(Bug914Layer::scene());
 }

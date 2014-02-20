@@ -40,9 +40,9 @@ public:
     virtual std::string title() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Object* sender) override;
-    void nextCallback(Object* sender) override;
-    void backCallback(Object* sender) override;
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class ConsoleTCP : public BaseTestConsole

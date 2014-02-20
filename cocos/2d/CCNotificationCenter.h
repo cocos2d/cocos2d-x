@@ -27,13 +27,14 @@ THE SOFTWARE.
 #ifndef __CCNOTIFICATIONCENTER_H__
 #define __CCNOTIFICATIONCENTER_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCArray.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 
 class ScriptHandlerMgr;
-class CC_DLL __NotificationCenter : public Object
+class CC_DLL __NotificationCenter : public Ref
 {
     friend class ScriptHandlerMgr;
 public:
@@ -67,31 +68,31 @@ public:
      *  @param name The name of this notification.
      *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. nullptr means that the sender is not used to decide whether to deliver the notification to target.
      */
-    void addObserver(Object *target, 
+    void addObserver(Ref *target, 
                      SEL_CallFuncO selector,
                      const std::string& name,
-                     Object *sender);
+                     Ref *sender);
 
     /** @brief Removes the observer by the specified target and name.
      *  @param target The target of this notification.
      *  @param name The name of this notification. 
      */
-    void removeObserver(Object *target,const std::string& name);
+    void removeObserver(Ref *target,const std::string& name);
     
     /** @brief Removes all notifications registered by this target
      *  @param target The target of this notification.
      *  @returns the number of observers removed
      */
-    int removeAllObservers(Object *target);
+    int removeAllObservers(Ref *target);
 
     /** @brief Registers one hander for script binding.
      *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
-    void registerScriptObserver(Object *target,int handler,const std::string& name);
+    void registerScriptObserver(Ref *target,int handler,const std::string& name);
 
     /** Unregisters script observer */
-    void unregisterScriptObserver(Object *target,const std::string& name);
+    void unregisterScriptObserver(Ref *target,const std::string& name);
     
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
@@ -102,7 +103,7 @@ public:
      *  @param name The name of this notification.
      *  @param sender The object posting the notification. Can be nullptr
      */
-    void postNotification(const std::string& name, Object *sender);
+    void postNotification(const std::string& name, Ref *sender);
     
     /** @brief Gets script handler.
      *  @note Only supports Lua Binding now.
@@ -119,7 +120,7 @@ private:
     // internal functions
 
     // Check whether the observer exists by the specified target and name.
-    bool observerExisted(Object *target,const std::string& name, Object *sender);
+    bool observerExisted(Ref *target,const std::string& name, Ref *sender);
     
     // variables
     //
@@ -127,7 +128,7 @@ private:
     int     _scriptHandler;
 };
 
-class CC_DLL NotificationObserver : public Object
+class CC_DLL NotificationObserver : public Ref
 {
 public:
     /** @brief NotificationObserver constructor
@@ -138,10 +139,10 @@ public:
      * @js NA
      * @lua NA
      */
-    NotificationObserver(Object *target, 
+    NotificationObserver(Ref *target, 
                            SEL_CallFuncO selector,
                            const std::string& name,
-                           Object *sender);
+                           Ref *sender);
 
     /** NotificationObserver destructor function 
      * @js NA
@@ -153,14 +154,14 @@ public:
      * @js NA
      * @lua NA
      */
-    void performSelector(Object *sender);
+    void performSelector(Ref *sender);
     
     // Getters / Setters
     /**
      * @js NA
      * @lua NA
      */
-    Object* getTarget() const;
+    Ref* getTarget() const;
     /**
      * @js NA
      * @lua NA
@@ -175,7 +176,7 @@ public:
      * @js NA
      * @lua NA
      */
-    Object* getSender() const;
+    Ref* getSender() const;
     /**
      * @js NA
      * @lua NA
@@ -188,10 +189,10 @@ public:
     void setHandler(int handler);
 
 private:
-    Object* _target;
+    Ref* _target;
     SEL_CallFuncO _selector;
     std::string _name;
-    Object* _sender;
+    Ref* _sender;
     int _handler;
 };
 

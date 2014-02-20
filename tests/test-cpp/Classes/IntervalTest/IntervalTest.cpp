@@ -57,7 +57,7 @@ IntervalLayer::IntervalLayer()
     addChild(sprite);
     sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), NULL) ));
     // pause button
-    auto item1 = MenuItemFont::create("Pause", [&](Object* sender) {
+    auto item1 = MenuItemFont::create("Pause", [&](Ref* sender) {
 		if(Director::getInstance()->isPaused())
 			Director::getInstance()->resume();
 		else

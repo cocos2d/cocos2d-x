@@ -449,10 +449,10 @@
 		1A5700EE180BC6060088DEC7 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5700B7180BC6060088DEC7 /* CCNS.cpp */; };
 		1A5700EF180BC6060088DEC7 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700B8180BC6060088DEC7 /* CCNS.h */; };
 		1A5700F0180BC6060088DEC7 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700B8180BC6060088DEC7 /* CCNS.h */; };
-		1A5700F1180BC6060088DEC7 /* CCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5700B9180BC6060088DEC7 /* CCObject.cpp */; };
-		1A5700F2180BC6060088DEC7 /* CCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5700B9180BC6060088DEC7 /* CCObject.cpp */; };
-		1A5700F3180BC6060088DEC7 /* CCObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700BA180BC6060088DEC7 /* CCObject.h */; };
-		1A5700F4180BC6060088DEC7 /* CCObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700BA180BC6060088DEC7 /* CCObject.h */; };
+		1A5700F1180BC6060088DEC7 /* CCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5700B9180BC6060088DEC7 /* CCRef.cpp */; };
+		1A5700F2180BC6060088DEC7 /* CCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5700B9180BC6060088DEC7 /* CCRef.cpp */; };
+		1A5700F3180BC6060088DEC7 /* CCRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700BA180BC6060088DEC7 /* CCRef.h */; };
+		1A5700F4180BC6060088DEC7 /* CCRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700BA180BC6060088DEC7 /* CCRef.h */; };
 		1A5700F5180BC6060088DEC7 /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700BB180BC6060088DEC7 /* CCPlatformConfig.h */; };
 		1A5700F6180BC6060088DEC7 /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700BB180BC6060088DEC7 /* CCPlatformConfig.h */; };
 		1A5700F7180BC6060088DEC7 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5700BC180BC6060088DEC7 /* CCPlatformMacros.h */; };
@@ -2340,8 +2340,8 @@
 		1A5700B6180BC6060088DEC7 /* CCInteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCInteger.h; path = ../base/CCInteger.h; sourceTree = "<group>"; };
 		1A5700B7180BC6060088DEC7 /* CCNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNS.cpp; path = ../base/CCNS.cpp; sourceTree = "<group>"; };
 		1A5700B8180BC6060088DEC7 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNS.h; path = ../base/CCNS.h; sourceTree = "<group>"; };
-		1A5700B9180BC6060088DEC7 /* CCObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCObject.cpp; path = ../base/CCObject.cpp; sourceTree = "<group>"; };
-		1A5700BA180BC6060088DEC7 /* CCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCObject.h; path = ../base/CCObject.h; sourceTree = "<group>"; };
+		1A5700B9180BC6060088DEC7 /* CCRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCRef.cpp; path = ../base/CCRef.cpp; sourceTree = "<group>"; };
+		1A5700BA180BC6060088DEC7 /* CCRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCRef.h; path = ../base/CCRef.h; sourceTree = "<group>"; };
 		1A5700BB180BC6060088DEC7 /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPlatformConfig.h; path = ../base/CCPlatformConfig.h; sourceTree = "<group>"; };
 		1A5700BC180BC6060088DEC7 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPlatformMacros.h; path = ../base/CCPlatformMacros.h; sourceTree = "<group>"; };
 		1A5700BD180BC6060088DEC7 /* CCSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSet.cpp; path = ../base/CCSet.cpp; sourceTree = "<group>"; };
@@ -3175,7 +3175,6 @@
 		A0053F4D189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		A0053F4E189B2BEA0035A564 /* CCGLView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLView.cpp; sourceTree = "<group>"; };
 		A0053F4F189B2BEA0035A564 /* CCGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGLView.h; sourceTree = "<group>"; };
-		A0053F50189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		A0053F52189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = nativeactivity.cpp; sourceTree = "<group>"; };
@@ -3187,7 +3186,6 @@
 		A0053FAC189B2BEA0035A564 /* CCFileUtilsWin32.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsWin32.cpp; sourceTree = "<group>"; };
 		A0053FAD189B2BEA0035A564 /* CCFileUtilsWin32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsWin32.h; sourceTree = "<group>"; };
 		A0053FAE189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		A0053FAF189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		A0053FB0189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		A0053FB1189B2BEA0035A564 /* CCStdC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		A0053FB2189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
@@ -3198,7 +3196,6 @@
 		A0053FBA189B2BEA0035A564 /* CCFileUtilsLinux.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsLinux.cpp; sourceTree = "<group>"; };
 		A0053FBB189B2BEA0035A564 /* CCFileUtilsLinux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsLinux.h; sourceTree = "<group>"; };
 		A0053FBC189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		A0053FBD189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		A0053FBE189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		A0053FBF189B2BEA0035A564 /* CCStdC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		A0053FC0189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
@@ -3769,8 +3766,8 @@
 				1AA2063E1848437900053418 /* CCMap.h */,
 				1A5700B7180BC6060088DEC7 /* CCNS.cpp */,
 				1A5700B8180BC6060088DEC7 /* CCNS.h */,
-				1A5700B9180BC6060088DEC7 /* CCObject.cpp */,
-				1A5700BA180BC6060088DEC7 /* CCObject.h */,
+				1A5700B9180BC6060088DEC7 /* CCRef.cpp */,
+				1A5700BA180BC6060088DEC7 /* CCRef.h */,
 				1A5700BB180BC6060088DEC7 /* CCPlatformConfig.h */,
 				1A5700BC180BC6060088DEC7 /* CCPlatformMacros.h */,
 				1A5700BD180BC6060088DEC7 /* CCSet.cpp */,
@@ -5571,7 +5568,6 @@
 				A0053F4D189B2BEA0035A564 /* CCGL.h */,
 				A0053F4E189B2BEA0035A564 /* CCGLView.cpp */,
 				A0053F4F189B2BEA0035A564 /* CCGLView.h */,
-				A0053F50189B2BEA0035A564 /* CCImage.cpp */,
 				A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */,
 				A0053F52189B2BEA0035A564 /* CCStdC.h */,
 				A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */,
@@ -5590,7 +5586,6 @@
 				A0053FAC189B2BEA0035A564 /* CCFileUtilsWin32.cpp */,
 				A0053FAD189B2BEA0035A564 /* CCFileUtilsWin32.h */,
 				A0053FAE189B2BEA0035A564 /* CCGL.h */,
-				A0053FAF189B2BEA0035A564 /* CCImage.cpp */,
 				A0053FB0189B2BEA0035A564 /* CCPlatformDefine.h */,
 				A0053FB1189B2BEA0035A564 /* CCStdC.cpp */,
 				A0053FB2189B2BEA0035A564 /* CCStdC.h */,
@@ -5608,7 +5603,6 @@
 				A0053FBA189B2BEA0035A564 /* CCFileUtilsLinux.cpp */,
 				A0053FBB189B2BEA0035A564 /* CCFileUtilsLinux.h */,
 				A0053FBC189B2BEA0035A564 /* CCGL.h */,
-				A0053FBD189B2BEA0035A564 /* CCImage.cpp */,
 				A0053FBE189B2BEA0035A564 /* CCPlatformDefine.h */,
 				A0053FBF189B2BEA0035A564 /* CCStdC.cpp */,
 				A0053FC0189B2BEA0035A564 /* CCStdC.h */,
@@ -5739,7 +5733,7 @@
 				1A5700E9180BC6060088DEC7 /* CCGeometry.h in Headers */,
 				1A5700EB180BC6060088DEC7 /* CCInteger.h in Headers */,
 				1A5700EF180BC6060088DEC7 /* CCNS.h in Headers */,
-				1A5700F3180BC6060088DEC7 /* CCObject.h in Headers */,
+				1A5700F3180BC6060088DEC7 /* CCRef.h in Headers */,
 				1A5700F5180BC6060088DEC7 /* CCPlatformConfig.h in Headers */,
 				1A5700F7180BC6060088DEC7 /* CCPlatformMacros.h in Headers */,
 				1A5700FB180BC6060088DEC7 /* CCSet.h in Headers */,
@@ -6354,7 +6348,7 @@
 				1A5700EA180BC6060088DEC7 /* CCGeometry.h in Headers */,
 				1A5700EC180BC6060088DEC7 /* CCInteger.h in Headers */,
 				1A5700F0180BC6060088DEC7 /* CCNS.h in Headers */,
-				1A5700F4180BC6060088DEC7 /* CCObject.h in Headers */,
+				1A5700F4180BC6060088DEC7 /* CCRef.h in Headers */,
 				1A5700F6180BC6060088DEC7 /* CCPlatformConfig.h in Headers */,
 				1A5700F8180BC6060088DEC7 /* CCPlatformMacros.h in Headers */,
 				1AA206401848437A00053418 /* CCMap.h in Headers */,
@@ -7135,7 +7129,7 @@
 				1A5700DF180BC6060088DEC7 /* CCDictionary.cpp in Sources */,
 				1A5700E7180BC6060088DEC7 /* CCGeometry.cpp in Sources */,
 				1A5700ED180BC6060088DEC7 /* CCNS.cpp in Sources */,
-				1A5700F1180BC6060088DEC7 /* CCObject.cpp in Sources */,
+				1A5700F1180BC6060088DEC7 /* CCRef.cpp in Sources */,
 				1A5700F9180BC6060088DEC7 /* CCSet.cpp in Sources */,
 				1A5700FD180BC6060088DEC7 /* CCString.cpp in Sources */,
 				1A570101180BC6060088DEC7 /* etc1.cpp in Sources */,
@@ -7703,7 +7697,7 @@
 				1A5700E0180BC6060088DEC7 /* CCDictionary.cpp in Sources */,
 				1A5700E8180BC6060088DEC7 /* CCGeometry.cpp in Sources */,
 				1A5700EE180BC6060088DEC7 /* CCNS.cpp in Sources */,
-				1A5700F2180BC6060088DEC7 /* CCObject.cpp in Sources */,
+				1A5700F2180BC6060088DEC7 /* CCRef.cpp in Sources */,
 				1A5700FA180BC6060088DEC7 /* CCSet.cpp in Sources */,
 				1A5700FE180BC6060088DEC7 /* CCString.cpp in Sources */,
 				1A570102180BC6060088DEC7 /* etc1.cpp in Sources */,

@@ -30,13 +30,12 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
 #include "CCVector.h"
 #include "CCGL.h"
 #include "CCLabelAtlas.h"
-
 #include "kazmath/mat4.h"
 
 
@@ -83,7 +82,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CC_DLL Director : public Object
+class CC_DLL Director : public Ref
 {
 public:
     static const char *EVENT_PROJECTION_CHANGED;

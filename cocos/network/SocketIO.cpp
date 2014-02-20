@@ -46,7 +46,7 @@ namespace network {
  *		   Clients/endpoints may share the same impl to accomplish multiplexing on the same websocket
  */
 class SIOClientImpl : 
-	public cocos2d::Object, 
+	public cocos2d::Ref, 
 	public WebSocket::Delegate
 {
 private: 

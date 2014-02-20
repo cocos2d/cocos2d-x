@@ -533,7 +533,8 @@ CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformIdentity(
 }
 
 // CC prefix compatibility
-CC_DEPRECATED_ATTRIBUTE typedef Object CCObject;
+CC_DEPRECATED_ATTRIBUTE typedef Ref CCObject;
+CC_DEPRECATED_ATTRIBUTE typedef Ref Object;
 CC_DEPRECATED_ATTRIBUTE typedef Event CCEvent;
 CC_DEPRECATED_ATTRIBUTE typedef DataVisitor CCDataVisitor;
 CC_DEPRECATED_ATTRIBUTE typedef PrettyPrinter CCPrettyPrinter;

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_IMAGE_H__
 #define __CC_IMAGE_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCTexture2D.h"
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
@@ -53,7 +53,7 @@ typedef struct _MipmapInfo
     int len;
 }MipmapInfo;
 
-class CC_DLL Image : public Object
+class CC_DLL Image : public Ref
 {
 public:
     friend class TextureCache;

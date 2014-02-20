@@ -16,14 +16,14 @@ public:
     AnimationsTestLayer();
     virtual ~AnimationsTestLayer();
     
-    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName);
-    virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-    virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(Ref * pTarget, const char * pSelectorName);
+    virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Ref * pTarget, const char * pSelectorName);
+    virtual bool onAssignCCBMemberVariable(cocos2d::Ref * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
     
-    void onControlButtonIdleClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-    void onControlButtonWaveClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-    void onControlButtonJumpClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
-    void onControlButtonFunkyClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
+    void onControlButtonIdleClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+    void onControlButtonWaveClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+    void onControlButtonJumpClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
+    void onControlButtonFunkyClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
     
     void setAnimationManager(cocosbuilder::CCBAnimationManager *pAnimationManager);
     

@@ -124,7 +124,7 @@ void SocketIOTestLayer::echotest(SIOClient *client, const std::string& data) {
 
 }
 
-void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
+void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
 	ExtensionsTestScene *scene = new ExtensionsTestScene();
     scene->runThisTest();
@@ -135,7 +135,7 @@ void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuSIOClientClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuSIOClientClicked(cocos2d::Ref *sender)
 {
 	//create a client by using this static method, url does not need to contain the protocol
 	_sioClient = SocketIO::connect(*this, "ws://channon.us:3000");
@@ -148,7 +148,7 @@ void SocketIOTestLayer::onMenuSIOClientClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuSIOEndpointClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuSIOEndpointClicked(cocos2d::Ref *sender)
 {
 	//repeat the same connection steps for the namespace "testpoint"
 	_sioEndpoint = SocketIO::connect(*this, "ws://channon.us:3000/testpoint");
@@ -161,7 +161,7 @@ void SocketIOTestLayer::onMenuSIOEndpointClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuTestMessageClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestMessageClicked(cocos2d::Ref *sender)
 {
 	//check that the socket is != NULL before sending or emitting events
 	//the client should be NULL either before initialization and connection or after disconnect
@@ -169,14 +169,14 @@ void SocketIOTestLayer::onMenuTestMessageClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuTestMessageEndpointClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestMessageEndpointClicked(cocos2d::Ref *sender)
 {
 
 	if(_sioEndpoint != NULL) _sioEndpoint->send("Hello Socket.IO!");
 
 }
 
-void SocketIOTestLayer::onMenuTestEventClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestEventClicked(cocos2d::Ref *sender)
 {
 	//check that the socket is != NULL before sending or emitting events
 	//the client should be NULL either before initialization and connection or after disconnect
@@ -184,21 +184,21 @@ void SocketIOTestLayer::onMenuTestEventClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuTestEventEndpointClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestEventEndpointClicked(cocos2d::Ref *sender)
 {
 
 	if(_sioEndpoint != NULL) _sioEndpoint->emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
 
 }
 
-void SocketIOTestLayer::onMenuTestClientDisconnectClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestClientDisconnectClicked(cocos2d::Ref *sender)
 {
 
 	if(_sioClient != NULL) _sioClient->disconnect();
 
 }
 
-void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Ref *sender)
 {
 
 	if(_sioEndpoint != NULL) _sioEndpoint->disconnect();
