@@ -566,6 +566,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+
+// S3TC texture with no mipmaps test
+class TextureS3TCWithNoMipmaps : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureS3TCWithNoMipmaps);
+    TextureS3TCWithNoMipmaps();
+    
+    virtual std::string title() const override;
+};
+
 // ATITC RGB texture format test
 class TextureATITCRGB : public TextureDemo
 {
