@@ -95,7 +95,9 @@ IAsyncAction^ Cocos2dRenderer::OnSuspending()
 // user pressed the Back Key on the phone
 bool Cocos2dRenderer::OnBackKeyPress()
 {
-    return false;
+	CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+	return true;
+	//return false;
 }
 
 void Cocos2dRenderer::OnUpdateDevice()

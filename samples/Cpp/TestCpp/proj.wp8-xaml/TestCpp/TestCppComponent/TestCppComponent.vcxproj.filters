@@ -361,6 +361,12 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <Filter>Classes\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
+      <Filter>Classes\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
@@ -378,6 +384,12 @@
       <Filter>Classes\Tests</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
+      <Filter>Classes\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
       <Filter>Classes\Tests</Filter>
     </ClInclude>
   </ItemGroup>
