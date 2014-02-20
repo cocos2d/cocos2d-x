@@ -446,7 +446,7 @@ void WebSocket::onSubThreadStarted()
         if(NULL == _wsInstance) {
             WsMessage* msg = new WsMessage();
             msg->what = WS_MSG_TO_UITHREAD_ERROR;
-            _readyState = kStateClosing;
+            _readyState = State::CLOSING;
             _wsHelper->sendMessageToUIThread(msg);
         }
 
