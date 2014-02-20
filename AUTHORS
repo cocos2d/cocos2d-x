@@ -755,6 +755,9 @@ Developers:
         
     wefiends
         s3tc compressed textures with no mipmaps fail to be loaded.
+        
+    floatinghotpot
+        Fix a bug that no callback is invoked when websocket connection fails
     
 Retired Core Developers:
     WenSheng Yang
