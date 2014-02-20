@@ -975,11 +975,6 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float inter
     }, target, schedule_selector_to_key(selector), interval, paused);
 }
 
-void Scheduler::scheduleUpdateForTarget(Ref *target, int priority, bool paused)
-{
-    CCASSERT(false, "Please use scheduleUpdate instead.");
-}
-
 bool Scheduler::isScheduledForTarget(SEL_SCHEDULE selector, Ref *target)
 {
     return this->isScheduled(target, schedule_selector_to_key(selector));
