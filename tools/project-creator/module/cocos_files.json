@@ -1085,8 +1085,6 @@
 "extensions/GUI/CCEditBox/CCEditBoxImplMac.h",
 "extensions/GUI/CCEditBox/CCEditBoxImplMac.mm",
 "extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp",
-"extensions/GUI/CCEditBox/CCEditBoxImplTizen.cpp",
-"extensions/GUI/CCEditBox/CCEditBoxImplTizen.h",
 "extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp",
 "extensions/GUI/CCEditBox/CCEditBoxImplWin.h",
 "extensions/GUI/CCScrollView/CCScrollView.cpp",
