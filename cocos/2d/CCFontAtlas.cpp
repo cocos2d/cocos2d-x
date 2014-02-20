@@ -174,7 +174,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
             {
                 _currentPageOrigY += _currentPageLineHeight;
                 _currentPageOrigX = 0;
-                if(_currentPageOrigY >= PAGE_HEIGHT)
+                if(_currentPageOrigY + _currentPageLineHeight >= PAGE_HEIGHT)
                 {             
                     _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, PAGE_WIDTH, PAGE_HEIGHT, _pageContentSize );
                     _currentPageOrigY = 0;
