@@ -9,6 +9,7 @@
 "README.md",
 "build/BuildHelpers.CMakeLists.txt",
 "build/android-build.py",
+"build/build-mingw32-clang-make.sh",
 "build/build-mingw32-gcc-make.sh",
 "build/cocos2d-win32.vc2012.sln",
 "build/cocos2d_libs.xcodeproj/project.pbxproj",
