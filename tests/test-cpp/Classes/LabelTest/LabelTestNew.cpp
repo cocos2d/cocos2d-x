@@ -851,7 +851,7 @@ void LabelFNTMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touch
 
     float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
 
-    this->_labelShouldRetain->setWidth(labelWidth);
+    this->_labelShouldRetain->setMaxLineWidth(labelWidth);
 }
 
 void LabelFNTMultiLineAlignment::snapArrowsToEdge()
