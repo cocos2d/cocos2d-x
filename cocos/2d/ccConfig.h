@@ -274,7 +274,7 @@ To enable set it to a value different than 0. Disabled by default.
 
 /** Enable Script binding */
 #ifndef CC_ENABLE_SCRIPT_BINDING
-#define CC_ENABLE_SCRIPT_BINDING 0
+#define CC_ENABLE_SCRIPT_BINDING 1
 #endif
 
 #endif // __CCCONFIG_H__
