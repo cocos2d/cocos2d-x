@@ -213,10 +213,10 @@ void LabelMainScene::onIncrease(Ref* sender)
         break;
     case kCaseLabelUpdate:
         {
-            TTFConfig ttfConfig("fonts/arial.ttf", 60, GlyphCollection::DYNAMIC, nullptr, true);
+            TTFConfig ttfConfig("fonts/arial.ttf", 60, GlyphCollection::DYNAMIC);
             for( int i=0;i< kNodesIncrease;i++)
             {
-                auto label = Label::createWithTTF(ttfConfig, "Label", TextHAlignment::CENTER, size.width);
+                auto label = Label::createWithTTF(ttfConfig, "Label", TextHAlignment::LEFT);
                 label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
                 _labelContainer->addChild(label, 1, _quantityNodes);
 
