@@ -176,7 +176,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCDictionary.cpp" />
     <ClCompile Include="..\base\CCGeometry.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
-    <ClCompile Include="..\base\CCObject.cpp" />
+    <ClCompile Include="..\base\CCRef.cpp" />
     <ClCompile Include="..\base\CCSet.cpp" />
     <ClCompile Include="..\base\CCString.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
@@ -349,7 +349,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCInteger.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNS.h" />
-    <ClInclude Include="..\base\CCObject.h" />
+    <ClInclude Include="..\base\CCRef.h" />
     <ClInclude Include="..\base\CCPlatformConfig.h" />
     <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCSet.h" />
