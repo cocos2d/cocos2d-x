@@ -26,6 +26,7 @@ private:
     CCDictionary *mNodeSequences;
     CCDictionary *mBaseValues;
     int mAutoPlaySequenceId;
+    int mAnimationManagerId;
     
     CCNode *mRootNode;
     
@@ -142,6 +143,7 @@ private:
     CCActionInterval* getEaseAction(CCActionInterval *pAction, int nEasingType, float fEasingOpt);
     void runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
+    void stopActionsByTag(CCNode *node, int tag);
 };
 /**
  *  @js NA
