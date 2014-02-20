@@ -115,7 +115,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         }
 
         if (isspace ||
-            !last_word.empty() && iscjk_unicode(last_word.back()) && !isCJK)
+            (!last_word.empty() && iscjk_unicode(last_word.back()) && !isCJK))
         {
             // if current character is white space, put it into the current word
             if (isspace) last_word.push_back(character);
