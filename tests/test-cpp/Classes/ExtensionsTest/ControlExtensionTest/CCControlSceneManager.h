@@ -30,7 +30,7 @@
 
 USING_NS_CC;
 
-class ControlSceneManager : public cocos2d::Object
+class ControlSceneManager : public cocos2d::Ref
 {
 public:
     ControlSceneManager();

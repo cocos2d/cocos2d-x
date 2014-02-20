@@ -36,7 +36,7 @@
 #include "ScriptingCore.h"
 #include "jsb_helper.h"
 
-class MinXmlHttpRequest : public cocos2d::Object
+class MinXmlHttpRequest : public cocos2d::Ref
 {
 public:
     enum class ResponseType

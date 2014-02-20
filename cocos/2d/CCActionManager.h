@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "CCAction.h"
 #include "CCVector.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -53,7 +53,7 @@ struct _hashElement;
  
  @since v0.8
  */
-class CC_DLL ActionManager : public Object
+class CC_DLL ActionManager : public Ref
 {
 public:
     /**
@@ -122,13 +122,14 @@ public:
      */
     void resumeTargets(const Vector<Node*>& targetsToResume);
 
+    void update(float dt);
+    
 protected:
     // declared in ActionManager.m
 
     void removeActionAtIndex(ssize_t index, struct _hashElement *element);
     void deleteHashElement(struct _hashElement *element);
     void actionAllocWithHashElement(struct _hashElement *element);
-    void update(float dt);
 
 protected:
     struct _hashElement    *_targets;

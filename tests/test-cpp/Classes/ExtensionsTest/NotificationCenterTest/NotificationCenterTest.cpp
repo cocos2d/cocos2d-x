@@ -18,7 +18,7 @@ public:
     static Light* lightWithFile(const char* name);
 
     void setIsConnectToSwitch(bool bConnectToSwitch);
-    void switchStateChanged(Object* obj);
+    void switchStateChanged(Ref* obj);
     void updateLightState();
 
 private:
@@ -59,7 +59,7 @@ void Light::setIsConnectToSwitch(bool bConnectToSwitch)
     updateLightState();
 }
 
-void Light::switchStateChanged(Object* obj)
+void Light::switchStateChanged(Ref* obj)
 {
     s_bSwitchOn = obj == 0x00 ? false : true;
     updateLightState();
@@ -126,7 +126,7 @@ NotificationCenterTest::NotificationCenterTest()
         light->setIsConnectToSwitch(bConnected);
     }
 
-    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Object*)(intptr_t)item->getSelectedIndex());
+    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Ref*)(intptr_t)item->getSelectedIndex());
 
     /* for testing removeAllObservers */
     NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer1", NULL);
@@ -134,7 +134,7 @@ NotificationCenterTest::NotificationCenterTest()
     NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer3", NULL);
 }
 
-void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Object* sender)
+void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Ref* sender)
 {
     /* for testing removeAllObservers */
     int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
@@ -145,14 +145,14 @@ void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Object* sender)
     scene->release();
 }
 
-void NotificationCenterTest::toggleSwitch(Object *sender)
+void NotificationCenterTest::toggleSwitch(Ref *sender)
 {
     auto item = (MenuItemToggle*)sender;
     int index = item->getSelectedIndex();
-    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Object*)(intptr_t)index);
+    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Ref*)(intptr_t)index);
 }
 
-void NotificationCenterTest::connectToSwitch(Object *sender)
+void NotificationCenterTest::connectToSwitch(Ref *sender)
 {
     auto item = (MenuItemToggle*)sender;
     bool bConnected = item->getSelectedIndex() == 0 ? false : true;
@@ -160,7 +160,7 @@ void NotificationCenterTest::connectToSwitch(Object *sender)
     pLight->setIsConnectToSwitch(bConnected);
 }
 
-void NotificationCenterTest::doNothing(cocos2d::Object *sender)
+void NotificationCenterTest::doNothing(cocos2d::Ref *sender)
 {
 
 }

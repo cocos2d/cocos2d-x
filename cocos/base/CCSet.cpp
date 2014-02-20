@@ -31,12 +31,12 @@ NS_CC_BEGIN
 
 __Set::__Set(void)
 {
-    _set = new set<Object *>;
+    _set = new set<Ref *>;
 }
 
-__Set::__Set(const __Set &r__SetObject)
+__Set::__Set(const __Set &other)
 {
-    _set = new set<Object *>(*r__SetObject._set);
+    _set = new set<Ref *>(*other._set);
 
     // call retain of members
     __SetIterator iter;
@@ -91,7 +91,7 @@ int __Set::count(void)
     return (int)_set->size();
 }
 
-void __Set::addObject(Object *pObject)
+void __Set::addObject(Ref *pObject)
 {
     if (_set->count(pObject) == 0)
     {
@@ -100,7 +100,7 @@ void __Set::addObject(Object *pObject)
     }
 }
 
-void __Set::removeObject(Object *pObject)
+void __Set::removeObject(Ref *pObject)
 {
     if (_set->erase(pObject) > 0)
     {
@@ -122,14 +122,14 @@ void __Set::removeAllObjects()
         
         tmp = it;
         ++tmp;
-        Object * obj = *it;
+        Ref * obj = *it;
         _set->erase(it);
         CC_SAFE_RELEASE(obj);
         it = tmp;
     }
 }
 
-bool __Set::containsObject(Object *pObject)
+bool __Set::containsObject(Ref *pObject)
 {
     return _set->find(pObject) != _set->end();
 }
@@ -144,7 +144,7 @@ __SetIterator __Set::end(void)
     return _set->end();
 }
 
-Object* __Set::anyObject()
+Ref* __Set::anyObject()
 {
     if (!_set || _set->empty())
     {

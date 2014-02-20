@@ -23,9 +23,9 @@ public:
 
     virtual void onEnter();
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
     void newScene();
 

@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccTypes.h"
 #include "CCVector.h"
 #include "CCMap.h"
 #include "CCAffineTransform.h"
-#include "CCNode.h"
+
 #include "cocostudio/CCArmatureDefine.h"
 #include "CCTweenFunction.h"
 
@@ -68,7 +68,7 @@ namespace cocostudio {
  * @js NA
  * @lua NA
  */
-class  BaseData : public cocos2d::Object
+class  BaseData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(BaseData)
@@ -137,7 +137,7 @@ enum DisplayType
  *  @js NA
  *  @lua NA
  */
-class  DisplayData : public cocos2d::Object
+class  DisplayData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
@@ -268,7 +268,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  ArmatureData : public cocos2d::Object
+class  ArmatureData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(ArmatureData)
@@ -361,7 +361,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class  MovementBoneData : public cocos2d::Object
+class  MovementBoneData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(MovementBoneData)
@@ -393,7 +393,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class  MovementData : public cocos2d::Object
+class  MovementData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(MovementData)
@@ -455,7 +455,7 @@ public:
 *  @js NA
 *  @lua NA
 */
-class  AnimationData : public cocos2d::Object
+class  AnimationData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(AnimationData)
@@ -486,7 +486,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  ContourData : public cocos2d::Object
+class  ContourData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(ContourData)
@@ -515,7 +515,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  TextureData : public cocos2d::Object
+class  TextureData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(TextureData)

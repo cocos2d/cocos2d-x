@@ -69,7 +69,7 @@ public:
      @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByObject(Object* object);
+    virtual void removeScriptObjectByObject(Ref* object);
     
     /**
      @brief Remove Lua function reference
@@ -106,14 +106,14 @@ public:
     virtual int executeNodeEvent(Node* pNode, int nAction);
     virtual int executeMenuItemEvent(MenuItem* pMenuItem);
     virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName);
-    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget = NULL);
+    virtual int executeCallFuncActionEvent(CallFunc* pAction, Ref* pTarget = NULL);
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
     virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches);
     virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch);
     virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
-    virtual int executeEvent(int nHandler, const char* pEventName, Object* pEventSource = NULL, const char* pEventSourceClassName = NULL);
+    virtual int executeEvent(int nHandler, const char* pEventName, Ref* pEventSource = NULL, const char* pEventSourceClassName = NULL);
 
     virtual bool handleAssert(const char *msg);
     

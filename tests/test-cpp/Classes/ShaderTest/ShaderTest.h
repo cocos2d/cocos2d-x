@@ -15,9 +15,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
     CREATE_FUNC(ShaderTestDemo);
 };
@@ -91,7 +91,7 @@ public:
     virtual std::string subtitle() const override;
     virtual bool init();
     ControlSlider* createSliderCtl();
-    void sliderAction(Object* sender, Control::EventType controlEvent);
+    void sliderAction(Ref* sender, Control::EventType controlEvent);
 protected:
     SpriteBlur* _blurSprite;
     ControlSlider* _sliderCtl;

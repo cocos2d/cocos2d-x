@@ -141,7 +141,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		quantityOfNodes -= kNodesIncrease;
 		if( quantityOfNodes < 0 )
 			quantityOfNodes = 0;
@@ -153,7 +153,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
         srand(0);
 	});
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		quantityOfNodes += kNodesIncrease;
 		if( quantityOfNodes > kMaxNodes )
 			quantityOfNodes = kMaxNodes;
@@ -286,7 +286,7 @@ void IterateSpriteSheetForLoop::update(float dt)
 
     for( const auto &object : children )
     {
-        auto o = static_cast<Object*>(object);
+        auto o = static_cast<Ref*>(object);
         auto sprite = static_cast<Sprite*>(o);
         sprite->setVisible(false);
     }

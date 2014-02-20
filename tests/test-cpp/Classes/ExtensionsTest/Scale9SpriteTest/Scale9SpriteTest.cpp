@@ -99,7 +99,7 @@ void S9SpriteTestDemo::onEnter()
     CCLOG("sprite frames added to sprite frame cache...");
 }
 
-void S9SpriteTestDemo::restartCallback(Object* sender)
+void S9SpriteTestDemo::restartCallback(Ref* sender)
 {
     auto s = new S9SpriteTestScene();
     s->addChild( restartAction() );
@@ -107,7 +107,7 @@ void S9SpriteTestDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void S9SpriteTestDemo::nextCallback(Object* sender)
+void S9SpriteTestDemo::nextCallback(Ref* sender)
 {
     auto s = new S9SpriteTestScene();
     s->addChild( nextAction() );
@@ -115,7 +115,7 @@ void S9SpriteTestDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void S9SpriteTestDemo::backCallback(Object* sender)
+void S9SpriteTestDemo::backCallback(Ref* sender)
 {
     auto s = new S9SpriteTestScene();
     s->addChild( backAction() );

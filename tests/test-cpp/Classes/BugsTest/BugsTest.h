@@ -20,7 +20,7 @@ class BugsTestBaseLayer : public Layer
 {
 public:
     virtual void onEnter();
-    void backCallback(Object* sender);
+    void backCallback(Ref* sender);
 };
 
 class BugsTestScene : public TestScene

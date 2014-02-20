@@ -222,13 +222,13 @@ void MotionStreakTest::onEnter()
     menuMode->setPosition(Point(s.width/2, s.height/4));
 }
 
-void MotionStreakTest::modeCallback(Object *pSender)
+void MotionStreakTest::modeCallback(Ref *pSender)
 {
     bool fastMode = streak->isFastMode();
     streak->setFastMode(! fastMode);
 }
 
-void MotionStreakTest::restartCallback(Object* sender)
+void MotionStreakTest::restartCallback(Ref* sender)
 {
     auto s = new MotionStreakTestScene();//CCScene::create();
     s->addChild(restartMotionAction()); 
@@ -237,7 +237,7 @@ void MotionStreakTest::restartCallback(Object* sender)
     s->release();
 }
 
-void MotionStreakTest::nextCallback(Object* sender)
+void MotionStreakTest::nextCallback(Ref* sender)
 {
     auto s = new MotionStreakTestScene();//CCScene::create();
     s->addChild( nextMotionAction() );
@@ -245,7 +245,7 @@ void MotionStreakTest::nextCallback(Object* sender)
     s->release();
 }
 
-void MotionStreakTest::backCallback(Object* sender)
+void MotionStreakTest::backCallback(Ref* sender)
 {
     auto s = new MotionStreakTestScene;//CCScene::create();
     s->addChild( backMotionAction() );
