@@ -94,7 +94,9 @@ Timer::Timer()
 , _interval(0.0f)
 , _callback(nullptr)
 , _key(0)
+#if CC_ENABLE_SCRIPT_BINDING
 , _scriptHandler(0)
+#endif
 {
 }
 
@@ -108,6 +110,7 @@ Timer* Timer::create(const ccSchedulerFunc& callback, void *target, long key, fl
     return timer;
 }
 
+#if CC_ENABLE_SCRIPT_BINDING
 Timer* Timer::createWithScriptHandler(int handler, float seconds)
 {
     Timer *timer = new Timer();
@@ -126,6 +129,7 @@ bool Timer::initWithScriptHandler(int handler, float seconds)
 
     return true;
 }
+#endif
 
 bool Timer::initWithTarget(const ccSchedulerFunc& callback, void *target, long key, float seconds, unsigned int repeat, float delay)
 {
@@ -159,13 +163,14 @@ void Timer::update(float dt)
                 {
                     _callback(_elapsed);
                 }
-
+#if CC_ENABLE_SCRIPT_BINDING
                 if (0 != _scriptHandler)
                 {
                     SchedulerScriptData data(_scriptHandler,_elapsed);
                     ScriptEvent event(kScheduleEvent,&data);
                     ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                 }
+#endif
                 _elapsed = 0;
             }
         }    
@@ -181,13 +186,14 @@ void Timer::update(float dt)
                         _callback(_elapsed);
                     }
 
+#if CC_ENABLE_SCRIPT_BINDING
                     if (0 != _scriptHandler)
                     {
                         SchedulerScriptData data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
                         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                     }
-
+#endif
                     _elapsed = _elapsed - _delay;
                     _timesExecuted += 1;
                     _useDelay = false;
@@ -202,13 +208,15 @@ void Timer::update(float dt)
                         _callback(_elapsed);
                     }
 
+#if CC_ENABLE_SCRIPT_BINDING
                     if (0 != _scriptHandler)
                     {
                         SchedulerScriptData data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
                         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                     }
-
+#endif
+                    
                     _elapsed = 0;
                     _timesExecuted += 1;
 
@@ -241,7 +249,9 @@ Scheduler::Scheduler(void)
 , _currentTarget(nullptr)
 , _currentTargetSalvaged(false)
 , _updateHashLocked(false)
+#if CC_ENABLE_SCRIPT_BINDING
 , _scriptHandlerEntries(20)
+#endif
 {
     // I don't expect to have more than 30 functions to all per frame
     _functionsToPerform.reserve(30);
@@ -595,8 +605,9 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
             unscheduleUpdate(entry->target);
         }
     }
-
+#if CC_ENABLE_SCRIPT_BINDING
     _scriptHandlerEntries.clear();
+#endif
 }
 
 void Scheduler::unscheduleAllForTarget(void *target)
@@ -635,6 +646,7 @@ void Scheduler::unscheduleAllForTarget(void *target)
     unscheduleUpdate(target);
 }
 
+#if CC_ENABLE_SCRIPT_BINDING
 unsigned int Scheduler::scheduleScriptFunc(unsigned int handler, float interval, bool paused)
 {
     SchedulerScriptHandlerEntry* entry = SchedulerScriptHandlerEntry::create(handler, interval, paused);
@@ -654,6 +666,8 @@ void Scheduler::unscheduleScriptEntry(unsigned int scheduleScriptEntryID)
         }
     }
 }
+
+#endif
 
 void Scheduler::resumeTarget(void *target)
 {
@@ -904,6 +918,7 @@ void Scheduler::update(float dt)
     _updateHashLocked = false;
     _currentTarget = nullptr;
 
+#if CC_ENABLE_SCRIPT_BINDING
     //
     // Script callbacks
     //
@@ -924,7 +939,7 @@ void Scheduler::update(float dt)
             }
         }
     }
-
+#endif
     //
     // Functions allocated from another thread
     //

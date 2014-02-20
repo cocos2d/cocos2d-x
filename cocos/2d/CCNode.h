@@ -1491,10 +1491,12 @@ protected:
     bool _reorderChildDirty;          ///< children order dirty flag
     bool _isTransitionFinished;       ///< flag to indicate whether the transition was finished
 
+#if CC_ENABLE_SCRIPT_BINDING
     int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
-
+#endif
+    
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
 #if CC_USE_PHYSICS

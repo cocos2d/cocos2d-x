@@ -26,6 +26,9 @@
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
+#include "ccConfig.h"
+#if CC_ENABLE_SCRIPT_BINDING
+
 #include "platform/CCCommon.h"
 #include "CCTouch.h"
 #include "CCEventTouch.h"
@@ -501,5 +504,7 @@ private:
 /// @}
 
 NS_CC_END
+
+#endif // #if CC_ENABLE_SCRIPT_BINDING
 
 #endif // __SCRIPT_SUPPORT_H__

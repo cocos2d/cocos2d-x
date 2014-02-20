@@ -106,7 +106,9 @@ Node::Node(void)
 , _ignoreAnchorPointForPosition(false)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
+#if CC_ENABLE_SCRIPT_BINDING
 , _updateScriptHandler(0)
+#endif
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
@@ -127,9 +129,11 @@ Node::Node(void)
     _eventDispatcher = director->getEventDispatcher();
     _eventDispatcher->retain();
     
+#if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
-
+#endif
+    
     kmMat4Identity(&_transform);
     kmMat4Identity(&_inverse);
     kmMat4Identity(&_additionalTransform);
@@ -139,10 +143,12 @@ Node::~Node()
 {
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
+#if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
     }
+#endif
 
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_scheduler);
@@ -539,6 +545,7 @@ void Node::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
+#if CC_ENABLE_SCRIPT_BINDING
     if ( _scriptType != kScriptTypeNone)
     {
         int action = kNodeOnCleanup;
@@ -546,6 +553,7 @@ void Node::cleanup()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
     
     // timers
     for( const auto &child: _children)
@@ -852,6 +860,7 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnter;
@@ -859,6 +868,7 @@ void Node::onEnter()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
     
     for( const auto &child: _children)
         child->onEnter();
@@ -872,6 +882,7 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnterTransitionDidFinish;
@@ -879,6 +890,7 @@ void Node::onEnterTransitionDidFinish()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
     
     for( const auto &child: _children)
         child->onEnterTransitionDidFinish();
@@ -888,7 +900,8 @@ void Node::onExitTransitionDidStart()
 {
     for( const auto &child: _children)
         child->onExitTransitionDidStart();
-    
+
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExitTransitionDidStart;
@@ -896,6 +909,7 @@ void Node::onExitTransitionDidStart()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
 }
 
 void Node::onExit()
@@ -907,6 +921,7 @@ void Node::onExit()
     for( const auto &child: _children)
         child->onExit();
     
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExit;
@@ -914,6 +929,7 @@ void Node::onExit()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1003,7 +1019,10 @@ void Node::scheduleUpdateWithPriority(int priority)
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
     unscheduleUpdate();
+    
+#if CC_ENABLE_SCRIPT_BINDING
     _updateScriptHandler = nHandler;
+#endif
     _scheduler->scheduleUpdate([this](float dt){
         this->update(dt);
     }, this, priority, !_running);
@@ -1012,11 +1031,14 @@ void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 void Node::unscheduleUpdate()
 {
     _scheduler->unscheduleUpdate(this);
+    
+#if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
         _updateScriptHandler = 0;
     }
+#endif
 }
 
 void Node::schedule(SEL_SCHEDULE selector)
@@ -1085,6 +1107,7 @@ void Node::pauseSchedulerAndActions()
 // override me
 void Node::update(float fDelta)
 {
+#if CC_ENABLE_SCRIPT_BINDING
     if (0 != _updateScriptHandler)
     {
         //only lua use
@@ -1092,6 +1115,7 @@ void Node::update(float fDelta)
         ScriptEvent event(kScheduleEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     
     if (_componentContainer && !_componentContainer->isEmpty())
     {

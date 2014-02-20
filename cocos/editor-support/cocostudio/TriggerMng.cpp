@@ -71,6 +71,8 @@ void TriggerMng::parse(const rapidjson::Value &root)
 {
     CCLOG("%s", triggerMngVersion());
     int count = DICTOOL->getArrayCount_json(root, "Triggers");
+    
+#if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     bool useBindings = engine != nullptr;
 
@@ -87,6 +89,7 @@ void TriggerMng::parse(const rapidjson::Value &root)
         }
     }
     else
+#endif // #if CC_ENABLE_SCRIPT_BINDING
     {
         for (int i = 0; i < count; ++i)
         {
