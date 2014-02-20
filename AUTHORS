@@ -646,7 +646,8 @@ Developers:
         Fixed a bug that CCBReader can't play sequence automatically in JSB.
         Could not set next animation in CCBAnimationCompleted callback.
         Fixed missing to add JSAutoCompartment when invoking JS functions from C++.
-        CCBReader: To set anchor point to 0,0 when created by loader
+        CCBReader: To set anchor point to 0,0 when created by loader.
+        Potential crash when websocket connection closes.
         
     lite3
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
