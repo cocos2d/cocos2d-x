@@ -169,6 +169,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getEditBox());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
@@ -176,6 +177,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     return YES;
 }
 
@@ -192,6 +194,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxReturn(getEditBoxImplIOS()->getEditBox());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -203,7 +206,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         event.data = (void*)&data;
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
-	
+#endif
+    
 	if(editBox_ != nil)
 	{
 		getEditBoxImplIOS()->onEndEditing();
@@ -246,6 +250,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -253,7 +258,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
-
+#endif
 }
 
 @end

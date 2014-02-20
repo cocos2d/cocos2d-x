@@ -56,18 +56,22 @@ class CC_DLL Timer : public Ref
 public:
     /** Allocates a timer with a target, a selector and an interval in seconds. */
     static Timer* create(const ccSchedulerFunc& callback, void *target, long key, float seconds = 0.0f);
+    
+#if CC_ENABLE_SCRIPT_BINDING
     /** Allocates a timer with a script callback function and an interval in seconds. 
      * @js NA
      * @lua NA
      */
     static Timer* createWithScriptHandler(int handler, float seconds);
+    
+    /** Initializes a timer with a script callback function and an interval in seconds. */
+    bool initWithScriptHandler(int handler, float seconds);
+#endif
 
     Timer(void);
 
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
     bool initWithTarget(const ccSchedulerFunc& callback, void *target, long key, float seconds, unsigned int repeat, float delay);
-    /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(int handler, float seconds);
 
     /** get interval in seconds */
     inline float getInterval() const { return _interval; };
@@ -83,8 +87,10 @@ public:
     /** triggers the timer */
     void update(float dt);
     
+#if CC_ENABLE_SCRIPT_BINDING
     inline int getScriptHandler() const { return _scriptHandler; };
-
+#endif
+    
 protected:
     void *_target;
     float _elapsed;
@@ -96,7 +102,9 @@ protected:
     float _interval;
     ccSchedulerFunc _callback;
     long _key;
+#if CC_ENABLE_SCRIPT_BINDING
     int _scriptHandler;
+#endif
 };
 
 //
@@ -105,7 +113,10 @@ protected:
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
+
+#if CC_ENABLE_SCRIPT_BINDING
 class SchedulerScriptHandlerEntry;
+#endif
 
 /** @brief Scheduler is responsible for triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
@@ -251,6 +262,7 @@ public:
       */
     void unscheduleAllWithMinPriority(int minPriority);
 
+#if CC_ENABLE_SCRIPT_BINDING
     /** The scheduled script callback will be called every 'interval' seconds.
      If paused is true, then it won't be called until it is resumed.
      If 'interval' is 0, it will be called every frame.
@@ -260,7 +272,7 @@ public:
     
     /** Unschedule a script entry. */
     void unscheduleScriptEntry(unsigned int scheduleScriptEntryID);
-
+#endif
     /** Pauses the target.
      All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
      If the target is not present, nothing happens.
@@ -332,8 +344,11 @@ protected:
     bool _currentTargetSalvaged;
     // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
     bool _updateHashLocked;
+    
+#if CC_ENABLE_SCRIPT_BINDING
     Vector<SchedulerScriptHandlerEntry*> _scriptHandlerEntries;
-
+#endif
+    
     // Used for "perform Function"
     std::vector<std::function<void()>> _functionsToPerform;
     std::mutex _performMutex;
