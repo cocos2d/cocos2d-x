@@ -26,6 +26,7 @@
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
+#include "ccConfig.h"
 #if CC_ENABLE_SCRIPT_BINDING
 
 #include "platform/CCCommon.h"
