@@ -274,7 +274,7 @@ void TestController::addConsoleAutoTest()
                     Director::getInstance()->replaceScene(scene);
                     cocostudio::ArmatureDataManager::destroyInstance();
                 } );
-                
+                return;
             }
             for(int i = 0; i < g_testCount; i++)
             {
@@ -285,15 +285,27 @@ void TestController::addConsoleAutoTest()
 
                     if (scene)
                     {
+                        std::string  msg("autotest: running test:");
+                        msg += args;
+                        write(fd, msg.c_str(), strlen(msg.c_str()));
+                        write(fd, "\n",1);
+
                         currentController = &g_aTestNames[i];
                         Scheduler *sched = Director::getInstance()->getScheduler();
                         sched->performFunctionInCocosThread( [&](){
                             currentController->callback()->runThisTest();
                             currentController->callback()->release();
                         } );
+                        return;
                     }
                 }
             }
+
+            //no match found,print warning message
+            std::string  msg("autotest: could not find test:");
+            msg += args;
+            write(fd, msg.c_str(), strlen(msg.c_str()));
+            write(fd, "\n",1);
         }
         
     };
