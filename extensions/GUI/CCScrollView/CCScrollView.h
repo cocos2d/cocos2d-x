@@ -28,7 +28,7 @@
 
 #include "CCLayer.h"
 #include "CCEventListenerTouch.h"
-
+#include "CCActionTween.h"
 #include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
