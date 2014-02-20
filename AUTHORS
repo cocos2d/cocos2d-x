@@ -96,6 +96,7 @@ Developers:
         CMake support for windows.
         Added support for x64 target of windows.
         Added Dutch Language support.
+        Added clang support for Windows.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
