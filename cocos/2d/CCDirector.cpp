@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
-#include "CCLabelBMFont.h"
+#include "CCFontFNT.h"
 #include "CCActionManager.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
@@ -493,7 +493,7 @@ void Director::setProjection(Projection projection)
 
 void Director::purgeCachedData(void)
 {
-    LabelBMFont::purgeCachedData();
+    FontFNT::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
         SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
@@ -746,7 +746,7 @@ void Director::purgeDirector()
     CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
-    LabelBMFont::purgeCachedData();
+    FontFNT::purgeCachedData();
 
     FontFreeType::shutdownFreeType();
 
