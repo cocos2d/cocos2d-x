@@ -420,6 +420,17 @@ protected:
     void onDraw();
 };
 
+class LabelTTFLargeText : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFLargeText);
+
+    LabelTTFLargeText();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 // we don't support linebreak mode
 
 #endif
