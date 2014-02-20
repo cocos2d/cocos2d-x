@@ -207,7 +207,7 @@ void PhysicsWorld::debugDraw()
         {
             if (_debugDrawMask & DEBUGDRAW_SHAPE)
             {
-                for (Object* obj : _bodies)
+                for (Ref* obj : _bodies)
                 {
                     PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
                     

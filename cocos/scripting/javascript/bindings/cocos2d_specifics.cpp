@@ -759,28 +759,6 @@ bool js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate(JSContext *cx, uint32_t
     return false;
 }
 
-bool js_cocos2dx_swap_native_object(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 2) {
-		// get the native object from the second object to the first object
-		jsval *argv = JS_ARGV(cx, vp);
-		JSObject *one = JSVAL_TO_OBJECT(argv[0]);
-		JSObject *two = JSVAL_TO_OBJECT(argv[1]);
-		js_proxy_t *jsproxy = jsb_get_js_proxy(two);
-		void *ptrTwo = (jsproxy ? jsproxy->ptr : NULL);
-		if (jsproxy) {
-			js_proxy_t *nproxy = jsb_get_native_proxy(ptrTwo);
-			if (nproxy) {
-                JS_RemoveObjectRoot(cx, &jsproxy->obj);
-				jsb_remove_proxy(nproxy, jsproxy);
-                jsproxy = jsb_new_proxy(ptrTwo, one);
-                JS_AddNamedObjectRoot(cx, &jsproxy->obj, typeid(*((Object*)jsproxy->ptr)).name());
-			}
-		}
-	}
-	return true;
-}
-
 JSObject* getObjectFromNamespace(JSContext* cx, JSObject *ns, const char *name) {
 	JS::RootedValue out(cx);
     bool ok = true;
@@ -1021,9 +999,9 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
     {
         schedFunc_proxy_t *current, *tmp;
         HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
-            std::vector<Object*> objectsNeedToBeReleased;
+            std::vector<Ref*> objectsNeedToBeReleased;
             Array* targets = current->targets;
-            Object* pObj = NULL;
+            Ref* pObj = NULL;
             CCARRAY_FOREACH(targets, pObj)
             {
                 JSScheduleWrapper* wrapper = static_cast<JSScheduleWrapper*>(pObj);
@@ -1034,7 +1012,7 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
                 }
             }
             
-            std::vector<Object*>::iterator iter = objectsNeedToBeReleased.begin();
+            std::vector<Ref*>::iterator iter = objectsNeedToBeReleased.begin();
             for (; iter != objectsNeedToBeReleased.end(); ++iter)
             {
                 targets->removeObject(*iter, true);
@@ -1052,9 +1030,9 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
     {
         schedTarget_proxy_t *current, *tmp;
         HASH_ITER(hh, _schedObj_target_ht, current, tmp) {
-            std::vector<Object*> objectsNeedToBeReleased;
+            std::vector<Ref*> objectsNeedToBeReleased;
             Array* targets = current->targets;
-            Object* pObj = NULL;
+            Ref* pObj = NULL;
             CCARRAY_FOREACH(targets, pObj)
             {
                 JSScheduleWrapper* wrapper = static_cast<JSScheduleWrapper*>(pObj);
@@ -1101,9 +1079,9 @@ void JSScheduleWrapper::removeAllTargetsForJSObject(JSObject* jsTargetObj)
 
     schedFunc_proxy_t *current, *tmp;
     HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
-        std::vector<Object*> objectsNeedToBeReleased;
+        std::vector<Ref*> objectsNeedToBeReleased;
         Array* targets = current->targets;
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(targets, pObj)
         {
             if (removeNativeTargets->containsObject(pObj))
@@ -1153,7 +1131,7 @@ void JSScheduleWrapper::removeTargetForJSObject(JSObject* jsTargetObj, JSSchedul
 
     HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
         Array* targets = current->targets;
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         
         CCARRAY_FOREACH(targets, pObj)
         {
@@ -1189,7 +1167,7 @@ void JSScheduleWrapper::dump()
     schedTarget_proxy_t *current, *tmp;
     int nativeTargetsCount = 0;
     HASH_ITER(hh, _schedObj_target_ht, current, tmp) {
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(current->targets, pObj)
         {
             CCLOG("js target ( %p ), native target[%d]=( %p )", current->jsTargetObj, nativeTargetsCount, pObj);
@@ -1202,7 +1180,7 @@ void JSScheduleWrapper::dump()
     schedFunc_proxy_t *current_func, *tmp_func;
     int jsfuncTargetCount = 0;
     HASH_ITER(hh, _schedFunc_target_ht, current_func, tmp_func) {
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(current_func->targets, pObj)
         {
             CCLOG("js func ( %p ), native target[%d]=( %p )", current_func->jsfuncObj, jsfuncTargetCount, pObj);
@@ -1258,12 +1236,12 @@ void JSScheduleWrapper::update(float dt)
     JS_RemoveValueRoot(cx, &data);
 }
 
-Object* JSScheduleWrapper::getTarget()
+Ref*  JSScheduleWrapper::getTarget()
 {
     return _pTarget;
 }
 
-void JSScheduleWrapper::setTarget(Object* pTarget)
+void JSScheduleWrapper::setTarget(Ref* pTarget)
 {
     _pTarget = pTarget;
 }
@@ -1315,7 +1293,7 @@ bool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
         
         Array* targetArray = JSScheduleWrapper::getTargetForSchedule(argv[0]);
         CCLOGINFO("unschedule target number: %d", targetArray->count());
-        Object* tmp = NULL;
+        Ref* tmp = NULL;
         CCARRAY_FOREACH(targetArray, tmp)
         {
             JSScheduleWrapper* target = static_cast<JSScheduleWrapper*>(tmp);
@@ -1391,7 +1369,7 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         
         bool bFound = false;
         Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
             JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
@@ -1483,7 +1461,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         
         bool bFound = false;
         Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
             JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
@@ -1556,7 +1534,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
         
         bool bFound = false;
         Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
             JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
@@ -1581,7 +1559,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
         }
         
         tmpCobj->setPriority(arg0);
-        cobj->getScheduler()->scheduleUpdateForTarget(tmpCobj, arg0, !cobj->isRunning());
+        cobj->getScheduler()->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCobj), tmpCobj, arg0, !cobj->isRunning());
         
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
@@ -1656,7 +1634,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
         
         bool bFound = false;
         Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
             JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
@@ -1680,7 +1658,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
             JSScheduleWrapper::setTargetForJSObject(obj, tmpCobj);
         }
         
-        cobj->getScheduler()->scheduleUpdateForTarget(tmpCobj, 0, !cobj->isRunning());
+        cobj->getScheduler()->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCobj), tmpCobj, 0, !cobj->isRunning());
         
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
@@ -1771,7 +1749,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
         
         bool bFound = false;
         Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
             JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
@@ -1798,7 +1776,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
             JSScheduleWrapper::setTargetForJSObject(tmpObj, tmpCObj);
         }
         tmpCObj->setPriority(arg1);
-        sched->scheduleUpdateForTarget(tmpCObj, arg1, paused);
+        sched->scheduleUpdate(CC_CALLBACK_1(JSScheduleWrapper::update, tmpCObj), tmpCObj, arg1, paused);
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
@@ -1892,7 +1870,7 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         
         bool bFound = false;
         Array* pTargetArr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(pTargetArr, pObj)
         {
             JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
@@ -2101,7 +2079,7 @@ bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 	if (thisObj) {
 		js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
 		if (proxy) {
-			((Object *)proxy->ptr)->retain();
+			((Ref *)proxy->ptr)->retain();
 			return true;
 		}
 	}
@@ -2115,7 +2093,7 @@ bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 	if (thisObj) {
 		js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
 		if (proxy) {
-			((Object *)proxy->ptr)->release();
+			((Ref *)proxy->ptr)->release();
 			return true;
 		}
 	}
@@ -4211,7 +4189,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 		JS_ValueToObject(cx, nsval, &ns);
 	}
 
-	JS_DefineFunction(cx, global, "__associateObjWithNative", js_cocos2dx_swap_native_object, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
 	JSObject *tmpObj;

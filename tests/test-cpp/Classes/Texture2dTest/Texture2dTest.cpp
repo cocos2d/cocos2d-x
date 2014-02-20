@@ -166,21 +166,21 @@ TextureDemo::~TextureDemo()
     log("%s\n", textureCache->getCachedTextureInfo().c_str());
 }
 
-void TextureDemo::restartCallback(Object* sender)
+void TextureDemo::restartCallback(Ref* sender)
 {
     auto s = TextureTestScene::create();
     s->addChild(restartTextureTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void TextureDemo::nextCallback(Object* sender)
+void TextureDemo::nextCallback(Ref* sender)
 {
     auto s = TextureTestScene::create();
     s->addChild(nextTextureTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void TextureDemo::backCallback(Object* sender)
+void TextureDemo::backCallback(Ref* sender)
 {
     auto s = TextureTestScene::create();
     s->addChild(backTextureTest());
@@ -1924,7 +1924,7 @@ void TextureMemoryAlloc::onEnter()
     menu2->setPosition(Point(s.width/2, s.height/4));
 }
 
-void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::Object *sender)
+void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::Ref *sender)
 {
     if (_background)
     {
@@ -1932,7 +1932,7 @@ void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::Object *sender)
     }
 }
 
-void TextureMemoryAlloc::updateImage(cocos2d::Object *sender)
+void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
 {
     if (_background)
     {

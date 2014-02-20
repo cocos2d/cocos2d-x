@@ -19,9 +19,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter();
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 };
 
 
@@ -226,12 +226,12 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    void  setAlignmentLeft(Object* sender);
-    void  setAlignmentCenter(Object* sender);
-    void  setAlignmentRight(Object* sender);
-    void  setAlignmentTop(Object* sender);
-    void  setAlignmentMiddle(Object* sender);
-    void  setAlignmentBottom(Object* sender);
+    void  setAlignmentLeft(Ref* sender);
+    void  setAlignmentCenter(Ref* sender);
+    void  setAlignmentRight(Ref* sender);
+    void  setAlignmentTop(Ref* sender);
+    void  setAlignmentMiddle(Ref* sender);
+    void  setAlignmentBottom(Ref* sender);
     void  updateAlignment();
     const char* getCurrentAlignment();
 private:
@@ -278,8 +278,8 @@ public:
     void snapArrowsToEdge();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void stringChanged(Object *sender);
-    void alignmentChanged(Object *sender);
+    void stringChanged(Ref *sender);
+    void alignmentChanged(Ref *sender);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);

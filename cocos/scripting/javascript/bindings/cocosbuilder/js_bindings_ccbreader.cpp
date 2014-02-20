@@ -23,14 +23,14 @@ static void removeSelector(std::string &str) {
     }
 }
 
-SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget,
+SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::Ref * pTarget,
                                                                        const char * pSelectorName) {
     this->callBackProp = pSelectorName;
     removeSelector(this->callBackProp);
     return menu_selector(CCBScriptCallbackProxy::menuItemCallback);
 }
 
-Control::Handler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(Object * pTarget,
+Control::Handler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(Ref * pTarget,
                                                                            const char * pSelectorName) {
     
     this->callBackProp = pSelectorName;
@@ -38,7 +38,7 @@ Control::Handler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(Object * 
     return cccontrol_selector(CCBScriptCallbackProxy::controlCallback);
 }
 
-bool CCBScriptCallbackProxy::onAssignCCBMemberVariable(Object * pTarget,
+bool CCBScriptCallbackProxy::onAssignCCBMemberVariable(Ref * pTarget,
                                                        const char * pMemberVariableName,
                                                        Node * pNode) {
     return true;
@@ -53,11 +53,11 @@ CCBSelectorResolver * CCBScriptCallbackProxy::createNew() {
     return dynamic_cast<CCBSelectorResolver *>(ret);
 }
 
-void CCBScriptCallbackProxy::menuItemCallback(Object *pSender) {
+void CCBScriptCallbackProxy::menuItemCallback(Ref *pSender) {
     ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
-void CCBScriptCallbackProxy::controlCallback(Object *pSender, Control::EventType event) {
+void CCBScriptCallbackProxy::controlCallback(Ref *pSender, Control::EventType event) {
     ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
@@ -113,12 +113,12 @@ bool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, j
     if (argc == 2) {
         const char* arg0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        cocos2d::Object* arg1;
+        cocos2d::Ref* arg1;
         do {
             js_proxy_t *proxy;
             JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
             proxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+            arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
         } while (0);
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -155,12 +155,12 @@ bool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, j
     if (argc == 3) {
         const char* arg0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        cocos2d::Object* arg1;
+        cocos2d::Ref* arg1;
         do {
             js_proxy_t *proxy;
             JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
             proxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+            arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
         } while (0);
         cocos2d::Size arg2;
         ok &= jsval_to_ccsize(cx, argv[2], &arg2);
@@ -196,12 +196,12 @@ bool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uint3
 	if (argc == 2) {
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		cocos2d::Object* arg1;
+		cocos2d::Ref* arg1;
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
 			proxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+			arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg1)
 		} while (0);
         
@@ -239,12 +239,12 @@ bool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uint3
 	if (argc == 3) {
 		const char* arg0;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-		cocos2d::Object* arg1;
+		cocos2d::Ref* arg1;
 		do {
 			js_proxy_t *proxy;
 			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[1]);
 			proxy = jsb_get_js_proxy(tmpObj);
-			arg1 = (cocos2d::Object*)(proxy ? proxy->ptr : NULL);
+			arg1 = (cocos2d::Ref*)(proxy ? proxy->ptr : NULL);
 			TEST_NATIVE_OBJECT(cx, arg1)
 		} while (0);
 		cocos2d::Size arg2;

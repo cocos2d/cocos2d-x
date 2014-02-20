@@ -517,7 +517,7 @@
     <ClCompile Include="..\base\CCNS.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCObject.cpp">
+    <ClCompile Include="..\base\CCRef.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCSet.cpp">
@@ -1111,7 +1111,7 @@
     <ClInclude Include="..\base\CCNS.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCObject.h">
+    <ClInclude Include="..\base\CCRef.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCSet.h">

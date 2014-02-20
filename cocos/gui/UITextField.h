@@ -94,7 +94,7 @@ typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-typedef void (Object::*SEL_TextFieldEvent)(Object*, TextFiledEventType);
+typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 /** class UITextField : public Widget
@@ -131,7 +131,7 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListenerTextField(Object* target, SEL_TextFieldEvent selecor);
+    void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
 
     virtual void setAnchorPoint(const Point &pt) override;
     
@@ -162,7 +162,7 @@ protected:
     float _touchHeight;
     bool _useTouchArea;
     
-    Object* _textFieldEventListener;
+    Ref* _textFieldEventListener;
     SEL_TextFieldEvent _textFieldEventSelector;
     
     std::string _passwordStyleText;

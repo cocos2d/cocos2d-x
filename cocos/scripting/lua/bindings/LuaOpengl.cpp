@@ -2231,7 +2231,7 @@ static int tolua_Cocos2d_glGetUniformfv00(lua_State* tolua_S)
         unsigned int arg1 = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
         
         GLsizei length;
-        glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
+        glGetProgramiv(arg0, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
         GLchar* namebuffer = new GLchar[length];
         GLint size = -1;
         GLenum type = -1;

@@ -15,22 +15,22 @@ TimelineCallbackTestLayer::~TimelineCallbackTestLayer()
     CocosDenshion::SimpleAudioEngine::end();
 }
 
-SEL_MenuHandler TimelineCallbackTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName) {
+SEL_MenuHandler TimelineCallbackTestLayer::onResolveCCBCCMenuItemSelector(Ref * pTarget, const char * pSelectorName) {
     return NULL;
 }
 
-Control::Handler TimelineCallbackTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+Control::Handler TimelineCallbackTestLayer::onResolveCCBCCControlSelector(Ref * pTarget, const char * pSelectorName) {
     return NULL;
 }
 
-SEL_CallFuncN TimelineCallbackTestLayer::onResolveCCBCCCallFuncSelector(Object * pTarget, const char* pSelectorName)
+SEL_CallFuncN TimelineCallbackTestLayer::onResolveCCBCCCallFuncSelector(Ref * pTarget, const char* pSelectorName)
 {
     CCB_SELECTORRESOLVER_CALLFUNC_GLUE(this, "onCallback1", TimelineCallbackTestLayer::onCallback1);
     CCB_SELECTORRESOLVER_CALLFUNC_GLUE(this, "onCallback2", TimelineCallbackTestLayer::onCallback2);
     return NULL;
 }
 
-bool TimelineCallbackTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * pMemberVariableName, Node * pNode) {
+bool TimelineCallbackTestLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {
     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "helloLabel", LabelTTF *, this->_helloLabel);
     
     return false;

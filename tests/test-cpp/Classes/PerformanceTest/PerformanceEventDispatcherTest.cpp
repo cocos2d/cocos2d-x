@@ -112,7 +112,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     _quantityOfNodes = nNodes;
     
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		_quantityOfNodes -= kNodesIncrease;
 		if( _quantityOfNodes < 0 )
 			_quantityOfNodes = 0;
@@ -126,7 +126,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     decrease->setColor(Color3B(0,200,20));
     _decrease = decrease;
     
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		_quantityOfNodes += kNodesIncrease;
 		if( _quantityOfNodes > kMaxNodes )
 			_quantityOfNodes = kMaxNodes;
@@ -189,7 +189,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
         this->_lastRenderedCount = 0;
     };
     
-    auto toggle = MenuItemToggle::createWithCallback([=](Object* sender){
+    auto toggle = MenuItemToggle::createWithCallback([=](Ref* sender){
         auto toggle = static_cast<MenuItemToggle*>(sender);
         this->_type = toggle->getSelectedIndex();
         auto label = static_cast<LabelTTF*>(this->getChildByTag(TAG_SUBTITLE));
@@ -202,7 +202,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     toggle->setPosition(VisibleRect::left());
     _toggle = toggle;
     
-    auto start = MenuItemFont::create("start", [this](Object* sender){
+    auto start = MenuItemFont::create("start", [this](Ref* sender){
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
@@ -221,7 +221,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     start->setPosition(VisibleRect::right() + Point(0, 40));
     _startItem = start;
     
-    auto stop = MenuItemFont::create("stop", [=](Object* sender){
+    auto stop = MenuItemFont::create("stop", [=](Ref* sender){
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __EFFECTS_CCGRABBER_H__
 
 #include "CCConfiguration.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
@@ -40,7 +40,7 @@ class Texture2D;
  */
 
 /** FBO class that grabs the the contents of the screen */
-class Grabber : public Object
+class Grabber : public Ref
 {
 public:
     /**

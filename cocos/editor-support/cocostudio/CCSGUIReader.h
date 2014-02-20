@@ -32,7 +32,7 @@ namespace cocostudio {
 
 #define kCCSVersion 1.0
 
-class GUIReader : public cocos2d::Object
+class GUIReader : public cocos2d::Ref
 {
 public:
     CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader() { return GUIReader::getInstance(); };
@@ -61,7 +61,7 @@ protected:
     
 };
 
-class WidgetPropertiesReader : public cocos2d::Object
+class WidgetPropertiesReader : public cocos2d::Ref
 {
 public:
     virtual cocos2d::gui::Widget* createWidget(const rapidjson::Value& dic, const char* fullPath, const char* fileName)=0;

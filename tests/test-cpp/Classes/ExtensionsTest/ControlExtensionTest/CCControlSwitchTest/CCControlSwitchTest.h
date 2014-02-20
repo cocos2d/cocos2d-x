@@ -32,7 +32,7 @@ public:
     virtual ~ControlSwitchTest();
     bool init();
     /** Callback for the change value. */
-    void valueChanged(Object* sender, Control::EventType controlEvent);
+    void valueChanged(Ref* sender, Control::EventType controlEvent);
     LabelTTF *_displayValueLabel;
     CONTROL_SCENE_CREATE_FUNC(ControlSwitchTest)
 };

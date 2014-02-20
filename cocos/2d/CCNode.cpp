@@ -492,7 +492,7 @@ void Node::setOrderOfArrival(int orderOfArrival)
     _orderOfArrival = orderOfArrival;
 }
 
-void Node::setUserObject(Object *pUserObject)
+void Node::setUserObject(Ref *pUserObject)
 {
     CC_SAFE_RETAIN(pUserObject);
     CC_SAFE_RELEASE(_userObject);
@@ -985,7 +985,7 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    return _scheduler->isScheduledForTarget(selector, this);
+    return _scheduler->isScheduled(this, schedule_selector_to_key(selector));
 }
 
 void Node::scheduleUpdate()
@@ -995,19 +995,23 @@ void Node::scheduleUpdate()
 
 void Node::scheduleUpdateWithPriority(int priority)
 {
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
     unscheduleUpdate();
     _updateScriptHandler = nHandler;
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
 {
-    _scheduler->unscheduleUpdateForTarget(this);
+    _scheduler->unscheduleUpdate(this);
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
@@ -1030,7 +1034,9 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
 
-    _scheduler->scheduleSelector(selector, this, interval , repeat, delay, !_running);
+    _scheduler->schedule([=](float dt){
+        (this->*selector)(dt);
+    }, this, schedule_selector_to_key(selector), interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1040,11 +1046,11 @@ void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
 
 void Node::unschedule(SEL_SCHEDULE selector)
 {
-    // explicit nil handling
-    if (selector == 0)
+    // explicit null handling
+    if (selector == nullptr)
         return;
-
-    _scheduler->unscheduleSelector(selector, this);
+    
+    _scheduler->unschedule(this, schedule_selector_to_key(selector));
 }
 
 void Node::unscheduleAllSelectors()

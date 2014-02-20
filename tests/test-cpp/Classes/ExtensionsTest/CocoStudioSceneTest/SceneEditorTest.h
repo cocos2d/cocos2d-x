@@ -13,7 +13,7 @@ public:
 	virtual void runThisTest();
 
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(cocos2d::Object* pSender);
+	virtual void MainMenuCallback(cocos2d::Ref* pSender);
 };
 
 enum {
@@ -39,9 +39,9 @@ public:
 	virtual std::string title();
 	virtual std::string subtitle();
 
-	virtual void restartCallback(cocos2d::Object* pSender);
-	virtual void nextCallback(cocos2d::Object* pSender);
-	virtual void backCallback(cocos2d::Object* pSender);
+	virtual void restartCallback(cocos2d::Ref* pSender);
+	virtual void nextCallback(cocos2d::Ref* pSender);
+	virtual void backCallback(cocos2d::Ref* pSender);
 
 	virtual void draw();
 
@@ -100,7 +100,7 @@ public:
 	virtual void onEnter();
     virtual void onExit();
     cocos2d::Node* createGameScene();
-	void touchEvent(cocos2d::Object *pSender, cocos2d::gui::TouchEventType type);
+	void touchEvent(cocos2d::Ref *pSender, cocos2d::gui::TouchEventType type);
 private:
 	cocos2d::Node* _node;
 };

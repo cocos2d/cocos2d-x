@@ -29,13 +29,13 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 #include "platform/CCGLViewProtocol.h"
 
 NS_CC_BEGIN
 
-class CC_DLL GLView : public Object, public GLViewProtocol
+class CC_DLL GLView : public Ref, public GLViewProtocol
 {
 public:
 

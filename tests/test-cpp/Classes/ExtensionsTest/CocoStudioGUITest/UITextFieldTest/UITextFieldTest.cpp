@@ -52,7 +52,7 @@ bool UITextFieldTest::init()
     return false;
 }
 
-void UITextFieldTest::textFieldEvent(Object *pSender, TextFiledEventType type)
+void UITextFieldTest::textFieldEvent(Ref *pSender, TextFiledEventType type)
 {
     switch (type)
     {
@@ -140,7 +140,7 @@ bool UITextFieldTest_MaxLength::init()
     return false;
 }
 
-void UITextFieldTest_MaxLength::textFieldEvent(Object *pSender, TextFiledEventType type)
+void UITextFieldTest_MaxLength::textFieldEvent(Ref *pSender, TextFiledEventType type)
 {
     switch (type)
     {
@@ -234,7 +234,7 @@ bool UITextFieldTest_Password::init()
     return false;
 }
 
-void UITextFieldTest_Password::textFieldEvent(Object *pSender, TextFiledEventType type)
+void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextFiledEventType type)
 {
     switch (type)
     {
