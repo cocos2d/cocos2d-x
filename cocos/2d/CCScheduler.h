@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include <functional>
 #include <mutex>
+#include <set>
 
 #include "CCRef.h"
 #include "CCVector.h"
@@ -54,7 +55,7 @@ class CC_DLL Timer : public Ref
 {
 public:
     /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static Timer* create(const ccSchedulerFunc& callback, Ref *target, long key, float seconds = 0.0f);
+    static Timer* create(const ccSchedulerFunc& callback, void *target, long key, float seconds = 0.0f);
     /** Allocates a timer with a script callback function and an interval in seconds. 
      * @js NA
      * @lua NA
@@ -64,7 +65,7 @@ public:
     Timer(void);
 
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithTarget(const ccSchedulerFunc& callback, Ref *target, long key, float seconds, unsigned int repeat, float delay);
+    bool initWithTarget(const ccSchedulerFunc& callback, void *target, long key, float seconds, unsigned int repeat, float delay);
     /** Initializes a timer with a script callback function and an interval in seconds. */
     bool initWithScriptHandler(int handler, float seconds);
 
@@ -85,7 +86,7 @@ public:
     inline int getScriptHandler() const { return _scriptHandler; };
 
 protected:
-    Ref *_target;
+    void *_target;
     float _elapsed;
     bool _runForever;
     bool _useDelay;
@@ -161,39 +162,39 @@ public:
 
      @since v3.0
      */
-    void schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, unsigned int repeat, float delay, bool paused);
+    void schedule(const ccSchedulerFunc& callback, void *target, long key, float interval, unsigned int repeat, float delay, bool paused);
 
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
-    void schedule(const ccSchedulerFunc& callback, Ref *target, long key, float interval, bool paused);
+    void schedule(const ccSchedulerFunc& callback, void *target, long key, float interval, bool paused);
     
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
      @since v3.0
      */
-    void scheduleUpdate(const ccSchedulerFunc& callback, Ref *target, int priority, bool paused);
+    void scheduleUpdate(const ccSchedulerFunc& callback, void *target, int priority, bool paused);
     
     /** Checks whether a selector for a given taget is scheduled.
      @since v3.0.0
      */
-    bool isScheduled(Ref *target, long key);
+    bool isScheduled(void *target, long key);
 
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
      @since v3.0
      */
-    void unschedule(Ref *target, long key);
+    void unschedule(void *target, long key);
 
     /** Unschedules the update selector for a given target
      @since v3.0
      */
-    void unscheduleUpdate(Ref *target);
+    void unscheduleUpdate(void *target);
 
     /** Unschedules all selectors for a given target.
      This also includes the "update" selector.
      @since v3.0
      */
-    void unscheduleAllForTarget(Ref *target);
+    void unscheduleAllForTarget(void *target);
 
     // OLD METHODS
     /** The scheduled method will be called every 'interval' seconds.
@@ -213,6 +214,7 @@ public:
     template <class T>
     void scheduleUpdateForTarget(T *target, int priority, bool paused)
     {
+        target->retain();
         this->scheduleUpdate([=](float dt){
             target->update(dt);
         }, target, priority, paused);
@@ -232,7 +234,7 @@ public:
     /** Unschedules the update selector for a given target
      @since v0.99.3
      */
-    void unscheduleUpdateForTarget(Ref *target) { unscheduleUpdate(target); };
+    void unscheduleUpdateForTarget(Ref *target);
     
     ///
     
@@ -264,39 +266,39 @@ public:
      If the target is not present, nothing happens.
      @since v0.99.3
      */
-    void pauseTarget(Ref *target);
+    void pauseTarget(void *target);
 
     /** Resumes the target.
      The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
      If the target is not present, nothing happens.
      @since v0.99.3
      */
-    void resumeTarget(Ref *target);
+    void resumeTarget(void *target);
 
     /** Returns whether or not the target is paused
     @since v1.0.0
     * In js: var isTargetPaused(var jsObject)
     * @lua NA 
     */
-    bool isTargetPaused(Ref *target);
+    bool isTargetPaused(void *target);
 
     /** Pause all selectors from all targets.
       You should NEVER call this method, unless you know what you are doing.
      @since v2.0.0
       */
-    Vector<Ref*> pauseAllTargets();
+    std::set<void*> pauseAllTargets();
 
     /** Pause all selectors from all targets with a minimum priority.
       You should only call this with kPriorityNonSystemMin or higher.
       @since v2.0.0
       */
-    Vector<Ref*> pauseAllTargetsWithMinPriority(int minPriority);
+    std::set<void*> pauseAllTargetsWithMinPriority(int minPriority);
 
     /** Resume selectors on a set of targets.
      This can be useful for undoing a call to pauseAllSelectors.
      @since v2.0.0
       */
-    void resumeTargets(const Vector<Ref*>& targetsToResume);
+    void resumeTargets(const std::set<void*>& targetsToResume);
 
     /** calls a function on the cocos2d thread. Useful when you need to call a cocos2d function from another thread.
      This function is thread safe.
@@ -310,8 +312,8 @@ protected:
 
     // update specific
 
-    void priorityIn(struct _listEntry **list, const ccSchedulerFunc& callback, Ref *target, int priority, bool paused);
-    void appendIn(struct _listEntry **list, const ccSchedulerFunc& callback, Ref *target, bool paused);
+    void priorityIn(struct _listEntry **list, const ccSchedulerFunc& callback, void *target, int priority, bool paused);
+    void appendIn(struct _listEntry **list, const ccSchedulerFunc& callback, void *target, bool paused);
 
 
     float _timeScale;
