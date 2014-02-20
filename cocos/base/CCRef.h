@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCREF_H__
 
 #include "CCPlatformMacros.h"
+#include "ccConfig.h"
 
 NS_CC_BEGIN
 
@@ -131,11 +132,13 @@ protected:
     
     friend class AutoreleasePool;
     
+#if CC_ENABLE_SCRIPT_BINDING
 public:
     /// object id, ScriptSupport need public _ID
     unsigned int        _ID;
     /// Lua reference id
     int                 _luaID;
+#endif
 };
 
 class Node;
