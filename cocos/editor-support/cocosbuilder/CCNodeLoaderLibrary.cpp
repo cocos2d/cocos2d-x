@@ -65,7 +65,11 @@ void NodeLoaderLibrary::unregisterNodeLoader(const char * pClassName) {
 NodeLoader * NodeLoaderLibrary::getNodeLoader(const char* pClassName) {
     NodeLoaderMap::iterator ccNodeLoadersIterator = this->_nodeLoaders.find(pClassName);
     assert(ccNodeLoadersIterator != this->_nodeLoaders.end());
-    return ccNodeLoadersIterator->second;
+
+    NodeLoader* pNodeLoader = ccNodeLoadersIterator->second;
+    pNodeLoader->getCustomProperties()->removeAllObjects();
+
+    return pNodeLoader;
 }
 
 void NodeLoaderLibrary::purge(bool pReleaseNodeLoaders) {
