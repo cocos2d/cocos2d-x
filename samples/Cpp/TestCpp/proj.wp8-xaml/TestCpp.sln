@@ -1,9 +1,8 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCpp", "TestCpp\TestCpp\TestCpp.csproj", "{BDB566ED-9953-42FF-B1FE-95986AE100B6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cocos2dComponent", "TestCpp\Cocos2dComponent\Cocos2dComponent.vcxproj", "{04CF20CA-E130-432E-8E8E-2624F022BB25}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCppComponent", "TestCpp\TestCppComponent\TestCppComponent.vcxproj", "{04CF20CA-E130-432E-8E8E-2624F022BB25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
