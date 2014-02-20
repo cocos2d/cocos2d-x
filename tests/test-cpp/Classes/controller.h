@@ -18,6 +18,7 @@ public:
     void onTouchMoved(Touch* touches, Event  *event);
 
     void onMouseScroll(Event *event);
+    void addConsoleAutoTest();
 
 private:
     Point _beginPos;
