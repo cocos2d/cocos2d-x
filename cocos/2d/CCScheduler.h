@@ -210,7 +210,13 @@ public:
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
     void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
     
-    CC_DEPRECATED_ATTRIBUTE void scheduleUpdateForTarget(Ref *target, int priority, bool paused);
+    template <class T>
+    void scheduleUpdateForTarget(T *target, int priority, bool paused)
+    {
+        this->scheduleUpdate([=](float dt){
+            target->update(dt);
+        }, target, priority, paused);
+    }
     
     /** Checks whether a selector for a given taget is scheduled.
      @since v3.0.0
