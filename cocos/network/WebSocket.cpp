@@ -442,6 +442,14 @@ void WebSocket::onSubThreadStarted()
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                              _path.c_str(), _host.c_str(), _host.c_str(),
                                              name.c_str(), -1);
+                                             
+        if(NULL == _wsInstance) {
+            WsMessage* msg = new WsMessage();
+            msg->what = WS_MSG_TO_UITHREAD_ERROR;
+            _readyState = State::CLOSING;
+            _wsHelper->sendMessageToUIThread(msg);
+        }
+
 	}
 }
 
