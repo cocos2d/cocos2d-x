@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Fri Jan 10 13:07:28 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Feb 18 17:35:01 2014.
 */
 
 /****************************************************************************
@@ -20539,6 +20539,32 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: playBackgroundMusic of class  CCComAudio */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCComAudio_playBackgroundMusic02
+static int tolua_CocoStudio_CCComAudio_playBackgroundMusic02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCComAudio",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCComAudio* self = (CCComAudio*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playBackgroundMusic'", NULL);
+#endif
+  {
+   self->playBackgroundMusic();
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_CocoStudio_CCComAudio_playBackgroundMusic01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: stopBackgroundMusic of class  CCComAudio */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_CCComAudio_stopBackgroundMusic00
 static int tolua_CocoStudio_CCComAudio_stopBackgroundMusic00(lua_State* tolua_S)
@@ -20947,6 +20973,33 @@ static int tolua_CocoStudio_CCComAudio_playEffect01(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_CocoStudio_CCComAudio_playEffect00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: playEffect of class  CCComAudio */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCComAudio_playEffect02
+static int tolua_CocoStudio_CCComAudio_playEffect02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCComAudio",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCComAudio* self = (CCComAudio*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->playEffect();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_CocoStudio_CCComAudio_playEffect01(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -24034,6 +24087,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"preloadBackgroundMusic",tolua_CocoStudio_CCComAudio_preloadBackgroundMusic00);
    tolua_function(tolua_S,"playBackgroundMusic",tolua_CocoStudio_CCComAudio_playBackgroundMusic00);
    tolua_function(tolua_S,"playBackgroundMusic",tolua_CocoStudio_CCComAudio_playBackgroundMusic01);
+   tolua_function(tolua_S,"playBackgroundMusic",tolua_CocoStudio_CCComAudio_playBackgroundMusic02);
    tolua_function(tolua_S,"stopBackgroundMusic",tolua_CocoStudio_CCComAudio_stopBackgroundMusic00);
    tolua_function(tolua_S,"stopBackgroundMusic",tolua_CocoStudio_CCComAudio_stopBackgroundMusic01);
    tolua_function(tolua_S,"pauseBackgroundMusic",tolua_CocoStudio_CCComAudio_pauseBackgroundMusic00);
@@ -24047,6 +24101,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setEffectsVolume",tolua_CocoStudio_CCComAudio_setEffectsVolume00);
    tolua_function(tolua_S,"playEffect",tolua_CocoStudio_CCComAudio_playEffect00);
    tolua_function(tolua_S,"playEffect",tolua_CocoStudio_CCComAudio_playEffect01);
+   tolua_function(tolua_S,"playEffect",tolua_CocoStudio_CCComAudio_playEffect02);
    tolua_function(tolua_S,"pauseEffect",tolua_CocoStudio_CCComAudio_pauseEffect00);
    tolua_function(tolua_S,"pauseAllEffects",tolua_CocoStudio_CCComAudio_pauseAllEffects00);
    tolua_function(tolua_S,"resumeEffect",tolua_CocoStudio_CCComAudio_resumeEffect00);
