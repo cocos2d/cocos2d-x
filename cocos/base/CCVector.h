@@ -317,10 +317,11 @@ public:
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         auto iter = std::find(_data.begin(), _data.end(), object);
-        if (iter != _data.end())
+        if (iter != _data.end()) {
             _data.erase(iter);
-        if (toRelease)
-            object->release();
+            if (toRelease)
+                object->release();
+        }
     }
 
     /** @brief Removes from the vector with an iterator. 
