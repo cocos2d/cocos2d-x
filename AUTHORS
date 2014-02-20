@@ -682,6 +682,7 @@ Developers:
         Fixed a logic error in ControlUtils::RectUnion.
         Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         Deleted several lines of useless code in ScrollView::deaccelerateScrolling.
+        Fixed that ScrollView should implement ActionTweenDelegate.
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
