@@ -752,6 +752,9 @@ Developers:
         
     maksqwe
         Fixed string size check in BitmapDC::utf8ToUtf16 on win32 and assert condition in TriggerMng.
+        
+    wefiends
+        s3tc compressed textures with no mipmaps fail to be loaded.
     
 Retired Core Developers:
     WenSheng Yang
