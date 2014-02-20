@@ -310,6 +310,11 @@ void ScrollView::setZoomScaleInDuration(float s, float dt)
     }
 }
 
+void ScrollView::updateTweenAction(float value, const std::string& key)
+{
+    this->setZoomScale(value);
+}
+
 void ScrollView::setViewSize(Size size)
 {
     _viewSize = size;
