@@ -95,6 +95,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TextureS3TCDxt1),
     CL(TextureS3TCDxt3),
     CL(TextureS3TCDxt5),
+    CL(TextureS3TCWithNoMipmaps),
     
     CL(TextureATITCRGB),
     CL(TextureATITCExplicit),
@@ -2135,6 +2136,20 @@ std::string TextureS3TCDxt5::title() const
 std::string TextureS3TCDxt5::subtitle() const
 {
     return "S3TC dxt5 decode";    
+}
+
+//Implement of S3TC with no mipmaps
+TextureS3TCWithNoMipmaps::TextureS3TCWithNoMipmaps()
+{
+    auto sprite = Sprite::create("Images/test_512x512_s3tc_dxt5_with_no_mipmaps.dds");
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    
+    addChild(sprite);
+}
+std::string TextureS3TCWithNoMipmaps::title() const
+{
+    return "S3TC with no mipmaps";
 }
 
 //Implement of ATITC
