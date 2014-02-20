@@ -392,6 +392,52 @@ static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object,
         return node;
     }
     
+    //object is CCInteger
+    if (CCInteger *val=dynamic_cast<CCInteger *>(object))
+    {
+        tinyxml2::XMLElement* node = pDoc->NewElement("integer");
+        char strVal[33] = { 0 };
+        sprintf(strVal, "%d", val->getValue());
+        tinyxml2::XMLText* content = pDoc->NewText(strVal);
+        node->LinkEndChild(content);
+        return node;
+    }
+    
+    //object is CCFloat
+    if (CCFloat *val = dynamic_cast<CCFloat *>(object))
+    {
+        tinyxml2::XMLElement* node = pDoc->NewElement("real");
+        char strVal[64] = { 0 };
+        sprintf(strVal, "%f", val->getValue());
+        tinyxml2::XMLText* content = pDoc->NewText(strVal);
+        node->LinkEndChild(content);
+        return node;
+    }
+    
+    //object is CCDouble
+    if (CCDouble *val = dynamic_cast<CCDouble *>(object))
+    {
+        tinyxml2::XMLElement* node = pDoc->NewElement("real");
+        char strVal[64] = { 0 };
+        sprintf(strVal, "%d", val->getValue());
+        tinyxml2::XMLText* content = pDoc->NewText(strVal);
+        node->LinkEndChild(content);
+        return node;
+    }
+    
+    //object is CCBool
+    if (CCBool *val = dynamic_cast<CCBool *>(object))
+    {
+        if (val->getValue())
+        {
+            return pDoc->NewElement("true");
+        }
+        else
+        {
+            return pDoc->NewElement("false");
+        }
+    }
+    
     // object is CCArray
     if (CCArray *array = dynamic_cast<CCArray *>(object))
         return generateElementForArray(array, pDoc);
