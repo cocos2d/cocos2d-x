@@ -663,7 +663,6 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _maxS = 1;
     _maxT = 1;
 
-    _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
@@ -701,6 +700,22 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     {
         CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
         return false;
+    }
+    
+    // set the premultiplied tag
+    if (!image->hasPremultipliedAlpha())
+    {
+        if (image->getFileType() == Image::Format::PVR)
+        {
+            _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
+        }else
+        {
+            CCLOG("warning: We can't not find the if the data is premultiplied or not, we will assume it's false.");
+            _hasPremultipliedAlpha = false;
+        }
+    }else
+    {
+        _hasPremultipliedAlpha = image->isPremultipliedAlpha();
     }
 
     unsigned char*   tempData = image->getData();
@@ -755,22 +770,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
             free(outTempData);
         }
-
-        // set the premultiplied tag
-        if (!image->hasPremultipliedAlpha())
-        {
-            if (image->getFileType() == Image::Format::PVR)
-            {
-                _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
-            }else
-            {
-                CCLOG("wanning: We cann't find the data is premultiplied or not, we will assume it's false.");
-                _hasPremultipliedAlpha = false;
-            }
-        }else
-        {
-            _hasPremultipliedAlpha = image->isPremultipliedAlpha();
-        }
+        
         return true;
     }
 }
