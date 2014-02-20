@@ -40,7 +40,7 @@ extern "C" {
 
 using namespace gui;
 
-class LuaCocoStudioEventListener:public Object
+class LuaCocoStudioEventListener:public Ref
 {
 public:
     LuaCocoStudioEventListener();
@@ -48,7 +48,7 @@ public:
     
     static LuaCocoStudioEventListener* create();
     
-    virtual void eventCallbackFunc(Object* sender,int eventType);
+    virtual void eventCallbackFunc(Ref* sender,int eventType);
 };
 
 LuaCocoStudioEventListener::LuaCocoStudioEventListener()
@@ -72,7 +72,7 @@ LuaCocoStudioEventListener* LuaCocoStudioEventListener::create()
     return listener;
 }
 
-void LuaCocoStudioEventListener::eventCallbackFunc(Object* sender,int eventType)
+void LuaCocoStudioEventListener::eventCallbackFunc(Ref* sender,int eventType)
 {
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
     

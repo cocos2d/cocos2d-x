@@ -19,7 +19,7 @@ public:
 
     virtual void setJSCallbackThis(jsval thisObj);
 
-    virtual void eventCallbackFunc(Object*,int);
+    virtual void eventCallbackFunc(Ref*,int);
 
 private:
     bool m_bNeedUnroot;
@@ -55,7 +55,7 @@ void JSStudioEventListenerWrapper::setJSCallbackThis(jsval jsThisObj)
     }
 }
 
-void JSStudioEventListenerWrapper::eventCallbackFunc(Object* sender,int eventType)
+void JSStudioEventListenerWrapper::eventCallbackFunc(Ref* sender,int eventType)
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JSObject *thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);

@@ -78,7 +78,7 @@ public:
         VALUE_CHANGED        = 1 << 8      // A touch dragging or otherwise manipulating a control, causing it to emit a series of different values.
     };
     
-    typedef void (Object::*Handler)(Object*, EventType);
+    typedef void (Ref::*Handler)(Ref*, EventType);
     
     /** The possible state for a control.  */
     enum class State
@@ -131,7 +131,7 @@ public:
      * @param controlEvents A bitmask specifying the control events for which the
      * action message is sent. See "CCControlEvent" for bitmask constants.
      */
-    virtual void addTargetWithActionForControlEvents(Object* target, Handler action, EventType controlEvents);
+    virtual void addTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents);
 
     /**
      * Removes a target and action for a particular event (or events) from an
@@ -145,7 +145,7 @@ public:
      * @param controlEvents A bitmask specifying the control events associated with
      * target and action. See "CCControlEvent" for bitmask constants.
      */
-    virtual void removeTargetWithActionForControlEvents(Object* target, Handler action, EventType controlEvents);
+    virtual void removeTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents);
 
     /**
      * Returns a point corresponding to the touh location converted into the
@@ -198,7 +198,7 @@ protected:
      * @return an Invocation object able to construct messages using a given 
      * target-action pair.
      */
-    Invocation* invocationWithTargetAndActionForControlEvent(Object* target, Handler action, EventType controlEvent);
+    Invocation* invocationWithTargetAndActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
 
     /**
     * Returns the Invocation list for the given control event. If the list does
@@ -224,7 +224,7 @@ protected:
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.
      */
-    void addTargetWithActionForControlEvent(Object* target, Handler action, EventType controlEvent);
+    void addTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
     
     /**
      * Removes a target and action for a particular event from an internal dispatch
@@ -238,7 +238,7 @@ protected:
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.
      */
-    void removeTargetWithActionForControlEvent(Object* target, Handler action, EventType controlEvent);
+    void removeTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
 
     bool _enabled;
     bool _selected;

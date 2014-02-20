@@ -662,7 +662,7 @@ bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 }
 
 
-void ScriptingCore::removeScriptObjectByObject(Object* pObj)
+void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
 {
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -791,7 +791,7 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
     Array* arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
     if (arr) {
         Scheduler* pScheduler = Director::getInstance()->getScheduler();
-        Object* pObj = NULL;
+        Ref* pObj = NULL;
         CCARRAY_FOREACH(arr, pObj)
         {
             pScheduler->unscheduleAllForTarget(pObj);
@@ -1459,7 +1459,7 @@ void ScriptingCore::enableDebugger()
         t.detach();
 
         Scheduler* scheduler = Director::getInstance()->getScheduler();
-        scheduler->scheduleUpdateForTarget(this->_runLoop, 0, false);
+        scheduler->scheduleUpdate(CC_CALLBACK_1(SimpleRunLoop::update, this->_runLoop), this->_runLoop, 0, false);
     }
 }
 

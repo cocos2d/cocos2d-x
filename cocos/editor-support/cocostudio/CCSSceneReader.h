@@ -41,7 +41,7 @@ public:
     static void destroyInstance();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const std::string &fileName);
-	void setTarget(const std::function<void(cocos2d::Object* obj, void* doc)>& selector);
+	void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
 	cocos2d::Node* getNodeByTag(int nTag);
     
 private:
@@ -54,7 +54,7 @@ private:
 	cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
 private:
     static SceneReader* s_sharedReader;
-    std::function<void(cocos2d::Object* obj, void* doc)> _fnSelector;
+    std::function<void(cocos2d::Ref* obj, void* doc)> _fnSelector;
 	cocos2d::Node*      _node;
 };
 

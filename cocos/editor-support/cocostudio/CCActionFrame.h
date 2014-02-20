@@ -92,7 +92,7 @@ enum class FrameEaseType
 *  @js NA
 *  @lua NA
 */
-class ActionFrame:public cocos2d::Object
+class ActionFrame: public cocos2d::Ref
 {
 
 public:

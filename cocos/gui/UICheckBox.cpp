@@ -316,7 +316,7 @@ void CheckBox::unSelectedEvent()
     }
 }
 
-void CheckBox::addEventListenerCheckBox(Object *target, SEL_SelectedStateEvent selector)
+void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
 {
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;

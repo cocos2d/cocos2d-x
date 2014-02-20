@@ -41,7 +41,7 @@ NS_CC_BEGIN
 // -----------------------------------------------------------------------
 // DictElement
 
-DictElement::DictElement(const char* pszKey, Object* pObject)
+DictElement::DictElement(const char* pszKey, Ref* pObject)
 {
     CCASSERT(pszKey && strlen(pszKey) > 0, "Invalid key value.");
     _intKey = 0;
@@ -60,7 +60,7 @@ DictElement::DictElement(const char* pszKey, Object* pObject)
     memset(&hh, 0, sizeof(hh));
 }
 
-DictElement::DictElement(intptr_t iKey, Object* pObject)
+DictElement::DictElement(intptr_t iKey, Ref* pObject)
 {
     _strKey[0] = '\0';
     _intKey = iKey;
@@ -124,7 +124,7 @@ __Array* __Dictionary::allKeys()
     return array;
 }
 
-__Array* __Dictionary::allKeysForObject(Object* object)
+__Array* __Dictionary::allKeysForObject(Ref* object)
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
@@ -159,7 +159,7 @@ __Array* __Dictionary::allKeysForObject(Object* object)
     return array;
 }
 
-Object* __Dictionary::objectForKey(const std::string& key)
+Ref* __Dictionary::objectForKey(const std::string& key)
 {
     // if dictionary wasn't initialized, return NULL directly.
     if (_dictType == kDictUnknown) return NULL;
@@ -167,7 +167,7 @@ Object* __Dictionary::objectForKey(const std::string& key)
     // This method uses string as key, therefore we should make sure that the key type of this __Dictionary is string.
     CCASSERT(_dictType == kDictStr, "this dictionary does not use string as key.");
 
-    Object* pRetObject = NULL;
+    Ref* pRetObject = NULL;
     DictElement *pElement = NULL;
     HASH_FIND_STR(_elements, key.c_str(), pElement);
     if (pElement != NULL)
@@ -177,7 +177,7 @@ Object* __Dictionary::objectForKey(const std::string& key)
     return pRetObject;
 }
 
-Object* __Dictionary::objectForKey(intptr_t key)
+Ref* __Dictionary::objectForKey(intptr_t key)
 {
     // if dictionary wasn't initialized, return NULL directly.
     if (_dictType == kDictUnknown) return NULL;
@@ -185,7 +185,7 @@ Object* __Dictionary::objectForKey(intptr_t key)
     // This method uses integer as key, therefore we should make sure that the key type of this __Dictionary is integer.
     CCASSERT(_dictType == kDictInt, "this dictionary does not use integer as key.");
 
-    Object* pRetObject = NULL;
+    Ref* pRetObject = NULL;
     DictElement *pElement = NULL;
     HASH_FIND_PTR(_elements, &key, pElement);
     if (pElement != NULL)
@@ -215,7 +215,7 @@ const __String* __Dictionary::valueForKey(intptr_t key)
     return pStr;
 }
 
-void __Dictionary::setObject(Object* pObject, const std::string& key)
+void __Dictionary::setObject(Ref* pObject, const std::string& key)
 {
     CCASSERT(key.length() > 0 && pObject != NULL, "Invalid Argument!");
     if (_dictType == kDictUnknown)
@@ -233,7 +233,7 @@ void __Dictionary::setObject(Object* pObject, const std::string& key)
     }
     else if (pElement->_object != pObject)
     {
-        Object* pTmpObj = pElement->_object;
+        Ref* pTmpObj = pElement->_object;
         pTmpObj->retain();
         removeObjectForElememt(pElement);
         setObjectUnSafe(pObject, key);
@@ -241,7 +241,7 @@ void __Dictionary::setObject(Object* pObject, const std::string& key)
     }
 }
 
-void __Dictionary::setObject(Object* pObject, intptr_t key)
+void __Dictionary::setObject(Ref* pObject, intptr_t key)
 {
     CCASSERT(pObject != NULL, "Invalid Argument!");
     if (_dictType == kDictUnknown)
@@ -259,7 +259,7 @@ void __Dictionary::setObject(Object* pObject, intptr_t key)
     }
     else if (pElement->_object != pObject)
     {
-        Object* pTmpObj = pElement->_object;
+        Ref* pTmpObj = pElement->_object;
         pTmpObj->retain();
         removeObjectForElememt(pElement);
         setObjectUnSafe(pObject, key);
@@ -295,14 +295,14 @@ void __Dictionary::removeObjectForKey(intptr_t key)
     removeObjectForElememt(pElement);
 }
 
-void __Dictionary::setObjectUnSafe(Object* pObject, const std::string& key)
+void __Dictionary::setObjectUnSafe(Ref* pObject, const std::string& key)
 {
     pObject->retain();
     DictElement* pElement = new DictElement(key.c_str(), pObject);
     HASH_ADD_STR(_elements, _strKey, pElement);
 }
 
-void __Dictionary::setObjectUnSafe(Object* pObject, const intptr_t key)
+void __Dictionary::setObjectUnSafe(Ref* pObject, const intptr_t key)
 {
     pObject->retain();
     DictElement* pElement = new DictElement(key, pObject);
@@ -311,7 +311,7 @@ void __Dictionary::setObjectUnSafe(Object* pObject, const intptr_t key)
 
 void __Dictionary::removeObjectsForKeys(__Array* pKey__Array)
 {
-    Object* pObj = NULL;
+    Ref* pObj = NULL;
     CCARRAY_FOREACH(pKey__Array, pObj)
     {
         __String* pStr = static_cast<__String*>(pObj);
@@ -341,14 +341,14 @@ void __Dictionary::removeAllObjects()
     }
 }
 
-Object* __Dictionary::randomObject()
+Ref* __Dictionary::randomObject()
 {
     if (_dictType == kDictUnknown)
     {
         return NULL;
     }
     
-    Object* key = allKeys()->getRandomObject();
+    Ref* key = allKeys()->getRandomObject();
     
     if (_dictType == kDictInt)
     {
@@ -474,7 +474,7 @@ static ValueVector ccarray_to_valuevector(__Array* arr)
 {
     ValueVector ret;
     
-    Object* obj;
+    Ref* obj;
     CCARRAY_FOREACH(arr, obj)
     {
         Value arrElement;
@@ -516,7 +516,7 @@ static ValueMap ccdictionary_to_valuemap(__Dictionary* dict)
     DictElement* pElement = nullptr;
     CCDICT_FOREACH(dict, pElement)
     {
-        Object* obj = pElement->getObject();
+        Ref* obj = pElement->getObject();
         
         __String* strVal = nullptr;
         __Dictionary* dictVal = nullptr;
@@ -567,7 +567,7 @@ __Dictionary* __Dictionary::clone() const
     __Dictionary* newDict = __Dictionary::create();
     
     DictElement* element = NULL;
-    Object* tmpObj = NULL;
+    Ref* tmpObj = NULL;
     Clonable* obj = NULL;
     if (_dictType == kDictInt)
     {
@@ -576,7 +576,7 @@ __Dictionary* __Dictionary::clone() const
             obj = dynamic_cast<Clonable*>(element->getObject());
             if (obj)
             {
-                tmpObj = dynamic_cast<Object*>(obj->clone());
+                tmpObj = dynamic_cast<Ref*>(obj->clone());
                 if (tmpObj)
                 {
                     newDict->setObject(tmpObj, element->getIntKey());
@@ -595,7 +595,7 @@ __Dictionary* __Dictionary::clone() const
             obj = dynamic_cast<Clonable*>(element->getObject());
             if (obj)
             {
-                tmpObj = dynamic_cast<Object*>(obj->clone());
+                tmpObj = dynamic_cast<Ref*>(obj->clone());
                 if (tmpObj)
                 {
                     newDict->setObject(tmpObj, element->getStrKey());

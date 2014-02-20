@@ -176,47 +176,47 @@ bool ControlButtonTest_Event::init()
     return false;
 }
 
-void ControlButtonTest_Event::touchBitmaskAction(Object *senderz, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchBitmaskAction(Ref *senderz, Control::EventType controlEvent)
 {
     _displayBitmaskLabel->setString(String::createWithFormat("using bitmask (%d)", controlEvent)->getCString());
 }
 
-void ControlButtonTest_Event::touchDownAction(Object *senderz, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchDownAction(Ref *senderz, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragInsideAction(Object *sender, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchDragInsideAction(Ref *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Inside")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragOutsideAction(Object *sender, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchDragOutsideAction(Ref *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Outside")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragEnterAction(Object *sender, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchDragEnterAction(Ref *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Enter")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragExitAction(Object *sender, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchDragExitAction(Ref *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Exit")->getCString());
 }
 
-void ControlButtonTest_Event::touchUpInsideAction(Object *sender, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchUpInsideAction(Ref *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Up Inside.")->getCString());
 }
 
-void ControlButtonTest_Event::touchUpOutsideAction(Object *sender, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchUpOutsideAction(Ref *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Up Outside.")->getCString());
 }
 
-void ControlButtonTest_Event::touchCancelAction(Object *sender, Control::EventType controlEvent)
+void ControlButtonTest_Event::touchCancelAction(Ref *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Cancel")->getCString());
 }

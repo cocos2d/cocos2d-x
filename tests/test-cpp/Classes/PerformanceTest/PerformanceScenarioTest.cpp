@@ -111,7 +111,7 @@ void ScenarioTest::performTests()
 
     // add decrease & increase menu item
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		int idx = _itemToggle->getSelectedIndex();
         switch (idx) {
         case 0:
@@ -129,7 +129,7 @@ void ScenarioTest::performTests()
 	});
     decrease->setPosition(Point(origin.x + s.width / 2 - 80, origin.y + 80));
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		int idx = _itemToggle->getSelectedIndex();
         switch (idx) {
         case 0:

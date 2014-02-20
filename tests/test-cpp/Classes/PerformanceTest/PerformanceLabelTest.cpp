@@ -32,7 +32,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 // LabelMenuLayer
 //
 ////////////////////////////////////////////////////////
-void LabelMenuLayer::restartCallback(Object* sender)
+void LabelMenuLayer::restartCallback(Ref* sender)
 {
     if ( LabelMainScene::_s_autoTest )
     {
@@ -43,7 +43,7 @@ void LabelMenuLayer::restartCallback(Object* sender)
     PerformBasicLayer::restartCallback(sender);
 }
 
-void LabelMenuLayer::nextCallback(Object* sender)
+void LabelMenuLayer::nextCallback(Ref* sender)
 {
     if ( LabelMainScene::_s_autoTest )
     {
@@ -54,7 +54,7 @@ void LabelMenuLayer::nextCallback(Object* sender)
     PerformBasicLayer::nextCallback(sender);
 }
 
-void LabelMenuLayer::backCallback(Object* sender)
+void LabelMenuLayer::backCallback(Ref* sender)
 {
     if ( LabelMainScene::_s_autoTest )
     {
@@ -182,7 +182,7 @@ void LabelMainScene::updateNodes()
     }
 }
 
-void LabelMainScene::onIncrease(Object* sender)
+void LabelMainScene::onIncrease(Ref* sender)
 {    
     if( _quantityNodes >= kMaxNodes)
         return;
@@ -254,7 +254,7 @@ void LabelMainScene::onIncrease(Object* sender)
     updateNodes();
 }
 
-void LabelMainScene::onDecrease(Object* sender)
+void LabelMainScene::onDecrease(Ref* sender)
 {
     if( _quantityNodes <= 0 )
         return;
@@ -419,7 +419,7 @@ void  LabelMainScene::finishAutoTest()
     log("Label performance test is  finish ");
 }
 
-void  LabelMainScene::onAutoTest(Object* sender)
+void  LabelMainScene::onAutoTest(Ref* sender)
 {
     LabelMainScene::_s_autoTest = !LabelMainScene::_s_autoTest;
     MenuItemFont* menuItem = dynamic_cast<MenuItemFont*>(sender);

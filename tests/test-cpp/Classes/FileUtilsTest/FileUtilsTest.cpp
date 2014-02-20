@@ -52,7 +52,7 @@ void FileUtilsDemo::onEnter()
     BaseTest::onEnter();    
 }
 
-void FileUtilsDemo::backCallback(Object* sender)
+void FileUtilsDemo::backCallback(Ref* sender)
 {
     auto scene = new FileUtilsTestScene();
     auto layer = backAction();
@@ -62,7 +62,7 @@ void FileUtilsDemo::backCallback(Object* sender)
     scene->release();
 }
 
-void FileUtilsDemo::nextCallback(Object* sender)
+void FileUtilsDemo::nextCallback(Ref* sender)
 {
     auto scene = new FileUtilsTestScene();
     auto layer = nextAction();
@@ -72,7 +72,7 @@ void FileUtilsDemo::nextCallback(Object* sender)
     scene->release();
 }
 
-void FileUtilsDemo::restartCallback(Object* sender)
+void FileUtilsDemo::restartCallback(Ref* sender)
 {
     auto scene = new FileUtilsTestScene();
     auto layer = restartAction();

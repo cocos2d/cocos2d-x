@@ -27,7 +27,8 @@ THE SOFTWARE.
 #define __CC_SET_H__
 
 #include <set>
-#include "CCObject.h"
+#include "CCRef.h"
+#include "CCDataVisitor.h"
 
 NS_CC_BEGIN
 
@@ -36,9 +37,9 @@ NS_CC_BEGIN
  * @{
  */
 
-typedef std::set<Object *>::iterator __SetIterator;
+typedef std::set<Ref *>::iterator __SetIterator;
 
-class CC_DLL __Set : public Object
+class CC_DLL __Set : public Ref
 {
 public:
     /**
@@ -72,11 +73,11 @@ public:
     /**
     *@brief Add a element into Set, it will retain the element.
     */
-    void addObject(Object *pObject);
+    void addObject(Ref *pObject);
     /**
     *@brief Remove the given element, nothing todo if no element equals pObject.
     */
-    void removeObject(Object *pObject);
+    void removeObject(Ref *pObject);
     /**
      *@brief Remove all elements of the set
      */
@@ -84,7 +85,7 @@ public:
     /**
     *@brief Check if Set contains a element equals pObject.
     */
-    bool containsObject(Object *pObject);
+    bool containsObject(Ref *pObject);
     /**
     *@brief Return the iterator that points to the first element.
     * @js NA
@@ -100,7 +101,7 @@ public:
     /**
     *@brief Return the first element if it contains elements, or null if it doesn't contain any element.
     */
-    Object* anyObject();
+    Ref* anyObject();
     /**
      * @js NA
      * @lua NA
@@ -108,7 +109,7 @@ public:
     virtual void acceptVisitor(DataVisitor &visitor);
 
 private:
-    std::set<Object *> *_set;
+    std::set<Ref *> *_set;
 };
 
 // end of data_structure group

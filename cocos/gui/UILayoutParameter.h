@@ -41,7 +41,7 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class LayoutParameter : public Object
+class LayoutParameter : public Ref
 {
 public:
     /**

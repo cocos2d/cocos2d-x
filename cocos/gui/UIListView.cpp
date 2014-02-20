@@ -394,7 +394,7 @@ void ListView::sortAllChildren()
     }
 }
     
-void ListView::addEventListenerListView(Object *target, SEL_ListViewEvent selector)
+void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
 {
     _listViewEventListener = target;
     _listViewEventSelector = selector;
