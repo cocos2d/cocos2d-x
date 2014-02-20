@@ -28,6 +28,7 @@
 #include "CCPlatformMacros.h"
 #include "CCEventListener.h"
 #include "CCEvent.h"
+#include "CCStdC.h"
 
 #include <functional>
 #include <string>
