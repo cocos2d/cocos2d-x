@@ -78,7 +78,7 @@ TextInputTest::TextInputTest()
     
 }
 
-void TextInputTest::restartCallback(Object* sender)
+void TextInputTest::restartCallback(Ref* sender)
 {
     auto s = new TextInputTestScene();
     s->addChild(restartTextInputTest()); 
@@ -87,7 +87,7 @@ void TextInputTest::restartCallback(Object* sender)
     s->release();
 }
 
-void TextInputTest::nextCallback(Object* sender)
+void TextInputTest::nextCallback(Ref* sender)
 {
     auto s = new TextInputTestScene();
     s->addChild( nextTextInputTest() );
@@ -95,7 +95,7 @@ void TextInputTest::nextCallback(Object* sender)
     s->release();
 }
 
-void TextInputTest::backCallback(Object* sender)
+void TextInputTest::backCallback(Ref* sender)
 {
     auto s = new TextInputTestScene();
     s->addChild( backTextInputTest() );

@@ -114,7 +114,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		quantityOfNodes -= kNodesIncrease;
 		if( quantityOfNodes < 0 )
 			quantityOfNodes = 0;
@@ -128,7 +128,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     decrease->setColor(Color3B(0,200,20));
     _decrease = decrease;
     
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		quantityOfNodes += kNodesIncrease;
 		if( quantityOfNodes > kMaxNodes )
 			quantityOfNodes = kMaxNodes;
@@ -173,7 +173,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
         toggleItems.pushBack(MenuItemFont::create(f.name));
     }
     
-    auto toggle = MenuItemToggle::createWithCallback([this](Object* sender){
+    auto toggle = MenuItemToggle::createWithCallback([this](Ref* sender){
         auto toggle = static_cast<MenuItemToggle*>(sender);
         this->_type = toggle->getSelectedIndex();
         auto label = static_cast<LabelTTF*>(this->getChildByTag(TAG_SUBTITLE));
@@ -185,7 +185,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     toggle->setPosition(VisibleRect::left());
     _toggle = toggle;
     
-    auto start = MenuItemFont::create("start", [this](Object* sender){
+    auto start = MenuItemFont::create("start", [this](Ref* sender){
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
@@ -204,7 +204,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     start->setPosition(VisibleRect::right() + Point(0, 40));
     _startItem = start;
     
-    auto stop = MenuItemFont::create("stop", [this](Object* sender){
+    auto stop = MenuItemFont::create("stop", [this](Ref* sender){
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
@@ -559,7 +559,7 @@ void ArrayPerfTest::generateTestFunctions()
         } } ,
         { "getIndexOfObject",    [=](){
             Array* nodeVector = createArray();
-            Object* objToGet = nodeVector->getObjectAtIndex(quantityOfNodes/3);
+            Ref* objToGet = nodeVector->getObjectAtIndex(quantityOfNodes/3);
             ssize_t index = 0;
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -581,7 +581,7 @@ void ArrayPerfTest::generateTestFunctions()
         } } ,
         { "containsObject",    [=](){
             Array* nodeVector = createArray();
-            Object* objToGet = nodeVector->getObjectAtIndex(quantityOfNodes/3);
+            Ref* objToGet = nodeVector->getObjectAtIndex(quantityOfNodes/3);
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -642,8 +642,8 @@ void ArrayPerfTest::generateTestFunctions()
         { "swap by object",        [=](){
             Array* nodeVector = createArray();
             
-            Object* swapNode1 = nodeVector->getObjectAtIndex(quantityOfNodes / 3);
-            Object* swapNode2 = nodeVector->getObjectAtIndex(quantityOfNodes / 3 * 2);
+            Ref* swapNode1 = nodeVector->getObjectAtIndex(quantityOfNodes / 3);
+            Ref* swapNode2 = nodeVector->getObjectAtIndex(quantityOfNodes / 3 * 2);
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -662,7 +662,7 @@ void ArrayPerfTest::generateTestFunctions()
         
         { "CCARRAY_FOREACH",     [=](){
             Array* nodeVector = createArray();
-            Object* obj;
+            Ref* obj;
             CC_PROFILER_START(this->profilerName());
             
             CCARRAY_FOREACH(nodeVector, obj)
@@ -967,7 +967,7 @@ void DictionaryStringKeyPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
             
             std::string allKeysString;
-            Object* obj;
+            Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
                 auto key = static_cast<String*>(obj);
@@ -1000,7 +1000,7 @@ void DictionaryStringKeyPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
             
             std::string allKeysString;
-            Object* obj;
+            Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
                 auto key = static_cast<String*>(obj);
@@ -1283,7 +1283,7 @@ void DictionaryIntKeyPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
             
             int allKeysInt = 0;
-            Object* obj;
+            Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
                 auto key = static_cast<Integer*>(obj);
@@ -1316,7 +1316,7 @@ void DictionaryIntKeyPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
             
             int allKeysInt = 0;
-            Object* obj;
+            Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
                 auto key = static_cast<Integer*>(obj);

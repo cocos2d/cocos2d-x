@@ -86,7 +86,7 @@ EditBoxTest::~EditBoxTest()
     
 }
 
-void EditBoxTest::toExtensionsMainLayer(cocos2d::Object *sender)
+void EditBoxTest::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
     auto scene = new ExtensionsTestScene();
     scene->runThisTest();

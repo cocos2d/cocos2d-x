@@ -18,9 +18,9 @@ public:
 	virtual std::string subtitle() const override;
     virtual void setup();
 
-	void backCallback(Object* sender);
-	void nextCallback(Object* sender);
-	void restartCallback(Object* sender);
+	void backCallback(Ref* sender);
+	void nextCallback(Ref* sender);
+	void restartCallback(Ref* sender);
 };
 
 class BasicTest : public BaseClippingNodeTest

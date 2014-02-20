@@ -17,7 +17,7 @@ class EditBoxTest : public cocos2d::Layer, public cocos2d::extension::EditBoxDel
 public:
     EditBoxTest();
     virtual ~EditBoxTest();
-    void toExtensionsMainLayer(cocos2d::Object *sender);
+    void toExtensionsMainLayer(cocos2d::Ref *sender);
     
     virtual void editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox);
     virtual void editBoxEditingDidEnd(cocos2d::extension::EditBox* editBox);

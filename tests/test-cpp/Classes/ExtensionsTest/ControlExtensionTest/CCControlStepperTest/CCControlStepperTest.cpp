@@ -87,7 +87,7 @@ ControlStepper *ControlStepperTest::makeControlStepper()
     return ControlStepper::create(minusSprite, plusSprite);
 }
 
-void ControlStepperTest::valueChanged(Object *sender, Control::EventType controlEvent)
+void ControlStepperTest::valueChanged(Ref *sender, Control::EventType controlEvent)
 {
     ControlStepper* pControl = (ControlStepper*)sender;
     // Change value of label.

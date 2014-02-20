@@ -15,9 +15,9 @@ public:
 
     bool initWithEntryID(int entryId);
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
 
     bool onTouchBegan(Touch* touch, Event* event);

@@ -17,9 +17,9 @@ public:
     FontTest();
     void showFont(const char *pFont);
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
     virtual std::string title() const override;
 
     CREATE_FUNC(FontTest);

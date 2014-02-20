@@ -69,7 +69,7 @@ void ConfigurationBase::onExit()
     BaseTest::onExit();
 }
 
-void ConfigurationBase::restartCallback(Object* sender)
+void ConfigurationBase::restartCallback(Ref* sender)
 {
     auto s = new ConfigurationTestScene();
     s->addChild( restartAction() );
@@ -77,7 +77,7 @@ void ConfigurationBase::restartCallback(Object* sender)
     s->release();
 }
 
-void ConfigurationBase::nextCallback(Object* sender)
+void ConfigurationBase::nextCallback(Ref* sender)
 {
     auto s = new ConfigurationTestScene();
     s->addChild( nextAction() );
@@ -85,7 +85,7 @@ void ConfigurationBase::nextCallback(Object* sender)
     s->release();
 }
 
-void ConfigurationBase::backCallback(Object* sender)
+void ConfigurationBase::backCallback(Ref* sender)
 {
     auto s = new ConfigurationTestScene();
     s->addChild( backAction() );

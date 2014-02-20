@@ -495,7 +495,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
-        Object *pTarget = request->getTarget();
+        Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
         if (pTarget && pSelector) 

@@ -100,7 +100,7 @@ std::string BaseClippingNodeTest::subtitle() const
 	return "";
 }
 
-void BaseClippingNodeTest::restartCallback(Object* sender)
+void BaseClippingNodeTest::restartCallback(Ref* sender)
 {
 	Scene *s = new ClippingNodeTestScene();
 	s->addChild(restartAction());
@@ -108,7 +108,7 @@ void BaseClippingNodeTest::restartCallback(Object* sender)
     s->release();
 }
 
-void BaseClippingNodeTest::nextCallback(Object* sender)
+void BaseClippingNodeTest::nextCallback(Ref* sender)
 {
 	Scene *s = new ClippingNodeTestScene();
 	s->addChild(nextAction());
@@ -116,7 +116,7 @@ void BaseClippingNodeTest::nextCallback(Object* sender)
     s->release();
 }
 
-void BaseClippingNodeTest::backCallback(Object* sender)
+void BaseClippingNodeTest::backCallback(Ref* sender)
 {
 	Scene *s = new ClippingNodeTestScene();
 	s->addChild(backAction());

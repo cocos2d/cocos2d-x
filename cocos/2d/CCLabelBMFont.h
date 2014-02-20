@@ -106,7 +106,7 @@ typedef struct _KerningHashElement
 /** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
 @since v0.8
 */
-class CC_DLL CCBMFontConfiguration : public Object
+class CC_DLL CCBMFontConfiguration : public Ref
 {
     // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
 public://@public

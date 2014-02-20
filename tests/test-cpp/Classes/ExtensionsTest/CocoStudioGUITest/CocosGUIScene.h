@@ -63,12 +63,12 @@ public:
 	virtual void runThisTest();
     
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Object* sender);    
+	virtual void MainMenuCallback(Ref* sender);    
     
-    void load(Object* pSender, int count);
-    void loadTextureCallBack(Object *obj);
+    void load(Ref* pSender, int count);
+    void loadTextureCallBack(Ref *obj);
     
-    void menuCallback(Object* pSender);
+    void menuCallback(Ref* pSender);
     
     UILayer* _ul;
     
