@@ -65,20 +65,6 @@ class CC_DLL Ref
 {
 public:
     /**
-     * Constructor
-     *
-     * The Ref's reference count is 1 after construction.
-     * @js NA
-     */
-    Ref();
-    
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Ref();
-    
-    /**
      * Retains the ownership.
      *
      * This increases the Ref's reference count.
@@ -125,7 +111,23 @@ public:
      * @js NA
      */
     unsigned int getReferenceCount() const;
-
+    
+protected:
+    /**
+     * Constructor
+     *
+     * The Ref's reference count is 1 after construction.
+     * @js NA
+     */
+    Ref();
+    
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Ref();
+    
 protected:
     /// count of references
     unsigned int _referenceCount;
