@@ -138,6 +138,7 @@ bool CCTextFieldTTF::attachWithIME()
         CCEGLView * pGlView = CCDirector::sharedDirector()->getOpenGLView();
         if (pGlView)
         {
+			pGlView->setKeyboardConfig(getKeyboardConfig());
             pGlView->setIMEKeyboardState(true);
         }
     }

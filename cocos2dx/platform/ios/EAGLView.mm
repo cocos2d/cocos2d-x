@@ -90,6 +90,8 @@ static EAGLView *view = 0;
 @synthesize multiSampling=multiSampling_;
 @synthesize isKeyboardShown=isKeyboardShown_;
 @synthesize keyboardShowNotification = keyboardShowNotification_;
+@synthesize keyboardConfig = keyboardConfig_;
+
 + (Class) layerClass
 {
     return [CAEAGLLayer class];
@@ -532,14 +534,6 @@ static EAGLView *view = 0;
 }
 
 #pragma mark -
-#pragma mark UITextInputTrait protocol
-
--(UITextAutocapitalizationType) autocapitalizationType
-{
-    return UITextAutocapitalizationTypeNone;
-}
-
-#pragma mark -
 #pragma mark UITextInput protocol
 
 #pragma mark UITextInput - properties
@@ -912,5 +906,202 @@ static EAGLView *view = 0;
         [[NSNotificationCenter defaultCenter]postNotification:self.keyboardShowNotification];
     }
 }
+
+
+#pragma mark -
+#pragma mark UITextInputTraitProtocol
+
+-(UITextAutocorrectionType) autocorrectionType
+{
+	if (keyboardConfig_.getAutocorrection() == false)
+	{
+		return UITextAutocorrectionTypeNo;
+	}
+	else
+	{
+		return UITextAutocorrectionTypeYes;
+	}
+	
+}
+
+-(BOOL) enablesReturnKeyAutomatically
+{
+	if (keyboardConfig_.getEnablesReturnKeyAutomatically() == false)
+	{
+		return NO;
+	}
+	else
+	{
+		return YES;
+	}
+}
+
+-(UIKeyboardAppearance) keyboardAppearance
+{
+	switch (keyboardConfig_.getKeyboardAppearance())
+	{
+		case cocos2d::CCKeyboardConfig::kCCKeyboardAppearanceAlert:
+			return UIKeyboardAppearanceAlert;
+		case cocos2d::CCKeyboardConfig::kCCKeyboardAppearanceDark:
+			return UIKeyboardAppearanceDark;
+		case cocos2d::CCKeyboardConfig::kCCKeyboardAppearanceLight:
+			return UIKeyboardAppearanceLight;
+		default:
+		case cocos2d::CCKeyboardConfig::kCCKeyboardAppearanceDefault:
+			return UIKeyboardAppearanceDefault;
+	}
+}
+
+-(BOOL) secureTextEntry
+{
+	if (keyboardConfig_.getSecureTextEntry() == false)
+	{
+		return NO;
+	}
+	else
+	{
+		return YES;
+	}
+}
+
+-(UITextSpellCheckingType) spellCheckingType
+{
+	if (keyboardConfig_.getSpellChecking() == false)
+	{
+		return UITextSpellCheckingTypeNo;
+	}
+	else
+	{
+		return UITextSpellCheckingTypeYes;
+	}
+
+}
+
+-(UITextAutocapitalizationType) autocapitalizationType
+{
+	switch (keyboardConfig_.getTextAutocapitalizationType())
+	{
+		case cocos2d::CCKeyboardConfig::kCCTextAutocapitalizationTypeAllCharacters:
+		{
+			return UITextAutocapitalizationTypeAllCharacters;
+		}
+		default:
+		case cocos2d::CCKeyboardConfig::kCCTextAutocapitalizationTypeNone:
+		{
+			return UITextAutocapitalizationTypeNone;
+		}
+		case cocos2d::CCKeyboardConfig::kCCTextAutocapitalizationTypeSentences:
+		{
+			return UITextAutocapitalizationTypeSentences;
+		}
+		case cocos2d::CCKeyboardConfig::kCCTextAutocapitalizationTypeWords:
+		{
+			return UITextAutocapitalizationTypeWords;
+		}
+	}
+}
+
+-(UIKeyboardType) keyboardType
+{
+	switch (keyboardConfig_.getKeyboardType())
+	{
+		default:
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeDefault:
+		{
+			return UIKeyboardTypeDefault;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeASCIICapable:
+		{
+			return UIKeyboardTypeASCIICapable;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeDecimalPad:
+		{
+			return UIKeyboardTypeDecimalPad;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeEmailAddress:
+		{
+			return UIKeyboardTypeEmailAddress;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeNamePhonePad:
+		{
+			return UIKeyboardTypeNamePhonePad;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeNumberPad:
+		{
+			return UIKeyboardTypeNumberPad;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeNumbersAndPunctuation:
+		{
+			return UIKeyboardTypeNumbersAndPunctuation;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypePhonePad:
+		{
+			return UIKeyboardTypePhonePad;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeTwitter:
+		{
+			return UIKeyboardTypeTwitter;
+		}
+		case cocos2d::CCKeyboardConfig::kCCKeyboardTypeURL:
+		{
+			return UIKeyboardTypeURL;
+		}
+	}
+}
+
+-(UIReturnKeyType) returnKeyType
+{
+	switch (keyboardConfig_.getReturnKeyType())
+	{
+		default:
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyDefault:
+		{
+			return UIReturnKeyDefault;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyDone:
+		{
+			return UIReturnKeyDone;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyEmergencyCall:
+		{
+			return UIReturnKeyEmergencyCall;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyGo:
+		{
+			return UIReturnKeyGo;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyGoogle:
+		{
+			return UIReturnKeyGoogle;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyJoin:
+		{
+			return UIReturnKeyJoin;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyNext:
+		{
+			return UIReturnKeyNext;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyRoute:
+		{
+			return UIReturnKeyRoute;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeySearch:
+		{
+			return UIReturnKeySearch;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeySend:
+		{
+			return UIReturnKeySend;
+		}
+		case cocos2d::CCKeyboardConfig::kCCReturnKeyYahoo:
+		{
+			return UIReturnKeyYahoo;
+		}
+	}
+}
+
+#pragma mark -
+
 
 @end

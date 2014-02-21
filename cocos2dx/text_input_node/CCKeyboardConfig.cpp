@@ -22,36 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_IPHONE_H__
-#define __CC_EGLVIEW_IPHONE_H__
-
-#include "platform/CCCommon.h"
-#include "platform/CCEGLViewProtocol.h"
+#include "CCKeyboardConfig.h"
 
 NS_CC_BEGIN
 
-
-
-class CC_DLL CCEGLView : public CCEGLViewProtocol
+CCKeyboardConfig CCKeyboardConfig::defaultConfig(void)
 {
-public:
-    CCEGLView();
-   ~CCEGLView();
+	CCKeyboardConfig defaultConfig_;
+	return defaultConfig_;
+}
 
-    virtual bool    isOpenGLReady();
-    virtual bool    setContentScaleFactor(float contentScaleFactor);
-    
-    // keep compatible
-    virtual void    end();
-    virtual void    swapBuffers();
-    
-    virtual void setIMEKeyboardState(bool bOpen);
-    virtual void setKeyboardConfig(const CCKeyboardConfig& keyboardConfig);
-    
-    static CCEGLView* sharedOpenGLView();
+void CCKeyboardConfig::setToDefault(void)
+{
+	setReturnKeyType(kCCReturnKeyDefault);
+	setKeyboardAppearance(kCCKeyboardAppearanceDefault);
+	setTextAutocapitalizationType(kCCTextAutocapitalizationTypeNone);
+	setKeyboardType(kCCKeyboardTypeDefault);
+	setSpellChecking(false);
+	setAutocorrection(false);
+	setEnablesReturnKeyAutomatically(false);
+	setSecureTextEntry(false);
+}
 
-};
+CCKeyboardConfig::CCKeyboardConfig(void)
+{
+	setToDefault();
+}
 
 NS_CC_END
-
-#endif    // end of __CC_EGLVIEW_IPHONE_H__

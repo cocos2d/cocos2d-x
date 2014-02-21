@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "label_nodes/CCLabelTTF.h"
 #include "text_input_node/CCIMEDelegate.h"
+#include "text_input_node/CCKeyboardConfig.h"
 #include "touch_dispatcher/CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN
@@ -133,6 +134,8 @@ public:
     //////////////////////////////////////////////////////////////////////////
     // properties
     //////////////////////////////////////////////////////////////////////////
+	
+	CC_SYNTHESIZE_PASS_BY_REF(CCKeyboardConfig, _keyboardConfig, KeyboardConfig);
 
     CC_SYNTHESIZE(CCTextFieldDelegate *, m_pDelegate, Delegate);
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);

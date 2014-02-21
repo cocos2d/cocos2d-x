@@ -303,6 +303,8 @@
 		46A393F716E5D01B00210B16 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393F316E5D01B00210B16 /* CCUserDefault.h */; };
 		46A393F816E5D01B00210B16 /* CCUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CCUserDefault.mm */; };
 		46A393F916E5D01B00210B16 /* CCUserDefaultAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */; };
+		49D244B618058DAA0046C73D /* CCKeyboardConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49D244B418058DAA0046C73D /* CCKeyboardConfig.cpp */; };
+		49D244B718058DAA0046C73D /* CCKeyboardConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 49D244B518058DAA0046C73D /* CCKeyboardConfig.h */; };
 		4EF8999016E207E70040A527 /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998416E207E70040A527 /* CCParallaxNode.cpp */; };
 		4EF8999116E207E70040A527 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998516E207E70040A527 /* CCParallaxNode.h */; };
 		4EF8999216E207E70040A527 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */; };
@@ -618,6 +620,8 @@
 		46A393F316E5D01B00210B16 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		46A393F416E5D01B00210B16 /* CCUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUserDefault.mm; sourceTree = "<group>"; };
 		46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefaultAndroid.cpp; sourceTree = "<group>"; };
+		49D244B418058DAA0046C73D /* CCKeyboardConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardConfig.cpp; sourceTree = "<group>"; };
+		49D244B518058DAA0046C73D /* CCKeyboardConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardConfig.h; sourceTree = "<group>"; };
 		4EF8998416E207E70040A527 /* CCParallaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParallaxNode.cpp; sourceTree = "<group>"; };
 		4EF8998516E207E70040A527 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
@@ -1166,6 +1170,8 @@
 		1551A605158F2ADE00E66CFE /* text_input_node */ = {
 			isa = PBXGroup;
 			children = (
+				49D244B418058DAA0046C73D /* CCKeyboardConfig.cpp */,
+				49D244B518058DAA0046C73D /* CCKeyboardConfig.h */,
 				1551A606158F2ADE00E66CFE /* CCIMEDelegate.h */,
 				1551A607158F2ADE00E66CFE /* CCIMEDispatcher.cpp */,
 				1551A608158F2ADE00E66CFE /* CCIMEDispatcher.h */,
@@ -1349,6 +1355,7 @@
 				1551A6C0158F2ADE00E66CFE /* quaternion.h in Headers */,
 				1551A6C1158F2ADE00E66CFE /* ray2.h in Headers */,
 				1551A6C2158F2ADE00E66CFE /* utility.h in Headers */,
+				49D244B718058DAA0046C73D /* CCKeyboardConfig.h in Headers */,
 				1551A6C3158F2ADE00E66CFE /* vec2.h in Headers */,
 				1551A6C4158F2ADE00E66CFE /* vec3.h in Headers */,
 				1551A6C5158F2ADE00E66CFE /* vec4.h in Headers */,
@@ -1660,6 +1667,7 @@
 				1A5428FF1720F0650074EC5C /* CCDataVisitor.cpp in Sources */,
 				4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */,
 				37EEEBF8175DDF3A003C1193 /* CCComponent.cpp in Sources */,
+				49D244B618058DAA0046C73D /* CCKeyboardConfig.cpp in Sources */,
 				37EEEBFA175DDF3A003C1193 /* CCComponentContainer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

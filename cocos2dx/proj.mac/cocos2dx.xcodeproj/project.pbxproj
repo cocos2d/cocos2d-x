@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01786EDC1806166700477EB5 /* CCKeyboardConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01786EDA1806166700477EB5 /* CCKeyboardConfig.cpp */; };
+		01786EDD1806166700477EB5 /* CCKeyboardConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 01786EDB1806166700477EB5 /* CCKeyboardConfig.h */; };
 		152DCD8E165614AB009B8D87 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCD8A165614AB009B8D87 /* CCDrawingPrimitives.cpp */; };
 		152DCD8F165614AB009B8D87 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 152DCD8B165614AB009B8D87 /* CCDrawingPrimitives.h */; };
 		152DCD90165614AB009B8D87 /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 152DCD8C165614AB009B8D87 /* CCDrawNode.cpp */; };
@@ -310,6 +312,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01786EDA1806166700477EB5 /* CCKeyboardConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeyboardConfig.cpp; sourceTree = "<group>"; };
+		01786EDB1806166700477EB5 /* CCKeyboardConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardConfig.h; sourceTree = "<group>"; };
 		152DCD8A165614AB009B8D87 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
 		152DCD8B165614AB009B8D87 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		152DCD8C165614AB009B8D87 /* CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode.cpp; sourceTree = "<group>"; };
@@ -1116,6 +1120,8 @@
 		1551A605158F2ADE00E66CFE /* text_input_node */ = {
 			isa = PBXGroup;
 			children = (
+				01786EDA1806166700477EB5 /* CCKeyboardConfig.cpp */,
+				01786EDB1806166700477EB5 /* CCKeyboardConfig.h */,
 				1551A606158F2ADE00E66CFE /* CCIMEDelegate.h */,
 				1551A607158F2ADE00E66CFE /* CCIMEDispatcher.cpp */,
 				1551A608158F2ADE00E66CFE /* CCIMEDispatcher.h */,
@@ -1360,6 +1366,7 @@
 				1551A817158F2ADF00E66CFE /* CCScriptSupport.h in Headers */,
 				1551A819158F2ADF00E66CFE /* CCGLProgram.h in Headers */,
 				1551A81B158F2ADF00E66CFE /* ccGLStateCache.h in Headers */,
+				01786EDD1806166700477EB5 /* CCKeyboardConfig.h in Headers */,
 				1551A81C158F2ADF00E66CFE /* ccShader_Position_uColor_frag.h in Headers */,
 				1551A81D158F2ADF00E66CFE /* ccShader_Position_uColor_vert.h in Headers */,
 				1551A81E158F2ADF00E66CFE /* ccShader_PositionColor_frag.h in Headers */,
@@ -1568,6 +1575,7 @@
 				1551A816158F2ADF00E66CFE /* CCScriptSupport.cpp in Sources */,
 				1551A818158F2ADF00E66CFE /* CCGLProgram.cpp in Sources */,
 				1551A81A158F2ADF00E66CFE /* ccGLStateCache.cpp in Sources */,
+				01786EDC1806166700477EB5 /* CCKeyboardConfig.cpp in Sources */,
 				1551A829158F2ADF00E66CFE /* CCShaderCache.cpp in Sources */,
 				1551A82C158F2ADF00E66CFE /* ccShaders.cpp in Sources */,
 				1551A82E158F2ADF00E66CFE /* CCAnimation.cpp in Sources */,

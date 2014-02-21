@@ -356,4 +356,10 @@ float CCEGLViewProtocol::getScaleY() const
     return m_fScaleY;
 }
 
+void CCEGLViewProtocol::setKeyboardConfig(const CCKeyboardConfig& keyboardConfig)
+{
+	CCLOGINFO("Warning: keyboardConfig not implemented on the current platform - Keyboard will remain with default configuration");
+}
+
+
 NS_CC_END

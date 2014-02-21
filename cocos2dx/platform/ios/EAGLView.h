@@ -70,6 +70,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "CCESRenderer.h"
 
+#include "../../text_input_node/CCKeyboardConfig.h"
+
 //CLASS INTERFACE:
 
 /** EAGLView Class.
@@ -99,6 +101,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     CGRect                  originalRect_;
     NSNotification*         keyboardShowNotification_;
     BOOL                    isKeyboardShown_;
+	
+	cocos2d::CCKeyboardConfig keyboardConfig_;
 }
 
 @property(nonatomic, readonly) UITextPosition *beginningOfDocument;
@@ -142,6 +146,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property(nonatomic,readwrite) BOOL multiSampling;
 
+@property(nonatomic, assign) cocos2d::CCKeyboardConfig keyboardConfig;
+
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
@@ -154,4 +160,5 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis;
 -(void) doAnimationWhenAnotherEditBeClicked;
+
 @end
