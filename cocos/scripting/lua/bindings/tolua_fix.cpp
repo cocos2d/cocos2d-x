@@ -1,6 +1,6 @@
 
 #include "tolua_fix.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "LuaBasicConversions.h"
 #include <stdlib.h>
 
@@ -35,7 +35,7 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
         return -1;
     }
     
-    Object* vPtr = static_cast<Object*>(ptr);
+    Ref* vPtr = static_cast<Ref*>(ptr);
     const char* vType = getLuaTypeName(vPtr, type);
 
     if (*p_refid == 0)
