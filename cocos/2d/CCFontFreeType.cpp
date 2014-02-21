@@ -156,8 +156,17 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect, int &xA
         return false;
     
     // load glyph infos
-    if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
-        return false;
+    if (_distanceFieldEnabled)
+    {
+        if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            return false;
+    }
+    else
+    {
+        if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
+            return false;
+    }
+    
     
     // store result in the passed rectangle
     outRect.origin.x    = _fontRef->glyph->metrics.horiBearingX >> 6;
@@ -236,7 +245,7 @@ unsigned char * FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWid
         return 0;
     
     if (_distanceFieldEnabled)
-    {    
+    {
         if (FT_Load_Char(_fontRef,theChar,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
             return 0;
     }
