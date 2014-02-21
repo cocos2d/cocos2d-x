@@ -87,9 +87,9 @@ void ObjectFactory::destroyInstance()
     CC_SAFE_DELETE(_sharedFactory);
 }
 
-Object* ObjectFactory::createObject(const std::string &name)
+Ref* ObjectFactory::createObject(const std::string &name)
 {
-	Object *o = nullptr;
+	Ref *o = nullptr;
 	do 
 	{
 		const TInfo t = _typeMap[name];
@@ -127,7 +127,7 @@ Component* ObjectFactory::createComponent(const std::string &name)
     {
         CCASSERT(false, "Unregistered Component!");
     }
-	Object *o = NULL;
+	Ref *o = NULL;
 	do 
 	{
 		const TInfo t = _typeMap[comName];

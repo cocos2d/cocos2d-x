@@ -196,7 +196,7 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     //    ActionManager::getInstance()->releaseActions();
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
-    Object* rootWidget = (Object*) widget;
+    Ref* rootWidget = (Ref*) widget;
     ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
@@ -331,7 +331,7 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(Widget*widg
         widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
     }
     int z = DICTOOL->getIntValue_json(options, "ZOrder");
-    widget->setZOrder(z);
+    widget->setLocalZOrder(z);
 }
 
 void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(Widget *widget, const rapidjson::Value&options)
@@ -895,7 +895,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     //    ActionManager::getInstance()->releaseActions();
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
-    Object* rootWidget = (Object*) widget;
+    Ref* rootWidget = (Ref*) widget;
     ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
@@ -1062,7 +1062,7 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(Widget*widg
         widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
     }
     int z = DICTOOL->getIntValue_json(options, "ZOrder");
-    widget->setZOrder(z);
+    widget->setLocalZOrder(z);
 
 	bool layout = DICTOOL->checkObjectExist_json(options, "layoutParameter");
 	if (layout)

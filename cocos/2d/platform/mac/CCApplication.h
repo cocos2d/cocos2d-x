@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_MAC_H__
 #define __CC_APPLICATION_MAC_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
 #include <string>
@@ -52,7 +55,7 @@ public:
     virtual void setAnimationInterval(double interval);
         
     /**
-    @brief	Get status bar rectangle in EGLView window.
+    @brief	Get status bar rectangle in GLView window.
     */
         
     /**
@@ -101,10 +104,13 @@ public:
 protected:
     static Application * sm_pSharedApplication;
     
+    long _animationInterval;  //micro second
     std::string _resourceRootPath;
     std::string _startupScriptFilename;
 };
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #endif	// end of __CC_APPLICATION_MAC_H__;

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.cocos2dx.testlua"
+      android:versionCode="1"
+      android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="9"/>
+    <uses-feature android:glEsVersion="0x00020000" />
+
+    <application android:label="@string/app_name"
+                 android:icon="@drawable/icon">
+
+        <activity android:name=".Cocos2dxActivity"
+                  android:label="@string/app_name"
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                  android:configChanges="orientation">
+
+            <!-- Tell NativeActivity the name of our .so -->
+            <meta-data android:name="android.app.lib_name"
+                       android:value="testlua" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+    <supports-screens android:anyDensity="true"
+                      android:smallScreens="true"
+                      android:normalScreens="true"
+                      android:largeScreens="true"
+                      android:xlargeScreens="true"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+</manifest> 

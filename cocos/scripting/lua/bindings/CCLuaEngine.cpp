@@ -75,7 +75,7 @@ void LuaEngine::addLuaLoader(lua_CFunction func)
     _stack->addLuaLoader(func);
 }
 
-void LuaEngine::removeScriptObjectByObject(Object* pObj)
+void LuaEngine::removeScriptObjectByObject(Ref* pObj)
 {
     _stack->removeScriptObjectByObject(pObj);
     ScriptHandlerMgr::getInstance()->removeObjectAllHandlers(pObj);
@@ -128,7 +128,7 @@ int LuaEngine::executeNotificationEvent(NotificationCenter* pNotificationCenter,
     return ret;
 }
 
-int LuaEngine::executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget/* = NULL*/)
+int LuaEngine::executeCallFuncActionEvent(CallFunc* pAction, Ref* pTarget/* = NULL*/)
 {
     return 0;
 }
@@ -162,12 +162,12 @@ int LuaEngine::executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerat
     return 0;
 }
 
-int LuaEngine::executeEvent(int nHandler, const char* pEventName, Object* pEventSource /* = NULL*/, const char* pEventSourceClassName /* = NULL*/)
+int LuaEngine::executeEvent(int nHandler, const char* pEventName, Ref* pEventSource /* = NULL*/, const char* pEventSourceClassName /* = NULL*/)
 {
     _stack->pushString(pEventName);
     if (pEventSource)
     {
-        _stack->pushObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "CCObject");
+        _stack->pushObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "cc.Object");
     }
     int ret = _stack->executeFunctionByHandler(nHandler, pEventSource ? 2 : 1);
     _stack->clean();
@@ -329,7 +329,7 @@ int LuaEngine::handleMenuClickedEvent(void* data)
         return 0;
     
     _stack->pushInt(menuItem->getTag());
-    _stack->pushObject(menuItem, "MenuItem");
+    _stack->pushObject(menuItem, "cc.MenuItem");
     int ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
     return ret;
@@ -349,10 +349,10 @@ int LuaEngine::handleCallFuncActionEvent(void* data)
     if (0 == handler)
         return 0;
     
-    Object* target = static_cast<Object*>(basicScriptData->value);
+    Ref* target = static_cast<Ref*>(basicScriptData->value);
     if (NULL != target)
     {
-        _stack->pushObject(target, "Node");
+        _stack->pushObject(target, "cc.Node");
     }
     int ret = _stack->executeFunctionByHandler(handler, target ? 1 : 0);
     _stack->clean();
@@ -447,7 +447,7 @@ int LuaEngine::handleCommonEvent(void* data)
         }
         else
         {
-            _stack->pushObject(commonInfo->eventSource, "Object");
+            _stack->pushObject(commonInfo->eventSource, "cc.Object");
         }
     }
     int ret = _stack->executeFunctionByHandler(commonInfo->handler, commonInfo->eventSource ? 2 : 1);
@@ -585,7 +585,7 @@ int LuaEngine::handlerControlEvent(void* data)
             
             if (0 != handler)
             {
-                _stack->pushObject((Object*)basicScriptData->nativeObject, "Object");
+                _stack->pushObject((Ref*)basicScriptData->nativeObject, "cc.Object");
                 _stack->pushInt(controlEvents);
                 ret = _stack->executeFunctionByHandler(handler, 2);
                 _stack->clean();
@@ -612,7 +612,7 @@ int LuaEngine::handleEventAcc(void* data)
     lua_State* L = _stack->getLuaState();
     
     LuaEventAccelerationData* eventListennerAcc = static_cast<LuaEventAccelerationData*>(basicScriptData->value);    
-    toluafix_pushusertype_ccobject(L, eventListennerAcc->event->_ID, &(eventListennerAcc->event->_luaID), (void*)(eventListennerAcc->event),"Event");
+    toluafix_pushusertype_ccobject(L, eventListennerAcc->event->_ID, &(eventListennerAcc->event->_luaID), (void*)(eventListennerAcc->event),"cc.Event");
     Acceleration*  accleration = static_cast<Acceleration*>(eventListennerAcc->acc);
     lua_pushnumber(L,accleration->x);
     lua_pushnumber(L,accleration->y);
@@ -640,7 +640,7 @@ int LuaEngine::handleEventKeyboard(ScriptHandlerMgr::HandlerType type, void* dat
     
     lua_State* L = _stack->getLuaState();
     lua_pushinteger(L, keyboardData->keyCode);
-    toluafix_pushusertype_ccobject(L, keyboardData->event->_ID, &(keyboardData->event->_luaID), (void*)(keyboardData->event),"Event");
+    toluafix_pushusertype_ccobject(L, keyboardData->event->_ID, &(keyboardData->event->_luaID), (void*)(keyboardData->event),"cc.Event");
     int ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
     return ret;
@@ -667,8 +667,8 @@ int LuaEngine::handleEventTouch(ScriptHandlerMgr::HandlerType type, void* data)
     
     Touch* touch = touchData->touch;
     if (NULL != touch) {
-        _stack->pushObject(touchData->touch, "Touch");
-        _stack->pushObject(touchData->event, "Event");
+        _stack->pushObject(touchData->touch, "cc.Touch");
+        _stack->pushObject(touchData->event, "cc.Event");
         ret = _stack->executeFunctionByHandler(handler, 2);
     }
     _stack->clean();
@@ -702,11 +702,11 @@ int LuaEngine::handleEventTouches(ScriptHandlerMgr::HandlerType type,void* data)
     for (auto& touch : touchesData->touches)
     {
         _stack->pushInt(i);
-        _stack->pushObject(touch, "Touch");
+        _stack->pushObject(touch, "cc.Touch");
         lua_rawset(L, -3);
         ++i;
     }
-    _stack->pushObject(touchesData->event, "Event");
+    _stack->pushObject(touchesData->event, "cc.Event");
     
     ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
@@ -731,7 +731,7 @@ int LuaEngine::handleEventMouse(ScriptHandlerMgr::HandlerType type, void* data)
     if (0 == handler)
         return 0;
     
-    _stack->pushObject(mouseData->event, "Event");
+    _stack->pushObject(mouseData->event, "cc.Event");
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     
@@ -754,7 +754,7 @@ int LuaEngine::handleEvenCustom(void* data)
         return 0;
     
     lua_State* L = _stack->getLuaState();
-    toluafix_pushusertype_ccobject(L, eventCustom->_ID, &(eventCustom->_luaID), (void*)(eventCustom),"EventCustom");
+    toluafix_pushusertype_ccobject(L, eventCustom->_ID, &(eventCustom->_luaID), (void*)(eventCustom),"cc.EventCustom");
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     
@@ -859,14 +859,102 @@ int LuaEngine::handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int n
 
 int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data)
 {
-    CCASSERT(0, "TableView is not bound yet");
-    return 0;
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+    LuaTableViewEventData* tableViewData = static_cast<LuaTableViewEventData*>(eventData->value);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, type);
+    
+    if (0 == handler)
+        return 0;
+    
+    Ref* obj = static_cast<Ref*>(eventData->nativeObject);
+    if (nullptr == obj)
+        return 0;
+    
+    int ret = 0;
+    switch (type)
+    {
+        case ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL:
+        case ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM:
+        {
+            toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"cc.TableView");
+            ret = _stack->executeFunctionByHandler(handler, 1);
+        }
+            break;
+        case ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE:
+        {
+            Ref* cellObject = static_cast<Ref*>(tableViewData->value);
+            if (nullptr == cellObject) {
+                break;
+            }
+            toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"cc.TableView");
+            toluafix_pushusertype_ccobject(_stack->getLuaState(), cellObject->_ID, &(cellObject->_luaID), (void*)(cellObject),"cc.TableViewCell");
+            ret = _stack->executeFunctionByHandler(handler, 2);
+        }
+            break;
+        default:
+            break;
+    }
+    
+    return ret;
+
 }
 
 int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType handlerType,void* data, int numResults, const std::function<void(lua_State*,int)>& func)
 {
-    CCASSERT(0, "TableView is not bound yet");
-    return 0;
+    if (nullptr == data || numResults <= 0)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+    LuaTableViewEventData* tableViewData = static_cast<LuaTableViewEventData*>(eventData->value);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, handlerType);
+    
+    if (0 == handler)
+        return 0;
+    
+    Ref* obj = static_cast<Ref*>(eventData->nativeObject);
+    if (nullptr == obj)
+        return 0;
+    
+    int ret = 0;
+    switch (handlerType)
+    {
+        case ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX:
+        {
+            toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"cc.TableView");
+            _stack->pushLong(*((ssize_t*)tableViewData->value));
+            ret = _stack->executeFunction(handler, 2, 2, func);
+        }
+            break;
+        case ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX:
+        {
+            toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"cc.TableView");
+            _stack->pushLong(*((ssize_t*)tableViewData->value));
+            ret = _stack->executeFunction(handler, 2, 1, func);
+        }
+            break;
+        case ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS:
+        {
+            toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"cc.TableView");
+            ret = _stack->executeFunction(handler, 1, 1, func);
+        }
+            break;
+        default:
+            break;
+    }
+    
+    return ret;
 }
 
 int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data)
@@ -925,7 +1013,7 @@ int LuaEngine::handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void
     if (0 == handler)
         return 0;
     
-    _stack->pushObject(listenerData->objTarget, "Object");
+    _stack->pushObject(listenerData->objTarget, "cc.Object");
     _stack->pushInt(listenerData->eventType);
     
     _stack->executeFunctionByHandler(handler, 2);
@@ -956,7 +1044,7 @@ int LuaEngine::handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* da
             {
                 LuaArmatureMovementEventData* movementData = static_cast<LuaArmatureMovementEventData*>(wrapperData->eventData);
             
-                _stack->pushObject(movementData->objTarget, "Armature");
+                _stack->pushObject(movementData->objTarget, "ccs.Armature");
                 _stack->pushInt(movementData->movementType);
                 _stack->pushString(movementData->movementID.c_str());
                 _stack->executeFunctionByHandler(handler, 3);
@@ -966,7 +1054,7 @@ int LuaEngine::handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* da
             {
                 LuaArmatureFrameEventData* frameData = static_cast<LuaArmatureFrameEventData*>(wrapperData->eventData);
             
-                _stack->pushObject(frameData->objTarget, "Bone");
+                _stack->pushObject(frameData->objTarget, "ccs.Bone");
                 _stack->pushString(frameData->frameEventName.c_str());
                 _stack->pushInt(frameData->originFrameIndex);
                 _stack->pushInt(frameData->currentFrameIndex);

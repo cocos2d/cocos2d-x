@@ -26,6 +26,8 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_PROTOCOL_H__
 #define __CC_APPLICATION_PROTOCOL_H__
 
+#include "CCPlatformMacros.h"
+
 NS_CC_BEGIN
 
 /**

@@ -29,15 +29,14 @@
 #ifndef __FAKE_XMLHTTPREQUEST_H__
 #define __FAKE_XMLHTTPREQUEST_H__
 
+#include "jsapi.h"
+#include "jsfriendapi.h"
 #include "network/HttpClient.h"
 #include "js_bindings_config.h"
 #include "ScriptingCore.h"
-#include "jstypes.h"
-#include "jsapi.h"
-#include "jsfriendapi.h"
 #include "jsb_helper.h"
 
-class MinXmlHttpRequest : public cocos2d::Object
+class MinXmlHttpRequest : public cocos2d::Ref
 {
 public:
     enum class ResponseType

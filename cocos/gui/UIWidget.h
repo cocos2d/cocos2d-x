@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __UIWIDGET_H__
 #define __UIWIDGET_H__
 
-#include "cocos2d.h"
+#include "CCNode.h"
 #include "gui/UILayoutDefine.h"
 #include "gui/UILayoutParameter.h"
 
@@ -72,7 +72,7 @@ typedef enum
     POSITION_PERCENT
 }PositionType;
 
-typedef void (Object::*SEL_TouchEvent)(Object*,TouchEventType);
+typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 /**
 *   @js NA
@@ -212,7 +212,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      */
     virtual void addChild(Node * child, int zOrder) override;
     /**
@@ -221,7 +221,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
@@ -336,7 +336,7 @@ public:
     /**
      * Sets the touch event target/selector of the menu item
      */
-    void addTouchEventListener(Object* target,SEL_TouchEvent selector);
+    void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
     
     
     //cocos2d property
@@ -663,7 +663,7 @@ protected:
     Point _touchStartPos;    ///< touch began point
     Point _touchMovePos;     ///< touch moved point
     Point _touchEndPos;      ///< touch ended point
-    Object*       _touchEventListener;
+    Ref*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
     std::string _name;
     WidgetType _widgetType;

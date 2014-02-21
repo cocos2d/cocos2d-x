@@ -1,8 +1,11 @@
+#include "cocos2d.h"
+
 #include "CCNodeLoader.h"
 #include "CCBSelectorResolver.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBAnimationManager.h"
 #include "CCNode+CCBRelativePositioning.h"
+
 
 using namespace std;
 using namespace cocos2d;
@@ -77,7 +80,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 
                 // Skip properties that doesn't have a value to override
                 Array *extraPropsNames = (Array*)pNode->getUserObject();
-                Object* pObj = NULL;
+                Ref* pObj = NULL;
                 bool bFound = false;
                 CCARRAY_FOREACH(extraPropsNames, pObj)
                 {
@@ -758,7 +761,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
 
     if(selectorTarget != CCBReader::TargetType::NONE)
     {
-        Object * target = NULL;
+        Ref*  target = NULL;
         if(!ccbReader->isJSControlled())
         {
             if(selectorTarget == CCBReader::TargetType::DOCUMENT_ROOT)
@@ -841,7 +844,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
     {
         if(!ccbReader->isJSControlled())
         {
-            Object * target = NULL;
+            Ref*  target = NULL;
             if(selectorTarget == CCBReader::TargetType::DOCUMENT_ROOT)
             {
                 target = ccbReader->getAnimationManager()->getRootNode();

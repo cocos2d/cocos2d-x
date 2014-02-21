@@ -25,13 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_FILEUTILS_H__
 #define __CC_FILEUTILS_H__
 
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "CCValue.h"
 #include "CCData.h"
+
+#include <string>
+#include <vector>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
@@ -326,7 +327,10 @@ public:
      *  @note This method is used internally.
      */
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
-    
+
+    /** Returns the full path cache */
+    const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
+
 protected:
     /**
      *  The default constructor.

@@ -28,6 +28,8 @@
  ****************************************************************************/
 
 #include "WebSocket.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
 
 #include <thread>
 #include <mutex>
@@ -54,7 +56,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public Object
+class WsThreadHelper : public Ref
 {
 public:
     WsThreadHelper();
@@ -158,7 +160,6 @@ void WsThreadHelper::wsThreadEntryFunc()
         }
     }
     
-    _ws->onSubThreadEnded();
 }
 
 void WsThreadHelper::sendMessageToUIThread(WsMessage *msg)
@@ -440,6 +441,14 @@ void WebSocket::onSubThreadStarted()
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                              _path.c_str(), _host.c_str(), _host.c_str(),
                                              name.c_str(), -1);
+                                             
+        if(NULL == _wsInstance) {
+            WsMessage* msg = new WsMessage();
+            msg->what = WS_MSG_TO_UITHREAD_ERROR;
+            _readyState = State::CLOSING;
+            _wsHelper->sendMessageToUIThread(msg);
+        }
+
 	}
 }
 
@@ -521,7 +530,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
 
                         size_t remaining = data->len - data->issued;
                         size_t n = std::min(remaining, c_bufferSize );
-                        CCLOG("[websocket:send] total: %d, sent: %d, remaining: %d, buffer size: %d", data->len, data->issued, remaining, n);
+                        CCLOG("[websocket:send] total: %d, sent: %d, remaining: %d, buffer size: %d", static_cast<int>(data->len), static_cast<int>(data->issued), static_cast<int>(remaining), static_cast<int>(n));
 
                         unsigned char* buf = new unsigned char[LWS_SEND_BUFFER_PRE_PADDING + n + LWS_SEND_BUFFER_POST_PADDING];
 

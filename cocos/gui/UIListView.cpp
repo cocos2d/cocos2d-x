@@ -378,7 +378,7 @@ void ListView::refreshView()
     for (int i=0; i<length; i++)
     {
         Widget* item = _items.at(i);
-        item->setZOrder(i);
+        item->setLocalZOrder(i);
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();
@@ -394,7 +394,7 @@ void ListView::sortAllChildren()
     }
 }
     
-void ListView::addEventListenerListView(Object *target, SEL_ListViewEvent selector)
+void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
 {
     _listViewEventListener = target;
     _listViewEventSelector = selector;

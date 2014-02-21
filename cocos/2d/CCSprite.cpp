@@ -45,9 +45,9 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-#include "CCFrustum.h"
+#include "renderer/CCFrustum.h"
 
 // external
 #include "kazmath/GL/matrix.h"
@@ -242,9 +242,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         // zwoptex default values
         _offsetPosition = Point::ZERO;
-        
-        _hasChildren = false;
-        
+
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
         
@@ -605,74 +603,10 @@ void Sprite::updateTransform(void)
 
 // draw
 
-//void Sprite::draw(void)
-//{
-//    CC_PROFILER_START_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
-//
-//    CCASSERT(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
-//
-//    CC_NODE_DRAW_SETUP();
-//
-//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//    GL::bindTexture2D( _texture->getName() );
-//    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-//
-//#define kQuadSize sizeof(_quad.bl)
-//#ifdef EMSCRIPTEN
-//    long offset = 0;
-//    setGLBufferData(&_quad, 4 * kQuadSize, 0);
-//#else
-//    long offset = (long)&_quad;
-//#endif // EMSCRIPTEN
-//
-//    // vertex
-//    int diff = offsetof( V3F_C4B_T2F, vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-//
-//    // texCoods
-//    diff = offsetof( V3F_C4B_T2F, texCoords);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-//
-//    // color
-//    diff = offsetof( V3F_C4B_T2F, colors);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-//
-//
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//
-//    CHECK_GL_ERROR_DEBUG();
-//
-//
-//#if CC_SPRITE_DEBUG_DRAW == 1
-//    // draw bounding box
-//    Point vertices[4]={
-//        Point(_quad.tl.vertices.x,_quad.tl.vertices.y),
-//        Point(_quad.bl.vertices.x,_quad.bl.vertices.y),
-//        Point(_quad.br.vertices.x,_quad.br.vertices.y),
-//        Point(_quad.tr.vertices.x,_quad.tr.vertices.y),
-//    };
-//    ccDrawPoly(vertices, 4, true);
-//#elif CC_SPRITE_DEBUG_DRAW == 2
-//    // draw texture box
-//    Size s = this->getTextureRect().size;
-//    Point offsetPix = this->getOffsetPosition();
-//    Point vertices[4] = {
-//        Point(offsetPix.x,offsetPix.y), Point(offsetPix.x+s.width,offsetPix.y),
-//        Point(offsetPix.x+s.width,offsetPix.y+s.height), Point(offsetPix.x,offsetPix.y+s.height)
-//    };
-//    ccDrawPoly(vertices, 4, true);
-//#endif // CC_SPRITE_DEBUG_DRAW
-//
-//    CC_INCREMENT_GL_DRAWS(1);
-//
-//    CC_PROFILER_STOP_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
-//}
-
 void Sprite::draw(void)
 {
     //TODO implement z order
-    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
+    _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
 
 //    if(culling())
     {
@@ -767,18 +701,12 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     }
     //CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
     Node::addChild(child, zOrder, tag);
-    _hasChildren = true;
 }
 
 void Sprite::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(child != nullptr, "");
-    CCASSERT(_children.contains(child), "");
-
-    if (zOrder == child->getZOrder())
-    {
-        return;
-    }
+    CCASSERT(child != nullptr, "child must be non null");
+    CCASSERT(_children.contains(child), "child does not belong to this");
 
     if( _batchNode && ! _reorderChildDirty)
     {
@@ -813,8 +741,6 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
     }
 
     Node::removeAllChildrenWithCleanup(cleanup);
-    
-    _hasChildren = false;
 }
 
 void Sprite::sortAllChildren()
@@ -832,8 +758,8 @@ void Sprite::sortAllChildren()
             auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->getZOrder() < tempJ->getZOrder() ||
-                           ( tempI->getZOrder() == tempJ->getZOrder() &&
+            while(j>=0 && ( tempI->getLocalZOrder() < tempJ->getLocalZOrder() ||
+                           ( tempI->getLocalZOrder() == tempJ->getLocalZOrder() &&
                             tempI->getOrderOfArrival() < tempJ->getOrderOfArrival() ) ) )
             {
                 _children->fastSetObject( tempJ, j+1 );
@@ -882,27 +808,24 @@ void Sprite::setDirtyRecursively(bool bValue)
 {
     _recursiveDirty = bValue;
     setDirty(bValue);
-    // recursively set dirty
-    if (_hasChildren)
-    {
-        for(const auto &child: _children) {
-            Sprite* sp = dynamic_cast<Sprite*>(child);
-            if (sp)
-            {
-                sp->setDirtyRecursively(true);
-            }
+
+    for(const auto &child: _children) {
+        Sprite* sp = dynamic_cast<Sprite*>(child);
+        if (sp)
+        {
+            sp->setDirtyRecursively(true);
         }
     }
 }
 
 // XXX HACK: optimization
-#define SET_DIRTY_RECURSIVELY() {                                    \
-                    if (! _recursiveDirty) {    \
-                        _recursiveDirty = true;                    \
-                        setDirty(true);                              \
-                        if ( _hasChildren)                        \
-                            setDirtyRecursively(true);                \
-                        }                                            \
+#define SET_DIRTY_RECURSIVELY() {                       \
+                    if (! _recursiveDirty) {            \
+                        _recursiveDirty = true;         \
+                        setDirty(true);                 \
+                        if (!_children.empty())         \
+                            setDirtyRecursively(true);  \
+                        }                               \
                     }
 
 void Sprite::setPosition(const Point& pos)

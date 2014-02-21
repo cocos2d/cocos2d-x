@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCSkin.h"
 
+#include "CCParticleSystemQuad.h"
+
 using namespace cocos2d;
 
 namespace cocostudio {
@@ -63,7 +65,7 @@ DisplayManager::~DisplayManager()
     if( _displayRenderNode )
     {
         _displayRenderNode->removeFromParentAndCleanup(true);
-        if(_displayRenderNode->retainCount() > 0)
+        if(_displayRenderNode->getReferenceCount() > 0)
             CC_SAFE_RELEASE_NULL(_displayRenderNode);
     }
 

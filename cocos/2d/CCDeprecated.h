@@ -533,7 +533,8 @@ CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformIdentity(
 }
 
 // CC prefix compatibility
-CC_DEPRECATED_ATTRIBUTE typedef Object CCObject;
+CC_DEPRECATED_ATTRIBUTE typedef Ref CCObject;
+CC_DEPRECATED_ATTRIBUTE typedef Ref Object;
 CC_DEPRECATED_ATTRIBUTE typedef Event CCEvent;
 CC_DEPRECATED_ATTRIBUTE typedef DataVisitor CCDataVisitor;
 CC_DEPRECATED_ATTRIBUTE typedef PrettyPrinter CCPrettyPrinter;
@@ -764,7 +765,7 @@ CC_DEPRECATED_ATTRIBUTE typedef TMXTiledMap CCTMXTiledMap;
 CC_DEPRECATED_ATTRIBUTE typedef TileMapAtlas CCTileMapAtlas;
 CC_DEPRECATED_ATTRIBUTE typedef Timer CCTimer;
 CC_DEPRECATED_ATTRIBUTE typedef Scheduler CCScheduler;
-CC_DEPRECATED_ATTRIBUTE typedef EGLView CCEGLView;
+CC_DEPRECATED_ATTRIBUTE typedef GLView CCEGLView;
 
 CC_DEPRECATED_ATTRIBUTE typedef Component CCComponent;
 CC_DEPRECATED_ATTRIBUTE typedef AffineTransform CCAffineTransform;
@@ -840,7 +841,7 @@ CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameColor;
 CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNamePosition;
 CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameTexCoord;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAT_NONE;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAG_NONE;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
@@ -976,7 +977,7 @@ CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionUnKnown       = Resolu
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag
 #define kCCTMXTileDiagonalFlag        kTMXTileDiagonalFlag
 #define kCCFlipedAll                  kFlipedAll
-#define kCCFlippedMask                kFlippedMask
+#define kCCFlippedMask                kTMXFlippedMask
 
 
 /** use log() instead */

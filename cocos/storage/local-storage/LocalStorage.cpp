@@ -27,7 +27,8 @@
  Works on cocos2d-iphone and cocos2d-x.
  */
 
-#include "cocos2d.h"
+#include "LocalStorage.h"
+#include "CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
@@ -55,16 +56,16 @@ static void localStorageCreateTable()
 		printf("Error in CREATE TABLE\n");
 }
 
-void localStorageInit( const char *fullpath)
+void localStorageInit( const std::string& fullpath/* = "" */)
 {
 	if( ! _initialized ) {
 
 		int ret = 0;
 		
-		if (!fullpath)
+		if (fullpath.empty())
 			ret = sqlite3_open(":memory:",&_db);
 		else
-			ret = sqlite3_open(fullpath, &_db);
+			ret = sqlite3_open(fullpath.c_str(), &_db);
 
 		localStorageCreateTable();
 
@@ -103,12 +104,12 @@ void localStorageFree()
 }
 
 /** sets an item in the LS */
-void localStorageSetItem( const char *key, const char *value)
+void localStorageSetItem( const std::string& key, const std::string& value)
 {
 	assert( _initialized );
 	
-	int ok = sqlite3_bind_text(_stmt_update, 1, key, -1, SQLITE_TRANSIENT);
-	ok |= sqlite3_bind_text(_stmt_update, 2, value, -1, SQLITE_TRANSIENT);
+	int ok = sqlite3_bind_text(_stmt_update, 1, key.c_str(), -1, SQLITE_TRANSIENT);
+	ok |= sqlite3_bind_text(_stmt_update, 2, value.c_str(), -1, SQLITE_TRANSIENT);
 
 	ok |= sqlite3_step(_stmt_update);
 	
@@ -119,29 +120,31 @@ void localStorageSetItem( const char *key, const char *value)
 }
 
 /** gets an item from the LS */
-const char* localStorageGetItem( const char *key )
+std::string localStorageGetItem( const std::string& key )
 {
 	assert( _initialized );
 
+	std::string ret;
 	int ok = sqlite3_reset(_stmt_select);
 
-	ok |= sqlite3_bind_text(_stmt_select, 1, key, -1, SQLITE_TRANSIENT);
+	ok |= sqlite3_bind_text(_stmt_select, 1, key.c_str(), -1, SQLITE_TRANSIENT);
 	ok |= sqlite3_step(_stmt_select);
-	const unsigned char *ret = sqlite3_column_text(_stmt_select, 0);
-	
+	const unsigned char *text = sqlite3_column_text(_stmt_select, 0);
+	if (text)
+		ret = (const char*)text;
 
 	if( ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW)
 		printf("Error in localStorage.getItem()\n");
 
-	return (const char*)ret;
+	return ret;
 }
 
 /** removes an item from the LS */
-void localStorageRemoveItem( const char *key )
+void localStorageRemoveItem( const std::string& key )
 {
 	assert( _initialized );
 
-	int ok = sqlite3_bind_text(_stmt_remove, 1, key, -1, SQLITE_TRANSIENT);
+	int ok = sqlite3_bind_text(_stmt_remove, 1, key.c_str(), -1, SQLITE_TRANSIENT);
 	
 	ok |= sqlite3_step(_stmt_remove);
 	

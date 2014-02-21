@@ -164,7 +164,7 @@ static int tolua_collect_WebSocket (lua_State* tolua_S)
 /* function to release collected object via destructor */
 static void tolua_reg_Web_Socket_type(lua_State* tolua_S)
 {
-    tolua_usertype(tolua_S, "WebSocket");
+    tolua_usertype(tolua_S, "cc.WebSocket");
 }
 
 /* method: create of class WebSocket */
@@ -174,7 +174,7 @@ static int tolua_Cocos2d_WebSocket_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"WebSocket",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
         !tolua_isstring(tolua_S,2,0,&tolua_err)  ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -185,7 +185,7 @@ static int tolua_Cocos2d_WebSocket_create00(lua_State* tolua_S)
             const char* urlName = ((const char*)  tolua_tostring(tolua_S,2,0));
             LuaWebSocket *wSocket = new LuaWebSocket();
             wSocket->init(*wSocket, urlName);
-            tolua_pushusertype(tolua_S,(void*)wSocket,"WebSocket");
+            tolua_pushusertype(tolua_S,(void*)wSocket,"cc.WebSocket");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
     }
     return 1;
@@ -204,7 +204,7 @@ static int tolua_Cocos2d_WebSocket_createByAProtocol00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"WebSocket",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
         !tolua_isstring(tolua_S,2,0,&tolua_err)  ||
         !tolua_isstring(tolua_S,3,0,&tolua_err)  ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -219,7 +219,7 @@ static int tolua_Cocos2d_WebSocket_createByAProtocol00(lua_State* tolua_S)
         protocols.push_back(protocol);
         LuaWebSocket *wSocket = new LuaWebSocket();
         wSocket->init(*wSocket, urlName,&protocols);
-        tolua_pushusertype(tolua_S,(void*)wSocket,"WebSocket");
+        tolua_pushusertype(tolua_S,(void*)wSocket,"cc.WebSocket");
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
     }
     return 1;
@@ -238,7 +238,7 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"WebSocket",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
         !tolua_isstring(tolua_S,2,0,&tolua_err)  ||
         !tolua_isusertable(tolua_S,3,"CCArray",0,&tolua_err)  ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -251,7 +251,7 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
         Array*    protocolArray = ((Array*)  tolua_tousertype(tolua_S,3,0));
         std::vector<std::string> protocols;
         if (NULL != protocolArray) {
-            Object* pObj = NULL;
+            Ref* pObj = NULL;
             CCARRAY_FOREACH(protocolArray, pObj)
             {
                 String* pStr = static_cast<String*>(pObj);
@@ -262,7 +262,7 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
         }
         LuaWebSocket *wSocket = new LuaWebSocket();
         wSocket->init(*wSocket, urlName,&protocols);
-        tolua_pushusertype(tolua_S,(void*)wSocket,"WebSocket");
+        tolua_pushusertype(tolua_S,(void*)wSocket,"cc.WebSocket");
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
     }
     return 1;
@@ -281,7 +281,7 @@ static int tolua_Cocos2d_WebSocket_getReadyState00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err)
         )
         goto tolua_lerror;
@@ -312,7 +312,7 @@ static int tolua_Cocos2d_WebSocket_close00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err)
         )
         goto tolua_lerror;
@@ -340,7 +340,7 @@ static int tolua_Cocos2d_WebSocket_sendString00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S, 1, "WebSocket", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 1, "cc.WebSocket", 0, &tolua_err) ||
         !tolua_isstring(tolua_S, 2, 0, &tolua_err)                ||
         !tolua_isnoobj(tolua_S, 3, &tolua_err)
         )
@@ -376,12 +376,12 @@ tolua_lerror:
 TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
     tolua_open(tolua_S);
     tolua_reg_Web_Socket_type(tolua_S);
-    tolua_module(tolua_S,NULL,0);
-    tolua_beginmodule(tolua_S,NULL);
+    tolua_module(tolua_S,"cc",0);
+    tolua_beginmodule(tolua_S,"cc");
       #ifdef __cplusplus
-      tolua_cclass(tolua_S,"WebSocket","WebSocket","",tolua_collect_WebSocket);
+      tolua_cclass(tolua_S,"WebSocket","cc.WebSocket","",tolua_collect_WebSocket);
       #else
-      tolua_cclass(tolua_S,"WebSocket","WebSocket","",NULL);
+      tolua_cclass(tolua_S,"WebSocket","cc.WebSocket","",NULL);
       #endif
       tolua_beginmodule(tolua_S,"WebSocket");
         tolua_function(tolua_S, "create", tolua_Cocos2d_WebSocket_create00);
@@ -400,7 +400,7 @@ int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -429,7 +429,7 @@ int tolua_Cocos2d_WebSocket_unregisterScriptHandler00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -457,7 +457,7 @@ TOLUA_API int register_web_socket_manual(lua_State* tolua_S)
     if (nullptr == tolua_S)
         return 0 ;
     
-    lua_pushstring(tolua_S,"WebSocket");
+    lua_pushstring(tolua_S,"cc.WebSocket");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {

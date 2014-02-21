@@ -26,26 +26,28 @@
 #ifndef _CCFontFNT_h_
 #define _CCFontFNT_h_
 
-#include "cocos2d.h"
 #include "CCFont.h"
 
 NS_CC_BEGIN
+
+class BMFontConfiguration;
 
 class FontFNT : public Font
 {
     
 public:
     
-    static FontFNT * create(const std::string& fntFilePath);
-    
-    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
-    virtual Rect  getRectForChar(unsigned short theChar) const override;
+    static FontFNT * create(const std::string& fntFilePath, const Point& imageOffset = Point::ZERO);
+    /** Purges the cached data.
+    Removes from memory the cached configurations and the atlas name dictionary.
+    */
+    static void purgeCachedData();
+    virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
     
 protected:
     
-    FontFNT(CCBMFontConfiguration *theContfig) :
-        _configuration(theContfig) {}
+    FontFNT(BMFontConfiguration *theContfig, const Point& imageOffset = Point::ZERO);
     /**
      * @js NA
      * @lua NA
@@ -54,11 +56,10 @@ protected:
     
 private:
     
-    int  getAdvanceForChar(unsigned short theChar) const;
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
-    Rect getRectForCharInternal(unsigned short theChar) const;
     
-    CCBMFontConfiguration * _configuration;
+    BMFontConfiguration * _configuration;
+    Point                   _imageOffset;
     
 };
 

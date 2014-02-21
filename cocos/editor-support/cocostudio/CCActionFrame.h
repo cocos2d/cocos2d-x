@@ -25,7 +25,8 @@ THE SOFTWARE.
 #ifndef __ActionFRAME_H__
 #define __ActionFRAME_H__
 
-#include "cocos2d.h"
+#include "CCGeometry.h"
+#include "CCActionInterval.h"
 
 namespace cocostudio {
 
@@ -91,7 +92,7 @@ enum class FrameEaseType
 *  @js NA
 *  @lua NA
 */
-class ActionFrame:public cocos2d::Object
+class ActionFrame: public cocos2d::Ref
 {
 
 public:

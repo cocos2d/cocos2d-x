@@ -40,7 +40,7 @@ extern "C" {
 
 using namespace cocostudio;
 
-class LuaArmatureWrapper:public Object
+class LuaArmatureWrapper:public Ref
 {
 public:
     LuaArmatureWrapper();
@@ -83,7 +83,7 @@ static int lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<ArmatureAnimation*>(tolua_tousertype(L,1,0));
@@ -153,7 +153,7 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<ArmatureAnimation*>(tolua_tousertype(L,1,0));
@@ -217,7 +217,7 @@ tolua_lerror:
 
 static void extendArmatureAnimation(lua_State* L)
 {
-    lua_pushstring(L, "ArmatureAnimation");
+    lua_pushstring(L, "ccs.ArmatureAnimation");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -237,7 +237,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ArmatureDataManager",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccs.ArmatureDataManager",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<ArmatureDataManager*>(tolua_tousertype(L,1,0));
@@ -309,7 +309,7 @@ tolua_lerror:
 
 static void extendArmatureDataManager(lua_State* L)
 {
-    lua_pushstring(L, "ArmatureDataManager");
+    lua_pushstring(L, "ccs.ArmatureDataManager");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -328,7 +328,7 @@ static int lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"Bone",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccs.Bone",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<cocostudio::Bone*>(tolua_tousertype(L,1,0));
@@ -373,7 +373,7 @@ static int lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"Bone",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccs.Bone",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<cocostudio::Bone*>(tolua_tousertype(L,1,0));
@@ -405,7 +405,7 @@ tolua_lerror:
 
 static void extendBone(lua_State* L)
 {
-    lua_pushstring(L, "Bone");
+    lua_pushstring(L, "ccs.Bone");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {

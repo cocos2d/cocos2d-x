@@ -46,5 +46,16 @@ struct LuaAssetsManagerEventData
     }
 };
 
+struct LuaTableViewEventData
+{
+    void* value;
+    
+    // Constructor
+    LuaTableViewEventData(void* _value = nullptr)
+    :value(_value)
+    {
+    }
+};
+
 
 #endif // #ifndef COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_LUA_COCOS2DX_EXTENSION_MANUAL_H

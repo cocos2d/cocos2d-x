@@ -5,7 +5,35 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 
-if [ "$GEN_JSB"x = "YES"x ]; then
+if [ -z "$NDK_ROOT" ]; then
+    export NDK_ROOT=$HOME/bin/android-ndk
+fi
+
+if [ -z "$PYTHON_BIN" ]; then
+    export PYTHON_BIN=/usr/bin/python
+fi
+
+
+if [ "$GEN_COCOS_FILES"x = "YES"x ]; then
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        exit 0
+    fi
+    if [ -z "${GH_EMAIL}" ]; then
+        echo "GH_EMAIL not set"
+        exit 0
+    fi
+    if [ -z "${GH_USER}" ]; then
+        echo "GH_USER not set"
+        exit 0
+    fi
+    if [ -z "${GH_PASSWORD}" ]; then
+        echo "GH_USER not set"
+        exit 0
+    fi
+
+    cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-cocosfiles.sh
+elif [ "$GEN_JSB"x = "YES"x ]; then
     # Re-generation of the javascript bindings can perform push of the new
     # version back to github.  We don't do this for pull requests, or if
     # GH_USER/GH_EMAIL/GH_PASSWORD environment variables are not set correctly
@@ -26,7 +54,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
         echo "GH_USER not set"
         exit 0
     fi
-    export NDK_ROOT=$HOME/bin/android-ndk
+
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 elif [ "$PLATFORM"x = "android"x ]; then
@@ -36,15 +64,16 @@ elif [ "$PLATFORM"x = "android"x ]; then
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT
 
     # Create a directory for temporary objects
     mkdir android_build_objs
 
-    PROJECTS=("Cpp/HelloCpp" "Cpp/TestCpp" "Cpp/SimpleGame" "Cpp/AssetsManagerTest" "Javascript/TestJavascript" "Javascript/CocosDragonJS" "Javascript/CrystalCraze" "Javascript/MoonWarriors" "Javascript/WatermelonWithMe" "Lua/HelloLua" "Lua/TestLua")
+    PROJECTS=("test-cpp" "test-javascript" "test-lua")
     for i in ${PROJECTS[*]}; do
-        ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/samples/$i/proj.android/obj
+        ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/tests/$i/proj.android/obj
     done
 
     # Build all samples
@@ -70,7 +99,9 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
+    echo "Building cocos2d-x"
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
@@ -81,6 +112,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd $COCOS2DX_ROOT/tools/project-creator
     ./create_project.py -n MyGameCpp -k com.MyCompany.AwesomeGameCpp -l cpp -p $HOME
     ./create_project.py -n MyGameLua -k com.MyCompany.AwesomeGameLua -l lua -p $HOME
+    ./create_project.py -n MyGameJs -k com.MyCompany.AwesomeGameJs -l javascript -p $HOME
     cd $HOME/MyGameCpp
     mkdir build
     cd build
@@ -93,11 +125,18 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cmake ..
     make -j10
 
+    cd $HOME/MyGameJs
+    mkdir build
+    cd build
+    cmake ..
+    make -j10
+
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT/build
     export PYTHON=/usr/bin/python
@@ -107,6 +146,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
 elif [ "$PLATFORM"x = "ios"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
+    ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT
     xctool/xctool.sh -project samples/Cpp/HelloCpp/proj.ios/HelloCpp.xcodeproj -scheme HelloCpp test

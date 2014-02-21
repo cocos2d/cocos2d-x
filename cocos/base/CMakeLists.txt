@@ -3,7 +3,7 @@ set(COCOS_BASE_SRC
   CCAutoreleasePool.cpp
   CCGeometry.cpp
   CCNS.cpp
-  CCObject.cpp
+  CCRef.cpp
   CCSet.cpp
   CCArray.cpp
   CCDictionary.cpp

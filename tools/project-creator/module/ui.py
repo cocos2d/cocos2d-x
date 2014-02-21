@@ -48,12 +48,13 @@ else:
 class ThreadedTask(threading.Thread):
     """Create cocos project thread.
     """
-    def __init__(self, queue, projectName, packageName, language, projectPath):
+    def __init__(self, queue, projectName, packageName, language, runtime, projectPath):
         threading.Thread.__init__(self)
         self.queue = queue
         self.projectName = projectName
         self.packageName = packageName
         self.language = language
+        self.runtime = runtime
         self.projectPath = projectPath
 
     def run(self):
@@ -82,13 +83,14 @@ class ThreadedTask(threading.Thread):
             self.projectName,
             self.packageName,
             self.language,
+            self.runtime,
             self.projectPath,
             self.newProjectCallBack
         )
         if breturn:
-            putMsg = "end@%d@%d@%s" %(100, 100, "create successful")
+            putMsg = "end@%d@%d@%s" %(100, 100, "Projected created successfully")
         else:
-            putMsg = "end@%d@%d@%s" %(100, 100, "create failure")
+            putMsg = "end@%d@%d@%s" %(100, 100, "Failed to create project")
         self.queue.put(putMsg)
 
     def newProjectCallBack(self, step, totalStep, showMsg):
@@ -176,7 +178,7 @@ class TkCocosDialog(Frame):
         scnHeight = self.parent.winfo_screenheight()
         tmpcnf = '%dx%d+%d+%d'%(curWidth, curHeight, int((scnWidth-curWidth)/2), int((scnHeight-curHeight)/2))
         self.parent.geometry(tmpcnf)
-        self.parent.title("Cocos Project Creator")
+        self.parent.title("Cocos2d Project Creator")
 
         #fix size
         #self.parent.maxsize(curWidth, curHeight)
@@ -260,7 +262,7 @@ class TkCocosDialog(Frame):
         #create a new thread to deal with create new project.
         self.btnCreate['state'] = DISABLED
         self.queue = Queue()
-        ThreadedTask(self.queue, projectName, packageName, language, projectPath).start()
+        ThreadedTask(self.queue, projectName, packageName, language,None, projectPath).start()
         self.parent.after(100, self.process_queue)
 
     def pathCallback(self):

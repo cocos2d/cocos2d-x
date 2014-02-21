@@ -33,8 +33,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -538,16 +538,16 @@ void ProgressTimer::onDraw()
         if (!_reverseDirection) 
         {
             glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
-        } 
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_vertexDataCount);
+        }
         else 
         {
             glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
             glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
             // 2 draw calls
-            CC_INCREMENT_GL_DRAWS(1);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,_vertexDataCount);
         }
     }
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ProgressTimer::draw()
@@ -555,7 +555,7 @@ void ProgressTimer::draw()
     if( ! _vertexData || ! _sprite)
         return;
 
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

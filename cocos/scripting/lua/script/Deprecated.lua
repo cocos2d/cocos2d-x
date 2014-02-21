@@ -29,6 +29,12 @@ function TextureCacheDeprecated.destroyInstance(self)
 end
 rawset(cc.TextureCache,"destroyInstance",TextureCacheDeprecated.destroyInstance)
 
+function TextureCacheDeprecated.dumpCachedTextureInfo(self)
+    deprecatedTip("self:dumpCachedTextureInfo","self:getCachedTextureInfo")
+    return print(self:getCachedTextureInfo())
+end
+rawset(cc.TextureCache,"dumpCachedTextureInfo",TextureCacheDeprecated.dumpCachedTextureInfo)
+
 local CCTextureCacheDeprecated = { }
 function CCTextureCacheDeprecated.sharedTextureCache()
     deprecatedTip("CCTextureCache:sharedTextureCache","CCTextureCache:getInstance")
@@ -696,15 +702,20 @@ end
 rawset(CCControl,"addHandleOfControlEvent",CCControlDeprecated.addHandleOfControlEvent)
 --functions of CCControl will be deprecated end
 
+--Enums of CCTableView will be deprecated begin
+rawset(CCTableView, "kTableViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
+rawset(CCTableView,"kTableViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
+rawset(CCTableView,"kTableCellTouched",cc.TABLECELL_TOUCHED)
+rawset(CCTableView,"kTableCellSizeForIndex",cc.TABLECELL_SIZE_FOR_INDEX)
+rawset(CCTableView,"kTableCellSizeAtIndex",cc.TABLECELL_SIZE_AT_INDEX)
+rawset(CCTableView,"kNumberOfCellsInTableView",cc.NUMBER_OF_CELLS_IN_TABLEVIEW)
+--Enums of CCTableView will be deprecated end
 
---functions of CCEGLView will be deprecated end
-local CCEGLViewDeprecated = { }
-function CCEGLViewDeprecated.sharedOpenGLView()
-    deprecatedTip("CCEGLView:sharedOpenGLView","CCEGLView:getInstance")
-    return CCEGLView:getInstance()
-end
-rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
---functions of CCFileUtils will be deprecated end
+--Enums of CCScrollView will be deprecated begin
+rawset(CCScrollView, "kScrollViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
+rawset(CCScrollView,"kScrollViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
+--Enums of CCScrollView will be deprecated end
+
 
 
 --functions of CCApplication will be deprecated end
@@ -1088,12 +1099,19 @@ end
 rawset(SceneReader,"purgeSceneReader",SceneReaderDeprecated.purgeSceneReader)
 --functions of SceneReader will be deprecated end
 
---functions of CCEGLView will be deprecated begin
-local CCEGLViewDeprecated = { }
-function CCEGLViewDeprecated.sharedOpenGLView()
-    deprecatedTip("CCEGLView:sharedOpenGLView","cc.EGLView:getInstance")
-    return cc.EGLView:getInstance()
+--functions of cc.Node will be deprecated begin
+local NodeDeprecated = { }
+function NodeDeprecated.setZOrder(self,zOrder)
+    deprecatedTip("cc.Node:setZOrder","cc.Node:setLocalZOrder")
+    return self:setLocalZOrder(zOrder)
 end
-rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
---functions of CCEGLView will be deprecated end
+rawset(cc.Node,"setZOrder",NodeDeprecated.setZOrder)
+
+function NodeDeprecated.getZOrder(self)
+    deprecatedTip("cc.Node:getZOrder","cc.Node:getLocalZOrder")
+    return self:getLocalZOrder()
+end
+rawset(cc.Node,"getZOrder",NodeDeprecated.getZOrder)
+--functions of cc.Node will be deprecated end
+
 

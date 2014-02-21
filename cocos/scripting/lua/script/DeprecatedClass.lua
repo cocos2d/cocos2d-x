@@ -175,6 +175,15 @@ end
 _G["CCEaseElasticOut"] = DeprecatedClass.CCEaseElasticOut()
 --CCEaseElasticOut class will be Deprecated,end
 
+--CCTableViewCell class will be Deprecated,begin
+function DeprecatedClass.CCTableViewCell()
+    deprecatedTip("CCTableViewCell","cc.TableViewCell")
+    return cc.TableViewCell
+end
+_G["CCTableViewCell"] = DeprecatedClass.CCTableViewCell()
+--CCTableViewCell class will be Deprecated,end
+
+
 --CCEaseBackOut class will be Deprecated,begin
 function DeprecatedClass.CCEaseBackOut()
     deprecatedTip("CCEaseBackOut","cc.EaseBackOut")
@@ -719,6 +728,15 @@ end
 _G["CCPlace"] = DeprecatedClass.CCPlace()
 --CCPlace class will be Deprecated,end
 
+--CCScrollView class will be Deprecated,begin
+function DeprecatedClass.CCScrollView()
+    deprecatedTip("CCScrollView","cc.ScrollView")
+    return cc.ScrollView
+end
+_G["CCScrollView"] = DeprecatedClass.CCScrollView()
+--CCScrollView class will be Deprecated,end
+
+
 --CCGLProgram class will be Deprecated,begin
 function DeprecatedClass.CCGLProgram()
     deprecatedTip("CCGLProgram","cc.GLProgram")
@@ -798,6 +816,15 @@ function DeprecatedClass.CCParticleFlower()
 end
 _G["CCParticleFlower"] = DeprecatedClass.CCParticleFlower()
 --CCParticleFlower class will be Deprecated,end
+
+--CCTableView class will be Deprecated,begin
+function DeprecatedClass.CCTableView()
+    deprecatedTip("CCTableView","cc.TableView")
+    return cc.TableView
+end
+_G["CCTableView"] = DeprecatedClass.CCTableView()
+--CCTableView class will be Deprecated,end
+
 
 --CCParticleSmoke class will be Deprecated,begin
 function DeprecatedClass.CCParticleSmoke()
@@ -2105,17 +2132,18 @@ _G["ActionObject"] = DeprecatedClass.ActionObject()
 
 --CCEGLViewProtocol class will be Deprecated,begin
 function DeprecatedClass.CCEGLViewProtocol()
-    deprecatedTip("CCEGLViewProtocol","cc.EGLViewProtocol")
-    return cc.EGLViewProtocol
+    deprecatedTip("CCEGLViewProtocol","cc.GLViewProtocol")
+    return cc.GLViewProtocol
 end
 _G["CCEGLViewProtocol"] = DeprecatedClass.CCEGLViewProtocol()
 --CCEGLViewProtocol class will be Deprecated,end
 
 --CCEGLView class will be Deprecated,begin
 function DeprecatedClass.CCEGLView()
-    deprecatedTip("CCEGLView","cc.EGLView")
-    return cc.EGLView
+    deprecatedTip("CCEGLView","cc.GLView")
+    return cc.GLView
 end
+
 _G["CCEGLView"] = DeprecatedClass.CCEGLView()
 --CCEGLView class will be Deprecated,end
 
@@ -2126,5 +2154,37 @@ function DeprecatedClass.CCBProxy()
 end
 _G["CCBProxy"] = DeprecatedClass.CCBProxy()
 --CCBProxy class will be Deprecated,end
+
+--WebSocket class will be Deprecated,begin
+function DeprecatedClass.WebSocket()
+    deprecatedTip("WebSocket","cc.WebSocket")
+    return cc.WebSocket
+end
+_G["WebSocket"] = DeprecatedClass.WebSocket()
+--WebSocket class will be Deprecated,end
+
+--XMLHttpRequest class will be Deprecated,begin
+function DeprecatedClass.XMLHttpRequest()
+    deprecatedTip("XMLHttpRequest","cc.XMLHttpRequest")
+    return cc.XMLHttpRequest
+end
+_G["XMLHttpRequest"] = DeprecatedClass.XMLHttpRequest()
+--XMLHttpRequest class will be Deprecated,end
+
+--EGLViewProtocol class will be Deprecated,begin
+function DeprecatedClass.EGLViewProtocol()
+    deprecatedTip("cc.EGLViewProtocol","cc.GLViewProtocol")
+    return cc.GLViewProtocol
+end
+_G["cc.EGLViewProtocol"] = DeprecatedClass.EGLViewProtocol()
+--EGLViewProtocol class will be Deprecated,end
+
+--EGLView class will be Deprecated,begin
+function DeprecatedClass.EGLView()
+    deprecatedTip("cc.EGLView","cc.GLView")
+    return cc.GLView
+end
+_G["cc.EGLView"] = DeprecatedClass.EGLView()
+--EGLView  class will be Deprecated,end
 
 

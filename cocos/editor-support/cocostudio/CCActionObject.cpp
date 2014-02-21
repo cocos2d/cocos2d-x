@@ -25,6 +25,10 @@ THE SOFTWARE.
 #include "cocostudio/CCActionObject.h"
 #include "cocostudio/DictionaryHelper.h"
 
+#include "CCDirector.h"
+#include "CCScheduler.h"
+#include "CCActionInstant.h"
+
 using namespace cocos2d;
 
 namespace cocostudio {
@@ -100,7 +104,7 @@ bool ActionObject::isPlaying()
 	return _bPlaying;
 }
 
-void ActionObject::initWithDictionary(const rapidjson::Value& dic, Object* root)
+void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 {
 	setName(DICTOOL->getStringValue_json(dic, "name"));
 	setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));

@@ -25,10 +25,17 @@
 #ifndef __CCMAP_H__
 #define __CCMAP_H__
 
+#define USE_STD_UNORDERED_MAP 1
+
 #include "ccMacros.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include <vector>
+
+#if USE_STD_UNORDERED_MAP
 #include <unordered_map>
+#else
+#include <map>
+#endif
 
 NS_CC_BEGIN
 
@@ -44,7 +51,11 @@ public:
     // ------------------------------------------
     // Iterators
     // ------------------------------------------
+#if USE_STD_UNORDERED_MAP
     typedef std::unordered_map<K, V> RefMap;
+#else
+    typedef std::map<K, V> RefMap;
+#endif
     
     typedef typename RefMap::iterator iterator;
     typedef typename RefMap::const_iterator const_iterator;
@@ -62,7 +73,7 @@ public:
     Map<K, V>()
     : _data()
     {
-        static_assert(std::is_convertible<V, Object*>::value, "Invalid Type for cocos2d::Map<K, V>!");
+        static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
         CCLOGINFO("In the default constructor of Map!");
     }
     
@@ -70,7 +81,7 @@ public:
     explicit Map<K, V>(ssize_t capacity)
     : _data()
     {
-        static_assert(std::is_convertible<V, Object*>::value, "Invalid Type for cocos2d::Map<K, V>!");
+        static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
         CCLOGINFO("In the constructor with capacity of Map!");
         _data.reserve(capacity);
     }
@@ -78,7 +89,7 @@ public:
     /** Copy constructor */
     Map<K, V>(const Map<K, V>& other)
     {
-        static_assert(std::is_convertible<V, Object*>::value, "Invalid Type for cocos2d::Map<K, V>!");
+        static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
         CCLOGINFO("In the copy constructor of Map!");
         _data = other._data;
         addRefForAllObjects();
@@ -87,7 +98,7 @@ public:
     /** Move constructor */
     Map<K, V>(Map<K, V>&& other)
     {
-        static_assert(std::is_convertible<V, Object*>::value, "Invalid Type for cocos2d::Map<K, V>!");
+        static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
         CCLOGINFO("In the move constructor of Map!");
         _data = std::move(other._data);
     }
@@ -104,25 +115,39 @@ public:
     /** Sets capacity of the map */
     void reserve(ssize_t capacity)
     {
+#if USE_STD_UNORDERED_MAP
         _data.reserve(capacity);
+#endif
     }
     
     /** Returns the number of buckets in the Map container. */
     ssize_t bucketCount() const
     {
+#if USE_STD_UNORDERED_MAP
         return _data.bucket_count();
+#else
+        return 0;
+#endif
     }
     
     /** Returns the number of elements in bucket n. */
     ssize_t bucketSize(ssize_t n) const
     {
+#if USE_STD_UNORDERED_MAP
         return _data.bucket_size(n);
+#else
+        return 0;
+#endif
     }
     
     /** Returns the bucket number where the element with key k is located. */
     ssize_t bucket(const K& k) const
     {
+#if USE_STD_UNORDERED_MAP
         return _data.bucket(k);
+#else
+        return 0;
+#endif
     }
     
     /** The number of elements in the map. */
@@ -144,9 +169,11 @@ public:
     std::vector<K> keys() const
     {
         std::vector<K> keys;
-        
+
         if (!_data.empty())
         {
+            keys.reserve(_data.size());
+            
             for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
             {
                 keys.push_back(iter->first);
@@ -160,13 +187,20 @@ public:
     {
         std::vector<K> keys;
         
-        for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
+        if (!_data.empty())
         {
-            if (iter->second == object)
+            keys.reserve(_data.size() / 10);
+            
+            for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
             {
-                keys.push_back(iter->first);
+                if (iter->second == object)
+                {
+                    keys.push_back(iter->first);
+                }
             }
         }
+        
+        keys.shrink_to_fit();
         
         return keys;
     }

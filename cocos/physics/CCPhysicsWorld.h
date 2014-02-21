@@ -29,7 +29,7 @@
 #if CC_USE_PHYSICS
 
 #include "CCVector.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 #include <list>
@@ -55,7 +55,7 @@ typedef struct PhysicsRayCastInfo
 {
     PhysicsShape* shape;
     Point start;
-    Point end;
+    Point end;              //< in lua, it's name is "ended"
     Point contact;
     Vect normal;
     float fraction;

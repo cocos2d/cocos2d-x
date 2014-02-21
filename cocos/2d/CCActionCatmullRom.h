@@ -52,7 +52,7 @@ NS_CC_BEGIN;
  Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
 @ingroup Actions
  */
-class CC_DLL PointArray : public Object, public Clonable
+class CC_DLL PointArray : public Ref, public Clonable
 {
 public:
     

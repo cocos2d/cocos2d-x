@@ -22,6 +22,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "CCFileUtilsWin32.h"
 #include "platform/CCCommon.h"
 #include <Shlobj.h>
@@ -184,6 +188,10 @@ static Data getData(const std::string& filename, bool forString)
 std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
+	if (data.isNull())
+	{
+		return "";
+	}
     std::string ret((const char*)data.getBytes());
     return ret;
 }
@@ -303,3 +311,6 @@ string FileUtilsWin32::getWritablePath() const
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+

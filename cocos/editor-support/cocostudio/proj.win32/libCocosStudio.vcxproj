@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CCActionFrame.cpp" />
     <ClCompile Include="..\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CCActionManagerEx.cpp" />
@@ -41,7 +40,6 @@
     <ClCompile Include="..\CCSSceneReader.cpp" />
     <ClCompile Include="..\CCTransformHelp.cpp" />
     <ClCompile Include="..\CCTween.cpp" />
-    <ClCompile Include="..\CCTweenFunction.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
     <ClCompile Include="..\ObjectFactory.cpp" />
@@ -60,7 +58,6 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
-    <ClInclude Include="..\CCActionEaseEx.h" />
     <ClInclude Include="..\CCActionFrame.h" />
     <ClInclude Include="..\CCActionFrameEasing.h" />
     <ClInclude Include="..\CCActionManagerEx.h" />
@@ -91,7 +88,6 @@
     <ClInclude Include="..\CCSSceneReader.h" />
     <ClInclude Include="..\CCTransformHelp.h" />
     <ClInclude Include="..\CCTween.h" />
-    <ClInclude Include="..\CCTweenFunction.h" />
     <ClInclude Include="..\CCUtilMath.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
     <ClInclude Include="..\ObjectFactory.h" />

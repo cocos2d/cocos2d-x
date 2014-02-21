@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCGL.h"
 #include "CCConfiguration.h"
+#include "renderer/CCRenderer.h"
+
 // support
 #include "CCTexture2D.h"
 #include "CCString.h"
@@ -624,11 +626,11 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
             // option 1: subdata
-            //glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-            
+//            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+
             // option 2: data
-            //      glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-            
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+
             // option 3: orphaning + glMapBuffer
             glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), nullptr, GL_DYNAMIC_DRAW);
             void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
@@ -697,7 +699,8 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
+
     CHECK_GL_ERROR_DEBUG();
 }
 

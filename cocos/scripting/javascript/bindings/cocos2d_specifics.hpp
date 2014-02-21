@@ -1,8 +1,8 @@
 #ifndef __JS_COCOS2D_X_SPECIFICS_H__
 #define __JS_COCOS2D_X_SPECIFICS_H__
 
-#include "jsapi.h"
 #include "ScriptingCore.h"
+#include "platform/CCSAXParser.h"
 
 class JSScheduleWrapper;
 
@@ -93,7 +93,7 @@ jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
 
-class JSCallbackWrapper: public cocos2d::Object {
+class JSCallbackWrapper: public cocos2d::Ref {
 public:
     JSCallbackWrapper();
     virtual ~JSCallbackWrapper();
@@ -135,10 +135,10 @@ public:
     void pause();
     
     void scheduleFunc(float dt);
-    virtual void update(float dt);
+    void update(float dt);
     
-    Object* getTarget();
-    void setTarget(Object* pTarget);
+    Ref* getTarget();
+    void setTarget(Ref* pTarget);
     
     void setPureJSTarget(JSObject* jstarget);
     JSObject* getPureJSTarget();
@@ -150,14 +150,14 @@ public:
     bool isUpdateSchedule();
     
 protected:
-    Object* _pTarget;
+    Ref* _pTarget;
     JSObject* _pPureJSTarget;
     int _priority;
     bool _isUpdateSchedule;
 };
 
 
-class JSTouchDelegate: public cocos2d::Object
+class JSTouchDelegate: public cocos2d::Ref
 {
 public:
     JSTouchDelegate();
@@ -197,6 +197,45 @@ private:
     bool _needUnroot;
     cocos2d::EventListenerTouchOneByOne*  _touchListenerOneByOne;
     cocos2d::EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
+};
+
+
+class CC_DLL __JSSAXDelegator: public cocos2d::SAXDelegator
+{
+public:
+    static __JSSAXDelegator* getInstance() {
+		static __JSSAXDelegator* pInstance = NULL;
+        if (pInstance == NULL) {
+            pInstance = new __JSSAXDelegator();
+        }
+		return pInstance;
+	};
+    
+    ~__JSSAXDelegator();
+    
+    cocos2d::SAXParser* getParser();
+    
+    std::string parse(const std::string& path);
+    
+    bool preloadPlist(const std::string& path) {
+        return true;
+    }
+    
+    std::string getList(const std::string& path) {
+        return path;
+    }
+    
+    // implement pure virtual methods of SAXDelegator
+    void startElement(void *ctx, const char *name, const char **atts);
+    void endElement(void *ctx, const char *name);
+    void textHandler(void *ctx, const char *ch, int len);
+
+private:
+    cocos2d::SAXParser _parser;
+    JSObject* _obj;
+    std::string _result;
+    bool _isStoringCharacters;
+    std::string _currentValue;
 };
 
 

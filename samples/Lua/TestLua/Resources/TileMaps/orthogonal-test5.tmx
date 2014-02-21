@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="101" tileheight="81">
+ <tileset firstgid="1" name="Untitled" tilewidth="101" tileheight="171" spacing="2" margin="2">
+  <image source="ortho-test1.png"/>
+ </tileset>
+ <tileset firstgid="46" name="tileset2" tilewidth="101" tileheight="171" spacing="2" margin="2">
+  <image source="ortho-test1_bw.png"/>
+ </tileset>
+ <layer name="Layer 0" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAX4AB8Q8wOxAJSvRIJeZiBmAmIWIGYFYjYS9AoBsTAQawCxKhCrQMVVkbAgEGsDsQQQiwCxKFQ9F4nqKTEfAM9UTSZAAgAA
+  </data>
+ </layer>
+ <layer name="Layer 1" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAXUBNZAbAPEtmToNQBifSA2BGIjIDYmQa89GfbhMgcd4wMA7a2boEACAAA=
+  </data>
+ </layer>
+ <layer name="Layer 2" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAUDCfiAmB+IBcjQywzETEDMAsSsQMxGgl4hMuzDBgAgyUssQAIAAA==
+  </data>
+ </layer>
+</map>

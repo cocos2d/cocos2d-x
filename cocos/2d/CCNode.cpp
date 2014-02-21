@@ -64,29 +64,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#if CC_USE_ARRAY_VECTOR
-bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
+bool nodeComparisonLess(Node* n1, Node* n2)
 {
-    Object *p1 = static_cast<Object*>(pp1);
-    Object *p2 = static_cast<Object*>(pp2);
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+    return( n1->getLocalZOrder() < n2->getLocalZOrder() ||
+           ( n1->getLocalZOrder() == n2->getLocalZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
            );
 }
-#else
-bool nodeComparisonLess(Object* p1, Object* p2)
-{
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
-}
-#endif
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
@@ -108,7 +91,8 @@ Node::Node(void)
 , _inverseDirty(true)
 // children (lazy allocs)
 // lazy alloc
-, _ZOrder(0)
+, _localZOrder(0)
+, _globalZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
@@ -122,7 +106,9 @@ Node::Node(void)
 , _ignoreAnchorPointForPosition(false)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
+#if CC_ENABLE_SCRIPT_BINDING
 , _updateScriptHandler(0)
+#endif
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
@@ -143,9 +129,11 @@ Node::Node(void)
     _eventDispatcher = director->getEventDispatcher();
     _eventDispatcher->retain();
     
+#if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
-
+#endif
+    
     kmMat4Identity(&_transform);
     kmMat4Identity(&_inverse);
     kmMat4Identity(&_additionalTransform);
@@ -155,10 +143,12 @@ Node::~Node()
 {
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
+#if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
     }
+#endif
 
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_scheduler);
@@ -212,30 +202,32 @@ void Node::setSkewY(float newSkewY)
     _transformDirty = _inverseDirty = true;
 }
 
-/// zOrder getter
-int Node::getZOrder() const
-{
-    return _ZOrder;
-}
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
-void Node::_setZOrder(int z)
+void Node::_setLocalZOrder(int z)
 {
-    _ZOrder = z;
+    _localZOrder = z;
 }
 
-void Node::setZOrder(int z)
+void Node::setLocalZOrder(int z)
 {
+    _localZOrder = z;
     if (_parent)
     {
         _parent->reorderChild(this, z);
     }
-    // should set "_ZOrder" after reorderChild, because the implementation of reorderChild subclass of Node, such as Sprite,
-    // will return when _ZOrder value is not changed
-    _setZOrder(z);
-    
+
     _eventDispatcher->setDirtyForNode(this);
+}
+
+void Node::setGlobalZOrder(float globalZOrder)
+{
+    if (_globalZOrder != globalZOrder)
+    {
+        _globalZOrder = globalZOrder;
+        _eventDispatcher->setDirtyForNode(this);
+    }
 }
 
 /// vertexZ getter
@@ -246,9 +238,10 @@ float Node::getVertexZ() const
 
 
 /// vertexZ setter
-void Node::setVertexZ(float var)
+void Node::setVertexZ(float zOrder)
 {
-    _vertexZ = var;
+    _vertexZ = zOrder;
+    setGlobalZOrder(zOrder);
 }
 
 
@@ -505,7 +498,7 @@ void Node::setOrderOfArrival(int orderOfArrival)
     _orderOfArrival = orderOfArrival;
 }
 
-void Node::setUserObject(Object *pUserObject)
+void Node::setUserObject(Ref *pUserObject)
 {
     CC_SAFE_RETAIN(pUserObject);
     CC_SAFE_RELEASE(_userObject);
@@ -552,6 +545,7 @@ void Node::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
+#if CC_ENABLE_SCRIPT_BINDING
     if ( _scriptType != kScriptTypeNone)
     {
         int action = kNodeOnCleanup;
@@ -559,6 +553,7 @@ void Node::cleanup()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
     
     // timers
     for( const auto &child: _children)
@@ -650,7 +645,7 @@ void Node::addChild(Node *child, int zOrder)
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_ZOrder, child->_tag);
+    this->addChild(child, child->_localZOrder, child->_tag);
 }
 
 void Node::removeFromParent()
@@ -767,7 +762,7 @@ void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
     _children.pushBack(child);
-    child->_setZOrder(z);
+    child->_setLocalZOrder(z);
 }
 
 void Node::reorderChild(Node *child, int zOrder)
@@ -775,7 +770,7 @@ void Node::reorderChild(Node *child, int zOrder)
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    child->_setZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void Node::sortAllChildren()
@@ -816,7 +811,7 @@ void Node::visit()
         {
             auto node = _children.at(i);
 
-            if ( node && node->_ZOrder < 0 )
+            if ( node && node->_localZOrder < 0 )
                 node->visit();
             else
                 break;
@@ -865,6 +860,7 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnter;
@@ -872,6 +868,7 @@ void Node::onEnter()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
     
     for( const auto &child: _children)
         child->onEnter();
@@ -885,6 +882,7 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnterTransitionDidFinish;
@@ -892,6 +890,7 @@ void Node::onEnterTransitionDidFinish()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
     
     for( const auto &child: _children)
         child->onEnterTransitionDidFinish();
@@ -901,7 +900,8 @@ void Node::onExitTransitionDidStart()
 {
     for( const auto &child: _children)
         child->onExitTransitionDidStart();
-    
+
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExitTransitionDidStart;
@@ -909,6 +909,7 @@ void Node::onExitTransitionDidStart()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
 }
 
 void Node::onExit()
@@ -920,6 +921,7 @@ void Node::onExit()
     for( const auto &child: _children)
         child->onExit();
     
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExit;
@@ -927,6 +929,7 @@ void Node::onExit()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
@@ -998,7 +1001,7 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    return _scheduler->isScheduledForTarget(selector, this);
+    return _scheduler->isScheduled(this, schedule_selector_to_key(selector));
 }
 
 void Node::scheduleUpdate()
@@ -1008,24 +1011,34 @@ void Node::scheduleUpdate()
 
 void Node::scheduleUpdateWithPriority(int priority)
 {
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
     unscheduleUpdate();
+    
+#if CC_ENABLE_SCRIPT_BINDING
     _updateScriptHandler = nHandler;
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+#endif
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
 {
-    _scheduler->unscheduleUpdateForTarget(this);
+    _scheduler->unscheduleUpdate(this);
+    
+#if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
         _updateScriptHandler = 0;
     }
+#endif
 }
 
 void Node::schedule(SEL_SCHEDULE selector)
@@ -1043,7 +1056,9 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
 
-    _scheduler->scheduleSelector(selector, this, interval , repeat, delay, !_running);
+    _scheduler->schedule([=](float dt){
+        (this->*selector)(dt);
+    }, this, schedule_selector_to_key(selector), interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1053,11 +1068,11 @@ void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
 
 void Node::unschedule(SEL_SCHEDULE selector)
 {
-    // explicit nil handling
-    if (selector == 0)
+    // explicit null handling
+    if (selector == nullptr)
         return;
-
-    _scheduler->unscheduleSelector(selector, this);
+    
+    _scheduler->unschedule(this, schedule_selector_to_key(selector));
 }
 
 void Node::unscheduleAllSelectors()
@@ -1092,6 +1107,7 @@ void Node::pauseSchedulerAndActions()
 // override me
 void Node::update(float fDelta)
 {
+#if CC_ENABLE_SCRIPT_BINDING
     if (0 != _updateScriptHandler)
     {
         //only lua use
@@ -1099,6 +1115,7 @@ void Node::update(float fDelta)
         ScriptEvent event(kScheduleEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     
     if (_componentContainer && !_componentContainer->isEmpty())
     {

@@ -38,9 +38,9 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -200,6 +200,16 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
         quads[i].tr.texCoords.v = top;
     }
 }
+
+void ParticleSystemQuad::updateTexCoords()
+{
+    if (_texture)
+    {
+        const Size& s = _texture->getContentSize();
+        initTexCoordsWithRect(Rect(0, 0, s.width, s.height));
+    }
+}
+
 void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect)
 {
     // Only update the texture if is different from the current one
@@ -210,11 +220,13 @@ void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect
 
     this->initTexCoordsWithRect(rect);
 }
+
 void ParticleSystemQuad::setTexture(Texture2D* texture)
 {
     const Size& s = texture->getContentSize();
     this->setTextureWithRect(texture, Rect(0, 0, s.width, s.height));
 }
+
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
     CCASSERT(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
@@ -439,7 +451,7 @@ void ParticleSystemQuad::draw()
 
         auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-        _quadCommand.init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
         Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
 
@@ -468,11 +480,10 @@ void ParticleSystemQuad::setTotalParticles(int tp)
             _indices = indicesNew;
 
             // Clear the memory
-            // XXX: Bug? If the quads are cleared, then drawing doesn't work... WHY??? XXX
             memset(_particles, 0, particlesSize);
             memset(_quads, 0, quadsSize);
             memset(_indices, 0, indicesSize);
-
+            
             _allocatedParticles = tp;
         }
         else
@@ -506,12 +517,17 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         {
             setupVBO();
         }
+        
+        // fixed http://www.cocos2d-x.org/issues/3990
+        // Updates texture coords.
+        updateTexCoords();
     }
     else
     {
         _totalParticles = tp;
     }
     
+    _emissionRate = _totalParticles / _life;
     resetSystem();
 }
 

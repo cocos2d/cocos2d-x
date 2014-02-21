@@ -35,7 +35,11 @@
 #define SPINE_CCSKELETON_H_
 
 #include <spine/spine.h>
-#include "cocos2d.h"
+
+#include "CCNode.h"
+#include "CCProtocols.h"
+#include "CCTextureAtlas.h"
+#include "renderer/CCCustomCommand.h"
 
 namespace spine {
 

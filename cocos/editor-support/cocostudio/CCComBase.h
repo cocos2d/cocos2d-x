@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMBASE_H__
 #define __CC_EXTENTIONS_CCCOMBASE_H__
 
-#include "cocos2d.h"
 #include "ObjectFactory.h"
 #include "DictionaryHelper.h"
 #include <string>
@@ -34,10 +33,10 @@ THE SOFTWARE.
 #define DECLARE_CLASS_COMPONENT_INFO \
     public: \
         static cocostudio::ObjectFactory::TInfo Type; \
-        static cocos2d::Object* createInstance(void); \
+        static cocos2d::Ref* createInstance(void); \
         
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
-        cocos2d::Object* className::createInstance(void) \
+        cocos2d::Ref* className::createInstance(void) \
         { \
             return className::create(); \
         } \

@@ -25,9 +25,16 @@
  ****************************************************************************/
 
 #include "HttpClient.h"
+
 #include <thread>
 #include <queue>
+#include <condition_variable>
+
 #include <errno.h>
+
+#include "CCVector.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
 
 #include "curl/curl.h"
 
@@ -488,7 +495,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
-        Object *pTarget = request->getTarget();
+        Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
         if (pTarget && pSelector) 

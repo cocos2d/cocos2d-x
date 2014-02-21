@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include <unordered_map>
 #include <functional>
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCTexture2D.h"
 #include "platform/CCImage.h"
 
@@ -61,7 +61,7 @@ NS_CC_BEGIN
 * Once the texture is loaded, the next time it will return
 * a reference of the previously loaded texture reducing GPU & CPU memory
 */
-class CC_DLL TextureCache : public Object
+class CC_DLL TextureCache : public Ref
 {
 public:
     /** Returns the shared instance of the cache */
@@ -163,7 +163,7 @@ public:
     *
     * @since v1.0
     */
-    void dumpCachedTextureInfo() const;
+    std::string getCachedTextureInfo() const;
 
     //wait for texture cahe to quit befor destroy instance
     //called by director, please do not called outside

@@ -59,7 +59,10 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #ifndef __CC_SOCKETIO_H__
 #define __CC_SOCKETIO_H__
 
-#include "cocos2d.h"
+#include "CCPlatformMacros.h"
+#include "CCMap.h"
+
+#include <string>
 
 NS_CC_BEGIN
 
@@ -126,7 +129,7 @@ typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
      *  @brief A single connection to a socket.io endpoint
      */
 class SIOClient
-	: public cocos2d::Object
+	: public cocos2d::Ref
 {
 private:
 	int _port;

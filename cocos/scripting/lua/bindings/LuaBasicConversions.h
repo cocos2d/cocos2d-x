@@ -35,6 +35,7 @@ extern "C" {
 using namespace cocos2d;
 
 extern std::unordered_map<std::string, std::string>  g_luaType;
+extern std::unordered_map<std::string, std::string>  g_typeCast;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err);
@@ -87,7 +88,7 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
         {
             tolua_Error err;
             //Undo check
-            if (!tolua_isusertype(L, i + 2, "Object", 0, &err))
+            if (!tolua_isusertype(L, i + 2, "cc.Object", 0, &err))
             {
                 ok = false;
                 break;
@@ -193,6 +194,23 @@ extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret);
 extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret);
 extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret);
 
+template <class T>
+bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
+{
+    if(nullptr == L || lua_gettop(L) < lo)
+        return false;
+    
+    if (!luaval_is_usertype(L, lo, type, 0))
+        return false;
+    
+    *ret = static_cast<T*>(tolua_tousertype(L, lo, 0));
+    
+    if (nullptr == ret)
+        LUA_PRECONDITION(ret, "Invalid Native Object");
+    
+    return true;
+}
+
 
 // from native
 extern void point_to_luaval(lua_State* L,const Point& pt);
@@ -204,6 +222,7 @@ extern void color4b_to_luaval(lua_State* L,const Color4B& cc);
 extern void color4f_to_luaval(lua_State* L,const Color4F& cc);
 extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
 extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info);
+extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data);
 extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue);
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
 extern void array_to_luaval(lua_State* L,Array* inValue);
@@ -224,7 +243,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
             continue;
         
 
-        if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+        if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
             std::string typeName = typeid(*obj).name();
             auto iter = g_luaType.find(typeName);
@@ -254,7 +273,7 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
     {
         std::string key = iter->first;
         T obj = iter->second;
-        if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+        if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
             std::string name = typeid(*obj).name();
             auto typeIter = g_luaType.find(name);
@@ -274,4 +293,43 @@ void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
 void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
 void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue);
 void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
+
+template <class T>
+void object_to_luaval(lua_State* L,const char* type, T* ret)
+{
+    if(nullptr != ret)
+    {
+        /**
+         Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name
+         */
+        std::string hashName = typeid(*ret).name();
+        auto iter =  g_luaType.find(hashName);
+        std::string className = "";
+        if(g_luaType.end() != iter)
+        {
+            className = iter->second.c_str();
+        }
+        else
+        {
+            className = type;
+        }
+        
+        cocos2d::Ref* dynObject = dynamic_cast<cocos2d::Ref *>(ret);
+        if (nullptr != dynObject)
+        {
+            int ID = (int)(dynObject->_ID) ;
+            int* luaID = &(dynObject->_luaID);
+            toluafix_pushusertype_ccobject(L,ID, luaID, (void*)ret,className.c_str());
+        }
+        else
+        {
+            tolua_pushusertype(L,(void*)ret,className.c_str());
+        }
+    }
+    else
+    {
+        lua_pushnil(L);
+    }
+}
+
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

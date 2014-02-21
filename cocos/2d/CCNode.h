@@ -1,9 +1,9 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2009      Valentin Milea
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,8 +26,8 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __PLATFORM_CCNODE_H__
-#define __PLATFORM_CCNODE_H__
+#ifndef __CCNODE_H__
+#define __CCNODE_H__
 
 #include "ccMacros.h"
 #include "CCAffineTransform.h"
@@ -72,11 +72,7 @@ enum {
     kNodeOnCleanup
 };
 
-#if CC_USE_ARRAY_VECTOR
-bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
-#else
-bool nodeComparisonLess(Object* p1, Object* p2);
-#endif
+bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -130,7 +126,7 @@ class EventListener;
 
  */
 
-class CC_DLL Node : public Object
+class CC_DLL Node : public Ref
 {
 public:
     /// Default tag used for all the nodes
@@ -161,43 +157,72 @@ public:
     /// @name Setters & Getters for Graphic Peroperties
 
     /**
-     * Sets the Z order which stands for the drawing order, and reorder this node in its parent's children array.
-     *
-     * The Z order of node is relative to its siblings.
-     * It is not related to the OpenGL's z property. This one only affects the draw order of itself and its siblings.
-     * Lower Z order number are drawn before higher numbers.
-     * Please refer to `setVertexZ(float)` for the difference.
-     *
-     * @param zOrder   Z order of this node.
+     LocalZOrder is the 'key' used to sort the node relative to its siblings.
+
+     The Node's parent will sort all its children based ont the LocalZOrder value.
+     If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
+     
+     Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
+     And Nodes that have LocalZOder values < 0 are the "left" subtree
+     While Nodes with LocalZOder >=0 are the "right" subtree.
+     
+     @see `setGlobalZOrder`
+     @see `setVertexZ`
      */
-    virtual void setZOrder(int zOrder);
-    /*
-     * Sets the z order which stands for the drawing order
-     *
-     * This is an internal method. Don't call it outside the framework.
-     * The difference between setZOrder(int) and _setOrder(int) is:
-     * - _setZOrder(int) is a pure setter for _ZOrder memeber variable
-     * - setZOrder(int) firstly changes _ZOrder, then recorder this node in its parent's chilren array.
+    virtual void setLocalZOrder(int localZOrder);
+
+    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      */
-    virtual void _setZOrder(int z);
+    virtual void _setLocalZOrder(int z);
     /**
-     * Gets the Z order of this node.
+     * Gets the local Z order of this node.
      *
-     * @see `setZOrder(int)`
+     * @see `setLocalZOrder(int)`
      *
-     * @return The Z order.
+     * @return The local (relative to its siblings) Z order.
      */
-    virtual int getZOrder() const;
+    virtual int getLocalZOrder() const { return _localZOrder; }
+    CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
-     * Sets the real OpenGL Z vertex.
+     Defines the oder in which the nodes are renderer.
+     Nodes that have a Global Z Order lower, are renderer first.
+     
+     In case two or more nodes have the same Global Z Order, the oder is not guaranteed.
+     The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
+     
+     By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.
+     
+     Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
+     
+     Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
+     And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
+
+     @see `setLocalZOrder()`
+     @see `setVertexZ()`
+
+     @since v3.0
+     */
+    virtual void setGlobalZOrder(float globalZOrder);
+    /**
+     * Returns the Node's Global Z Order.
      *
-     * Differences between openGL Z vertex and cocos2d Z order:
-     * - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
-     * - OpenGL Z might require to set 2D projection
-     * - cocos2d Z order works OK if all the nodes uses the same openGL Z vertex. eg: `vertexZ = 0`
+     * @see `setGlobalZOrder(int)`
      *
-     * @warning Use it at your own risk since it might break the cocos2d parent-children z order
+     * @return The node's global Z order
+     */
+    virtual float getGlobalZOrder() const { return _globalZOrder; }
+
+    /**
+     * Sets the 'z' value in the OpenGL Depth Buffer.
+     *
+     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on 
+     * in order to use this property correctly.
+     *
+     * `setVertexZ()` also sets the `setGlobalZValue()` with the vertexZ value.
+     *
+     * @see `setGlobalZValue()`
      *
      * @param vertexZ  OpenGL Z vertex of this node.
      */
@@ -506,11 +531,11 @@ public:
      * A node which called addChild subsequently will take a larger arrival order,
      * If two children have the same Z order, the child with larger arrival order will be drawn later.
      *
-     * @warning This method is used internally for zOrder sorting, don't change this manually
+     * @warning This method is used internally for localZOrder sorting, don't change this manually
      *
      * @param orderOfArrival   The arrival order.
      */
-    virtual void setOrderOfArrival(int orderOfArrival);
+    void setOrderOfArrival(int orderOfArrival);
     /**
      * Returns the arrival order, indecates which children is added previously.
      *
@@ -518,7 +543,7 @@ public:
      *
      * @return The arrival order.
      */
-    virtual int getOrderOfArrival() const;
+    int getOrderOfArrival() const;
 
 
     /** @deprecated No longer needed
@@ -566,24 +591,24 @@ public:
      */
     virtual void addChild(Node * child);
     /**
-     * Adds a child to the container with a z-order
+     * Adds a child to the container with a local z-order
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      */
-    virtual void addChild(Node * child, int zOrder);
+    virtual void addChild(Node * child, int localZOrder);
     /**
      * Adds a child to the container with z order and tag
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    virtual void addChild(Node* child, int zOrder, int tag);
+    virtual void addChild(Node* child, int localZOrder, int tag);
     /**
      * Gets a child from the container with its tag
      *
@@ -686,9 +711,9 @@ public:
      * Reorders a child according to a new z value.
      *
      * @param child     An already added child node. It MUST be already added.
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
      */
-    virtual void reorderChild(Node * child, int zOrder);
+    virtual void reorderChild(Node * child, int localZOrder);
 
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
@@ -783,12 +808,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual Object* getUserObject() { return _userObject; }
+    virtual Ref* getUserObject() { return _userObject; }
     /**
     * @js NA
     * @lua NA
     */
-    virtual const Object* getUserObject() const { return _userObject; }
+    virtual const Ref* getUserObject() const { return _userObject; }
 
     /**
      * Returns a user assigned Object
@@ -800,7 +825,7 @@ public:
      *
      * @param userObject    A user assigned Object
      */
-    virtual void setUserObject(Object *userObject);
+    virtual void setUserObject(Ref *userObject);
 
     /// @} end of Tag & User Data
 
@@ -1411,7 +1436,6 @@ protected:
     float _scaleX;                    ///< scaling factor on x-axis
     float _scaleY;                    ///< scaling factor on y-axis
 
-    float _vertexZ;                   ///< OpenGL real Z vertex
 
     Point _position;               ///< position of the node
 
@@ -1433,19 +1457,23 @@ protected:
     mutable bool _transformDirty;             ///< transform dirty flag
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
 
-    int _ZOrder;                      ///< z-order value that affects the draw order
-    
+
+    int _localZOrder;                   ///< Local order (relative to its siblings) used to sort the node
+    float _globalZOrder;                ///< Global order used to sort the node
+    float _vertexZ;                     ///< OpenGL real Z vertex
+
+
     Vector<Node*> _children;               ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
 
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
 
     void *_userData;                  ///< A user assingned void pointer, Can be point to any cpp object
-    Object *_userObject;            ///< A user assigned Object
+    Ref *_userObject;            ///< A user assigned Object
 
     GLProgram *_shaderProgram;      ///< OpenGL shader
 
-    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same zOrder
+    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
 
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
 
@@ -1463,10 +1491,12 @@ protected:
     bool _reorderChildDirty;          ///< children order dirty flag
     bool _isTransitionFinished;       ///< flag to indicate whether the transition was finished
 
+#if CC_ENABLE_SCRIPT_BINDING
     int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
-
+#endif
+    
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
 #if CC_USE_PHYSICS
@@ -1530,4 +1560,4 @@ private:
 
 NS_CC_END
 
-#endif // __PLATFORM_CCNODE_H__
+#endif // __CCNODE_H__

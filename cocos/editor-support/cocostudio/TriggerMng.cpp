@@ -71,6 +71,8 @@ void TriggerMng::parse(const rapidjson::Value &root)
 {
     CCLOG("%s", triggerMngVersion());
     int count = DICTOOL->getArrayCount_json(root, "Triggers");
+    
+#if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     bool useBindings = engine != nullptr;
 
@@ -87,6 +89,7 @@ void TriggerMng::parse(const rapidjson::Value &root)
         }
     }
     else
+#endif // #if CC_ENABLE_SCRIPT_BINDING
     {
         for (int i = 0; i < count; ++i)
         {
@@ -106,7 +109,7 @@ void TriggerMng::parse(const rapidjson::Value &root)
 
 cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
 {
-    CCAssert(event >= 0, "Argument must be larger than 0");
+    CCASSERT(event != 0, "Argument must be larger than 0");
     
     auto iter = _eventTriggers.find(event);
     if (iter == _eventTriggers.end())
@@ -129,7 +132,7 @@ TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 bool TriggerMng::add(unsigned int event, TriggerObj *obj)
 {
     bool ret = false;
-    CCAssert(obj != nullptr, "Argument must be non-nil");
+    CCASSERT(obj != nullptr, "Argument must be non-nil");
     do
     {
         auto iterator = _eventTriggers.find(event);
@@ -170,7 +173,7 @@ void TriggerMng::removeAll(void)
 bool TriggerMng::remove(unsigned int event)
 {
     bool bRet = false;
-    CCAssert(event >= 0, "event must be larger than 0");
+    CCASSERT(event != 0, "event must be larger than 0");
     do 
     {
         auto iterator = _eventTriggers.find(event);
@@ -194,8 +197,8 @@ bool TriggerMng::remove(unsigned int event)
 bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
 {
 	bool bRet = false;
-	CCAssert(event >= 0, "event must be larger than 0");
-	CCAssert(Obj != 0, "TriggerObj must be not 0");
+	CCASSERT(event != 0, "event must be larger than 0");
+	CCASSERT(Obj != 0, "TriggerObj must be not 0");
 	do 
 	{
         auto iterator = _eventTriggers.find(event);
@@ -238,7 +241,7 @@ bool TriggerMng::isEmpty(void) const
     return _eventTriggers.empty();
 }
 
-void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL_MovementEventCallFunc mecf)
+void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Ref *pTarget, SEL_MovementEventCallFunc mecf)
 {
 	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
@@ -262,7 +265,7 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 	}
 }
 
-void TriggerMng::removeArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL_MovementEventCallFunc mecf)
+void TriggerMng::removeArmatureMovementCallBack(Armature *pAr, Ref *pTarget, SEL_MovementEventCallFunc mecf)
 {
 	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
@@ -314,7 +317,7 @@ void TriggerMng::removeAllArmatureMovementCallBack()
 ArmatureMovementDispatcher::ArmatureMovementDispatcher(void)
 : _mapEventAnimation(nullptr)
 {
-	_mapEventAnimation = new std::unordered_map<Object*, SEL_MovementEventCallFunc> ;
+	_mapEventAnimation = new std::unordered_map<Ref*, SEL_MovementEventCallFunc> ;
 }
 
 ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
@@ -331,12 +334,12 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 	 }
  }
 
-  void ArmatureMovementDispatcher::addAnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::addAnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->insert(std::make_pair(pTarget, mecf));
   }
 
-  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->erase(pTarget);
   }

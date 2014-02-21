@@ -23,6 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #import "CCApplication.h"
 #import <Cocoa/Cocoa.h>
 #include <algorithm>
@@ -30,13 +33,24 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCDirector.h"
 #import "CCDirectorCaller.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
+
+static long getCurrentMillSecond()
+{
+    long lLastTime = 0;
+    struct timeval stCurrentTime;
+    
+    gettimeofday(&stCurrentTime,NULL);
+    lLastTime = stCurrentTime.tv_sec*1000+stCurrentTime.tv_usec*0.001; //millseconds
+    return lLastTime;
+}
 
 Application* Application::sm_pSharedApplication = 0;
 
 Application::Application()
+: _animationInterval(1.0f/60.0f*1000.0f)
 {
     CCASSERT(! sm_pSharedApplication, "sm_pSharedApplication already exist");
     sm_pSharedApplication = this;
@@ -54,12 +68,17 @@ int Application::run()
     {
         return 0;
     }
-    EGLView* pMainWnd = EGLView::getInstance();
+    GLView* glview = Director::getInstance()->getOpenGLView();
     
-    while (!pMainWnd->windowShouldClose())
+    while (!glview->windowShouldClose())
     {
+        long iLastTime = getCurrentMillSecond();
         Director::getInstance()->mainLoop();
-        pMainWnd->pollEvents();
+        glview->pollEvents();
+        long iCurTime = getCurrentMillSecond();
+        if (iCurTime-iLastTime<_animationInterval){
+            usleep(static_cast<useconds_t>((_animationInterval - iCurTime+iLastTime)*1000));
+        }
     }
 
     /* Only work on Desktop
@@ -74,7 +93,7 @@ int Application::run()
 
 void Application::setAnimationInterval(double interval)
 {
-    [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
+    _animationInterval = interval*1000.0f;
 }
 
 Application::Platform Application::getTargetPlatform()
@@ -129,6 +148,9 @@ LanguageType Application::getCurrentLanguage()
     }
     else if ([languageCode isEqualToString:@"es"]){
         ret = LanguageType::SPANISH;
+    }
+    else if ([languageCode isEqualToString:@"nl"]){
+        ret = LanguageType::DUTCH;
     }
     else if ([languageCode isEqualToString:@"ru"]){
         ret = LanguageType::RUSSIAN;
@@ -189,3 +211,5 @@ const std::string& Application::getStartupScriptFilename(void)
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
