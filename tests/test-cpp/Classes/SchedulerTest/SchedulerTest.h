@@ -16,9 +16,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void backCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void restartCallback(Object* sender);
+    void backCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void restartCallback(Ref* sender);
 };
 
 // class SchedulerTestLayer : Layer
@@ -79,7 +79,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    Vector<Object*> _pausedTargets;
+    std::set<void*> _pausedTargets;
 };
 
 class SchedulerPauseResumeAllUser : public SchedulerTestLayer
@@ -99,7 +99,7 @@ public:
     void pause(float dt);
     void resume(float dt);
 private:
-    Vector<Object*> _pausedTargets;
+    std::set<void*> _pausedTargets;
 };
 
 class SchedulerUnscheduleAll : public SchedulerTestLayer
@@ -258,7 +258,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     ControlSlider* sliderCtl();
-    void sliderAction(Object* sender, Control::EventType controlEvent);
+    void sliderAction(Ref* sender, Control::EventType controlEvent);
     ControlSlider* _sliderCtl;
 };
 
@@ -273,7 +273,7 @@ public:
     virtual std::string subtitle() const override;
     void onEnter();
     ControlSlider* sliderCtl();
-    void sliderAction(Object* sender, Control::EventType controlEvent);
+    void sliderAction(Ref* sender, Control::EventType controlEvent);
     Scheduler *sched1;
     Scheduler *sched2;
     ActionManager *actionManager1;

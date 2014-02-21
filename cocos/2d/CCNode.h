@@ -26,8 +26,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __PLATFORM_CCNODE_H__
-#define __PLATFORM_CCNODE_H__
+#ifndef __CCNODE_H__
+#define __CCNODE_H__
 
 #include "ccMacros.h"
 #include "CCAffineTransform.h"
@@ -126,7 +126,7 @@ class EventListener;
 
  */
 
-class CC_DLL Node : public Object
+class CC_DLL Node : public Ref
 {
 public:
     /// Default tag used for all the nodes
@@ -808,12 +808,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual Object* getUserObject() { return _userObject; }
+    virtual Ref* getUserObject() { return _userObject; }
     /**
     * @js NA
     * @lua NA
     */
-    virtual const Object* getUserObject() const { return _userObject; }
+    virtual const Ref* getUserObject() const { return _userObject; }
 
     /**
      * Returns a user assigned Object
@@ -825,7 +825,7 @@ public:
      *
      * @param userObject    A user assigned Object
      */
-    virtual void setUserObject(Object *userObject);
+    virtual void setUserObject(Ref *userObject);
 
     /// @} end of Tag & User Data
 
@@ -1469,7 +1469,7 @@ protected:
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
 
     void *_userData;                  ///< A user assingned void pointer, Can be point to any cpp object
-    Object *_userObject;            ///< A user assigned Object
+    Ref *_userObject;            ///< A user assigned Object
 
     GLProgram *_shaderProgram;      ///< OpenGL shader
 
@@ -1491,10 +1491,12 @@ protected:
     bool _reorderChildDirty;          ///< children order dirty flag
     bool _isTransitionFinished;       ///< flag to indicate whether the transition was finished
 
+#if CC_ENABLE_SCRIPT_BINDING
     int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
-
+#endif
+    
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
 #if CC_USE_PHYSICS
@@ -1558,4 +1560,4 @@ private:
 
 NS_CC_END
 
-#endif // __PLATFORM_CCNODE_H__
+#endif // __CCNODE_H__

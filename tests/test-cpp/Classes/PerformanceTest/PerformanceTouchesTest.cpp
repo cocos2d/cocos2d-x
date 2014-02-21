@@ -249,7 +249,7 @@ void TouchesPerformTest3::onEnter()
     }
     
     auto emitEventlabel = LabelTTF::create("Emit Touch Event", "", 24);
-    auto menuItem = MenuItemLabel::create(emitEventlabel, [this](Object* sender){
+    auto menuItem = MenuItemLabel::create(emitEventlabel, [this](Ref* sender){
         
         CC_PROFILER_PURGE_ALL();
         

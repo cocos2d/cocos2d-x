@@ -39,9 +39,9 @@ public:
     SpriteTestDemo(void);
     virtual ~SpriteTestDemo(void);
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
     // overrides
     virtual std::string title() const override;

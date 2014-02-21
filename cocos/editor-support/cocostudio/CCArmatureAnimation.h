@@ -44,8 +44,8 @@ enum MovementEventType
 class Armature;
 class Bone;
 
-typedef void (cocos2d::Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const std::string&);
-typedef void (cocos2d::Object::*SEL_FrameEventCallFunc)(Bone *, const std::string&, int, int);
+typedef void (cocos2d::Ref::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const std::string&);
+typedef void (cocos2d::Ref::*SEL_FrameEventCallFunc)(Bone *, const std::string&, int, int);
 
 #define movementEvent_selector(_SELECTOR) (cocostudio::SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (cocostudio::SEL_FrameEventCallFunc)(&_SELECTOR)
@@ -184,13 +184,13 @@ public:
      * Set armature's movement event callback function
      * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
      */
-    CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Object *target, SEL_MovementEventCallFunc callFunc);
+    CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Ref *target, SEL_MovementEventCallFunc callFunc);
 
     /**
      * Set armature's frame event callback function
      * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
      */
-    CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
+    CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Ref *target, SEL_FrameEventCallFunc callFunc);
     
     void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener);
     void setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
@@ -216,12 +216,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual Object* getUserObject() { return _userObject; }
+    virtual Ref* getUserObject() { return _userObject; }
     /** 
     * @js NA
     * @lua NA
     */
-    virtual const Object* getUserObject() const { return _userObject; }
+    virtual const Ref* getUserObject() const { return _userObject; }
 
     /**
      * Returns a user assigned Object
@@ -233,7 +233,7 @@ public:
      *
      * @param userObject    A user assigned Object
      */
-    virtual void setUserObject(Object *userObject);
+    virtual void setUserObject(Ref *userObject);
 protected:
 
     /**
@@ -296,7 +296,7 @@ protected:
     unsigned int _movementIndex;
     int _movementListDurationTo;
 
-    cocos2d::Object *_userObject;
+    cocos2d::Ref *_userObject;
 protected:
     /**
      * MovementEvent CallFunc.
@@ -316,8 +316,8 @@ protected:
     SEL_FrameEventCallFunc _frameEventCallFunc;
 
 
-    cocos2d::Object *_movementEventTarget;
-    cocos2d::Object *_frameEventTarget;
+    cocos2d::Ref *_movementEventTarget;
+    cocos2d::Ref *_frameEventTarget;
     
     
     std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> _movementEventListener;

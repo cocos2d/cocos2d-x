@@ -46,15 +46,15 @@ public:
     ControlButtonTest_Event();
     ~ControlButtonTest_Event();
     bool init();
-    void touchDownAction(Object *sender, Control::EventType controlEvent);
-    void touchDragInsideAction(Object *sender, Control::EventType controlEvent);
-    void touchDragOutsideAction(Object *sender, Control::EventType controlEvent);
-    void touchDragEnterAction(Object *sender, Control::EventType controlEvent);
-    void touchDragExitAction(Object *sender, Control::EventType controlEvent);
-    void touchUpInsideAction(Object *sender, Control::EventType controlEvent);
-    void touchUpOutsideAction(Object *sender, Control::EventType controlEvent);
-    void touchCancelAction(Object *sender, Control::EventType controlEvent);
-    void touchBitmaskAction(Object *sender, Control::EventType controlEvent);
+    void touchDownAction(Ref *sender, Control::EventType controlEvent);
+    void touchDragInsideAction(Ref *sender, Control::EventType controlEvent);
+    void touchDragOutsideAction(Ref *sender, Control::EventType controlEvent);
+    void touchDragEnterAction(Ref *sender, Control::EventType controlEvent);
+    void touchDragExitAction(Ref *sender, Control::EventType controlEvent);
+    void touchUpInsideAction(Ref *sender, Control::EventType controlEvent);
+    void touchUpOutsideAction(Ref *sender, Control::EventType controlEvent);
+    void touchCancelAction(Ref *sender, Control::EventType controlEvent);
+    void touchBitmaskAction(Ref *sender, Control::EventType controlEvent);
 protected:
     CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayValueLabel, DisplayValueLabel)
     CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayBitmaskLabel, DisplayBitmaskLabel)

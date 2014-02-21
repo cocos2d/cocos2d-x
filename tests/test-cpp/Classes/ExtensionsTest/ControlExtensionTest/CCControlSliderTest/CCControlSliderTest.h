@@ -31,7 +31,7 @@ public:
     ControlSliderTest();
     virtual ~ControlSliderTest();
     bool init();
-    void valueChanged(Object *sender, Control::EventType controlEvent);
+    void valueChanged(Ref *sender, Control::EventType controlEvent);
 protected:
     LabelTTF* _displayValueLabel;
     CONTROL_SCENE_CREATE_FUNC(ControlSliderTest)

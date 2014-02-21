@@ -286,7 +286,7 @@ void SubTest::removeByTag(int tag)
 // SpriteMenuLayer
 //
 ////////////////////////////////////////////////////////
-void SpriteMenuLayer::restartCallback(Object* sender)
+void SpriteMenuLayer::restartCallback(Ref* sender)
 {
     if ( SpriteMainScene::_s_autoTest )
     {
@@ -296,7 +296,7 @@ void SpriteMenuLayer::restartCallback(Object* sender)
     
     PerformBasicLayer::restartCallback(sender);
 }
-void SpriteMenuLayer::nextCallback(Object* sender)
+void SpriteMenuLayer::nextCallback(Ref* sender)
 {
     if ( SpriteMainScene::_s_autoTest )
     {
@@ -306,7 +306,7 @@ void SpriteMenuLayer::nextCallback(Object* sender)
     
     PerformBasicLayer::nextCallback(sender);
 }
-void SpriteMenuLayer::backCallback(Object* sender)
+void SpriteMenuLayer::backCallback(Ref* sender)
 {
     if ( SpriteMainScene::_s_autoTest )
     {
@@ -488,7 +488,7 @@ SpriteMainScene::~SpriteMainScene()
     }
 }
 
-void SpriteMainScene::testNCallback(Object* sender)
+void SpriteMainScene::testNCallback(Ref* sender)
 {
     if (SpriteMainScene::_s_autoTest)
     {
@@ -514,7 +514,7 @@ void SpriteMainScene::updateNodes()
     }
 }
 
-void SpriteMainScene::onIncrease(Object* sender)
+void SpriteMainScene::onIncrease(Ref* sender)
 {    
     if( quantityNodes >= kMaxNodes)
         return;
@@ -529,7 +529,7 @@ void SpriteMainScene::onIncrease(Object* sender)
     updateNodes();
 }
 
-void SpriteMainScene::onDecrease(Object* sender)
+void SpriteMainScene::onDecrease(Ref* sender)
 {
     
     if( quantityNodes <= 0 )
@@ -728,7 +728,7 @@ void  SpriteMainScene::finishAutoTest()
     log("Sprite performance test is  finish ");
 }
 
-void  SpriteMainScene::onAutoTest(Object* sender)
+void  SpriteMainScene::onAutoTest(Ref* sender)
 {
     SpriteMainScene::_s_autoTest = !SpriteMainScene::_s_autoTest;
     MenuItemFont* menuItem = dynamic_cast<MenuItemFont*>(sender);

@@ -68,7 +68,7 @@ bool UISliderTest::init()
     return false;
 }
 
-void UISliderTest::sliderEvent(Object *pSender, SliderEventType type)
+void UISliderTest::sliderEvent(Ref *pSender, SliderEventType type)
 {
     if (type == SLIDER_PERCENTCHANGED)
     {
@@ -149,7 +149,7 @@ bool UISliderTest_Scale9::init()
     return false;
 }
 
-void UISliderTest_Scale9::sliderEvent(Object *pSender, SliderEventType type)
+void UISliderTest_Scale9::sliderEvent(Ref *pSender, SliderEventType type)
 {
     if (type == SLIDER_PERCENTCHANGED)
     {

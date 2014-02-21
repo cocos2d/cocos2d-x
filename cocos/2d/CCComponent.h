@@ -25,12 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_FRAMEWORK_COMPONENT_H__
 #define __CC_FRAMEWORK_COMPONENT_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include <string>
 
 NS_CC_BEGIN
 
-class CC_DLL Component : public Object
+class Node;
+
+class CC_DLL Component : public Ref
 {
 protected:
     /**

@@ -29,17 +29,17 @@ static Point s_tCurPos = Point::ZERO;
 
 struct {
 	const char *test_name;
-	std::function<void(Object*)> callback;
+	std::function<void(Ref*)> callback;
 } g_bugs[] = {
-	{ "Bug-350", [](Object* sender){ TEST_BUG(350)} },
-	{ "Bug-422", [](Object* sender){ TEST_BUG(422)} },
-	{ "Bug-458", [](Object* sender){ TEST_BUG(458)} },
-	{ "Bug-624", [](Object* sender){ TEST_BUG(624)} },
-	{ "Bug-886", [](Object* sender){ TEST_BUG(886)} },
-	{ "Bug-899", [](Object* sender){ TEST_BUG(899)} },
-	{ "Bug-914", [](Object* sender){ TEST_BUG(914)} },
-	{ "Bug-1159", [](Object* sender){ TEST_BUG(1159)} },
-	{ "Bug-1174", [](Object* sender){ TEST_BUG(1174)} },
+	{ "Bug-350", [](Ref* sender){ TEST_BUG(350)} },
+	{ "Bug-422", [](Ref* sender){ TEST_BUG(422)} },
+	{ "Bug-458", [](Ref* sender){ TEST_BUG(458)} },
+	{ "Bug-624", [](Ref* sender){ TEST_BUG(624)} },
+	{ "Bug-886", [](Ref* sender){ TEST_BUG(886)} },
+	{ "Bug-899", [](Ref* sender){ TEST_BUG(899)} },
+	{ "Bug-914", [](Ref* sender){ TEST_BUG(914)} },
+	{ "Bug-1159", [](Ref* sender){ TEST_BUG(1159)} },
+	{ "Bug-1174", [](Ref* sender){ TEST_BUG(1174)} },
 };
 
 static const int g_maxitems = sizeof(g_bugs) / sizeof(g_bugs[0]);
@@ -123,7 +123,7 @@ void BugsTestBaseLayer::onEnter()
     addChild(menu);
 }
 
-void BugsTestBaseLayer::backCallback(Object* sender)
+void BugsTestBaseLayer::backCallback(Ref* sender)
 {
 //    Director::getInstance()->enableRetinaDisplay(false);
     auto scene = new BugsTestScene();

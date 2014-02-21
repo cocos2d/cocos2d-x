@@ -243,7 +243,7 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
         Array*    protocolArray = ((Array*)  tolua_tousertype(tolua_S,3,0));
         std::vector<std::string> protocols;
         if (NULL != protocolArray) {
-            Object* pObj = NULL;
+            Ref* pObj = NULL;
             CCARRAY_FOREACH(protocolArray, pObj)
             {
                 String* pStr = static_cast<String*>(pObj);

@@ -129,7 +129,7 @@ void AtlasDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void AtlasDemo::restartCallback(Object* sender)
+void AtlasDemo::restartCallback(Ref* sender)
 {
     auto s = new AtlasTestScene();
     s->addChild(restartAtlasAction()); 
@@ -138,7 +138,7 @@ void AtlasDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void AtlasDemo::nextCallback(Object* sender)
+void AtlasDemo::nextCallback(Ref* sender)
 {
     auto s = new AtlasTestScene();
     s->addChild( nextAtlasAction() );
@@ -146,7 +146,7 @@ void AtlasDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void AtlasDemo::backCallback(Object* sender)
+void AtlasDemo::backCallback(Ref* sender)
 {
     auto s = new AtlasTestScene();
     s->addChild( backAtlasAction() );
@@ -1001,37 +1001,37 @@ void  LabelTTFTest::updateAlignment()
     this->addChild(_plabel);
 }
 
-void LabelTTFTest::setAlignmentLeft(Object* sender)
+void LabelTTFTest::setAlignmentLeft(Ref* sender)
 {
     _horizAlign = TextHAlignment::LEFT;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentCenter(Object* sender)
+void LabelTTFTest::setAlignmentCenter(Ref* sender)
 {
     _horizAlign = TextHAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentRight(Object* sender)
+void LabelTTFTest::setAlignmentRight(Ref* sender)
 {
     _horizAlign = TextHAlignment::RIGHT;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentTop(Object* sender)
+void LabelTTFTest::setAlignmentTop(Ref* sender)
 {
     _vertAlign = TextVAlignment::TOP;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentMiddle(Object* sender)
+void LabelTTFTest::setAlignmentMiddle(Ref* sender)
 {
     _vertAlign = TextVAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentBottom(Object* sender)
+void LabelTTFTest::setAlignmentBottom(Ref* sender)
 {
     _vertAlign = TextVAlignment::BOTTOM;
     this->updateAlignment();
@@ -1234,7 +1234,7 @@ std::string BitmapFontMultiLineAlignment::subtitle() const
     return "";
 }
 
-void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
+void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
 {
     auto item = (MenuItemFont*)sender;
     item->setColor(Color3B::RED);
@@ -1260,7 +1260,7 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
+void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
 {
     auto item = static_cast<MenuItemFont*>(sender);
     item->setColor(Color3B::RED);

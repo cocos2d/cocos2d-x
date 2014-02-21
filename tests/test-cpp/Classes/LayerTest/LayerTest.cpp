@@ -86,7 +86,7 @@ void LayerTest::onEnter()
     BaseTest::onEnter();
 }
 
-void LayerTest::restartCallback(Object* sender)
+void LayerTest::restartCallback(Ref* sender)
 {
     auto s = new LayerTestScene();
     s->addChild(restartAction());
@@ -95,7 +95,7 @@ void LayerTest::restartCallback(Object* sender)
     s->release();
 }
 
-void LayerTest::nextCallback(Object* sender)
+void LayerTest::nextCallback(Ref* sender)
 {
     auto s = new LayerTestScene();
     s->addChild( nextAction() );
@@ -103,7 +103,7 @@ void LayerTest::nextCallback(Object* sender)
     s->release();
 }
 
-void LayerTest::backCallback(Object* sender)
+void LayerTest::backCallback(Ref* sender)
 {
     auto s = new LayerTestScene();
     s->addChild( backAction() );
@@ -600,7 +600,7 @@ LayerGradientTest::LayerGradientTest()
     menu->setPosition(Point(s.width / 2, 100));
 }
 
-void LayerGradientTest::toggleItem(Object *sender)
+void LayerGradientTest::toggleItem(Ref *sender)
 {
     auto gradient = static_cast<LayerGradient*>( getChildByTag(kTagLayer) );
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
@@ -709,7 +709,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-void LayerIgnoreAnchorPointPos::onToggle(Object* pObject)
+void LayerIgnoreAnchorPointPos::onToggle(Ref* pObject)
 {
     auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
@@ -757,7 +757,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-void LayerIgnoreAnchorPointRot::onToggle(Object* pObject)
+void LayerIgnoreAnchorPointRot::onToggle(Ref* pObject)
 {
     auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
@@ -808,7 +808,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-void LayerIgnoreAnchorPointScale::onToggle(Object* pObject)
+void LayerIgnoreAnchorPointScale::onToggle(Ref* pObject)
 {
     auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
     bool ignore = layer->isIgnoreAnchorPointForPosition();

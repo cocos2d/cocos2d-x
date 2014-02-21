@@ -152,7 +152,7 @@ auto item = MenuItemLabel::create(label, std::bind(&MyClass::callback, this, std
 
 // in v3.0 you can use lambdas or any other "Function" object
 auto item = MenuItemLabel::create(label,
-                 [&](Object *sender) {
+                 [&](Ref *sender) {
                      // do something. Item "sender" clicked
                   });
 ```

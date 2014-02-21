@@ -36,7 +36,7 @@ NS_CC_BEGIN
 class FontAtlas;
 
 
-class CC_DLL Font : public Object
+class CC_DLL Font : public Ref
 {
 public:
     virtual  FontAtlas *createFontAtlas() = 0;

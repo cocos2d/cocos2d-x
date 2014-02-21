@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <string>
 #include <chrono>
 #include "ccConfig.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCMap.h"
 
 NS_CC_BEGIN
@@ -47,7 +47,7 @@ class ProfilingTimer;
  To use it, enable set the CC_ENABLE_PROFILERS=1 in the ccConfig.h file
  */
 
-class CC_DLL Profiler : public Object
+class CC_DLL Profiler : public Ref
 {
 public:
     /**
@@ -98,7 +98,7 @@ public:
     Map<std::string, ProfilingTimer*> _activeTimers;
 };
 
-class ProfilingTimer : public Object
+class ProfilingTimer : public Ref
 {
 public:
     /**

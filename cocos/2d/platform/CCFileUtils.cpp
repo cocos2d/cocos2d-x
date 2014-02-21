@@ -112,7 +112,7 @@ public:
     {
         CC_UNUSED_PARAM(ctx);
         CC_UNUSED_PARAM(atts);
-        std::string sName(name);
+        const std::string sName(name);
         if( sName == "dict" )
         {
 			if(_resultType == SAX_RESULT_DICT && _rootDict.empty())
@@ -203,7 +203,7 @@ public:
     {
         CC_UNUSED_PARAM(ctx);
         SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
-        std::string sName((char*)name);
+        const std::string sName((char*)name);
         if( sName == "dict" )
         {
             _stateStack.pop();
@@ -280,7 +280,7 @@ public:
         }
 
         SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
-        std::string text = std::string((char*)ch,0,len);
+        const std::string text = std::string((char*)ch,0,len);
 
         switch(_state)
         {
@@ -307,14 +307,14 @@ public:
 
 ValueMap FileUtils::getValueMapFromFile(const std::string& filename)
 {
-    std::string fullPath = fullPathForFilename(filename.c_str());
+    const std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
 }
 
 ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
 {
-    std::string fullPath = fullPathForFilename(filename.c_str());
+    const std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
     return tMaker.arrayWithContentsOfFile(fullPath.c_str());
 }
@@ -423,7 +423,7 @@ static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxm
 {
     tinyxml2::XMLElement* rootNode = doc->NewElement("dict");
     
-    for (auto iter = dict.begin(); iter != dict.end(); ++iter)
+    for (auto iter = dict.cbegin(); iter != dict.cend(); ++iter)
     {
         tinyxml2::XMLElement* tmpNode = doc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
@@ -566,7 +566,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
     do
     {
         // read the file from hardware
-        std::string fullPath = fullPathForFilename(filename);
+        const std::string fullPath = fullPathForFilename(filename);
         FILE *fp = fopen(fullPath.c_str(), mode);
         CC_BREAK_IF(!fp);
         
@@ -684,12 +684,12 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
     }
     
     // Get the new file name.
-    std::string newFilename( getNewFilename(filename) );
+    const std::string newFilename( getNewFilename(filename) );
     
-    string fullpath = "";
+	std::string fullpath;
     
-    for (auto searchIt = _searchPathArray.begin(); searchIt != _searchPathArray.end(); ++searchIt) {
-        for (auto resolutionIt = _searchResolutionsOrderArray.begin(); resolutionIt != _searchResolutionsOrderArray.end(); ++resolutionIt) {
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt) {
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt) {
             
             fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
             
@@ -719,7 +719,7 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
     bool existDefault = false;
     _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
-    for(auto iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
+    for(auto iter = searchResolutionsOrder.cbegin(); iter != searchResolutionsOrder.cend(); ++iter)
     {
         std::string resolutionDirectory = *iter;
         if (!existDefault && resolutionDirectory == "")
@@ -761,7 +761,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     
     _fullPathCache.clear();
     _searchPathArray.clear();
-    for (auto iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
+    for (auto iter = searchPaths.cbegin(); iter != searchPaths.cend(); ++iter)
     {
         std::string prefix;
         std::string path;
@@ -811,7 +811,7 @@ void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 
 void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename)
 {
-    std::string fullPath = fullPathForFilename(filename);
+    const std::string fullPath = fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
