@@ -23,18 +23,10 @@
  ****************************************************************************/
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-    #include "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
+#include "Lua_web_socket.h"
 #include <map>
 #include <string>
-#include "Lua_web_socket.h"
+#include "tolua_fix.h"
 #include "cocos2d.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"

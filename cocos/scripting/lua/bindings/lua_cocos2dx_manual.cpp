@@ -22,15 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_manual.hpp"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include  "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
+#include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"

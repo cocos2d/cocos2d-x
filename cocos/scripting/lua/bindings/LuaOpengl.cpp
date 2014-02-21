@@ -21,17 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifdef __cplusplus
-extern "C" {
-#endif
-    #include "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
+#include "LuaOpengl.h"
 #include <map>
 #include <string>
-#include "LuaOpengl.h"
+#include "tolua_fix.h"
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
