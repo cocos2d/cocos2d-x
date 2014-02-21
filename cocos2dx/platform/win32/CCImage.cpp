@@ -413,7 +413,6 @@ bool CCImage::initWithString(
         GetDIBits(dc.getDC(), dc.getBitmap(), 0, m_nHeight, m_pData, 
             (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
-        // change pixel's alpha value to 255, when it's RGB != 0
         COLORREF * pPixel = NULL;
         for (int y = 0; y < m_nHeight; ++y)
         {
@@ -421,8 +420,7 @@ bool CCImage::initWithString(
             for (int x = 0; x < m_nWidth; ++x)
             {
                 COLORREF& clr = *pPixel;
-
-                clr |= (0xffffff | (GetRValue(clr) << 24));
+                clr = (clr << 8) | 0xffffff;
                 ++pPixel;
             }
         }
