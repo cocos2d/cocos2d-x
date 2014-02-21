@@ -32,11 +32,11 @@ function LabelAtlasTest.step(dt)
     local string = string.format("%2.2f Test", m_time)
 
     local label1_origin = LabelAtlasTest.layer:getChildByTag(kTagSprite1)
-    local label1 = tolua.cast(label1_origin, "cc.LabelAtlas")
+    local label1 = label1_origin
     label1:setString(string)	--
 
     local label2_origin = LabelAtlasTest.layer:getChildByTag(kTagSprite2)
-    local label2 = tolua.cast(label2_origin, "cc.LabelAtlas")
+    local label2 = label2_origin
     string = string.format("%d", m_time)
 
     label2:setString(string)
@@ -88,11 +88,11 @@ function LabelAtlasColorTest.step(dt)
     m_time = m_time + dt
     local string = string.format("%2.2f Test", m_time)
     local label1_origin = LabelAtlasColorTest.layer:getChildByTag(kTagSprite1)
-    local label1 = tolua.cast(label1_origin, "cc.LabelAtlas")
+    local label1 = label1_origin
     label1:setString(string)
 
     local label2_origin = LabelAtlasColorTest.layer:getChildByTag(kTagSprite2)
-    local label2 = tolua.cast(label2_origin, "cc.LabelAtlas")
+    local label2 = label2_origin
     string = string.format("%d", m_time)
 
     label2:setString(string)
@@ -199,7 +199,7 @@ function Atlas3.create()
     label2:setColor(cc.c3b(255, 0, 0 ))
     layer:addChild(label2, 0, kTagBitmapAtlas2)
 
-    label2:runAction( tolua.cast(repeatAction:clone(), "cc.Action") )
+    label2:runAction( repeatAction:clone())
 
     local label3 = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest2.fnt")
     -- testing anchors
@@ -223,13 +223,13 @@ function Atlas3.step(dt)
     m_time = m_time + dt
     local string = string.format("%2.2f Test j", m_time)
 
-    local label1 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas1), "cc.LabelBMFont")
+    local label1 = Atlas3.layer:getChildByTag(kTagBitmapAtlas1)
     label1:setString(string)
 
-    local label2 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas2), "cc.LabelBMFont")
+    local label2 = Atlas3.layer:getChildByTag(kTagBitmapAtlas2)
     label2:setString(string)
 
-    local label3 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas3), "cc.LabelBMFont")
+    local label3 = Atlas3.layer:getChildByTag(kTagBitmapAtlas3)
     label3:setString(string)
 end
 
@@ -309,7 +309,7 @@ function Atlas4.create()
     label2:setPosition( cc.p(s.width/2.0, 80) )
 
     local lastChar = label2:getChildByTag(3)
-    lastChar:runAction(tolua.cast( rot_4ever:clone(), "cc.Action" ))
+    lastChar:runAction(rot_4ever:clone())
 
     layer:registerScriptHandler(Atlas4.onNodeEvent)
 
@@ -329,7 +329,7 @@ function Atlas4.step(dt)
 
     local string = string.format("%04.1f", m_time)
 
-    local label1 = tolua.cast(Atlas4.layer:getChildByTag(kTagBitmapAtlas2), "cc.LabelBMFont")
+    local label1 = Atlas4.layer:getChildByTag(kTagBitmapAtlas2)
     label1:setString(string)
 end
 
@@ -592,9 +592,9 @@ function LabelsEmpty.create()
 end
 
 function LabelsEmpty.updateStrings(dt)
-    local label1 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas1), "cc.LabelBMFont")
-    local label2 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas2), "cc.LabelTTF")
-    local label3 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas3), "cc.LabelAtlas")
+    local label1 = LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas1)
+    local label2 = LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas2)
+    local label3 = LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas3)
 
     if( LabelsEmpty.setEmpty == false) then
         label1:setString("not empty")
@@ -1118,7 +1118,7 @@ end
 
 
 function BitmapFontMultiLineAlignment.stringChanged(tag, sender)
-    local item = tolua.cast(sender, "cc.MenuItemFont")
+    local item = sender
     item:setColor(cc.c3b(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
@@ -1136,7 +1136,7 @@ end
 
 function BitmapFontMultiLineAlignment.alignmentChanged(tag, sender)
     -- cclog("BitmapFontMultiLineAlignment.alignmentChanged, tag:"..tag)
-    local item = tolua.cast(sender, "cc.MenuItemFont")
+    local item = sender
     item:setColor(cc.c3b(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
