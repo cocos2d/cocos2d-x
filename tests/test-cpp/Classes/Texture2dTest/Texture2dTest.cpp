@@ -95,6 +95,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TextureS3TCDxt1),
     CL(TextureS3TCDxt3),
     CL(TextureS3TCDxt5),
+    CL(TextureS3TCWithNoMipmaps),
     
     CL(TextureATITCRGB),
     CL(TextureATITCExplicit),
@@ -166,21 +167,21 @@ TextureDemo::~TextureDemo()
     log("%s\n", textureCache->getCachedTextureInfo().c_str());
 }
 
-void TextureDemo::restartCallback(Object* sender)
+void TextureDemo::restartCallback(Ref* sender)
 {
     auto s = TextureTestScene::create();
     s->addChild(restartTextureTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void TextureDemo::nextCallback(Object* sender)
+void TextureDemo::nextCallback(Ref* sender)
 {
     auto s = TextureTestScene::create();
     s->addChild(nextTextureTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void TextureDemo::backCallback(Object* sender)
+void TextureDemo::backCallback(Ref* sender)
 {
     auto s = TextureTestScene::create();
     s->addChild(backTextureTest());
@@ -1924,7 +1925,7 @@ void TextureMemoryAlloc::onEnter()
     menu2->setPosition(Point(s.width/2, s.height/4));
 }
 
-void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::Object *sender)
+void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::Ref *sender)
 {
     if (_background)
     {
@@ -1932,7 +1933,7 @@ void TextureMemoryAlloc::changeBackgroundVisible(cocos2d::Object *sender)
     }
 }
 
-void TextureMemoryAlloc::updateImage(cocos2d::Object *sender)
+void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
 {
     if (_background)
     {
@@ -2135,6 +2136,20 @@ std::string TextureS3TCDxt5::title() const
 std::string TextureS3TCDxt5::subtitle() const
 {
     return "S3TC dxt5 decode";    
+}
+
+//Implement of S3TC with no mipmaps
+TextureS3TCWithNoMipmaps::TextureS3TCWithNoMipmaps()
+{
+    auto sprite = Sprite::create("Images/test_512x512_s3tc_dxt5_with_no_mipmaps.dds");
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    
+    addChild(sprite);
+}
+std::string TextureS3TCWithNoMipmaps::title() const
+{
+    return "S3TC with no mipmaps";
 }
 
 //Implement of ATITC

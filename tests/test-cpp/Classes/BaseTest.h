@@ -33,9 +33,9 @@ public:
     virtual std::string title() const;
     virtual std::string subtitle() const;
 
-	virtual void restartCallback(Object* sender);
-	virtual void nextCallback(Object* sender);
-	virtual void backCallback(Object* sender);
+	virtual void restartCallback(Ref* sender);
+	virtual void nextCallback(Ref* sender);
+	virtual void backCallback(Ref* sender);
 
     virtual void onEnter() override;
     virtual void onExit() override;

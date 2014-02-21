@@ -23,25 +23,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "CCScriptSupport.h"
 
 NS_CC_BEGIN
 
-Object::Object()
-: _luaID(0)
-, _referenceCount(1) // when the object is created, the reference count of it is 1
+Ref::Ref()
+: _referenceCount(1) // when the Ref is created, the reference count of it is 1
 {
+#if CC_ENABLE_SCRIPT_BINDING
     static unsigned int uObjectCount = 0;
-
+    _luaID = 0;
     _ID = ++uObjectCount;
+#endif
 }
 
-Object::~Object()
+Ref::~Ref()
 {
+#if CC_ENABLE_SCRIPT_BINDING
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
@@ -55,17 +56,16 @@ Object::~Object()
             pEngine->removeScriptObjectByObject(this);
         }
     }
+#endif
 }
 
-Object* Object::autorelease()
+void Ref::retain()
 {
-    PoolManager::getInstance()->getCurrentPool()->addObject(this);
-    return this;
+    CCASSERT(_referenceCount > 0, "reference count should greater than 0");
+    ++_referenceCount;
 }
 
-
-
-void Object::release()
+void Ref::release()
 {
     CCASSERT(_referenceCount > 0, "reference count should greater than 0");
     --_referenceCount;
@@ -76,18 +76,18 @@ void Object::release()
         auto poolManager = PoolManager::getInstance();
         if (!poolManager->getCurrentPool()->isClearing() && poolManager->isObjectInPools(this))
         {
-            // Trigger an assert if the reference count is 0 but the object is still in autorelease pool.
+            // Trigger an assert if the reference count is 0 but the Ref is still in autorelease pool.
             // This happens when 'autorelease/release' were not used in pairs with 'new/retain'.
             //
             // Wrong usage (1):
             //
-            // auto obj = Node::create();   // Ref = 1, but it's an autorelease object which means it was in the autorelease pool.
+            // auto obj = Node::create();   // Ref = 1, but it's an autorelease Ref which means it was in the autorelease pool.
             // obj->autorelease();   // Wrong: If you wish to invoke autorelease several times, you should retain `obj` first.
             //
             // Wrong usage (2):
             //
             // auto obj = Node::create();
-            // obj->release();   // Wrong: obj is an autorelease object, it will be released when clearing current pool.
+            // obj->release();   // Wrong: obj is an autorelease Ref, it will be released when clearing current pool.
             //
             // Correct usage (1):
             //
@@ -110,24 +110,15 @@ void Object::release()
     }
 }
 
-bool Object::isSingleReference() const
+Ref* Ref::autorelease()
 {
-    return _referenceCount == 1;
+    PoolManager::getInstance()->getCurrentPool()->addObject(this);
+    return this;
 }
 
-unsigned int Object::getReferenceCount() const
+unsigned int Ref::getReferenceCount() const
 {
     return _referenceCount;
-}
-
-bool Object::isEqual(const Object *object)
-{
-    return this == object;
-}
-
-void Object::acceptVisitor(DataVisitor &visitor)
-{
-    visitor.visitObject(this);
 }
 
 NS_CC_END

@@ -62,7 +62,7 @@ typedef struct
  */
 
 //helper class to store Color3B's in mutable arrays
-class Color3bObject : public Object
+class Color3bObject : public Ref
 {
 public:
     Color3B value;

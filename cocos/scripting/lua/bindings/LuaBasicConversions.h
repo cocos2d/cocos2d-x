@@ -31,7 +31,6 @@ extern "C" {
 #include "tolua_fix.h"
 #include "cocos2d.h"
 
-
 using namespace cocos2d;
 
 extern std::unordered_map<std::string, std::string>  g_luaType;
@@ -243,7 +242,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
             continue;
         
 
-        if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+        if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
             std::string typeName = typeid(*obj).name();
             auto iter = g_luaType.find(typeName);
@@ -273,7 +272,7 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
     {
         std::string key = iter->first;
         T obj = iter->second;
-        if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+        if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
             std::string name = typeid(*obj).name();
             auto typeIter = g_luaType.find(name);
@@ -322,7 +321,9 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
 {
     if(nullptr != ret)
     {
-        cocos2d::Object* dynObject = dynamic_cast<cocos2d::Object *>(ret);
+      
+        cocos2d::Ref* dynObject = dynamic_cast<cocos2d::Ref *>(ret);
+
         if (nullptr != dynObject)
         {
             int ID = (int)(dynObject->_ID) ;
@@ -339,6 +340,5 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
         lua_pushnil(L);
     }
 }
-
 
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

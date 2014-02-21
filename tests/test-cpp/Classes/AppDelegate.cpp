@@ -35,6 +35,7 @@ USING_NS_CC;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
+:_curTest(nullptr)
 {
 }
 
@@ -107,6 +108,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto scene = Scene::create();
     auto layer = new TestController();
+    layer->addConsoleAutoTest();
     layer->autorelease();
 
     scene->addChild(layer);
@@ -133,4 +135,14 @@ void AppDelegate::applicationWillEnterForeground()
     Director::getInstance()->startAnimation();
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
+}
+
+void AppDelegate::setCurrentTest(BaseTest* curTest)
+{
+    _curTest = curTest;
+}
+
+BaseTest* AppDelegate::getCurrentTest()
+{
+    return _curTest;
 }

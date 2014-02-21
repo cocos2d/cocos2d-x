@@ -119,7 +119,7 @@ void SkeletonAnimation::setMix (const char* fromAnimation, const char* toAnimati
 	spAnimationStateData_setMixByName(state->data, fromAnimation, toAnimation, duration);
 }
 
-void SkeletonAnimation::setAnimationListener (Object* instance, SEL_AnimationStateEvent method) {
+void SkeletonAnimation::setAnimationListener (Ref* instance, SEL_AnimationStateEvent method) {
 	listenerInstance = instance;
 	listenerMethod = method;
 }

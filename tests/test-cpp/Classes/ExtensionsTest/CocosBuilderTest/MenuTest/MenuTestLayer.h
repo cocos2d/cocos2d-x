@@ -16,13 +16,13 @@ class MenuTestLayer
         MenuTestLayer();
         virtual ~MenuTestLayer();
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
+        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Ref * pTarget, const char * pSelectorName);
+        virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Ref * pTarget, const char * pSelectorName);
+        virtual bool onAssignCCBMemberVariable(cocos2d::Ref * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
 
-        void onMenuItemAClicked(cocos2d::Object * sender);
-        void onMenuItemBClicked(cocos2d::Object * sender);
-        void onMenuItemCClicked(cocos2d::Object * sender);
+        void onMenuItemAClicked(cocos2d::Ref * sender);
+        void onMenuItemBClicked(cocos2d::Ref * sender);
+        void onMenuItemCClicked(cocos2d::Ref * sender);
 
     private:
         cocos2d::LabelBMFont * mMenuItemStatusLabelBMFont;

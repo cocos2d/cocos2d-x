@@ -27,9 +27,10 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_CACHE_H__
 #define __CC_ANIMATION_CACHE_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCMap.h"
 #include "CCValue.h"
+
 #include <string>
 
 NS_CC_BEGIN
@@ -48,7 +49,7 @@ Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5,
 
 @since v0.99.5
 */
-class CC_DLL AnimationCache : public Object
+class CC_DLL AnimationCache : public Ref
 {
 public:
     /**

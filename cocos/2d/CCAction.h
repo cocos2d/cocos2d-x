@@ -28,12 +28,12 @@ THE SOFTWARE.
 #ifndef __ACTIONS_CCACTION_H__
 #define __ACTIONS_CCACTION_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
-#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
+class Node;
 /**
  * @addtogroup actions
  * @{
@@ -42,7 +42,7 @@ NS_CC_BEGIN
 /** 
 @brief Base class for Action objects.
  */
-class CC_DLL Action : public Object, public Clonable
+class CC_DLL Action : public Ref, public Clonable
 {
 public:
     /// Default tag used for all the actions

@@ -93,7 +93,7 @@ jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
 
-class JSCallbackWrapper: public cocos2d::Object {
+class JSCallbackWrapper: public cocos2d::Ref {
 public:
     JSCallbackWrapper();
     virtual ~JSCallbackWrapper();
@@ -135,10 +135,10 @@ public:
     void pause();
     
     void scheduleFunc(float dt);
-    virtual void update(float dt);
+    void update(float dt);
     
-    Object* getTarget();
-    void setTarget(Object* pTarget);
+    Ref* getTarget();
+    void setTarget(Ref* pTarget);
     
     void setPureJSTarget(JSObject* jstarget);
     JSObject* getPureJSTarget();
@@ -150,14 +150,14 @@ public:
     bool isUpdateSchedule();
     
 protected:
-    Object* _pTarget;
+    Ref* _pTarget;
     JSObject* _pPureJSTarget;
     int _priority;
     bool _isUpdateSchedule;
 };
 
 
-class JSTouchDelegate: public cocos2d::Object
+class JSTouchDelegate: public cocos2d::Ref
 {
 public:
     JSTouchDelegate();

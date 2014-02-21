@@ -32,7 +32,8 @@ extern "C" {
 }
 #endif
 
-#include "CCObject.h"
+#include "CCRef.h"
+#include <string>
 
 TOLUA_API int register_all_cocos2dx_coco_studio_manual(lua_State* L);
 
@@ -55,23 +56,23 @@ struct LuaArmatureWrapperEventData
 
 struct LuaArmatureMovementEventData
 {
-    cocos2d::Object* objTarget;
+    cocos2d::Ref* objTarget;
     int movementType;
     std::string movementID;
     
-    LuaArmatureMovementEventData(cocos2d::Object* _objTarget, int _movementType,const std::string& _movementID):objTarget(_objTarget),movementType(_movementType),movementID(_movementID)
+    LuaArmatureMovementEventData(cocos2d::Ref* _objTarget, int _movementType,const std::string& _movementID):objTarget(_objTarget),movementType(_movementType),movementID(_movementID)
     {
     }
 };
 
 struct LuaArmatureFrameEventData
 {
-    cocos2d::Object* objTarget;
+    cocos2d::Ref* objTarget;
     std::string  frameEventName;
     int originFrameIndex;
     int currentFrameIndex;
     
-    LuaArmatureFrameEventData( cocos2d::Object* _objTarget, const std::string& _frameEventName, int _originFrameIndex, int _currentFrameIndex):objTarget(_objTarget), frameEventName(_frameEventName),originFrameIndex(_originFrameIndex), currentFrameIndex(_currentFrameIndex)
+    LuaArmatureFrameEventData( cocos2d::Ref* _objTarget, const std::string& _frameEventName, int _originFrameIndex, int _currentFrameIndex):objTarget(_objTarget), frameEventName(_frameEventName),originFrameIndex(_originFrameIndex), currentFrameIndex(_currentFrameIndex)
     {
     }
 };

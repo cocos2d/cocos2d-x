@@ -29,9 +29,8 @@ THE SOFTWARE.
 #define __CCTMX_OBJECT_GROUP_H__
 
 #include "CCGeometry.h"
-#include "CCString.h"
-#include "CCArray.h"
 #include "CCValue.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -43,7 +42,7 @@ NS_CC_BEGIN
 /** @brief TMXObjectGroup represents the TMX object group.
 @since v0.99.0
 */
-class CC_DLL TMXObjectGroup : public Object
+class CC_DLL TMXObjectGroup : public Ref
 {
 public:
     /**

@@ -26,12 +26,12 @@ void CCBKeyframe::setValue(const Value& value)
     _value = value;
 }
     
-Object* CCBKeyframe::getObject() const
+Ref* CCBKeyframe::getObject() const
 {
     return _object;
 }
 
-void CCBKeyframe::setObject(Object* obj)
+void CCBKeyframe::setObject(Ref* obj)
 {
     CC_SAFE_RETAIN(obj);
     CC_SAFE_RELEASE(_object);

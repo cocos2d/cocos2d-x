@@ -115,7 +115,7 @@ std::string PhysicsDemo::subtitle() const
     return "";
 }
 
-void PhysicsDemo::restartCallback(Object* sender)
+void PhysicsDemo::restartCallback(Ref* sender)
 {
     auto s = new PhysicsTestScene();
     s->addChild( restart() );
@@ -123,7 +123,7 @@ void PhysicsDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void PhysicsDemo::nextCallback(Object* sender)
+void PhysicsDemo::nextCallback(Ref* sender)
 {
     auto s = new PhysicsTestScene();
     s->addChild( next() );
@@ -131,7 +131,7 @@ void PhysicsDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void PhysicsDemo::backCallback(Object* sender)
+void PhysicsDemo::backCallback(Ref* sender)
 {
     auto s = new PhysicsTestScene();
     s->addChild( back() );
@@ -178,7 +178,7 @@ Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
 }
 
 
-void PhysicsDemo::toggleDebugCallback(Object* sender)
+void PhysicsDemo::toggleDebugCallback(Ref* sender)
 {
     if (_scene != nullptr)
     {
@@ -521,7 +521,7 @@ void PhysicsDemoRayCast::onEnter()
     scheduleUpdate();
 }
 
-void PhysicsDemoRayCast::changeModeCallback(Object* sender)
+void PhysicsDemoRayCast::changeModeCallback(Ref* sender)
 {
     _mode = (_mode + 1) % 3;
     

@@ -135,7 +135,7 @@ void AtlasDemoNew::onEnter()
     BaseTest::onEnter();
 }
 
-void AtlasDemoNew::restartCallback(Object* sender)
+void AtlasDemoNew::restartCallback(Ref* sender)
 {
     auto s = new AtlasTestSceneNew();
     s->addChild(restartAtlasActionNew()); 
@@ -144,7 +144,7 @@ void AtlasDemoNew::restartCallback(Object* sender)
     s->release();
 }
 
-void AtlasDemoNew::nextCallback(Object* sender)
+void AtlasDemoNew::nextCallback(Ref* sender)
 {
     auto s = new AtlasTestSceneNew();
     s->addChild( nextAtlasActionNew() );
@@ -152,7 +152,7 @@ void AtlasDemoNew::nextCallback(Object* sender)
     s->release();
 }
 
-void AtlasDemoNew::backCallback(Object* sender)
+void AtlasDemoNew::backCallback(Ref* sender)
 {
     auto s = new AtlasTestSceneNew();
     s->addChild( backAtlasActionNew() );
@@ -762,7 +762,7 @@ std::string LabelFNTMultiLineAlignment::subtitle() const
     return "";
 }
 
-void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Object *sender)
+void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
 {
     auto item = (MenuItemFont*)sender;
     item->setColor(Color3B::RED);
@@ -788,7 +788,7 @@ void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
+void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
 {
     auto item = static_cast<MenuItemFont*>(sender);
     item->setColor(Color3B::RED);
@@ -1068,19 +1068,19 @@ void  LabelTTFDynamicAlignment::updateAlignment()
     }
 }
 
-void LabelTTFDynamicAlignment::setAlignmentLeft(Object* sender)
+void LabelTTFDynamicAlignment::setAlignmentLeft(Ref* sender)
 {
     _horizAlign = TextHAlignment::LEFT;
     this->updateAlignment();
 }
 
-void LabelTTFDynamicAlignment::setAlignmentCenter(Object* sender)
+void LabelTTFDynamicAlignment::setAlignmentCenter(Ref* sender)
 {
     _horizAlign = TextHAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFDynamicAlignment::setAlignmentRight(Object* sender)
+void LabelTTFDynamicAlignment::setAlignmentRight(Ref* sender)
 {
     _horizAlign = TextHAlignment::RIGHT;
     this->updateAlignment();

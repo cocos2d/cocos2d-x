@@ -32,7 +32,7 @@
 
 using namespace cocostudio;
 
-class LuaArmatureWrapper:public Object
+class LuaArmatureWrapper:public Ref
 {
 public:
     LuaArmatureWrapper();

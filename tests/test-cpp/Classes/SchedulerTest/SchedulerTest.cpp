@@ -68,7 +68,7 @@ void SchedulerTestLayer::onEnter()
     BaseTest::onEnter();
 }
 
-void SchedulerTestLayer::backCallback(Object* sender)
+void SchedulerTestLayer::backCallback(Ref* sender)
 {
     auto scene = new SchedulerTestScene();
     auto layer = backSchedulerTest();
@@ -78,7 +78,7 @@ void SchedulerTestLayer::backCallback(Object* sender)
     scene->release();
 }
 
-void SchedulerTestLayer::nextCallback(Object* sender)
+void SchedulerTestLayer::nextCallback(Ref* sender)
 {
     auto scene = new SchedulerTestScene();
     auto layer = nextSchedulerTest();
@@ -88,7 +88,7 @@ void SchedulerTestLayer::nextCallback(Object* sender)
     scene->release();
 }
 
-void SchedulerTestLayer::restartCallback(Object* sender)
+void SchedulerTestLayer::restartCallback(Ref* sender)
 {
     auto scene = new SchedulerTestScene();
     auto layer = restartSchedulerTest();
@@ -248,14 +248,9 @@ void SchedulerPauseResumeAll::pause(float dt)
     log("Pausing");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargets();
-    
-    int c = _pausedTargets.size();
-    
-    if (c > 2)
-    {
-        // should have only 2 items: ActionManager, self
-        log("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
-    }
+
+    // should have only 2 items: ActionManager, self
+    CCASSERT(_pausedTargets.size() == 2, "Error: pausedTargets should have only 2 items");
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
@@ -435,7 +430,9 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         auto director = Director::getInstance();
-        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+        director->getScheduler()->scheduleUpdate([director](float dt){
+            director->getActionManager()->update(dt);
+        }, director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
     
     SchedulerTestLayer::onExit();
@@ -658,7 +655,7 @@ void SchedulerUpdate::removeUpdates(float dt)
 
     for (auto& c : children)
     {
-        auto obj = static_cast<Object*>(c);
+        auto obj = static_cast<Ref*>(c);
         auto node = static_cast<Node*>(obj);
         
         if (! node)
@@ -834,7 +831,7 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(Object* sender, Control::EventType controlEvent)
+void SchedulerTimeScale::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
     ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
     float scale;
@@ -926,7 +923,7 @@ ControlSlider *TwoSchedulers::sliderCtl()
     return slider;
 }
 
-void TwoSchedulers::sliderAction(Object* sender, Control::EventType controlEvent)
+void TwoSchedulers::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
     float scale;
 
@@ -969,11 +966,15 @@ void TwoSchedulers::onEnter()
     // Create a new scheduler, and link it to the main scheduler
     sched1 = new Scheduler();
 
-    defaultScheduler->scheduleUpdateForTarget(sched1, 0, false);
+    defaultScheduler->scheduleUpdate([this](float dt){
+        this->sched1->update(dt);
+    }, sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager1 = new ActionManager();
-    sched1->scheduleUpdateForTarget(actionManager1, 0, false);
+    sched1->scheduleUpdate([this](float dt){
+        this->actionManager1->update(dt);
+    }, actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
     {
@@ -995,11 +996,15 @@ void TwoSchedulers::onEnter()
 
     // Create a new scheduler, and link it to the main scheduler
     sched2 = new Scheduler();;
-    defaultScheduler->scheduleUpdateForTarget(sched2, 0, false);
+    defaultScheduler->scheduleUpdate([this](float dt){
+        this->sched2->update(dt);
+    }, sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager2 = new ActionManager();
-    sched2->scheduleUpdateForTarget(actionManager2, 0, false);
+    sched2->scheduleUpdate([this](float dt){
+        this->actionManager2->update(dt);
+    }, actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
         auto sprite = Sprite::create("Images/grossinis_sister2.png");

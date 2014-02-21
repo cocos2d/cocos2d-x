@@ -1584,7 +1584,7 @@ void ScrollView::bounceRightEvent()
     }
 }
 
-void ScrollView::addEventListenerScrollView(Object *target, SEL_ScrollViewEvent selector)
+void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent selector)
 {
     _scrollViewEventListener = target;
     _scrollViewEventSelector = selector;

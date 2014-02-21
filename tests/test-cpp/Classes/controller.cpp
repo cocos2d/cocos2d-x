@@ -5,15 +5,24 @@
 #include <string>
 
 // test inclues
+#include "AppDelegate.h"
+#include "BaseTest.h"
 #include "controller.h"
 #include "testResource.h"
 #include "tests.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#include <unistd.h>
+#else
+#include <io.h>
+#endif
+#include "cocostudio/CocoStudio.h"
 
-struct {
+typedef struct _Controller{
 	const char *test_name;
 	std::function<TestScene*()> callback;
-} g_aTestNames[] = {
+} Controller;
+Controller g_aTestNames[] = {
 
     //
     // TESTS MUST BE ORDERED ALPHABETICALLY
@@ -96,7 +105,7 @@ struct {
 };
 
 static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
-
+static Controller *currentController = nullptr;
 #define LINE_SPACE          40
 
 static Point s_tCurPos = Point::ZERO;
@@ -150,7 +159,7 @@ TestController::~TestController()
 {
 }
 
-void TestController::menuCallback(Object * sender)
+void TestController::menuCallback(Ref * sender)
 {
 	Director::getInstance()->purgeCachedData();
 
@@ -168,7 +177,7 @@ void TestController::menuCallback(Object * sender)
     }
 }
 
-void TestController::closeCallback(Object * sender)
+void TestController::closeCallback(Ref * sender)
 {
     Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -229,4 +238,128 @@ void TestController::onMouseScroll(Event *event)
 
     _itemMenu->setPosition(nextPos);
     s_tCurPos   = nextPos;
+}
+
+void TestController::addConsoleAutoTest()
+{
+    auto _console = Director::getInstance()->getConsole();
+    
+    static struct Console::Command autotest = {
+        "autotest", 
+        "testcpp autotest command, use -h to list available tests", 
+        [](int fd, const std::string& args) 
+        {
+            if(args == "help" || args == "-h")
+            {
+                const char msg[] = "usage: autotest ActionsTest\n\tavailable tests: ";
+                write(fd, msg, sizeof(msg));
+                write(fd, "\n",1);
+                for(int i = 0; i < g_testCount; i++)
+                {
+                    write(fd, "\t",1);
+                    write(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1);
+                    write(fd, "\n",1);
+                }
+                const char help_main[] = "\tmain, return to main menu\n";
+                write(fd, help_main, sizeof(help_main));
+
+                const char help_next[] = "\tnext, run next test\n";
+                write(fd, help_next, sizeof(help_next));
+                
+                const char help_back[] = "\tback, run prev test\n";
+                write(fd, help_back, sizeof(help_back));
+                
+                const char help_restart[] = "\trestart, restart current test\n";
+                write(fd, help_restart, sizeof(help_restart));
+                return;
+            }
+            if(args == "main")
+            {
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&]()
+                {
+                    auto scene = Scene::create();
+                    auto layer = new TestController();
+                    scene->addChild(layer);
+                    layer->release();
+                    Director::getInstance()->replaceScene(scene);
+                    cocostudio::ArmatureDataManager::destroyInstance();
+                } );
+                return;
+            }
+            const char msg_notest[] = "autotest: can't detect running test.\n";
+            AppDelegate* app = (AppDelegate *)Application::getInstance();
+            BaseTest* currentTest = app->getCurrentTest();
+            if(args == "next")
+            {
+                if(currentTest != nullptr)
+                {
+                    currentTest->nextCallback(nullptr);
+                }
+                else
+                {
+                    write(fd, msg_notest, sizeof(msg_notest));
+                }
+                return;
+            }
+            if(args == "back")
+            {
+                if(currentTest != nullptr)
+                {
+                    currentTest->backCallback(nullptr);
+                }
+                else
+                {
+                    write(fd, msg_notest, sizeof(msg_notest));
+                }
+                return;
+            }
+
+            if(args == "restart")
+            {
+                if(currentTest != nullptr)
+                {
+                    currentTest->restartCallback(nullptr);
+                }
+                else
+                {
+                    write(fd, msg_notest, sizeof(msg_notest));
+                }
+                return;
+            }
+
+            for(int i = 0; i < g_testCount; i++)
+            {
+                if(args == g_aTestNames[i].test_name)
+                {
+                    // create the test scene and run it
+                    auto scene = g_aTestNames[i].callback();
+
+                    if (scene)
+                    {
+                        std::string  msg("autotest: running test:");
+                        msg += args;
+                        write(fd, msg.c_str(), strlen(msg.c_str()));
+                        write(fd, "\n",1);
+
+                        currentController = &g_aTestNames[i];
+                        Scheduler *sched = Director::getInstance()->getScheduler();
+                        sched->performFunctionInCocosThread( [&](){
+                            currentController->callback()->runThisTest();
+                            currentController->callback()->release();
+                        } );
+                        return;
+                    }
+                }
+            }
+
+            //no match found,print warning message
+            std::string  msg("autotest: could not find test:");
+            msg += args;
+            write(fd, msg.c_str(), strlen(msg.c_str()));
+            write(fd, "\n",1);
+        }
+        
+    };
+    _console->addCommand(autotest);
 }

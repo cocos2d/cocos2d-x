@@ -44,10 +44,10 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
-    void toggleDebugCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
+    void toggleDebugCallback(Ref* sender);
     
     Sprite* addGrossiniAtPosition(Point p, float scale = 1.0);
     Sprite* makeBall(Point point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
@@ -108,7 +108,7 @@ public:
     void update(float delta) override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     
-    void changeModeCallback(Object* sender);
+    void changeModeCallback(Ref* sender);
     
     bool anyRay(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     

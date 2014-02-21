@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCBool.h"
 #include "CCInteger.h"
 #include "CCFloat.h"
@@ -90,7 +90,7 @@ std::string PrettyPrinter::getResult()
     return _result;
 }
 
-void PrettyPrinter::visitObject(const Object *p)
+void PrettyPrinter::visitObject(const Ref *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%p", p);
@@ -137,7 +137,7 @@ void PrettyPrinter::visit(const __Array *p)
     _result += "<array>\n";
 
     setIndentLevel(_indentLevel+1);
-    Object* obj;
+    Ref* obj;
     int i = 0;
     char buf[50] = {0};
     CCARRAY_FOREACH(p, obj)
@@ -148,7 +148,7 @@ void PrettyPrinter::visit(const __Array *p)
         sprintf(buf, "%s%02d: ", _indentStr.c_str(), i);
         _result += buf;
         PrettyPrinter v(_indentLevel);
-        obj->acceptVisitor(v);
+//FIXME:james        obj->acceptVisitor(v);
         _result += v.getResult();
         i++;
     }
@@ -177,7 +177,7 @@ void PrettyPrinter::visit(const __Dictionary *p)
         sprintf(buf, "%s%s: ", _indentStr.c_str(),element->getStrKey());
         _result += buf;
         PrettyPrinter v(_indentLevel);
-        element->getObject()->acceptVisitor(v);
+//FIXME:james        element->getObject()->acceptVisitor(v);
         _result += v.getResult();
         bFirstElement = false;
     }
@@ -206,7 +206,7 @@ void PrettyPrinter::visit(const __Set *p)
         }
         _result += _indentStr.c_str();
         PrettyPrinter v(_indentLevel);
-        (*it)->acceptVisitor(v);
+//FIXME:james        (*it)->acceptVisitor(v);
         _result += v.getResult();
     }
     setIndentLevel(_indentLevel-1);

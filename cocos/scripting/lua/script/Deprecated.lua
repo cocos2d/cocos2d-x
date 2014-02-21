@@ -702,16 +702,6 @@ end
 rawset(CCControl,"addHandleOfControlEvent",CCControlDeprecated.addHandleOfControlEvent)
 --functions of CCControl will be deprecated end
 
-
---functions of CCEGLView will be deprecated end
-local CCEGLViewDeprecated = { }
-function CCEGLViewDeprecated.sharedOpenGLView()
-    deprecatedTip("CCEGLView:sharedOpenGLView","CCEGLView:getInstance")
-    return CCEGLView:getInstance()
-end
-rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
---functions of CCFileUtils will be deprecated end
-
 --Enums of CCTableView will be deprecated begin
 rawset(CCTableView, "kTableViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
 rawset(CCTableView,"kTableViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
@@ -1108,15 +1098,6 @@ function SceneReaderDeprecated.purgeSceneReader(self)
 end
 rawset(SceneReader,"purgeSceneReader",SceneReaderDeprecated.purgeSceneReader)
 --functions of SceneReader will be deprecated end
-
---functions of CCEGLView will be deprecated begin
-local CCEGLViewDeprecated = { }
-function CCEGLViewDeprecated.sharedOpenGLView()
-    deprecatedTip("CCEGLView:sharedOpenGLView","cc.EGLView:getInstance")
-    return cc.EGLView:getInstance()
-end
-rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
---functions of CCEGLView will be deprecated end
 
 --functions of cc.Node will be deprecated begin
 local NodeDeprecated = { }
