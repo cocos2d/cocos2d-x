@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011        Максим Аксенов 
+Copyright (c) 2011        Максим Аксенов
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
@@ -70,7 +70,7 @@ CCTMXLayerInfo::CCTMXLayerInfo()
 , m_pTiles(NULL)
 , m_bOwnTiles(true)
 , m_uMinGID(100000)
-, m_uMaxGID(0)        
+, m_uMaxGID(0)
 , m_tOffset(CCPointZero)
 {
     m_pProperties= new CCDictionary();;
@@ -161,12 +161,12 @@ void CCTMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePat
     {
         m_sTMXFileName = CCFileUtils::sharedFileUtils()->fullPathForFilename(tmxFileName);
     }
-    
+
     if (resourcePath != NULL)
     {
         m_sResources = resourcePath;
     }
-    
+
     m_pObjectGroups = CCArray::createWithCapacity(4);
     m_pObjectGroups->retain();
 
@@ -193,7 +193,7 @@ bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
 }
 
 CCTMXMapInfo::CCTMXMapInfo()
-: m_tMapSize(CCSizeZero)    
+: m_tMapSize(CCSizeZero)
 , m_tTileSize(CCSizeZero)
 , m_pLayers(NULL)
 , m_pTilesets(NULL)
@@ -279,7 +279,7 @@ void CCTMXMapInfo::setTileProperties(CCDictionary* tileProperties)
 bool CCTMXMapInfo::parseXMLString(const char *xmlString)
 {
     int len = strlen(xmlString);
-    if (xmlString == NULL || len <= 0) 
+    if (xmlString == NULL || len <= 0)
     {
         return false;
     }
@@ -299,12 +299,12 @@ bool CCTMXMapInfo::parseXMLString(const char *xmlString)
 bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 {
     CCSAXParser parser;
-    
+
     if (false == parser.init("UTF-8") )
     {
         return false;
     }
-    
+
     parser.setDelegator(this);
 
     return parser.parse(CCFileUtils::sharedFileUtils()->fullPathForFilename(xmlFilename).c_str());
@@ -313,14 +313,14 @@ bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 
 // the XML parser calls here with all the elements
 void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
-{    
+{
     CC_UNUSED_PARAM(ctx);
     CCTMXMapInfo *pTMXMapInfo = this;
     std::string elementName = (char*)name;
     std::map<std::string, std::string> *attributeDict = new std::map<std::string, std::string>();
     if (atts && atts[0])
     {
-        for(int i = 0; atts[i]; i += 2) 
+        for(int i = 0; atts[i]; i += 2)
         {
             std::string key = (char*)atts[i];
             std::string value = (char*)atts[i+1];
@@ -355,8 +355,8 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // The parent element is now "map"
         pTMXMapInfo->setParentElement(TMXPropertyMap);
-    } 
-    else if (elementName == "tileset") 
+    }
+    else if (elementName == "tileset")
     {
         // If this is an external tileset then start parsing that
         std::string externalTilesetFilename = valueForKey("source", attributeDict);
@@ -368,14 +368,14 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
                 externalTilesetFilename = dir + externalTilesetFilename;
             }
-            else 
+            else
             {
                 externalTilesetFilename = m_sResources + "/" + externalTilesetFilename;
             }
             externalTilesetFilename = CCFileUtils::sharedFileUtils()->fullPathForFilename(externalTilesetFilename.c_str());
-            
+
             m_uCurrentFirstGID = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
-            
+
             pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
         else
@@ -409,7 +409,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
         pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
         CC_SAFE_RELEASE(dict);
-        
+
         pTMXMapInfo->setParentElement(TMXPropertyTile);
 
     }
@@ -446,7 +446,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // The parent element is now "layer"
         pTMXMapInfo->setParentElement(TMXPropertyLayer);
 
-    } 
+    }
     else if (elementName == "objectgroup")
     {
         CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup();
@@ -475,11 +475,11 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             string dir = m_sTMXFileName.substr(0, m_sTMXFileName.find_last_of("/") + 1);
             tileset->m_sSourceImage = dir + imagename;
         }
-        else 
+        else
         {
             tileset->m_sSourceImage = m_sResources + (m_sResources.size() ? "/" : "") + imagename;
         }
-    } 
+    }
     else if (elementName == "data")
     {
         std::string encoding = valueForKey("encoding", attributeDict);
@@ -505,7 +505,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
-    } 
+    }
     else if (elementName == "object")
     {
         char buffer[32] = {0};
@@ -516,7 +516,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         CCDictionary *dict = new CCDictionary();
         // Parse everything automatically
         const char* pArray[] = {"name", "type", "width", "height", "gid"};
-        
+
         for(size_t i = 0; i < sizeof(pArray)/sizeof(pArray[0]); ++i )
         {
             const char* key = pArray[i];
@@ -532,7 +532,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // X
 
         const char* value = valueForKey("x", attributeDict);
-        if (value) 
+        if (value)
         {
             int x = atoi(value) + (int)objectGroup->getPositionOffset().x;
             sprintf(buffer, "%d", x);
@@ -561,14 +561,14 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
          // The parent element is now "object"
          pTMXMapInfo->setParentElement(TMXPropertyObject);
 
-    } 
-    else if (elementName == "property")
+    }
+    else if (elementName == "properties")
     {
-        if ( pTMXMapInfo->getParentElement() == TMXPropertyNone ) 
+        if ( pTMXMapInfo->getParentElement() == TMXPropertyNone )
         {
             CCLOG( "TMX tile map: Parent element is unsupported. Cannot add property named '%s' with value '%s'",
                 valueForKey("name", attributeDict), valueForKey("value",attributeDict) );
-        } 
+        }
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyMap )
         {
             // The parent element is the map
@@ -577,7 +577,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             pTMXMapInfo->getProperties()->setObject(value, key.c_str());
             value->release();
 
-        } 
+        }
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyLayer )
         {
             // The parent element is the last layer
@@ -588,8 +588,8 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             layer->getProperties()->setObject(value, key.c_str());
             value->release();
 
-        } 
-        else if ( pTMXMapInfo->getParentElement() == TMXPropertyObjectGroup ) 
+        }
+        else if ( pTMXMapInfo->getParentElement() == TMXPropertyObjectGroup )
         {
             // The parent element is the last object group
             CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)pTMXMapInfo->getObjectGroups()->lastObject();
@@ -598,7 +598,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             objectGroup->getProperties()->setObject(value, key);
             value->release();
 
-        } 
+        }
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyObject )
         {
             // The parent element is the last object
@@ -609,8 +609,8 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             CCString *propertyValue = new CCString(valueForKey("value", attributeDict));
             dict->setObject(propertyValue, propertyName);
             propertyValue->release();
-        } 
-        else if ( pTMXMapInfo->getParentElement() == TMXPropertyTile ) 
+        }
+        else if ( pTMXMapInfo->getParentElement() == TMXPropertyTile )
         {
             CCDictionary* dict = (CCDictionary*)pTMXMapInfo->getTileProperties()->objectForKey(pTMXMapInfo->getParentGID());
 
@@ -620,7 +620,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             propertyValue->release();
         }
     }
-    else if (elementName == "polygon") 
+    else if (elementName == "polygon")
     {
         // find parent object's dict and add polygon-points to it
         CCTMXObjectGroup* objectGroup = (CCTMXObjectGroup*)m_pObjectGroups->lastObject();
@@ -641,7 +641,7 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 stringstream pointStream(pointPair);
                 string xStr,yStr;
                 char buffer[32] = {0};
-                
+
                 CCDictionary* pPointDict = new CCDictionary;
 
                 // set x
@@ -663,16 +663,16 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                     pStr->autorelease();
                     pPointDict->setObject(pStr, "y");
                 }
-                
+
                 // add to points array
                 pPointsArray->addObject(pPointDict);
                 pPointDict->release();
             }
-            
+
             dict->setObject(pPointsArray, "points");
             pPointsArray->release();
         }
-    } 
+    }
     else if (elementName == "polyline")
     {
         // find parent object's dict and add polyline-points to it
@@ -696,7 +696,7 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
 
     int len = 0;
 
-    if(elementName == "data" && pTMXMapInfo->getLayerAttribs()&TMXLayerAttribBase64) 
+    if(elementName == "data" && pTMXMapInfo->getLayerAttribs()&TMXLayerAttribBase64)
     {
         pTMXMapInfo->setStoringCharacters(false);
 
@@ -705,7 +705,7 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
         std::string currentString = pTMXMapInfo->getCurrentString();
         unsigned char *buffer;
         len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
-        if( ! buffer ) 
+        if( ! buffer )
         {
             CCLOG("cocos2d: TiledMap: decode data error");
             return;
@@ -722,11 +722,11 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
             CCAssert(inflatedLen == sizeHint, "");
 
             inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
-            
+
             delete [] buffer;
             buffer = NULL;
 
-            if( ! deflated ) 
+            if( ! deflated )
             {
                 CCLOG("cocos2d: TiledMap: inflate data error");
                 return;
@@ -741,12 +741,12 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
 
         pTMXMapInfo->setCurrentString("");
 
-    } 
+    }
     else if (elementName == "map")
     {
         // The map element has ended
         pTMXMapInfo->setParentElement(TMXPropertyNone);
-    }    
+    }
     else if (elementName == "layer")
     {
         // The layer element has ended
@@ -756,8 +756,8 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
     {
         // The objectgroup element has ended
         pTMXMapInfo->setParentElement(TMXPropertyNone);
-    } 
-    else if (elementName == "object") 
+    }
+    else if (elementName == "object")
     {
         // The object element has ended
         pTMXMapInfo->setParentElement(TMXPropertyNone);
