@@ -257,7 +257,15 @@ void CCScrollView::setZoomScale(float s)
         {
             m_pDelegate->scrollViewDidZoom(this);
         }
-        this->setContentOffset(ccpAdd(m_pContainer->getPosition(),offset));
+        
+        CCPoint finalOffset = ccpAdd(m_pContainer->getPosition(),offset);
+        const CCPoint minOffset = this->minContainerOffset();
+        const CCPoint maxOffset = this->maxContainerOffset();
+        
+        finalOffset.x = MAX(minOffset.x, MIN(maxOffset.x, finalOffset.x));
+        finalOffset.y = MAX(minOffset.y, MIN(maxOffset.y, finalOffset.y));
+        
+        this->setContentOffset(finalOffset);
     }
 }
 
