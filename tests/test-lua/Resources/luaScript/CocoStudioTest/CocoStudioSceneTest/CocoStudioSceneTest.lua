@@ -298,9 +298,9 @@ end
 function UIComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.json")
     if nil ~= node then
-        local render = tolua.cast(node:getChildByTag(10025):getComponent("GUIComponent"),"ccs.ComRender")
-        local widget = tolua.cast(render:getNode(), "ccui.Widget")
-        local button = tolua.cast(widget:getChildByName("Button_156"),"ccui.Button")
+        local render = node:getChildByTag(10025):getComponent("GUIComponent")
+        local widget = render:getNode()
+        local button = widget:getChildByName("Button_156")
         local function onTouch(sender, eventType)
             if eventType == ccui.TouchEventType.began then
                 local blowFish = tolua.cast(node:getChildByTag(10010):getComponent("CCArmature"), "ccs.ComRender")
