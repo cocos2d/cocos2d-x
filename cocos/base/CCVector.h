@@ -312,6 +312,7 @@ public:
     /** @brief Remove a certain object in Vector.
      *  @param object The object to be removed.
      *  @param removeAll Whether to remove all elements with the same value.
+     *                   If its value is 'false', it will just erase the first occurrence.
      */
     void eraseObject(T object, bool removeAll = false)
     {
