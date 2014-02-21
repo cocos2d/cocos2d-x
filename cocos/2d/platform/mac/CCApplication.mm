@@ -37,9 +37,20 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+static long getCurrentMillSecond()
+{
+    long lLastTime = 0;
+    struct timeval stCurrentTime;
+    
+    gettimeofday(&stCurrentTime,NULL);
+    lLastTime = stCurrentTime.tv_sec*1000+stCurrentTime.tv_usec*0.001; //millseconds
+    return lLastTime;
+}
+
 Application* Application::sm_pSharedApplication = 0;
 
 Application::Application()
+: _animationInterval(1.0f/60.0f*1000.0f)
 {
     CCASSERT(! sm_pSharedApplication, "sm_pSharedApplication already exist");
     sm_pSharedApplication = this;
@@ -61,8 +72,13 @@ int Application::run()
     
     while (!glview->windowShouldClose())
     {
+        long iLastTime = getCurrentMillSecond();
         Director::getInstance()->mainLoop();
         glview->pollEvents();
+        long iCurTime = getCurrentMillSecond();
+        if (iCurTime-iLastTime<_animationInterval){
+            usleep(static_cast<useconds_t>((_animationInterval - iCurTime+iLastTime)*1000));
+        }
     }
 
     /* Only work on Desktop
@@ -77,7 +93,7 @@ int Application::run()
 
 void Application::setAnimationInterval(double interval)
 {
-    [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
+    _animationInterval = interval*1000.0f;
 }
 
 Application::Platform Application::getTargetPlatform()
