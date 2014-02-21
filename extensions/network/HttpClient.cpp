@@ -249,8 +249,14 @@ static bool configureCURL(CURL *handle)
     if (code != CURLE_OK) {
         return false;
     }
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    code = curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, CCHttpClient::getInstance()->isSSLVerifyPeer());
+    if (code != CURLE_OK) {
+        return false;
+    }
+    code = curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, CCHttpClient::getInstance()->getSSLVerifyHost());
+    if (code != CURLE_OK) {
+        return false;
+    }
 
     // FIXED #3224: The subthread of CCHttpClient interrupts main thread if timeout comes.
     // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
@@ -400,6 +406,8 @@ void CCHttpClient::destroyInstance()
 CCHttpClient::CCHttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
+, _sslVerifyPeer(true)
+, _sslVerifyHost(2L)
 {
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
                     schedule_selector(CCHttpClient::dispatchResponseCallbacks), this, 0, false);
