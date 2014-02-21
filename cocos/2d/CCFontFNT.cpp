@@ -51,7 +51,7 @@ enum {
 struct _FontDefHashElement;
 
 /**
-@struct ccBMFontDef
+@struct BMFontDef
 BMFont definition
 */
 typedef struct _BMFontDef {
@@ -65,9 +65,9 @@ typedef struct _BMFontDef {
     short yOffset;
     //! The amount to move the current position after drawing the character (in pixels)
     short xAdvance;
-} ccBMFontDef;
+} BMFontDef;
 
-/** @struct ccBMFontPadding
+/** @struct BMFontPadding
 BMFont padding
 @since v0.8.2
 */
@@ -80,12 +80,12 @@ typedef struct _BMFontPadding {
     int right;
     /// padding bottom
     int bottom;
-} ccBMFontPadding;
+} BMFontPadding;
 
 typedef struct _FontDefHashElement
 {
 	unsigned int	key;		// key. Font Unicode value
-	ccBMFontDef		fontDef;	// font definition
+	BMFontDef		fontDef;	// font definition
 	UT_hash_handle	hh;
 } tFontDefHashElement;
 
@@ -97,10 +97,10 @@ typedef struct _KerningHashElement
 	UT_hash_handle	hh;
 } tKerningHashElement;
 
-/** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
+/** @brief BMFontConfiguration has parsed configuration of the the .fnt file
 @since v0.8
 */
-class CC_DLL CCBMFontConfiguration : public Ref
+class CC_DLL BMFontConfiguration : public Ref
 {
     // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
 public://@public
@@ -110,7 +110,7 @@ public://@public
     //! FNTConfig: Common Height Should be signed (issue #1343)
     int _commonHeight;
     //! Padding
-    ccBMFontPadding    _padding;
+    BMFontPadding    _padding;
     //! atlas name
     std::string _atlasName;
     //! values for kerning
@@ -122,20 +122,20 @@ public:
     /**
      * @js ctor
      */
-    CCBMFontConfiguration();
+    BMFontConfiguration();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~CCBMFontConfiguration();
+    virtual ~BMFontConfiguration();
     /**
      * @js NA
      * @lua NA
      */
     std::string description() const;
 
-    /** allocates a CCBMFontConfiguration with a FNT file */
-    static CCBMFontConfiguration * create(const std::string& FNTfile);
+    /** allocates a BMFontConfiguration with a FNT file */
+    static BMFontConfiguration * create(const std::string& FNTfile);
 
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const std::string& FNTfile);
@@ -147,7 +147,7 @@ public:
 private:
     std::set<unsigned int>* parseConfigFile(const std::string& controlFile);
 	std::set<unsigned int>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
-    void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
+    void parseCharacterDefinition(std::string line, BMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
     void parseImageFileName(std::string line, const std::string& fntFile);
@@ -159,21 +159,21 @@ private:
 //
 //FNTConfig Cache - free functions
 //
-static Map<std::string, CCBMFontConfiguration*>* s_configurations = nullptr;
+static Map<std::string, BMFontConfiguration*>* s_configurations = nullptr;
 
-CCBMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
+BMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 {
-    CCBMFontConfiguration* ret = nullptr;
+    BMFontConfiguration* ret = nullptr;
 
     if( s_configurations == nullptr )
     {
-        s_configurations = new Map<std::string, CCBMFontConfiguration*>();
+        s_configurations = new Map<std::string, BMFontConfiguration*>();
     }
 
     ret = s_configurations->at(fntFile);
     if( ret == nullptr )
     {
-        ret = CCBMFontConfiguration::create(fntFile.c_str());
+        ret = BMFontConfiguration::create(fntFile.c_str());
         if (ret)
         {
             s_configurations->insert(fntFile, ret);
@@ -187,9 +187,9 @@ CCBMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 //BitmapFontConfiguration
 //
 
-CCBMFontConfiguration * CCBMFontConfiguration::create(const std::string& FNTfile)
+BMFontConfiguration * BMFontConfiguration::create(const std::string& FNTfile)
 {
-    CCBMFontConfiguration * ret = new CCBMFontConfiguration();
+    BMFontConfiguration * ret = new BMFontConfiguration();
     if (ret->initWithFNTfile(FNTfile))
     {
         ret->autorelease();
@@ -199,7 +199,7 @@ CCBMFontConfiguration * CCBMFontConfiguration::create(const std::string& FNTfile
     return nullptr;
 }
 
-bool CCBMFontConfiguration::initWithFNTfile(const std::string& FNTfile)
+bool BMFontConfiguration::initWithFNTfile(const std::string& FNTfile)
 {
     _kerningDictionary = nullptr;
     _fontDefDictionary = nullptr;
@@ -214,12 +214,12 @@ bool CCBMFontConfiguration::initWithFNTfile(const std::string& FNTfile)
     return true;
 }
 
-std::set<unsigned int>* CCBMFontConfiguration::getCharacterSet() const
+std::set<unsigned int>* BMFontConfiguration::getCharacterSet() const
 {
     return _characterSet;
 }
 
-CCBMFontConfiguration::CCBMFontConfiguration()
+BMFontConfiguration::BMFontConfiguration()
 : _fontDefDictionary(nullptr)
 , _commonHeight(0)
 , _kerningDictionary(nullptr)
@@ -228,19 +228,19 @@ CCBMFontConfiguration::CCBMFontConfiguration()
 
 }
 
-CCBMFontConfiguration::~CCBMFontConfiguration()
+BMFontConfiguration::~BMFontConfiguration()
 {
-    CCLOGINFO( "deallocing CCBMFontConfiguration: %p", this );
+    CCLOGINFO( "deallocing BMFontConfiguration: %p", this );
     this->purgeFontDefDictionary();
     this->purgeKerningDictionary();
     _atlasName.clear();
     CC_SAFE_DELETE(_characterSet);
 }
 
-std::string CCBMFontConfiguration::description(void) const
+std::string BMFontConfiguration::description(void) const
 {
     return StringUtils::format(
-        "<CCBMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",
+        "<BMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",
         (size_t)this,
         HASH_COUNT(_fontDefDictionary),
         HASH_COUNT(_kerningDictionary),
@@ -248,7 +248,7 @@ std::string CCBMFontConfiguration::description(void) const
     );
 }
 
-void CCBMFontConfiguration::purgeKerningDictionary()
+void BMFontConfiguration::purgeKerningDictionary()
 {
     tKerningHashElement *current;
     while(_kerningDictionary) 
@@ -259,7 +259,7 @@ void CCBMFontConfiguration::purgeKerningDictionary()
     }
 }
 
-void CCBMFontConfiguration::purgeFontDefDictionary()
+void BMFontConfiguration::purgeFontDefDictionary()
 {    
     tFontDefHashElement *current, *tmp;
 
@@ -269,12 +269,12 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
     }
 }
 
-std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const std::string& controlFile)
+std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {    
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(controlFile);
 
 	Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
-    CCASSERT((!data.isNull() && data.getSize() > 0), "CCBMFontConfiguration::parseConfigFile | Open file error.");
+    CCASSERT((!data.isNull() && data.getSize() > 0), "BMFontConfiguration::parseConfigFile | Open file error.");
 
     if (memcmp("BMF", data.getBytes(), 3) == 0) {
         std::set<unsigned int>* ret = parseBinaryConfigFile(data.getBytes(), data.getSize(), controlFile);
@@ -355,7 +355,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const std::string
     return validCharsString;
 }
 
-std::set<unsigned int>* CCBMFontConfiguration::parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile)
+std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile)
 {
     /* based on http://www.angelcode.com/products/bmfont/doc/file_format.html file format */
 
@@ -514,7 +514,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseBinaryConfigFile(unsigned ch
     return validCharsString;
 }
 
-void CCBMFontConfiguration::parseImageFileName(std::string line, const std::string& fntFile)
+void BMFontConfiguration::parseImageFileName(std::string line, const std::string& fntFile)
 {
     //////////////////////////////////////////////////////////////////////////
     // line to parse:
@@ -534,7 +534,7 @@ void CCBMFontConfiguration::parseImageFileName(std::string line, const std::stri
     _atlasName = FileUtils::getInstance()->fullPathFromRelativeFile(value.c_str(), fntFile);
 }
 
-void CCBMFontConfiguration::parseInfoArguments(std::string line)
+void BMFontConfiguration::parseInfoArguments(std::string line)
 {
     //////////////////////////////////////////////////////////////////////////
     // possible lines to parse:
@@ -550,7 +550,7 @@ void CCBMFontConfiguration::parseInfoArguments(std::string line)
     CCLOG("cocos2d: padding: %d,%d,%d,%d", _padding.left, _padding.top, _padding.right, _padding.bottom);
 }
 
-void CCBMFontConfiguration::parseCommonArguments(std::string line)
+void BMFontConfiguration::parseCommonArguments(std::string line)
 {
     //////////////////////////////////////////////////////////////////////////
     // line to parse:
@@ -581,7 +581,7 @@ void CCBMFontConfiguration::parseCommonArguments(std::string line)
     // packed (ignore) What does this mean ??
 }
 
-void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition)
+void BMFontConfiguration::parseCharacterDefinition(std::string line, BMFontDef *characterDefinition)
 {    
     //////////////////////////////////////////////////////////////////////////
     // line to parse:
@@ -631,7 +631,7 @@ void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontD
     sscanf(value.c_str(), "xadvance=%hd", &characterDefinition->xAdvance);
 }
 
-void CCBMFontConfiguration::parseKerningEntry(std::string line)
+void BMFontConfiguration::parseKerningEntry(std::string line)
 {        
     //////////////////////////////////////////////////////////////////////////
     // line to parse:
@@ -667,7 +667,7 @@ void CCBMFontConfiguration::parseKerningEntry(std::string line)
 
 FontFNT * FontFNT::create(const std::string& fntFilePath, const Point& imageOffset /* = Point::ZERO */)
 {
-    CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
+    BMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
     if (!newConf)
         return nullptr;
     
@@ -690,7 +690,7 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Point& imageOffs
     return tempFont;
 }
 
-FontFNT::FontFNT(CCBMFontConfiguration *theContfig, const Point& imageOffset /* = Point::ZERO */)
+FontFNT::FontFNT(BMFontConfiguration *theContfig, const Point& imageOffset /* = Point::ZERO */)
 :_configuration(theContfig)
 ,_imageOffset(CC_POINT_PIXELS_TO_POINTS(imageOffset))
 {
@@ -774,7 +774,7 @@ FontAtlas * FontFNT::createFontAtlas()
     tempAtlas->setCommonLineHeight(_configuration->_commonHeight);
     
     
-    ccBMFontDef fontDef;
+    BMFontDef fontDef;
     tFontDefHashElement *currentElement, *tmp;
     
     // Purge uniform hash

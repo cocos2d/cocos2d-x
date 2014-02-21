@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class CCBMFontConfiguration;
+class BMFontConfiguration;
 
 class FontFNT : public Font
 {
@@ -47,7 +47,7 @@ public:
     
 protected:
     
-    FontFNT(CCBMFontConfiguration *theContfig, const Point& imageOffset = Point::ZERO);
+    FontFNT(BMFontConfiguration *theContfig, const Point& imageOffset = Point::ZERO);
     /**
      * @js NA
      * @lua NA
@@ -58,7 +58,7 @@ private:
     
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
     
-    CCBMFontConfiguration * _configuration;
+    BMFontConfiguration * _configuration;
     Point                   _imageOffset;
     
 };
