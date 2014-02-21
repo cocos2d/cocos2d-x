@@ -186,7 +186,7 @@ void Control::removeTargetWithActionForControlEvent(Ref* target, Handler action,
     
     //remove all invocations if the target and action are null
     //TODO: should the invocations be deleted, or just removed from the array? Won't that cause issues if you add a single invocation for multiple events?
-    bool bDeleteObjects=true;
+
     if (!target && !action)
     {
         //remove objects
@@ -215,7 +215,7 @@ void Control::removeTargetWithActionForControlEvent(Ref* target, Handler action,
         }
 
         for(const auto &invocation : tobeRemovedInvocations) {
-            eventInvocationList.eraseObject(invocation, bDeleteObjects);
+            eventInvocationList.eraseObject(invocation);
         }
     }
 }

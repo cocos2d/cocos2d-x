@@ -309,18 +309,39 @@ public:
         last->release();
     }
     
-    /** @brief Remove a certain object.
+    /** @brief Remove a certain object in Vector.
      *  @param object The object to be removed.
-     *  @param toRelease Whether to decrease the referece count of the deleted object.
+     *  @param removeAll Whether to remove all elements with the same value.
+     *                   If its value is 'false', it will just erase the first occurrence.
      */
-    void eraseObject(T object, bool toRelease = true)
+    void eraseObject(T object, bool removeAll = false)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
-        auto iter = std::find(_data.begin(), _data.end(), object);
-        if (iter != _data.end())
-            _data.erase(iter);
-        if (toRelease)
-            object->release();
+        
+        if (removeAll)
+        {
+            for (auto iter = _data.begin(); iter != _data.end();)
+            {
+                if ((*iter) == object)
+                {
+                    iter = _data.erase(iter);
+                    object->release();
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
+        }
+        else
+        {
+            auto iter = std::find(_data.begin(), _data.end(), object);
+            if (iter != _data.end())
+            {
+                _data.erase(iter);
+                object->release();
+            }
+        }
     }
 
     /** @brief Removes from the vector with an iterator. 
