@@ -360,8 +360,6 @@
 "cocos/2d/platform/mac/CCApplication.mm",
 "cocos/2d/platform/mac/CCCommon.mm",
 "cocos/2d/platform/mac/CCDevice.mm",
-"cocos/2d/platform/mac/CCDirectorCaller.h",
-"cocos/2d/platform/mac/CCDirectorCaller.mm",
 "cocos/2d/platform/mac/CCGL.h",
 "cocos/2d/platform/mac/CCPlatformDefine.h",
 "cocos/2d/platform/mac/CCStdC.h",
