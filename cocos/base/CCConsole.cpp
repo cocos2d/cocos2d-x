@@ -111,21 +111,23 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 	va_start(args, format);
 	vsnprintf(buf, sizeof(buf), format, args);
 	va_end(args);
-
-	return write(sock, buf, strlen(buf));
+    auto console = Director::getInstance()->getConsole();
+	return console->socketWrite(sock, buf, strlen(buf));
 }
 
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
-    write(fd, prompt, sizeof(prompt));
+    auto console = Director::getInstance()->getConsole();
+    console->socketWrite(fd, prompt, sizeof(prompt));
 }
 
 static int printSceneGraph(int fd, Node* node, int level)
 {
     int total = 1;
+    auto console = Director::getInstance()->getConsole();
     for(int i=0; i<level; ++i)
-        write(fd, "-", 1);
+        console->socketWrite(fd, "-", 1);
 
     mydprintf(fd, " %s\n", node->getDescription().c_str());
 
@@ -137,7 +139,8 @@ static int printSceneGraph(int fd, Node* node, int level)
 
 static void printSceneGraphBoot(int fd)
 {
-    write(fd,"\n",1);
+    auto console = Director::getInstance()->getConsole();
+    console->socketWrite(fd,"\n",1);
     auto scene = Director::getInstance()->getRunningScene();
     int total = printSceneGraph(fd, scene, 0);
     mydprintf(fd, "Total Nodes: %d\n", total);
@@ -288,6 +291,24 @@ Console::~Console()
     stop();
 }
 
+ssize_t Console::socketWrite(int fd, const char* buf, size_t len)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    return send(fd, buf, len , 0);
+#else
+    return write(fd, buf, len);
+#endif
+}
+
+ssize_t Console::socketRead(int fd, char* buf, size_t len)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    return recv(fd, buf, len , 0);
+#else
+    return read(fd, buf, len);
+#endif
+}
+
 bool Console::listenOnTCP(int port)
 {
     int listenfd, n;
@@ -389,7 +410,8 @@ void Console::addCommand(const Command& cmd)
 void Console::commandHelp(int fd, const std::string &args)
 {
     const char help[] = "\nAvailable commands:\n";
-    write(fd, help, sizeof(help));
+    auto console = Director::getInstance()->getConsole();
+    console->socketWrite(fd, help, sizeof(help));
     for(auto it=_commands.begin();it!=_commands.end();++it)
     {
         auto cmd = it->second;
@@ -558,11 +580,12 @@ bool Console::parseCommand(int fd)
 {
     char buf[512];
     auto r = readline(fd, buf, sizeof(buf)-1);
+    auto console = Director::getInstance()->getConsole();
     if(r < 1)
     {
         const char err[] = "Unknown error!\n";
         sendPrompt(fd);
-        write(fd, err, sizeof(err));
+        console->socketWrite(fd, err, sizeof(err));
         return false;
     }
     std::string cmdLine;
@@ -574,7 +597,7 @@ bool Console::parseCommand(int fd)
     if(args.empty())
     {
         const char err[] = "Unknown command. Type 'help' for options\n";
-        write(fd, err, sizeof(err));
+        console->socketWrite(fd, err, sizeof(err));
         sendPrompt(fd);
         return false;
     }
@@ -596,7 +619,7 @@ bool Console::parseCommand(int fd)
         cmd.callback(fd, args2);
     }else if(strcmp(buf, "\r\n") != 0) {
         const char err[] = "Unknown command. Type 'help' for options\n";
-        write(fd, err, sizeof(err));
+        console->socketWrite(fd, err, sizeof(err));
     }
 
     sendPrompt(fd);
@@ -613,9 +636,10 @@ ssize_t Console::readline(int fd, char* ptr, int maxlen)
 {
     ssize_t n, rc;
     char c;
+    auto console = Director::getInstance()->getConsole();
 
     for( n=1; n<maxlen-1; n++ ) {
-        if( (rc = read(fd, &c, 1 )) ==1 ) {
+        if( (rc = console->socketRead(fd, &c, 1 )) ==1 ) {
             *ptr++ = c;
             if(c == '\n') {
                 break;
@@ -685,6 +709,7 @@ void Console::loop()
 
         copy_set = _read_set;
         timeout_copy = timeout;
+        auto console = Director::getInstance()->getConsole();
         int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
         if( nready == -1 )
@@ -731,7 +756,7 @@ void Console::loop()
             _DebugStringsMutex.lock();
             for(const auto &str : _DebugStrings) {
                 for(const auto &fd : _fds) {
-                    write(fd, str.c_str(), str.length());
+                    console->socketWrite(fd, str.c_str(), str.length());
                 }
             }
             _DebugStrings.clear();
