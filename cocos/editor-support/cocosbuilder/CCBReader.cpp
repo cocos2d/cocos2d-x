@@ -192,7 +192,7 @@ set<string>& CCBReader::getLoadedSpriteSheet()
     return _loadedSpriteSheets;
 }
 
-Object* CCBReader::getOwner()
+Ref*  CCBReader::getOwner()
 {
     return _owner;
 }
@@ -202,12 +202,12 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName)
     return this->readNodeGraphFromFile(pCCBFileName, nullptr);
 }
 
-Node* CCBReader::readNodeGraphFromFile(const char* pCCBFileName, Object* pOwner) 
+Node* CCBReader::readNodeGraphFromFile(const char* pCCBFileName, Ref* pOwner) 
 {
     return this->readNodeGraphFromFile(pCCBFileName, pOwner, Director::getInstance()->getWinSize());
 }
 
-Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner, const Size &parentSize)
+Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Ref *pOwner, const Size &parentSize)
 {
     if (nullptr == pCCBFileName || strlen(pCCBFileName) == 0)
     {
@@ -231,7 +231,7 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
     return ret;
 }
 
-Node* CCBReader::readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, Object *pOwner, const Size &parentSize)
+Node* CCBReader::readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, Ref *pOwner, const Size &parentSize)
 {
     _data = data;
     _bytes =_data->getBytes();
@@ -274,12 +274,12 @@ Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName)
     return createSceneWithNodeGraphFromFile(pCCBFileName, nullptr);
 }
 
-Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Object *pOwner)
+Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Ref *pOwner)
 {
     return createSceneWithNodeGraphFromFile(pCCBFileName, pOwner, Director::getInstance()->getWinSize());
 }
 
-Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Object *pOwner, const Size &parentSize)
+Scene* CCBReader::createSceneWithNodeGraphFromFile(const char *pCCBFileName, Ref *pOwner, const Size &parentSize)
 {
     Node *pNode = readNodeGraphFromFile(pCCBFileName, pOwner, parentSize);
     Scene *pScene = Scene::create();
@@ -626,7 +626,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     {
         if(!_jsControlled)
         {
-            Object * target = nullptr;
+            Ref*  target = nullptr;
             if(memberVarAssignmentType == TargetType::DOCUMENT_ROOT)
             {
                 target = _animationManager->getRootNode();
@@ -677,7 +677,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
         
         if(!_jsControlled)
         {
-            Object * target = node;
+            Ref*  target = node;
             if(target != nullptr)
             {
                 CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);

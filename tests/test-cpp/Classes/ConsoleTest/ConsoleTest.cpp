@@ -92,7 +92,7 @@ void BaseTestConsole::onEnter()
     BaseTest::onEnter();
 }
 
-void BaseTestConsole::restartCallback(Object* sender)
+void BaseTestConsole::restartCallback(Ref* sender)
 {
     auto s = new ConsoleTestScene();
     s->addChild(restartConsoleTest());
@@ -101,7 +101,7 @@ void BaseTestConsole::restartCallback(Object* sender)
     s->release();
 }
 
-void BaseTestConsole::nextCallback(Object* sender)
+void BaseTestConsole::nextCallback(Ref* sender)
 {
     auto s = new ConsoleTestScene();
     s->addChild( nextConsoleTest() );
@@ -109,7 +109,7 @@ void BaseTestConsole::nextCallback(Object* sender)
     s->release();
 }
 
-void BaseTestConsole::backCallback(Object* sender)
+void BaseTestConsole::backCallback(Ref* sender)
 {
     auto s = new ConsoleTestScene();
     s->addChild( backConsoleTest() );

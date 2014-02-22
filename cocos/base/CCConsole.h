@@ -118,7 +118,7 @@ protected:
     void commandTextures(int fd, const std::string &args);
     void commandResolution(int fd, const std::string &args);
     void commandProjection(int fd, const std::string &args);
-
+    void commandDirector(int fd, const std::string &args);
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;

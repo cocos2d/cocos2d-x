@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
-#include "CCLabelBMFont.h"
+#include "CCFontFNT.h"
 #include "CCActionManager.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
@@ -142,7 +142,9 @@ bool Director::init(void)
     _scheduler = new Scheduler();
     // action manager
     _actionManager = new ActionManager();
-    _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->_actionManager->update(dt);
+    }, _actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
     _eventDispatcher = new EventDispatcher();
     _eventAfterDraw = new EventCustom(EVENT_AFTER_DRAW);
@@ -491,7 +493,7 @@ void Director::setProjection(Projection projection)
 
 void Director::purgeCachedData(void)
 {
-    LabelBMFont::purgeCachedData();
+    FontFNT::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
         SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
@@ -744,7 +746,7 @@ void Director::purgeDirector()
     CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
-    LabelBMFont::purgeCachedData();
+    FontFNT::purgeCachedData();
 
     FontFreeType::shutdownFreeType();
 

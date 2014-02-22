@@ -167,7 +167,7 @@ bool UIListViewTest_Vertical::init()
     return false;
 }
 
-void UIListViewTest_Vertical::selectedItemEvent(Object *pSender, ListViewEventType type)
+void UIListViewTest_Vertical::selectedItemEvent(Ref *pSender, ListViewEventType type)
 {
     switch (type)
     {
@@ -340,7 +340,7 @@ bool UIListViewTest_Horizontal::init()
     return false;
 }
 
-void UIListViewTest_Horizontal::selectedItemEvent(Object *pSender, ListViewEventType type)
+void UIListViewTest_Horizontal::selectedItemEvent(Ref *pSender, ListViewEventType type)
 {
     switch (type)
     {

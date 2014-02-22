@@ -33,7 +33,7 @@ public:
     UISliderTest();
     ~UISliderTest();
     bool init();
-    void sliderEvent(Object* pSender, SliderEventType type);
+    void sliderEvent(Ref* pSender, SliderEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest)
@@ -46,7 +46,7 @@ public:
     UISliderTest_Scale9();
     ~UISliderTest_Scale9();
     bool init();
-    void sliderEvent(Object* pSender, SliderEventType type);
+    void sliderEvent(Ref* pSender, SliderEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest_Scale9)

@@ -196,7 +196,7 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     //    ActionManager::getInstance()->releaseActions();
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
-    Object* rootWidget = (Object*) widget;
+    Ref* rootWidget = (Ref*) widget;
     ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
@@ -895,7 +895,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     //    ActionManager::getInstance()->releaseActions();
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
-    Object* rootWidget = (Object*) widget;
+    Ref* rootWidget = (Ref*) widget;
     ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }

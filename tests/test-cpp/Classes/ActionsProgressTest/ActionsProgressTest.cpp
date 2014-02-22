@@ -121,7 +121,7 @@ void SpriteDemo::onEnter()
     addChild(background, -10);
 }
 
-void SpriteDemo::restartCallback(Object* sender)
+void SpriteDemo::restartCallback(Ref* sender)
 {
     auto s = new ProgressActionsTestScene();
     s->addChild(restartAction()); 
@@ -130,7 +130,7 @@ void SpriteDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void SpriteDemo::nextCallback(Object* sender)
+void SpriteDemo::nextCallback(Ref* sender)
 {
     auto s = new ProgressActionsTestScene();
     s->addChild( nextAction() );
@@ -138,7 +138,7 @@ void SpriteDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void SpriteDemo::backCallback(Object* sender)
+void SpriteDemo::backCallback(Ref* sender)
 {
     auto s = new ProgressActionsTestScene();
     s->addChild( backAction() );

@@ -42,9 +42,9 @@ public:
     TestLayer1(void);
     ~TestLayer1(void);
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
     void step(float dt);
 
@@ -60,9 +60,9 @@ public:
     TestLayer2(void);
     ~TestLayer2(void);
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
     void step(float dt);
 

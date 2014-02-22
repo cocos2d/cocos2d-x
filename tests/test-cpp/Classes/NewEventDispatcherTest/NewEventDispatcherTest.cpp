@@ -77,7 +77,7 @@ void EventDispatcherTestDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void EventDispatcherTestDemo::backCallback(Object* sender)
+void EventDispatcherTestDemo::backCallback(Ref* sender)
 {
     auto scene = new EventDispatcherTestScene();
     auto layer = backAction();
@@ -87,7 +87,7 @@ void EventDispatcherTestDemo::backCallback(Object* sender)
     scene->release();
 }
 
-void EventDispatcherTestDemo::nextCallback(Object* sender)
+void EventDispatcherTestDemo::nextCallback(Ref* sender)
 {
     auto scene = new EventDispatcherTestScene();
     auto layer = nextAction();
@@ -97,7 +97,7 @@ void EventDispatcherTestDemo::nextCallback(Object* sender)
     scene->release();
 }
 
-void EventDispatcherTestDemo::restartCallback(Object* sender)
+void EventDispatcherTestDemo::restartCallback(Ref* sender)
 {
     auto scene = new EventDispatcherTestScene();
     auto layer = restartAction();
@@ -181,13 +181,13 @@ void TouchableSpriteTest::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite3);
     
 
-    auto removeAllTouchItem = MenuItemFont::create("Remove All Touch Listeners", [this](Object* sender){
+    auto removeAllTouchItem = MenuItemFont::create("Remove All Touch Listeners", [this](Ref* sender){
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only Next item could be clicked");
         
         _eventDispatcher->removeEventListeners(EventListener::Type::TOUCH_ONE_BY_ONE);
         
-        auto nextItem = MenuItemFont::create("Next", [=](Object* sender){
+        auto nextItem = MenuItemFont::create("Next", [=](Ref* sender){
             nextCallback(nullptr);
         });
         
@@ -370,7 +370,7 @@ void RemoveListenerWhenDispatching::onEnter()
     addChild(statusLabel);
     std::shared_ptr<bool> enable(new bool(true));
     // Enable/Disable item
-    auto toggleItem = MenuItemToggle::createWithCallback([=](Object* sender){
+    auto toggleItem = MenuItemToggle::createWithCallback([=](Ref* sender){
         if (*enable)
         {
             _eventDispatcher->removeEventListener(listener1);
@@ -428,7 +428,7 @@ void CustomEventTest::onEnter()
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
-    auto sendItem = MenuItemFont::create("Send Custom Event 1", [=](Object* sender){
+    auto sendItem = MenuItemFont::create("Send Custom Event 1", [=](Ref* sender){
         static int count = 0;
         ++count;
         char* buf = new char[10];
@@ -454,7 +454,7 @@ void CustomEventTest::onEnter()
     
     _eventDispatcher->addEventListenerWithFixedPriority(_listener2, 1);
     
-    auto sendItem2 = MenuItemFont::create("Send Custom Event 2", [=](Object* sender){
+    auto sendItem2 = MenuItemFont::create("Send Custom Event 2", [=](Ref* sender){
         static int count = 0;
         ++count;
         char* buf = new char[10];
@@ -670,7 +670,7 @@ void RemoveListenerAfterAddingTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
 
-    auto item1 = MenuItemFont::create("Click Me 1", [this](Object* sender){
+    auto item1 = MenuItemFont::create("Click Me 1", [this](Ref* sender){
         auto listener = EventListenerTouchOneByOne::create();
         listener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
             CCASSERT(false, "Should not come here!");
@@ -684,7 +684,7 @@ void RemoveListenerAfterAddingTest::onEnter()
     item1->setPosition(VisibleRect::center() + Point(0, 80));
     
     auto addNextButton = [this](){
-        auto next = MenuItemFont::create("Please Click Me To Reset!", [this](Object* sender){
+        auto next = MenuItemFont::create("Please Click Me To Reset!", [this](Ref* sender){
             this->restartCallback(nullptr);
         });
         next->setPosition(VisibleRect::center() + Point(0, -40));
@@ -695,7 +695,7 @@ void RemoveListenerAfterAddingTest::onEnter()
         this->addChild(menu);
     };
     
-    auto item2 = MenuItemFont::create("Click Me 2", [=](Object* sender){
+    auto item2 = MenuItemFont::create("Click Me 2", [=](Ref* sender){
         auto listener = EventListenerTouchOneByOne::create();
         listener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
             CCASSERT(false, "Should not come here!");
@@ -710,7 +710,7 @@ void RemoveListenerAfterAddingTest::onEnter()
     
     item2->setPosition(VisibleRect::center() + Point(0, 40));
     
-    auto item3 = MenuItemFont::create("Click Me 3", [=](Object* sender){
+    auto item3 = MenuItemFont::create("Click Me 3", [=](Ref* sender){
         auto listener = EventListenerTouchOneByOne::create();
         listener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
             CCASSERT(false, "Should not come here!");

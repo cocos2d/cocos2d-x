@@ -1,11 +1,21 @@
 cocos2d-x-3.0rc0 Feb.?? 2014
 [All]
+     [NEW]          Adds more console commands: director resume|pause|stopanimation|startanimation.
      [NEW]          Adds Dutch Language support.
      [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
      [NEW]          Director: Displays 'Vertices drawn' in the stats. Useful to measure performance.
      [NEW]          Using python to automatically generate script bindings codes.
      [NEW]          Linux javascript bindings support.
      
+     [FIX]          Character would not be aligned on the baseline when label using distance field.
+     [FIX]          Adds a macro to disable inserting script binding relevant codes.
+     [FIX]          Removing child from TMXLayer may cause crash.
+     [FIX]          Voice recognition input would cause crash on ios7.
+     [FIX]          Object which isn't in Vector would also be released when invoking Vector::eraseObject.
+     [FIX]          Potential crash when websocket connection closes.
+     [FIX]          No callback is invoked when websocket connection fails.
+     [FIX]          s3tc compressed textures with no mipmaps fail to be loaded.
+     [FIX]          Get rid of 'Object', rename it to 'Ref', delete non-reference stuff 'isEqual' and 'update'.
      [FIX]          Merge cocostudio/CCActionXxx to CCAction.
      [FIX]          Supports 'setTimeout' and 'setInterval' in JSB.
      [FIX]          Exposes the missing data structures of Spine to JS.

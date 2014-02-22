@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "CCArray.h"
+#include "CCEventTouch.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN

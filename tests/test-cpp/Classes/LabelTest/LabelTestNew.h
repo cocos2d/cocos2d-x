@@ -20,9 +20,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter();
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 };
 
 class LabelTTFAlignmentNew : public AtlasDemoNew
@@ -190,8 +190,8 @@ public:
     void snapArrowsToEdge();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void stringChanged(Object *sender);
-    void alignmentChanged(Object *sender);
+    void stringChanged(Ref *sender);
+    void alignmentChanged(Ref *sender);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
@@ -276,9 +276,9 @@ public:
     
 private:
     
-    void setAlignmentLeft(Object* sender);
-    void setAlignmentCenter(Object* sender);
-    void setAlignmentRight(Object* sender);
+    void setAlignmentLeft(Ref* sender);
+    void setAlignmentCenter(Ref* sender);
+    void setAlignmentRight(Ref* sender);
     void updateAlignment();
     
     Label          * _label;
@@ -418,6 +418,17 @@ public:
 protected:
     CustomCommand _renderCmd;
     void onDraw();
+};
+
+class LabelTTFLargeText : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFLargeText);
+
+    LabelTTFLargeText();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // we don't support linebreak mode

@@ -58,7 +58,7 @@ void UILoadingBarTest_Left::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Left::previousCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Left::previousCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -67,7 +67,7 @@ void UILoadingBarTest_Left::previousCallback(Object* sender, TouchEventType type
     }
 }
 
-void UILoadingBarTest_Left::restartCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Left::restartCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -76,7 +76,7 @@ void UILoadingBarTest_Left::restartCallback(Object* sender, TouchEventType type)
     }
 }
 
-void UILoadingBarTest_Left::nextCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Left::nextCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -141,7 +141,7 @@ void UILoadingBarTest_Right::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Right::previousCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Right::previousCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -150,7 +150,7 @@ void UILoadingBarTest_Right::previousCallback(Object* sender, TouchEventType typ
     }
 }
 
-void UILoadingBarTest_Right::restartCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Right::restartCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -159,7 +159,7 @@ void UILoadingBarTest_Right::restartCallback(Object* sender, TouchEventType type
     }
 }
 
-void UILoadingBarTest_Right::nextCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Right::nextCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -226,7 +226,7 @@ void UILoadingBarTest_Left_Scale9::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Left_Scale9::previousCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Left_Scale9::previousCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -235,7 +235,7 @@ void UILoadingBarTest_Left_Scale9::previousCallback(Object* sender, TouchEventTy
     }
 }
 
-void UILoadingBarTest_Left_Scale9::restartCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Left_Scale9::restartCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -244,7 +244,7 @@ void UILoadingBarTest_Left_Scale9::restartCallback(Object* sender, TouchEventTyp
     }
 }
 
-void UILoadingBarTest_Left_Scale9::nextCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Left_Scale9::nextCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -312,7 +312,7 @@ void UILoadingBarTest_Right_Scale9::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Right_Scale9::previousCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Right_Scale9::previousCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -321,7 +321,7 @@ void UILoadingBarTest_Right_Scale9::previousCallback(Object* sender, TouchEventT
     }
 }
 
-void UILoadingBarTest_Right_Scale9::restartCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Right_Scale9::restartCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -330,7 +330,7 @@ void UILoadingBarTest_Right_Scale9::restartCallback(Object* sender, TouchEventTy
     }
 }
 
-void UILoadingBarTest_Right_Scale9::nextCallback(Object* sender, TouchEventType type)
+void UILoadingBarTest_Right_Scale9::nextCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {

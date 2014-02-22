@@ -13,23 +13,23 @@ ButtonTestLayer::~ButtonTestLayer()
     CC_SAFE_RELEASE(mControlEventLabel);
 }
 
-SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName) {
+SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(Ref * pTarget, const char * pSelectorName) {
     return NULL;    
 }
 
-Control::Handler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+Control::Handler ButtonTestLayer::onResolveCCBCCControlSelector(Ref * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
 
     return NULL;
 }
 
-bool ButtonTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * pMemberVariableName, Node * pNode) {
+bool ButtonTestLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {
     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", LabelBMFont *, this->mControlEventLabel);
 
     return false;
 }
 
-void ButtonTestLayer::onControlButtonClicked(cocos2d::Object *pSender, Control::EventType pControlEvent) {
+void ButtonTestLayer::onControlButtonClicked(cocos2d::Ref *pSender, Control::EventType pControlEvent) {
     switch(pControlEvent) {
         case Control::EventType::TOUCH_DOWN:
             this->mControlEventLabel->setString("Touch Down.");

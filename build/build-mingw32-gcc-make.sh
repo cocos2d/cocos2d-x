@@ -45,7 +45,7 @@ if [ "${OSTYPE}" = "msys" ]; then
   PP=mingw-w64-${HOST_ARCH}
   
   MINGW_PACKAGES=(glfw glew libwebp libjpeg-turbo libpng freetype libiconv zlib curl
-                  make gcc binutils headers cmake libxml2)
+                  make gcc binutils headers cmake)
 
   MINGW_PACKAGES=(${MINGW_PACKAGES[@]/#/${PP}-})
 

@@ -26,11 +26,11 @@ public:
     virtual void onClose(cocos2d::network::WebSocket* ws);
     virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error);
     
-    void toExtensionsMainLayer(cocos2d::Object *sender);
+    void toExtensionsMainLayer(cocos2d::Ref *sender);
     
     // Menu Callbacks
-    void onMenuSendTextClicked(cocos2d::Object *sender);
-    void onMenuSendBinaryClicked(cocos2d::Object *sender);
+    void onMenuSendTextClicked(cocos2d::Ref *sender);
+    void onMenuSendBinaryClicked(cocos2d::Ref *sender);
 
 private:
     cocos2d::network::WebSocket* _wsiSendText;

@@ -35,7 +35,7 @@ extern "C" {
 }
 
 #include "ccTypes.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 using std::memset;
@@ -72,7 +72,7 @@ typedef union {
     std::string*        stringValue;
     LuaValueDict*     dictValue;
     LuaValueArray*    arrayValue;
-    Object*           ccobjectValue;
+    Ref*           ccobjectValue;
 } LuaValueField;
 
 class LuaValue
@@ -85,8 +85,8 @@ public:
     static const LuaValue stringValue(const std::string& stringValue);
     static const LuaValue dictValue(const LuaValueDict& dictValue);
     static const LuaValue arrayValue(const LuaValueArray& arrayValue);
-    static const LuaValue ccobjectValue(Object* ccobjectValue, const char* objectTypename);
-    static const LuaValue ccobjectValue(Object* ccobjectValue, const std::string& objectTypename);
+    static const LuaValue ccobjectValue(Ref* ccobjectValue, const char* objectTypename);
+    static const LuaValue ccobjectValue(Ref* ccobjectValue, const std::string& objectTypename);
     
     LuaValue(void)
     : _type(LuaValueTypeInt)
@@ -130,7 +130,7 @@ public:
         return *_field.arrayValue;
     }
     
-    Object* ccobjectValue(void) const {
+    Ref* ccobjectValue(void) const {
         return _field.ccobjectValue;
     }
     

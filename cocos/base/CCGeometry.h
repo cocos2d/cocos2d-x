@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include <functional>
 
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN
@@ -457,7 +456,7 @@ public:
     
 private:
     // returns true if segment A-B intersects with segment C-D. S->E is the ovderlap part
-    static bool isOneDemensionSegmentOverlap(float A, float B, float C, float D, float *S, float * E);
+    static bool isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, float * E);
     
     // cross procuct of 2 vector. A->B X C->D
     static float crossProduct2Vector(const Point& A, const Point& B, const Point& C, const Point& D) { return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y); }

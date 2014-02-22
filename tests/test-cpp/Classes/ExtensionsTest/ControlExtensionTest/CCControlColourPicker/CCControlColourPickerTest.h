@@ -35,7 +35,7 @@ public:
     virtual ~ControlColourPickerTest();
     bool init();
     /** Callback for the change value. */
-    void colourValueChanged(Object *sender, Control::EventType controlEvent);
+    void colourValueChanged(Ref *sender, Control::EventType controlEvent);
 
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _colorLabel, ColorLabel)
 

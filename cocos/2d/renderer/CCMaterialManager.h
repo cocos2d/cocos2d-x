@@ -27,13 +27,13 @@
 #define _CC_MATERIALMANAGER_H_
 
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccTypes.h"
 #include <map>
 
 NS_CC_BEGIN
 
-class MaterialManager : public Object
+class MaterialManager : public Ref
 {
 public:
     static MaterialManager* getInstance();

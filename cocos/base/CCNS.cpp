@@ -55,17 +55,13 @@ static inline void split(const std::string& src, const std::string& token, strAr
 // if the form is right,the string will be split into the parameter strs;
 // or the parameter strs will be empty.
 // if the form is right return true,else return false.
-static bool splitWithForm(const std::string& str, strArray& strs)
+static bool splitWithForm(const std::string& content, strArray& strs)
 {
     bool bRet = false;
 
     do 
     {
-        CC_BREAK_IF(str.empty());
-
-        // string is empty
-        std::string content = str;
-        CC_BREAK_IF(content.length() == 0);
+        CC_BREAK_IF(content.empty());
 
         size_t nPosLeft  = content.find('{');
         size_t nPosRight = content.find('}');
@@ -75,7 +71,7 @@ static bool splitWithForm(const std::string& str, strArray& strs)
         // '}' is before '{'
         CC_BREAK_IF(nPosLeft > nPosRight);
 
-        std::string pointStr = content.substr(nPosLeft + 1, nPosRight - nPosLeft - 1);
+        const std::string pointStr = content.substr(nPosLeft + 1, nPosRight - nPosLeft - 1);
         // nothing between '{' and '}'
         CC_BREAK_IF(pointStr.length() == 0);
 
@@ -128,8 +124,8 @@ Rect RectFromString(const std::string& str)
         CC_BREAK_IF(nPointEnd == std::string::npos);
 
         // get the point string and size string
-        std::string pointStr = content.substr(0, nPointEnd);
-        std::string sizeStr  = content.substr(nPointEnd + 1, content.length() - nPointEnd);
+        const std::string pointStr = content.substr(0, nPointEnd);
+        const std::string sizeStr  = content.substr(nPointEnd + 1, content.length() - nPointEnd);
 
         // split the string with ','
         strArray pointInfo;

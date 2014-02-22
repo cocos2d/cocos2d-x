@@ -64,7 +64,7 @@ std::string UnitTestDemo::subtitle() const
     return "";
 }
 
-void UnitTestDemo::restartCallback(Object* sender)
+void UnitTestDemo::restartCallback(Ref* sender)
 {
     auto s = new UnitTestScene();
     s->addChild( restartAction() );
@@ -72,7 +72,7 @@ void UnitTestDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void UnitTestDemo::nextCallback(Object* sender)
+void UnitTestDemo::nextCallback(Ref* sender)
 {
     auto s = new UnitTestScene();
     s->addChild( nextAction() );
@@ -80,7 +80,7 @@ void UnitTestDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void UnitTestDemo::backCallback(Object* sender)
+void UnitTestDemo::backCallback(Ref* sender)
 {
     auto s = new UnitTestScene();
     s->addChild( backAction() );
@@ -233,6 +233,47 @@ void TemplateVectorTest::onEnter()
     vec6.eraseObject(vec6.at(2));
     CCASSERT(vec6.at(2)->getTag() == 1013, "");
     vec6.clear();
+    
+    auto objA = Node::create(); // retain count is 1
+    auto objB = Node::create();
+    auto objC = Node::create();
+    {
+        Vector<Node*> array1;
+        Vector<Node*> array2;
+        
+        // push back objA 3 times
+        array1.pushBack(objA); // retain count is 2
+        array1.pushBack(objA); // retain count is 3
+        array1.pushBack(objA); // retain count is 4
+        
+        array2.pushBack(objA); // retain count is 5
+        array2.pushBack(objB);
+        array2.pushBack(objC);
+        
+        for (auto obj : array1) {
+            array2.eraseObject(obj);
+        }
+        CCASSERT(objA->getReferenceCount() == 4, "");
+    }
+    CCASSERT(objA->getReferenceCount() == 1, "");
+    
+    {
+        Vector<Node*> array1;
+        // push back objA 3 times
+        array1.pushBack(objA); // retain count is 2
+        array1.pushBack(objA); // retain count is 3
+        array1.pushBack(objA); // retain count is 4
+        CCASSERT(objA->getReferenceCount() == 4, "");
+        array1.eraseObject(objA, true); // Remove all occurrences in the Vector.
+        CCASSERT(objA->getReferenceCount() == 1, "");
+        
+        array1.pushBack(objA); // retain count is 2
+        array1.pushBack(objA); // retain count is 3
+        array1.pushBack(objA); // retain count is 4
+        
+        array1.eraseObject(objA, false);
+        CCASSERT(objA->getReferenceCount() == 3, ""); // Only remove the first occurrence in the Vector.
+    }
 
     // Check the retain count in vec7
     CCASSERT(vec7.size() == 20, "");
