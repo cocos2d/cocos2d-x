@@ -28,7 +28,7 @@
 
 #include "CCLayer.h"
 #include "CCEventListenerTouch.h"
-
+#include "CCActionTween.h"
 #include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
@@ -65,7 +65,7 @@ public:
  * ScrollView support for cocos2d-x.
  * It provides scroll view functionalities to cocos2d projects natively.
  */
-class ScrollView : public Layer
+class ScrollView : public Layer, public ActionTweenDelegate
 {
 public:
     enum class Direction
@@ -162,11 +162,11 @@ public:
     /**
      * Provided to make scroll view compatible with SWLayer's pause method
      */
-    void pause(Object* sender);
+    void pause(Ref* sender);
     /**
      * Provided to make scroll view compatible with SWLayer's resume method
      */
-    void resume(Object* sender);
+    void resume(Ref* sender);
 
     void setTouchEnabled(bool enabled);
 	bool isTouchEnabled() const;
@@ -230,6 +230,10 @@ public:
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
 
+    /**
+     * CCActionTweenDelegate
+     */
+    void updateTweenAction(float value, const std::string& key);
 protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.

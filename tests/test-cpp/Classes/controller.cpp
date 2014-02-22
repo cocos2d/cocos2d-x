@@ -159,7 +159,7 @@ TestController::~TestController()
 {
 }
 
-void TestController::menuCallback(Object * sender)
+void TestController::menuCallback(Ref * sender)
 {
 	Director::getInstance()->purgeCachedData();
 
@@ -177,7 +177,7 @@ void TestController::menuCallback(Object * sender)
     }
 }
 
-void TestController::closeCallback(Object * sender)
+void TestController::closeCallback(Ref * sender)
 {
     Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -371,3 +371,4 @@ void TestController::addConsoleAutoTest()
     };
     console->addCommand(autotest);
 }
+

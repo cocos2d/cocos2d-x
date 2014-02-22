@@ -50,6 +50,7 @@ static long getCurrentMillSecond() {
 }
 
 Application::Application()
+: _animationInterval(1.0f/60.0f*1000.0f)
 {
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
@@ -59,7 +60,6 @@ Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
-    _animationInterval = 1.0f/60.0f*1000.0f;
 }
 
 int Application::run()
@@ -75,7 +75,7 @@ int Application::run()
 
     while (!glview->windowShouldClose())
     {
-    long iLastTime = getCurrentMillSecond();
+        long iLastTime = getCurrentMillSecond();
         director->mainLoop();
         glview->pollEvents();
         long iCurTime = getCurrentMillSecond();

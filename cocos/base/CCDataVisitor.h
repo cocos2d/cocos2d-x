@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class Object;
+class Ref;
 class __Bool;
 class __Integer;
 class __Float;
@@ -50,7 +50,7 @@ class __Set;
  *
  * Use cases:
  *  - data serialization,
- *  - pretty printing of Object *
+ *  - pretty printing of Ref* 
  *  - safe value reading from Array, __Dictionary, Set
  *
  * Usage:
@@ -69,7 +69,7 @@ public:
     virtual ~DataVisitor() {}
 
     /** default method, called from non-overloaded methods and for unrecognized objects */
-    virtual void visitObject(const Object *p) = 0;
+    virtual void visitObject(const Ref *p) = 0;
 
     virtual void visit(const __Bool *p);
     virtual void visit(const __Integer *p);
@@ -90,7 +90,7 @@ public:
     virtual void clear();
     virtual std::string getResult();
     
-    virtual void visitObject(const Object *p);
+    virtual void visitObject(const Ref *p);
     virtual void visit(const __Bool * p);
     virtual void visit(const __Integer *p);
     virtual void visit(const __Float *p);

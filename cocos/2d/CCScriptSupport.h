@@ -26,6 +26,9 @@
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
+#include "ccConfig.h"
+#if CC_ENABLE_SCRIPT_BINDING
+
 #include "platform/CCCommon.h"
 #include "CCTouch.h"
 #include "CCEventTouch.h"
@@ -51,7 +54,7 @@ enum ccScriptType {
     kScriptTypeJavascript
 };
 
-class ScriptHandlerEntry : public Object
+class ScriptHandlerEntry : public Ref
 {
 public:
     static ScriptHandlerEntry* create(int handler);
@@ -59,7 +62,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~ScriptHandlerEntry(void);
+    virtual ~ScriptHandlerEntry();
     
     int getHandler(void) {
         return _handler;
@@ -100,7 +103,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~SchedulerScriptHandlerEntry(void);
+    virtual ~SchedulerScriptHandlerEntry();
     /**
      * @js NA
      * @lua NA
@@ -159,7 +162,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~TouchScriptHandlerEntry(void);
+    virtual ~TouchScriptHandlerEntry();
     /**
      * @js NA
      * @lua NA
@@ -309,7 +312,7 @@ struct CommonScriptData
     // Now this struct is only used in LuaBinding.
     int handler;
     char eventName[64];
-    Object* eventSource;
+    Ref* eventSource;
     char eventSourceClassName[64];
     
     // Constructor
@@ -317,7 +320,7 @@ struct CommonScriptData
      * @js NA
      * @lua NA
      */
-    CommonScriptData(int inHandler,const char* inName,Object* inSource = nullptr,const char* inClassName = nullptr)
+    CommonScriptData(int inHandler,const char* inName, Ref* inSource = nullptr,const char* inClassName = nullptr)
     : handler(inHandler),
       eventSource(inSource)
     {
@@ -373,7 +376,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void removeScriptObjectByObject(Object* obj) = 0;
+    virtual void removeScriptObjectByObject(Ref* obj) = 0;
     
     /** Remove script function handler, only LuaEngine class need to implement this function. 
      * @js NA
@@ -501,5 +504,7 @@ private:
 /// @}
 
 NS_CC_END
+
+#endif // #if CC_ENABLE_SCRIPT_BINDING
 
 #endif // __SCRIPT_SUPPORT_H__

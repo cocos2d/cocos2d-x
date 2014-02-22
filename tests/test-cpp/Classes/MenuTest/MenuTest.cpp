@@ -76,7 +76,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     item3->setColor( Color3B(200,200,255) );
     
     // Font Item
-    auto item4 = MenuItemFont::create("I toggle enable items", [&](Object *sender) {
+    auto item4 = MenuItemFont::create("I toggle enable items", [&](Ref *sender) {
 		_disabledItem->setEnabled(! _disabledItem->isEnabled() );
 	});
 
@@ -156,12 +156,12 @@ MenuLayerMainMenu::~MenuLayerMainMenu()
     _disabledItem->release();
 }
 
-void MenuLayerMainMenu::menuCallback(Object* sender)
+void MenuLayerMainMenu::menuCallback(Ref* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(1);
 }
 
-void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
+void MenuLayerMainMenu::menuCallbackConfig(Ref* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(3);
 }
@@ -173,7 +173,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
     log("TOUCHES ALLOWED AGAIN");
 }
 
-void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
+void MenuLayerMainMenu::menuCallbackDisabled(Ref* sender) 
 {
     // hijack all touch events for 5 seconds
     _eventDispatcher->setPriority(_touchListener, -1);
@@ -181,23 +181,23 @@ void MenuLayerMainMenu::menuCallbackDisabled(Object* sender)
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
 
-void MenuLayerMainMenu::menuCallback2(Object* sender)
+void MenuLayerMainMenu::menuCallback2(Ref* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(2);
 }
 
-void MenuLayerMainMenu::menuCallbackBugsTest(Object *pSender)
+void MenuLayerMainMenu::menuCallbackBugsTest(Ref *pSender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(4);
 }
 
-void MenuLayerMainMenu::onQuit(Object* sender)
+void MenuLayerMainMenu::onQuit(Ref* sender)
 {
     //[[Director sharedDirector] end];
     //getCocosApp()->exit();
 }
 
-void MenuLayerMainMenu::menuMovingCallback(Object *pSender)
+void MenuLayerMainMenu::menuMovingCallback(Ref *pSender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(5);
 }
@@ -286,12 +286,12 @@ void MenuLayer2::alignMenusV()
     }
 }
 
-void MenuLayer2::menuCallback(Object* sender)
+void MenuLayer2::menuCallback(Ref* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }
 
-void MenuLayer2::menuCallbackOpacity(Object* sender)
+void MenuLayer2::menuCallbackOpacity(Ref* sender)
 {
     auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
     GLubyte opacity = menu->getOpacity();
@@ -301,7 +301,7 @@ void MenuLayer2::menuCallbackOpacity(Object* sender)
         menu->setOpacity(128);     
 }
 
-void MenuLayer2::menuCallbackAlign(Object* sender)
+void MenuLayer2::menuCallbackAlign(Ref* sender)
 {
     _alignedH = ! _alignedH;
     
@@ -322,12 +322,12 @@ MenuLayer3::MenuLayer3()
     MenuItemFont::setFontSize(28);
 
     auto label = LabelBMFont::create("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
-    auto item1 = MenuItemLabel::create(label, [&](Object *sender) {
+    auto item1 = MenuItemLabel::create(label, [&](Ref *sender) {
 		//CCLOG("Label clicked. Toogling AtlasSprite");
 		_disabledItem->setEnabled( ! _disabledItem->isEnabled() );
 		_disabledItem->stopAllActions();
 	});
-    auto item2 = MenuItemFont::create("--- Go Back ---", [&](Object *sender) {
+    auto item2 = MenuItemFont::create("--- Go Back ---", [&](Ref *sender) {
 		    static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 	});
 
@@ -336,7 +336,7 @@ MenuLayer3::MenuLayer3()
     auto spriteDisabled = Sprite::create(s_MenuItem,  Rect(0,23*0,115,23));
     
     
-    auto item3 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](Object *sender) {
+    auto item3 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](Ref *sender) {
 		log("sprite clicked!");
 	});
     _disabledItem = item3;  item3->retain();
@@ -455,12 +455,12 @@ MenuLayer4::~MenuLayer4()
 {
 }
 
-void MenuLayer4::menuCallback(Object* sender)
+void MenuLayer4::menuCallback(Ref* sender)
 {
     //CCLOG("selected item: %x index:%d", dynamic_cast<MenuItemToggle*>(sender)->selectedItem(), dynamic_cast<MenuItemToggle*>(sender)->selectedIndex() ); 
 }
 
-void MenuLayer4::backCallback(Object* sender)
+void MenuLayer4::backCallback(Ref* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }
@@ -480,7 +480,7 @@ BugsTest::BugsTest()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-void BugsTest::issue1410MenuCallback(Object *sender)
+void BugsTest::issue1410MenuCallback(Ref *sender)
 {
     auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
     menu->setEnabled(false);
@@ -489,7 +489,7 @@ void BugsTest::issue1410MenuCallback(Object *sender)
     log("NO CRASHES");
 }
 
-void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
+void BugsTest::issue1410v2MenuCallback(cocos2d::Ref *pSender)
 {
     auto menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
     menu->setEnabled(true);
@@ -498,7 +498,7 @@ void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
     log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
 
-void BugsTest::backMenuCallback(cocos2d::Object *pSender)
+void BugsTest::backMenuCallback(cocos2d::Ref *pSender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }
@@ -533,7 +533,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     
 }
 
-void RemoveMenuItemWhenMove::goBack(Object *pSender)
+void RemoveMenuItemWhenMove::goBack(Ref *pSender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }

@@ -386,7 +386,7 @@ std::string EffectAdvanceTextLayer::subtitle() const
     return "";
 }
 
-void EffectAdvanceTextLayer::restartCallback(Object* sender)
+void EffectAdvanceTextLayer::restartCallback(Ref* sender)
 {
     auto s = new EffectAdvanceScene();
     s->addChild(restartEffectAdvanceAction()); 
@@ -395,7 +395,7 @@ void EffectAdvanceTextLayer::restartCallback(Object* sender)
     s->release();
 }
 
-void EffectAdvanceTextLayer::nextCallback(Object* sender)
+void EffectAdvanceTextLayer::nextCallback(Ref* sender)
 {
     auto s = new EffectAdvanceScene();
     s->addChild( nextEffectAdvanceAction() );
@@ -404,7 +404,7 @@ void EffectAdvanceTextLayer::nextCallback(Object* sender)
     s->release();
 }
 
-void EffectAdvanceTextLayer::backCallback(Object* sender)
+void EffectAdvanceTextLayer::backCallback(Ref* sender)
 {
     auto s = new EffectAdvanceScene();
     s->addChild( backEffectAdvanceAction() );

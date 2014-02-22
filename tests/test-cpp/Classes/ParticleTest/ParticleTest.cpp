@@ -1153,7 +1153,7 @@ void ParticleDemo::update(float dt)
     }
 }
 
-void ParticleDemo::toggleCallback(Object* sender)
+void ParticleDemo::toggleCallback(Ref* sender)
 {
     if (_emitter != NULL)
     {
@@ -1166,7 +1166,7 @@ void ParticleDemo::toggleCallback(Object* sender)
     }
 }
 
-void ParticleDemo::restartCallback(Object* sender)
+void ParticleDemo::restartCallback(Ref* sender)
 {
     if (_emitter != NULL)
     {
@@ -1174,7 +1174,7 @@ void ParticleDemo::restartCallback(Object* sender)
     }
 }
 
-void ParticleDemo::nextCallback(Object* sender)
+void ParticleDemo::nextCallback(Ref* sender)
 {
     auto s = new ParticleTestScene();
     s->addChild( nextParticleAction() );
@@ -1182,7 +1182,7 @@ void ParticleDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void ParticleDemo::backCallback(Object* sender)
+void ParticleDemo::backCallback(Ref* sender)
 {
     auto s = new ParticleTestScene();
     s->addChild( backParticleAction() );

@@ -118,7 +118,7 @@ void TileDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void TileDemo::restartCallback(Object* sender)
+void TileDemo::restartCallback(Ref* sender)
 {
     auto s = new TileMapTestScene();
     s->addChild(restartTileMapAction());
@@ -127,7 +127,7 @@ void TileDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void TileDemo::nextCallback(Object* sender)
+void TileDemo::nextCallback(Ref* sender)
 {
     auto s = new TileMapTestScene();
     s->addChild( nextTileMapAction() );
@@ -135,7 +135,7 @@ void TileDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void TileDemo::backCallback(Object* sender)
+void TileDemo::backCallback(Ref* sender)
 {
     auto s = new TileMapTestScene();
     s->addChild( backTileMapAction() );

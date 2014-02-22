@@ -26,7 +26,8 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 #ifndef __CCBOOL_H__
 #define __CCBOOL_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
+#include "CCDataVisitor.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +36,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL __Bool : public Object, public Clonable
+class CC_DLL __Bool : public Ref, public Clonable
 {
 public:
     __Bool(bool v)

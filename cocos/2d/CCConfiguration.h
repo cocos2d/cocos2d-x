@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGL.h"
 #include "CCString.h"
 #include "CCValue.h"
@@ -43,7 +43,7 @@ NS_CC_BEGIN
  @brief Configuration contains some openGL variables
  @since v0.99.0
  */
-class CC_DLL Configuration : public Object
+class CC_DLL Configuration : public Ref
 {
 public:
     

@@ -12,13 +12,13 @@ enum
 static struct
 {
 	const char *name;
-	std::function<void(Object* sender)> callback;
+	std::function<void(Ref* sender)> callback;
 }
 g_guisTests[] =
 {
 	{
         "gui ButtonTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIButtonTest);
@@ -30,7 +30,7 @@ g_guisTests[] =
 	},
     {
         "gui CheckBoxTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUICheckBoxTest);
@@ -42,7 +42,7 @@ g_guisTests[] =
 	},
 	{
         "gui SliderTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUISliderTest);
@@ -55,7 +55,7 @@ g_guisTests[] =
     /*
 	{
         "gui PotentiometerTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIPotentiometerTest);
@@ -67,7 +67,7 @@ g_guisTests[] =
 	},
     {
         "gui SwitchTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUISwitchTest_Horizontal);
@@ -80,7 +80,7 @@ g_guisTests[] =
      */
     {
         "gui ImageViewTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIImageViewTest);
@@ -92,7 +92,7 @@ g_guisTests[] =
 	},
     {
         "gui LoadingBarTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUILoadingBarTest_Left);
@@ -105,7 +105,7 @@ g_guisTests[] =
     /*
     {
         "gui ProgressTimerTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIProgressTimerTest_Radial);
@@ -118,7 +118,7 @@ g_guisTests[] =
      */
     {
         "gui LabelAtalsTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUILabelAtlasTest);
@@ -130,7 +130,7 @@ g_guisTests[] =
 	},
     {
         "gui LabelTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUILabelTest);
@@ -142,7 +142,7 @@ g_guisTests[] =
 	},
     {
         "gui LabelBMFontTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUILabelBMFontTest);
@@ -154,7 +154,7 @@ g_guisTests[] =
 	},
     {
         "gui TextFieldTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUITextFieldTest);
@@ -166,7 +166,7 @@ g_guisTests[] =
 	},
     {
         "gui LayoutTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUILayoutTest);
@@ -178,7 +178,7 @@ g_guisTests[] =
 	},
     {
         "gui ScrollViewTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIScrollViewTest_Vertical);
@@ -190,7 +190,7 @@ g_guisTests[] =
 	},
     {
         "gui PageViewTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIPageViewTest);
@@ -202,7 +202,7 @@ g_guisTests[] =
 	},
     {
         "gui ListViewTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIListViewTest_Vertical);
@@ -215,7 +215,7 @@ g_guisTests[] =
     /*
     {
         "gui GridViewTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIGridViewTest_Mode_Column);
@@ -227,7 +227,7 @@ g_guisTests[] =
 	},
     {
         "gui PickerViewTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIPickerViewTest_Vertical);
@@ -240,7 +240,7 @@ g_guisTests[] =
      */
     {
         "gui WidgetAddNodeTest",
-        [](Object* sender)
+        [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUIWidgetAddNodeTest);

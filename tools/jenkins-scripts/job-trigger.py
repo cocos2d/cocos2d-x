@@ -37,7 +37,7 @@ def main():
     payload_forword['branch'] = branch
 
     #set commit status to pending
-    target_url = os.environ['BUILD_URL']
+    target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
     
     if(action == 'closed'):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'

@@ -236,7 +236,7 @@ void reloadScript()
     
 }
 
-class ConnectWaiter: public Object
+class ConnectWaiter: public Ref
 {
 public:
 	static ConnectWaiter& getInstance()

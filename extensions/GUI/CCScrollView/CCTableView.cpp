@@ -499,7 +499,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
 	}
 
 #if 0 // For Testing.
-    Object* pObj;
+    Ref* pObj;
     int i = 0;
     CCARRAY_FOREACH(_cellsUsed, pObj)
     {

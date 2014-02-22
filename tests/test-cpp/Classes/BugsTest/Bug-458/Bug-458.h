@@ -7,7 +7,7 @@ class Bug458Layer : public BugsTestBaseLayer
 {
 public:
     virtual bool init();
-    void selectAnswer(Object* sender);
+    void selectAnswer(Ref* sender);
 };
 
 #endif // __BUG_458_H__
