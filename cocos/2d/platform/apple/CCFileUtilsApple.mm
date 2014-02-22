@@ -39,59 +39,17 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
+static void addItemToArray(id item, ValueVector& array);
+
+static void addObjectToNSArray(const Value& value, NSMutableArray *array);
 static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict);
 
-static void addItemToArray(id item, ValueVector& array)
-{
-    // add string value into array
-    if ([item isKindOfClass:[NSString class]])
-    {
-        array.push_back(Value([item UTF8String]));
-        return;
-    }
-    
-    // add number value into array(such as int, float, bool and so on)
-    if ([item isKindOfClass:[NSNumber class]])
-    {
-        array.push_back(Value([item doubleValue]));
-        return;
-    }
-    
-    // add dictionary value into array
-    if ([item isKindOfClass:[NSDictionary class]])
-    {
-        ValueMap dict;
-        for (id subKey in [item allKeys])
-        {
-            id subValue = [item objectForKey:subKey];
-            addValueToDict(subKey, subValue, dict);
-        }
-        
-        array.push_back(Value(dict));
-        return;
-    }
-    
-    // add array value into array
-    if ([item isKindOfClass:[NSArray class]])
-    {
-        ValueVector subArray;
-        for (id subItem in item)
-        {
-            addItemToArray(subItem, subArray);
-        }
-        array.push_back(Value(subArray));
-        return;
-    }
-}
-
-static void addObjectToNSArray(const Value& value, NSMutableArray *array)
+static NSObject *convertValueToNSObject(const Value &value)
 {
     // add string into array
     if (value.getType() == Value::Type::STRING)
     {
-        NSString *element = [NSString stringWithCString:value.asString().c_str() encoding:NSUTF8StringEncoding];
-        [array addObject:element];
-        return;
+        return [NSString stringWithCString:value.asString().c_str() encoding:NSUTF8StringEncoding];
     }
     
     // add array into array
@@ -99,30 +57,100 @@ static void addObjectToNSArray(const Value& value, NSMutableArray *array)
     {
         NSMutableArray *element = [NSMutableArray array];
         
-        ValueVector valueArray = value.asValueVector();
-        
+        const ValueVector &valueArray = value.asValueVector();
         for (const auto &e : valueArray)
         {
             addObjectToNSArray(e, element);
         }
         
-        [array addObject:element];
-        return;
+        return element;
     }
     
     // add dictionary value into array
     if (value.getType() == Value::Type::MAP)
     {
         NSMutableDictionary *element = [NSMutableDictionary dictionary];
-
-        auto valueDict = value.asValueMap();
-        for (auto iter = valueDict.begin(); iter != valueDict.end(); ++iter)
+        
+        const auto &valueDict = value.asValueMap();
+        for (const auto &dictEntry : valueDict)
         {
-            addObjectToNSDict(iter->first, iter->second, element);
+            addObjectToNSDict(dictEntry.first, dictEntry.second, element);
         }
         
-        [array addObject:element];
+        return element;
     }
+    
+    if (value.getType() == Value::Type::BYTE)
+    {
+        return [NSNumber numberWithChar:value.asByte()];
+    }
+    
+    if (value.getType() == Value::Type::DOUBLE)
+    {
+        return [NSNumber numberWithDouble:value.asDouble()];
+    }
+    
+    if (value.getType() == Value::Type::FLOAT)
+    {
+        return [NSNumber numberWithFloat:value.asFloat()];
+    }
+    
+    if (value.getType() == Value::Type::INTEGER)
+    {
+        return [NSNumber numberWithInt:value.asInt()];
+    }
+    
+    if (value.getType() == Value::Type::BOOLEAN)
+    {
+        return [NSNumber numberWithBool:value.asBool()];
+    }
+
+    return nil;
+}
+
+static Value convertNSObjectToValue(id object) {
+    // add string value into array
+    if ([object isKindOfClass:[NSString class]])
+    {
+        return Value([object UTF8String]);
+    }
+    
+    // add number value into array(such as int, float, bool and so on)
+    if ([object isKindOfClass:[NSNumber class]])
+    {
+        return Value([object doubleValue]);
+    }
+    
+    // add dictionary value into array
+    if ([object isKindOfClass:[NSDictionary class]])
+    {
+        ValueMap dict;
+        for (id subKey in [object allKeys])
+        {
+            id subValue = [object objectForKey:subKey];
+            addValueToDict(subKey, subValue, dict);
+        }
+        
+        return Value(dict);
+    }
+    
+    // add array value into array
+    if ([object isKindOfClass:[NSArray class]])
+    {
+        ValueVector subArray;
+        for (id subItem in object)
+        {
+            addItemToArray(subItem, subArray);
+        }
+        return Value(subArray);
+    }
+
+    return Value::Null;
+}
+
+static void addItemToArray(id item, ValueVector& array)
+{
+    array.push_back(convertNSObjectToValue(item));
 }
 
 static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
@@ -130,90 +158,20 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
     // the key must be a string
     CCASSERT([nsKey isKindOfClass:[NSString class]], "The key should be a string!");
     std::string key = [nsKey UTF8String];
-    
-    // the value is a string
-    if ([nsValue isKindOfClass:[NSString class]])
-    {
-        dict[key] = Value([nsValue UTF8String]);
-        return;
-    }
-    
-    // the value is a number
-    if ([nsValue isKindOfClass:[NSNumber class]])
-    {
-        dict[key] = Value([nsValue doubleValue]);
-        return;
-    }
-    
-    // the value is a new dictionary
-    if ([nsValue isKindOfClass:[NSDictionary class]])
-    {
-        ValueMap subDict;
-        
-        for (id subKey in [nsValue allKeys])
-        {
-            id subValue = [nsValue objectForKey:subKey];
-            addValueToDict(subKey, subValue, subDict);
-        }
-        dict[key] = Value(subDict);
-        return;
-    }
-    
-    // the value is a array
-    if ([nsValue isKindOfClass:[NSArray class]])
-    {
-        ValueVector valueArray;
+    dict[key] = convertNSObjectToValue(nsValue);
+}
 
-        for (id item in nsValue)
-        {
-            addItemToArray(item, valueArray);
-        }
-        dict[key] = Value(valueArray);
-        return;
-    }
+static void addObjectToNSArray(const Value& value, NSMutableArray *array)
+{
+    NSObject *nsObject = convertValueToNSObject(value);
+    [array addObject:nsObject];
 }
 
 static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict)
 {
-    NSString *NSkey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
-    
-    // the object is a Dictionary
-    if (value.getType() == Value::Type::MAP)
-    {
-        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
-        ValueMap subDict = value.asValueMap();
-        for (auto iter = subDict.begin(); iter != subDict.end(); ++iter)
-        {
-            addObjectToNSDict(iter->first, iter->second, dictElement);
-        }
-        
-        [dict setObject:dictElement forKey:NSkey];
-        return;
-    }
-    
-    // the object is a String
-    if (value.getType() == Value::Type::STRING)
-    {
-        NSString *strElement = [NSString stringWithCString:value.asString().c_str() encoding:NSUTF8StringEncoding];
-        [dict setObject:strElement forKey:NSkey];
-        return;
-    }
-    
-    // the object is a Array
-    if (value.getType() == Value::Type::VECTOR)
-    {
-        NSMutableArray *arrElement = [NSMutableArray array];
-        
-        ValueVector array = value.asValueVector();
-        
-        for(const auto& v : array)
-        {
-            addObjectToNSArray(v, arrElement);
-        }
-
-        [dict setObject:arrElement forKey:NSkey];
-        return;
-    }
+    NSString *nsKey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
+    NSObject *nsObject = convertValueToNSObject(value);
+    [dict setObject:nsObject forKey:nsKey];
 }
 
 
