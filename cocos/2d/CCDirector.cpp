@@ -59,7 +59,6 @@ THE SOFTWARE.
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCFrustum.h"
 #include "CCConsole.h"
 
 #include "kazmath/kazmath.h"
@@ -133,8 +132,6 @@ bool Director::init(void)
     _winSizeInPoints = Size::ZERO;
 
     _openGLView = nullptr;
-
-    _cullingFrustum = new Frustum();
 
     _contentScaleFactor = 1.0f;
 
@@ -276,16 +273,6 @@ void Director::drawScene()
     }
 
     kmGLPushMatrix();
-
-    //construct the frustum
-    {
-        kmMat4 view;
-        kmMat4 projection;
-        kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-        kmGLGetMatrix(KM_GL_MODELVIEW, &view);
-
-        _cullingFrustum->setupFromMatrix(view, projection);
-    }
 
     // draw the scene
     if (_runningScene)
@@ -743,7 +730,6 @@ void Director::purgeDirector()
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
     CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
-    CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
     FontFNT::purgeCachedData();
