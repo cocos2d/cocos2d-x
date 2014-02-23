@@ -94,7 +94,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     return true;
 }
 
-void MenuLayer::restartCallback(Object* sender)
+void MenuLayer::restartCallback(Ref* sender)
 {
     auto s = new Box2dTestBedScene();
     auto box = MenuLayer::menuWithEntryID(m_entryID);
@@ -103,7 +103,7 @@ void MenuLayer::restartCallback(Object* sender)
     s->release();
 }
 
-void MenuLayer::nextCallback(Object* sender)
+void MenuLayer::nextCallback(Ref* sender)
 {
     auto s = new Box2dTestBedScene();
     int next = m_entryID + 1;
@@ -115,7 +115,7 @@ void MenuLayer::nextCallback(Object* sender)
     s->release();
 }
 
-void MenuLayer::backCallback(Object* sender)
+void MenuLayer::backCallback(Ref* sender)
 {
     auto s = new Box2dTestBedScene();
     int next = m_entryID - 1;

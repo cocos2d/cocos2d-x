@@ -129,6 +129,8 @@ static std::function<Layer*()> createFunctions[] =
 	CL(SpriteBatchBug1217),
 	CL(AnimationCacheTest),
 	CL(AnimationCacheFile),
+	CL(SpriteCullTest1),
+	CL(SpriteCullTest2),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -189,7 +191,7 @@ void SpriteTestDemo::onEnter()
     BaseTest::onEnter();  
 }
 
-void SpriteTestDemo::restartCallback(Object* sender)
+void SpriteTestDemo::restartCallback(Ref* sender)
 {
     auto s = new SpriteTestScene();
     s->addChild(restartSpriteTestAction()); 
@@ -198,7 +200,7 @@ void SpriteTestDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void SpriteTestDemo::nextCallback(Object* sender)
+void SpriteTestDemo::nextCallback(Ref* sender)
 {
     auto s = new SpriteTestScene();
     s->addChild( nextSpriteTestAction() );
@@ -206,7 +208,7 @@ void SpriteTestDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void SpriteTestDemo::backCallback(Object* sender)
+void SpriteTestDemo::backCallback(Ref* sender)
 {
     auto s = new SpriteTestScene();
     s->addChild( backSpriteTestAction() );
@@ -4914,3 +4916,82 @@ std::string SpriteBatchNodeRotationalSkewNegativeScaleChildren::subtitle() const
     return "rot skew + negative scale with children";
 }
 
+
+//------------------------------------------------------------------
+//
+// SpriteCullTest1
+//
+//------------------------------------------------------------------
+
+SpriteCullTest1::SpriteCullTest1()
+{
+    Size s = Director::getInstance()->getWinSize();
+    auto grossini = Sprite::create("Images/grossini.png");
+
+    grossini->setPosition(s.width/2, s.height/2);
+
+    auto right = MoveBy::create(3, Point(s.width*2,0));
+    auto back1 = right->reverse();
+    auto left = MoveBy::create(3, Point(-s.width*2,0));
+    auto back2 = left->reverse();
+    auto up = MoveBy::create(3, Point(0,s.height*2));
+    auto back3 = up->reverse();
+    auto down = MoveBy::create(3, Point(0,-s.height*2));
+    auto back4 = down->reverse();
+
+    auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, nullptr);
+    grossini->runAction(seq);
+    this->addChild(grossini);
+}
+
+
+std::string SpriteCullTest1::title() const
+{
+    return "Testing Culling: No Scale, No Rotation";
+}
+
+std::string SpriteCullTest1::subtitle() const
+{
+    return "Look at the GL calls";
+}
+
+
+//------------------------------------------------------------------
+//
+// SpriteCullTest2
+//
+//------------------------------------------------------------------
+
+SpriteCullTest2::SpriteCullTest2()
+{
+    Size s = Director::getInstance()->getWinSize();
+    auto grossini = Sprite::create("Images/grossini.png");
+
+    grossini->setPosition(s.width/2, s.height/2);
+
+    auto right = MoveBy::create(3, Point(s.width*2,0));
+    auto back1 = right->reverse();
+    auto left = MoveBy::create(3, Point(-s.width*2,0));
+    auto back2 = left->reverse();
+    auto up = MoveBy::create(3, Point(0,s.height*2));
+    auto back3 = up->reverse();
+    auto down = MoveBy::create(3, Point(0,-s.height*2));
+    auto back4 = down->reverse();
+
+    grossini->setScale(0.1);
+    
+    auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, nullptr);
+    grossini->runAction(seq);
+    this->addChild(grossini);
+}
+
+
+std::string SpriteCullTest2::title() const
+{
+    return "Testing Culling: Scale, No Rotation";
+}
+
+std::string SpriteCullTest2::subtitle() const
+{
+    return "Look at the GL calls";
+}

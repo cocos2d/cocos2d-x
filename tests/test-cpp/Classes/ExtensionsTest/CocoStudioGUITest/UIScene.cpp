@@ -56,7 +56,7 @@ bool UIScene::init()
     return false;
 }
 
-void UIScene::menuCloseCallback(Object* pSender, TouchEventType type)
+void UIScene::menuCloseCallback(Ref* pSender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -67,7 +67,7 @@ void UIScene::menuCloseCallback(Object* pSender, TouchEventType type)
     }
 }
 
-void UIScene::toCocosGUITestScene(Object* sender, TouchEventType type)
+void UIScene::toCocosGUITestScene(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -79,7 +79,7 @@ void UIScene::toCocosGUITestScene(Object* sender, TouchEventType type)
     }
 }
 
-void UIScene::previousCallback(Object* sender, TouchEventType type)
+void UIScene::previousCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -87,7 +87,7 @@ void UIScene::previousCallback(Object* sender, TouchEventType type)
     }
 }
 
-void UIScene::restartCallback(Object* sender, TouchEventType type)
+void UIScene::restartCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
@@ -95,7 +95,7 @@ void UIScene::restartCallback(Object* sender, TouchEventType type)
     }
 }
 
-void UIScene::nextCallback(Object* sender, TouchEventType type)
+void UIScene::nextCallback(Ref* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {

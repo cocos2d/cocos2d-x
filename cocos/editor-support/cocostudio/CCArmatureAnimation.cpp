@@ -183,7 +183,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
 
     int durationTween = _movementData->durationTween == 0 ? _rawDuration : _movementData->durationTween;
 
-    TweenType tweenEasing = _movementData->tweenEasing;
+    cocos2d::tweenfunc::TweenType tweenEasing = _movementData->tweenEasing;
     loop = (loop < 0) ? _movementData->loop : loop;
 
     _onMovementList = false;
@@ -453,13 +453,13 @@ std::string ArmatureAnimation::getCurrentMovementID() const
     return _movementID;
 }
 
-void ArmatureAnimation::setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc)
+void ArmatureAnimation::setMovementEventCallFunc(Ref *target, SEL_MovementEventCallFunc callFunc)
 {
     _movementEventTarget = target;
     _movementEventCallFunc = callFunc;
 }
 
-void ArmatureAnimation::setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc)
+void ArmatureAnimation::setFrameEventCallFunc(Ref *target, SEL_FrameEventCallFunc callFunc)
 {
     _frameEventTarget = target;
     _frameEventCallFunc = callFunc;
@@ -474,7 +474,7 @@ void ArmatureAnimation::setFrameEventCallFunc(std::function<void(Bone *bone, con
     _frameEventListener = listener;
 }
 
-void ArmatureAnimation::setUserObject(Object *pUserObject)
+void ArmatureAnimation::setUserObject(Ref *pUserObject)
 {
     CC_SAFE_RETAIN(pUserObject);
     CC_SAFE_RELEASE(_userObject);

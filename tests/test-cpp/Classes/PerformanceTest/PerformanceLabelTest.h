@@ -11,9 +11,9 @@ public:
     {
     }
 
-    virtual void restartCallback(Object* sender) override;
-    virtual void nextCallback(Object* sender) override;
-    virtual void backCallback(Object* sender) override;
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
     virtual void showCurrentTest() override;
 };
 
@@ -28,15 +28,15 @@ public:
     void initWithSubTest(int nodes);
     void updateNodes();
 
-    void onIncrease(Object* sender);
-    void onDecrease(Object* sender);
+    void onIncrease(Ref* sender);
+    void onDecrease(Ref* sender);
 
     int getSubTestNum() { return 1; }
     int getNodesNum() { return _quantityNodes; }
     
     void  updateAutoTest(float dt);
     void  updateText(float dt);
-    void  onAutoTest(Object* sender);
+    void  onAutoTest(Ref* sender);
 
     void  autoShowLabelTests(int curCase,int nodes);
 

@@ -571,7 +571,7 @@ void PageView::pageTurningEvent()
     }
 }
 
-void PageView::addEventListenerPageView(Object *target, SEL_PageViewEvent selector)
+void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
 {
     _pageViewEventListener = target;
     _pageViewEventSelector = selector;

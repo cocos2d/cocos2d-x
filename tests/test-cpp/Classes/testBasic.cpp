@@ -19,7 +19,7 @@ TestScene::TestScene(bool bPortrait, bool physics/* = false*/)
     }
 }
 
-void testScene_callback( Object *sender )
+void testScene_callback(Ref *sender )
 {
     auto scene = Scene::create();
 

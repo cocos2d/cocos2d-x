@@ -35,7 +35,7 @@ public:
     bool init();
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _displayValueLabel, DisplayValueLabel)
 
-    void valueChanged(Object *sender, Control::EventType controlEvent);
+    void valueChanged(Ref *sender, Control::EventType controlEvent);
 
     CONTROL_SCENE_CREATE_FUNC(ControlPotentiometerTest)
 };

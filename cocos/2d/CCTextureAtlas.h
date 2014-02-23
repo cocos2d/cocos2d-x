@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCTEXTURE_ATLAS_H__
 
 #include "ccTypes.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccConfig.h"
 #include <string>
 
@@ -56,7 +56,7 @@ Supported features:
 The quads are rendered using an OpenGL ES VBO.
 To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
 */
-class CC_DLL TextureAtlas : public Object 
+class CC_DLL TextureAtlas : public Ref 
 {
 public:
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.

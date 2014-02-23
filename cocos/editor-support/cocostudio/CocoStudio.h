@@ -47,7 +47,6 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCTweenFunction.h"
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCComBase.h"
 #include "cocostudio/CCComAttribute.h"

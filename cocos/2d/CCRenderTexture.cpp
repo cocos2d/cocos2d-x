@@ -446,10 +446,23 @@ Image* RenderTexture::newImage(bool fliimage)
             break;
         }
 
-        this->begin();
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+
+        //TODO move this to configration, so we don't check it every time
+        /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+         */
+        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+        {
+            // -- bind a temporary texture so we can clear the render buffer without losing our texture
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
+            CHECK_GL_ERROR_DEBUG();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
+        }
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
-        this->end();
+        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 
         if ( fliimage ) // -- flip is only required when saving image to file
         {

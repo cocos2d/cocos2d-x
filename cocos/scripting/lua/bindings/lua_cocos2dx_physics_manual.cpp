@@ -411,7 +411,7 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -452,7 +452,7 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -495,7 +495,7 @@ int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -558,7 +558,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -599,7 +599,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -642,7 +642,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -705,7 +705,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -746,7 +746,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;
@@ -789,7 +789,7 @@ int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
 				} else {
 					className = "cc.PhysicsBody";
 				}
-				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				cocos2d::Ref *dynObject = dynamic_cast<cocos2d::Ref *>((cocos2d::PhysicsBody*)ret);
 				if (NULL != dynObject) {
 					int ID = ret ? (int)(dynObject->_ID) : -1;
 					int* luaID = ret ? &(dynObject->_luaID) : NULL;

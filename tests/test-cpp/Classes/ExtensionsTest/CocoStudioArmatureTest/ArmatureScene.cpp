@@ -142,7 +142,7 @@ void ArmatureTestScene::runThisTest()
 
     Director::getInstance()->replaceScene(this);
 }
-void ArmatureTestScene::MainMenuCallback(Object *pSender)
+void ArmatureTestScene::MainMenuCallback(Ref *pSender)
 {
     //TestScene::MainMenuCallback(pSender);
 
@@ -209,21 +209,21 @@ std::string ArmatureTestLayer::subtitle() const
     return "";
 }
 
-void ArmatureTestLayer::restartCallback(Object *pSender)
+void ArmatureTestLayer::restartCallback(Ref *pSender)
 {
     Scene *s = new ArmatureTestScene();
     s->addChild( RestartTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
-void ArmatureTestLayer::nextCallback(Object *pSender)
+void ArmatureTestLayer::nextCallback(Ref *pSender)
 {
     Scene *s = new ArmatureTestScene();
     s->addChild( NextTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
-void ArmatureTestLayer::backCallback(Object *pSender)
+void ArmatureTestLayer::backCallback(Ref *pSender)
 {
     Scene *s = new ArmatureTestScene();
     s->addChild( BackTest() );
@@ -270,7 +270,7 @@ std::string TestAsynchronousLoading::subtitle() const
     return "current percent : ";
 }
 
-void TestAsynchronousLoading::restartCallback(Object* pSender)
+void TestAsynchronousLoading::restartCallback(Ref* pSender)
 {
     ArmatureDataManager::destroyInstance();
     ArmatureTestLayer::restartCallback(pSender);
@@ -390,11 +390,11 @@ std::string TestPerformance::subtitle() const
 {
     return "Current Armature Count : ";
 }
-void TestPerformance::onIncrease(Object* pSender)
+void TestPerformance::onIncrease(Ref* pSender)
 {
     addArmature(20);
 }
-void TestPerformance::onDecrease(Object* pSender)
+void TestPerformance::onDecrease(Ref* pSender)
 {
     if (armatureCount == 0)
         return;
@@ -1335,7 +1335,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
     armature->runAction(Sequence::create(move, nullptr));
 }
 
-void TestArmatureNesting2::changeMountCallback(Object* pSender)
+void TestArmatureNesting2::changeMountCallback(Ref* pSender)
 {
     hero->stopAllActions();
 

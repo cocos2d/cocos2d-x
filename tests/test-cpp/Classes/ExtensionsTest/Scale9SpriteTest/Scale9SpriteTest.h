@@ -40,9 +40,9 @@ class S9SpriteTestDemo : public BaseTest
 public:
     virtual void onEnter();
     
-	virtual void restartCallback(Object* sender);
-	virtual void nextCallback(Object* sender);
-	virtual void backCallback(Object* sender);
+	virtual void restartCallback(Ref* sender);
+	virtual void nextCallback(Ref* sender);
+	virtual void backCallback(Ref* sender);
 };
     
 // S9BatchNodeBasic

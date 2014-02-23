@@ -32,7 +32,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 // LabelMenuLayer
 //
 ////////////////////////////////////////////////////////
-void LabelMenuLayer::restartCallback(Object* sender)
+void LabelMenuLayer::restartCallback(Ref* sender)
 {
     if ( LabelMainScene::_s_autoTest )
     {
@@ -43,7 +43,7 @@ void LabelMenuLayer::restartCallback(Object* sender)
     PerformBasicLayer::restartCallback(sender);
 }
 
-void LabelMenuLayer::nextCallback(Object* sender)
+void LabelMenuLayer::nextCallback(Ref* sender)
 {
     if ( LabelMainScene::_s_autoTest )
     {
@@ -54,7 +54,7 @@ void LabelMenuLayer::nextCallback(Object* sender)
     PerformBasicLayer::nextCallback(sender);
 }
 
-void LabelMenuLayer::backCallback(Object* sender)
+void LabelMenuLayer::backCallback(Ref* sender)
 {
     if ( LabelMainScene::_s_autoTest )
     {
@@ -182,7 +182,7 @@ void LabelMainScene::updateNodes()
     }
 }
 
-void LabelMainScene::onIncrease(Object* sender)
+void LabelMainScene::onIncrease(Ref* sender)
 {    
     if( _quantityNodes >= kMaxNodes)
         return;
@@ -213,10 +213,10 @@ void LabelMainScene::onIncrease(Object* sender)
         break;
     case kCaseLabelUpdate:
         {
-            TTFConfig ttfConfig("fonts/arial.ttf", 60, GlyphCollection::DYNAMIC, nullptr, true);
+            TTFConfig ttfConfig("fonts/arial.ttf", 60, GlyphCollection::DYNAMIC);
             for( int i=0;i< kNodesIncrease;i++)
             {
-                auto label = Label::createWithTTF(ttfConfig, "Label", TextHAlignment::CENTER, size.width);
+                auto label = Label::createWithTTF(ttfConfig, "Label", TextHAlignment::LEFT);
                 label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
                 _labelContainer->addChild(label, 1, _quantityNodes);
 
@@ -254,7 +254,7 @@ void LabelMainScene::onIncrease(Object* sender)
     updateNodes();
 }
 
-void LabelMainScene::onDecrease(Object* sender)
+void LabelMainScene::onDecrease(Ref* sender)
 {
     if( _quantityNodes <= 0 )
         return;
@@ -419,7 +419,7 @@ void  LabelMainScene::finishAutoTest()
     log("Label performance test is  finish ");
 }
 
-void  LabelMainScene::onAutoTest(Object* sender)
+void  LabelMainScene::onAutoTest(Ref* sender)
 {
     LabelMainScene::_s_autoTest = !LabelMainScene::_s_autoTest;
     MenuItemFont* menuItem = dynamic_cast<MenuItemFont*>(sender);

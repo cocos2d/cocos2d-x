@@ -60,6 +60,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFAlignmentNew),
     CL(LabelFNTBounds),
     CL(LabelTTFLongLineWrapping),
+    CL(LabelTTFLargeText),
     CL(LabelTTFColor),
     CL(LabelTTFFontsTestNew),
     CL(LabelTTFDynamicAlignment),
@@ -134,7 +135,7 @@ void AtlasDemoNew::onEnter()
     BaseTest::onEnter();
 }
 
-void AtlasDemoNew::restartCallback(Object* sender)
+void AtlasDemoNew::restartCallback(Ref* sender)
 {
     auto s = new AtlasTestSceneNew();
     s->addChild(restartAtlasActionNew()); 
@@ -143,7 +144,7 @@ void AtlasDemoNew::restartCallback(Object* sender)
     s->release();
 }
 
-void AtlasDemoNew::nextCallback(Object* sender)
+void AtlasDemoNew::nextCallback(Ref* sender)
 {
     auto s = new AtlasTestSceneNew();
     s->addChild( nextAtlasActionNew() );
@@ -151,7 +152,7 @@ void AtlasDemoNew::nextCallback(Object* sender)
     s->release();
 }
 
-void AtlasDemoNew::backCallback(Object* sender)
+void AtlasDemoNew::backCallback(Ref* sender)
 {
     auto s = new AtlasTestSceneNew();
     s->addChild( backAtlasActionNew() );
@@ -761,7 +762,7 @@ std::string LabelFNTMultiLineAlignment::subtitle() const
     return "";
 }
 
-void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Object *sender)
+void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
 {
     auto item = (MenuItemFont*)sender;
     item->setColor(Color3B::RED);
@@ -787,7 +788,7 @@ void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
+void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
 {
     auto item = static_cast<MenuItemFont*>(sender);
     item->setColor(Color3B::RED);
@@ -850,7 +851,7 @@ void LabelFNTMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touch
 
     float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
 
-    this->_labelShouldRetain->setWidth(labelWidth);
+    this->_labelShouldRetain->setMaxLineWidth(labelWidth);
 }
 
 void LabelFNTMultiLineAlignment::snapArrowsToEdge()
@@ -978,6 +979,29 @@ std::string LabelTTFLongLineWrapping::subtitle() const
     return "Uses the new Label with TTF. Testing auto-wrapping";
 }
 
+LabelTTFLargeText::LabelTTFLargeText()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    // Long sentence
+    TTFConfig ttfConfig("fonts/wt021.ttf",36,GlyphCollection::DYNAMIC);
+    std::string text = FileUtils::getInstance()->getStringFromFile("commonly_used_words.txt");
+    auto label = Label::createWithTTF(ttfConfig,text, TextHAlignment::CENTER, size.width);
+    label->setPosition( Point(size.width/2, size.height/2) );
+    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    addChild(label);
+}
+
+std::string LabelTTFLargeText::title() const
+{
+    return "New Label + .TTF";
+}
+
+std::string LabelTTFLargeText::subtitle() const
+{
+    return "Uses the new Label with TTF. Testing large text";
+}
+
 LabelTTFColor::LabelTTFColor()
 {
     auto size = Director::getInstance()->getWinSize();
@@ -1044,19 +1068,19 @@ void  LabelTTFDynamicAlignment::updateAlignment()
     }
 }
 
-void LabelTTFDynamicAlignment::setAlignmentLeft(Object* sender)
+void LabelTTFDynamicAlignment::setAlignmentLeft(Ref* sender)
 {
     _horizAlign = TextHAlignment::LEFT;
     this->updateAlignment();
 }
 
-void LabelTTFDynamicAlignment::setAlignmentCenter(Object* sender)
+void LabelTTFDynamicAlignment::setAlignmentCenter(Ref* sender)
 {
     _horizAlign = TextHAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFDynamicAlignment::setAlignmentRight(Object* sender)
+void LabelTTFDynamicAlignment::setAlignmentRight(Ref* sender)
 {
     _horizAlign = TextHAlignment::RIGHT;
     this->updateAlignment();

@@ -19,11 +19,11 @@ public:
     void onEnter();
     void initPhysics();
     void createResetButton();
-    void reset(Object* sender);
+    void reset(Ref* sender);
 
     void addNewSpriteAtPosition(Point p);
     void update(float dt);
-    void toggleDebugCallback(Object* sender);
+    void toggleDebugCallback(Ref* sender);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual void onAcceleration(Acceleration* acc, Event* event);
 

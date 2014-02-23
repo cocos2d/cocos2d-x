@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 NS_CC_BEGIN
@@ -52,7 +52,7 @@ class Texture2D;
     SpriteFrame *frame = SpriteFrame::frameWithTexture(texture, rect, offset);
     sprite->setDisplayFrame(frame);
  */
-class CC_DLL SpriteFrame : public Object, public Clonable
+class CC_DLL SpriteFrame : public Ref, public Clonable
 {
 public:
 

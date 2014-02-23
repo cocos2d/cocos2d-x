@@ -513,7 +513,7 @@ void TextField::deleteBackwardEvent()
     }
 }
 
-void TextField::addEventListenerTextField(Object *target, SEL_TextFieldEvent selecor)
+void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)
 {
     _textFieldEventListener = target;
     _textFieldEventSelector = selecor;
