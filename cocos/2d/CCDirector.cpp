@@ -59,6 +59,7 @@ THE SOFTWARE.
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCFrustum.h"
 #include "CCConsole.h"
 
 #include "kazmath/kazmath.h"
@@ -446,7 +447,7 @@ void Director::setProjection(Projection projection)
             kmGLLoadIdentity();
 
             // issue #1334
-            kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+            kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
             // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
             kmGLMultMatrix(&matrixPerspective);
