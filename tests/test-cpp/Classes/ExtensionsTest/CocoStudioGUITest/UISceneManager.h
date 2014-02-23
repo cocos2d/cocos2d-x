@@ -100,7 +100,7 @@ enum
     kUITestMax
 };
 
-class UISceneManager : public Object
+class UISceneManager : public Ref
 {
 public:
     UISceneManager();

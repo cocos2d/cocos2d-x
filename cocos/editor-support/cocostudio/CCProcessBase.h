@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+
 enum AnimationType
 {
     SINGLE_FRAME = -4,          //! the animation just have one frame
@@ -49,7 +50,7 @@ enum AnimationType
  *  @js NA
  *  @lua NA
  */
-class  ProcessBase : public cocos2d::Object
+class  ProcessBase : public cocos2d::Ref
 {
 public:
     ProcessBase(void);
@@ -155,7 +156,7 @@ protected:
     AnimationType _loopType;
 
     //! The tween easing effect
-    TweenType _tweenEasing;
+    cocos2d::tweenfunc::TweenType _tweenEasing;
 
     //! The animation update speed
     float _animationInternal;

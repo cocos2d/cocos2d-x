@@ -19,9 +19,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    virtual void restartCallback(Object* sender) override;
-    virtual void nextCallback(Object* sender) override;
-    virtual void backCallback(Object* sender) override;
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
 };
 
 //-------------------------------------

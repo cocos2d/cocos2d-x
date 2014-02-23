@@ -11,7 +11,7 @@ class TableViewTestLayer : public cocos2d::Layer, public cocos2d::extension::Tab
 public:
     virtual bool init();  
    
-	void toExtensionsMainLayer(cocos2d::Object *sender);
+	void toExtensionsMainLayer(cocos2d::Ref *sender);
 
     CREATE_FUNC(TableViewTestLayer);
     

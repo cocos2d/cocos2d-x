@@ -217,6 +217,8 @@ public:
      * @lua NA
      */
     EditBoxDelegate* getDelegate();
+    
+#if CC_ENABLE_SCRIPT_BINDING
     /**
      * Registers a script function that will be called for EditBox events.
      *
@@ -257,6 +259,9 @@ public:
      * @lua NA
      */
     int  getScriptEditBoxHandler(void){ return _scriptEditBoxHandler ;}
+    
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     /**
      * Set the text entered in the edit box.
      * @param pText The given text.
@@ -410,7 +415,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void touchDownAction(Object *sender, Control::EventType controlEvent);
+    void touchDownAction(Ref *sender, Control::EventType controlEvent);
     
 protected:
     EditBoxImpl*      _editBoxImpl;
@@ -434,7 +439,9 @@ protected:
     
     int   _maxLength;
     float _adjustHeight;
+#if CC_ENABLE_SCRIPT_BINDING
     int   _scriptEditBoxHandler;
+#endif
 };
 
 NS_CC_EXT_END

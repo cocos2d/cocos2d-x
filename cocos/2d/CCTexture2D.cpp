@@ -753,7 +753,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         if (outTempData != nullptr && outTempData != tempData)
         {
 
-            delete [] outTempData;
+            free(outTempData);
         }
 
         // set the premultiplied tag
@@ -781,32 +781,32 @@ Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, s
     {
     case PixelFormat::RGBA8888:
         *outDataLen = dataLen*4;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertI8ToRGBA8888(data, dataLen, *outData);
         break;
     case PixelFormat::RGB888:
         *outDataLen = dataLen*3;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertI8ToRGB888(data, dataLen, *outData);
         break;
     case PixelFormat::RGB565:
         *outDataLen = dataLen*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertI8ToRGB565(data, dataLen, *outData);
         break;
     case PixelFormat::AI88:
         *outDataLen = dataLen*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertI8ToAI88(data, dataLen, *outData);
         break;
     case PixelFormat::RGBA4444:
         *outDataLen = dataLen*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertI8ToRGBA4444(data, dataLen, *outData);
         break;
     case PixelFormat::RGB5A1:
         *outDataLen = dataLen*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertI8ToRGB5A1(data, dataLen, *outData);
         break;
     default:
@@ -830,37 +830,37 @@ Texture2D::PixelFormat Texture2D::convertAI88ToFormat(const unsigned char* data,
     {
     case PixelFormat::RGBA8888:
         *outDataLen = dataLen*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertAI88ToRGBA8888(data, dataLen, *outData);
         break;
     case PixelFormat::RGB888:
         *outDataLen = dataLen/2*3;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertAI88ToRGB888(data, dataLen, *outData);
         break;
     case PixelFormat::RGB565:
         *outDataLen = dataLen;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertAI88ToRGB565(data, dataLen, *outData);
         break;
     case PixelFormat::A8:
         *outDataLen = dataLen/2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertAI88ToA8(data, dataLen, *outData);
         break;
     case PixelFormat::I8:
         *outDataLen = dataLen/2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertAI88ToI8(data, dataLen, *outData);
         break;
     case PixelFormat::RGBA4444:
         *outDataLen = dataLen;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertAI88ToRGBA4444(data, dataLen, *outData);
         break;
     case PixelFormat::RGB5A1:
         *outDataLen = dataLen;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertAI88ToRGB5A1(data, dataLen, *outData);
         break;
     default:
@@ -885,32 +885,32 @@ Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* dat
     {
     case PixelFormat::RGBA8888:
         *outDataLen = dataLen/3*4;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGB888ToRGBA8888(data, dataLen, *outData);
         break;
     case PixelFormat::RGB565:
         *outDataLen = dataLen/3*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGB888ToRGB565(data, dataLen, *outData);
         break;
     case PixelFormat::I8:
         *outDataLen = dataLen/3;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGB888ToI8(data, dataLen, *outData);
         break;
     case PixelFormat::AI88:
         *outDataLen = dataLen/3*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGB888ToAI88(data, dataLen, *outData);
         break;
     case PixelFormat::RGBA4444:
         *outDataLen = dataLen/3*2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGB888ToRGBA4444(data, dataLen, *outData);
         break;
     case PixelFormat::RGB5A1:
         *outDataLen = dataLen;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGB888ToRGB5A1(data, dataLen, *outData);
         break;
     default:
@@ -934,37 +934,37 @@ Texture2D::PixelFormat Texture2D::convertRGBA8888ToFormat(const unsigned char* d
     {
     case PixelFormat::RGB888:
         *outDataLen = dataLen/4*3;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGBA8888ToRGB888(data, dataLen, *outData);
         break;
     case PixelFormat::RGB565:
         *outDataLen = dataLen/2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGBA8888ToRGB565(data, dataLen, *outData);
         break;
     case PixelFormat::A8:
         *outDataLen = dataLen/4;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGBA8888ToA8(data, dataLen, *outData);
         break;
     case PixelFormat::I8:
         *outDataLen = dataLen/4;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGBA8888ToI8(data, dataLen, *outData);
         break;
     case PixelFormat::AI88:
         *outDataLen = dataLen/2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGBA8888ToAI88(data, dataLen, *outData);
         break;
     case PixelFormat::RGBA4444:
         *outDataLen = dataLen/2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGBA8888ToRGBA4444(data, dataLen, *outData);
         break;
     case PixelFormat::RGB5A1:
         *outDataLen = dataLen/2;
-        *outData = new unsigned char[*outDataLen];
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGBA8888ToRGB5A1(data, dataLen, *outData);
         break;
     default:
@@ -1094,7 +1094,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 
     if (outTempData != nullptr && outTempData != outData.getBytes())
     {
-        delete [] outTempData;
+        free(outTempData);
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     _hasPremultipliedAlpha = true;

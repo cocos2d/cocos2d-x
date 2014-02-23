@@ -60,10 +60,10 @@ public:
     ~ControlScene();
     bool init();
     // Menu Callbacks
-    void toExtensionsMainLayer(Object* sender);
-    void previousCallback(Object* sender);
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
+    void toExtensionsMainLayer(Ref* sender);
+    void previousCallback(Ref* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
 
     /** Title label of the scene. */
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _sceneTitleLabel, SceneTitleLabel)

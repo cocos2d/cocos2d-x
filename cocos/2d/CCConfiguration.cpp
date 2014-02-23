@@ -181,16 +181,7 @@ void Configuration::purgeConfiguration()
 
 bool Configuration::checkForGLExtension(const string &searchName) const
 {
-    bool ret = false;
-    const char *kSearchName = searchName.c_str();
-    
-    if (_glExtensions && 
-        strstr(_glExtensions, kSearchName))
-    {
-        ret = true;
-    }
-    
-    return ret;
+   return  (_glExtensions && strstr(_glExtensions, searchName.c_str() ) ) ? true : false;
 }
 
 //
@@ -267,7 +258,7 @@ bool Configuration::supportsShareableVAO() const
 const Value& Configuration::getValue(const std::string& key, const Value& defaultValue) const
 {
     auto iter = _valueDict.find(key);
-    if (iter != _valueDict.end())
+    if (iter != _valueDict.cend())
         return _valueDict.at(key);
 	return defaultValue;
 }
@@ -289,13 +280,13 @@ void Configuration::loadConfigFile(const std::string& filename)
 	// search for metadata
 	bool validMetadata = false;
 	auto metadataIter = dict.find("metadata");
-	if (metadataIter != dict.end() && metadataIter->second.getType() == Value::Type::MAP)
+	if (metadataIter != dict.cend() && metadataIter->second.getType() == Value::Type::MAP)
     {
         
 		const auto& metadata = metadataIter->second.asValueMap();
         auto formatIter = metadata.find("format");
         
-		if (formatIter != metadata.end())
+		if (formatIter != metadata.cend())
         {
 			int format = formatIter->second.asInt();
 
@@ -314,7 +305,7 @@ void Configuration::loadConfigFile(const std::string& filename)
 	}
 
 	auto dataIter = dict.find("data");
-	if (dataIter == dict.end() || dataIter->second.getType() != Value::Type::MAP)
+	if (dataIter == dict.cend() || dataIter->second.getType() != Value::Type::MAP)
     {
 		CCLOG("Expected 'data' dict, but not found. Config file: %s", filename.c_str());
 		return;
@@ -323,9 +314,9 @@ void Configuration::loadConfigFile(const std::string& filename)
 	// Add all keys in the existing dictionary
     
 	const auto& dataMap = dataIter->second.asValueMap();
-    for (auto dataMapIter = dataMap.begin(); dataMapIter != dataMap.end(); ++dataMapIter)
+    for (auto dataMapIter = dataMap.cbegin(); dataMapIter != dataMap.cend(); ++dataMapIter)
     {
-        if (_valueDict.find(dataMapIter->first) == _valueDict.end())
+        if (_valueDict.find(dataMapIter->first) == _valueDict.cend())
             _valueDict[dataMapIter->first] = dataMapIter->second;
         else
             CCLOG("Key already present. Ignoring '%s'",dataMapIter->first.c_str());

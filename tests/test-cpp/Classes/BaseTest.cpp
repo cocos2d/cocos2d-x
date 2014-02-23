@@ -25,14 +25,15 @@
 #include "BaseTest.h"
 #include "VisibleRect.h"
 #include "testResource.h"
-
+#include "AppDelegate.h"
 
 USING_NS_CC;
 
 void BaseTest::onEnter()
 {
 	Layer::onEnter();
-
+    AppDelegate* app = (AppDelegate *)Application::getInstance();
+    app->setCurrentTest(this);
 	// add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
@@ -62,11 +63,12 @@ void BaseTest::onEnter()
     item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 9999);
-
 }
 
 void BaseTest::onExit()
 {
+    AppDelegate* app = (AppDelegate *)Application::getInstance();
+    app->setCurrentTest(NULL);
 	Layer::onExit();
 }
 
@@ -80,17 +82,17 @@ std::string BaseTest::subtitle() const
 	return "";
 }
 
-void BaseTest::restartCallback(Object* sender)
+void BaseTest::restartCallback(Ref* sender)
 {
 	log("override restart!");
 }
 
-void BaseTest::nextCallback(Object* sender)
+void BaseTest::nextCallback(Ref* sender)
 {
 	log("override next!");
 }
 
-void BaseTest::backCallback(Object* sender)
+void BaseTest::backCallback(Ref* sender)
 {
 	log("override back!");
 }

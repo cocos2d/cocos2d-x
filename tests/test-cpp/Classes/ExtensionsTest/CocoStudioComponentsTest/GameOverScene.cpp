@@ -72,7 +72,7 @@ bool GameOverLayer::init()
                                 nullptr));
 		
         
-        auto itemBack = MenuItemFont::create("Back", [](Object* sender){
+        auto itemBack = MenuItemFont::create("Back", [](Ref* sender){
             auto scene = new ExtensionsTestScene();
             scene->runThisTest();
             scene->release();

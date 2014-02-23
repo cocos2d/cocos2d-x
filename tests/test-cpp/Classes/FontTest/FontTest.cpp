@@ -139,12 +139,12 @@ void FontTest::showFont(const char *pFont)
     this->addChild(top, 0, kTagLabel4);
 }
 
-void FontTest::backCallback(Object* sender)
+void FontTest::backCallback(Ref* sender)
 {
     showFont(backAction());
 }
 
-void FontTest::nextCallback(Object* sender)
+void FontTest::nextCallback(Ref* sender)
 {
     showFont(nextAction());
 }
@@ -154,7 +154,7 @@ std::string FontTest::title() const
     return "Font test";
 }
 
-void FontTest::restartCallback(Object* sender)
+void FontTest::restartCallback(Ref* sender)
 {
     showFont(restartAction());
 }

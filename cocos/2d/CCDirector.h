@@ -30,13 +30,12 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
 #include "CCVector.h"
 #include "CCGL.h"
 #include "CCLabelAtlas.h"
-
 #include "kazmath/mat4.h"
 
 
@@ -59,7 +58,6 @@ class EventDispatcher;
 class EventCustom;
 class EventListenerCustom;
 class TextureCache;
-class Frustum;
 class Renderer;
 class Console;
 
@@ -83,7 +81,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CC_DLL Director : public Object
+class CC_DLL Director : public Ref
 {
 public:
     static const char *EVENT_PROJECTION_CHANGED;
@@ -331,12 +329,6 @@ public:
     */
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor() const { return _contentScaleFactor; }
-    
-    /**
-     Get the Culling Frustum
-     */
-    
-    Frustum* getFrustum() const { return _cullingFrustum; }
 
     /** Gets the Scheduler associated with this director
      @since v2.0
@@ -451,8 +443,6 @@ protected:
     unsigned int _frames;
     float _secondsPerFrame;
     
-    Frustum *_cullingFrustum;
-     
     /* The running scene */
     Scene *_runningScene;
     

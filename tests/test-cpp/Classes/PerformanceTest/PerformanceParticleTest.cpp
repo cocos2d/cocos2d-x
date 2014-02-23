@@ -79,7 +79,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     quantityParticles = particles;
 
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		quantityParticles -= kNodesIncrease;
 		if( quantityParticles < 0 )
 			quantityParticles = 0;
@@ -88,7 +88,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 		createParticleSystem();
 	});
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		quantityParticles += kNodesIncrease;
 		if( quantityParticles > kMaxParticles )
 			quantityParticles = kMaxParticles;
@@ -246,7 +246,7 @@ void ParticleMainScene::createParticleSystem()
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 }
 
-void ParticleMainScene::testNCallback(Object* sender)
+void ParticleMainScene::testNCallback(Ref* sender)
 {
     subtestNumber = static_cast<Node*>(sender)->getTag();
 

@@ -51,7 +51,7 @@ void RenderTextureTest::onEnter()
     BaseTest::onEnter();
 }
 
-void RenderTextureTest::restartCallback(Object* sender)
+void RenderTextureTest::restartCallback(Ref* sender)
 {
     auto s = new RenderTextureScene();
     s->addChild(restartTestCase()); 
@@ -60,7 +60,7 @@ void RenderTextureTest::restartCallback(Object* sender)
     s->release();
 }
 
-void RenderTextureTest::nextCallback(Object* sender)
+void RenderTextureTest::nextCallback(Ref* sender)
 {
     auto s = new RenderTextureScene();
     s->addChild( nextTestCase() );
@@ -68,7 +68,7 @@ void RenderTextureTest::nextCallback(Object* sender)
     s->release();
 }
 
-void RenderTextureTest::backCallback(Object* sender)
+void RenderTextureTest::backCallback(Ref* sender)
 {
     auto s = new RenderTextureScene();
     s->addChild( backTestCase() );
@@ -126,12 +126,12 @@ std::string RenderTextureSave::subtitle() const
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
 
-void RenderTextureSave::clearImage(cocos2d::Object *sender)
+void RenderTextureSave::clearImage(cocos2d::Ref *sender)
 {
     _target->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
-void RenderTextureSave::saveImage(cocos2d::Object *sender)
+void RenderTextureSave::saveImage(cocos2d::Ref *sender)
 {
     static int counter = 0;
 
@@ -143,14 +143,8 @@ void RenderTextureSave::saveImage(cocos2d::Object *sender)
     _target->saveToFile(png, Image::Format::PNG);
     _target->saveToFile(jpg, Image::Format::JPG);
     
-
-    auto image = _target->newImage();
-
-    auto tex = Director::getInstance()->getTextureCache()->addImage(image, png);
-
-    CC_SAFE_DELETE(image);
-
-    auto sprite = Sprite::createWithTexture(tex);
+    std::string fileName = FileUtils::getInstance()->getWritablePath() + jpg;
+    auto sprite = Sprite::create(fileName);
 
     sprite->setScale(0.3f);
     addChild(sprite);
@@ -584,7 +578,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-void RenderTextureTargetNode::touched(Object* sender)
+void RenderTextureTargetNode::touched(Ref* sender)
 {
     if (renderTexture->getClearFlags() == 0)
     {

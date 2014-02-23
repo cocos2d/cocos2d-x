@@ -272,4 +272,9 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_USE_PHYSICS 1
 #endif
 
+/** Enable Script binding */
+#ifndef CC_ENABLE_SCRIPT_BINDING
+#define CC_ENABLE_SCRIPT_BINDING 1
+#endif
+
 #endif // __CCCONFIG_H__

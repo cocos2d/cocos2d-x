@@ -15,7 +15,6 @@ set(EXTENSIONS_SRC
   GUI/CCEditBox/CCEditBox.cpp
   GUI/CCEditBox/CCEditBoxImplAndroid.cpp
   GUI/CCEditBox/CCEditBoxImplNone.cpp
-  GUI/CCEditBox/CCEditBoxImplTizen.cpp
   GUI/CCEditBox/CCEditBoxImplWin.cpp
   GUI/CCScrollView/CCScrollView.cpp
   GUI/CCScrollView/CCTableView.cpp

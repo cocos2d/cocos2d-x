@@ -39,9 +39,9 @@ public:
     SpriteTestDemo(void);
     virtual ~SpriteTestDemo(void);
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 
     // overrides
     virtual std::string title() const override;
@@ -727,6 +727,24 @@ class SpriteBatchBug1217 : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchBug1217);
     SpriteBatchBug1217();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class SpriteCullTest1 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteCullTest1);
+    SpriteCullTest1();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class SpriteCullTest2 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteCullTest2);
+    SpriteCullTest2();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

@@ -11,9 +11,9 @@ class ShaderTestDemo2 : public BaseTest
 public:
     ShaderTestDemo2(void);
     virtual std::string title() const { return "Shader Sprite!";}
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 };
 
 class ShaderTestScene2 : public TestScene

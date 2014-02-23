@@ -39,9 +39,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter();
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
 };
 
 class TextureTIFF : public TextureDemo
@@ -504,8 +504,8 @@ public:
     virtual void onEnter();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void updateImage(Object *sender);
-    void changeBackgroundVisible(Object *sender);
+    void updateImage(Ref *sender);
+    void changeBackgroundVisible(Ref *sender);
 private:
     Sprite *_background;
 };
@@ -564,6 +564,17 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+
+// S3TC texture with no mipmaps test
+class TextureS3TCWithNoMipmaps : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureS3TCWithNoMipmaps);
+    TextureS3TCWithNoMipmaps();
+    
+    virtual std::string title() const override;
 };
 
 // ATITC RGB texture format test
