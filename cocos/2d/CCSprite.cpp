@@ -565,10 +565,10 @@ void Sprite::updateTransform(void)
             float dx = x1 * cr - y2 * sr2 + x;
             float dy = x1 * sr + y2 * cr2 + y;
 
-            _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-            _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-            _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-            _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+            _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
+            _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
+            _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
+            _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -599,7 +599,7 @@ void Sprite::updateTransform(void)
         Point( _quad.tr.vertices.x, _quad.tr.vertices.y ),
         Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
     };
-    ccDrawPoly(vertices, 4, true);
+    DrawPrimitives::drawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
 }
 
@@ -618,19 +618,27 @@ void Sprite::draw(void)
 bool Sprite::culling() const
 {
     Size s = Director::getInstance()->getWinSize();
-    kmVec3 v3 = {_contentSize.width*0.5f, _contentSize.height*0.5f, 0};
-    kmVec3Transform(&v3, &v3, &_modelViewTransform);
+    float hcsx = _contentSize.width * 0.5f;
+    float hcsy = _contentSize.height * 0.5f;
 
-    float cshw = _contentSize.width * fmaxf(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
-	float cshh = _contentSize.height * fmaxf(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
+    // convert to world coordinates
+    float x = hcsx * _modelViewTransform.mat[0] + hcsy * _modelViewTransform.mat[4] + _modelViewTransform.mat[12];
+    float y = hcsx * _modelViewTransform.mat[1] + hcsy * _modelViewTransform.mat[5] + _modelViewTransform.mat[13];
 
-    return ( (fabsf(v3.x)-cshw) < s.width/2 && (fabsf(v3.y)-cshh) < s.height/2);
+    // center of screen is (0,0)
+    x -= s.width/2;
+    y -= s.height/2;
+
+    // convert content size to world coordinates
+    float wchw = hcsx * fmaxf(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
+    float wchh = hcsy * fmaxf(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
+
+    float tmpx = (fabsf(x)-wchw);
+    float tmpy = (fabsf(y)-wchh);
+    return (tmpx < s.width/2 && tmpy < s.height/2);
 }
 
-
-
 // Node overrides
-
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
@@ -796,15 +804,15 @@ void Sprite::setRotation(float rotation)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setRotationX(float fRotationX)
+void Sprite::setRotationSkewX(float fRotationX)
 {
-    Node::setRotationX(fRotationX);
+    Node::setRotationSkewX(fRotationX);
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setRotationY(float fRotationY)
+void Sprite::setRotationSkewY(float fRotationY)
 {
-    Node::setRotationY(fRotationY);
+    Node::setRotationSkewY(fRotationY);
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -844,9 +852,9 @@ void Sprite::setScale(float scaleX, float scaleY)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setVertexZ(float fVertexZ)
+void Sprite::setPositionZ(float fVertexZ)
 {
-    Node::setVertexZ(fVertexZ);
+    Node::setPositionZ(fVertexZ);
     SET_DIRTY_RECURSIVELY();
 }
 
