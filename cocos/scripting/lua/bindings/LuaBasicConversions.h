@@ -87,8 +87,8 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
         if (lua_isuserdata(L, i + 2))
         {
             tolua_Error err;
-            //Undo check
-            if (!tolua_isusertype(L, i + 2, "cc.Object", 0, &err))
+            
+            if (!tolua_isusertype(L, i + 2, "cc.Ref", 0, &err))
             {
                 ok = false;
                 break;
