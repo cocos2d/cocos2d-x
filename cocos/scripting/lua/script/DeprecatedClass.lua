@@ -127,14 +127,6 @@ end
 _G["CCJumpBy"] = DeprecatedClass.CCJumpBy()
 --CCJumpBy class will be Deprecated,end
 
---CCObject class will be Deprecated,begin
-function DeprecatedClass.CCObject()
-    deprecatedTip("CCObject","cc.Object")
-    return cc.Object
-end
-_G["CCObject"] = DeprecatedClass.CCObject()
---CCObject class will be Deprecated,end
-
 --CCTransitionRotoZoom class will be Deprecated,begin
 function DeprecatedClass.CCTransitionRotoZoom()
     deprecatedTip("CCTransitionRotoZoom","cc.TransitionRotoZoom")
