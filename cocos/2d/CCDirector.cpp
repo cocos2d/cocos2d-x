@@ -448,18 +448,19 @@ void Director::setProjection(Projection projection)
 
             // issue #1334
             kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
-            // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+//            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
             kmGLMultMatrix(&matrixPerspective);
 
-            kmGLMatrixMode(KM_GL_MODELVIEW);
-            kmGLLoadIdentity();
             kmVec3 eye, center, up;
             kmVec3Fill(&eye, size.width/2, size.height/2, zeye);
             kmVec3Fill(&center, size.width/2, size.height/2, 0.0f);
             kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
+
+            kmGLMatrixMode(KM_GL_MODELVIEW);
+            kmGLLoadIdentity();
             break;
         }
 

@@ -352,8 +352,15 @@ public:
     virtual void  setPositionY(float y);
     virtual float getPositionY(void) const;
 
+    /**
+     * Sets the X, Y, and Z axis position
+     */
     virtual void setPosition3D(const Vertex3F& position);
+    /**
+     * returns the X, Y and Z axis position
+     */
     virtual Vertex3F getPosition3D() const;
+
     /**
      * Sets the 'z' axis in the position. It is the OpenGL Z vertex value.
      *
@@ -391,13 +398,16 @@ public:
     /**
      * Changes the X skew angle of the node in degrees.
      *
+     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
+     * while the second one uses the real skew funciton.
+     *
      * This angle describes the shear distortion in the X direction.
      * Thus, it is the angle between the Y axis and the left edge of the shape
      * The default skewX angle is 0. Positive values distort the node in a CW direction.
      *
-     * @param fSkewX The X skew angle of the node in degrees.
+     * @param skewX The X skew angle of the node in degrees.
      */
-    virtual void setSkewX(float fSkewX);
+    virtual void setSkewX(float skewX);
     /**
      * Returns the X skew angle of the node in degrees.
      *
@@ -411,13 +421,16 @@ public:
     /**
      * Changes the Y skew angle of the node in degrees.
      *
+     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
+     * while the second one uses the real skew funciton.
+     *
      * This angle describes the shear distortion in the Y direction.
      * Thus, it is the angle between the X axis and the bottom edge of the shape
      * The default skewY angle is 0. Positive values distort the node in a CCW direction.
      *
-     * @param fSkewY    The Y skew angle of the node in degrees.
+     * @param skewY    The Y skew angle of the node in degrees.
      */
-    virtual void setSkewY(float fSkewY);
+    virtual void setSkewY(float skewY);
     /**
      * Returns the Y skew angle of the node in degrees.
      *
@@ -514,11 +527,21 @@ public:
      */
     virtual float getRotation() const;
 
+    /**
+     * Sets the X, Y and Z axis rotation
+     * Useful for 3d rotations
+     */
     virtual void setRotation3D(const Vertex3F& rotation);
+    /**
+     * returns the X, Y and Z axis rotation
+     */
     virtual Vertex3F getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
+     *
+     * The difference between setRotationalSkew() and setSkew() is that the first one simulate Flash's skew functionality
+     * while the second one uses the real skew funciton.
      *
      * 0 is the default rotation angle.
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
@@ -540,6 +563,9 @@ public:
 
     /**
      * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
+     *
+     * The difference between setRotationalSkew() and setSkew() is that the first one simulate Flash's skew functionality
+     * while the second one uses the real skew funciton.
      *
      * 0 is the default rotation angle.
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
