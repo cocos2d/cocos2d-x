@@ -84,4 +84,4 @@ If the last command results in sdk.dir missing error then do:
 
     $ android list target
     $ android update project -p . -t (id from step 6)
-    $ android update project -p cocos2d-x/cocos2dx/platform/android/java/ -t (id from step 6)
+    $ android update project -p cocos2d/cocos/2d/platform/android/java/ -t (id from step 6)
