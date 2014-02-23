@@ -45,12 +45,14 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
+#include "CCDirector.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCFrustum.h"
 
 // external
 #include "kazmath/GL/matrix.h"
+#include "kazmath/kazmath.h"
 
 
 using namespace std;
@@ -605,38 +607,24 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(void)
 {
-    //TODO implement z order
-    _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
-
-//    if(culling())
+    if(culling())
     {
+        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
         Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
 }
 
+// Culling function from cocos2d-iphone CCSprite.m file
 bool Sprite::culling() const
 {
-    Frustum* frustum = Director::getInstance()->getFrustum();
-    //TODO optimize this transformation, should use parent's transformation instead
-    kmMat4 worldTM = getNodeToWorldTransform();
-    //generate aabb
+    Size s = Director::getInstance()->getWinSize();
+    kmVec3 v3 = {_contentSize.width*0.5f, _contentSize.height*0.5f, 0};
+    kmVec3Transform(&v3, &v3, &_modelViewTransform);
 
-    //
-    // calculate the Quad based on the Affine Matrix
-    //
-    Rect newRect = RectApplyTransform(_rect, worldTM);
+    float cshw = _contentSize.width * fmaxf(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
+	float cshh = _contentSize.height * fmaxf(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
 
-    kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
-    
-    AABB aabb(point,point);
-    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
-    aabb.expand(point);
-    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _vertexZ);
-    aabb.expand(point);
-    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _vertexZ);
-    aabb.expand(point);
-
-    return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
+    return ( (fabsf(v3.x)-cshw) < s.width/2 && (fabsf(v3.y)-cshh) < s.height/2);
 }
 
 void Sprite::updateQuadVertices()
