@@ -627,46 +627,7 @@ bool Sprite::culling() const
     return ( (fabsf(v3.x)-cshw) < s.width/2 && (fabsf(v3.y)-cshh) < s.height/2);
 }
 
-void Sprite::updateQuadVertices()
-{
-#if CC_USE_PHYSICS
-    updatePhysicsTransform();
-    setDirty(true);
-#endif
 
-    //TODO optimize the performance cache affineTransformation
-
-    // recalculate matrix only if it is dirty
-    if(isDirty())
-    {
-
-//        if( ! _parent || _parent == (Node*)_batchNode )
-//        {
-//            _transformToBatch = getNodeToParentTransform();
-//        }
-//        else
-//        {
-//            CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-//            _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<Sprite*>(_parent)->_transformToBatch );
-//        }
-
-        //TODO optimize this transformation, should use parent's transformation instead
-        _transformToBatch = getNodeToWorldTransform();
-
-        //
-        // calculate the Quad based on the Affine Matrix
-        //
-        Rect newRect = RectApplyTransform(_rect, _transformToBatch);
-
-        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
-        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
-        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
-        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
-        
-        _recursiveDirty = false;
-        setDirty(false);
-    }
-}
 
 // Node overrides
 
