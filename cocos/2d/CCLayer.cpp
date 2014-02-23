@@ -590,7 +590,7 @@ void LayerColor::draw()
     for(int i = 0; i < 4; ++i)
     {
         kmVec3 pos;
-        pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _vertexZ;
+        pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         kmVec3TransformCoord(&pos, &pos, &_modelViewTransform);
         _noMVPVertices[i] = Vertex3F(pos.x,pos.y,pos.z);
     }

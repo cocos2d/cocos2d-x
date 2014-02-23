@@ -35,7 +35,6 @@
 #include "CCGL.h"
 #include "ccGLStateCache.h"
 #include "CCGLProgram.h"
-#include "kazmath/kazmath.h"
 #include "CCScriptSupport.h"
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
@@ -215,29 +214,6 @@ public:
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
     /**
-     * Sets the 'z' value in the OpenGL Depth Buffer.
-     *
-     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on 
-     * in order to use this property correctly.
-     *
-     * `setVertexZ()` also sets the `setGlobalZValue()` with the vertexZ value.
-     *
-     * @see `setGlobalZValue()`
-     *
-     * @param vertexZ  OpenGL Z vertex of this node.
-     */
-    virtual void setVertexZ(float vertexZ);
-    /**
-     * Gets OpenGL Z vertex of this node.
-     *
-     * @see setVertexZ(float)
-     *
-     * @return OpenGL Z vertex of this node
-     */
-    virtual float getVertexZ() const;
-
-
-    /**
      * Changes the scale factor on X axis of this node
      *
      * The deafult value is 1.0 if you haven't changed it before
@@ -271,6 +247,23 @@ public:
      * @return The scale factor on Y axis.
      */
     virtual float getScaleY() const;
+
+    /**
+     * Changes the scale factor on Z axis of this node
+     *
+     * The Default value is 1.0 if you haven't changed it before.
+     *
+     * @param scaleY   The scale factor on Y axis.
+     */
+    virtual void setScaleZ(float scaleZ);
+    /**
+     * Returns the scale factor on Z axis of this node
+     *
+     * @see `setScaleZ(float)`
+     *
+     * @return The scale factor on Z axis.
+     */
+    virtual float getScaleZ() const;
 
 
     /**
@@ -359,6 +352,41 @@ public:
     virtual void  setPositionY(float y);
     virtual float getPositionY(void) const;
 
+    virtual void setPosition3D(const Vertex3F& position);
+    virtual Vertex3F getPosition3D() const;
+    /**
+     * Sets the 'z' axis in the position. It is the OpenGL Z vertex value.
+     *
+     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on
+     * in order to use this property correctly.
+     *
+     * `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.
+     *
+     * @see `setGlobalZValue()`
+     *
+     * @param vertexZ  OpenGL Z vertex of this node.
+     */
+    virtual void setPositionZ(float positionZ);
+    CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
+
+    /**
+     * Gets position Z axis of this node.
+     *
+     * @see setPositionZ(float)
+     *
+     * @return the position Z axis of this node.
+     */
+    virtual float getPositionZ() const;
+    CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
+
+    /** Sets the position using normalized coordinates.
+     - (0,0) means bottom,left corner
+     - (1,1) means top,right corner
+     - (0.5,0.5) means center
+     */
+    virtual void setNormalizedPosition(const Point& position);
+    /** returns the normalized position */
+    const Point& getNormalizedPosition() const;
 
     /**
      * Changes the X skew angle of the node in degrees.
@@ -486,6 +514,8 @@ public:
      */
     virtual float getRotation() const;
 
+    virtual void setRotation3D(const Vertex3F& rotation);
+    virtual Vertex3F getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -495,16 +525,18 @@ public:
      *
      * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
      */
-    virtual void setRotationX(float rotationX);
+    virtual void setRotationSkewX(float rotationX);
+    CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
+
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
-     * @see `setRotationX(float)`
+     * @see `setRotationSkewX(float)`
      *
      * @return The X rotation in degrees.
      */
-    virtual float getRotationX() const;
-
+    virtual float getRotationSkewX() const;
+    CC_DEPRECATED_ATTRIBUTE virtual float getRotationX() const { return getRotationSkewX(); }
 
     /**
      * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
@@ -514,16 +546,18 @@ public:
      *
      * @param rotationY    The Y rotation in degrees.
      */
-    virtual void setRotationY(float rotationY);
+    virtual void setRotationSkewY(float rotationY);
+    CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
+
     /**
      * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
      *
-     * @see `setRotationY(float)`
+     * @see `setRotationSkewY(float)`
      *
      * @return The Y rotation in degrees.
      */
-    virtual float getRotationY() const;
-
+    virtual float getRotationSkewY() const;
+    CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
 
     /**
      * Sets the arrival order when this node has a same ZOrder with other children.
@@ -1429,18 +1463,23 @@ protected:
     virtual void disableCascadeColor();
     virtual void updateColor() {}
 
+    float _rotationX;               ///< rotation on the X-axis
+    float _rotationY;               ///< rotation on the Y-axis
 
-    float _rotationX;                 ///< rotation angle on x-axis
-    float _rotationY;                 ///< rotation angle on y-axis
+    // rotation Z is decomposed in 2 to simulate Skew for Flash animations
+    float _rotationZ_X;             ///< rotation angle on Z-axis, component X
+    float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
 
-    float _scaleX;                    ///< scaling factor on x-axis
-    float _scaleY;                    ///< scaling factor on y-axis
+    float _scaleX;                  ///< scaling factor on x-axis
+    float _scaleY;                  ///< scaling factor on y-axis
+    float _scaleZ;                  ///< scaling factor on z-axis
 
+    Point _position;                ///< position of the node
+    float _positionZ;               ///< OpenGL real Z position
+    Point _normalizedPosition;      ///< position in normalized coordinates
 
-    Point _position;               ///< position of the node
-
-    float _skewX;                     ///< skew angle on x-axis
-    float _skewY;                     ///< skew angle on y-axis
+    float _skewX;                   ///< skew angle on x-axis
+    float _skewY;                   ///< skew angle on y-axis
 
     Point _anchorPointInPoints;    ///< anchor point in points
     Point _anchorPoint;            ///< anchor point normalized (NOT in points)
@@ -1460,8 +1499,6 @@ protected:
 
     int _localZOrder;                   ///< Local order (relative to its siblings) used to sort the node
     float _globalZOrder;                ///< Global order used to sort the node
-    float _vertexZ;                     ///< OpenGL real Z vertex
-
 
     Vector<Node*> _children;               ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node

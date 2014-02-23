@@ -322,7 +322,8 @@ class CC_DLL RotateBy : public ActionInterval
 public:
     /** creates the action */
     static RotateBy* create(float duration, float deltaAngle);
-    static RotateBy* create(float duration, float deltaAngleX, float deltaAngleY);
+    static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    static RotateBy* create(float duration, const Vertex3F& deltaAngle3D);
 
     //
     // Override
@@ -333,16 +334,21 @@ public:
     virtual void update(float time) override;
     
 protected:
-    RotateBy() {}
+    RotateBy();
     virtual ~RotateBy() {}
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
-    bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
+    bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    bool initWithDuration(float duration, const Vertex3F& deltaAngle3D);
 
-    float _angleX;
-    float _startAngleX;
-    float _angleY;
-    float _startAngleY;
+    float _angleZ_X;
+    float _startAngleZ_X;
+    float _angleZ_Y;
+    float _startAngleZ_Y;
+
+    bool _is3D;
+    Vertex3F _angle3D;
+    Vertex3F _startAngle3D;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);

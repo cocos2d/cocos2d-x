@@ -33,9 +33,12 @@
 
 static std::function<Layer*()> createFunctions[] = {
 
+    CL(ActionRotateBy3D),
+
     CL(ActionManual),
     CL(ActionMove),
     CL(ActionRotate),
+    CL(ActionRotateBy3D),
     CL(ActionScale),
     CL(ActionSkew),
     CL(ActionRotationalSkew),
@@ -499,6 +502,31 @@ void ActionRotate::onEnter()
 std::string ActionRotate::subtitle() const
 {
     return "RotateTo / RotateBy";
+}
+
+//------------------------------------------------------------------
+//
+//    ActionRotateBy3D
+//
+//------------------------------------------------------------------
+void ActionRotateBy3D::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(3);
+
+    auto actionBy1 = RotateBy::create(4, Vertex3F(360, 0, 0));
+    auto actionBy2 = RotateBy::create(4, Vertex3F(0, 360, 0));
+    auto actionBy3 = RotateBy::create(4 ,Vertex3F(0, 0, 360));
+
+    _tamara->runAction( Sequence::create(actionBy1, actionBy1->reverse(), nullptr));
+    _grossini->runAction( Sequence::create(actionBy2, actionBy2->reverse(), nullptr));
+    _kathia->runAction( Sequence::create(actionBy3, actionBy3->reverse(), nullptr));
+}
+
+std::string ActionRotateBy3D::subtitle() const
+{
+    return "RotateBy in 3D";
 }
 
 //------------------------------------------------------------------
