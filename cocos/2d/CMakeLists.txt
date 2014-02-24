@@ -7,7 +7,7 @@ set(PLATFORM_SRC
   platform/win32/CCFileUtilsWin32.cpp
   platform/win32/CCCommon.cpp
   platform/win32/CCApplication.cpp
-  platform/win32/CCGLView.cpp
+  platform/desktop/CCGLView.cpp
   platform/win32/CCDevice.cpp
 )
 
