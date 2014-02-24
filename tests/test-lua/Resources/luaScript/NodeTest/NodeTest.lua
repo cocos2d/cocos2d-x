@@ -261,10 +261,10 @@ local function Test6()
     local rot = cc.RotateBy:create(2, 360)
     local rot_back = rot:reverse()
     local forever1 = cc.RepeatForever:create(cc.Sequence:create(rot, rot_back))
-    local forever11 = tolua.cast(forever1:clone(), "cc.RepeatForever")
+    local forever11 = forever1:clone()
 
-    local forever2 = tolua.cast(forever1:clone(), "cc.RepeatForever")
-    local forever21 = tolua.cast(forever1:clone(), "cc.RepeatForever")
+    local forever2 = forever1:clone()
+    local forever21 = forever1:clone()
 
     Test6_layer:addChild(sp1, 0, kTagSprite1)
     sp1:addChild(sp11)
@@ -342,7 +342,7 @@ local function shouldNotLeak(dt)
 	scheduler:unscheduleScriptEntry(StressTest2_entry)
 
     local sublayer = StressTest2_layer:getChildByTag(kTagSprite1)
-    sublayer:removeAllChildrenWithCleanup(true)
+    sublayer:removeAllChildren(true)
 end
 
 local function StressTest2_onEnterOrExit(tag)
@@ -370,10 +370,9 @@ local function StressTest2()
 
     local fire = cc.ParticleFire:create()
     fire:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
-	fire = tolua.cast(fire, "cc.Node")
     fire:setPosition(80, s.height / 2 - 50)
 
-    local copy_seq3 = tolua.cast(seq3:clone(), "cc.Sequence")
+    local copy_seq3 = seq3:clone()
     fire:runAction(cc.RepeatForever:create(copy_seq3))
     sublayer:addChild(fire, 2)
 
@@ -564,7 +563,7 @@ local function ConvertToNode()
 
         point:setPosition(sprite:getPosition())
 
-        local copy = tolua.cast(action:clone(), "cc.RepeatForever")
+        local copy = action:clone()
         sprite:runAction(copy)
         ConvertToNode_layer:addChild(sprite, i)
     end

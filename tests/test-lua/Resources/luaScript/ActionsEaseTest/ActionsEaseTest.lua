@@ -425,10 +425,10 @@ local function SpeedTest()
     local spawn = cc.Spawn:create(seq3_1, seq3_2)
     SpeedTest_action1 = cc.Speed:create(cc.RepeatForever:create(spawn), 1.0)
 
-	local spawn2 = tolua.cast(spawn:clone(), "cc.Spawn")
+	local spawn2 = spawn:clone()
     SpeedTest_action2 = cc.Speed:create(cc.RepeatForever:create(spawn2), 1.0)
 
-	local spawn3 = tolua.cast(spawn:clone(), "cc.Spawn")
+	local spawn3 = spawn:clone()
 	SpeedTest_action3 = cc.Speed:create(cc.RepeatForever:create(spawn3), 1.0)
 
     grossini:runAction(SpeedTest_action2)
