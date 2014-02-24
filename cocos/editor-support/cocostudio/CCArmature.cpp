@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,9 +28,12 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
-#include "CCQuadCommand.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
+
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "CCShaderCache.h"
+#include "CCDrawingPrimitives.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -101,7 +104,7 @@ Armature::~Armature(void)
 
 bool Armature::init()
 {
-    return init(nullptr);
+    return init("");
 }
 
 
@@ -155,7 +158,7 @@ bool Armature::init(const std::string& name)
                     CC_BREAK_IF(!frameData);
 
                     bone->getTweenData()->copy(frameData);
-                    bone->changeDisplayByIndex(frameData->displayIndex, false);
+                    bone->changeDisplayWithIndex(frameData->displayIndex, false);
                 }
                 while (0);
             }
@@ -180,9 +183,6 @@ bool Armature::init(const std::string& name)
         }
 
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
-        unscheduleUpdate();
-        scheduleUpdate();
 
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
@@ -225,7 +225,7 @@ Bone *Armature::createBone(const std::string& boneName)
     }
 
     bone->setBoneData(boneData);
-    bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+    bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
 
     return bone;
 }
@@ -432,6 +432,18 @@ void Armature::draw()
     }
 }
 
+void Armature::onEnter()
+{
+    Node::onEnter();
+    scheduleUpdate();
+}
+
+void Armature::onExit()
+{
+    Node::onExit();
+    unscheduleUpdate();
+}
+
 
 void Armature::visit()
 {
@@ -561,7 +573,7 @@ void CCArmature::drawContour()
             }
             DrawPrimitives::drawPoly( points, (unsigned int)length, true );
 
-            delete points;
+            delete []points;
         }
     }
 }

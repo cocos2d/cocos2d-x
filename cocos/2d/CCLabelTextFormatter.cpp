@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,76 +25,51 @@
 
 #include <vector>
 
-#include "cocos2d.h"
 #include "ccUTF8.h"
 #include "CCLabelTextFormatter.h"
+#include "CCDirector.h"
+#include "CCLabel.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
-bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
+bool LabelTextFormatter::multilineText(Label *theLabel)
 {
-    // to do if (m_fWidth > 0)
-    if (theLabel->getMaxLineWidth())
-    {
-        // Step 1: Make multiline
-        vector<unsigned short> strWhole = cc_utf16_vec_from_utf16_str(theLabel->getUTF8String());
-        size_t stringLength        = strWhole.size();
-        
-        vector<unsigned short> multiline_string;
-        multiline_string.reserve( stringLength );
-        
-        vector<unsigned short> last_word;
-        last_word.reserve( stringLength );
-        
-        unsigned int line = 1, i = 0;
-        
-        bool   isStartOfLine  = false, isStartOfWord = false;
-        float  startOfLine = -1, startOfWord   = -1;
-        
-        int skip = 0;
-                
-        int strLen = theLabel->getStringLenght();
-        std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
-        int tIndex = 0;
+    int strLen = theLabel->getStringLenght();
+    auto strWhole = theLabel->_currentUTF16String;
 
-        for (int j = 0; j+skip < strLen; j++)
-        {            
-            LetterInfo* info = &leterInfo->at(j+skip);
+    vector<unsigned short> multiline_string;
+    multiline_string.reserve( strLen );
 
-            unsigned int justSkipped = 0;                                  
-            
-            while (info->def.validDefinition == false)
-            {
-                justSkipped++;
-                info = &leterInfo->at( j+skip+justSkipped );
-            }
-            skip += justSkipped;
-            tIndex = j + skip;
-            
-            if (i >= stringLength)
-                break;
-            
-            unsigned short character = strWhole[i];
-            
-            if (!isStartOfWord)
-            {
-                startOfWord = theLabel->getLetterPosXLeft( tIndex );
-                isStartOfWord = true;
-            }
-            
-            if (!isStartOfLine)
-            {
-                startOfLine = startOfWord;
-                isStartOfLine  = true;
-            }
-            
-            // Newline.
-            if (character == '\n')
+    vector<unsigned short> last_word;
+    last_word.reserve( strLen );
+
+    bool   isStartOfLine  = false, isStartOfWord = false;
+    float  startOfLine = -1, startOfWord   = -1;
+
+    int skip = 0;
+    
+    int tIndex = 0;
+    float scalsX = theLabel->getScaleX();
+    float lineWidth = theLabel->_maxLineWidth;
+    bool breakLineWithoutSpace = theLabel->_lineBreakWithoutSpaces;
+    Label::LetterInfo* info = nullptr;
+
+    for (int j = 0; j+skip < strLen; j++)
+    {            
+        info = & theLabel->_lettersInfo.at(j+skip);
+
+        unsigned int justSkipped = 0;
+
+        while (info->def.validDefinition == false)
+        {
+            justSkipped++;
+            tIndex = j+skip+justSkipped;
+            if (strWhole[tIndex-1] == '\n')
             {
                 cc_utf8_trim_ws(&last_word);
-                
+
                 last_word.push_back('\n');
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
@@ -101,137 +77,132 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                 isStartOfLine = false;
                 startOfWord = -1;
                 startOfLine = -1;
-                i += justSkipped;
-                ++line;
-                
-                if (i >= stringLength)
-                    break;
-                
-                character = strWhole[i];
-                
-                if (!startOfWord)
-                {
-                    startOfWord = theLabel->getLetterPosXLeft( tIndex );
-                    isStartOfWord = true;
-                }
-                if (!startOfLine)
-                {
-                    startOfLine  = startOfWord;
-                    isStartOfLine = true;
-                }
             }
-            
-            // Whitespace.
-            if (isspace_unicode(character))
+            if(tIndex < strLen)
+            {
+                info = & theLabel->_lettersInfo.at( tIndex );
+            }
+            else
+                break;
+        }
+        skip += justSkipped;
+        tIndex = j + skip;
+
+        if (tIndex >= strLen)
+            break;
+
+        unsigned short character = strWhole[tIndex];
+
+        if (!isStartOfWord)
+        {
+            startOfWord = info->position.x * scalsX;
+            isStartOfWord = true;
+        }
+
+        if (!isStartOfLine)
+        {
+            startOfLine = startOfWord;
+            isStartOfLine  = true;
+        }
+        
+        // 1) Whitespace.
+        // 2) This character is non-CJK, but the last character is CJK
+        bool isspace = isspace_unicode(character);
+        bool isCJK = false;
+        if(!isspace)
+        {
+            isCJK = iscjk_unicode(character);
+        }
+
+        if (isspace ||
+            (!last_word.empty() && iscjk_unicode(last_word.back()) && !isCJK))
+        {
+            // if current character is white space, put it into the current word
+            if (isspace) last_word.push_back(character);
+            multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+            last_word.clear();
+            isStartOfWord = false;
+            startOfWord = -1;
+            // put the CJK character in the last word
+            // and put the non-CJK(ASCII) character in the current word
+            if (!isspace) last_word.push_back(character);
+            continue;
+        }
+        
+        float posRight = (info->position.x + info->contentSize.width) * scalsX;
+        // Out of bounds.
+        if (posRight - startOfLine > lineWidth)
+        {
+            if (!breakLineWithoutSpace && !isCJK)
             {
                 last_word.push_back(character);
-                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-                last_word.clear();
-                isStartOfWord = false;
-                startOfWord = -1;
-                ++i;
-                continue;
-            }
-            
-            // Out of bounds.
-            if (theLabel->getLetterPosXRight( tIndex ) - startOfLine > theLabel->getMaxLineWidth())
-            {
-                if (!theLabel->breakLineWithoutSpace())
-                {
-                    last_word.push_back(character);
-                    
-                    int found = cc_utf8_find_last_not_char(multiline_string, ' ');
-                    if (found != -1)
-                        cc_utf8_trim_ws(&multiline_string);
-                    else
-                        multiline_string.clear();
-                    
-                    if (multiline_string.size() > 0)
-                        multiline_string.push_back('\n');
-                    
-                    ++line;
-                    isStartOfLine = false;
-                    startOfLine = -1;
-                    ++i;
-                }
-                else
-                {
-                    cc_utf8_trim_ws(&last_word);
-                    
-                    last_word.push_back('\n');
-                    multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-                    last_word.clear();
-                    isStartOfWord = false;
-                    isStartOfLine = false;
-                    startOfWord = -1;
-                    startOfLine = -1;
-                    ++line;
-                    
-                    if (i >= stringLength)
-                        break;
-                    
-                    if (!startOfWord)
-                    {
-                        startOfWord = theLabel->getLetterPosXLeft( tIndex );
-                        isStartOfWord = true;
-                    }
-                    if (!startOfLine)
-                    {
-                        startOfLine  = startOfWord;
-                        isStartOfLine = true;
-                    }
-                    
-                    --j;
-                }
                 
-                continue;
+                int found = cc_utf8_find_last_not_char(multiline_string, ' ');
+                if (found != -1)
+                    cc_utf8_trim_ws(&multiline_string);
+                else
+                    multiline_string.clear();
+
+                if (multiline_string.size() > 0)
+                    multiline_string.push_back('\n');
+
+                isStartOfLine = false;
+                startOfLine = -1;
             }
             else
             {
-                // Character is normal.
-                last_word.push_back(character);
-                ++i;
-                continue;
+                cc_utf8_trim_ws(&last_word);
+
+                last_word.push_back('\n');
+                
+                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+                last_word.clear();
+                isStartOfWord = false;
+                isStartOfLine = false;
+                startOfWord = -1;
+                startOfLine = -1;
+                --j;
             }
         }
-        
-        multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-        
-        size_t size = multiline_string.size();
-        unsigned short* strNew = new unsigned short[size + 1];
-        
-        for (int j = 0; j < size; ++j)
+        else
         {
-            strNew[j] = multiline_string[j];
+            // Character is normal.
+            last_word.push_back(character);
         }
-        
-        strNew[size] = 0;
-        theLabel->assignNewUTF8String(strNew);
-        
-        return true;
     }
-    else
+
+    multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+
+    size_t size = multiline_string.size();
+    unsigned short* strNew = new unsigned short[size + 1];
+
+    for (size_t j = 0; j < size; ++j)
     {
-        return false;
+        strNew[j] = multiline_string[j];
     }
+
+    strNew[size] = 0;
+    theLabel->setCurrentString(strNew);
+
+    return true;
 }
 
-bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
+bool LabelTextFormatter::alignText(Label *theLabel)
 {
     int i = 0;
     
     int lineNumber = 0;
-    int strLen = cc_wcslen(theLabel->getUTF8String());
+    int strLen = cc_wcslen(theLabel->_currentUTF16String);
     vector<unsigned short> lastLine;
-    std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
+    auto strWhole = theLabel->_currentUTF16String;
+
     for (int ctr = 0; ctr <= strLen; ++ctr)
-    {
-        unsigned short int currentChar = theLabel->getCharAtStringPosition(ctr);      
-        
+    { 
+        unsigned short currentChar = strWhole[ctr];
+
         if (currentChar == '\n' || currentChar == 0)
         {
-            float lineWidth = 0.0f;
-            size_t lineLength = lastLine.size();
+            auto lineLength = lastLine.size();
             
             // if last line is empty we must just increase lineNumber and work with next line
             if (lineLength == 0)
@@ -242,22 +213,25 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
             int index = static_cast<int>(i + lineLength - 1 + lineNumber);
             if (index < 0) continue;
             
-            if(currentChar == 0)
-                continue;
-            LetterInfo* info = &leterInfo->at( index );
+            auto info = & theLabel->_lettersInfo.at( index );
             if(info->def.validDefinition == false)
                 continue;
-            lineWidth = info->position.x + info->contentSize.width /2.0f;
             
             float shift = 0;
-            switch (theLabel->getTextAlignment())
+            switch (theLabel->_alignment)
             {
                 case TextHAlignment::CENTER:
-                    shift = theLabel->getLabelContentSize().width/2.0f - lineWidth/2.0f;
-                    break;
+                    {
+                        float lineWidth = info->position.x + info->contentSize.width;
+                        shift = theLabel->getContentSize().width/2.0f - lineWidth/2.0f;
+                        break;
+                    }
                 case TextHAlignment::RIGHT:
-                    shift = theLabel->getLabelContentSize().width - lineWidth;
-                    break;
+                    {
+                        float lineWidth = info->position.x + info->contentSize.width;
+                        shift = theLabel->getContentSize().width - lineWidth;
+                        break;
+                    }
                 default:
                     break;
             }
@@ -269,10 +243,10 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                     index = i + j + lineNumber;
                     if (index < 0) continue;
                     
-                    info = &leterInfo->at( index );
+                    info = & theLabel->_lettersInfo.at( index );
                     if(info)
                     {
-                        info->position = info->position + Point(shift, 0.0f);
+                        info->position.x += shift;
                     }
                 }
             }
@@ -290,7 +264,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
     return true;
 }
 
-bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
+bool LabelTextFormatter::createStringSprites(Label *theLabel)
 {
     // check for string
     unsigned int stringLen = theLabel->getStringLenght();
@@ -299,68 +273,59 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
     if (stringLen == 0)
         return false;
     
-    int nextFontPositionX       = 0;
-    int nextFontPositionY       = 0;
-    
-    unsigned short prev         = -1;
-    
-    
-    Size tmpSize                = Size::ZERO;
-    
     int longestLine             = 0;
-    unsigned int totalHeight    = 0;
+    unsigned int totalHeight    = theLabel->_commonLineHeight * theLabel->_currNumLines;
+    int nextFontPositionX       = 0;
+    int nextFontPositionY       = totalHeight;
     
-    
-    int quantityOfLines         = theLabel->getStringNumLines();
-    int commonLineHeight        = theLabel->getCommonLineHeight();
-    
-    totalHeight                 =     commonLineHeight * quantityOfLines;
-    nextFontPositionY           = 0 - (commonLineHeight - totalHeight);
-    
-    Rect      rect;
-
     Rect charRect;
     int charXOffset = 0;
     int charYOffset = 0;
     int charAdvance = 0;
+
+    auto strWhole = theLabel->_currentUTF16String;
+    auto fontAtlas = theLabel->getFontAtlas();
+    FontLetterDefinition tempDefinition;
+    Point letterPosition;
+    const auto& kernings = theLabel->_horizontalKernings;
+
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     
     for (unsigned int i = 0; i < stringLen; i++)
     {
-        // get the current character
-        unsigned short c    = theLabel->getCharAtStringPosition(i);
-        
-        charXOffset         = theLabel->getXOffsetForChar(c);
-        charYOffset         = theLabel->getYOffsetForChar(c);
-        charAdvance         = theLabel->getAdvanceForChar(c, i);
-        charRect            = theLabel->getRectForChar(c);
-        
-        int kerningAmount   = theLabel->getKerningForCharsPair(prev, c);
+        unsigned short c    = strWhole[i];
+        if (fontAtlas->getLetterDefinitionForChar(c, tempDefinition))
+        {
+            charXOffset         = tempDefinition.offsetX;
+            charYOffset         = tempDefinition.offsetY;
+            charAdvance         = tempDefinition.xAdvance;
+        }
+        else
+        {
+            charXOffset         = -1;
+            charYOffset         = -1;
+            charAdvance         = -1;
+        }
         
         if (c == '\n')
         {
             nextFontPositionX  = 0;
-            nextFontPositionY -= commonLineHeight;
+            nextFontPositionY -= theLabel->_commonLineHeight;
             
             theLabel->recordPlaceholderInfo(i);
             continue;
         }
         
-        // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
-        int yOffset = commonLineHeight - charYOffset;
-        
-        
-        Point fontPos = Point((float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
-                             (float)nextFontPositionY + yOffset     -   charRect.size.height *  0.5f);
+        letterPosition.x = (nextFontPositionX + charXOffset + kernings[i]) / contentScaleFactor;
+        letterPosition.y = (nextFontPositionY - charYOffset) / contentScaleFactor;
                
-        if( theLabel->recordLetterInfo(CC_POINT_PIXELS_TO_POINTS(fontPos),c,i) == false)
+        if( theLabel->recordLetterInfo(letterPosition,tempDefinition,i) == false)
         {
             log("WARNING: can't find letter definition in font file for letter: %c", c);
             continue;
         }
 
-        // update kerning
-        nextFontPositionX += charAdvance + kerningAmount;
-        prev = c;
+        nextFontPositionX += charAdvance + kernings[i];
         
         if (longestLine < nextFontPositionX)
         {
@@ -368,12 +333,14 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         }
     }
     
+    float lastCharWidth = tempDefinition.width * contentScaleFactor;
+    Size tmpSize                = Size::ZERO;
     // If the last character processed has an xAdvance which is less that the width of the characters image, then we need
     // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
     // box
-    if (charAdvance < charRect.size.width)
+    if(charAdvance < lastCharWidth)
     {
-        tmpSize.width = longestLine + charRect.size.width - charAdvance;
+        tmpSize.width = longestLine - charAdvance + lastCharWidth;
     }
     else
     {
@@ -381,7 +348,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
     }
     
     tmpSize.height = totalHeight;
-    theLabel->setLabelContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));    
+    theLabel->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
     return true;
 }
 

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,10 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCSpriteFrame.h"
+#include "CCSpriteFrameCache.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
+
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmature.h"
+
 
 using namespace cocos2d;
 
@@ -182,10 +188,10 @@ void Skin::updateTransform()
         float dx = x1 * cr - y2 * sr2 + x;
         float dy = x1 * sr + y2 * cr2 + y;
 
-        SET_VERTEX3F( _quad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-        SET_VERTEX3F( _quad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-        SET_VERTEX3F( _quad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-        SET_VERTEX3F( _quad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+        SET_VERTEX3F( _quad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
+        SET_VERTEX3F( _quad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
+        SET_VERTEX3F( _quad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
+        SET_VERTEX3F( _quad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
     }
 
     // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -197,7 +203,7 @@ void Skin::updateTransform()
 
 kmMat4 Skin::getNodeToWorldTransform() const
 {
-    return TransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(), _transform);
 }
 
 kmMat4 Skin::getNodeToWorldTransformAR() const
@@ -210,7 +216,7 @@ kmMat4 Skin::getNodeToWorldTransformAR() const
     displayTransform.mat[12] = anchorPoint.x;
     displayTransform.mat[13] = anchorPoint.y;
 
-    return TransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
 void Skin::draw()
@@ -219,9 +225,8 @@ void Skin::draw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
     //TODO implement z order
-    QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
-    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
-    Director::getInstance()->getRenderer()->addCommand(renderCommand);
+    _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 }
 
 void Skin::setBone(Bone *bone)

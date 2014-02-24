@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -42,17 +42,17 @@ struct RelativeData
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
-class  ArmatureDataManager : public cocos2d::Object
+class  ArmatureDataManager : public cocos2d::Ref
 {
 public:
 	/** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static ArmatureDataManager *sharedArmatureDataManager() { return ArmatureDataManager::getInstance(); }
 
     /** @deprecated Use destoryInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destoryInstance(); };
+    CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destroyInstance(); };
     
     static ArmatureDataManager *getInstance();
-    static void destoryInstance();
+    static void destroyInstance();
     
 private:
 	/**
@@ -141,7 +141,7 @@ public:
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
-    void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
@@ -152,7 +152,7 @@ public:
      *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
      */
-    void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
@@ -199,7 +199,7 @@ private:
 
     bool _autoLoadSpriteFile;
 
-    std::map<std::string, RelativeData> _relativeDatas;
+    std::unordered_map<std::string, RelativeData> _relativeDatas;
 };
 
 

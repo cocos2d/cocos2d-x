@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,8 +26,11 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
+
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "CCShaderCache.h"
+#include "CCDirector.h"
 
 using namespace cocos2d;
 
@@ -46,11 +49,13 @@ BatchNode *BatchNode::create()
 }
 
 BatchNode::BatchNode()
+: _groupCommand(nullptr)
 {
 }
 
 BatchNode::~BatchNode()
 {
+    CC_SAFE_DELETE(_groupCommand);
 }
 
 bool BatchNode::init()
@@ -78,6 +83,10 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
     if (armature != nullptr)
     {
         armature->setBatchNode(this);
+        if (_groupCommand == nullptr)
+        {
+            _groupCommand = new GroupCommand();
+        }
     }
 }
 
@@ -119,17 +128,17 @@ void BatchNode::draw()
     }
 
     CC_NODE_DRAW_SETUP();
-    
-    generateGroupCommand();
 
+    bool pushed = false;
     for(auto object : _children)
     {
         Armature *armature = dynamic_cast<Armature *>(object);
         if (armature)
         {
-            if (_popGroupCommand)
+            if (!pushed)
             {
                 generateGroupCommand();
+                pushed = true;
             }
         
             armature->visit();
@@ -137,7 +146,7 @@ void BatchNode::draw()
         else
         {
             Director::getInstance()->getRenderer()->popGroup();
-            _popGroupCommand = true;
+            pushed = false;
             
             ((Node *)object)->visit();
         }
@@ -147,13 +156,10 @@ void BatchNode::draw()
 void BatchNode::generateGroupCommand()
 {
     Renderer* renderer = Director::getInstance()->getRenderer();
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
-    groupCommand->init(0,_vertexZ);
-    renderer->addCommand(groupCommand);
+    _groupCommand->init(_globalZOrder);
+    renderer->addCommand(_groupCommand);
 
-    renderer->pushGroup(groupCommand->getRenderQueueID());
-    
-    _popGroupCommand = false;
+    renderer->pushGroup(_groupCommand->getRenderQueueID());
 }
 
 }

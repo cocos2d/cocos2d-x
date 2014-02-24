@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -67,8 +67,8 @@ EventListenerMouse* EventListenerMouse::clone()
 }
 
 EventListenerMouse::EventListenerMouse()
-: onMouseUp(nullptr)
-, onMouseDown(nullptr)
+: onMouseDown(nullptr)
+, onMouseUp(nullptr)
 , onMouseMove(nullptr)
 , onMouseScroll(nullptr)
 {

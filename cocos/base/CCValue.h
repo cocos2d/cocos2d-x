@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -37,7 +37,7 @@ class Value;
 
 typedef std::vector<Value> ValueVector;
 typedef std::unordered_map<std::string, Value> ValueMap;
-typedef std::unordered_map<int, Value> IntValueMap;
+typedef std::unordered_map<int, Value> ValueMapIntKey;
 
 class Value
 {
@@ -59,8 +59,8 @@ public:
     explicit Value(const ValueMap& v);
 	explicit Value(ValueMap&& v);
     
-    explicit Value(const IntValueMap& v);
-    explicit Value(IntValueMap&& v);
+    explicit Value(const ValueMapIntKey& v);
+    explicit Value(ValueMapIntKey&& v);
     
     Value(const Value& other);
     Value(Value&& other);
@@ -84,8 +84,8 @@ public:
     Value& operator= (const ValueMap& v);
 	Value& operator= (ValueMap&& v);
     
-    Value& operator= (const IntValueMap& v);
-    Value& operator= (IntValueMap&& v);
+    Value& operator= (const ValueMapIntKey& v);
+    Value& operator= (ValueMapIntKey&& v);
     
     unsigned char asByte() const;
     int asInt() const;
@@ -94,14 +94,14 @@ public:
     bool asBool() const;
     std::string asString() const;
     
-    inline ValueVector& asValueVector() { return *_vectorData; }
-    inline const ValueVector& asValueVector() const { return *_vectorData; }
+    ValueVector& asValueVector();
+    const ValueVector& asValueVector() const;
     
-    inline ValueMap& asValueMap() { return *_mapData; }
-    inline const ValueMap& asValueMap() const { return *_mapData; }
+    ValueMap& asValueMap();
+    const ValueMap& asValueMap() const;
     
-    inline IntValueMap& asIntKeyMap() { return *_intKeyMapData; }
-    inline const IntValueMap& asIntKeyMap() const { return *_intKeyMapData; }
+    ValueMapIntKey& asIntKeyMap();
+    const ValueMapIntKey& asIntKeyMap() const;
 
     inline bool isNull() const { return _type == Type::NONE; }
     
@@ -138,7 +138,7 @@ private:
     std::string _strData;
     ValueVector* _vectorData;
     ValueMap* _mapData;
-    IntValueMap* _intKeyMapData;
+    ValueMapIntKey* _intKeyMapData;
 
     Type _type;
 };

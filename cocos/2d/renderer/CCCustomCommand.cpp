@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,40 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
-RenderCommandPool<CustomCommand> CustomCommand::_commandPool;
 
 CustomCommand::CustomCommand()
-:RenderCommand()
-, _viewport(0)
-, _depth(0)
-, func(nullptr)
+: func(nullptr)
 {
     _type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
-void CustomCommand::init(int viewport, int32_t depth)
+void CustomCommand::init(float globalOrder)
 {
-    _viewport = viewport;
-    _depth = depth;
+    _globalOrder = globalOrder;
 }
 
 CustomCommand::~CustomCommand()
 {
 
-}
-
-int64_t CustomCommand::generateID()
-{
-    _id = 0;
-
-    _id = (int64_t)_viewport << 61
-            | (int64_t)1 << 60 // translucent
-            | (int64_t)_depth << 36;
-
-    return _id;
 }
 
 void CustomCommand::execute()
@@ -64,11 +48,6 @@ void CustomCommand::execute()
     {
         func();
     }
-}
-
-void CustomCommand::releaseToCommandPool()
-{
-    getCommandPool().pushBackCommand(this);
 }
 
 NS_CC_END

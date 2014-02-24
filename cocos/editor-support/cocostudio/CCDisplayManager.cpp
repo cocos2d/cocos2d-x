@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCSkin.h"
+
+#include "CCParticleSystemQuad.h"
 
 using namespace cocos2d;
 
@@ -63,7 +65,7 @@ DisplayManager::~DisplayManager()
     if( _displayRenderNode )
     {
         _displayRenderNode->removeFromParentAndCleanup(true);
-        if(_displayRenderNode->retainCount() > 0)
+        if(_displayRenderNode->getReferenceCount() > 0)
             CC_SAFE_RELEASE_NULL(_displayRenderNode);
     }
 
@@ -108,7 +110,7 @@ void DisplayManager::addDisplay(DisplayData *displayData, int index)
     if(index == _displayIndex)
     {
         _displayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -193,7 +195,7 @@ void DisplayManager::addDisplay(Node *display, int index)
     if(index == _displayIndex)
     {
         _displayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -213,7 +215,7 @@ const cocos2d::Vector<DecorativeDisplay*>& DisplayManager::getDecorativeDisplayL
     return _decoDisplayList;
 }
 
-void DisplayManager::changeDisplayByIndex(int index, bool force)
+void DisplayManager::changeDisplayWithIndex(int index, bool force)
 {
     CCASSERT( index < (int)_decoDisplayList.size(), "the _index value is out of range");
 
@@ -243,13 +245,13 @@ void DisplayManager::changeDisplayByIndex(int index, bool force)
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
-void CCDisplayManager::changeDisplayByName(const std::string& name, bool force)
+void CCDisplayManager::changeDisplayWithName(const std::string& name, bool force)
 {
     for (int i = 0; i<_decoDisplayList.size(); i++)
     {
         if (_decoDisplayList.at(i)->getDisplayData()->displayName == name)
         {
-            changeDisplayByIndex(i, force);
+            changeDisplayWithIndex(i, force);
             break;
         }
     }

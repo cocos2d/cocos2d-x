@@ -27,20 +27,19 @@ CCArmatureDefine.cpp \
 CCDataReaderHelper.cpp \
 CCSpriteFrameCacheHelper.cpp \
 CCTransformHelp.cpp \
-CCTweenFunction.cpp \
 CCUtilMath.cpp \
 CCComAttribute.cpp \
 CCComAudio.cpp \
 CCComController.cpp \
 CCComRender.cpp \
 CCInputDelegate.cpp \
-CSContentJsonDictionary.cpp \
 DictionaryHelper.cpp \
 CCSGUIReader.cpp \
 CCSSceneReader.cpp \
-../../../external/json/json_reader.cpp \
-../../../external/json/json_value.cpp \
-../../../external/json/json_writer.cpp
+ObjectFactory.cpp \
+TriggerBase.cpp \
+TriggerMng.cpp \
+TriggerObj.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external

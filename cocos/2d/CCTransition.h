@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -48,7 +49,7 @@ class NodeGrid;
 /** @brief TransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
 */
-class CC_DLL TransitionEaseScene// : public Object
+class CC_DLL TransitionEaseScene// : public Ref
 {
 public:
     virtual ~TransitionEaseScene() {}

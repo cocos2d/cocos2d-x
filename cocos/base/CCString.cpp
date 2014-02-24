@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
  http://www.cocos2d-x.org
 
@@ -58,7 +59,9 @@ __String::~__String()
 
 __String& __String::operator= (const __String& other)
 {
-    _string = other._string;
+    if (this != &other) {
+        _string = other._string;
+    }
     return *this;
 }
 
@@ -181,26 +184,26 @@ void __String::appendWithFormat(const char* format, ...)
 __Array* __String::componentsSeparatedByString(const char *delimiter)
 {
     __Array* result = __Array::create();
-    
+    std::string strTmp = _string;
     size_t cutAt;
-    while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
+    while( (cutAt = strTmp.find_first_of(delimiter)) != strTmp.npos )
     {
         if(cutAt > 0)
         {
-            result->addObject(__String::create(_string.substr(0, cutAt)));
+            result->addObject(__String::create(strTmp.substr(0, cutAt)));
         }
-        _string = _string.substr(cutAt + 1);
+        strTmp = strTmp.substr(cutAt + 1);
     }
     
-    if(_string.length() > 0)
+    if(strTmp.length() > 0)
     {
-        result->addObject(__String::create(_string));
+        result->addObject(__String::create(strTmp));
     }
     
     return result;
 }
 
-bool __String::isEqual(const Object* pObject)
+bool __String::isEqual(const Ref* pObject)
 {
     bool bRet = false;
     const __String* pStr = dynamic_cast<const __String*>(pObject);

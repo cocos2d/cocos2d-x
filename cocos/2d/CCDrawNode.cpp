@@ -1,5 +1,6 @@
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +24,13 @@
 #include "CCDrawNode.h"
 #include "CCShaderCache.h"
 #include "CCGL.h"
-#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 #include "CCDirector.h"
-#include "CCRenderer.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -124,10 +126,6 @@ DrawNode::~DrawNode()
         GL::bindVAO(0);
         _vao = 0;
     }
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
-#endif
 }
 
 DrawNode* DrawNode::create()
@@ -196,10 +194,12 @@ bool DrawNode::init()
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Need to listen the event only when not use batchnode, because it will use VBO
-    NotificationCenter::getInstance()->addObserver(this,
-                                                   callfuncO_selector(DrawNode::listenBackToForeground),
-                                                   EVNET_COME_TO_FOREGROUND,
-                                                   nullptr);
+    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+    /** listen the event that coming to foreground on Android */
+        this->init();
+    });
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
     
     return true;
@@ -235,16 +235,15 @@ void DrawNode::render()
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
     CHECK_GL_ERROR_DEBUG();
 }
 
 void DrawNode::draw()
 {
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(DrawNode::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void DrawNode::onDraw()
@@ -457,6 +456,86 @@ void DrawNode::drawPolygon(Point *verts, int count, const Color4F &fillColor, fl
     free(extrude);
 }
 
+void DrawNode::drawTriangle(const Point &p1, const Point &p2, const Point &p3, const Color4F &color)
+{
+    unsigned int vertex_count = 2*3;
+    ensureCapacity(vertex_count);
+
+    Color4B col = Color4B(color);
+    V2F_C4B_T2F a = {Vertex2F(p1.x, p1.y), col, Tex2F(0.0, 0.0) };
+    V2F_C4B_T2F b = {Vertex2F(p2.x, p2.y), col, Tex2F(0.0,  0.0) };
+    V2F_C4B_T2F c = {Vertex2F(p3.x, p3.y), col, Tex2F(0.0,  0.0) };
+
+    V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+    V2F_C4B_T2F_Triangle triangle = {a, b, c};
+    triangles[0] = triangle;
+
+    _bufferCount += vertex_count;
+    _dirty = true;
+}
+
+void DrawNode::drawCubicBezier(const Point& from, const Point& control1, const Point& control2, const Point& to, unsigned int segments, const Color4F &color)
+{
+    unsigned int vertex_count = (segments + 1) * 3;
+    ensureCapacity(vertex_count);
+
+    Tex2F texCoord = Tex2F(0.0, 0.0);
+    Color4B col = Color4B(color);
+    Vertex2F vertex;
+    Vertex2F firstVertex = Vertex2F(from.x, from.y);
+    Vertex2F lastVertex = Vertex2F(to.x, to.y);
+
+    float t = 0;
+    for(unsigned int i = segments + 1; i > 0; i--)
+    {
+        float x = powf(1 - t, 3) * from.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * to.x;
+        float y = powf(1 - t, 3) * from.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * to.y;
+        vertex = Vertex2F(x, y);
+
+        V2F_C4B_T2F a = {firstVertex, col, texCoord };
+        V2F_C4B_T2F b = {lastVertex, col, texCoord };
+        V2F_C4B_T2F c = {vertex, col, texCoord };
+        V2F_C4B_T2F_Triangle triangle = {a, b, c};
+        ((V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount))[0] = triangle;
+
+        lastVertex = vertex;
+        t += 1.0f / segments;
+        _bufferCount += 3;
+    }
+    _dirty = true;
+}
+
+void DrawNode::drawQuadraticBezier(const Point& from, const Point& control, const Point& to, unsigned int segments, const Color4F &color)
+{
+    unsigned int vertex_count = (segments + 1) * 3;
+    ensureCapacity(vertex_count);
+
+    Tex2F texCoord = Tex2F(0.0, 0.0);
+    Color4B col = Color4B(color);
+    Vertex2F vertex;
+    Vertex2F firstVertex = Vertex2F(from.x, from.y);
+    Vertex2F lastVertex = Vertex2F(to.x, to.y);
+
+    float t = 0;
+    for(unsigned int i = segments + 1; i > 0; i--)
+    {
+        float x = powf(1 - t, 2) * from.x + 2.0f * (1 - t) * t * control.x + t * t * to.x;
+        float y = powf(1 - t, 2) * from.y + 2.0f * (1 - t) * t * control.y + t * t * to.y;
+        vertex = Vertex2F(x, y);
+
+        V2F_C4B_T2F a = {firstVertex, col, texCoord };
+        V2F_C4B_T2F b = {lastVertex, col, texCoord };
+        V2F_C4B_T2F c = {vertex, col, texCoord };
+        V2F_C4B_T2F_Triangle triangle = {a, b, c};
+        ((V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount))[0] = triangle;
+
+        lastVertex = vertex;
+        t += 1.0f / segments;
+        _bufferCount += 3;
+    }
+    _dirty = true;
+}
+
 void DrawNode::clear()
 {
     _bufferCount = 0;
@@ -471,13 +550,6 @@ const BlendFunc& DrawNode::getBlendFunc() const
 void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
-}
-
-/** listen the event that coming to foreground on Android
- */
-void DrawNode::listenBackToForeground(Object *obj)
-{
-    init();
 }
 
 NS_CC_END

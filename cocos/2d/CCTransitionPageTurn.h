@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Sindesso Pty Ltd http://www.sindesso.com/
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +28,7 @@ THE SOFTWARE.
 #define __CCPAGE_TURN_TRANSITION_H__
 
 #include "CCTransition.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -96,6 +98,12 @@ protected:
     bool    _back;    
     static float POLYGON_OFFSET_FACTOR;
     static float POLYGON_OFFSET_UNITS;
+    
+protected:
+    CustomCommand _enableOffsetCmd;
+    CustomCommand _disableOffsetCmd;
+    void onEnablePolygonOffset();
+    void onDisablePolygonOffset();
 };
 
 // end of transition group

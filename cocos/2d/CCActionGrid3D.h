@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -97,8 +98,6 @@ private:
 class CC_DLL FlipY3D : public FlipX3D
 {
 public:
-    FlipY3D() {}
-    virtual ~FlipY3D() {}
     /** creates the action with duration */
     static FlipY3D* create(float duration);
 
@@ -106,6 +105,9 @@ public:
     virtual void update(float time) override;
 	virtual FlipY3D* clone() const override;
 
+protected:
+    FlipY3D() {}
+    virtual ~FlipY3D() {}
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(FlipY3D);
 };

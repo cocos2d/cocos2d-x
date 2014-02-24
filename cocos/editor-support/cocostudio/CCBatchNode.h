@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,12 @@ THE SOFTWARE.
 #ifndef __CCBATCHNODE_H__
 #define __CCBATCHNODE_H__
 
+#include "CCNode.h"
 #include "cocostudio/CCArmatureDefine.h"
+
+namespace cocos2d {
+    class GroupCommand;
+}
 
 namespace cocostudio {
 
@@ -61,11 +66,10 @@ public:
      */
     void draw() override;
     
-    void setPopGroupCommand(bool pop) { _popGroupCommand = pop; }
 protected:
     void generateGroupCommand();
 
-    bool _popGroupCommand;
+    cocos2d::GroupCommand* _groupCommand;
 };
 
 }

@@ -10,10 +10,8 @@
 #include "GUI/CCEditBox/CCEditBox.h"
 
 // Physics integration
-#if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
 #include "physics-nodes/CCPhysicsDebugNode.h"
 #include "physics-nodes/CCPhysicsSprite.h"
-#endif
 
 #include "assets-manager/AssetsManager.h"
 

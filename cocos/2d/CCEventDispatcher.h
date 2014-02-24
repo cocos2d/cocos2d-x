@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,6 +28,7 @@
 #include "CCPlatformMacros.h"
 #include "CCEventListener.h"
 #include "CCEvent.h"
+#include "CCStdC.h"
 
 #include <functional>
 #include <string>
@@ -52,7 +53,7 @@ event listeners can be added and removed even
 from within an EventListener, while events are being
 dispatched.
 */
-class EventDispatcher : public Object
+class EventDispatcher : public Ref
 {
 public:
     /** Adds a event listener for a specified event with the priority of scene graph.
@@ -155,8 +156,17 @@ protected:
         ssize_t _gt0Index;
     };
     
-    /** Adds event listener with item */
+    /** Adds an event listener with item
+     *  @note if it is dispatching event, the added operation will be delayed to the end of current dispatch
+     *  @see forceAddEventListener
+     */
     void addEventListener(EventListener* listener);
+    
+    /** Force adding an event listener
+     *  @note force add an event listener which will ignore whether it's in dispatching.
+     *  @see addEventListener
+     */
+    void forceAddEventListener(EventListener* listener);
     
     /** Gets event the listener list for the event listener type. */
     EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);
@@ -198,16 +208,16 @@ protected:
     enum class DirtyFlag
     {
         NONE = 0,
-        FIXED_PRITORY = 1 << 0,
+        FIXED_PRIORITY = 1 << 0,
         SCENE_GRAPH_PRIORITY = 1 << 1,
-        ALL = FIXED_PRITORY | SCENE_GRAPH_PRIORITY
+        ALL = FIXED_PRIORITY | SCENE_GRAPH_PRIORITY
     };
     
     /** Sets the dirty flag for a specified listener ID */
     void setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag);
     
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
-    void visitTarget(Node* node);
+    void visitTarget(Node* node, bool isRootNode);
     
     /** Listeners map */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listeners;
@@ -220,6 +230,9 @@ protected:
     
     /** The map of node and its event priority */
     std::unordered_map<Node*, int> _nodePriorityMap;
+    
+    /** key: Global Z Order, value: Sorted Nodes */
+    std::unordered_map<float, std::vector<Node*>> _globalZOrderNodeMap;
     
     /** The listeners to be added after dispatching event */
     std::vector<EventListener*> _toAddedListeners;

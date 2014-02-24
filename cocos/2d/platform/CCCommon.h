@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,14 +35,6 @@ NS_CC_BEGIN
  * @{
  */
 
-/// The max length of CCLog message.
-static const int kMaxLogLen = 16*1024;
-
-/**
-@brief Output Debug message.
-*/
-void CC_DLL log(const char * format, ...) CC_FORMAT_PRINTF(1, 2);
-
 /**
  * lua can not deal with ...
  */
@@ -63,6 +56,7 @@ enum class LanguageType
     ITALIAN,
     GERMAN,
     SPANISH,
+    DUTCH,
     RUSSIAN,
     KOREAN,
     JAPANESE,

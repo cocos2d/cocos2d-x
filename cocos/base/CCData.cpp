@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,13 +40,17 @@ _size(0)
     CCLOGINFO("In the empty constructor of Data.");
 }
 
-Data::Data(Data&& other)
+Data::Data(Data&& other) :
+_bytes(nullptr),
+_size(0)
 {
     CCLOGINFO("In the move constructor of Data.");
     move(other);
 }
 
-Data::Data(const Data& other)
+Data::Data(const Data& other) :
+_bytes(nullptr),
+_size(0)
 {
     CCLOGINFO("In the copy constructor of Data.");
     copy(other._bytes, other._size);

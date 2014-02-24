@@ -16,21 +16,18 @@
     <ClInclude Include="..\UICheckBox.h" />
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
-    <ClInclude Include="..\UIInputManager.h" />
-    <ClInclude Include="..\UILabel.h" />
-    <ClInclude Include="..\UILabelAtlas.h" />
-    <ClInclude Include="..\UILabelBMFont.h" />
-    <ClInclude Include="..\UILayer.h" />
     <ClInclude Include="..\UILayout.h" />
     <ClInclude Include="..\UILayoutDefine.h" />
     <ClInclude Include="..\UILayoutParameter.h" />
     <ClInclude Include="..\UIListView.h" />
     <ClInclude Include="..\UILoadingBar.h" />
     <ClInclude Include="..\UIPageView.h" />
-    <ClInclude Include="..\UIRootWidget.h" />
     <ClInclude Include="..\UIScrollInterface.h" />
     <ClInclude Include="..\UIScrollView.h" />
     <ClInclude Include="..\UISlider.h" />
+    <ClInclude Include="..\UIText.h" />
+    <ClInclude Include="..\UITextAtlas.h" />
+    <ClInclude Include="..\UITextBMFont.h" />
     <ClInclude Include="..\UITextField.h" />
     <ClInclude Include="..\UIWidget.h" />
   </ItemGroup>
@@ -40,20 +37,17 @@
     <ClCompile Include="..\UICheckBox.cpp" />
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />
-    <ClCompile Include="..\UIInputManager.cpp" />
-    <ClCompile Include="..\UILabel.cpp" />
-    <ClCompile Include="..\UILabelAtlas.cpp" />
-    <ClCompile Include="..\UILabelBMFont.cpp" />
-    <ClCompile Include="..\UILayer.cpp" />
     <ClCompile Include="..\UILayout.cpp" />
     <ClCompile Include="..\UILayoutDefine.cpp" />
     <ClCompile Include="..\UILayoutParameter.cpp" />
     <ClCompile Include="..\UIListView.cpp" />
     <ClCompile Include="..\UILoadingBar.cpp" />
     <ClCompile Include="..\UIPageView.cpp" />
-    <ClCompile Include="..\UIRootWidget.cpp" />
     <ClCompile Include="..\UIScrollView.cpp" />
     <ClCompile Include="..\UISlider.cpp" />
+    <ClCompile Include="..\UIText.cpp" />
+    <ClCompile Include="..\UITextAtlas.cpp" />
+    <ClCompile Include="..\UITextBMFont.cpp" />
     <ClCompile Include="..\UITextField.cpp" />
     <ClCompile Include="..\UIWidget.cpp" />
   </ItemGroup>
@@ -110,6 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

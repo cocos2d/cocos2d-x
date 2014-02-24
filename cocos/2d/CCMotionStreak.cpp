@@ -1,6 +1,7 @@
 /****************************************************************************
+Copyright (c) 2011      ForzeField Studios S.L.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011 ForzeField Studios S.L.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,8 +31,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCVertex.h"
-#include "CCCustomCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -358,10 +359,9 @@ void MotionStreak::draw()
     if(_nuPoints <= 1)
         return;
     kmGLGetMatrix(KM_GL_MODELVIEW,&_cachedMV);
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0,_vertexZ);
-    cmd->func = CC_CALLBACK_0(MotionStreak::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 
 }
 

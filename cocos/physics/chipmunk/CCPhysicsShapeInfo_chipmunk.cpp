@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsShapeInfo_chipmunk.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 #include <algorithm>
 #include <unordered_map>
 

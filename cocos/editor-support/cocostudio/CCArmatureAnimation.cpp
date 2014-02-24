@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -183,7 +183,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
 
     int durationTween = _movementData->durationTween == 0 ? _rawDuration : _movementData->durationTween;
 
-    TweenType tweenEasing = _movementData->tweenEasing;
+    cocos2d::tweenfunc::TweenType tweenEasing = _movementData->tweenEasing;
     loop = (loop < 0) ? _movementData->loop : loop;
 
     _onMovementList = false;
@@ -236,7 +236,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
             if(!bone->isIgnoreMovementBoneData())
             {
                 //! this bone is not include in this movement, so hide it
-                bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+                bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
                 tween->stop();
             }
 
@@ -246,8 +246,12 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
     _armature->update(0);
 }
 
-
 void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int loop)
+{
+    playWithIndex(animationIndex, durationTo, loop);
+}
+
+void ArmatureAnimation::playWithIndex(int animationIndex, int durationTo, int loop)
 {
     std::vector<std::string> &movName = _animationData->movementNames;
     CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
@@ -257,7 +261,7 @@ void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int loop
 }
 
 
-void ArmatureAnimation::play(const std::vector<std::string>& movementNames, int durationTo, bool loop)
+void ArmatureAnimation::playWithNames(const std::vector<std::string>& movementNames, int durationTo, bool loop)
 {
     _movementList.clear();
     _movementListLoop = loop;
@@ -270,7 +274,7 @@ void ArmatureAnimation::play(const std::vector<std::string>& movementNames, int 
     updateMovementList();
 }
 
-void ArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, int durationTo, bool loop)
+void ArmatureAnimation::playWithIndexes(const std::vector<int>& movementIndexes, int durationTo, bool loop)
 {
     _movementList.clear();
     _movementListLoop = loop;
@@ -324,7 +328,7 @@ void ArmatureAnimation::gotoAndPause(int frameIndex)
     pause();
 }
 
-long ArmatureAnimation::getMovementCount() const
+ssize_t ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }
@@ -449,13 +453,13 @@ std::string ArmatureAnimation::getCurrentMovementID() const
     return _movementID;
 }
 
-void ArmatureAnimation::setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc)
+void ArmatureAnimation::setMovementEventCallFunc(Ref *target, SEL_MovementEventCallFunc callFunc)
 {
     _movementEventTarget = target;
     _movementEventCallFunc = callFunc;
 }
 
-void ArmatureAnimation::setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc)
+void ArmatureAnimation::setFrameEventCallFunc(Ref *target, SEL_FrameEventCallFunc callFunc)
 {
     _frameEventTarget = target;
     _frameEventCallFunc = callFunc;
@@ -470,7 +474,7 @@ void ArmatureAnimation::setFrameEventCallFunc(std::function<void(Bone *bone, con
     _frameEventListener = listener;
 }
 
-void ArmatureAnimation::setUserObject(Object *pUserObject)
+void ArmatureAnimation::setUserObject(Ref *pUserObject)
 {
     CC_SAFE_RETAIN(pUserObject);
     CC_SAFE_RELEASE(_userObject);

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,8 +25,6 @@ THE SOFTWARE.
 #ifndef __CCARMATUREDEFINE_H__
 #define __CCARMATUREDEFINE_H__
 
-
-#include "cocos2d.h"
 
 #define VERSION_COMBINED 0.30f
 #define VERSION_CHANGE_ROTATION_RANGE 1.0f

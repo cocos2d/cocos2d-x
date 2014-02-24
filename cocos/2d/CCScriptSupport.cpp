@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,6 +24,9 @@
  ****************************************************************************/
 
 #include "CCScriptSupport.h"
+
+#if CC_ENABLE_SCRIPT_BINDING
+
 #include "CCScheduler.h"
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
@@ -49,7 +53,12 @@ ScriptHandlerEntry* ScriptHandlerEntry::create(int handler)
 
 ScriptHandlerEntry::~ScriptHandlerEntry(void)
 {
-    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+    if (_handler != 0 )
+    {
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+        LUALOG("[LUA] Remove event handler: %d", _handler);
+        _handler = 0;
+    }
 }
 
 // #pragma mark -
@@ -97,8 +106,6 @@ TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int handler,
 
 TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
 {
-    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
-    LUALOG("[LUA] Remove touch event handler: %d", _handler);
 }
 
 bool TouchScriptHandlerEntry::init(bool isMultiTouches, int priority, bool swallowsTouches)
@@ -123,8 +130,11 @@ ScriptEngineManager::~ScriptEngineManager(void)
 
 void ScriptEngineManager::setScriptEngine(ScriptEngineProtocol *scriptEngine)
 {
-    removeScriptEngine();
-    _scriptEngine = scriptEngine;
+	if (_scriptEngine != scriptEngine)
+	{
+		removeScriptEngine();
+		_scriptEngine = scriptEngine;
+	}
 }
 
 void ScriptEngineManager::removeScriptEngine(void)
@@ -155,3 +165,5 @@ void ScriptEngineManager::destroyInstance()
 }
 
 NS_CC_END
+
+#endif // #if CC_ENABLE_SCRIPT_BINDING

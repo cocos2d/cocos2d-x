@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,14 +26,15 @@
 #ifndef _CC_GROUPCOMMAND_H_
 #define _CC_GROUPCOMMAND_H_
 
-#include "CCPlatformMacros.h"
+#include "CCRef.h"
 #include "CCRenderCommand.h"
 #include "CCRenderCommandPool.h"
+
 #include <unordered_map>
 
 NS_CC_BEGIN
 
-class GroupCommandManager : public Object
+class GroupCommandManager : public Ref
 {
 public:
     static GroupCommandManager* getInstance();
@@ -53,31 +54,15 @@ protected:
 class GroupCommand : public RenderCommand
 {
 public:
-    static RenderCommandPool<GroupCommand>& getCommandPool() { return _commandPool; }
-
-    void init(int viewport, int32_t depth);
-
-    // +----------+----------+-----+-----------------------------------+
-    // |          |          |     |                |                  |
-    // | ViewPort | Transluc |     |      Depth     |                  |
-    // |   3 bits |    1 bit |     |    24 bits     |                  |
-    // +----------+----------+-----+----------------+------------------+
-    virtual int64_t generateID() override;
-
-    inline bool isTranslucent() {return true;}
-    inline int getRenderQueueID() {return _renderQueueID;}
-    virtual void releaseToCommandPool() override;
-    
-protected:
     GroupCommand();
     ~GroupCommand();
+    
+    void init(float depth);
 
-    int _viewport;
-    int32_t _depth;
+    inline int getRenderQueueID() const {return _renderQueueID;}
+    
+protected:
     int _renderQueueID;
-    static RenderCommandPool<GroupCommand> _commandPool;
-
-    friend class RenderCommandPool<GroupCommand>;
 };
 
 NS_CC_END

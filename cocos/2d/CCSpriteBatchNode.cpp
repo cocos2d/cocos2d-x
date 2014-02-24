@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2009      Matt Oswald
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -42,8 +43,8 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCLayer.h"
 #include "CCScene.h"
-#include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -97,7 +98,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
     _children.reserve(capacity);
 
     _descendants.reserve(capacity);
-
+    
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
@@ -178,7 +179,7 @@ void SpriteBatchNode::reorderChild(Node *child, int zOrder)
     CCASSERT(child != nullptr, "the child should not be null");
     CCASSERT(_children.contains(child), "Child doesn't belong to Sprite");
 
-    if (zOrder == child->getZOrder())
+    if (zOrder == child->getLocalZOrder())
     {
         return;
     }
@@ -276,7 +277,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
     {
         bool needNewIndex=true;
 
-        if (array.at(0)->getZOrder() >= 0)
+        if (array.at(0)->getLocalZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -293,7 +294,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
 
         for(const auto &child: array) {
             Sprite* sp = static_cast<Sprite*>(child);
-            if (needNewIndex && sp->getZOrder() >= 0)
+            if (needNewIndex && sp->getLocalZOrder() >= 0)
             {
                 oldIndex = sprite->getAtlasIndex();
                 sprite->setAtlasIndex(*curIndex);
@@ -355,21 +356,13 @@ void SpriteBatchNode::draw()
     for(const auto &child: _children)
         child->updateTransform();
 
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              shader,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _batchCommand.init(
+                       _globalZOrder,
+                       _shaderProgram,
+                       _blendFunc,
+                       _textureAtlas,
+                       _modelViewTransform);
+    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)
@@ -379,9 +372,9 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // this is likely computationally expensive
     ssize_t quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%zd] to [%zd].",
-        _textureAtlas->getCapacity(),
-        quantity);
+    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%d] to [%d].",
+        static_cast<int>(_textureAtlas->getCapacity()),
+        static_cast<int>(quantity));
 
     if (! _textureAtlas->resizeCapacity(quantity))
     {
@@ -398,14 +391,14 @@ ssize_t SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, ssize_t index)
     auto& children = parent->getChildren();
     for(const auto &child: children) {
         Sprite* sp = static_cast<Sprite*>(child);
-        if (sp && (sp->getZOrder() < 0))
+        if (sp && (sp->getLocalZOrder() < 0))
         {
             index = rebuildIndexInOrder(sp, index);
         }
     }
 
     // ignore self (batch node)
-    if (! parent->isEqual(this))
+    if (parent != static_cast<Ref*>(this))
     {
         parent->setAtlasIndex(index);
         index++;
@@ -413,7 +406,7 @@ ssize_t SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, ssize_t index)
 
     for(const auto &child: children) {
         Sprite* sp = static_cast<Sprite*>(child);
-        if (sp && (sp->getZOrder() >= 0))
+        if (sp && (sp->getLocalZOrder() >= 0))
         {
             index = rebuildIndexInOrder(sp, index);
         }
@@ -494,7 +487,7 @@ ssize_t SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
     else
     {
         // previous & sprite belong to the same branch
-        if ((prev->getZOrder() < 0 && nZ < 0) || (prev->getZOrder() >= 0 && nZ >= 0))
+        if ((prev->getLocalZOrder() < 0 && nZ < 0) || (prev->getLocalZOrder() >= 0 && nZ >= 0))
         {
             return highestAtlasIndexInChild(prev) + 1;
         }
@@ -548,8 +541,9 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     {
         auto next = std::next(it);
 
+        Sprite *spr = nullptr;
         for(; next != _descendants.end(); ++next) {
-            Sprite *spr = *next;
+            spr = *next;
             spr->setAtlasIndex( spr->getAtlasIndex() - 1 );
         }
 
@@ -656,10 +650,11 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     child->setAtlasIndex(z);
 
     // XXX: optimize with a binary search
-    auto it = std::begin(_descendants);
-    for(const auto &sprite: _descendants) {
-        if(sprite->getAtlasIndex() >= z)
-            std::next(it);
+    auto it = _descendants.begin();
+    for (; it != _descendants.end(); ++it)
+    {
+        if((*it)->getAtlasIndex() >= z)
+            break;
     }
 
     _descendants.insert(it, child);

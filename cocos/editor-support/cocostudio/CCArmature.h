@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -59,13 +59,12 @@ CC_DEPRECATED_ATTRIBUTE typedef DisplayManager CCDisplayManager;
 CC_DEPRECATED_ATTRIBUTE typedef ColliderBody CCColliderBody;
 CC_DEPRECATED_ATTRIBUTE typedef ColliderDetector CCColliderDetector;
 CC_DEPRECATED_ATTRIBUTE typedef SpriteFrameCacheHelper CCSpriteFrameCacheHelper;
-CC_DEPRECATED_ATTRIBUTE typedef TweenFunction CCTweenFunction;
 CC_DEPRECATED_ATTRIBUTE typedef ArmatureData CCArmatureData;
 CC_DEPRECATED_ATTRIBUTE typedef Bone CCBone;
 CC_DEPRECATED_ATTRIBUTE typedef ArmatureAnimation CCArmatureAnimation;
 CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
 CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
-CC_DEPRECATED_ATTRIBUTE typedef TweenType CCTweenType;
+CC_DEPRECATED_ATTRIBUTE typedef cocos2d::tweenfunc::TweenType CCTweenType;
 
 class  Armature : public cocos2d::Node, public cocos2d::BlendProtocol
 {
@@ -160,6 +159,9 @@ public:
     virtual void visit() override;
     virtual void update(float dt) override;
     virtual void draw() override;
+
+    virtual void onEnter() override;
+    virtual void onExit() override; 
 
     virtual const kmMat4& getNodeToParentTransform() const override;
     /**

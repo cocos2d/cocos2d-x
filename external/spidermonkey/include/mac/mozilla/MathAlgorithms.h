@@ -187,6 +187,16 @@ namespace detail {
   }
 
   inline uint_fast8_t
+  CountPopulation32(uint32_t u)
+  {
+     uint32_t sum2  = (u     & 0x55555555) + ((u     & 0xaaaaaaaa) >> 1);
+     uint32_t sum4  = (sum2  & 0x33333333) + ((sum2  & 0xcccccccc) >> 2);
+     uint32_t sum8  = (sum4  & 0x0f0f0f0f) + ((sum4  & 0xf0f0f0f0) >> 4);
+     uint32_t sum16 = (sum8  & 0x00ff00ff) + ((sum8  & 0xff00ff00) >> 8);
+     return sum16;
+  }
+
+  inline uint_fast8_t
   CountLeadingZeroes64(uint64_t u)
   {
 #  if defined(MOZ_BITSCAN_WINDOWS64)
@@ -243,6 +253,12 @@ namespace detail {
   }
 
   inline uint_fast8_t
+  CountPopulation32(uint32_t u)
+  {
+    return __builtin_popcount(u);
+  }
+
+  inline uint_fast8_t
   CountLeadingZeroes64(uint64_t u)
   {
     return __builtin_clzll(u);
@@ -258,6 +274,7 @@ namespace detail {
 #  error "Implement these!"
   inline uint_fast8_t CountLeadingZeroes32(uint32_t u) MOZ_DELETE;
   inline uint_fast8_t CountTrailingZeroes32(uint32_t u) MOZ_DELETE;
+  inline uint_fast8_t CountPopulation32(uint32_t u) MOZ_DELETE;
   inline uint_fast8_t CountLeadingZeroes64(uint64_t u) MOZ_DELETE;
   inline uint_fast8_t CountTrailingZeroes64(uint64_t u) MOZ_DELETE;
 #endif
@@ -298,6 +315,15 @@ CountTrailingZeroes32(uint32_t u)
 {
   MOZ_ASSERT(u != 0);
   return detail::CountTrailingZeroes32(u);
+}
+
+/**
+ * Compute the number of one bits in the number |u|,
+ */
+inline uint_fast8_t
+CountPopulation32(uint32_t u)
+{
+  return detail::CountPopulation32(u);
 }
 
 /** Analogous to CountLeadingZeroes32, but for 64-bit numbers. */

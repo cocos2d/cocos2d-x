@@ -51,6 +51,10 @@ NS_CC_EXT_BEGIN;
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
+#define LOW_SPEED_LIMIT 1L
+#define LOW_SPEED_TIME 5L
+
+
 // Message type
 #define ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED                0
 #define ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION     1
@@ -152,6 +156,9 @@ bool AssetsManager::checkUpdate()
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, getVersionCode);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, &_version);
     if (_connectionTimeout) curl_easy_setopt(_curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
+    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
     res = curl_easy_perform(_curl);
     
     if (res != 0)
@@ -312,7 +319,7 @@ bool AssetsManager::uncompress()
             return false;
         }
         
-        string fullPath = _storagePath + fileName;
+        const string fullPath = _storagePath + fileName;
         
         // Check if this entry is a directory or a file.
         const size_t filenameLength = strlen(fileName);
@@ -332,15 +339,15 @@ bool AssetsManager::uncompress()
             //There are not directory entry in some case.
             //So we need to test whether the file directory exists when uncompressing file entry
             //, if does not exist then create directory
-            string fileNameStr(fileName);
+            const string fileNameStr(fileName);
             
             size_t startIndex=0;
             
             size_t index=fileNameStr.find("/",startIndex);
             
-            while(index!=-1)
+            while(index != std::string::npos)
             {
-                string dir=_storagePath+fileNameStr.substr(0,index);
+                const string dir=_storagePath+fileNameStr.substr(0,index);
                 
                 FILE *out = fopen(dir.c_str(), "r");
                 
@@ -427,6 +434,7 @@ bool AssetsManager::uncompress()
     }
     
     CCLOG("end uncompressing");
+    unzClose(zipfile);
     
     return true;
 }
@@ -494,7 +502,7 @@ int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownl
 bool AssetsManager::downLoad()
 {
     // Create a file to save package.
-    string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+    const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
@@ -514,6 +522,10 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
     curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, assetsManagerProgressFunc);
     curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
+    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
     if (res != 0)

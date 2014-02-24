@@ -19,10 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 #ifndef __PHYSICSNODES_CCPHYSICSSPRITE_H__
 #define __PHYSICSNODES_CCPHYSICSSPRITE_H__
 
-#include "cocos2d.h"
+#include "CCSprite.h"
 #include "extensions/ExtensionMacros.h"
 
 struct cpBody;
@@ -125,8 +126,6 @@ protected:
     // box2d specific
     b2Body  *_pB2Body;
     float   _PTMRatio;
-    
-
 };
 
 NS_CC_EXT_END

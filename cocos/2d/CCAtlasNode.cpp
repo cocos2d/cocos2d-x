@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -33,8 +34,8 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "TransformUtils.h"
-#include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
 
 // external
 #include "kazmath/GL/matrix.h"
@@ -151,17 +152,16 @@ void AtlasNode::draw(void)
 
     auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
-              _vertexZ,
+    _quadCommand.init(
+              _globalZOrder,
               _textureAtlas->getTexture()->getName(),
               shader,
               _blendFunc,
               _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
+              _quadsToDraw,
               _modelViewTransform);
 
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 
 }
 
@@ -263,12 +263,12 @@ TextureAtlas * AtlasNode::getTextureAtlas() const
     return _textureAtlas;
 }
 
-int AtlasNode::getQuadsToDraw() const
+ssize_t AtlasNode::getQuadsToDraw() const
 {
     return _quadsToDraw;
 }
 
-void AtlasNode::setQuadsToDraw(int quadsToDraw)
+void AtlasNode::setQuadsToDraw(ssize_t quadsToDraw)
 {
     _quadsToDraw = quadsToDraw;
 }

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -30,6 +31,9 @@ extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 #include "tolua_fix.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "lua_extensions.h"
+#endif
 }
 
 #include "Cocos2dxLuaLoader.h"
@@ -58,6 +62,10 @@ extern "C" {
 #include "lua_cocos2dx_coco_studio_manual.hpp"
 #include "lua_cocos2dx_spine_auto.hpp"
 #include "lua_cocos2dx_spine_manual.hpp"
+#include "lua_cocos2dx_physics_auto.hpp"
+#include "lua_cocos2dx_physics_manual.hpp"
+#include "lua_cocos2dx_gui_auto.hpp"
+#include "lua_cocos2dx_gui_manual.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -141,21 +149,29 @@ bool LuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(_state, "_G", global_functions);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    luaopen_lua_extensions(_state);
+#endif
     g_luaType.clear();
     register_all_cocos2dx(_state);
     register_all_cocos2dx_extension(_state);
     register_all_cocos2dx_deprecated(_state);
     register_cocos2dx_extension_CCBProxy(_state);
-    register_cocos2dx_event_releated(_state);
     tolua_opengl_open(_state);
+    register_all_cocos2dx_gui(_state);
     register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_extension_manual(_state);
     register_all_cocos2dx_manual_deprecated(_state);
     register_all_cocos2dx_coco_studio_manual(_state);
+    register_all_cocos2dx_gui_manual(_state);
     register_all_cocos2dx_spine(_state);
     register_all_cocos2dx_spine_manual(_state);
     register_glnode_manual(_state);
+#if CC_USE_PHYSICS
+    register_all_cocos2dx_physics(_state);
+    register_all_cocos2dx_physics_manual(_state);
+#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif
@@ -221,7 +237,7 @@ void LuaStack::addLuaLoader(lua_CFunction func)
 }
 
 
-void LuaStack::removeScriptObjectByObject(Object* pObj)
+void LuaStack::removeScriptObjectByObject(Ref* pObj)
 {
     toluafix_remove_ccobject_by_refid(_state, pObj->_luaID);
 }
@@ -314,7 +330,7 @@ void LuaStack::pushNil(void)
     lua_pushnil(_state);
 }
 
-void LuaStack::pushObject(Object* objectValue, const char* typeName)
+void LuaStack::pushObject(Ref* objectValue, const char* typeName)
 {
     toluafix_pushusertype_ccobject(_state, objectValue->_ID, &objectValue->_luaID, objectValue, typeName);
 }
@@ -560,7 +576,7 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
                     
                 }else{
                     
-                    resultArray.addObject(static_cast<Object*>(tolua_tousertype(_state, -1, NULL)));
+                    resultArray.addObject(static_cast<Ref*>(tolua_tousertype(_state, -1, NULL)));
                 }
                 // remove return value from stack
                 lua_pop(_state, 1);                                                /* L: ... [G] ret1 ret2 ... ret*/
@@ -574,6 +590,74 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
         }
     }
     lua_settop(_state, 0);
+    return 1;
+}
+
+int LuaStack::executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func)
+{
+    if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
+    {
+        if (numArgs > 0)
+        {
+            lua_insert(_state, -(numArgs + 1));                        /* L: ... func arg1 arg2 ... */
+        }
+        
+        int functionIndex = -(numArgs + 1);
+        
+        if (!lua_isfunction(_state, functionIndex))
+        {
+            CCLOG("value at stack [%d] is not function", functionIndex);
+            lua_pop(_state, numArgs + 1); // remove function and arguments
+            return 0;
+        }
+        
+        int traceCallback = 0;
+        lua_getglobal(_state, "__G__TRACKBACK__");                        /* L: ... func arg1 arg2 ... G */
+        if (!lua_isfunction(_state, -1))
+        {
+            lua_pop(_state, 1);                                           /* L: ... func arg1 arg2 ... */
+        }
+        else
+        {
+            lua_insert(_state, functionIndex - 1);                         /* L: ... G func arg1 arg2 ... */
+            traceCallback = functionIndex - 1;
+        }
+        
+        int error = 0;
+        ++_callFromLua;
+        error = lua_pcall(_state, numArgs, numResults, traceCallback);     /* L: ... [G] ret1 ret2 ... retResults*/
+        --_callFromLua;
+        
+        if (error)
+        {
+            if (traceCallback == 0)
+            {
+                CCLOG("[LUA ERROR] %s", lua_tostring(_state, - 1));        /* L: ... error */
+                lua_pop(_state, 1);                                        // remove error message from stack
+            }
+            else                                                           /* L: ... G error */
+            {
+                lua_pop(_state, 2);                                        // remove __G__TRACKBACK__ and error message from stack
+            }
+            return 0;
+        }
+        
+        // get return value,don't pass LUA_MULTRET to numResults,
+        do {
+            
+            if (numResults <= 0 || nullptr == func)
+                break;
+            
+            func(_state, numResults);
+            
+        } while (0);
+        
+        if (traceCallback)
+        {
+            lua_pop(_state, 1);                                          // remove __G__TRACKBACK__ from stack      /* L: ... */
+        }
+    }
+    
     return 1;
 }
 

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsJoint.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 #include "chipmunk.h"
 
 #include "CCPhysicsBody.h"

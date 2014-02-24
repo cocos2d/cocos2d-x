@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,9 +25,9 @@
 #include "CCNodeGrid.h"
 #include "CCGrid.h"
 
-#include "CCGroupCommand.h"
-#include "CCRenderer.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 NS_CC_BEGIN
@@ -47,8 +47,8 @@ NodeGrid* NodeGrid::create()
 }
 
 NodeGrid::NodeGrid()
-: _nodeGrid(nullptr)
-, _gridTarget(nullptr)
+: _gridTarget(nullptr)
+, _nodeGrid(nullptr)
 {
 
 }
@@ -92,10 +92,9 @@ void NodeGrid::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
 
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
-    groupCommand->init(0,_vertexZ);
-    renderer->addCommand(groupCommand);
-    renderer->pushGroup(groupCommand->getRenderQueueID());
+    _groupCommand.init(_globalZOrder);
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     kmGLPushMatrix();
     Director::Projection beforeProjectionType;
@@ -105,10 +104,9 @@ void NodeGrid::visit()
         _nodeGrid->set2DProjection();
     }
 
-    CustomCommand* gridBeginCmd = CustomCommand::getCommandPool().generateCommand();
-    gridBeginCmd->init(0,_vertexZ);
-    gridBeginCmd->func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
-    renderer->addCommand(gridBeginCmd);
+    _gridBeginCommand.init(_globalZOrder);
+    _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
+    renderer->addCommand(&_gridBeginCommand);
 
     this->transform();
     
@@ -127,7 +125,7 @@ void NodeGrid::visit()
         {
             auto node = _children.at(i);
 
-            if ( node && node->getZOrder() < 0 )
+            if ( node && node->getLocalZOrder() < 0 )
                 node->visit();
             else
                 break;
@@ -154,10 +152,9 @@ void NodeGrid::visit()
         director->setProjection(beforeProjectionType);
     }
 
-    CustomCommand* gridEndCmd = CustomCommand::getCommandPool().generateCommand();
-    gridEndCmd->init(0,_vertexZ);
-    gridEndCmd->func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
-    renderer->addCommand(gridEndCmd);
+    _gridEndCommand.init(_globalZOrder);
+    _gridEndCommand.func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
+    renderer->addCommand(&_gridEndCommand);
 
     renderer->popGroup();
  

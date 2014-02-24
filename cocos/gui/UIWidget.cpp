@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIWidget.h"
 #include "gui/UILayout.h"
@@ -37,7 +37,6 @@ _touchEnabled(false),
 _touchPassedEnabled(false),
 _focus(false),
 _brightStyle(BRIGHT_NONE),
-_updateEnabled(false),
 _touchStartPos(Point::ZERO),
 _touchMovePos(Point::ZERO),
 _touchEndPos(Point::ZERO),
@@ -66,7 +65,8 @@ Widget::~Widget()
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     _widgetChildren.clear();
-    CC_SAFE_RELEASE(_touchListener);
+    setTouchEnabled(false);
+    _nodes.clear();
 }
 
 Widget* Widget::create()
@@ -104,6 +104,7 @@ void Widget::onEnter()
 
 void Widget::onExit()
 {
+    unscheduleUpdate();
     Node::onExit();
 }
     
@@ -127,7 +128,7 @@ void Widget::addChild(Node * child, int zOrder)
     
 void Widget::addChild(Node* child, int zOrder, int tag)
 {
-    CCASSERT(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
+    CCASSERT(dynamic_cast<Widget*>(child) != nullptr, "Widget only supports Widgets as children");
     Node::addChild(child, zOrder, tag);
     _widgetChildren.pushBack(child);
 }
@@ -165,7 +166,7 @@ const Vector<Node*>& Widget::getChildren() const
     return _widgetChildren;
 }
     
-long Widget::getChildrenCount() const
+ssize_t Widget::getChildrenCount() const
 {
     return _widgetChildren.size();
 }
@@ -197,7 +198,7 @@ void Widget::removeChildByTag(int tag, bool cleanup)
     
     Node *child = getChildByTag(tag);
     
-    if (child == NULL)
+    if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -251,6 +252,75 @@ Widget* Widget::getChildByName(const char *name)
     }
     return nullptr;
 }
+    
+void Widget::addNode(Node* node)
+{
+    addNode(node, node->getLocalZOrder(), node->getTag());
+}
+
+void Widget::addNode(Node * node, int zOrder)
+{
+    addNode(node, zOrder, node->getTag());
+}
+
+void Widget::addNode(Node* node, int zOrder, int tag)
+{
+    CCAssert(dynamic_cast<Widget*>(node) == nullptr, "Widget only supports Nodes as renderer");
+    Node::addChild(node, zOrder, tag);
+    _nodes.pushBack(node);
+}
+
+Node* Widget::getNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    for (auto& node : _nodes)
+    {
+        if(node && node->getTag() == tag)
+            return node;
+    }
+    return nullptr;
+}
+
+Vector<Node*>& Widget::getNodes()
+{
+    return _nodes;
+}
+
+void Widget::removeNode(Node* node)
+{
+    Node::removeChild(node);
+    _nodes.eraseObject(node);
+}
+
+void Widget::removeNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    Node *node = this->getNodeByTag(tag);
+    
+    if (node == nullptr)
+    {
+        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeNode(node);
+    }
+}
+
+void Widget::removeAllNodes()
+{
+    for (auto& node : _nodes)
+    {
+        if (node)
+        {
+            Node::removeChild(node);
+        }
+    }
+    _nodes.clear();
+}
+
 
 void Widget::initRenderer()
 {
@@ -553,28 +623,6 @@ bool Widget::isTouchEnabled() const
     return _touchEnabled;
 }
 
-void Widget::setUpdateEnabled(bool enable)
-{
-    if (enable == _updateEnabled)
-    {
-        return;
-    }
-    _updateEnabled = enable;
-    if (enable)
-    {
-        scheduleUpdate();
-    }
-    else
-    {
-        unscheduleUpdate();
-    }
-}
-
-bool Widget::isUpdateEnabled()
-{
-    return _updateEnabled;
-}
-
 bool Widget::isFocused() const
 {
     return _focus;
@@ -660,11 +708,15 @@ void Widget::didNotSelectSelf()
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
-    _touchStartPos = touch->getLocation();
-    _hitted = isEnabled()
-    & isTouchEnabled()
-    & hitTest(_touchStartPos)
-    & clippingParentAreaContainPoint(_touchStartPos);
+    _hitted = false;
+    if (isEnabled() && isTouchEnabled())
+    {
+        _touchStartPos = touch->getLocation();
+        if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
+        {
+            _hitted = true;
+        }
+    }
     if (!_hitted)
     {
         return false;
@@ -717,11 +769,6 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
     cancelUpEvent();
 }
 
-void Widget::onTouchLongClicked(const Point &touchPoint)
-{
-    longClickEvent();
-}
-
 void Widget::pushDownEvent()
 {
     if (_touchEventListener && _touchEventSelector)
@@ -754,12 +801,7 @@ void Widget::cancelUpEvent()
     }
 }
 
-void Widget::longClickEvent()
-{
-    
-}
-
-void Widget::addTouchEventListener(Object *target, SEL_TouchEvent selector)
+void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
@@ -977,10 +1019,11 @@ Widget* Widget::createCloneInstance()
 
 void Widget::copyClonedWidgetChildren(Widget* model)
 {
-    int length = model->getChildren().size();
-    for (int i=0; i<length; i++)
+    auto& modelChildren = model->getChildren();
+    
+    for (auto& subWidget : modelChildren)
     {
-        Widget* child = static_cast<Widget*>(model->getChildren().at(i));
+        Widget* child = static_cast<Widget*>(subWidget);
         addChild(child->clone());
     }
 }
@@ -997,8 +1040,7 @@ void Widget::copyProperties(Widget *widget)
     setBright(widget->isBright());
     setTouchEnabled(widget->isTouchEnabled());
     _touchPassedEnabled = false;
-    setZOrder(widget->getZOrder());
-    setUpdateEnabled(widget->isUpdateEnabled());
+    setLocalZOrder(widget->getLocalZOrder());
     setTag(widget->getTag());
     setName(widget->getName());
     setActionTag(widget->getActionTag());

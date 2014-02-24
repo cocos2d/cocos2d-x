@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2013 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +59,12 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #ifndef __CC_SOCKETIO_H__
 #define __CC_SOCKETIO_H__
 
-#include "cocos2d.h"
+#include "CCPlatformMacros.h"
+#include "CCMap.h"
+
+#include <string>
+
+NS_CC_BEGIN
 
 namespace network {
 
@@ -124,7 +129,7 @@ typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
      *  @brief A single connection to a socket.io endpoint
      */
 class SIOClient
-	: public cocos2d::Object
+	: public cocos2d::Ref
 {
 private:
 	int _port;
@@ -184,5 +189,7 @@ public:
 };
 
 }
+
+NS_CC_END
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */

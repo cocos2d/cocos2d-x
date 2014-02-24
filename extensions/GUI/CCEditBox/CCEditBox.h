@@ -26,7 +26,7 @@
 #ifndef __CCEDITTEXT_H__
 #define __CCEDITTEXT_H__
 
-#include "cocos2d.h"
+#include "CCIMEDelegate.h"
 #include "extensions/ExtensionMacros.h"
 #include "../CCControlExtension/CCControlExtensions.h"
 
@@ -217,6 +217,8 @@ public:
      * @lua NA
      */
     EditBoxDelegate* getDelegate();
+    
+#if CC_ENABLE_SCRIPT_BINDING
     /**
      * Registers a script function that will be called for EditBox events.
      *
@@ -257,6 +259,9 @@ public:
      * @lua NA
      */
     int  getScriptEditBoxHandler(void){ return _scriptEditBoxHandler ;}
+    
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     /**
      * Set the text entered in the edit box.
      * @param pText The given text.
@@ -366,51 +371,51 @@ public:
     void setReturnType(EditBox::KeyboardReturnType returnType);
     
     /* override functions */
-    virtual void setPosition(const Point& pos);
-    virtual void setVisible(bool visible);
-    virtual void setContentSize(const Size& size);
-	virtual void setAnchorPoint(const Point& anchorPoint);
+    virtual void setPosition(const Point& pos) override;
+    virtual void setVisible(bool visible) override;
+    virtual void setContentSize(const Size& size) override;
+	virtual void setAnchorPoint(const Point& anchorPoint) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void visit(void) override;
     /**
      * @js NA
      * @lua NA
      */
-	virtual void onEnter(void);
+	virtual void onEnter(void) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit(void);
+    virtual void onExit(void) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
     
     /* callback funtions
      * @js NA
      * @lua NA
      */
-    void touchDownAction(Object *sender, Control::EventType controlEvent);
+    void touchDownAction(Ref *sender, Control::EventType controlEvent);
     
 protected:
     EditBoxImpl*      _editBoxImpl;
@@ -434,7 +439,9 @@ protected:
     
     int   _maxLength;
     float _adjustHeight;
+#if CC_ENABLE_SCRIPT_BINDING
     int   _scriptEditBoxHandler;
+#endif
 };
 
 NS_CC_EXT_END

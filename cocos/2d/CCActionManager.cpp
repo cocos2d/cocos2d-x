@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -171,8 +172,8 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
     CCASSERT(target != nullptr, "");
 
     tHashElement *element = nullptr;
-    // we should convert it to Object*, because we save it as Object*
-    Object *tmp = target;
+    // we should convert it to Ref*, because we save it as Ref*
+    Ref *tmp = target;
     HASH_FIND_PTR(_targets, &tmp, element);
     if (! element)
     {
@@ -246,7 +247,7 @@ void ActionManager::removeAction(Action *action)
     }
 
     tHashElement *element = nullptr;
-    Object *target = action->getOriginalTarget();
+    Ref *target = action->getOriginalTarget();
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {

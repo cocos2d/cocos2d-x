@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012  cocos2d-x.org
-Copyright (c) 2011 ForzeField Studios S.L.
+Copyright (c) 2011      ForzeField Studios S.L.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +30,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccTypes.h"
 #include "CCNode.h"
+#include "renderer/CCCustomCommand.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -144,6 +146,8 @@ protected:
     Vertex2F* _vertices;
     GLubyte* _colorPointer;
     Tex2F* _texCoords;
+    
+    CustomCommand _customCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);

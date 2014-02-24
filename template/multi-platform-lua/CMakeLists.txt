@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 set(APP_NAME HelloLua)
 project (${APP_NAME})
 
-include(../../build/BuildHelpers.CMakeLists.txt)
+include(cocos2d/build/BuildHelpers.CMakeLists.txt)
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
@@ -44,9 +44,10 @@ set(GAME_SRC
   Classes/AppDelegate.cpp
 )
 
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/../..)
+set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 include_directories(
+  /usr/local/include/GLFW
   Classes
   ${COCOS2D_ROOT}/cocos/scripting/lua/bindings
   ${COCOS2D_ROOT}/external/lua/lua
@@ -57,6 +58,7 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/2d
   ${COCOS2D_ROOT}/cocos/2d/renderer
   ${COCOS2D_ROOT}/cocos/2d/platform
+  ${COCOS2D_ROOT}/cocos/2d/platform/desktop
   ${COCOS2D_ROOT}/cocos/2d/platform/linux
   ${COCOS2D_ROOT}/cocos/base
   ${COCOS2D_ROOT}/cocos/physics
@@ -68,25 +70,82 @@ include_directories(
   ${COCOS2D_ROOT}/external/jpeg/include/linux
   ${COCOS2D_ROOT}/external/tiff/include/linux
   ${COCOS2D_ROOT}/external/webp/include/linux
-  ${COCOS2D_ROOT}/external/glfw3/include/linux
-  ${COCOS2D_ROOT}/external/curl/include/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/tinyxml2
   ${COCOS2D_ROOT}/external/unzip
   ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
   ${COCOS2D_ROOT}/external/freetype2/include/linux
+  ${COCOS2D_ROOT}/external/websockets/include/linux
+  ${COCOS2D_ROOT}/external/spidermonkey/include/linux
   ${COCOS2D_ROOT}/external/linux-specific/fmod/include/${ARCH_DIR}
 )
 
 link_directories(
   /usr/local/lib
-  ${COCOS2D_ROOT}/lib
   ${COCOS2D_ROOT}/external/jpeg/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/tiff/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/webp/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/freetype2/prebuilt/linux/${ARCH_DIR}
-  ${COCOS2D_ROOT}/external/curl/prebuilt/linux/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/websockets/prebuilt/linux/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/spidermonkey/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
+
+# kazmath
+add_subdirectory(${COCOS2D_ROOT}/cocos/math/kazmath)
+
+# chipmunk library
+add_subdirectory(${COCOS2D_ROOT}/external/chipmunk/src)
+
+# box2d library
+add_subdirectory(${COCOS2D_ROOT}/external/Box2D)
+
+# unzip library
+add_subdirectory(${COCOS2D_ROOT}/external/unzip)
+
+# tinyxml2 library
+add_subdirectory(${COCOS2D_ROOT}/external/tinyxml2)
+
+# audio
+add_subdirectory(${COCOS2D_ROOT}/cocos/audio)
+
+# cocos base library
+add_subdirectory(${COCOS2D_ROOT}/cocos/base)
+
+# cocos 2d library
+add_subdirectory(${COCOS2D_ROOT}/cocos/2d)
+
+# cocos storage
+add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
+
+# gui
+add_subdirectory(${COCOS2D_ROOT}/cocos/gui)
+
+# network
+add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+
+# extensions
+add_subdirectory(${COCOS2D_ROOT}/extensions)
+
+## Editor Support
+
+# spine
+add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/spine)
+
+# cocosbuilder
+add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocosbuilder)
+
+# cocostudio
+add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocostudio)
+
+## Scripting
+# lua
+add_subdirectory(${COCOS2D_ROOT}/external/lua/lua)
+
+# tolua
+add_subdirectory(${COCOS2D_ROOT}/external/lua/tolua)
+
+# luabinding
+add_subdirectory(${COCOS2D_ROOT}/cocos/scripting/lua)
 
 # add the executable
 add_executable(${APP_NAME}
@@ -101,45 +160,18 @@ endif()
 
 target_link_libraries(${APP_NAME}
   luabinding
-  tolua
-  lua
   gui
   network
-  curl
-  ldap
-  lber
-  idn
-  rtmp
+  storage
   spine
   cocostudio
-  jsoncpp
   cocosbuilder
   extensions
-  box2d
   audio
-  ${FMOD_LIB}
   cocos2d
-  cocosbase
-  chipmunk
-  tinyxml2
-  kazmath
-  unzip
-  jpeg
-  webp
-  tiff
-  freetype
-  fontconfig
-  png
-  pthread
-  glfw
-  GLEW
-  GL
-  X11
-  rt
-  z
   )
 
-set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
+set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
@@ -147,5 +179,6 @@ set_target_properties(${APP_NAME} PROPERTIES
 pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua/script ${APP_BIN_DIR}/Resources
   )
 

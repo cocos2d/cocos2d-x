@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -34,7 +35,7 @@ extern "C" {
 
 NS_CC_BEGIN
 
-class LuaStack : public Object
+class LuaStack : public Ref
 {
 public:
     static LuaStack *create(void);
@@ -65,7 +66,7 @@ public:
      @brief Remove Object from lua state
      @param object The object to be removed.
      */
-    virtual void removeScriptObjectByObject(Object* object);
+    virtual void removeScriptObjectByObject(Ref* object);
     
     /**
      @brief Remove Lua function reference
@@ -107,7 +108,7 @@ public:
     virtual void pushString(const char* stringValue);
     virtual void pushString(const char* stringValue, int length);
     virtual void pushNil(void);
-    virtual void pushObject(Object* objectValue, const char* typeName);
+    virtual void pushObject(Ref* objectValue, const char* typeName);
     virtual void pushLuaValue(const LuaValue& value);
     virtual void pushLuaValueDict(const LuaValueDict& dict);
     virtual void pushLuaValueArray(const LuaValueArray& array);    
@@ -116,6 +117,7 @@ public:
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
     virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray);
+    virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
 
     virtual bool handleAssert(const char *msg);
     

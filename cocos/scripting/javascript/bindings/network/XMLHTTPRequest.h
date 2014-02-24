@@ -29,15 +29,14 @@
 #ifndef __FAKE_XMLHTTPREQUEST_H__
 #define __FAKE_XMLHTTPREQUEST_H__
 
+#include "jsapi.h"
+#include "jsfriendapi.h"
 #include "network/HttpClient.h"
 #include "js_bindings_config.h"
 #include "ScriptingCore.h"
-#include "jstypes.h"
-#include "jsapi.h"
-#include "jsfriendapi.h"
 #include "jsb_helper.h"
 
-class MinXmlHttpRequest : public cocos2d::Object
+class MinXmlHttpRequest : public cocos2d::Ref
 {
 public:
     enum class ResponseType
@@ -80,7 +79,7 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
 
-    void handle_requestResponse(network::HttpClient *sender, network::HttpResponse *response);
+    void handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
 
 
 private:
@@ -102,7 +101,7 @@ private:
     ResponseType                      _responseType;
     unsigned                          _timeout;
     bool                              _isAsync;
-    network::HttpRequest*             _httpRequest;
+    cocos2d::network::HttpRequest*    _httpRequest;
     bool                              _isNetwork;
     bool                              _withCredentialsValue;
     std::unordered_map<std::string, std::string>          _httpHeader;

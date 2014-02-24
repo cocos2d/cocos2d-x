@@ -1,31 +1,31 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __UIWIDGET_H__
 #define __UIWIDGET_H__
 
-#include "cocos2d.h"
+#include "CCNode.h"
 #include "gui/UILayoutDefine.h"
 #include "gui/UILayoutParameter.h"
 
@@ -72,7 +72,7 @@ typedef enum
     POSITION_PERCENT
 }PositionType;
 
-typedef void (Object::*SEL_TouchEvent)(Object*,TouchEventType);
+typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 /**
 *   @js NA
@@ -212,7 +212,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      */
     virtual void addChild(Node * child, int zOrder) override;
     /**
@@ -221,7 +221,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
@@ -232,7 +232,7 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    Node * getChildByTag(int tag);
+    virtual Node * getChildByTag(int tag) override;
     
     virtual void sortAllChildren() override;
     /**
@@ -259,14 +259,14 @@ public:
      *
      * @return The amount of children.
      */
-    long getChildrenCount() const;
+    virtual ssize_t getChildrenCount() const override;
     
     /**
      * Removes this node itself from its parent node with a cleanup.
      * If the node orphan, then nothing happens.
      * @see `removeFromParentAndCleanup(bool)`
      */
-    virtual void removeFromParent();
+    virtual void removeFromParent() override;
     /**
      * Removes this node itself from its parent node.
      * If the node orphan, then nothing happens.
@@ -274,7 +274,7 @@ public:
      * @js removeFromParent
      * @lua removeFromParent
      */
-    virtual void removeFromParentAndCleanup(bool cleanup);
+    virtual void removeFromParentAndCleanup(bool cleanup) override;
     
     /**
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
@@ -282,7 +282,7 @@ public:
      * @param child     The child node which will be removed.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChild(Node* child, bool cleanup = true);
+    virtual void removeChild(Node* child, bool cleanup = true) override;
     
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
@@ -290,13 +290,13 @@ public:
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+    virtual void removeChildByTag(int tag, bool cleanup = true) override;
     /**
      * Removes all children from the container with a cleanup.
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
-    virtual void removeAllChildren();
+    virtual void removeAllChildren() override;
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
@@ -304,7 +304,7 @@ public:
      * @js removeAllChildren
      * @lua removeAllChildren
      */
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     
     /**
      * Gets a child from the container with its name
@@ -313,14 +313,30 @@ public:
      *
      * @return a Widget object whose name equals to the input parameter
      */
-    Widget* getChildByName(const char* name);
+    virtual Widget* getChildByName(const char* name);
     
-    virtual void visit();
+    virtual void addNode(Node* node);
+    
+    virtual void addNode(Node * node, int zOrder);
+    
+    virtual void addNode(Node* node, int zOrder, int tag);
+    
+    virtual Node * getNodeByTag(int tag);
+    
+    virtual Vector<Node*>& getNodes();
+    
+    virtual void removeNode(Node* node);
+    
+    virtual void removeNodeByTag(int tag);
+    
+    virtual void removeAllNodes();
+    
+    virtual void visit() override;
     
     /**
      * Sets the touch event target/selector of the menu item
      */
-    void addTouchEventListener(Object* target,SEL_TouchEvent selector);
+    void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
     
     
     //cocos2d property
@@ -333,7 +349,7 @@ public:
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    void setPosition(const Point &pos);
+    virtual void setPosition(const Point &pos) override;
     
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -534,14 +550,7 @@ public:
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
-    
-    /**
-     * A call back function called when widget is selected, and on touch long clicked.
-     *
-     * @param touch point
-     */
-    virtual void onTouchLongClicked(const Point &touchPoint);
-    
+        
     /**
      * Sets a LayoutParameter to widget. 
      *
@@ -595,16 +604,6 @@ public:
     virtual Node* getVirtualRenderer();
     
     /**
-     * Schedules the "update" method.
-     */
-    void setUpdateEnabled(bool enable);
-    
-    /**
-     * is the "update" method scheduled.
-     */
-    bool isUpdateEnabled();
-    
-    /**
      * Gets the content size of widget.
      *
      * Content size is widget's texture size.
@@ -618,8 +617,8 @@ public:
     
     Widget* clone();
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
     void updateSizeAndPosition();
     
@@ -648,7 +647,6 @@ protected:
     void moveEvent();
     void releaseUpEvent();
     void cancelUpEvent();
-    void longClickEvent();
     void updateAnchorPoint();
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
@@ -662,37 +660,28 @@ protected:
     bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
-    bool _updateEnabled;      ///< is "update" method scheduled
-//    Node* _renderer;        ///< base renderer
     Point _touchStartPos;    ///< touch began point
     Point _touchMovePos;     ///< touch moved point
     Point _touchEndPos;      ///< touch ended point
-    
-    Object*       _touchEventListener;
+    Ref*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
-    
-
-    
     std::string _name;
     WidgetType _widgetType;
 	int _actionTag;
     Size _size;
     Size _customSize;
-    Map<int, LayoutParameter*> _layoutParameterDictionary;
     bool _ignoreSize;
-    Vector<Node*> _widgetChildren;
     bool _affectByClipping;
-    
     SizeType _sizeType;
     Point _sizePercent;
     PositionType _positionType;
     Point _positionPercent;
-    
     bool _reorderWidgetChildDirty;
-    
     bool _hitted;
-    
     EventListenerTouchOneByOne* _touchListener;
+    Map<int, LayoutParameter*> _layoutParameterDictionary;
+    Vector<Node*> _widgetChildren;
+    Vector<Node*> _nodes;
 };
 }
 

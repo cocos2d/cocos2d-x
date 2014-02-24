@@ -1,39 +1,48 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UILayout.h"
 #include "gui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "kazmath/GL/matrix.h"
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
+#include "CCDirector.h"
+#include "CCDrawingPrimitives.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
 namespace gui {
     
-#define BACKGROUNDIMAGEZ (-1)
-#define BCAKGROUNDCOLORRENDERERZ (-2)
+static const int BACKGROUNDIMAGE_Z = (-1);
+static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
 
 static GLint g_sStencilBits = -1;
+static GLint s_layer = -1;
 
 Layout::Layout():
 _clippingEnabled(false),
@@ -54,17 +63,47 @@ _backGroundImageTextureSize(Size::ZERO),
 _layoutType(LAYOUT_ABSOLUTE),
 _clippingType(LAYOUT_CLIPPING_STENCIL),
 _clippingStencil(nullptr),
-_handleScissor(false),
 _scissorRectDirty(false),
 _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
-_doLayoutDirty(true)
+_doLayoutDirty(true),
+_currentStencilEnabled(GL_FALSE),
+_currentStencilWriteMask(~0),
+_currentStencilFunc(GL_ALWAYS),
+_currentStencilRef(0),
+_currentStencilValueMask(~0),
+_currentStencilFail(GL_KEEP),
+_currentStencilPassDepthFail(GL_KEEP),
+_currentStencilPassDepthPass(GL_KEEP),
+_currentDepthWriteMask(GL_TRUE),
+_currentAlphaTestEnabled(GL_FALSE),
+_currentAlphaTestFunc(GL_ALWAYS),
+_currentAlphaTestRef(1)
 {
     _widgetType = WidgetTypeContainer;
 }
 
 Layout::~Layout()
 {
+    CC_SAFE_RELEASE(_clippingStencil);
+}
+    
+void Layout::onEnter()
+{
+    Widget::onEnter();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onEnter();
+    }
+}
+    
+void Layout::onExit()
+{
+    Widget::onExit();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onExit();
+    }
 }
 
 Layout* Layout::create()
@@ -117,6 +156,17 @@ bool Layout::isClippingEnabled()
     return _clippingEnabled;
 }
     
+bool Layout::hitTest(const Point &pt)
+{
+    Point nsp = convertToNodeSpace(pt);
+    Rect bb = Rect(0.0f, 0.0f, _size.width, _size.height);
+    if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
+    {
+        return true;
+    }
+    return false;
+}
+    
 void Layout::visit()
 {
     if (!_enabled)
@@ -151,108 +201,151 @@ void Layout::sortAllChildren()
     
 void Layout::stencilClippingVisit()
 {
-    if (!_clippingStencil || !_clippingStencil->isVisible())
-    {
-        Node::visit();
+    if(!_visible)
         return;
-    }
-    if (g_sStencilBits < 1)
+    
+    kmGLPushMatrix();
+    transform();
+    //Add group command
+    
+    Renderer* renderer = Director::getInstance()->getRenderer();
+    
+    _groupCommand.init(_globalZOrder);
+    renderer->addCommand(&_groupCommand);
+    
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
+    
+    _beforeVisitCmdStencil.init(_globalZOrder);
+    _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
+    renderer->addCommand(&_beforeVisitCmdStencil);
+    
+    _clippingStencil->visit();
+    
+    _afterDrawStencilCmd.init(_globalZOrder);
+    _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
+    renderer->addCommand(&_afterDrawStencilCmd);
+    
+    int i = 0;
+    
+    if(!_children.empty())
     {
-        Node::visit();
-        return;
-    }
-    static GLint layer = -1;
-    if (layer + 1 == g_sStencilBits)
-    {
-        static bool once = true;
-        if (once)
+        sortAllChildren();
+        // draw children zOrder < 0
+        for( ; i < _children.size(); i++ )
         {
-            char warning[200] = {0};
-            snprintf(warning, sizeof(warning), "Nesting more than %d stencils is not supported. Everything will be drawn without stencil for this node and its childs.", g_sStencilBits);
-            CCLOG("%s", warning);
+            auto node = _children.at(i);
             
-            once = false;
+            if ( node && node->getLocalZOrder() < 0 )
+                node->visit();
+            else
+                break;
         }
-        Node::visit();
-        return;
+        // self draw
+        this->draw();
+        
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit();
     }
-    layer++;
-    GLint mask_layer = 0x1 << layer;
+    else
+    {
+        this->draw();
+    }
+    
+    _afterVisitCmdStencil.init(_globalZOrder);
+    _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
+    renderer->addCommand(&_afterVisitCmdStencil);
+    
+    renderer->popGroup();
+    
+    kmGLPopMatrix();
+}
+    
+void Layout::onBeforeVisitStencil()
+{
+    s_layer++;
+    GLint mask_layer = 0x1 << s_layer;
     GLint mask_layer_l = mask_layer - 1;
-    GLint mask_layer_le = mask_layer | mask_layer_l;
-    GLboolean currentStencilEnabled = GL_FALSE;
-    GLuint currentStencilWriteMask = ~0;
-    GLenum currentStencilFunc = GL_ALWAYS;
-    GLint currentStencilRef = 0;
-    GLuint currentStencilValueMask = ~0;
-    GLenum currentStencilFail = GL_KEEP;
-    GLenum currentStencilPassDepthFail = GL_KEEP;
-    GLenum currentStencilPassDepthPass = GL_KEEP;
-    currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
-    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
-    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&currentStencilFunc);
-    glGetIntegerv(GL_STENCIL_REF, &currentStencilRef);
-    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&currentStencilValueMask);
-    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&currentStencilFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&currentStencilPassDepthFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&currentStencilPassDepthPass);
+    _mask_layer_le = mask_layer | mask_layer_l;
+    _currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
+    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&_currentStencilWriteMask);
+    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&_currentStencilFunc);
+    glGetIntegerv(GL_STENCIL_REF, &_currentStencilRef);
+    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&_currentStencilValueMask);
+    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&_currentStencilFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
+    
     glEnable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
     glStencilMask(mask_layer);
-    GLboolean currentDepthWriteMask = GL_TRUE;
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &currentDepthWriteMask);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
     glDepthMask(GL_FALSE);
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     kmGLLoadIdentity();
+    
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPushMatrix();
     kmGLLoadIdentity();
+    
     DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
+    
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPopMatrix();
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    GLboolean currentAlphaTestEnabled = GL_FALSE;
-    GLenum currentAlphaTestFunc = GL_ALWAYS;
-    GLclampf currentAlphaTestRef = 1;
-#endif
-    kmGLPushMatrix();
-    transform();
-    _clippingStencil->visit();
-    kmGLPopMatrix();
-    glDepthMask(currentDepthWriteMask);
-    glStencilFunc(GL_EQUAL, mask_layer_le, mask_layer_le);
+}
+
+void Layout::onAfterDrawStencil()
+{
+    glDepthMask(_currentDepthWriteMask);
+    glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-    Node::visit();
-    glStencilFunc(currentStencilFunc, currentStencilRef, currentStencilValueMask);
-    glStencilOp(currentStencilFail, currentStencilPassDepthFail, currentStencilPassDepthPass);
-    glStencilMask(currentStencilWriteMask);
-    if (!currentStencilEnabled)
+}
+
+
+void Layout::onAfterVisitStencil()
+{
+    glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
+    glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
+    glStencilMask(_currentStencilWriteMask);
+    if (!_currentStencilEnabled)
     {
         glDisable(GL_STENCIL_TEST);
     }
-    layer--;
+    s_layer--;
+}
+    
+void Layout::onBeforeVisitScissor()
+{
+    Rect clippingRect = getClippingRect();
+    glEnable(GL_SCISSOR_TEST);
+    auto glview = Director::getInstance()->getOpenGLView();
+    glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+}
+
+void Layout::onAfterVisitScissor()
+{
+    glDisable(GL_SCISSOR_TEST);
 }
     
 void Layout::scissorClippingVisit()
 {
-    Rect clippingRect = getClippingRect();
-    if (_handleScissor)
-    {
-        glEnable(GL_SCISSOR_TEST);
-    }
-    EGLView::getInstance()->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+    Renderer* renderer = Director::getInstance()->getRenderer();
+
+    _beforeVisitCmdScissor.init(_globalZOrder);
+    _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
+    renderer->addCommand(&_beforeVisitCmdScissor);
+
     Node::visit();
-    if (_handleScissor)
-    {
-        glDisable(GL_SCISSOR_TEST);
-    }
+    
+    _afterVisitCmdScissor.init(_globalZOrder);
+    _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
+    renderer->addCommand(&_afterVisitCmdScissor);
 }
 
 void Layout::setClippingEnabled(bool able)
@@ -267,15 +360,30 @@ void Layout::setClippingEnabled(bool able)
         case LAYOUT_CLIPPING_STENCIL:
             if (able)
             {
-                glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
+                static bool once = true;
+                if (once)
+                {
+                    glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
+                    if (g_sStencilBits <= 0)
+                    {
+                        CCLOG("Stencil buffer is not enabled.");
+                    }
+                    once = false;
+                }
                 _clippingStencil = DrawNode::create();
-                _clippingStencil->onEnter();
+                if (_running)
+                {
+                    _clippingStencil->onEnter();
+                }
                 _clippingStencil->retain();
                 setStencilClippingSize(_size);
             }
             else
             {
-                _clippingStencil->onExit();
+                if (_running)
+                {
+                    _clippingStencil->onExit();
+                }
                 _clippingStencil->release();
                 _clippingStencil = nullptr;
             }
@@ -314,9 +422,8 @@ void Layout::setStencilClippingSize(const Size &size)
     
 const Rect& Layout::getClippingRect()
 {
-    _handleScissor = true;
     Point worldPos = convertToWorldSpace(Point::ZERO);
-    AffineTransform t = nodeToWorldTransform();
+    AffineTransform t = getNodeToWorldAffineTransform();
     float scissorWidth = _size.width*t.a;
     float scissorHeight = _size.height*t.d;
     Rect parentClippingRect;
@@ -333,11 +440,6 @@ const Rect& Layout::getClippingRect()
                 {
                     _clippingParent = parent;
                     firstClippingParentFounded = true;
-                }
-                
-                if (parent->_clippingType == LAYOUT_CLIPPING_SCISSOR)
-                {
-                    _handleScissor = false;
                     break;
                 }
             }
@@ -400,6 +502,7 @@ const Rect& Layout::getClippingRect()
 void Layout::onSizeChanged()
 {
     Widget::onSizeChanged();
+    setContentSize(_size);
     setStencilClippingSize(_size);
     _doLayoutDirty = true;
     if (_backGroundImage)
@@ -432,12 +535,12 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::Scale9Sprite::create();
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     else
     {
         _backGroundImage = Sprite::create();
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -549,15 +652,15 @@ void Layout::addBackGroundImage()
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::Scale9Sprite::create();
-        _backGroundImage->setZOrder(-1);
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        _backGroundImage->setLocalZOrder(-1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = Sprite::create();
-        _backGroundImage->setZOrder(-1);
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        _backGroundImage->setLocalZOrder(-1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
@@ -621,7 +724,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
-            Node::addChild(_colorRender, BACKGROUNDIMAGEZ, -1);
+            Node::addChild(_colorRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         case LAYOUT_COLOR_GRADIENT:
             _gradientRender = LayerGradient::create();
@@ -630,7 +733,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
             _gradientRender->setVector(_alongVector);
-            Node::addChild(_gradientRender, BACKGROUNDIMAGEZ, -1);
+            Node::addChild(_gradientRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         default:
             break;
@@ -709,6 +812,11 @@ LayoutType Layout::getLayoutType() const
 {
     return _layoutType;
 }
+    
+void Layout::requestDoLayout()
+{
+    _doLayoutDirty = true;
+}
 
 void Layout::doLayout()
 {
@@ -722,12 +830,12 @@ void Layout::doLayout()
             break;
         case LAYOUT_LINEAR_VERTICAL:
         {
-            int length = _widgetChildren.size();
             Size layoutSize = getSize();
             float topBoundary = layoutSize.height;
-            for (int i=0; i<length; ++i)
+            
+            for (auto& subWidget : _widgetChildren)
             {
-                Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                Widget* child = static_cast<Widget*>(subWidget);
                 LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
@@ -762,12 +870,11 @@ void Layout::doLayout()
         }
         case LAYOUT_LINEAR_HORIZONTAL:
         {
-            int length = _widgetChildren.size();
             Size layoutSize = getSize();
             float leftBoundary = 0.0f;
-            for (int i=0; i<length; ++i)
+            for (auto& subWidget : _widgetChildren)
             {
-                Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                Widget* child = static_cast<Widget*>(subWidget);
                 LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
@@ -802,22 +909,19 @@ void Layout::doLayout()
         }
         case LAYOUT_RELATIVE:
         {
-            int length = _widgetChildren.size();
-            int unlayoutChildCount = length;
+            ssize_t unlayoutChildCount = _widgetChildren.size();
             Size layoutSize = getSize();
-            
-            for (int i=0; i<length; i++)
+            for (auto& subWidget : _widgetChildren)
             {
-                Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                Widget* child = static_cast<Widget*>(subWidget);
                 RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                 layoutParameter->_put = false;
             }
-            
             while (unlayoutChildCount > 0)
             {
-                for (int i=0; i<length; i++)
+                for (auto& subWidget : _widgetChildren)
                 {
-                    Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                    Widget* child = static_cast<Widget*>(subWidget);
                     RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                     
                     if (layoutParameter)
@@ -836,7 +940,7 @@ void Layout::doLayout()
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
                         {
-                            relativeWidget = UIHelper::seekWidgetByRelativeName(this, relativeName);
+                            relativeWidget = Helper::seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
                                 relativeWidgetLP = dynamic_cast<RelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));

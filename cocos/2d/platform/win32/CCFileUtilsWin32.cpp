@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,6 +22,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "CCFileUtilsWin32.h"
 #include "platform/CCCommon.h"
 #include <Shlobj.h>
@@ -150,7 +155,7 @@ static Data getData(const std::string& filename, bool forString)
         }
         DWORD sizeRead = 0;
         BOOL successed = FALSE;
-        successed = ::ReadFile(fileHandle, buffer, *size, &sizeRead, NULL);
+        successed = ::ReadFile(fileHandle, buffer, size, &sizeRead, NULL);
         ::CloseHandle(fileHandle);
 
         if (!successed)
@@ -180,22 +185,25 @@ static Data getData(const std::string& filename, bool forString)
     return ret;
 }
 
-std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
+std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
+	if (data.isNull())
+	{
+		return "";
+	}
     std::string ret((const char*)data.getBytes());
     return ret;
 }
     
-Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
+Data FileUtilsWin32::getDataFromFile(const std::string& filename)
 {
     return getData(filename, false);
 }
 
-unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mode, ssize_t* size)
+unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const char* mode, ssize_t* size)
 {
     unsigned char * pBuffer = NULL;
-    CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
     *size = 0;
     do
     {
@@ -303,3 +311,6 @@ string FileUtilsWin32::getWritablePath() const
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+

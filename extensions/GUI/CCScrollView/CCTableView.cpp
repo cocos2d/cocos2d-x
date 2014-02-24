@@ -23,12 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "cocos2d.h"
 #include "CCTableView.h"
 #include "CCTableViewCell.h"
 
 NS_CC_EXT_BEGIN
 
+TableView* TableView::create()
+{
+    return TableView::create(nullptr, Size::ZERO);
+}
 
 TableView* TableView::create(TableViewDataSource* dataSource, Size size)
 {
@@ -51,6 +54,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = NULL*/)
 {
     if (ScrollView::initWithViewSize(size,container))
     {
+        CC_SAFE_DELETE(_indices);
         _indices        = new std::set<ssize_t>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
@@ -495,7 +499,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
 	}
 
 #if 0 // For Testing.
-    Object* pObj;
+    Ref* pObj;
     int i = 0;
     CCARRAY_FOREACH(_cellsUsed, pObj)
     {

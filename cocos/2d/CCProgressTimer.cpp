@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc
 
 http://www.cocos2d-x.org
 
@@ -32,8 +33,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -225,6 +226,28 @@ void ProgressTimer::setAnchorPoint(const Point& anchorPoint)
 Point ProgressTimer::getMidpoint() const
 {
     return _midpoint;
+}
+
+void ProgressTimer::setColor(const Color3B &color)
+{
+    _sprite->setColor(color);
+    updateColor();
+}
+
+const Color3B& ProgressTimer::getColor() const
+{
+    return _sprite->getColor();
+}
+
+void ProgressTimer::setOpacity(GLubyte opacity)
+{
+    _sprite->setOpacity(opacity);
+    updateColor();
+}
+
+GLubyte ProgressTimer::getOpacity() const
+{
+    return _sprite->getOpacity();
 }
 
 void ProgressTimer::setMidpoint(const Point& midPoint)
@@ -515,16 +538,16 @@ void ProgressTimer::onDraw()
         if (!_reverseDirection) 
         {
             glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
-        } 
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_vertexDataCount);
+        }
         else 
         {
             glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
             glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
             // 2 draw calls
-            CC_INCREMENT_GL_DRAWS(1);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,_vertexDataCount);
         }
     }
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ProgressTimer::draw()
@@ -532,10 +555,9 @@ void ProgressTimer::draw()
     if( ! _vertexData || ! _sprite)
         return;
 
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 

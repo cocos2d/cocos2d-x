@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +26,7 @@ THE SOFTWARE.
 #include "CCTextFieldTTF.h"
 
 #include "CCDirector.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -125,7 +126,7 @@ bool TextFieldTTF::attachWithIME()
     if (ret)
     {
         // open keyboard
-        EGLView * pGlView = Director::getInstance()->getOpenGLView();
+        GLView * pGlView = Director::getInstance()->getOpenGLView();
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(true);
@@ -140,7 +141,7 @@ bool TextFieldTTF::detachWithIME()
     if (ret)
     {
         // close keyboard
-        EGLView * glView = Director::getInstance()->getOpenGLView();
+        GLView * glView = Director::getInstance()->getOpenGLView();
         if (glView)
         {
             glView->setIMEKeyboardState(false);
@@ -209,14 +210,14 @@ void TextFieldTTF::deleteBackward()
     }
 
     // get the delete byte number
-    int deleteLen = 1;    // default, erase 1 byte
+    size_t deleteLen = 1;    // default, erase 1 byte
 
     while(0x80 == (0xC0 & _inputText.at(len - deleteLen)))
     {
         ++deleteLen;
     }
 
-    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + len - deleteLen, deleteLen))
+    if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + len - deleteLen, static_cast<int>(deleteLen)))
     {
         // delegate doesn't wan't to delete backwards
         return;

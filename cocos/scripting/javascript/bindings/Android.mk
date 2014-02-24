@@ -14,8 +14,7 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    jsb_opengl_functions.cpp \
                    jsb_opengl_manual.cpp \
                    jsb_opengl_registration.cpp \
-                   ../../auto-generated/js-bindings/jsb_cocos2dx_auto.cpp \
-                   ../../auto-generated/js-bindings/jsb_cocos2dx_spine_auto.cpp
+                   ../../auto-generated/js-bindings/jsb_cocos2dx_auto.cpp
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 

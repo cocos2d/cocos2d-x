@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -23,12 +23,11 @@
  ****************************************************************************/
 
 
-#include "CCGroupCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCRenderer.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN
-RenderCommandPool<GroupCommand> GroupCommand::_commandPool;
 
 static GroupCommandManager* s_instance;
 GroupCommandManager *GroupCommandManager::getInstance()
@@ -87,18 +86,14 @@ void GroupCommandManager::releaseGroupID(int groupID)
 }
 
 GroupCommand::GroupCommand()
-:RenderCommand()
-, _viewport(0)
-, _depth(0)
 {
     _type = RenderCommand::Type::GROUP_COMMAND;
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }
 
-void GroupCommand::init(int viewport, int32_t depth)
+void GroupCommand::init(float globalOrder)
 {
-    _viewport = viewport;
-    _depth = depth;
+    _globalOrder = globalOrder;
     GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }
@@ -107,22 +102,5 @@ GroupCommand::~GroupCommand()
 {
     GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
 }
-
-int64_t GroupCommand::generateID()
-{
-    _id = 0;
-
-    _id = (int64_t)_viewport << 61
-            | (int64_t)1 << 60 // translucent
-            | (int64_t)_depth << 36;
-
-    return _id;
-}
-
-void GroupCommand::releaseToCommandPool()
-{
-    getCommandPool().pushBackCommand(this);
-}
-
 
 NS_CC_END

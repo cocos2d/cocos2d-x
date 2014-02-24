@@ -1,7 +1,6 @@
 #ifndef _CCB_CCNODELOADERLIBRARY_H_
 #define _CCB_CCNODELOADERLIBRARY_H_
 
-#include "cocos2d.h"
 #include "CCBReader.h"
 
 namespace cocosbuilder {
@@ -11,7 +10,7 @@ class NodeLoader;
 typedef std::map<std::string, NodeLoader *> NodeLoaderMap;
 typedef std::pair<std::string, NodeLoader *> NodeLoaderMapEntry;
 
-class NodeLoaderLibrary : public cocos2d::Object
+class NodeLoaderLibrary : public cocos2d::Ref
 {
 public:
     /**

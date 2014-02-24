@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Leonardo Kasperavičius
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
  
@@ -35,15 +36,16 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCGLProgram.h"
 #include "TransformUtils.h"
-#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CCRenderer.h"
-#include "CCQuadCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -74,10 +76,8 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
         
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
-        NotificationCenter::getInstance()->addObserver(this,
-                                                                      callfuncO_selector(ParticleSystemQuad::listenBackToForeground),
-                                                                      EVNET_COME_TO_FOREGROUND,
-                                                                      nullptr);
+        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(ParticleSystemQuad::listenBackToForeground, this));
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
 
         return true;
@@ -106,10 +106,6 @@ ParticleSystemQuad::~ParticleSystemQuad()
             GL::bindVAO(0);
         }
     }
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
-#endif
 }
 
 // implementation ParticleSystemQuad
@@ -204,6 +200,16 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
         quads[i].tr.texCoords.v = top;
     }
 }
+
+void ParticleSystemQuad::updateTexCoords()
+{
+    if (_texture)
+    {
+        const Size& s = _texture->getContentSize();
+        initTexCoordsWithRect(Rect(0, 0, s.width, s.height));
+    }
+}
+
 void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect)
 {
     // Only update the texture if is different from the current one
@@ -214,11 +220,13 @@ void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect
 
     this->initTexCoordsWithRect(rect);
 }
+
 void ParticleSystemQuad::setTexture(Texture2D* texture)
 {
     const Size& s = texture->getContentSize();
     this->setTextureWithRect(texture, Rect(0, 0, s.width, s.height));
 }
+
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
     CCASSERT(spriteFrame->getOffsetInPixels().equals(Point::ZERO), 
@@ -443,9 +451,8 @@ void ParticleSystemQuad::draw()
 
         auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-        QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-        cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(cmd);
+        _quadCommand.init(_globalZOrder, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
+        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
 
 }
@@ -473,11 +480,10 @@ void ParticleSystemQuad::setTotalParticles(int tp)
             _indices = indicesNew;
 
             // Clear the memory
-            // XXX: Bug? If the quads are cleared, then drawing doesn't work... WHY??? XXX
             memset(_particles, 0, particlesSize);
             memset(_quads, 0, quadsSize);
             memset(_indices, 0, indicesSize);
-
+            
             _allocatedParticles = tp;
         }
         else
@@ -511,12 +517,17 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         {
             setupVBO();
         }
+        
+        // fixed http://www.cocos2d-x.org/issues/3990
+        // Updates texture coords.
+        updateTexCoords();
     }
     else
     {
         _totalParticles = tp;
     }
     
+    _emissionRate = _totalParticles / _life;
     resetSystem();
 }
 
@@ -577,7 +588,7 @@ void ParticleSystemQuad::setupVBO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void ParticleSystemQuad::listenBackToForeground(Object *obj)
+void ParticleSystemQuad::listenBackToForeground(EventCustom* event)
 {
     if (Configuration::getInstance()->supportsShareableVAO())
     {

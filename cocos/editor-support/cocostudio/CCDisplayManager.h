@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,7 +37,7 @@ class Bone;
  *  @js NA
  *  @lua NA
  */
-class  DisplayManager : public cocos2d::Object
+class  DisplayManager : public cocos2d::Ref
 {
 public:
     static DisplayManager *create(Bone *bone);
@@ -74,6 +74,12 @@ public:
 
     const cocos2d::Vector<DecorativeDisplay*>& getDecorativeDisplayList() const;
 
+    /*
+     * @deprecated, please use changeDisplayWithIndex and changeDisplayWithName
+     */
+    CC_DEPRECATED_ATTRIBUTE void changeDisplayByIndex(int index, bool force);
+    CC_DEPRECATED_ATTRIBUTE void changeDisplayByName(const std::string& name, bool force);
+    
     /**
      * Change display by index. You can just use this method to change display in the display list.
      * The display list is just used for this bone, and it is the displays you may use in every frame.
@@ -83,9 +89,8 @@ public:
      * @param index The index of the display you want to change
      * @param force If true, then force change display to specified display, or current display will set to  display index edit in the flash every key frame.
      */
-    void changeDisplayByIndex(int index, bool force);
-
-    void changeDisplayByName(const std::string& name, bool force);
+    void changeDisplayWithIndex(int index, bool force);
+    void changeDisplayWithName(const std::string& name, bool force);
 
     cocos2d::Node *getDisplayRenderNode() const;
     DisplayType getDisplayRenderNodeType() const;

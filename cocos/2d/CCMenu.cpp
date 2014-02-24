@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -346,7 +347,7 @@ void Menu::alignItemsInColumns(int columns, va_list args)
 void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
 {
     int height = -5;
-    int row = 0;
+    size_t row = 0;
     int rowHeight = 0;
     int columnsOccupied = 0;
     int rowColumns = 0;
@@ -441,7 +442,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
 
     int width = -10;
     int columnHeight = -5;
-    int column = 0;
+    size_t column = 0;
     int columnWidth = 0;
     int rowsOccupied = 0;
     int columnRows;

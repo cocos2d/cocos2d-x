@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,8 +28,9 @@
 #define _COCOS2D_CCLABEL_H_
 
 #include "CCSpriteBatchNode.h"
-#include "CCLabelTextFormatProtocol.h"
 #include "ccTypes.h"
+#include "renderer/CCCustomCommand.h"
+#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
@@ -48,29 +50,54 @@ enum class LabelEffect {
     GLOW
 };
 
-//fwd
-struct FontLetterDefinition;
-class FontAtlas;
+typedef struct _ttfConfig
+{
+    std::string fontFilePath;
+    int fontSize;
+    GlyphCollection glyphs;
+    const char *customGlyphs;
+    bool distanceFieldEnabled;
 
+    _ttfConfig(const char* filePath,int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
+        const char *customGlyphCollection = nullptr,bool useDistanceField = false)
+        :fontFilePath(filePath)
+        ,fontSize(size)
+        ,glyphs(glyphCollection)
+        ,customGlyphs(customGlyphCollection)
+        ,distanceFieldEnabled(useDistanceField)
+    {}
+}TTFConfig;
 
-
-class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public LabelTextFormatProtocol
+class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
-    
-    // static create
-    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
-    
-    static Label* createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
-    
-    bool setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
+    static Label* create();
 
+    CC_DEPRECATED_ATTRIBUTE static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::LEFT, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
+    static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::LEFT, int lineWidth = 0);
+    
+    static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment = TextHAlignment::LEFT, int lineWidth = 0, const Point& imageOffset = Point::ZERO);
+    
+    static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(const std::string& plistFile);
+
+    bool setTTFConfig(const TTFConfig& ttfConfig);
+
+    bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
+
+    bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(const std::string& plistFile);
+
+    virtual void setString(const std::string& text) override;
+
+    //only support for TTF
     void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
     
-    virtual void setString(const std::string &stringToRender) override;
-    void setString(const std::string &stringToRender,bool multilineEnable);
     virtual void setAlignment(TextHAlignment alignment);
-    virtual void setWidth(float width);
+    CC_DEPRECATED_ATTRIBUTE void setWidth(float width) { setMaxLineWidth(width);}
+    virtual void setMaxLineWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale) override;
     virtual void setScaleX(float scaleX) override;
@@ -81,98 +108,103 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
     virtual void setColor(const Color3B& color) override;
-    
-     // CCLabelTextFormat protocol implementation
-    virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
-    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) override;
-    virtual bool recordPlaceholderInfo(int spriteIndex) override;
-    virtual float getLetterPosXLeft( int index ) const override;
-    virtual float getLetterPosXRight( int index ) const override;
 
-    virtual Sprite * getLetter(int ID) override;
-    
+    virtual Sprite * getLetter(int lettetIndex);
+
     // font related stuff
-    virtual int getCommonLineHeight() const override;
-    virtual int getKerningForCharsPair(unsigned short first, unsigned short second) const override;
-    virtual int getXOffsetForChar(unsigned short c) const override;
-    virtual int getYOffsetForChar(unsigned short c) const override;
-    virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const override;
-    virtual Rect getRectForChar(unsigned short c) const override;
+    virtual int getCommonLineHeight() const;  
+
     
     // string related stuff
-    virtual int getStringNumLines() const override;
-    virtual int getStringLenght() const override;
-    virtual unsigned short getCharAtStringPosition(int position) const override;
-    virtual unsigned short * getUTF8String() const override;
-    virtual void assignNewUTF8String(unsigned short *newString) override;
-    virtual TextHAlignment getTextAlignment() const override;
+    virtual int getStringNumLines() const;
+    virtual int getStringLenght() const;
+    virtual TextHAlignment getTextAlignment() const;
     
     // label related stuff
-    virtual float getMaxLineWidth() const override;
-    virtual bool breakLineWithoutSpace() const override;
-    virtual Size getLabelContentSize() const override;
-    virtual void setLabelContentSize(const Size &newSize) override;
+    virtual float getMaxLineWidth() const;
+    virtual bool breakLineWithoutSpace() const;
     
-    // carloX
-    virtual const std::string& getString() const override { static std::string _ret("not implemented"); return _ret; }
+    virtual const std::string& getString() const override {  return _originalUTF8String; }
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
+    virtual void visit() override;
     virtual void draw(void) override;
+    virtual void onDraw();
+
+    virtual FontAtlas* getFontAtlas() const {return _fontAtlas;}
 
 private:
-    /**
-     * @js NA
-     */
-    Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField = false,bool useA8Shader = false);
-    /**
-     * @js NA
-     * @lua NA
-     */
-   ~Label();
-    
-    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0, bool useDistanceField = false,bool useA8Shader = false);
+    struct LetterInfo
+    {
+        FontLetterDefinition def;
 
-    void setFontSize(int fontSize);
-    
+        Point position;
+        Size  contentSize;
+    };
+    /**
+    * @js NA
+    */
+    Label(FontAtlas *atlas = nullptr, TextHAlignment alignment = TextHAlignment::LEFT, bool useDistanceField = false,bool useA8Shader = false);
+    /**
+    * @js NA
+    * @lua NA
+    */
+    ~Label();
+
+    bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+
+    // CCLabelTextFormat protocol implementation
+    virtual bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
+    virtual bool recordPlaceholderInfo(int spriteIndex);
+
+    void setFontScale(float fontScale);
+
     bool init();
     
     void alignText();   
     
-    bool computeAdvancesForString(unsigned short int *stringToRender);
+    bool computeHorizontalKernings(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
     void resetCurrentString();
+    void computeStringNumLines();
 
-    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);
+    void updateSpriteWithLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture);
 
     virtual void updateColor() override;
 
-    
     //! used for optimization
-    Sprite              *_reusedLetter;
-    std::vector<LetterInfo>     _lettersInfo;       
-   
-    bool                        _multilineEnable;
-    float                       _commonLineHeight;
-    bool                        _lineBreakWithoutSpaces;
-    float                       _width;
-    TextHAlignment              _alignment;
-    unsigned short int *        _currentUTF16String;
-    unsigned short int *        _originalUTF16String;
-    Size               *        _advances;
-    FontAtlas          *        _fontAtlas;
-    bool                        _isOpacityModifyRGB;
+    Sprite *_reusedLetter;
+    Rect _reusedRect;
+    std::vector<LetterInfo> _lettersInfo;
 
-    bool                        _useDistanceField;
-    bool                        _useA8Shader;
-    int                         _fontSize;
+    float _commonLineHeight;
+    bool  _lineBreakWithoutSpaces;
+    float _maxLineWidth;
+    TextHAlignment _alignment;
+    unsigned short int * _currentUTF16String;
+    unsigned short int * _originalUTF16String;
+    std::string          _originalUTF8String;
+    int * _horizontalKernings;
+    FontAtlas * _fontAtlas;
+    bool _isOpacityModifyRGB;
 
-    LabelEffect                 _currLabelEffect;
-    Color3B                     _effectColor;
+    bool _useDistanceField;
+    bool _useA8Shader;
+    float _fontScale;
 
-    GLuint                      _uniformEffectColor;
-    
+    LabelEffect _currLabelEffect;
+    Color3B _effectColor;
+
+    GLuint _uniformEffectColor;
+
+    CustomCommand _customCommand;
+    int           _currNumLines;
+
+    std::vector<SpriteBatchNode*> _batchNodes;
+
+    friend class LabelTextFormatter;
 };
 
 

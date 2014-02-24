@@ -1,31 +1,185 @@
-cocos2d-x-3.0beta0 ?? 2013
+cocos2d-x-3.0rc0 Feb.?? 2014
 [All]
+     [NEW]          Action: RotateBy supports 3D rotations
+     [NEW]          Bindings: Using python to automatically generate script bindings
+     [NEW]          Bindings: Added JS bindings support for Linux
+     [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
+     [NEW]          Console: Added more commands: director resume|pause|stopanimation|startanimation.
+     [NEW]          Director: Displays 'Vertices drawn' in the stats. Useful to measure performance.
+     [NEW]          Node: Added set/get Position3D() and set/get Rotation3D()
+                    Node: Calculates rotation X and Y correctly.
+                    Node: set/get VertexZ() -> set/get PositionZ()
+                    Node: setRotationX() -> setRotationSkewX()
+                    Node: setRotationY() -> setRotationSkewY()
+     [NEW]          Language: Added Dutch support.
+     [NEW]          Sprite: Added auto-culling support
+
+     [FIX]          Character would not be aligned on the baseline when label using distance field.
+     [FIX]          Adds a macro to disable inserting script binding relevant codes.
+     [FIX]          Removing child from TMXLayer may cause crash.
+     [FIX]          Voice recognition input would cause crash on ios7.
+     [FIX]          Object which isn't in Vector would also be released when invoking Vector::eraseObject.
+     [FIX]          Potential crash when websocket connection closes.
+     [FIX]          No callback is invoked when websocket connection fails.
+     [FIX]          s3tc compressed textures with no mipmaps fail to be loaded.
+     [FIX]          Get rid of 'Object', rename it to 'Ref', delete non-reference stuff 'isEqual' and 'update'.
+     [FIX]          Merge cocostudio/CCActionXxx to CCAction.
+     [FIX]          Supports 'setTimeout' and 'setInterval' in JSB.
+     [FIX]          Exposes the missing data structures of Spine to JS.
+     [FIX]          Node::setRotation() moves opposite when node has a physics body.
+     [FIX]          A string which only contains CJK characters can't make a line-break when it's needed.
+     [FIX]          EGLView improvements: renamed to GLView, no longer a singleton, easier to customize
+     [FIX]          Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo.
+     [FIX]          cc.BuilderReader.load( path, null, parentSize ); was not allowed.
+
+cocos2d-x-3.0beta2 Jan.24 2014
+[All]
+     [NEW]          Full screen support for desktop platforms.
+     [NEW]          Adds performance test for EventDispatcher.
+     [NEW]          Adds performance test for Containers(Vector<>, Array, Map<K,V>, Dictionary).
+     [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
+     [NEW]          GLCache: glActiveTexture() is cached with GL::activeTexture(). All code MUST call the cached version in order to work correctly
+     [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
+     [NEW]          Label: Integrates LabelAtlas into new Label.
+     [NEW]          Node: Added `setGlobalZOrder()`. Useful to change the Node's render order. Node::setZOrder() -> Node::setLocalZOrder()
+     [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
+     
+     [FIX]          event->stopPropagation can't work for EventListenerTouchAllAtOnce.
+     [FIX]          Uses unified `desktop/CCEGLView.h/cpp` for desktop platforms (windows, mac, linux).
+     [FIX]          Bindings-generator supports Windows again and remove dependency of LLVM since we only need binary(libclang.so/dll).
+     [FIX]          Removes unused files for MAC platform after using glfw3 to create opengl context.
+     [FIX]          Wrong arithmetic of child's position in ParallaxNode::addChild()
+     [FIX]          CocoStudio: TestColliderDetector in ArmatureTest can't work.
+     [FIX]          CocoStudio: The order of transform calculation in Skin::getNodeToWorldTransform() is incorrect.
+     [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
+     [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
+     [FIX]          Label: Memory leak in FontFreeType::createFontAtlas().
+     [FIX]          Label: Crash when using unknown characters.
+     [FIX]          Label: Missing line breaks and wrong alignment.
+     [FIX]          Label: Corrupt looking characters and incorrect spacing between characters
+     [FIX]          Label: Label:color and opacity settings are invalid afeter these these properties changed: 1)text content changed 2)align style changed 3)max line width limited
+     [FIX]          Label: Crash when using unknown characters
+     [FIX]          Console: log(format, va_args) is private to prevent possible resolution errors
+     [FIX]          Configuration: dumpInfo() -> getInfo()
+     [FIX]          ControlSlider doesn't support to set selected thumb sprite.
+     [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
+     [FIX]          Particles: Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [FIX]          Renderer: Uses a float as key with only the depth. Viewport, opaque are not needed now
+     [FIX]          Renderer Performance Fix: QuadCommand::init() does not copy the Quads, it only store a reference making the code faster
+     [FIX]          Renderer Performance Fix: Sprite and SpriteBatchNode (and subclasses) has much better performance
+     [FIX]          Renderer Performance Fix: When note using VAO, call glBufferData() instead of glBufferSubData().
+     [FIX]          Renderer Performance Fix: Doesn't sort z=0 elements. It also uses sort() instead of stable_sort() for z!=0.
+     [FIX]          Sprite: removed _hasChildren optimization. It uses !_children.empty() now which is super fast as well
+     [FIX]          Tests: Sprites Performance Test has 4 new tests
+     [FIX]          TextureCache: getTextureForKey and removeTextureForKey work as expected
+     [FIX]          TextureCache: dumpCachedTextureInfo() -> getCachedTextureInfo()
+     [FIX]          Websocket doesn't support send/receive data which larger than 4096 bytes.
+     [FIX]          Object: Remove _retainCount
+     [FIX]          ParallaxNode: Coordinate of Sprite may be wrong after being added into ParallaxNode
+     [FIX]          Crash if there is not `textureFileName`section in particle plist file
+     [FIX]          Websocket cannot send/receive more than 4096 bytes data
+     [FIX]          TextureCache::addImageAsync can't load first image
+     [FIX]          ControlSlider: Can not set "selected thumb sprite"
+     [FIX]          ControlSlider: Can not set "scale ratio"
+     [FIX]          Crash when loading tga format image
+     [FIX]          Keyboard pressed events are being repeatedly fired before keyboard is released
+[Android]
+     [FIX]          Background music can't be resumed when back from foreground
+     [FIX]          ANR (Application Not Responding) appears on android 2.3 when pressing hardware button.
+[lua binding]
+     [NEW]          Can bind classes that have the same class names but different namesapces
+     [FIX]          Use EventDispatcher to update some test cases
+     [FIX]          sp.SkeletonAnimation:registerScriptHandler should not override cc.Node:registerScriptHandler
+[javascript binding]
+     [NEW]          Bind SAXParser
+     [FIX]          Pure JS class that wants to inherite from cc.Class will trigger an irrelevant log
+     [FIX]          Mac and iOS Simulator should also use SpiderMonkey which was built in RELEASE mode
+     [FIX]          Crash when running JSB projects on iOS device in DEBUG mode
+     [FIX]          Crash when Firefox connects to JSB application on Mac platform.
+[Desktop]
+     [NEW]          Support fullscreen
+[Linux]
+     [FIX]          "Testing empty labels" in LabelTest crashes.
+[Mac]
+     [FIX]          Removes unused files after using glfw3 to create opengl context
+[Win32]
+     [FIX]          Compiling error when using x64 target
+     [FIX]          Tests: TestCpp works with CMake
+     [FIX]          Bindings-generator supports Windows again and remove dependency of LLVM since it only needs binary of libclang
+
+cocos2d-x-3.0beta Jan.7 2014
+[All]
+     [NEW]          New label: shadow, outline, glow support
+     [NEW]          AngelCode binary file format support for LabelBMFont
+     [NEW]          New spine runtime support
+     [NEW]          Add templated containers, such as `cocos2d::Map<>` and `cocos2d::Vector<>`
+     [NEW]          TextureCache::addImageAsync() uses std::function<> as call back
+     [NEW]          Namespace changed: network -> cocos2d::network, gui -> cocos2d::gui
+     [NEW]          Added more CocoStudioSceneTest samples.
+     [NEW]          Added UnitTest for Vector<T>, Map<K, V>, Value.
+     [NEW]          AngelCode binary file format support for LabelBMFont.
+     [NEW]          New renderer: Scene graph and Renderer are decoupled now.
      [NEW]          Upgrated Box2D to 2.3.0
      [NEW]          SChedule::performFunctionInCocosThread()
      [NEW]          Added tga format support again.
+     [NEW]          Adds UnitTest for Template container and Value class
      [FIX]          A Logic error in ControlUtils::RectUnion.
      [FIX]          Bug fixes for Armature, use Vector<T>, Map<K, V> instead of Array, Dictionary.
      [FIX]          Used c++11 range loop(highest performance) instead of other types of loop.
      [FIX]          Removed most hungarian notations.
      [FIX]          Merged NodeRGBA to Node.
-     [NEW]          New renderer support.
      [FIX]          Potential hash collision fix.
      [FIX]          Updates spine runtime to the latest version.
      [FIX]          Uses `const std::string&` instead of `const char*`.
      [FIX]          LabelBMFont string can't be shown integrally.
      [FIX]          Deprecates FileUtils::getFileData, adds FileUtils::getStringFromFile/getDataFromFile.
      [FIX]          GUI refactoring: Removes UI prefix, Widget is inherited from Node, uses new containers(Vector<T>, Map<K,V>).
+     [FIX]          String itself is also modified in `String::componentsSeparatedByString`.
+     [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
+     [FIX]          Crash if connection breaks during download using AssetManager.   
+     [FIX]          OpenAL context isn't destroyed correctly on mac and ios.
+     [FIX]          Useless conversion in ScrollView::onTouchBegan.
+     [FIX]          Two memory leak fixes in EventDispatcher::removeEventListener(s).  
+     [FIX]          CCTMXMap doesn't support TMX files reference external TSX files
+     [FIX]          Logical error in `CallFuncN::clone()`   
+     [FIX]          Child's opacity will not be changed when its parent's cascadeOpacityEnabled was set to true and opacity was changed
+     [FIX]          Disallow copy and assign for Scene Graph + Actions objects
+     [FIX]          XMLHttpRequest receives wrong binary array
+     [FIX]          XMLHttpRequest.status needs to be assigned even when connection fails
+     [FIX]          TextureCache::addImageAsync may load a image even it is loaded in GL thread
+     [FIX]          EventCustom shouldn't use std::hash to generate unique ID, because the result is not unique 
+     [FIX]          CC_USE_PHYSICS is actually impossible to turn it off
+     [FIX]          Crash if connection breaks during download using AssetManager
+     [FIX]          Project_creator supports creating project at any folder and supports UI
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
-     [FIX]          XMLHttpRequest receives wrong binary array.
      [NEW]          Bindings-generator supports to bind 'unsigned long'.
+     [FIX]          XMLHttpRequest receives wrong binary array.
      [FIX]          'Test Frame Event' of TestJavascript/CocoStudioArmatureTest Crashes.
      [FIX]          UserDefault::getDoubleForKey() doesn't pass default value to Java.
+[iOS]
+     [FIX]          Infinite loop in UserDefault's destructor
 [Windows]
      [NEW]          CMake support for windows.
 [Bindings]
-     [FIX]          Don't bind override functions for JSB and LuaBining since they aren't needed at all.
+     [NEW]          Support CocoStudio v1.2
      [NEW]          Adds spine JS binding support.
+     [FIX]          Don't bind override functions for JSB and LuaBining since they aren't needed at all.
+     [FIX]          The order of onEnter and onExit is wrong.
+     [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA.
+     [FIX]          Bindings-generator doesn't support 'unsigned long'
+     [FIX]          Potential hash collision by using typeid(T).hash_code() in JSB and LuaBinding
+[Lua binding]
+     [NEW]          New label support
+     [NEW]          Physcis integrated support
+     [NEW]          EventDispatcher support
+     [FIX]          CallFuncND + auto remove lua test case have no effect
+     [FIX]          Lua gc will cause correcsponding c++ object been released
+     [FIX]          Some lua manual binding functions don't remove unneeded element in the lua stack
+     [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA
+[Javascript binding]
+     [FIX]          `onEnter` event is triggered after children's `onEnter` event
      
 cocos2d-x-3.0alpha1 Nov.19 2013
 [all platforms]
@@ -699,7 +853,7 @@ cocos2d-2.0-x-2.0.2 @Aug.30 2012
     Refactor  #1399: adjust directory structure
     Refactor  #1402: improve static creator function names to avoid confusion
     Refactor  #1413: improve CCTouch::getLocation(), getDelta() which returns OpenGL coordinates directly
-    Refactor  #1437: change the return type of CCApplication::sharedApplication() and CCEGLView::sharedOpenGLView() to a pointer
+    Refactor  #1437: change the return type of CCApplication::sharedApplication() and CCGLView::sharedOpenGLView() to a pointer
     Refactor  #1441: put hd and iPad resources of TestCpp into separate directories
     Refactor  #1442: use CREATE_FUNC to replace LAYER_CREATE_FUNC and SCENE_CREATE_FUNC
  [iOS]
@@ -733,7 +887,7 @@ cocos2d-2.0-rc2-x-2.0.1 @Jun.28 2012
     Bug       #1293: fix a bug that CCDirector::getFrames() returns wrong value
     Bug       #1296: fix a logical error in CCTMXTiledMap::tilesetForLayer()
     Bug       #1300: fix a typo of CC_ENABLE_CACHE_TEXTTURE_DATA
-    Bug       #1301: apply scissor with points in CCEGLView::sharedOpenGLView().setScissorInPoints()
+    Bug       #1301: apply scissor with points in CCGLView::sharedOpenGLView().setScissorInPoints()
     Bug       #1302: change the parameter type of CCMenu::setHandlerPriority to signed int
     Bug       #1308: fix a logical bug in CCTouchDispatcher
     Bug       #1326: fix a bug that the compilation of HelloLua and testjs project was broken after synchronizing to rc2

@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,6 +29,7 @@
 #include "CCPlatformMacros.h"
 #include <stdint.h> // for ssize_t on android
 #include <string>   // for ssize_t on linux
+#include "CCStdC.h" // for ssize_t on window
 
 NS_CC_BEGIN
 

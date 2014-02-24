@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Jason Booth
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,16 +35,17 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "platform/CCFileUtils.h"
 #include "CCGL.h"
-#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCGrid.h"
 
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -66,15 +68,11 @@ RenderTexture::RenderTexture()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
     // Then it can be restored after coming to foreground on Android.
-    NotificationCenter::getInstance()->addObserver(this,
-                                                                  callfuncO_selector(RenderTexture::listenToBackground),
-                                                                  EVENT_COME_TO_BACKGROUND,
-                                                                  nullptr);
-    
-    NotificationCenter::getInstance()->addObserver(this,
-                                                                  callfuncO_selector(RenderTexture::listenToForeground),
-                                                                  EVNET_COME_TO_FOREGROUND, // this is misspelt
-                                                                  nullptr);
+    auto toBackgroundListener = EventListenerCustom::create(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(RenderTexture::listenToBackground, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(toBackgroundListener, this);
+
+    auto toForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(RenderTexture::listenToForeground, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(toForegroundListener, this);
 #endif
 }
 
@@ -89,14 +87,9 @@ RenderTexture::~RenderTexture()
         glDeleteRenderbuffers(1, &_depthRenderBufffer);
     }
     CC_SAFE_DELETE(_UITextureImage);
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
-#endif
 }
 
-void RenderTexture::listenToBackground(cocos2d::Object *obj)
+void RenderTexture::listenToBackground(EventCustom *event)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CC_SAFE_DELETE(_UITextureImage);
@@ -124,7 +117,7 @@ void RenderTexture::listenToBackground(cocos2d::Object *obj)
 #endif
 }
 
-void RenderTexture::listenToForeground(cocos2d::Object *obj)
+void RenderTexture::listenToForeground(EventCustom *event)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture
@@ -329,10 +322,9 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     this->begin();
 
     //clear screen
-    CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
-    clearCmd->init(0, _vertexZ);
-    clearCmd->func = CC_CALLBACK_0(RenderTexture::onClear, this);
-    Director::getInstance()->getRenderer()->addCommand(clearCmd);
+    _beginWithClearCommand.init(_globalZOrder);
+    _beginWithClearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
+    Director::getInstance()->getRenderer()->addCommand(&_beginWithClearCommand);
 }
 
 //TODO find a better way to clear the screen, there is no need to rebind render buffer there.
@@ -348,11 +340,10 @@ void RenderTexture::clearDepth(float depthValue)
 
     this->begin();
 
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(RenderTexture::onClearDepth, this);
+    _clearDepthCommand.init(_globalZOrder);
+    _clearDepthCommand.func = CC_CALLBACK_0(RenderTexture::onClearDepth, this);
 
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_clearDepthCommand);
 
     this->end();
 }
@@ -455,10 +446,23 @@ Image* RenderTexture::newImage(bool fliimage)
             break;
         }
 
-        this->begin();
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+
+        //TODO move this to configration, so we don't check it every time
+        /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+         */
+        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+        {
+            // -- bind a temporary texture so we can clear the render buffer without losing our texture
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
+            CHECK_GL_ERROR_DEBUG();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
+        }
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
-        this->end();
+        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 
         if ( fliimage ) // -- flip is only required when saving image to file
         {
@@ -508,7 +512,7 @@ void RenderTexture::onBegin()
     float heightRatio = size.height / texSize.height;
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
+    glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 
 
     kmMat4 orthoMatrix;
@@ -614,10 +618,9 @@ void RenderTexture::draw()
         begin();
 
         //clear screen
-        CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
-        clearCmd->init(0, _vertexZ);
-        clearCmd->func = CC_CALLBACK_0(RenderTexture::onClear, this);
-        Director::getInstance()->getRenderer()->addCommand(clearCmd);
+        _clearCommand.init(_globalZOrder);
+        _clearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
+        Director::getInstance()->getRenderer()->addCommand(&_clearCommand);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -642,30 +645,48 @@ void RenderTexture::begin()
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
+    
+    Director *director = Director::getInstance();
+    director->setProjection(director->getProjection());
+    
+    const Size& texSize = _texture->getContentSizeInPixels();
+    
+    // Calculate the adjustment ratios based on the old and new projections
+    Size size = director->getWinSizeInPixels();
+    float widthRatio = size.width / texSize.width;
+    float heightRatio = size.height / texSize.height;
+    
+    kmMat4 orthoMatrix;
+    kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+                                 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+    kmGLMultMatrix(&orthoMatrix);
 
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
-    groupCommand->init(0, _vertexZ);
+    _groupCommand.init(_globalZOrder);
 
     Renderer *renderer =  Director::getInstance()->getRenderer();
-    renderer->addCommand(groupCommand);
-    renderer->pushGroup(groupCommand->getRenderQueueID());
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    CustomCommand* beginCmd = CustomCommand::getCommandPool().generateCommand();
-    beginCmd->init(0, _vertexZ);
-    beginCmd->func = CC_CALLBACK_0(RenderTexture::onBegin, this);
+    _beginCommand.init(_globalZOrder);
+    _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
 
-    Director::getInstance()->getRenderer()->addCommand(beginCmd);
+    Director::getInstance()->getRenderer()->addCommand(&_beginCommand);
 }
 
 void RenderTexture::end()
 {
-    CustomCommand* endCmd = CustomCommand::getCommandPool().generateCommand();
-    endCmd->init(0, _vertexZ);
-    endCmd->func = CC_CALLBACK_0(RenderTexture::onEnd, this);
+    _endCommand.init(_globalZOrder);
+    _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
     Renderer *renderer = Director::getInstance()->getRenderer();
-    renderer->addCommand(endCmd);
+    renderer->addCommand(&_endCommand);
     renderer->popGroup();
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
 }
 
 NS_CC_END

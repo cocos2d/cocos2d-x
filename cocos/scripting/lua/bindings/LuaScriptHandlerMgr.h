@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #ifndef __LUA_SCRIPT_HANDLER_MGR_H__
 #define __LUA_SCRIPT_HANDLER_MGR_H__
 
@@ -7,7 +30,7 @@ extern "C" {
 }
 
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccMacros.h"
 #include "CCActionInstant.h"
 #include <vector>
@@ -21,7 +44,7 @@ class ScheduleHandlerDelegate;
 typedef std::vector<ScheduleHandlerDelegate*> VecShedule;
 typedef std::map<cocos2d::Node*,VecShedule> MapNodeSchedules;
 
-class ScheduleHandlerDelegate:public cocos2d::Object
+class ScheduleHandlerDelegate:public cocos2d::Ref
 {
 public:
     ScheduleHandlerDelegate():_isUpdateSchedule(false)
@@ -67,7 +90,6 @@ public:
     {
         NODE = 0,
         MENU_CLICKED,
-        NOTIFICATION,
         CALLFUNC,
         SCHEDULE,
         TOUCHES,
@@ -108,26 +130,36 @@ public:
         ASSETSMANAGER_SUCCESS,
         ASSETSMANAGER_ERROR,
         
-        EVENT_LISTENER,
+        STUDIO_EVENT_LISTENER,
         ARMATURE_EVENT,
         
-        EVENTLISTENER_ACC,
-        EVENTLISTENER_CUSTIOM,
+        EVENT_ACC,
+        EVENT_CUSTIOM,
         
-        EVENTLISTENER_KEYBOARD_PRESSED,
-        EVENTLISTENER_KEYBOARD_RELEASE,
+        EVENT_KEYBOARD_PRESSED,
+        EVENT_KEYBOARD_RELEASED,
         
-        EVENTLISTENER_TOUCH_BEGAN,
-        EVENTLISTENER_TOUCH_MOVED,
-        EVENTLISTENER_TOUCH_ENDED,
-        EVENTLISTENER_TOUCH_CANCELLED,
+        EVENT_TOUCH_BEGAN,
+        EVENT_TOUCH_MOVED,
+        EVENT_TOUCH_ENDED,
+        EVENT_TOUCH_CANCELLED,
         
-        EVENTLISTENER_MOUSE_DOWN,
-        EVENTLISTENER_MOUSE_UP,
-        EVENTLISTENER_MOUSE_MOVE,
-        EVENTLISTENER_MOUSE_SCROLL,
+        EVENT_TOUCHES_BEGAN,
+        EVENT_TOUCHES_MOVED,
+        EVENT_TOUCHES_ENDED,
+        EVENT_TOUCHES_CANCELLED,
         
-        SPINE_EVENT,
+        EVENT_MOUSE_DOWN,
+        EVENT_MOUSE_UP,
+        EVENT_MOUSE_MOVE,
+        EVENT_MOUSE_SCROLL,
+        
+        EVENT_SPINE,
+        
+        EVENT_PHYSICS_CONTACT_BEGIN,
+        EVENT_PHYSICS_CONTACT_PRESOLVE,
+        EVENT_PHYSICS_CONTACT_POSTSOLVE,
+        EVENT_PHYSICS_CONTACT_SEPERATE,
     };
     
     typedef int Handler;

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -142,7 +142,7 @@ Color4B BaseData::getColor()
     return Color4B(r, g, b, a);
 }
 
-const std::string& DisplayData::changeDisplayToTexture(const std::string& displayName)
+const std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
 {
     // remove .xxx
     std::string textureName = displayName;
@@ -153,7 +153,7 @@ const std::string& DisplayData::changeDisplayToTexture(const std::string& displa
         textureName = textureName.erase(startPos);
     }
 
-    return textureName.c_str();
+    return textureName;
 }
 
 DisplayData::DisplayData(void)
@@ -249,7 +249,7 @@ BoneData *ArmatureData::getBoneData(const std::string& boneName)
 FrameData::FrameData(void)
     : frameID(0)
     , duration(1)
-    , tweenEasing(Linear)
+    , tweenEasing(cocos2d::tweenfunc::Linear)
     , easingParamNumber(0)
     , easingParams(NULL)
     , isTween(true)
@@ -330,7 +330,7 @@ MovementData::MovementData(void)
     , durationTo(0)
     , durationTween(0)
     , loop(true)
-    , tweenEasing(Linear)
+    , tweenEasing(cocos2d::tweenfunc::Linear)
 {
 }
 

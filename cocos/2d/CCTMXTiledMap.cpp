@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -122,12 +123,12 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
             tileset = *iter;
             if (tileset)
             {
-                for( unsigned int y=0; y < size.height; y++ )
+                for( int y=0; y < size.height; y++ )
                 {
-                    for( unsigned int x=0; x < size.width; x++ ) 
+                    for( int x=0; x < size.width; x++ )
                     {
-                        unsigned int pos = (unsigned int)(x + size.width * y);
-                        unsigned int gid = layerInfo->_tiles[ pos ];
+                        int pos = static_cast<int>(x + size.width * y);
+                        int gid = layerInfo->_tiles[ pos ];
 
                         // gid are stored in little endian.
                         // if host is big endian, then swap
@@ -140,7 +141,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                         {
                             // Optimization: quick return
                             // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                            if( (gid & kFlippedMask) >= tileset->_firstGid )
+                            if( (gid & kTMXFlippedMask) >= tileset->_firstGid )
                                 return tileset;
                         }
                     }
@@ -173,7 +174,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
-            addChild((Node*)child, idx, idx);
+            addChild(child, idx, idx);
             
             // update content size with the max size
             const Size& childSize = child->getContentSize();
@@ -245,9 +246,19 @@ Value TMXTiledMap::getPropertiesForGID(int GID) const
     return Value();
 }
 
+bool TMXTiledMap::getPropertiesForGID(int GID, Value** value)
+{
+    if (_tileProperties.find(GID) != _tileProperties.end()) {
+        *value = &_tileProperties.at(GID);
+        return true;
+    } else {
+        return false;
+    }
+}
+
 std::string TMXTiledMap::getDescription() const
 {
-    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %zd", _tag, _children.size());
+    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %d", _tag, static_cast<int>(_children.size()));
 }
 
 

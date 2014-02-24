@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,13 +29,15 @@ THE SOFTWARE.
 #define __CCTEXTURE_ATLAS_H__
 
 #include "ccTypes.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccConfig.h"
 #include <string>
 
 NS_CC_BEGIN
 
 class Texture2D;
+class EventCustom;
+class EventListenerCustom;
 
 /**
  * @addtogroup textures
@@ -53,7 +56,7 @@ Supported features:
 The quads are rendered using an OpenGL ES VBO.
 To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
 */
-class CC_DLL TextureAtlas : public Object 
+class CC_DLL TextureAtlas : public Ref 
 {
 public:
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
@@ -184,7 +187,7 @@ public:
     void drawQuads();
     /** listen the event that coming to foreground on Android
      */
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(EventCustom* event);
 
     /** whether or not the array buffer of the VBO needs to be updated*/
     inline bool isDirty(void) { return _dirty; }
@@ -235,6 +238,10 @@ protected:
     Texture2D* _texture;
     /** Quads that are going to be rendered */
     V3F_C4B_T2F_Quad* _quads;
+    
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundlistener;
+#endif
 };
 
 // end of textures group

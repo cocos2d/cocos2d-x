@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -26,7 +27,7 @@ THE SOFTWARE.
 #define __EFFECTS_CCGRABBER_H__
 
 #include "CCConfiguration.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
@@ -39,7 +40,7 @@ class Texture2D;
  */
 
 /** FBO class that grabs the the contents of the screen */
-class Grabber : public Object
+class Grabber : public Ref
 {
 public:
     /**

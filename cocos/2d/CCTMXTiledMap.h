@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -144,6 +145,11 @@ public:
     Value getPropertiesForGID(int GID) const;
     CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
+    /** Assings properties to argument value, returns true if it did found properties 
+        for that GID and did assinged a value, else it returns false.
+     */
+    bool getPropertiesForGID(int GID, Value** value);
+
     /** the map's size property measured in tiles */
     inline const Size& getMapSize() const { return _mapSize; };
     inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
@@ -204,7 +210,7 @@ protected:
     ValueMap _properties;
     
     //! tile properties
-    IntValueMap _tileProperties;
+    ValueMapIntKey _tileProperties;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

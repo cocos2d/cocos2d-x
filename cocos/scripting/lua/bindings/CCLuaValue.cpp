@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -83,7 +84,7 @@ const LuaValue LuaValue::arrayValue(const LuaValueArray& arrayValue)
     return value;
 }
 
-const LuaValue LuaValue::ccobjectValue(Object* ccobjectValue, const char* objectTypename)
+const LuaValue LuaValue::ccobjectValue(Ref* ccobjectValue, const char* objectTypename)
 {
     LuaValue value;
     value._type = LuaValueTypeObject;
@@ -93,7 +94,7 @@ const LuaValue LuaValue::ccobjectValue(Object* ccobjectValue, const char* object
     return value;
 }
 
-const LuaValue LuaValue::ccobjectValue(Object* ccobjectValue, const std::string& objectTypename)
+const LuaValue LuaValue::ccobjectValue(Ref* ccobjectValue, const std::string& objectTypename)
 {
     return LuaValue::ccobjectValue(ccobjectValue, objectTypename.c_str());
 }

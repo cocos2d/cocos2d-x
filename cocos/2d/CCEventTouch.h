@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -60,7 +60,7 @@ private:
     EventCode _eventCode;
     std::vector<Touch*> _touches;
 
-    friend class EGLViewProtocol;
+    friend class GLViewProtocol;
 };
 
 

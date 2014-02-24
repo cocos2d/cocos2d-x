@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,6 +26,9 @@
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
+#include "ccConfig.h"
+#if CC_ENABLE_SCRIPT_BINDING
+
 #include "platform/CCCommon.h"
 #include "CCTouch.h"
 #include "CCEventTouch.h"
@@ -41,7 +45,6 @@ NS_CC_BEGIN
 class Timer;
 class Layer;
 class MenuItem;
-class NotificationCenter;
 class CallFunc;
 class Acceleration;
 
@@ -51,7 +54,7 @@ enum ccScriptType {
     kScriptTypeJavascript
 };
 
-class ScriptHandlerEntry : public Object
+class ScriptHandlerEntry : public Ref
 {
 public:
     static ScriptHandlerEntry* create(int handler);
@@ -59,7 +62,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~ScriptHandlerEntry(void);
+    virtual ~ScriptHandlerEntry();
     
     int getHandler(void) {
         return _handler;
@@ -100,7 +103,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~SchedulerScriptHandlerEntry(void);
+    virtual ~SchedulerScriptHandlerEntry();
     /**
      * @js NA
      * @lua NA
@@ -159,7 +162,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~TouchScriptHandlerEntry(void);
+    virtual ~TouchScriptHandlerEntry();
     /**
      * @js NA
      * @lua NA
@@ -201,7 +204,6 @@ enum ScriptEventType
 {
     kNodeEvent = 0,
     kMenuClickedEvent,
-    kNotificationEvent,
     kCallFuncEvent,
     kScheduleEvent,
     kTouchEvent,
@@ -210,16 +212,6 @@ enum ScriptEventType
     kAccelerometerEvent,
     kControlEvent,
     kCommonEvent,
-    kTableViewEvent,//Now it's only used in LuaBinding
-    kAssetsManagerEvent,//Now it's only used in Lua Binding
-    kCocoStudioEventListener,//Now it's only used in Lua Binding
-    kArmatureWrapper,//Now it's only used in Lua Binding
-    kEventListenerAcc,//Now it's only used in Lua Binding
-    kEventListenerKeyboard,//Now it's only used in Lua Binding
-    kEventListenerTouch,//Now it's only used in Lua Binding
-    kEventListenerTouches,//Now it's only used in Lua Binding
-    kEventListenerMouse,//Now it's only used in Lua Binding
-    kEventListenerCustom,////Now it's only used in Lua Binding
 };
 
 struct BasicScriptData
@@ -320,7 +312,7 @@ struct CommonScriptData
     // Now this struct is only used in LuaBinding.
     int handler;
     char eventName[64];
-    Object* eventSource;
+    Ref* eventSource;
     char eventSourceClassName[64];
     
     // Constructor
@@ -328,7 +320,7 @@ struct CommonScriptData
      * @js NA
      * @lua NA
      */
-    CommonScriptData(int inHandler,const char* inName,Object* inSource = nullptr,const char* inClassName = nullptr)
+    CommonScriptData(int inHandler,const char* inName, Ref* inSource = nullptr,const char* inClassName = nullptr)
     : handler(inHandler),
       eventSource(inSource)
     {
@@ -384,7 +376,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void removeScriptObjectByObject(Object* obj) = 0;
+    virtual void removeScriptObjectByObject(Ref* obj) = 0;
     
     /** Remove script function handler, only LuaEngine class need to implement this function. 
      * @js NA
@@ -438,6 +430,14 @@ public:
      * @lua NA
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    enum class ConfigType
+    {
+        NONE,
+        COCOSTUDIO
+    };
+    /** Parse configuration file */
+    virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
 };
 
 /**
@@ -504,5 +504,7 @@ private:
 /// @}
 
 NS_CC_END
+
+#endif // #if CC_ENABLE_SCRIPT_BINDING
 
 #endif // __SCRIPT_SUPPORT_H__

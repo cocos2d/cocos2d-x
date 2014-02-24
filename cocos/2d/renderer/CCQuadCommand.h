@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -37,48 +37,35 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
-    static RenderCommandPool<QuadCommand>& getCommandPool() { return _commandPool; }
 
     QuadCommand();
     ~QuadCommand();
 
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount,
+    void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const kmMat4& mv);
 
-    // +----------+----------+-----+-----------------------------------+
-    // |          |          |     |                |                  |
-    // | ViewPort | Transluc |     |      Depth     |  Material ID     |
-    // |   3 bits |    1 bit |     |    24 bits     |      24 bit2     |
-    // +----------+----------+-----+----------------+------------------+
-    virtual int64_t generateID();
-
-    void useMaterial();
+    void useMaterial() const;
 
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() const { return true; }
 
-    inline int32_t getMaterialID() const { return _materialID; }
+    void generateMaterialID();
+    inline uint32_t getMaterialID() const { return _materialID; }
 
     inline GLuint getTextureID() const { return _textureID; }
 
-    inline V3F_C4B_T2F_Quad* getQuad() const { return _quad; }
+    inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
 
-    inline ssize_t getQuadCount() const { return _quadCount; }
+    inline ssize_t getQuadCount() const { return _quadsCount; }
 
     inline GLProgram* getShader() const { return _shader; }
 
     inline BlendFunc getBlendType() const { return _blendType; }
+
+    inline const kmMat4& getModelView() const { return _mv; }
     
-    virtual void releaseToCommandPool() override;
-
 protected:
-    int32_t _materialID;
-
-    //Key Data
-    int _viewport;          /// Which view port it belongs to
-
-    //TODO use material to determine if it's translucent
-    int32_t _depth;
+    uint32_t _materialID;
 
     //Maternal
     GLuint _textureID;
@@ -88,15 +75,11 @@ protected:
 
     BlendFunc _blendType;
 
-    V3F_C4B_T2F_Quad* _quad;
-    ssize_t _quadCount;
-    ssize_t _capacity;
+    V3F_C4B_T2F_Quad* _quads;
+    ssize_t _quadsCount;
 
-    friend class RenderCommandPool<QuadCommand>;
-
-    static RenderCommandPool<QuadCommand> _commandPool;
+    kmMat4 _mv;
 };
-
 NS_CC_END
 
 #endif //_CC_QUADCOMMAND_H_

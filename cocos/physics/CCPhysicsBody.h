@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,14 +26,16 @@
 #define __CCPHYSICS_BODY_H__
 
 #include "ccConfig.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 #include "CCPhysicsShape.h"
 #include "CCVector.h"
 
 NS_CC_BEGIN
+
+class Node;
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
@@ -51,7 +53,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
-class PhysicsBody : public Object
+class PhysicsBody : public Ref
 {
 public:
     /** create a body with defult mass and moment. */
@@ -291,7 +293,7 @@ protected:
     virtual void setPosition(Point position);
     virtual void setRotation(float rotation);
     
-    virtual void update(float delta) override;
+    void update(float delta);
     
     void removeJoint(PhysicsJoint* joint);
     
@@ -300,29 +302,29 @@ protected:
     virtual ~PhysicsBody();
     
 protected:
-    Node*                       _node;
-    std::vector<PhysicsJoint*>  _joints;
-    Vector<PhysicsShape*>       _shapes;
-    PhysicsWorld*               _world;
-    PhysicsBodyInfo*            _info;
-    bool                        _dynamic;
-    bool                        _enable;
-    bool                        _rotationEnable;
-    bool                        _gravityEnable;
-    bool                        _massDefault;
-    bool                        _momentDefault;
-    float                       _mass;
-    float                       _area;
-    float                       _density;
-    float                       _moment;
-    float                       _linearDamping;
-    float                       _angularDamping;
-    int                         _tag;
+    Node* _node;
+    std::vector<PhysicsJoint*> _joints;
+    Vector<PhysicsShape*> _shapes;
+    PhysicsWorld* _world;
+    PhysicsBodyInfo* _info;
+    bool _dynamic;
+    bool _enable;
+    bool _rotationEnable;
+    bool _gravityEnable;
+    bool _massDefault;
+    bool _momentDefault;
+    float _mass;
+    float _area;
+    float _density;
+    float _moment;
+    float _linearDamping;
+    float _angularDamping;
+    int _tag;
     
-    int                         _categoryBitmask;
-    int                         _collisionBitmask;
-    int                         _contactTestBitmask;
-    int                         _group;
+    int _categoryBitmask;
+    int _collisionBitmask;
+    int _contactTestBitmask;
+    int _group;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

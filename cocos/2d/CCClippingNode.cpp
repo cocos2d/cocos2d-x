@@ -1,9 +1,9 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- * cocos2d-x: http://www.cocos2d-x.org
+ * Copyright (c) 2012      Pierre-David Bélanger
+ * Copyright (c) 2012      cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
- * Copyright (c) 2012 Pierre-David Bélanger
- * Copyright (c) 2012 cocos2d-x.org
+ * cocos2d-x: http://www.cocos2d-x.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,10 @@
 #include "CCShaderCache.h"
 #include "CCDirector.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
-#include "CCCustomCommand.h"
+
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -209,23 +210,37 @@ void ClippingNode::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
     
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
-    groupCommand->init(0,_vertexZ);
-    renderer->addCommand(groupCommand);
+    _groupCommand.init(_globalZOrder);
+    renderer->addCommand(&_groupCommand);
 
-    renderer->pushGroup(groupCommand->getRenderQueueID());
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    CustomCommand* beforeVisitCmd = CustomCommand::getCommandPool().generateCommand();
-    beforeVisitCmd->init(0,_vertexZ);
-    beforeVisitCmd->func = CC_CALLBACK_0(ClippingNode::onBeforeVisit, this);
-    renderer->addCommand(beforeVisitCmd);
+    _beforeVisitCmd.init(_globalZOrder);
+    _beforeVisitCmd.func = CC_CALLBACK_0(ClippingNode::onBeforeVisit, this);
+    renderer->addCommand(&_beforeVisitCmd);
+    if (_alphaThreshold < 1)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#else
+        // since glAlphaTest do not exists in OES, use a shader that writes
+        // pixel only if greater than an alpha threshold
+        GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+        // set our alphaThreshold
+        program->use();
+        program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+        // we need to recursively apply this shader to all the nodes in the stencil node
+        // XXX: we should have a way to apply shader to all nodes without having to do this
+        setProgram(_stencil, program);
+        
+#endif
 
+    }
     _stencil->visit();
 
-    CustomCommand* afterDrawStencilCmd = CustomCommand::getCommandPool().generateCommand();
-    afterDrawStencilCmd->init(0,_vertexZ);
-    afterDrawStencilCmd->func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
-    renderer->addCommand(afterDrawStencilCmd);
+    _afterDrawStencilCmd.init(_globalZOrder);
+    _afterDrawStencilCmd.func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
+    renderer->addCommand(&_afterDrawStencilCmd);
 
     int i = 0;
     
@@ -237,7 +252,7 @@ void ClippingNode::visit()
         {
             auto node = _children.at(i);
             
-            if ( node && node->getZOrder() < 0 )
+            if ( node && node->getLocalZOrder() < 0 )
                 node->visit();
             else
                 break;
@@ -253,10 +268,9 @@ void ClippingNode::visit()
         this->draw();
     }
 
-    CustomCommand* afterVisitCmd = CustomCommand::getCommandPool().generateCommand();
-    afterVisitCmd->init(0,_vertexZ);
-    afterVisitCmd->func = CC_CALLBACK_0(ClippingNode::onAfterVisit, this);
-    renderer->addCommand(afterVisitCmd);
+    _afterVisitCmd.init(_globalZOrder);
+    _afterVisitCmd.func = CC_CALLBACK_0(ClippingNode::onAfterVisit, this);
+    renderer->addCommand(&_afterVisitCmd);
 
     renderer->popGroup();
     
@@ -384,17 +398,7 @@ void ClippingNode::onBeforeVisit()
         // pixel will be drawn only if greater than an alpha threshold
         glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-        // since glAlphaTest do not exists in OES, use a shader that writes
-        // pixel only if greater than an alpha threshold
-        GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-        // set our alphaThreshold
-        program->use();
-        program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-        // we need to recursively apply this shader to all the nodes in the stencil node
-        // XXX: we should have a way to apply shader to all nodes without having to do this
-        setProgram(_stencil, program);
-
+        
 #endif
     }
 

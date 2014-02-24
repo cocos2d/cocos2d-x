@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,15 +31,18 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
-#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCDirector.h"
 #include "CCGL.h"
 #include "CCConfiguration.h"
+#include "renderer/CCRenderer.h"
+
 // support
 #include "CCTexture2D.h"
 #include "CCString.h"
 #include <stdlib.h>
+#include "CCEventDispatcher.h"
+#include "CCEventListenerCustom.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -51,6 +55,9 @@ TextureAtlas::TextureAtlas()
     ,_dirty(false)
     ,_texture(nullptr)
     ,_quads(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    ,_backToForegroundlistener(nullptr)
+#endif
 {}
 
 TextureAtlas::~TextureAtlas()
@@ -70,7 +77,7 @@ TextureAtlas::~TextureAtlas()
     CC_SAFE_RELEASE(_texture);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
 }
 
@@ -185,10 +192,8 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
-    NotificationCenter::getInstance()->addObserver(this,
-                                                           callfuncO_selector(TextureAtlas::listenBackToForeground),
-                                                           EVNET_COME_TO_FOREGROUND,
-                                                           nullptr);
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(TextureAtlas::listenBackToForeground, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
     
     this->setupIndices();
@@ -207,7 +212,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     return true;
 }
 
-void TextureAtlas::listenBackToForeground(Object *obj)
+void TextureAtlas::listenBackToForeground(EventCustom* event)
 {  
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -224,7 +229,7 @@ void TextureAtlas::listenBackToForeground(Object *obj)
 
 std::string TextureAtlas::getDescription() const
 {
-    return StringUtils::format("<TextureAtlas | totalQuads = %zd>", _totalQuads);
+    return StringUtils::format("<TextureAtlas | totalQuads = %d>", static_cast<int>(_totalQuads));
 }
 
 
@@ -621,11 +626,11 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
             // option 1: subdata
-            //glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-            
+//            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+
             // option 2: data
-            //      glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-            
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+
             // option 3: orphaning + glMapBuffer
             glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), nullptr, GL_DYNAMIC_DRAW);
             void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
@@ -694,7 +699,8 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    CC_INCREMENT_GL_DRAWS(1);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
+
     CHECK_GL_ERROR_DEBUG();
 }
 

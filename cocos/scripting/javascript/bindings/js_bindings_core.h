@@ -26,9 +26,6 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "cocos2d.h"
-#include "chipmunk.h"
-#include "SimpleAudioEngine.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,7 +68,7 @@ extern "C" {
 	
 	
 	// needed for callbacks. It does nothing.
-	JSBool JSB_do_nothing(JSContext *cx, uint32_t argc, jsval *vp);
+	bool JSB_do_nothing(JSContext *cx, uint32_t argc, jsval *vp);
 
 #ifdef __cplusplus
 }

@@ -16,6 +16,9 @@
     <Filter Include="cocos2dx_support\generated">
       <UniqueIdentifier>{19f563f0-e0ff-4500-890b-1755841d4ddb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocos2dx_support\socket">
+      <UniqueIdentifier>{8815bb6e-fc9c-4cbf-b190-8b47169ed71f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.cpp">
@@ -88,6 +91,72 @@
       <Filter>cocos2dx_support\generated</Filter>
     </ClCompile>
     <ClCompile Include="lua_cocos2dx_coco_studio_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_spine_auto.cpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_cocos2dx_spine_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaSkeletonAnimation.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto.cpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_cocos2dx_gui_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_cocos2dx_physics_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_physics_auto.cpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\auxiliar.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\except.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\inet.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\luasocket.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\luasocket_buffer.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\luasocket_io.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\mime.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\options.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\select.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\socket_scripts.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\tcp.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\timeout.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\udp.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\wsocket.c">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_extensions.c">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,12 +236,90 @@
     <ClInclude Include="lua_cocos2dx_coco_studio_manual.hpp">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_spine_auto.hpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_cocos2dx_spine_manual.hpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaSkeletonAnimation.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto.hpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_cocos2dx_gui_manual.hpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_cocos2dx_physics_manual.hpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_physics_auto.hpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\auxiliar.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\except.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\inet.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\luasocket.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\luasocket_buffer.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\luasocket_io.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\mime.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\options.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\select.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\socket.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\socket_scripts.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\tcp.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\timeout.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\udp.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\wsocket.h">
+      <Filter>cocos2dx_support\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_extensions.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto_api.js">
       <Filter>cocos2dx_support\generated</Filter>
     </None>
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_spine_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_physics_auto_api.js">
       <Filter>cocos2dx_support\generated</Filter>
     </None>
   </ItemGroup>

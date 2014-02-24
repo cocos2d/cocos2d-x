@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsWorld.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <climits>
 
@@ -207,7 +207,7 @@ void PhysicsWorld::debugDraw()
         {
             if (_debugDrawMask & DEBUGDRAW_SHAPE)
             {
-                for (Object* obj : _bodies)
+                for (Ref* obj : _bodies)
                 {
                     PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
                     
@@ -283,9 +283,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::BEGIN);
     contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
     
     return ret ? contact.resetResult() : false;
 }
@@ -300,9 +298,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -316,9 +312,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -330,9 +324,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
     contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data)

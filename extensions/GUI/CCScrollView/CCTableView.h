@@ -129,7 +129,7 @@ public:
      *
      * @return number of cells
      */
-    virtual long numberOfCellsInTableView(TableView *table) = 0;
+    virtual ssize_t numberOfCellsInTableView(TableView *table) = 0;
 
 };
 
@@ -148,6 +148,10 @@ public:
         TOP_DOWN,
         BOTTOM_UP
     };
+    
+    /** Empty contructor of TableView */
+    static TableView* create();
+    
     /**
      * An intialized table view object
      *

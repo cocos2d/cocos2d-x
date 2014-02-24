@@ -23,14 +23,12 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "CCEGLView.h"
+#include "cocos2d.h"
 
 USING_NS_CC;
 
 int main(int argc, char *argv[])
 {
     AppDelegate app;
-    EGLView eglView;
-    eglView.init("Hello World",900,640);
     return Application::getInstance()->run();
 }

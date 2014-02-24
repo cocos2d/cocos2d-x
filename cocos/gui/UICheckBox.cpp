@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UICheckBox.h"
 
@@ -28,11 +28,11 @@ NS_CC_BEGIN
 
 namespace gui {
     
-#define BACKGROUNDBOXRENDERERZ (-1)
-#define BACKGROUNDSELECTEDBOXRENDERERZ (-1)
-#define FRONTCROSSRENDERERZ (-1)
-#define BACKGROUNDBOXDISABLEDRENDERERZ (-1)
-#define FRONTCROSSDISABLEDRENDERERZ (-1)
+static const int BACKGROUNDBOX_RENDERER_Z = (-1);
+static const int BACKGROUNDSELECTEDBOX_RENDERER_Z = (-1);
+static const int FRONTCROSS_RENDERER_Z = (-1);
+static const int BACKGROUNDBOXDISABLED_RENDERER_Z = (-1);
+static const int FRONTCROSSDISABLED_RENDERER_Z = (-1);
 
 CheckBox::CheckBox():
 _backGroundBoxRenderer(nullptr),
@@ -92,11 +92,11 @@ void CheckBox::initRenderer()
     _backGroundBoxDisabledRenderer = Sprite::create();
     _frontCrossDisabledRenderer = Sprite::create();
         
-    Node::addChild(_backGroundBoxRenderer, BACKGROUNDBOXRENDERERZ, -1);
-    Node::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDSELECTEDBOXRENDERERZ, -1);
-    Node::addChild(_frontCrossRenderer, FRONTCROSSRENDERERZ, -1);
-    Node::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLEDRENDERERZ, -1);
-    Node::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLEDRENDERERZ, -1);
+    Node::addChild(_backGroundBoxRenderer, BACKGROUNDBOX_RENDERER_Z, -1);
+    Node::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDSELECTEDBOX_RENDERER_Z, -1);
+    Node::addChild(_frontCrossRenderer, FRONTCROSS_RENDERER_Z, -1);
+    Node::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLED_RENDERER_Z, -1);
+    Node::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLED_RENDERER_Z, -1);
 }
 
 void CheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)
@@ -316,7 +316,7 @@ void CheckBox::unSelectedEvent()
     }
 }
 
-void CheckBox::addEventListenerCheckBox(Object *target, SEL_SelectedStateEvent selector)
+void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
 {
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;

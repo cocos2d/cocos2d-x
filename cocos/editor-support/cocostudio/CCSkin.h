@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 #ifndef __CCSKIN_H__
 #define __CCSKIN_H__
+
+#include "CCSprite.h"
+#include "renderer/CCQuadCommand.h"
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
@@ -74,6 +77,7 @@ protected:
     Armature *_armature;
     kmMat4 _skinTransform;
     std::string _displayName;
+    cocos2d::QuadCommand _quadCommand;     // quad command
 };
 
 }

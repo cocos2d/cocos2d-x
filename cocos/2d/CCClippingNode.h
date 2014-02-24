@@ -1,9 +1,9 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- * cocos2d-x: http://www.cocos2d-x.org
+ * Copyright (c) 2012      Pierre-David Bélanger
+ * Copyright (c) 2012      cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
- * Copyright (c) 2012 Pierre-David Bélanger
- * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,8 @@
 
 #include "CCNode.h"
 #include "CCGL.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -141,6 +143,11 @@ protected:
     GLclampf _currentAlphaTestRef;
 
     GLint _mask_layer_le;
+    
+    GroupCommand _groupCommand;
+    CustomCommand _beforeVisitCmd;
+    CustomCommand _afterDrawStencilCmd;
+    CustomCommand _afterVisitCmd;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);

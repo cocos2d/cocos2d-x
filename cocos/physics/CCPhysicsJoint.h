@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,13 +26,14 @@
 #define __CCPHYSICS_JOINT_H__
 
 #include "ccConfig.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 NS_CC_BEGIN
 
+class Node;
 class PhysicsBody;
 class PhysicsWorld;
 class PhysicsJointInfo;

@@ -5,7 +5,6 @@
 #include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
-#include "jsb_cocos2dx_spine_auto.hpp"
 #include "cocos2d_specifics.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
@@ -27,51 +26,34 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *director = Director::getInstance();
-    director->setOpenGLView(EGLView::getInstance());
-    
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLView::create("My Game");
+        director->setOpenGLView(glview);
+    }
+
     // turn on display FPS
     director->setDisplayStats(true);
-    
+
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-    
+
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
-    sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_system);
     sc->start();
-    
+
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
-       
-    return true;
-}
 
-void handle_signal(int signal) {
-    static int internal_state = 0;
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    // should start everything back
-    Director* director = Director::getInstance();
-    if (director->getRunningScene()) {
-        director->popToRootScene();
-    } else {
-        PoolManager::sharedPoolManager()->finalize();
-        if (internal_state == 0) {
-            //sc->dumpRoot(NULL, 0, NULL);
-            sc->start();
-            internal_state = 1;
-        } else {
-            sc->runScript("hello.js");
-            internal_state = 0;
-        }
-    }
+    return true;
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too

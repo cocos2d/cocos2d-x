@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,20 +28,20 @@
 NS_CC_BEGIN
 
 RenderCommand::RenderCommand()
+: _type(RenderCommand::Type::UNKNOWN_COMMAND)
+, _globalOrder(0)
 {
-    _id = 0;
-    _type = RenderCommand::Type::UNKNOWN_COMMAND;
 }
 
 RenderCommand::~RenderCommand()
 {
 }
 
-void printBits(size_t const size, void const * const ptr)
+void printBits(ssize_t const size, void const * const ptr)
 {
     unsigned char *b = (unsigned char*) ptr;
     unsigned char byte;
-    int i, j;
+    ssize_t i, j;
 
     for (i=size-1;i>=0;i--)
     {
@@ -57,9 +57,7 @@ void printBits(size_t const size, void const * const ptr)
 
 void RenderCommand::printID()
 {
-    printf("CommandID: ");
-    printBits(sizeof(_id), &_id);
-    printf("\n");
+    printf("Command Depth: %f\n", _globalOrder);
 }
 
 NS_CC_END

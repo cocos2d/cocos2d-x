@@ -9,7 +9,8 @@
 #include "cocos2d_specifics.hpp"
 #include "gui/CocosGUI.h"
 
-using namespace gui;
+using namespace cocos2d;
+using namespace cocos2d::gui;
 
 class JSStudioEventListenerWrapper: public JSCallbackWrapper {
 public:
@@ -18,7 +19,7 @@ public:
 
     virtual void setJSCallbackThis(jsval thisObj);
 
-    virtual void eventCallbackFunc(Object*,int);
+    virtual void eventCallbackFunc(Ref*,int);
 
 private:
     bool m_bNeedUnroot;
@@ -54,7 +55,7 @@ void JSStudioEventListenerWrapper::setJSCallbackThis(jsval jsThisObj)
     }
 }
 
-void JSStudioEventListenerWrapper::eventCallbackFunc(Object* sender,int eventType)
+void JSStudioEventListenerWrapper::eventCallbackFunc(Ref* sender,int eventType)
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JSObject *thisObj = JSVAL_IS_VOID(_jsThisObj) ? NULL : JSVAL_TO_OBJECT(_jsThisObj);
@@ -77,12 +78,12 @@ void JSStudioEventListenerWrapper::eventCallbackFunc(Object* sender,int eventTyp
     }
 }
 
-static JSBool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UIWidget* cobj = (gui::UIWidget *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::Widget* cobj = (gui::Widget *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -96,18 +97,18 @@ static JSBool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t
         
         cobj->addTouchEventListener(tmpObj, toucheventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UICheckBox* cobj = (gui::UICheckBox *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::CheckBox* cobj = (gui::CheckBox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -121,18 +122,18 @@ static JSBool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t ar
 
         cobj->addEventListenerCheckBox(tmpObj, checkboxselectedeventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UISlider* cobj = (gui::UISlider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::Slider* cobj = (gui::Slider *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -146,18 +147,18 @@ static JSBool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc
 
         cobj->addEventListenerSlider(tmpObj, sliderpercentchangedselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UITextField* cobj = (gui::UITextField *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::TextField* cobj = (gui::TextField *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -171,18 +172,18 @@ static JSBool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t a
 
         cobj->addEventListenerTextField(tmpObj, textfieldeventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UIPageView* cobj = (gui::UIPageView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::PageView* cobj = (gui::PageView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -196,18 +197,18 @@ static JSBool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t ar
 
         cobj->addEventListenerPageView(tmpObj, pagevieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UIListView* cobj = (gui::UIListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::ListView* cobj = (gui::ListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
         jsval *argv = JS_ARGV(cx, vp);
@@ -221,57 +222,58 @@ static JSBool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t ar
 
         cobj->addEventListenerListView(tmpObj, listvieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UILayoutParameter* cobj = (gui::UILayoutParameter *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 1) {
-        jsval *argv = JS_ARGV(cx, vp);
+        JS::CallArgs argv = CallArgsFromVp(argc, vp);
 
-        JSObject *tmp;
+        JS::RootedObject tmp(cx);
         JS::RootedValue jsleft(cx), jstop(cx),jsright(cx),jsbottom(cx);
         double left, top,right,bottom;
-        JSBool ok = argv[0].isObject() &&
+        bool ok = argv[0].isObject() &&
             JS_ValueToObject(cx, argv[0], &tmp) &&
             JS_GetProperty(cx, tmp, "left", &jsleft) &&
             JS_GetProperty(cx, tmp, "top", &jstop) &&
             JS_GetProperty(cx, tmp, "right", &jsright) &&
-            JS_GetProperty(cx, tmp, "bottom", &jsbottom) &&
-            JS_ValueToNumber(cx, jsleft, &left) &&
-            JS_ValueToNumber(cx, jstop, &top) &&
-            JS_ValueToNumber(cx, jsright, &right) &&
-            JS_ValueToNumber(cx, jsbottom, &bottom);
+            JS_GetProperty(cx, tmp, "bottom", &jsbottom);
+        
+        left = jsleft.toNumber();
+        top = jstop.toNumber();
+        right = jsright.toNumber();
+        bottom = jsbottom.toNumber();
 
-        JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+        JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
-        cobj->setMargin(gui::UIMargin(left,top,right,bottom));
-        return JS_TRUE;
+        cobj->setMargin(gui::Margin(left,top,right,bottom));
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-static JSBool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::UILayoutParameter* cobj = (gui::UILayoutParameter *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    gui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 0) {
         JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
-        if (!tmp) return JS_FALSE;
-        gui::UIMargin margin = cobj->getMargin();
-        JSBool ok = JS_DefineProperty(cx, tmp, "left", DOUBLE_TO_JSVAL(margin.left), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        if (!tmp) return false;
+        gui::Margin margin = cobj->getMargin();
+        bool ok = JS_DefineProperty(cx, tmp, "left", DOUBLE_TO_JSVAL(margin.left), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "top", DOUBLE_TO_JSVAL(margin.top), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "right", DOUBLE_TO_JSVAL(margin.right), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "bottom", DOUBLE_TO_JSVAL(margin.bottom), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -281,37 +283,37 @@ static JSBool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc
         }
         else
         {
-            return JS_FALSE;
+            return false;
         }
-        return JS_TRUE;
+        return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
-    return JS_FALSE;
+    return false;
 }
 
-extern JSObject* jsb_UIWidget_prototype;
-extern JSObject* jsb_UICheckBox_prototype;
-extern JSObject* jsb_UISlider_prototype;
-extern JSObject* jsb_UITextField_prototype;
-extern JSObject* jsb_UILayoutParameter_prototype;
-extern JSObject* jsb_UIPageView_prototype;
-extern JSObject* jsb_UIListView_prototype;
+extern JSObject* jsb_cocos2d_gui_Widget_prototype;
+extern JSObject* jsb_cocos2d_gui_CheckBox_prototype;
+extern JSObject* jsb_cocos2d_gui_Slider_prototype;
+extern JSObject* jsb_cocos2d_gui_TextField_prototype;
+extern JSObject* jsb_cocos2d_gui_LayoutParameter_prototype;
+extern JSObject* jsb_cocos2d_gui_PageView_prototype;
+extern JSObject* jsb_cocos2d_gui_ListView_prototype;
 
 void register_all_cocos2dx_gui_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_UIWidget_prototype, "addTouchEventListener", js_cocos2dx_UIWidget_addTouchEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_Widget_prototype, "addTouchEventListener", js_cocos2dx_UIWidget_addTouchEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_UICheckBox_prototype, "addEventListenerCheckBox", js_cocos2dx_UICheckBox_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_CheckBox_prototype, "addEventListenerCheckBox", js_cocos2dx_UICheckBox_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_UISlider_prototype, "addEventListenerSlider", js_cocos2dx_UISlider_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_Slider_prototype, "addEventListenerSlider", js_cocos2dx_UISlider_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_UITextField_prototype, "addEventListenerTextField", js_cocos2dx_UITextField_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_TextField_prototype, "addEventListenerTextField", js_cocos2dx_UITextField_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_UIPageView_prototype, "addEventListenerPageView", js_cocos2dx_UIPageView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_PageView_prototype, "addEventListenerPageView", js_cocos2dx_UIPageView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_UIListView_prototype, "addEventListenerListView", js_cocos2dx_UIListView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_ListView_prototype, "addEventListenerListView", js_cocos2dx_UIListView_addEventListener, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_UILayoutParameter_prototype, "setMargin", js_cocos2dx_LayoutParameter_setMargin, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_LayoutParameter_prototype, "setMargin", js_cocos2dx_LayoutParameter_setMargin, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_UILayoutParameter_prototype, "getMargin", js_cocos2dx_LayoutParameter_getMargin, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_gui_LayoutParameter_prototype, "getMargin", js_cocos2dx_LayoutParameter_getMargin, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
