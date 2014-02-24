@@ -850,10 +850,10 @@ void TMXIsoObjectsTest::onDraw()
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
-        float x = dict["positon_x"].asFloat();
-        float y = dict["positon_y"].asFloat();
-        float width = dict["size_width"].asFloat();
-        float height = dict["size_height"].asFloat();
+        float x = dict["converted_x"].asFloat();
+        float y = dict["converted_y"].asFloat();
+        float width = dict["converted_width"].asFloat();
+        float height = dict["converted_height"].asFloat();
         
         glLineWidth(3);
         
