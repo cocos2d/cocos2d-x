@@ -147,7 +147,7 @@ local function OpenGLTestMainLayer()
         local i = 0
         local len = table.getn(children)
         for i= 0 ,len - 1 do
-            local child = tolua.cast(children[i + 1], "cc.Sprite")
+            local child = children[i + 1]
             local oldPosX,oldPosY = child:getPosition()
             child:setPosition(oldPosX,math.sin(accum * 2 + i / 2.0) * 20)
             local scaleY = math.sin(accum * 2 + i / 2.0 + 0.707)
@@ -558,7 +558,7 @@ local function OpenGLTestMainLayer()
 
         local function getCurrentResult()
             local var = {}
-            local glProgam = tolua.cast(sprite:getShaderProgram(),"cc.GLProgram")
+            local glProgam = sprite:getShaderProgram()
             if nil ~= glProgam then
                 local p = glProgam:getProgram()
                 local aaSize,aaType,aaName = gl.getActiveAttrib(p,0)

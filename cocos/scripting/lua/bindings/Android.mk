@@ -37,7 +37,7 @@ LOCAL_SRC_FILES := CCLuaBridge.cpp \
           ../../../../external/lua/tolua/tolua_map.c \
           ../../../../external/lua/tolua/tolua_push.c \
           ../../../../external/lua/tolua/tolua_to.c \
-          tolua_fix.c \
+          tolua_fix.cpp \
           socket/auxiliar.c \
           socket/luasocket_buffer.c \
           socket/except.c \

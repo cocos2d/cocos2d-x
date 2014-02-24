@@ -314,7 +314,7 @@ local function LayerTest1()
 
         local newSize = cc.size( math.abs(x - s.width/2)*2, math.abs(y - s.height/2)*2)
 
-        local  l = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerColor")
+        local  l = ret:getChildByTag(kTagLayer)
 
         l:setContentSize( newSize )
     end
@@ -395,7 +395,7 @@ local function LayerTestBlend()
     local blend = true
 
     local function newBlend(dt)
-        local layer = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerColor")
+        local layer = ret:getChildByTag(kTagLayer)
 
         local src = 0
         local dst = 0
@@ -445,7 +445,7 @@ local function LayerGradient()
 
     local function toggleItem(sender)
         -- cclog("toggleItem")
-        local gradient = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerGradient")
+        local gradient = ret:getChildByTag(kTagLayer)
         gradient:setCompressedInterpolation(not gradient:isCompressedInterpolation())
     end
 
@@ -463,7 +463,7 @@ local function LayerGradient()
         local diff = cc.p(movingPos.x - start.x, movingPos.y - start.y)
         diff = cc.pNormalize(diff)
 
-        local gradient = tolua.cast(ret:getChildByTag(1), "cc.LayerGradient")
+        local gradient = ret:getChildByTag(1)
         gradient:setVector(diff)
     end
 
@@ -492,7 +492,7 @@ local function LayerIgnoreAnchorPointPos()
     l:setPosition(cc.p( s.width/2, s.height/2))
 
     local move = cc.MoveBy:create(2, cc.p(100,2))
-    local  back = tolua.cast(move:reverse(), "cc.MoveBy")
+    local  back = move:reverse()
     local seq = cc.Sequence:create(move, back)
     l:runAction(cc.RepeatForever:create(seq))
     ret:addChild(l, 0, kLayerIgnoreAnchorPoint)
@@ -569,7 +569,7 @@ local function LayerIgnoreAnchorPointScale()
 
 
     local scale = cc.ScaleBy:create(2, 2)
-    local  back = tolua.cast(scale:reverse(), "cc.ScaleBy")
+    local  back = scale:reverse()
     local seq = cc.Sequence:create(scale, back)
 
     l:runAction(cc.RepeatForever:create(seq))

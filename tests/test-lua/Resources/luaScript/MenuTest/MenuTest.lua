@@ -32,13 +32,13 @@ local function MenuLayerMainMenu()
 
     local function menuCallback(sender)
         cclog("menuCallback...")
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(1)
+        ret:getParent():switchTo(1)
     end
 
     item1:registerScriptTapHandler(menuCallback)
     -- Image Item
     local function menuCallback2(sender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(2)
+        ret:getParent():switchTo(2)
     end
 
     local  item2 = cc.MenuItemImage:create(s_SendScore, s_PressSendScore)
@@ -46,7 +46,7 @@ local function MenuLayerMainMenu()
 
 
     local schedulerEntry = nil
-	local scheduler = cc.Director:getInstance():getScheduler()
+    local scheduler = cc.Director:getInstance():getScheduler()
     local function allowTouches(dt)
         local  pDirector = cc.Director:getInstance()
         --pDirector:getTouchDispatcher():setPriority(cc.MENU_HANDLER_PRIORITY +1, ret)
@@ -85,7 +85,7 @@ local function MenuLayerMainMenu()
     cc.MenuItemFont:setFontName("Marker Felt")
 
     local function menuCallbackConfig(sender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(3)
+        ret:getParent():switchTo(3)
     end
 
     -- Label Item (cc.LabelBMFont)
@@ -99,7 +99,7 @@ local function MenuLayerMainMenu()
     -- Events
     cc.MenuItemFont:setFontName("Marker Felt")
     local function menuCallbackBugsTest(pSender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(4)
+        ret:getParent():switchTo(4)
     end
 
     -- Bugs Item
@@ -115,7 +115,7 @@ local function MenuLayerMainMenu()
     item7:registerScriptTapHandler(onQuit)
 
     local function menuMovingCallback(pSender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(5)
+        ret:getParent():switchTo(5)
     end
 
     local  item8 = cc.MenuItemFont:create("Remove menu item when moving")
@@ -152,7 +152,7 @@ local function MenuLayerMainMenu()
         if pObject == nil then
             break
         end
-        child = tolua.cast(pObject, "cc.Node")
+        child = pObject
         local dstPointX, dstPointY = child:getPosition()
         local offset = s.width/2 + 50
         if  i % 2 == 0 then
@@ -200,7 +200,7 @@ local function MenuLayer2()
     local function alignMenusH()
         local i = 0
         for i=0, 1 do
-            local menu = tolua.cast(ret:getChildByTag(100+i), "cc.Menu")
+            local menu = ret:getChildByTag(100+i)
             menu:setPosition( m_centeredMenu )
             if i==0 then
                 -- TIP: if no padding, padding = 5
@@ -219,7 +219,7 @@ local function MenuLayer2()
     local function alignMenusV()
         local i = 0
         for i=0, 1 do
-            local menu = tolua.cast(ret:getChildByTag(100+i), "cc.Menu")
+            local menu = ret:getChildByTag(100+i)
             menu:setPosition( m_centeredMenu )
             if i==0 then
                 -- TIP: if no padding, padding = 5
@@ -236,11 +236,11 @@ local function MenuLayer2()
     end
 
     local function menuCallback(sender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(0)
+        ret:getParent():switchTo(0)
     end
 
     local function menuCallbackOpacity(tag, sender)
-        local menu = tolua.cast(sender:getParent(), "cc.Menu")
+        local menu = sender:getParent()
         local opacity = menu:getOpacity()
         if opacity == 128 then
             menu:setOpacity(255)
@@ -305,7 +305,7 @@ local function MenuLayer3()
     local m_disabledItem = nil
     local ret = cc.Layer:create()
     local function menuCallback(sender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(0)
+        ret:getParent():switchTo(0)
     end
 
     local function menuCallback2(sender)
@@ -357,8 +357,8 @@ local function MenuLayer3()
     item2:runAction( cc.RepeatForever:create(cc.Sequence:create( jump, jump:reverse())))
 
     local  spin1 = cc.RotateBy:create(3, 360)
-    local  spin2 = tolua.cast(spin1:clone(), "cc.ActionInterval")
-    local  spin3 = tolua.cast(spin1:clone(), "cc.ActionInterval")
+    local  spin2 = spin1:clone()
+    local  spin3 = spin1:clone()
 
     item1:runAction( cc.RepeatForever:create(spin1) )
     item2:runAction( cc.RepeatForever:create(spin2) )
@@ -398,11 +398,11 @@ local function MenuLayer4()
     local  item1 = cc.MenuItemToggle:create(cc.MenuItemFont:create( "On" ))
 
     local function menuCallback(tag, sender)
-        cclog("selected item: tag: %d, index:%d", tag, tolua.cast(sender, "cc.MenuItemToggle"):getSelectedIndex() )
+        cclog("selected item: tag: %d, index:%d", tag, sender:getSelectedIndex() )
     end
 
     local function backCallback(tag, sender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(0)
+        ret:getParent():switchTo(0)
     end
 
     item1:registerScriptTapHandler(menuCallback)
@@ -475,21 +475,21 @@ end
 local function BugsTest()
     local ret = cc.Layer:create()
     local function issue1410MenuCallback(tag, pSender)
-        local menu = tolua.cast(pSender:getParent(), "cc.Menu")
+        local menu = pSender:getParent()
         menu:setEnabled(false)
         menu:setEnabled(true)
         cclog("NO CRASHES")
     end
 
     local function issue1410v2MenuCallback(tag, pSender)
-        local menu = tolua.cast(pSender:getParent(), "cc.Menu")
+        local menu = pSender:getParent()
         menu:setEnabled(true)
         menu:setEnabled(false)
         cclog("NO CRASHES. AND MENU SHOULD STOP WORKING")
     end
 
     local function backMenuCallback(tag, pSender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(0)
+        ret:getParent():switchTo(0)
     end
 
 
@@ -526,7 +526,7 @@ local function RemoveMenuItemWhenMove()
 
     local back = cc.MenuItemFont:create("go back")
     local function goBack(tag, pSender)
-        tolua.cast(ret:getParent(), "cc.LayerMultiplex"):switchTo(0)
+        ret:getParent():switchTo(0)
     end
 
     back:registerScriptTapHandler(goBack)
