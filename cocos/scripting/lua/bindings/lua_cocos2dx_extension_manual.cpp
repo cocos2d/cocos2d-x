@@ -766,7 +766,7 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
         }
         
 #if COCOS2D_DEBUG >= 1
-        if (!tolua_isusertype(tolua_S, 3, "cc.Object", 0, &tolua_err))
+        if (!tolua_isusertype(tolua_S, 3, "cc.Ref", 0, &tolua_err))
             goto tolua_lerror;
 #endif
         Ref* owner = static_cast<Ref*>(tolua_tousertype(tolua_S, 3, 0));
