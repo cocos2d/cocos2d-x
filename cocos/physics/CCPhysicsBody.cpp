@@ -738,6 +738,11 @@ bool PhysicsBody::isResting() const
     return CP_PRIVATE(_info->getBody()->node).root != ((cpBody*)0);
 }
 
+void PhysicsBody::setResting() const
+{
+    cpBodySleep(_info->getBody());
+}
+
 void PhysicsBody::update(float delta)
 {
     if (_node != nullptr)
