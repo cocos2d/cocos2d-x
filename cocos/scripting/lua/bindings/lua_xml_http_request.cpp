@@ -22,13 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_xml_http_request.h"
-
-extern "C"
-{
-#include "tolua_fix.h"
-}
-
 #include <string>
+#include "tolua_fix.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"

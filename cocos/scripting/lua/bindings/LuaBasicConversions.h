@@ -27,9 +27,8 @@
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
-#include "tolua_fix.h"
 }
-
+#include "tolua_fix.h"
 #include "cocos2d.h"
 
 using namespace cocos2d;
@@ -294,36 +293,46 @@ void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
 void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue);
 void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
 
+/**
+ Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name
+ */
+template <class T>
+const char* getLuaTypeName(T* ret,const char* type)
+{
+    if (nullptr != ret)
+    {
+        std::string hashName = typeid(*ret).name();
+        auto iter =  g_luaType.find(hashName);
+        if(g_luaType.end() != iter)
+        {
+            return iter->second.c_str();
+        }
+        else
+        {
+            return type;
+        }
+    }
+    
+    return nullptr;
+}
+
 template <class T>
 void object_to_luaval(lua_State* L,const char* type, T* ret)
 {
     if(nullptr != ret)
     {
-        /**
-         Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name
-         */
-        std::string hashName = typeid(*ret).name();
-        auto iter =  g_luaType.find(hashName);
-        std::string className = "";
-        if(g_luaType.end() != iter)
-        {
-            className = iter->second.c_str();
-        }
-        else
-        {
-            className = type;
-        }
-        
+      
         cocos2d::Ref* dynObject = dynamic_cast<cocos2d::Ref *>(ret);
+
         if (nullptr != dynObject)
         {
             int ID = (int)(dynObject->_ID) ;
             int* luaID = &(dynObject->_luaID);
-            toluafix_pushusertype_ccobject(L,ID, luaID, (void*)ret,className.c_str());
+            toluafix_pushusertype_ccobject(L,ID, luaID, (void*)ret,type);
         }
         else
         {
-            tolua_pushusertype(L,(void*)ret,className.c_str());
+            tolua_pushusertype(L,(void*)ret,getLuaTypeName(ret, type));
         }
     }
     else

@@ -1,6 +1,10 @@
 
 #include "tolua_fix.h"
+#include "CCRef.h"
+#include "LuaBasicConversions.h"
 #include <stdlib.h>
+
+using namespace cocos2d;
 
 static int s_function_ref_id = 0;
 
@@ -30,6 +34,9 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
         lua_pushnil(L);
         return -1;
     }
+    
+    Ref* vPtr = static_cast<Ref*>(ptr);
+    const char* vType = getLuaTypeName(vPtr, type);
 
     if (*p_refid == 0)
     {
@@ -38,7 +45,7 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
         lua_pushstring(L, TOLUA_REFID_PTR_MAPPING);
         lua_rawget(L, LUA_REGISTRYINDEX);                           /* stack: refid_ptr */
         lua_pushinteger(L, refid);                                  /* stack: refid_ptr refid */
-        lua_pushlightuserdata(L, ptr);                              /* stack: refid_ptr refid ptr */
+        lua_pushlightuserdata(L, vPtr);                              /* stack: refid_ptr refid ptr */
 
         lua_rawset(L, -3);                  /* refid_ptr[refid] = ptr, stack: refid_ptr */
         lua_pop(L, 1);                                              /* stack: - */
@@ -46,14 +53,14 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
         lua_pushstring(L, TOLUA_REFID_TYPE_MAPPING);
         lua_rawget(L, LUA_REGISTRYINDEX);                           /* stack: refid_type */
         lua_pushinteger(L, refid);                                  /* stack: refid_type refid */
-        lua_pushstring(L, type);                                    /* stack: refid_type refid type */
+        lua_pushstring(L, vType);                                    /* stack: refid_type refid type */
         lua_rawset(L, -3);                /* refid_type[refid] = type, stack: refid_type */
         lua_pop(L, 1);                                              /* stack: - */
 
         //printf("[LUA] push CCObject OK - refid: %d, ptr: %x, type: %s\n", *p_refid, (int)ptr, type);
     }
 
-    tolua_pushusertype_and_addtoroot(L, ptr, type);
+    tolua_pushusertype_and_addtoroot(L, vPtr, vType);
     
     return 0;
 }

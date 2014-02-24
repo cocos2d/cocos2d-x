@@ -3,11 +3,6 @@
 #define __TOLUA_FIX_H_
 
 #include "tolua++.h"
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
     
 #define TOLUA_REFID_PTR_MAPPING "toluafix_refid_ptr_mapping"
 #define TOLUA_REFID_TYPE_MAPPING "toluafix_refid_type_mapping"
@@ -27,9 +22,5 @@ TOLUA_API int toluafix_isfunction(lua_State* L, int lo, const char* type, int de
 TOLUA_API int toluafix_totable(lua_State* L, int lo, int def);
 TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, tolua_Error* err);
 TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label);
-    
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #endif // __TOLUA_FIX_H_

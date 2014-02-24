@@ -24,13 +24,12 @@
  ****************************************************************************/
 
 #include "CCLuaStack.h"
-
+#include "tolua_fix.h"
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#include "tolua_fix.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "lua_extensions.h"
 #endif
