@@ -763,7 +763,10 @@ Developers:
         s3tc compressed textures with no mipmaps fail to be loaded.
         
     floatinghotpot
-        Fix a bug that no callback is invoked when websocket connection fails
+        Fixed a bug that no callback is invoked when websocket connection fails
+        
+    Linghui
+        Updated README of template: fix wrong platform java path.
     
 Retired Core Developers:
     WenSheng Yang
