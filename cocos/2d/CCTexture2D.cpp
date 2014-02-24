@@ -531,27 +531,23 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize)
+bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize)
 {
-    CCASSERT(dataLen>0 && pixelsWide>0 && pixelsHigh>0, "Invalid size");
+    CCASSERT(dataLen>0 && contentSize.width>0 && contentSize.height>0, "Invalid size");
 
     //if data has no mipmaps, we will consider it has only one mipmap
     MipmapInfo mipmap;
     mipmap.address = (unsigned char*)data;
     mipmap.len = static_cast<int>(dataLen);
-    return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh);
+    return initWithMipmaps(&mipmap, 1, pixelFormat, contentSize);
 
-    //update information
-    _contentSize = contentSize;
-    _maxS = contentSize.width / (float)(pixelsWide);
-    _maxT = contentSize.height / (float)(pixelsHigh);
 }
 
-bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
+bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, const Size& size)
 {
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
-    CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");
+    CCASSERT(size.width>0 && size.height>0, "Invalid size");
 
     if (mipmapsNum <= 0)
     {
@@ -580,7 +576,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     //Set the row align only when mipmapsNum == 1 and the data is uncompressed
     if (mipmapsNum == 1 && !info.compressed)
     {
-        unsigned int bytesPerRow = pixelsWide * info.bpp / 8;
+        int bytesPerRow = static_cast<int>(size.width) * info.bpp / 8;
 
         if(bytesPerRow % 8 == 0)
         {
@@ -623,8 +619,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     CHECK_GL_ERROR_DEBUG(); // clean possible GL error
     
     // Specify OpenGL texture image
-    int width = pixelsWide;
-    int height = pixelsHigh;
+    int width = static_cast<int>(size.width);
+    int height = static_cast<int>(size.height);
     
     for (int i = 0; i < mipmapsNum; ++i)
     {
@@ -656,9 +652,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         height = MAX(height >> 1, 1);
     }
 
-    _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
-    _pixelsWide = pixelsWide;
-    _pixelsHigh = pixelsHigh;
+    _contentSize = size;
+    _pixelsWide = static_cast<int>(size.width);
+    _pixelsHigh = static_cast<int>(size.height);
     _pixelFormat = pixelFormat;
     _maxS = 1;
     _maxT = 1;
@@ -674,7 +670,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 std::string Texture2D::getDescription() const
 {
-    return StringUtils::format("<Texture2D | Name = %u | Dimensions = %ld x %ld | Coordinates = (%.2f, %.2f)>", _name, (long)_pixelsWide, (long)_pixelsHigh, _maxS, _maxT);
+    return StringUtils::format("<Texture2D | Name = %u | Dimensions = %ld x %ld>", _name, (long)_pixelsWide, (long)_pixelsHigh);
 }
 
 // implementation Texture2D (Image)
@@ -717,7 +713,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
         }
 
-        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
+        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageSize);
         
         return true;
     }
@@ -728,7 +724,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image is compressed and we cann't convert it for now");
         }
 
-        initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
+        initWithData(tempData, tempDataLen, image->getRenderFormat(), imageSize);
         return true;
     }
     else
@@ -747,7 +743,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
         pixelFormat = convertDataToFormat(tempData, tempDataLen, renderFormat, pixelFormat, &outTempData, &outTempDataLen);
 
-        initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
+        initWithData(outTempData, outTempDataLen, pixelFormat, imageSize);
 
 
         if (outTempData != nullptr && outTempData != tempData)

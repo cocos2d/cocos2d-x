@@ -663,9 +663,7 @@ void VolatileTextureMgr::reloadAllTextures()
             {
                 vt->_texture->initWithData(vt->_textureData,
                                            vt->_dataLen,
-                                          vt->_pixelFormat, 
-                                          vt->_textureSize.width, 
-                                          vt->_textureSize.height, 
+                                          vt->_pixelFormat,
                                           vt->_textureSize);
             }
             break;
