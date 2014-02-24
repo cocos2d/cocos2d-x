@@ -181,6 +181,37 @@ public:
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
+    
+protected:
+    struct ButtonState {
+        Node *renderer;
+        std::string fileName;
+        Rect capInsets;
+        TextureResType texType;
+        Size textureSize;
+        Point textureScaleInSize;
+        bool textureLoaded;
+        
+        ButtonState():
+        renderer(nullptr),
+        capInsets(Rect::ZERO),
+        texType(UI_TEX_TYPE_LOCAL),
+        textureSize(Size::ZERO),
+        textureScaleInSize(1,1),
+        textureLoaded(false) {
+        }
+        
+        ButtonState& operator=(const ButtonState &rhs) {
+            fileName = rhs.fileName;
+            capInsets = rhs.capInsets;
+            texType = rhs.texType;
+            textureSize = rhs.textureSize;
+            textureScaleInSize = rhs.textureScaleInSize;
+            textureLoaded = false;
+            
+            return *this;
+        }
+    };
 
 protected:
     virtual bool init() override;
@@ -190,39 +221,19 @@ protected:
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
     
-    void normalTextureScaleChangedWithSize();
-    void pressedTextureScaleChangedWithSize();
-    void disabledTextureScaleChangedWithSize();
+    void load(ButtonState &b);
+    void textureScaleChangedWithSize(ButtonState &b);
+    void setCapInsets(ButtonState &s, const Rect &capInsets);
+    
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
-    Node* _buttonNormalRenderer;
-    Node* _buttonClickedRenderer;
-    Node* _buttonDisableRenderer;
+    ButtonState _normalState, _pressedState, _disabledState;
     LabelTTF* _titleRenderer;
-    std::string _normalFileName;
-    std::string _clickedFileName;
-    std::string _disabledFileName;
     bool _prevIgnoreSize;
     bool _scale9Enabled;
-    Rect _capInsetsNormal;
-    Rect _capInsetsPressed;
-    Rect _capInsetsDisabled;
-    TextureResType _normalTexType;
-    TextureResType _pressedTexType;
-    TextureResType _disabledTexType;
-    Size _normalTextureSize;
-    Size _pressedTextureSize;
-    Size _disabledTextureSize;
     bool _pressedActionEnabled;
     Color3B _titleColor;
-    float _normalTextureScaleXInSize;
-    float _normalTextureScaleYInSize;
-    float _pressedTextureScaleXInSize;
-    float _pressedTextureScaleYInSize;
-    bool _normalTextureLoaded;
-    bool _pressedTextureLoaded;
-    bool _disabledTextureLoaded;
 };
 
 }
