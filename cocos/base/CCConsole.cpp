@@ -112,14 +112,14 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 	vsnprintf(buf, sizeof(buf), format, args);
 	va_end(args);
     auto console = Director::getInstance()->getConsole();
-	return console->socketWrite(sock, buf, strlen(buf));
+	return send(sock, buf, strlen(buf),0);
 }
 
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
     auto console = Director::getInstance()->getConsole();
-    console->socketWrite(fd, prompt, sizeof(prompt));
+    send(fd, prompt, sizeof(prompt),0);
 }
 
 static int printSceneGraph(int fd, Node* node, int level)
@@ -127,7 +127,7 @@ static int printSceneGraph(int fd, Node* node, int level)
     int total = 1;
     auto console = Director::getInstance()->getConsole();
     for(int i=0; i<level; ++i)
-        console->socketWrite(fd, "-", 1);
+        send(fd, "-", 1,0);
 
     mydprintf(fd, " %s\n", node->getDescription().c_str());
 
@@ -140,7 +140,7 @@ static int printSceneGraph(int fd, Node* node, int level)
 static void printSceneGraphBoot(int fd)
 {
     auto console = Director::getInstance()->getConsole();
-    console->socketWrite(fd,"\n",1);
+    send(fd,"\n",1,0);
     auto scene = Director::getInstance()->getRunningScene();
     int total = printSceneGraph(fd, scene, 0);
     mydprintf(fd, "Total Nodes: %d\n", total);
@@ -293,23 +293,6 @@ Console::~Console()
     stop();
 }
 
-ssize_t Console::socketWrite(int fd, const char* buf, size_t len)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    return send(fd, buf, len , 0);
-#else
-    return write(fd, buf, len);
-#endif
-}
-
-ssize_t Console::socketRead(int fd, char* buf, size_t len)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    return recv(fd, buf, len , 0);
-#else
-    return read(fd, buf, len);
-#endif
-}
 
 bool Console::listenOnTCP(int port)
 {
@@ -413,7 +396,7 @@ void Console::commandHelp(int fd, const std::string &args)
 {
     const char help[] = "\nAvailable commands:\n";
     auto console = Director::getInstance()->getConsole();
-    console->socketWrite(fd, help, sizeof(help));
+    send(fd, help, sizeof(help),0);
     for(auto it=_commands.begin();it!=_commands.end();++it)
     {
         auto cmd = it->second;
@@ -627,7 +610,7 @@ bool Console::parseCommand(int fd)
     {
         const char err[] = "Unknown error!\n";
         sendPrompt(fd);
-        console->socketWrite(fd, err, sizeof(err));
+        send(fd, err, sizeof(err),0);
         return false;
     }
     std::string cmdLine;
@@ -639,7 +622,7 @@ bool Console::parseCommand(int fd)
     if(args.empty())
     {
         const char err[] = "Unknown command. Type 'help' for options\n";
-        console->socketWrite(fd, err, sizeof(err));
+        send(fd, err, sizeof(err),0);
         sendPrompt(fd);
         return false;
     }
@@ -661,7 +644,7 @@ bool Console::parseCommand(int fd)
         cmd.callback(fd, args2);
     }else if(strcmp(buf, "\r\n") != 0) {
         const char err[] = "Unknown command. Type 'help' for options\n";
-        console->socketWrite(fd, err, sizeof(err));
+        send(fd, err, sizeof(err),0);
     }
 
     sendPrompt(fd);
@@ -681,7 +664,7 @@ ssize_t Console::readline(int fd, char* ptr, int maxlen)
     auto console = Director::getInstance()->getConsole();
 
     for( n=1; n<maxlen-1; n++ ) {
-        if( (rc = console->socketRead(fd, &c, 1 )) ==1 ) {
+        if( (rc = recv(fd, &c, 1, 0)) ==1 ) {
             *ptr++ = c;
             if(c == '\n') {
                 break;
@@ -798,7 +781,7 @@ void Console::loop()
             _DebugStringsMutex.lock();
             for(const auto &str : _DebugStrings) {
                 for(const auto &fd : _fds) {
-                    console->socketWrite(fd, str.c_str(), str.length());
+                    send(fd, str.c_str(), str.length(),0);
                 }
             }
             _DebugStrings.clear();

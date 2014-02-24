@@ -96,12 +96,7 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
-    /** write to socket */
-    ssize_t socketWrite(int fd, const char* buf, size_t len);
-
-    /** read from socket */
-    ssize_t socketRead(int fd, char* buf, size_t len);
-
+ 
 protected:
     void loop();
     ssize_t readline(int fd, char *buf, int maxlen);

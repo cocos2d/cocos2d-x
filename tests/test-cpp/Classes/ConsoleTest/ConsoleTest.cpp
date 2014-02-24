@@ -27,6 +27,7 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <unistd.h>
+#include <sys/socket.h>
 #else
 #include <io.h>
 #endif
@@ -170,9 +171,9 @@ ConsoleCustomCommand::ConsoleCustomCommand()
             
             const char msg[] = "how are you?\nArguments passed: ";
             auto _console = Director::getInstance()->getConsole();
-            _console->socketWrite(fd, msg, sizeof(msg));
-            _console->socketWrite(fd, args.c_str(), args.length());
-            _console->socketWrite(fd, "\n",1);
+            send(fd, msg, sizeof(msg),0);
+            send(fd, args.c_str(), args.length(),0);
+            send(fd, "\n",1,0);
         }},
     };
     _console->addCommand(commands[0]);
