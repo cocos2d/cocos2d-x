@@ -329,7 +329,12 @@ bool Console::listenOnTCP(int port)
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
 
-        close(listenfd);    /* bind error, close and try next one */
+/* bind error, close and try next one */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        closesocket(listenfd);
+#else
+        close(listenfd);
+#endif
     } while ( (res = res->ai_next) != NULL);
     
     if (res == NULL) {
@@ -414,7 +419,11 @@ void Console::commandExit(int fd, const std::string &args)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-    close(fd);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        closesocket(fd);
+#else
+        close(fd);
+#endif
 }
 
 void Console::commandSceneGraph(int fd, const std::string &args)
