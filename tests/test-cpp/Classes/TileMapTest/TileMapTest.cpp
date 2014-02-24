@@ -778,10 +778,10 @@ void TMXOrthoObjectsTest::onDraw()
     {
         ValueMap& dict = obj.asValueMap();
         
-        float x = dict["converted_x"].asFloat();
-        float y = dict["converted_y"].asFloat();
-        float width = dict["converted_width"].asFloat();
-        float height = dict["converted_height"].asFloat();
+        float x = dict["x"].asFloat();
+        float y = dict["y"].asFloat();
+        float width = dict["width"].asFloat();
+        float height = dict["height"].asFloat();
         
         glLineWidth(3);
         
@@ -850,10 +850,10 @@ void TMXIsoObjectsTest::onDraw()
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
-        float x = dict["converted_x"].asFloat();
-        float y = dict["converted_y"].asFloat();
-        float width = dict["converted_width"].asFloat();
-        float height = dict["converted_height"].asFloat();
+        float x = dict["x"].asFloat();
+        float y = dict["y"].asFloat();
+        float width = dict["width"].asFloat();
+        float height = dict["height"].asFloat();
         
         glLineWidth(3);
         
@@ -1535,10 +1535,10 @@ void TMXGIDObjectsTest::onDraw()
     {
         ValueMap& dict = obj.asValueMap();
         
-        float x = dict["converted_x"].asFloat();
-        float y = dict["converted_y"].asFloat();
-        float width = dict["converted_width"].asFloat();
-        float height = dict["converted_height"].asFloat();
+        float x = dict["x"].asFloat();
+        float y = dict["y"].asFloat();
+        float width = dict["width"].asFloat();
+        float height = dict["height"].asFloat();
         
         glLineWidth(3);
         
