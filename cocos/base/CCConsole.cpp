@@ -575,7 +575,7 @@ void Console::commandDirector(int fd, const std::string& args)
                             "\tresume, resume all scheduled timers\n"
                             "\tstop, Stops the animation. Nothing will be drawn.\n"
                             "\tstart, Restart the animation again, Call this function only if [director stop] was called earlier\n";
-         write(fd, help, sizeof(help) - 1);
+         send(fd, help, sizeof(help) - 1,0);
     }
     else if(args == "pause")
     {
