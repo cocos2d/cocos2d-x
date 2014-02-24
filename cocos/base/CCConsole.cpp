@@ -800,7 +800,7 @@ void Console::loop()
     }
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    closesocket(_listenfd)
+    closesocket(_listenfd);
 	WSACleanup();
 #else
     close(_listenfd);
