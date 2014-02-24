@@ -767,6 +767,9 @@ Developers:
         
     Linghui
         Updated README of template: fix wrong platform java path.
+        
+    seemk
+        Fixed crash if invoking Director::end() on WINDOWS.
     
 Retired Core Developers:
     WenSheng Yang
