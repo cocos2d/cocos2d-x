@@ -278,7 +278,7 @@ public:
     /**
      * Makes the Sprite to be updated in the Atlas.
      */
-    virtual void setDirty(bool bDirty) { _dirty = bDirty; }
+    virtual void setDirty(bool dirty) { _dirty = dirty; }
 
     /**
      * Returns the quad (tex coords, vertex coords and color) information.
@@ -527,7 +527,7 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
-    bool culling() const;
+    bool isInsideBounds() const;
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
