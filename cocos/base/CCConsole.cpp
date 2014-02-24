@@ -111,21 +111,18 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 	va_start(args, format);
 	vsnprintf(buf, sizeof(buf), format, args);
 	va_end(args);
-    auto console = Director::getInstance()->getConsole();
 	return send(sock, buf, strlen(buf),0);
 }
 
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
-    auto console = Director::getInstance()->getConsole();
     send(fd, prompt, sizeof(prompt),0);
 }
 
 static int printSceneGraph(int fd, Node* node, int level)
 {
     int total = 1;
-    auto console = Director::getInstance()->getConsole();
     for(int i=0; i<level; ++i)
         send(fd, "-", 1,0);
 
@@ -139,7 +136,6 @@ static int printSceneGraph(int fd, Node* node, int level)
 
 static void printSceneGraphBoot(int fd)
 {
-    auto console = Director::getInstance()->getConsole();
     send(fd,"\n",1,0);
     auto scene = Director::getInstance()->getRunningScene();
     int total = printSceneGraph(fd, scene, 0);
@@ -400,7 +396,6 @@ void Console::addCommand(const Command& cmd)
 void Console::commandHelp(int fd, const std::string &args)
 {
     const char help[] = "\nAvailable commands:\n";
-    auto console = Director::getInstance()->getConsole();
     send(fd, help, sizeof(help),0);
     for(auto it=_commands.begin();it!=_commands.end();++it)
     {
@@ -614,7 +609,6 @@ bool Console::parseCommand(int fd)
 {
     char buf[512];
     auto r = readline(fd, buf, sizeof(buf)-1);
-    auto console = Director::getInstance()->getConsole();
     if(r < 1)
     {
         const char err[] = "Unknown error!\n";
@@ -670,7 +664,6 @@ ssize_t Console::readline(int fd, char* ptr, int maxlen)
 {
     ssize_t n, rc;
     char c;
-    auto console = Director::getInstance()->getConsole();
 
     for( n=1; n<maxlen-1; n++ ) {
         if( (rc = recv(fd, &c, 1, 0)) ==1 ) {
@@ -743,7 +736,7 @@ void Console::loop()
 
         copy_set = _read_set;
         timeout_copy = timeout;
-        auto console = Director::getInstance()->getConsole();
+        
         int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
         if( nready == -1 )
