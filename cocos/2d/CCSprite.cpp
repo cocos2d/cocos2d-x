@@ -47,7 +47,6 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
 #include "renderer/CCFrustum.h"
 
 // external
@@ -590,17 +589,6 @@ void Sprite::updateTransform(void)
         arrayMakeObjectsPerformSelector(_children, updateTransform, Sprite*);
     }*/
     Node::updateTransform();
-
-#if CC_SPRITE_DEBUG_DRAW
-    // draw bounding box
-    Point vertices[4] = {
-        Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-        Point( _quad.br.vertices.x, _quad.br.vertices.y ),
-        Point( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-        Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
-    };
-    DrawPrimitives::drawPoly(vertices, 4, true);
-#endif // CC_SPRITE_DEBUG_DRAW
 }
 
 // draw
@@ -611,8 +599,31 @@ void Sprite::draw(void)
     {
         _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
         Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+#if CC_SPRITE_DEBUG_DRAW
+        _customDebugDrawCommand.init(_globalZOrder);
+        _customDebugDrawCommand.func = CC_CALLBACK_0(Sprite::drawDebugData, this);
+        Director::getInstance()->getRenderer()->addCommand(&_customDebugDrawCommand);
+#endif //CC_SPRITE_DEBUG_DRAW
     }
 }
+#if CC_SPRITE_DEBUG_DRAW
+void Sprite::drawDebugData()
+{
+    kmMat4 oldModelView;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldModelView);
+    kmGLLoadMatrix(&_modelViewTransform);
+    // draw bounding box
+    Point vertices[4] = {
+        Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
+        Point( _quad.br.vertices.x, _quad.br.vertices.y ),
+        Point( _quad.tr.vertices.x, _quad.tr.vertices.y ),
+        Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
+    };
+    DrawPrimitives::drawPoly(vertices, 4, true);
+    
+    kmGLLoadMatrix(&oldModelView);
+}
+#endif //CC_SPRITE_DEBUG_DRAW
 
 // Culling function from cocos2d-iphone CCSprite.m file
 bool Sprite::culling() const
