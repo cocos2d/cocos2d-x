@@ -518,7 +518,7 @@ static int tolua_Cocos2d_CCArray_createWithObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertable(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -709,7 +709,7 @@ static int tolua_Cocos2d_CCArray_indexOfObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -759,7 +759,7 @@ static int tolua_Cocos2d_CCArray_objectAtIndex00(lua_State* tolua_S)
             Ref* tolua_ret = (Ref*)  self->getObjectAtIndex(index);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Ref");
         }
     }
     return 1;
@@ -793,7 +793,7 @@ static int tolua_Cocos2d_CCArray_lastObject00(lua_State* tolua_S)
             Ref* tolua_ret = (Ref*)  self->getLastObject();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Ref");
         }
     }
     return 1;
@@ -827,7 +827,7 @@ static int tolua_Cocos2d_CCArray_randomObject00(lua_State* tolua_S)
             Ref* tolua_ret = (Ref*)  self->getRandomObject();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Ref");
         }
     }
     return 1;
@@ -881,7 +881,7 @@ static int tolua_Cocos2d_CCArray_containsObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -915,7 +915,7 @@ static int tolua_Cocos2d_CCArray_addObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -980,7 +980,7 @@ static int tolua_Cocos2d_CCArray_insertObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
         )
@@ -1047,7 +1047,7 @@ static int tolua_Cocos2d_CCArray_removeObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
         !tolua_isboolean(tolua_S,3,1,&tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
         )
@@ -1178,7 +1178,7 @@ static int tolua_Cocos2d_CCArray_fastRemoveObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -1243,8 +1243,8 @@ static int tolua_Cocos2d_CCArray_exchangeObject00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"Object",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,3,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.Ref",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"cc.Ref",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
         )
         goto tolua_lerror;
@@ -1375,7 +1375,7 @@ static int tolua_Cocos2d_CCArray_replaceObjectAtIndex00(lua_State* tolua_S)
     if (
         !tolua_isusertype(tolua_S,1,"CCArray",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,3,"Object",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"cc.Ref",0,&tolua_err) ||
         !tolua_isboolean(tolua_S,4,1,&tolua_err) ||
         !tolua_isnoobj(tolua_S,5,&tolua_err)
         )
@@ -1909,7 +1909,7 @@ tolua_lerror:
 static int register_cocos2dx_deprecated_String(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S, "CCString");
-    tolua_cclass(tolua_S,"CCString","CCString","Object",NULL);
+    tolua_cclass(tolua_S,"CCString","CCString","cc.Ref",NULL);
     tolua_beginmodule(tolua_S,"CCString");
         tolua_function(tolua_S,"intValue",tolua_Cocos2d_CCString_intValue00);
         tolua_function(tolua_S,"uintValue",tolua_Cocos2d_CCString_uintValue00);
