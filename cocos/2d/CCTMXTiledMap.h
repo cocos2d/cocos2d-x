@@ -134,21 +134,16 @@ public:
     CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
-    Value getProperty(const std::string& propertyName) const;
+    const Value& getProperty(const std::string& propertyName) const;
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
+    CC_DEPRECATED_ATTRIBUTE const Value& propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** return properties dictionary for tile GID */
-    Value getPropertiesForGID(int GID) const;
-    CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
-
-    /** Assings properties to argument value, returns true if it did found properties 
-        for that GID and did assinged a value, else it returns false.
-     */
-    bool getPropertiesForGID(int GID, Value** value);
+    const Value& getPropertiesForGID(int GID) const;
+    CC_DEPRECATED_ATTRIBUTE const Value& propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
     /** the map's size property measured in tiles */
     inline const Size& getMapSize() const { return _mapSize; };

@@ -1424,7 +1424,12 @@ TMXOrthoXMLFormatTest::TMXOrthoXMLFormatTest()
     }
     
     for(int i=24;i<=26;i++){
-        log("GID:%i, Properties:%s", i, map->getPropertiesForGID(i).asValueMap()["name"].asString().c_str());
+        const Value& v = map->getPropertiesForGID(i);
+        if (!v.isNull())
+        {
+            const ValueMap& properties = v.asValueMap();
+            log("GID:%i, Properties:%s", i, properties.at("name").asString().c_str());
+        }
     }
     
     auto action = ScaleBy::create(2, 0.5f);

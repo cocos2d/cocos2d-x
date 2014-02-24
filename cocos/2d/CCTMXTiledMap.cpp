@@ -230,30 +230,20 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
     return nullptr;
 }
 
-Value TMXTiledMap::getProperty(const std::string& propertyName) const
+const Value& TMXTiledMap::getProperty(const std::string& propertyName) const
 {
     if (_properties.find(propertyName) != _properties.end())
         return _properties.at(propertyName);
     
-    return Value();
+    return Value::Null;
 }
 
-Value TMXTiledMap::getPropertiesForGID(int GID) const
+const Value& TMXTiledMap::getPropertiesForGID(int GID) const
 {
     if (_tileProperties.find(GID) != _tileProperties.end())
         return _tileProperties.at(GID);
     
-    return Value();
-}
-
-bool TMXTiledMap::getPropertiesForGID(int GID, Value** value)
-{
-    if (_tileProperties.find(GID) != _tileProperties.end()) {
-        *value = &_tileProperties.at(GID);
-        return true;
-    } else {
-        return false;
-    }
+    return Value::Null;
 }
 
 std::string TMXTiledMap::getDescription() const
