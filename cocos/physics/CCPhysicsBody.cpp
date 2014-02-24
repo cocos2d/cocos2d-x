@@ -30,6 +30,8 @@
 
 #include "chipmunk.h"
 
+#include "CCNode.h"
+
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
@@ -733,11 +735,29 @@ void PhysicsBody::setEnable(bool enable)
 
 bool PhysicsBody::isResting() const
 {
-    return cpBodyIsSleeping(_info->getBody()) == cpTrue;
+    return CP_PRIVATE(_info->getBody()->node).root != ((cpBody*)0);
 }
 
 void PhysicsBody::update(float delta)
 {
+    if (_node != nullptr)
+    {
+        cpVect pos = cpBodyGetPos(_info->getBody());
+        cpVect prePos = _info->getPosition();
+        if (memcmp(&pos, &prePos, sizeof(cpVect)) != 0)
+        {
+            _node->setPosition(getPosition());
+            _info->setPosition(pos);
+        }
+        
+        cpVect rot = cpBodyGetRot(_info->getBody());
+        cpVect preRot = _info->getRotation();
+        if (memcmp(&rot, &preRot, sizeof(cpVect)) != 0)
+        {
+            _node->setRotation(getRotation());
+            _info->setRotation(rot);
+        }
+    }
     // damping compute
     if (_dynamic && !isResting())
     {
