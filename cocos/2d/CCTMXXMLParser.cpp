@@ -494,15 +494,15 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         
         Point p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().x - attributeDict["height"].asInt());
         p = CC_POINT_PIXELS_TO_POINTS(p);
-        dict["position_x"] = Value(p.x);
-        dict["position_y"] = Value(p.y);
+        dict["converted_x"] = Value(p.x);
+        dict["converted_y"] = Value(p.y);
         
         int width = attributeDict["width"].asInt();
         int height = attributeDict["height"].asInt();
         Size s(width, height);
         s = CC_SIZE_PIXELS_TO_POINTS(s);
-        dict["size_width"] = Value(s.width);
-        dict["size_height"] = Value(s.height);
+        dict["converted_width"] = Value(s.width);
+        dict["converted_height"] = Value(s.height);
 
         // Add the object to the objectGroup
         objectGroup->getObjects().push_back(Value(dict));
