@@ -1368,11 +1368,11 @@ BMFontOneAtlas::BMFontOneAtlas()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, TextHAlignment::LEFT, Point::ZERO);
+    auto label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt");
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/3*2));
 
-    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", kLabelAutomaticWidth, TextHAlignment::LEFT, Point(0, 128));
+    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", 0, TextHAlignment::LEFT, Point(0, 128));
     addChild(label2);
     label2->setPosition(Point(s.width/2, s.height/3*1));
 }

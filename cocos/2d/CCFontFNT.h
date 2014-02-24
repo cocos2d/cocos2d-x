@@ -30,22 +30,24 @@
 
 NS_CC_BEGIN
 
-class CCBMFontConfiguration;
+class BMFontConfiguration;
 
 class FontFNT : public Font
 {
     
 public:
     
-    static FontFNT * create(const std::string& fntFilePath);
-    
+    static FontFNT * create(const std::string& fntFilePath, const Point& imageOffset = Point::ZERO);
+    /** Purges the cached data.
+    Removes from memory the cached configurations and the atlas name dictionary.
+    */
+    static void purgeCachedData();
     virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
     
 protected:
     
-    FontFNT(CCBMFontConfiguration *theContfig) :
-        _configuration(theContfig) {}
+    FontFNT(BMFontConfiguration *theContfig, const Point& imageOffset = Point::ZERO);
     /**
      * @js NA
      * @lua NA
@@ -56,7 +58,8 @@ private:
     
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
     
-    CCBMFontConfiguration * _configuration;
+    BMFontConfiguration * _configuration;
+    Point                   _imageOffset;
     
 };
 

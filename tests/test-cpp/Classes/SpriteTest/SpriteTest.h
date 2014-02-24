@@ -731,6 +731,24 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class SpriteCullTest1 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteCullTest1);
+    SpriteCullTest1();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class SpriteCullTest2 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteCullTest2);
+    SpriteCullTest2();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class SpriteTestScene : public TestScene
 {
 public:
