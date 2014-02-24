@@ -13,6 +13,7 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <unistd.h>
+#include <sys/socket.h>
 #else
 #include <io.h>
 #endif
@@ -250,29 +251,28 @@ void TestController::addConsoleAutoTest()
         [](int fd, const std::string& args) 
         {
             Scheduler *sched = Director::getInstance()->getScheduler();
-            auto _console = Director::getInstance()->getConsole();
             if(args == "help" || args == "-h")
             {
                 const char msg[] = "usage: autotest ActionsTest\n\tavailable tests: ";
-                _console->socketWrite(fd, msg, sizeof(msg));
-                _console->socketWrite(fd, "\n",1);
+                send(fd, msg, sizeof(msg),0);
+                send(fd, "\n",1,0);
                 for(int i = 0; i < g_testCount; i++)
                 {
-                    _console->socketWrite(fd, "\t",1);
-                    _console->socketWrite(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1);
-                    _console->socketWrite(fd, "\n",1);
+                    send(fd, "\t",1,0);
+                    send(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1,0);
+                    send(fd, "\n",1,0);
                 }
                 const char help_main[] = "\tmain, return to main menu\n";
-                _console->socketWrite(fd, help_main, sizeof(help_main));
+                send(fd, help_main, sizeof(help_main),0);
 
                 const char help_next[] = "\tnext, run next test\n";
-                _console->socketWrite(fd, help_next, sizeof(help_next));
+                send(fd, help_next, sizeof(help_next),0);
                 
                 const char help_back[] = "\tback, run prev test\n";
-                _console->socketWrite(fd, help_back, sizeof(help_back));
+                send(fd, help_back, sizeof(help_back),0);
                 
                 const char help_restart[] = "\trestart, restart current test\n";
-                _console->socketWrite(fd, help_restart, sizeof(help_restart));
+                send(fd, help_restart, sizeof(help_restart),0);
                 return;
             }
             if(args == "main")
@@ -303,7 +303,7 @@ void TestController::addConsoleAutoTest()
                 }
                 else
                 {
-                    _console->socketWrite(fd, msg_notest, sizeof(msg_notest));
+                    send(fd, msg_notest, sizeof(msg_notest),0);
                 }
                 return;
             }
@@ -317,7 +317,7 @@ void TestController::addConsoleAutoTest()
                 }
                 else
                 {
-                    _console->socketWrite(fd, msg_notest, sizeof(msg_notest));
+                    send(fd, msg_notest, sizeof(msg_notest),0);
                 }
                 return;
             }
@@ -332,7 +332,7 @@ void TestController::addConsoleAutoTest()
                 }
                 else
                 {
-                    _console->socketWrite(fd, msg_notest, sizeof(msg_notest));
+                    send(fd, msg_notest, sizeof(msg_notest),0);
                 }
                 return;
             }
@@ -348,8 +348,8 @@ void TestController::addConsoleAutoTest()
                     {
                         std::string  msg("autotest: running test:");
                         msg += args;
-                        _console->socketWrite(fd, msg.c_str(), strlen(msg.c_str()));
-                        _console->socketWrite(fd, "\n",1);
+                        send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                        send(fd, "\n",1,0);
 
                         currentController = &g_aTestNames[i];
                         sched->performFunctionInCocosThread( [&](){
@@ -364,8 +364,8 @@ void TestController::addConsoleAutoTest()
             //no match found,print warning message
             std::string  msg("autotest: could not find test:");
             msg += args;
-            _console->socketWrite(fd, msg.c_str(), strlen(msg.c_str()));
-            _console->socketWrite(fd, "\n",1);
+            send(fd, msg.c_str(), strlen(msg.c_str()),0);
+            send(fd, "\n",1,0);
         }
         
     };
