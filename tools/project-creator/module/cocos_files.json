@@ -1011,7 +1011,7 @@
 "cocos/scripting/lua/bindings/socket/usocket.h",
 "cocos/scripting/lua/bindings/socket/wsocket.c",
 "cocos/scripting/lua/bindings/socket/wsocket.h",
-"cocos/scripting/lua/bindings/tolua_fix.c",
+"cocos/scripting/lua/bindings/tolua_fix.cpp",
 "cocos/scripting/lua/bindings/tolua_fix.h",
 "cocos/scripting/lua/script/AudioEngine.lua",
 "cocos/scripting/lua/script/CCBReaderLoad.lua",
