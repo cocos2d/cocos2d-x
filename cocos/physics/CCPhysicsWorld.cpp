@@ -1009,14 +1009,14 @@ void PhysicsWorld::update(float delta)
         _delayDirty = !(_delayAddBodies.size() == 0 && _delayRemoveBodies.size() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
     }
     
-    for (auto& body : _bodies)
-    {
-        body->update(delta);
-    }
-    
     _updateTime += delta;
     if (++_updateRateCount >= _updateRate)
     {
+        for (auto& body : _bodies)
+        {
+            body->update(_updateTime * _speed);
+        }
+        
         _info->step(_updateTime * _speed);
         _updateRateCount = 0;
         _updateTime = 0.0f;
