@@ -610,9 +610,10 @@ Developers:
         Makes Colors are now comparable and explicit convertible
         
     bmanGH
-        Use gl caching functions in TexturePVR::createGLTexture()
+        Used gl caching functions in TexturePVR::createGLTexture()
         Configuration of VAO in runtime
-        Add setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
+        Added setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
+        Fixed a bug that object which isn't in Vector would also be released when invoking Vector::eraseObject.
         
     metadao
         make create_project.py more pythonic and fix some typoes

@@ -1720,8 +1720,6 @@
 		46A1704F1807CC1C005B8026 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AC81807B038005B8026 /* CCApplication.h */; };
 		46A170501807CC1C005B8026 /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AC91807B038005B8026 /* CCApplication.mm */; };
 		46A170511807CC1C005B8026 /* CCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACA1807B038005B8026 /* CCCommon.mm */; };
-		46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16ACC1807B038005B8026 /* CCDirectorCaller.h */; };
-		46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */; };
 		46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD41807B038005B8026 /* CCPlatformDefine.h */; };
 		46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD51807B038005B8026 /* CCStdC.h */; };
 		46A170A91807CE9D005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
@@ -3073,8 +3071,6 @@
 		46A16AC81807B038005B8026 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16AC91807B038005B8026 /* CCApplication.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCApplication.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16ACA1807B038005B8026 /* CCCommon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCCommon.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		46A16ACC1807B038005B8026 /* CCDirectorCaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirectorCaller.h; sourceTree = "<group>"; };
-		46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDirectorCaller.mm; sourceTree = "<group>"; };
 		46A16AD41807B038005B8026 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		46A16AD51807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		46A16E1B1807C948005B8026 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos/2d/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -5381,8 +5377,6 @@
 				46A16AC81807B038005B8026 /* CCApplication.h */,
 				46A16AC91807B038005B8026 /* CCApplication.mm */,
 				46A16ACA1807B038005B8026 /* CCCommon.mm */,
-				46A16ACC1807B038005B8026 /* CCDirectorCaller.h */,
-				46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */,
 				1A0DB7351823828F0025743D /* CCGL.h */,
 				46A16AD41807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AD51807B038005B8026 /* CCStdC.h */,
@@ -5657,7 +5651,6 @@
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
 				46A170EB1807CECA005B8026 /* CCPhysicsJoint.h in Headers */,
-				46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */,
 				46A170B71807CEA3005B8026 /* vec4.h in Headers */,
 				46A170B61807CEA3005B8026 /* vec3.h in Headers */,
 				50AE5EA5188749250007CFE3 /* CCBatchCommand.h in Headers */,
@@ -7077,7 +7070,6 @@
 				46A170D01807CEBB005B8026 /* vec4.c in Sources */,
 				ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
 				46A170CE1807CEBB005B8026 /* vec2.c in Sources */,
-				46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */,
 				460E44F01807DED6000CDD6D /* matrix.c in Sources */,
 				06CAAACB186AD7F20012A414 /* TriggerMng.cpp in Sources */,
 				46A170511807CC1C005B8026 /* CCCommon.mm in Sources */,

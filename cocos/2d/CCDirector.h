@@ -58,7 +58,6 @@ class EventDispatcher;
 class EventCustom;
 class EventListenerCustom;
 class TextureCache;
-class Frustum;
 class Renderer;
 class Console;
 
@@ -330,12 +329,6 @@ public:
     */
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor() const { return _contentScaleFactor; }
-    
-    /**
-     Get the Culling Frustum
-     */
-    
-    Frustum* getFrustum() const { return _cullingFrustum; }
 
     /** Gets the Scheduler associated with this director
      @since v2.0
@@ -450,8 +443,6 @@ protected:
     unsigned int _frames;
     float _secondsPerFrame;
     
-    Frustum *_cullingFrustum;
-     
     /* The running scene */
     Scene *_runningScene;
     
