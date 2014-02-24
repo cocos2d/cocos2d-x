@@ -12,7 +12,7 @@ bool UILabelAtlasTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("LabelAtlas");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -21,7 +21,7 @@ bool UILabelAtlasTest::init()
         _uiLayer->addChild(alert);
         
         // Create the label atlas
-        gui::TextAtlas* labelAtlas = gui::TextAtlas::create();
+        ui::TextAtlas* labelAtlas = ui::TextAtlas::create();
         labelAtlas->setProperty("1234567890", "cocosgui/labelatlas.png", 17, 22, "0");
         labelAtlas->setPosition(Point((widgetSize.width) / 2, widgetSize.height / 2.0f));
         _uiLayer->addChild(labelAtlas);                

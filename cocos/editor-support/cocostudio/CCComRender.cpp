@@ -149,7 +149,7 @@ bool ComRender::serialize(void* r)
 			}
 			else if(strcmp(className, "GUIComponent") == 0)
 			{
-				cocos2d::gui::Widget* widget = GUIReader::getInstance()->widgetFromJsonFile(filePath.c_str());
+				cocos2d::ui::Widget* widget = GUIReader::getInstance()->widgetFromJsonFile(filePath.c_str());
                 _render = widget;
 			}
 			else

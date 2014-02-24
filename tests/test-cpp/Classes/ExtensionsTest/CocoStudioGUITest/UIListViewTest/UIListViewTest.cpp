@@ -27,7 +27,7 @@ bool UIListViewTest_Vertical::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move by vertical direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -36,7 +36,7 @@ bool UIListViewTest_Vertical::init()
         _uiLayer->addChild(_displayValueLabel);
         
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ListView vertical");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -200,7 +200,7 @@ bool UIListViewTest_Horizontal::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move by horizontal direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -209,7 +209,7 @@ bool UIListViewTest_Horizontal::init()
         _uiLayer->addChild(_displayValueLabel);
         
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ListView horizontal");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
