@@ -219,6 +219,8 @@ target_link_libraries(cocos2d
   kazmath
   unzip
   ${COCOS_LINK}
+  websockets
+  libwebp
 )
 
 set_target_properties(cocos2d
