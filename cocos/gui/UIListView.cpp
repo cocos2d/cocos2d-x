@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 ListView::ListView():
 _model(nullptr),

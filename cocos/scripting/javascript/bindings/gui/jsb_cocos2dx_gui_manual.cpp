@@ -82,7 +82,7 @@ static bool js_cocos2dx_UIWidget_addTouchEventListener(JSContext *cx, uint32_t a
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::Widget* cobj = (gui::Widget *)(proxy ? proxy->ptr : NULL);
+    ui::Widget* cobj = (gui::Widget *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
@@ -107,7 +107,7 @@ static bool js_cocos2dx_UICheckBox_addEventListener(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::CheckBox* cobj = (gui::CheckBox *)(proxy ? proxy->ptr : NULL);
+    ui::CheckBox* cobj = (gui::CheckBox *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
@@ -132,7 +132,7 @@ static bool js_cocos2dx_UISlider_addEventListener(JSContext *cx, uint32_t argc, 
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::Slider* cobj = (gui::Slider *)(proxy ? proxy->ptr : NULL);
+    ui::Slider* cobj = (gui::Slider *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
@@ -157,7 +157,7 @@ static bool js_cocos2dx_UITextField_addEventListener(JSContext *cx, uint32_t arg
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::TextField* cobj = (gui::TextField *)(proxy ? proxy->ptr : NULL);
+    ui::TextField* cobj = (gui::TextField *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
@@ -182,7 +182,7 @@ static bool js_cocos2dx_UIPageView_addEventListener(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::PageView* cobj = (gui::PageView *)(proxy ? proxy->ptr : NULL);
+    ui::PageView* cobj = (gui::PageView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
@@ -207,7 +207,7 @@ static bool js_cocos2dx_UIListView_addEventListener(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::ListView* cobj = (gui::ListView *)(proxy ? proxy->ptr : NULL);
+    ui::ListView* cobj = (gui::ListView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 2) {
@@ -232,7 +232,7 @@ static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, 
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
+    ui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 1) {
@@ -266,13 +266,13 @@ static bool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc, 
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    gui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
+    ui::LayoutParameter* cobj = (gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 0) {
         JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
         if (!tmp) return false;
-        gui::Margin margin = cobj->getMargin();
+        ui::Margin margin = cobj->getMargin();
         bool ok = JS_DefineProperty(cx, tmp, "left", DOUBLE_TO_JSVAL(margin.left), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "top", DOUBLE_TO_JSVAL(margin.top), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "right", DOUBLE_TO_JSVAL(margin.right), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
