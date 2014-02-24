@@ -144,16 +144,47 @@ void Button::ignoreContentAdaptWithSize(bool ignore)
 
 void Button::loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType)
 {
+    CC_SAFE_RELEASE_NULL(_normalState.sprite);
+    CC_SAFE_RELEASE_NULL(_pressedState.sprite);
+    CC_SAFE_RELEASE_NULL(_disabledState.sprite);
+
     loadTextureNormal(normal,texType);
     loadTexturePressed(selected,texType);
     loadTextureDisabled(disabled,texType);
 }
 
+void Button::loadTextures(cocos2d::SpriteFrame* normal, cocos2d::SpriteFrame* selected, cocos2d::SpriteFrame* disabled) {
+    CC_SAFE_RELEASE_NULL(_normalState.sprite);
+    CC_SAFE_RELEASE_NULL(_pressedState.sprite);
+    CC_SAFE_RELEASE_NULL(_disabledState.sprite);
+    
+    _normalState.sprite = normal;
+    _normalState.texType = ButtonState::TexType::SPRITE_FRAME;
+    load(_normalState);
+    _pressedState.sprite = selected;
+    _pressedState.texType = ButtonState::TexType::SPRITE_FRAME;
+    load(_pressedState);
+    _disabledState.sprite = disabled;
+    _disabledState.texType = ButtonState::TexType::SPRITE_FRAME;
+    load(_disabledState);
+    
+    CC_SAFE_RETAIN(_normalState.sprite);
+    CC_SAFE_RETAIN(_pressedState.sprite);
+    CC_SAFE_RETAIN(_disabledState.sprite);
+}
+
 void Button::load(ButtonState &state) {
     
-    if (state.fileName.empty())
-    {
-        return;
+    if ( state.texType == ButtonState::TexType::SPRITE_FRAME ) {
+        if (!state.sprite)
+        {
+            return;
+        }
+    } else {
+        if (state.fileName.empty())
+        {
+            return;
+        }
     }
     
     if (_scale9Enabled)
@@ -161,10 +192,13 @@ void Button::load(ButtonState &state) {
         auto renderer = static_cast<cocos2d::extension::Scale9Sprite*>(state.renderer);
         switch (state.texType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case ButtonState::TexType::SPRITE_FRAME:
+                renderer->setSpriteFrame(state.sprite);
+                break;
+            case ButtonState::TexType::LOCAL:
                 renderer->initWithFile(state.fileName.c_str());
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case ButtonState::TexType::PLIST:
                 renderer->initWithSpriteFrameName(state.fileName.c_str());
                 break;
         }
@@ -176,10 +210,13 @@ void Button::load(ButtonState &state) {
         auto renderer = static_cast<cocos2d::Sprite*>(state.renderer);
         switch (state.texType)
         {
-            case UI_TEX_TYPE_LOCAL:
+            case ButtonState::TexType::SPRITE_FRAME:
+                renderer->setSpriteFrame(state.sprite);
+                break;
+            case ButtonState::TexType::LOCAL:
                 renderer->setTexture(state.fileName.c_str());
                 break;
-            case UI_TEX_TYPE_PLIST:
+            case ButtonState::TexType::PLIST:
                 renderer->setSpriteFrame(state.fileName.c_str());
                 break;
         }
@@ -194,24 +231,55 @@ void Button::load(ButtonState &state) {
 
 void Button::loadTextureNormal(const char* normal,TextureResType texType)
 {
-    _normalState.texType =texType;
+    CC_SAFE_RELEASE_NULL(_normalState.sprite);
+    _normalState.setTexType(texType);
     _normalState.fileName = normal;
     load(_normalState);
 }
 
-void Button::loadTexturePressed(const char* selected,TextureResType texType)
+void Button::loadTexturePressed(const char* pressed,TextureResType texType)
 {
-    _pressedState.texType = texType;
-    _pressedState.fileName = selected;
+    CC_SAFE_RELEASE_NULL(_pressedState.sprite);
+    _pressedState.setTexType(texType);
+    _pressedState.fileName = pressed;
     load(_pressedState);
 }
 
 void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
 {
-    _disabledState.texType = texType;
+    CC_SAFE_RELEASE_NULL(_disabledState.sprite);
+    _disabledState.setTexType(texType);
     _disabledState.fileName = disabled;
     load(_disabledState);
 }
+
+void Button::loadTextureNormal(cocos2d::SpriteFrame *normal)
+{
+    CC_SAFE_RELEASE_NULL(_normalState.sprite);
+    _normalState.sprite = normal;
+    _normalState.texType = ButtonState::TexType::SPRITE_FRAME;
+    load(_normalState);
+    CC_SAFE_RETAIN(_normalState.sprite);
+}
+
+void Button::loadTexturePressed(cocos2d::SpriteFrame *pressed)
+{
+    CC_SAFE_RELEASE_NULL(_pressedState.sprite);
+    _pressedState.sprite = pressed;
+    _pressedState.texType = ButtonState::TexType::SPRITE_FRAME;
+    load(_pressedState);
+    CC_SAFE_RETAIN(_pressedState.sprite);
+}
+
+void Button::loadTextureDisabled(cocos2d::SpriteFrame *disabled)
+{
+    CC_SAFE_RELEASE_NULL(_disabledState.sprite);
+    _disabledState.sprite = disabled;
+    _disabledState.texType = ButtonState::TexType::SPRITE_FRAME;
+    load(_disabledState);
+    CC_SAFE_RETAIN(_disabledState.sprite);
+}
+
 
 void Button::setCapInsets(const Rect &capInsets)
 {
