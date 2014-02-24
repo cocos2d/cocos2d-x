@@ -751,7 +751,7 @@ static int tolua_Cocos2d_CCArray_objectAtIndex00(lua_State* tolua_S)
             Ref* tolua_ret = (Ref*)  self->getObjectAtIndex(index);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Object");
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
         }
     }
     return 1;
@@ -785,7 +785,7 @@ static int tolua_Cocos2d_CCArray_lastObject00(lua_State* tolua_S)
             Ref* tolua_ret = (Ref*)  self->getLastObject();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Object");
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
         }
     }
     return 1;
@@ -819,7 +819,7 @@ static int tolua_Cocos2d_CCArray_randomObject00(lua_State* tolua_S)
             Ref* tolua_ret = (Ref*)  self->getRandomObject();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Object");
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
         }
     }
     return 1;
