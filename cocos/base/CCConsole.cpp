@@ -793,8 +793,7 @@ void Console::loop()
     for(const auto &fd: _fds )
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        closesocket(fd)
-        WSACleanup();
+        closesocket(fd);
 #else
         close(fd);
 #endif
