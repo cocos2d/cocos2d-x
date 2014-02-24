@@ -95,7 +95,7 @@ local function Effect2()
 
     local  delay = cc.DelayTime:create(1)
 
-    target:runAction(cc.Sequence:create(shaky, delay ,reuse, shuffle, tolua.cast(delay:clone(), "cc.Action"), turnoff, turnon))
+    target:runAction(cc.Sequence:create(shaky, delay ,reuse, shuffle, delay:clone(), turnoff, turnon))
     return ret
 end
 

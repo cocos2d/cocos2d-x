@@ -408,8 +408,8 @@ public:
     virtual void setPosition(const Point& pos) override;
     virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
-    virtual void setRotationX(float rotationX) override;
-    virtual void setRotationY(float rotationY) override;
+    virtual void setRotationSkewX(float rotationX) override;
+    virtual void setRotationSkewY(float rotationY) override;
     virtual void setSkewX(float sx) override;
     virtual void setSkewY(float sy) override;
     virtual void removeChild(Node* child, bool cleanup) override;
@@ -419,11 +419,10 @@ public:
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
-    virtual void setVertexZ(float vertexZ) override;
+    virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void updateQuadVertices();
     virtual void draw(void) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;

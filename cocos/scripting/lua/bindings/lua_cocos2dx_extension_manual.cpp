@@ -22,16 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_extension_manual.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include  "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
 #include "cocos2d.h"
+#include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "cocos-ext.h"
@@ -766,7 +758,7 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
         }
         
 #if COCOS2D_DEBUG >= 1
-        if (!tolua_isusertype(tolua_S, 3, "cc.Object", 0, &tolua_err))
+        if (!tolua_isusertype(tolua_S, 3, "cc.Ref", 0, &tolua_err))
             goto tolua_lerror;
 #endif
         Ref* owner = static_cast<Ref*>(tolua_tousertype(tolua_S, 3, 0));

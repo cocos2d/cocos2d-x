@@ -69,7 +69,7 @@ local function runNotificationCenterTest()
 		local s = cc.Director:getInstance():getWinSize()
     	
     	local function toggleSwitch(tag,menuItem)
-    		local toggleItem = tolua.cast(menuItem,"cc.MenuItemToggle")
+    		local toggleItem = menuItem
     		local nIndex     = toggleItem:getSelectedIndex()
     		local selectedItem = toggleItem:getSelectedItem()
     		if 0 == nIndex  then
@@ -155,7 +155,7 @@ local function runNotificationCenterTest()
         	connectitem:setTag(NotificationCenterParam.kTagConnect+i)
         	
         	local function connectToSwitch(tag,menuItem)
-    		   local connectMenuitem = tolua.cast(menuItem,"cc.MenuItemToggle")
+    		   local connectMenuitem = menuItem
     		   local bConnected = true
     		   if connectMenuitem:getSelectedIndex() == 0 then
     		   	   bConnected = false
@@ -376,7 +376,7 @@ local function runCCControlTest()
         	if nil == pSender or nil == pDisplayValueLabel then
         		return
         	end       	
-        	local pControl = tolua.cast(pSender,"cc.ControlSlider")
+        	local pControl = pSender
         	local strFmt = nil
         	if pControl:getTag() == 1 then
         		strFmt = string.format("Upper slider value = %.02f",pControl:getValue())
@@ -434,7 +434,7 @@ local function runCCControlTest()
         		return
         	end
         	
-        	local pPicker = tolua.cast(pSender,"cc.ControlColourPicker")
+        	local pPicker = pSender
         	local strFmt  = string.format("#%02X%02X%02X",pPicker:getColor().r, pPicker:getColor().g, pPicker:getColor().b)
         	pColorLabel:setString(strFmt)       	
         end
@@ -499,7 +499,7 @@ local function runCCControlTest()
         		return
         	end
         	
-        	local pControl = tolua.cast(pSender,"cc.ControlSwitch")
+        	local pControl = pSender
         	if pControl:isOn() then
         		pDisplayValueLabel:setString("On")
         	else
@@ -774,7 +774,7 @@ local function runCCControlTest()
         		return
         	end
         	
-        	local pControl = tolua.cast(pSender,"cc.ControlPotentiometer")
+        	local pControl = pSender
         	local strFmt = string.format("%0.2f",pControl:getValue())
         	pDisplayValueLabel:setString(strFmt )
         end
@@ -831,7 +831,7 @@ local function runCCControlTest()
     			return
     		end
     		
-    		local pControl = tolua.cast(pSender,"cc.ControlStepper")
+    		local pControl = pSender
     		local strFmt   = string.format("%0.02f",pControl:getValue() )
     		pDisplayValueLabel:setString(strFmt )
     	end
@@ -917,7 +917,7 @@ local function runEditBoxTest()
     local EditEmail = nil
 	
 	local function editBoxTextEventHandle(strEventName,pSender)
-		local edit = tolua.cast(pSender,"cc.EditBox")
+		local edit = pSender
 		local strFmt 
 		if strEventName == "began" then
 			strFmt = string.format("editBox %p DidBegin !", edit)
@@ -1038,7 +1038,7 @@ function TableViewTestLayer.tableCellAtIndex(table, idx)
         label:setTag(123)
         cell:addChild(label)
     else
-        label = tolua.cast(cell:getChildByTag(123),"cc.LabelTTF")
+        label = cell:getChildByTag(123)
         if nil ~= label then
             label:setString(strValue)
         end
