@@ -330,6 +330,13 @@ struct BlendFunc
     }
 };
 
+// For rotated SpriteFrames loaded from texture packers.
+enum class Rotation {
+    NONE,
+    LEFT,
+    RIGHT
+};
+
 // Label::VAlignment
 // Label::HAlignment
 

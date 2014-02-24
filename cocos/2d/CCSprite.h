@@ -139,6 +139,19 @@ public:
     static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated=false);
 
     /**
+     * Creates a sprite with a texture and a rect.
+     *
+     * After creation, the offset will be (0,0).
+     *
+     * @param   texture    A pointer to an existing Texture2D object.
+     *                      You can use a Texture2D object for many sprites.
+     * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
+     * @param   rotation     The rect's rotation
+     * @return  A valid sprite object that is marked as autoreleased.
+     */
+    static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, Rotation rotation);
+
+    /**
      * Creates a sprite with an sprite frame.
      *
      * @param   pSpriteFrame    A sprite frame which involves a texture and a rect
@@ -221,6 +234,12 @@ public:
     virtual void setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize);
 
     /**
+     * Sets the texture rect, rectRotatiot and untrimmed size of the Sprite in points.
+     * It will update the texture coordinates and the vertex rectangle.
+     */
+    virtual void setTextureRect(const Rect& rect, Rotation rotation, const Size& untrimmedSize);
+
+    /**
      * Sets the vertex rect.
      * It will be called internally by setTextureRect.
      * Useful if you want to create 2x images from SD images in Retina Display.
@@ -289,7 +308,12 @@ public:
     /**
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated(void) const { return _rectRotated; }
+    inline bool isTextureRectRotated(void) const { return _rectRotation != Rotation::NONE; }
+    
+    /**
+     * Returns the texture rectangle's rotation.
+     */
+    inline Rotation getTextureRectRotation(void) const { return _rectRotation; }
 
     /**
      * Returns the index used on the TextureAtlas.
@@ -474,6 +498,19 @@ protected:
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
 
     /**
+     * Initializes a sprite with a texture and a rect in points, optionally rotated.
+     *
+     * After initialization, the offset will be (0,0).
+     * @note    This is the designated initializer.
+     *
+     * @param   texture    A Texture2D object whose texture will be applied to this sprite.
+     * @param   rect        A rectangle assigned the contents of texture.
+     * @param   rotation     The rect's rotation (to be corrected when rendered).
+     * @return  true if the sprite is initialized properly, false otherwise.
+     */
+    virtual bool initWithTexture(Texture2D *texture, const Rect& rect, Rotation rotation);
+
+    /**
      * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
      *
      * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect
@@ -554,7 +591,7 @@ protected:
 
     // texture
     Rect _rect;                             /// Retangle of Texture2D
-    bool   _rectRotated;                    /// Whether the texture is rotated
+    Rotation _rectRotation;                    /// Texture rect's rotation
 
     // Offset Position (used by Zwoptex)
     Point _offsetPosition;
