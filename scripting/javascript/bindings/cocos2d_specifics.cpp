@@ -2782,6 +2782,28 @@ JSBool js_cocos2dx_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
+JSBool js_cocos2dx_CCApplication_openURL(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CCApplication* cobj = (cocos2d::CCApplication *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        cobj->openURL(arg0.c_str());
+    }
+    else {
+        JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    }
+
+    return JS_FALSE;
+}
+
 JSBool js_cocos2dx_CCSprite_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     return js_cocos2dx_setBlendFunc<CCSprite>(cx, argc, vp);

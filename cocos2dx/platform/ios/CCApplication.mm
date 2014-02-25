@@ -54,6 +54,13 @@ int CCApplication::run()
     return 0;
 }
 
+void CCApplication::openURL(const char* pszUrl)
+{
+    NSString *msg = [NSString stringWithCString:pszUrl encoding:NSASCIIStringEncodeing];
+    NSURL *nsUrl = [NSURL URLWithString:msg];
+    [[UIApplication sharedApplication] openURL:nsUrl];
+}
+
 void CCApplication::setAnimationInterval(double interval)
 {
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
