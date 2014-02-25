@@ -7,7 +7,7 @@ set(PLATFORM_SRC
   platform/win32/CCFileUtilsWin32.cpp
   platform/win32/CCCommon.cpp
   platform/win32/CCApplication.cpp
-  platform/win32/CCGLView.cpp
+  platform/desktop/CCGLView.cpp
   platform/win32/CCDevice.cpp
 )
 
@@ -158,68 +158,73 @@ add_library(cocos2d STATIC
 
 if(WIN32)
 
-if(MINGW)
+  if(MINGW)
 
-set(COCOS_LINK
-  z
-  jpeg
-  png
-  webp
-  tiff
-  glfw3
-  glew32
-  opengl32
-  iconv
-  freetype
-  bz2
-  )
+    set(COCOS_LINK
+      z
+      jpeg
+      png
+      webp
+      tiff
+      glfw3
+      glew32
+      opengl32
+      iconv
+      freetype
+      bz2
+      )
 
-else()
+  else()
 
 
-set(COCOS_LINK
-  libjpeg
-  libpng
-  libwebp
-  libtiff
-  freetype250
-  glfw3
-  glew32
-  opengl32
-  libiconv
-  libzlib
-  )
+    set(COCOS_LINK
+      libjpeg
+      libpng
+      libwebp
+      libtiff
+      freetype250
+      glfw3
+      glew32
+      opengl32
+      libiconv
+      libzlib
+      )
 
-endif()
+  endif()
 
 elseif(APPLE)
 
 else()
-set(COCOS_LINK
-  jpeg
-  webp
-  tiff
-  freetype
-  fontconfig
-  png
-  pthread
-  glfw
-  GLEW
-  GL
-  X11
-  rt
-  z
-)
+  set(COCOS_LINK
+    jpeg
+    webp
+    tiff
+    freetype
+    fontconfig
+    png
+    pthread
+    glfw
+    GLEW
+    GL
+    X11
+    rt
+    z
+  )
 endif()
 
-target_link_libraries(cocos2d
+set(COCOS2D_TARGET_LINKED_LIBRARIES
   cocosbase
   chipmunk_static
   tinyxml2
   kazmath
   unzip
-  ${COCOS_LINK}
-)
+  ${COCOS_LINK})
+
+if(WIN32)
+  LIST(APPEND COCOS2D_TARGET_LINKED_LIBRARIES websockets libwebp)
+endif(WIN32)
+
+target_link_libraries(cocos2d ${COCOS2D_TARGET_LINKED_LIBRARIES})
 
 set_target_properties(cocos2d
     PROPERTIES
