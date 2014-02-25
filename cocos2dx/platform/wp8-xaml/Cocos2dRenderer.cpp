@@ -97,7 +97,7 @@ void Cocos2dRenderer::OnBackKeyPress()
 {
     // handle the backkey in your app here.
     // call Cocos2dEvent::TerminateApp if it is time to exit your app.
-    // ie. the use is on your first page and wishes to exit your app.
+    // ie. the user is on your first page and wishes to exit your app.
     m_delegate->Invoke(Cocos2dEvent::TerminateApp);
 }
 
