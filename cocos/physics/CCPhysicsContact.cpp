@@ -118,7 +118,7 @@ PhysicsContactPreSolve::~PhysicsContactPreSolve()
     CC_SAFE_DELETE(_preContactData);
 }
 
-float PhysicsContactPreSolve::getElasticity() const
+float PhysicsContactPreSolve::getRestitution() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
@@ -133,9 +133,9 @@ Point PhysicsContactPreSolve::getSurfaceVelocity() const
     return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
 }
 
-void PhysicsContactPreSolve::setElasticity(float elasticity)
+void PhysicsContactPreSolve::setRestitution(float restitution)
 {
-    static_cast<cpArbiter*>(_contactInfo)->e = elasticity;
+    static_cast<cpArbiter*>(_contactInfo)->e = restitution;
 }
 
 void PhysicsContactPreSolve::setFriction(float friction)
@@ -165,7 +165,7 @@ PhysicsContactPostSolve::~PhysicsContactPostSolve()
     
 }
 
-float PhysicsContactPostSolve::getElasticity() const
+float PhysicsContactPostSolve::getRestitution() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
