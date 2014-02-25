@@ -93,9 +93,12 @@ IAsyncAction^ Cocos2dRenderer::OnSuspending()
 
 
 // user pressed the Back Key on the phone
-bool Cocos2dRenderer::OnBackKeyPress()
+void Cocos2dRenderer::OnBackKeyPress()
 {
-    return false;
+    // handle the backkey in your app here.
+    // call Cocos2dEvent::TerminateApp if it is time to exit your app.
+    // ie. the use is on your first page and wishes to exit your app.
+    m_delegate->Invoke(Cocos2dEvent::TerminateApp);
 }
 
 void Cocos2dRenderer::OnUpdateDevice()
@@ -143,6 +146,7 @@ void Cocos2dRenderer::OnKeyPressed(Platform::String^ text)
     int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)text->Data(), 1, szUtf8, sizeof(szUtf8), NULL, NULL);
     CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
 }
+
 
 void Cocos2dRenderer::OnCocos2dKeyEvent(Cocos2dKeyEvent event)
 {

@@ -76,5 +76,17 @@ void KeyboardEvent::execute(Cocos2dRenderer ^ renderer)
     }
 }
 
+
+BackButtonEvent::BackButtonEvent()
+{
+
+}
+
+void BackButtonEvent::execute(Cocos2dRenderer ^ renderer)
+{
+    renderer->OnBackKeyPress();
+}
+
+
 }
 
