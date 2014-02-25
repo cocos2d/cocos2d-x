@@ -212,16 +212,19 @@ else()
   )
 endif()
 
-target_link_libraries(cocos2d
+set(COCOS2D_TARGET_LINKED_LIBRARIES
   cocosbase
   chipmunk_static
   tinyxml2
   kazmath
   unzip
-  ${COCOS_LINK}
-  websockets
-  libwebp
-)
+  ${COCOS_LINK})
+
+if(WIN32)
+  LIST(APPEND COCOS2D_TARGET_LINKED_LIBRARIES websockets libwebp)
+endif(WIN32)
+
+target_link_libraries(cocos2d ${COCOS2D_TARGET_LINKED_LIBRARIES})
 
 set_target_properties(cocos2d
     PROPERTIES
