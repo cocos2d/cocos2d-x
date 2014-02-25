@@ -96,7 +96,7 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
-
+ 
 protected:
     void loop();
     ssize_t readline(int fd, char *buf, int maxlen);
@@ -135,7 +135,6 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };
-
 
 NS_CC_END
 

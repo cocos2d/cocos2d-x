@@ -111,21 +111,20 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 	va_start(args, format);
 	vsnprintf(buf, sizeof(buf), format, args);
 	va_end(args);
-
-	return write(sock, buf, strlen(buf));
+	return send(sock, buf, strlen(buf),0);
 }
 
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
-    write(fd, prompt, sizeof(prompt));
+    send(fd, prompt, sizeof(prompt),0);
 }
 
 static int printSceneGraph(int fd, Node* node, int level)
 {
     int total = 1;
     for(int i=0; i<level; ++i)
-        write(fd, "-", 1);
+        send(fd, "-", 1,0);
 
     mydprintf(fd, " %s\n", node->getDescription().c_str());
 
@@ -137,7 +136,7 @@ static int printSceneGraph(int fd, Node* node, int level)
 
 static void printSceneGraphBoot(int fd)
 {
-    write(fd,"\n",1);
+    send(fd,"\n",1,0);
     auto scene = Director::getInstance()->getRunningScene();
     int total = printSceneGraph(fd, scene, 0);
     mydprintf(fd, "Total Nodes: %d\n", total);
@@ -290,6 +289,7 @@ Console::~Console()
     stop();
 }
 
+
 bool Console::listenOnTCP(int port)
 {
     int listenfd, n;
@@ -325,7 +325,12 @@ bool Console::listenOnTCP(int port)
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
 
-        close(listenfd);    /* bind error, close and try next one */
+/* bind error, close and try next one */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        closesocket(listenfd);
+#else
+        close(listenfd);
+#endif
     } while ( (res = res->ai_next) != NULL);
     
     if (res == NULL) {
@@ -391,7 +396,7 @@ void Console::addCommand(const Command& cmd)
 void Console::commandHelp(int fd, const std::string &args)
 {
     const char help[] = "\nAvailable commands:\n";
-    write(fd, help, sizeof(help));
+    send(fd, help, sizeof(help),0);
     for(auto it=_commands.begin();it!=_commands.end();++it)
     {
         auto cmd = it->second;
@@ -409,7 +414,11 @@ void Console::commandExit(int fd, const std::string &args)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-    close(fd);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        closesocket(fd);
+#else
+        close(fd);
+#endif
 }
 
 void Console::commandSceneGraph(int fd, const std::string &args)
@@ -566,7 +575,7 @@ void Console::commandDirector(int fd, const std::string& args)
                             "\tresume, resume all scheduled timers\n"
                             "\tstop, Stops the animation. Nothing will be drawn.\n"
                             "\tstart, Restart the animation again, Call this function only if [director stop] was called earlier\n";
-         write(fd, help, sizeof(help) - 1);
+         send(fd, help, sizeof(help) - 1,0);
     }
     else if(args == "pause")
     {
@@ -604,7 +613,7 @@ bool Console::parseCommand(int fd)
     {
         const char err[] = "Unknown error!\n";
         sendPrompt(fd);
-        write(fd, err, sizeof(err));
+        send(fd, err, sizeof(err),0);
         return false;
     }
     std::string cmdLine;
@@ -616,7 +625,7 @@ bool Console::parseCommand(int fd)
     if(args.empty())
     {
         const char err[] = "Unknown command. Type 'help' for options\n";
-        write(fd, err, sizeof(err));
+        send(fd, err, sizeof(err),0);
         sendPrompt(fd);
         return false;
     }
@@ -638,7 +647,7 @@ bool Console::parseCommand(int fd)
         cmd.callback(fd, args2);
     }else if(strcmp(buf, "\r\n") != 0) {
         const char err[] = "Unknown command. Type 'help' for options\n";
-        write(fd, err, sizeof(err));
+        send(fd, err, sizeof(err),0);
     }
 
     sendPrompt(fd);
@@ -657,7 +666,7 @@ ssize_t Console::readline(int fd, char* ptr, int maxlen)
     char c;
 
     for( n=1; n<maxlen-1; n++ ) {
-        if( (rc = read(fd, &c, 1 )) ==1 ) {
+        if( (rc = recv(fd, &c, 1, 0)) ==1 ) {
             *ptr++ = c;
             if(c == '\n') {
                 break;
@@ -727,6 +736,7 @@ void Console::loop()
 
         copy_set = _read_set;
         timeout_copy = timeout;
+        
         int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
         if( nready == -1 )
@@ -773,7 +783,7 @@ void Console::loop()
             _DebugStringsMutex.lock();
             for(const auto &str : _DebugStrings) {
                 for(const auto &fd : _fds) {
-                    write(fd, str.c_str(), str.length());
+                    send(fd, str.c_str(), str.length(),0);
                 }
             }
             _DebugStrings.clear();
@@ -783,9 +793,20 @@ void Console::loop()
 
     // clean up: ignore stdin, stdout and stderr
     for(const auto &fd: _fds )
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        closesocket(fd);
+#else
         close(fd);
+#endif
+    }
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    closesocket(_listenfd);
+	WSACleanup();
+#else
     close(_listenfd);
-
+#endif
     _running = false;
 }
 
