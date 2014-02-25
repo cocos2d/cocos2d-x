@@ -58,13 +58,15 @@ namespace PhoneDirect3DXamlAppInterop
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
 
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
-
             }
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
         {
-            e.Cancel = m_d3dInterop.OnBackKeyPress();
+            m_d3dInterop.OnBackKeyPress();
+            // cocos2d-x will async send Cocos2dEvent.TerminateApp event if it is time to exit app.
+            // We do not want to exit now, so we set e.Cancel to true.
+            e.Cancel = true;
         }
 
         public void OnKeyDown(object sender, KeyEventArgs e)
@@ -102,6 +104,10 @@ namespace PhoneDirect3DXamlAppInterop
             {
                 switch (theEvent)
                 {
+                    case Cocos2dEvent.TerminateApp:
+                        Application.Current.Terminate();
+                        break;
+
                     case Cocos2dEvent.ShowKeyboard:
                         if (m_textBox == null)
                         {

@@ -50,7 +50,7 @@ public:
 
     void UpdateForWindowSizeChange(float width, float height);
     Windows::Foundation::IAsyncAction^ OnSuspending();
-    bool OnBackKeyPress();
+    void OnBackKeyPress();
 
     void OnCocos2dKeyEvent(Cocos2dKeyEvent key);
     void OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ text);

@@ -77,6 +77,13 @@ private:
     Platform::Agile<Platform::String> m_text;
 };
 
+class BackButtonEvent : public InputEvent
+{
+public:
+    BackButtonEvent();
+    virtual void execute(Cocos2dRenderer ^ renderer);
+};
+
 
 }
 

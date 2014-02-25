@@ -64,7 +64,8 @@ namespace PhoneDirect3DXamlAppInterop
 
         protected override void OnBackKeyPress(CancelEventArgs e)
         {
-            e.Cancel = m_d3dInterop.OnBackKeyPress();
+            m_d3dInterop.OnBackKeyPress();
+            e.Cancel = true;
         }
 
         public void OnKeyDown(object sender, KeyEventArgs e)
