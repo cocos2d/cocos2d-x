@@ -169,7 +169,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClCompile Include="socket\timeout.c" />
     <ClCompile Include="socket\udp.c" />
     <ClCompile Include="socket\wsocket.c" />
-    <ClCompile Include="tolua_fix.c" />
+    <ClCompile Include="tolua_fix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h" />
