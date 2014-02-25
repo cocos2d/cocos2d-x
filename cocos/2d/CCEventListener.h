@@ -64,7 +64,7 @@ protected:
     EventListener();
     
     /** Initializes event with type and callback function */
-    bool init(Type t, ListenerID listenerID, std::function<void(Event*)>callback);
+    bool init(Type t, const ListenerID& listenerID, const std::function<void(Event*)>& callback);
 public:
     /** Destructor */
     virtual ~EventListener();

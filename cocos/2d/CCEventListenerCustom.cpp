@@ -32,7 +32,7 @@ EventListenerCustom::EventListenerCustom()
 {
 }
 
-EventListenerCustom* EventListenerCustom::create(const std::string& eventName, std::function<void(EventCustom*)> callback)
+EventListenerCustom* EventListenerCustom::create(const std::string& eventName, const std::function<void(EventCustom*)>& callback)
 {
     EventListenerCustom* ret = new EventListenerCustom();
     if (ret && ret->init(eventName, callback))
@@ -46,7 +46,7 @@ EventListenerCustom* EventListenerCustom::create(const std::string& eventName, s
     return ret;
 }
 
-bool EventListenerCustom::init(ListenerID listenerId, std::function<void(EventCustom*)>callback)
+bool EventListenerCustom::init(const ListenerID& listenerId, const std::function<void(EventCustom*)>& callback)
 {
     bool ret = false;
     
