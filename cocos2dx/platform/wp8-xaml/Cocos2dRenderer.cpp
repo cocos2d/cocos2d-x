@@ -39,7 +39,7 @@ using namespace PhoneDirect3DXamlAppComponent;
 
 USING_NS_CC;
 
-Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr)
+Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
 {
     mApp = new AppDelegate();
 }
@@ -55,6 +55,7 @@ void Cocos2dRenderer::CreateGLResources()
         pEGLView->setViewName("Cocos2d-x");
         CCApplication::sharedApplication()->run();
         pEGLView->SetXamlEventDelegate(m_delegate);
+        pEGLView->SetXamlMessageBoxDelegate(m_messageBoxDelegate);
    }
     else
     {
@@ -177,6 +178,18 @@ void Cocos2dRenderer::SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2
         eglView->SetXamlEventDelegate(delegate);
     }
 }
+
+void Cocos2dRenderer::SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate)
+{
+    m_messageBoxDelegate = delegate;
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    if(eglView)
+    {
+        eglView->SetXamlMessageBoxDelegate(delegate);
+    }
+
+}
+
 
 
 

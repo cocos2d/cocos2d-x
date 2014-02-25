@@ -169,7 +169,13 @@ void Direct3DInterop::SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate)
 { 
     m_delegate = delegate; 
     m_renderer->SetXamlEventDelegate(delegate);
-};
+}
+
+void Direct3DInterop::SetCocos2dMessageBoxDelegate(Cocos2dMessageBoxDelegate ^ delegate)
+{
+    m_messageBoxDelegate = delegate;
+    m_renderer->SetXamlMessageBoxDelegate(delegate);
+}
 
 bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
 {
@@ -180,6 +186,5 @@ bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
     }
     return false;
 }
-
 
 }

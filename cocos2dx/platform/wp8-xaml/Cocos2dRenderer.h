@@ -43,6 +43,7 @@ public:
     void OnKeyPressed(Platform::String^ text);
     void OnCocos2dKeyEvent(PhoneDirect3DXamlAppComponent::Cocos2dKeyEvent event);
     void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate);
+    void SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -61,6 +62,7 @@ private:
     bool mInitialized;
 
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
+    PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
 
 	// The AppDelegate for the Cocos2D app
 	AppDelegate* mApp;

@@ -87,6 +87,8 @@ CCEGLView::CCEGLView()
     , m_eglContext(nullptr)
     , m_eglSurface(nullptr)
     , m_isXamlWindow(false)
+    , m_delegate(nullptr)
+    , m_messageBoxDelegate(nullptr)
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8");
@@ -393,6 +395,18 @@ void CCEGLView::ValidateDevice()
 {
 
 }
+
+bool CCEGLView::ShowMessageBox(Platform::String^ title, Platform::String^ message)
+{
+    if(m_messageBoxDelegate)
+    {
+        m_messageBoxDelegate->Invoke(title, message);
+        return true;
+    }
+    return false;
+}
+
+
 
 // called by orientation change from WP8 XAML
 void CCEGLView::UpdateOrientation(DisplayOrientations orientation)

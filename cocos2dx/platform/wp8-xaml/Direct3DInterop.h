@@ -62,6 +62,7 @@ public:
     property Windows::Foundation::Size WindowBounds;
 
     void SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate);
+    void SetCocos2dMessageBoxDelegate(Cocos2dMessageBoxDelegate ^ delegate);
 
 protected:
     // Event Handlers
@@ -88,6 +89,7 @@ private:
 
     Windows::Foundation::Size m_renderResolution;
     Cocos2dEventDelegate^ m_delegate;
+    Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
 };
 
 }

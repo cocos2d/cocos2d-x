@@ -58,6 +58,7 @@ namespace PhoneDirect3DXamlAppInterop
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
 
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
+                m_d3dInterop.SetCocos2dMessageBoxDelegate(OnCocos2dMessageBoxEvent);
             }
         }
 
@@ -97,6 +98,15 @@ namespace PhoneDirect3DXamlAppInterop
             m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Text, m_textBox.Text);
             m_textBox.Text = "";
         }
+
+        public void OnCocos2dMessageBoxEvent(String title, String text)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show(text, title, MessageBoxButton.OK);
+            });
+        }
+
 
         public void OnCocos2dEvent(Cocos2dEvent theEvent)
         {

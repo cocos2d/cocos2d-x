@@ -36,6 +36,7 @@ namespace PhoneDirect3DXamlAppComponent
 
 public delegate void Cocos2dEventDelegate(Cocos2dEvent event);    
 
+public delegate void Cocos2dMessageBoxDelegate(Platform::String^  title, Platform::String^ text);    
 
 enum PointerEventType
 {
