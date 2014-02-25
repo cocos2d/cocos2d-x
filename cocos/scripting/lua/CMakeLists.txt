@@ -5,7 +5,7 @@ set(LUABINDING_SRC
   ../auto-generated/lua-bindings/lua_cocos2dx_gui_auto.cpp
   ../auto-generated/lua-bindings/lua_cocos2dx_spine_auto.cpp
   ../auto-generated/lua-bindings/lua_cocos2dx_physics_auto.cpp
-  bindings/tolua_fix.c
+  bindings/tolua_fix.cpp
   bindings/CCLuaBridge.cpp
   bindings/CCLuaEngine.cpp
   bindings/CCLuaStack.cpp

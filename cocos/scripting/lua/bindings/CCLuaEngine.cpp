@@ -167,7 +167,7 @@ int LuaEngine::executeEvent(int nHandler, const char* pEventName, Ref* pEventSou
     _stack->pushString(pEventName);
     if (pEventSource)
     {
-        _stack->pushObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "cc.Object");
+        _stack->pushObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "cc.Ref");
     }
     int ret = _stack->executeFunctionByHandler(nHandler, pEventSource ? 2 : 1);
     _stack->clean();
@@ -447,7 +447,7 @@ int LuaEngine::handleCommonEvent(void* data)
         }
         else
         {
-            _stack->pushObject(commonInfo->eventSource, "cc.Object");
+            _stack->pushObject(commonInfo->eventSource, "cc.Ref");
         }
     }
     int ret = _stack->executeFunctionByHandler(commonInfo->handler, commonInfo->eventSource ? 2 : 1);
@@ -585,7 +585,7 @@ int LuaEngine::handlerControlEvent(void* data)
             
             if (0 != handler)
             {
-                _stack->pushObject((Ref*)basicScriptData->nativeObject, "cc.Object");
+                _stack->pushObject((Ref*)basicScriptData->nativeObject, "cc.Ref");
                 _stack->pushInt(controlEvents);
                 ret = _stack->executeFunctionByHandler(handler, 2);
                 _stack->clean();
@@ -1013,7 +1013,7 @@ int LuaEngine::handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void
     if (0 == handler)
         return 0;
     
-    _stack->pushObject(listenerData->objTarget, "cc.Object");
+    _stack->pushObject(listenerData->objTarget, "cc.Ref");
     _stack->pushInt(listenerData->eventType);
     
     _stack->executeFunctionByHandler(handler, 2);

@@ -21,17 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
+#include "LuaScriptHandlerMgr.h"
 #include <map>
 #include <string>
-#include "LuaScriptHandlerMgr.h"
+#include "tolua_fix.h"
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
@@ -282,7 +275,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_registerScriptHandler00(lua_State* tol
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S, 2, "cc.Object", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 2, "cc.Ref", 0, &tolua_err) ||
         !toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err) ||
         !tolua_isnumber(tolua_S, 4, 0, &tolua_err) ||
         !tolua_isnoobj(tolua_S,5,&tolua_err) )
@@ -316,7 +309,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_unregisterScriptHandler00(lua_State* t
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S, 2, "cc.Object", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 2, "cc.Ref", 0, &tolua_err) ||
         !tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err) )
         goto tolua_lerror;
@@ -348,7 +341,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_removeObjectAllHandlers00(lua_State* t
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S, 2, "cc.Object", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 2, "cc.Ref", 0, &tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err) )
         goto tolua_lerror;
     else

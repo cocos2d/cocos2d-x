@@ -23,14 +23,7 @@
  ****************************************************************************/
 
 #include "LuaBasicConversions.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include  "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
+#include "tolua_fix.h"
 
 std::unordered_map<std::string, std::string>  g_luaType;
 std::unordered_map<std::string, std::string>  g_typeCast;
@@ -1071,7 +1064,7 @@ bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
         else if (lua_isuserdata(L, i + 2))
         {
             tolua_Error err;
-            if (!tolua_isusertype(L, i + 2, "cc.Object", 0, &err))
+            if (!tolua_isusertype(L, i + 2, "cc.Ref", 0, &err))
             {
 #if COCOS2D_DEBUG >=1
                 luaval_to_native_err(L,"#ferror:",&err);
@@ -1596,18 +1589,9 @@ void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info)
         lua_pushnil(L);
     }else
     {
-        std::string hashName = typeid(*shape).name();
-        auto iter = g_luaType.find(hashName);
-        std::string className = "";
-        if(iter != g_luaType.end()){
-            className = iter->second.c_str();
-        } else {
-            className = "PhysicsShape";
-        }
-        
         int ID =  (int)(shape->_ID);
         int* luaID = &(shape->_luaID);
-        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)shape,className.c_str());
+        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)shape,"cc.PhysicsShape");
     }
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
     
