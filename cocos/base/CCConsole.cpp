@@ -636,8 +636,8 @@ void Console::commandTouch(int fd, const std::string& args)
             if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
             {
                 
-                float x = std::stof(argv[1]);
-                float y = std::stof(argv[2]);
+                float x = std::atof(argv[1].c_str());
+                float y = std::atof(argv[2].c_str());
 
                 srand (time(NULL));
                 _touchId = rand();
@@ -659,8 +659,8 @@ void Console::commandTouch(int fd, const std::string& args)
             if((argv.size() == 3) && (isFloat(argv[1])) && (isFloat(argv[2])))
             {
                 
-                float x = std::stof(argv[1]);
-                float y = std::stof(argv[2]);
+                float x = std::atof(argv[1].c_str());
+                float y = std::atof(argv[2].c_str());
                 
                 Scheduler *sched = Director::getInstance()->getScheduler();
                 sched->performFunctionInCocosThread( [&](){
@@ -682,10 +682,10 @@ void Console::commandTouch(int fd, const std::string& args)
                 && (isFloat(argv[3])) && (isFloat(argv[4])))
             {
                 
-                float x1 = std::stof(argv[1]);
-                float y1 = std::stof(argv[2]);
-                float x2 = std::stof(argv[3]);
-                float y2 = std::stof(argv[4]);
+                float x1 = std::atof(argv[1].c_str());
+                float y1 = std::atof(argv[2].c_str());
+                float x2 = std::atof(argv[3].c_str());
+                float y2 = std::atof(argv[4].c_str());
 
                 srand (time(NULL));
                 _touchId = rand();
