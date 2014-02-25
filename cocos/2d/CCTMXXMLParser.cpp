@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ZipUtils.h"
 #include "base64.h"
+#include "CCDirector.h"
 
 using namespace std;
 
@@ -159,6 +160,7 @@ TMXMapInfo::TMXMapInfo()
 , _tileSize(Size::ZERO)
 , _layerAttribs(0)
 , _storingCharacters(false)
+, _xmlTileIndex(0)
 , _currentFirstGID(-1)
 , _recordFirstGID(true)
 {
@@ -312,32 +314,13 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            int gid = attributeDict["gid"].asInt();
+            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asInt());
             int tilesAmount = layerSize.width*layerSize.height;
             
-            do
+            if (_xmlTileIndex < tilesAmount)
             {
-                if (tilesAmount > 1)
-                {
-                    // Check the value is all set or not
-                    CC_BREAK_IF(layer->_tiles[tilesAmount - 2] != -1 && layer->_tiles[tilesAmount - 1] != -1);
-                    
-                    int currentTileIndex = tilesAmount - layer->_tiles[tilesAmount - 1] - 2;
-                    layer->_tiles[currentTileIndex] = gid;
-                    
-                    if (currentTileIndex != tilesAmount - 1)
-                    {
-                        --layer->_tiles[tilesAmount - 1];
-                    }
-                }
-                else if(tilesAmount == 1)
-                {
-                    if (layer->_tiles[0] == -1)
-                    {
-                        layer->_tiles[0] = gid;
-                    }
-                }
-            } while (0);
+                layer->_tiles[_xmlTileIndex++] = gid;
+            }
         }
         else
         {
@@ -425,26 +408,11 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            ssize_t tilesAmount = layerSize.width*layerSize.height;
+            int tilesAmount = layerSize.width*layerSize.height;
 
             uint32_t *tiles = (uint32_t*) malloc(tilesAmount*sizeof(uint32_t));
-            // set all value to -1
-            memset(tiles, 0xFF, tilesAmount*sizeof(int));
-            
-            /* Save the special index in tiles[tilesAmount - 1];
-             * When we load tiles, we can do this:
-             * tiles[tilesAmount - tiles[tilesAmount - 1] - 1] = tileNum;
-             * --tiles[tilesAmount - 1];
-             * We do this because we can easily control how much tiles we loaded without add a "curTilesAmount" into class member.
-             */
-            if (tilesAmount > 1)
-            {
-                // XXX FIXME
-                // Compiler will generate a "implicit conversion loses integer..."
-                // Don't fix the warning. We need to fix the code instead. why we are using 'tiles' to store the amount of tiles.
-                // Isn't it better to have a variable with the length ?
-                tiles[tilesAmount - 1] = tilesAmount - 2;
-            }
+            // set all value to 0
+            memset(tiles, 0, tilesAmount*sizeof(int));
 
             layer->_tiles = tiles;
         }
@@ -487,16 +455,21 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // But X and Y since they need special treatment
         // X
-
-        int x = attributeDict["x"].asInt() + (int)objectGroup->getPositionOffset().x;
-        dict["x"] = Value(x);
-
+        int x = attributeDict["x"].asInt();
         // Y
-        int y = attributeDict["y"].asInt() + (int)objectGroup->getPositionOffset().y;
-
-        // Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
-        y = (int)(_mapSize.height * _tileSize.height) - y - attributeDict["height"].asInt();
-        dict["y"] = Value(y);
+        int y = attributeDict["y"].asInt();
+        
+        Point p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().x - attributeDict["height"].asInt());
+        p = CC_POINT_PIXELS_TO_POINTS(p);
+        dict["x"] = Value(p.x);
+        dict["y"] = Value(p.y);
+        
+        int width = attributeDict["width"].asInt();
+        int height = attributeDict["height"].asInt();
+        Size s(width, height);
+        s = CC_SIZE_PIXELS_TO_POINTS(s);
+        dict["width"] = Value(s.width);
+        dict["height"] = Value(s.height);
 
         // Add the object to the objectGroup
         objectGroup->getObjects().push_back(Value(dict));
@@ -700,23 +673,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
         }
         else if (tmxMapInfo->getLayerAttribs() & TMXLayerAttribNone)
         {
-            TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
-            Size layerSize = layer->_layerSize;
-            int tilesAmount = layerSize.width * layerSize.height;
-            
-            //set all the tiles unseted to 0
-            if (tilesAmount > 1 && layer->_tiles[tilesAmount - 2] == -1)
-            {
-                for (int i = tilesAmount - layer->_tiles[tilesAmount - 1] - 2; i < tilesAmount; ++i)
-                {
-                    layer->_tiles[i] = 0;
-                }
-            }
-            else if (layer->_tiles[tilesAmount - 1] == -1)
-            {
-                layer->_tiles[tilesAmount - 1] = 0;
-            }
-                
+            _xmlTileIndex = 0;
         }
 
     }

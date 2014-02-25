@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "gui/UIHelper.h"
 
 NS_CC_BEGIN
-namespace gui {
+namespace ui {
 
 const char* CocosGUIVersion();
 
