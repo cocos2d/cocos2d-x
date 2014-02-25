@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);

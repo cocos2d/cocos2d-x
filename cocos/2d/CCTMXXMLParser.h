@@ -303,6 +303,8 @@ protected:
     bool _storingCharacters;
     /// properties
     ValueMap _properties;
+    //! xml format tile index
+    int _xmlTileIndex;
     
     //! tmx filename
     std::string _TMXFileName;

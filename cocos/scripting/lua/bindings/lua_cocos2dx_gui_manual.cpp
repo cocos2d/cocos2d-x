@@ -30,7 +30,7 @@
 #include "CocosGUI.h"
 #include "CCLuaEngine.h"
 
-using namespace gui;
+using namespace ui;
 
 class LuaCocoStudioEventListener:public Ref
 {
@@ -630,7 +630,7 @@ static void extendLayoutParameter(lua_State* L)
     lua_pop(L, 1);
 }
 
-int register_all_cocos2dx_gui_manual(lua_State* L)
+int register_all_cocos2dx_ui_manual(lua_State* L)
 {
     if (nullptr == L)
         return 0;

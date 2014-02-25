@@ -20,7 +20,7 @@ bool UITextFieldTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the textfield events will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -29,7 +29,7 @@ bool UITextFieldTest::init()
         _uiLayer->addChild(_displayValueLabel);        
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("TextField");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -106,7 +106,7 @@ bool UITextFieldTest_MaxLength::init()
         Size screenSize = CCDirector::getInstance()->getWinSize();
         
         // Add a label in which the textfield events will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -115,7 +115,7 @@ bool UITextFieldTest_MaxLength::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text *alert = gui::Text::create();
+        ui::Text *alert = ui::Text::create();
         alert->setText("TextField max length");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -200,7 +200,7 @@ bool UITextFieldTest_Password::init()
         Size screenSize = CCDirector::getInstance()->getWinSize();
         
         // Add a label in which the textfield events will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -209,7 +209,7 @@ bool UITextFieldTest_Password::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text *alert = gui::Text::create();
+        ui::Text *alert = ui::Text::create();
         alert->setText("TextField password");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);

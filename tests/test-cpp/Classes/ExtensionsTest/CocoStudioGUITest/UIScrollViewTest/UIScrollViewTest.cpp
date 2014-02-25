@@ -21,7 +21,7 @@ bool UIScrollViewTest_Vertical::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the scrollview alert will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move by vertical direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -30,7 +30,7 @@ bool UIScrollViewTest_Vertical::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ScrollView vertical");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -43,7 +43,7 @@ bool UIScrollViewTest_Vertical::init()
         Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
         
         // Create the scrollview by vertical
-        gui::ScrollView* scrollView = gui::ScrollView::create();
+        ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setTouchEnabled(true);
         scrollView->setSize(Size(280.0f, 150.0f));        
         Size backgroundSize = background->getContentSize();
@@ -109,7 +109,7 @@ bool UIScrollViewTest_Horizontal::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the scrollview alert will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move by horizontal direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -117,7 +117,7 @@ bool UIScrollViewTest_Horizontal::init()
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);            
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ScrollView horizontal");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -130,7 +130,7 @@ bool UIScrollViewTest_Horizontal::init()
         Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
         
         // Create the scrollview by horizontal
-        gui::ScrollView* scrollView = gui::ScrollView::create();
+        ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setBounceEnabled(true);
         scrollView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
         scrollView->setTouchEnabled(true);
@@ -203,7 +203,7 @@ bool UIScrollViewTest_Both::init()
         Size widgetSize = _widget->getSize();;
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move by any direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -212,7 +212,7 @@ bool UIScrollViewTest_Both::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ScrollView both");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -225,7 +225,7 @@ bool UIScrollViewTest_Both::init()
         Layout* background = static_cast<Layout*>(root->getChildByName("background_Panel"));
         
         // Create the dragpanel
-        gui::ScrollView* scrollView = gui::ScrollView::create();
+        ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setDirection(SCROLLVIEW_DIR_BOTH);
         scrollView->setTouchEnabled(true);
         scrollView->setBounceEnabled(true);
@@ -272,7 +272,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
 //        _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -281,7 +281,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ScrollView scroll to percent both directrion");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -293,7 +293,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         
         Layout* background = static_cast<Layout*>(root->getChildByName("background_Panel"));
         
-        gui::ScrollView* sc = gui::ScrollView::create();
+        ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         sc->setDirection(SCROLLVIEW_DIR_BOTH);
@@ -334,7 +334,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
 //        _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -343,7 +343,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ScrollView scroll to percent both directrion bounce");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -355,7 +355,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         
         Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
         
-        gui::ScrollView* sc = gui::ScrollView::create();
+        ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         sc->setBounceEnabled(true);
