@@ -263,7 +263,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     
     // bitmask check
     if ((shapeA->getCategoryBitmask() & shapeB->getContactTestBitmask()) == 0
-        || (shapeB->getContactTestBitmask() & shapeA->getCategoryBitmask()) == 0)
+        || (shapeA->getContactTestBitmask() & shapeB->getCategoryBitmask()) == 0)
     {
         contact.setNotificationEnable(false);
     }
