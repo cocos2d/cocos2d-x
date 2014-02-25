@@ -4,7 +4,7 @@
 //  Created by LinWenhai on 17/11/13.
 //
 //
-#include "jsb_cocos2dx_ui_manual.h"
+#include "jsb_cocos2dx_gui_manual.h"
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
 #include "gui/CocosGUI.h"
