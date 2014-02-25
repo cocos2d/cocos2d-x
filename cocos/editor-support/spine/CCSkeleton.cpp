@@ -70,7 +70,6 @@ void Skeleton::initialize () {
 	setOpacityModifyRGB(true);
 
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-	scheduleUpdate();
 }
 
 void Skeleton::setSkeletonData (spSkeletonData *skeletonData, bool isOwnsSkeletonData) {
@@ -273,6 +272,16 @@ Rect Skeleton::getBoundingBox () const {
 	}
 	Point position = getPosition();
 	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+}
+
+void Skeleton::onEnter() {
+	Node::onEnter();
+	scheduleUpdate();
+}
+	
+void Skeleton::onExit() {
+	Node::onExit();
+	unscheduleUpdate();
 }
 
 // --- Convenience methods for Skeleton_* functions.
