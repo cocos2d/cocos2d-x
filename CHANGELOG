@@ -14,6 +14,9 @@ cocos2d-x-3.0rc0 Feb.?? 2014
      [NEW]          Language: Added Dutch support.
      [NEW]          Sprite: Added auto-culling support
 
+     [FIX]          Object values (x, y, width and height) from TMXObjectGroup are incorrect.
+     [FIX]          Thread deadlock if new functions are added in callback of Scheduler:: performFunctionInCocosThread.
+     [FIX]          Refactored the codes of parsing pure xml layer format for tilemap.
      [FIX]          Crash if invoking Director::end() on WINDOWS.
      [FIX]          Character would not be aligned on the baseline when label using distance field.
      [FIX]          Adds a macro to disable inserting script binding relevant codes.

@@ -22,7 +22,7 @@ bool UISliderTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the slider alert will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move the slider thumb");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -31,7 +31,7 @@ bool UISliderTest::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("Slider");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -97,7 +97,7 @@ bool UISliderTest_Scale9::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the slider alert will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move the slider thumb");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -106,7 +106,7 @@ bool UISliderTest_Scale9::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Text *alert = gui::Text::create();
+        ui::Text *alert = ui::Text::create();
         alert->setText("Slider scale9 render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);

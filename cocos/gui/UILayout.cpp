@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BCAKGROUNDCOLORRENDERER_Z = (-2);

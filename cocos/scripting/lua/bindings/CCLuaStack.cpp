@@ -163,7 +163,7 @@ bool LuaStack::init(void)
     register_all_cocos2dx_extension_manual(_state);
     register_all_cocos2dx_manual_deprecated(_state);
     register_all_cocos2dx_coco_studio_manual(_state);
-    register_all_cocos2dx_gui_manual(_state);
+    register_all_cocos2dx_ui_manual(_state);
     register_all_cocos2dx_spine(_state);
     register_all_cocos2dx_spine_manual(_state);
     register_glnode_manual(_state);
