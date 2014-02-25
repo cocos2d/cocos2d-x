@@ -243,7 +243,6 @@ public:
      * it is used to simulate fluid or air friction forces on the body. 
      * the value is 0.0f to 1.0f. 
      */
-    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
     inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
     /** get angular damping. */
     inline float getAngularDamping() const { return _angularDamping; }
@@ -299,6 +298,7 @@ protected:
     void update(float delta);
     
     void removeJoint(PhysicsJoint* joint);
+    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
     
 protected:
     PhysicsBody();
