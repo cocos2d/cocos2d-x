@@ -691,15 +691,76 @@ void Console::commandTouch(int fd, const std::string& args)
                 _touchId = rand();
 
                 Scheduler *sched = Director::getInstance()->getScheduler();
-                sched->performFunctionInCocosThread( [&](){
-                    Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &x1, &y1);
+                sched->performFunctionInCocosThread( [=](){
+                    float tempx = x1, tempy = y1;
+                    Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &tempx, &tempy);
                 });
 
                 float dx = std::abs(x1 - x2);
                 float dy = std::abs(y1 - y2);
+                float _x_ = x1, _y_ = y1;
+                if(dx > dy)
+                {
+                    while(dx > 1)
+                    {
+                        
+                        if(x1 < x2)
+                        {
+                            _x_ += 1;
+                        }
+                        if(x1 > x2)
+                        {
+                            _x_ -= 1;
+                        }
+                        if(y1 < y2)
+                        {
+                            _y_ += dy/dx;
+                        }
+                        if(y1 > y2)
+                        {
+                            _y_ -= dy/dx;
+                        }
+                        sched->performFunctionInCocosThread( [=](){
+                            float tempx = _x_, tempy = _y_;
+                            Director::getInstance()->getOpenGLView()->handleTouchesMove(1, &_touchId, &tempx, &tempy);
+                        });
+                        dx -= 1;
+                    }
+                    
+                }
+                else
+                {
+                    while(dy > 1)
+                    {
+                        if(x1 < x2)
+                        {
+                            _x_ += dx/dy;
+                        }
+                        if(x1 > x2)
+                        {
+                            _x_ -= dx/dy;
+                        }
+                        if(y1 < y2)
+                        {
+                            _y_ += 1;
+                        }
+                        if(y1 > y2)
+                        {
+                            _y_ -= 1;
+                        }
+                        sched->performFunctionInCocosThread( [=](){
+                            float tempx = _x_, tempy = _y_;
+                            Director::getInstance()->getOpenGLView()->handleTouchesMove(1, &_touchId, &tempx, &tempy);
+                        });
+                       dy -= 1;
+                    }
+                    
+                }
 
-                float dt = dx>dy?dx:dy;
-                
+                sched->performFunctionInCocosThread( [&](){
+                    Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x2, &y2);
+                });
+
             }
             else 
             {
