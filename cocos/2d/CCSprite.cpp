@@ -47,7 +47,6 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
 #include "renderer/CCFrustum.h"
 
 // external
@@ -590,8 +589,29 @@ void Sprite::updateTransform(void)
         arrayMakeObjectsPerformSelector(_children, updateTransform, Sprite*);
     }*/
     Node::updateTransform();
+}
 
+// draw
+
+void Sprite::draw(void)
+{
+    if(isInsideBounds())
+    {
+        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
+        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 #if CC_SPRITE_DEBUG_DRAW
+        _customDebugDrawCommand.init(_globalZOrder);
+        _customDebugDrawCommand.func = CC_CALLBACK_0(Sprite::drawDebugData, this);
+        Director::getInstance()->getRenderer()->addCommand(&_customDebugDrawCommand);
+#endif //CC_SPRITE_DEBUG_DRAW
+    }
+}
+#if CC_SPRITE_DEBUG_DRAW
+void Sprite::drawDebugData()
+{
+    kmMat4 oldModelView;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldModelView);
+    kmGLLoadMatrix(&_modelViewTransform);
     // draw bounding box
     Point vertices[4] = {
         Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
@@ -600,22 +620,13 @@ void Sprite::updateTransform(void)
         Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
-#endif // CC_SPRITE_DEBUG_DRAW
+    
+    kmGLLoadMatrix(&oldModelView);
 }
-
-// draw
-
-void Sprite::draw(void)
-{
-    if(culling())
-    {
-        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
-    }
-}
+#endif //CC_SPRITE_DEBUG_DRAW
 
 // Culling function from cocos2d-iphone CCSprite.m file
-bool Sprite::culling() const
+bool Sprite::isInsideBounds() const
 {
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
@@ -634,15 +645,10 @@ bool Sprite::culling() const
     y -= screen_half.height;
 
     // convert content size to world coordinates
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     float wchw = hcsx * std::max(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
     float wchh = hcsy * std::max(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
-#else
-    float wchw = hcsx * fmaxf(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
-    float wchh = hcsy * fmaxf(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
-#endif
 
-    // compare if it in the positive quarter of the screen
+    // compare if it in the positive quadrant of the screen
     float tmpx = (fabsf(x)-wchw);
     float tmpy = (fabsf(y)-wchh);
     return (tmpx < screen_half.width && tmpy < screen_half.height);
@@ -714,31 +720,7 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-#if 0
-        int i = 0, j = 0, length = _children->count();
-
-        // insertion sort
-        for(i=1; i<length; i++)
-        {
-            j = i-1;
-            auto tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
-            auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
-
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->getLocalZOrder() < tempJ->getLocalZOrder() ||
-                           ( tempI->getLocalZOrder() == tempJ->getLocalZOrder() &&
-                            tempI->getOrderOfArrival() < tempJ->getOrderOfArrival() ) ) )
-            {
-                _children->fastSetObject( tempJ, j+1 );
-                j = j-1;
-                if(j>=0)
-                    tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
-            }
-            _children->fastSetObject(tempI, j+1);
-        }
-#else
         std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
-#endif
 
         if ( _batchNode)
         {
@@ -769,7 +751,6 @@ void Sprite::setReorderChildDirtyRecursively(void)
         }
     }
 }
-
 
 void Sprite::setDirtyRecursively(bool bValue)
 {

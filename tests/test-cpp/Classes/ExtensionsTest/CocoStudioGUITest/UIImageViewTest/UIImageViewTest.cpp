@@ -11,7 +11,7 @@ bool UIImageViewTest::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ImageView");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -72,7 +72,7 @@ bool UIImageViewTest_Scale9::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("ImageView scale9 render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(26);

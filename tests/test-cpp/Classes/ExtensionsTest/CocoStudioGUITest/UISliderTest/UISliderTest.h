@@ -37,7 +37,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest)
-    gui::Text* _displayValueLabel;
+    ui::Text* _displayValueLabel;
 };
 
 class UISliderTest_Scale9 : public UIScene
@@ -50,7 +50,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest_Scale9)
-    gui::Text* _displayValueLabel;
+    ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UISliderTest__) */

@@ -25,7 +25,7 @@ bool UILoadingBarTest_Left::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("LoadingBar left");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -107,7 +107,7 @@ bool UILoadingBarTest_Right::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        gui::Text *alert = gui::Text::create();
+        ui::Text *alert = ui::Text::create();
         alert->setText("LoadingBar right");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -190,7 +190,7 @@ bool UILoadingBarTest_Left_Scale9::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("LoadingBar left scale9 render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -275,7 +275,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        gui::Text *alert = gui::Text::create();
+        ui::Text *alert = ui::Text::create();
         alert->setText("LoadingBar right scale9 render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);

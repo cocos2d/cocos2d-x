@@ -21,7 +21,7 @@ bool UIPageViewTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = gui::Text::create();
+        _displayValueLabel = ui::Text::create();
         _displayValueLabel->setText("Move by horizontal direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -30,7 +30,7 @@ bool UIPageViewTest::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the black background
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("PageView");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -65,7 +65,7 @@ bool UIPageViewTest::init()
             imageView->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
             layout->addChild(imageView);
             
-            gui::Text* label = gui::Text::create();
+            ui::Text* label = ui::Text::create();
             label->setText(CCString::createWithFormat("page %d", (i + 1))->getCString());
             label->setFontName("Marker Felt");
             label->setFontSize(30);

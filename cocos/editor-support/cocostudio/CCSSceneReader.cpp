@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "ObjectFactory.h"
 
 using namespace cocos2d;
-using namespace gui;
+using namespace ui;
 
 namespace cocostudio {
 
