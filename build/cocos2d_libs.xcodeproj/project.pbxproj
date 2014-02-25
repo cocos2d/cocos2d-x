@@ -1542,9 +1542,9 @@
 		3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40818ACB63900834404 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40718ACB63900834404 /* CCDevice.mm */; };
 		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
-		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_ui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_ui_manual.cpp */; };
+		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
 		3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
-		3EEF8BD6183A001B005E8A6C /* jsb_cocos2dx_ui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_ui_manual.cpp */; };
+		3EEF8BD6183A001B005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
 		460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709D1807CE87005B8026 /* mat4stack.c */; };
 		460E44F01807DED6000CDD6D /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709E1807CE87005B8026 /* matrix.c */; };
 		460E44F11807DED7000CDD6D /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709D1807CE87005B8026 /* mat4stack.c */; };
@@ -2812,8 +2812,8 @@
 		3E26D40718ACB63900834404 /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_gui_auto.cpp; sourceTree = "<group>"; };
 		3EEF8BCC1839F390005E8A6C /* jsb_cocos2dx_gui_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_gui_auto.hpp; sourceTree = "<group>"; };
-		3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_ui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_ui_manual.cpp; path = gui/jsb_cocos2dx_ui_manual.cpp; sourceTree = "<group>"; };
-		3EEF8BD21839F5C5005E8A6C /* jsb_cocos2dx_ui_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_cocos2dx_ui_manual.h; path = gui/jsb_cocos2dx_ui_manual.h; sourceTree = "<group>"; };
+		3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_gui_manual.cpp; path = gui/jsb_cocos2dx_gui_manual.cpp; sourceTree = "<group>"; };
+		3EEF8BD21839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_cocos2dx_gui_manual.h; path = gui/jsb_cocos2dx_gui_manual.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -4835,8 +4835,8 @@
 		3EEF8BD01839F5A7005E8A6C /* gui */ = {
 			isa = PBXGroup;
 			children = (
-				3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_ui_manual.cpp */,
-				3EEF8BD21839F5C5005E8A6C /* jsb_cocos2dx_ui_manual.h */,
+				3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */,
+				3EEF8BD21839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.h */,
 			);
 			name = gui;
 			sourceTree = "<group>";
@@ -7576,7 +7576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */,
-				3EEF8BD6183A001B005E8A6C /* jsb_cocos2dx_ui_manual.cpp in Sources */,
+				3EEF8BD6183A001B005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */,
 				1A2C791D181A1257004E5527 /* js_bindings_chipmunk_registration.cpp in Sources */,
 				1A2C793D181A1257004E5527 /* js_bindings_opengl.cpp in Sources */,
 				1A2C794F181A1257004E5527 /* jsb_opengl_registration.cpp in Sources */,
@@ -8029,7 +8029,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */,
-				3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_ui_manual.cpp in Sources */,
+				3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */,
 				1A2C791E181A1257004E5527 /* js_bindings_chipmunk_registration.cpp in Sources */,
 				1A2C793E181A1257004E5527 /* js_bindings_opengl.cpp in Sources */,
 				1A2C7950181A1257004E5527 /* jsb_opengl_registration.cpp in Sources */,
