@@ -3,6 +3,11 @@
 
 USING_NS_CC;
 
+int main(int argc, char** argv)
+{
+    return _tWinMain(0,0,0,0);
+}
+
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                        HINSTANCE hPrevInstance,
                        LPTSTR    lpCmdLine,
