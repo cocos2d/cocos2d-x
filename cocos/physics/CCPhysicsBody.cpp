@@ -69,7 +69,7 @@ PhysicsBody::PhysicsBody()
 , _angularDamping(0.0f)
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
-, _collisionBitmask(UINT_MAX)
+, _collisionBitmask(0)
 , _contactTestBitmask(UINT_MAX)
 , _group(0)
 {
