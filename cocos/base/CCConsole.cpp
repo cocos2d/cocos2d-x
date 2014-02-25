@@ -757,8 +757,9 @@ void Console::commandTouch(int fd, const std::string& args)
                     
                 }
 
-                sched->performFunctionInCocosThread( [&](){
-                    Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x2, &y2);
+                sched->performFunctionInCocosThread( [=](){
+                    float tempx = x2, tempy = y2;
+                    Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &tempx, &tempy);
                 });
 
             }
