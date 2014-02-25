@@ -65,6 +65,7 @@ PhysicsBody::PhysicsBody()
 , _area(0.0f)
 , _density(0.0f)
 , _moment(MOMENT_DEFAULT)
+, _isDamping(false)
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
@@ -520,7 +521,11 @@ void PhysicsBody::addMoment(float moment)
     }
     else if (moment == -PHYSICS_INFINITY)
     {
-        // if moment is -PHYSICS_INFINITY, it won't change
+        if (moment == PHYSICS_INFINITY)
+        {
+            _moment = MOMENT_DEFAULT;
+            _momentDefault = true;
+        }
         return;
     }
     else
@@ -764,7 +769,7 @@ void PhysicsBody::update(float delta)
         }
     }
     // damping compute
-    if (_dynamic && !isResting())
+    if (_isDamping && _dynamic && !isResting())
     {
         _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
         _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
