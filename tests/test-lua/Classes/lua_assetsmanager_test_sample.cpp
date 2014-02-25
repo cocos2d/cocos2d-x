@@ -1,13 +1,5 @@
 #include "lua_assetsmanager_test_sample.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include  "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
+#include "tolua_fix.h"
 #include "cocos2d.h"
 #include "cocos-ext.h"
 

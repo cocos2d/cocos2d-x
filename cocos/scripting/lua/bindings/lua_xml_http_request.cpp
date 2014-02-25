@@ -22,13 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_xml_http_request.h"
-
-extern "C"
-{
-#include "tolua_fix.h"
-}
-
 #include <string>
+#include "tolua_fix.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
@@ -1084,7 +1079,7 @@ TOLUA_API int register_xml_http_request(lua_State* L)
     lua_reg_xml_http_request(L);
     tolua_module(L,"cc",0);
     tolua_beginmodule(L,"cc");
-      tolua_cclass(L,"XMLHttpRequest","cc.XMLHttpRequest","cc.Object",lua_collect_xml_http_request);
+      tolua_cclass(L,"XMLHttpRequest","cc.XMLHttpRequest","cc.Ref",lua_collect_xml_http_request);
       tolua_beginmodule(L,"XMLHttpRequest");
         tolua_variable(L, "responseType", lua_get_XMLHttpRequest_responseType, lua_set_XMLHttpRequest_responseType);
         tolua_variable(L, "withCredentials", lua_get_XMLHttpRequest_withCredentials, lua_set_XMLHttpRequest_withCredentials);

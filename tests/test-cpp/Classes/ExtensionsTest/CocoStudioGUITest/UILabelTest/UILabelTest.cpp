@@ -11,7 +11,7 @@ bool UILabelTest::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("Label");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -20,7 +20,7 @@ bool UILabelTest::init()
         _uiLayer->addChild(alert);        
         
         // Create the label
-        gui::Text* label = gui::Text::create();
+        ui::Text* label = ui::Text::create();
         label->setText("Label");
         label->setFontName("AmericanTypewriter");
         label->setFontSize(30);
@@ -40,7 +40,7 @@ bool UILabelTest_LineWrap::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("Label line wrap");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -49,7 +49,7 @@ bool UILabelTest_LineWrap::init()
         _uiLayer->addChild(alert);
         
         // Create the line wrap
-        gui::Text* label = gui::Text::create();
+        ui::Text* label = ui::Text::create();
         label->setTextAreaSize(Size(280, 150));
         label->setTextHorizontalAlignment(TextHAlignment::CENTER);
         label->setText("Label can line wrap");
@@ -72,7 +72,7 @@ bool UILabelTest_Effect::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Label* alert = gui::Label::create();
+        ui::Label* alert = ui::Label::create();
         alert->setText("Label Effect");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -82,7 +82,7 @@ bool UILabelTest_Effect::init()
         
         
         // create the shadow only label
-        gui::Label* shadow_label = gui::Label::create();
+        ui::Label* shadow_label = ui::Label::create();
         
         Color3B tintColorRed      =  { 255, 0, 0   };
         Size shadowOffset(12.0f, 12.0f);
@@ -105,7 +105,7 @@ bool UILabelTest_Effect::init()
         
         
         // create the stroke only label
-        gui::Label* stroke_label = gui::Label::create();
+        ui::Label* stroke_label = ui::Label::create();
         
         Color3B tintColorYellow   =  { 255, 255, 0 };
         Color3B strokeColor       =  { 0, 10, 255  };
@@ -128,7 +128,7 @@ bool UILabelTest_Effect::init()
         
         
         // create the label stroke and shadow
-        gui::Label* strokeAndShadow_label = gui::Label::create();
+        ui::Label* strokeAndShadow_label = ui::Label::create();
         
         Color3B tintColorBlue     =  { 0, 0, 255   };
         Color3B strokeShadowColor =  { 255, 0, 0   };
@@ -170,7 +170,7 @@ bool UILabelTest_TTF::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("Label set TTF font");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -179,7 +179,7 @@ bool UILabelTest_TTF::init()
         _uiLayer->addChild(alert);
         
         // Create the label
-        gui::Text* label = gui::Text::create();
+        ui::Text* label = ui::Text::create();
         label->setText("Label");
         label->setFontName("fonts/A Damn Mess.ttf");
         label->setFontSize(30);

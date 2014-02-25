@@ -21,7 +21,7 @@ bool UIWidgetAddNodeTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        gui::Text* alert = gui::Text::create();
+        ui::Text* alert = ui::Text::create();
         alert->setText("Widget Add Node");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);

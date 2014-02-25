@@ -22,16 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_spine_manual.hpp"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include  "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
 #include "cocos2d.h"
+#include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 #include "LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"

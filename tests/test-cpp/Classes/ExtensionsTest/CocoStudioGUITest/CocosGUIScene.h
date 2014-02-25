@@ -32,7 +32,7 @@
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
-using namespace gui;
+using namespace ui;
 
 class CocosGUITestMainLayer : public Layer
 {

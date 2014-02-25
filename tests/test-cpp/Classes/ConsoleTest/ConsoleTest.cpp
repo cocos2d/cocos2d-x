@@ -27,6 +27,7 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <unistd.h>
+#include <sys/socket.h>
 #else
 #include <io.h>
 #endif
@@ -165,14 +166,12 @@ std::string ConsoleTCP::subtitle() const
 
 ConsoleCustomCommand::ConsoleCustomCommand()
 {
-    _console = Director::getInstance()->getConsole();
-
     static struct Console::Command commands[] = {
         {"hello", "This is just a user generated command", [](int fd, const std::string& args) {
             const char msg[] = "how are you?\nArguments passed: ";
-            write(fd, msg, sizeof(msg));
-            write(fd, args.c_str(), args.length());
-            write(fd, "\n",1);
+            send(fd, msg, sizeof(msg),0);
+            send(fd, args.c_str(), args.length(),0);
+            send(fd, "\n",1,0);
         }},
     };
     _console->addCommand(commands[0]);

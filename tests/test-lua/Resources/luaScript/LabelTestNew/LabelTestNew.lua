@@ -61,7 +61,7 @@ function LabelFNTColorAndOpacity.create()
     label2:setColor(cc.c3b(255, 0, 0 ))
     layer:addChild(label2, 0, kTagBitmapAtlas2)
 
-    label2:runAction( tolua.cast(repeatAction:clone(), "cc.Action") )
+    label2:runAction(repeatAction:clone())
 
     local label3 = cc.Label:createWithBMFont("fonts/bitmapFontTest2.fnt", "Test")
     -- testing anchors
@@ -85,13 +85,13 @@ function LabelFNTColorAndOpacity.step(dt)
     m_time = m_time + dt
     local string = string.format("%2.2f Test j", m_time)
 
-    local label1 = tolua.cast(LabelFNTColorAndOpacity.layer:getChildByTag(kTagBitmapAtlas1), "cc.Label")
+    local label1 = LabelFNTColorAndOpacity.layer:getChildByTag(kTagBitmapAtlas1)
     label1:setString(string)
 
-    local label2 = tolua.cast(LabelFNTColorAndOpacity.layer:getChildByTag(kTagBitmapAtlas2), "cc.Label")
+    local label2 = LabelFNTColorAndOpacity.layer:getChildByTag(kTagBitmapAtlas2)
     label2:setString(string)
 
-    local label3 = tolua.cast(LabelFNTColorAndOpacity.layer:getChildByTag(kTagBitmapAtlas3), "cc.Label")
+    local label3 = LabelFNTColorAndOpacity.layer:getChildByTag(kTagBitmapAtlas3)
     label3:setString(string)
 end
 
@@ -165,7 +165,7 @@ function LabelFNTSpriteActions.create()
     label2:setPosition( cc.p(s.width/2.0, 80) )
 
     local lastChar = label2:getLetter(3)
-    lastChar:runAction(tolua.cast( rot_4ever:clone(), "cc.Action" ))
+    lastChar:runAction(rot_4ever:clone())
 
     layer:registerScriptHandler(LabelFNTSpriteActions.onNodeEvent)
 
@@ -694,7 +694,7 @@ function LabelFNTMultiLineAlignment.create()
 
         local labelWidth = math.abs(LabelFNTMultiLineAlignment._pArrowsShouldRetain:getPositionX() - LabelFNTMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
 
-        LabelFNTMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth)
+        LabelFNTMultiLineAlignment._pLabelShouldRetain:setMaxLineWidth(labelWidth)
     end
 
     local  function onTouchesEnded(touch, event)
@@ -725,7 +725,7 @@ end
 
 
 function LabelFNTMultiLineAlignment.stringChanged(tag, sender)
-    local item = tolua.cast(sender, "cc.MenuItemFont")
+    local item = sender
     item:setColor(cc.c3b(255, 0, 0))
     LabelFNTMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     LabelFNTMultiLineAlignment._pLastAlignmentItem = item
@@ -743,7 +743,7 @@ end
 
 function LabelFNTMultiLineAlignment.alignmentChanged(tag, sender)
     -- cclog("LabelFNTMultiLineAlignment.alignmentChanged, tag:"..tag)
-    local item = tolua.cast(sender, "cc.MenuItemFont")
+    local item = sender
     item:setColor(cc.c3b(255, 0, 0))
     LabelFNTMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     LabelFNTMultiLineAlignment._pLastAlignmentItem = item

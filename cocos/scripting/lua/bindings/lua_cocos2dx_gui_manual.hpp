@@ -34,7 +34,7 @@ extern "C" {
 
 #include "CCRef.h"
 
-TOLUA_API int register_all_cocos2dx_gui_manual(lua_State* L);
+TOLUA_API int register_all_cocos2dx_ui_manual(lua_State* L);
 
 struct LuaStudioEventListenerData
 {
