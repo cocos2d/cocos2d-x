@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
+#include "CCSprite.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
@@ -590,6 +591,65 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 #endif
     
     return texture;
+}
+
+bool CCTextureCache::reloadTexture(const char* fileName)
+{
+    std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    if (fullpath.size() == 0)
+    {
+        return false;
+    }
+    
+    CCTexture2D * texture = (CCTexture2D*) m_pTextures->objectForKey(fullpath);
+    
+    bool ret = false;
+    if (! texture) {
+        texture = this->addImage(fullpath.c_str());
+        ret = (texture != NULL);
+    }
+    else
+    {
+        do {
+            CCImage* image = new CCImage();
+            CC_BREAK_IF(NULL == image);
+            
+            bool bRet = image->initWithImageFile(fullpath.c_str());
+            CC_BREAK_IF(!bRet);
+            
+            ret = texture->initWithImage(image);
+        } while (0);
+    }
+    
+    return ret;
+}
+
+void CCTextureCache::updateTexture(CCNode* node, CCTexture2D* texture)
+{
+    if (NULL == node || NULL == texture) {
+        return;
+    }
+
+    // update self
+    CCSprite* sprite = dynamic_cast<CCSprite*>(node);
+    if (NULL != sprite && sprite->getTexture() == texture) {
+        CCSize size = texture->getContentSize();
+        sprite->setTextureRect(CCRect(0, 0, size.width, size.height));
+    }
+
+    // update children
+    CCArray* children = node->getChildren();
+    if (NULL != children && children->count() > 0)
+    {
+        CCObject* obj = NULL;
+        CCARRAY_FOREACH(children, obj)
+        {
+            CCNode* child = dynamic_cast<CCNode*>(obj);
+            if (NULL != child) {
+                updateTexture(child, texture);
+            }
+        }
+    }
 }
 
 // TextureCache - Remove
