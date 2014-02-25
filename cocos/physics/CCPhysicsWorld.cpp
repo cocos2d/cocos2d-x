@@ -281,9 +281,12 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
         }
     }
     
-    contact.setEventCode(PhysicsContact::EventCode::BEGIN);
-    contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    if (contact.isNotificationEnabled())
+    {
+        contact.setEventCode(PhysicsContact::EventCode::BEGIN);
+        contact.setWorld(this);
+        _scene->getEventDispatcher()->dispatchEvent(&contact);
+    }
     
     return ret ? contact.resetResult() : false;
 }
