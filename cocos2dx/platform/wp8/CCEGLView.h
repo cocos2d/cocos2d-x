@@ -106,7 +106,10 @@ public:
     void OnOrientationChanged();
     
     void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate) { m_delegate = delegate; };
+    void SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate) { m_messageBoxDelegate = delegate; };
 
+    bool ShowMessageBox(Platform::String^ title, Platform::String^ message);
+ 
 	Windows::UI::Core::CoreWindow^ getWindow() { return m_window.Get(); };
 	
 	int Run();
@@ -173,6 +176,7 @@ private:
 	EGLSurface m_eglSurface;
     bool m_isXamlWindow;
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
+    PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
 };
 
 NS_CC_END
