@@ -82,7 +82,7 @@ static std::string &trim(std::string &s) {
     return ltrim(rtrim(s));
 }
 
-std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+static std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
     std::stringstream ss(s);
     std::string item;
     while (std::getline(ss, item, delim)) {
@@ -92,13 +92,19 @@ std::vector<std::string> &split(const std::string &s, char delim, std::vector<st
 }
 
 
-std::vector<std::string> split(const std::string &s, char delim) {
+static std::vector<std::string> split(const std::string &s, char delim) {
     std::vector<std::string> elems;
     split(s, delim, elems);
     return elems;
 }
-
-
+//isFloat taken from http://stackoverflow.com/questions/447206/c-isfloat-function
+static bool isFloat( std::string myString ) {
+    std::istringstream iss(myString);
+    float f;
+    iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+    // Check the entire string was consumed and if either failbit or badbit is set
+    return iss.eof() && !iss.fail(); 
+}
 // helper free functions
 
 // dprintf() is not defined in Android
@@ -274,6 +280,7 @@ Console::Console()
         { "scenegraph", "Print the scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
         { "texture", "Flush or print the TextureCache info. Args: [flush | ] ", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
         { "director", "director commands, type -h or [director help] to list supported directives", std::bind(&Console::commandDirector, this, std::placeholders::_1, std::placeholders::_2) },
+        { "touch", "simulate touch event via console, type -h or [director help] to list supported directives", std::bind(&Console::commandTouch, this, std::placeholders::_1, std::placeholders::_2) },
 
     };
 
@@ -575,7 +582,7 @@ void Console::commandDirector(int fd, const std::string& args)
                             "\tresume, resume all scheduled timers\n"
                             "\tstop, Stops the animation. Nothing will be drawn.\n"
                             "\tstart, Restart the animation again, Call this function only if [director stop] was called earlier\n";
-         write(fd, help, sizeof(help) - 1);
+         send(fd, help, sizeof(help) - 1,0);
     }
     else if(args == "pause")
     {
@@ -603,6 +610,71 @@ void Console::commandDirector(int fd, const std::string& args)
         director->startAnimation();
     }
 
+}
+
+void Console::commandTouch(int fd, const std::string& args)
+{
+    if(args =="help" || args == "-h")
+    {
+        const char help[] = "available touch directives:\n"
+                            "\tbegin x y: simulate touch begin event\n"
+                            "\tend x y: simulate touch end event\n"
+                            "\tswipe x1 y1 x2 y2: simulate touch swipe from (x1,y1) to (x2,y2).\n";
+         send(fd, help, sizeof(help) - 1,0);
+    }
+    else
+    {
+        auto argv = split(args,' ');
+        
+        if(argv.size() == 0)
+        {
+            return;
+        }
+
+        if(argv[0]=="begin")
+        {
+            if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
+            {
+                
+                float x = std::stof(argv[1]);
+                float y = std::stof(argv[2]);
+
+                srand (time(NULL));
+                _touchId = rand();
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&](){
+                    Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &x, &y);
+                });
+            }
+            else 
+            {
+                const char msg[] = "touch: invalid arguments.\n";
+                send(fd, msg, sizeof(msg) - 1, 0);
+            }
+            return;
+        }
+
+        if(argv[0]=="end")
+        {
+            if((argv.size() == 3) && (isFloat(argv[1])) && (isFloat(argv[2])))
+            {
+                
+                float x = std::stof(argv[1]);
+                float y = std::stof(argv[2]);
+                
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&](){
+                    Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x, &y);
+                });
+            }
+            else 
+            {
+                const char msg[] = "touch: invalid arguments.\n";
+                send(fd, msg, sizeof(msg) - 1, 0);
+            }
+            
+        }
+    }
 }
 
 bool Console::parseCommand(int fd)
