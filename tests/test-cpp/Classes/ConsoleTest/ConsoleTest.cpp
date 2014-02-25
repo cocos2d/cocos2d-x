@@ -168,9 +168,7 @@ ConsoleCustomCommand::ConsoleCustomCommand()
 {
     static struct Console::Command commands[] = {
         {"hello", "This is just a user generated command", [](int fd, const std::string& args) {
-            
             const char msg[] = "how are you?\nArguments passed: ";
-            auto _console = Director::getInstance()->getConsole();
             send(fd, msg, sizeof(msg),0);
             send(fd, args.c_str(), args.length(),0);
             send(fd, "\n",1,0);
