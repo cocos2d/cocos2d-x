@@ -6,7 +6,7 @@
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "CocosGUIScene.h"
 
-using namespace gui;
+using namespace ui;
 
 UIScene::UIScene()
 : _sceneTitle(nullptr)
@@ -37,9 +37,9 @@ bool UIScene::init()
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
         
-        _sceneTitle = dynamic_cast<gui::Text*>(root->getChildByName("UItest"));
+        _sceneTitle = dynamic_cast<ui::Text*>(root->getChildByName("UItest"));
         
-        gui::Text* back_label = dynamic_cast<gui::Text*>(root->getChildByName("back"));
+        ui::Text* back_label = dynamic_cast<ui::Text*>(root->getChildByName("back"));
         back_label->addTouchEventListener(this, toucheventselector(UIScene::toCocosGUITestScene));
         
         Button* left_button = dynamic_cast<Button*>(root->getChildByName("left_Button"));

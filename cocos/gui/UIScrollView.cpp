@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 

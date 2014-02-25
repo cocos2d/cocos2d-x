@@ -9,7 +9,7 @@
 
 using namespace cocos2d;
 using namespace cocostudio;
-using namespace gui;
+using namespace ui;
 
 Layer *Next();
 Layer *Back();
@@ -397,7 +397,7 @@ cocos2d::Node* UIComponentTest::createGameScene()
 	_node = node;
 	
     ComRender *render = static_cast<ComRender*>(_node->getChildByTag(10025)->getComponent("GUIComponent"));
-	Widget* widget = static_cast<cocos2d::gui::Widget*>(render->getNode());
+	Widget* widget = static_cast<cocos2d::ui::Widget*>(render->getNode());
 	Button* button = static_cast<Button*>(widget->getChildByName("Button_156"));
 	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
 

@@ -31,7 +31,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace gui;
+using namespace ui;
 
 #define UI_SCENE_CREATE_FUNC(UIScene) \
 public: \
@@ -65,7 +65,7 @@ public:
     virtual void nextCallback(Ref* sender, TouchEventType type);
     
     /** Title label of the scene. */    
-    CC_SYNTHESIZE_READONLY(gui::Text*, _sceneTitle, SceneTitle)
+    CC_SYNTHESIZE_READONLY(Text*, _sceneTitle, SceneTitle)
     
     UI_SCENE_CREATE_FUNC(UIScene);
     
