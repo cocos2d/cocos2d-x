@@ -37,7 +37,7 @@ public:
 
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest)
-    gui::Text* _displayValueLabel;
+    ui::Text* _displayValueLabel;
 };
 
 class UIButtonTest_Scale9 : public UIScene
@@ -50,7 +50,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_Scale9)
-    gui::Text* _displayValueLabel;
+    ui::Text* _displayValueLabel;
 };
 
 class UIButtonTest_PressedAction : public UIScene
@@ -63,7 +63,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_PressedAction)
-    gui::Text* _displayValueLabel;
+    ui::Text* _displayValueLabel;
 };
 
 class UIButtonTest_Title : public UIScene
@@ -76,7 +76,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_Title)
-    gui::Text* _displayValueLabel;
+    ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIButtonTest__) */
