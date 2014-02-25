@@ -51,7 +51,7 @@
     <ClCompile Include="LuaScriptHandlerMgr.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="tolua_fix.c">
+    <ClCompile Include="tolua_fix.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
     <ClCompile Include="CCBProxy.cpp">
