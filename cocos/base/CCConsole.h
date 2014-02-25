@@ -114,6 +114,7 @@ protected:
     void commandResolution(int fd, const std::string &args);
     void commandProjection(int fd, const std::string &args);
     void commandDirector(int fd, const std::string &args);
+    void commandTouch(int fd, const std::string &args);
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;
@@ -132,6 +133,7 @@ protected:
     std::mutex _DebugStringsMutex;
     std::vector<std::string> _DebugStrings;
 
+    int _touchId;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };

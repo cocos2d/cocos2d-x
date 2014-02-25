@@ -672,8 +672,43 @@ void Console::commandTouch(int fd, const std::string& args)
                 const char msg[] = "touch: invalid arguments.\n";
                 send(fd, msg, sizeof(msg) - 1, 0);
             }
+            return;
+        }
+
+        if(argv[0]=="swipe")
+        {
+            if((argv.size() == 5) 
+                && (isFloat(argv[1])) && (isFloat(argv[2]))
+                && (isFloat(argv[3])) && (isFloat(argv[4])))
+            {
+                
+                float x1 = std::stof(argv[1]);
+                float y1 = std::stof(argv[2]);
+                float x2 = std::stof(argv[3]);
+                float y2 = std::stof(argv[4]);
+
+                srand (time(NULL));
+                _touchId = rand();
+
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&](){
+                    Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &x1, &y1);
+                });
+
+                float dx = std::abs(x1 - x2);
+                float dy = std::abs(y1 - y2);
+
+                float dt = dx>dy?dx:dy;
+                
+            }
+            else 
+            {
+                const char msg[] = "touch: invalid arguments.\n";
+                send(fd, msg, sizeof(msg) - 1, 0);
+            }
             
         }
+
     }
 }
 
