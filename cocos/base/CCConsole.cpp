@@ -617,8 +617,7 @@ void Console::commandTouch(int fd, const std::string& args)
     if(args =="help" || args == "-h")
     {
         const char help[] = "available touch directives:\n"
-                            "\tbegin x y: simulate touch begin event\n"
-                            "\tend x y: simulate touch end event\n"
+                            "\ttap x y: simulate touch tap at (x,y)\n"
                             "\tswipe x1 y1 x2 y2: simulate touch swipe from (x1,y1) to (x2,y2).\n";
          send(fd, help, sizeof(help) - 1,0);
     }
@@ -631,7 +630,7 @@ void Console::commandTouch(int fd, const std::string& args)
             return;
         }
 
-        if(argv[0]=="begin")
+        if(argv[0]=="tap")
         {
             if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
             {
@@ -644,26 +643,6 @@ void Console::commandTouch(int fd, const std::string& args)
                 Scheduler *sched = Director::getInstance()->getScheduler();
                 sched->performFunctionInCocosThread( [&](){
                     Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &x, &y);
-                });
-            }
-            else 
-            {
-                const char msg[] = "touch: invalid arguments.\n";
-                send(fd, msg, sizeof(msg) - 1, 0);
-            }
-            return;
-        }
-
-        if(argv[0]=="end")
-        {
-            if((argv.size() == 3) && (isFloat(argv[1])) && (isFloat(argv[2])))
-            {
-                
-                float x = std::atof(argv[1].c_str());
-                float y = std::atof(argv[2].c_str());
-                
-                Scheduler *sched = Director::getInstance()->getScheduler();
-                sched->performFunctionInCocosThread( [&](){
                     Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x, &y);
                 });
             }
