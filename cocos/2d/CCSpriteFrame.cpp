@@ -59,12 +59,30 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect
     return spriteFrame;
 }
 
+SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize)
+{
+    SpriteFrame *spriteFrame = new SpriteFrame();
+    spriteFrame->initWithTexture(texture, rect, rotation, offset, originalSize);
+    spriteFrame->autorelease();
+    
+    return spriteFrame;
+}
+
 SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
 {
     SpriteFrame *spriteFrame = new SpriteFrame();
     spriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
     spriteFrame->autorelease();
 
+    return spriteFrame;
+}
+
+SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize)
+{
+    SpriteFrame *spriteFrame = new SpriteFrame();
+    spriteFrame->initWithTextureFilename(filename, rect, rotation, offset, originalSize);
+    spriteFrame->autorelease();
+    
     return spriteFrame;
 }
 
@@ -82,6 +100,31 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
 
 bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
 {
+    return initWithTexture(texture, rect, (rotated ? Rotation::RIGHT : Rotation::NONE), offset, originalSize);
+}
+
+bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
+{
+    return initWithTextureFilename(filename, rect, (rotated ? Rotation::RIGHT : Rotation::NONE), offset, originalSize);
+}
+
+bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize)
+{
+    _texture = nullptr;
+    _textureFilename = filename;
+    _rectInPixels = rect;
+    _rect = CC_RECT_PIXELS_TO_POINTS( rect );
+    _offsetInPixels = offset;
+    _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
+    _originalSizeInPixels = originalSize;
+    _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
+    _rotation = rotation;
+
+    return true;
+}
+
+bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize)
+{
     _texture = texture;
 
     if (texture)
@@ -95,22 +138,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
-    _rotated = rotated;
-
-    return true;
-}
-
-bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize)
-{
-    _texture = nullptr;
-    _textureFilename = filename;
-    _rectInPixels = rect;
-    _rect = CC_RECT_PIXELS_TO_POINTS( rect );
-    _offsetInPixels = offset;
-    _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
-    _originalSizeInPixels = originalSize;
-    _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
-    _rotated = rotated;
+    _rotation = rotation;
 
     return true;
 }
@@ -125,7 +153,7 @@ SpriteFrame* SpriteFrame::clone() const
 {
 	// no copy constructor	
     SpriteFrame *copy = new SpriteFrame();
-    copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
+    copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotation, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
     copy->autorelease();
     return copy;

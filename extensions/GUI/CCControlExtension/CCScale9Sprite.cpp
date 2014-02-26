@@ -47,7 +47,7 @@ enum positions
 
 Scale9Sprite::Scale9Sprite()
 : _spritesGenerated(false)
-, _spriteFrameRotated(false)
+, _spriteFrameRotation(Rotation::NONE)
 , _positionsAreDirty(false)
 , _scale9Image(NULL)
 , _topLeft(NULL)
@@ -94,9 +94,13 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rec
 
 bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets)
 {
+    return this->initWithBatchNode(batchnode, rect, rotated ? Rotation::RIGHT : Rotation::NONE, capInsets);
+}
+bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, Rotation rotation, const Rect& capInsets)
+{
     if(batchnode)
     {
-        this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
+        this->updateWithBatchNode(batchnode, rect, rotation, capInsets);
     }
     
     this->setAnchorPoint(Point(0.5f, 0.5f));
@@ -105,13 +109,19 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rec
     return true;
 }
 
+
+bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets)
+{
+    return updateWithBatchNode(batchnode, originalRect, rotated ? Rotation::RIGHT : Rotation::NONE, capInsets);
+}
+
 #define    TRANSLATE_X(x, y, xtranslate) \
     x+=xtranslate;                       \
 
 #define    TRANSLATE_Y(x, y, ytranslate) \
     y+=ytranslate;                       \
 
-bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets)
+bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, Rotation rotation, const Rect& capInsets)
 {
     GLubyte opacity = getOpacity();
     Color3B color = getColor();
@@ -146,7 +156,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
     _scale9Image->removeAllChildrenWithCleanup(true);
 
     _capInsets = capInsets;
-    _spriteFrameRotated = rotated;
+    _spriteFrameRotation = rotation;
     
     // If there is no given rect
     if ( rect.equals(Rect::ZERO) )
@@ -231,7 +241,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
     TRANSLATE_X(x, y, center_w);
     Rect rightbottombounds = Rect(x, y, right_w, bottom_h);
 
-    if (!rotated) {
+    if (rotation == Rotation::NONE) {
         // log("!rotated");
 
         AffineTransform t = AffineTransform::IDENTITY;
@@ -311,7 +321,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
         Rect rotatedcentertopbounds = centertopbounds;
         
         t = AffineTransformTranslate(t, rect.size.height+rect.origin.x, rect.origin.y);
-        t = AffineTransformRotate(t, 1.57079633f);
+        t = AffineTransformRotate(t, (rotation == Rotation::RIGHT ? 1.57079633f : -1.57079633f));
         
         centerbounds = RectApplyAffineTransform(centerbounds, t);
         rightbottombounds = RectApplyAffineTransform(rightbottombounds, t);
@@ -544,7 +554,7 @@ bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& cap
     SpriteBatchNode *batchnode = SpriteBatchNode::createWithTexture(texture, 9);
     CCASSERT(batchnode != NULL, "CCSpriteBatchNode must be not nil");
 
-    bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
+    bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->getRotation(), capInsets);
     return pReturn;
 }
 
@@ -669,7 +679,7 @@ Size Scale9Sprite::getPreferredSize()
 void Scale9Sprite::setCapInsets(Rect capInsets)
 {
     Size contentSize = this->_contentSize;
-    this->updateWithBatchNode(this->_scale9Image, this->_spriteRect, _spriteFrameRotated, capInsets);
+    this->updateWithBatchNode(this->_scale9Image, this->_spriteRect, _spriteFrameRotation, capInsets);
     this->setContentSize(contentSize);
 }
 
@@ -716,7 +726,7 @@ bool Scale9Sprite::isOpacityModifyRGB() const
 void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame)
 {
     SpriteBatchNode * batchnode = SpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
-    this->updateWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), Rect::ZERO);
+    this->updateWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->getRotation(), Rect::ZERO);
 
     // Reset insets
     this->_insetLeft = 0;

@@ -65,6 +65,11 @@ public:
      The originalSize is the size in pixels of the frame before being trimmed.
      */
     static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+
+    /** Create a SpriteFrame with a texture filename, rect, rotation, offset and originalSize in pixels.
+     The originalSize is the size in pixels of the frame before being trimmed.
+     */
+    static SpriteFrame* create(const std::string& filename, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize);
     
     /** Create a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
@@ -75,6 +80,12 @@ public:
      The originalSize is the size in points of the frame before being trimmed.
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+
+    /** Create a SpriteFrame with a texture, rect, rotation, offset and originalSize in pixels.
+     The originalSize is the size in points of the frame before being trimmed.
+     */
+    static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize);
+
     /**
      * @js NA
      * @lua NA
@@ -96,6 +107,11 @@ public:
     */
     bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
 
+    /** Initializes a SpriteFrame with a texture, rect, rotation, offset and originalSize in pixels.
+     The originalSize is the size in points of the frame before being trimmed.
+     */
+    bool initWithTexture(Texture2D* pobTexture, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize);
+
     /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
 
@@ -103,13 +119,21 @@ public:
      */
     bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
 
+    /** Initializes a SpriteFrame with a texture, rect, rotation, offset and originalSize in pixels.
+     The originalSize is the size in pixels of the frame before being trimmed.
+     */
+    bool initWithTextureFilename(const std::string& filename, const Rect& rect, Rotation rotation, const Point& offset, const Size& originalSize);
+
 
     // attributes
     inline const Rect& getRectInPixels() const { return _rectInPixels; }
     void setRectInPixels(const Rect& rectInPixels);
 
-    inline bool isRotated(void) const { return _rotated; }
-    inline void setRotated(bool rotated) { _rotated = rotated; }
+    inline bool isRotated(void) const { return _rotation != Rotation::NONE; }
+    inline void setRotated(bool rotated) { setRotation(rotated ? Rotation::RIGHT : Rotation::NONE); }
+
+    inline void setRotation(Rotation rotation) { _rotation = rotation; }
+    inline Rotation getRotation() const { return _rotation; }
 
     /** get rect of the frame */
     inline const Rect& getRect(void) const { return _rect; }
@@ -146,7 +170,7 @@ protected:
     Point _offset;
     Size _originalSize;
     Rect _rectInPixels;
-    bool   _rotated;
+    Rotation   _rotation;
     Rect _rect;
     Point _offsetInPixels;
     Size _originalSizeInPixels;

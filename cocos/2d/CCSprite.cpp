@@ -78,8 +78,13 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
 
 Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
+    return createWithTexture(texture, rect, rotated ? Rotation::RIGHT : Rotation::NONE );
+}
+
+Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, Rotation rotation)
+{
     Sprite *sprite = new Sprite();
-    if (sprite && sprite->initWithTexture(texture, rect, rotated))
+    if (sprite && sprite->initWithTexture(texture, rect, rotation))
     {
         sprite->autorelease();
         return sprite;
@@ -221,8 +226,12 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
     return bRet;
 }
 
+bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated) {
+    return initWithTexture(texture, rect, rotated ? Rotation::RIGHT : Rotation::NONE);
+}
+
 // designated initializer
-bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
+bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, Rotation rotation)
 {
     bool result;
     if (Node::init())
@@ -258,7 +267,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         // update texture (calls updateBlendFunc)
         setTexture(texture);
-        setTextureRect(rect, rotated, rect.size);
+        setTextureRect(rect, rotation, rect.size);
         
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
@@ -362,9 +371,14 @@ void Sprite::setTextureRect(const Rect& rect)
     setTextureRect(rect, false, rect.size);
 }
 
-void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)
+void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize) {
+    setTextureRect(rect, rotated ? Rotation::RIGHT : Rotation::NONE, untrimmedSize);
+}
+
+void Sprite::setTextureRect(const Rect& rect, Rotation rotation, const Size& untrimmedSize)
 {
-    _rectRotated = rotated;
+
+    _rectRotation = rotation;
 
     setContentSize(untrimmedSize);
     setVertexRect(rect);
@@ -430,7 +444,7 @@ void Sprite::setTextureCoords(Rect rect)
 
     float left, right, top, bottom;
 
-    if (_rectRotated)
+    if (_rectRotation != Rotation::NONE)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         left    = (2*rect.origin.x+1)/(2*atlasWidth);
@@ -443,6 +457,11 @@ void Sprite::setTextureCoords(Rect rect)
         top     = rect.origin.y/atlasHeight;
         bottom  = (rect.origin.y+rect.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+
+        if ( _rectRotation == Rotation::LEFT ) {
+            CC_SWAP(left, right, float);
+            CC_SWAP(top, bottom, float);
+        }
 
         if (_flippedX)
         {
@@ -865,7 +884,7 @@ void Sprite::setFlippedX(bool flippedX)
     if (_flippedX != flippedX)
     {
         _flippedX = flippedX;
-        setTextureRect(_rect, _rectRotated, _contentSize);
+        setTextureRect(_rect, _rectRotation, _contentSize);
     }
 }
 
@@ -879,7 +898,7 @@ void Sprite::setFlippedY(bool flippedY)
     if (_flippedY != flippedY)
     {
         _flippedY = flippedY;
-        setTextureRect(_rect, _rectRotated, _contentSize);
+        setTextureRect(_rect, _rectRotation, _contentSize);
     }
 }
 
@@ -966,8 +985,8 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     }
 
     // update rect
-    _rectRotated = spriteFrame->isRotated();
-    setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
+    _rectRotation = spriteFrame->getRotation();
+    setTextureRect(spriteFrame->getRect(), _rectRotation, spriteFrame->getOriginalSize());
 }
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
@@ -998,7 +1017,7 @@ SpriteFrame* Sprite::getSpriteFrame() const
 {
     return SpriteFrame::createWithTexture(_texture,
                                            CC_RECT_POINTS_TO_PIXELS(_rect),
-                                           _rectRotated,
+                                           _rectRotation,
                                            CC_POINT_POINTS_TO_PIXELS(_unflippedOffsetPositionFromCenter),
                                            CC_SIZE_POINTS_TO_PIXELS(_contentSize));
 }
