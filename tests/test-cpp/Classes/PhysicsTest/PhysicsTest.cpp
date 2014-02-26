@@ -16,7 +16,8 @@ namespace
         CL(PhysicsDemoPump),
         CL(PhysicsDemoOneWayPlatform),
         CL(PhysicsDemoSlice),
-        CL(PhysicsDemoBug3988), 
+        CL(PhysicsDemoBug3988),
+        CL(PhysicsContactTest),
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -322,23 +323,41 @@ Sprite* PhysicsDemo::makeBall(Point point, float radius, PhysicsMaterial materia
     return ball;
 }
 
-Sprite* PhysicsDemo::makeBox(Point point, Size size, PhysicsMaterial material)
+Sprite* PhysicsDemo::makeBox(Point point, Size size, int color, PhysicsMaterial material)
 {
-    auto box = CCRANDOM_0_1() > 0.5f ? Sprite::create("Images/YellowSquare.png") : Sprite::create("Images/CyanSquare.png");
+    bool yellow = false;
+    if (color == 0)
+    {
+        yellow = CCRANDOM_0_1() > 0.5f;
+    }else
+    {
+        yellow = color == 1;
+    }
+    
+    auto box = yellow ? Sprite::create("Images/YellowSquare.png") : Sprite::create("Images/CyanSquare.png");
     
     box->setScaleX(size.width/100.0f);
     box->setScaleY(size.height/100.0f);
     
-    auto body = PhysicsBody::createBox(size);
+    auto body = PhysicsBody::createBox(size, material);
     box->setPhysicsBody(body);
     box->setPosition(Point(point.x, point.y));
     
     return box;
 }
 
-Sprite* PhysicsDemo::makeTriangle(Point point, Size size, PhysicsMaterial material)
+Sprite* PhysicsDemo::makeTriangle(Point point, Size size, int color, PhysicsMaterial material)
 {
-    auto triangle = CCRANDOM_0_1() > 0.5f ? Sprite::create("Images/YellowTriangle.png") : Sprite::create("Images/CyanTriangle.png");
+    bool yellow = false;
+    if (color == 0)
+    {
+        yellow = CCRANDOM_0_1() > 0.5f;
+    }else
+    {
+        yellow = color == 1;
+    }
+    
+    auto triangle = yellow ? Sprite::create("Images/YellowTriangle.png") : Sprite::create("Images/CyanTriangle.png");
     
     if(size.height == 0)
     {
@@ -351,7 +370,7 @@ Sprite* PhysicsDemo::makeTriangle(Point point, Size size, PhysicsMaterial materi
     
     Point vers[] = { Point(0, size.height/2), Point(size.width/2, -size.height/2), Point(-size.width/2, -size.height/2)};
     
-    auto body = PhysicsBody::createPolygon(vers, 3);
+    auto body = PhysicsBody::createPolygon(vers, 3, material);
     triangle->setPhysicsBody(body);
     triangle->setPosition(Point(point.x, point.y));
     
@@ -1245,6 +1264,115 @@ std::string PhysicsDemoBug3988::title() const
 std::string PhysicsDemoBug3988::subtitle() const
 {
     return "All the Rectangles should have same rotation angle";
+}
+
+void PhysicsContactTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+	_scene->getPhysicsWorld()->setGravity(Vect::ZERO);
+    
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1, 1, 0.0)));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    auto contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(PhysicsContactTest::onContactBegin, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+    
+    // yellow box, will collide with itself and blue box.
+    for (int i = 0; i < 20; ++i)
+    {
+        Size size(10 + CCRANDOM_0_1()*10, 10 + CCRANDOM_0_1()*10);
+        Size winSize = VisibleRect::getVisibleRect().size;
+        Point position = Point(winSize.width, winSize.height) - Point(size.width, size.height);
+        position.x = position.x * CCRANDOM_0_1();
+        position.y = position.y * CCRANDOM_0_1();
+        position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
+        Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
+        auto box = makeBox(position, size, 1, PhysicsMaterial(0.1, 1, 0.0));
+        box->getPhysicsBody()->setVelocity(velocity);
+        box->getPhysicsBody()->setCategoryBitmask(0x01);    // 0001
+        box->getPhysicsBody()->setContactTestBitmask(0x04); // 0100
+        box->getPhysicsBody()->setCollisionBitmask(0x03);   // 0011
+        this->addChild(box);
+    }
+    
+    // blue box, will collide with blue box.
+    for (int i = 0; i < 20; ++i)
+    {
+        Size size(10 + CCRANDOM_0_1()*10, 10 + CCRANDOM_0_1()*10);
+        Size winSize = VisibleRect::getVisibleRect().size;
+        Point position = Point(winSize.width, winSize.height) - Point(size.width, size.height);
+        position.x = position.x * CCRANDOM_0_1();
+        position.y = position.y * CCRANDOM_0_1();
+        position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
+        Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
+        auto box = makeBox(position, size, 2, PhysicsMaterial(0.1, 1, 0.0));
+        box->getPhysicsBody()->setVelocity(velocity);
+        box->getPhysicsBody()->setCategoryBitmask(0x02);    // 0010
+        box->getPhysicsBody()->setContactTestBitmask(0x08); // 1000
+        box->getPhysicsBody()->setCollisionBitmask(0x01);   // 0001
+        this->addChild(box);
+    }
+    
+    // yellow triangle, will collide with itself and blue box.
+    for (int i = 0; i < 100; ++i)
+    {
+        Size size(10 + CCRANDOM_0_1()*10, 10 + CCRANDOM_0_1()*10);
+        Size winSize = VisibleRect::getVisibleRect().size;
+        Point position = Point(winSize.width, winSize.height) - Point(size.width, size.height);
+        position.x = position.x * CCRANDOM_0_1();
+        position.y = position.y * CCRANDOM_0_1();
+        position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
+        Vect velocity((CCRANDOM_0_1() - 0.5)*300, (CCRANDOM_0_1() - 0.5)*300);
+        auto triangle = makeTriangle(position, size, 1, PhysicsMaterial(0.1, 1, 0.0));
+        triangle->getPhysicsBody()->setVelocity(velocity);
+        triangle->getPhysicsBody()->setCategoryBitmask(0x04);    // 0100
+        triangle->getPhysicsBody()->setContactTestBitmask(0x01); // 0001
+        triangle->getPhysicsBody()->setCollisionBitmask(0x06);   // 0110
+        this->addChild(triangle);
+    }
+    
+    // blue triangle, will collide with yellow box.
+    for (int i = 0; i < 100; ++i)
+    {
+        Size size(10 + CCRANDOM_0_1()*10, 10 + CCRANDOM_0_1()*10);
+        Size winSize = VisibleRect::getVisibleRect().size;
+        Point position = Point(winSize.width, winSize.height) - Point(size.width, size.height);
+        position.x = position.x * CCRANDOM_0_1();
+        position.y = position.y * CCRANDOM_0_1();
+        position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
+        Vect velocity((CCRANDOM_0_1() - 0.5)*300, (CCRANDOM_0_1() - 0.5)*300);
+        auto triangle = makeTriangle(position, size, 2, PhysicsMaterial(0.1, 1, 0.0));
+        triangle->getPhysicsBody()->setVelocity(velocity);
+        triangle->getPhysicsBody()->setCategoryBitmask(0x08);    // 1000
+        triangle->getPhysicsBody()->setContactTestBitmask(0x02); // 0010
+        triangle->getPhysicsBody()->setCollisionBitmask(0x01);   // 0001
+        this->addChild(triangle);
+    }
+	
+}
+
+bool PhysicsContactTest::onContactBegin(PhysicsContact& contact)
+{
+    PhysicsBody* a = contact.getShapeA()->getBody();
+    PhysicsBody* b = contact.getShapeB()->getBody();
+    PhysicsBody* body = (a->getCategoryBitmask() == 0x04 || a->getCategoryBitmask() == 0x08) ? a : b;
+    
+    CC_ASSERT(body->getCategoryBitmask() == 0x04 || body->getCategoryBitmask() == 0x08);
+    
+    return true;
+}
+
+std::string PhysicsContactTest::title() const
+{
+    return "Contact Test";
+}
+
+std::string PhysicsContactTest::subtitle() const
+{
+    return "should not crash";
 }
 
 #endif // ifndef CC_USE_PHYSICS

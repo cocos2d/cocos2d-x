@@ -1440,11 +1440,6 @@ public:
      */
     PhysicsBody* getPhysicsBody() const;
 
-    /**
-     *   update rotation and position from physics body
-     */
-    virtual bool updatePhysicsTransform();
-
 #endif
     
     // overrides
