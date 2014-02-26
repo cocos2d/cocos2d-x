@@ -59,6 +59,11 @@ namespace PhoneDirect3DXamlAppInterop
 
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
                 m_d3dInterop.SetCocos2dMessageBoxDelegate(OnCocos2dMessageBoxEvent);
+                EditBoxDelegate editBoxDelegate = new EditBoxDelegate();
+                EditBoxImpl editBoxImpl = new EditBoxImpl();
+                editBoxImpl.setMainPage(this);
+                editBoxImpl.setD3dInterop(m_d3dInterop);
+                editBoxDelegate.SetCallback(editBoxImpl);
             }
         }
 
@@ -141,6 +146,14 @@ namespace PhoneDirect3DXamlAppInterop
                         m_textBox = null;
                         break;
                 }
+            });
+        }
+
+        public void PresentUserControl(UserControl control)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                LayoutRoot.Children.Add(control);
             });
         }
     }

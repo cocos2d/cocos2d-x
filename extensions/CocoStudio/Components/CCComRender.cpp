@@ -42,146 +42,158 @@ CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
 
 CCComRender::~CCComRender(void)
 {
-	m_pRender = NULL;
+    CC_SAFE_RELEASE_NULL(m_pRender);
 }
 
 void CCComRender::onEnter()
 {
-	if (m_pOwner != NULL)
-	{
-		m_pOwner->addChild(m_pRender);
-	}
+    if (m_pOwner != NULL)
+    {
+        m_pOwner->addChild(m_pRender);
+    }
 }
 
 void CCComRender::onExit()
 {
-	m_pRender = NULL;
+    if (m_pOwner != NULL)
+    {
+        m_pOwner->removeChild(m_pRender, true);
+    }
 }
 
 cocos2d::CCNode* CCComRender::getNode()
 {
-	return m_pRender;
+    return m_pRender;
 }
 
 void CCComRender::setNode(cocos2d::CCNode *pNode)
 {
-	m_pRender = pNode;
+	if (m_pRender != NULL)
+	{
+		m_pRender->release();
+		m_pRender = NULL;
+	}
+    if (pNode != NULL)
+    {		
+		m_pRender = pNode;
+        m_pRender->retain();    
+    }
 }
 
 bool CCComRender::serialize(void* r)
 {
-	bool bRet = false;
-	do 
-	{
-		CC_BREAK_IF(r == NULL);
-		rapidjson::Value *v = (rapidjson::Value *)r;
-		const char *pClassName = DICTOOL->getStringValue_json(*v, "classname");
-		CC_BREAK_IF(pClassName == NULL);
-		const char *pComName = DICTOOL->getStringValue_json(*v, "name");
-		if (pComName != NULL)
-		{
-			setName(pComName);
-		}
-		else
-		{
-			setName(pClassName);
-		}
-		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
-		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
-		const char *pFile = DICTOOL->getStringValue_json(fileData, "path");
-		const char *pPlist = DICTOOL->getStringValue_json(fileData, "plistFile");
-		CC_BREAK_IF(pFile == NULL && pPlist == NULL);
-		std::string strFilePath;
-		std::string strPlistPath;
-		if (pFile != NULL)
-		{
-			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
-		}
-		if (pPlist != NULL)
-		{
-			strPlistPath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pPlist));
-		}
-		int nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
-		if (nResType == 0)
-		{
-			if (strcmp(pClassName, "CCSprite") == 0 && strFilePath.find(".png") != strFilePath.npos)
-			{
-				m_pRender = CCSprite::create(strFilePath.c_str());
-			}
-			else if(strcmp(pClassName, "CCTMXTiledMap") == 0 && strFilePath.find(".tmx") != strFilePath.npos)
-			{
-				m_pRender = CCTMXTiledMap::create(strFilePath.c_str());
-			}
-			else if(strcmp(pClassName, "CCParticleSystemQuad") == 0 && strFilePath.find(".plist") != strFilePath.npos)
-			{
-				m_pRender = CCParticleSystemQuad::create(strFilePath.c_str());
+    bool bRet = false;
+    do 
+    {
+        CC_BREAK_IF(r == NULL);
+        rapidjson::Value *v = (rapidjson::Value *)r;
+        const char *pClassName = DICTOOL->getStringValue_json(*v, "classname");
+        CC_BREAK_IF(pClassName == NULL);
+        const char *pComName = DICTOOL->getStringValue_json(*v, "name");
+        if (pComName != NULL)
+        {
+            setName(pComName);
+        }
+        else
+        {
+            setName(pClassName);
+        }
+        const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
+        CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
+        const char *pFile = DICTOOL->getStringValue_json(fileData, "path");
+        const char *pPlist = DICTOOL->getStringValue_json(fileData, "plistFile");
+        CC_BREAK_IF(pFile == NULL && pPlist == NULL);
+        std::string strFilePath;
+        std::string strPlistPath;
+        if (pFile != NULL)
+        {
+            strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
+        }
+        if (pPlist != NULL)
+        {
+            strPlistPath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pPlist));
+        }
+        int nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+        if (nResType == 0)
+        {
+            if (strcmp(pClassName, "CCSprite") == 0 && strFilePath.find(".png") != strFilePath.npos)
+            {
+                m_pRender = CCSprite::create(strFilePath.c_str());
+            }
+            else if(strcmp(pClassName, "CCTMXTiledMap") == 0 && strFilePath.find(".tmx") != strFilePath.npos)
+            {
+                m_pRender = CCTMXTiledMap::create(strFilePath.c_str());
+            }
+            else if(strcmp(pClassName, "CCParticleSystemQuad") == 0 && strFilePath.find(".plist") != strFilePath.npos)
+            {
+                m_pRender = CCParticleSystemQuad::create(strFilePath.c_str());
                 m_pRender->setPosition(ccp(0.0f, 0.0f));
-			}
-			else if(strcmp(pClassName, "CCArmature") == 0)
-			{
-				std::string reDir = strFilePath;
-				std::string file_path = "";
-				size_t pos = reDir.find_last_of('/');
-				if (pos != std::string::npos)
-				{
-					file_path = reDir.substr(0, pos+1);
-				}
-				rapidjson::Document doc;
-				if(!readJson(strFilePath.c_str(), doc))
-				{
-					CCLog("read json file[%s] error!\n", strFilePath.c_str());
-					continue;
-				}
-				const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(doc, "armature_data", 0);
-				const char *name = DICTOOL->getStringValue_json(subData, "name");
-				CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
-				CCArmature *pAr = CCArmature::create(name);
-				m_pRender = pAr;
-				const char *actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
-				if (actionName != NULL && pAr->getAnimation() != NULL)
-				{
-					pAr->getAnimation()->play(actionName);
-				}
-			}
-			else if(strcmp(pClassName, "GUIComponent") == 0)
-			{
-				cocos2d::gui::TouchGroup* tg = cocos2d::gui::TouchGroup::create();
-				cocos2d::gui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
-				tg->addWidget(widget);
-				m_pRender = tg;
-			}
-			else
-			{
-				CC_BREAK_IF(true);
-			}
-		}
-		else if (nResType == 1)
-		{
-			if (strcmp(pClassName, "CCSprite") == 0)
-			{
-				std::string strPngFile = strPlistPath;
-				std::string::size_type pos = strPngFile.find(".plist");
-				if (pos  == strPngFile.npos)
-				{
-					continue;
-				}
-				strPngFile.replace(pos, strPngFile.length(), ".png");
-				CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(strPlistPath.c_str(), strPngFile.c_str());
-				m_pRender = CCSprite::createWithSpriteFrameName(strFilePath.c_str());
-			}
-			else
-			{
-				CC_BREAK_IF(true);
-			}
-		}
-		else
-		{
-			CC_BREAK_IF(true);
-		}
-		bRet = true;
-	} while (0);
+            }
+            else if(strcmp(pClassName, "CCArmature") == 0)
+            {
+                std::string reDir = strFilePath;
+                std::string file_path = "";
+                size_t pos = reDir.find_last_of('/');
+                if (pos != std::string::npos)
+                {
+                    file_path = reDir.substr(0, pos+1);
+                }
+                rapidjson::Document doc;
+                if(!readJson(strFilePath.c_str(), doc))
+                {
+                    CCLog("read json file[%s] error!\n", strFilePath.c_str());
+                    continue;
+                }
+                const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(doc, "armature_data", 0);
+                const char *name = DICTOOL->getStringValue_json(subData, "name");
+                CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
+                CCArmature *pAr = CCArmature::create(name);
+                m_pRender = pAr;
+                const char *actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
+                if (actionName != NULL && pAr->getAnimation() != NULL)
+                {
+                    pAr->getAnimation()->play(actionName);
+                }
+            }
+            else if(strcmp(pClassName, "GUIComponent") == 0)
+            {
+                cocos2d::gui::TouchGroup* tg = cocos2d::gui::TouchGroup::create();
+                cocos2d::gui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
+                tg->addWidget(widget);
+                m_pRender = tg;
+            }
+            else
+            {
+                CC_BREAK_IF(true);
+            }
+        }
+        else if (nResType == 1)
+        {
+            if (strcmp(pClassName, "CCSprite") == 0)
+            {
+                std::string strPngFile = strPlistPath;
+                std::string::size_type pos = strPngFile.find(".plist");
+                if (pos  == strPngFile.npos)
+                {
+                    continue;
+                }
+                strPngFile.replace(pos, strPngFile.length(), ".png");
+                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(strPlistPath.c_str(), strPngFile.c_str());
+                m_pRender = CCSprite::createWithSpriteFrameName(strFilePath.c_str());
+            }
+            else
+            {
+                CC_BREAK_IF(true);
+            }
+        }
+        else
+        {
+            CC_BREAK_IF(true);
+        }
+        bRet = true;
+    } while (0);
 
-	return bRet;
+    return bRet;
 }
 
 CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
@@ -200,35 +212,35 @@ CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
 
 CCComRender* CCComRender::create(void)
 {
-	CCComRender * pRet = new CCComRender();
-	if (pRet != NULL && pRet->init())
-	{
-		pRet->autorelease();
-	}
-	else
-	{
-		CC_SAFE_DELETE(pRet);
-	}
-	return pRet;
+    CCComRender * pRet = new CCComRender();
+    if (pRet != NULL && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    return pRet;
 }
 
 bool CCComRender::readJson(const char *pszFileName, rapidjson::Document &doc)
 {
-	bool bRet = false;
-	unsigned long size = 0;
-	unsigned char *pBytes = NULL;
-	do {
-		CC_BREAK_IF(pszFileName == NULL);
-		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
-		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
-		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
-		std::string load_str((const char*)pBytes, size);
-		CC_SAFE_DELETE_ARRAY(pBytes);
-		doc.Parse<0>(load_str.c_str());
-		CC_BREAK_IF(doc.HasParseError());
-		bRet = true;
-	} while (0);
-	return bRet;
+    bool bRet = false;
+    unsigned long size = 0;
+    unsigned char *pBytes = NULL;
+    do {
+        CC_BREAK_IF(pszFileName == NULL);
+        std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
+        pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
+        CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+        std::string load_str((const char*)pBytes, size);
+        CC_SAFE_DELETE_ARRAY(pBytes);
+        doc.Parse<0>(load_str.c_str());
+        CC_BREAK_IF(doc.HasParseError());
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 

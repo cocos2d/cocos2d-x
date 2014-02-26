@@ -57,7 +57,7 @@ void CCComponent::update(float delta)
 
 bool CCComponent::serialize(void *ar)
 {
-	return true;
+    return true;
 }
 
 CCComponent* CCComponent::create(void)
@@ -71,7 +71,7 @@ CCComponent* CCComponent::create(void)
     {
         CC_SAFE_DELETE(pRet);
     }
-	return pRet;
+    return pRet;
 }
 
 const char* CCComponent::getName() const
@@ -81,7 +81,7 @@ const char* CCComponent::getName() const
 
 void  CCComponent::setName(const char *pName)
 {
-	m_strName.assign(pName);
+    m_strName.assign(pName);
 }
 
 CCNode* CCComponent::getOwner() const
