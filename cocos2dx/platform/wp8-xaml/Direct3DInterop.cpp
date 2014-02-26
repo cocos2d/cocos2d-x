@@ -124,7 +124,7 @@ void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ a
     mInputEvents.push(e);
 }
 
-void Direct3DInterop::OnEditboxEvent(Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler)
+void Direct3DInterop::OnCocos2dEditboxEvent(Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler)
 {
 	std::lock_guard<std::mutex> guard(mMutex);
 	std::shared_ptr<EditBoxEvent> e(new EditBoxEvent(sender, args, handler));
@@ -185,6 +185,13 @@ void Direct3DInterop::SetCocos2dMessageBoxDelegate(Cocos2dMessageBoxDelegate ^ d
     m_messageBoxDelegate = delegate;
     m_renderer->SetXamlMessageBoxDelegate(delegate);
 }
+
+void Direct3DInterop::SetCocos2dEditBoxDelegate(Cocos2dEditBoxDelegate ^ delegate)
+{
+    m_editBoxDelegate = delegate;
+    m_renderer->SetXamlEditBoxDelegate(delegate);
+}
+
 
 bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
 {

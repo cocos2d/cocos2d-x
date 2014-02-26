@@ -406,6 +406,16 @@ bool CCEGLView::ShowMessageBox(Platform::String^ title, Platform::String^ messag
     return false;
 }
 
+bool CCEGLView::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
+{
+    if(m_editBoxDelegate)
+    {
+        m_editBoxDelegate->Invoke(strPlaceHolder, strText, maxLength, inputMode, inputFlag, receiveHandler);
+        return true;
+    }
+    return false;
+}
+
 
 
 // called by orientation change from WP8 XAML
