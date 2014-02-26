@@ -475,7 +475,18 @@ void PhysicsDemoLogoSmash::onEnter()
 std::string PhysicsDemoLogoSmash::title() const
 {
     return "Logo Smash";
-}void PhysicsDemoPyramidStack::onEnter()
+}
+
+void PhysicsDemoPyramidStack::updateOnce(float delta)
+{
+    auto ball = getChildByTag(100);
+    
+    ball->setScale(ball->getScale() * 3);
+    ball->setPhysicsBody(PhysicsBody::createCircle(30));
+    ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+}
+
+void PhysicsDemoPyramidStack::onEnter()
 {
     PhysicsDemo::onEnter();
     
@@ -491,9 +502,13 @@ std::string PhysicsDemoLogoSmash::title() const
     
     auto ball = Sprite::create("Images/ball.png");
     ball->setScale(1);
+    ball->setTag(100);
     ball->setPhysicsBody(PhysicsBody::createCircle(10));
+    ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     ball->setPosition(VisibleRect::bottom() + Point(0, 60));
     this->addChild(ball);
+    
+    scheduleOnce(schedule_selector(PhysicsDemoPyramidStack::updateOnce), 3.0);
 
     for(int i=0; i<14; i++)
     {
