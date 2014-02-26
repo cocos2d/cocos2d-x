@@ -619,21 +619,21 @@ Now classes are binded into different modules instead of using global module. Th
 
 Examples:
 
-| v2.1                    | v3.0                    |
-| CCDirector              | cc.Director             |
-| CCArmature              | ccs.Armature            |
-| kCCTextAlignmentLeft    | cc.kCCTextAlignmentLeft |
+    | v2.1                    | v3.0                    |
+    | CCDirector              | cc.Director             |
+    | CCArmature              | ccs.Armature            |
+    | kCCTextAlignmentLeft    | cc.kCCTextAlignmentLeft |
 
 ### Modified functions
 
 Some global function names are renamed:
 
-| v2.1                    | v3.0                    |
-| CCPoint/ccp             | cc.p                    |
-| CCRect                  | cc.rect                 |
-| CCColor3B               | cc.c3b                  |
-| CCColor4B               | cc.c4b                  |
-| TODO: add others
+    | v2.1                    | v3.0                    |
+    | CCPoint/ccp             | cc.p                    |
+    | CCRect                  | cc.rect                 |
+    | CCColor3B               | cc.c3b                  |
+    | CCColor4B               | cc.c4b                  |
+    | TODO: add others
 
 ### Add some modules
 
