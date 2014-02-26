@@ -106,13 +106,6 @@ static bool isFloat( std::string myString ) {
     return iss.eof() && !iss.fail(); 
 }
 
-static bool isInt( std::string myString ) {
-    std::istringstream iss(myString);
-    int i;
-    iss >> std::noskipws >> i; // noskipws considers leading whitespace invalid
-    // Check the entire string was consumed and if either failbit or badbit is set
-    return iss.eof() && !iss.fail(); 
-}
 // helper free functions
 
 // dprintf() is not defined in Android
