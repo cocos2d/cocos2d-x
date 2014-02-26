@@ -93,6 +93,7 @@ public:
     CREATE_FUNC(PhysicsDemoPyramidStack);
 
     void onEnter() override;
+    void updateOnce(float delta);
     virtual std::string title() const override;
 };
 

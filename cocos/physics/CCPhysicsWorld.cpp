@@ -692,11 +692,11 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
         // set destroy param to false to keep the iterator available
         removeJoint(joint, false);
         
-        PhysicsBody* other = (joint->getBodyA() == body ? joint->getBodyB() : body);
+        PhysicsBody* other = (joint->getBodyA() == body ? joint->getBodyB() : joint->getBodyA());
         other->removeJoint(joint);
         
         // test the distraction is delaied or not
-        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+        if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) != _delayRemoveJoints.rend())
         {
             joint->_destoryMark = true;
         }
@@ -775,7 +775,7 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
         }
         
         // test the distraction is delaied or not
-        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+        if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) != _delayRemoveJoints.rend())
         {
             joint->_destoryMark = true;
         }
@@ -853,7 +853,7 @@ void PhysicsWorld::removeJointOrDelay(PhysicsJoint* joint)
     
     if (_info->isLocked())
     {
-        if (std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint) == _delayRemoveJoints.end())
+        if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) == _delayRemoveJoints.rend())
         {
             _delayRemoveJoints.push_back(joint);
             _delayDirty = true;
@@ -897,7 +897,7 @@ void PhysicsWorld::removeAllJoints(bool destroy)
             }
             
             // test the distraction is delaied or not
-            if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+            if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) != _delayRemoveJoints.rend())
             {
                 joint->_destoryMark = true;
             }

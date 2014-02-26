@@ -1463,15 +1463,23 @@ void Node::removeAllComponents()
 #if CC_USE_PHYSICS
 void Node::setPhysicsBody(PhysicsBody* body)
 {
+    body->_node = this;
+    body->retain();
+    
     if (_physicsBody != nullptr)
     {
+        PhysicsWorld* world = _physicsBody->getWorld();
+        _physicsBody->removeFromWorld();
         _physicsBody->_node = nullptr;
         _physicsBody->release();
+        
+        if (world != nullptr)
+        {
+            world->addBody(body);
+        }
     }
     
     _physicsBody = body;
-    _physicsBody->_node = this;
-    _physicsBody->retain();
     _physicsBody->setPosition(getPosition());
     _physicsBody->setRotation(getRotation());
 }
