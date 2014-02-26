@@ -7,34 +7,26 @@
 - [Requirements](#requirements)
 	- [Runtime Requirements](#runtime-requirements)
 	- [Compiler Requirements](#compiler-requirements)
-- [Highlights of v3.0.0](#highlights-of-v300)
+- [Highlights of v3.0](#highlights-of-v30)
 - [Features in detail](#features-in-detail)
-	- [C++11 features](#c++11-features)
+	- [C++11 features](#c11-features)
 		- [std::function](#stdfunction)
 		- [strongly typed enums](#strongly-typed-enums)
 		- [override](#override)
 	- [Removed Objective-C patterns](#removed-objective-c-patterns)
-		- [No more 'CC' prefix for C++ classes and free functions](#no-more-'cc'-prefix-for-c++-classes-and-free-functions)
+		- [No more 'CC' prefix for C++ classes and free functions](#no-more-cc-prefix-for-c-classes-and-free-functions)
 		- [clone() instead of copy()](#clone-instead-of-copy)
 		- [Singletons use getInstance() and destroyInstance()](#singletons-use-getinstance-and-destroyinstance)
+		- [Object is replaced with Ref](#object-is-replaced-with-ref)
 		- [getters](#getters)
 		- [POD types](#pod-types)
-	- [New renderer](#new-renderer)
-	- [Improved LabelTTF / LabelBMFont](#improved-labelttf--labelbmfont)
+	- [New Renderer](#new-renderer)
+		- [Renderer features](#renderer-features)
+			- [Auto-batching](#auto-batching)
+			- [Auto-culling](#auto-culling)
+			- [Global Z order](#global-z-order)
+	- [Improved LabelTTF / LabelBMFont / LabelAtlas](#improved-labelttf--labelbmfont--labelatlas)
 	- [New EventDispatcher](#new-eventdispatcher)
-		- [Adding Touch Event Listener](#adding-touch-event-listener)
-		- [Adding Mouse Event Listener](#adding-mouse-event-listener)
-		- [Adding A Keyboard Event Listener](#adding-a-keyboard-event-listener)
-		- [Adding An Acceleration Event Listener](#adding-an-acceleration-event-listener)
-		- [Adding A Custom Event Listener](#adding-a-custom-event-listener)
-		- [Dispatching A Custom Event](#dispatching-a-custom-event)
-		- [Setting Fixed Priority For A Listener](#setting-fixed-priority-for-a-listener)
-		- [Removing Event Listener](#removing-event-listener)
-			- [Removing A Specified Event Listener](#removing-a-specified-event-listener)
-			- [Removing Custom Event Listener](#removing-custom-event-listener)
-			- [Removing All Listeners For Specified Event Listener Type](#removing-all-listeners-for-specified-event-listener-type)
-			- [Removing All Listeners](#removing-all-listeners)
-
 	- [Physics Integration](#physics-integration)
 		- [PhysicsWorld](#physicsworld)
 		- [PhysicsBody](#physicsbody)
@@ -42,17 +34,16 @@
 		- [PhysicsJoint](#physicsjoint)
 		- [PhysicsContact](#physicscontact)
 - [Misc API Changes](#misc-api-changes)
-	- [`ccTypes.h`](#cctypesh)
+	- [ccTypes.h](#cctypesh)
 	- [deprecated functions and  global variables](#deprecated-functions-and--global-variables)
-	- [Changes in the Lua bindings](#changes-in-the-lua-bindings)
-		- [Use bindings-generator tool for lua binding](#use-bindings-generator-tool-for-lua-binding)
-		- [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
-		- [Use ScriptHandlerMgr to manage the register and unregister of lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
-		- [Use "cc" and "ccs" as module name](#use-cc-and-ccs-as-module-name)
-		- [Deprecated funtions, tables and classes](#deprecated-funtions-tables-and-classes)
-		- [Use the lua table instead of the some structs and classes binding](#use-the-lua-table-instead-of-the-some-structs-and-classes-binding)
-		- [Integrate more modules into lua](#integrate-more-modules-into-lua)
-	- [Known issues](#known-issues)
+- [Changes in the Lua bindings](#changes-in-the-lua-bindings)
+    - [Use bindings-generator tool for lua binding](#use-bindings-generator-tool-for-lua-binding)
+	    - [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
+	    - [Use ScriptHandlerMgr to manage the register and unregister of Lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
+	- [Misc API changes](#misc-api-changes-1)
+		- [Use cc、ccs、ccui and sp as module name](#use-ccccsccui-and-sp-as-module-name)
+		- [Modified functions](#modified-functions)
+		- [Add some modules](#add-some-modules)
 
 # Misc Information
 
@@ -579,11 +570,11 @@ color3B = Color3B::WHITE;
 
 # Changes in the Lua bindings
 
-# Use bindings-generator tool for lua binding
+## Use bindings-generator tool for lua binding
 
 Only have to write an ini file for a module, don't have to write a lot of .pkg files
 
-## Bind the classes with namespace to lua
+### Bind the classes with namespace to lua
 
 In previous, the lua binding can not bind classes that have the same class name but different namespaces. In order to resolve this issue, now the metatable name of a class is changed. For example, `CCNode` will be changed to `cc.Node`. This modification will affect some APIs as follows:
 
@@ -595,7 +586,7 @@ In previous, the lua binding can not bind classes that have the same class name 
 	| tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFileUtils") 		| tolua_pushusertype(tolua_S,(void*)tolua_ret,"cc.FileUtils")  |
 	| tolua.cast(pChildren[i + 1], "CCNode") 			| tolua.cast(pChildren[i + 1], "cc.Node") |
 
-## Use ScriptHandlerMgr to manage the register and unregister of Lua function
+### Use ScriptHandlerMgr to manage the register and unregister of Lua function
 
 When we want to add register and unregister functions of Lua function for class, we need to change the declarative and defined files and then bind to Lua.
 In v3.0, we use the `ScriptHandlerMgr`. As an example, lets see the `MenuItem` class:
