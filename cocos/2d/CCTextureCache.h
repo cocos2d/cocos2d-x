@@ -134,6 +134,20 @@ public:
     Texture2D* getTextureForKey(const std::string& key) const;
     CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
+    /** Reload texture from the image file
+    * If the file image hasn't loaded before, load it.
+    * Otherwise the texture will be reloaded from the file image.
+    * The "filenName" parameter is the related/absolute path of the file image.
+    * Return true if the reloading is succeed, otherwise return false.
+    */
+    bool reloadTexture(const std::string& fileName);
+    
+    /** Update the nodes & it's children which used texture
+     * The "node" parameter is the root node will be updated
+     * The "texture" parameter is the texture which was updated
+     */
+    void updateTexture(Node* node, Texture2D* texture);
+
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
     * In the short term: it will free some resources preventing your app from being killed
