@@ -1,7 +1,9 @@
 /****************************************************************************
- Copyright (c) 2013 Chris Hannon http://www.channon.us
+ Created by Chris Hannon 2013 http://www.channon.us
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+  
+ http://www.cocos2d-x.org
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -92,6 +94,7 @@ public:
         virtual void onMessage(SIOClient* client, const std::string& data) = 0;
         virtual void onClose(SIOClient* client) = 0;
         virtual void onError(SIOClient* client, const std::string& data) = 0;
+		virtual void eventFired(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
     };
 
 	/**
@@ -100,7 +103,7 @@ public:
      *  @param  uri      The URI of the socket.io server
      *  @return An initialized SIOClient if connected successfully, otherwise NULL
      */
-	static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
+	static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate);
 	
 private:
 

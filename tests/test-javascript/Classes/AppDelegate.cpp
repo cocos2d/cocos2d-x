@@ -20,6 +20,7 @@
 #include "jsb_opengl_registration.h"
 #include "network/XMLHTTPRequest.h"
 #include "network/jsb_websocket.h"
+#include "network/jsb_socketio.h"
 #include "cocosbuilder/js_bindings_ccbreader.h"
 
 USING_NS_CC;
@@ -99,6 +100,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
+	sc->addRegisterCallback(register_jsb_socketio);
 
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
