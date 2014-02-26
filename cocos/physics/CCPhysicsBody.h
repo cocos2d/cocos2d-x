@@ -243,7 +243,7 @@ public:
      * it is used to simulate fluid or air friction forces on the body. 
      * the value is 0.0f to 1.0f. 
      */
-    inline void setLinearDamping(float damping) { _linearDamping = damping; }
+    inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
     /** get angular damping. */
     inline float getAngularDamping() const { return _angularDamping; }
     /**
@@ -251,10 +251,12 @@ public:
      * it is used to simulate fluid or air friction forces on the body.
      * the value is 0.0f to 1.0f.
      */
-    inline void setAngularDamping(float damping) { _angularDamping = damping; }
+    inline void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
     
     /** whether the body is at rest */
     bool isResting() const;
+    /** set body to rest */
+    void setResting() const;
     /** 
      * whether the body is enabled
      * if the body it isn't enabled, it will not has simulation by world
@@ -296,6 +298,7 @@ protected:
     void update(float delta);
     
     void removeJoint(PhysicsJoint* joint);
+    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
     
 protected:
     PhysicsBody();
@@ -317,6 +320,7 @@ protected:
     float _area;
     float _density;
     float _moment;
+    bool _isDamping;
     float _linearDamping;
     float _angularDamping;
     int _tag;

@@ -30,6 +30,8 @@
 
 #include "chipmunk.h"
 
+#include "CCNode.h"
+
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
@@ -63,11 +65,12 @@ PhysicsBody::PhysicsBody()
 , _area(0.0f)
 , _density(0.0f)
 , _moment(MOMENT_DEFAULT)
+, _isDamping(false)
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
-, _collisionBitmask(UINT_MAX)
+, _collisionBitmask(0)
 , _contactTestBitmask(UINT_MAX)
 , _group(0)
 {
@@ -518,7 +521,11 @@ void PhysicsBody::addMoment(float moment)
     }
     else if (moment == -PHYSICS_INFINITY)
     {
-        // if moment is -PHYSICS_INFINITY, it won't change
+        if (moment == PHYSICS_INFINITY)
+        {
+            _moment = MOMENT_DEFAULT;
+            _momentDefault = true;
+        }
         return;
     }
     else
@@ -733,13 +740,36 @@ void PhysicsBody::setEnable(bool enable)
 
 bool PhysicsBody::isResting() const
 {
-    return cpBodyIsSleeping(_info->getBody()) == cpTrue;
+    return CP_PRIVATE(_info->getBody()->node).root != ((cpBody*)0);
+}
+
+void PhysicsBody::setResting() const
+{
+    cpBodySleep(_info->getBody());
 }
 
 void PhysicsBody::update(float delta)
 {
+    if (_node != nullptr)
+    {
+        cpVect pos = cpBodyGetPos(_info->getBody());
+        cpVect prePos = _info->getPosition();
+        if (memcmp(&pos, &prePos, sizeof(cpVect)) != 0)
+        {
+            _node->setPosition(getPosition());
+            _info->setPosition(pos);
+        }
+        
+        cpVect rot = cpBodyGetRot(_info->getBody());
+        cpVect preRot = _info->getRotation();
+        if (memcmp(&rot, &preRot, sizeof(cpVect)) != 0)
+        {
+            _node->setRotation(getRotation());
+            _info->setRotation(rot);
+        }
+    }
     // damping compute
-    if (_dynamic && !isResting())
+    if (_isDamping && _dynamic && !isResting())
     {
         _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
         _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);

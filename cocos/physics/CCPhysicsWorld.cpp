@@ -263,7 +263,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     
     // bitmask check
     if ((shapeA->getCategoryBitmask() & shapeB->getContactTestBitmask()) == 0
-        || (shapeB->getContactTestBitmask() & shapeA->getCategoryBitmask()) == 0)
+        || (shapeA->getContactTestBitmask() & shapeB->getCategoryBitmask()) == 0)
     {
         contact.setNotificationEnable(false);
     }
@@ -281,9 +281,12 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
         }
     }
     
-    contact.setEventCode(PhysicsContact::EventCode::BEGIN);
-    contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    if (contact.isNotificationEnabled())
+    {
+        contact.setEventCode(PhysicsContact::EventCode::BEGIN);
+        contact.setWorld(this);
+        _scene->getEventDispatcher()->dispatchEvent(&contact);
+    }
     
     return ret ? contact.resetResult() : false;
 }
@@ -1009,14 +1012,14 @@ void PhysicsWorld::update(float delta)
         _delayDirty = !(_delayAddBodies.size() == 0 && _delayRemoveBodies.size() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
     }
     
-    for (auto& body : _bodies)
-    {
-        body->update(delta);
-    }
-    
     _updateTime += delta;
     if (++_updateRateCount >= _updateRate)
     {
+        for (auto& body : _bodies)
+        {
+            body->update(_updateTime * _speed);
+        }
+        
         _info->step(_updateTime * _speed);
         _updateRateCount = 0;
         _updateTime = 0.0f;
