@@ -330,11 +330,10 @@ static bool _js_set_SIOClient_tag(JSContext* cx, JS::HandleObject obj, JS::Handl
 	JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 	
 	if (cobj) {
-		const char *out = "";
+		std::string out = "";
 
-		jsval_to_charptr(cx, vp, &out);
-        //vp.set(std_string_to_jsval(cx, cobj->getTag()));
-		cobj->setTag(out);
+		jsval_to_std_string(cx, vp, &out);
+		cobj->setTag(out.c_str());
 		return true;
     } else {
         JS_ReportError(cx, "Error: SocketIO instance is invalid.");
