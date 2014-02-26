@@ -254,6 +254,14 @@ void Node::setRotation(float newRotation)
 #endif
 }
 
+#if CC_USE_PHYSICS
+void Node::physicsSetRotation(float newRotation)
+{
+    _rotationZ_X = _rotationZ_Y = newRotation;
+    _transformDirty = _inverseDirty = true;
+}
+#endif
+
 float Node::getRotationSkewX() const
 {
     return _rotationZ_X;
@@ -383,6 +391,14 @@ void Node::setPosition(const Point& newPosition)
     }
 #endif
 }
+
+#if CC_USE_PHYSICS
+void Node::physicsSetPosition(const Point& newPosition)
+{
+    _position = newPosition;
+    _transformDirty = _inverseDirty = true;
+}
+#endif
 
 void Node::getPosition(float* x, float* y) const
 {

@@ -256,7 +256,7 @@ public:
     /** whether the body is at rest */
     bool isResting() const;
     /** set body to rest */
-    void setResting() const;
+    void setResting(bool rest) const;
     /** 
      * whether the body is enabled
      * if the body it isn't enabled, it will not has simulation by world
