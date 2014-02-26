@@ -170,6 +170,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
 			currentLanguage = kLanguageSpanish;
 			break;
 
+		case S3E_DEVICE_LANGUAGE_DUTCH:
+			currentLanguage = kLanguageDutch;
+			break;
+
 		case S3E_DEVICE_LANGUAGE_RUSSIAN:
 			currentLanguage = kLanguageRussian;
 			break;
