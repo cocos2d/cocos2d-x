@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #else
 #include <io.h>
+#include <WS2tcpip.h>
 #endif
 
 //------------------------------------------------------------------
@@ -213,13 +214,13 @@ void ConsoleUploadFile::uploadFile()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     WSADATA wsaData;
-    n = WSAStartup(MAKEWORD(2, 2),&wsaData);
+    WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
 
     s = getaddrinfo("localhost", "5678", &hints, &result);
-    if (s != 0) {
-       CCLOG("ConsoleUploadFile: getaddrinfo: %s\n", gai_strerror(s));
-
+    if (s != 0) 
+    {
+       CCLOG("ConsoleUploadFile: getaddrinfo error");
         return;
     }
 
