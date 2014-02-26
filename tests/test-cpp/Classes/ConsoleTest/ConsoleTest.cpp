@@ -24,14 +24,13 @@
 
 #include "ConsoleTest.h"
 #include "../testResource.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
-#include <stdio.h>
-#include <stdlib.h>
 #else
 #include <io.h>
 #include <WS2tcpip.h>
@@ -182,7 +181,9 @@ ConsoleUploadFile::ConsoleUploadFile()
 {
     srand (time(NULL));
     int _id = rand()%100000;
-    _target_file_name = std::string("grossini") + std::to_string(_id);
+    char buf[32];
+    sprintf(buf, "%d", _id);
+    _target_file_name = std::string("grossini") + buf;
 
    _src_file_path = FileUtils::getInstance()->fullPathForFilename(s_pathGrossini);
     _thread = std::thread( &ConsoleUploadFile::uploadFile, this);
@@ -264,13 +265,14 @@ void ConsoleUploadFile::uploadFile()
     fseek(fp, 0, SEEK_END);
     int size = ftell(fp);
     fseek(fp, 0, SEEK_SET);
-
+    char sb[32];
+    sprintf(sb, "%d", size);
     std::string tmp = "upload";
 
     tmp += " ";
     tmp += _target_file_name;
     tmp += " ";
-    tmp += std::to_string(size);
+    tmp += sb;
     tmp += "\n";
     char cmd[512];
 
