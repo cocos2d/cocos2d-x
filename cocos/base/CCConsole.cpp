@@ -977,7 +977,6 @@ void Console::loop()
                         {
                             to_remove.push_back(fd);
                         }
-
                     }
                     else
                     {
@@ -985,6 +984,8 @@ void Console::loop()
                         _file_uploading = false;
 
                     }
+                    if(--nready <= 0)
+                        break;
                 }
             }
 
