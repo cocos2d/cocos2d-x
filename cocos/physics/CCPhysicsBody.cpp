@@ -743,37 +743,46 @@ bool PhysicsBody::isResting() const
     return CP_PRIVATE(_info->getBody()->node).root != ((cpBody*)0);
 }
 
-void PhysicsBody::setResting() const
+void PhysicsBody::setResting(bool rest) const
 {
-    cpBodySleep(_info->getBody());
+    if (rest && !isResting())
+    {
+        cpBodySleep(_info->getBody());
+    }else if(!rest && isResting())
+    {
+        cpBodyActivate(_info->getBody());
+    }
 }
 
 void PhysicsBody::update(float delta)
 {
-    if (_node != nullptr)
+    if (_node != nullptr && _dynamic && !isResting())
     {
         cpVect pos = cpBodyGetPos(_info->getBody());
         cpVect prePos = _info->getPosition();
-        if (memcmp(&pos, &prePos, sizeof(cpVect)) != 0)
+        // more than one pixel.
+        if (std::abs(pos.x - prePos.x) >= 1.0f || std::abs(pos.y - prePos.y) >= 1.0f)
         {
-            _node->setPosition(getPosition());
+            _node->physicsSetPosition(getPosition());
             _info->setPosition(pos);
         }
         
         cpVect rot = cpBodyGetRot(_info->getBody());
         cpVect preRot = _info->getRotation();
-        if (memcmp(&rot, &preRot, sizeof(cpVect)) != 0)
+        // more than one degree.
+        if (std::abs(rot.x - preRot.x) >= 0.01f || std::abs(rot.y - preRot.y) >= 0.01f)
         {
-            _node->setRotation(getRotation());
+            _node->physicsSetRotation(getRotation());
             _info->setRotation(rot);
         }
-    }
-    // damping compute
-    if (_isDamping && _dynamic && !isResting())
-    {
-        _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
+        
+        // damping compute
+        if (_isDamping)
+        {
+            _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
+        }
     }
 }
 
