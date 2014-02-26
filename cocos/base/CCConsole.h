@@ -100,6 +100,7 @@ public:
 protected:
     void loop();
     ssize_t readline(int fd, char *buf, int maxlen);
+    ssize_t readfile(int fd, std::string &file_name, int file_size);
     bool parseCommand(int fd);
     
     void addClient();
@@ -115,6 +116,7 @@ protected:
     void commandProjection(int fd, const std::string &args);
     void commandDirector(int fd, const std::string &args);
     void commandTouch(int fd, const std::string &args);
+    void commandUpload(int fd, const std::string &args);
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;
@@ -125,6 +127,10 @@ protected:
 
     bool _running;
     bool _endThread;
+
+    bool _file_uploading;
+    ssize_t _upload_file_size;
+    std::string _upload_file_name;
 
     std::map<std::string, Command> _commands;
 
