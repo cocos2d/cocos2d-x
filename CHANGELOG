@@ -15,8 +15,9 @@ cocos2d-x-3.0rc0 Feb.?? 2014
      [NEW]          Language: Added Dutch support.
      [NEW]          Sprite: Added auto-culling support
      
+     [FIX]          Can not use Node::setPhysicsBody to reset a physics body.
      [FIX]          Improves physical performance.
-     [FIX]          CCConsole crashes on Windows.
+     [FIX]          Console crashes on Windows.
      [FIX]          Changes namespace 'cocos2d::gui' to 'cocos2d::ui'.
      [FIX]          State is changed to RESUME when game comes back to foreground if pause button was clicked in Interval Test
      [FIX]          Object values (x, y, width and height) from TMXObjectGroup are incorrect.
