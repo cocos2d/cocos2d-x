@@ -25,6 +25,7 @@ namespace PhoneDirect3DXamlAppInterop
     {
         private Direct3DInterop m_d3dInterop = null;
         TextBox m_textBox = null;
+        private event EventHandler<String> m_receiveHandler;
 
         // Constructor
         public MainPage()
@@ -59,11 +60,7 @@ namespace PhoneDirect3DXamlAppInterop
 
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
                 m_d3dInterop.SetCocos2dMessageBoxDelegate(OnCocos2dMessageBoxEvent);
-                EditBoxDelegate editBoxDelegate = new EditBoxDelegate();
-                EditBoxImpl editBoxImpl = new EditBoxImpl();
-                editBoxImpl.setMainPage(this);
-                editBoxImpl.setD3dInterop(m_d3dInterop);
-                editBoxDelegate.SetCallback(editBoxImpl);
+                m_d3dInterop.SetCocos2dEditBoxDelegate(OpenEditBox);
             }
         }
 
@@ -147,6 +144,24 @@ namespace PhoneDirect3DXamlAppInterop
                         break;
                 }
             });
+        }
+
+        public void OpenEditBox(String strPlaceHolder, string strText, int maxLength, int inputMode, int inputFlag, EventHandler<String> receiveHandler)
+        {
+            m_receiveHandler = receiveHandler;
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                EditBox editbox = new EditBox(this, strPlaceHolder, strText, maxLength, inputMode, inputFlag);
+                PresentUserControl(editbox); 
+            });
+        }
+
+        public void OnSelectText(object sender, String str)
+        {
+            if (m_d3dInterop != null && m_receiveHandler != null)
+            {
+                m_d3dInterop.OnCocos2dEditboxEvent(sender, str, m_receiveHandler);
+            }
         }
 
         public void PresentUserControl(UserControl control)

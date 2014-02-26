@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "EditBoxEvent.h"
 
+using namespace Platform;
+
 namespace PhoneDirect3DXamlAppComponent
 {
 	EditBoxEvent::EditBoxEvent( Object^ sender, Platform::String^ arg, Windows::Foundation::EventHandler<Platform::String^>^ handle ):
@@ -36,7 +38,10 @@ namespace PhoneDirect3DXamlAppComponent
 
 	void EditBoxEvent::execute( Cocos2dRenderer ^ renderer )
 	{
-		m_handler->Invoke(m_sender, m_args);
+        if(m_handler.Get())
+        {
+		    m_handler.Get()->Invoke(m_sender.Get(), m_args.Get());
+        }
 	}
 
 

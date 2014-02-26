@@ -56,6 +56,7 @@ void Cocos2dRenderer::CreateGLResources()
         CCApplication::sharedApplication()->run();
         pEGLView->SetXamlEventDelegate(m_delegate);
         pEGLView->SetXamlMessageBoxDelegate(m_messageBoxDelegate);
+        pEGLView->SetXamlEditBoxDelegate(m_editBoxDelegate);
    }
     else
     {
@@ -187,7 +188,16 @@ void Cocos2dRenderer::SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::C
     {
         eglView->SetXamlMessageBoxDelegate(delegate);
     }
+}
 
+void Cocos2dRenderer::SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ delegate)
+{
+    m_editBoxDelegate = delegate;
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    if(eglView)
+    {
+        eglView->SetXamlEditBoxDelegate(delegate);
+    }
 }
 
 
