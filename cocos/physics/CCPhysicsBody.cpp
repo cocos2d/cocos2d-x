@@ -760,18 +760,14 @@ void PhysicsBody::update(float delta)
     {
         cpVect pos = cpBodyGetPos(_info->getBody());
         cpVect prePos = _info->getPosition();
-        // more than one pixel.
-        if (std::abs(pos.x - prePos.x) >= 1.0f || std::abs(pos.y - prePos.y) >= 1.0f)
+        cpVect rot = cpBodyGetRot(_info->getBody());
+        cpVect preRot = _info->getRotation();
+        
+        if (std::abs(pos.x - prePos.x) >= 0.3f || std::abs(pos.y - prePos.y) >= 0.3f
+            || std::abs(rot.x - preRot.x) >= 0.01f || std::abs(rot.y - preRot.y) >= 0.01f)
         {
             _node->physicsSetPosition(getPosition());
             _info->setPosition(pos);
-        }
-        
-        cpVect rot = cpBodyGetRot(_info->getBody());
-        cpVect preRot = _info->getRotation();
-        // more than one degree.
-        if (std::abs(rot.x - preRot.x) >= 0.01f || std::abs(rot.y - preRot.y) >= 0.01f)
-        {
             _node->physicsSetRotation(getRotation());
             _info->setRotation(rot);
         }

@@ -529,6 +529,11 @@ protected:
 
     bool isInsideBounds() const;
 
+#if CC_USE_PHYSICS
+    virtual void physicsSetPosition(const Point &position);
+    virtual void physicsSetRotation(float rotation);
+#endif
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
