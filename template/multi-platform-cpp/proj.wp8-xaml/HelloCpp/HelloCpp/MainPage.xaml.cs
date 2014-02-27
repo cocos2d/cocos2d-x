@@ -25,6 +25,7 @@ namespace PhoneDirect3DXamlAppInterop
     {
         private Direct3DInterop m_d3dInterop = null;
         TextBox m_textBox = null;
+        private event EventHandler<String> m_receiveHandler;
 
         // Constructor
         public MainPage()
@@ -58,35 +59,39 @@ namespace PhoneDirect3DXamlAppInterop
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
 
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
-
+                m_d3dInterop.SetCocos2dMessageBoxDelegate(OnCocos2dMessageBoxEvent);
+                m_d3dInterop.SetCocos2dEditBoxDelegate(OpenEditBox);
             }
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
         {
-            e.Cancel = m_d3dInterop.OnBackKeyPress();
+            m_d3dInterop.OnBackKeyPress();
+            // cocos2d-x will async send Cocos2dEvent.TerminateApp event if it is time to exit app.
+            // We do not want to exit now, so we set e.Cancel to true.
+            e.Cancel = true;
         }
 
         public void OnKeyDown(object sender, KeyEventArgs e)
         {
             ModifierKeys modifiers = Keyboard.Modifiers;
 
-            switch(e.Key)
+            switch (e.Key)
             {
-            case Key.Escape:
-                m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Escape);
-		        e.Handled = true;
-                break;
-	        case Key.Back:
-                m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Back);
-  		        e.Handled = true;
-              break;
-            case Key.Enter:
-                m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Enter);
-   		        e.Handled = true;
-               break;
-            default:
-                break;
+                case Key.Escape:
+                    m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Escape);
+                    e.Handled = true;
+                    break;
+                case Key.Back:
+                    m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Back);
+                    e.Handled = true;
+                    break;
+                case Key.Enter:
+                    m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Enter);
+                    e.Handled = true;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -96,14 +101,27 @@ namespace PhoneDirect3DXamlAppInterop
             m_textBox.Text = "";
         }
 
+        public void OnCocos2dMessageBoxEvent(String title, String text)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show(text, title, MessageBoxButton.OK);
+            });
+        }
+
+
         public void OnCocos2dEvent(Cocos2dEvent theEvent)
         {
             Dispatcher.BeginInvoke(() =>
             {
                 switch (theEvent)
                 {
+                    case Cocos2dEvent.TerminateApp:
+                        Application.Current.Terminate();
+                        break;
+
                     case Cocos2dEvent.ShowKeyboard:
-                        if(m_textBox == null)
+                        if (m_textBox == null)
                         {
                             m_textBox = new TextBox();
                             m_textBox.Opacity = 0.0;
@@ -116,16 +134,42 @@ namespace PhoneDirect3DXamlAppInterop
                         }
                         m_textBox.Focus();
                         break;
-                         
+
                     case Cocos2dEvent.HideKeyboard:
-                        if(m_textBox != null)
+                        if (m_textBox != null)
                         {
                             LayoutRoot.Children.Remove(m_textBox);
                         }
                         m_textBox = null;
                         break;
                 }
-            });  
+            });
+        }
+
+        public void OpenEditBox(String strPlaceHolder, string strText, int maxLength, int inputMode, int inputFlag, EventHandler<String> receiveHandler)
+        {
+            m_receiveHandler = receiveHandler;
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                EditBox editbox = new EditBox(this, strPlaceHolder, strText, maxLength, inputMode, inputFlag);
+                PresentUserControl(editbox); 
+            });
+        }
+
+        public void OnSelectText(object sender, String str)
+        {
+            if (m_d3dInterop != null && m_receiveHandler != null)
+            {
+                m_d3dInterop.OnCocos2dEditboxEvent(sender, str, m_receiveHandler);
+            }
+        }
+
+        public void PresentUserControl(UserControl control)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                LayoutRoot.Children.Add(control);
+            });
         }
     }
 }
