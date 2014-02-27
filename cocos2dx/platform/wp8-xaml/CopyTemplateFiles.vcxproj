@@ -88,7 +88,13 @@ xcopy "EditBox.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\Hell
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(FTSDK_DIR)Redist\amd64\FaceTrackLib.dll" "$(OutDir)" /eiycq</Command>
+      <Command>echo "Copying WP8-XAML CPP template files"
+xcopy "App.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "App.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "MainPage.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "MainPage.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "EditBox.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "EditBox.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -103,7 +109,13 @@ xcopy "EditBox.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\Hell
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(FTSDK_DIR)Redist\amd64\FaceTrackLib.dll" "$(OutDir)" /eiycq</Command>
+      <Command>echo "Copying WP8-XAML CPP template files"
+xcopy "App.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "App.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "MainPage.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "MainPage.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "EditBox.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "EditBox.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -118,7 +130,13 @@ xcopy "EditBox.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\Hell
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(FTSDK_DIR)Redist\amd64\FaceTrackLib.dll" "$(OutDir)" /eiycq</Command>
+      <Command>echo "Copying WP8-XAML CPP template files"
+xcopy "App.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "App.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "MainPage.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "MainPage.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "EditBox.xaml" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq
+xcopy "EditBox.xaml.cs" "..\..\..\template\multi-platform-cpp\proj.wp8-xaml\HelloCpp\HelloCpp" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
