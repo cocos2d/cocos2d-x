@@ -472,6 +472,10 @@ void CCEGLView::UpdateWindowSize()
     {
         m_obScreenSize = CCSizeMake(width, height);
         CCSize designSize = getDesignResolutionSize();
+        if(m_eResolutionPolicy == kResolutionUnKnown)
+        {
+            m_eResolutionPolicy = kResolutionShowAll;
+        }
         CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, m_eResolutionPolicy);
         CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
    }
