@@ -201,9 +201,19 @@ public:
     CREATE_FUNC(PhysicsContactTest);
     
     void onEnter() override;
+    void resetTest();
     bool onContactBegin(PhysicsContact& contact);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+    void onDecrease(Ref* sender);
+    void onIncrease(Ref* sender);
+    
+private:
+    int _yellowBoxNum;
+    int _blueBoxNum;
+    int _yellowTriangleNum;
+    int _blueTriangleNum;
 };
 
 
