@@ -647,9 +647,13 @@ void ActionFade::onEnter()
 
     auto action2 = FadeOut::create(1.0f);
     auto action2Back = action2->reverse();
+    auto action2BackReverse = action2Back->reverse();
+    auto action2BackReverseReverse = action2BackReverse->reverse();
 
+    _tamara->setOpacity(122);
     _tamara->runAction( Sequence::create( action1, action1Back, NULL));
-    _kathia->runAction( Sequence::create( action2, action2Back, NULL));
+    _kathia->setOpacity(122);
+    _kathia->runAction( Sequence::create( action2, action2Back,action2BackReverse,action2BackReverseReverse, NULL));
 }
 
 std::string  ActionFade::subtitle() const
