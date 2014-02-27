@@ -24,8 +24,12 @@ namespace PhoneDirect3DXamlAppInterop
     public partial class MainPage : PhoneApplicationPage
     {
         private Direct3DInterop m_d3dInterop = null;
-        TextBox m_textBox = null;
+
+        // event handler for CCEditBox
         private event EventHandler<String> m_receiveHandler;
+
+        // invisible XAML TextBox for Cocos2d-x keyboard input
+        TextBox m_textBox = null;
 
         // Constructor
         public MainPage()
@@ -39,31 +43,24 @@ namespace PhoneDirect3DXamlAppInterop
             {
                 m_d3dInterop = new Direct3DInterop();
 
-                // Set window bounds in dips
+                // Set WindowBounds to size of DrawingSurface
                 m_d3dInterop.WindowBounds = new Windows.Foundation.Size(
                     (float)DrawingSurface.ActualWidth,
                     (float)DrawingSurface.ActualHeight
                     );
 
-                // Set native resolution in pixels
-                m_d3dInterop.NativeResolution = new Windows.Foundation.Size(
-                    (float)Math.Floor(DrawingSurface.ActualWidth * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f),
-                    (float)Math.Floor(DrawingSurface.ActualHeight * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f)
-                    );
-
-                // Set render resolution to the full native resolution
-                m_d3dInterop.RenderResolution = m_d3dInterop.NativeResolution;
-
-                // Hook-up native component to DrawingSurfaceBackgroundGrid
+                // Hook-up native component to DrawingSurface
                 DrawingSurface.SetContentProvider(m_d3dInterop.CreateContentProvider());
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
 
+                // Hook-up Cocos2d-x delegates
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
                 m_d3dInterop.SetCocos2dMessageBoxDelegate(OnCocos2dMessageBoxEvent);
                 m_d3dInterop.SetCocos2dEditBoxDelegate(OpenEditBox);
             }
         }
 
+        // called when the user presses the back button on the device
         protected override void OnBackKeyPress(CancelEventArgs e)
         {
             m_d3dInterop.OnBackKeyPress();
@@ -101,6 +98,7 @@ namespace PhoneDirect3DXamlAppInterop
             m_textBox.Text = "";
         }
 
+        // Called by the Cocos2d-x C++ engine to display a MessageBox
         public void OnCocos2dMessageBoxEvent(String title, String text)
         {
             Dispatcher.BeginInvoke(() =>
@@ -109,7 +107,7 @@ namespace PhoneDirect3DXamlAppInterop
             });
         }
 
-
+        // events called by the Cocos2d-x C++ engine to be handled by C#
         public void OnCocos2dEvent(Cocos2dEvent theEvent)
         {
             Dispatcher.BeginInvoke(() =>
@@ -146,13 +144,14 @@ namespace PhoneDirect3DXamlAppInterop
             });
         }
 
+        // Called by the Cocos2d-x C++ engine to display a CCEditBox
         public void OpenEditBox(String strPlaceHolder, string strText, int maxLength, int inputMode, int inputFlag, EventHandler<String> receiveHandler)
         {
             m_receiveHandler = receiveHandler;
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 EditBox editbox = new EditBox(this, strPlaceHolder, strText, maxLength, inputMode, inputFlag);
-                PresentUserControl(editbox); 
+                LayoutRoot.Children.Add(editbox);
             });
         }
 
@@ -162,14 +161,6 @@ namespace PhoneDirect3DXamlAppInterop
             {
                 m_d3dInterop.OnCocos2dEditboxEvent(sender, str, m_receiveHandler);
             }
-        }
-
-        public void PresentUserControl(UserControl control)
-        {
-            Dispatcher.BeginInvoke(() =>
-            {
-                LayoutRoot.Children.Add(control);
-            });
         }
     }
 }
