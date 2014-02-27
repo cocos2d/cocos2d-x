@@ -21,8 +21,8 @@ class ConfigurationBase : public BaseTest
 protected:
 
 public:
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -37,7 +37,7 @@ class ConfigurationLoadConfig : public ConfigurationBase
 public:
     CREATE_FUNC(ConfigurationLoadConfig);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
@@ -46,7 +46,7 @@ class ConfigurationQuery : public ConfigurationBase
 public:
     CREATE_FUNC(ConfigurationQuery);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
@@ -55,7 +55,7 @@ class ConfigurationInvalid : public ConfigurationBase
 public:
     CREATE_FUNC(ConfigurationInvalid);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
@@ -64,7 +64,7 @@ class ConfigurationDefault : public ConfigurationBase
 public:
     CREATE_FUNC(ConfigurationDefault);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
@@ -73,7 +73,7 @@ class ConfigurationSet : public ConfigurationBase
 public:
     CREATE_FUNC(ConfigurationSet);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 

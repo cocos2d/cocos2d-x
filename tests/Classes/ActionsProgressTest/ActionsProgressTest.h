@@ -37,7 +37,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
@@ -47,49 +47,49 @@ public:
 class SpriteProgressToRadial : public SpriteDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteProgressToHorizontal : public SpriteDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteProgressToVertical : public SpriteDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteProgressToRadialMidpointChanged : public SpriteDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteProgressBarVarious : public SpriteDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteProgressBarTintAndFade : public SpriteDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteProgressWithSpriteFrame : public SpriteDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 

@@ -73,7 +73,7 @@ protected:
 class TestAsynchronousLoading : public ArmatureTestLayer
 {
 public:
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
     virtual void restartCallback(Ref* pSender);
@@ -84,13 +84,13 @@ public:
 class TestDirectLoading : public ArmatureTestLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class TestCSWithSkeleton : public ArmatureTestLayer
 {
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 };
 
@@ -98,7 +98,7 @@ class TestCSWithSkeleton : public ArmatureTestLayer
 class TestDragonBones20 : public ArmatureTestLayer
 {
 public:
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 };
 
@@ -108,7 +108,7 @@ class TestPerformance : public ArmatureTestLayer
 public:
 	~TestPerformance();
 
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
     virtual void onIncrease(Ref* pSender);
@@ -128,7 +128,7 @@ public:
 
 class TestPerformanceBatchNode : public TestPerformance
 {
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual void addArmatureToParent(cocostudio::Armature *armature);
     virtual void removeArmatureFromParent(int tag);
@@ -138,7 +138,7 @@ class TestPerformanceBatchNode : public TestPerformance
 
 class TestChangeZorder : public ArmatureTestLayer
 {
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 	void changeZorder(float dt);
 
@@ -150,7 +150,7 @@ class TestAnimationEvent : public ArmatureTestLayer
 {
 public:
 
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 	void callback1();
@@ -163,7 +163,7 @@ public:
 class TestFrameEvent : public ArmatureTestLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     void checkAction(float dt);
@@ -174,8 +174,8 @@ protected:
 
 class TestUseMutiplePicture : public ArmatureTestLayer
 {
-	virtual void onEnter();
-	virtual void onExit();
+	virtual void onEnter() override;
+	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
 	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
@@ -186,8 +186,8 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 
 class TestParticleDisplay : public ArmatureTestLayer
 {
-	virtual void onEnter();
-	virtual void onExit();
+	virtual void onEnter() override;
+	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
 	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
@@ -208,8 +208,8 @@ class TestColliderDetector : public ArmatureTestLayer
 public:
 	~TestColliderDetector();
 
-	virtual void onEnter();
-	virtual void onExit();
+	virtual void onEnter() override;
+	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual void draw();
 	virtual void update(float delta);
@@ -238,8 +238,8 @@ class TestColliderDetector : public ArmatureTestLayer
 public:
 	~TestColliderDetector();
 
-	virtual void onEnter();
-	virtual void onExit();
+	virtual void onEnter() override;
+	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual void update(float delta);
 
@@ -267,7 +267,7 @@ class TestColliderDetector : public ArmatureTestLayer
 public:
     ~TestColliderDetector();
     
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual void update(float delta);
     virtual void draw();
@@ -291,7 +291,7 @@ public:
 class TestBoundingBox : public ArmatureTestLayer
 {
 public:
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 	virtual void draw();
 
@@ -306,15 +306,15 @@ protected:
 class TestAnchorPoint : public ArmatureTestLayer
 {
 public:
-	virtual void onEnter();
+	virtual void onEnter() override;
 	virtual std::string title() const override;
 };
 
 class TestArmatureNesting : public ArmatureTestLayer
 {
 public:
-	virtual void onEnter();
-	virtual void onExit();
+	virtual void onEnter() override;
+	virtual void onExit() override;
 	virtual std::string title() const override;
 	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
@@ -361,7 +361,7 @@ private:
 class TestPlaySeveralMovement : public ArmatureTestLayer
 {      
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

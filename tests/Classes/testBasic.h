@@ -10,7 +10,7 @@ class TestScene : public Scene
 {
 public: 
     TestScene(bool bPortrait = false, bool physics = false);
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     virtual void runThisTest() = 0;
 };

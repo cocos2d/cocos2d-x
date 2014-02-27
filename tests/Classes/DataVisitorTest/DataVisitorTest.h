@@ -10,7 +10,7 @@ class PrettyPrinterDemo : public Layer
 public:
     virtual std::string title() const;
     virtual std::string subtitle() const;
-    virtual void onEnter();
+    virtual void onEnter() override;
     void addSprite();
 protected:
     std::string    _title;

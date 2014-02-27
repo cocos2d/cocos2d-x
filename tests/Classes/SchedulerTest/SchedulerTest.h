@@ -11,7 +11,7 @@ USING_NS_CC_EXT;
 class SchedulerTestLayer : public BaseTest
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -21,23 +21,12 @@ public:
     void restartCallback(Ref* sender);
 };
 
-// class SchedulerTestLayer : Layer
-// {
-// }
-// -(String*) title;
-// -(String*) subtitle;
-// 
-// -(void) backCallback:(id) sender;
-// -(void) nextCallback:(id) sender;
-// -(void) restartCallback:(id) sender;
-// 
-
 class SchedulerAutoremove : public SchedulerTestLayer
 {
 public:
     CREATE_FUNC(SchedulerAutoremove);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -52,7 +41,7 @@ class SchedulerPauseResume : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerPauseResume);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -68,8 +57,8 @@ public:
 
     SchedulerPauseResumeAll();
     virtual ~SchedulerPauseResumeAll();
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual void update(float delta);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -89,8 +78,8 @@ public:
 
     SchedulerPauseResumeAllUser();
     virtual ~SchedulerPauseResumeAllUser();
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -107,7 +96,7 @@ class SchedulerUnscheduleAll : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerUnscheduleAll);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -123,8 +112,8 @@ class SchedulerUnscheduleAllHard : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerUnscheduleAllHard);
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -142,7 +131,7 @@ class SchedulerUnscheduleAllUserLevel : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerUnscheduleAllUserLevel);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -158,7 +147,7 @@ class SchedulerSchedulesAndRemove : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerSchedulesAndRemove);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -174,7 +163,7 @@ class SchedulerUpdate : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerUpdate);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -186,7 +175,7 @@ class SchedulerUpdateAndCustom : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerUpdateAndCustom);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -200,7 +189,7 @@ class SchedulerUpdateFromCustom : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerUpdateFromCustom);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -227,7 +216,7 @@ class RescheduleSelector : public SchedulerTestLayer
 public:
     CREATE_FUNC(RescheduleSelector);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -242,7 +231,7 @@ class SchedulerDelayAndRepeat : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerDelayAndRepeat);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void update(float dt);
