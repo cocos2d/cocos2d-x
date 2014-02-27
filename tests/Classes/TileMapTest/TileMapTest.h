@@ -13,7 +13,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
@@ -44,8 +44,8 @@ public:
     TMXOrthoTest(void);
     virtual std::string title() const override;
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
 };
 
 class TMXOrthoTest2 : public TileDemo
@@ -198,8 +198,8 @@ public:
 
     ~TMXIsoVertexZ();
     void repositionSprite(float dt);
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
 };
 
 class TMXOrthoVertexZ : public TileDemo
@@ -212,8 +212,8 @@ public:
 
     ~TMXOrthoVertexZ();
     void repositionSprite(float dt);
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
 };
 
 class TMXIsoMoveLayer : public TileDemo

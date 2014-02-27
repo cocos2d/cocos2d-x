@@ -21,7 +21,7 @@ public:
 
     void checkAnim(float dt);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);

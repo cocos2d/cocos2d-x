@@ -7,7 +7,7 @@ class Bug1159Layer : public BugsTestBaseLayer
 {
 public:
     virtual bool init();
-    virtual void onExit();
+    virtual void onExit() override;
     static Scene* scene();
     void callBack(Ref* sender);
 

@@ -13,7 +13,7 @@ public:
 
     virtual void showCurrentTest();
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const;
     virtual std::string subtitle() const;
     virtual void performTests() = 0;

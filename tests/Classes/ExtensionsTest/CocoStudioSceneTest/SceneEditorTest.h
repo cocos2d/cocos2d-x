@@ -33,8 +33,8 @@ enum {
 class SceneEditorTestLayer : public cocos2d::Layer
 {
 public:
-	virtual void onEnter();
-	virtual void onExit();
+	virtual void onEnter() override;
+	virtual void onExit() override;
 
 	virtual std::string title();
 	virtual std::string subtitle();
@@ -58,8 +58,8 @@ public:
 	~LoadSceneEdtiorFileTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
 };
 
@@ -71,8 +71,8 @@ public:
 	~SpriteComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
 
 };
@@ -84,8 +84,8 @@ public:
 	~ArmatureComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
 
 };
@@ -97,8 +97,8 @@ public:
 	~UIComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
 	void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
 private:
@@ -112,8 +112,8 @@ public:
 	~TmxMapComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
 
 };
@@ -125,8 +125,8 @@ public:
 	~ParticleComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
 };
 
@@ -137,8 +137,8 @@ public:
 	~EffectComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
     void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 private:
@@ -152,8 +152,8 @@ public:
 	~BackgroundComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
     cocos2d::Node* createGameScene();
 };
 
@@ -164,8 +164,8 @@ public:
 	~AttributeComponentTest();
 
     virtual std::string title();
-	virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnter() override;
+    virtual void onExit() override;
 	bool initData();
     cocos2d::Node* createGameScene();
 private:
@@ -179,8 +179,8 @@ public:
 	~TriggerTest();
 
     virtual std::string title();
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
 	// default implements are used to call script callback if exist
 	virtual bool onTouchBegan(Touch *touch, Event *unused_event); 

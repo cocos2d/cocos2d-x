@@ -11,7 +11,7 @@ public:
     CocosDenshionTest(void);
     ~CocosDenshionTest(void);
 
-    virtual void onExit();
+    virtual void onExit() override;
 
 private:
     void addButtons();

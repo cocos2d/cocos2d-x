@@ -76,8 +76,8 @@ public:
     int getSubTestNum() { return subtestNumber; }
     int getNodesNum() { return quantityNodes; }
     
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     void  updateAutoTest(float dt);
     void  onAutoTest(Ref* sender);
 
