@@ -1,0 +1,19 @@
+{
+    "rename":               ["PROJECT_NAME/PROJECT_NAME/PROJECT_NAME.csproj",
+                             "PROJECT_NAME/PROJECT_NAME/PROJECT_NAME.csproj.user",
+                             "PROJECT_NAME/PROJECT_NAME",
+                             "PROJECT_NAME/PROJECT_NAMEComponent/PROJECT_NAMEComponent.vcxproj",
+                             "PROJECT_NAME/PROJECT_NAMEComponent/PROJECT_NAMEComponent.vcxproj.filters",
+                             "PROJECT_NAME/PROJECT_NAMEComponent",
+                             "PROJECT_NAME",
+                             "PROJECT_NAME.sln"							 
+                             ],
+    "remove":               [],
+    "replace_package_name": [],
+    "replace_project_name": ["PROJECT_NAME/PROJECT_NAME/PROJECT_NAME.csproj",
+                             "PROJECT_NAME/PROJECT_NAME/PROJECT_NAME.csproj.user",
+                             "PROJECT_NAME/PROJECT_NAMEComponent/PROJECT_NAMEComponent.vcxproj",
+                             "PROJECT_NAME/PROJECT_NAMEComponent/PROJECT_NAMEComponent.vcxproj.filters",
+                             "PROJECT_NAME/PROJECT_NAME/Properties/WMAppManifest.xml",
+                             "PROJECT_NAME.sln"]
+}
