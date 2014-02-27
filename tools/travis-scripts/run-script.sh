@@ -20,26 +20,26 @@ if [ "$GEN_COCOS_FILES"x = "YES"x ]; then
     fi
     if [ -z "${GH_EMAIL}" ]; then
         echo "GH_EMAIL not set"
-        exit 0
+        exit 1
     fi
     if [ -z "${GH_USER}" ]; then
         echo "GH_USER not set"
-        exit 0
+        exit 1
     fi
     if [ -z "${GH_PASSWORD}" ]; then
         echo "GH_USER not set"
-        exit 0
+        exit 1
     fi
 
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-cocosfiles.sh
+    # ./generate-cocosfiles.sh
 elif [ "$PLATFORM"x = "android"x ]; then
     export NDK_ROOT=$HOME/bin/android-ndk
 
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-cocosfiles.sh
+    # ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT
 
@@ -66,7 +66,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-cocosfiles.sh
+    # ./generate-cocosfiles.sh
 
     echo "Building cocos2d-x"
     cd $COCOS2DX_ROOT/build
@@ -79,7 +79,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-cocosfiles.sh
+    # ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT/build
     export PYTHON=/usr/bin/python
@@ -88,7 +88,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     EMCC_DEBUG=1 make PLATFORM=emscripten -j 8
 elif [ "$PLATFORM"x = "ios"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-cocosfiles.sh
+    # ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT
     xctool/xctool.sh -project samples/Cpp/HelloCpp/proj.ios/HelloCpp.xcodeproj -scheme HelloCpp test
