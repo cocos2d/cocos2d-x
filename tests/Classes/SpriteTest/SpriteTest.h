@@ -176,8 +176,8 @@ class SpriteZVertex: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteZVertex);
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     SpriteZVertex();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -192,8 +192,8 @@ class SpriteBatchNodeZVertex: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeZVertex);
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     SpriteBatchNodeZVertex();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -258,8 +258,8 @@ class SpriteAliased : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteAliased);
     SpriteAliased();
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -269,8 +269,8 @@ class SpriteBatchNodeAliased : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeAliased);
     SpriteBatchNodeAliased();
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -312,8 +312,8 @@ class SpriteFrameTest: public SpriteTestDemo
 {
 public:
     CREATE_FUNC(SpriteFrameTest);
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -331,8 +331,8 @@ class SpriteFrameAliasNameTest : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteFrameAliasNameTest);
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -343,7 +343,7 @@ public:
     CREATE_FUNC(SpriteOffsetAnchorRotation);
 
     SpriteOffsetAnchorRotation();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -353,7 +353,7 @@ class SpriteBatchNodeOffsetAnchorRotation: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotation);
     SpriteBatchNodeOffsetAnchorRotation();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -363,7 +363,7 @@ class SpriteOffsetAnchorScale: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteOffsetAnchorScale);
     SpriteOffsetAnchorScale();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -373,7 +373,7 @@ class SpriteBatchNodeOffsetAnchorScale: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeOffsetAnchorScale);
     SpriteBatchNodeOffsetAnchorScale();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -483,7 +483,7 @@ class SpriteAnimationSplit : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteAnimationSplit);
     SpriteAnimationSplit();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
 };
 
@@ -495,7 +495,7 @@ public:
     SpriteHybrid();
     void reparentSprite(float dt);
     virtual std::string title() const override;
-    virtual void onExit();
+    virtual void onExit() override;
 
 protected:
     bool     _usingSpriteBatchNode;
@@ -506,7 +506,7 @@ class SpriteBatchNodeChildren: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeChildren);
     SpriteBatchNodeChildren();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
 };
 
@@ -515,7 +515,7 @@ class SpriteBatchNodeChildrenZ : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeChildrenZ);
     SpriteBatchNodeChildrenZ();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
 };
 
@@ -524,7 +524,7 @@ class SpriteChildrenVisibility: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteChildrenVisibility);
     SpriteChildrenVisibility();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
 };
 
@@ -543,7 +543,7 @@ class SpriteChildrenAnchorPoint: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteChildrenAnchorPoint);
     SpriteChildrenAnchorPoint();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -553,7 +553,7 @@ class SpriteBatchNodeChildrenAnchorPoint: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeChildrenAnchorPoint);
     SpriteBatchNodeChildrenAnchorPoint();
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

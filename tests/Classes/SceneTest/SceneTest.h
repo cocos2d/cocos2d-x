@@ -10,8 +10,8 @@ public:
     SceneTestLayer1();
     ~SceneTestLayer1();
 
-    virtual void onEnter();
-    virtual void onEnterTransitionDidFinish();
+    virtual void onEnter() override;
+    virtual void onEnterTransitionDidFinish() override;
 
     void testDealloc(float dt);
     void onPushScene(Ref* sender);
