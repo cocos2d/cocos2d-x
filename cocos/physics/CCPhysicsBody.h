@@ -330,6 +330,9 @@ protected:
     int _contactTestBitmask;
     int _group;
     
+    bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
+    bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
+    
     friend class PhysicsWorld;
     friend class PhysicsShape;
     friend class PhysicsJoint;

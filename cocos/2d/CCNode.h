@@ -1483,11 +1483,6 @@ protected:
     virtual void updateCascadeColor();
     virtual void disableCascadeColor();
     virtual void updateColor() {}
-    
-#if CC_USE_PHYSICS
-    virtual void physicsSetPosition(const Point &position);
-    virtual void physicsSetRotation(float rotation);
-#endif
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis
@@ -1576,10 +1571,6 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
-    
-#if CC_USE_PHYSICS
-    friend class PhysicsBody;
-#endif
 };
 
 //#pragma mark - NodeRGBA
