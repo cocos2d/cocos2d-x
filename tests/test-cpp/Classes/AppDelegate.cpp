@@ -27,12 +27,10 @@
 
 #include "cocos2d.h"
 #include "controller.h"
-#include "SimpleAudioEngine.h"
 #include "cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
 
 USING_NS_CC;
-using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 :_curTest(nullptr)
@@ -125,16 +123,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
 
 void AppDelegate::setCurrentTest(BaseTest* curTest)
