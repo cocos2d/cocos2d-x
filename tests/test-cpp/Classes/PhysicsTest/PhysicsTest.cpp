@@ -1127,12 +1127,14 @@ void PhysicsDemoOneWayPlatform::onEnter()
     
     auto platform = makeBox(VisibleRect::center(), Size(200, 50));
     platform->getPhysicsBody()->setDynamic(false);
+    platform->getPhysicsBody()->setContactTestBitmask(0xFFFFFFFF);
     this->addChild(platform);
     
     auto ball = makeBall(VisibleRect::center() - Point(0, 50), 20);
     ball->getPhysicsBody()->setVelocity(Point(0, 150));
     ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     ball->getPhysicsBody()->setMass(1.0f);
+    ball->getPhysicsBody()->setContactTestBitmask(0xFFFFFFFF);
     this->addChild(ball);
     
     auto contactListener = EventListenerPhysicsContactWithBodies::create(platform->getPhysicsBody(), ball->getPhysicsBody());

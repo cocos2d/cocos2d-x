@@ -1485,8 +1485,8 @@ protected:
     virtual void updateColor() {}
     
 #if CC_USE_PHYSICS
-    void physicsSetPosition(const Point &position);
-    void physicsSetRotation(float rotation);
+    virtual void physicsSetPosition(const Point &position);
+    virtual void physicsSetRotation(float rotation);
 #endif
 
     float _rotationX;               ///< rotation on the X-axis

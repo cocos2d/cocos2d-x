@@ -788,6 +788,20 @@ void Sprite::setRotation(float rotation)
     SET_DIRTY_RECURSIVELY();
 }
 
+#if CC_USE_PHYSICS
+void Sprite::physicsSetPosition(const Point& newPosition)
+{
+    Node::physicsSetPosition(newPosition);
+    SET_DIRTY_RECURSIVELY();
+}
+
+void Sprite::physicsSetRotation(float newRotation)
+{
+    Node::physicsSetRotation(newRotation);
+    SET_DIRTY_RECURSIVELY();
+}
+#endif
+
 void Sprite::setRotationSkewX(float fRotationX)
 {
     Node::setRotationSkewX(fRotationX);
