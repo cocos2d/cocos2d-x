@@ -173,7 +173,7 @@ Node::~Node()
     CC_SAFE_DELETE(_componentContainer);
     
 #if CC_USE_PHYSICS
-    CC_SAFE_RELEASE(_physicsBody);
+    setPhysicsBody(nullptr);
 #endif
 }
 
@@ -1479,8 +1479,11 @@ void Node::removeAllComponents()
 #if CC_USE_PHYSICS
 void Node::setPhysicsBody(PhysicsBody* body)
 {
-    body->_node = this;
-    body->retain();
+    if (body != nullptr)
+    {
+        body->_node = this;
+        body->retain();
+    }
     
     if (_physicsBody != nullptr)
     {
@@ -1489,15 +1492,18 @@ void Node::setPhysicsBody(PhysicsBody* body)
         _physicsBody->_node = nullptr;
         _physicsBody->release();
         
-        if (world != nullptr)
+        if (world != nullptr && body != nullptr)
         {
             world->addBody(body);
         }
     }
     
     _physicsBody = body;
-    _physicsBody->setPosition(getPosition());
-    _physicsBody->setRotation(getRotation());
+    if (body != nullptr)
+    {
+        _physicsBody->setPosition(getPosition());
+        _physicsBody->setRotation(getRotation());
+    }
 }
 
 PhysicsBody* Node::getPhysicsBody() const
