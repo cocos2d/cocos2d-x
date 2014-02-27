@@ -21,8 +21,8 @@ public:
 
     Rect getRect();
     bool initWithTexture(Texture2D* aTexture);
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     bool containsTouchLocation(Touch* touch);
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);

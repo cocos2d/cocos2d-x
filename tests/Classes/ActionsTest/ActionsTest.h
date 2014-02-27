@@ -50,7 +50,7 @@ protected:
     Sprite*    _kathia;
 public:
     virtual void onEnter() override;
-    virtual void onExit();
+    virtual void onExit() override;
 
     void centerSprites(unsigned int numberOfSprites);
     void alignSpritesLeft(unsigned int numberOfSprites);
@@ -194,7 +194,7 @@ public:
     CREATE_FUNC(ActionAnimate);
 
     virtual void onEnter() override;
-    virtual void onExit();
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -491,7 +491,7 @@ public:
     CREATE_FUNC(Issue1305);
 
     virtual void onEnter() override;
-    virtual void onExit();
+    virtual void onExit() override;
     void log(Node* sender);
     void addSprite(float dt);
     virtual std::string title() const override;

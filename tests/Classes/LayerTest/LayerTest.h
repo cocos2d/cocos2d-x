@@ -16,7 +16,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
@@ -27,7 +27,7 @@ class LayerTestCascadingOpacityA : public LayerTest
 {
 public:
     CREATE_FUNC(LayerTestCascadingOpacityA);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -35,7 +35,7 @@ class LayerTestCascadingOpacityB : public LayerTest
 {
 public:
     CREATE_FUNC(LayerTestCascadingOpacityB);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -43,7 +43,7 @@ class LayerTestCascadingOpacityC : public LayerTest
 {
 public:
     CREATE_FUNC(LayerTestCascadingOpacityC);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -51,7 +51,7 @@ class LayerTestCascadingColorA : public LayerTest
 {
 public:
     CREATE_FUNC(LayerTestCascadingColorA);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -59,7 +59,7 @@ class LayerTestCascadingColorB : public LayerTest
 {
 public:
     CREATE_FUNC(LayerTestCascadingColorB);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -67,7 +67,7 @@ class LayerTestCascadingColorC : public LayerTest
 {
 public:
     CREATE_FUNC(LayerTestCascadingColorC);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -77,7 +77,7 @@ class LayerTest1 : public LayerTest
 public:
     CREATE_FUNC(LayerTest1);
 
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 
     void updateSize(Point &touchLocation);
@@ -91,7 +91,7 @@ class LayerTest2 : public LayerTest
 {
 public:
     CREATE_FUNC(LayerTest2);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -139,7 +139,7 @@ class LayerIgnoreAnchorPointPos : public LayerTest
 {
 public:
     CREATE_FUNC(LayerIgnoreAnchorPointPos);
-    virtual void onEnter();
+    virtual void onEnter() override;
     void onToggle(Ref* pObject);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -149,7 +149,7 @@ class LayerIgnoreAnchorPointRot : public LayerTest
 {
 public:
     CREATE_FUNC(LayerIgnoreAnchorPointRot);
-    virtual void onEnter();
+    virtual void onEnter() override;
     void onToggle(Ref* pObject);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -159,7 +159,7 @@ class LayerIgnoreAnchorPointScale : public LayerTest
 {
 public:
     CREATE_FUNC(LayerIgnoreAnchorPointScale);
-    virtual void onEnter();
+    virtual void onEnter() override;
     void onToggle(Ref* pObject);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

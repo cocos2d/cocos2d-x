@@ -46,7 +46,7 @@ public:
     ~EaseSpriteDemo(void);
 
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     
     void centerSprites(unsigned int numberOfSprites);
     

@@ -26,7 +26,7 @@ class CrashTest : public ActionManagerTest
 {
 public:
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     void removeThis();
 };
 
@@ -34,7 +34,7 @@ class LogicTest : public ActionManagerTest
 {
 public:
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     void bugMe(Node* node);
 };
 
@@ -42,7 +42,7 @@ class PauseTest : public ActionManagerTest
 {
 public:
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     void unpause(float dt);
 };
 
@@ -50,7 +50,7 @@ class RemoveTest : public ActionManagerTest
 {
 public:
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     void stopAction();
 };
 
@@ -58,7 +58,7 @@ class ResumeTest : public ActionManagerTest
 {
 public:
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     void resumeGrossini(float time);
 };
 

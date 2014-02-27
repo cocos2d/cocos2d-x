@@ -44,112 +44,112 @@ public:
 class DemoFirework : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoFire : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoSun : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoGalaxy : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoFlower : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoBigFlower : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoRotFlower : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoMeteor : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoSpiral : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoExplosion : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoSmoke : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoSnow : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoRain : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoModernArt : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class DemoRing : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class ParallaxParticle : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
@@ -161,7 +161,7 @@ public:
     {    
         _title = file;
     }
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override
     {
         return _title;
@@ -171,21 +171,21 @@ public:
 class RadiusMode1 : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class RadiusMode2 : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class Issue704 : public ParticleDemo
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
