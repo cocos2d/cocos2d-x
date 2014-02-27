@@ -8,8 +8,8 @@ import shutil
 from optparse import OptionParser
 
 CPP_SAMPLES = ['testcpp']
-LUA_SAMPLES = ['testlua']
-JSB_SAMPLES = ['testjavascript']
+LUA_SAMPLES = []
+JSB_SAMPLES = []
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
 
 def get_num_of_cpu():
@@ -204,7 +204,7 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
     app_android_root = ''
     for target in build_targets:
         if target == 'testcpp':
-            app_android_root = os.path.join(cocos_root, 'tests/test-cpp/proj.android')
+            app_android_root = os.path.join(cocos_root, 'tests/proj.android')
         elif target == 'testlua':
             app_android_root = os.path.join(cocos_root, 'tests/test-lua/proj.android')
         elif target == 'testjavascript':

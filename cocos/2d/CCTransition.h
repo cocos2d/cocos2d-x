@@ -570,12 +570,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit();
+    virtual void onExit() override;
 
 protected:
     TransitionFade();
