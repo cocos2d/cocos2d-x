@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="AssetsManager">
@@ -93,6 +93,9 @@
     </Filter>
     <Filter Include="CocoStudio\Trigger">
       <UniqueIdentifier>{808a0d6d-222a-42ab-baad-02d541d666ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\CCEditBox">
+      <UniqueIdentifier>{9c2032b1-faf8-45b5-8aa3-5d0710fc0f17}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -459,6 +462,12 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\System\UITouchGroup.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWp8.cpp">
+      <Filter>GUI\CCEditBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -909,6 +918,14 @@
     <ClInclude Include="..\CocoStudio\Components\CCComBase.h">
       <Filter>CocoStudio\Components</Filter>
     </ClInclude>
-
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWp8.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

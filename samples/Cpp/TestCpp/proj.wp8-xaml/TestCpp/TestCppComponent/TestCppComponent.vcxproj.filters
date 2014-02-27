@@ -361,6 +361,15 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\extensions\proj.wp8\EditBoxDelegate.cpp">
+      <Filter>Classes\Tests\EditBoxHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\extensions\proj.wp8\EditBoxEvent.cpp">
+      <Filter>Classes\Tests\EditBoxHelper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
@@ -380,6 +389,18 @@
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
       <Filter>Classes\Tests</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\extensions\proj.wp8\EditBoxDelegate.h">
+      <Filter>Classes\Tests\EditBoxHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\extensions\proj.wp8\IEditBoxCallback.h">
+      <Filter>Classes\Tests\EditBoxHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\extensions\proj.wp8\EditBoxEvent.h">
+      <Filter>Classes\Tests\EditBoxHelper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">
@@ -387,6 +408,9 @@
     </Filter>
     <Filter Include="Classes\Tests">
       <UniqueIdentifier>{e4d71d07-24f9-43a0-8830-cf803e647c97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Tests\EditBoxHelper">
+      <UniqueIdentifier>{558525e6-cc60-43b3-9c0b-b9d174efa5f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
