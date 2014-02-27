@@ -97,7 +97,7 @@ void QuadCommand::generateMaterialID()
     // +---------------------+-------------------+----------------------------------------+
 
     _materialID = (uint64_t)_shader->getProgram() << 54
-            | (uint64_t)blendID << 40
+            | (uint64_t)blendID << 50
             | (uint64_t)_textureID << 0;
 }
 
