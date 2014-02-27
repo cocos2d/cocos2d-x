@@ -73,6 +73,8 @@ PhysicsBody::PhysicsBody()
 , _collisionBitmask(0)
 , _contactTestBitmask(UINT_MAX)
 , _group(0)
+, _positionResetTag(false)
+, _rotationResetTag(false)
 {
 }
 
@@ -343,12 +345,21 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(Point position)
 {
-    cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
+    if (!_positionResetTag)
+    {
+        cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
+    }
+    _positionResetTag = false;
 }
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    if (!_rotationResetTag)
+    {
+        cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    }
+    
+    _rotationResetTag = false;
 }
 
 Point PhysicsBody::getPosition() const
@@ -743,37 +754,45 @@ bool PhysicsBody::isResting() const
     return CP_PRIVATE(_info->getBody()->node).root != ((cpBody*)0);
 }
 
-void PhysicsBody::setResting() const
+void PhysicsBody::setResting(bool rest) const
 {
-    cpBodySleep(_info->getBody());
+    if (rest && !isResting())
+    {
+        cpBodySleep(_info->getBody());
+    }else if(!rest && isResting())
+    {
+        cpBodyActivate(_info->getBody());
+    }
 }
 
 void PhysicsBody::update(float delta)
 {
-    if (_node != nullptr)
+    if (_node != nullptr && _dynamic && !isResting())
     {
         cpVect pos = cpBodyGetPos(_info->getBody());
         cpVect prePos = _info->getPosition();
-        if (memcmp(&pos, &prePos, sizeof(cpVect)) != 0)
-        {
-            _node->setPosition(getPosition());
-            _info->setPosition(pos);
-        }
-        
         cpVect rot = cpBodyGetRot(_info->getBody());
         cpVect preRot = _info->getRotation();
-        if (memcmp(&rot, &preRot, sizeof(cpVect)) != 0)
+        
+        // only reset the node position when body position/rotation changed.
+        if (std::abs(pos.x - prePos.x) >= 0.3f || std::abs(pos.y - prePos.y) >= 0.3f
+            || std::abs(rot.x - preRot.x) >= 0.01f || std::abs(rot.y - preRot.y) >= 0.01f)
         {
+            _positionResetTag = true;
+            _rotationResetTag = true;
+            _node->setPosition(getPosition());
+            _info->setPosition(pos);
             _node->setRotation(getRotation());
             _info->setRotation(rot);
         }
-    }
-    // damping compute
-    if (_isDamping && _dynamic && !isResting())
-    {
-        _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
+        
+        // damping compute
+        if (_isDamping)
+        {
+            _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
+        }
     }
 }
 
