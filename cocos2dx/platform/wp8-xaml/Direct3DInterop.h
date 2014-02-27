@@ -57,8 +57,6 @@ public:
 	void OnCocos2dEditboxEvent(Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler);
 
     property Windows::Graphics::Display::DisplayOrientations WindowOrientation;
-    property Windows::Foundation::Size NativeResolution;
-    property Windows::Foundation::Size RenderResolution;
     property Windows::Foundation::Size WindowBounds;
 
     void SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate);
@@ -88,8 +86,6 @@ private:
     std::queue<std::shared_ptr<InputEvent>> mInputEvents;
     std::mutex mMutex;
 
-
-    Windows::Foundation::Size m_renderResolution;
     Cocos2dEventDelegate^ m_delegate;
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     Cocos2dEditBoxDelegate^ m_editBoxDelegate;
