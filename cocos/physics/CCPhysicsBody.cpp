@@ -73,6 +73,8 @@ PhysicsBody::PhysicsBody()
 , _collisionBitmask(0)
 , _contactTestBitmask(UINT_MAX)
 , _group(0)
+, _positionResetTag(false)
+, _rotationResetTag(false)
 {
 }
 
@@ -343,12 +345,21 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(Point position)
 {
-    cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
+    if (!_positionResetTag)
+    {
+        cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
+    }
+    _positionResetTag = false;
 }
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    if (!_rotationResetTag)
+    {
+        cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    }
+    
+    _rotationResetTag = false;
 }
 
 Point PhysicsBody::getPosition() const
@@ -763,12 +774,15 @@ void PhysicsBody::update(float delta)
         cpVect rot = cpBodyGetRot(_info->getBody());
         cpVect preRot = _info->getRotation();
         
+        // only reset the node position when body position/rotation changed.
         if (std::abs(pos.x - prePos.x) >= 0.3f || std::abs(pos.y - prePos.y) >= 0.3f
             || std::abs(rot.x - preRot.x) >= 0.01f || std::abs(rot.y - preRot.y) >= 0.01f)
         {
-            _node->physicsSetPosition(getPosition());
+            _positionResetTag = true;
+            _rotationResetTag = true;
+            _node->setPosition(getPosition());
             _info->setPosition(pos);
-            _node->physicsSetRotation(getRotation());
+            _node->setRotation(getRotation());
             _info->setRotation(rot);
         }
         
