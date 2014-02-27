@@ -511,9 +511,12 @@ CCPoint CCEGLView::TransformToOrientation(Point p)
 {
     CCPoint returnValue;
 
-	float x = getScaledDPIValue(p.X);
-	float y = getScaledDPIValue(p.Y);
-
+#if 0
+    float x = getScaledDPIValue(p.X);
+    float y = getScaledDPIValue(p.Y);  
+#endif // 0
+    float x = p.X;
+    float y = p.Y;  
 
     switch (m_orientation)
     {
@@ -543,30 +546,12 @@ CCPoint CCEGLView::TransformToOrientation(Point p)
     return returnValue;
 }
 
-#if 1
-
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 
 	return TransformToOrientation(args->CurrentPoint->Position);
 
 }
 
-#else
-CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
-	auto p = args->CurrentPoint;
-	float x = getScaledDPIValue(p->Position.X);
-	float y = getScaledDPIValue(p->Position.Y);
-    CCPoint pt(x, y);
-
-	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
-
-	if(zoomFactor > 0.0f) {
-		pt.x /= zoomFactor;
-		pt.y /= zoomFactor;
-	}
-	return pt;
-}
-#endif
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
