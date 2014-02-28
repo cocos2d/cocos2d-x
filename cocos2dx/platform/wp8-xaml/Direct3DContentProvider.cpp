@@ -67,10 +67,10 @@ HRESULT Direct3DContentProvider::GetTexture(_In_ const DrawingSurfaceSizeF* size
     HRESULT hr = S_OK;
 
     if (!m_synchronizedTexture ||
-        m_renderTargetSize.Width != m_controller->RenderResolution.Width ||
-        m_renderTargetSize.Height != m_controller->RenderResolution.Height)
+        m_renderTargetSize.Width != m_controller->WindowBounds.Width ||
+        m_renderTargetSize.Height != m_controller->WindowBounds.Height)
     {
-        UpdateForWindowSizeChange(m_controller->RenderResolution.Width, m_controller->RenderResolution.Height);
+        UpdateForWindowSizeChange(m_controller->WindowBounds.Width, m_controller->WindowBounds.Height);
         hr = InitializeTexture();
     }
 
@@ -91,8 +91,8 @@ HRESULT Direct3DContentProvider::GetTexture(_In_ const DrawingSurfaceSizeF* size
     {    
         textureSubRectangle->left = 0.0f;
         textureSubRectangle->top = 0.0f;
-        textureSubRectangle->right = m_controller->RenderResolution.Width;
-        textureSubRectangle->bottom = m_controller->RenderResolution.Height;
+	    textureSubRectangle->right = static_cast<FLOAT>(size->width);
+	    textureSubRectangle->bottom = static_cast<FLOAT>(size->height);
 
         hr = m_synchronizedTexture.CopyTo(synchronizedTexture);
 
