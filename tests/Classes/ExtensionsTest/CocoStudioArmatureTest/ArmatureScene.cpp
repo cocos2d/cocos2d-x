@@ -845,7 +845,7 @@ void TestColliderDetector::onExit()
 
     ArmatureTestLayer::onExit();
 }
-void TestColliderDetector::draw()
+void TestColliderDetector::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     kmGLPushMatrix();
@@ -1065,7 +1065,7 @@ void TestColliderDetector::update(float delta)
         }
     }
 }
-void TestColliderDetector::draw()
+void TestColliderDetector::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this);
@@ -1106,7 +1106,7 @@ std::string TestBoundingBox::title() const
 {
     return "Test BoundingBox";
 }
-void TestBoundingBox::draw()
+void TestBoundingBox::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);

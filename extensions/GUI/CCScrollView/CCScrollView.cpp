@@ -552,7 +552,7 @@ void ScrollView::onAfterDraw()
     }
 }
 
-void ScrollView::visit()
+void ScrollView::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
 {
 	// quick return if not visible
 	if (!isVisible())
@@ -562,7 +562,10 @@ void ScrollView::visit()
 
 	kmGLPushMatrix();
 
-	this->transform();
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        this->transform();
+
     this->beforeDraw();
 
 	if (!_children.empty())
@@ -575,7 +578,7 @@ void ScrollView::visit()
 			Node *child = _children.at(i);
 			if ( child->getLocalZOrder() < 0 )
             {
-				child->visit();
+				child->visit(renderer, _modelViewTransform, dirty);
 			}
             else
             {
@@ -584,19 +587,19 @@ void ScrollView::visit()
 		}
 		
 		// this draw
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
         
 		// draw children zOrder >= 0
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			child->visit();
+			child->visit(renderer, _modelViewTransform, dirty);
 		}
         
 	}
     else
     {
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
     }
 
     this->afterDraw();

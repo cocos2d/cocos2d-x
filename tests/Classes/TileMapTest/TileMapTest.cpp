@@ -755,7 +755,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXOrthoObjectsTest::draw()
+void TMXOrthoObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
@@ -829,7 +829,7 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXIsoObjectsTest::draw()
+void TMXIsoObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
@@ -1513,7 +1513,7 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 }
 
-void TMXGIDObjectsTest::draw()
+void TMXGIDObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);

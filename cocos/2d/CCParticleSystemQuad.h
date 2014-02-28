@@ -104,7 +104,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
 
     /**
      * @js NA

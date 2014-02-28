@@ -239,7 +239,7 @@ void DrawNode::render()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawNode::draw()
+void DrawNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this);

@@ -17,7 +17,7 @@ public:
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     }
 
-    virtual void draw()
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
     {
         DrawPrimitives::setDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
         glLineWidth(10);

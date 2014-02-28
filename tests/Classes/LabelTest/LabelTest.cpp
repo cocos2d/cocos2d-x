@@ -205,7 +205,7 @@ Atlas1::~Atlas1()
     _textureAtlas->release();
 }
 
-void Atlas1::draw()
+void Atlas1::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
@@ -528,7 +528,7 @@ Atlas4::Atlas4()
     schedule( schedule_selector(Atlas4::step), 0.1f);
 }
 
-void Atlas4::draw()
+void Atlas4::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
@@ -1614,7 +1614,7 @@ std::string LabelBMFontBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelBMFontBounds::draw()
+void LabelBMFontBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);

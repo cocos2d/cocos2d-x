@@ -121,7 +121,7 @@ public:
 
     virtual void update(float dt);
     virtual void setPosition(const Point &newPosition);
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
 
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
 

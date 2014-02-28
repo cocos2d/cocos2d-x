@@ -167,7 +167,7 @@ bool Layout::hitTest(const Point &pt)
     return false;
 }
     
-void Layout::visit()
+void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
 {
     if (!_enabled)
     {
@@ -178,10 +178,10 @@ void Layout::visit()
         switch (_clippingType)
         {
             case LAYOUT_CLIPPING_STENCIL:
-                stencilClippingVisit();
+                stencilClippingVisit(renderer, parentTransform, parentTransformDirty);
                 break;
             case LAYOUT_CLIPPING_SCISSOR:
-                scissorClippingVisit();
+                scissorClippingVisit(renderer, parentTransform, parentTransformDirty);
                 break;
             default:
                 break;
@@ -189,7 +189,7 @@ void Layout::visit()
     }
     else
     {
-        Node::visit();
+        Node::visit(renderer, parentTransform, parentTransformDirty);
     }
 }
     
@@ -199,17 +199,17 @@ void Layout::sortAllChildren()
     doLayout();
 }
     
-void Layout::stencilClippingVisit()
+void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
 {
     if(!_visible)
         return;
     
     kmGLPushMatrix();
-    transform();
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        transform();
     //Add group command
-    
-    Renderer* renderer = Director::getInstance()->getRenderer();
-    
+
     _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
     
@@ -219,7 +219,7 @@ void Layout::stencilClippingVisit()
     _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
-    _clippingStencil->visit();
+    _clippingStencil->visit(renderer, _modelViewTransform, dirty);
     
     _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
@@ -236,19 +236,19 @@ void Layout::stencilClippingVisit()
             auto node = _children.at(i);
             
             if ( node && node->getLocalZOrder() < 0 )
-                node->visit();
+                node->visit(renderer, _modelViewTransform, dirty);
             else
                 break;
         }
         // self draw
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit();
+            (*it)->visit(renderer, _modelViewTransform, dirty);
     }
     else
     {
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
     }
     
     _afterVisitCmdStencil.init(_globalZOrder);
@@ -333,15 +333,13 @@ void Layout::onAfterVisitScissor()
     glDisable(GL_SCISSOR_TEST);
 }
     
-void Layout::scissorClippingVisit()
+void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformDirty)
 {
-    Renderer* renderer = Director::getInstance()->getRenderer();
-
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
-    Node::visit();
+    Node::visit(renderer, parentTransform, parentTransformDirty);
     
     _afterVisitCmdScissor.init(_globalZOrder);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);

@@ -57,7 +57,7 @@ public:
 
     LabelFNTSpriteActions();
     virtual void step(float dt);
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -222,7 +222,7 @@ public:
 
     LabelFNTBounds();
     
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
@@ -411,7 +411,7 @@ public:
 
     LabelTTFOldNew();
 
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

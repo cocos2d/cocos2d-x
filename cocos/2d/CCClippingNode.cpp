@@ -199,17 +199,18 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     kmGLPopMatrix();
 }
 
-void ClippingNode::visit()
+void ClippingNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
 {
     if(!_visible)
         return;
     
     kmGLPushMatrix();
-    transform();
+
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        transform();
     //Add group command
-    
-    Renderer* renderer = Director::getInstance()->getRenderer();
-    
+        
     _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
 
@@ -236,7 +237,7 @@ void ClippingNode::visit()
 #endif
 
     }
-    _stencil->visit();
+    _stencil->visit(renderer, _modelViewTransform, dirty);
 
     _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
@@ -253,19 +254,19 @@ void ClippingNode::visit()
             auto node = _children.at(i);
             
             if ( node && node->getLocalZOrder() < 0 )
-                node->visit();
+                node->visit(renderer, _modelViewTransform, dirty);
             else
                 break;
         }
         // self draw
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit();
+            (*it)->visit(renderer, _modelViewTransform, dirty);
     }
     else
     {
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
     }
 
     _afterVisitCmd.init(_globalZOrder);
