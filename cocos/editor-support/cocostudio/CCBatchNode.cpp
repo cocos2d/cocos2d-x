@@ -101,7 +101,7 @@ void BatchNode::removeChild(Node* child, bool cleanup)
     Node::removeChild(child, cleanup);
 }
 
-void BatchNode::visit()
+void BatchNode::visit(bool parentTransformDirty)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -110,9 +110,12 @@ void BatchNode::visit()
     }
     kmGLPushMatrix();
 
-    transform();
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        transform();
+
     sortAllChildren();
-    draw();
+    draw(dirty);
 
     // reset for next frame
     _orderOfArrival = 0;
@@ -120,7 +123,7 @@ void BatchNode::visit()
     kmGLPopMatrix();
 }
 
-void BatchNode::draw()
+void BatchNode::draw(bool transformDirty)
 {
     if (_children.empty())
     {
@@ -141,14 +144,14 @@ void BatchNode::draw()
                 pushed = true;
             }
         
-            armature->visit();
+            armature->visit(transformDirty);
         }
         else
         {
             Director::getInstance()->getRenderer()->popGroup();
             pushed = false;
             
-            ((Node *)object)->visit();
+            ((Node *)object)->visit(transformDirty);
         }
     }
 }

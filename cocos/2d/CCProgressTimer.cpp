@@ -550,7 +550,7 @@ void ProgressTimer::onDraw()
     }
 }
 
-void ProgressTimer::draw()
+void ProgressTimer::draw(bool transformDirty)
 {
     if( ! _vertexData || ! _sprite)
         return;

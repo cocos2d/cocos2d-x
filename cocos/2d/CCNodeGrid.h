@@ -55,7 +55,7 @@ public:
     void setTarget(Node *target);
 
     // overrides
-    virtual void visit() override;
+    virtual void visit(bool parentTransformDirty) override;
 
 protected:
     NodeGrid();

@@ -309,7 +309,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);
 }
 
-void LabelFNTSpriteActions::draw()
+void LabelFNTSpriteActions::draw(bool transformDirty)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
@@ -926,7 +926,7 @@ std::string LabelFNTBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelFNTBounds::draw()
+void LabelFNTBounds::draw(bool transformDirty)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
@@ -1515,7 +1515,7 @@ void LabelTTFOldNew::onDraw()
     kmGLLoadMatrix(&oldMat);
 }
 
-void LabelTTFOldNew::draw()
+void LabelTTFOldNew::draw(bool transformDirty)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this);

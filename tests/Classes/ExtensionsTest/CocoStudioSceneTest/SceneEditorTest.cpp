@@ -194,11 +194,10 @@ void SceneEditorTestLayer::backCallback(Ref *pSender)
     s->release();
 }
 
-void SceneEditorTestLayer::draw()
+void SceneEditorTestLayer::draw(bool transformDirty)
 {
-    Layer::draw();
+    Layer::draw(transformDirty);
 }
-
 
 LoadSceneEdtiorFileTest::LoadSceneEdtiorFileTest()
 {

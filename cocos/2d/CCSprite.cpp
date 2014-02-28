@@ -277,6 +277,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
 , _texture(nullptr)
+,_previousIsInsideBounds(true)
 {
 }
 
@@ -586,9 +587,11 @@ void Sprite::updateTransform(void)
 
 // draw
 
-void Sprite::draw(void)
+void Sprite::draw(bool transformDirty)
 {
-    if(isInsideBounds())
+    _previousIsInsideBounds = transformDirty ? isInsideBounds() : _previousIsInsideBounds;
+
+    if(_previousIsInsideBounds)
     {
         _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
         Director::getInstance()->getRenderer()->addCommand(&_quadCommand);

@@ -138,7 +138,7 @@ void AtlasNode::updateAtlasValues()
 }
 
 // AtlasNode - draw
-void AtlasNode::draw(void)
+void AtlasNode::draw(bool transformDirty)
 {
 //    CC_NODE_DRAW_SETUP();
 //

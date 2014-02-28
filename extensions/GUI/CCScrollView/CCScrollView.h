@@ -225,7 +225,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit() override;
+    virtual void visit(bool parentTransformDirty) override;
     
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;

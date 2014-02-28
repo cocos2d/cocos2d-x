@@ -104,7 +104,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void draw() override;
+    virtual void draw(bool transformDirty) override;
 
     /**
      * @js NA

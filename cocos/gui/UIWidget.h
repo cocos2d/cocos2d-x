@@ -331,7 +331,7 @@ public:
     
     virtual void removeAllNodes();
     
-    virtual void visit() override;
+    virtual void visit(bool parentTransformDirty) override;
     
     /**
      * Sets the touch event target/selector of the menu item

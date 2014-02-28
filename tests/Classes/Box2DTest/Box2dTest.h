@@ -17,7 +17,7 @@ public:
 
     void initPhysics();
     void createResetButton();
-    virtual void draw();
+    virtual void draw(bool transformDirty) override;
 
     void addNewSpriteAtPosition(Point p);
     void update(float dt);

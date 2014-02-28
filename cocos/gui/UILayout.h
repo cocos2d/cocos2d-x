@@ -209,7 +209,7 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit();
+    virtual void visit(bool parentTransformDirty) override;
     
     virtual void sortAllChildren() override;
     
@@ -219,6 +219,7 @@ public:
     virtual void onExit() override;
     
     virtual bool hitTest(const Point &pt);
+
 protected:
     //override "init" method of widget.
     virtual bool init() override;
@@ -234,8 +235,8 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit();
-    void scissorClippingVisit();
+    void stencilClippingVisit(bool parentTransformDirty);
+    void scissorClippingVisit(bool parentTransformDirty);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
@@ -248,7 +249,8 @@ protected:
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();
-protected:
+
+    
     bool _clippingEnabled;
     
     //background

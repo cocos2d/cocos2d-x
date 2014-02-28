@@ -61,7 +61,7 @@ public:
     void setSpace(cpSpace *space);
     
     // Overrides
-    virtual void draw() override;
+    virtual void draw(bool transformDirty) override;
 
 protected:
     cpSpace *_spacePtr;

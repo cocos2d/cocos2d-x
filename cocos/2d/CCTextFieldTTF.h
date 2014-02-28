@@ -149,31 +149,19 @@ public:
     virtual void setColorSpaceHolder(const Color3B& color);
 
     // input text property
-public:
     virtual void setString(const std::string& text) override;
     virtual const std::string& getString() const override;
-protected:
-    TextFieldDelegate * _delegate;
-    int _charCount;
-    
-    std::string _inputText;
+
 
     // place holder text property
     // place holder text displayed when there is no text in the text field.
-public:
     virtual void setPlaceHolder(const std::string& text);
     virtual const std::string& getPlaceHolder(void) const;
-protected:
-    std::string _placeHolder;
-    Color3B _colorSpaceHolder;
-public:
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();
-protected:
-    bool _secureTextEntry;
-protected:
 
-    virtual void draw();
+protected:
+    virtual void draw(bool parentTransformDirty) override;
 
     //////////////////////////////////////////////////////////////////////////
     // IMEDelegate interface
@@ -184,7 +172,16 @@ protected:
     virtual void insertText(const char * text, int len) override;
     virtual void deleteBackward() override;
     virtual const std::string& getContentText() override;
-private:
+
+    std::string _placeHolder;
+    Color3B _colorSpaceHolder;
+
+    bool _secureTextEntry;
+
+    TextFieldDelegate * _delegate;
+    int _charCount;
+    std::string _inputText;
+
     class LengthStack;
     LengthStack * _lens;
 };

@@ -207,9 +207,9 @@ void Box2DView::tick(float dt)
     m_test->Step(&settings);
 }
 
-void Box2DView::draw()
+void Box2DView::draw(bool transformDirty)
 {
-    Layer::draw();
+    Layer::draw(transformDirty);
 
     _customCmd.init(_globalZOrder);
     _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this);

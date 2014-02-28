@@ -278,14 +278,14 @@ void Director::drawScene()
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit();
+        _runningScene->visit(false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit();
+        _notificationNode->visit(false);
     }
 
     if (_displayStats)
@@ -870,9 +870,9 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        _drawnVerticesLabel->visit();
-        _drawnBatchesLabel->visit();
-        _FPSLabel->visit();
+        _drawnVerticesLabel->visit(false);
+        _drawnBatchesLabel->visit(false);
+        _FPSLabel->visit(false);
     }
 }
 

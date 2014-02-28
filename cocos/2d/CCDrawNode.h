@@ -92,7 +92,7 @@ public:
     void onDraw();
     
     // Overrides
-    virtual void draw() override;
+    virtual void draw(bool transformDirty) override;
 
 protected:
     DrawNode();

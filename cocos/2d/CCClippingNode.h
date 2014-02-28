@@ -95,7 +95,7 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
-    virtual void visit() override;
+    virtual void visit(bool parentTransformDirty) override;
 
 protected:
     ClippingNode();

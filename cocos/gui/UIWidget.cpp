@@ -108,11 +108,11 @@ void Widget::onExit()
     Node::onExit();
 }
     
-void Widget::visit()
+void Widget::visit(bool parentTransformDirty)
 {
     if (_enabled)
     {
-        Node::visit();
+        Node::visit(parentTransformDirty);
     }    
 }
 

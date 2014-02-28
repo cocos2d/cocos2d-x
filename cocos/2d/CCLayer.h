@@ -266,7 +266,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw() override;
+    virtual void draw(bool transformDirty) override;
     virtual void onDraw();
     
     virtual void setContentSize(const Size & var) override;

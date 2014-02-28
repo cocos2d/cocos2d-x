@@ -67,7 +67,7 @@ public:
 	virtual ~Skeleton ();
 
 	virtual void update (float deltaTime) override;
-	virtual void draw() override;
+	virtual void draw(bool transformDirty) override;
     void onDraw();
 	virtual cocos2d::Rect getBoundingBox () const override;
 
@@ -109,9 +109,7 @@ private:
     // Util function that setting blend-function by nextRenderedTexture's premultiplied flag
     void setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture);
     
-    cocos2d::CustomCommand _customCommand;
-    
-    kmMat4 _oldTransMatrix;
+    cocos2d::CustomCommand _customCommand;    
 };
 
 }

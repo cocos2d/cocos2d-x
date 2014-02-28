@@ -120,7 +120,7 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 
 // override visit.
 // Don't call visit on it's children
-void ParticleBatchNode::visit()
+void ParticleBatchNode::visit(bool parentTransformDirty)
 {
     // CAREFUL:
     // This visit is almost identical to Node#visit
@@ -136,9 +136,12 @@ void ParticleBatchNode::visit()
 
     kmGLPushMatrix();
 
-    transform();
+    bool dirty = parentTransformDirty || _transformDirty;
 
-    draw();
+    if(dirty)
+        transform();
+
+    draw(dirty);
 
     kmGLPopMatrix();
 }
@@ -373,7 +376,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(void)
+void ParticleBatchNode::draw(bool transformDirty)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 

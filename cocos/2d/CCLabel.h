@@ -128,8 +128,8 @@ public:
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
-    virtual void visit() override;
-    virtual void draw(void) override;
+    virtual void visit(bool parentTransformDirty) override;
+    virtual void draw(bool transformDirty) override;
     virtual void onDraw();
 
     virtual FontAtlas* getFontAtlas() const {return _fontAtlas;}

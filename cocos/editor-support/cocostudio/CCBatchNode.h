@@ -60,11 +60,11 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual void visit() override;
+    virtual void visit(bool parentTransformDirty) override;
     /**
      *  @js NA
      */
-    void draw() override;
+    virtual void draw(bool transformDirty) override;
     
 protected:
     void generateGroupCommand();

@@ -361,7 +361,7 @@ void RenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
-void RenderTexture::visit()
+void RenderTexture::visit(bool parentTransformDirty)
 {
     // override visit.
 	// Don't call visit on its children
@@ -371,10 +371,13 @@ void RenderTexture::visit()
     }
 	
 	kmGLPushMatrix();
-    
-    transform();
-    _sprite->visit();
-    draw();
+
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        transform();
+
+    _sprite->visit(dirty);
+    draw(dirty);
     
 	kmGLPopMatrix();
 
@@ -610,7 +613,7 @@ void RenderTexture::onClearDepth()
     glClearDepth(depthClearValue);
 }
 
-void RenderTexture::draw()
+void RenderTexture::draw(bool transformDirty)
 {
     if (_autoDraw)
     {
@@ -628,7 +631,7 @@ void RenderTexture::draw()
         for(const auto &child: _children)
         {
             if (child != _sprite)
-                child->visit();
+                child->visit(transformDirty);
         }
 
         //End will pop the current render group

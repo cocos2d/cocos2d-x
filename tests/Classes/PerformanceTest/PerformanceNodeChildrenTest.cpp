@@ -945,7 +945,7 @@ void VisitSceneGraph::updateQuantityOfNodes()
 void VisitSceneGraph::update(float dt)
 {
     CC_PROFILER_START( this->profilerName() );
-    this->visit();
+    this->visit(true);
     CC_PROFILER_STOP( this->profilerName() );
 }
 

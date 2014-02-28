@@ -379,7 +379,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void) override;
+    virtual void visit(bool parentTransformDirty) override;
     /**
      * @js NA
      * @lua NA

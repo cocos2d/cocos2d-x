@@ -769,14 +769,14 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
     this->updateCapInset();
 }
 
-void Scale9Sprite::visit()
+void Scale9Sprite::visit(bool parentTransformDirty)
 {
     if(this->_positionsAreDirty)
     {
         this->updatePositions();
         this->_positionsAreDirty = false;
     }
-    Node::visit();
+    Node::visit(parentTransformDirty);
 }
 
 void Scale9Sprite::setColor(const Color3B& color)

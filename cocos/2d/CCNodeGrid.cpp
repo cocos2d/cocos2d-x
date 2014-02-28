@@ -82,14 +82,14 @@ void NodeGrid::onGridEndDraw()
     }
 }
 
-void NodeGrid::visit()
+void NodeGrid::visit(bool parentTransformDirty)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
     {
         return;
     }
-    
+
     Renderer* renderer = Director::getInstance()->getRenderer();
 
     _groupCommand.init(_globalZOrder);
@@ -108,11 +108,14 @@ void NodeGrid::visit()
     _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(&_gridBeginCommand);
 
-    this->transform();
+    bool dirty = parentTransformDirty || _transformDirty;
+
+    if(dirty)
+        this->transform();
     
     if(_gridTarget)
     {
-        _gridTarget->visit();
+        _gridTarget->visit(dirty);
     }
     
     int i = 0;
@@ -126,20 +129,20 @@ void NodeGrid::visit()
             auto node = _children.at(i);
 
             if ( node && node->getLocalZOrder() < 0 )
-                node->visit();
+                node->visit(dirty);
             else
                 break;
         }
         // self draw,currently we have nothing to draw on NodeGrid, so there is no need to add render command
-        this->draw();
+        this->draw(dirty);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
-            (*it)->visit();
+            (*it)->visit(dirty);
         }
     }
     else
     {
-        this->draw();
+        this->draw(dirty);
     }
     
     // reset for next frame

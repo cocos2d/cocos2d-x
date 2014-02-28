@@ -1791,14 +1791,13 @@ std::string TextureDrawAtPoint::subtitle() const
     return "draws 2 textures using drawAtPoint";
 }
 
-void TextureDrawAtPoint::draw()
+void TextureDrawAtPoint::draw(bool transformDirty)
 {
-    TextureDemo::draw();
+    TextureDemo::draw(transformDirty);
     
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
-
 }
 
 void TextureDrawAtPoint::onDraw()
@@ -1832,9 +1831,9 @@ TextureDrawInRect::~TextureDrawInRect()
     _Tex2F->release();
 }
 
-void TextureDrawInRect::draw()
+void TextureDrawInRect::draw(bool transformDirty)
 {
-    TextureDemo::draw();
+    TextureDemo::draw(transformDirty);
 
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this);

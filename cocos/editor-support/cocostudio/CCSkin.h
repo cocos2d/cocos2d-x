@@ -39,7 +39,7 @@ public:
     static Skin *create();
     static Skin *createWithSpriteFrameName(const std::string& pszSpriteFrameName);
     static Skin *create(const std::string& pszFileName);
-public:
+
     /**
      *  @js ctor
      */
@@ -54,7 +54,7 @@ public:
     kmMat4 getNodeToWorldTransform() const override;
     kmMat4 getNodeToWorldTransformAR() const;
     
-    virtual void draw() override;
+    virtual void draw(bool transformDirty) override;
     
     /**
      *  @js NA
@@ -71,6 +71,7 @@ public:
     virtual Bone *getBone() const;
 
     virtual const std::string &getDisplayName() const { return _displayName; }
+
 protected:
     BaseData _skinData;
     Bone *_bone;
