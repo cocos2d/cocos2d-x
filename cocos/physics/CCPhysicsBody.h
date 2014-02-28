@@ -192,6 +192,15 @@ public:
     /** get the body rotation. */
     float getRotation() const;
     
+    /** set body position offset, it's the position witch relative to node */
+    void setPositionOffset(const Point& position);
+    /** get body position offset. */
+    Point getPositionOffset();
+    /** set body rotation offset, it's the rotation witch relative to node */
+    void setRotationOffset(float rotation);
+    /** set the body rotation offset */
+    float getRotationOffset();
+    
     /**
      * @brief test the body is dynamic or not.
      * a dynamic body will effect with gravity.
@@ -332,6 +341,8 @@ protected:
     
     bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
     bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
+    Point _positionOffset;
+    float _rotationOffset;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;
