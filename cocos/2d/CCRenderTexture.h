@@ -154,8 +154,8 @@ public:
     };
     
     // Overrides
-    virtual void visit() override;
-    virtual void draw() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
 
 public:
     // XXX should be procted.

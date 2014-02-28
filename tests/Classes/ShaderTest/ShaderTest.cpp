@@ -191,7 +191,7 @@ void ShaderNode::setPosition(const Point &newPosition)
     _center = Vertex2F(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
-void ShaderNode::draw()
+void ShaderNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this);
@@ -433,7 +433,7 @@ public:
     ~SpriteBlur();
     void setBlurSize(float f);
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
-    void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     void initProgram();
 
     static SpriteBlur* create(const char *pszFileName);
@@ -525,7 +525,7 @@ void SpriteBlur::initProgram()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void SpriteBlur::draw()
+void SpriteBlur::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this);

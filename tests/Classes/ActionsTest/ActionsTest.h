@@ -375,7 +375,7 @@ public:
     CREATE_FUNC(ActionFollow);
 
     virtual void onEnter() override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual std::string subtitle() const override;
 
 protected:
@@ -451,7 +451,7 @@ public:
     CREATE_FUNC(ActionCatmullRomStacked);
 
     virtual ~ActionCatmullRomStacked();
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -472,7 +472,7 @@ public:
     CREATE_FUNC(ActionCardinalSplineStacked);
 
     virtual ~ActionCardinalSplineStacked();
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty);
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -567,7 +567,7 @@ public:
     ~ActionCatmullRom();
     
     virtual void onEnter() override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
 private:
@@ -588,7 +588,7 @@ public:
     ~ActionCardinalSpline();
     
     virtual void onEnter() override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
 private:

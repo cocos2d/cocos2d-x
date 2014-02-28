@@ -596,13 +596,12 @@ void RawStencilBufferTest::setup()
     Director::getInstance()->setAlphaBlending(true);
 }
 
-void RawStencilBufferTest::draw()
+void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {    
     auto winPoint = Point(Director::getInstance()->getWinSize());
     
     auto planeSize = winPoint * (1.0 / _planeCount);
     
-    Renderer *renderer = Director::getInstance()->getRenderer();
     size_t neededCmdSize = _planeCount * 2 + 2;
     if(_renderCmds.size() != neededCmdSize)
     {
@@ -635,7 +634,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        _sprites.at(i)->visit();
+        _sprites.at(i)->visit(renderer, _modelViewTransform, transformDirty);
         kmGLPopMatrix();
         
         iter->init(_globalZOrder);
@@ -645,7 +644,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        _sprites.at(i)->visit();
+        _sprites.at(i)->visit(renderer, _modelViewTransform, transformDirty);
         kmGLPopMatrix();
     }
     

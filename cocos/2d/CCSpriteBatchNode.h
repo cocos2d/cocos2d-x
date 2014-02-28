@@ -155,7 +155,7 @@ public:
     */
     virtual const BlendFunc& getBlendFunc() const override;
 
-    virtual void visit() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty) override;
     
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
@@ -164,7 +164,7 @@ public:
     virtual void removeChild(Node *child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void sortAllChildren() override;
-    virtual void draw(void) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual std::string getDescription() const override;
 
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.

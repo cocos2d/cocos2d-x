@@ -900,15 +900,25 @@ void Node::sortAllChildren()
 }
 
 
- void Node::draw()
- {
-     //CCASSERT(0);
-     // override me
-     // Only use- this function to draw your stuff.
-     // DON'T draw your stuff outside this method
- }
+void Node::draw()
+{
+    auto renderer = Director::getInstance()->getRenderer();
+    draw(renderer, _modelViewTransform, true);
+}
+
+void Node::draw(Renderer* renderer, const kmMat4 &transform, bool transformDirty)
+{
+}
 
 void Node::visit()
+{
+    auto renderer = Director::getInstance()->getRenderer();
+    kmMat4 parentTransform;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &parentTransform);
+    visit(renderer, parentTransform, true);
+}
+
+void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -918,7 +928,11 @@ void Node::visit()
     
     kmGLPushMatrix();
 
-    this->transform();
+    bool dirty = _transformDirty || parentTransformDirty;
+
+    if(dirty)
+        this->transform();
+
     int i = 0;
 
     if(!_children.empty())
@@ -930,19 +944,19 @@ void Node::visit()
             auto node = _children.at(i);
 
             if ( node && node->_localZOrder < 0 )
-                node->visit();
+                node->visit(renderer, _modelViewTransform, dirty);
             else
                 break;
         }
         // self draw
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit();
+            (*it)->visit(renderer, _modelViewTransform, dirty);
     }
     else
     {
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
     }
 
     // reset for next frame

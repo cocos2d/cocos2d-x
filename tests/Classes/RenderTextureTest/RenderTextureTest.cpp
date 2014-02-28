@@ -462,7 +462,7 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
     CC_SAFE_RELEASE(_spriteDS);
 }
 
-void RenderTextureTestDepthStencil::draw()
+void RenderTextureTestDepthStencil::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _renderCmds[0].init(_globalZOrder);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
@@ -630,13 +630,13 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
     return sprite;
 }
 
-void SpriteRenderTextureBug::SimpleSprite::draw()
+void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
-    Sprite::draw();
+    Sprite::draw(renderer, transform, transformDirty);
     
 }
 

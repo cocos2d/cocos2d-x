@@ -974,7 +974,7 @@ public:
         sprite->setShaderProgram(shader);
         return sprite;
     }
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     void onDraw();
 
 protected:
@@ -982,7 +982,7 @@ protected:
 
 };
 
-void MySprite::draw()
+void MySprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);

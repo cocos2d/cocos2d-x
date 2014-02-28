@@ -54,6 +54,7 @@ class Component;
 class ComponentContainer;
 class EventDispatcher;
 class Scene;
+class Renderer;
 #if CC_USE_PHYSICS
 class PhysicsBody;
 #endif
@@ -990,12 +991,15 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4& transform, bool transformDirty);
+    virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit();
+    virtual void visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformDirty);
+    virtual void visit() final;
+
 
     /** Returns the Scene that contains the Node.
      It returns `nullptr` if the node doesn't belong to any Scene.

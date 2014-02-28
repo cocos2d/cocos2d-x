@@ -266,7 +266,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual void onDraw();
     
     virtual void setContentSize(const Size & var) override;

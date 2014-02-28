@@ -131,7 +131,7 @@ SpriteBatchNode::~SpriteBatchNode()
 
 // override visit
 // don't call visit on it's children
-void SpriteBatchNode::visit(void)
+void SpriteBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
@@ -150,9 +150,12 @@ void SpriteBatchNode::visit(void)
     kmGLPushMatrix();
 
     sortAllChildren();
-    transform();
 
-    draw();
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        transform();
+
+    draw(renderer, _modelViewTransform, dirty);
 
     kmGLPopMatrix();
     setOrderOfArrival(0);
@@ -345,7 +348,7 @@ void SpriteBatchNode::reorderBatch(bool reorder)
     _reorderChildDirty=reorder;
 }
 
-void SpriteBatchNode::draw()
+void SpriteBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     // Optimization: Fast Dispatch
     if( _textureAtlas->getTotalQuads() == 0 )

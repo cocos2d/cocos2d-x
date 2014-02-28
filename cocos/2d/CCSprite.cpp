@@ -586,7 +586,7 @@ void Sprite::updateTransform(void)
 
 // draw
 
-void Sprite::draw(void)
+void Sprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     if(isInsideBounds())
     {

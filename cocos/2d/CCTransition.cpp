@@ -97,16 +97,16 @@ void TransitionScene::sceneOrder()
     _isInSceneOnTop = true;
 }
 
-void TransitionScene::draw()
+void TransitionScene::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
-    Scene::draw();
+    Scene::draw(renderer, transform, transformDirty);
 
     if( _isInSceneOnTop ) {
-        _outScene->visit();
-        _inScene->visit();
+        _outScene->visit(renderer, transform, transformDirty);
+        _inScene->visit(renderer, transform, transformDirty);
     } else {
-        _inScene->visit();
-        _outScene->visit();
+        _inScene->visit(renderer, transform, transformDirty);
+        _outScene->visit(renderer, transform, transformDirty);
     }
 }
 
@@ -1258,7 +1258,7 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw()
+void TransitionCrossFade::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }
@@ -1407,19 +1407,19 @@ void TransitionTurnOffTiles::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionTurnOffTiles::draw()
+void TransitionTurnOffTiles::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
-    Scene::draw();
+    Scene::draw(renderer, transform, transformDirty);
     
     if( _isInSceneOnTop )
     {
-        _outSceneProxy->visit();
-        _inScene->visit();
+        _outSceneProxy->visit(renderer, transform, transformDirty);
+        _inScene->visit(renderer, transform, transformDirty);
     } 
     else
     {
-        _inScene->visit();
-        _outSceneProxy->visit();
+        _inScene->visit(renderer, transform, transformDirty);
+        _outSceneProxy->visit(renderer, transform, transformDirty);
     }
 }
 
@@ -1487,10 +1487,10 @@ void TransitionSplitCols::switchTargetToInscene()
     _gridProxy->setTarget(_inScene);
 }
 
-void TransitionSplitCols::draw()
+void TransitionSplitCols::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
-    Scene::draw();
-    _gridProxy->visit();
+    Scene::draw(renderer, transform, transformDirty);
+    _gridProxy->visit(renderer, transform, transformDirty);
 }
 
 void TransitionSplitCols::onExit()
@@ -1603,19 +1603,19 @@ void TransitionFadeTR::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionFadeTR::draw()
+void TransitionFadeTR::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
-    Scene::draw();
+    Scene::draw(renderer, transform, transformDirty);
     
     if( _isInSceneOnTop )
     {
-        _outSceneProxy->visit();
-        _inScene->visit();
+        _outSceneProxy->visit(renderer, transform, transformDirty);
+        _inScene->visit(renderer, transform, transformDirty);
     } 
     else
     {
-        _inScene->visit();
-        _outSceneProxy->visit();
+        _inScene->visit(renderer, transform, transformDirty);
+        _outSceneProxy->visit(renderer, transform, transformDirty);
     }
 }
 

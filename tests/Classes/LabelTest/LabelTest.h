@@ -35,7 +35,7 @@ public:
     ~Atlas1();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
 protected:
     void onDraw();
 protected:
@@ -102,7 +102,7 @@ public:
 
     Atlas4();
     virtual void step(float dt);
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -377,7 +377,7 @@ public:
 
     LabelBMFontBounds();
     
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 protected:

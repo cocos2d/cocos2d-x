@@ -354,7 +354,7 @@ void MotionStreak::onDraw()
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
 }
 
-void MotionStreak::draw()
+void MotionStreak::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
 {
     if(_nuPoints <= 1)
         return;
