@@ -511,28 +511,30 @@ CCPoint CCEGLView::TransformToOrientation(Point p)
 {
     CCPoint returnValue;
 
-#if 0
-    float x = getScaledDPIValue(p.X);
-    float y = getScaledDPIValue(p.Y);  
-#endif // 0
     float x = p.X;
     float y = p.Y;  
+ 
+    if(!m_isXamlWindow)
+    {
+        x = getScaledDPIValue(p.X);
+        y = getScaledDPIValue(p.Y);  
+    }
 
     switch (m_orientation)
     {
-    case DisplayOrientations::Portrait:
-    default:
-        returnValue = CCPoint(x, y);
-        break;
-    case DisplayOrientations::Landscape:
-        returnValue = CCPoint(y, m_width - x);
-        break;
-    case DisplayOrientations::PortraitFlipped:
-        returnValue = CCPoint(m_width - x, m_height - y);
-        break;
-    case DisplayOrientations::LandscapeFlipped:
-        returnValue = CCPoint(m_height - y, x);
-        break;
+        case DisplayOrientations::Portrait:
+        default:
+            returnValue = CCPoint(x, y);
+            break;
+        case DisplayOrientations::Landscape:
+            returnValue = CCPoint(y, m_width - x);
+            break;
+        case DisplayOrientations::PortraitFlipped:
+            returnValue = CCPoint(m_width - x, m_height - y);
+            break;
+        case DisplayOrientations::LandscapeFlipped:
+            returnValue = CCPoint(m_height - y, x);
+            break;
     }
 
 	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
