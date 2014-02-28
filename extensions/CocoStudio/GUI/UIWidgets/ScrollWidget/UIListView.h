@@ -150,6 +150,8 @@ public:
      */
     void setItemsMargin(float margin);
     
+    float getItemsMargin();
+    
     virtual void sortAllChildren();
     
     int getCurSelectedIndex() const;
@@ -173,9 +175,10 @@ protected:
     virtual void addChild(CCNode* child) {ScrollView::addChild(child);};
     virtual void addChild(CCNode * child, int zOrder) {ScrollView::addChild(child, zOrder);};
     virtual void addChild(CCNode* child, int zOrder, int tag) {ScrollView::addChild(child, zOrder, tag);};
-    virtual void removeChild(CCNode* widget, bool cleanup = true) {ScrollView::removeChild(widget, cleanup);};
+    virtual void removeChild(CCNode* widget) {ScrollView::removeChild(widget);};
+    virtual void removeChild(CCNode* widget, bool cleanup) {ScrollView::removeChild(widget, cleanup);};
     
-    virtual void removeAllChildren() {removeAllChildrenWithCleanup(true);};
+    virtual void removeAllChildren() {ScrollView::removeAllChildren();};
     virtual void removeAllChildrenWithCleanup(bool cleanup) {ScrollView::removeAllChildrenWithCleanup(cleanup);};
     virtual CCArray* getChildren() {return ScrollView::getChildren();};
     virtual unsigned int getChildrenCount() const {return ScrollView::getChildrenCount();};

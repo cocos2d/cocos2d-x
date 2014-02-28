@@ -77,13 +77,15 @@ public:
      */
     void setScale9Enabled(bool able);
     
+    bool isScale9Enabled();
+    
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
     void setCapInsets(const CCRect &capInsets);
-    
+
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
@@ -91,12 +93,16 @@ public:
      */
     void setCapInsetsBarRenderer(const CCRect &capInsets);
     
+    const CCRect& getCapInsetBarRenderer();
+    
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
     void setCapInsetProgressBarRebderer(const CCRect &capInsets);
+    
+    const CCRect& getCapInsetProgressBarRebderer();
     
     /**
      * Load textures for slider ball.
