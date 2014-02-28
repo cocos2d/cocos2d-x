@@ -72,7 +72,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw() override;
+    virtual void draw(bool transformDirty) override;
 
     /**
     * Creates a base transition with duration and incoming scene.

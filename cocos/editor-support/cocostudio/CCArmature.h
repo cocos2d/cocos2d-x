@@ -156,9 +156,9 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit() override;
+    virtual void visit(bool parentTransformDirty) override;
+    virtual void draw(bool transformDirty) override;
     virtual void update(float dt) override;
-    virtual void draw() override;
 
     virtual void onEnter() override;
     virtual void onExit() override; 

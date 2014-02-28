@@ -266,16 +266,16 @@ void ControlSwitchSprite::needsLayout()
     RenderTexture *rt = RenderTexture::create((int)_maskTexture->getContentSize().width, (int)_maskTexture->getContentSize().height);
 
     rt->begin();
-    _onSprite->visit();
-    _offSprite->visit();
+    _onSprite->visit(true);
+    _offSprite->visit(true);
 
     if (_onLabel)
     {
-        _onLabel->visit();
+        _onLabel->visit(true);
     }
     if (_offLabel)
     {
-        _offLabel->visit();
+        _offLabel->visit(true);
     }
 
     rt->end();

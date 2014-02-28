@@ -92,27 +92,27 @@ void TransitionPageTurn::onDisablePolygonOffset()
     glPolygonOffset(0, 0);
 }
 
-void TransitionPageTurn::draw()
+void TransitionPageTurn::draw(bool transformDirty)
 {
-    Scene::draw();
+    Scene::draw(transformDirty);
     
     if( _isInSceneOnTop ) {
-        _outSceneProxy->visit();
+        _outSceneProxy->visit(transformDirty);
         _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
         Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
-        _inSceneProxy->visit();
+        _inSceneProxy->visit(transformDirty);
         _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
         Director::getInstance()->getRenderer()->addCommand(&_disableOffsetCmd);
     } else {
-        _inSceneProxy->visit();
+        _inSceneProxy->visit(transformDirty);
         
         _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
         Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
         
-        _outSceneProxy->visit();
+        _outSceneProxy->visit(transformDirty);
         
         _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);

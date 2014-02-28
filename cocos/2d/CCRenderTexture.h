@@ -154,8 +154,8 @@ public:
     };
     
     // Overrides
-    virtual void visit() override;
-    virtual void draw() override;
+    virtual void visit(bool parentTransformDirty) override;
+    virtual void draw(bool transformDirty) override;
 
 public:
     // XXX should be procted.

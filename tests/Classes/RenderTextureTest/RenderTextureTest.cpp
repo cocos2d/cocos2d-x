@@ -198,7 +198,7 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
             _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
             // Call visit to draw the brush, don't call draw..
-            _brushs.at(i)->visit();
+            _brushs.at(i)->visit(true);
         }
     }
 
@@ -248,8 +248,8 @@ RenderTextureIssue937::RenderTextureIssue937()
     //        [[rend sprite] setBlendFunc:(BlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
     rend->begin();
-    spr_premulti->visit();
-    spr_nonpremulti->visit();
+    spr_premulti->visit(true);
+    spr_nonpremulti->visit(true);
     rend->end(); 
 
     auto s = Director::getInstance()->getWinSize();
@@ -414,7 +414,7 @@ void RenderTextureZbuffer::renderScreenShot()
     texture->setAnchorPoint(Point(0, 0));
     texture->begin();
 
-    this->visit();
+    this->visit(true);
 
     texture->end();
 
@@ -462,7 +462,7 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
     CC_SAFE_RELEASE(_spriteDS);
 }
 
-void RenderTextureTestDepthStencil::draw()
+void RenderTextureTestDepthStencil::draw(bool transformDirty)
 {
     _renderCmds[0].init(_globalZOrder);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
@@ -474,13 +474,13 @@ void RenderTextureTestDepthStencil::draw()
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
     
-    _spriteDS->visit();
+    _spriteDS->visit(true);
     
     _renderCmds[2].init(_globalZOrder);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
     
-    _spriteDraw->visit();
+    _spriteDraw->visit(true);
     
     _rend->end();
     
@@ -630,13 +630,13 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
     return sprite;
 }
 
-void SpriteRenderTextureBug::SimpleSprite::draw()
+void SpriteRenderTextureBug::SimpleSprite::draw(bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
-    Sprite::draw();
+    Sprite::draw(transformDirty);
     
 }
 

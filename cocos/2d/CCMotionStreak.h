@@ -78,7 +78,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual void draw() override;
+    virtual void draw(bool transformDirty) override;
     /**
     * @js NA
     * @lua NA
@@ -102,11 +102,9 @@ public:
     virtual bool isOpacityModifyRGB() const override;
 
 protected:
-    kmMat4 _cachedMV;
     //renderer callback
     void onDraw();
 
-protected:
     /**
      * @js ctor
      */

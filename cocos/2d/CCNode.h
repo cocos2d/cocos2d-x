@@ -981,21 +981,15 @@ public:
     virtual void cleanup();
 
     /**
-     * Override this method to draw your own node.
-     * The following GL states will be enabled by default:
-     * - `glEnableClientState(GL_VERTEX_ARRAY);`
-     * - `glEnableClientState(GL_COLOR_ARRAY);`
-     * - `glEnableClientState(GL_TEXTURE_COORD_ARRAY);`
-     * - `glEnable(GL_TEXTURE_2D);`
-     * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
-     * But if you enable any other GL state, you should disable it after drawing your node.
+     * Override this method with your own code, and send to the Renderer 
+     * the RenderCommand command.
      */
-    virtual void draw();
+    virtual void draw(bool transformDirty);
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit();
+    virtual void visit(bool parentTransformDirty);
 
     /** Returns the Scene that contains the Node.
      It returns `nullptr` if the node doesn't belong to any Scene.
@@ -1251,6 +1245,7 @@ public:
 
     /**
      * Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes.
+     * @return whether or not the local transform was dirty
      */
     void transform();
     /**

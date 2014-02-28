@@ -679,14 +679,14 @@ void Label::onDraw()
     CC_PROFILER_STOP("Label - draw");
 }
 
-void Label::draw()
+void Label::draw(bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-void Label::visit()
+void Label::visit(bool parentTransformDirty)
 {
     if (! _visible)
     {
@@ -695,8 +695,11 @@ void Label::visit()
     
     kmGLPushMatrix();
 
-    transform();
-    draw();
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        transform();
+    
+    draw(dirty);
 
     kmGLPopMatrix();
 

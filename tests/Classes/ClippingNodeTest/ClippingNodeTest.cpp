@@ -596,7 +596,7 @@ void RawStencilBufferTest::setup()
     Director::getInstance()->setAlphaBlending(true);
 }
 
-void RawStencilBufferTest::draw()
+void RawStencilBufferTest::draw(bool transformDirty)
 {    
     auto winPoint = Point(Director::getInstance()->getWinSize());
     
@@ -615,9 +615,7 @@ void RawStencilBufferTest::draw()
     iter->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
     renderer->addCommand(&(*iter));
     ++iter;
-    
 
-        
     for (int i = 0; i < _planeCount; i++) {
         
         auto stencilPoint = planeSize * (_planeCount - i);
@@ -635,7 +633,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        _sprites.at(i)->visit();
+        _sprites.at(i)->visit(true);
         kmGLPopMatrix();
         
         iter->init(_globalZOrder);
@@ -645,7 +643,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        _sprites.at(i)->visit();
+        _sprites.at(i)->visit(true);
         kmGLPopMatrix();
     }
     

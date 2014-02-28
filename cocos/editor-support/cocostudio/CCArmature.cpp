@@ -378,13 +378,12 @@ void Armature::update(float dt)
     _armatureTransformDirty = false;
 }
 
-void Armature::draw()
+void Armature::draw(bool transformDirty)
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
         CC_NODE_DRAW_SETUP();
     }
-
 
     for (auto& object : _children)
     {
@@ -408,17 +407,17 @@ void Armature::draw()
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
-                skin->draw();
+                skin->draw(transformDirty);
             }
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                node->draw();
+                node->draw(transformDirty);
             }
             break;
             default:
             {
-                node->visit();
+                node->visit(transformDirty);
                 CC_NODE_DRAW_SETUP();
             }
             break;
@@ -426,7 +425,7 @@ void Armature::draw()
         }
         else if(Node *node = dynamic_cast<Node *>(object))
         {
-            node->visit();
+            node->visit(transformDirty);
             CC_NODE_DRAW_SETUP();
         }
     }
@@ -445,7 +444,7 @@ void Armature::onExit()
 }
 
 
-void Armature::visit()
+void Armature::visit(bool parentTransformDirty)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -454,9 +453,13 @@ void Armature::visit()
     }
     kmGLPushMatrix();
 
-    transform();
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        transform();
+
     sortAllChildren();
-    draw();
+
+    draw(dirty);
 
     // reset for next frame
     _orderOfArrival = 0;

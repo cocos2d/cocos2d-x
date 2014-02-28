@@ -1344,7 +1344,7 @@ void ActionFollow::onEnter()
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
 }
 
-void ActionFollow::draw()
+void ActionFollow::draw(bool transformDirty)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this);
@@ -1651,9 +1651,9 @@ ActionCatmullRomStacked::~ActionCatmullRomStacked()
     CC_SAFE_RELEASE(_array2);
 }
 
-void ActionCatmullRomStacked::draw()
+void ActionCatmullRomStacked::draw(bool transformDirty)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(transformDirty);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
@@ -1760,9 +1760,9 @@ ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
     CC_SAFE_RELEASE(_array);
 }
 
-void ActionCardinalSplineStacked::draw()
+void ActionCardinalSplineStacked::draw(bool transformDirty)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(transformDirty);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
@@ -2127,9 +2127,9 @@ ActionCatmullRom::~ActionCatmullRom()
     _array2->release();
 }
 
-void ActionCatmullRom::draw()
+void ActionCatmullRom::draw(bool transformDirty)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(transformDirty);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
@@ -2222,9 +2222,9 @@ ActionCardinalSpline::~ActionCardinalSpline()
     _array->release();
 }
 
-void ActionCardinalSpline::draw()
+void ActionCardinalSpline::draw(bool transformDirty)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(transformDirty);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();

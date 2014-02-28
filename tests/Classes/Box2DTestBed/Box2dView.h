@@ -42,7 +42,7 @@ public:
     bool initWithEntryID(int entryId);
     std::string title() const;
     void tick(float dt);
-    void draw();
+    virtual void draw(bool transformDirty) override;
 
 //    virtual void registerWithTouchDispatcher();
     bool onTouchBegan(Touch* touch, Event* event);

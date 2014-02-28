@@ -43,7 +43,7 @@ public:
 	virtual void nextCallback(cocos2d::Ref* pSender);
 	virtual void backCallback(cocos2d::Ref* pSender);
 
-	virtual void draw();
+	virtual void draw(bool transformDirty) override;
 
 protected:
 	MenuItemImage *restartItem;

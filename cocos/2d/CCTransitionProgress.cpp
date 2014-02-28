@@ -79,7 +79,7 @@ void TransitionProgress::onEnter()
 
     // render outScene to its texturebuffer
     texture->beginWithClear(0, 0, 0, 1);
-    _sceneToBeModified->visit();
+    _sceneToBeModified->visit(true);
     texture->end();
 
 

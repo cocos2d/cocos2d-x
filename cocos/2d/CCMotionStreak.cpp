@@ -328,7 +328,7 @@ void MotionStreak::reset()
 void MotionStreak::onDraw()
 {  
     getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(_cachedMV);
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
@@ -354,11 +354,11 @@ void MotionStreak::onDraw()
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
 }
 
-void MotionStreak::draw()
+void MotionStreak::draw(bool transformDirty)
 {
     if(_nuPoints <= 1)
         return;
-    kmGLGetMatrix(KM_GL_MODELVIEW,&_cachedMV);
+
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);

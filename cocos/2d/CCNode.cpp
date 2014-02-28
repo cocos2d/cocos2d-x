@@ -900,7 +900,7 @@ void Node::sortAllChildren()
 }
 
 
- void Node::draw()
+ void Node::draw(bool transformDirty)
  {
      //CCASSERT(0);
      // override me
@@ -908,7 +908,7 @@ void Node::sortAllChildren()
      // DON'T draw your stuff outside this method
  }
 
-void Node::visit()
+void Node::visit(bool parentTransformDirty)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -918,7 +918,10 @@ void Node::visit()
     
     kmGLPushMatrix();
 
-    this->transform();
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        this->transform();
+
     int i = 0;
 
     if(!_children.empty())
@@ -930,19 +933,19 @@ void Node::visit()
             auto node = _children.at(i);
 
             if ( node && node->_localZOrder < 0 )
-                node->visit();
+                node->visit(dirty);
             else
                 break;
         }
         // self draw
-        this->draw();
+        this->draw(dirty);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit();
+            (*it)->visit(dirty);
     }
     else
     {
-        this->draw();
+        this->draw(dirty);
     }
 
     // reset for next frame
