@@ -209,7 +209,7 @@ void Atlas1::draw()
 {
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
-    
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
@@ -220,6 +220,7 @@ void Atlas1::draw()
 
 void Atlas1::onDraw()
 {
+    CC_NODE_DRAW_SETUP();
     _textureAtlas->drawQuads();
 }
 
