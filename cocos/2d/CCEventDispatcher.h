@@ -220,7 +220,7 @@ protected:
     void visitTarget(Node* node, bool isRootNode);
     
     /** Listeners map */
-    std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listeners;
+    std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
     /** The map of dirty flag */
     std::unordered_map<EventListener::ListenerID, DirtyFlag> _priorityDirtyFlagMap;
