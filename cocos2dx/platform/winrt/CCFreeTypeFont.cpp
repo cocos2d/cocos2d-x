@@ -339,6 +339,40 @@ FT_Error CCFreeTypeFont::addWord(const std::string& word)
     return error;
 }
 
+int CCFreeTypeFont::getNextWord(std::string strLine, int nStart)
+{	
+	// used by utf-8 coding.
+	int nLen = strLine.length();
+	if (nStart >= nLen)
+	{
+		return -1;
+	}
+	
+	do 
+	{
+		unsigned char ch = (unsigned char)strLine[nStart];
+		if (ch == ' ')
+			return nStart + 1;
+		if (ch < 0x80) // ASCII
+		{
+			nStart++;
+		}
+		else if (ch < (0xC0)) // none utf8 
+		{
+			return -1;
+		}		
+		else if (ch < (0xE0)) // 2-byte utf8 character
+		{
+			return nStart + 2;
+		}
+		else if (ch < (0xF0)) // 3-byte utf8 character
+		{
+			return nStart + 3;
+		}		
+	} while (nStart < nLen);
+	return nStart;
+}
+
 FT_Error CCFreeTypeFont::initGlyphs(const char* text) 
 {
     FT_Error error = 0;
@@ -359,14 +393,15 @@ FT_Error CCFreeTypeFont::initGlyphs(const char* text)
         newLine();
 
         std::size_t prev = 0, pos;
-        while ((pos = line.find_first_of(" ", prev)) != std::string::npos)
+		while ((pos = getNextWord(line, prev)) != std::string::npos)
         {
             if (pos > prev)
             {
-                addWord(line.substr(prev, pos-prev));
+                addWord(line.substr(prev, pos - prev));
             }
-            prev = pos + 1;
+			prev = pos;
         }
+		
         if (prev < line.length())
         {
             addWord(line.substr(prev, std::string::npos));
