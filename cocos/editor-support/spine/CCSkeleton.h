@@ -69,6 +69,8 @@ public:
 	virtual void update (float deltaTime) override;
 	virtual void draw() override;
     void onDraw();
+	void onEnter() override;
+	void onExit() override;
 	virtual cocos2d::Rect getBoundingBox () const override;
 
 	// --- Convenience methods for common Skeleton_* functions.
