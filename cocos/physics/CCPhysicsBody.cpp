@@ -831,13 +831,8 @@ void PhysicsBody::setPositionOffset(const Point& position)
     if (!_positionOffset.equals(position))
     {
         Point pos = getPosition();
-        
         _positionOffset = position;
-        
-        if (_node!= nullptr)
-        {
-            setPosition(pos);
-        }
+        setPosition(pos);
     }
 }
 
@@ -851,13 +846,8 @@ void PhysicsBody::setRotationOffset(float rotation)
     if (std::abs(_rotationOffset - rotation) > 0.5f)
     {
         float rot = getRotation();
-        
         _rotationOffset = rotation;
-        
-        if (_node != nullptr)
-        {
-            setRotation(rot);
-        }
+        setRotation(rot);
     }
 }
 
