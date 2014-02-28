@@ -108,7 +108,7 @@ public:
     void dispatchEvent(Event* event);
 
     /** Dispatches a Custom Event with a event name an optional user data */
-    void dispatchCustomEvent(const std::string &eventName, void *optionalUserData);
+    void dispatchCustomEvent(const std::string &eventName, void *optionalUserData = nullptr);
 
     /** Constructor of EventDispatcher */
     EventDispatcher();
@@ -220,7 +220,7 @@ protected:
     void visitTarget(Node* node, bool isRootNode);
     
     /** Listeners map */
-    std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listeners;
+    std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
     /** The map of dirty flag */
     std::unordered_map<EventListener::ListenerID, DirtyFlag> _priorityDirtyFlagMap;
@@ -247,6 +247,8 @@ protected:
     bool _isEnabled;
     
     int _nodePriorityIndex;
+    
+    std::set<std::string> _internalCustomListenerIDs;
 };
 
 

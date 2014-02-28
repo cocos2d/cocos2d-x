@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 
 Margin::Margin(void) : left(0), top(0), right(0), bottom(0)

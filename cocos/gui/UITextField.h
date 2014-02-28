@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
  *  @js NA
@@ -41,7 +41,7 @@ public:
     UICCTextField();
     ~UICCTextField();
     
-    virtual void onEnter();
+    virtual void onEnter() override;
     
     // static
     static UICCTextField* create(const char *placeholder, const char *fontName, float fontSize);

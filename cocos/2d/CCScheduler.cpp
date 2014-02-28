@@ -948,11 +948,14 @@ void Scheduler::update(float dt)
     // And almost never there will be functions scheduled to be called.
     if( !_functionsToPerform.empty() ) {
         _performMutex.lock();
-        for( const auto &function : _functionsToPerform ) {
-            function();
-        }
+        // fixed #4123: Save the callback functions, they must be invoked after '_performMutex.unlock()', otherwise if new functions are added in callback, it will cause thread deadlock.
+        auto temp = _functionsToPerform;
         _functionsToPerform.clear();
         _performMutex.unlock();
+        for( const auto &function : temp ) {
+            function();
+        }
+        
     }
 }
 

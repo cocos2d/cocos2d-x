@@ -118,7 +118,7 @@ protected:
     std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
-    uint32_t _lastMaterialID;
+    uint64_t _lastMaterialID;
 
     std::vector<QuadCommand*> _batchedQuadCommands;
 
