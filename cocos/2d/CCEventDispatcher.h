@@ -247,6 +247,8 @@ protected:
     bool _isEnabled;
     
     int _nodePriorityIndex;
+    
+    std::set<std::string> _internalCustomListenerIDs;
 };
 
 

@@ -33,6 +33,7 @@
 
 #include "CCNode.h"
 #include "CCDirector.h"
+#include "CCEventType.h"
 
 #include <algorithm>
 
@@ -184,10 +185,18 @@ EventDispatcher::EventDispatcher()
 , _nodePriorityIndex(0)
 {
     _toAddedListeners.reserve(50);
+    
+    // fixed #4129: Mark the following listener IDs for internal use.
+    // Therefore, internal listeners would not be cleaned when removeAllEventListeners is invoked.
+    _internalCustomListenerIDs.insert(EVENT_COME_TO_FOREGROUND);
+    _internalCustomListenerIDs.insert(EVENT_COME_TO_BACKGROUND);
 }
 
 EventDispatcher::~EventDispatcher()
 {
+    // Clear internal custom listener IDs from set,
+    // so removeAllEventListeners would clean internal custom listeners.
+    _internalCustomListenerIDs.clear();
     removeAllEventListeners();
 }
 
@@ -1131,11 +1140,19 @@ void EventDispatcher::removeCustomEventListeners(const std::string& customEventN
 
 void EventDispatcher::removeAllEventListeners()
 {
+    bool cleanMap = true;
     std::vector<EventListener::ListenerID> types(_listenerMap.size());
-
+    
     for (const auto& e : _listenerMap)
     {
-        types.push_back(e.first);
+        if (_internalCustomListenerIDs.find(e.first) != _internalCustomListenerIDs.end())
+        {
+            cleanMap = false;
+        }
+        else
+        {
+            types.push_back(e.first);
+        }
     }
 
     for (const auto& type : types)
@@ -1143,7 +1160,7 @@ void EventDispatcher::removeAllEventListeners()
         removeEventListenersForListenerID(type);
     }
     
-    if (!_inDispatch)
+    if (!_inDispatch && cleanMap)
     {
         _listenerMap.clear();
     }
