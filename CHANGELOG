@@ -1,17 +1,23 @@
 cocos2d-x-2.2.3 @?.? ????
+[All]
+     [NEW]    Adds Dutch Language support.
+
 [Android]
-     [FIX]    Screen will be flickering when switching to a new activity.
+     [FIX]    Screen would be flickering when switching to a new activity.
 
 [WP8 | WinRT]
-     [FIX]    Using the correct resolution policy in CCEGLView::UpdateWindowSize.
+     [FIX]    Added Lua bindings support for Wp8 and WinRT.
+     [FIX]    Added CCEditBox support for wp8.
+     [FIX]    Used the correct resolution policy in CCEGLView::UpdateWindowSize.
 
 [JSBindings]
-     [NEW]    Adds 'setTimeout' and 'setInterval' for JSB.
+     [NEW]    Added 'setTimeout' and 'setInterval' for JSB.
 
 [Emscripten]
-     [NEW]    Adds emscripten support for Windows Host.
+     [NEW]    Added emscripten support for Windows Host.
 
 [LuaBindings]
+     [NEW]    Added more test cases for CocoStuidoTest/SceneTest.
      [FIX]    CCComponent class wasn't exposed to LUA.
 
 cocos2d-x-2.2.2 @Jan.07 2014

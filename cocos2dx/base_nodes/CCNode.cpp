@@ -1314,6 +1314,11 @@ bool CCNode::removeComponent(const char *pName)
     return m_pComponentContainer->remove(pName);
 }
 
+bool CCNode::removeComponent(CCComponent *pComponent)
+{
+    return m_pComponentContainer->remove(pComponent);
+}
+
 void CCNode::removeAllComponents()
 {
     m_pComponentContainer->removeAll();
