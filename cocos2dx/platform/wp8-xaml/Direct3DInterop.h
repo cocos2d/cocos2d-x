@@ -50,18 +50,19 @@ public:
 
     void UpdateForWindowSizeChange(float width, float height);
     Windows::Foundation::IAsyncAction^ OnSuspending();
-    bool OnBackKeyPress();
 
+    void OnBackKeyPress();
     void OnCocos2dKeyEvent(Cocos2dKeyEvent key);
     void OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ text);
+	void OnCocos2dEditboxEvent(Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler);
 
     property Windows::Graphics::Display::DisplayOrientations WindowOrientation;
-
-    property Windows::Foundation::Size NativeResolution;
-    property Windows::Foundation::Size RenderResolution;
     property Windows::Foundation::Size WindowBounds;
 
     void SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate);
+    void SetCocos2dMessageBoxDelegate(Cocos2dMessageBoxDelegate ^ delegate);
+    void SetCocos2dEditBoxDelegate(Cocos2dEditBoxDelegate ^ delegate);
+
 
 protected:
     // Event Handlers
@@ -85,9 +86,10 @@ private:
     std::queue<std::shared_ptr<InputEvent>> mInputEvents;
     std::mutex mMutex;
 
-
-    Windows::Foundation::Size m_renderResolution;
     Cocos2dEventDelegate^ m_delegate;
+    Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
+    Cocos2dEditBoxDelegate^ m_editBoxDelegate;
+
 };
 
 }
