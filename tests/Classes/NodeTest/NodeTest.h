@@ -52,7 +52,7 @@ class Test2 : public TestCocosNodeDemo
 public:
     CREATE_FUNC(Test2);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class Test4 : public TestCocosNodeDemo
@@ -62,7 +62,7 @@ public:
     void delay2(float dt);
     void delay4(float dt);
 
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     Test4();
@@ -74,7 +74,7 @@ public:
     CREATE_FUNC(Test5);
 
     void addAndRemove(float dt);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     Test5();
@@ -85,7 +85,7 @@ class Test6 : public TestCocosNodeDemo
 public:
     CREATE_FUNC(Test6);
     void addAndRemove(float dt);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     Test6();
@@ -97,7 +97,7 @@ public:
     CREATE_FUNC(StressTest1);
     void shouldNotCrash(float dt);
     void removeMe(Node* node);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     StressTest1();
@@ -108,7 +108,7 @@ class StressTest2 : public TestCocosNodeDemo
 public:
     CREATE_FUNC(StressTest2);
     void shouldNotLeak(float dt);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     StressTest2();
@@ -119,7 +119,7 @@ class SchedulerTest1 : public TestCocosNodeDemo
 public:
     CREATE_FUNC(SchedulerTest1);
     void doSomething(float dt);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     SchedulerTest1();
@@ -129,7 +129,7 @@ class NodeToWorld : public TestCocosNodeDemo
 {
 public:
     CREATE_FUNC(NodeToWorld);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     NodeToWorld();
@@ -139,7 +139,7 @@ class NodeToWorld3D : public TestCocosNodeDemo
 {
 public:
     CREATE_FUNC(NodeToWorld3D);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     NodeToWorld3D();
@@ -151,7 +151,7 @@ public:
     CREATE_FUNC(CameraOrbitTest);
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     CameraOrbitTest();
@@ -165,7 +165,7 @@ public:
 
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     CameraZoomTest();

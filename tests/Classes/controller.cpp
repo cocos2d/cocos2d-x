@@ -3,7 +3,7 @@
 #include <map>
 #include <functional>
 #include <string>
-
+#include <unistd.h>
 // test inclues
 #include "AppDelegate.h"
 #include "BaseTest.h"
@@ -110,6 +110,12 @@ static Controller *currentController = nullptr;
 #define LINE_SPACE          40
 
 static Point s_tCurPos = Point::ZERO;
+
+//sleep for t seconds
+static void wait(int t)
+{
+    usleep(t * 1000 * 1000);
+}
 
 TestController::TestController()
 : _beginPos(Point::ZERO)
@@ -337,13 +343,77 @@ void TestController::addConsoleAutoTest()
                 return;
             }
 
+            if(args == "run")
+            {
+                for (int i = 0; i < g_testCount; i++)
+                {
+                    // create the test scene and run it
+                    auto scene = g_aTestNames[i].callback();
+
+                    if (scene)
+                    {
+                        std::string  msg("autotest: running test:");
+                        msg += g_aTestNames[i].test_name;
+                        send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                        send(fd, "\n",1,0);
+
+                        currentController = &g_aTestNames[i];
+                        sched->performFunctionInCocosThread( [&](){
+                            currentController->callback()->runThisTest();
+                            currentController->callback()->release();
+                        } );
+                        wait(1);
+                        BaseTest* firstTest = app->getCurrentTest();
+                        if(firstTest == nullptr)
+                        {
+                            continue;
+                        }
+                        std::string  t1("");
+                        t1 += firstTest->subtitle();
+                        send(fd, t1.c_str(), strlen(t1.c_str()),0);
+                        send(fd, "\n",1,0);
+                        wait(2);
+                        
+                                                //printf("rtti:%s", typeid(firstTest).name());
+                        while(1)
+                        {
+                            //currentTest->nextCallback(nullptr);
+                            sched->performFunctionInCocosThread( [&](){
+                                BaseTest *t = app->getCurrentTest();
+                                if(t != nullptr)
+                                {
+                                    t->nextCallback(nullptr);
+                                }
+                            } );
+                            wait(1);
+                            BaseTest * curTest = app->getCurrentTest();
+                            if(curTest == nullptr)
+                            {
+                                break;
+                            }
+                            std::string  title("");
+                            title += curTest->subtitle();
+                            send(fd, title.c_str(), strlen(title.c_str()),0);
+                            send(fd, "\n",1,0);
+                            wait(2);
+
+                            if(t1 == title)
+                            {
+                                break;
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
             for(int i = 0; i < g_testCount; i++)
             {
                 if(args == g_aTestNames[i].test_name)
                 {
                     // create the test scene and run it
                     auto scene = g_aTestNames[i].callback();
-
                     if (scene)
                     {
                         std::string  msg("autotest: running test:");
