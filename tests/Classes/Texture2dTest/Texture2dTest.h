@@ -37,7 +37,7 @@ public:
     virtual ~TextureDemo();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
@@ -49,7 +49,7 @@ class TextureTIFF : public TextureDemo
 public:
     CREATE_FUNC(TextureTIFF);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 
@@ -58,7 +58,7 @@ class TextureTGA : public TextureDemo
 public:
     CREATE_FUNC(TextureTGA);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePNG : public TextureDemo
@@ -66,7 +66,7 @@ class TexturePNG : public TextureDemo
 public:
     CREATE_FUNC(TexturePNG);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureJPEG : public TextureDemo
@@ -74,7 +74,7 @@ class TextureJPEG : public TextureDemo
 public:
     CREATE_FUNC(TextureJPEG);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureWEBP : public TextureDemo
@@ -82,7 +82,7 @@ class TextureWEBP : public TextureDemo
 public:
     CREATE_FUNC(TextureWEBP);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureMipMap : public TextureDemo
@@ -91,7 +91,7 @@ public:
     CREATE_FUNC(TextureMipMap);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRTest : public TextureDemo
@@ -99,7 +99,7 @@ class TexturePVRTest : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRTest);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVR2BPP : public TextureDemo
@@ -107,7 +107,7 @@ class TexturePVR2BPP : public TextureDemo
 public:
     CREATE_FUNC(TexturePVR2BPP);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVR4BPP : public TextureDemo
@@ -115,7 +115,7 @@ class TexturePVR4BPP : public TextureDemo
 public:
     CREATE_FUNC(TexturePVR4BPP);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA8888 : public TextureDemo
@@ -123,7 +123,7 @@ class TexturePVRRGBA8888 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRRGBA8888);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRBGRA8888 : public TextureDemo
@@ -131,7 +131,7 @@ class TexturePVRBGRA8888 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRBGRA8888);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA4444 : public TextureDemo
@@ -139,7 +139,7 @@ class TexturePVRRGBA4444 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRRGBA4444);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA4444GZ : public TextureDemo
@@ -148,7 +148,7 @@ public:
     CREATE_FUNC(TexturePVRRGBA4444GZ);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA4444CCZ : public TextureDemo
@@ -157,7 +157,7 @@ public:
     CREATE_FUNC(TexturePVRRGBA4444CCZ);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA5551 : public TextureDemo
@@ -165,7 +165,7 @@ class TexturePVRRGBA5551 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRRGBA5551);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGB565 : public TextureDemo
@@ -173,7 +173,7 @@ class TexturePVRRGB565 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRRGB565);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGB888 : public TextureDemo
@@ -181,7 +181,7 @@ class TexturePVRRGB888 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRRGB888);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRA8 : public TextureDemo
@@ -189,7 +189,7 @@ class TexturePVRA8 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRA8);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRI8 : public TextureDemo
@@ -197,7 +197,7 @@ class TexturePVRI8 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRI8);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRAI88 : public TextureDemo
@@ -205,7 +205,7 @@ class TexturePVRAI88 : public TextureDemo
 public:
     CREATE_FUNC(TexturePVRAI88);
     virtual std::string title() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVR2BPPv3 : public TextureDemo
@@ -214,7 +214,7 @@ public:
     CREATE_FUNC(TexturePVR2BPPv3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRII2BPPv3 : public TextureDemo
@@ -223,7 +223,7 @@ public:
     CREATE_FUNC(TexturePVRII2BPPv3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVR4BPPv3 : public TextureDemo
@@ -232,7 +232,7 @@ public:
     CREATE_FUNC(TexturePVR4BPPv3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRII4BPPv3 : public TextureDemo
@@ -241,7 +241,7 @@ public:
     CREATE_FUNC(TexturePVRII4BPPv3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA8888v3 : public TextureDemo
@@ -250,7 +250,7 @@ public:
     CREATE_FUNC(TexturePVRRGBA8888v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRBGRA8888v3 : public TextureDemo
@@ -259,7 +259,7 @@ public:
     CREATE_FUNC(TexturePVRBGRA8888v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA4444v3 : public TextureDemo
@@ -268,7 +268,7 @@ public:
     CREATE_FUNC(TexturePVRRGBA4444v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGBA5551v3 : public TextureDemo
@@ -277,7 +277,7 @@ public:
     CREATE_FUNC(TexturePVRRGBA5551v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGB565v3 : public TextureDemo
@@ -286,7 +286,7 @@ public:
     CREATE_FUNC(TexturePVRRGB565v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRRGB888v3 : public TextureDemo
@@ -295,7 +295,7 @@ public:
     CREATE_FUNC(TexturePVRRGB888v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRA8v3 : public TextureDemo
@@ -304,7 +304,7 @@ public:
     CREATE_FUNC(TexturePVRA8v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRI8v3 : public TextureDemo
@@ -313,7 +313,7 @@ public:
     CREATE_FUNC(TexturePVRI8v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRAI88v3 : public TextureDemo
@@ -322,7 +322,7 @@ public:
     CREATE_FUNC(TexturePVRAI88v3);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRBadEncoding : public TextureDemo
@@ -331,7 +331,7 @@ public:
     CREATE_FUNC(TexturePVRBadEncoding);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRMipMap : public TextureDemo
@@ -340,7 +340,7 @@ public:
     CREATE_FUNC(TexturePVRMipMap);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRMipMap2 : public TextureDemo
@@ -349,7 +349,7 @@ public:
     CREATE_FUNC(TexturePVRMipMap2);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRNonSquare : public TextureDemo
@@ -358,7 +358,7 @@ public:
     CREATE_FUNC(TexturePVRNonSquare);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRNPOT4444 : public TextureDemo
@@ -367,7 +367,7 @@ public:
     CREATE_FUNC(TexturePVRNPOT4444);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePVRNPOT8888 : public TextureDemo
@@ -376,7 +376,7 @@ public:
     CREATE_FUNC(TexturePVRNPOT8888);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureAlias : public TextureDemo
@@ -385,7 +385,7 @@ public:
     CREATE_FUNC(TextureAlias);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TexturePixelFormat : public TextureDemo
@@ -394,7 +394,7 @@ public:
     CREATE_FUNC(TexturePixelFormat);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureBlend : public TextureDemo
@@ -403,7 +403,7 @@ public:
     CREATE_FUNC(TextureBlend);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureAsync : public TextureDemo
@@ -415,7 +415,7 @@ public:
     void imageLoaded(cocos2d::Texture2D* texture);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 private:
     int _imageOffset;
 };
@@ -427,7 +427,7 @@ public:
     virtual ~TextureGlRepeat();
     virtual std::string title() const override;
 
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureGlClamp : public TextureDemo
@@ -437,7 +437,7 @@ public:
     virtual ~TextureGlClamp();
     virtual std::string title() const override;
 
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureSizeTest : public TextureDemo
@@ -446,7 +446,7 @@ public:
     CREATE_FUNC(TextureSizeTest);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureCache1 : public TextureDemo
@@ -455,7 +455,7 @@ public:
     CREATE_FUNC(TextureCache1);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class TextureDrawAtPoint : public TextureDemo
@@ -465,7 +465,7 @@ public:
     ~TextureDrawAtPoint();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void draw();
 protected:
     CustomCommand _renderCmd;
@@ -481,7 +481,7 @@ public:
     ~TextureDrawInRect();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void draw();
 protected:
     CustomCommand _renderCmd;
@@ -501,7 +501,7 @@ class TextureMemoryAlloc : public TextureDemo
 {
 public:
     CREATE_FUNC(TextureMemoryAlloc);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void updateImage(Ref *sender);
@@ -616,7 +616,7 @@ class TextureConvertRGB888 : public TextureDemo
 {
 public:
     CREATE_FUNC(TextureConvertRGB888);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -626,7 +626,7 @@ class TextureConvertRGBA8888 : public TextureDemo
 {
 public:
     CREATE_FUNC(TextureConvertRGBA8888);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -636,7 +636,7 @@ class TextureConvertI8 : public TextureDemo
 {
 public:
     CREATE_FUNC(TextureConvertI8);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -646,7 +646,7 @@ class TextureConvertAI88 : public TextureDemo
 {
 public:
     CREATE_FUNC(TextureConvertAI88);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

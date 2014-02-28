@@ -17,7 +17,7 @@ protected:
     Node* _target2;
 
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     ~EffectAdvanceTextLayer(void);
 
     virtual std::string title() const override;
@@ -31,43 +31,43 @@ public:
 class Effect1 : public EffectAdvanceTextLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class Effect2 : public EffectAdvanceTextLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class Effect3 : public EffectAdvanceTextLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class Effect4 : public EffectAdvanceTextLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class Effect5 : public EffectAdvanceTextLayer
 {
 public:
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
 };
 
 class Issue631 : public EffectAdvanceTextLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

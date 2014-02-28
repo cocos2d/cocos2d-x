@@ -256,7 +256,7 @@ public:
     /** whether the body is at rest */
     bool isResting() const;
     /** set body to rest */
-    void setResting() const;
+    void setResting(bool rest) const;
     /** 
      * whether the body is enabled
      * if the body it isn't enabled, it will not has simulation by world
@@ -329,6 +329,9 @@ protected:
     int _collisionBitmask;
     int _contactTestBitmask;
     int _group;
+    
+    bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
+    bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

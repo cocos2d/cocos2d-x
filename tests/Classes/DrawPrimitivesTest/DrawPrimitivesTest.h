@@ -17,7 +17,7 @@ public:
     void backCallback(Ref* sender);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class DrawPrimitivesTest : public BaseLayer

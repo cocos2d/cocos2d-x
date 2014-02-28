@@ -35,7 +35,7 @@ class TouchableSpriteTest : public EventDispatcherTestDemo
 {
 public:
     CREATE_FUNC(TouchableSpriteTest);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -44,7 +44,7 @@ class FixedPriorityTest : public EventDispatcherTestDemo
 {
 public:
     CREATE_FUNC(FixedPriorityTest);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -53,7 +53,7 @@ class RemoveListenerWhenDispatching : public EventDispatcherTestDemo
 {
 public:
     CREATE_FUNC(RemoveListenerWhenDispatching);
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -164,5 +164,21 @@ protected:
     bool isPointInNode(Point pt, Node* node);
     bool isPointInTopHalfAreaOfScreen(Point pt);
 };
+
+class Issue4129 : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(Issue4129);
+    Issue4129();
+    virtual ~Issue4129();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    EventListenerCustom* _customlistener;
+    bool _bugFixed;
+};
+
 
 #endif /* defined(__samples__NewEventDispatcherTest__) */

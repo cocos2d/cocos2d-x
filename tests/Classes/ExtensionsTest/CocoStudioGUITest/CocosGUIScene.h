@@ -37,7 +37,7 @@ using namespace ui;
 class CocosGUITestMainLayer : public Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     
 	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);

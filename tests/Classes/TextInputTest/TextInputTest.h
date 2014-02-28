@@ -22,7 +22,7 @@ public:
     virtual std::string title() const;
     void addKeyboardNotificationLayer(KeyboardNotificationLayer * layer);
     
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ public:
     virtual void onClickTrackNode(bool bClicked);
 
     // Layer
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -82,8 +82,8 @@ public:
     virtual void onClickTrackNode(bool bClicked);
 
     // Layer
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
     // TextFieldDelegate
     virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender);

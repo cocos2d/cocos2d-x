@@ -45,31 +45,13 @@ public:
     void backCallback(Ref* sender) override;
 };
 
-class ConsoleTCP : public BaseTestConsole
-{
-public:
-    CREATE_FUNC(ConsoleTCP);
-
-    void onEnter() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-protected:
-    ConsoleTCP();
-    virtual ~ConsoleTCP();
-
-    cocos2d::Console *_console;
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleTCP);
-};
 
 class ConsoleCustomCommand : public BaseTestConsole
 {
 public:
     CREATE_FUNC(ConsoleCustomCommand);
 
-    void onEnter() override;
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -80,6 +62,27 @@ protected:
     cocos2d::Console *_console;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleCustomCommand);
+};
+
+class ConsoleUploadFile : public BaseTestConsole
+{
+public:
+    CREATE_FUNC(ConsoleUploadFile);
+
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    ConsoleUploadFile();
+    virtual ~ConsoleUploadFile();
+
+    void uploadFile();
+    std::string _src_file_path;
+    std::string _target_file_name;
+    std::thread _thread;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleUploadFile);
 };
 
 class ConsoleTestScene : public TestScene

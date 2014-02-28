@@ -6,7 +6,7 @@
 class PerformanceMainLayer : public Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     
     bool onTouchBegan(Touch* touches, Event  *event);
     void onTouchMoved(Touch* touches, Event  *event);

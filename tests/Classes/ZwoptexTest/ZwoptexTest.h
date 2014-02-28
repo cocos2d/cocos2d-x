@@ -7,7 +7,7 @@
 class ZwoptexTest : public BaseTest
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
@@ -21,7 +21,7 @@ class ZwoptexGenericTest : public ZwoptexTest
 {
 public:
     ~ZwoptexGenericTest();
-    virtual void onEnter();
+    virtual void onEnter() override;
     void flipSprites(float dt);
     void startIn05Secs(float dt);
 

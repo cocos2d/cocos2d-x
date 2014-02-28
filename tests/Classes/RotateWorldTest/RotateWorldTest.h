@@ -12,14 +12,14 @@ public:
 class SpriteLayer : public Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     CREATE_FUNC(SpriteLayer)
 };
 
 class TestLayer : public Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     CREATE_FUNC(TestLayer)
 };
@@ -27,7 +27,7 @@ public:
 class RotateWorldMainLayer : public Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
 
     CREATE_FUNC(RotateWorldMainLayer)
 };

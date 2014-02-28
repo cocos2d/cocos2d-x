@@ -9,7 +9,7 @@
 class RenderTextureTest : public BaseTest
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
