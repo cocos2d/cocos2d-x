@@ -81,6 +81,8 @@ public:
      */
     void setFontSize(int size);
     
+    int getFontSize();
+    
     /**
      * Sets the font name of label.
      *
@@ -88,6 +90,7 @@ public:
      */
     void setFontName(const std::string& name);
     
+    const char* getFontName();
     /**
      * Sets the touch scale enabled of label.
      *
@@ -157,8 +160,16 @@ public:
     virtual std::string getDescription() const;
     
     void setTextAreaSize(const CCSize &size);
+    
+    CCSize getTextAreaSize();
+    
     void setTextHorizontalAlignment(CCTextAlignment alignment);
+    
+    CCTextAlignment getTextHorizontalAlignment();
+    
     void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
+    
+    CCVerticalTextAlignment getTextVerticalAlignment();
 protected:
     virtual bool init();
     virtual void initRenderer();

@@ -98,6 +98,11 @@ void Label::setFontSize(int size)
     _labelRenderer->setFontSize(size);
     labelScaleChangedWithSize();
 }
+    
+int Label::getFontSize()
+{
+    return _fontSize;
+}
 
 void Label::setFontName(const std::string& name)
 {
@@ -105,11 +110,21 @@ void Label::setFontName(const std::string& name)
     _labelRenderer->setFontName(name.c_str());
     labelScaleChangedWithSize();
 }
+    
+const char* Label::getFontName()
+{
+    return _fontName.c_str();
+}
 
 void Label::setTextAreaSize(const CCSize &size)
 {
     _labelRenderer->setDimensions(size);
     labelScaleChangedWithSize();
+}
+    
+CCSize Label::getTextAreaSize()
+{
+    return _labelRenderer->getDimensions();
 }
 
 void Label::setTextHorizontalAlignment(CCTextAlignment alignment)
@@ -117,11 +132,21 @@ void Label::setTextHorizontalAlignment(CCTextAlignment alignment)
     _labelRenderer->setHorizontalAlignment(alignment);
     labelScaleChangedWithSize();
 }
+    
+CCTextAlignment Label::getTextHorizontalAlignment()
+{
+    return _labelRenderer->getHorizontalAlignment();
+}
 
 void Label::setTextVerticalAlignment(CCVerticalTextAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
     labelScaleChangedWithSize();
+}
+    
+CCVerticalTextAlignment Label::getTextVerticalAlignment()
+{
+    return _labelRenderer->getVerticalAlignment();
 }
 
 void Label::setTouchScaleChangeEnabled(bool enable)

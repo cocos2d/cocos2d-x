@@ -139,6 +139,28 @@ void Layout::addChild(CCNode *child, int zOrder, int tag)
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
+    
+void Layout::removeChild(CCNode *child)
+{
+    Widget::removeChild(child);
+}
+    
+void Layout::removeChild(CCNode* widget, bool cleanup)
+{
+    Widget::removeChild(widget, cleanup);
+    _doLayoutDirty = true;
+}
+
+void Layout::removeAllChildren()
+{
+    Widget::removeAllChildren();
+}
+
+void Layout::removeAllChildrenWithCleanup(bool cleanup)
+{
+    Widget::removeAllChildrenWithCleanup(cleanup);
+    _doLayoutDirty = true;
+}
 
 bool Layout::isClippingEnabled()
 {
@@ -337,6 +359,11 @@ void Layout::setClippingType(LayoutClippingType type)
     setClippingEnabled(clippingEnabled);
 }
     
+LayoutClippingType Layout::getClippingType()
+{
+    return _clippingType;
+}
+    
 void Layout::setStencilClippingSize(const CCSize &size)
 {
     if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
@@ -488,6 +515,11 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);    
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
+    
+bool Layout::isBackGroundImageScale9Enabled()
+{
+    return _backGroundScale9Enabled;
+}
 
 void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
 {
@@ -556,6 +588,11 @@ void Layout::setBackGroundImageCapInsets(const CCRect &capInsets)
     }
 }
 
+const CCRect& Layout::getBackGroundImageCapInsets()
+{
+    return _backGroundImageCapInsets;
+}
+    
 void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 {
     if (!child)
@@ -680,6 +717,11 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             break;
     }
 }
+    
+LayoutBackGroundColorType Layout::getBackGroundColorType()
+{
+    return _colorType;
+}
 
 void Layout::setBackGroundColor(const ccColor3B &color)
 {
@@ -688,6 +730,11 @@ void Layout::setBackGroundColor(const ccColor3B &color)
     {
         _colorRender->setColor(color);
     }
+}
+    
+const ccColor3B& Layout::getBackGroundColor()
+{
+    return _cColor;
 }
 
 void Layout::setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor)
@@ -702,6 +749,16 @@ void Layout::setBackGroundColor(const ccColor3B &startColor, const ccColor3B &en
     {
         _gradientRender->setEndColor(endColor);
     }
+}
+    
+const ccColor3B& Layout::getBackGroundStartColor()
+{
+    return _gStartColor;
+}
+
+const ccColor3B& Layout::getBackGroundEndColor()
+{
+    return _gEndColor;
 }
 
 void Layout::setBackGroundColorOpacity(int opacity)
@@ -721,6 +778,11 @@ void Layout::setBackGroundColorOpacity(int opacity)
             break;
     }
 }
+    
+int Layout::getBackGroundColorOpacity()
+{
+    return _cOpacity;
+}
 
 void Layout::setBackGroundColorVector(const CCPoint &vector)
 {
@@ -729,6 +791,11 @@ void Layout::setBackGroundColorVector(const CCPoint &vector)
     {
         _gradientRender->setVector(vector);
     }
+}
+    
+const CCPoint& Layout::getBackGroundColorVector()
+{
+    return _alongVector;
 }
 
 const CCSize& Layout::getBackGroundImageTextureSize() const

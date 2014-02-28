@@ -216,6 +216,11 @@ void Widget::removeFromParentAndCleanup(bool cleanup)
 {
     CCNodeRGBA::removeFromParentAndCleanup(cleanup);
 }
+    
+void Widget::removeChild(CCNode *child)
+{
+    removeChild(child, true);
+}
 
 void Widget::removeChild(CCNode *child, bool cleanup)
 {

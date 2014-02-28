@@ -152,6 +152,11 @@ void Button::setScale9Enabled(bool able)
     setCapInsetsDisabledRenderer(_capInsetsDisabled);
     setBright(_bright);
 }
+    
+bool Button::isScale9Enabled()
+{
+    return _scale9Enabled;
+}
 
 void Button::ignoreContentAdaptWithSize(bool ignore)
 {
@@ -326,6 +331,11 @@ void Button::setCapInsetsNormalRenderer(const CCRect &capInsets)
     }
     static_cast<extension::CCScale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
+    
+const CCRect& Button::getCapInsetNormalRenderer()
+{
+    return _capInsetsNormal;
+}
 
 void Button::setCapInsetsPressedRenderer(const CCRect &capInsets)
 {
@@ -336,6 +346,11 @@ void Button::setCapInsetsPressedRenderer(const CCRect &capInsets)
     }
     static_cast<extension::CCScale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
+    
+const CCRect& Button::getCapInsetPressedRenderer()
+{
+    return _capInsetsPressed;
+}
 
 void Button::setCapInsetsDisabledRenderer(const CCRect &capInsets)
 {
@@ -345,6 +360,11 @@ void Button::setCapInsetsDisabledRenderer(const CCRect &capInsets)
         return;
     }
     static_cast<extension::CCScale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
+}
+    
+const CCRect& Button::getCapInsetDisabledRenderer()
+{
+    return _capInsetsDisabled;
 }
 
 void Button::onPressStateChangedToNormal()
