@@ -84,33 +84,33 @@ public:
 	virtual void onConnect(SIOClient* client) {
 		CCLOG("JSB SocketIO::SIODelegate->onConnect method called from native");
 
-		this->eventFired(client, "connect", "");
+		this->fireEventToScript(client, "connect", "");
 
 	}
 
     virtual void onMessage(SIOClient* client, const std::string& data) {
 		CCLOG("JSB SocketIO::SIODelegate->onMessage method called from native with data: %s", data.c_str());
 		
-		this->eventFired(client, "message", data);
+		this->fireEventToScript(client, "message", data);
 
 	}
 
     virtual void onClose(SIOClient* client) {
 		CCLOG("JSB SocketIO::SIODelegate->onClose method called from native");
         
-		this->eventFired(client, "disconnect", "");
+		this->fireEventToScript(client, "disconnect", "");
 
 	}
 
     virtual void onError(SIOClient* client, const std::string& data) {
 		CCLOG("JSB SocketIO::SIODelegate->onError method called from native with data: %s", data.c_str());
 
-		this->eventFired(client, "error", data);
+		this->fireEventToScript(client, "error", data);
 
 	}
 
-	virtual void eventFired(SIOClient* client, const std::string& eventName, const std::string& data) {
-		CCLOG("JSB SocketIO::SIODelegate->eventFired method called from native with name '%s' data: %s", eventName.c_str(), data.c_str());
+	virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) {
+		CCLOG("JSB SocketIO::SIODelegate->fireEventToScript method called from native with name '%s' data: %s", eventName.c_str(), data.c_str());
 
 		js_proxy_t * p = jsb_get_native_proxy(client);
         if (!p) return;

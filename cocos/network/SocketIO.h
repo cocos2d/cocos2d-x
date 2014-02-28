@@ -94,7 +94,7 @@ public:
         virtual void onMessage(SIOClient* client, const std::string& data) = 0;
         virtual void onClose(SIOClient* client) = 0;
         virtual void onError(SIOClient* client, const std::string& data) = 0;
-		virtual void eventFired(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
+		virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
     };
 
 	/**

@@ -443,7 +443,7 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 				}
 
 				c->fireEvent(eventname, payload);
-				c->getDelegate()->eventFired(c, eventname, payload);
+				c->getDelegate()->fireEventToScript(c, eventname, payload);
 			}
 			
 			break;
