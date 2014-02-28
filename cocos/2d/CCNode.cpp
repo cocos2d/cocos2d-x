@@ -336,8 +336,8 @@ void Node::setScale(float scale)
 {
     if (_scaleX == scale)
         return;
-    
-    _scaleX = _scaleY = scale;
+
+    _scaleX = _scaleY = _scaleZ = scale;
     _transformDirty = _inverseDirty = true;
 }
 
