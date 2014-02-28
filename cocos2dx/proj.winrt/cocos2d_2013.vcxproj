@@ -546,7 +546,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -563,7 +563,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -580,7 +580,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -597,7 +597,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -614,7 +614,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -631,7 +631,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)..\platform\third_party\winrt\libraries\vs2013\$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libpng.lib;libjpeg.lib;zlib.lib;freetype.lib;libtiff.lib;d2d1.lib;d3d11.lib;dxgi.lib;ole32.lib;windowscodecs.lib;dwrite.lib;dxguid.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
