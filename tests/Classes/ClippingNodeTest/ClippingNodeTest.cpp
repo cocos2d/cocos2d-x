@@ -633,7 +633,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
         ++iter;
         
         kmGLPushMatrix();
-        this->transform();
+        _modelViewTransform = this->transform(transform);
         _sprites.at(i)->visit(renderer, _modelViewTransform, transformDirty);
         kmGLPopMatrix();
         
@@ -643,7 +643,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
         ++iter;
         
         kmGLPushMatrix();
-        this->transform();
+        _modelViewTransform = this->transform(transform);
         _sprites.at(i)->visit(renderer, _modelViewTransform, transformDirty);
         kmGLPopMatrix();
     }

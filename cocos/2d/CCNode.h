@@ -1256,7 +1256,7 @@ public:
     /**
      * Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes.
      */
-    void transform();
+    kmMat4 transform(const kmMat4 &parentTransform);
     /**
      * Performs OpenGL view-matrix transformation of it's ancestors.
      * Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)

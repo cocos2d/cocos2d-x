@@ -108,11 +108,16 @@ void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool pa
     {
         return;
     }
-    kmGLPushMatrix();
 
     bool dirty = parentTransformDirty || _transformDirty;
     if(dirty)
-        transform();
+        _modelViewTransform = transform(parentTransform);
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
 
     sortAllChildren();
     draw(renderer, _modelViewTransform, dirty);

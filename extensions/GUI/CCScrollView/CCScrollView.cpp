@@ -560,11 +560,15 @@ void ScrollView::visit(Renderer *renderer, const kmMat4 &parentTransform, bool p
 		return;
     }
 
-	kmGLPushMatrix();
-
     bool dirty = parentTransformDirty || _transformDirty;
     if(dirty)
-        this->transform();
+        _modelViewTransform = this->transform(parentTransform);
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
 
     this->beforeDraw();
 
