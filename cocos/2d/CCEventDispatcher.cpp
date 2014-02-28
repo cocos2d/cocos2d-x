@@ -652,7 +652,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     
     bool isNeedsMutableSet = (oneByOneListeners && allAtOnceListeners);
     
-    std::vector<Touch*> originalTouches = event->getTouches();
+    const std::vector<Touch*>& originalTouches = event->getTouches();
     std::vector<Touch*> mutableTouches(originalTouches.size());
     std::copy(originalTouches.begin(), originalTouches.end(), mutableTouches.begin());
 
