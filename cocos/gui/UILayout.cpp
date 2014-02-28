@@ -204,10 +204,16 @@ void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransf
     if(!_visible)
         return;
     
-    kmGLPushMatrix();
     bool dirty = parentTransformDirty || _transformDirty;
     if(dirty)
-        transform();
+        _modelViewTransform = transform(parentTransform);
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     //Add group command
 
     _groupCommand.init(_globalZOrder);

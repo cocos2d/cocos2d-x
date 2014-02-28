@@ -925,13 +925,17 @@ void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentT
     {
         return;
     }
-    
-    kmGLPushMatrix();
 
     bool dirty = _transformDirty || parentTransformDirty;
-
     if(dirty)
-        this->transform();
+        _modelViewTransform = this->transform(parentTransform);
+
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
 
     int i = 0;
 
@@ -967,21 +971,17 @@ void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentT
 
 void Node::transformAncestors()
 {
-    if( _parent != nullptr  )
-    {
-        _parent->transformAncestors();
-        _parent->transform();
-    }
+    // remove me
+    CCASSERT(false, "no longer supported");
 }
 
-void Node::transform()
+kmMat4 Node::transform(const kmMat4& parentTransform)
 {
+    kmMat4 ret;
     kmMat4 transfrom4x4 = this->getNodeToParentTransform();
+    kmMat4Multiply(&ret, &parentTransform, &transfrom4x4);
 
-    kmGLMultMatrix( &transfrom4x4 );
-
-    // saves the MV matrix
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
+    return ret;
 }
 
 void Node::onEnter()

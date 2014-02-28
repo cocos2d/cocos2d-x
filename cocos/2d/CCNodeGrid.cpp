@@ -94,7 +94,16 @@ void NodeGrid::visit(Renderer *renderer, const kmMat4 &parentTransform, bool par
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
+    bool dirty = parentTransformDirty || _transformDirty;
+    if(dirty)
+        _modelViewTransform = this->transform(parentTransform);
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
     kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     Director::Projection beforeProjectionType;
     if(_nodeGrid && _nodeGrid->isActive())
     {
@@ -106,10 +115,7 @@ void NodeGrid::visit(Renderer *renderer, const kmMat4 &parentTransform, bool par
     _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(&_gridBeginCommand);
 
-    bool dirty = parentTransformDirty || _transformDirty;
-    if(dirty)
-        this->transform();
-    
+
     if(_gridTarget)
     {
         _gridTarget->visit(renderer, _modelViewTransform, dirty);
