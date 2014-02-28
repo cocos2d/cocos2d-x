@@ -355,12 +355,12 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
 {
     EventListenerVector* listeners = nullptr;
     EventListener::ListenerID listenerID = listener->getListenerID();
-    auto itr = _listeners.find(listenerID);
-    if (itr == _listeners.end())
+    auto itr = _listenerMap.find(listenerID);
+    if (itr == _listenerMap.end())
     {
         
         listeners = new EventListenerVector();
-        _listeners.insert(std::make_pair(listenerID, listeners));
+        _listenerMap.insert(std::make_pair(listenerID, listeners));
     }
     else
     {
@@ -463,7 +463,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         }
     };
     
-    for (auto iter = _listeners.begin(); iter != _listeners.end();)
+    for (auto iter = _listenerMap.begin(); iter != _listenerMap.end();)
     {
         auto listeners = iter->second;
         auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
@@ -479,7 +479,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         {
             _priorityDirtyFlagMap.erase(listener->getListenerID());
             auto list = iter->second;
-            iter = _listeners.erase(iter);
+            iter = _listenerMap.erase(iter);
             CC_SAFE_DELETE(list);
         }
         else
@@ -514,7 +514,7 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
     if (listener == nullptr)
         return;
     
-    for (auto iter = _listeners.begin(); iter != _listeners.end(); ++iter)
+    for (auto iter = _listenerMap.begin(); iter != _listenerMap.end(); ++iter)
     {
         auto fixedPriorityListeners = iter->second->getFixedPriorityListeners();
         if (fixedPriorityListeners)
@@ -613,8 +613,8 @@ void EventDispatcher::dispatchEvent(Event* event)
     
     sortEventListeners(listenerID);
     
-    auto iter = _listeners.find(listenerID);
-    if (iter != _listeners.end())
+    auto iter = _listenerMap.find(listenerID);
+    if (iter != _listenerMap.end())
     {
         auto listeners = iter->second;
         
@@ -835,8 +835,8 @@ void EventDispatcher::updateListeners(Event* event)
 {
     auto onUpdateListeners = [this](const EventListener::ListenerID& listenerID)
     {
-        auto listenersIter = _listeners.find(listenerID);
-        if (listenersIter == _listeners.end())
+        auto listenersIter = _listenerMap.find(listenerID);
+        if (listenersIter == _listenerMap.end())
             return;
         
         auto listeners = listenersIter->second;
@@ -891,7 +891,7 @@ void EventDispatcher::updateListeners(Event* event)
         {
             _priorityDirtyFlagMap.erase(listenersIter->first);
             delete listenersIter->second;
-            _listeners.erase(listenersIter);
+            _listenerMap.erase(listenersIter);
         }
     };
     
@@ -1027,8 +1027,8 @@ void EventDispatcher::sortEventListenersOfFixedPriority(const EventListener::Lis
 
 EventDispatcher::EventListenerVector* EventDispatcher::getListeners(const EventListener::ListenerID& listenerID)
 {
-    auto iter = _listeners.find(listenerID);
-    if (iter != _listeners.end())
+    auto iter = _listenerMap.find(listenerID);
+    if (iter != _listenerMap.end())
     {
         return iter->second;
     }
@@ -1038,8 +1038,8 @@ EventDispatcher::EventListenerVector* EventDispatcher::getListeners(const EventL
 
 void EventDispatcher::removeEventListenersForListenerID(const EventListener::ListenerID& listenerID)
 {
-    auto listenerItemIter = _listeners.find(listenerID);
-    if (listenerItemIter != _listeners.end())
+    auto listenerItemIter = _listenerMap.find(listenerID);
+    if (listenerItemIter != _listenerMap.end())
     {
         auto listeners = listenerItemIter->second;
         auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
@@ -1077,7 +1077,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
         {
             listeners->clear();
             delete listeners;
-            _listeners.erase(listenerItemIter);
+            _listenerMap.erase(listenerItemIter);
             _priorityDirtyFlagMap.erase(listenerID);
         }
     }
@@ -1131,9 +1131,9 @@ void EventDispatcher::removeCustomEventListeners(const std::string& customEventN
 
 void EventDispatcher::removeAllEventListeners()
 {
-    std::vector<EventListener::ListenerID> types(_listeners.size());
+    std::vector<EventListener::ListenerID> types(_listenerMap.size());
 
-    for (const auto& e : _listeners)
+    for (const auto& e : _listenerMap)
     {
         types.push_back(e.first);
     }
@@ -1145,7 +1145,7 @@ void EventDispatcher::removeAllEventListeners()
     
     if (!_inDispatch)
     {
-        _listeners.clear();
+        _listenerMap.clear();
     }
 }
 
