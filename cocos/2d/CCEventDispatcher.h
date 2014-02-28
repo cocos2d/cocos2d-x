@@ -108,7 +108,7 @@ public:
     void dispatchEvent(Event* event);
 
     /** Dispatches a Custom Event with a event name an optional user data */
-    void dispatchCustomEvent(const std::string &eventName, void *optionalUserData);
+    void dispatchCustomEvent(const std::string &eventName, void *optionalUserData = nullptr);
 
     /** Constructor of EventDispatcher */
     EventDispatcher();
