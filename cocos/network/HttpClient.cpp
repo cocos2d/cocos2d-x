@@ -481,7 +481,10 @@ void HttpClient::send(HttpRequest* request)
 void HttpClient::dispatchResponseCallbacks()
 {
     // log("CCHttpClient::dispatchResponseCallbacks is running");
-    
+    //occurs when cocos thread fires but the network thread has already quited
+    if (nullptr == s_responseQueue) {
+        return;
+    }
     HttpResponse* response = nullptr;
     
     s_responseQueueMutex.lock();
