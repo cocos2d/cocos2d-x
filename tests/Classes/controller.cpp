@@ -3,7 +3,8 @@
 #include <map>
 #include <functional>
 #include <string>
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 // test inclues
 #include "AppDelegate.h"
 #include "BaseTest.h"
@@ -114,7 +115,8 @@ static Point s_tCurPos = Point::ZERO;
 //sleep for t seconds
 static void wait(int t)
 {
-    usleep(t * 1000 * 1000);
+    std::chrono::milliseconds dura( t * 1000 );
+    std::this_thread::sleep_for( dura );
 }
 
 TestController::TestController()
