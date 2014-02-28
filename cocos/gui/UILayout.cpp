@@ -67,6 +67,7 @@ _scissorRectDirty(false),
 _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
 _doLayoutDirty(true),
+_clippingRectDirty(true),
 _currentStencilEnabled(GL_FALSE),
 _currentStencilWriteMask(~0),
 _currentStencilFunc(GL_ALWAYS),
@@ -95,6 +96,8 @@ void Layout::onEnter()
     {
         _clippingStencil->onEnter();
     }
+    _doLayoutDirty = true;
+    _clippingRectDirty = true;
 }
     
 void Layout::onExit()
@@ -422,79 +425,83 @@ void Layout::setStencilClippingSize(const Size &size)
     
 const Rect& Layout::getClippingRect()
 {
-    Point worldPos = convertToWorldSpace(Point::ZERO);
-    AffineTransform t = getNodeToWorldAffineTransform();
-    float scissorWidth = _size.width*t.a;
-    float scissorHeight = _size.height*t.d;
-    Rect parentClippingRect;
-    Layout* parent = this;
-    bool firstClippingParentFounded = false;
-    while (parent)
+    if (_clippingRectDirty)
     {
-        parent = dynamic_cast<Layout*>(parent->getParent());
-        if(parent)
+        Point worldPos = convertToWorldSpace(Point::ZERO);
+        AffineTransform t = getNodeToWorldAffineTransform();
+        float scissorWidth = _size.width*t.a;
+        float scissorHeight = _size.height*t.d;
+        Rect parentClippingRect;
+        Layout* parent = this;
+        bool firstClippingParentFounded = false;
+        while (parent)
         {
-            if (parent->isClippingEnabled())
+            parent = dynamic_cast<Layout*>(parent->getParent());
+            if(parent)
             {
-                if (!firstClippingParentFounded)
+                if (parent->isClippingEnabled())
                 {
-                    _clippingParent = parent;
-                    firstClippingParentFounded = true;
-                    break;
+                    if (!firstClippingParentFounded)
+                    {
+                        _clippingParent = parent;
+                        firstClippingParentFounded = true;
+                        break;
+                    }
                 }
             }
         }
-    }
-    
-    if (_clippingParent)
-    {
-        parentClippingRect = _clippingParent->getClippingRect();
-        float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
-        float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
-        float finalWidth = scissorWidth;
-        float finalHeight = scissorHeight;
         
-        float leftOffset = worldPos.x - parentClippingRect.origin.x;
-        if (leftOffset < 0.0f)
+        if (_clippingParent)
         {
-            finalX = parentClippingRect.origin.x;
-            finalWidth += leftOffset;
+            parentClippingRect = _clippingParent->getClippingRect();
+            float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
+            float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
+            float finalWidth = scissorWidth;
+            float finalHeight = scissorHeight;
+            
+            float leftOffset = worldPos.x - parentClippingRect.origin.x;
+            if (leftOffset < 0.0f)
+            {
+                finalX = parentClippingRect.origin.x;
+                finalWidth += leftOffset;
+            }
+            float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
+            if (rightOffset > 0.0f)
+            {
+                finalWidth -= rightOffset;
+            }
+            float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
+            if (topOffset > 0.0f)
+            {
+                finalHeight -= topOffset;
+            }
+            float bottomOffset = worldPos.y - parentClippingRect.origin.y;
+            if (bottomOffset < 0.0f)
+            {
+                finalY = parentClippingRect.origin.x;
+                finalHeight += bottomOffset;
+            }
+            if (finalWidth < 0.0f)
+            {
+                finalWidth = 0.0f;
+            }
+            if (finalHeight < 0.0f)
+            {
+                finalHeight = 0.0f;
+            }
+            _clippingRect.origin.x = finalX;
+            _clippingRect.origin.y = finalY;
+            _clippingRect.size.width = finalWidth;
+            _clippingRect.size.height = finalHeight;
         }
-        float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
-        if (rightOffset > 0.0f)
+        else
         {
-            finalWidth -= rightOffset;
+            _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
+            _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
+            _clippingRect.size.width = scissorWidth;
+            _clippingRect.size.height = scissorHeight;
         }
-        float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
-        if (topOffset > 0.0f)
-        {
-            finalHeight -= topOffset;
-        }
-        float bottomOffset = worldPos.y - parentClippingRect.origin.y;
-        if (bottomOffset < 0.0f)
-        {
-            finalY = parentClippingRect.origin.x;
-            finalHeight += bottomOffset;
-        }
-        if (finalWidth < 0.0f)
-        {
-            finalWidth = 0.0f;
-        }
-        if (finalHeight < 0.0f)
-        {
-            finalHeight = 0.0f;
-        }
-        _clippingRect.origin.x = finalX;
-        _clippingRect.origin.y = finalY;
-        _clippingRect.size.width = finalWidth;
-        _clippingRect.size.height = finalHeight;
-    }
-    else
-    {
-        _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
-        _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
-        _clippingRect.size.width = scissorWidth;
-        _clippingRect.size.height = scissorHeight;
+        _clippingRectDirty = false;
     }
     return _clippingRect;
 }
@@ -505,6 +512,7 @@ void Layout::onSizeChanged()
     setContentSize(_size);
     setStencilClippingSize(_size);
     _doLayoutDirty = true;
+    _clippingRectDirty = true;
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
