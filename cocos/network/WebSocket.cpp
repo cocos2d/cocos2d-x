@@ -699,6 +699,8 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
             break;
         case WS_MSG_TO_UITHREAD_CLOSE:
             {
+                //Waiting for the subThread safety exit
+                _wsHelper->joinSubThread();
                 _delegate->onClose(this);
             }
             break;
