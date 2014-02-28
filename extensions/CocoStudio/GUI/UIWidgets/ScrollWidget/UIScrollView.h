@@ -261,8 +261,10 @@ public:
     
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     
+    virtual void removeChild(CCNode* child);
+    
     //override "removeChild" method of widget.
-	virtual void removeChild(CCNode* child, bool cleaup = true);
+	virtual void removeChild(CCNode* child, bool cleaup);
     
     //override "getChildren" method of widget.
     virtual CCArray* getChildren();

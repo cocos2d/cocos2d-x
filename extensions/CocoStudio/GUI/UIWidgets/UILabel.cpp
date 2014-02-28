@@ -98,6 +98,11 @@ void Label::setFontSize(int size)
     _labelRenderer->setFontSize(size);
     labelScaleChangedWithSize();
 }
+    
+int Label::getFontSize()
+{
+    return _fontSize;
+}
 
 void Label::setFontName(const std::string& name)
 {
@@ -105,11 +110,21 @@ void Label::setFontName(const std::string& name)
     _labelRenderer->setFontName(name.c_str());
     labelScaleChangedWithSize();
 }
+    
+const char* Label::getFontName()
+{
+    return _fontName.c_str();
+}
 
 void Label::setTextAreaSize(const CCSize &size)
 {
     _labelRenderer->setDimensions(size);
     labelScaleChangedWithSize();
+}
+    
+CCSize Label::getTextAreaSize()
+{
+    return _labelRenderer->getDimensions();
 }
 
 void Label::setTextHorizontalAlignment(CCTextAlignment alignment)
@@ -117,24 +132,31 @@ void Label::setTextHorizontalAlignment(CCTextAlignment alignment)
     _labelRenderer->setHorizontalAlignment(alignment);
     labelScaleChangedWithSize();
 }
+    
+CCTextAlignment Label::getTextHorizontalAlignment()
+{
+    return _labelRenderer->getHorizontalAlignment();
+}
 
 void Label::setTextVerticalAlignment(CCVerticalTextAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
     labelScaleChangedWithSize();
 }
+    
+CCVerticalTextAlignment Label::getTextVerticalAlignment()
+{
+    return _labelRenderer->getVerticalAlignment();
+}
 
 void Label::setTouchScaleChangeEnabled(bool enable)
 {
     _touchScaleChangeEnabled = enable;
-    _normalScaleValueX = getScaleX();
-    _normalScaleValueY = getScaleY();
 }
     
 void Label::setScale(float fScale)
 {
     Widget::setScale(fScale);
-    _normalScaleValueX = _normalScaleValueY = fScale;
 }
     
 void Label::setScaleX(float fScaleX)
@@ -158,7 +180,8 @@ void Label::onPressStateChangedToNormal()
     {
         return;
     }
-    clickScale(_normalScaleValueX, _normalScaleValueY);
+    _labelRenderer->setScaleX(_normalScaleValueX);
+    _labelRenderer->setScaleY(_normalScaleValueY);
 }
 
 void Label::onPressStateChangedToPressed()
@@ -167,20 +190,13 @@ void Label::onPressStateChangedToPressed()
     {
         return;
     }
-    _normalScaleValueX = getScaleX();
-    _normalScaleValueY = getScaleY();
-    clickScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
+    _labelRenderer->setScaleX(_normalScaleValueX + _onSelectedScaleOffset);
+    _labelRenderer->setScaleY(_normalScaleValueY + _onSelectedScaleOffset);
 }
 
 void Label::onPressStateChangedToDisabled()
 {
     
-}
-
-void Label::clickScale(float scaleX, float scaleY)
-{
-    setScaleX(scaleX);
-    setScaleY(scaleY);
 }
 
 void Label::setFlipX(bool flipX)
@@ -231,6 +247,7 @@ void Label::labelScaleChangedWithSize()
     {
         _labelRenderer->setScale(1.0f);
         _size = _labelRenderer->getContentSize();
+        _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
     else
     {
@@ -244,6 +261,8 @@ void Label::labelScaleChangedWithSize()
         float scaleY = _size.height / textureSize.height;
         _labelRenderer->setScaleX(scaleX);
         _labelRenderer->setScaleY(scaleY);
+        _normalScaleValueX = scaleX;
+        _normalScaleValueY = scaleY;
     }
     
 }

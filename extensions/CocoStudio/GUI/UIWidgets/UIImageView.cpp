@@ -214,6 +214,11 @@ void ImageView::setScale9Enabled(bool able)
     }
     setCapInsets(_capInsets);
 }
+    
+bool ImageView::isScale9Enabled()
+{
+    return _scale9Enabled;
+}
 
 void ImageView::ignoreContentAdaptWithSize(bool ignore)
 {
@@ -232,6 +237,11 @@ void ImageView::setCapInsets(const CCRect &capInsets)
         return;
     }
     STATIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
+}
+    
+const CCRect& ImageView::getCapInsets()
+{
+    return _capInsets;
 }
 
 void ImageView::setAnchorPoint(const CCPoint &pt)
