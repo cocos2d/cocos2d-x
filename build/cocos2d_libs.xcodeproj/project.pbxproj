@@ -1788,8 +1788,6 @@
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1599607A1811329600C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
-		1599607F181132DE00C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/ios/libluajit.a; sourceTree = "<group>"; };
 		1A087AE61860400400196EF5 /* edtaa3func.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edtaa3func.cpp; sourceTree = "<group>"; };
 		1A087AE71860400400196EF5 /* edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edtaa3func.h; sourceTree = "<group>"; };
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
@@ -2049,13 +2047,6 @@
 		1A570545180BD9C40088DEC7 /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
 		1A57FFF7180BC5160088DEC7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; name = CHANGELOG; path = ../CHANGELOG; sourceTree = "<group>"; };
 		1A85BA0C1845F31700260FC0 /* CCVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCVector.h; path = ../base/CCVector.h; sourceTree = "<group>"; };
-		1A8C563F180E8D0D00EF57C3 /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
-		1A8C5640180E8D0D00EF57C3 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
-		1A8C5641180E8D0D00EF57C3 /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
-		1A8C5642180E8D0D00EF57C3 /* tolua_is.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_is.c; sourceTree = "<group>"; };
-		1A8C5643180E8D0D00EF57C3 /* tolua_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_map.c; sourceTree = "<group>"; };
-		1A8C5644180E8D0D00EF57C3 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
-		1A8C5645180E8D0D00EF57C3 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A8C58BF180E92CC00EF57C3 /* CocosGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUI.cpp; sourceTree = "<group>"; };
 		1A8C58C0180E92CC00EF57C3 /* CocosGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUI.h; sourceTree = "<group>"; };
 		1A8C58C1180E92CC00EF57C3 /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = UILayout.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -2191,8 +2182,6 @@
 		1AAF5384180E35A3000584C8 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		1AAF5387180E35AC000584C8 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		1AAF541C180E3B6A000584C8 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
-		1AAF5421180E4047000584C8 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
-		1AAF5424180E405B000584C8 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		1AAF584B180E40B9000584C8 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		1AAF584C180E40B9000584C8 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1AAF584D180E40B9000584C8 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
@@ -3307,9 +3296,7 @@
 				1A57033F180BD0540088DEC7 /* glfw3 */,
 				1A570373180BD1790088DEC7 /* jpeg */,
 				1AD71EF8180E28C400808F54 /* json */,
-				1A8C55C9180E8C5700EF57C3 /* lua */,
 				1A57035C180BD0D90088DEC7 /* png */,
-				1AAF541E180E4013000584C8 /* spidermonkey */,
 				1A57038A180BD1EF0088DEC7 /* tiff */,
 				1A570348180BD09B0088DEC7 /* tinyxml2 */,
 				1A57034F180BD0B00088DEC7 /* unzip */,
@@ -3532,55 +3519,6 @@
 			path = ../external/freetype2/prebuilt/ios;
 			sourceTree = "<group>";
 		};
-		1A8C55C9180E8C5700EF57C3 /* lua */ = {
-			isa = PBXGroup;
-			children = (
-				1A8C5637180E8C7800EF57C3 /* luajit */,
-				1A8C563E180E8D0D00EF57C3 /* tolua */,
-			);
-			name = lua;
-			sourceTree = "<group>";
-		};
-		1A8C5637180E8C7800EF57C3 /* luajit */ = {
-			isa = PBXGroup;
-			children = (
-				1A8C563B180E8CA700EF57C3 /* mac */,
-				1A8C5638180E8C8700EF57C3 /* ios */,
-			);
-			name = luajit;
-			sourceTree = "<group>";
-		};
-		1A8C5638180E8C8700EF57C3 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				1599607F181132DE00C7D42C /* libluajit.a */,
-			);
-			name = ios;
-			sourceTree = "<group>";
-		};
-		1A8C563B180E8CA700EF57C3 /* mac */ = {
-			isa = PBXGroup;
-			children = (
-				1599607A1811329600C7D42C /* libluajit.a */,
-			);
-			name = mac;
-			sourceTree = "<group>";
-		};
-		1A8C563E180E8D0D00EF57C3 /* tolua */ = {
-			isa = PBXGroup;
-			children = (
-				1A8C563F180E8D0D00EF57C3 /* tolua++.h */,
-				1A8C5640180E8D0D00EF57C3 /* tolua_event.c */,
-				1A8C5641180E8D0D00EF57C3 /* tolua_event.h */,
-				1A8C5642180E8D0D00EF57C3 /* tolua_is.c */,
-				1A8C5643180E8D0D00EF57C3 /* tolua_map.c */,
-				1A8C5644180E8D0D00EF57C3 /* tolua_push.c */,
-				1A8C5645180E8D0D00EF57C3 /* tolua_to.c */,
-			);
-			name = tolua;
-			path = ../external/lua/tolua;
-			sourceTree = "<group>";
-		};
 		1A8C58BD180E92CC00EF57C3 /* gui */ = {
 			isa = PBXGroup;
 			children = (
@@ -3788,41 +3726,6 @@
 			);
 			name = ios;
 			path = ../external/curl/prebuilt/ios;
-			sourceTree = "<group>";
-		};
-		1AAF541E180E4013000584C8 /* spidermonkey */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF541F180E4023000584C8 /* prebuilt */,
-			);
-			name = spidermonkey;
-			sourceTree = "<group>";
-		};
-		1AAF541F180E4023000584C8 /* prebuilt */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF5423180E405B000584C8 /* ios */,
-				1AAF5420180E4047000584C8 /* mac */,
-			);
-			name = prebuilt;
-			sourceTree = "<group>";
-		};
-		1AAF5420180E4047000584C8 /* mac */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF5421180E4047000584C8 /* libjs_static.a */,
-			);
-			name = mac;
-			path = ../external/spidermonkey/prebuilt/mac;
-			sourceTree = "<group>";
-		};
-		1AAF5423180E405B000584C8 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF5424180E405B000584C8 /* libjs_static.a */,
-			);
-			name = ios;
-			path = ../external/spidermonkey/prebuilt/ios;
 			sourceTree = "<group>";
 		};
 		1AAF5849180E40B8000584C8 /* storage */ = {

@@ -24,6 +24,7 @@ std::function<Layer*()> createFunctions[] =
     CL(DirectorEventTest),
     CL(GlobalZTouchTest),
     CL(StopPropagationTest),
+    CL(Issue4129),
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -1087,4 +1088,67 @@ std::string StopPropagationTest::title() const
 std::string StopPropagationTest::subtitle() const
 {
     return "Shouldn't crash and only blue block could be clicked";
+}
+
+Issue4129::Issue4129()
+: _bugFixed(false)
+{
+    _customlistener = _eventDispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
+        
+        auto label = LabelTTF::create("Yeah, this issue was fixed.", "", 20);
+        label->setAnchorPoint(Point(0, 0.5f));
+        label->setPosition(Point(VisibleRect::left()));
+        this->addChild(label);
+        
+        // After test, remove it.
+        _eventDispatcher->removeEventListener(_customlistener);
+        
+        _bugFixed = true;
+    });
+    
+    auto removeAllTouchItem = MenuItemFont::create("Remove All Listeners", [this](Ref* sender){
+        auto senderItem = static_cast<MenuItemFont*>(sender);
+        senderItem->setString("Only 'Reset' item could be clicked");
+        
+        _eventDispatcher->removeAllEventListeners();
+        
+        auto nextItem = MenuItemFont::create("Reset", [=](Ref* sender){
+            CCASSERT(_bugFixed, "This issue was not fixed!");
+            this->restartCallback(nullptr);
+        });
+        
+        nextItem->setFontSizeObj(16);
+        nextItem->setPosition(VisibleRect::right() + Point(-100, -30));
+        
+        auto menu2 = Menu::create(nextItem, NULL);
+        menu2->setPosition(Point(0, 0));
+        menu2->setAnchorPoint(Point(0, 0));
+        this->addChild(menu2);
+        
+        // Simulate to dispatch 'come to background' event
+        _eventDispatcher->dispatchCustomEvent(EVENT_COME_TO_BACKGROUND);
+    });
+    
+    removeAllTouchItem->setFontSizeObj(16);
+    removeAllTouchItem->setPosition(VisibleRect::right() + Point(-100, 0));
+    
+    auto menu = Menu::create(removeAllTouchItem, nullptr);
+    menu->setPosition(Point(0, 0));
+    menu->setAnchorPoint(Point(0, 0));
+    addChild(menu);
+}
+
+Issue4129::~Issue4129()
+{
+    _eventDispatcher->removeEventListener(_customlistener);
+}
+
+std::string Issue4129::title() const
+{
+    return "Issue 4129: Remove All Listeners";
+}
+
+std::string Issue4129::subtitle() const
+{
+    return "Should see 'Yeah, this issue was fixed.'";
 }

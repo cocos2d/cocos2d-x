@@ -162,6 +162,7 @@ void AtlasDemo::backCallback(Ref* sender)
 //------------------------------------------------------------------
 Atlas1::Atlas1()
 {
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     _textureAtlas = TextureAtlas::create(s_AtlasTest, 3); _textureAtlas->retain();
     
     auto s = Director::getInstance()->getWinSize();
@@ -209,7 +210,6 @@ void Atlas1::draw(Renderer *renderer, const kmMat4 &transform, bool transformDir
 {
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
-    
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
@@ -220,6 +220,7 @@ void Atlas1::draw(Renderer *renderer, const kmMat4 &transform, bool transformDir
 
 void Atlas1::onDraw()
 {
+    CC_NODE_DRAW_SETUP();
     _textureAtlas->drawQuads();
 }
 
