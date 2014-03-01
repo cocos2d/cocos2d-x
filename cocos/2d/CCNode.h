@@ -1347,54 +1347,12 @@ public:
 	/**
      *  Sets an additional transform matrix to the node.
      *
-     *  In order to remove it, set the Identity Matrix to the additional transform.
+     *  In order to remove it, call it again with the argument `nullptr`
      *
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
-     @code
-     // create a batchNode
-     SpriteBatchNode* batch= SpriteBatchNode::create("Icon-114.png");
-     this->addChild(batch);
-
-     // create two sprites, spriteA will be added to batchNode, they are using different textures.
-     Sprite* spriteA = Sprite::createWithTexture(batch->getTexture());
-     Sprite* spriteB = Sprite::create("Icon-72.png");
-
-     batch->addChild(spriteA);
-
-     // We can't make spriteB as spriteA's child since they use different textures. So just add it to layer.
-     // But we want to simulate `parent-child` relationship for these two node.
-     this->addChild(spriteB);
-
-     //position
-     spriteA->setPosition(Point(200, 200));
-
-     // Gets the spriteA's transform.
-     auto t = spriteA->getNodeToParentTransform();
-
-     // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
-     spriteB->setAdditionalTransform(t);
-
-     //scale
-     spriteA->setScale(2);
-
-     // Gets the spriteA's transform.
-     t = spriteA->getNodeToParentTransform();
-
-     // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
-     spriteB->setAdditionalTransform(t);
-
-     //rotation
-     spriteA->setRotation(20);
-
-     // Gets the spriteA's transform.
-     t = spriteA->getNodeToParentTransform();
-
-     // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
-     spriteB->setAdditionalTransform(t);
-     @endcode
      */
-    void setAdditionalTransform(const kmMat4& additionalTransform);
+    void setAdditionalTransform(kmMat4* additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
