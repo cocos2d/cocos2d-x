@@ -348,6 +348,7 @@
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ExtensionsTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
@@ -471,6 +472,7 @@
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ExtensionsTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />

@@ -676,6 +676,9 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestCpp.h" />
@@ -1248,6 +1251,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
