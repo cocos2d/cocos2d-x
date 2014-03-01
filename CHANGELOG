@@ -13,8 +13,9 @@ cocos2d-x-3.0rc0 Feb.?? 2014
                     Node: set/get VertexZ() -> set/get PositionZ()
                     Node: setRotationX() -> setRotationSkewX()
                     Node: setRotationY() -> setRotationSkewY()
+		    Node: visit() and draw() new arguments: Renderer, parentTransform, and whether or not the parentTransform has changed since the last frame
      [NEW]          Language: Added Dutch support.
-     [NEW]          Sprite: Added auto-culling support
+     [NEW]          Sprite: Added auto-culling support. Performance increased in about 100% when many sprites are outside the screen
      
      [FIX]          spine::Skeleton would not be updated after being re-added to scene.
      [FIX]          Loading custom fonts from ttf file fails on windows.
