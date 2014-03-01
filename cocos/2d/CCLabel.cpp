@@ -679,23 +679,24 @@ void Label::onDraw()
     CC_PROFILER_STOP("Label - draw");
 }
 
-void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
-void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (! _visible)
     {
         return;
     }
     
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,

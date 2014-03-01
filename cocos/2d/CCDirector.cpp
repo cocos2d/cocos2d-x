@@ -282,7 +282,7 @@ void Director::drawScene()
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, identity, true);
+        _runningScene->visit(_renderer, identity, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 

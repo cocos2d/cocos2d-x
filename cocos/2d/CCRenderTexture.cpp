@@ -361,7 +361,7 @@ void RenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
-void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // override visit.
 	// Don't call visit on its children
@@ -370,9 +370,10 @@ void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, boo
         return;
     }
 	
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,
@@ -617,7 +618,7 @@ void RenderTexture::onClearDepth()
     glClearDepth(depthClearValue);
 }
 
-void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_autoDraw)
     {
@@ -635,7 +636,7 @@ void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool trans
         for(const auto &child: _children)
         {
             if (child != _sprite)
-                child->visit(renderer, transform, transformDirty);
+                child->visit(renderer, transform, transformUpdated);
         }
 
         //End will pop the current render group

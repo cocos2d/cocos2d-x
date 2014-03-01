@@ -72,7 +72,7 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
             setupVBO();
         }
 
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
         
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
@@ -358,16 +358,14 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
-void ParticleSystemQuad::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void ParticleSystemQuad::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
     //quad command
     if(_particleIdx > 0)
     {
-        auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-        _quadCommand.init(_globalZOrder, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, _quads, _particleIdx, _modelViewTransform);
+        renderer->addCommand(&_quadCommand);
     }
 }
 

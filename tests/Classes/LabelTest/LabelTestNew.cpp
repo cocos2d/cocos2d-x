@@ -309,12 +309,12 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);
 }
 
-void LabelFNTSpriteActions::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void LabelFNTSpriteActions::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
-    
+    renderer->addCommand(&_renderCmd);
+
 }
 
 void LabelFNTSpriteActions::onDraw()
@@ -926,11 +926,11 @@ std::string LabelFNTBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelFNTBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void LabelFNTBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
+    renderer->addCommand(&_renderCmd);
 }
 
 void LabelFNTBounds::onDraw()
@@ -1515,11 +1515,11 @@ void LabelTTFOldNew::onDraw()
     kmGLLoadMatrix(&oldMat);
 }
 
-void LabelTTFOldNew::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void LabelTTFOldNew::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
+    renderer->addCommand(&_renderCmd);
 }
 
 std::string LabelTTFOldNew::title() const

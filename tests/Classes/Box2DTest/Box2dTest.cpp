@@ -137,14 +137,14 @@ void Box2DTestLayer::createResetButton()
 
 }
 
-void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     //
     // IMPORTANT:
     // This is only for debug purposes
     // It is recommend to disable it
     //
-    Layer::draw(renderer, transform, transformDirty);
+    Layer::draw(renderer, transform, transformUpdated);
 
 #if CC_ENABLE_BOX2D_INTEGRATION
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
@@ -154,7 +154,7 @@ void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool tran
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 
     kmGLPopMatrix();
 #endif

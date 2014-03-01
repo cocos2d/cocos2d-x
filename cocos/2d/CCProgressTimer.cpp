@@ -550,14 +550,14 @@ void ProgressTimer::onDraw()
     }
 }
 
-void ProgressTimer::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void ProgressTimer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if( ! _vertexData || ! _sprite)
         return;
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 

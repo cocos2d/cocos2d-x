@@ -17,7 +17,7 @@ public:
 
     void initPhysics();
     void createResetButton();
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     void addNewSpriteAtPosition(Point p);
     void update(float dt);

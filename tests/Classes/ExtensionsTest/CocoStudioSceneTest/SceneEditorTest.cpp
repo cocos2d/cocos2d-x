@@ -194,9 +194,9 @@ void SceneEditorTestLayer::backCallback(Ref *pSender)
     s->release();
 }
 
-void SceneEditorTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void SceneEditorTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    Layer::draw(renderer, transform, transformDirty);
+    Layer::draw(renderer, transform, transformUpdated);
 }
 
 

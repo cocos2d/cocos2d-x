@@ -316,9 +316,9 @@ void EditBox::setAnchorPoint(const Point& anchorPoint)
     }
 }
 
-void EditBox::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void EditBox::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
-    ControlButton::visit(renderer, parentTransform, parentTransformDirty);
+    ControlButton::visit(renderer, parentTransform, parentTransformUpdated);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->visit();

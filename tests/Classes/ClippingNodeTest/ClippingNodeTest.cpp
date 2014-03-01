@@ -596,7 +596,7 @@ void RawStencilBufferTest::setup()
     Director::getInstance()->setAlphaBlending(true);
 }
 
-void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {    
     auto winPoint = Point(Director::getInstance()->getWinSize());
     
@@ -614,9 +614,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
     iter->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
     renderer->addCommand(&(*iter));
     ++iter;
-    
 
-        
     for (int i = 0; i < _planeCount; i++) {
         
         auto stencilPoint = planeSize * (_planeCount - i);
@@ -634,7 +632,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
         
         kmGLPushMatrix();
         _modelViewTransform = this->transform(transform);
-        _sprites.at(i)->visit(renderer, _modelViewTransform, transformDirty);
+        _sprites.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
         kmGLPopMatrix();
         
         iter->init(_globalZOrder);
@@ -644,14 +642,13 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
         
         kmGLPushMatrix();
         _modelViewTransform = this->transform(transform);
-        _sprites.at(i)->visit(renderer, _modelViewTransform, transformDirty);
+        _sprites.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
         kmGLPopMatrix();
     }
     
     iter->init(_globalZOrder);
     iter->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
     renderer->addCommand(&(*iter));
-
 }
 
 void RawStencilBufferTest::onEnableStencil()

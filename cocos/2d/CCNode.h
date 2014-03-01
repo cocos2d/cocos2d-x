@@ -991,13 +991,13 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const kmMat4& transform, bool transformDirty);
+    virtual void draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated);
     virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformDirty);
+    virtual void visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
     virtual void visit() final;
 
 
@@ -1254,16 +1254,6 @@ public:
     /// @name Transformations
 
     /**
-     * Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes.
-     */
-    kmMat4 transform(const kmMat4 &parentTransform);
-    /**
-     * Performs OpenGL view-matrix transformation of it's ancestors.
-     * Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)
-     * It's necessary to transform the ancestors again.
-     */
-    void transformAncestors();
-    /**
      * Calls children's updateTransform() method recursively.
      *
      * This method is moved from Sprite, so it's no longer specific to Sprite.
@@ -1313,7 +1303,7 @@ public:
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
 
-    /** @deprecated Use worldToNodeTransform() instead */
+    /** @deprecated Use getWorldToNodeTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
@@ -1404,8 +1394,8 @@ public:
      spriteB->setAdditionalTransform(t);
      @endcode
      */
-    void setAdditionalTransform(const AffineTransform& additionalTransform);
     void setAdditionalTransform(const kmMat4& additionalTransform);
+    void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
 
@@ -1481,7 +1471,9 @@ protected:
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
-    
+
+    kmMat4 transform(const kmMat4 &parentTransform);
+
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
     virtual void updateCascadeColor();
@@ -1506,32 +1498,32 @@ protected:
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Point _anchorPointInPoints;    ///< anchor point in points
-    Point _anchorPoint;            ///< anchor point normalized (NOT in points)
+    Point _anchorPointInPoints;     ///< anchor point in points
+    Point _anchorPoint;             ///< anchor point normalized (NOT in points)
 
-    Size _contentSize;             ///< untransformed size of the node
+    Size _contentSize;              ///< untransformed size of the node
 
     kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
+    mutable kmMat4 _transform;      ///< transform
+    mutable bool _transformDirty;   ///< transform dirty flag
+    mutable kmMat4 _inverse;        ///< inverse transform
+    mutable bool _inverseDirty;     ///< inverse transform dirty flag
     mutable kmMat4 _additionalTransform; ///< transform
-    mutable kmMat4 _transform;     ///< transform
-    mutable kmMat4 _inverse;       ///< inverse transform
     bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
-    mutable bool _transformDirty;             ///< transform dirty flag
-    mutable bool _inverseDirty;               ///< inverse transform dirty flag
+    bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
+    int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
+    float _globalZOrder;            ///< Global order used to sort the node
 
-    int _localZOrder;                   ///< Local order (relative to its siblings) used to sort the node
-    float _globalZOrder;                ///< Global order used to sort the node
-
-    Vector<Node*> _children;               ///< array of children nodes
+    Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
 
-    int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
+    int _tag;                       ///< a tag. Can be any number you assigned just to identify this node
 
-    void *_userData;                  ///< A user assingned void pointer, Can be point to any cpp object
-    Ref *_userObject;            ///< A user assigned Object
+    void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
+    Ref *_userObject;               ///< A user assigned Object
 
     GLProgram *_shaderProgram;      ///< OpenGL shader
 
@@ -1543,9 +1535,9 @@ protected:
 
     EventDispatcher* _eventDispatcher;  ///< event dispatcher used to dispatch all kinds of events
 
-    bool _running;                    ///< is running
+    bool _running;                  ///< is running
 
-    bool _visible;                    ///< is this node visible
+    bool _visible;                  ///< is this node visible
 
     bool _ignoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the Node, false otherwise.
                                           ///< Used by Layer and Scene.

@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
 
-#include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "CCShaderCache.h"
@@ -378,7 +377,7 @@ void Armature::update(float dt)
     _armatureTransformDirty = false;
 }
 
-void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
@@ -408,17 +407,17 @@ void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool t
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
-                skin->draw(renderer, transform, transformDirty);
+                skin->draw(renderer, transform, transformUpdated);
             }
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                node->draw(renderer, transform, transformDirty);
+                node->draw(renderer, transform, transformUpdated);
             }
             break;
             default:
             {
-                node->visit(renderer, transform, transformDirty);
+                node->visit(renderer, transform, transformUpdated);
                 CC_NODE_DRAW_SETUP();
             }
             break;
@@ -426,7 +425,7 @@ void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool t
         }
         else if(Node *node = dynamic_cast<Node *>(object))
         {
-            node->visit(renderer, transform, transformDirty);
+            node->visit(renderer, transform, transformUpdated);
             CC_NODE_DRAW_SETUP();
         }
     }
@@ -445,7 +444,7 @@ void Armature::onExit()
 }
 
 
-void Armature::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void Armature::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -453,9 +452,10 @@ void Armature::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform,
         return;
     }
 
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,
