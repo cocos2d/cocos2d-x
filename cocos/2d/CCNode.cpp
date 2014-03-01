@@ -900,7 +900,6 @@ void Node::sortAllChildren()
     }
 }
 
-
 void Node::draw()
 {
     auto renderer = Director::getInstance()->getRenderer();
