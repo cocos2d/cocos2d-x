@@ -151,15 +151,12 @@ protected:
     bool allocMemory();
 
     V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
-    GLushort            *_indices;    // indices
-    
-    GLuint                _VAOname;
-    
-    GLuint                _buffersVBO[2]; //0: vertex  1: indices
+    GLushort            *_indices;      // indices
+    GLuint              _VAOname;
+    GLuint              _buffersVBO[2]; //0: vertex  1: indices
 
-    kmMat4                _transformMatrix;
-    
-    QuadCommand _quadCommand;     // quad command
+    QuadCommand _quadCommand;           // quad command
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };
