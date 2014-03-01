@@ -212,8 +212,8 @@ void ShaderSprite::onDraw()
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     
-    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }
 
 class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>

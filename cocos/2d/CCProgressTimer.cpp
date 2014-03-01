@@ -532,7 +532,8 @@ void ProgressTimer::onDraw()
     if(_type == Type::RADIAL)
     {
         glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
-    } 
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_vertexDataCount);
+    }
     else if (_type == Type::BAR)
     {
         if (!_reverseDirection) 
