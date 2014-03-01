@@ -1361,16 +1361,20 @@ void Node::setNodeToParentTransform(const kmMat4& transform)
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
-    CGAffineToGL(additionalTransform, _additionalTransform.mat);
-    _transformUpdated = _transformDirty = _inverseDirty = true;
-    _useAdditionalTransform = true;
+    kmMat4 tmp;
+    CGAffineToGL(additionalTransform, tmp.mat);
+    setAdditionalTransform(&tmp);
 }
 
-void Node::setAdditionalTransform(const kmMat4& additionalTransform)
+void Node::setAdditionalTransform(kmMat4* additionalTransform)
 {
-    _additionalTransform = additionalTransform;
+    if(additionalTransform == nullptr) {
+        _useAdditionalTransform = false;
+    } else {
+        _additionalTransform = *additionalTransform;
+        _useAdditionalTransform = true;
+    }
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    _useAdditionalTransform = true;
 }
 
 

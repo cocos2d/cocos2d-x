@@ -112,21 +112,18 @@ void TransitionScene::draw(Renderer *renderer, const kmMat4 &transform, bool tra
 
 void TransitionScene::finish()
 {
-    kmMat4 identity;
-    kmMat4Identity(&identity);
-
     // clean up
     _inScene->setVisible(true);
     _inScene->setPosition(Point(0,0));
     _inScene->setScale(1.0f);
     _inScene->setRotation(0.0f);
-    _inScene->setAdditionalTransform(identity);
+    _inScene->setAdditionalTransform(nullptr);
 
     _outScene->setVisible(false);
     _outScene->setPosition(Point(0,0));
     _outScene->setScale(1.0f);
     _outScene->setRotation(0.0f);
-    _outScene->setAdditionalTransform(identity);
+    _outScene->setAdditionalTransform(nullptr);
 
     //[self schedule:@selector(setNewScene:) interval:0];
     this->schedule(schedule_selector(TransitionScene::setNewScene), 0);

@@ -1107,8 +1107,8 @@ CameraTest2::CameraTest2()
     kmMat4 lookupMatrix;
     kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
 
-    _sprite1->setAdditionalTransform(lookupMatrix);
-    _sprite2->setAdditionalTransform(lookupMatrix);
+    _sprite1->setAdditionalTransform(&lookupMatrix);
+    _sprite2->setAdditionalTransform(&lookupMatrix);
 
 }
 
