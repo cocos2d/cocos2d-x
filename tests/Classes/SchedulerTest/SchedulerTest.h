@@ -287,6 +287,21 @@ private:
     Node *testNode;
 };
 
+class ScheduleCallbackTest : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(ScheduleCallbackTest);
+    
+    ~ScheduleCallbackTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onEnter();
+    
+    void callback(float dt);
+    
+private:
+};
+
 class SchedulerTestScene : public TestScene
 {
 public:
