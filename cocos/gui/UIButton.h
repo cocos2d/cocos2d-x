@@ -107,6 +107,8 @@ public:
      */
     void setCapInsetsNormalRenderer(const Rect &capInsets);
     
+    const Rect& getCapInsetsNormalRenderer();
+    
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
@@ -114,12 +116,16 @@ public:
      */
     void setCapInsetsPressedRenderer(const Rect &capInsets);
     
+    const Rect& getCapInsetsPressedRenderer();
+    
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
     void setCapInsetsDisabledRenderer(const Rect &capInsets);
+    
+    const Rect& getCapInsetsDisabledRenderer();
     
     //override "setAnchorPoint" of widget.
     virtual void setAnchorPoint(const Point &pt) override;
@@ -130,6 +136,8 @@ public:
      * @param true that using scale9 renderer, false otherwise.
      */
     virtual void setScale9Enabled(bool able);
+    
+    bool isScale9Enabled();
     
     //override "setFlipX" of widget.
     virtual void setFlipX(bool flipX) override;
