@@ -55,7 +55,7 @@ public:
     void setTarget(Node *target);
 
     // overrides
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty) override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     NodeGrid();

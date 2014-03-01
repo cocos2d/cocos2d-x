@@ -7,7 +7,7 @@
 class CustomTableViewCell : public cocos2d::extension::TableViewCell
 {
 public:
-	virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
+	virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 };
 
 #endif /* __CUSTOMTABELVIEWCELL_H__ */

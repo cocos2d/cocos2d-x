@@ -199,14 +199,15 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     kmGLPopMatrix();
 }
 
-void ClippingNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void ClippingNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;
     
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,

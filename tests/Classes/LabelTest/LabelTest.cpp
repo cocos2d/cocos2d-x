@@ -206,14 +206,14 @@ Atlas1::~Atlas1()
     _textureAtlas->release();
 }
 
-void Atlas1::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void Atlas1::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-    
+    renderer->addCommand(&_customCommand);
+
 //    [textureAtlas drawNumberOfQuads:3];
     
 }
@@ -529,11 +529,11 @@ Atlas4::Atlas4()
     schedule( schedule_selector(Atlas4::step), 0.1f);
 }
 
-void Atlas4::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void Atlas4::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void Atlas4::onDraw()
@@ -1615,11 +1615,11 @@ std::string LabelBMFontBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelBMFontBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void LabelBMFontBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void LabelBMFontBounds::onDraw()

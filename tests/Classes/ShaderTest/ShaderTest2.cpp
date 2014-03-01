@@ -112,7 +112,7 @@ public:
     virtual void initShader();
     void setBackgroundNotification();
 
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     void listenBackToForeground(Ref *obj);
     
 protected:
@@ -176,12 +176,12 @@ void ShaderSprite::initShader()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void ShaderSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void ShaderSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCommand.init(_globalZOrder);
     _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCommand);
-    
+    renderer->addCommand(&_renderCommand);
+
 }
 
 void ShaderSprite::onDraw()

@@ -167,7 +167,7 @@ bool Layout::hitTest(const Point &pt)
     return false;
 }
     
-void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (!_enabled)
     {
@@ -178,10 +178,10 @@ void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool paren
         switch (_clippingType)
         {
             case LAYOUT_CLIPPING_STENCIL:
-                stencilClippingVisit(renderer, parentTransform, parentTransformDirty);
+                stencilClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
             case LAYOUT_CLIPPING_SCISSOR:
-                scissorClippingVisit(renderer, parentTransform, parentTransformDirty);
+                scissorClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
             default:
                 break;
@@ -189,7 +189,7 @@ void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool paren
     }
     else
     {
-        Node::visit(renderer, parentTransform, parentTransformDirty);
+        Node::visit(renderer, parentTransform, parentTransformUpdated);
     }
 }
     
@@ -199,14 +199,15 @@ void Layout::sortAllChildren()
     doLayout();
 }
     
-void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;
     
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,
@@ -339,13 +340,13 @@ void Layout::onAfterVisitScissor()
     glDisable(GL_SCISSOR_TEST);
 }
     
-void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformDirty)
+void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
 {
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
-    Node::visit(renderer, parentTransform, parentTransformDirty);
+    Node::visit(renderer, parentTransform, parentTransformUpdated);
     
     _afterVisitCmdScissor.init(_globalZOrder);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);

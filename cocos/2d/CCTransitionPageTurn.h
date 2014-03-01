@@ -72,7 +72,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     /**
     * Creates a base transition with duration and incoming scene.

@@ -131,7 +131,7 @@ SpriteBatchNode::~SpriteBatchNode()
 
 // override visit
 // don't call visit on it's children
-void SpriteBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void SpriteBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
@@ -149,9 +149,10 @@ void SpriteBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, b
 
     sortAllChildren();
 
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,
@@ -352,7 +353,7 @@ void SpriteBatchNode::reorderBatch(bool reorder)
     _reorderChildDirty=reorder;
 }
 
-void SpriteBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void SpriteBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
     if( _textureAtlas->getTotalQuads() == 0 )
@@ -368,8 +369,8 @@ void SpriteBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool tra
                        _shaderProgram,
                        _blendFunc,
                        _textureAtlas,
-                       _modelViewTransform);
-    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
+                       transform);
+    renderer->addCommand(&_batchCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)

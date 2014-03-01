@@ -92,6 +92,7 @@ Node::Node(void)
 , _useAdditionalTransform(false)
 , _transformDirty(true)
 , _inverseDirty(true)
+, _transformUpdated(true)
 // children (lazy allocs)
 // lazy alloc
 , _localZOrder(0)
@@ -193,7 +194,7 @@ void Node::setSkewX(float skewX)
         return;
     
     _skewX = skewX;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 float Node::getSkewY() const
@@ -207,7 +208,7 @@ void Node::setSkewY(float skewY)
         return;
     
     _skewY = skewY;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 
@@ -255,8 +256,8 @@ void Node::setRotation(float rotation)
         return;
     
     _rotationZ_X = _rotationZ_Y = rotation;
-    _transformDirty = _inverseDirty = true;
-    
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
@@ -277,7 +278,7 @@ void Node::setRotation3D(const Vertex3F& rotation)
         _rotationZ_X == rotation.z)
         return;
     
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 
     _rotationX = rotation.x;
     _rotationY = rotation.y;
@@ -307,7 +308,7 @@ void Node::setRotationSkewX(float rotationX)
         return;
     
     _rotationZ_X = rotationX;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 float Node::getRotationSkewY() const
@@ -321,7 +322,7 @@ void Node::setRotationSkewY(float rotationY)
         return;
     
     _rotationZ_Y = rotationY;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// scale getter
@@ -338,7 +339,7 @@ void Node::setScale(float scale)
         return;
 
     _scaleX = _scaleY = _scaleZ = scale;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// scaleX getter
@@ -355,7 +356,7 @@ void Node::setScale(float scaleX,float scaleY)
     
     _scaleX = scaleX;
     _scaleY = scaleY;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// scaleX setter
@@ -365,7 +366,7 @@ void Node::setScaleX(float scaleX)
         return;
     
     _scaleX = scaleX;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// scaleY getter
@@ -381,7 +382,7 @@ void Node::setScaleZ(float scaleZ)
         return;
     
     _scaleZ = scaleZ;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// scaleY getter
@@ -397,7 +398,7 @@ void Node::setScaleY(float scaleY)
         return;
     
     _scaleY = scaleY;
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 
@@ -414,8 +415,8 @@ void Node::setPosition(const Point& position)
         return;
     
     _position = position;
-    _transformDirty = _inverseDirty = true;
-    
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
@@ -480,7 +481,7 @@ void Node::setPositionZ(float positionZ)
     if (_positionZ == positionZ)
         return;
     
-    _transformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 
     _positionZ = positionZ;
 
@@ -538,7 +539,7 @@ void Node::setAnchorPoint(const Point& point)
     {
         _anchorPoint = point;
         _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
-        _transformDirty = _inverseDirty = true;
+        _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
 
@@ -555,7 +556,7 @@ void Node::setContentSize(const Size & size)
         _contentSize = size;
 
         _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
-        _transformDirty = _inverseDirty = true;
+        _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
 
@@ -582,7 +583,7 @@ void Node::ignoreAnchorPointForPosition(bool newValue)
     if (newValue != _ignoreAnchorPointForPosition) 
     {
 		_ignoreAnchorPointForPosition = newValue;
-		_transformDirty = _inverseDirty = true;
+        _transformUpdated = _transformDirty = _inverseDirty = true;
 	}
 }
 
@@ -906,7 +907,7 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const kmMat4 &transform, bool transformDirty)
+void Node::draw(Renderer* renderer, const kmMat4 &transform, bool transformUpdated)
 {
 }
 
@@ -918,7 +919,7 @@ void Node::visit()
     visit(renderer, parentTransform, true);
 }
 
-void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -926,9 +927,10 @@ void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentT
         return;
     }
 
-    bool dirty = _transformDirty || parentTransformDirty;
+    bool dirty = _transformUpdated || parentTransformUpdated;
     if(dirty)
         _modelViewTransform = this->transform(parentTransform);
+    _transformUpdated = false;
 
 
     // IMPORTANT:
@@ -969,17 +971,10 @@ void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentT
     kmGLPopMatrix();
 }
 
-void Node::transformAncestors()
-{
-    // remove me
-    CCASSERT(false, "no longer supported");
-}
-
 kmMat4 Node::transform(const kmMat4& parentTransform)
 {
-    kmMat4 ret;
-    kmMat4 transfrom4x4 = this->getNodeToParentTransform();
-    kmMat4Multiply(&ret, &parentTransform, &transfrom4x4);
+    kmMat4 ret = this->getNodeToParentTransform();
+    kmMat4Multiply(&ret, &parentTransform, &ret);
 
     return ret;
 }
@@ -1362,19 +1357,20 @@ void Node::setNodeToParentTransform(const kmMat4& transform)
 {
     _transform = transform;
     _transformDirty = false;
+    _transformUpdated = true;
 }
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
     CGAffineToGL(additionalTransform, _additionalTransform.mat);
-    _transformDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
     _useAdditionalTransform = true;
 }
 
 void Node::setAdditionalTransform(const kmMat4& additionalTransform)
 {
     _additionalTransform = additionalTransform;
-    _transformDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
     _useAdditionalTransform = true;
 }
 

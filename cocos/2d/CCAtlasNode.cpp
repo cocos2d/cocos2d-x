@@ -35,7 +35,6 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
 
 // external
 #include "kazmath/GL/matrix.h"
@@ -110,8 +109,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR));
-    _uniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
     return true;
 }
@@ -138,20 +136,18 @@ void AtlasNode::updateAtlasValues()
 }
 
 // AtlasNode - draw
-void AtlasNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void AtlasNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
     _quadCommand.init(
               _globalZOrder,
               _textureAtlas->getTexture()->getName(),
-              shader,
+              _shaderProgram,
               _blendFunc,
               _textureAtlas->getQuads(),
               _quadsToDraw,
-              _modelViewTransform);
+              transform);
 
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    renderer->addCommand(&_quadCommand);
 
 }
 

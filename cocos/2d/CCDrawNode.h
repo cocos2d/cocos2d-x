@@ -92,7 +92,7 @@ public:
     void onDraw();
     
     // Overrides
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
 protected:
     DrawNode();

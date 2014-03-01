@@ -424,7 +424,7 @@ public:
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
@@ -572,6 +572,8 @@ protected:
     // image is flipped
     bool _flippedX;                         /// Whether the sprite is flipped horizontally or not
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
+
+    bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);

@@ -120,7 +120,7 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 
 // override visit.
 // Don't call visit on it's children
-void ParticleBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void ParticleBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // CAREFUL:
     // This visit is almost identical to Node#visit
@@ -134,9 +134,10 @@ void ParticleBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform,
         return;
     }
 
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,
@@ -379,7 +380,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void ParticleBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 
@@ -394,7 +395,7 @@ void ParticleBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool t
                        _blendFunc,
                        _textureAtlas,
                        _modelViewTransform);
-    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
+    renderer->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

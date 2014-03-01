@@ -101,7 +101,7 @@ void BatchNode::removeChild(Node* child, bool cleanup)
     Node::removeChild(child, cleanup);
 }
 
-void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformDirty)
+void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -109,9 +109,10 @@ void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool pa
         return;
     }
 
-    bool dirty = parentTransformDirty || _transformDirty;
+    bool dirty = parentTransformUpdated || _transformUpdated;
     if(dirty)
         _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the kmGL stack,
@@ -128,7 +129,7 @@ void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool pa
     kmGLPopMatrix();
 }
 
-void BatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void BatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_children.empty())
     {
@@ -149,14 +150,14 @@ void BatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transform
                 pushed = true;
             }
         
-            armature->visit(renderer, transform, transformDirty);
+            armature->visit(renderer, transform, transformUpdated);
         }
         else
         {
-            Director::getInstance()->getRenderer()->popGroup();
+            renderer->popGroup();
             pushed = false;
             
-            ((Node *)object)->visit(renderer, transform, transformDirty);
+            ((Node *)object)->visit(renderer, transform, transformUpdated);
         }
     }
 }

@@ -92,31 +92,31 @@ void TransitionPageTurn::onDisablePolygonOffset()
     glPolygonOffset(0, 0);
 }
 
-void TransitionPageTurn::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void TransitionPageTurn::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    Scene::draw(renderer, transform, transformDirty);
+    Scene::draw(renderer, transform, transformUpdated);
     
     if( _isInSceneOnTop ) {
-        _outSceneProxy->visit(renderer, transform, transformDirty);
+        _outSceneProxy->visit(renderer, transform, transformUpdated);
         _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
-        _inSceneProxy->visit(renderer, transform, transformDirty);
+        renderer->addCommand(&_enableOffsetCmd);
+        _inSceneProxy->visit(renderer, transform, transformUpdated);
         _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_disableOffsetCmd);
+        renderer->addCommand(&_disableOffsetCmd);
     } else {
-        _inSceneProxy->visit(renderer, transform, transformDirty);
+        _inSceneProxy->visit(renderer, transform, transformUpdated);
         
         _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
+        renderer->addCommand(&_enableOffsetCmd);
         
-        _outSceneProxy->visit(renderer, transform, transformDirty);
+        _outSceneProxy->visit(renderer, transform, transformUpdated);
         
         _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_disableOffsetCmd);
+        renderer->addCommand(&_disableOffsetCmd);
     }
 }
 

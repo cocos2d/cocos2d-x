@@ -462,32 +462,31 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
     CC_SAFE_RELEASE(_spriteDS);
 }
 
-void RenderTextureTestDepthStencil::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void RenderTextureTestDepthStencil::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmds[0].init(_globalZOrder);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[0]);
-    
+    renderer->addCommand(&_renderCmds[0]);
+
     _rend->beginWithClear(0, 0, 0, 0, 0, 0);
     
     _renderCmds[1].init(_globalZOrder);
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
-    
+    renderer->addCommand(&_renderCmds[1]);
+
     _spriteDS->visit();
     
     _renderCmds[2].init(_globalZOrder);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
-    
+    renderer->addCommand(&_renderCmds[2]);
+
     _spriteDraw->visit();
     
     _rend->end();
     
     _renderCmds[3].init(_globalZOrder);
     _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[3]);
-
+    renderer->addCommand(&_renderCmds[3]);
 }
 
 void RenderTextureTestDepthStencil::onBeforeClear()
@@ -630,13 +629,13 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
     return sprite;
 }
 
-void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-    
-    Sprite::draw(renderer, transform, transformDirty);
+    renderer->addCommand(&_customCommand);
+
+    Sprite::draw(renderer, transform, transformUpdated);
     
 }
 

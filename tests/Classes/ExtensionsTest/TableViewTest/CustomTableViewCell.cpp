@@ -2,9 +2,9 @@
 
 USING_NS_CC;
 
-void CustomTableViewCell::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void CustomTableViewCell::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-	TableViewCell::draw(renderer, transform, transformDirty);
+	TableViewCell::draw(renderer, transform, transformUpdated);
 	// draw bounding box
 // 	auto pos = getPosition();
 // 	auto size = Size(178, 200);

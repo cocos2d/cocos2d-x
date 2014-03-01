@@ -242,7 +242,7 @@ const std::string& TextFieldTTF::getContentText()
     return _inputText;
 }
 
-void TextFieldTTF::draw(Renderer *renderer, const kmMat4 &transform, bool transformDirty)
+void TextFieldTTF::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_delegate && _delegate->onDraw(this))
     {
@@ -250,14 +250,14 @@ void TextFieldTTF::draw(Renderer *renderer, const kmMat4 &transform, bool transf
     }
     if (_inputText.length())
     {
-        LabelTTF::draw(renderer, transform, transformDirty);
+        LabelTTF::draw(renderer, transform, transformUpdated);
         return;
     }
 
     // draw placeholder
     Color3B color = getColor();
     setColor(_colorSpaceHolder);
-    LabelTTF::draw(renderer, transform, transformDirty);
+    LabelTTF::draw(renderer, transform, transformUpdated);
     setColor(color);
 }
 
