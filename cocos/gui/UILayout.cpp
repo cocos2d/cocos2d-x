@@ -153,6 +153,23 @@ void Layout::addChild(Node *child, int zOrder, int tag)
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
+    
+void Layout::removeChild(Node *child, bool cleanup)
+{
+    Widget::removeChild(child, cleanup);
+    _doLayoutDirty = true;
+}
+    
+void Layout::removeAllChildren()
+{
+    Widget::removeAllChildren();
+}
+    
+void Layout::removeAllChildrenWithCleanup(bool cleanup)
+{
+    Widget::removeAllChildrenWithCleanup(cleanup);
+    _doLayoutDirty = true;
+}
 
 bool Layout::isClippingEnabled()
 {
@@ -408,6 +425,11 @@ void Layout::setClippingType(LayoutClippingType type)
     setClippingEnabled(clippingEnabled);
 }
     
+LayoutClippingType Layout::getClippingType()
+{
+    return _clippingType;
+}
+    
 void Layout::setStencilClippingSize(const Size &size)
 {
     if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
@@ -620,6 +642,11 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
+    
+const Rect& Layout::getBackGroundImageCapInsets()
+{
+    return _backGroundImageCapInsets;
+}
 
 void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 {
@@ -747,6 +774,11 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             break;
     }
 }
+    
+LayoutBackGroundColorType Layout::getBackGroundColorType()
+{
+    return _colorType;
+}
 
 void Layout::setBackGroundColor(const Color3B &color)
 {
@@ -755,6 +787,11 @@ void Layout::setBackGroundColor(const Color3B &color)
     {
         _colorRender->setColor(color);
     }
+}
+    
+const Color3B& Layout::getBackGroundColor()
+{
+    return _cColor;
 }
 
 void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endColor)
@@ -769,6 +806,16 @@ void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endCol
     {
         _gradientRender->setEndColor(endColor);
     }
+}
+    
+const Color3B& Layout::getBackGroundStartColor()
+{
+    return _gStartColor;
+}
+
+const Color3B& Layout::getBackGroundEndColor()
+{
+    return _gEndColor;
 }
 
 void Layout::setBackGroundColorOpacity(int opacity)
@@ -788,6 +835,11 @@ void Layout::setBackGroundColorOpacity(int opacity)
             break;
     }
 }
+    
+int Layout::getBackGroundColorOpacity()
+{
+    return _cOpacity;
+}
 
 void Layout::setBackGroundColorVector(const Point &vector)
 {
@@ -796,6 +848,11 @@ void Layout::setBackGroundColorVector(const Point &vector)
     {
         _gradientRender->setVector(vector);
     }
+}
+    
+const Point& Layout::getBackGroundColorVector()
+{
+    return _alongVector;
 }
 
 const Size& Layout::getBackGroundImageTextureSize() const
