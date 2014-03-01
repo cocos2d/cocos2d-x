@@ -39,15 +39,18 @@ public:
 	virtual bool OnRender() override;
     virtual void CreateGLResources() override;
 
+    void OnBackButton();
     void OnKeyPressed(Platform::String^ text);
     void OnCocos2dKeyEvent(PhoneDirect3DXamlAppComponent::Cocos2dKeyEvent event);
     void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate);
+    void SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate);
+    void SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ delegate);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
     Windows::Foundation::IAsyncAction^ OnSuspending();
-    bool OnBackKeyPress();
+    void OnBackKeyPress();
     void Connect();
     void Disconnect();
 
@@ -60,6 +63,8 @@ private:
     bool mInitialized;
 
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
+    PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
+    PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ m_editBoxDelegate;
 
 	// The AppDelegate for the Cocos2D app
 	AppDelegate* mApp;
