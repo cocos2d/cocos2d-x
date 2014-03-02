@@ -293,6 +293,11 @@ CCNode* ScrollView::getNodeByTag(int tag)
 {
     return _innerContainer->getNodeByTag(tag);
 }
+    
+void ScrollView::removeNodeByTag(int tag)
+{
+    _innerContainer->removeNodeByTag(tag);
+}
 
 CCArray* ScrollView::getNodes()
 {

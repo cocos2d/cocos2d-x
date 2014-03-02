@@ -283,6 +283,8 @@ public:
     
     virtual CCNode * getNodeByTag(int tag);
     
+    virtual void removeNodeByTag(int tag);
+    
     virtual CCArray* getNodes();
     
     virtual void removeNode(CCNode* node);
