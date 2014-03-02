@@ -273,6 +273,41 @@ Widget* ScrollView::getChildByName(const char *name)
 {
     return _innerContainer->getChildByName(name);
 }
+    
+void ScrollView::addNode(CCNode* node)
+{
+    Layout::addNode(node);
+}
+
+void ScrollView::addNode(CCNode * node, int zOrder)
+{
+    Layout::addNode(node, zOrder);
+}
+
+void ScrollView::addNode(CCNode* node, int zOrder, int tag)
+{
+    _innerContainer->addNode(node, zOrder, tag);
+}
+
+CCNode* ScrollView::getNodeByTag(int tag)
+{
+    return _innerContainer->getNodeByTag(tag);
+}
+
+CCArray* ScrollView::getNodes()
+{
+    return _innerContainer->getNodes();
+}
+
+void ScrollView::removeNode(CCNode* node)
+{
+    _innerContainer->removeNode(node);
+}
+
+void ScrollView::removeAllNodes()
+{
+    _innerContainer->removeAllNodes();
+}
 
 void ScrollView::moveChildren(float offsetX, float offsetY)
 {
