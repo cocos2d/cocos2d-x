@@ -156,7 +156,7 @@ Node::~Node()
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_scheduler);
     
-    _eventDispatcher->cleanTarget(this);
+    _eventDispatcher->removeEventListenersForTarget(this);
     CC_SAFE_RELEASE(_eventDispatcher);
     
     // attributes
@@ -1050,7 +1050,7 @@ void Node::setEventDispatcher(EventDispatcher* dispatcher)
 {
     if (dispatcher != _eventDispatcher)
     {
-        _eventDispatcher->cleanTarget(this);
+        _eventDispatcher->removeEventListenersForTarget(this);
         CC_SAFE_RETAIN(dispatcher);
         CC_SAFE_RELEASE(_eventDispatcher);
         _eventDispatcher = dispatcher;
@@ -1198,14 +1198,14 @@ void Node::resume()
 {
     _scheduler->resumeTarget(this);
     _actionManager->resumeTarget(this);
-    _eventDispatcher->resumeTarget(this);
+    _eventDispatcher->resumeEventListenersForTarget(this);
 }
 
 void Node::pause()
 {
     _scheduler->pauseTarget(this);
     _actionManager->pauseTarget(this);
-    _eventDispatcher->pauseTarget(this);
+    _eventDispatcher->pauseEventListenersForTarget(this);
 }
 
 void Node::resumeSchedulerAndActions()
