@@ -45,7 +45,8 @@ typedef enum
     
 typedef enum
 {
-    LISTVIEW_ONSELECTEDITEM
+    LISTVIEW_ONSELECTEDITEM,
+    LISTVIEW_ONTOUCHDOWN
 }ListViewEventType;
 
 typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
@@ -202,6 +203,7 @@ protected:
     SEL_ListViewEvent    _listViewEventSelector;
     ssize_t _curSelectedIndex;
     bool _refreshViewDirty;
+    Point _lastTouchPoint;
 };
 
 }
