@@ -183,7 +183,7 @@ TimerTargetCallback::TimerTargetCallback()
 {
 }
 
-bool TimerTargetCallback::initWithLambda(const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay)
+bool TimerTargetCallback::initWithCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay)
 {
     _target = target;
     _callback = callback;
@@ -326,7 +326,7 @@ void Scheduler::scheduleCallback(const ccSchedulerFunc& callback, void *target, 
     }
 
     TimerTargetCallback *timer = new TimerTargetCallback();
-    timer->initWithLambda(callback, target, key, interval, repeat, delay);
+    timer->initWithCallback(callback, target, key, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();
 }

@@ -104,7 +104,7 @@ public:
     TimerTargetCallback();
     
     /** Initializes a timer with a target, a lambda and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithLambda(const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay);
+    bool initWithCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay);
     
     /**
      * @js NA
