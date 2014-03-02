@@ -1,13 +1,13 @@
 #ifndef __CCB_KEYFRAME_H__
 #define __CCB_KEYFRAME_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCValue.h"
 
 
 namespace cocosbuilder {
 
-class CCBKeyframe : public cocos2d::Object
+class CCBKeyframe : public cocos2d::Ref
 {
 public:
     enum class EasingType
@@ -45,8 +45,8 @@ public:
     const cocos2d::Value& getValue() const;
     void setValue(const cocos2d::Value& value);
     
-    cocos2d::Object* getObject() const;
-    void setObject(cocos2d::Object* obj);
+    cocos2d::Ref* getObject() const;
+    void setObject(cocos2d::Ref* obj);
     
     float getTime();
     void setTime(float fTime);
@@ -59,7 +59,7 @@ public:
     
 private:
     cocos2d::Value _value;
-    cocos2d::Object* _object;
+    cocos2d::Ref* _object;
     float _time;
     EasingType _easingType;
     float _easingOpt;

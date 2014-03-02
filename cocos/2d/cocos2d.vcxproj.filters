@@ -357,9 +357,6 @@
     <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
-    <ClCompile Include="platform\win32\CCImage.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
     <ClCompile Include="platform\win32\CCStdC.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -520,7 +517,7 @@
     <ClCompile Include="..\base\CCNS.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCObject.cpp">
+    <ClCompile Include="..\base\CCRef.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCSet.cpp">
@@ -597,6 +594,9 @@
     </ClCompile>
     <ClCompile Include="platform\desktop\CCGLView.cpp">
       <Filter>platform\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CCImage.cpp">
+      <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -885,9 +885,6 @@
     <ClInclude Include="platform\CCImage.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="platform\CCImageCommon_cpp.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="platform\CCSAXParser.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -1114,7 +1111,7 @@
     <ClInclude Include="..\base\CCNS.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCObject.h">
+    <ClInclude Include="..\base\CCRef.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCSet.h">

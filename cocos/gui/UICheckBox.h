@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
@@ -37,7 +37,7 @@ typedef enum
     CHECKBOX_STATE_EVENT_UNSELECTED
 }CheckBoxEventType;
 
-typedef void (Object::*SEL_SelectedStateEvent)(Object*,CheckBoxEventType);
+typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 #define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
 /**
@@ -140,7 +140,7 @@ public:
     virtual void setAnchorPoint(const Point &pt) override;
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListenerCheckBox(Object* target,SEL_SelectedStateEvent selector);
+    void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX) override;
@@ -192,7 +192,7 @@ protected:
     Sprite* _frontCrossDisabledRenderer;
     bool _isSelected;
 
-    Object*       _checkBoxEventListener;
+    Ref*       _checkBoxEventListener;
     SEL_SelectedStateEvent    _checkBoxEventSelector;
     
     TextureResType _backGroundTexType;

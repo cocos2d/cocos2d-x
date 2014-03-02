@@ -28,7 +28,7 @@ THE SOFTWARE.
 #define __CC_ANIMATION_H__
 
 #include "CCPlatformConfig.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCArray.h"
 #include "CCValue.h"
 #include "CCGeometry.h"
@@ -55,7 +55,7 @@ class SpriteFrame;
  
  @since v2.0
  */
-class CC_DLL AnimationFrame : public Object, public Clonable
+class CC_DLL AnimationFrame : public Ref, public Clonable
 {
 public:
     /**
@@ -135,7 +135,7 @@ You can animate a Animation object by using the Animate action. Example:
 @endcode
 
 */
-class CC_DLL Animation : public Object, public Clonable
+class CC_DLL Animation : public Ref, public Clonable
 {
 public:
     /** Creates an animation

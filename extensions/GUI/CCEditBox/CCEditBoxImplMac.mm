@@ -158,6 +158,7 @@
         pDelegate->editBoxEditingDidBegin(getEditBoxImplMac()->getEditBox());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -165,6 +166,7 @@
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     return YES;
 }
 
@@ -178,6 +180,7 @@
         pDelegate->editBoxReturn(getEditBoxImplMac()->getEditBox());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -189,6 +192,7 @@
         event.data = (void*)&data;
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     return YES;
 }
 
@@ -226,6 +230,7 @@
         pDelegate->editBoxTextChanged(getEditBoxImplMac()->getEditBox(), getEditBoxImplMac()->getText());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -233,6 +238,7 @@
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
 }
 
 @end

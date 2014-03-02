@@ -26,7 +26,7 @@
 #define cocos2d_libs_EventListener_h
 
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 #include <functional>
 #include <string>
@@ -43,7 +43,7 @@ class Node;
  *  If you need custom listener which with different callback, you need to inherit this class.
  *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
  */
-class EventListener : public Object
+class EventListener : public Ref
 {
 public:
     enum class Type
@@ -64,7 +64,7 @@ protected:
     EventListener();
     
     /** Initializes event with type and callback function */
-    bool init(Type t, ListenerID listenerID, std::function<void(Event*)>callback);
+    bool init(Type t, const ListenerID& listenerID, const std::function<void(Event*)>& callback);
 public:
     /** Destructor */
     virtual ~EventListener();

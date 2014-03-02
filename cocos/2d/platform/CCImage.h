@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_IMAGE_H__
 #define __CC_IMAGE_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCTexture2D.h"
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
@@ -53,7 +53,7 @@ typedef struct _MipmapInfo
     int len;
 }MipmapInfo;
 
-class CC_DLL Image : public Object
+class CC_DLL Image : public Ref
 {
 public:
     friend class TextureCache;
@@ -94,19 +94,6 @@ public:
         UNKOWN
     };
 
-    enum class TextAlign
-    {
-        CENTER        = 0x33, ///< Horizontal center and vertical center.
-        TOP           = 0x13, ///< Horizontal center and vertical top.
-        TOP_RIGHT     = 0x12, ///< Horizontal right and vertical top.
-        RIGHT         = 0x32, ///< Horizontal right and vertical center.
-        BOTTOM_RIGHT = 0x22, ///< Horizontal right and vertical bottom.
-        BOTTOM        = 0x23, ///< Horizontal center and vertical bottom.
-        BOTTOM_LEFT  = 0x21, ///< Horizontal left and vertical bottom.
-        LEFT          = 0x31, ///< Horizontal left and vertical center.
-        TOP_LEFT      = 0x11, ///< Horizontal left and vertical top.
-    };
-    
     /**
     @brief Load the image from the specified path.
     @param path   the absolute file path.
@@ -127,53 +114,6 @@ public:
     // @warning kFmtRawData only support RGBA8888
     bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
-    /**
-    @brief Create image with specified string.
-    @param text       the text the image will show (cannot be nil).
-    @param width      the image width, if 0, the width will match the text's width.
-    @param height     the image height, if 0, the height will match the text's height.
-    @param alignMask  the test Alignment
-    @param fontName   the name of the font used to draw the text. If nil, use the default system font.
-    @param size       the font size, if 0, use the system default size.
-    * @js NA
-    * @lua NA
-    */
-    bool initWithString(
-        const char *    text,
-        int             width = 0,
-        int             height = 0,
-        TextAlign       alignMask = TextAlign::CENTER,
-        const char *    fontName = 0,
-        int             size = 0);
-    
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    
-        bool initWithStringShadowStroke(
-                                            const char *    pText,
-                                            int             nWidth      = 0,
-                                            int             nHeight     = 0,
-                                            TextAlign       eAlignMask  = TextAlign::CENTER,
-                                            const char *    pFontName   = 0,
-                                            int             nSize       = 0,
-                                            float           textTintR   = 1,
-                                            float           textTintG   = 1,
-                                            float           textTintB   = 1,
-                                            bool shadow                 = false,
-                                            float shadowOffsetX         = 0.0,
-                                            float shadowOffsetY         = 0.0,
-                                            float shadowOpacity         = 0.0,
-                                            float shadowBlur            = 0.0,
-                                            bool  stroke                =  false,
-                                            float strokeR               = 1,
-                                            float strokeG               = 1,
-                                            float strokeB               = 1,
-                                            float strokeSize            = 1
-                                        
-                                        );
-    
-    #endif
-    
-    
     // Getters
     inline unsigned char *   getData()               { return _data; }
     inline ssize_t           getDataLen()            { return _dataLen; }

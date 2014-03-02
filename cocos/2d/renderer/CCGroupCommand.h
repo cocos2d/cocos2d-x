@@ -26,14 +26,15 @@
 #ifndef _CC_GROUPCOMMAND_H_
 #define _CC_GROUPCOMMAND_H_
 
-#include "CCPlatformMacros.h"
+#include "CCRef.h"
 #include "CCRenderCommand.h"
 #include "CCRenderCommandPool.h"
+
 #include <unordered_map>
 
 NS_CC_BEGIN
 
-class GroupCommandManager : public Object
+class GroupCommandManager : public Ref
 {
 public:
     static GroupCommandManager* getInstance();

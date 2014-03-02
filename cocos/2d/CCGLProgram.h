@@ -31,8 +31,7 @@ THE SOFTWARE.
 #define __CCGLPROGRAM_H__
 
 #include "ccMacros.h"
-#include "CCObject.h"
-
+#include "CCRef.h"
 #include "CCGL.h"
 #include "kazmath/kazmath.h"
 
@@ -54,7 +53,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
  
  @since v2.0.0
  */
-class CC_DLL GLProgram : public Object
+class CC_DLL GLProgram : public Ref
 {
 public:
     enum

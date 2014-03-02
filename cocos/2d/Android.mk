@@ -12,6 +12,7 @@ CCAction.cpp \
 CCActionCamera.cpp \
 CCActionCatmullRom.cpp \
 CCActionEase.cpp \
+CCTweenFunction.cpp \
 CCActionGrid.cpp \
 CCActionGrid3D.cpp \
 CCActionInstant.cpp \
@@ -115,6 +116,7 @@ platform/CCGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+platform/CCImage.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
@@ -134,7 +136,7 @@ renderer/CCRenderMaterial.cpp \
 ../base/CCDictionary.cpp \
 ../base/CCGeometry.cpp \
 ../base/CCNS.cpp \
-../base/CCObject.cpp \
+../base/CCRef.cpp \
 ../base/CCSet.cpp \
 ../base/CCString.cpp \
 ../base/CCValue.cpp \

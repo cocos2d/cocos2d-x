@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CCDICTIONARY_H__
 
 #include "uthash.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCArray.h"
 #include "CCString.h"
 
@@ -69,7 +69,7 @@ private:
      *  @param  pszKey    The string key of this element.
      *  @param  pObject   The object of this element.
      */
-    DictElement(const char* pszKey, Object* pObject);
+    DictElement(const char* pszKey, Ref* pObject);
 
     /**
      *  Constructor of DictElement. It's only for internal usage. Dictionary is its friend class.
@@ -77,7 +77,7 @@ private:
      *  @param  iKey    The integer key of this element.
      *  @param  pObject   The object of this element.
      */
-    DictElement(intptr_t iKey, Object* pObject);
+    DictElement(intptr_t iKey, Ref* pObject);
     
 public:
     /**
@@ -120,7 +120,7 @@ public:
      *
      * @return  The object of this element.
      */
-    inline Object* getObject() const { return _object; }
+    inline Ref* getObject() const { return _object; }
 
 private:
     // The max length of string key.
@@ -129,7 +129,7 @@ private:
     // So it's a pain that all elements will allocate 256 bytes for this array.
     char      _strKey[MAX_KEY_LEN];     // hash key of string type
     intptr_t  _intKey;       // hash key of integer type
-    Object* _object;    // hash value
+    Ref* _object;    // hash value
 public:
     UT_hash_handle hh;      // makes this class hashable
     friend class __Dictionary; // declare Dictionary as friend class
@@ -172,7 +172,7 @@ public:
  *
  */
 
-class CC_DLL __Dictionary : public Object, public Clonable
+class CC_DLL __Dictionary : public Ref, public Clonable
 {
 public:
     /**
@@ -216,7 +216,7 @@ public:
      *  @return   The array contains all keys for the specified object. It's an autorelease object yet.
      * @js NA
      */
-    __Array* allKeysForObject(Object* object);
+    __Array* allKeysForObject(Ref* object);
 
     /**
      *  Get the object according to the specified string key.
@@ -237,7 +237,7 @@ public:
      *  @see objectForKey(intptr_t)
      * @js NA
      */
-    Object* objectForKey(const std::string& key);
+    Ref* objectForKey(const std::string& key);
     
     /**
      *  Get the object according to the specified integer key.
@@ -248,7 +248,7 @@ public:
      *  @see objectForKey(const std::string&)
      * @js NA
      */
-    Object* objectForKey(intptr_t key);
+    Ref* objectForKey(intptr_t key);
     
     /** Get the value according to the specified string key.
      *
@@ -281,10 +281,10 @@ public:
      *
      *  @param pObject  The Object to be inserted.
      *  @param key      The string key for searching.
-     *  @see setObject(Object*, intptr_t)
+     *  @see setObject(Ref*, intptr_t)
      * @js NA
      */
-    void setObject(Object* pObject, const std::string& key);
+    void setObject(Ref* pObject, const std::string& key);
     
     /** Insert an object to dictionary, and match it with the specified string key.
      *
@@ -294,10 +294,10 @@ public:
      *        Then the new object will be inserted after that.
      *  @param pObject  The Object to be inserted.
      *  @param key      The string key for searching.
-     *  @see setObject(Object*, const std::string&)
+     *  @see setObject(Ref*, const std::string&)
      *  @js NA
      */
-    void setObject(Object* pObject, intptr_t key);
+    void setObject(Ref* pObject, intptr_t key);
 
     /** 
      *  Remove an object by the specified string key.
@@ -357,7 +357,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    Object* randomObject();
+    Ref* randomObject();
     
     /**
      *  Create a dictionary.
@@ -425,8 +425,8 @@ private:
     /** 
      *  For internal usage, invoked by setObject.
      */
-    void setObjectUnSafe(Object* pObject, const std::string& key);
-    void setObjectUnSafe(Object* pObject, const intptr_t key);
+    void setObjectUnSafe(Ref* pObject, const std::string& key);
+    void setObjectUnSafe(Ref* pObject, const intptr_t key);
     
 public:
     /**

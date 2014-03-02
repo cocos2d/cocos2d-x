@@ -29,7 +29,7 @@
 #include <string>
 #include <stdint.h>
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
@@ -39,7 +39,7 @@ class Node;
 /**
  *   Base class of all kinds of events.
  */
-class Event : public Object
+class Event : public Ref
 {
 public:
     enum class Type

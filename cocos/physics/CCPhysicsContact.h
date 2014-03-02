@@ -28,7 +28,7 @@
 #include "ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 #include "CCEventListenerCustom.h"
 #include "CCEvent.h"
@@ -130,14 +130,14 @@ private:
 class PhysicsContactPreSolve
 {
 public:
-    /** get elasticity between two bodies*/
-    float getElasticity() const;
+    /** get restitution between two bodies*/
+    float getRestitution() const;
     /** get friction between two bodies*/
     float getFriction() const;
     /** get surface velocity between two bodies*/
     Point getSurfaceVelocity() const;
-    /** set the elasticity*/
-    void setElasticity(float elasticity);
+    /** set the restitution*/
+    void setRestitution(float restitution);
     /** set the friction*/
     void setFriction(float friction);
     /** set the surface velocity*/
@@ -165,8 +165,8 @@ private:
 class PhysicsContactPostSolve
 {
 public:
-    /** get elasticity between two bodies*/
-    float getElasticity() const;
+    /** get restitution between two bodies*/
+    float getRestitution() const;
     /** get friction between two bodies*/
     float getFriction() const;
     /** get surface velocity between two bodies*/
@@ -204,7 +204,7 @@ public:
      */
     std::function<bool(PhysicsContact& contact)> onContactBegin;
     /*
-     * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision this step or true to process it normally. Additionally, you may override collision values, elasticity, or surface velocity values.
+     * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision this step or true to process it normally. Additionally, you may override collision values, restitution, or surface velocity values.
      */
     std::function<bool(PhysicsContact& contact, PhysicsContactPreSolve& solve)> onContactPreSolve;
     /*
