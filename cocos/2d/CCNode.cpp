@@ -537,7 +537,7 @@ const Point& Node::getAnchorPoint() const
 void Node::setAnchorPoint(const Point& point)
 {
 #if CC_USE_PHYSICS
-    if (_physicsBody != nullptr && point.equals(Point::ANCHOR_MIDDLE))
+    if (_physicsBody != nullptr && !point.equals(Point::ANCHOR_MIDDLE))
     {
         CCLOG("Node warning: This node has a physics body, the anchor must be in the middle, you cann't change this to other value.");
         return;
