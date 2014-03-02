@@ -479,9 +479,18 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
 
         removeListenerInVector(sceneGraphPriorityListeners);
-        if (!isFound)
+        if (isFound)
+        {
+            // fixed #4160: Dirty flag need to be updated after listeners were removed.
+            setDirty(listener->getListenerID(), DirtyFlag::SCENE_GRAPH_PRIORITY);
+        }
+        else
         {
             removeListenerInVector(fixedPriorityListeners);
+            if (isFound)
+            {
+                setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRIORITY);
+            }
         }
 
         if (iter->second->empty())
@@ -554,14 +563,18 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
     // priority < 0
     if (fixedPriorityListeners)
     {
-        bool isEmpty = fixedPriorityListeners->empty();
-        for (; !isEmpty && i < listeners->getGt0Index(); ++i)
+        CCASSERT(listeners->getGt0Index() <= fixedPriorityListeners->size(), "Out of range exception!");
+        
+        if (!fixedPriorityListeners->empty())
         {
-            auto l = fixedPriorityListeners->at(i);
-            if (!l->isPaused() && l->isRegistered() && onEvent(l))
+            for (; i < listeners->getGt0Index(); ++i)
             {
-                shouldStopPropagation = true;
-                break;
+                auto l = fixedPriorityListeners->at(i);
+                if (!l->isPaused() && l->isRegistered() && onEvent(l))
+                {
+                    shouldStopPropagation = true;
+                    break;
+                }
             }
         }
     }
@@ -1082,12 +1095,15 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
         removeAllListenersInVector(sceneGraphPriorityListeners);
         removeAllListenersInVector(fixedPriorityListeners);
         
+        // Remove the dirty flag according the 'listenerID'.
+        // No need to check whether the dispatcher is dispatching event.
+        _priorityDirtyFlagMap.erase(listenerID);
+        
         if (!_inDispatch)
         {
             listeners->clear();
             delete listeners;
             _listenerMap.erase(listenerItemIter);
-            _priorityDirtyFlagMap.erase(listenerID);
         }
     }
     
