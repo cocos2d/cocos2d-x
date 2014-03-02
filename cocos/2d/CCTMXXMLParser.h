@@ -29,11 +29,11 @@ THE SOFTWARE.
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
 
-#include "CCArray.h"
 #include "CCGeometry.h"
 #include "platform/CCSAXParser.h"
 #include "CCVector.h"
 #include "CCValue.h"
+
 #include <string>
 
 NS_CC_BEGIN
@@ -89,7 +89,7 @@ typedef enum TMXTileFlags_ {
 
 This information is obtained from the TMX file.
 */
-class CC_DLL TMXLayerInfo : public Object
+class CC_DLL TMXLayerInfo : public Ref
 {
 public:
     /**
@@ -125,7 +125,7 @@ public:
 
 This information is obtained from the TMX file. 
 */
-class CC_DLL TMXTilesetInfo : public Object
+class CC_DLL TMXTilesetInfo : public Ref
 {
 public:
     std::string     _name;
@@ -163,7 +163,7 @@ And it also contains:
 This information is obtained from the TMX file.
 
 */
-class CC_DLL TMXMapInfo : public Object, public SAXDelegator
+class CC_DLL TMXMapInfo : public Ref, public SAXDelegator
 {    
 public:    
     /** creates a TMX Format with a tmx file */
@@ -303,6 +303,8 @@ protected:
     bool _storingCharacters;
     /// properties
     ValueMap _properties;
+    //! xml format tile index
+    int _xmlTileIndex;
     
     //! tmx filename
     std::string _TMXFileName;

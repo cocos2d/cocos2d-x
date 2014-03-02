@@ -39,7 +39,7 @@ EventListenerAcceleration::~EventListenerAcceleration()
     CCLOGINFO("In the destructor of AccelerationEventListener. %p", this);
 }
 
-EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(Acceleration*, Event*)> callback)
+EventListenerAcceleration* EventListenerAcceleration::create(const std::function<void(Acceleration*, Event*)>& callback)
 {
     EventListenerAcceleration* ret = new EventListenerAcceleration();
     if (ret && ret->init(callback))
@@ -54,7 +54,7 @@ EventListenerAcceleration* EventListenerAcceleration::create(std::function<void(
     return ret;
 }
 
-bool EventListenerAcceleration::init(std::function<void(Acceleration*, Event* event)> callback)
+bool EventListenerAcceleration::init(const std::function<void(Acceleration*, Event* event)>& callback)
 {
     auto listener = [this](Event* event){
         auto accEvent = static_cast<EventAcceleration*>(event);

@@ -172,8 +172,8 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
     CCASSERT(target != nullptr, "");
 
     tHashElement *element = nullptr;
-    // we should convert it to Object*, because we save it as Object*
-    Object *tmp = target;
+    // we should convert it to Ref*, because we save it as Ref*
+    Ref *tmp = target;
     HASH_FIND_PTR(_targets, &tmp, element);
     if (! element)
     {
@@ -247,7 +247,7 @@ void ActionManager::removeAction(Action *action)
     }
 
     tHashElement *element = nullptr;
-    Object *target = action->getOriginalTarget();
+    Ref *target = action->getOriginalTarget();
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {

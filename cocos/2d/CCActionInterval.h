@@ -322,7 +322,8 @@ class CC_DLL RotateBy : public ActionInterval
 public:
     /** creates the action */
     static RotateBy* create(float duration, float deltaAngle);
-    static RotateBy* create(float duration, float deltaAngleX, float deltaAngleY);
+    static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    static RotateBy* create(float duration, const Vertex3F& deltaAngle3D);
 
     //
     // Override
@@ -333,16 +334,21 @@ public:
     virtual void update(float time) override;
     
 protected:
-    RotateBy() {}
+    RotateBy();
     virtual ~RotateBy() {}
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
-    bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
+    bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    bool initWithDuration(float duration, const Vertex3F& deltaAngle3D);
 
-    float _angleX;
-    float _startAngleX;
-    float _angleY;
-    float _startAngleY;
+    float _angleZ_X;
+    float _startAngleZ_X;
+    float _angleZ_Y;
+    float _startAngleZ_Y;
+
+    bool _is3D;
+    Vertex3F _angle3D;
+    Vertex3F _startAngle3D;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);
@@ -701,53 +707,6 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Blink);
 };
 
-/** @brief Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
- The "reverse" of this action is FadeOut
- */
-class CC_DLL FadeIn : public ActionInterval
-{
-public:
-    /** creates the action */
-    static FadeIn* create(float d);
-
-    //
-    // Overrides
-    //
-    virtual void update(float time) override;
-    virtual FadeIn* clone() const override;
-	virtual ActionInterval* reverse(void) const override;
-
-protected:
-    FadeIn() {}
-    virtual ~FadeIn() {}
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(FadeIn);
-};
-
-/** @brief Fades Out an object that implements the RGBAProtocol protocol. It modifies the opacity from 255 to 0.
- The "reverse" of this action is FadeIn
-*/
-class CC_DLL FadeOut : public ActionInterval
-{
-public:
-    /** creates the action */
-    static FadeOut* create(float d);
-
-    //
-    // Overrides
-    //
-    virtual void update(float time) override;
-    virtual FadeOut* clone() const  override;
-	virtual ActionInterval* reverse(void) const override;
-
-protected:
-    FadeOut() {}
-    virtual ~FadeOut() {}
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(FadeOut);
-};
 
 /** @brief Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  @warning This action doesn't support "reverse"
@@ -774,11 +733,64 @@ protected:
 
     GLubyte _toOpacity;
     GLubyte _fromOpacity;
-
+    friend class FadeOut;
+    friend class FadeIn;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeTo);
 };
 
+/** @brief Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
+ The "reverse" of this action is FadeOut
+ */
+class CC_DLL FadeIn : public FadeTo
+{
+public:
+    /** creates the action */
+    static FadeIn* create(float d);
+
+    //
+    // Overrides
+    //
+    virtual void startWithTarget(Node *target) override;
+    virtual FadeIn* clone() const override;
+	virtual FadeTo* reverse(void) const override;
+    
+    void setReverseAction(FadeTo* ac);
+
+protected:
+    FadeIn():_reverseAction(nullptr) {}
+    virtual ~FadeIn() {}
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(FadeIn);
+    FadeTo* _reverseAction;
+};
+
+/** @brief Fades Out an object that implements the RGBAProtocol protocol. It modifies the opacity from 255 to 0.
+ The "reverse" of this action is FadeIn
+*/
+class CC_DLL FadeOut : public FadeTo
+{
+public:
+    /** creates the action */
+    static FadeOut* create(float d);
+
+    //
+    // Overrides
+    //
+    virtual void startWithTarget(Node *target) override;
+    virtual FadeOut* clone() const  override;
+	virtual FadeTo* reverse(void) const override;
+    
+    void setReverseAction(FadeTo* ac);
+
+protected:
+    FadeOut():_reverseAction(nullptr) {}
+    virtual ~FadeOut() {}
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(FadeOut);
+    FadeTo* _reverseAction;
+};
 /** @brief Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
  @warning This action doesn't support "reverse"
  @since v0.7.2

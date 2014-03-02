@@ -35,7 +35,7 @@ class EventListenerAcceleration : public EventListener
 public:
     static const std::string LISTENER_ID;
     
-    static EventListenerAcceleration* create(std::function<void(Acceleration*, Event*)> callback);
+    static EventListenerAcceleration* create(const std::function<void(Acceleration*, Event*)>& callback);
     virtual ~EventListenerAcceleration();
     
     /// Overrides
@@ -44,7 +44,7 @@ public:
 private:
     EventListenerAcceleration();
     
-    bool init(std::function<void(Acceleration*, Event* event)> callback);
+    bool init(const std::function<void(Acceleration*, Event* event)>& callback);
     std::function<void(Acceleration*, Event*)> onAccelerationEvent;
     
     friend class LuaEventListenerAcceleration;

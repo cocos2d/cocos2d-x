@@ -34,12 +34,16 @@ THE SOFTWARE.
 #include "cocostudio/CCColliderDetector.h"
 #endif
 
+namespace cocos2d {
+    class Node;
+}
+
 namespace cocostudio {
 /**
  *  @js NA
  *  @lua NA
  */
-class  DecorativeDisplay: public cocos2d::Object
+class  DecorativeDisplay: public cocos2d::Ref
 {
 public:
     static DecorativeDisplay *create();
@@ -49,15 +53,7 @@ public:
 
     virtual bool init();
 
-    virtual void setDisplay(cocos2d::Node *display) 
-    { 
-        if (_display != display)
-        {
-            CC_SAFE_RETAIN(display);
-            CC_SAFE_RELEASE(_display);
-            _display = display; 
-        }
-    }
+    virtual void setDisplay(cocos2d::Node *display);
     virtual cocos2d::Node *getDisplay() const { return _display; }
 
     virtual void setDisplayData(DisplayData *data)

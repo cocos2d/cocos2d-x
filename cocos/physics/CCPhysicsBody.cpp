@@ -30,6 +30,8 @@
 
 #include "chipmunk.h"
 
+#include "CCNode.h"
+
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
@@ -63,13 +65,16 @@ PhysicsBody::PhysicsBody()
 , _area(0.0f)
 , _density(0.0f)
 , _moment(MOMENT_DEFAULT)
+, _isDamping(false)
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
-, _collisionBitmask(UINT_MAX)
+, _collisionBitmask(0)
 , _contactTestBitmask(UINT_MAX)
 , _group(0)
+, _positionResetTag(false)
+, _rotationResetTag(false)
 {
 }
 
@@ -340,12 +345,21 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(Point position)
 {
-    cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
+    if (!_positionResetTag)
+    {
+        cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
+    }
+    _positionResetTag = false;
 }
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    if (!_rotationResetTag)
+    {
+        cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    }
+    
+    _rotationResetTag = false;
 }
 
 Point PhysicsBody::getPosition() const
@@ -518,7 +532,11 @@ void PhysicsBody::addMoment(float moment)
     }
     else if (moment == -PHYSICS_INFINITY)
     {
-        // if moment is -PHYSICS_INFINITY, it won't change
+        if (moment == PHYSICS_INFINITY)
+        {
+            _moment = MOMENT_DEFAULT;
+            _momentDefault = true;
+        }
         return;
     }
     else
@@ -733,17 +751,48 @@ void PhysicsBody::setEnable(bool enable)
 
 bool PhysicsBody::isResting() const
 {
-    return cpBodyIsSleeping(_info->getBody()) == cpTrue;
+    return CP_PRIVATE(_info->getBody()->node).root != ((cpBody*)0);
+}
+
+void PhysicsBody::setResting(bool rest) const
+{
+    if (rest && !isResting())
+    {
+        cpBodySleep(_info->getBody());
+    }else if(!rest && isResting())
+    {
+        cpBodyActivate(_info->getBody());
+    }
 }
 
 void PhysicsBody::update(float delta)
 {
-    // damping compute
-    if (_dynamic && !isResting())
+    if (_node != nullptr && _dynamic && !isResting())
     {
-        _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
+        cpVect pos = cpBodyGetPos(_info->getBody());
+        cpVect prePos = _info->getPosition();
+        cpVect rot = cpBodyGetRot(_info->getBody());
+        cpVect preRot = _info->getRotation();
+        
+        // only reset the node position when body position/rotation changed.
+        if (std::abs(pos.x - prePos.x) >= 0.3f || std::abs(pos.y - prePos.y) >= 0.3f
+            || std::abs(rot.x - preRot.x) >= 0.01f || std::abs(rot.y - preRot.y) >= 0.01f)
+        {
+            _positionResetTag = true;
+            _rotationResetTag = true;
+            _node->setPosition(getPosition());
+            _info->setPosition(pos);
+            _node->setRotation(getRotation());
+            _info->setRotation(rot);
+        }
+        
+        // damping compute
+        if (_isDamping)
+        {
+            _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
+        }
     }
 }
 

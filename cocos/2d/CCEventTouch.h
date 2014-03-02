@@ -48,8 +48,8 @@ public:
 
     EventTouch();
 
-    EventCode getEventCode() { return _eventCode; };
-    std::vector<Touch*> getTouches() { return _touches; };
+    inline EventCode getEventCode() const { return _eventCode; };
+    inline const std::vector<Touch*>& getTouches() const { return _touches; };
 
 #if TOUCH_PERF_DEBUG
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };

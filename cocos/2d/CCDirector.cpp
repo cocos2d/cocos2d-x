@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
-#include "CCLabelBMFont.h"
+#include "CCFontFNT.h"
 #include "CCActionManager.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
@@ -134,15 +134,15 @@ bool Director::init(void)
 
     _openGLView = nullptr;
 
-    _cullingFrustum = new Frustum();
-
     _contentScaleFactor = 1.0f;
 
     // scheduler
     _scheduler = new Scheduler();
     // action manager
     _actionManager = new ActionManager();
-    _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->_actionManager->update(dt);
+    }, _actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
     _eventDispatcher = new EventDispatcher();
     _eventAfterDraw = new EventCustom(EVENT_AFTER_DRAW);
@@ -274,16 +274,6 @@ void Director::drawScene()
     }
 
     kmGLPushMatrix();
-
-    //construct the frustum
-    {
-        kmMat4 view;
-        kmMat4 projection;
-        kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-        kmGLGetMatrix(KM_GL_MODELVIEW, &view);
-
-        _cullingFrustum->setupFromMatrix(view, projection);
-    }
 
     // draw the scene
     if (_runningScene)
@@ -457,19 +447,20 @@ void Director::setProjection(Projection projection)
             kmGLLoadIdentity();
 
             // issue #1334
-            kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
-            // kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+            kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
+//            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
             kmGLMultMatrix(&matrixPerspective);
 
-            kmGLMatrixMode(KM_GL_MODELVIEW);
-            kmGLLoadIdentity();
             kmVec3 eye, center, up;
             kmVec3Fill(&eye, size.width/2, size.height/2, zeye);
             kmVec3Fill(&center, size.width/2, size.height/2, 0.0f);
             kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
+
+            kmGLMatrixMode(KM_GL_MODELVIEW);
+            kmGLLoadIdentity();
             break;
         }
 
@@ -491,7 +482,7 @@ void Director::setProjection(Projection projection)
 
 void Director::purgeCachedData(void)
 {
-    LabelBMFont::purgeCachedData();
+    FontFNT::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
         SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
@@ -741,10 +732,9 @@ void Director::purgeDirector()
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
     CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
-    CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
-    LabelBMFont::purgeCachedData();
+    FontFNT::purgeCachedData();
 
     FontFreeType::shutdownFreeType();
 

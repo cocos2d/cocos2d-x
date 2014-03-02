@@ -157,7 +157,7 @@ bool ScrollView::isNodeVisible(Node* node)
     return viewRect.intersectsRect(node->getBoundingBox());
 }
 
-void ScrollView::pause(Object* sender)
+void ScrollView::pause(Ref* sender)
 {
     _container->pause();
 
@@ -167,7 +167,7 @@ void ScrollView::pause(Object* sender)
     }
 }
 
-void ScrollView::resume(Object* sender)
+void ScrollView::resume(Ref* sender)
 {
     auto& children = _container->getChildren();
     for(const auto &child : children) {
@@ -310,6 +310,11 @@ void ScrollView::setZoomScaleInDuration(float s, float dt)
     }
 }
 
+void ScrollView::updateTweenAction(float value, const std::string& key)
+{
+    this->setZoomScale(value);
+}
+
 void ScrollView::setViewSize(Size size)
 {
     _viewSize = size;
@@ -404,25 +409,16 @@ void ScrollView::deaccelerateScrolling(float dt)
         minInset = this->minContainerOffset();
     }
     
-    //check to see if offset lies within the inset bounds
-    newX     = MIN(_container->getPosition().x, maxInset.x);
-    newX     = MAX(newX, minInset.x);
-    newY     = MIN(_container->getPosition().y, maxInset.y);
-    newY     = MAX(newY, minInset.y);
-    
     newX = _container->getPosition().x;
     newY = _container->getPosition().y;
     
-    _scrollDistance     = _scrollDistance - Point(newX - _container->getPosition().x, newY - _container->getPosition().y);
     _scrollDistance     = _scrollDistance * SCROLL_DEACCEL_RATE;
     this->setContentOffset(Point(newX,newY));
     
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        newY > maxInset.y || newY < minInset.y ||
-        newX > maxInset.x || newX < minInset.x ||
-        newX == maxInset.x || newX == minInset.x ||
-        newY == maxInset.y || newY == minInset.y)
+        newY >= maxInset.y || newY <= minInset.y ||
+        newX >= maxInset.x || newX <= minInset.x)
     {
         this->unschedule(schedule_selector(ScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
@@ -662,7 +658,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
     {
         if (_touches.size() == 1 && _dragging)
         { // scrolling
-            Point moveDistance, newPoint, maxInset, minInset;
+            Point moveDistance, newPoint;
             Rect  frame;
             float newX, newY;
             
@@ -712,9 +708,6 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                     default:
                         break;
                 }
-                
-                maxInset = _maxInset;
-                minInset = _minInset;
 
                 newX     = _container->getPosition().x + moveDistance.x;
                 newY     = _container->getPosition().y + moveDistance.y;

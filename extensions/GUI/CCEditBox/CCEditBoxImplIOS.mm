@@ -169,6 +169,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getEditBox());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
@@ -176,6 +177,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     return YES;
 }
 
@@ -183,7 +185,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     CCLOG("textFieldShouldEndEditing...");
     editState_ = NO;
-    getEditBoxImplIOS()->setText(getEditBoxImplIOS()->getText());
+    getEditBoxImplIOS()->refreshInactiveText();
     
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
@@ -192,6 +194,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxReturn(getEditBoxImplIOS()->getEditBox());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -203,7 +206,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         event.data = (void*)&data;
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
-	
+#endif
+    
 	if(editBox_ != nil)
 	{
 		getEditBoxImplIOS()->onEndEditing();
@@ -246,6 +250,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -253,7 +258,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
-
+#endif
 }
 
 @end
@@ -338,30 +343,32 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
     setPlaceholderFont(pDefaultFontName, size.height*2/3);
 }
 
-void EditBoxImplIOS::placeInactiveLabels() {
+void EditBoxImplIOS::placeInactiveLabels()
+{
     _label->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
     _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
 }
 
 void EditBoxImplIOS::setInactiveText(const char* pText)
 {
-	if(_systemControl.textField.secureTextEntry == YES)
-	{
-		std::string passwordString;
-		for(int i = 0; i < strlen(pText); ++i)
-			passwordString.append("\u25CF");
-		_label->setString(passwordString.c_str());
-	}
-	else
-		_label->setString(getText());
-	
-	// Clip the text width to fit to the text box
-	float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
-	Rect clippingRect = _label->getTextureRect();
-	if(clippingRect.size.width > fMaxWidth) {
-		clippingRect.size.width = fMaxWidth;
-		_label->setTextureRect(clippingRect);
-	}
+    if(_systemControl.textField.secureTextEntry == YES)
+    {
+        std::string passwordString;
+        for(int i = 0; i < strlen(pText); ++i)
+            passwordString.append("\u25CF");
+        _label->setString(passwordString.c_str());
+    }
+    else
+        _label->setString(getText());
+
+    // Clip the text width to fit to the text box
+    float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
+    Rect clippingRect = _label->getTextureRect();
+    if(clippingRect.size.width > fMaxWidth)
+    {
+        clippingRect.size.width = fMaxWidth;
+        _label->setTextureRect(clippingRect);
+    }
 }
 
 void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
@@ -414,25 +421,13 @@ void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)
 
 void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
 {
-    // FIX ME: this is a temporary fix for issue #2920: IPA packed by Xcode5 may crash on iOS7 when switching to voice recognition input method.
-    // This temporary fix is only for ios version aboves 7.0.
-    // I don't know how to fix it, so I changed the keyboard type to hide the dictation button to avoid crash.
-    // Issue #2920 url: http://www.cocos2d-x.org/issues/2920
-    Boolean above7 = NO;
-    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-    
-    if ([currSysVer compare:@"7" options:NSNumericSearch range:NSMakeRange(0, 1)] == 0)
-    {
-        above7 = YES;
-    }
-    
     switch (inputMode)
     {
         case EditBox::InputMode::EMAIL_ADDRESS:
             _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case EditBox::InputMode::NUMERIC:
-            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeDecimalPad : UIKeyboardTypeNumberPad);
+            _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case EditBox::InputMode::PHONE_NUMBER:
             _systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
@@ -444,10 +439,10 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
             _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case EditBox::InputMode::SINGLE_LINE:
-            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeEmailAddress : UIKeyboardTypeDefault);
+            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
         default:
-            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeEmailAddress : UIKeyboardTypeDefault);
+            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
     }
 }
@@ -515,12 +510,13 @@ bool EditBoxImplIOS::isEditing()
     return [_systemControl isEditState] ? true : false;
 }
 
-void EditBoxImplIOS::setText(const char* pText)
+void EditBoxImplIOS::refreshInactiveText()
 {
-    _systemControl.textField.text = [NSString stringWithUTF8String:pText];
-	if(_systemControl.textField.hidden == YES) {
-		setInactiveText(pText);
-		if(strlen(pText) == 0)
+    const char* text = getText();
+    if(_systemControl.textField.hidden == YES)
+    {
+		setInactiveText(text);
+		if(strlen(text) == 0)
 		{
 			_label->setVisible(false);
 			_labelPlaceHolder->setVisible(true);
@@ -533,9 +529,26 @@ void EditBoxImplIOS::setText(const char* pText)
 	}
 }
 
+void EditBoxImplIOS::setText(const char* text)
+{
+    NSString* nsText =[NSString stringWithUTF8String:text];
+    if ([nsText compare:_systemControl.textField.text] != NSOrderedSame)
+    {
+        _systemControl.textField.text = nsText;
+    }
+    
+    refreshInactiveText();
+}
+
+NSString* removeSiriString(NSString* str)
+{
+    NSString* siriString = @"\xef\xbf\xbc";
+    return [str stringByReplacingOccurrencesOfString:siriString withString:@""];
+}
+
 const char*  EditBoxImplIOS::getText(void)
 {
-    return [_systemControl.textField.text UTF8String];
+    return [removeSiriString(_systemControl.textField.text) UTF8String];
 }
 
 void EditBoxImplIOS::setPlaceHolder(const char* pText)

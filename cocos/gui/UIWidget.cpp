@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 Widget::Widget():
 _enabled(true),
@@ -801,7 +801,7 @@ void Widget::cancelUpEvent()
     }
 }
 
-void Widget::addTouchEventListener(Object *target, SEL_TouchEvent selector)
+void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;

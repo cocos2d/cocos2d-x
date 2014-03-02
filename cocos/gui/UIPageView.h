@@ -30,14 +30,14 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
     PAGEVIEW_EVENT_TURNING,
 }PageViewEventType;
 
-typedef void (Object::*SEL_PageViewEvent)(Object*, PageViewEventType);
+typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
 typedef enum {
@@ -124,7 +124,7 @@ public:
     Layout* getPage(ssize_t index);
     
     // event
-    void addEventListenerPageView(Object *target, SEL_PageViewEvent selector);
+    void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
 
     
 
@@ -209,7 +209,7 @@ protected:
     float _autoScrollSpeed;
     int _autoScrollDir;
     float _childFocusCancelOffset;
-    Object* _pageViewEventListener;
+    Ref* _pageViewEventListener;
     SEL_PageViewEvent _pageViewEventSelector;
 
 };

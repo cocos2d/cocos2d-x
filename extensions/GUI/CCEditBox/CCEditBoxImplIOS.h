@@ -95,6 +95,7 @@ public:
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);
+    virtual void refreshInactiveText();
     virtual void setPlaceHolder(const char* pText);
     virtual void setPosition(const Point& pos);
     virtual void setVisible(bool visible);

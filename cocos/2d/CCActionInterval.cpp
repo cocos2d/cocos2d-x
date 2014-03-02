@@ -747,7 +747,7 @@ void RotateTo::startWithTarget(Node *target)
     ActionInterval::startWithTarget(target);
     
     // Calculate X
-    _startAngleX = target->getRotationX();
+    _startAngleX = target->getRotationSkewX();
     if (_startAngleX > 0)
     {
         _startAngleX = fmodf(_startAngleX, 360.0f);
@@ -768,7 +768,7 @@ void RotateTo::startWithTarget(Node *target)
     }
     
     //Calculate Y: It's duplicated from calculating X since the rotation wrap should be the same
-    _startAngleY = _target->getRotationY();
+    _startAngleY = _target->getRotationSkewY();
 
     if (_startAngleY > 0)
     {
@@ -795,8 +795,8 @@ void RotateTo::update(float time)
 {
     if (_target)
     {
-        _target->setRotationX(_startAngleX + _diffAngleX * time);
-        _target->setRotationY(_startAngleY + _diffAngleY * time);
+        _target->setRotationSkewX(_startAngleX + _diffAngleX * time);
+        _target->setRotationSkewY(_startAngleY + _diffAngleY * time);
     }
 }
 
@@ -819,17 +819,6 @@ RotateBy* RotateBy::create(float duration, float deltaAngle)
     return rotateBy;
 }
 
-bool RotateBy::initWithDuration(float duration, float deltaAngle)
-{
-    if (ActionInterval::initWithDuration(duration))
-    {
-        _angleX = _angleY = deltaAngle;
-        return true;
-    }
-
-    return false;
-}
-
 RotateBy* RotateBy::create(float duration, float deltaAngleX, float deltaAngleY)
 {
     RotateBy *rotateBy = new RotateBy();
@@ -839,23 +828,64 @@ RotateBy* RotateBy::create(float duration, float deltaAngleX, float deltaAngleY)
     return rotateBy;
 }
 
+RotateBy* RotateBy::create(float duration, const Vertex3F& deltaAngle3D)
+{
+    RotateBy *rotateBy = new RotateBy();
+    rotateBy->initWithDuration(duration, deltaAngle3D);
+    rotateBy->autorelease();
+
+    return rotateBy;
+}
+
+RotateBy::RotateBy()
+: _is3D(false)
+{
+}
+
+bool RotateBy::initWithDuration(float duration, float deltaAngle)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _angleZ_X = _angleZ_Y = deltaAngle;
+        return true;
+    }
+
+    return false;
+}
+
 bool RotateBy::initWithDuration(float duration, float deltaAngleX, float deltaAngleY)
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _angleX = deltaAngleX;
-        _angleY = deltaAngleY;
+        _angleZ_X = deltaAngleX;
+        _angleZ_Y = deltaAngleY;
         return true;
     }
     
     return false;
 }
 
+bool RotateBy::initWithDuration(float duration, const Vertex3F& deltaAngle3D)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _angle3D = deltaAngle3D;
+        _is3D = true;
+        return true;
+    }
+
+    return false;
+}
+
+
 RotateBy* RotateBy::clone(void) const
 {
 	// no copy constructor
 	auto a = new RotateBy();
-    a->initWithDuration(_duration, _angleX, _angleY);
+    if(_is3D)
+        a->initWithDuration(_duration, _angle3D);
+    else
+        a->initWithDuration(_duration, _angleZ_X, _angleZ_Y);
 	a->autorelease();
 	return a;
 }
@@ -863,8 +893,15 @@ RotateBy* RotateBy::clone(void) const
 void RotateBy::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-    _startAngleX = target->getRotationX();
-    _startAngleY = target->getRotationY();
+    if(_is3D)
+    {
+        _startAngle3D = target->getRotation3D();
+    }
+    else
+    {
+        _startAngleZ_X = target->getRotationSkewX();
+        _startAngleZ_Y = target->getRotationSkewY();
+    }
 }
 
 void RotateBy::update(float time)
@@ -872,14 +909,33 @@ void RotateBy::update(float time)
     // XXX: shall I add % 360
     if (_target)
     {
-        _target->setRotationX(_startAngleX + _angleX * time);
-        _target->setRotationY(_startAngleY + _angleY * time);
+        if(_is3D)
+        {
+            Vertex3F v;
+            v.x = _startAngle3D.x + _angle3D.x * time;
+            v.y = _startAngle3D.y + _angle3D.y * time;
+            v.z = _startAngle3D.z + _angle3D.z * time;
+            _target->setRotation3D(v);
+        }
+        else
+        {
+            _target->setRotationSkewX(_startAngleZ_X + _angleZ_X * time);
+            _target->setRotationSkewY(_startAngleZ_Y + _angleZ_Y * time);
+        }
     }
 }
 
 RotateBy* RotateBy::reverse() const
 {
-    return RotateBy::create(_duration, -_angleX, -_angleY);
+    if(_is3D)
+    {
+        Vertex3F v;
+        v.x = - _angle3D.x;
+        v.y = - _angle3D.y;
+        v.z = - _angle3D.z;
+        return RotateBy::create(_duration, v);
+    }
+    return RotateBy::create(_duration, -_angleZ_X, -_angleZ_Y);
 }
 
 //
@@ -1608,7 +1664,7 @@ FadeIn* FadeIn::create(float d)
 {
     FadeIn* action = new FadeIn();
 
-    action->initWithDuration(d);
+    action->initWithDuration(d,255.0f);
     action->autorelease();
 
     return action;
@@ -1618,24 +1674,41 @@ FadeIn* FadeIn::clone() const
 {
 	// no copy constructor
 	auto a = new FadeIn();
-    a->initWithDuration(_duration);
+    a->initWithDuration(_duration,255.0f);
 	a->autorelease();
 	return a;
 }
 
-void FadeIn::update(float time)
+void FadeIn::setReverseAction(cocos2d::FadeTo *ac)
 {
-    if (_target)
-    {
-        _target->setOpacity((GLubyte)(255 * time));
-    }
-    /*_target->setOpacity((GLubyte)(255 * time));*/
+    _reverseAction = ac;
 }
 
-ActionInterval* FadeIn::reverse() const
+
+FadeTo* FadeIn::reverse() const
 {
-    return FadeOut::create(_duration);
+    auto action = FadeOut::create(_duration);
+    action->setReverseAction(const_cast<FadeIn*>(this));
+    return action;
+    
 }
+
+void FadeIn::startWithTarget(cocos2d::Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    
+    if (nullptr != _reverseAction) {
+        this->_toOpacity = this->_reverseAction->_fromOpacity;
+    }else{
+        _toOpacity = 255.0f;
+    }
+    
+    if (target) {
+        _fromOpacity = target->getOpacity();
+    }
+}
+
+
 
 //
 // FadeOut
@@ -1645,7 +1718,7 @@ FadeOut* FadeOut::create(float d)
 {
     FadeOut* action = new FadeOut();
 
-    action->initWithDuration(d);
+    action->initWithDuration(d,0.0f);
     action->autorelease();
 
     return action;
@@ -1655,23 +1728,37 @@ FadeOut* FadeOut::clone() const
 {
 	// no copy constructor
 	auto a = new FadeOut();
-    a->initWithDuration(_duration);
+    a->initWithDuration(_duration,0.0f);
 	a->autorelease();
 	return a;
 }
 
-void FadeOut::update(float time)
+void FadeOut::startWithTarget(cocos2d::Node *target)
 {
-    if (_target)
-    {
-        _target->setOpacity(GLubyte(255 * (1 - time)));
+    ActionInterval::startWithTarget(target);
+    
+    if (nullptr != _reverseAction) {
+        _toOpacity = _reverseAction->_fromOpacity;
+    }else{
+        _toOpacity = 0.0f;
     }
-    /*_target->setOpacity(GLubyte(255 * (1 - time)));*/    
+    
+    if (target) {
+        _fromOpacity = target->getOpacity();
+    }
 }
 
-ActionInterval* FadeOut::reverse() const
+void FadeOut::setReverseAction(cocos2d::FadeTo *ac)
 {
-    return FadeIn::create(_duration);
+    _reverseAction = ac;
+}
+
+
+FadeTo* FadeOut::reverse() const
+{
+    auto action = FadeIn::create(_duration);
+    action->setReverseAction(const_cast<FadeOut*>(this));
+    return action;
 }
 
 //
