@@ -190,7 +190,7 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-    void selectedItemEvent();
+    void selectedItemEvent(ListViewEventType type);
     virtual void interceptTouchEvent(int handleState,Widget* sender,const Point &touchPoint) override;
     void refreshView();
 protected:
