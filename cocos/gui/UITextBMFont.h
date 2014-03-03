@@ -71,6 +71,9 @@ public:
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
     void labelBMFontScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;

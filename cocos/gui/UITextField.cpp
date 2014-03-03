@@ -592,6 +592,21 @@ std::string TextField::getDescription() const
 {
     return "TextField";
 }
+    
+void TextField::updateTextureColor()
+{
+    updateColorToRenderer(_textFieldRenderer);
+}
+
+void TextField::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_textFieldRenderer);
+}
+
+void TextField::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_textFieldRenderer);
+}
 
 void TextField::attachWithIME()
 {

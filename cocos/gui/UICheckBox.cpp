@@ -127,9 +127,8 @@ void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texTy
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_backGroundBoxRenderer);
     backGroundTextureScaleChangedWithSize();
 }
 
@@ -152,9 +151,8 @@ void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
     backGroundSelectedTextureScaleChangedWithSize();
 }
 
@@ -177,9 +175,8 @@ void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_frontCrossRenderer);
     frontCrossTextureScaleChangedWithSize();
 }
 
@@ -202,9 +199,8 @@ void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
     backGroundDisabledTextureScaleChangedWithSize();
 }
 
@@ -227,9 +223,8 @@ void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
@@ -489,6 +484,33 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
 std::string CheckBox::getDescription() const
 {
     return "CheckBox";
+}
+    
+void CheckBox::updateTextureColor()
+{
+    updateColorToRenderer(_backGroundBoxRenderer);
+    updateColorToRenderer(_backGroundSelectedBoxRenderer);
+    updateColorToRenderer(_frontCrossRenderer);
+    updateColorToRenderer(_backGroundBoxDisabledRenderer);
+    updateColorToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_backGroundBoxRenderer);
+    updateOpacityToRenderer(_backGroundSelectedBoxRenderer);
+    updateOpacityToRenderer(_frontCrossRenderer);
+    updateOpacityToRenderer(_backGroundBoxDisabledRenderer);
+    updateOpacityToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_backGroundBoxRenderer);
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
+    updateRGBAToRenderer(_frontCrossRenderer);
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
 }
 
 Widget* CheckBox::createCloneInstance()

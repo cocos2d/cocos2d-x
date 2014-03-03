@@ -168,15 +168,6 @@ public:
     virtual Node* getVirtualRenderer() override;
     
     /**
-     * Sets color to widget
-     *
-     * It default change the color of widget's children.
-     *
-     * @param color
-     */
-    virtual void setColor(const Color3B &color) override;
-    
-    /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
@@ -197,7 +188,9 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-    
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();

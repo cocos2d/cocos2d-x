@@ -177,6 +177,9 @@ protected:
     void selectedEvent();
     void unSelectedEvent();
     virtual void onSizeChanged() override;
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
     void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();

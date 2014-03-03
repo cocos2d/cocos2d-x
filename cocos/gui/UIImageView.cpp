@@ -110,9 +110,8 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_imageRenderer);
     imageTextureScaleChangedWithSize();
 }
 
@@ -293,6 +292,21 @@ void ImageView::imageTextureScaleChangedWithSize()
 std::string ImageView::getDescription() const
 {
     return "ImageView";
+}
+    
+void ImageView::updateTextureColor()
+{
+    updateColorToRenderer(_imageRenderer);
+}
+
+void ImageView::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_imageRenderer);
+}
+
+void ImageView::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_imageRenderer);
 }
 
 Widget* ImageView::createCloneInstance()

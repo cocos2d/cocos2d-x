@@ -126,8 +126,6 @@ bool Layout::init()
     if (Node::init())
     {
         initRenderer();
-        setCascadeColorEnabled(true);
-        setCascadeOpacityEnabled(true);
         setBright(true);
         ignoreContentAdaptWithSize(false);
         setSize(Size::ZERO);
