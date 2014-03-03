@@ -150,6 +150,8 @@ public:
      */
     void setItemsMargin(float margin);
     
+    float getItemsMargin();
+    
     virtual void sortAllChildren() override;
     
     ssize_t getCurSelectedIndex() const;
