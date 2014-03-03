@@ -140,8 +140,7 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_barRenderer);
     _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_barType)
@@ -327,6 +326,21 @@ void LoadingBar::setScale9Scale()
 std::string LoadingBar::getDescription() const
 {
     return "LoadingBar";
+}
+    
+void LoadingBar::updateTextureColor()
+{
+    updateColorToRenderer(_barRenderer);
+}
+
+void LoadingBar::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_barRenderer);
+}
+
+void LoadingBar::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_barRenderer);
 }
 
 Widget* LoadingBar::createCloneInstance()

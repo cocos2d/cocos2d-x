@@ -269,6 +269,21 @@ std::string Text::getDescription() const
 {
     return "Label";
 }
+    
+void Text::updateTextureColor()
+{
+    updateColorToRenderer(_labelRenderer);
+}
+
+void Text::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelRenderer);
+}
+
+void Text::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelRenderer);
+}
 
 Widget* Text::createCloneInstance()
 {

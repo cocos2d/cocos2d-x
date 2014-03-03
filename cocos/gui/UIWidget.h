@@ -426,6 +426,14 @@ public:
      */
     virtual bool isFlipY(){return false;};
     
+    virtual void setColor(const Color3B& color) override;
+    
+    virtual void setOpacity(GLubyte opacity) override;
+    
+    const Color3B& getColor() const override {return _color;};
+    
+    GLubyte getOpacity() const override {return _opacity;};
+    
     /**
      * A call back function when widget lost of focus.
      */
@@ -648,6 +656,12 @@ protected:
     void releaseUpEvent();
     void cancelUpEvent();
     void updateAnchorPoint();
+    virtual void updateTextureColor(){};
+    virtual void updateTextureOpacity(){};
+    virtual void updateTextureRGBA(){};
+    void updateColorToRenderer(Node* renderer);
+    void updateOpacityToRenderer(Node* renderer);
+    void updateRGBAToRenderer(Node* renderer);
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
@@ -679,9 +693,12 @@ protected:
     bool _reorderWidgetChildDirty;
     bool _hitted;
     EventListenerTouchOneByOne* _touchListener;
+    Vector<Node*> _nodes;
+    Color3B _color;
+    GLubyte _opacity;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
     Vector<Node*> _widgetChildren;
-    Vector<Node*> _nodes;
+
 };
 }
 

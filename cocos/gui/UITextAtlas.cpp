@@ -135,6 +135,21 @@ std::string TextAtlas::getDescription() const
 {
     return "TextAtlas";
 }
+    
+void TextAtlas::updateTextureColor()
+{
+    updateColorToRenderer(_labelAtlasRenderer);
+}
+
+void TextAtlas::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelAtlasRenderer);
+}
+
+void TextAtlas::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelAtlasRenderer);
+}
 
 Widget* TextAtlas::createCloneInstance()
 {

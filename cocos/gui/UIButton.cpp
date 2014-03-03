@@ -214,9 +214,8 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
         }
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_buttonNormalRenderer);
     normalTextureScaleChangedWithSize();
     _normalTextureLoaded = true;
 }
@@ -261,9 +260,8 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
         }
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_buttonDisableRenderer);
     pressedTextureScaleChangedWithSize();
     _pressedTextureLoaded = true;
 }
@@ -308,9 +306,8 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
         }
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_buttonDisableRenderer);
     disabledTextureScaleChangedWithSize();
     _disabledTextureLoaded = true;
 }
@@ -656,16 +653,31 @@ const char* Button::getTitleFontName() const
 {
     return _titleRenderer->getFontName().c_str();
 }
-
-void Button::setColor(const Color3B &color)
-{
-    Widget::setColor(color);
-    setTitleColor(_titleColor);
-}
-
+    
 std::string Button::getDescription() const
 {
     return "Button";
+}
+    
+void Button::updateTextureColor()
+{
+    updateColorToRenderer(_buttonNormalRenderer);
+    updateColorToRenderer(_buttonClickedRenderer);
+    updateColorToRenderer(_buttonDisableRenderer);
+}
+
+void Button::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_buttonNormalRenderer);
+    updateOpacityToRenderer(_buttonClickedRenderer);
+    updateOpacityToRenderer(_buttonDisableRenderer);
+}
+
+void Button::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_buttonNormalRenderer);
+    updateRGBAToRenderer(_buttonClickedRenderer);
+    updateRGBAToRenderer(_buttonDisableRenderer);
 }
 
 Widget* Button::createCloneInstance()
