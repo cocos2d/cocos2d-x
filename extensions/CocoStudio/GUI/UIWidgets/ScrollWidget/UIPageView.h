@@ -164,7 +164,8 @@ protected:
     virtual void addChild(CCNode * child);
     virtual void addChild(CCNode * child, int zOrder);
     virtual void addChild(CCNode* child, int zOrder, int tag);
-    virtual void removeChild(CCNode* widget, bool cleanup = true);
+    virtual void removeChild(CCNode* widget);
+    virtual void removeChild(CCNode* widget, bool cleanup);
     virtual void removeAllChildren();
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     virtual CCArray* getChildren(){return Widget::getChildren();};

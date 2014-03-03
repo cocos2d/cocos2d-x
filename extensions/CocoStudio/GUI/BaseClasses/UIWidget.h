@@ -275,13 +275,15 @@ public:
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
     
+    virtual void removeChild(CCNode* child);
+    
     /**
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      *
      * @param child     The child node which will be removed.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChild(CCNode* child, bool cleanup = true);
+    virtual void removeChild(CCNode* child, bool cleanup);
     
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
@@ -289,7 +291,7 @@ public:
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+    virtual void removeChildByTag(int tag, bool cleanup);
     /**
      * Removes all children from the container with a cleanup.
      *
