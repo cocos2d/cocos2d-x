@@ -253,7 +253,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
 
 void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    playWithIndex(animationIndex, durationTo, durationTween, tweenEasing);
+    playWithIndex(animationIndex, durationTo, durationTween, loop, tweenEasing);
 }
 
 void CCArmatureAnimation::playWithIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
