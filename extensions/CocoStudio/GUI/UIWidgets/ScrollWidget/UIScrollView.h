@@ -261,8 +261,10 @@ public:
     
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     
+    virtual void removeChild(CCNode* child);
+    
     //override "removeChild" method of widget.
-	virtual void removeChild(CCNode* child, bool cleaup = true);
+	virtual void removeChild(CCNode* child, bool cleaup);
     
     //override "getChildren" method of widget.
     virtual CCArray* getChildren();
@@ -272,6 +274,23 @@ public:
     virtual CCNode * getChildByTag(int tag);
     
     virtual Widget* getChildByName(const char* name);
+    
+    virtual void addNode(CCNode* node);
+    
+    virtual void addNode(CCNode * node, int zOrder);
+    
+    virtual void addNode(CCNode* node, int zOrder, int tag);
+    
+    virtual CCNode * getNodeByTag(int tag);
+    
+    virtual void removeNodeByTag(int tag);
+    
+    virtual CCArray* getNodes();
+    
+    virtual void removeNode(CCNode* node);
+        
+    virtual void removeAllNodes();
+
     
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);

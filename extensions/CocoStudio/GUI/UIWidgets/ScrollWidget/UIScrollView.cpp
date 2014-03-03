@@ -233,20 +233,25 @@ void ScrollView::addChild(CCNode *child, int zOrder, int tag)
 {
     return _innerContainer->addChild(child, zOrder, tag);
 }
-
+    
+void ScrollView::removeChild(CCNode *child)
+{
+    Layout::removeChild(child);
+}
+    
+void ScrollView::removeChild(CCNode* child, bool cleanup)
+{
+    return _innerContainer->removeChild(child, cleanup);
+}
+    
 void ScrollView::removeAllChildren()
 {
-    removeAllChildrenWithCleanup(true);
+    Layout::removeAllChildren();
 }
     
 void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
 {
     _innerContainer->removeAllChildrenWithCleanup(cleanup);
-}
-
-void ScrollView::removeChild(CCNode* child, bool cleanup)
-{
-	return _innerContainer->removeChild(child, cleanup);
 }
 
 CCArray* ScrollView::getChildren()
@@ -267,6 +272,46 @@ CCNode* ScrollView::getChildByTag(int tag)
 Widget* ScrollView::getChildByName(const char *name)
 {
     return _innerContainer->getChildByName(name);
+}
+    
+void ScrollView::addNode(CCNode* node)
+{
+    Layout::addNode(node);
+}
+
+void ScrollView::addNode(CCNode * node, int zOrder)
+{
+    Layout::addNode(node, zOrder);
+}
+
+void ScrollView::addNode(CCNode* node, int zOrder, int tag)
+{
+    _innerContainer->addNode(node, zOrder, tag);
+}
+
+CCNode* ScrollView::getNodeByTag(int tag)
+{
+    return _innerContainer->getNodeByTag(tag);
+}
+    
+void ScrollView::removeNodeByTag(int tag)
+{
+    _innerContainer->removeNodeByTag(tag);
+}
+
+CCArray* ScrollView::getNodes()
+{
+    return _innerContainer->getNodes();
+}
+
+void ScrollView::removeNode(CCNode* node)
+{
+    _innerContainer->removeNode(node);
+}
+
+void ScrollView::removeAllNodes()
+{
+    _innerContainer->removeAllNodes();
 }
 
 void ScrollView::moveChildren(float offsetX, float offsetY)
