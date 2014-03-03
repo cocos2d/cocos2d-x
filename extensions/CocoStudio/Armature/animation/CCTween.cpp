@@ -268,7 +268,6 @@ void CCTween::updateHandler()
 
             m_iTotalDuration = 0;
             m_iBetweenDuration = 0;
-            m_iFromIndex = m_iToIndex = 0;
         }
         break;
         }
