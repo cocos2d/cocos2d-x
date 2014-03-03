@@ -361,8 +361,44 @@ public:
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
     
+    /////////////////////////////////////
+    
     // Deprecated methods:
     
+    /** The scheduled method will be called every 'interval' seconds.
+     If paused is true, then it won't be called until it is resumed.
+     If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdateForTarget:' instead.
+     If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
+     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
+     delay is the amount of time the action will wait before it'll start
+     @deprecated Please use 'Scheduler::schedule' instead.
+     @since v0.99.3, repeat and delay added in v1.1
+     */
+    CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
+    {
+        schedule(selector, target, interval, repeat, delay, paused);
+    };
+    
+    /** calls scheduleSelector with kRepeatForever and a 0 delay 
+     *  @deprecated Please use 'Scheduler::schedule' instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
+    {
+        schedule(selector, target, interval, paused);
+    };
+    
+    /** Unschedule a selector for a given target.
+     If you want to unschedule the "update", use unscheudleUpdateForTarget.
+     @deprecated Please use 'Scheduler::schedule' instead.
+     @since v0.99.3
+     */
+    CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
+    
+    /** Checks whether a selector for a given taget is scheduled.
+     @deprecated Please use 'Scheduler::isScheduled' instead.
+     @since v0.99.3
+     */
+    CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
     
 protected:
     
