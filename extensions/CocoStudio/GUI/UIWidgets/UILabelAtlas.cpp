@@ -112,7 +112,7 @@ LabelAtlas* LabelAtlas::create()
 void LabelAtlas::initRenderer()
 {
     _laberAtlasRenderer = UICCLabelAtlas::create();
-    CCNodeRGBA::addChild(_laberAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
+    CCNode::addChild(_laberAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
 
 void LabelAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
@@ -181,6 +181,21 @@ void LabelAtlas::labelAtlasScaleChangedWithSize()
         _laberAtlasRenderer->setScaleX(scaleX);
         _laberAtlasRenderer->setScaleY(scaleY);
     }
+}
+    
+void LabelAtlas::updateTextureColor()
+{
+    updateColorToRenderer(_laberAtlasRenderer);
+}
+
+void LabelAtlas::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_laberAtlasRenderer);
+}
+
+void LabelAtlas::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_laberAtlasRenderer);
 }
 
 std::string LabelAtlas::getDescription() const

@@ -92,11 +92,11 @@ void CheckBox::initRenderer()
     _backGroundBoxDisabledRenderer = CCSprite::create();
     _frontCrossDisabledRenderer = CCSprite::create();
     
-    CCNodeRGBA::addChild(_backGroundBoxRenderer, BACKGROUNDBOX_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDBOXSELECTED_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_frontCrossRenderer, FRONTCROSS_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLED_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLED_RENDERER_Z, -1);
+    CCNode::addChild(_backGroundBoxRenderer, BACKGROUNDBOX_RENDERER_Z, -1);
+    CCNode::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDBOXSELECTED_RENDERER_Z, -1);
+    CCNode::addChild(_frontCrossRenderer, FRONTCROSS_RENDERER_Z, -1);
+    CCNode::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLED_RENDERER_Z, -1);
+    CCNode::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLED_RENDERER_Z, -1);
 }
 
 void CheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)
@@ -127,9 +127,8 @@ void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texTy
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_backGroundBoxRenderer);
     backGroundTextureScaleChangedWithSize();
 }
 
@@ -152,9 +151,8 @@ void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
     backGroundSelectedTextureScaleChangedWithSize();
 }
 
@@ -177,9 +175,8 @@ void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_frontCrossRenderer);
     frontCrossTextureScaleChangedWithSize();
 }
 
@@ -202,9 +199,8 @@ void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
     backGroundDisabledTextureScaleChangedWithSize();
 }
 
@@ -227,9 +223,8 @@ void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
@@ -484,6 +479,33 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
         _frontCrossDisabledRenderer->setScaleX(scaleX);
         _frontCrossDisabledRenderer->setScaleY(scaleY);
     }
+}
+    
+void CheckBox::updateTextureColor()
+{
+    updateColorToRenderer(_backGroundBoxRenderer);
+    updateColorToRenderer(_backGroundSelectedBoxRenderer);
+    updateColorToRenderer(_frontCrossRenderer);
+    updateColorToRenderer(_backGroundBoxDisabledRenderer);
+    updateColorToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_backGroundBoxRenderer);
+    updateOpacityToRenderer(_backGroundSelectedBoxRenderer);
+    updateOpacityToRenderer(_frontCrossRenderer);
+    updateOpacityToRenderer(_backGroundBoxDisabledRenderer);
+    updateOpacityToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_backGroundBoxRenderer);
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
+    updateRGBAToRenderer(_frontCrossRenderer);
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
 }
 
 std::string CheckBox::getDescription() const

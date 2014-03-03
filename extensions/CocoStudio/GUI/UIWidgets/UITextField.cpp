@@ -310,7 +310,7 @@ void TextField::onEnter()
 void TextField::initRenderer()
 {
     _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
-    CCNodeRGBA::addChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
+    CCNode::addChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
 }
 
 void TextField::setTouchSize(const CCSize &size)
@@ -586,6 +586,21 @@ const CCSize& TextField::getContentSize() const
 CCNode* TextField::getVirtualRenderer()
 {
     return _textFieldRenderer;
+}
+    
+void TextField::updateTextureColor()
+{
+    updateColorToRenderer(_textFieldRenderer);
+}
+
+void TextField::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_textFieldRenderer);
+}
+
+void TextField::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_textFieldRenderer);
 }
 
 std::string TextField::getDescription() const

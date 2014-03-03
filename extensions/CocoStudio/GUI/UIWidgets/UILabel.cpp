@@ -70,7 +70,7 @@ bool Label::init()
 void Label::initRenderer()
 {
     _labelRenderer = CCLabelTTF::create();
-    CCNodeRGBA::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
+    CCNode::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
 void Label::setText(const std::string& text)
@@ -265,6 +265,21 @@ void Label::labelScaleChangedWithSize()
         _normalScaleValueY = scaleY;
     }
     
+}
+    
+void Label::updateTextureColor()
+{
+    updateColorToRenderer(_labelRenderer);
+}
+
+void Label::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelRenderer);
+}
+
+void Label::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelRenderer);
 }
 
 std::string Label::getDescription() const

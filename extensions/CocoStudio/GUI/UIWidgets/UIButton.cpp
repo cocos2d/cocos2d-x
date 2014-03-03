@@ -98,10 +98,10 @@ void Button::initRenderer()
     _buttonDisableRenderer = CCSprite::create();
     _titleRenderer = CCLabelTTF::create();
     
-    CCNodeRGBA::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_buttonClickedRenderer,PRESSED_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_buttonDisableRenderer,DISABLED_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_titleRenderer,TITLE_RENDERER_Z, -1);
+    CCNode::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    CCNode::addChild(_buttonClickedRenderer,PRESSED_RENDERER_Z, -1);
+    CCNode::addChild(_buttonDisableRenderer,DISABLED_RENDERER_Z, -1);
+    CCNode::addChild(_titleRenderer,TITLE_RENDERER_Z, -1);
 }
 
 void Button::setScale9Enabled(bool able)
@@ -112,9 +112,9 @@ void Button::setScale9Enabled(bool able)
     }
     _brightStyle = BRIGHT_NONE;
     _scale9Enabled = able;
-    CCNodeRGBA::removeChild(_buttonNormalRenderer, true);
-    CCNodeRGBA::removeChild(_buttonClickedRenderer, true);
-    CCNodeRGBA::removeChild(_buttonDisableRenderer, true);
+    CCNode::removeChild(_buttonNormalRenderer, true);
+    CCNode::removeChild(_buttonClickedRenderer, true);
+    CCNode::removeChild(_buttonDisableRenderer, true);
     _buttonNormalRenderer = NULL;
     _buttonClickedRenderer = NULL;
     _buttonDisableRenderer = NULL;
@@ -134,9 +134,9 @@ void Button::setScale9Enabled(bool able)
     loadTextureNormal(_normalFileName.c_str(), _normalTexType);
     loadTexturePressed(_clickedFileName.c_str(), _pressedTexType);
     loadTextureDisabled(_disabledFileName.c_str(), _disabledTexType);
-    CCNodeRGBA::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_buttonClickedRenderer,PRESSED_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_buttonDisableRenderer,DISABLED_RENDERER_Z, -1);
+    CCNode::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    CCNode::addChild(_buttonClickedRenderer,PRESSED_RENDERER_Z, -1);
+    CCNode::addChild(_buttonDisableRenderer,DISABLED_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -214,9 +214,8 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
         }
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_buttonNormalRenderer);
     normalTextureScaleChangedWithSize();
     _normalTextureLoaded = true;
 }
@@ -261,9 +260,8 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
         }
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_buttonClickedRenderer);
     pressedTextureScaleChangedWithSize();
     _pressedTextureLoaded = true;
 }
@@ -308,9 +306,8 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
         }
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateRGBAToRenderer(_buttonDisableRenderer);
     disabledTextureScaleChangedWithSize();
     _disabledTextureLoaded = true;
 }
@@ -656,11 +653,26 @@ const char* Button::getTitleFontName() const
 {
     return _titleRenderer->getFontName();
 }
-
-void Button::setColor(const ccColor3B &color)
+    
+void Button::updateTextureColor()
 {
-    Widget::setColor(color);
-    setTitleColor(_titleColor);
+    updateColorToRenderer(_buttonNormalRenderer);
+    updateColorToRenderer(_buttonClickedRenderer);
+    updateColorToRenderer(_buttonDisableRenderer);
+}
+    
+void Button::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_buttonNormalRenderer);
+    updateOpacityToRenderer(_buttonClickedRenderer);
+    updateOpacityToRenderer(_buttonDisableRenderer);
+}
+    
+void Button::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_buttonNormalRenderer);
+    updateRGBAToRenderer(_buttonClickedRenderer);
+    updateRGBAToRenderer(_buttonDisableRenderer);
 }
 
 std::string Button::getDescription() const

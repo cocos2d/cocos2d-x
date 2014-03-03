@@ -57,7 +57,9 @@ _reorderWidgetChildDirty(true),
 _hitted(false),
 _widgetChildren(NULL),
 _layoutParameterDictionary(NULL),
-_nodes(NULL)
+_nodes(NULL),
+_color(ccWHITE),
+_opacity(255)
 {
     
 }
@@ -88,7 +90,7 @@ Widget* Widget::create()
 
 bool Widget::init()
 {
-    if (CCNodeRGBA::init())
+    if (CCNode::init())
     {
         _widgetChildren = CCArray::create();
         CC_SAFE_RETAIN(_widgetChildren);
@@ -97,8 +99,6 @@ bool Widget::init()
         _nodes = CCArray::create();
         CC_SAFE_RETAIN(_nodes);
         initRenderer();
-        setCascadeColorEnabled(true);
-        setCascadeOpacityEnabled(true);
         setBright(true);
         ignoreContentAdaptWithSize(true);
         setAnchorPoint(CCPoint(0.5f, 0.5f));
@@ -110,44 +110,44 @@ bool Widget::init()
 void Widget::onEnter()
 {
     updateSizeAndPosition();
-    CCNodeRGBA::onEnter();
+    CCNode::onEnter();
 }
 
 void Widget::onExit()
 {
     unscheduleUpdate();
-    CCNodeRGBA::onExit();
+    CCNode::onExit();
 }
     
 void Widget::visit()
 {
     if (_enabled)
     {
-        CCNodeRGBA::visit();
+        CCNode::visit();
     }    
 }
 
 void Widget::addChild(CCNode *child)
 {
-    CCNodeRGBA::addChild(child);
+    CCNode::addChild(child);
 }
 
 void Widget::addChild(CCNode * child, int zOrder)
 {
-    CCNodeRGBA::addChild(child, zOrder);
+    CCNode::addChild(child, zOrder);
 }
     
 void Widget::addChild(CCNode* child, int zOrder, int tag)
 {
     CCAssert(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
-    CCNodeRGBA::addChild(child, zOrder, tag);
+    CCNode::addChild(child, zOrder, tag);
     _widgetChildren->addObject(child);
 }
     
 void Widget::sortAllChildren()
 {
     _reorderWidgetChildDirty = m_bReorderChildDirty;
-    CCNodeRGBA::sortAllChildren();
+    CCNode::sortAllChildren();
     if( _reorderWidgetChildDirty )
     {
         int i,j,length = _widgetChildren->data->num;
@@ -214,7 +214,7 @@ void Widget::removeFromParent()
 
 void Widget::removeFromParentAndCleanup(bool cleanup)
 {
-    CCNodeRGBA::removeFromParentAndCleanup(cleanup);
+    CCNode::removeFromParentAndCleanup(cleanup);
 }
     
 void Widget::removeChild(CCNode *child)
@@ -224,7 +224,7 @@ void Widget::removeChild(CCNode *child)
 
 void Widget::removeChild(CCNode *child, bool cleanup)
 {
-    CCNodeRGBA::removeChild(child, cleanup);
+    CCNode::removeChild(child, cleanup);
     _widgetChildren->removeObject(child);
 }
 
@@ -256,7 +256,7 @@ void Widget::removeAllChildrenWithCleanup(bool cleanup)
         CCObject* child;
         CCARRAY_FOREACH(_widgetChildren, child)
         {
-            CCNodeRGBA::removeChild((CCNode*)child, cleanup);
+            CCNode::removeChild((CCNode*)child, cleanup);
         }
     }
     _widgetChildren->removeAllObjects();
@@ -303,7 +303,7 @@ void Widget::addNode(CCNode * node, int zOrder)
 void Widget::addNode(CCNode* node, int zOrder, int tag)
 {
     CCAssert(dynamic_cast<Widget*>(node) == NULL, "Widget only supports Nodes as renderer");
-    CCNodeRGBA::addChild(node, zOrder, tag);
+    CCNode::addChild(node, zOrder, tag);
     _nodes->addObject(node);
 }
     
@@ -331,7 +331,7 @@ CCArray* Widget::getNodes()
     
 void Widget::removeNode(CCNode* node)
 {
-    CCNodeRGBA::removeChild(node);
+    CCNode::removeChild(node);
     _nodes->removeObject(node);
 }
     
@@ -359,7 +359,7 @@ void Widget::removeAllNodes()
         CCARRAY_FOREACH(_nodes, renderer)
         {
             CCNode* pNode = (CCNode*) renderer;
-            CCNodeRGBA::removeChild(pNode);
+            CCNode::removeChild(pNode);
         }
         _nodes->removeAllObjects();
     }
@@ -912,7 +912,7 @@ void Widget::setPosition(const CCPoint &pos)
             }
         }
     }
-    CCNodeRGBA::setPosition(pos);
+    CCNode::setPosition(pos);
 }
 
 void Widget::setPositionPercent(const CCPoint &percent)
@@ -1088,8 +1088,6 @@ void Widget::copyProperties(Widget *widget)
     setFlipY(widget->isFlipY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
-    setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
-    setCascadeColorEnabled(widget->isCascadeColorEnabled());
     CCDictElement* parameterElement = NULL;
     CCDictionary* layoutParameterDic = widget->_layoutParameterDictionary;
     CCDICT_FOREACH(layoutParameterDic, parameterElement)
@@ -1109,6 +1107,46 @@ void Widget::setActionTag(int tag)
 int Widget::getActionTag()
 {
 	return _actionTag;
+}
+    
+void Widget::setColor(const ccColor3B& color)
+{
+    _color = color;
+    updateTextureColor();
+}
+
+void Widget::setOpacity(GLubyte opacity)
+{
+    _opacity = opacity;
+    updateTextureOpacity();
+}
+    
+void Widget::updateColorToRenderer(CCNode* renderer)
+{
+    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
+    if (rgbap)
+    {
+        rgbap->setColor(_color);
+    }
+}
+    
+void Widget::updateOpacityToRenderer(CCNode* renderer)
+{
+    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
+    if (rgbap)
+    {
+        rgbap->setOpacity(_opacity);
+    }
+}
+    
+void Widget::updateRGBAToRenderer(CCNode* renderer)
+{
+    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
+    if (rgbap)
+    {
+        rgbap->setColor(_color);
+        rgbap->setOpacity(_opacity);
+    }
 }
     
 }

@@ -58,7 +58,7 @@ LabelBMFont* LabelBMFont::create()
 void LabelBMFont::initRenderer()
 {
     _labelBMFontRenderer = cocos2d::CCLabelBMFont::create();
-    CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
+    CCNode::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
 }
 
 void LabelBMFont::setFntFile(const char *fileName)
@@ -137,6 +137,21 @@ void LabelBMFont::labelBMFontScaleChangedWithSize()
         _labelBMFontRenderer->setScaleX(scaleX);
         _labelBMFontRenderer->setScaleY(scaleY);
     }
+}
+    
+void LabelBMFont::updateTextureColor()
+{
+    updateColorToRenderer(_labelBMFontRenderer);
+}
+
+void LabelBMFont::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelBMFontRenderer);
+}
+
+void LabelBMFont::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelBMFontRenderer);
 }
 
 std::string LabelBMFont::getDescription() const

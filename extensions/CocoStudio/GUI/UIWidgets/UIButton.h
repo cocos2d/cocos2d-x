@@ -168,15 +168,6 @@ public:
     virtual CCNode* getVirtualRenderer();
     
     /**
-     * Sets color to widget
-     *
-     * It default change the color of widget's children.
-     *
-     * @param color
-     */
-    virtual void setColor(const ccColor3B &color);
-    
-    /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const;
@@ -197,7 +188,9 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
-    
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
