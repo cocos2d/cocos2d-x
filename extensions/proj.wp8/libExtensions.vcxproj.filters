@@ -469,6 +469,9 @@
     <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWp8.cpp">
       <Filter>GUI\CCEditBox</Filter>
     </ClCompile>
+    <ClCompile Include="EditBoxEvent.cpp">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -925,6 +928,9 @@
       <Filter>GUI\CCEditBox</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWp8.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="EditBoxEvent.h">
       <Filter>GUI\CCEditBox</Filter>
     </ClInclude>
   </ItemGroup>
