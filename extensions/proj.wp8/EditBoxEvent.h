@@ -26,21 +26,22 @@ THE SOFTWARE.
 #define __EditBoxEVENT_H__
 
 #include "platform/wp8-xaml/InputEvent.h"
-using namespace Platform;
+#include <agile.h>
+
 
 namespace PhoneDirect3DXamlAppComponent
 {
 	class EditBoxEvent : public InputEvent
 	{
 	public:
-		EditBoxEvent(Object^ sender, Platform::String^ arg, Windows::Foundation::EventHandler<Platform::String^>^ handle);
+		EditBoxEvent(Platform::Object^ sender, Platform::String^ arg, Windows::Foundation::EventHandler<Platform::String^>^ handle);
 
 		virtual void execute(Cocos2dRenderer ^ renderer);
 
 	private:
-		Object^ m_sender;
-		Platform::String^ m_args;
-		Windows::Foundation::EventHandler<Platform::String^>^ m_handler;
+		Platform::Agile<Platform::Object^> m_sender;
+		Platform::Agile<Platform::String^> m_args;
+		Platform::Agile<Windows::Foundation::EventHandler<Platform::String^>^> m_handler;
 	};
 }
 

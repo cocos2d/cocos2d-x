@@ -24,8 +24,7 @@ THE SOFTWARE.
 
 #include "CCEditBoxImplWp8.h"
 #include "CCEditBox.h"
-#include "proj.wp8/EditBoxDelegate.h"
-using namespace PhoneDirect3DXamlAppComponent;
+
 
 NS_CC_EXT_BEGIN
 
@@ -76,7 +75,6 @@ void CCEditBoxImplWp8::openKeyboard()
 	if (text.length())
 		strncpy(pText, text.c_str(), 100);
 
-	EditBoxDelegate^ editBoxDelegate = ref new EditBoxDelegate();
 	Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler = ref new Windows::Foundation::EventHandler<Platform::String^>(
 		[this](Platform::Object^ sender, Platform::String^ arg)
 	{
@@ -88,7 +86,7 @@ void CCEditBoxImplWp8::openKeyboard()
 		}
 	});
 
-	editBoxDelegate->GlobalCallback->openEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, m_eEditBoxInputMode, m_eEditBoxInputFlag, receiveHandler);
+    CCEGLView::sharedOpenGLView()->OpenXamlEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, m_eEditBoxInputMode, m_eEditBoxInputFlag, receiveHandler);
 }
 
 bool CCEditBoxImplWp8::initWithSize( const CCSize& size )
