@@ -35,6 +35,7 @@ NDK_ROOT = 'NDK_ROOT1'
 class SetEnvVar:
 
 	current_absolute_path = os.path.dirname(os.path.realpath(__file__))
+	ndk_root = None
 
 	@staticmethod
 	def _isWindows():
@@ -68,12 +69,6 @@ class SetEnvVar:
 		file.write('export PATH=$%s:$PATH\n' % key)
 		file.close()
 
-		# make it take effect immediately
-		cmd = 'source ' + profile_path
-		p = os.popen(cmd)
-		p.close()
-
-
 	@staticmethod
 	def _set_environment_variable(key, value):
 
@@ -103,36 +98,39 @@ class SetEnvVar:
 	@staticmethod
 	def _get_ndk_root():
 
-		ndk_root = None
-
 		# python on linux doesn't include Tkinter model, so let user input in terminal
 		if SetEnvVar._isLinux():
-			print "not linux"
 			while True:
 
-				ndk_root = raw_input('Enter path of ndk, press enter to skip: ')
-				if not ndk_root:
+				input_value = raw_input('Enter path of ndk, press enter to skip: ')
+				if not input_value:
 					break
 
-				if not os.path.exists(ndk_root):
-					print 'input path %s does not exist' % ndk_root
-				else:
+				if os.path.exists(input_value):
+					if SetEnvVar._check_validation_ndk_root(input_value):
+						print 'warning: %s is not valid path of ndk root' % input_value
+
 					break
+
+			SetEnvVar.ndk_root = input_value
 			
 		else:
 			# pop up a window to let user select path for ndk root
 			import Tkinter, tkFileDialog
 
 			try:
-				ndk_root = os.environ[NDK_ROOT]
+				SetEnvVar.ndk_root = os.environ[NDK_ROOT]
 			except Exception:
 				root = Tkinter.Tk()
 				SetEnvVar._center(root)
 
 				def callback():
-					ndk_root = tkFileDialog.askdirectory()
+					SetEnvVar.ndk_root = tkFileDialog.askdirectory()
 					root.destroy()
 
+					# check out if it is a real ndk root
+					if not SetEnvVar._check_validation_ndk_root(SetEnvVar.ndk_root):
+						print 'warning: %s is not a valid path of ndk root' % SetEnvVar.ndk_root		
 
 				frame = Tkinter.Frame(root)
 				Tkinter.Label(frame, text='select path for ndk root').pack(side=Tkinter.LEFT)
@@ -140,7 +138,13 @@ class SetEnvVar:
 				frame.pack()
 				root.mainloop()
 
-		return ndk_root
+	@staticmethod
+	def _check_validation_ndk_root(ndk_root):
+		ndk_build_path = os.path.join(ndk_root, 'ndk-build')
+		if os.path.isfile(ndk_build_path):
+			return True
+		else:
+			return False
 
 	# display a window in center and put it on top
 	@staticmethod
@@ -158,17 +162,15 @@ class SetEnvVar:
 	def set_ndk_root(value):
 
 		if value:
-			ndk_root = value
+			SetEnvVar.ndk_root = value
 		else:
-			ndk_root = SetEnvVar._get_ndk_root()
+			SetEnvVar._get_ndk_root()
 
-		print "ndk_root is %s" % ndk_root
+		print "ndk_root is %s" % SetEnvVar.ndk_root
 
-		if ndk_root:
-			os.environ[NDK_ROOT] = ndk_root
-			SetEnvVar._set_environment_variable(NDK_ROOT, ndk_root)
-
-usage = ""
+		if SetEnvVar.ndk_root:
+			os.environ[NDK_ROOT] = SetEnvVar.ndk_root
+			SetEnvVar._set_environment_variable(NDK_ROOT, SetEnvVar.ndk_root)
 
 
 if __name__ == '__main__':
