@@ -13,9 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
-				1A6FB7E71785683A00CDF010 /* PBXTargetDependency */,
 				A03F31FF178147CB006731B9 /* PBXTargetDependency */,
-				A03F3201178147CB006731B9 /* PBXTargetDependency */,
 				A03F2FC01781458C006731B9 /* PBXTargetDependency */,
 				A03F2E93178141D1006731B9 /* PBXTargetDependency */,
 				A03F2E95178141D1006731B9 /* PBXTargetDependency */,
@@ -35,8 +33,6 @@
 				A07A5049178389710073F6A7 /* PBXTargetDependency */,
 				A07A504B178389710073F6A7 /* PBXTargetDependency */,
 				A07A504D178389710073F6A7 /* PBXTargetDependency */,
-				A07A504F178389710073F6A7 /* PBXTargetDependency */,
-				1A6FB4FF17854AD600CDF010 /* PBXTargetDependency */,
 			);
 			name = "build all libs iOS";
 			productName = "build-all-libs iOS";
@@ -60,112 +56,6 @@
 		06CAAAD0186AD7FE0012A414 /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06CAAABC186AD63B0012A414 /* TriggerBase.cpp */; };
 		06CAAAD1186AD8010012A414 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CAAABB186AD63B0012A414 /* ObjectFactory.h */; };
 		06CAAAD2186AD8030012A414 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CAAABB186AD63B0012A414 /* ObjectFactory.h */; };
-		1585AB5B1828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB591828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp */; };
-		1585AB5C1828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB591828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp */; };
-		1585AB5D1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1585AB5A1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp */; };
-		1585AB5E1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1585AB5A1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp */; };
-		158E06DE181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */; };
-		158E06DF181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */; };
-		158E06E0181F6796008E01F6 /* lua_xml_http_request.h in Headers */ = {isa = PBXBuildFile; fileRef = 158E06DD181F6796008E01F6 /* lua_xml_http_request.h */; };
-		158E06E1181F6796008E01F6 /* lua_xml_http_request.h in Headers */ = {isa = PBXBuildFile; fileRef = 158E06DD181F6796008E01F6 /* lua_xml_http_request.h */; };
-		1599607B1811329600C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607A1811329600C7D42C /* libluajit.a */; };
-		15996080181132DE00C7D42C /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1599607F181132DE00C7D42C /* libluajit.a */; };
-		15A71D5E18921E6900F30AC0 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D3C18921E6900F30AC0 /* auxiliar.c */; };
-		15A71D5F18921E6900F30AC0 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D3C18921E6900F30AC0 /* auxiliar.c */; };
-		15A71D6018921E6900F30AC0 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D3D18921E6900F30AC0 /* auxiliar.h */; };
-		15A71D6118921E6900F30AC0 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D3D18921E6900F30AC0 /* auxiliar.h */; };
-		15A71D6218921E6900F30AC0 /* except.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D3E18921E6900F30AC0 /* except.c */; };
-		15A71D6318921E6900F30AC0 /* except.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D3E18921E6900F30AC0 /* except.c */; };
-		15A71D6418921E6900F30AC0 /* except.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D3F18921E6900F30AC0 /* except.h */; };
-		15A71D6518921E6900F30AC0 /* except.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D3F18921E6900F30AC0 /* except.h */; };
-		15A71D6618921E6900F30AC0 /* inet.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4018921E6900F30AC0 /* inet.c */; };
-		15A71D6718921E6900F30AC0 /* inet.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4018921E6900F30AC0 /* inet.c */; };
-		15A71D6818921E6900F30AC0 /* inet.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4118921E6900F30AC0 /* inet.h */; };
-		15A71D6918921E6900F30AC0 /* inet.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4118921E6900F30AC0 /* inet.h */; };
-		15A71D6A18921E6900F30AC0 /* luasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4218921E6900F30AC0 /* luasocket.c */; };
-		15A71D6B18921E6900F30AC0 /* luasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4218921E6900F30AC0 /* luasocket.c */; };
-		15A71D6C18921E6900F30AC0 /* luasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4318921E6900F30AC0 /* luasocket.h */; };
-		15A71D6D18921E6900F30AC0 /* luasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4318921E6900F30AC0 /* luasocket.h */; };
-		15A71D6E18921E6900F30AC0 /* luasocket_buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4418921E6900F30AC0 /* luasocket_buffer.c */; };
-		15A71D6F18921E6900F30AC0 /* luasocket_buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4418921E6900F30AC0 /* luasocket_buffer.c */; };
-		15A71D7018921E6900F30AC0 /* luasocket_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4518921E6900F30AC0 /* luasocket_buffer.h */; };
-		15A71D7118921E6900F30AC0 /* luasocket_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4518921E6900F30AC0 /* luasocket_buffer.h */; };
-		15A71D7218921E6900F30AC0 /* luasocket_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4618921E6900F30AC0 /* luasocket_io.c */; };
-		15A71D7318921E6900F30AC0 /* luasocket_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4618921E6900F30AC0 /* luasocket_io.c */; };
-		15A71D7418921E6900F30AC0 /* luasocket_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4718921E6900F30AC0 /* luasocket_io.h */; };
-		15A71D7518921E6900F30AC0 /* luasocket_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4718921E6900F30AC0 /* luasocket_io.h */; };
-		15A71D7618921E6900F30AC0 /* mime.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4818921E6900F30AC0 /* mime.c */; };
-		15A71D7718921E6900F30AC0 /* mime.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4818921E6900F30AC0 /* mime.c */; };
-		15A71D7818921E6900F30AC0 /* mime.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4918921E6900F30AC0 /* mime.h */; };
-		15A71D7918921E6900F30AC0 /* mime.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4918921E6900F30AC0 /* mime.h */; };
-		15A71D7A18921E6900F30AC0 /* options.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4A18921E6900F30AC0 /* options.c */; };
-		15A71D7B18921E6900F30AC0 /* options.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4A18921E6900F30AC0 /* options.c */; };
-		15A71D7C18921E6900F30AC0 /* options.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4B18921E6900F30AC0 /* options.h */; };
-		15A71D7D18921E6900F30AC0 /* options.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4B18921E6900F30AC0 /* options.h */; };
-		15A71D7E18921E6900F30AC0 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4C18921E6900F30AC0 /* select.c */; };
-		15A71D7F18921E6900F30AC0 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4C18921E6900F30AC0 /* select.c */; };
-		15A71D8018921E6900F30AC0 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4D18921E6900F30AC0 /* select.h */; };
-		15A71D8118921E6900F30AC0 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4D18921E6900F30AC0 /* select.h */; };
-		15A71D8218921E6900F30AC0 /* serial.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4E18921E6900F30AC0 /* serial.c */; };
-		15A71D8318921E6900F30AC0 /* serial.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D4E18921E6900F30AC0 /* serial.c */; };
-		15A71D8418921E6900F30AC0 /* socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4F18921E6900F30AC0 /* socket.h */; };
-		15A71D8518921E6900F30AC0 /* socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D4F18921E6900F30AC0 /* socket.h */; };
-		15A71D8618921E6900F30AC0 /* socket_scripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5018921E6900F30AC0 /* socket_scripts.c */; };
-		15A71D8718921E6900F30AC0 /* socket_scripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5018921E6900F30AC0 /* socket_scripts.c */; };
-		15A71D8818921E6900F30AC0 /* socket_scripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5118921E6900F30AC0 /* socket_scripts.h */; };
-		15A71D8918921E6900F30AC0 /* socket_scripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5118921E6900F30AC0 /* socket_scripts.h */; };
-		15A71D8A18921E6900F30AC0 /* tcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5218921E6900F30AC0 /* tcp.c */; };
-		15A71D8B18921E6900F30AC0 /* tcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5218921E6900F30AC0 /* tcp.c */; };
-		15A71D8C18921E6900F30AC0 /* tcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5318921E6900F30AC0 /* tcp.h */; };
-		15A71D8D18921E6900F30AC0 /* tcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5318921E6900F30AC0 /* tcp.h */; };
-		15A71D8E18921E6900F30AC0 /* timeout.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5418921E6900F30AC0 /* timeout.c */; };
-		15A71D8F18921E6900F30AC0 /* timeout.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5418921E6900F30AC0 /* timeout.c */; };
-		15A71D9018921E6900F30AC0 /* timeout.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5518921E6900F30AC0 /* timeout.h */; };
-		15A71D9118921E6900F30AC0 /* timeout.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5518921E6900F30AC0 /* timeout.h */; };
-		15A71D9218921E6900F30AC0 /* udp.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5618921E6900F30AC0 /* udp.c */; };
-		15A71D9318921E6900F30AC0 /* udp.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5618921E6900F30AC0 /* udp.c */; };
-		15A71D9418921E6900F30AC0 /* udp.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5718921E6900F30AC0 /* udp.h */; };
-		15A71D9518921E6900F30AC0 /* udp.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5718921E6900F30AC0 /* udp.h */; };
-		15A71D9618921E6900F30AC0 /* unix.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5818921E6900F30AC0 /* unix.c */; };
-		15A71D9718921E6900F30AC0 /* unix.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5818921E6900F30AC0 /* unix.c */; };
-		15A71D9818921E6900F30AC0 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5918921E6900F30AC0 /* unix.h */; };
-		15A71D9918921E6900F30AC0 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5918921E6900F30AC0 /* unix.h */; };
-		15A71D9A18921E6900F30AC0 /* usocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5A18921E6900F30AC0 /* usocket.c */; };
-		15A71D9B18921E6900F30AC0 /* usocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71D5A18921E6900F30AC0 /* usocket.c */; };
-		15A71D9C18921E6900F30AC0 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5B18921E6900F30AC0 /* usocket.h */; };
-		15A71D9D18921E6900F30AC0 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5B18921E6900F30AC0 /* usocket.h */; };
-		15A71DA018921E6900F30AC0 /* wsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5D18921E6900F30AC0 /* wsocket.h */; };
-		15A71DA118921E6900F30AC0 /* wsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71D5D18921E6900F30AC0 /* wsocket.h */; };
-		15A71DA41892291500F30AC0 /* lua_extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71DA21892291500F30AC0 /* lua_extensions.c */; };
-		15A71DA51892291500F30AC0 /* lua_extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A71DA21892291500F30AC0 /* lua_extensions.c */; };
-		15A71DA61892291500F30AC0 /* lua_extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71DA31892291500F30AC0 /* lua_extensions.h */; };
-		15A71DA71892291500F30AC0 /* lua_extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A71DA31892291500F30AC0 /* lua_extensions.h */; };
-		15B53FC618B6462900763AAD /* tolua_fix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B53FC518B6462800763AAD /* tolua_fix.cpp */; };
-		15B53FC718B6462900763AAD /* tolua_fix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B53FC518B6462800763AAD /* tolua_fix.cpp */; };
-		15CA8D0D18697A56000032AB /* lua_cocos2dx_spine_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8D0B18697A56000032AB /* lua_cocos2dx_spine_manual.cpp */; };
-		15CA8D0E18697A56000032AB /* lua_cocos2dx_spine_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8D0B18697A56000032AB /* lua_cocos2dx_spine_manual.cpp */; };
-		15CA8D0F18697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15CA8D0C18697A56000032AB /* lua_cocos2dx_spine_manual.hpp */; };
-		15CA8D1018697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15CA8D0C18697A56000032AB /* lua_cocos2dx_spine_manual.hpp */; };
-		15CA8D1318697AE1000032AB /* lua_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8D1118697AE1000032AB /* lua_cocos2dx_spine_auto.cpp */; };
-		15CA8D1418697AE1000032AB /* lua_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8D1118697AE1000032AB /* lua_cocos2dx_spine_auto.cpp */; };
-		15CA8D1518697AE1000032AB /* lua_cocos2dx_spine_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15CA8D1218697AE1000032AB /* lua_cocos2dx_spine_auto.hpp */; };
-		15CA8D1618697AE1000032AB /* lua_cocos2dx_spine_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15CA8D1218697AE1000032AB /* lua_cocos2dx_spine_auto.hpp */; };
-		15CA8D1918697BE5000032AB /* LuaSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8D1718697BE5000032AB /* LuaSkeletonAnimation.cpp */; };
-		15CA8D1A18697BE5000032AB /* LuaSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8D1718697BE5000032AB /* LuaSkeletonAnimation.cpp */; };
-		15CA8D1B18697BE5000032AB /* LuaSkeletonAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CA8D1818697BE5000032AB /* LuaSkeletonAnimation.h */; };
-		15CA8D1C18697BE5000032AB /* LuaSkeletonAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CA8D1818697BE5000032AB /* LuaSkeletonAnimation.h */; };
-		15D6E845182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15D6E843182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp */; };
-		15D6E846182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15D6E843182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp */; };
-		15D6E847182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15D6E844182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp */; };
-		15D6E848182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15D6E844182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp */; };
-		15F4C8821875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */; };
-		15F4C8831875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */; };
-		15F4C8841875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */; };
-		15F4C8851875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */; };
-		15F4CA1F1875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */; };
-		15F4CA201875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */; };
-		15F4CA211875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */; };
-		15F4CA221875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */; };
 		1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AE61860400400196EF5 /* edtaa3func.cpp */; };
 		1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AE61860400400196EF5 /* edtaa3func.cpp */; };
 		1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A087AE71860400400196EF5 /* edtaa3func.h */; };
@@ -173,178 +63,6 @@
 		1A0DB7321823827C0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7301823827C0025743D /* CCGL.h */; };
 		1A0DB7331823827C0025743D /* CCEAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7311823827C0025743D /* CCEAGLView.h */; };
 		1A0DB7381823828F0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7351823828F0025743D /* CCGL.h */; };
-		1A2C7872181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
-		1A2C7874181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
-		1A2C7876181A11EC004E5527 /* jsb_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */; };
-		1A2C7878181A11EC004E5527 /* jsb_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */; };
-		1A2C787E181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7861181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp */; };
-		1A2C7880181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7861181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp */; };
-		1A2C7882181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7862181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp */; };
-		1A2C7884181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7862181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp */; };
-		1A2C788A181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7864181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp */; };
-		1A2C788C181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7864181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp */; };
-		1A2C788E181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7865181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp */; };
-		1A2C7890181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7865181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp */; };
-		1A2C7896181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7867181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp */; };
-		1A2C7898181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7867181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp */; };
-		1A2C789A181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7868181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp */; };
-		1A2C789C181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7868181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp */; };
-		1A2C78A3181A11EC004E5527 /* lua_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C786B181A11EC004E5527 /* lua_cocos2dx_auto.cpp */; };
-		1A2C78A5181A11EC004E5527 /* lua_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C786B181A11EC004E5527 /* lua_cocos2dx_auto.cpp */; };
-		1A2C78A7181A11EC004E5527 /* lua_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C786C181A11EC004E5527 /* lua_cocos2dx_auto.hpp */; };
-		1A2C78A9181A11EC004E5527 /* lua_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C786C181A11EC004E5527 /* lua_cocos2dx_auto.hpp */; };
-		1A2C78AF181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C786E181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp */; };
-		1A2C78B1181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C786E181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp */; };
-		1A2C78B3181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C786F181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp */; };
-		1A2C78B5181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C786F181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp */; };
-		1A2C790D181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78BE181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp */; };
-		1A2C790E181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78BE181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp */; };
-		1A2C790F181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78BF181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h */; };
-		1A2C7910181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78BF181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h */; };
-		1A2C7911181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C0181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h */; };
-		1A2C7912181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C0181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h */; };
-		1A2C7913181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78C1181A1257004E5527 /* js_bindings_chipmunk_functions.cpp */; };
-		1A2C7914181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78C1181A1257004E5527 /* js_bindings_chipmunk_functions.cpp */; };
-		1A2C7915181A1257004E5527 /* js_bindings_chipmunk_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C2181A1257004E5527 /* js_bindings_chipmunk_functions.h */; };
-		1A2C7916181A1257004E5527 /* js_bindings_chipmunk_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C2181A1257004E5527 /* js_bindings_chipmunk_functions.h */; };
-		1A2C7917181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C3181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h */; };
-		1A2C7918181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C3181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h */; };
-		1A2C7919181A1257004E5527 /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78C4181A1257004E5527 /* js_bindings_chipmunk_manual.cpp */; };
-		1A2C791A181A1257004E5527 /* js_bindings_chipmunk_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78C4181A1257004E5527 /* js_bindings_chipmunk_manual.cpp */; };
-		1A2C791B181A1257004E5527 /* js_bindings_chipmunk_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C5181A1257004E5527 /* js_bindings_chipmunk_manual.h */; };
-		1A2C791C181A1257004E5527 /* js_bindings_chipmunk_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C5181A1257004E5527 /* js_bindings_chipmunk_manual.h */; };
-		1A2C791D181A1257004E5527 /* js_bindings_chipmunk_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78C6181A1257004E5527 /* js_bindings_chipmunk_registration.cpp */; };
-		1A2C791E181A1257004E5527 /* js_bindings_chipmunk_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78C6181A1257004E5527 /* js_bindings_chipmunk_registration.cpp */; };
-		1A2C791F181A1257004E5527 /* js_bindings_chipmunk_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C7181A1257004E5527 /* js_bindings_chipmunk_registration.h */; };
-		1A2C7920181A1257004E5527 /* js_bindings_chipmunk_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78C7181A1257004E5527 /* js_bindings_chipmunk_registration.h */; };
-		1A2C7921181A1257004E5527 /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78CB181A1257004E5527 /* cocos2d_specifics.cpp */; };
-		1A2C7922181A1257004E5527 /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78CB181A1257004E5527 /* cocos2d_specifics.cpp */; };
-		1A2C7923181A1257004E5527 /* cocos2d_specifics.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78CC181A1257004E5527 /* cocos2d_specifics.hpp */; };
-		1A2C7924181A1257004E5527 /* cocos2d_specifics.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78CC181A1257004E5527 /* cocos2d_specifics.hpp */; };
-		1A2C7925181A1257004E5527 /* cocosbuilder_specifics.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78CF181A1257004E5527 /* cocosbuilder_specifics.hpp */; };
-		1A2C7926181A1257004E5527 /* cocosbuilder_specifics.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78CF181A1257004E5527 /* cocosbuilder_specifics.hpp */; };
-		1A2C7927181A1257004E5527 /* js_bindings_ccbreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78D0181A1257004E5527 /* js_bindings_ccbreader.cpp */; };
-		1A2C7928181A1257004E5527 /* js_bindings_ccbreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78D0181A1257004E5527 /* js_bindings_ccbreader.cpp */; };
-		1A2C7929181A1257004E5527 /* js_bindings_ccbreader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78D1181A1257004E5527 /* js_bindings_ccbreader.h */; };
-		1A2C792A181A1257004E5527 /* js_bindings_ccbreader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78D1181A1257004E5527 /* js_bindings_ccbreader.h */; };
-		1A2C792F181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78D9181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp */; };
-		1A2C7930181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78D9181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp */; };
-		1A2C7931181A1257004E5527 /* jsb_cocos2dx_studio_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78DA181A1257004E5527 /* jsb_cocos2dx_studio_manual.h */; };
-		1A2C7932181A1257004E5527 /* jsb_cocos2dx_studio_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78DA181A1257004E5527 /* jsb_cocos2dx_studio_manual.h */; };
-		1A2C7933181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78E0181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp */; };
-		1A2C7934181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78E0181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp */; };
-		1A2C7935181A1257004E5527 /* jsb_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E1181A1257004E5527 /* jsb_cocos2dx_extension_manual.h */; };
-		1A2C7936181A1257004E5527 /* jsb_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E1181A1257004E5527 /* jsb_cocos2dx_extension_manual.h */; };
-		1A2C7937181A1257004E5527 /* js_bindings_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E5181A1257004E5527 /* js_bindings_config.h */; };
-		1A2C7938181A1257004E5527 /* js_bindings_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E5181A1257004E5527 /* js_bindings_config.h */; };
-		1A2C7939181A1257004E5527 /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78E6181A1257004E5527 /* js_bindings_core.cpp */; };
-		1A2C793A181A1257004E5527 /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78E6181A1257004E5527 /* js_bindings_core.cpp */; };
-		1A2C793B181A1257004E5527 /* js_bindings_core.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E7181A1257004E5527 /* js_bindings_core.h */; };
-		1A2C793C181A1257004E5527 /* js_bindings_core.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E7181A1257004E5527 /* js_bindings_core.h */; };
-		1A2C793D181A1257004E5527 /* js_bindings_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78E8181A1257004E5527 /* js_bindings_opengl.cpp */; };
-		1A2C793E181A1257004E5527 /* js_bindings_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78E8181A1257004E5527 /* js_bindings_opengl.cpp */; };
-		1A2C793F181A1257004E5527 /* js_bindings_opengl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E9181A1257004E5527 /* js_bindings_opengl.h */; };
-		1A2C7940181A1257004E5527 /* js_bindings_opengl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78E9181A1257004E5527 /* js_bindings_opengl.h */; };
-		1A2C7941181A1257004E5527 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78EA181A1257004E5527 /* js_manual_conversions.cpp */; };
-		1A2C7942181A1257004E5527 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78EA181A1257004E5527 /* js_manual_conversions.cpp */; };
-		1A2C7943181A1257004E5527 /* js_manual_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78EB181A1257004E5527 /* js_manual_conversions.h */; };
-		1A2C7944181A1257004E5527 /* js_manual_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78EB181A1257004E5527 /* js_manual_conversions.h */; };
-		1A2C7945181A1257004E5527 /* jsb_helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78EC181A1257004E5527 /* jsb_helper.h */; };
-		1A2C7946181A1257004E5527 /* jsb_helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78EC181A1257004E5527 /* jsb_helper.h */; };
-		1A2C7947181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78ED181A1257004E5527 /* jsb_opengl_functions.cpp */; };
-		1A2C7948181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78ED181A1257004E5527 /* jsb_opengl_functions.cpp */; };
-		1A2C7949181A1257004E5527 /* jsb_opengl_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78EE181A1257004E5527 /* jsb_opengl_functions.h */; };
-		1A2C794A181A1257004E5527 /* jsb_opengl_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78EE181A1257004E5527 /* jsb_opengl_functions.h */; };
-		1A2C794B181A1257004E5527 /* jsb_opengl_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78EF181A1257004E5527 /* jsb_opengl_manual.cpp */; };
-		1A2C794C181A1257004E5527 /* jsb_opengl_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78EF181A1257004E5527 /* jsb_opengl_manual.cpp */; };
-		1A2C794D181A1257004E5527 /* jsb_opengl_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F0181A1257004E5527 /* jsb_opengl_manual.h */; };
-		1A2C794E181A1257004E5527 /* jsb_opengl_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F0181A1257004E5527 /* jsb_opengl_manual.h */; };
-		1A2C794F181A1257004E5527 /* jsb_opengl_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78F1181A1257004E5527 /* jsb_opengl_registration.cpp */; };
-		1A2C7950181A1257004E5527 /* jsb_opengl_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78F1181A1257004E5527 /* jsb_opengl_registration.cpp */; };
-		1A2C7951181A1257004E5527 /* jsb_opengl_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F2181A1257004E5527 /* jsb_opengl_registration.h */; };
-		1A2C7952181A1257004E5527 /* jsb_opengl_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F2181A1257004E5527 /* jsb_opengl_registration.h */; };
-		1A2C7953181A1257004E5527 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78F5181A1257004E5527 /* js_bindings_system_functions.cpp */; };
-		1A2C7954181A1257004E5527 /* js_bindings_system_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78F5181A1257004E5527 /* js_bindings_system_functions.cpp */; };
-		1A2C7955181A1257004E5527 /* js_bindings_system_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F6181A1257004E5527 /* js_bindings_system_functions.h */; };
-		1A2C7956181A1257004E5527 /* js_bindings_system_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F6181A1257004E5527 /* js_bindings_system_functions.h */; };
-		1A2C7957181A1257004E5527 /* js_bindings_system_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F7181A1257004E5527 /* js_bindings_system_functions_registration.h */; };
-		1A2C7958181A1257004E5527 /* js_bindings_system_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F7181A1257004E5527 /* js_bindings_system_functions_registration.h */; };
-		1A2C7959181A1257004E5527 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78F8181A1257004E5527 /* js_bindings_system_registration.cpp */; };
-		1A2C795A181A1257004E5527 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78F8181A1257004E5527 /* js_bindings_system_registration.cpp */; };
-		1A2C795B181A1257004E5527 /* js_bindings_system_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F9181A1257004E5527 /* js_bindings_system_registration.h */; };
-		1A2C795C181A1257004E5527 /* js_bindings_system_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C78F9181A1257004E5527 /* js_bindings_system_registration.h */; };
-		1A2C795D181A1257004E5527 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78FF181A1257004E5527 /* jsb_websocket.cpp */; };
-		1A2C795E181A1257004E5527 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C78FF181A1257004E5527 /* jsb_websocket.cpp */; };
-		1A2C795F181A1257004E5527 /* jsb_websocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7900181A1257004E5527 /* jsb_websocket.h */; };
-		1A2C7960181A1257004E5527 /* jsb_websocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7900181A1257004E5527 /* jsb_websocket.h */; };
-		1A2C7961181A1257004E5527 /* XMLHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7904181A1257004E5527 /* XMLHTTPRequest.cpp */; };
-		1A2C7962181A1257004E5527 /* XMLHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C7904181A1257004E5527 /* XMLHTTPRequest.cpp */; };
-		1A2C7963181A1257004E5527 /* XMLHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7905181A1257004E5527 /* XMLHTTPRequest.h */; };
-		1A2C7964181A1257004E5527 /* XMLHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C7905181A1257004E5527 /* XMLHTTPRequest.h */; };
-		1A2C7965181A1257004E5527 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C790A181A1257004E5527 /* ScriptingCore.cpp */; };
-		1A2C7966181A1257004E5527 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C790A181A1257004E5527 /* ScriptingCore.cpp */; };
-		1A2C7967181A1257004E5527 /* ScriptingCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C790B181A1257004E5527 /* ScriptingCore.h */; };
-		1A2C7968181A1257004E5527 /* ScriptingCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C790B181A1257004E5527 /* ScriptingCore.h */; };
-		1A2C7969181A1257004E5527 /* spidermonkey_specifics.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C790C181A1257004E5527 /* spidermonkey_specifics.h */; };
-		1A2C796A181A1257004E5527 /* spidermonkey_specifics.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C790C181A1257004E5527 /* spidermonkey_specifics.h */; };
-		1A3B1F78180E88C300497A22 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */; };
-		1A3B1F79180E88C300497A22 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */; };
-		1A3B1F7A180E88C300497A22 /* CCBProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F4F180E88C200497A22 /* CCBProxy.h */; };
-		1A3B1F7B180E88C300497A22 /* CCBProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F4F180E88C200497A22 /* CCBProxy.h */; };
-		1A3B1F7C180E88C300497A22 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F50180E88C200497A22 /* CCLuaBridge.cpp */; };
-		1A3B1F7D180E88C300497A22 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F50180E88C200497A22 /* CCLuaBridge.cpp */; };
-		1A3B1F7E180E88C300497A22 /* CCLuaBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F51180E88C200497A22 /* CCLuaBridge.h */; };
-		1A3B1F7F180E88C300497A22 /* CCLuaBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F51180E88C200497A22 /* CCLuaBridge.h */; };
-		1A3B1F80180E88C300497A22 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F52180E88C200497A22 /* CCLuaEngine.cpp */; };
-		1A3B1F81180E88C300497A22 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F52180E88C200497A22 /* CCLuaEngine.cpp */; };
-		1A3B1F82180E88C300497A22 /* CCLuaEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F53180E88C200497A22 /* CCLuaEngine.h */; };
-		1A3B1F83180E88C300497A22 /* CCLuaEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F53180E88C200497A22 /* CCLuaEngine.h */; };
-		1A3B1F84180E88C300497A22 /* CCLuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F54180E88C200497A22 /* CCLuaStack.cpp */; };
-		1A3B1F85180E88C300497A22 /* CCLuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F54180E88C200497A22 /* CCLuaStack.cpp */; };
-		1A3B1F86180E88C300497A22 /* CCLuaStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F55180E88C200497A22 /* CCLuaStack.h */; };
-		1A3B1F87180E88C300497A22 /* CCLuaStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F55180E88C200497A22 /* CCLuaStack.h */; };
-		1A3B1F88180E88C300497A22 /* CCLuaValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F56180E88C300497A22 /* CCLuaValue.cpp */; };
-		1A3B1F89180E88C300497A22 /* CCLuaValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F56180E88C300497A22 /* CCLuaValue.cpp */; };
-		1A3B1F8A180E88C300497A22 /* CCLuaValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F57180E88C300497A22 /* CCLuaValue.h */; };
-		1A3B1F8B180E88C300497A22 /* CCLuaValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F57180E88C300497A22 /* CCLuaValue.h */; };
-		1A3B1F8C180E88C300497A22 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F58180E88C300497A22 /* Cocos2dxLuaLoader.cpp */; };
-		1A3B1F8D180E88C300497A22 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F58180E88C300497A22 /* Cocos2dxLuaLoader.cpp */; };
-		1A3B1F8E180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F59180E88C300497A22 /* Cocos2dxLuaLoader.h */; };
-		1A3B1F8F180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F59180E88C300497A22 /* Cocos2dxLuaLoader.h */; };
-		1A3B1F90180E88C300497A22 /* lua_cocos2dx_deprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F5D180E88C300497A22 /* lua_cocos2dx_deprecated.cpp */; };
-		1A3B1F91180E88C300497A22 /* lua_cocos2dx_deprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F5D180E88C300497A22 /* lua_cocos2dx_deprecated.cpp */; };
-		1A3B1F92180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F5E180E88C300497A22 /* lua_cocos2dx_deprecated.h */; };
-		1A3B1F93180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F5E180E88C300497A22 /* lua_cocos2dx_deprecated.h */; };
-		1A3B1F94180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F5F180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp */; };
-		1A3B1F95180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F5F180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp */; };
-		1A3B1F96180E88C300497A22 /* lua_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F60180E88C300497A22 /* lua_cocos2dx_extension_manual.h */; };
-		1A3B1F97180E88C300497A22 /* lua_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F60180E88C300497A22 /* lua_cocos2dx_extension_manual.h */; };
-		1A3B1F98180E88C300497A22 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F61180E88C300497A22 /* lua_cocos2dx_manual.cpp */; };
-		1A3B1F99180E88C300497A22 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F61180E88C300497A22 /* lua_cocos2dx_manual.cpp */; };
-		1A3B1F9A180E88C300497A22 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F62180E88C300497A22 /* lua_cocos2dx_manual.hpp */; };
-		1A3B1F9B180E88C300497A22 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F62180E88C300497A22 /* lua_cocos2dx_manual.hpp */; };
-		1A3B1F9C180E88C300497A22 /* Lua_web_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F63180E88C300497A22 /* Lua_web_socket.cpp */; };
-		1A3B1F9D180E88C300497A22 /* Lua_web_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F63180E88C300497A22 /* Lua_web_socket.cpp */; };
-		1A3B1F9E180E88C300497A22 /* Lua_web_socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F64180E88C300497A22 /* Lua_web_socket.h */; };
-		1A3B1F9F180E88C300497A22 /* Lua_web_socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F64180E88C300497A22 /* Lua_web_socket.h */; };
-		1A3B1FA0180E88C300497A22 /* LuaBasicConversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F65180E88C300497A22 /* LuaBasicConversions.cpp */; };
-		1A3B1FA1180E88C300497A22 /* LuaBasicConversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F65180E88C300497A22 /* LuaBasicConversions.cpp */; };
-		1A3B1FA2180E88C300497A22 /* LuaBasicConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F66180E88C300497A22 /* LuaBasicConversions.h */; };
-		1A3B1FA3180E88C300497A22 /* LuaBasicConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F66180E88C300497A22 /* LuaBasicConversions.h */; };
-		1A3B1FA4180E88C300497A22 /* LuaOpengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F67180E88C300497A22 /* LuaOpengl.cpp */; };
-		1A3B1FA5180E88C300497A22 /* LuaOpengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F67180E88C300497A22 /* LuaOpengl.cpp */; };
-		1A3B1FA6180E88C300497A22 /* LuaOpengl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F68180E88C300497A22 /* LuaOpengl.h */; };
-		1A3B1FA7180E88C300497A22 /* LuaOpengl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F68180E88C300497A22 /* LuaOpengl.h */; };
-		1A3B1FA8180E88C300497A22 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F69180E88C300497A22 /* LuaScriptHandlerMgr.cpp */; };
-		1A3B1FA9180E88C300497A22 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F69180E88C300497A22 /* LuaScriptHandlerMgr.cpp */; };
-		1A3B1FAA180E88C300497A22 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F6A180E88C300497A22 /* LuaScriptHandlerMgr.h */; };
-		1A3B1FAB180E88C300497A22 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F6A180E88C300497A22 /* LuaScriptHandlerMgr.h */; };
-		1A3B1FB6180E88C300497A22 /* CCLuaObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F74180E88C300497A22 /* CCLuaObjcBridge.h */; };
-		1A3B1FB7180E88C300497A22 /* CCLuaObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F74180E88C300497A22 /* CCLuaObjcBridge.h */; };
-		1A3B1FB8180E88C300497A22 /* CCLuaObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F75180E88C300497A22 /* CCLuaObjcBridge.mm */; };
-		1A3B1FB9180E88C300497A22 /* CCLuaObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B1F75180E88C300497A22 /* CCLuaObjcBridge.mm */; };
-		1A3B1FBC180E88C300497A22 /* tolua_fix.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F77180E88C300497A22 /* tolua_fix.h */; };
-		1A3B1FBD180E88C300497A22 /* tolua_fix.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3B1F77180E88C300497A22 /* tolua_fix.h */; };
 		1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570063180BC5A10088DEC7 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570048180BC5A10088DEC7 /* CCAction.h */; };
@@ -840,20 +558,6 @@
 		1A570549180BD9C40088DEC7 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570545180BD9C40088DEC7 /* CCTouch.h */; };
 		1A85BA0D1845F31700260FC0 /* CCVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A85BA0C1845F31700260FC0 /* CCVector.h */; };
 		1A85BA0E1845F31700260FC0 /* CCVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A85BA0C1845F31700260FC0 /* CCVector.h */; };
-		1A8C5646180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
-		1A8C5647180E8D0D00EF57C3 /* tolua++.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C563F180E8D0D00EF57C3 /* tolua++.h */; };
-		1A8C5648180E8D0D00EF57C3 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5640180E8D0D00EF57C3 /* tolua_event.c */; };
-		1A8C5649180E8D0D00EF57C3 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5640180E8D0D00EF57C3 /* tolua_event.c */; };
-		1A8C564A180E8D0D00EF57C3 /* tolua_event.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C5641180E8D0D00EF57C3 /* tolua_event.h */; };
-		1A8C564B180E8D0D00EF57C3 /* tolua_event.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C5641180E8D0D00EF57C3 /* tolua_event.h */; };
-		1A8C564C180E8D0D00EF57C3 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5642180E8D0D00EF57C3 /* tolua_is.c */; };
-		1A8C564D180E8D0D00EF57C3 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5642180E8D0D00EF57C3 /* tolua_is.c */; };
-		1A8C564E180E8D0D00EF57C3 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5643180E8D0D00EF57C3 /* tolua_map.c */; };
-		1A8C564F180E8D0D00EF57C3 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5643180E8D0D00EF57C3 /* tolua_map.c */; };
-		1A8C5650180E8D0D00EF57C3 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5644180E8D0D00EF57C3 /* tolua_push.c */; };
-		1A8C5651180E8D0D00EF57C3 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5644180E8D0D00EF57C3 /* tolua_push.c */; };
-		1A8C5652180E8D0D00EF57C3 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5645180E8D0D00EF57C3 /* tolua_to.c */; };
-		1A8C5653180E8D0D00EF57C3 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5645180E8D0D00EF57C3 /* tolua_to.c */; };
 		1A8C58EC180E92CC00EF57C3 /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58BF180E92CC00EF57C3 /* CocosGUI.cpp */; };
 		1A8C58ED180E92CC00EF57C3 /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58BF180E92CC00EF57C3 /* CocosGUI.cpp */; };
 		1A8C58EE180E92CC00EF57C3 /* CocosGUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58C0180E92CC00EF57C3 /* CocosGUI.h */; };
@@ -1097,8 +801,6 @@
 		1A9DCA4A180E6DE3007A3AD4 /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA47180E6DE3007A3AD4 /* ccTypes.cpp */; };
 		1A9DCA4B180E6DE3007A3AD4 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA48180E6DE3007A3AD4 /* ccTypes.h */; };
 		1A9DCA4C180E6DE3007A3AD4 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA48180E6DE3007A3AD4 /* ccTypes.h */; };
-		1A9DCA4D180E6E3C007A3AD4 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5421180E4047000584C8 /* libjs_static.a */; };
-		1A9DCA4E180E6E42007A3AD4 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5424180E405B000584C8 /* libjs_static.a */; };
 		1AA2063F1848437900053418 /* CCMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA2063E1848437900053418 /* CCMap.h */; };
 		1AA206401848437A00053418 /* CCMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA2063E1848437900053418 /* CCMap.h */; };
 		1AAF528B180E2ECC000584C8 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168B61807AF9C005B8026 /* b2BroadPhase.cpp */; };
@@ -1531,20 +1233,11 @@
 		2AC795E81862875D005EC8E1 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D61862867D005EC8E1 /* Event.h */; };
 		2AC795E91862875D005EC8E1 /* EventData.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D81862867D005EC8E1 /* EventData.h */; };
 		2AC795EA1862875D005EC8E1 /* BoundingBoxAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */; };
-		2AFCB8211863D67F00EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Headers */ = {isa = PBXBuildFile; fileRef = 2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */; };
-		2AFCB8221863D68B00EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */; };
-		2AFCB8231863D6B200EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */; };
-		2AFCB8241863D6F600EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */; };
-		2AFCB8251863D70300EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */; };
 		373B9129187891F400198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		3E26D40518ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40418ACB5D100834404 /* CCImage.cpp */; };
 		3E26D40818ACB63900834404 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E26D40718ACB63900834404 /* CCDevice.mm */; };
-		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
-		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
-		3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
-		3EEF8BD6183A001B005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
 		460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709D1807CE87005B8026 /* mat4stack.c */; };
 		460E44F01807DED6000CDD6D /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709E1807CE87005B8026 /* matrix.c */; };
 		460E44F11807DED7000CDD6D /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709D1807CE87005B8026 /* mat4stack.c */; };
@@ -1954,10 +1647,6 @@
 		74AC8E2CDB69E1FDBFCFBD78 /* CCRenderCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC8F4F7D9E52FCB522B647 /* CCRenderCommand.h */; };
 		74AC8E3E7D85FB595242AAEC /* CCMaterialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC800F4905C8827A44EED3 /* CCMaterialManager.h */; };
 		74AC8EE0C2AAB82783F47089 /* CCFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = 74AC840F2F17ED6D0163669F /* CCFrustum.h */; };
-		85D37C4118AC6306007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */; };
-		85D37C4318AC6323007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */; };
-		85D37C4418AC6376007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */; };
-		85D37C4518AC6379007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */; };
 		A023FA34185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
 		A023FA35185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
 		A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
@@ -1967,14 +1656,6 @@
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		A0E6B28018613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
 		A0E6B28118613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
-		B362C3AE1872BAB700F0BDF4 /* lua_cocos2dx_physics_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B362C3A21872B37200F0BDF4 /* lua_cocos2dx_physics_auto.cpp */; };
-		B362C3AF1872BAB700F0BDF4 /* lua_cocos2dx_physics_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B362C3A31872B37200F0BDF4 /* lua_cocos2dx_physics_auto.hpp */; };
-		B362C3B01872BABC00F0BDF4 /* lua_cocos2dx_physics_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B362C3A21872B37200F0BDF4 /* lua_cocos2dx_physics_auto.cpp */; };
-		B362C3B11872BABC00F0BDF4 /* lua_cocos2dx_physics_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B362C3A31872B37200F0BDF4 /* lua_cocos2dx_physics_auto.hpp */; };
-		B362C3B21872BADC00F0BDF4 /* lua_cocos2dx_physics_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B362C3A41872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.cpp */; };
-		B362C3B31872BADC00F0BDF4 /* lua_cocos2dx_physics_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B362C3A51872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.hpp */; };
-		B362C3B41872BADF00F0BDF4 /* lua_cocos2dx_physics_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B362C3A41872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.cpp */; };
-		B362C3B51872BADF00F0BDF4 /* lua_cocos2dx_physics_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B362C3A51872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.hpp */; };
 		B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */; };
 		B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */; };
 		B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */; };
@@ -2010,20 +1691,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1A6FB4FE17854AD600CDF010 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1551A336158F2AB200E66CFE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1A119716178526AA00D62A44;
-			remoteInfo = "luabindings iOS";
-		};
-		1A6FB7E61785683A00CDF010 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1551A336158F2AB200E66CFE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1A6FB50417854BC200CDF010;
-			remoteInfo = "luabindings Mac";
-		};
 		460E44F31807E241000CDD6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1551A336158F2AB200E66CFE /* Project object */;
@@ -2073,13 +1740,6 @@
 			remoteGlobalIDString = A03F2FC117814595006731B9;
 			remoteInfo = "cocos2dx-extensions";
 		};
-		A03F3200178147CB006731B9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1551A336158F2AB200E66CFE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F31E81781479B006731B9;
-			remoteInfo = jsbindings;
-		};
 		A07A4E0F178386520073F6A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1551A336158F2AB200E66CFE /* Project object */;
@@ -2115,13 +1775,6 @@
 			remoteGlobalIDString = A07A4F9F178387730073F6A7;
 			remoteInfo = "CocosDenshion iOS";
 		};
-		A07A504E178389710073F6A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1551A336158F2AB200E66CFE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A07A4FB5178387750073F6A7;
-			remoteInfo = "jsbindings iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -2135,153 +1788,11 @@
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1585AB591828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_studio_auto.cpp; sourceTree = "<group>"; };
-		1585AB5A1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_studio_auto.hpp; sourceTree = "<group>"; };
-		158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_xml_http_request.cpp; sourceTree = "<group>"; };
-		158E06DD181F6796008E01F6 /* lua_xml_http_request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_xml_http_request.h; sourceTree = "<group>"; };
-		1599607A1811329600C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/mac/libluajit.a; sourceTree = "<group>"; };
-		1599607F181132DE00C7D42C /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = ../external/lua/luajit/prebuilt/ios/libluajit.a; sourceTree = "<group>"; };
-		15A71D3C18921E6900F30AC0 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = auxiliar.c; sourceTree = "<group>"; };
-		15A71D3D18921E6900F30AC0 /* auxiliar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = auxiliar.h; sourceTree = "<group>"; };
-		15A71D3E18921E6900F30AC0 /* except.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = except.c; sourceTree = "<group>"; };
-		15A71D3F18921E6900F30AC0 /* except.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = except.h; sourceTree = "<group>"; };
-		15A71D4018921E6900F30AC0 /* inet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = inet.c; sourceTree = "<group>"; };
-		15A71D4118921E6900F30AC0 /* inet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inet.h; sourceTree = "<group>"; };
-		15A71D4218921E6900F30AC0 /* luasocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocket.c; sourceTree = "<group>"; };
-		15A71D4318921E6900F30AC0 /* luasocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocket.h; sourceTree = "<group>"; };
-		15A71D4418921E6900F30AC0 /* luasocket_buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocket_buffer.c; sourceTree = "<group>"; };
-		15A71D4518921E6900F30AC0 /* luasocket_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocket_buffer.h; sourceTree = "<group>"; };
-		15A71D4618921E6900F30AC0 /* luasocket_io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocket_io.c; sourceTree = "<group>"; };
-		15A71D4718921E6900F30AC0 /* luasocket_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocket_io.h; sourceTree = "<group>"; };
-		15A71D4818921E6900F30AC0 /* mime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mime.c; sourceTree = "<group>"; };
-		15A71D4918921E6900F30AC0 /* mime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mime.h; sourceTree = "<group>"; };
-		15A71D4A18921E6900F30AC0 /* options.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = options.c; sourceTree = "<group>"; };
-		15A71D4B18921E6900F30AC0 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
-		15A71D4C18921E6900F30AC0 /* select.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = select.c; sourceTree = "<group>"; };
-		15A71D4D18921E6900F30AC0 /* select.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = select.h; sourceTree = "<group>"; };
-		15A71D4E18921E6900F30AC0 /* serial.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = serial.c; sourceTree = "<group>"; };
-		15A71D4F18921E6900F30AC0 /* socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.h; sourceTree = "<group>"; };
-		15A71D5018921E6900F30AC0 /* socket_scripts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = socket_scripts.c; sourceTree = "<group>"; };
-		15A71D5118921E6900F30AC0 /* socket_scripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket_scripts.h; sourceTree = "<group>"; };
-		15A71D5218921E6900F30AC0 /* tcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tcp.c; sourceTree = "<group>"; };
-		15A71D5318921E6900F30AC0 /* tcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tcp.h; sourceTree = "<group>"; };
-		15A71D5418921E6900F30AC0 /* timeout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timeout.c; sourceTree = "<group>"; };
-		15A71D5518921E6900F30AC0 /* timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timeout.h; sourceTree = "<group>"; };
-		15A71D5618921E6900F30AC0 /* udp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = udp.c; sourceTree = "<group>"; };
-		15A71D5718921E6900F30AC0 /* udp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udp.h; sourceTree = "<group>"; };
-		15A71D5818921E6900F30AC0 /* unix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unix.c; sourceTree = "<group>"; };
-		15A71D5918921E6900F30AC0 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unix.h; sourceTree = "<group>"; };
-		15A71D5A18921E6900F30AC0 /* usocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = usocket.c; sourceTree = "<group>"; };
-		15A71D5B18921E6900F30AC0 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usocket.h; sourceTree = "<group>"; };
-		15A71D5D18921E6900F30AC0 /* wsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wsocket.h; sourceTree = "<group>"; };
-		15A71DA21892291500F30AC0 /* lua_extensions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_extensions.c; sourceTree = "<group>"; };
-		15A71DA31892291500F30AC0 /* lua_extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_extensions.h; sourceTree = "<group>"; };
-		15B53FC518B6462800763AAD /* tolua_fix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tolua_fix.cpp; sourceTree = "<group>"; };
-		15CA8D0B18697A56000032AB /* lua_cocos2dx_spine_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_spine_manual.cpp; sourceTree = "<group>"; };
-		15CA8D0C18697A56000032AB /* lua_cocos2dx_spine_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_spine_manual.hpp; sourceTree = "<group>"; };
-		15CA8D1118697AE1000032AB /* lua_cocos2dx_spine_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_spine_auto.cpp; sourceTree = "<group>"; };
-		15CA8D1218697AE1000032AB /* lua_cocos2dx_spine_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_spine_auto.hpp; sourceTree = "<group>"; };
-		15CA8D1718697BE5000032AB /* LuaSkeletonAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaSkeletonAnimation.cpp; sourceTree = "<group>"; };
-		15CA8D1818697BE5000032AB /* LuaSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaSkeletonAnimation.h; sourceTree = "<group>"; };
-		15D6E843182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_coco_studio_manual.cpp; sourceTree = "<group>"; };
-		15D6E844182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_coco_studio_manual.hpp; sourceTree = "<group>"; };
-		15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_gui_auto.cpp; sourceTree = "<group>"; };
-		15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_gui_auto.hpp; sourceTree = "<group>"; };
-		15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_gui_manual.cpp; sourceTree = "<group>"; };
-		15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_gui_manual.hpp; sourceTree = "<group>"; };
 		1A087AE61860400400196EF5 /* edtaa3func.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edtaa3func.cpp; sourceTree = "<group>"; };
 		1A087AE71860400400196EF5 /* edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edtaa3func.h; sourceTree = "<group>"; };
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		1A0DB7311823827C0025743D /* CCEAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEAGLView.h; sourceTree = "<group>"; };
 		1A0DB7351823828F0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = jsb_cocos2dx_auto.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_auto.hpp; sourceTree = "<group>"; };
-		1A2C7861181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_builder_auto.cpp; sourceTree = "<group>"; };
-		1A2C7862181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_builder_auto.hpp; sourceTree = "<group>"; };
-		1A2C7864181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_extension_auto.cpp; sourceTree = "<group>"; };
-		1A2C7865181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
-		1A2C7867181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_auto.cpp; sourceTree = "<group>"; };
-		1A2C7868181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_studio_auto.hpp; sourceTree = "<group>"; };
-		1A2C786B181A11EC004E5527 /* lua_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = lua_cocos2dx_auto.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		1A2C786C181A11EC004E5527 /* lua_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_auto.hpp; sourceTree = "<group>"; };
-		1A2C786E181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_auto.cpp; sourceTree = "<group>"; };
-		1A2C786F181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
-		1A2C7871181A11EC004E5527 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		1A2C78BE181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_auto_classes.cpp; sourceTree = "<group>"; };
-		1A2C78BF181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes.h; sourceTree = "<group>"; };
-		1A2C78C0181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes_registration.h; sourceTree = "<group>"; };
-		1A2C78C1181A1257004E5527 /* js_bindings_chipmunk_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_functions.cpp; sourceTree = "<group>"; };
-		1A2C78C2181A1257004E5527 /* js_bindings_chipmunk_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions.h; sourceTree = "<group>"; };
-		1A2C78C3181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions_registration.h; sourceTree = "<group>"; };
-		1A2C78C4181A1257004E5527 /* js_bindings_chipmunk_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_manual.cpp; sourceTree = "<group>"; };
-		1A2C78C5181A1257004E5527 /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
-		1A2C78C6181A1257004E5527 /* js_bindings_chipmunk_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_chipmunk_registration.cpp; sourceTree = "<group>"; };
-		1A2C78C7181A1257004E5527 /* js_bindings_chipmunk_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_registration.h; sourceTree = "<group>"; };
-		1A2C78CB181A1257004E5527 /* cocos2d_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = cocos2d_specifics.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		1A2C78CC181A1257004E5527 /* cocos2d_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2d_specifics.hpp; sourceTree = "<group>"; };
-		1A2C78CF181A1257004E5527 /* cocosbuilder_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocosbuilder_specifics.hpp; sourceTree = "<group>"; };
-		1A2C78D0181A1257004E5527 /* js_bindings_ccbreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_ccbreader.cpp; sourceTree = "<group>"; };
-		1A2C78D1181A1257004E5527 /* js_bindings_ccbreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_ccbreader.h; sourceTree = "<group>"; };
-		1A2C78D9181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_manual.cpp; sourceTree = "<group>"; };
-		1A2C78DA181A1257004E5527 /* jsb_cocos2dx_studio_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_studio_manual.h; sourceTree = "<group>"; };
-		1A2C78E0181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_extension_manual.cpp; sourceTree = "<group>"; };
-		1A2C78E1181A1257004E5527 /* jsb_cocos2dx_extension_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_extension_manual.h; sourceTree = "<group>"; };
-		1A2C78E5181A1257004E5527 /* js_bindings_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_config.h; sourceTree = "<group>"; };
-		1A2C78E6181A1257004E5527 /* js_bindings_core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_core.cpp; sourceTree = "<group>"; };
-		1A2C78E7181A1257004E5527 /* js_bindings_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_core.h; sourceTree = "<group>"; };
-		1A2C78E8181A1257004E5527 /* js_bindings_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_opengl.cpp; sourceTree = "<group>"; };
-		1A2C78E9181A1257004E5527 /* js_bindings_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_opengl.h; sourceTree = "<group>"; };
-		1A2C78EA181A1257004E5527 /* js_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_manual_conversions.cpp; sourceTree = "<group>"; };
-		1A2C78EB181A1257004E5527 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
-		1A2C78EC181A1257004E5527 /* jsb_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_helper.h; sourceTree = "<group>"; };
-		1A2C78ED181A1257004E5527 /* jsb_opengl_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_opengl_functions.cpp; sourceTree = "<group>"; };
-		1A2C78EE181A1257004E5527 /* jsb_opengl_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_functions.h; sourceTree = "<group>"; };
-		1A2C78EF181A1257004E5527 /* jsb_opengl_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_opengl_manual.cpp; sourceTree = "<group>"; };
-		1A2C78F0181A1257004E5527 /* jsb_opengl_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_manual.h; sourceTree = "<group>"; };
-		1A2C78F1181A1257004E5527 /* jsb_opengl_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_opengl_registration.cpp; sourceTree = "<group>"; };
-		1A2C78F2181A1257004E5527 /* jsb_opengl_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_registration.h; sourceTree = "<group>"; };
-		1A2C78F5181A1257004E5527 /* js_bindings_system_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_functions.cpp; sourceTree = "<group>"; };
-		1A2C78F6181A1257004E5527 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
-		1A2C78F7181A1257004E5527 /* js_bindings_system_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions_registration.h; sourceTree = "<group>"; };
-		1A2C78F8181A1257004E5527 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
-		1A2C78F9181A1257004E5527 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
-		1A2C78FF181A1257004E5527 /* jsb_websocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_websocket.cpp; sourceTree = "<group>"; };
-		1A2C7900181A1257004E5527 /* jsb_websocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_websocket.h; sourceTree = "<group>"; };
-		1A2C7904181A1257004E5527 /* XMLHTTPRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLHTTPRequest.cpp; sourceTree = "<group>"; };
-		1A2C7905181A1257004E5527 /* XMLHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLHTTPRequest.h; sourceTree = "<group>"; };
-		1A2C790A181A1257004E5527 /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
-		1A2C790B181A1257004E5527 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
-		1A2C790C181A1257004E5527 /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
-		1A3B1F4F180E88C200497A22 /* CCBProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProxy.h; sourceTree = "<group>"; };
-		1A3B1F50180E88C200497A22 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
-		1A3B1F51180E88C200497A22 /* CCLuaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaBridge.h; sourceTree = "<group>"; };
-		1A3B1F52180E88C200497A22 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
-		1A3B1F53180E88C200497A22 /* CCLuaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaEngine.h; sourceTree = "<group>"; };
-		1A3B1F54180E88C200497A22 /* CCLuaStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaStack.cpp; sourceTree = "<group>"; };
-		1A3B1F55180E88C200497A22 /* CCLuaStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaStack.h; sourceTree = "<group>"; };
-		1A3B1F56180E88C300497A22 /* CCLuaValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaValue.cpp; sourceTree = "<group>"; };
-		1A3B1F57180E88C300497A22 /* CCLuaValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaValue.h; sourceTree = "<group>"; };
-		1A3B1F58180E88C300497A22 /* Cocos2dxLuaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cocos2dxLuaLoader.cpp; sourceTree = "<group>"; };
-		1A3B1F59180E88C300497A22 /* Cocos2dxLuaLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dxLuaLoader.h; sourceTree = "<group>"; };
-		1A3B1F5D180E88C300497A22 /* lua_cocos2dx_deprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_deprecated.cpp; sourceTree = "<group>"; };
-		1A3B1F5E180E88C300497A22 /* lua_cocos2dx_deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_deprecated.h; sourceTree = "<group>"; };
-		1A3B1F5F180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_manual.cpp; sourceTree = "<group>"; };
-		1A3B1F60180E88C300497A22 /* lua_cocos2dx_extension_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_extension_manual.h; sourceTree = "<group>"; };
-		1A3B1F61180E88C300497A22 /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
-		1A3B1F62180E88C300497A22 /* lua_cocos2dx_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_manual.hpp; sourceTree = "<group>"; };
-		1A3B1F63180E88C300497A22 /* Lua_web_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lua_web_socket.cpp; sourceTree = "<group>"; };
-		1A3B1F64180E88C300497A22 /* Lua_web_socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lua_web_socket.h; sourceTree = "<group>"; };
-		1A3B1F65180E88C300497A22 /* LuaBasicConversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaBasicConversions.cpp; sourceTree = "<group>"; };
-		1A3B1F66180E88C300497A22 /* LuaBasicConversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaBasicConversions.h; sourceTree = "<group>"; };
-		1A3B1F67180E88C300497A22 /* LuaOpengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaOpengl.cpp; sourceTree = "<group>"; };
-		1A3B1F68180E88C300497A22 /* LuaOpengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaOpengl.h; sourceTree = "<group>"; };
-		1A3B1F69180E88C300497A22 /* LuaScriptHandlerMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaScriptHandlerMgr.cpp; sourceTree = "<group>"; };
-		1A3B1F6A180E88C300497A22 /* LuaScriptHandlerMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaScriptHandlerMgr.h; sourceTree = "<group>"; };
-		1A3B1F74180E88C300497A22 /* CCLuaObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaObjcBridge.h; sourceTree = "<group>"; };
-		1A3B1F75180E88C300497A22 /* CCLuaObjcBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCLuaObjcBridge.mm; sourceTree = "<group>"; };
-		1A3B1F77180E88C300497A22 /* tolua_fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_fix.h; sourceTree = "<group>"; };
 		1A570047180BC5A10088DEC7 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		1A570048180BC5A10088DEC7 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		1A570049180BC5A10088DEC7 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -2535,15 +2046,7 @@
 		1A570544180BD9C40088DEC7 /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 		1A570545180BD9C40088DEC7 /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
 		1A57FFF7180BC5160088DEC7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; name = CHANGELOG; path = ../CHANGELOG; sourceTree = "<group>"; };
-		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A85BA0C1845F31700260FC0 /* CCVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCVector.h; path = ../base/CCVector.h; sourceTree = "<group>"; };
-		1A8C563F180E8D0D00EF57C3 /* tolua++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "tolua++.h"; sourceTree = "<group>"; };
-		1A8C5640180E8D0D00EF57C3 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
-		1A8C5641180E8D0D00EF57C3 /* tolua_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_event.h; sourceTree = "<group>"; };
-		1A8C5642180E8D0D00EF57C3 /* tolua_is.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_is.c; sourceTree = "<group>"; };
-		1A8C5643180E8D0D00EF57C3 /* tolua_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_map.c; sourceTree = "<group>"; };
-		1A8C5644180E8D0D00EF57C3 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
-		1A8C5645180E8D0D00EF57C3 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A8C58BF180E92CC00EF57C3 /* CocosGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUI.cpp; sourceTree = "<group>"; };
 		1A8C58C0180E92CC00EF57C3 /* CocosGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUI.h; sourceTree = "<group>"; };
 		1A8C58C1180E92CC00EF57C3 /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = UILayout.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -2679,8 +2182,6 @@
 		1AAF5384180E35A3000584C8 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		1AAF5387180E35AC000584C8 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		1AAF541C180E3B6A000584C8 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
-		1AAF5421180E4047000584C8 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
-		1AAF5424180E405B000584C8 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		1AAF584B180E40B9000584C8 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		1AAF584C180E40B9000584C8 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1AAF584D180E40B9000584C8 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
@@ -2795,8 +2296,6 @@
 		2AC795D81862867D005EC8E1 /* EventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventData.h; sourceTree = "<group>"; };
 		2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkeletonBounds.cpp; sourceTree = "<group>"; };
 		2AC795DA18628689005EC8E1 /* SkeletonBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkeletonBounds.h; sourceTree = "<group>"; };
-		2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_spine_auto.cpp; sourceTree = "<group>"; };
-		2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_spine_auto.hpp; sourceTree = "<group>"; };
 		373B910718787C0B00198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		37936A341869B76800E974DD /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		37936A351869B76800E974DD /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
@@ -2810,10 +2309,6 @@
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3E26D40418ACB5D100834404 /* CCImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
 		3E26D40718ACB63900834404 /* CCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
-		3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_gui_auto.cpp; sourceTree = "<group>"; };
-		3EEF8BCC1839F390005E8A6C /* jsb_cocos2dx_gui_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_gui_auto.hpp; sourceTree = "<group>"; };
-		3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_gui_manual.cpp; path = gui/jsb_cocos2dx_gui_manual.cpp; sourceTree = "<group>"; };
-		3EEF8BD21839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_cocos2dx_gui_manual.h; path = gui/jsb_cocos2dx_gui_manual.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -3153,8 +2648,6 @@
 		74AC8DF0EA49A124E1B11681 /* CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer.h; sourceTree = "<group>"; };
 		74AC8EB8FE47EED9B30B7106 /* CCRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCRenderer.cpp; sourceTree = "<group>"; };
 		74AC8F4F7D9E52FCB522B647 /* CCRenderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderCommand.h; sourceTree = "<group>"; };
-		85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_spine_manual.cpp; sourceTree = "<group>"; };
-		85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_spine_manual.h; sourceTree = "<group>"; };
 		A0053F46189B2BEA0035A564 /* Android.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		A0053F47189B2BEA0035A564 /* CCApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
 		A0053F48189B2BEA0035A564 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
@@ -3195,7 +2688,6 @@
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx-extensions Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A03F31FD1781479B006731B9 /* libjsbindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjsbindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04583F0189053B500E32FE8 /* CCGLView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCGLView.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A04583F1189053B500E32FE8 /* CCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCGLView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A07A4D641783777C0073F6A7 /* libcocos2dx iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3203,12 +2695,7 @@
 		A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A07A5030178387750073F6A7 /* libjsbindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjsbindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderCommandPool.h; sourceTree = "<group>"; };
-		B362C3A21872B37200F0BDF4 /* lua_cocos2dx_physics_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_physics_auto.cpp; sourceTree = "<group>"; };
-		B362C3A31872B37200F0BDF4 /* lua_cocos2dx_physics_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_physics_auto.hpp; sourceTree = "<group>"; };
-		B362C3A41872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_physics_manual.cpp; sourceTree = "<group>"; };
-		B362C3A51872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_physics_manual.hpp; sourceTree = "<group>"; };
 		B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
 		B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
 		B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
@@ -3243,22 +2730,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1A11972D178526AA00D62A44 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				15996080181132DE00C7D42C /* libluajit.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1A6FB51817854BC200CDF010 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1599607B1811329600C7D42C /* libluajit.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A03F2C011780BD04006731B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3284,14 +2755,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A03F31F01781479B006731B9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A9DCA4D180E6E3C007A3AD4 /* libjs_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3339,14 +2802,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A07A4FCC178387750073F6A7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A9DCA4E180E6E42007A3AD4 /* libjs_static.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -3369,7 +2824,6 @@
 				1AAF5360180E3374000584C8 /* network */,
 				46A170611807CE7A005B8026 /* physics */,
 				1551A340158F2AB200E66CFE /* Products */,
-				1AAF5426180E409E000584C8 /* scripting */,
 				1AAF5849180E40B8000584C8 /* storage */,
 			);
 			sourceTree = "<group>";
@@ -3382,15 +2836,11 @@
 				A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */,
 				A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */,
 				A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */,
-				A03F31FD1781479B006731B9 /* libjsbindings Mac.a */,
 				A07A4D641783777C0073F6A7 /* libcocos2dx iOS.a */,
 				A07A4EFC1783867C0073F6A7 /* libcocos2dx-extensions iOS.a */,
 				A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */,
 				A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */,
 				A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */,
-				A07A5030178387750073F6A7 /* libjsbindings iOS.a */,
-				1A119791178526AA00D62A44 /* libluabindings iOS.a */,
-				1A6FB53017854BC300CDF010 /* libluabindings Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3405,46 +2855,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		15A71D3B18921E6900F30AC0 /* socket */ = {
-			isa = PBXGroup;
-			children = (
-				15A71D3C18921E6900F30AC0 /* auxiliar.c */,
-				15A71D3D18921E6900F30AC0 /* auxiliar.h */,
-				15A71D3E18921E6900F30AC0 /* except.c */,
-				15A71D3F18921E6900F30AC0 /* except.h */,
-				15A71D4018921E6900F30AC0 /* inet.c */,
-				15A71D4118921E6900F30AC0 /* inet.h */,
-				15A71D4218921E6900F30AC0 /* luasocket.c */,
-				15A71D4318921E6900F30AC0 /* luasocket.h */,
-				15A71D4418921E6900F30AC0 /* luasocket_buffer.c */,
-				15A71D4518921E6900F30AC0 /* luasocket_buffer.h */,
-				15A71D4618921E6900F30AC0 /* luasocket_io.c */,
-				15A71D4718921E6900F30AC0 /* luasocket_io.h */,
-				15A71D4818921E6900F30AC0 /* mime.c */,
-				15A71D4918921E6900F30AC0 /* mime.h */,
-				15A71D4A18921E6900F30AC0 /* options.c */,
-				15A71D4B18921E6900F30AC0 /* options.h */,
-				15A71D4C18921E6900F30AC0 /* select.c */,
-				15A71D4D18921E6900F30AC0 /* select.h */,
-				15A71D4E18921E6900F30AC0 /* serial.c */,
-				15A71D4F18921E6900F30AC0 /* socket.h */,
-				15A71D5018921E6900F30AC0 /* socket_scripts.c */,
-				15A71D5118921E6900F30AC0 /* socket_scripts.h */,
-				15A71D5218921E6900F30AC0 /* tcp.c */,
-				15A71D5318921E6900F30AC0 /* tcp.h */,
-				15A71D5418921E6900F30AC0 /* timeout.c */,
-				15A71D5518921E6900F30AC0 /* timeout.h */,
-				15A71D5618921E6900F30AC0 /* udp.c */,
-				15A71D5718921E6900F30AC0 /* udp.h */,
-				15A71D5818921E6900F30AC0 /* unix.c */,
-				15A71D5918921E6900F30AC0 /* unix.h */,
-				15A71D5A18921E6900F30AC0 /* usocket.c */,
-				15A71D5B18921E6900F30AC0 /* usocket.h */,
-				15A71D5D18921E6900F30AC0 /* wsocket.h */,
-			);
-			path = socket;
-			sourceTree = "<group>";
-		};
 		1A087AE51860400400196EF5 /* edtaa3func */ = {
 			isa = PBXGroup;
 			children = (
@@ -3453,233 +2863,6 @@
 			);
 			name = edtaa3func;
 			path = ../external/edtaa3func;
-			sourceTree = "<group>";
-		};
-		1A2C785C181A11EC004E5527 /* auto-generated */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C785D181A11EC004E5527 /* js-bindings */,
-				1A2C786A181A11EC004E5527 /* lua-bindings */,
-				1A2C7871181A11EC004E5527 /* README.md */,
-			);
-			path = "auto-generated";
-			sourceTree = "<group>";
-		};
-		1A2C785D181A11EC004E5527 /* js-bindings */ = {
-			isa = PBXGroup;
-			children = (
-				3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */,
-				3EEF8BCC1839F390005E8A6C /* jsb_cocos2dx_gui_auto.hpp */,
-				1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */,
-				1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */,
-				1A2C7861181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp */,
-				1A2C7862181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp */,
-				1A2C7864181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp */,
-				1A2C7865181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp */,
-				1A2C7867181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp */,
-				1A2C7868181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp */,
-				2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */,
-				2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */,
-			);
-			path = "js-bindings";
-			sourceTree = "<group>";
-		};
-		1A2C786A181A11EC004E5527 /* lua-bindings */ = {
-			isa = PBXGroup;
-			children = (
-				B362C3A21872B37200F0BDF4 /* lua_cocos2dx_physics_auto.cpp */,
-				B362C3A31872B37200F0BDF4 /* lua_cocos2dx_physics_auto.hpp */,
-				15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */,
-				15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */,
-				15CA8D1118697AE1000032AB /* lua_cocos2dx_spine_auto.cpp */,
-				15CA8D1218697AE1000032AB /* lua_cocos2dx_spine_auto.hpp */,
-				1585AB591828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp */,
-				1585AB5A1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp */,
-				1A2C786B181A11EC004E5527 /* lua_cocos2dx_auto.cpp */,
-				1A2C786C181A11EC004E5527 /* lua_cocos2dx_auto.hpp */,
-				1A2C786E181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp */,
-				1A2C786F181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp */,
-			);
-			path = "lua-bindings";
-			sourceTree = "<group>";
-		};
-		1A2C78BA181A1257004E5527 /* bindings */ = {
-			isa = PBXGroup;
-			children = (
-				85D37C3718AC5E03007CDAFA /* spine */,
-				3EEF8BD01839F5A7005E8A6C /* gui */,
-				1A2C78BC181A1257004E5527 /* chipmunk */,
-				1A2C78CB181A1257004E5527 /* cocos2d_specifics.cpp */,
-				1A2C78CC181A1257004E5527 /* cocos2d_specifics.hpp */,
-				1A2C78CD181A1257004E5527 /* cocosbuilder */,
-				1A2C78D7181A1257004E5527 /* cocostudio */,
-				1A2C78DE181A1257004E5527 /* extension */,
-				1A2C78E5181A1257004E5527 /* js_bindings_config.h */,
-				1A2C78E6181A1257004E5527 /* js_bindings_core.cpp */,
-				1A2C78E7181A1257004E5527 /* js_bindings_core.h */,
-				1A2C78E8181A1257004E5527 /* js_bindings_opengl.cpp */,
-				1A2C78E9181A1257004E5527 /* js_bindings_opengl.h */,
-				1A2C78EA181A1257004E5527 /* js_manual_conversions.cpp */,
-				1A2C78EB181A1257004E5527 /* js_manual_conversions.h */,
-				1A2C78EC181A1257004E5527 /* jsb_helper.h */,
-				1A2C78ED181A1257004E5527 /* jsb_opengl_functions.cpp */,
-				1A2C78EE181A1257004E5527 /* jsb_opengl_functions.h */,
-				1A2C78EF181A1257004E5527 /* jsb_opengl_manual.cpp */,
-				1A2C78F0181A1257004E5527 /* jsb_opengl_manual.h */,
-				1A2C78F1181A1257004E5527 /* jsb_opengl_registration.cpp */,
-				1A2C78F2181A1257004E5527 /* jsb_opengl_registration.h */,
-				1A2C78F3181A1257004E5527 /* localstorage */,
-				1A2C78FD181A1257004E5527 /* network */,
-				1A2C790A181A1257004E5527 /* ScriptingCore.cpp */,
-				1A2C790B181A1257004E5527 /* ScriptingCore.h */,
-				1A2C790C181A1257004E5527 /* spidermonkey_specifics.h */,
-			);
-			path = bindings;
-			sourceTree = "<group>";
-		};
-		1A2C78BC181A1257004E5527 /* chipmunk */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C78BE181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp */,
-				1A2C78BF181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h */,
-				1A2C78C0181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h */,
-				1A2C78C1181A1257004E5527 /* js_bindings_chipmunk_functions.cpp */,
-				1A2C78C2181A1257004E5527 /* js_bindings_chipmunk_functions.h */,
-				1A2C78C3181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h */,
-				1A2C78C4181A1257004E5527 /* js_bindings_chipmunk_manual.cpp */,
-				1A2C78C5181A1257004E5527 /* js_bindings_chipmunk_manual.h */,
-				1A2C78C6181A1257004E5527 /* js_bindings_chipmunk_registration.cpp */,
-				1A2C78C7181A1257004E5527 /* js_bindings_chipmunk_registration.h */,
-			);
-			path = chipmunk;
-			sourceTree = "<group>";
-		};
-		1A2C78CD181A1257004E5527 /* cocosbuilder */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C78CF181A1257004E5527 /* cocosbuilder_specifics.hpp */,
-				1A2C78D0181A1257004E5527 /* js_bindings_ccbreader.cpp */,
-				1A2C78D1181A1257004E5527 /* js_bindings_ccbreader.h */,
-			);
-			path = cocosbuilder;
-			sourceTree = "<group>";
-		};
-		1A2C78D7181A1257004E5527 /* cocostudio */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C78D9181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp */,
-				1A2C78DA181A1257004E5527 /* jsb_cocos2dx_studio_manual.h */,
-			);
-			path = cocostudio;
-			sourceTree = "<group>";
-		};
-		1A2C78DE181A1257004E5527 /* extension */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C78E0181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp */,
-				1A2C78E1181A1257004E5527 /* jsb_cocos2dx_extension_manual.h */,
-			);
-			path = extension;
-			sourceTree = "<group>";
-		};
-		1A2C78F3181A1257004E5527 /* localstorage */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C78F5181A1257004E5527 /* js_bindings_system_functions.cpp */,
-				1A2C78F6181A1257004E5527 /* js_bindings_system_functions.h */,
-				1A2C78F7181A1257004E5527 /* js_bindings_system_functions_registration.h */,
-				1A2C78F8181A1257004E5527 /* js_bindings_system_registration.cpp */,
-				1A2C78F9181A1257004E5527 /* js_bindings_system_registration.h */,
-			);
-			path = localstorage;
-			sourceTree = "<group>";
-		};
-		1A2C78FD181A1257004E5527 /* network */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C78FF181A1257004E5527 /* jsb_websocket.cpp */,
-				1A2C7900181A1257004E5527 /* jsb_websocket.h */,
-				1A2C7904181A1257004E5527 /* XMLHTTPRequest.cpp */,
-				1A2C7905181A1257004E5527 /* XMLHTTPRequest.h */,
-			);
-			path = network;
-			sourceTree = "<group>";
-		};
-		1A3B1F49180E887E00497A22 /* lua */ = {
-			isa = PBXGroup;
-			children = (
-				1A3B1F4A180E88C200497A22 /* bindings */,
-			);
-			name = lua;
-			sourceTree = "<group>";
-		};
-		1A3B1F4A180E88C200497A22 /* bindings */ = {
-			isa = PBXGroup;
-			children = (
-				15B53FC518B6462800763AAD /* tolua_fix.cpp */,
-				15A71DA21892291500F30AC0 /* lua_extensions.c */,
-				15A71DA31892291500F30AC0 /* lua_extensions.h */,
-				15A71D3B18921E6900F30AC0 /* socket */,
-				B362C3A41872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.cpp */,
-				B362C3A51872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.hpp */,
-				15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */,
-				15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */,
-				15CA8D1718697BE5000032AB /* LuaSkeletonAnimation.cpp */,
-				15CA8D1818697BE5000032AB /* LuaSkeletonAnimation.h */,
-				15CA8D0B18697A56000032AB /* lua_cocos2dx_spine_manual.cpp */,
-				15CA8D0C18697A56000032AB /* lua_cocos2dx_spine_manual.hpp */,
-				15D6E843182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp */,
-				15D6E844182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp */,
-				158E06DC181F6796008E01F6 /* lua_xml_http_request.cpp */,
-				158E06DD181F6796008E01F6 /* lua_xml_http_request.h */,
-				1A3B1F4E180E88C200497A22 /* CCBProxy.cpp */,
-				1A3B1F4F180E88C200497A22 /* CCBProxy.h */,
-				1A3B1F50180E88C200497A22 /* CCLuaBridge.cpp */,
-				1A3B1F51180E88C200497A22 /* CCLuaBridge.h */,
-				1A3B1F52180E88C200497A22 /* CCLuaEngine.cpp */,
-				1A3B1F53180E88C200497A22 /* CCLuaEngine.h */,
-				1A3B1F54180E88C200497A22 /* CCLuaStack.cpp */,
-				1A3B1F55180E88C200497A22 /* CCLuaStack.h */,
-				1A3B1F56180E88C300497A22 /* CCLuaValue.cpp */,
-				1A3B1F57180E88C300497A22 /* CCLuaValue.h */,
-				1A3B1F58180E88C300497A22 /* Cocos2dxLuaLoader.cpp */,
-				1A3B1F59180E88C300497A22 /* Cocos2dxLuaLoader.h */,
-				1A3B1F5D180E88C300497A22 /* lua_cocos2dx_deprecated.cpp */,
-				1A3B1F5E180E88C300497A22 /* lua_cocos2dx_deprecated.h */,
-				1A3B1F5F180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp */,
-				1A3B1F60180E88C300497A22 /* lua_cocos2dx_extension_manual.h */,
-				1A3B1F61180E88C300497A22 /* lua_cocos2dx_manual.cpp */,
-				1A3B1F62180E88C300497A22 /* lua_cocos2dx_manual.hpp */,
-				1A3B1F63180E88C300497A22 /* Lua_web_socket.cpp */,
-				1A3B1F64180E88C300497A22 /* Lua_web_socket.h */,
-				1A3B1F65180E88C300497A22 /* LuaBasicConversions.cpp */,
-				1A3B1F66180E88C300497A22 /* LuaBasicConversions.h */,
-				1A3B1F67180E88C300497A22 /* LuaOpengl.cpp */,
-				1A3B1F68180E88C300497A22 /* LuaOpengl.h */,
-				1A3B1F69180E88C300497A22 /* LuaScriptHandlerMgr.cpp */,
-				1A3B1F6A180E88C300497A22 /* LuaScriptHandlerMgr.h */,
-				1A3B1F6C180E88C300497A22 /* platform */,
-				1A3B1F77180E88C300497A22 /* tolua_fix.h */,
-			);
-			name = bindings;
-			path = lua/bindings;
-			sourceTree = "<group>";
-		};
-		1A3B1F6C180E88C300497A22 /* platform */ = {
-			isa = PBXGroup;
-			children = (
-				1A3B1F73180E88C300497A22 /* ios */,
-			);
-			path = platform;
-			sourceTree = "<group>";
-		};
-		1A3B1F73180E88C300497A22 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				1A3B1F74180E88C300497A22 /* CCLuaObjcBridge.h */,
-				1A3B1F75180E88C300497A22 /* CCLuaObjcBridge.mm */,
-			);
-			path = ios;
 			sourceTree = "<group>";
 		};
 		1A570046180BC59A0088DEC7 /* actions */ = {
@@ -4113,9 +3296,7 @@
 				1A57033F180BD0540088DEC7 /* glfw3 */,
 				1A570373180BD1790088DEC7 /* jpeg */,
 				1AD71EF8180E28C400808F54 /* json */,
-				1A8C55C9180E8C5700EF57C3 /* lua */,
 				1A57035C180BD0D90088DEC7 /* png */,
-				1AAF541E180E4013000584C8 /* spidermonkey */,
 				1A57038A180BD1EF0088DEC7 /* tiff */,
 				1A570348180BD09B0088DEC7 /* tinyxml2 */,
 				1A57034F180BD0B00088DEC7 /* unzip */,
@@ -4338,55 +3519,6 @@
 			path = ../external/freetype2/prebuilt/ios;
 			sourceTree = "<group>";
 		};
-		1A8C55C9180E8C5700EF57C3 /* lua */ = {
-			isa = PBXGroup;
-			children = (
-				1A8C5637180E8C7800EF57C3 /* luajit */,
-				1A8C563E180E8D0D00EF57C3 /* tolua */,
-			);
-			name = lua;
-			sourceTree = "<group>";
-		};
-		1A8C5637180E8C7800EF57C3 /* luajit */ = {
-			isa = PBXGroup;
-			children = (
-				1A8C563B180E8CA700EF57C3 /* mac */,
-				1A8C5638180E8C8700EF57C3 /* ios */,
-			);
-			name = luajit;
-			sourceTree = "<group>";
-		};
-		1A8C5638180E8C8700EF57C3 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				1599607F181132DE00C7D42C /* libluajit.a */,
-			);
-			name = ios;
-			sourceTree = "<group>";
-		};
-		1A8C563B180E8CA700EF57C3 /* mac */ = {
-			isa = PBXGroup;
-			children = (
-				1599607A1811329600C7D42C /* libluajit.a */,
-			);
-			name = mac;
-			sourceTree = "<group>";
-		};
-		1A8C563E180E8D0D00EF57C3 /* tolua */ = {
-			isa = PBXGroup;
-			children = (
-				1A8C563F180E8D0D00EF57C3 /* tolua++.h */,
-				1A8C5640180E8D0D00EF57C3 /* tolua_event.c */,
-				1A8C5641180E8D0D00EF57C3 /* tolua_event.h */,
-				1A8C5642180E8D0D00EF57C3 /* tolua_is.c */,
-				1A8C5643180E8D0D00EF57C3 /* tolua_map.c */,
-				1A8C5644180E8D0D00EF57C3 /* tolua_push.c */,
-				1A8C5645180E8D0D00EF57C3 /* tolua_to.c */,
-			);
-			name = tolua;
-			path = ../external/lua/tolua;
-			sourceTree = "<group>";
-		};
 		1A8C58BD180E92CC00EF57C3 /* gui */ = {
 			isa = PBXGroup;
 			children = (
@@ -4596,60 +3728,6 @@
 			path = ../external/curl/prebuilt/ios;
 			sourceTree = "<group>";
 		};
-		1AAF541E180E4013000584C8 /* spidermonkey */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF541F180E4023000584C8 /* prebuilt */,
-			);
-			name = spidermonkey;
-			sourceTree = "<group>";
-		};
-		1AAF541F180E4023000584C8 /* prebuilt */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF5423180E405B000584C8 /* ios */,
-				1AAF5420180E4047000584C8 /* mac */,
-			);
-			name = prebuilt;
-			sourceTree = "<group>";
-		};
-		1AAF5420180E4047000584C8 /* mac */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF5421180E4047000584C8 /* libjs_static.a */,
-			);
-			name = mac;
-			path = ../external/spidermonkey/prebuilt/mac;
-			sourceTree = "<group>";
-		};
-		1AAF5423180E405B000584C8 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				1AAF5424180E405B000584C8 /* libjs_static.a */,
-			);
-			name = ios;
-			path = ../external/spidermonkey/prebuilt/ios;
-			sourceTree = "<group>";
-		};
-		1AAF5426180E409E000584C8 /* scripting */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C785C181A11EC004E5527 /* auto-generated */,
-				1AAF5428180E409E000584C8 /* javascript */,
-				1A3B1F49180E887E00497A22 /* lua */,
-			);
-			name = scripting;
-			path = ../cocos/scripting;
-			sourceTree = "<group>";
-		};
-		1AAF5428180E409E000584C8 /* javascript */ = {
-			isa = PBXGroup;
-			children = (
-				1A2C78BA181A1257004E5527 /* bindings */,
-			);
-			path = javascript;
-			sourceTree = "<group>";
-		};
 		1AAF5849180E40B8000584C8 /* storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -4830,15 +3908,6 @@
 				37936A391869B76800E974DD /* strfunc.h */,
 			);
 			path = internal;
-			sourceTree = "<group>";
-		};
-		3EEF8BD01839F5A7005E8A6C /* gui */ = {
-			isa = PBXGroup;
-			children = (
-				3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */,
-				3EEF8BD21839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.h */,
-			);
-			name = gui;
 			sourceTree = "<group>";
 		};
 		46A15FD01807A56F005B8026 /* audio */ = {
@@ -5532,15 +4601,6 @@
 			path = renderer;
 			sourceTree = "<group>";
 		};
-		85D37C3718AC5E03007CDAFA /* spine */ = {
-			isa = PBXGroup;
-			children = (
-				85D37C3918AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.cpp */,
-				85D37C3A18AC5E03007CDAFA /* jsb_cocos2dx_spine_manual.h */,
-			);
-			path = spine;
-			sourceTree = "<group>";
-		};
 		A0053F45189B2BEA0035A564 /* android */ = {
 			isa = PBXGroup;
 			children = (
@@ -5965,114 +5025,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1A11972F178526AA00D62A44 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A3B1F7B180E88C300497A22 /* CCBProxy.h in Headers */,
-				15A71D6118921E6900F30AC0 /* auxiliar.h in Headers */,
-				15A71DA71892291500F30AC0 /* lua_extensions.h in Headers */,
-				1A3B1F7F180E88C300497A22 /* CCLuaBridge.h in Headers */,
-				15A71D9518921E6900F30AC0 /* udp.h in Headers */,
-				15A71D8518921E6900F30AC0 /* socket.h in Headers */,
-				1A3B1F83180E88C300497A22 /* CCLuaEngine.h in Headers */,
-				15A71D9D18921E6900F30AC0 /* usocket.h in Headers */,
-				15CA8D1018697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */,
-				1A3B1F87180E88C300497A22 /* CCLuaStack.h in Headers */,
-				15A71D7D18921E6900F30AC0 /* options.h in Headers */,
-				15A71D9118921E6900F30AC0 /* timeout.h in Headers */,
-				1A3B1F8B180E88C300497A22 /* CCLuaValue.h in Headers */,
-				1A3B1F8F180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
-				15A71D7918921E6900F30AC0 /* mime.h in Headers */,
-				15A71D8D18921E6900F30AC0 /* tcp.h in Headers */,
-				1A3B1F93180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
-				1A3B1F97180E88C300497A22 /* lua_cocos2dx_extension_manual.h in Headers */,
-				15A71D9918921E6900F30AC0 /* unix.h in Headers */,
-				1A3B1F9B180E88C300497A22 /* lua_cocos2dx_manual.hpp in Headers */,
-				1A3B1F9F180E88C300497A22 /* Lua_web_socket.h in Headers */,
-				15A71D6918921E6900F30AC0 /* inet.h in Headers */,
-				1A3B1FA3180E88C300497A22 /* LuaBasicConversions.h in Headers */,
-				15A71D7518921E6900F30AC0 /* luasocket_io.h in Headers */,
-				1A3B1FA7180E88C300497A22 /* LuaOpengl.h in Headers */,
-				1A2C78A9181A11EC004E5527 /* lua_cocos2dx_auto.hpp in Headers */,
-				1A3B1FAB180E88C300497A22 /* LuaScriptHandlerMgr.h in Headers */,
-				1A3B1FB7180E88C300497A22 /* CCLuaObjcBridge.h in Headers */,
-				15A71DA118921E6900F30AC0 /* wsocket.h in Headers */,
-				15A71D8918921E6900F30AC0 /* socket_scripts.h in Headers */,
-				15CA8D1C18697BE5000032AB /* LuaSkeletonAnimation.h in Headers */,
-				1A3B1FBD180E88C300497A22 /* tolua_fix.h in Headers */,
-				15A71D6518921E6900F30AC0 /* except.h in Headers */,
-				1A8C5647180E8D0D00EF57C3 /* tolua++.h in Headers */,
-				158E06E1181F6796008E01F6 /* lua_xml_http_request.h in Headers */,
-				1A2C78B5181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */,
-				15A71D7118921E6900F30AC0 /* luasocket_buffer.h in Headers */,
-				B362C3B51872BADF00F0BDF4 /* lua_cocos2dx_physics_manual.hpp in Headers */,
-				15A71D6D18921E6900F30AC0 /* luasocket.h in Headers */,
-				15A71D8118921E6900F30AC0 /* select.h in Headers */,
-				1A8C564B180E8D0D00EF57C3 /* tolua_event.h in Headers */,
-				15CA8D1618697AE1000032AB /* lua_cocos2dx_spine_auto.hpp in Headers */,
-				B362C3AF1872BAB700F0BDF4 /* lua_cocos2dx_physics_auto.hpp in Headers */,
-				1585AB5E1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp in Headers */,
-				15D6E848182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */,
-				15F4C8851875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */,
-				15F4CA221875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1A6FB51B17854BC200CDF010 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A3B1F7A180E88C300497A22 /* CCBProxy.h in Headers */,
-				15A71D6018921E6900F30AC0 /* auxiliar.h in Headers */,
-				15A71DA61892291500F30AC0 /* lua_extensions.h in Headers */,
-				1A3B1F7E180E88C300497A22 /* CCLuaBridge.h in Headers */,
-				15A71D9418921E6900F30AC0 /* udp.h in Headers */,
-				15A71D8418921E6900F30AC0 /* socket.h in Headers */,
-				1A3B1F82180E88C300497A22 /* CCLuaEngine.h in Headers */,
-				15A71D9C18921E6900F30AC0 /* usocket.h in Headers */,
-				15CA8D0F18697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */,
-				1A3B1F86180E88C300497A22 /* CCLuaStack.h in Headers */,
-				15A71D7C18921E6900F30AC0 /* options.h in Headers */,
-				15A71D9018921E6900F30AC0 /* timeout.h in Headers */,
-				1A3B1F8A180E88C300497A22 /* CCLuaValue.h in Headers */,
-				1A3B1F8E180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
-				15A71D7818921E6900F30AC0 /* mime.h in Headers */,
-				15A71D8C18921E6900F30AC0 /* tcp.h in Headers */,
-				1A3B1F92180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
-				1A3B1F96180E88C300497A22 /* lua_cocos2dx_extension_manual.h in Headers */,
-				15A71D9818921E6900F30AC0 /* unix.h in Headers */,
-				1A3B1F9A180E88C300497A22 /* lua_cocos2dx_manual.hpp in Headers */,
-				1A3B1F9E180E88C300497A22 /* Lua_web_socket.h in Headers */,
-				15A71D6818921E6900F30AC0 /* inet.h in Headers */,
-				1A3B1FA2180E88C300497A22 /* LuaBasicConversions.h in Headers */,
-				15A71D7418921E6900F30AC0 /* luasocket_io.h in Headers */,
-				1A3B1FA6180E88C300497A22 /* LuaOpengl.h in Headers */,
-				1A2C78A7181A11EC004E5527 /* lua_cocos2dx_auto.hpp in Headers */,
-				1A3B1FAA180E88C300497A22 /* LuaScriptHandlerMgr.h in Headers */,
-				1A3B1FB6180E88C300497A22 /* CCLuaObjcBridge.h in Headers */,
-				15A71DA018921E6900F30AC0 /* wsocket.h in Headers */,
-				15A71D8818921E6900F30AC0 /* socket_scripts.h in Headers */,
-				15CA8D1B18697BE5000032AB /* LuaSkeletonAnimation.h in Headers */,
-				1A3B1FBC180E88C300497A22 /* tolua_fix.h in Headers */,
-				15A71D6418921E6900F30AC0 /* except.h in Headers */,
-				1A8C5646180E8D0D00EF57C3 /* tolua++.h in Headers */,
-				158E06E0181F6796008E01F6 /* lua_xml_http_request.h in Headers */,
-				1A2C78B3181A11EC004E5527 /* lua_cocos2dx_extension_auto.hpp in Headers */,
-				15A71D7018921E6900F30AC0 /* luasocket_buffer.h in Headers */,
-				B362C3B31872BADC00F0BDF4 /* lua_cocos2dx_physics_manual.hpp in Headers */,
-				15A71D6C18921E6900F30AC0 /* luasocket.h in Headers */,
-				15A71D8018921E6900F30AC0 /* select.h in Headers */,
-				1A8C564A180E8D0D00EF57C3 /* tolua_event.h in Headers */,
-				15CA8D1518697AE1000032AB /* lua_cocos2dx_spine_auto.hpp in Headers */,
-				B362C3B11872BABC00F0BDF4 /* lua_cocos2dx_physics_auto.hpp in Headers */,
-				1585AB5D1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp in Headers */,
-				15D6E847182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */,
-				15F4C8841875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */,
-				15F4CA211875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A03F2C051780BD04006731B9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -6207,46 +5159,6 @@
 				1AD71EF2180E27CF00808F54 /* CCPhysicsDebugNode.h in Headers */,
 				1AD71EF6180E27CF00808F54 /* CCPhysicsSprite.h in Headers */,
 				1AAF5355180E3060000584C8 /* AssetsManager.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A03F31F11781479B006731B9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AFCB8211863D67F00EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Headers */,
-				1A2C7937181A1257004E5527 /* js_bindings_config.h in Headers */,
-				1A2C790F181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h in Headers */,
-				1A2C7935181A1257004E5527 /* jsb_cocos2dx_extension_manual.h in Headers */,
-				1A2C791F181A1257004E5527 /* js_bindings_chipmunk_registration.h in Headers */,
-				1A2C7955181A1257004E5527 /* js_bindings_system_functions.h in Headers */,
-				1A2C7911181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h in Headers */,
-				1A2C7963181A1257004E5527 /* XMLHTTPRequest.h in Headers */,
-				1A2C795F181A1257004E5527 /* jsb_websocket.h in Headers */,
-				1A2C7969181A1257004E5527 /* spidermonkey_specifics.h in Headers */,
-				1A2C788E181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp in Headers */,
-				1A2C7923181A1257004E5527 /* cocos2d_specifics.hpp in Headers */,
-				1A2C7931181A1257004E5527 /* jsb_cocos2dx_studio_manual.h in Headers */,
-				1A2C789A181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp in Headers */,
-				1A2C794D181A1257004E5527 /* jsb_opengl_manual.h in Headers */,
-				1A2C7967181A1257004E5527 /* ScriptingCore.h in Headers */,
-				1A2C795B181A1257004E5527 /* js_bindings_system_registration.h in Headers */,
-				1A2C7949181A1257004E5527 /* jsb_opengl_functions.h in Headers */,
-				1A2C7925181A1257004E5527 /* cocosbuilder_specifics.hpp in Headers */,
-				1A2C7915181A1257004E5527 /* js_bindings_chipmunk_functions.h in Headers */,
-				1A2C7917181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h in Headers */,
-				1A2C793B181A1257004E5527 /* js_bindings_core.h in Headers */,
-				1A2C793F181A1257004E5527 /* js_bindings_opengl.h in Headers */,
-				1A2C7945181A1257004E5527 /* jsb_helper.h in Headers */,
-				1A2C7957181A1257004E5527 /* js_bindings_system_functions_registration.h in Headers */,
-				1A2C7943181A1257004E5527 /* js_manual_conversions.h in Headers */,
-				1A2C7929181A1257004E5527 /* js_bindings_ccbreader.h in Headers */,
-				1A2C7951181A1257004E5527 /* jsb_opengl_registration.h in Headers */,
-				1A2C7876181A11EC004E5527 /* jsb_cocos2dx_auto.hpp in Headers */,
-				1A2C7882181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp in Headers */,
-				1A2C791B181A1257004E5527 /* js_bindings_chipmunk_manual.h in Headers */,
-				85D37C4518AC6379007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */,
-				2AFCB8221863D68B00EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6720,45 +5632,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A07A4FCE178387750073F6A7 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A2C7938181A1257004E5527 /* js_bindings_config.h in Headers */,
-				1A2C7910181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h in Headers */,
-				1A2C7936181A1257004E5527 /* jsb_cocos2dx_extension_manual.h in Headers */,
-				1A2C7920181A1257004E5527 /* js_bindings_chipmunk_registration.h in Headers */,
-				1A2C7956181A1257004E5527 /* js_bindings_system_functions.h in Headers */,
-				1A2C7912181A1257004E5527 /* js_bindings_chipmunk_auto_classes_registration.h in Headers */,
-				1A2C7964181A1257004E5527 /* XMLHTTPRequest.h in Headers */,
-				1A2C7960181A1257004E5527 /* jsb_websocket.h in Headers */,
-				1A2C796A181A1257004E5527 /* spidermonkey_specifics.h in Headers */,
-				1A2C7890181A11EC004E5527 /* jsb_cocos2dx_extension_auto.hpp in Headers */,
-				1A2C7924181A1257004E5527 /* cocos2d_specifics.hpp in Headers */,
-				1A2C7932181A1257004E5527 /* jsb_cocos2dx_studio_manual.h in Headers */,
-				1A2C789C181A11EC004E5527 /* jsb_cocos2dx_studio_auto.hpp in Headers */,
-				1A2C794E181A1257004E5527 /* jsb_opengl_manual.h in Headers */,
-				1A2C7968181A1257004E5527 /* ScriptingCore.h in Headers */,
-				85D37C4118AC6306007CDAFA /* jsb_cocos2dx_spine_manual.h in Headers */,
-				1A2C795C181A1257004E5527 /* js_bindings_system_registration.h in Headers */,
-				1A2C794A181A1257004E5527 /* jsb_opengl_functions.h in Headers */,
-				1A2C7926181A1257004E5527 /* cocosbuilder_specifics.hpp in Headers */,
-				1A2C7916181A1257004E5527 /* js_bindings_chipmunk_functions.h in Headers */,
-				1A2C7918181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h in Headers */,
-				1A2C793C181A1257004E5527 /* js_bindings_core.h in Headers */,
-				1A2C7940181A1257004E5527 /* js_bindings_opengl.h in Headers */,
-				1A2C7946181A1257004E5527 /* jsb_helper.h in Headers */,
-				1A2C7958181A1257004E5527 /* js_bindings_system_functions_registration.h in Headers */,
-				1A2C7944181A1257004E5527 /* js_manual_conversions.h in Headers */,
-				1A2C792A181A1257004E5527 /* js_bindings_ccbreader.h in Headers */,
-				1A2C7952181A1257004E5527 /* jsb_opengl_registration.h in Headers */,
-				1A2C7878181A11EC004E5527 /* jsb_cocos2dx_auto.hpp in Headers */,
-				1A2C7884181A11EC004E5527 /* jsb_cocos2dx_builder_auto.hpp in Headers */,
-				1A2C791C181A1257004E5527 /* js_bindings_chipmunk_manual.h in Headers */,
-				2AFCB8251863D70300EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -6778,40 +5651,6 @@
 			name = "cocos2dx Mac";
 			productName = cocos2dx;
 			productReference = 1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		1A119716178526AA00D62A44 /* luabindings iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1A11978E178526AA00D62A44 /* Build configuration list for PBXNativeTarget "luabindings iOS" */;
-			buildPhases = (
-				1A119717178526AA00D62A44 /* Sources */,
-				1A11972D178526AA00D62A44 /* Frameworks */,
-				1A11972F178526AA00D62A44 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "luabindings iOS";
-			productName = cocos2dx;
-			productReference = 1A119791178526AA00D62A44 /* libluabindings iOS.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		1A6FB50417854BC200CDF010 /* luabindings Mac */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1A6FB52D17854BC200CDF010 /* Build configuration list for PBXNativeTarget "luabindings Mac" */;
-			buildPhases = (
-				1A6FB50517854BC200CDF010 /* Sources */,
-				1A6FB51817854BC200CDF010 /* Frameworks */,
-				1A6FB51B17854BC200CDF010 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "luabindings Mac";
-			productName = cocos2dx;
-			productReference = 1A6FB53017854BC300CDF010 /* libluabindings Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		A03F2B781780BD04006731B9 /* chipmunk Mac */ = {
@@ -6880,23 +5719,6 @@
 			name = "cocos2dx-extensions Mac";
 			productName = cocos2dx;
 			productReference = A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		A03F31E81781479B006731B9 /* jsbindings Mac */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A03F31FA1781479B006731B9 /* Build configuration list for PBXNativeTarget "jsbindings Mac" */;
-			buildPhases = (
-				A03F31E91781479B006731B9 /* Sources */,
-				A03F31F01781479B006731B9 /* Frameworks */,
-				A03F31F11781479B006731B9 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "jsbindings Mac";
-			productName = cocos2dx;
-			productReference = A03F31FD1781479B006731B9 /* libjsbindings Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		A07A4C241783777C0073F6A7 /* cocos2dx iOS */ = {
@@ -6985,23 +5807,6 @@
 			productReference = A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A07A4FB5178387750073F6A7 /* jsbindings iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A07A502D178387750073F6A7 /* Build configuration list for PBXNativeTarget "jsbindings iOS" */;
-			buildPhases = (
-				A07A4FB6178387750073F6A7 /* Sources */,
-				A07A4FCC178387750073F6A7 /* Frameworks */,
-				A07A4FCE178387750073F6A7 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "jsbindings iOS";
-			productName = cocos2dx;
-			productReference = A07A5030178387750073F6A7 /* libjsbindings iOS.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -7029,16 +5834,12 @@
 				A03F2B781780BD04006731B9 /* chipmunk Mac */,
 				A03F2D5D1780BDF7006731B9 /* box2d Mac */,
 				A03F2E9817814268006731B9 /* CocosDenshion Mac */,
-				A03F31E81781479B006731B9 /* jsbindings Mac */,
-				1A6FB50417854BC200CDF010 /* luabindings Mac */,
 				A07A4E0B178386390073F6A7 /* build all libs iOS */,
 				A07A4C241783777C0073F6A7 /* cocos2dx iOS */,
 				A07A4E111783867C0073F6A7 /* cocos2dx-extensions iOS */,
 				A07A4EFD178387670073F6A7 /* chipmunk iOS */,
 				A07A4F3C1783876B0073F6A7 /* box2d iOS */,
 				A07A4F9F178387730073F6A7 /* CocosDenshion iOS */,
-				A07A4FB5178387750073F6A7 /* jsbindings iOS */,
-				1A119716178526AA00D62A44 /* luabindings iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -7325,118 +6126,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1A119717178526AA00D62A44 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A3B1F79180E88C300497A22 /* CCBProxy.cpp in Sources */,
-				1A3B1F7D180E88C300497A22 /* CCLuaBridge.cpp in Sources */,
-				1A3B1F81180E88C300497A22 /* CCLuaEngine.cpp in Sources */,
-				15A71D9318921E6900F30AC0 /* udp.c in Sources */,
-				15A71DA51892291500F30AC0 /* lua_extensions.c in Sources */,
-				15A71D8318921E6900F30AC0 /* serial.c in Sources */,
-				B362C3B41872BADF00F0BDF4 /* lua_cocos2dx_physics_manual.cpp in Sources */,
-				1A3B1F85180E88C300497A22 /* CCLuaStack.cpp in Sources */,
-				158E06DF181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */,
-				15A71D7F18921E6900F30AC0 /* select.c in Sources */,
-				15A71D7B18921E6900F30AC0 /* options.c in Sources */,
-				1A3B1F89180E88C300497A22 /* CCLuaValue.cpp in Sources */,
-				1A3B1F8D180E88C300497A22 /* Cocos2dxLuaLoader.cpp in Sources */,
-				15A71D8718921E6900F30AC0 /* socket_scripts.c in Sources */,
-				1A3B1F91180E88C300497A22 /* lua_cocos2dx_deprecated.cpp in Sources */,
-				15CA8D1A18697BE5000032AB /* LuaSkeletonAnimation.cpp in Sources */,
-				1A3B1F95180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp in Sources */,
-				1A3B1F99180E88C300497A22 /* lua_cocos2dx_manual.cpp in Sources */,
-				15A71D6318921E6900F30AC0 /* except.c in Sources */,
-				15A71D7718921E6900F30AC0 /* mime.c in Sources */,
-				1585AB5C1828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp in Sources */,
-				1A3B1F9D180E88C300497A22 /* Lua_web_socket.cpp in Sources */,
-				B362C3AE1872BAB700F0BDF4 /* lua_cocos2dx_physics_auto.cpp in Sources */,
-				1A3B1FA1180E88C300497A22 /* LuaBasicConversions.cpp in Sources */,
-				1A3B1FA5180E88C300497A22 /* LuaOpengl.cpp in Sources */,
-				15A71D9B18921E6900F30AC0 /* usocket.c in Sources */,
-				1A3B1FA9180E88C300497A22 /* LuaScriptHandlerMgr.cpp in Sources */,
-				15A71D6B18921E6900F30AC0 /* luasocket.c in Sources */,
-				15CA8D0E18697A56000032AB /* lua_cocos2dx_spine_manual.cpp in Sources */,
-				15A71D6718921E6900F30AC0 /* inet.c in Sources */,
-				1A2C78A5181A11EC004E5527 /* lua_cocos2dx_auto.cpp in Sources */,
-				1A3B1FB9180E88C300497A22 /* CCLuaObjcBridge.mm in Sources */,
-				1A2C78B1181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp in Sources */,
-				15A71D7318921E6900F30AC0 /* luasocket_io.c in Sources */,
-				1A8C5649180E8D0D00EF57C3 /* tolua_event.c in Sources */,
-				15A71D8B18921E6900F30AC0 /* tcp.c in Sources */,
-				15CA8D1418697AE1000032AB /* lua_cocos2dx_spine_auto.cpp in Sources */,
-				15A71D8F18921E6900F30AC0 /* timeout.c in Sources */,
-				1A8C564D180E8D0D00EF57C3 /* tolua_is.c in Sources */,
-				1A8C564F180E8D0D00EF57C3 /* tolua_map.c in Sources */,
-				1A8C5651180E8D0D00EF57C3 /* tolua_push.c in Sources */,
-				1A8C5653180E8D0D00EF57C3 /* tolua_to.c in Sources */,
-				15D6E846182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */,
-				15A71D5F18921E6900F30AC0 /* auxiliar.c in Sources */,
-				15A71D6F18921E6900F30AC0 /* luasocket_buffer.c in Sources */,
-				15F4C8831875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */,
-				15A71D9718921E6900F30AC0 /* unix.c in Sources */,
-				15F4CA201875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */,
-				15B53FC718B6462900763AAD /* tolua_fix.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1A6FB50517854BC200CDF010 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1A3B1F78180E88C300497A22 /* CCBProxy.cpp in Sources */,
-				1A3B1F7C180E88C300497A22 /* CCLuaBridge.cpp in Sources */,
-				1A3B1F80180E88C300497A22 /* CCLuaEngine.cpp in Sources */,
-				15A71D9218921E6900F30AC0 /* udp.c in Sources */,
-				15A71DA41892291500F30AC0 /* lua_extensions.c in Sources */,
-				15A71D8218921E6900F30AC0 /* serial.c in Sources */,
-				B362C3B21872BADC00F0BDF4 /* lua_cocos2dx_physics_manual.cpp in Sources */,
-				1A3B1F84180E88C300497A22 /* CCLuaStack.cpp in Sources */,
-				158E06DE181F6796008E01F6 /* lua_xml_http_request.cpp in Sources */,
-				15A71D7E18921E6900F30AC0 /* select.c in Sources */,
-				15A71D7A18921E6900F30AC0 /* options.c in Sources */,
-				1A3B1F88180E88C300497A22 /* CCLuaValue.cpp in Sources */,
-				1A3B1F8C180E88C300497A22 /* Cocos2dxLuaLoader.cpp in Sources */,
-				15A71D8618921E6900F30AC0 /* socket_scripts.c in Sources */,
-				1A3B1F90180E88C300497A22 /* lua_cocos2dx_deprecated.cpp in Sources */,
-				15CA8D1918697BE5000032AB /* LuaSkeletonAnimation.cpp in Sources */,
-				1A3B1F94180E88C300497A22 /* lua_cocos2dx_extension_manual.cpp in Sources */,
-				1A3B1F98180E88C300497A22 /* lua_cocos2dx_manual.cpp in Sources */,
-				15A71D6218921E6900F30AC0 /* except.c in Sources */,
-				15A71D7618921E6900F30AC0 /* mime.c in Sources */,
-				1585AB5B1828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp in Sources */,
-				1A3B1F9C180E88C300497A22 /* Lua_web_socket.cpp in Sources */,
-				B362C3B01872BABC00F0BDF4 /* lua_cocos2dx_physics_auto.cpp in Sources */,
-				1A3B1FA0180E88C300497A22 /* LuaBasicConversions.cpp in Sources */,
-				1A3B1FA4180E88C300497A22 /* LuaOpengl.cpp in Sources */,
-				15A71D9A18921E6900F30AC0 /* usocket.c in Sources */,
-				1A3B1FA8180E88C300497A22 /* LuaScriptHandlerMgr.cpp in Sources */,
-				15A71D6A18921E6900F30AC0 /* luasocket.c in Sources */,
-				15CA8D0D18697A56000032AB /* lua_cocos2dx_spine_manual.cpp in Sources */,
-				15A71D6618921E6900F30AC0 /* inet.c in Sources */,
-				1A2C78A3181A11EC004E5527 /* lua_cocos2dx_auto.cpp in Sources */,
-				1A3B1FB8180E88C300497A22 /* CCLuaObjcBridge.mm in Sources */,
-				1A2C78AF181A11EC004E5527 /* lua_cocos2dx_extension_auto.cpp in Sources */,
-				15A71D7218921E6900F30AC0 /* luasocket_io.c in Sources */,
-				1A8C5648180E8D0D00EF57C3 /* tolua_event.c in Sources */,
-				15A71D8A18921E6900F30AC0 /* tcp.c in Sources */,
-				15CA8D1318697AE1000032AB /* lua_cocos2dx_spine_auto.cpp in Sources */,
-				15A71D8E18921E6900F30AC0 /* timeout.c in Sources */,
-				1A8C564C180E8D0D00EF57C3 /* tolua_is.c in Sources */,
-				1A8C564E180E8D0D00EF57C3 /* tolua_map.c in Sources */,
-				1A8C5650180E8D0D00EF57C3 /* tolua_push.c in Sources */,
-				1A8C5652180E8D0D00EF57C3 /* tolua_to.c in Sources */,
-				15D6E845182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */,
-				15A71D5E18921E6900F30AC0 /* auxiliar.c in Sources */,
-				15A71D6E18921E6900F30AC0 /* luasocket_buffer.c in Sources */,
-				15F4C8821875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */,
-				15A71D9618921E6900F30AC0 /* unix.c in Sources */,
-				15F4CA1F1875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */,
-				15B53FC618B6462900763AAD /* tolua_fix.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A03F2B791780BD04006731B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7568,40 +6257,6 @@
 				1AD71EF0180E27CF00808F54 /* CCPhysicsDebugNode.cpp in Sources */,
 				1AD71EF4180E27CF00808F54 /* CCPhysicsSprite.cpp in Sources */,
 				1AAF5353180E3060000584C8 /* AssetsManager.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A03F31E91781479B006731B9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */,
-				3EEF8BD6183A001B005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */,
-				1A2C791D181A1257004E5527 /* js_bindings_chipmunk_registration.cpp in Sources */,
-				1A2C793D181A1257004E5527 /* js_bindings_opengl.cpp in Sources */,
-				1A2C794F181A1257004E5527 /* jsb_opengl_registration.cpp in Sources */,
-				1A2C7959181A1257004E5527 /* js_bindings_system_registration.cpp in Sources */,
-				1A2C7919181A1257004E5527 /* js_bindings_chipmunk_manual.cpp in Sources */,
-				1A2C792F181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp in Sources */,
-				1A2C7965181A1257004E5527 /* ScriptingCore.cpp in Sources */,
-				1A2C790D181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
-				85D37C4418AC6376007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */,
-				1A2C7913181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */,
-				1A2C7933181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
-				1A2C7947181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */,
-				1A2C7927181A1257004E5527 /* js_bindings_ccbreader.cpp in Sources */,
-				1A2C7872181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */,
-				1A2C7939181A1257004E5527 /* js_bindings_core.cpp in Sources */,
-				1A2C794B181A1257004E5527 /* jsb_opengl_manual.cpp in Sources */,
-				1A2C787E181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp in Sources */,
-				1A2C7941181A1257004E5527 /* js_manual_conversions.cpp in Sources */,
-				1A2C7921181A1257004E5527 /* cocos2d_specifics.cpp in Sources */,
-				1A2C788A181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp in Sources */,
-				1A2C7953181A1257004E5527 /* js_bindings_system_functions.cpp in Sources */,
-				1A2C7896181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp in Sources */,
-				1A2C795D181A1257004E5527 /* jsb_websocket.cpp in Sources */,
-				1A2C7961181A1257004E5527 /* XMLHTTPRequest.cpp in Sources */,
-				2AFCB8231863D6B200EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8024,53 +6679,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A07A4FB6178387750073F6A7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */,
-				3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */,
-				1A2C791E181A1257004E5527 /* js_bindings_chipmunk_registration.cpp in Sources */,
-				1A2C793E181A1257004E5527 /* js_bindings_opengl.cpp in Sources */,
-				1A2C7950181A1257004E5527 /* jsb_opengl_registration.cpp in Sources */,
-				1A2C795A181A1257004E5527 /* js_bindings_system_registration.cpp in Sources */,
-				1A2C791A181A1257004E5527 /* js_bindings_chipmunk_manual.cpp in Sources */,
-				1A2C7930181A1257004E5527 /* jsb_cocos2dx_studio_manual.cpp in Sources */,
-				1A2C7966181A1257004E5527 /* ScriptingCore.cpp in Sources */,
-				1A2C790E181A1257004E5527 /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
-				85D37C4318AC6323007CDAFA /* jsb_cocos2dx_spine_manual.cpp in Sources */,
-				1A2C7914181A1257004E5527 /* js_bindings_chipmunk_functions.cpp in Sources */,
-				1A2C7934181A1257004E5527 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
-				1A2C7948181A1257004E5527 /* jsb_opengl_functions.cpp in Sources */,
-				1A2C7928181A1257004E5527 /* js_bindings_ccbreader.cpp in Sources */,
-				1A2C7874181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */,
-				1A2C793A181A1257004E5527 /* js_bindings_core.cpp in Sources */,
-				1A2C794C181A1257004E5527 /* jsb_opengl_manual.cpp in Sources */,
-				1A2C7880181A11EC004E5527 /* jsb_cocos2dx_builder_auto.cpp in Sources */,
-				1A2C7942181A1257004E5527 /* js_manual_conversions.cpp in Sources */,
-				1A2C7922181A1257004E5527 /* cocos2d_specifics.cpp in Sources */,
-				1A2C788C181A11EC004E5527 /* jsb_cocos2dx_extension_auto.cpp in Sources */,
-				1A2C7954181A1257004E5527 /* js_bindings_system_functions.cpp in Sources */,
-				1A2C7898181A11EC004E5527 /* jsb_cocos2dx_studio_auto.cpp in Sources */,
-				1A2C795E181A1257004E5527 /* jsb_websocket.cpp in Sources */,
-				1A2C7962181A1257004E5527 /* XMLHTTPRequest.cpp in Sources */,
-				2AFCB8241863D6F600EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1A6FB4FF17854AD600CDF010 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1A119716178526AA00D62A44 /* luabindings iOS */;
-			targetProxy = 1A6FB4FE17854AD600CDF010 /* PBXContainerItemProxy */;
-		};
-		1A6FB7E71785683A00CDF010 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1A6FB50417854BC200CDF010 /* luabindings Mac */;
-			targetProxy = 1A6FB7E61785683A00CDF010 /* PBXContainerItemProxy */;
-		};
 		460E44F41807E241000CDD6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A03F2B781780BD04006731B9 /* chipmunk Mac */;
@@ -8106,11 +6717,6 @@
 			target = A03F2FC117814595006731B9 /* cocos2dx-extensions Mac */;
 			targetProxy = A03F31FE178147CB006731B9 /* PBXContainerItemProxy */;
 		};
-		A03F3201178147CB006731B9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A03F31E81781479B006731B9 /* jsbindings Mac */;
-			targetProxy = A03F3200178147CB006731B9 /* PBXContainerItemProxy */;
-		};
 		A07A4E10178386520073F6A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A07A4C241783777C0073F6A7 /* cocos2dx iOS */;
@@ -8135,11 +6741,6 @@
 			isa = PBXTargetDependency;
 			target = A07A4F9F178387730073F6A7 /* CocosDenshion iOS */;
 			targetProxy = A07A504C178389710073F6A7 /* PBXContainerItemProxy */;
-		};
-		A07A504F178389710073F6A7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A07A4FB5178387750073F6A7 /* jsbindings iOS */;
-			targetProxy = A07A504E178389710073F6A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -8268,98 +6869,6 @@
 			};
 			name = Release;
 		};
-		1A11978F178526AA00D62A44 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "../cocos/2d/cocos2dx-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_IPHONE,
-				);
-				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/prebuilt/ios",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
-			};
-			name = Debug;
-		};
-		1A119790178526AA00D62A44 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "../cocos/2d/cocos2dx-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_IPHONE,
-				);
-				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/prebuilt/ios",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
-			};
-			name = Release;
-		};
-		1A6FB52E17854BC200CDF010 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "../cocos/2d/cocos2dx-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_MAC,
-					CC_KEYBOARD_SUPPORT,
-				);
-				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
-				);
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
-			};
-			name = Debug;
-		};
-		1A6FB52F17854BC200CDF010 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "../cocos/2d/cocos2dx-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_MAC,
-					CC_KEYBOARD_SUPPORT,
-				);
-				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../external/lua/luajit/prebuilt/mac",
-				);
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
-			};
-			name = Release;
-		};
 		A03F2CB61780BD04006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8471,44 +6980,6 @@
 				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/2d/platform/desktop $(SRCROOT)/../external/glfw3/include/mac";
-			};
-			name = Release;
-		};
-		A03F31FB1781479B006731B9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					COCOS2D_JAVASCRIPT,
-					CC_TARGET_OS_MAC,
-					CC_KEYBOARD_SUPPORT,
-				);
-				HEADER_SEARCH_PATHS = "";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../external/spidermonkey/prebuilt/mac\"",
-				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
-			};
-			name = Debug;
-		};
-		A03F31FC1781479B006731B9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					COCOS2D_JAVASCRIPT,
-					CC_TARGET_OS_MAC,
-					CC_KEYBOARD_SUPPORT,
-				);
-				HEADER_SEARCH_PATHS = "";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../external/spidermonkey/prebuilt/mac\"",
-				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Release;
 		};
@@ -8710,50 +7181,6 @@
 			};
 			name = Release;
 		};
-		A07A502E178387750073F6A7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					COCOS2D_JAVASCRIPT,
-					CC_TARGET_OS_IPHONE,
-				);
-				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../external/spidermonkey/prebuilt/ios\"",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../cocos/2d/platform/ios";
-			};
-			name = Debug;
-		};
-		A07A502F178387750073F6A7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					COCOS2D_JAVASCRIPT,
-					CC_TARGET_OS_IPHONE,
-				);
-				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../external/spidermonkey/prebuilt/ios\"",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../cocos/2d/platform/ios";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -8771,24 +7198,6 @@
 			buildConfigurations = (
 				1551A34D158F2AB200E66CFE /* Debug */,
 				1551A34E158F2AB200E66CFE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1A11978E178526AA00D62A44 /* Build configuration list for PBXNativeTarget "luabindings iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1A11978F178526AA00D62A44 /* Debug */,
-				1A119790178526AA00D62A44 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1A6FB52D17854BC200CDF010 /* Build configuration list for PBXNativeTarget "luabindings Mac" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1A6FB52E17854BC200CDF010 /* Debug */,
-				1A6FB52F17854BC200CDF010 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8834,15 +7243,6 @@
 			buildConfigurations = (
 				A03F2FD417814595006731B9 /* Debug */,
 				A03F2FD517814595006731B9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A03F31FA1781479B006731B9 /* Build configuration list for PBXNativeTarget "jsbindings Mac" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A03F31FB1781479B006731B9 /* Debug */,
-				A03F31FC1781479B006731B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -8897,15 +7297,6 @@
 			buildConfigurations = (
 				A07A4FB2178387730073F6A7 /* Debug */,
 				A07A4FB3178387730073F6A7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A07A502D178387750073F6A7 /* Build configuration list for PBXNativeTarget "jsbindings iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A07A502E178387750073F6A7 /* Debug */,
-				A07A502F178387750073F6A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

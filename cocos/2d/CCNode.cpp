@@ -173,7 +173,7 @@ Node::~Node()
     CC_SAFE_DELETE(_componentContainer);
     
 #if CC_USE_PHYSICS
-    CC_SAFE_RELEASE(_physicsBody);
+    setPhysicsBody(nullptr);
 #endif
 }
 
@@ -187,9 +187,12 @@ float Node::getSkewX() const
     return _skewX;
 }
 
-void Node::setSkewX(float newSkewX)
+void Node::setSkewX(float skewX)
 {
-    _skewX = newSkewX;
+    if (_skewX == skewX)
+        return;
+    
+    _skewX = skewX;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -198,10 +201,12 @@ float Node::getSkewY() const
     return _skewY;
 }
 
-void Node::setSkewY(float newSkewY)
+void Node::setSkewY(float skewY)
 {
-    _skewY = newSkewY;
-
+    if (_skewY == skewY)
+        return;
+    
+    _skewY = skewY;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -215,6 +220,9 @@ void Node::_setLocalZOrder(int z)
 
 void Node::setLocalZOrder(int z)
 {
+    if (_localZOrder == z)
+        return;
+    
     _localZOrder = z;
     if (_parent)
     {
@@ -241,15 +249,18 @@ float Node::getRotation() const
 }
 
 /// rotation setter
-void Node::setRotation(float newRotation)
+void Node::setRotation(float rotation)
 {
-    _rotationZ_X = _rotationZ_Y = newRotation;
+    if (_rotationZ_X == rotation)
+        return;
+    
+    _rotationZ_X = _rotationZ_Y = rotation;
     _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
-        _physicsBody->setRotation(newRotation);
+        _physicsBody->setRotation(rotation);
     }
 #endif
 }
@@ -261,6 +272,11 @@ float Node::getRotationSkewX() const
 
 void Node::setRotation3D(const Vertex3F& rotation)
 {
+    if (_rotationX == rotation.x &&
+        _rotationY == rotation.y &&
+        _rotationZ_X == rotation.z)
+        return;
+    
     _transformDirty = _inverseDirty = true;
 
     _rotationX = rotation.x;
@@ -285,9 +301,12 @@ Vertex3F Node::getRotation3D() const
     return Vertex3F(_rotationX,_rotationY,_rotationZ_X);
 }
 
-void Node::setRotationSkewX(float fRotationX)
+void Node::setRotationSkewX(float rotationX)
 {
-    _rotationZ_X = fRotationX;
+    if (_rotationZ_X == rotationX)
+        return;
+    
+    _rotationZ_X = rotationX;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -298,6 +317,9 @@ float Node::getRotationSkewY() const
 
 void Node::setRotationSkewY(float rotationY)
 {
+    if (_rotationZ_Y == rotationY)
+        return;
+    
     _rotationZ_Y = rotationY;
     _transformDirty = _inverseDirty = true;
 }
@@ -312,6 +334,9 @@ float Node::getScale(void) const
 /// scale setter
 void Node::setScale(float scale)
 {
+    if (_scaleX == scale)
+        return;
+    
     _scaleX = _scaleY = scale;
     _transformDirty = _inverseDirty = true;
 }
@@ -325,15 +350,21 @@ float Node::getScaleX() const
 /// scale setter
 void Node::setScale(float scaleX,float scaleY)
 {
+    if (_scaleX == scaleX && _scaleY == scaleY)
+        return;
+    
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformDirty = _inverseDirty = true;
 }
 
 /// scaleX setter
-void Node::setScaleX(float newScaleX)
+void Node::setScaleX(float scaleX)
 {
-    _scaleX = newScaleX;
+    if (_scaleX == scaleX)
+        return;
+    
+    _scaleX = scaleX;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -344,9 +375,12 @@ float Node::getScaleY() const
 }
 
 /// scaleY setter
-void Node::setScaleZ(float newScaleZ)
+void Node::setScaleZ(float scaleZ)
 {
-    _scaleZ = newScaleZ;
+    if (_scaleZ == scaleZ)
+        return;
+    
+    _scaleZ = scaleZ;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -357,9 +391,12 @@ float Node::getScaleZ() const
 }
 
 /// scaleY setter
-void Node::setScaleY(float newScaleY)
+void Node::setScaleY(float scaleY)
 {
-    _scaleY = newScaleY;
+    if (_scaleY == scaleY)
+        return;
+    
+    _scaleY = scaleY;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -371,15 +408,18 @@ const Point& Node::getPosition() const
 }
 
 /// position setter
-void Node::setPosition(const Point& newPosition)
+void Node::setPosition(const Point& position)
 {
-    _position = newPosition;
+    if (_position.equals(position))
+        return;
+    
+    _position = position;
     _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
-        _physicsBody->setPosition(newPosition);
+        _physicsBody->setPosition(position);
     }
 #endif
 }
@@ -437,6 +477,9 @@ float Node::getPositionZ() const
 
 void Node::setPositionZ(float positionZ)
 {
+    if (_positionZ == positionZ)
+        return;
+    
     _transformDirty = _inverseDirty = true;
 
     _positionZ = positionZ;
@@ -590,6 +633,7 @@ Scene* Node::getScene()
 {
     if(!_parent)
         return nullptr;
+    
     return _parent->getScene();
 }
 
@@ -918,10 +962,6 @@ void Node::transformAncestors()
 
 void Node::transform()
 {
-#if CC_USE_PHYSICS
-    updatePhysicsTransform();
-#endif
-
     kmMat4 transfrom4x4 = this->getNodeToParentTransform();
 
     kmGLMultMatrix( &transfrom4x4 );
@@ -1075,7 +1115,7 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    return _scheduler->isScheduled(this, schedule_selector_to_key(selector));
+    return _scheduler->isScheduled(selector, this);
 }
 
 void Node::scheduleUpdate()
@@ -1085,9 +1125,7 @@ void Node::scheduleUpdate()
 
 void Node::scheduleUpdateWithPriority(int priority)
 {
-    _scheduler->scheduleUpdate([this](float dt){
-        this->update(dt);
-    }, this, priority, !_running);
+    _scheduler->scheduleUpdate(this, priority, !_running);
 }
 
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
@@ -1097,9 +1135,8 @@ void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 #if CC_ENABLE_SCRIPT_BINDING
     _updateScriptHandler = nHandler;
 #endif
-    _scheduler->scheduleUpdate([this](float dt){
-        this->update(dt);
-    }, this, priority, !_running);
+    
+    _scheduler->scheduleUpdate(this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
@@ -1130,9 +1167,7 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
 
-    _scheduler->schedule([=](float dt){
-        (this->*selector)(dt);
-    }, this, schedule_selector_to_key(selector), interval , repeat, delay, !_running);
+    _scheduler->schedule(selector, this, interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1146,7 +1181,7 @@ void Node::unschedule(SEL_SCHEDULE selector)
     if (selector == nullptr)
         return;
     
-    _scheduler->unschedule(this, schedule_selector_to_key(selector));
+    _scheduler->unschedule(selector, this);
 }
 
 void Node::unscheduleAllSelectors()
@@ -1429,21 +1464,6 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
     return this->convertToNodeSpaceAR(point);
 }
 
-#if CC_USE_PHYSICS
-bool Node::updatePhysicsTransform()
-{
-    if (_physicsBody != nullptr && _physicsBody->getWorld() != nullptr && !_physicsBody->isResting())
-    {
-        _position = _physicsBody->getPosition();
-        _rotationZ_X = _rotationZ_Y = _physicsBody->getRotation();
-        _transformDirty = _inverseDirty = true;
-        return true;
-    }
-    
-    return false;
-}
-#endif
-
 void Node::updateTransform()
 {
     // Recursively iterate over children
@@ -1482,17 +1502,31 @@ void Node::removeAllComponents()
 #if CC_USE_PHYSICS
 void Node::setPhysicsBody(PhysicsBody* body)
 {
+    if (body != nullptr)
+    {
+        body->_node = this;
+        body->retain();
+    }
+    
     if (_physicsBody != nullptr)
     {
+        PhysicsWorld* world = _physicsBody->getWorld();
+        _physicsBody->removeFromWorld();
         _physicsBody->_node = nullptr;
         _physicsBody->release();
+        
+        if (world != nullptr && body != nullptr)
+        {
+            world->addBody(body);
+        }
     }
     
     _physicsBody = body;
-    _physicsBody->_node = this;
-    _physicsBody->retain();
-    _physicsBody->setPosition(getPosition());
-    _physicsBody->setRotation(getRotation());
+    if (body != nullptr)
+    {
+        _physicsBody->setPosition(getPosition());
+        _physicsBody->setRotation(getRotation());
+    }
 }
 
 PhysicsBody* Node::getPhysicsBody() const
