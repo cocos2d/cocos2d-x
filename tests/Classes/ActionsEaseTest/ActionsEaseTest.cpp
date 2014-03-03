@@ -119,7 +119,7 @@ void SpriteEase::testStopAction(float dt)
     _grossini->stopActionByTag(1);
 }
 
-std::string SpriteEase::title() const
+std::string SpriteEase::subtitle() const
 {
     return "EaseIn - EaseOut - Stop";
 }
@@ -159,7 +159,7 @@ void SpriteEaseInOut::onEnter()
 }
 
 
-std::string SpriteEaseInOut::title() const
+std::string SpriteEaseInOut::subtitle() const
 {
     return "EaseInOut and rates";
 }
@@ -196,7 +196,7 @@ void SpriteEaseExponential::onEnter()
 }
 
 
-std::string SpriteEaseExponential::title() const
+std::string SpriteEaseExponential::subtitle() const
 {
     return "ExpIn - ExpOut actions";
 }
@@ -229,7 +229,7 @@ void SpriteEaseExponentialInOut::onEnter()
 }
 
 
-std::string SpriteEaseExponentialInOut::title() const
+std::string SpriteEaseExponentialInOut::subtitle() const
 {
     return "EaseExponentialInOut action";
 }
@@ -266,7 +266,7 @@ void SpriteEaseSine::onEnter()
 }
 
 
-std::string SpriteEaseSine::title() const
+std::string SpriteEaseSine::subtitle() const
 {
     return "EaseSineIn - EaseSineOut";
 }
@@ -298,7 +298,7 @@ void SpriteEaseSineInOut::onEnter()
 }
 
 
-std::string SpriteEaseSineInOut::title() const
+std::string SpriteEaseSineInOut::subtitle() const
 {
     return "EaseSineInOut action";
 }
@@ -333,7 +333,7 @@ void SpriteEaseElastic::onEnter()
 }
 
 
-std::string SpriteEaseElastic::title() const
+std::string SpriteEaseElastic::subtitle() const
 {
     return "Elastic In - Out actions";
 }
@@ -371,7 +371,7 @@ void SpriteEaseElasticInOut::onEnter()
 }
 
 
-std::string SpriteEaseElasticInOut::title() const
+std::string SpriteEaseElasticInOut::subtitle() const
 {
     return "EaseElasticInOut action";
 }
@@ -408,7 +408,7 @@ void SpriteEaseBounce::onEnter()
 }
 
 
-std::string SpriteEaseBounce::title() const
+std::string SpriteEaseBounce::subtitle() const
 {
     return "Bounce In - Out actions";
 }
@@ -442,7 +442,7 @@ void SpriteEaseBounceInOut::onEnter()
 }
 
 
-std::string SpriteEaseBounceInOut::title() const
+std::string SpriteEaseBounceInOut::subtitle() const
 {
     return "EaseBounceInOut action";
 }
@@ -478,7 +478,7 @@ void SpriteEaseBack::onEnter()
 }
 
 
-std::string SpriteEaseBack::title() const
+std::string SpriteEaseBack::subtitle() const
 {
     return "Back In - Out actions";
 }
@@ -511,7 +511,7 @@ void SpriteEaseBackInOut::onEnter()
 }
 
 
-std::string SpriteEaseBackInOut::title() const
+std::string SpriteEaseBackInOut::subtitle() const
 {
     return "EaseBackInOut action";
 }
@@ -573,7 +573,7 @@ void SpriteEaseBezier::onEnter()
     
 }
 
-std::string SpriteEaseBezier::title()const
+std::string SpriteEaseBezier::subtitle()const
 {
     return "SpriteEaseBezier action";
 }
@@ -608,7 +608,7 @@ void SpriteEaseQuadratic::onEnter()
     _kathia->runAction( RepeatForever::create(seq3));
 }
 
-std::string SpriteEaseQuadratic::title() const
+std::string SpriteEaseQuadratic::subtitle() const
 {
     return "SpriteEaseQuadratic action";
 }
@@ -640,7 +640,7 @@ void SpriteEaseQuadraticInOut::onEnter()
     _tamara->runAction( RepeatForever::create(seq2));
 }
 
-std::string SpriteEaseQuadraticInOut::title()const
+std::string SpriteEaseQuadraticInOut::subtitle()const
 {
     return "SpriteEaseQuadraticInOut action";
 }
@@ -676,7 +676,7 @@ void SpriteEaseQuartic::onEnter()
     _kathia->runAction( RepeatForever::create(seq3));
 }
 
-std::string SpriteEaseQuartic::title()const
+std::string SpriteEaseQuartic::subtitle()const
 {
     return "SpriteEaseQuartic action";
 }
@@ -708,7 +708,7 @@ void SpriteEaseQuarticInOut::onEnter()
     _tamara->runAction( RepeatForever::create(seq2));
 }
 
-std::string SpriteEaseQuarticInOut::title()const
+std::string SpriteEaseQuarticInOut::subtitle()const
 {
     return "SpriteEaseQuarticInOut action";
 }
@@ -743,7 +743,7 @@ void SpriteEaseQuintic::onEnter()
     _kathia->runAction( RepeatForever::create(seq3));
 }
 
-std::string SpriteEaseQuintic::title()const
+std::string SpriteEaseQuintic::subtitle()const
 {
     return "SpriteEaseQuintic action";
 }
@@ -776,7 +776,7 @@ void SpriteEaseQuinticInOut::onEnter()
     _tamara->runAction( RepeatForever::create(seq2));
 }
 
-std::string SpriteEaseQuinticInOut::title()const
+std::string SpriteEaseQuinticInOut::subtitle()const
 {
     return "SpriteEaseQuinticInOut action";
 }
@@ -811,7 +811,7 @@ void SpriteEaseCircle::onEnter()
     _kathia->runAction( RepeatForever::create(seq3));
 }
 
-std::string SpriteEaseCircle::title()const
+std::string SpriteEaseCircle::subtitle()const
 {
     return "SpriteEaseCircle action";
 }
@@ -844,7 +844,7 @@ void SpriteEaseCircleInOut::onEnter()
     _tamara->runAction( RepeatForever::create(seq2));
 }
 
-std::string SpriteEaseCircleInOut::title()const
+std::string SpriteEaseCircleInOut::subtitle()const
 {
     return "SpriteEaseCircleInOut action";
 }
@@ -879,7 +879,7 @@ void SpriteEaseCubic::onEnter()
     _kathia->runAction( RepeatForever::create(seq3));
 }
 
-std::string SpriteEaseCubic::title()const
+std::string SpriteEaseCubic::subtitle()const
 {
     return "SpriteEaseCubic action";
 }
@@ -964,7 +964,7 @@ void SpeedTest::altertime(float dt)
     action3->setSpeed( CCRANDOM_MINUS1_1() * 2 );
 }
 
-std::string SpeedTest::title() const
+std::string SpeedTest::subtitle() const
 {
     return "Speed action";
 }
@@ -1072,7 +1072,7 @@ void EaseSpriteDemo::positionForTwo()
 }
 
 
-std::string EaseSpriteDemo::title() const
+std::string EaseSpriteDemo::subtitle() const
 {
     return "No title";
 }

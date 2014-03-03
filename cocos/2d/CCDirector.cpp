@@ -140,9 +140,7 @@ bool Director::init(void)
     _scheduler = new Scheduler();
     // action manager
     _actionManager = new ActionManager();
-    _scheduler->scheduleUpdate([this](float dt){
-        this->_actionManager->update(dt);
-    }, _actionManager, Scheduler::PRIORITY_SYSTEM, false);
+    _scheduler->scheduleUpdate(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
     _eventDispatcher = new EventDispatcher();
     _eventAfterDraw = new EventCustom(EVENT_AFTER_DRAW);
