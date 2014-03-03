@@ -79,9 +79,12 @@ ActionManagerTest::~ActionManagerTest(void)
 
 std::string ActionManagerTest::title() const
 {
+    return "ActionManager Test";
+}
+std::string ActionManagerTest::subtitle() const
+{
     return "No title";
 }
-
 void ActionManagerTest::restartCallback(Ref* sender)
 {
     auto s = new ActionManagerTestScene();
@@ -144,7 +147,7 @@ void CrashTest::removeThis()
     nextCallback(this);
 }
 
-std::string CrashTest::title() const
+std::string CrashTest::subtitle() const
 {
     return "Test 1. Should not crash";
 }
@@ -175,7 +178,7 @@ void LogicTest::bugMe(Node* node)
     node->runAction(ScaleTo::create(2, 2));
 }
 
-std::string LogicTest::title() const
+std::string LogicTest::subtitle() const
 {
     return "Logic test"; 
 }
@@ -223,7 +226,7 @@ void PauseTest::unpause(float dt)
     director->getActionManager()->resumeTarget(node);
 }
 
-std::string PauseTest::title() const
+std::string PauseTest::subtitle() const
 {
     return "Pause Test";
 }
@@ -259,7 +262,7 @@ void RemoveTest::stopAction()
     sprite->stopActionByTag(kTagSequence);
 }
 
-std::string RemoveTest::title() const
+std::string RemoveTest::subtitle() const
 {
     return "Remove Test";
 }
@@ -269,7 +272,7 @@ std::string RemoveTest::title() const
 // ResumeTest
 //
 //------------------------------------------------------------------
-std::string ResumeTest::title() const
+std::string ResumeTest::subtitle() const
 {
     return "Resume Test";
 }

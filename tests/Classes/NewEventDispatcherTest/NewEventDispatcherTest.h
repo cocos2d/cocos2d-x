@@ -165,6 +165,19 @@ protected:
     bool isPointInTopHalfAreaOfScreen(Point pt);
 };
 
+class PauseResumeTargetTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(PauseResumeTargetTest);
+    PauseResumeTargetTest();
+    virtual ~PauseResumeTargetTest();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+};
+
 class Issue4129 : public EventDispatcherTestDemo
 {
 public:
@@ -180,5 +193,17 @@ private:
     bool _bugFixed;
 };
 
+class Issue4160 : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(Issue4160);
+    Issue4160();
+    virtual ~Issue4160();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+};
 
 #endif /* defined(__samples__NewEventDispatcherTest__) */

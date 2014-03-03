@@ -67,6 +67,7 @@ _scissorRectDirty(false),
 _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
 _doLayoutDirty(true),
+_clippingRectDirty(true),
 _currentStencilEnabled(GL_FALSE),
 _currentStencilWriteMask(~0),
 _currentStencilFunc(GL_ALWAYS),
@@ -95,6 +96,8 @@ void Layout::onEnter()
     {
         _clippingStencil->onEnter();
     }
+    _doLayoutDirty = true;
+    _clippingRectDirty = true;
 }
     
 void Layout::onExit()
@@ -148,6 +151,23 @@ void Layout::addChild(Node *child, int zOrder, int tag)
 {
     supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     Widget::addChild(child, zOrder, tag);
+    _doLayoutDirty = true;
+}
+    
+void Layout::removeChild(Node *child, bool cleanup)
+{
+    Widget::removeChild(child, cleanup);
+    _doLayoutDirty = true;
+}
+    
+void Layout::removeAllChildren()
+{
+    Widget::removeAllChildren();
+}
+    
+void Layout::removeAllChildrenWithCleanup(bool cleanup)
+{
+    Widget::removeAllChildrenWithCleanup(cleanup);
     _doLayoutDirty = true;
 }
 
@@ -410,6 +430,11 @@ void Layout::setClippingType(LayoutClippingType type)
     setClippingEnabled(clippingEnabled);
 }
     
+LayoutClippingType Layout::getClippingType()
+{
+    return _clippingType;
+}
+    
 void Layout::setStencilClippingSize(const Size &size)
 {
     if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
@@ -427,79 +452,83 @@ void Layout::setStencilClippingSize(const Size &size)
     
 const Rect& Layout::getClippingRect()
 {
-    Point worldPos = convertToWorldSpace(Point::ZERO);
-    AffineTransform t = getNodeToWorldAffineTransform();
-    float scissorWidth = _size.width*t.a;
-    float scissorHeight = _size.height*t.d;
-    Rect parentClippingRect;
-    Layout* parent = this;
-    bool firstClippingParentFounded = false;
-    while (parent)
+    if (_clippingRectDirty)
     {
-        parent = dynamic_cast<Layout*>(parent->getParent());
-        if(parent)
+        Point worldPos = convertToWorldSpace(Point::ZERO);
+        AffineTransform t = getNodeToWorldAffineTransform();
+        float scissorWidth = _size.width*t.a;
+        float scissorHeight = _size.height*t.d;
+        Rect parentClippingRect;
+        Layout* parent = this;
+        bool firstClippingParentFounded = false;
+        while (parent)
         {
-            if (parent->isClippingEnabled())
+            parent = dynamic_cast<Layout*>(parent->getParent());
+            if(parent)
             {
-                if (!firstClippingParentFounded)
+                if (parent->isClippingEnabled())
                 {
-                    _clippingParent = parent;
-                    firstClippingParentFounded = true;
-                    break;
+                    if (!firstClippingParentFounded)
+                    {
+                        _clippingParent = parent;
+                        firstClippingParentFounded = true;
+                        break;
+                    }
                 }
             }
         }
-    }
-    
-    if (_clippingParent)
-    {
-        parentClippingRect = _clippingParent->getClippingRect();
-        float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
-        float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
-        float finalWidth = scissorWidth;
-        float finalHeight = scissorHeight;
         
-        float leftOffset = worldPos.x - parentClippingRect.origin.x;
-        if (leftOffset < 0.0f)
+        if (_clippingParent)
         {
-            finalX = parentClippingRect.origin.x;
-            finalWidth += leftOffset;
+            parentClippingRect = _clippingParent->getClippingRect();
+            float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
+            float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
+            float finalWidth = scissorWidth;
+            float finalHeight = scissorHeight;
+            
+            float leftOffset = worldPos.x - parentClippingRect.origin.x;
+            if (leftOffset < 0.0f)
+            {
+                finalX = parentClippingRect.origin.x;
+                finalWidth += leftOffset;
+            }
+            float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
+            if (rightOffset > 0.0f)
+            {
+                finalWidth -= rightOffset;
+            }
+            float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
+            if (topOffset > 0.0f)
+            {
+                finalHeight -= topOffset;
+            }
+            float bottomOffset = worldPos.y - parentClippingRect.origin.y;
+            if (bottomOffset < 0.0f)
+            {
+                finalY = parentClippingRect.origin.x;
+                finalHeight += bottomOffset;
+            }
+            if (finalWidth < 0.0f)
+            {
+                finalWidth = 0.0f;
+            }
+            if (finalHeight < 0.0f)
+            {
+                finalHeight = 0.0f;
+            }
+            _clippingRect.origin.x = finalX;
+            _clippingRect.origin.y = finalY;
+            _clippingRect.size.width = finalWidth;
+            _clippingRect.size.height = finalHeight;
         }
-        float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
-        if (rightOffset > 0.0f)
+        else
         {
-            finalWidth -= rightOffset;
+            _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
+            _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
+            _clippingRect.size.width = scissorWidth;
+            _clippingRect.size.height = scissorHeight;
         }
-        float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
-        if (topOffset > 0.0f)
-        {
-            finalHeight -= topOffset;
-        }
-        float bottomOffset = worldPos.y - parentClippingRect.origin.y;
-        if (bottomOffset < 0.0f)
-        {
-            finalY = parentClippingRect.origin.x;
-            finalHeight += bottomOffset;
-        }
-        if (finalWidth < 0.0f)
-        {
-            finalWidth = 0.0f;
-        }
-        if (finalHeight < 0.0f)
-        {
-            finalHeight = 0.0f;
-        }
-        _clippingRect.origin.x = finalX;
-        _clippingRect.origin.y = finalY;
-        _clippingRect.size.width = finalWidth;
-        _clippingRect.size.height = finalHeight;
-    }
-    else
-    {
-        _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
-        _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
-        _clippingRect.size.width = scissorWidth;
-        _clippingRect.size.height = scissorHeight;
+        _clippingRectDirty = false;
     }
     return _clippingRect;
 }
@@ -510,6 +539,7 @@ void Layout::onSizeChanged()
     setContentSize(_size);
     setStencilClippingSize(_size);
     _doLayoutDirty = true;
+    _clippingRectDirty = true;
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
@@ -616,6 +646,11 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
     {
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
+}
+    
+const Rect& Layout::getBackGroundImageCapInsets()
+{
+    return _backGroundImageCapInsets;
 }
 
 void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
@@ -744,6 +779,11 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             break;
     }
 }
+    
+LayoutBackGroundColorType Layout::getBackGroundColorType()
+{
+    return _colorType;
+}
 
 void Layout::setBackGroundColor(const Color3B &color)
 {
@@ -752,6 +792,11 @@ void Layout::setBackGroundColor(const Color3B &color)
     {
         _colorRender->setColor(color);
     }
+}
+    
+const Color3B& Layout::getBackGroundColor()
+{
+    return _cColor;
 }
 
 void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endColor)
@@ -766,6 +811,16 @@ void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endCol
     {
         _gradientRender->setEndColor(endColor);
     }
+}
+    
+const Color3B& Layout::getBackGroundStartColor()
+{
+    return _gStartColor;
+}
+
+const Color3B& Layout::getBackGroundEndColor()
+{
+    return _gEndColor;
 }
 
 void Layout::setBackGroundColorOpacity(int opacity)
@@ -785,6 +840,11 @@ void Layout::setBackGroundColorOpacity(int opacity)
             break;
     }
 }
+    
+int Layout::getBackGroundColorOpacity()
+{
+    return _cOpacity;
+}
 
 void Layout::setBackGroundColorVector(const Point &vector)
 {
@@ -793,6 +853,11 @@ void Layout::setBackGroundColorVector(const Point &vector)
     {
         _gradientRender->setVector(vector);
     }
+}
+    
+const Point& Layout::getBackGroundColorVector()
+{
+    return _alongVector;
 }
 
 const Size& Layout::getBackGroundImageTextureSize() const
@@ -1197,128 +1262,50 @@ void Layout::doLayout()
                                 
                             case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
                                 finalPosY += mg.bottom;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
-                                {
-                                    finalPosY += relativeWidgetMargin.top;
-                                }
                                 finalPosX += mg.left;
                                 break;
                             case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
                                 finalPosY += mg.bottom;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
-                                {
-                                    finalPosY += relativeWidgetMargin.top;
-                                }
                                 finalPosX -= mg.right;
                                 break;
                             case RELATIVE_LOCATION_ABOVE_CENTER:
                                 finalPosY += mg.bottom;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
-                                {
-                                    finalPosY += relativeWidgetMargin.top;
-                                }
                                 break;
                                 
                             case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
                                 finalPosX -= mg.right;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
-                                {
-                                    finalPosX -= relativeWidgetMargin.left;
-                                }
                                 finalPosY -= mg.top;
                                 break;
                             case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
                                 finalPosX -= mg.right;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
-                                {
-                                    finalPosX -= relativeWidgetMargin.left;
-                                }
                                 finalPosY += mg.bottom;
                                 break;
                             case RELATIVE_LOCATION_LEFT_OF_CENTER:
                                 finalPosX -= mg.right;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
-                                {
-                                    finalPosX -= relativeWidgetMargin.left;
-                                }
                                 break;
                                 
                             case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
                                 finalPosX += mg.left;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
-                                {
-                                    finalPosX += relativeWidgetMargin.right;
-                                }
                                 finalPosY -= mg.top;
                                 break;
                             case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
                                 finalPosX += mg.left;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
-                                {
-                                    finalPosX += relativeWidgetMargin.right;
-                                }
                                 finalPosY += mg.bottom;
                                 break;
                             case RELATIVE_LOCATION_RIGHT_OF_CENTER:
                                 finalPosX += mg.left;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
-                                {
-                                    finalPosX += relativeWidgetMargin.right;
-                                }
                                 break;
                                 
                             case RELATIVE_LOCATION_BELOW_LEFTALIGN:
                                 finalPosY -= mg.top;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
-                                {
-                                    finalPosY -= relativeWidgetMargin.bottom;
-                                }
                                 finalPosX += mg.left;
                                 break;
                             case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
                                 finalPosY -= mg.top;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
-                                {
-                                    finalPosY -= relativeWidgetMargin.bottom;
-                                }
                                 finalPosX -= mg.right;
                                 break;
                             case RELATIVE_LOCATION_BELOW_CENTER:
                                 finalPosY -= mg.top;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
-                                {
-                                    finalPosY -= relativeWidgetMargin.bottom;
-                                }
                                 break;
                             default:
                                 break;

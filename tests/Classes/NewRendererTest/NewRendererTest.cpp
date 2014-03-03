@@ -91,12 +91,12 @@ MultiSceneTest::~MultiSceneTest()
 
 std::string MultiSceneTest::title() const
 {
-    return BaseTest::title();
+    return "New Renderer";
 }
 
 std::string MultiSceneTest::subtitle() const
 {
-    return BaseTest::subtitle();
+    return "MultiSceneTest";
 }
 
 void MultiSceneTest::onEnter()
