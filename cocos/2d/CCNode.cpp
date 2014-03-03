@@ -1115,7 +1115,7 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    return _scheduler->isScheduledForTarget(this, selector);
+    return _scheduler->isScheduled(selector, this);
 }
 
 void Node::scheduleUpdate()
@@ -1125,7 +1125,7 @@ void Node::scheduleUpdate()
 
 void Node::scheduleUpdateWithPriority(int priority)
 {
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate(this, priority, !_running);
 }
 
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
@@ -1136,12 +1136,12 @@ void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
     _updateScriptHandler = nHandler;
 #endif
     
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate(this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
 {
-    _scheduler->unscheduleUpdateForTarget(this);
+    _scheduler->unscheduleUpdate(this);
     
 #if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
@@ -1167,7 +1167,7 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
 
-    _scheduler->scheduleSelector(selector, this, interval , repeat, delay, !_running);
+    _scheduler->schedule(selector, this, interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1181,7 +1181,7 @@ void Node::unschedule(SEL_SCHEDULE selector)
     if (selector == nullptr)
         return;
     
-    _scheduler->unscheduleSelector(selector, this);
+    _scheduler->unschedule(selector, this);
 }
 
 void Node::unscheduleAllSelectors()
