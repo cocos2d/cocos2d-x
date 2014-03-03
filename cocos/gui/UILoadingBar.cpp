@@ -193,6 +193,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
+    setPercent(_percent);
 }
 
 bool LoadingBar::isScale9Enabled()
