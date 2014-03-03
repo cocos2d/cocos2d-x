@@ -165,7 +165,7 @@ void UIListViewExTest_Vertical::selectedItemEvent(CCObject *pSender, ListViewEve
 {
     switch (type)
     {
-        case cocos2d::gui::LISTVIEW_ONSELECTEDITEM:
+        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM:
         {
             UIListView* listViewEx = static_cast<UIListView*>(pSender);
             CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());
@@ -341,7 +341,7 @@ void UIListViewExTest_Horizontal::selectedItemEvent(CCObject *pSender, ListViewE
 {
     switch (type)
     {
-        case cocos2d::gui::LISTVIEW_ONSELECTEDITEM:
+        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM:
             {
                 UIListView* listViewEx = static_cast<UIListView*>(pSender);
                 CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());

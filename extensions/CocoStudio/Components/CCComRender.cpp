@@ -165,8 +165,8 @@ bool CCComRender::serialize(void* r)
             }
             else if(strcmp(pClassName, "GUIComponent") == 0)
             {
-                cocos2d::gui::TouchGroup* tg = cocos2d::gui::TouchGroup::create();
-                cocos2d::gui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
+                cocos2d::ui::TouchGroup* tg = cocos2d::ui::TouchGroup::create();
+                cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
                 tg->addWidget(widget);
                 m_pRender = tg;
                 m_pRender->retain();

@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const int BACKGROUNDBOX_RENDERER_Z = (-1);
 static const int BACKGROUNDBOXSELECTED_RENDERER_Z = (-1);
