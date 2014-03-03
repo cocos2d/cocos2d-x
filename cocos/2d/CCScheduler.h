@@ -151,7 +151,7 @@ class SchedulerScriptHandlerEntry;
 #endif
 
 /** @brief Scheduler is responsible for triggering the scheduled callbacks.
-You should not use NSTimer. Instead use this class.
+You should not use system timer for your game logic. Instead, use this class.
 
 There are 2 different types of callbacks (selectors):
 
@@ -196,7 +196,9 @@ public:
      */
     void update(float dt);
 
-    // schedule / unschedule 'callback'. Added from v3.0-final
+    /////////////////////////////////////
+    
+    // schedule
     
     /** The scheduled method will be called every 'interval' seconds.
      If paused is true, then it won't be called until it is resumed.
@@ -207,27 +209,13 @@ public:
      @param key The key to identify the callback
      @since v3.0
      */
-    void scheduleCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float interval, unsigned int repeat, float delay, bool paused);
+    void schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key);
 
     /** Calls scheduleCallback with kRepeatForever and a 0 delay
      @since v3.0
      */
-    void scheduleCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float interval, bool paused);
+    void schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key);
     
-    /** Checks whether a callback associated with 'key' and 'target' is scheduled.
-     @since v3.0.0
-     */
-    bool isScheduledForKey(const std::string& key, void *target);
-
-    /** Unschedules a callback for a key and a given target.
-     If you want to unschedule the 'callbackPerFrame', use unscheduleUpdate.
-     @since v3.0
-     */
-    void unscheduleCallbackForKey(const std::string& key, void *target);
-
-    /////////////////////////////////////
-    
-    // schedule / unschedule 'selector'
     
     /** The scheduled method will be called every 'interval' seconds.
      If paused is true, then it won't be called until it is resumed.
@@ -236,55 +224,56 @@ public:
      repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
      delay is the amount of time the action will wait before it'll start
      
-     @since v0.99.3, repeat and delay added in v1.1
+     @since v3.0, repeat and delay added in v1.1
      */
-    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
+    void schedule(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
     
     /** calls scheduleSelector with kRepeatForever and a 0 delay */
-    void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
-    
-    /** Unschedule a selector for a given target.
-     If you want to unschedule the "update", use unscheudleUpdateForTarget.
-     @since v0.99.3
-     */
-    void unscheduleSelector(SEL_SCHEDULE selector, Ref *target);
-    
-    /** Checks whether a selector for a given taget is scheduled.
-     @since v0.99.3
-     */
-    CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduledForSelector(selector, target); };
-    
-    /** Checks whether a selector for a given taget is scheduled.
-     @since v3.0
-     */
-    bool isScheduledForSelector(SEL_SCHEDULE selector, Ref *target);
-    
-    /////////////////////////////////////
-    
-    // schedule / unschedule 'update'
+    void schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
     
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
-     @since v0.99.3
+     @since v3.0
      @lua NA
      */
     template <class T>
-    void scheduleUpdateForTarget(T *target, int priority, bool paused)
+    void scheduleUpdate(T *target, int priority, bool paused)
     {
-        this->scheduleCallbackPerFrame([target](float dt){
+        this->schedulePerFrame([target](float dt){
             target->update(dt);
         }, target, priority, paused);
     }
+
+#if CC_ENABLE_SCRIPT_BINDING
+    // schedule for script bindings
+    /** The scheduled script callback will be called every 'interval' seconds.
+     If paused is true, then it won't be called until it is resumed.
+     If 'interval' is 0, it will be called every frame.
+     return schedule script entry ID, used for unscheduleScriptFunc().
+     */
+    unsigned int scheduleScriptFunc(unsigned int handler, float interval, bool paused);
+#endif
+    /////////////////////////////////////
+    
+    // unschedule
+
+    /** Unschedules a callback for a key and a given target.
+     If you want to unschedule the 'callbackPerFrame', use unscheduleUpdate.
+     @since v3.0
+     */
+    void unschedule(const std::string& key, void *target);
+
+    /** Unschedule a selector for a given target.
+     If you want to unschedule the "update", use unscheudleUpdateForTarget.
+     @since v3.0
+     */
+    void unschedule(SEL_SCHEDULE selector, Ref *target);
     
     /** Unschedules the update selector for a given target
      @since v0.99.3
      */
-    void unscheduleUpdateForTarget(void *target);
-    
-    /////////////////////////////////////
-    
-    // unschedule all
+    void unscheduleUpdate(void *target);
     
     /** Unschedules all selectors for a given target.
      This also includes the "update" selector.
@@ -301,25 +290,29 @@ public:
     void unscheduleAll(void);
     
     /** Unschedules all selectors from all targets with a minimum priority.
-      You should only call this with kPriorityNonSystemMin or higher.
-      @since v2.0.0
-      */
-    void unscheduleAllWithMinPriority(int minPriority);
-
-    /////////////////////////////////////
-    
-    // schedule / unschedule for script bindings
-#if CC_ENABLE_SCRIPT_BINDING
-    /** The scheduled script callback will be called every 'interval' seconds.
-     If paused is true, then it won't be called until it is resumed.
-     If 'interval' is 0, it will be called every frame.
-     return schedule script entry ID, used for unscheduleScriptFunc().
+     You should only call this with kPriorityNonSystemMin or higher.
+     @since v2.0.0
      */
-    unsigned int scheduleScriptFunc(unsigned int handler, float interval, bool paused);
+    void unscheduleAllWithMinPriority(int minPriority);
     
+#if CC_ENABLE_SCRIPT_BINDING
     /** Unschedule a script entry. */
     void unscheduleScriptEntry(unsigned int scheduleScriptEntryID);
 #endif
+    
+    /////////////////////////////////////
+    
+    // isScheduled
+    
+    /** Checks whether a callback associated with 'key' and 'target' is scheduled.
+     @since v3.0.0
+     */
+    bool isScheduled(const std::string& key, void *target);
+    
+    /** Checks whether a selector for a given taget is scheduled.
+     @since v3.0
+     */
+    bool isScheduled(SEL_SCHEDULE selector, Ref *target);
     
     /////////////////////////////////////
     
@@ -367,7 +360,10 @@ public:
      @since v3.0
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
-
+    
+    // Deprecated methods:
+    
+    
 protected:
     
     /** Schedules the 'callback' function for a given target with a given priority.
@@ -376,7 +372,7 @@ protected:
      @note This method is only for internal use.
      @since v3.0
      */
-    void scheduleCallbackPerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused);
+    void schedulePerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused);
     
     void removeHashElement(struct _hashSelectorEntry *element);
     void removeUpdateFromHash(struct _listEntry *entry);

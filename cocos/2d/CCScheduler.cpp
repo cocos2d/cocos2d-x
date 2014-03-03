@@ -172,7 +172,7 @@ void TimerTargetSelector::trigger()
 
 void TimerTargetSelector::cancel()
 {
-    Director::getInstance()->getScheduler()->unscheduleSelector(_selector, _target);
+    Director::getInstance()->getScheduler()->unschedule(_selector, _target);
 }
 
 // TimerTargetCallback
@@ -202,7 +202,7 @@ void TimerTargetCallback::trigger()
 
 void TimerTargetCallback::cancel()
 {
-    Director::getInstance()->getScheduler()->unscheduleCallbackForKey(_key, _target);
+    Director::getInstance()->getScheduler()->unschedule(_key, _target);
 }
 
 #if CC_ENABLE_SCRIPT_BINDING
@@ -277,12 +277,12 @@ void Scheduler::removeHashElement(_hashSelectorEntry *element)
     free(element);
 }
 
-void Scheduler::scheduleCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float interval, bool paused)
+void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key)
 {
-    this->scheduleCallback(callback, target, key, interval, kRepeatForever, 0.0f, paused);
+    this->schedule(callback, target, interval, kRepeatForever, 0.0f, paused, key);
 }
 
-void Scheduler::scheduleCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float interval, unsigned int repeat, float delay, bool paused)
+void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key)
 {
     CCASSERT(target, "Argument target must be non-nullptr");
     CCASSERT(!key.empty(), "key should not be empty!");
@@ -331,7 +331,7 @@ void Scheduler::scheduleCallback(const ccSchedulerFunc& callback, void *target, 
     timer->release();
 }
 
-void Scheduler::unscheduleCallbackForKey(const std::string &key, void *target)
+void Scheduler::unschedule(const std::string &key, void *target)
 {
     // explicity handle nil arguments when removing an object
     if (target == nullptr || key.empty())
@@ -461,7 +461,7 @@ void Scheduler::appendIn(_listEntry **list, const ccSchedulerFunc& callback, voi
     HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
-void Scheduler::scheduleCallbackPerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused)
+void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused)
 {
     tHashUpdateEntry *hashElement = nullptr;
     HASH_FIND_PTR(_hashForUpdates, &target, hashElement);
@@ -493,7 +493,7 @@ void Scheduler::scheduleCallbackPerFrame(const ccSchedulerFunc& callback, void *
     }
 }
 
-bool Scheduler::isScheduledForKey(const std::string& key, void *target)
+bool Scheduler::isScheduled(const std::string& key, void *target)
 {
     CCASSERT(!key.empty(), "Argument key must not be empty");
     CCASSERT(target, "Argument target must be non-nullptr");
@@ -545,7 +545,7 @@ void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
     }
 }
 
-void Scheduler::unscheduleUpdateForTarget(void *target)
+void Scheduler::unscheduleUpdate(void *target)
 {
     if (target == nullptr)
     {
@@ -594,7 +594,7 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
         {
             if(entry->priority >= minPriority)
             {
-                unscheduleUpdateForTarget(entry->target);
+                unscheduleUpdate(entry->target);
             }
         }
     }
@@ -603,7 +603,7 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
     {
         DL_FOREACH_SAFE(_updates0List, entry, tmp)
         {
-            unscheduleUpdateForTarget(entry->target);
+            unscheduleUpdate(entry->target);
         }
     }
 
@@ -611,7 +611,7 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
     {
         if(entry->priority >= minPriority)
         {
-            unscheduleUpdateForTarget(entry->target);
+            unscheduleUpdate(entry->target);
         }
     }
 #if CC_ENABLE_SCRIPT_BINDING
@@ -652,7 +652,7 @@ void Scheduler::unscheduleAllForTarget(void *target)
     }
 
     // update selector
-    unscheduleUpdateForTarget(target);
+    unscheduleUpdate(target);
 }
 
 #if CC_ENABLE_SCRIPT_BINDING
@@ -968,7 +968,7 @@ void Scheduler::update(float dt)
     }
 }
 
-void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
+void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCASSERT(target, "Argument target must be non-nullptr");
     
@@ -1016,12 +1016,12 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float inter
     timer->release();
 }
 
-void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
+void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
 {
-    this->scheduleSelector(selector, target, interval, kRepeatForever, 0.0f, paused);
+    this->schedule(selector, target, interval, kRepeatForever, 0.0f, paused);
 }
 
-bool Scheduler::isScheduledForSelector(SEL_SCHEDULE selector, Ref *target)
+bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
 {
     CCASSERT(selector, "Argument selector must be non-nullptr");
     CCASSERT(target, "Argument target must be non-nullptr");
@@ -1056,7 +1056,7 @@ bool Scheduler::isScheduledForSelector(SEL_SCHEDULE selector, Ref *target)
     return false;  // should never get here
 }
 
-void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Ref *target)
+void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
 {
     // explicity handle nil arguments when removing an object
     if (target == nullptr || selector == nullptr)

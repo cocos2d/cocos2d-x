@@ -431,7 +431,7 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         auto director = Director::getInstance();
-        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+        director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
     
     SchedulerTestLayer::onExit();
@@ -965,11 +965,11 @@ void TwoSchedulers::onEnter()
     // Create a new scheduler, and link it to the main scheduler
     sched1 = new Scheduler();
 
-    defaultScheduler->scheduleUpdateForTarget(sched1, 0, false);
+    defaultScheduler->scheduleUpdate(sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager1 = new ActionManager();
-    sched1->scheduleUpdateForTarget(actionManager1, 0, false);
+    sched1->scheduleUpdate(actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
     {
@@ -991,11 +991,11 @@ void TwoSchedulers::onEnter()
 
     // Create a new scheduler, and link it to the main scheduler
     sched2 = new Scheduler();;
-    defaultScheduler->scheduleUpdateForTarget(sched2, 0, false);
+    defaultScheduler->scheduleUpdate(sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager2 = new ActionManager();
-    sched2->scheduleUpdateForTarget(actionManager2, 0, false);
+    sched2->scheduleUpdate(actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
         auto sprite = Sprite::create("Images/grossinis_sister2.png");
@@ -1119,33 +1119,33 @@ std::string ScheduleCallbackTest::title() const
 std::string ScheduleCallbackTest::subtitle() const
 {
     return "\n\n\n\nPlease see console.\n\
-scheduleCallback(lambda, ...)\n\
-scheduleCallback(CC_CALLBACK_1(XXX::member_function), this), this, ...)\n\
-scheduleCallback(global_function, ...)\n\
+schedule(lambda, ...)\n\
+schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...)\n\
+schedule(global_function, ...)\n\
 ";
 }
 
 static void ScheduleCallbackTest_global_callback(float dt)
 {
-    log("In the callback of scheduleCallback(global_function, ...), dt = %f", dt);
+    log("In the callback of schedule(global_function, ...), dt = %f", dt);
 }
 
 void ScheduleCallbackTest::onEnter()
 {
     SchedulerTestLayer::onEnter();
     
-    _scheduler->scheduleCallback([](float dt){
-        log("In the callback of scheduleCallback(lambda, ...), dt = %f", dt);
-    }, this, "lambda", 1.0f, false);
+    _scheduler->schedule([](float dt){
+        log("In the callback of schedule(lambda, ...), dt = %f", dt);
+    }, this, 1.0f, false, "lambda");
     
-    _scheduler->scheduleCallback(CC_CALLBACK_1(ScheduleCallbackTest::callback, this), this, "member_function", 1.0f, false);
+    _scheduler->schedule(CC_CALLBACK_1(ScheduleCallbackTest::callback, this), this, 1.0f, false, "member_function");
     
-    _scheduler->scheduleCallback(ScheduleCallbackTest_global_callback, this, "global_function", 1.0f, false);
+    _scheduler->schedule(ScheduleCallbackTest_global_callback, this, 1.0f, false, "global_function");
 }
 
 void ScheduleCallbackTest::callback(float dt)
 {
-    log("In the callback of scheduleCallback(CC_CALLBACK_1(XXX::member_function), this), this, ...), dt = %f", dt);
+    log("In the callback of schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...), dt = %f", dt);
 }
 
 //------------------------------------------------------------------
