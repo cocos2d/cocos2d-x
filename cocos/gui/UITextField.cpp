@@ -319,6 +319,11 @@ void TextField::setTouchSize(const Size &size)
     _touchWidth = size.width;
     _touchHeight = size.height;
 }
+    
+Size TextField::getTouchSize()
+{
+    return Size(_touchWidth, _touchHeight);
+}
 
 void TextField::setText(const std::string& text)
 {
@@ -345,17 +350,32 @@ void TextField::setPlaceHolder(const std::string& value)
     _textFieldRenderer->setPlaceHolder(value);
     textfieldRendererScaleChangedWithSize();
 }
+    
+const std::string& TextField::getPlaceHolder()
+{
+    return _textFieldRenderer->getPlaceHolder();
+}
 
 void TextField::setFontSize(int size)
 {
     _textFieldRenderer->setFontSize(size);
     textfieldRendererScaleChangedWithSize();
 }
+    
+int TextField::getFontSize()
+{
+    return _textFieldRenderer->getFontSize();
+}
 
 void TextField::setFontName(const std::string& name)
 {
     _textFieldRenderer->setFontName(name);
     textfieldRendererScaleChangedWithSize();
+}
+    
+const std::string& TextField::getFontName()
+{
+    return _textFieldRenderer->getFontName();
 }
 
 void TextField::didNotSelectSelf()
@@ -413,6 +433,11 @@ void TextField::setPasswordStyleText(const char *styleText)
     _textFieldRenderer->setPasswordStyleText(styleText);
     
     _passwordStyleText = styleText;
+}
+    
+const char* TextField::getPasswordStyleText()
+{
+    return _passwordStyleText.c_str();
 }
 
 void TextField::update(float dt)

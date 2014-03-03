@@ -81,12 +81,16 @@ public:
      */
     void setFontSize(int size);
     
+    int getFontSize();
+    
     /**
      * Sets the font name of label.
      *
      * @param  font name.
      */
     void setFontName(const std::string& name);
+    
+    const std::string& getFontName();
     
     /**
      * Sets the touch scale enabled of label.
@@ -157,8 +161,17 @@ public:
     virtual std::string getDescription() const override;
     
     void setTextAreaSize(const Size &size);
+    
+    const Size& getTextAreaSize();
+    
     void setTextHorizontalAlignment(TextHAlignment alignment);
-    void setTextVerticalAlignment(TextVAlignment alignment);    
+    
+    TextHAlignment getTextHorizontalAlignment();
+    
+    void setTextVerticalAlignment(TextVAlignment alignment);
+    
+    TextVAlignment getTextVerticalAlignment();
+    
 protected:
     virtual bool init() override;
     virtual void initRenderer() override;
@@ -166,7 +179,6 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-    void clickScale(float scaleX, float scaleY);
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;

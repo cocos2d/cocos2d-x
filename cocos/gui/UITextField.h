@@ -108,10 +108,14 @@ public:
     virtual ~TextField();
     static TextField* create();
     void setTouchSize(const Size &size);
+    Size getTouchSize();
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
+    const std::string& getPlaceHolder();
     void setFontSize(int size);
+    int getFontSize();
     void setFontName(const std::string& name);
+    const std::string& getFontName();
     virtual void didNotSelectSelf();
     const std::string& getStringValue();
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
@@ -122,6 +126,7 @@ public:
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);
+    const char* getPasswordStyleText();
     virtual void update(float dt) override;
     bool getAttachWithIME();
     void setAttachWithIME(bool attach);
