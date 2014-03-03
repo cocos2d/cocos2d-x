@@ -133,6 +133,9 @@ public:
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance();

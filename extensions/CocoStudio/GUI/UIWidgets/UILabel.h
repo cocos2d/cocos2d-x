@@ -177,6 +177,9 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);

@@ -78,7 +78,7 @@ typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 *   @js NA
 *   @lua NA
 */
-class Widget : public CCNodeRGBA
+class Widget : public CCNode
 {
 public:    
     /**
@@ -427,6 +427,14 @@ public:
      */
     virtual bool isFlipY(){return false;};
     
+    virtual void setColor(const ccColor3B& color);
+    
+    virtual void setOpacity(GLubyte opacity);
+    
+    const ccColor3B& getColor(){return _color;};
+
+    GLubyte getOpacity(){return _opacity;};
+    
     /**
      * A call back function when widget lost of focus.
      */
@@ -649,6 +657,12 @@ protected:
     void releaseUpEvent();
     void cancelUpEvent();
     void updateAnchorPoint();
+    virtual void updateTextureColor(){};
+    virtual void updateTextureOpacity(){};
+    virtual void updateTextureRGBA(){};
+    void updateColorToRenderer(CCNode* renderer);
+    void updateOpacityToRenderer(CCNode* renderer);
+    void updateRGBAToRenderer(CCNode* renderer);
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
@@ -687,6 +701,9 @@ protected:
     CCDictionary* _layoutParameterDictionary;
     
     CCArray* _nodes;
+    
+    ccColor3B _color;
+    GLubyte _opacity;
     
     friend class TouchGroup;
 };
