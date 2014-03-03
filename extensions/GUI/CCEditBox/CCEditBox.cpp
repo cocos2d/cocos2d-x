@@ -28,6 +28,8 @@
 
 NS_CC_EXT_BEGIN
 
+static const float CHECK_EDITBOX_POSITION_INTERVAL = 0.1f;
+
 EditBox::EditBox(void)
 : _editBoxImpl(NULL)
 , _delegate(NULL)
@@ -332,7 +334,18 @@ void EditBox::onEnter(void)
     {
         _editBoxImpl->onEnter();
     }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    this->schedule(schedule_selector(EditBox::updatePosition), CHECK_EDITBOX_POSITION_INTERVAL);
+#endif
 }
+
+void EditBox::updatePosition(float dt)
+{
+    if (nullptr != _editBoxImpl) {
+        _editBoxImpl->updatePosition(dt);
+    }
+}
+
 
 void EditBox::onExit(void)
 {

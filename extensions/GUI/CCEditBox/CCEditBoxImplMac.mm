@@ -382,6 +382,14 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord
     return screenPos;
 }
 
+void EditBoxImplMac::updatePosition(float dt)
+{
+    if(nullptr != _sysEdit)
+    {
+        adjustTextFieldPosition();
+    }
+}
+
 void EditBoxImplMac::adjustTextFieldPosition()
 {
 	Size contentSize = _editBox->getContentSize();
