@@ -168,7 +168,8 @@ void UIListViewExTest_Vertical::selectedItemEvent(CCObject *pSender, ListViewEve
         case cocos2d::gui::LISTVIEW_ONSELECTEDITEM:
         {
             UIListView* listViewEx = static_cast<UIListView*>(pSender);
-            CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());
+            if (listViewEx)
+                CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());
         }
             break;
             
@@ -344,7 +345,8 @@ void UIListViewExTest_Horizontal::selectedItemEvent(CCObject *pSender, ListViewE
         case cocos2d::gui::LISTVIEW_ONSELECTEDITEM:
             {
                 UIListView* listViewEx = static_cast<UIListView*>(pSender);
-                CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());
+                if (listViewEx)
+                    CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());
             }
             break;
             
