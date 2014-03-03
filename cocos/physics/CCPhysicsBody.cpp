@@ -836,7 +836,7 @@ void PhysicsBody::setPositionOffset(const Point& position)
     }
 }
 
-Point PhysicsBody::getPositionOffset()
+Point PhysicsBody::getPositionOffset() const
 {
     return _positionOffset;
 }
@@ -851,7 +851,7 @@ void PhysicsBody::setRotationOffset(float rotation)
     }
 }
 
-float PhysicsBody::getRotationOffset()
+float PhysicsBody::getRotationOffset() const
 {
     return _rotationOffset;
 }

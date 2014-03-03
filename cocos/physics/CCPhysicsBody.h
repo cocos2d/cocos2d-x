@@ -195,11 +195,11 @@ public:
     /** set body position offset, it's the position witch relative to node */
     void setPositionOffset(const Point& position);
     /** get body position offset. */
-    Point getPositionOffset();
+    Point getPositionOffset() const;
     /** set body rotation offset, it's the rotation witch relative to node */
     void setRotationOffset(float rotation);
     /** set the body rotation offset */
-    float getRotationOffset();
+    float getRotationOffset() const;
     
     /**
      * @brief test the body is dynamic or not.
