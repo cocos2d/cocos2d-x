@@ -27,7 +27,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(SchedulerUpdateFromCustom),
     CL(RescheduleSelector),
     CL(SchedulerDelayAndRepeat),
-    CL(SchedulerIssue2268)
+    CL(SchedulerIssue2268),
+    CL(ScheduleCallbackTest)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -430,9 +431,7 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         auto director = Director::getInstance();
-        director->getScheduler()->scheduleUpdate([director](float dt){
-            director->getActionManager()->update(dt);
-        }, director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+        director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
     
     SchedulerTestLayer::onExit();
@@ -966,15 +965,11 @@ void TwoSchedulers::onEnter()
     // Create a new scheduler, and link it to the main scheduler
     sched1 = new Scheduler();
 
-    defaultScheduler->scheduleUpdate([this](float dt){
-        this->sched1->update(dt);
-    }, sched1, 0, false);
+    defaultScheduler->scheduleUpdate(sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager1 = new ActionManager();
-    sched1->scheduleUpdate([this](float dt){
-        this->actionManager1->update(dt);
-    }, actionManager1, 0, false);
+    sched1->scheduleUpdate(actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
     {
@@ -996,15 +991,11 @@ void TwoSchedulers::onEnter()
 
     // Create a new scheduler, and link it to the main scheduler
     sched2 = new Scheduler();;
-    defaultScheduler->scheduleUpdate([this](float dt){
-        this->sched2->update(dt);
-    }, sched2, 0, false);
+    defaultScheduler->scheduleUpdate(sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
     actionManager2 = new ActionManager();
-    sched2->scheduleUpdate([this](float dt){
-        this->actionManager2->update(dt);
-    }, actionManager2, 0, false);
+    sched2->scheduleUpdate(actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
         auto sprite = Sprite::create("Images/grossinis_sister2.png");
@@ -1112,6 +1103,51 @@ std::string SchedulerIssue2268::subtitle() const
 {
     return "Should not crash";
 }
+
+// ScheduleCallbackTest
+
+ScheduleCallbackTest::~ScheduleCallbackTest()
+{
+    
+}
+
+std::string ScheduleCallbackTest::title() const
+{
+    return "ScheduleCallbackTest";
+}
+
+std::string ScheduleCallbackTest::subtitle() const
+{
+    return "\n\n\n\nPlease see console.\n\
+schedule(lambda, ...)\n\
+schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...)\n\
+schedule(global_function, ...)\n\
+";
+}
+
+static void ScheduleCallbackTest_global_callback(float dt)
+{
+    log("In the callback of schedule(global_function, ...), dt = %f", dt);
+}
+
+void ScheduleCallbackTest::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    
+    _scheduler->schedule([](float dt){
+        log("In the callback of schedule(lambda, ...), dt = %f", dt);
+    }, this, 1.0f, false, "lambda");
+    
+    _scheduler->schedule(CC_CALLBACK_1(ScheduleCallbackTest::callback, this), this, 1.0f, false, "member_function");
+    
+    _scheduler->schedule(ScheduleCallbackTest_global_callback, this, 1.0f, false, "global_function");
+}
+
+void ScheduleCallbackTest::callback(float dt)
+{
+    log("In the callback of schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...), dt = %f", dt);
+}
+
 //------------------------------------------------------------------
 //
 // SchedulerTestScene

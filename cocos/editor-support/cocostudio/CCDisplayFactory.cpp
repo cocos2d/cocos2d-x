@@ -263,6 +263,7 @@ void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDi
     ParticleSystem *system = ParticleSystemQuad::create(displayData->displayName.c_str());
 
     system->removeFromParent();
+    system->cleanup();
     
     Armature *armature = bone->getArmature();
     if (armature)

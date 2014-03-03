@@ -75,12 +75,16 @@ public:
      */
     void setScale9Enabled(bool able);
     
+    bool isScale9Enabled();
+    
     /**
      * Sets capinsets for imageview, if imageview is using scale9 renderer.
      *
      * @param capInsets    capinsets for imageview
      */
     void setCapInsets(const Rect &capInsets);
+    
+    const Rect& getCapInsets();
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX) override;

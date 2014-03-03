@@ -157,7 +157,7 @@ Node::~Node()
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_scheduler);
     
-    _eventDispatcher->cleanTarget(this);
+    _eventDispatcher->removeEventListenersForTarget(this);
     CC_SAFE_RELEASE(_eventDispatcher);
     
     // attributes
@@ -420,7 +420,9 @@ void Node::setPosition(const Point& position)
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
-        _physicsBody->setPosition(position);
+        Node* parent = getParent();
+        Point pos = parent != nullptr ? parent->convertToWorldSpace(getPosition()) : getPosition();
+        _physicsBody->setPosition(pos);
     }
 #endif
 }
@@ -535,6 +537,14 @@ const Point& Node::getAnchorPoint() const
 
 void Node::setAnchorPoint(const Point& point)
 {
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr && !point.equals(Point::ANCHOR_MIDDLE))
+    {
+        CCLOG("Node warning: This node has a physics body, the anchor must be in the middle, you cann't change this to other value.");
+        return;
+    }
+#endif
+    
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
@@ -720,6 +730,11 @@ void Node::addChild(Node *child, int zOrder, int tag)
     this->insertChild(child, zOrder);
     
 #if CC_USE_PHYSICS
+    if (child->getPhysicsBody() != nullptr)
+    {
+        child->getPhysicsBody()->setPosition(this->convertToWorldSpace(child->getPosition()));
+    }
+    
     for (Node* node = this->getParent(); node != nullptr; node = node->getParent())
     {
         if (dynamic_cast<Scene*>(node) != nullptr)
@@ -1058,7 +1073,7 @@ void Node::setEventDispatcher(EventDispatcher* dispatcher)
 {
     if (dispatcher != _eventDispatcher)
     {
-        _eventDispatcher->cleanTarget(this);
+        _eventDispatcher->removeEventListenersForTarget(this);
         CC_SAFE_RETAIN(dispatcher);
         CC_SAFE_RELEASE(_eventDispatcher);
         _eventDispatcher = dispatcher;
@@ -1123,7 +1138,7 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    return _scheduler->isScheduled(this, schedule_selector_to_key(selector));
+    return _scheduler->isScheduled(selector, this);
 }
 
 void Node::scheduleUpdate()
@@ -1133,9 +1148,7 @@ void Node::scheduleUpdate()
 
 void Node::scheduleUpdateWithPriority(int priority)
 {
-    _scheduler->scheduleUpdate([this](float dt){
-        this->update(dt);
-    }, this, priority, !_running);
+    _scheduler->scheduleUpdate(this, priority, !_running);
 }
 
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
@@ -1145,9 +1158,8 @@ void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 #if CC_ENABLE_SCRIPT_BINDING
     _updateScriptHandler = nHandler;
 #endif
-    _scheduler->scheduleUpdate([this](float dt){
-        this->update(dt);
-    }, this, priority, !_running);
+    
+    _scheduler->scheduleUpdate(this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
@@ -1178,9 +1190,7 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
 
-    _scheduler->schedule([=](float dt){
-        (this->*selector)(dt);
-    }, this, schedule_selector_to_key(selector), interval , repeat, delay, !_running);
+    _scheduler->schedule(selector, this, interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1194,7 +1204,7 @@ void Node::unschedule(SEL_SCHEDULE selector)
     if (selector == nullptr)
         return;
     
-    _scheduler->unschedule(this, schedule_selector_to_key(selector));
+    _scheduler->unschedule(selector, this);
 }
 
 void Node::unscheduleAllSelectors()
@@ -1206,14 +1216,14 @@ void Node::resume()
 {
     _scheduler->resumeTarget(this);
     _actionManager->resumeTarget(this);
-    _eventDispatcher->resumeTarget(this);
+    _eventDispatcher->resumeEventListenersForTarget(this);
 }
 
 void Node::pause()
 {
     _scheduler->pauseTarget(this);
     _actionManager->pauseTarget(this);
-    _eventDispatcher->pauseTarget(this);
+    _eventDispatcher->pauseEventListenersForTarget(this);
 }
 
 void Node::resumeSchedulerAndActions()
@@ -1524,6 +1534,14 @@ void Node::setPhysicsBody(PhysicsBody* body)
     {
         body->_node = this;
         body->retain();
+        
+        // physics rotation based on body position, but node rotation based on node anthor point
+        // it cann't support both of them, so I clear the anthor point to default.
+        if (!getAnchorPoint().equals(Point::ANCHOR_MIDDLE))
+        {
+            CCLOG("Node warning: setPhysicsBody sets anchor point to Point::ANCHOR_MIDDLE.");
+            setAnchorPoint(Point::ANCHOR_MIDDLE);
+        }
     }
     
     if (_physicsBody != nullptr)
@@ -1542,7 +1560,9 @@ void Node::setPhysicsBody(PhysicsBody* body)
     _physicsBody = body;
     if (body != nullptr)
     {
-        _physicsBody->setPosition(getPosition());
+        Node* parent = getParent();
+        Point pos = parent != nullptr ? parent->convertToWorldSpace(getPosition()) : getPosition();
+        _physicsBody->setPosition(pos);
         _physicsBody->setRotation(getRotation());
     }
 }
