@@ -141,13 +141,7 @@ public:
      * Return true if the reloading is succeed, otherwise return false.
      */
     bool reloadTexture(const char* fileName);
-    
-    /** Update the nodes & it's children which used texture
-     * The "node" parameter is the root node will be updated
-     * The "texture" parameter is the texture which is updated
-     */
-    void updateTexture(CCNode* node, CCTexture2D* texture);
-    
+
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
     * In the short term: it will free some resources preventing your app from being killed
