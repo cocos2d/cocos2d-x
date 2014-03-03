@@ -419,7 +419,9 @@ void Node::setPosition(const Point& position)
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
-        _physicsBody->setPosition(position);
+        Node* parent = getParent();
+        Point pos = parent != nullptr ? parent->convertToWorldSpace(getPosition()) : getPosition();
+        _physicsBody->setPosition(pos);
     }
 #endif
 }
@@ -534,6 +536,14 @@ const Point& Node::getAnchorPoint() const
 
 void Node::setAnchorPoint(const Point& point)
 {
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr && !point.equals(Point::ANCHOR_MIDDLE))
+    {
+        CCLOG("Node warning: This node has a physics body, the anchor must be in the middle, you cann't change this to other value.");
+        return;
+    }
+#endif
+    
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
@@ -719,6 +729,11 @@ void Node::addChild(Node *child, int zOrder, int tag)
     this->insertChild(child, zOrder);
     
 #if CC_USE_PHYSICS
+    if (child->getPhysicsBody() != nullptr)
+    {
+        child->getPhysicsBody()->setPosition(this->convertToWorldSpace(child->getPosition()));
+    }
+    
     for (Node* node = this->getParent(); node != nullptr; node = node->getParent())
     {
         if (dynamic_cast<Scene*>(node) != nullptr)
@@ -1506,6 +1521,14 @@ void Node::setPhysicsBody(PhysicsBody* body)
     {
         body->_node = this;
         body->retain();
+        
+        // physics rotation based on body position, but node rotation based on node anthor point
+        // it cann't support both of them, so I clear the anthor point to default.
+        if (!getAnchorPoint().equals(Point::ANCHOR_MIDDLE))
+        {
+            CCLOG("Node warning: setPhysicsBody sets anchor point to Point::ANCHOR_MIDDLE.");
+            setAnchorPoint(Point::ANCHOR_MIDDLE);
+        }
     }
     
     if (_physicsBody != nullptr)
@@ -1524,7 +1547,9 @@ void Node::setPhysicsBody(PhysicsBody* body)
     _physicsBody = body;
     if (body != nullptr)
     {
-        _physicsBody->setPosition(getPosition());
+        Node* parent = getParent();
+        Point pos = parent != nullptr ? parent->convertToWorldSpace(getPosition()) : getPosition();
+        _physicsBody->setPosition(pos);
         _physicsBody->setRotation(getRotation());
     }
 }
