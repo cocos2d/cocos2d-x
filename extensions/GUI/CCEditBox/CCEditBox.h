@@ -418,6 +418,7 @@ public:
     void touchDownAction(Ref *sender, Control::EventType controlEvent);
     
 protected:
+    void updatePosition(float dt);
     EditBoxImpl*      _editBoxImpl;
     EditBoxDelegate*  _delegate;
     
