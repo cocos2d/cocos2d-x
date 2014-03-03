@@ -387,9 +387,18 @@ public:
         schedule(selector, target, interval, paused);
     };
     
+    /** Schedules the 'update' selector for a given target with a given priority.
+     The 'update' selector will be called every frame.
+     The lower the priority, the earlier it is called.
+     @deprecated Please use 'Scheduler::scheduleUpdate' instead.
+     @since v0.99.3
+     */
+    template <class T>
+    CC_DEPRECATED_ATTRIBUTE void scheduleUpdateForTarget(T* target, int priority, bool paused) { scheduleUpdate(target, priority, paused); };
+    
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
-     @deprecated Please use 'Scheduler::schedule' instead.
+     @deprecated Please use 'Scheduler::unschedule' instead.
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
@@ -399,6 +408,12 @@ public:
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
+    
+    /** Unschedules the update selector for a given target
+     @deprecated Please use 'Scheduler::unscheduleUpdate' instead.
+     @since v0.99.3
+     */
+    CC_DEPRECATED_ATTRIBUTE void unscheduleUpdateForTarget(Ref *target) { return unscheduleUpdate(target); };
     
 protected:
     
