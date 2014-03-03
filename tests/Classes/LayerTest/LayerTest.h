@@ -28,7 +28,7 @@ class LayerTestCascadingOpacityA : public LayerTest
 public:
     CREATE_FUNC(LayerTestCascadingOpacityA);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LayerTestCascadingOpacityB : public LayerTest
@@ -36,7 +36,7 @@ class LayerTestCascadingOpacityB : public LayerTest
 public:
     CREATE_FUNC(LayerTestCascadingOpacityB);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LayerTestCascadingOpacityC : public LayerTest
@@ -44,7 +44,7 @@ class LayerTestCascadingOpacityC : public LayerTest
 public:
     CREATE_FUNC(LayerTestCascadingOpacityC);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LayerTestCascadingColorA : public LayerTest
@@ -52,7 +52,7 @@ class LayerTestCascadingColorA : public LayerTest
 public:
     CREATE_FUNC(LayerTestCascadingColorA);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LayerTestCascadingColorB : public LayerTest
@@ -60,7 +60,7 @@ class LayerTestCascadingColorB : public LayerTest
 public:
     CREATE_FUNC(LayerTestCascadingColorB);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LayerTestCascadingColorC : public LayerTest
@@ -68,7 +68,7 @@ class LayerTestCascadingColorC : public LayerTest
 public:
     CREATE_FUNC(LayerTestCascadingColorC);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 
@@ -78,7 +78,7 @@ public:
     CREATE_FUNC(LayerTest1);
 
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void updateSize(Point &touchLocation);
 
@@ -92,7 +92,7 @@ class LayerTest2 : public LayerTest
 public:
     CREATE_FUNC(LayerTest2);
     virtual void onEnter() override;
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 
@@ -103,7 +103,7 @@ public:
 
     LayerTestBlend();
     void newBlend(float dt);
-    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LayerGradientTest : public LayerTest

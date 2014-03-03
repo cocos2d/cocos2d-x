@@ -355,7 +355,7 @@ std::string SpriteBatchNode1::title() const
 
 std::string SpriteBatchNode1::subtitle() const
 {
-    return "Tap screen to add more sprites";
+    return "SpriteBatchNode: Tap screen to add more sprites";
 }
 
 
