@@ -28,7 +28,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BACKGROUNDCOLOR_RENDERER_Z = (-2);
@@ -112,8 +112,6 @@ bool Layout::init()
         _nodes = CCArray::create();
         CC_SAFE_RETAIN(_nodes);
         initRenderer();
-//        setCascadeColorEnabled(true);
-//        setCascadeOpacityEnabled(true);
         setBright(true);
         ignoreContentAdaptWithSize(false);
         setSize(CCSizeZero);

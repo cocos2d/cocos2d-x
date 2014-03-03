@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BASEBAR_RENDERER_Z = (-3);
 static const int PROGRESSBAR_RENDERER_Z = (-2);

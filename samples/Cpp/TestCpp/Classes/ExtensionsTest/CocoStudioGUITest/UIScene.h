@@ -30,7 +30,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace gui;
+using namespace ui;
 
 #define UI_SCENE_CREATE_FUNC(UIScene) \
 public: \

@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 
 #define STATIC_CAST_CCSPRITE static_cast<CCSprite*>(_imageRenderer)

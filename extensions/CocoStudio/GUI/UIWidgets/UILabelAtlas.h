@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
  *   @js NA
@@ -112,7 +112,7 @@ protected:
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
 protected:
-    UICCLabelAtlas* _laberAtlasRenderer;
+    UICCLabelAtlas* _labelAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
     int _itemWidth;

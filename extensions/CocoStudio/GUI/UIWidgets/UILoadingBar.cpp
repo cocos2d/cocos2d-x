@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BAR_RENDERER_Z = (-1);
     
@@ -193,6 +193,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
+    setPercent(_percent);
 }
     
 bool LoadingBar::isScale9Enabled()

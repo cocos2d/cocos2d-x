@@ -77,7 +77,7 @@ void UISliderTest::sliderEvent(CCObject *pSender, SliderEventType type)
 {
     switch (type)
     {
-        case ::cocos2d::gui::SLIDER_PERCENTCHANGED:
+        case ::cocos2d::ui::SLIDER_PERCENTCHANGED:
         {
             UISlider* slider = dynamic_cast<UISlider*>(pSender);
             int percent = slider->getPercent();
