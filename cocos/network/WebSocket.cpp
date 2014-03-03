@@ -122,7 +122,7 @@ WsThreadHelper::WsThreadHelper()
     _UIWsMessageQueue = new std::list<WsMessage*>();
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
     
-    Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::getInstance()->getScheduler()->scheduleUpdate(this, 0, false);
 }
 
 WsThreadHelper::~WsThreadHelper()
@@ -699,6 +699,8 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
             break;
         case WS_MSG_TO_UITHREAD_CLOSE:
             {
+                //Waiting for the subThread safety exit
+                _wsHelper->joinSubThread();
                 _delegate->onClose(this);
             }
             break;

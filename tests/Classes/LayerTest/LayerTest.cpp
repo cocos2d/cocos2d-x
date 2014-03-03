@@ -78,7 +78,7 @@ std::string LayerTest::subtitle() const
 
 std::string LayerTest::title() const
 {
-    return "No title";
+    return "Layer Test";
 }
 
 void LayerTest::onEnter()
@@ -167,7 +167,7 @@ void LayerTestCascadingOpacityA::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingOpacityA::title() const
+std::string LayerTestCascadingOpacityA::subtitle() const
 {
     return "Layer: cascading opacity";
 }
@@ -219,7 +219,7 @@ void LayerTestCascadingOpacityB::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingOpacityB::title() const
+std::string LayerTestCascadingOpacityB::subtitle() const
 {
     return "CCLayerColor: cascading opacity";
 }
@@ -269,7 +269,7 @@ void LayerTestCascadingOpacityC::onEnter()
        NULL)));
 }
 
-std::string LayerTestCascadingOpacityC::title() const
+std::string LayerTestCascadingOpacityC::subtitle() const
 {
     return "CCLayerColor: non-cascading opacity";
 }
@@ -323,7 +323,7 @@ void LayerTestCascadingColorA::onEnter()
      
 }
 
-std::string LayerTestCascadingColorA::title() const
+std::string LayerTestCascadingColorA::subtitle() const
 {
     return "Layer: cascading color";
 }
@@ -375,7 +375,7 @@ void LayerTestCascadingColorB::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingColorB::title() const
+std::string LayerTestCascadingColorB::subtitle() const
 {
     return "CCLayerColor: cascading color";
 }
@@ -424,7 +424,7 @@ void LayerTestCascadingColorC::onEnter()
        NULL)));
 }
 
-std::string LayerTestCascadingColorC::title() const
+std::string LayerTestCascadingColorC::subtitle() const
 {
     return "CCLayerColor: non-cascading color";
 }
@@ -481,7 +481,7 @@ void LayerTest1::onTouchesEnded(const std::vector<Touch*>& touches, Event  *even
     onTouchesMoved(touches, event);
 }
 
-std::string LayerTest1::title() const
+std::string LayerTest1::subtitle() const
 {
     return "ColorLayer resize (tap & move)";
 }
@@ -517,7 +517,7 @@ void LayerTest2::onEnter()
     layer2->runAction(seq2);
 }
 
-std::string LayerTest2::title() const
+std::string LayerTest2::subtitle() const
 {
     return "ColorLayer: fade and tint";
 }
@@ -569,7 +569,7 @@ void LayerTestBlend::newBlend(float dt)
 }
 
 
-std::string LayerTestBlend::title() const
+std::string LayerTestBlend::subtitle() const
 {
     return "ColorLayer: blend";
 }

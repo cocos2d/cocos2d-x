@@ -25,6 +25,7 @@ std::function<Layer*()> createFunctions[] =
     CL(GlobalZTouchTest),
     CL(StopPropagationTest),
     CL(Issue4129),
+    CL(Issue4160)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -231,12 +232,11 @@ public:
     TouchableSpriteWithFixedPriority()
     : _listener(nullptr)
     , _fixedPriority(0)
-    , _useNodePriority(false)
+    , _removeListenerOnTouchEnded(false)
     {
     }
     
-    void setPriority(int fixedPriority) { _fixedPriority = fixedPriority; _useNodePriority = false; };
-    void setPriorityWithThis(bool useNodePriority) { _useNodePriority = useNodePriority; _fixedPriority = true; }
+    void setPriority(int fixedPriority) { _fixedPriority = fixedPriority; };
     
     void onEnter() override
     {
@@ -259,22 +259,17 @@ public:
             return false;
         };
         
-        listener->onTouchMoved = [=](Touch* touch, Event* event){
-            //this->setPosition(this->getPosition() + touch->getDelta());
-        };
-        
         listener->onTouchEnded = [=](Touch* touch, Event* event){
             this->setColor(Color3B::WHITE);
+            
+            if (_removeListenerOnTouchEnded)
+            {
+                _eventDispatcher->removeEventListener(listener);
+            }
         };
         
-        if (_useNodePriority)
-        {
-            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-        }
-        else
-        {
-            _eventDispatcher->addEventListenerWithFixedPriority(listener, _fixedPriority);
-        }
+        _eventDispatcher->addEventListenerWithFixedPriority(listener, _fixedPriority);
+
         _listener = listener;
     }
     
@@ -285,10 +280,12 @@ public:
         Sprite::onExit();
     }
 
+    void removeListenerOnTouchEnded(bool toRemove) { _removeListenerOnTouchEnded = toRemove; };
+    
 private:
     EventListener* _listener;
     int _fixedPriority;
-    bool _useNodePriority;
+    bool _removeListenerOnTouchEnded;
 };
 
 void FixedPriorityTest::onEnter()
@@ -1090,6 +1087,7 @@ std::string StopPropagationTest::subtitle() const
     return "Shouldn't crash and only blue block could be clicked";
 }
 
+// Issue4129
 Issue4129::Issue4129()
 : _bugFixed(false)
 {
@@ -1151,4 +1149,44 @@ std::string Issue4129::title() const
 std::string Issue4129::subtitle() const
 {
     return "Should see 'Yeah, this issue was fixed.'";
+}
+
+// Issue4160
+Issue4160::Issue4160()
+{
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto sprite1 = TouchableSpriteWithFixedPriority::create();
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPriority(-30);
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
+    addChild(sprite1, -10);
+    
+    auto sprite2 = TouchableSpriteWithFixedPriority::create();
+    sprite2->setTexture("Images/MagentaSquare.png");
+    sprite2->setPriority(-20);
+    sprite2->removeListenerOnTouchEnded(true);
+    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite2, -20);
+    
+    auto sprite3 = TouchableSpriteWithFixedPriority::create();
+    sprite3->setTexture("Images/YellowSquare.png");
+    sprite3->setPriority(-10);
+    sprite3->setPosition(Point(0, 0));
+    sprite2->addChild(sprite3, -1);
+}
+
+Issue4160::~Issue4160()
+{
+}
+
+std::string Issue4160::title() const
+{
+    return "Issue 4160: Out of range exception";
+}
+
+std::string Issue4160::subtitle() const
+{
+    return "Touch the red block twice \n should not crash and the red one couldn't be touched";
 }

@@ -216,6 +216,15 @@ private:
     int _blueTriangleNum;
 };
 
+class PhysicsPositionRotationTest : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsPositionRotationTest);
+    
+    void onEnter() override;
+    virtual std::string title() const override;
+};
+
 
 #endif
 #endif
