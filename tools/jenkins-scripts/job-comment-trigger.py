@@ -18,7 +18,10 @@ def main():
     #get comment body
     comment_body = comment['body']
     print comment_body
-    if(cmp(comment_body.upper(),'[ci rebuild]'.upper()) != 0) :
+    pattern = re.compile("\[ci(\s+)rebuild\]", re.I)
+    result = pattern.search(comment_body)
+    if result is None:
+        print 'skip build for pull request #' + str(pr_num)
         return(0)
 
     issue = payload['issue']
