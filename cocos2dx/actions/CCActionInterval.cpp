@@ -516,6 +516,12 @@ void CCRepeat::update(float dt)
             }
         }
     }
+    else if(dt == 1)
+    {
+		//Because fmodf(dt * m_uTimes,1.0f) will return 0 when we have repeatCount == 99
+		m_pInnerAction->update(1.0f);
+		m_pInnerAction->stop();
+    }
     else
     {
         m_pInnerAction->update(fmodf(dt * m_uTimes,1.0f));
