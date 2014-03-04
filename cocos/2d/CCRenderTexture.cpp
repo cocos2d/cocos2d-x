@@ -301,6 +301,21 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     return ret;
 }
 
+void RenderTexture::setKeepMatrix(bool keepMatrix)
+{
+    _keepMatrix = keepMatrix;
+}
+
+void RenderTexture::setVirtualViewPort(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport)
+{
+    _rtTextureRect.origin.x = rtBegin.x;
+    _rtTextureRect.origin.y = rtBegin.y;
+
+    _fullRect = fullRect;
+
+    _fullviewPort = fullViewport;
+}
+
 void RenderTexture::beginWithClear(float r, float g, float b, float a)
 {
     beginWithClear(r, g, b, a, 0, 0, GL_COLOR_BUFFER_BIT);
