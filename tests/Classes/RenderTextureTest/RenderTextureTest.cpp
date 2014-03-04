@@ -15,6 +15,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RenderTextureTestDepthStencil),
     CL(RenderTextureTargetNode),
     CL(SpriteRenderTextureBug),
+    CL(RenderTexturePartTest),
 };
 
 #define MAX_LAYER   (sizeof(createFunctions)/sizeof(createFunctions[0]))
@@ -412,6 +413,7 @@ void RenderTextureZbuffer::renderScreenShot()
         return;
     }
     texture->setAnchorPoint(Point(0, 0));
+    texture->setKeepMatrix(true);
     texture->begin();
 
     this->visit();
@@ -429,6 +431,61 @@ void RenderTextureZbuffer::renderScreenShot()
     sprite->runAction(Sequence::create(FadeTo::create(2, 0),
                                           Hide::create(),
                                           NULL));
+}
+
+RenderTexturePartTest::RenderTexturePartTest()
+{
+    auto sprite1 = Sprite::create("Images/grossini.png");
+    auto sprite11 = Sprite::create("Images/grossini.png");
+    auto sprite2 = Sprite::create("Images/grossinis_sister1.png");
+    auto sprite22 = Sprite::create("Images/grossinis_sister1.png");
+    Size size = Director::getInstance()->getWinSize();
+    Size sprite1Size = sprite1->getContentSize();
+    sprite1->setPosition((size.width-sprite1Size.width)/2 - 20, (size.height - sprite1Size.height)/2 - 20);
+    sprite11->setPosition(size.width/2 + 20, (size.height - sprite1Size.height)/2 - 20);
+    
+    sprite2->setPosition((size.width-sprite1Size.width)/2 - 20, size.height/2 + 20);
+    sprite22->setPosition(size.width/2 + 20, size.height/2 + 20);
+    
+    addChild(sprite1);
+    addChild(sprite11);
+    addChild(sprite2);
+    addChild(sprite22);
+    
+    _rend = RenderTexture::create(200, 200, Texture2D::PixelFormat::RGBA8888);
+    _rend->retain();
+    _rend->setKeepMatrix(true);
+    Size pixelSize = Director::getInstance()->getWinSizeInPixels();
+    _rend->setVirtualViewPort(Point(size.width/2-150, size.height/2-150),Rect(0,0,size.width,size.height),Rect(0,0,pixelSize.width,pixelSize.height));
+    
+    _rend->beginWithClear(1, 0, 0, 1);
+    sprite1->visit();
+    sprite11->visit();
+    sprite2->visit();
+    sprite22->visit();
+    _rend->end();
+    
+    _spriteDraw = Sprite::createWithTexture(_rend->getSprite()->getTexture());
+    FiniteTimeAction* baseAction = MoveBy::create(1, Point(size.width,0));
+    _spriteDraw->setPosition(0,size.height/2);
+    _spriteDraw->runAction(RepeatForever::create(Sequence::create
+                                          (baseAction,baseAction->reverse(), NULL)));
+    addChild(_spriteDraw);
+}
+
+RenderTexturePartTest::~RenderTexturePartTest()
+{
+    CC_SAFE_RELEASE(_rend);
+}
+
+std::string RenderTexturePartTest::title() const
+{
+    return "Render Texture Part Test";
+}
+
+std::string RenderTexturePartTest::subtitle() const
+{
+    return "Only Grabbing a sub region of fullscreen";
 }
 
 // RenderTextureTestDepthStencil
