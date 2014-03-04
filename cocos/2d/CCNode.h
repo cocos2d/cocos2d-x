@@ -386,15 +386,6 @@ public:
     virtual float getPositionZ() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
 
-    /** Sets the position using normalized coordinates.
-     - (0,0) means bottom,left corner
-     - (1,1) means top,right corner
-     - (0.5,0.5) means center
-     */
-    virtual void setNormalizedPosition(const Point& position);
-    /** returns the normalized position */
-    const Point& getNormalizedPosition() const;
-
     /**
      * Changes the X skew angle of the node in degrees.
      *
@@ -1499,7 +1490,6 @@ protected:
 
     Point _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
-    Point _normalizedPosition;      ///< position in normalized coordinates
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
