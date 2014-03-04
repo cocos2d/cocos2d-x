@@ -20,7 +20,7 @@ bool UITextFieldTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the textfield events will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -29,7 +29,7 @@ bool UITextFieldTest::init()
         _uiLayer->addChild(_displayValueLabel);        
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("TextField");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -46,6 +46,9 @@ bool UITextFieldTest::init()
         textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
         _uiLayer->addChild(textField);
+        
+//        textField->setColor(Color3B(255, 0, 0));
+//        textField->setColorSpaceHolder(Color3B(255, 255, 255));
         
         return true;
     }
@@ -106,7 +109,7 @@ bool UITextFieldTest_MaxLength::init()
         Size screenSize = CCDirector::getInstance()->getWinSize();
         
         // Add a label in which the textfield events will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -115,7 +118,7 @@ bool UITextFieldTest_MaxLength::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text *alert = ui::Text::create();
+        Text *alert = Text::create();
         alert->setText("TextField max length");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -200,7 +203,7 @@ bool UITextFieldTest_Password::init()
         Size screenSize = CCDirector::getInstance()->getWinSize();
         
         // Add a label in which the textfield events will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -209,7 +212,7 @@ bool UITextFieldTest_Password::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text *alert = ui::Text::create();
+        Text *alert = Text::create();
         alert->setText("TextField password");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -263,6 +266,102 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextFiledEventType t
             
         case TEXTFIELD_EVENT_DELETE_BACKWARD:
             _displayValueLabel->setText(String::createWithFormat("delete word password")->getCString());
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+// UITextFieldTest_LineWrap
+UITextFieldTest_LineWrap::UITextFieldTest_LineWrap()
+: _displayValueLabel(NULL)
+{
+    
+}
+
+UITextFieldTest_LineWrap::~UITextFieldTest_LineWrap()
+{
+}
+
+bool UITextFieldTest_LineWrap::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getSize();
+        
+        // Add a label in which the textfield events will be displayed
+        _displayValueLabel = Text::create();
+        _displayValueLabel->setText("No Event");
+        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontSize(30);
+        _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
+        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text *alert = Text::create();
+        alert->setText("TextField line wrap");
+        alert->setFontName("Marker Felt");
+        alert->setFontSize(30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        _uiLayer->addChild(alert);
+        
+        // Create the textfield
+        TextField* textField = TextField::create();
+        textField->setTextAreaSize(Size(240, 160));
+        textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
+        textField->setTextVerticalAlignment(TextVAlignment::CENTER);
+        textField->setTouchEnabled(true);
+        textField->setFontName("Marker Felt");
+        textField->setFontSize(30);
+        textField->setPlaceHolder("input words here");
+        textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_LineWrap::textFieldEvent));
+        _uiLayer->addChild(textField);
+        
+        return true;
+    }
+    return false;
+}
+
+void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType type)
+{
+    switch (type)
+    {
+        case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+        {
+            TextField* textField = dynamic_cast<TextField*>(pSender);
+            Size widgetSize = _widget->getSize();
+            textField->runAction(CCMoveTo::create(0.225,
+                                                  Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + textField->getContentSize().height / 2)));
+            textField->setTextHorizontalAlignment(TextHAlignment::LEFT);
+            textField->setTextVerticalAlignment(TextVAlignment::TOP);
+            
+            _displayValueLabel->setText(CCString::createWithFormat("attach with IME")->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_DETACH_WITH_IME:
+        {
+            TextField* textField = dynamic_cast<TextField*>(pSender);
+            Size widgetSize = _widget->getSize();
+            textField->runAction(CCMoveTo::create(0.175, Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
+            textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
+            textField->setTextVerticalAlignment(TextVAlignment::CENTER);
+            
+            _displayValueLabel->setText(CCString::createWithFormat("detach with IME")->getCString());
+        }
+            break;
+            
+        case TEXTFIELD_EVENT_INSERT_TEXT:
+            _displayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
+            break;
+            
+        case TEXTFIELD_EVENT_DELETE_BACKWARD:
+            _displayValueLabel->setText(CCString::createWithFormat("delete word")->getCString());
             break;
             
         default:

@@ -103,12 +103,17 @@ typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 */
 class TextField : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     TextField();
     virtual ~TextField();
     static TextField* create();
     void setTouchSize(const Size &size);
     Size getTouchSize();
+    void setTouchAreaEnabled(bool enable);
+    virtual bool hitTest(const Point &pt);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
     const std::string& getPlaceHolder();
@@ -149,6 +154,10 @@ public:
     virtual Node* getVirtualRenderer() override;
     void attachWithIME();
     virtual void onEnter() override;
+    
+    void setTextAreaSize(const Size &size);
+    void setTextHorizontalAlignment(TextHAlignment alignment);
+    void setTextVerticalAlignment(TextVAlignment alignment);
 protected:
     // event
     virtual void initRenderer() override;

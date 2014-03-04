@@ -53,6 +53,8 @@ typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 
 class ListView : public ScrollView
 {
+ 
+    DECLARE_CLASS_GUI_INFO
     
 public:
     

@@ -30,16 +30,16 @@ bool UIScene::init()
         _widget = dynamic_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
         _uiLayer->addChild(_widget);
         
-        Size screenSize = Director::getInstance()->getWinSize();
+        Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _widget->getSize();
         _uiLayer->setPosition(Point((screenSize.width - rootSize.width) / 2,
-                                        (screenSize.height - rootSize.height) / 2));
+                                    (screenSize.height - rootSize.height) / 2));
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
         
-        _sceneTitle = dynamic_cast<ui::Text*>(root->getChildByName("UItest"));
+        _sceneTitle = dynamic_cast<Text*>(root->getChildByName("UItest"));
         
-        ui::Text* back_label = dynamic_cast<ui::Text*>(root->getChildByName("back"));
+        Text* back_label = dynamic_cast<Text*>(root->getChildByName("back"));
         back_label->addTouchEventListener(this, toucheventselector(UIScene::toCocosGUITestScene));
         
         Button* left_button = dynamic_cast<Button*>(root->getChildByName("left_Button"));
@@ -50,6 +50,18 @@ bool UIScene::init()
         
         Button* right_button = dynamic_cast<Button*>(root->getChildByName("right_Button"));
         right_button->addTouchEventListener(this, toucheventselector(UIScene::nextCallback));
+        
+        /*
+        Text* mainMenuLabel = Text::create();
+        mainMenuLabel->setText("MainMenu");
+        mainMenuLabel->setFontSize(20);
+        mainMenuLabel->setTouchScaleChangeEnabled(true);
+        mainMenuLabel->setPosition(Point(430,30));
+        mainMenuLabel->setTouchEnabled(true);
+        mainMenuLabel->addTouchEventListener(this, toucheventselector(UIScene::menuCloseCallback));
+        _uiLayer->addWidget(mainMenuLabel);
+         */
+    
         
         return true;
     }

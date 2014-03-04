@@ -29,6 +29,8 @@ NS_CC_BEGIN
 namespace ui {
 
 static const int LABEL_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(Text)
 
 Text::Text():
 _touchScaleChangeEnabled(false),
