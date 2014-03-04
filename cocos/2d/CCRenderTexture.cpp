@@ -64,6 +64,10 @@ RenderTexture::RenderTexture()
 , _clearStencil(0)
 , _autoDraw(false)
 , _sprite(nullptr)
+, _keepMatrix(false)
+, _rtTextureRect(Rect::ZERO)
+, _fullRect(Rect::ZERO)
+, _fullviewPort(Rect::ZERO)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
@@ -190,6 +194,9 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     void *data = nullptr;
     do 
     {
+        _fullRect = _rtTextureRect = Rect(0,0,w,h);
+        Size size = Director::getInstance()->getWinSizeInPixels();
+        _fullviewPort = Rect(0,0,size.width,size.height);
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
         h = (int)(h * CC_CONTENT_SCALE_FACTOR());
 
@@ -292,6 +299,21 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     CC_SAFE_FREE(data);
     
     return ret;
+}
+
+void RenderTexture::setKeepMatrix(bool keepMatrix)
+{
+    _keepMatrix = keepMatrix;
+}
+
+void RenderTexture::setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport)
+{
+    _rtTextureRect.origin.x = rtBegin.x;
+    _rtTextureRect.origin.y = rtBegin.y;
+
+    _fullRect = fullRect;
+
+    _fullviewPort = fullViewport;
 }
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a)
@@ -501,33 +523,45 @@ Image* RenderTexture::newImage(bool fliimage)
 void RenderTexture::onBegin()
 {
     //
+    Director *director = Director::getInstance();
+    Size size = director->getWinSizeInPixels();
     kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadMatrix(&_projectionMatrix);
-
+    
     kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLLoadMatrix(&_transformMatrix);
+    
+    if(!_keepMatrix)
+    {
+        director->setProjection(director->getProjection());
 
-    Director *director = Director::getInstance();
-    director->setProjection(director->getProjection());
+        const Size& texSize = _texture->getContentSizeInPixels();
 
-    const Size& texSize = _texture->getContentSizeInPixels();
-
-    // Calculate the adjustment ratios based on the old and new projections
-    Size size = director->getWinSizeInPixels();
-    float widthRatio = size.width / texSize.width;
-    float heightRatio = size.height / texSize.height;
+        // Calculate the adjustment ratios based on the old and new projections
+        float widthRatio = size.width / texSize.width;
+        float heightRatio = size.height / texSize.height;
+        kmMat4 orthoMatrix;
+        kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+            (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+        kmGLMultMatrix(&orthoMatrix);
+    }
+    //calculate viewport
+    {
+        Rect viewport;
+        viewport.size.width = _fullviewPort.size.width;
+        viewport.size.height = _fullviewPort.size.height;
+        float viewPortRectWidthRatio = float(viewport.size.width)/_fullRect.size.width;
+        float viewPortRectHeightRatio = float(viewport.size.height)/_fullRect.size.height;
+        viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
+        viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
+        //glViewport(_fullviewPort.origin.x, _fullviewPort.origin.y, (GLsizei)_fullviewPort.size.width, (GLsizei)_fullviewPort.size.height);
+        glViewport(viewport.origin.x, viewport.origin.y, (GLsizei)viewport.size.width, (GLsizei)viewport.size.height);
+    }
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
-
-
-    kmMat4 orthoMatrix;
-    kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-            (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-    kmGLMultMatrix(&orthoMatrix);
-
+    
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
@@ -552,13 +586,13 @@ void RenderTexture::onEnd()
 
     // restore viewport
     director->setViewport();
-
     //
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadMatrix(&_oldProjMatrix);
-
+    
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLLoadMatrix(&_oldTransMatrix);
+
 }
 
 void RenderTexture::onClear()
@@ -649,25 +683,28 @@ void RenderTexture::begin()
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_PROJECTION, &_projectionMatrix);
-
+    
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
     
-    Director *director = Director::getInstance();
-    director->setProjection(director->getProjection());
-    
-    const Size& texSize = _texture->getContentSizeInPixels();
-    
-    // Calculate the adjustment ratios based on the old and new projections
-    Size size = director->getWinSizeInPixels();
-    float widthRatio = size.width / texSize.width;
-    float heightRatio = size.height / texSize.height;
-    
-    kmMat4 orthoMatrix;
-    kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-                                 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-    kmGLMultMatrix(&orthoMatrix);
+    if(!_keepMatrix)
+    {
+        Director *director = Director::getInstance();
+        director->setProjection(director->getProjection());
+        
+        const Size& texSize = _texture->getContentSizeInPixels();
+        
+        // Calculate the adjustment ratios based on the old and new projections
+        Size size = director->getWinSizeInPixels();
+        float widthRatio = size.width / texSize.width;
+        float heightRatio = size.height / texSize.height;
+        
+        kmMat4 orthoMatrix;
+        kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+                                     (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+        kmGLMultMatrix(&orthoMatrix);
+    }
 
     _groupCommand.init(_globalZOrder);
 
@@ -695,6 +732,7 @@ void RenderTexture::end()
     
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPopMatrix();
+
 }
 
 NS_CC_END

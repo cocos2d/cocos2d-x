@@ -614,6 +614,7 @@ Developers:
         Configuration of VAO in runtime
         Added setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
         Fixed a bug that object which isn't in Vector would also be released when invoking Vector::eraseObject.
+        Fixed a bug that Timer::cancel always call Director::getInstance()->getScheduler() even in another Scheduler.
         
     metadao
         make create_project.py more pythonic and fix some typoes
