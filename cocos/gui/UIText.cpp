@@ -197,22 +197,22 @@ void Text::onPressStateChangedToDisabled()
     
 }
 
-void Text::setFlipX(bool flipX)
+void Text::setFlippedX(bool flippedX)
 {
-    _labelRenderer->setFlippedX(flipX);
+    _labelRenderer->setFlippedX(flippedX);
 }
 
-void Text::setFlipY(bool flipY)
+void Text::setFlippedY(bool flippedY)
 {
-    _labelRenderer->setFlippedY(flipY);
+    _labelRenderer->setFlippedY(flippedY);
 }
 
-bool Text::isFlipX()
+bool Text::isFlippedX()
 {
     return _labelRenderer->isFlippedX();
 }
 
-bool Text::isFlipY()
+bool Text::isFlippedY()
 {
     return _labelRenderer->isFlippedY();
 }
