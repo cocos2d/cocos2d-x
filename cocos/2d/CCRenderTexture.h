@@ -157,7 +157,13 @@ public:
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
+    //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix
     void setKeepMatrix(bool keepMatrix);
+    /**Used for grab part of screen to a texture. 
+    //rtBegin: the position of renderTexture on the fullRect
+    //fullRect: the total size of screen
+    //fullViewport: the total viewportSize
+    */
     void setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
