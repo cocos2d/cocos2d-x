@@ -157,6 +157,11 @@ public:
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
+    void setKeepMatrix(bool keepMatrix);
+    void setVirtualViewPort(Point& rtBegin, Rect& fullRect, Rect& fullViewport);
+
+
+
 public:
     // XXX should be procted.
     // but due to a bug in PowerVR + Android,
@@ -170,7 +175,12 @@ public:
 
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
-
+    //do not generate new modelView and projection matrix;
+    bool         _keepMatrix;
+    Rect         _rtTextureRect;
+    Rect         _fullRect;
+    Rect         _fullviewPort;
+    
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
     GLint        _oldFBO;
