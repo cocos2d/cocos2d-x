@@ -163,16 +163,16 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
     auto shader = new GLProgram();
-    shader->initWithVertexShaderFilename(vert, frag);
+    shader->initWithFilenames(vert, frag);
 
-    shader->addAttribute("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
+    shader->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
     shader->link();
 
     shader->updateUniforms();
 
-    _uniformCenter = glGetUniformLocation(shader->getProgram(), "center");
-    _uniformResolution = glGetUniformLocation(shader->getProgram(), "resolution");
-    _uniformTime = glGetUniformLocation(shader->getProgram(), "time");
+    _uniformCenter = shader->getUniformLocation("center");
+    _uniformResolution = shader->getUniformLocation("resolution");
+    _uniformTime = shader->getUniformLocation("time");
 
     this->setShaderProgram(shader);
 
@@ -505,29 +505,29 @@ void SpriteBlur::initProgram()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
-    auto pProgram = new GLProgram();
-    pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
-    setShaderProgram(pProgram);
-    pProgram->release();
+    auto program = new GLProgram();
+    program->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
+    setShaderProgram(program);
+    program->release();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+
+    CHECK_GL_ERROR_DEBUG();
+    
+    program->link();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->link();
+    program->updateUniforms();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->updateUniforms();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    pixelSizeLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "onePixelSize");
-    coefficientLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "gaussianCoefficient");
+    pixelSizeLocation = program->getUniformLocation("onePixelSize");
+    coefficientLocation = program->getUniformLocation("gaussianCoefficient");
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -544,11 +544,12 @@ void SpriteBlur::onDraw()
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
     GL::blendFunc(blend.src, blend.dst);
-    
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins();
-    getShaderProgram()->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
-    getShaderProgram()->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
+
+    auto program = getShaderProgram();
+    program->use();
+    program->setUniformsForBuiltins();
+    program->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
+    program->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
     
     GL::bindTexture2D( getTexture()->getName());
     
@@ -569,7 +570,6 @@ void SpriteBlur::onDraw()
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -692,10 +692,10 @@ bool ShaderRetroEffect::init()
 
         GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
         auto p = new GLProgram();
-        p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
+        p->initWithByteArrays(ccPositionTexture_vert, fragSource);
 
-        p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
         p->link();
         p->updateUniforms();
