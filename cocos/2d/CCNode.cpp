@@ -491,21 +491,6 @@ void Node::setPositionZ(float positionZ)
     setGlobalZOrder(positionZ);
 }
 
-void Node::setNormalizedPosition(const cocos2d::Point &position)
-{
-    _normalizedPosition = position;
-    Size s = Director::getInstance()->getVisibleSize();
-    Point p;
-    p.x = s.width * position.x;
-    p.y = s.height * position.y;
-    setPosition(p);
-}
-
-const Point& Node::getNormalizedPosition() const
-{
-    return _normalizedPosition;
-}
-
 ssize_t Node::getChildrenCount() const
 {
     return _children.size();
