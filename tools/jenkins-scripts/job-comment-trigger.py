@@ -65,11 +65,6 @@ def main():
     if(action == 'closed'):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
-  
-    r = requests.get(pr['url']+"/commits")
-    commits = r.json()
-    last_commit = commits[len(commits)-1]
-    message = last_commit['commit']['message']
     
     data = {"state":"pending", "target_url":target_url}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
