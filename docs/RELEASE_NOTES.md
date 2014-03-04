@@ -41,9 +41,14 @@
 	    - [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
 	    - [Use ScriptHandlerMgr to manage the register and unregister of Lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
 	- [Misc API changes](#misc-api-changes-1)
-		- [Use cc、ccs、ccui and sp as module name](#use-ccccsccui-and-sp-as-module-name)
+		- [Use cc、ccs、ccui、gl and sp as module name](#use-ccccsccuigl-and-sp-as-module-name)
 		- [Modified functions](#modified-functions)
 		- [Add some modules](#add-some-modules)
+		- [Add more lua bindings](#add-more-lua-bindings)
+		- [Replace some lua-bindings of Class or Struct with lua table](#replace-the-lua-bindings-of-class-or-struct-with-lua-table)
+	- [Other Changes](#other-changes)
+	    - [Support lua script codes call Obeject-C codes and Java codes](#support-lua-script-codes-call-OC-codes-and-Java-codes)
+	    - [Add some lua files to store the constants of different modules](#add-some-lua-files-to-store-the-constants-of-different-modules)			
 
 # Misc Information
 
@@ -607,7 +612,7 @@ ScriptHandlerMgr:getInstance():registerScriptHandler(menuItem, luafunction,cc.HA
 
 ## Misc API changes
 
-### Use `cc`、`ccs`、`ccui` and `sp` as module name
+### Use `cc`、`ccs`、`ccui` `gl` and `sp` as module name
 
 Now classes are binded into different modules instead of using global module. This will avoid conflicts with other codes.
 
@@ -616,6 +621,7 @@ Now classes are binded into different modules instead of using global module. Th
 * classes in `spine` were bound to `sp` module
 * classes in `cocostudio` were bound to `ccs` module
 * global variables are binded to corresponding modules
+* all funcionts and constants about `openGl` were bound to `gl` module
 
 Examples:
 
@@ -628,12 +634,14 @@ Examples:
 
 Some global function names are renamed:
 
+Examples:
+
     | v2.1                    | v3.0                    |
     | CCPoint/ccp             | cc.p                    |
     | CCRect                  | cc.rect                 |
     | CCColor3B               | cc.c3b                  |
     | CCColor4B               | cc.c4b                  |
-    | TODO: add others
+    | CCColor4F               | cc.c4f                  |
 
 ### Add some modules
 
@@ -642,9 +650,45 @@ In the version 3.0, more modules were bound to lua, specific as follows:
 * physics
 * spine
 * XMLHttpRequest
+* OpenGL
  
-The `XMLHttpRequest` and `physics` are in the `cc` module, and the `spine` is in the `sp` module. Related test cases located in:
+The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the `sp` module, and the `OpenGl` is in the `gl` module. Related test cases located in:
 
 * physics   ---> TestLua/PhysicsTest
 * spine     ---> TestLua/SpineTest
-* XMLHttpRequest ---> TestLua/XMLHttpRequestTest  
+* XMLHttpRequest ---> TestLua/XMLHttpRequestTest
+* openGL    ---> TestLua/OpenGLTest
+
+### Add more lua bindings
+Such as: New Label、New EventDispatcher and AssetsManager,etc.Related test cases located in:
+
+* New Lable ---> TestLua/LabelTestNew
+* New EventDispatcher --->TestLua/NewEventDispatcherTest
+* AssetsManager  ---> TestLua/AssetsManagerTest
+
+### Replace some lua-bindings of Class or Struct with lua table
+In the version 3.0, all the lua-binding of Struct type were replaced with the lua table
+
+Examples:
+ 
+    | v2.1                    | v3.0                    |
+    | CCPoint                 | lua table               |
+    | CCRect                  | lua table               |
+    | CCColor3B               | lua table               |
+    | CCColor4B               | lua table               |
+    | CCColor4F               | lua table               |
+    | CCAffineTransform       | lua table               |
+    | CCArray                 | lua table               |    
+    | CCDictionary            | lua table               |
+    | CCPointArray            | lua table               |
+    
+### Support lua script codes call Object-C codes and Java codes 
+`LuaObjcBridge` and `LuaJavaBridge` bound to lua surpported lua script codes calls Object-C codes and java codes. 
+    
+### Add some lua files to store the constants of different modules
+
+* Cocos2DConstants.lua store the constants of `cc` moudle
+* StudioConstants.lua store the constants of  `ccs` moudle
+* GuiConstants.lua store the constants of `ccui` moudle
+* OpenglConstants.lua store the constants of `gl` moudle
+
