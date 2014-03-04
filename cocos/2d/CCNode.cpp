@@ -141,6 +141,8 @@ Node::Node(void)
     kmMat4Identity(&_transform);
     kmMat4Identity(&_inverse);
     kmMat4Identity(&_additionalTransform);
+
+    memset(_strTag, sizeof(_strTag), 0);
 }
 
 Node::~Node()
@@ -594,6 +596,18 @@ void Node::setTag(int var)
     _tag = var;
 }
 
+//StrTag getter
+char* Node::getStrTag()
+{
+    return &(_strTag[0]);
+}
+
+//StrTag setter
+void Node::setStrTag(const char* strTag)
+{
+    strncpy(_strTag, strTag, sizeof(_strTag)-1);
+    _strTag[sizeof(_strTag)-1] = 0;
+}
 /// userData setter
 void Node::setUserData(void *var)
 {
@@ -694,6 +708,31 @@ Node* Node::getChildByTag(int tag)
     {
         if(child && child->_tag == tag)
             return child;
+    }
+    return nullptr;
+}
+
+Node* Node::getChildByStrTag(const char* label, bool recursive)
+{
+
+    for (auto& child : _children)
+    {
+       if(child)
+       {
+            if(strncmp(child->_strTag, label, sizeof(child->_strTag)-1) == 0)
+            {
+                return child;
+            }
+            if(recursive)
+            {
+                auto found = child->getChildByStrTag(label, true);
+                if(found != nullptr)
+                {
+                    return found;
+                }
+
+            }
+       }
     }
     return nullptr;
 }
