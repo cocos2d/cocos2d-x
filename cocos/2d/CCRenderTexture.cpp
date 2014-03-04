@@ -510,16 +510,16 @@ void RenderTexture::onBegin()
     //
     Director *director = Director::getInstance();
     Size size = director->getWinSizeInPixels();
+    kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&_projectionMatrix);
+    
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLLoadMatrix(&_transformMatrix);
+    
     if(!_keepMatrix)
     {
-        kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLLoadMatrix(&_projectionMatrix);
-
-        kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLLoadMatrix(&_transformMatrix);
-
         director->setProjection(director->getProjection());
 
             const Size& texSize = _texture->getContentSizeInPixels();
@@ -572,15 +572,12 @@ void RenderTexture::onEnd()
 
     // restore viewport
     director->setViewport();
-    if(_keepMatrix)
-    {
-        //
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLLoadMatrix(&_oldProjMatrix);
-
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLLoadMatrix(&_oldTransMatrix);
-    }
+    //
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&_oldProjMatrix);
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLLoadMatrix(&_oldTransMatrix);
 
 }
 
@@ -669,16 +666,16 @@ void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool trans
 
 void RenderTexture::begin()
 {
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPushMatrix();
+    kmGLGetMatrix(KM_GL_PROJECTION, &_projectionMatrix);
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPushMatrix();
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
+    
     if(!_keepMatrix)
     {
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLPushMatrix();
-        kmGLGetMatrix(KM_GL_PROJECTION, &_projectionMatrix);
-
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLPushMatrix();
-        kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
-        
         Director *director = Director::getInstance();
         director->setProjection(director->getProjection());
         
@@ -715,14 +712,12 @@ void RenderTexture::end()
     Renderer *renderer = Director::getInstance()->getRenderer();
     renderer->addCommand(&_endCommand);
     renderer->popGroup();
-    if(!_keepMatrix)
-    {
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLPopMatrix();
-
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLPopMatrix();
-    }
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
 
 }
 
