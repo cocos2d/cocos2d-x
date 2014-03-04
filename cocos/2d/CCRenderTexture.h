@@ -160,8 +160,6 @@ public:
     void setKeepMatrix(bool keepMatrix);
     void setVirtualViewPort(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
-
-
 public:
     // XXX should be procted.
     // but due to a bug in PowerVR + Android,
@@ -175,7 +173,8 @@ public:
 
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
-    //do not generate new modelView and projection matrix;
+    
+    //flags: whether generate new modelView and projection matrix or not
     bool         _keepMatrix;
     Rect         _rtTextureRect;
     Rect         _fullRect;
