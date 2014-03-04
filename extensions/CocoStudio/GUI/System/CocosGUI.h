@@ -37,6 +37,7 @@
 #include "../UIWidgets/ScrollWidget/UIScrollView.h"
 #include "../UIWidgets/UISlider.h"
 #include "../UIWidgets/UITextField.h"
+#include "../UIWidgets/UIRichText.h"
 #include "../UIWidgets/ScrollWidget/UIListView.h"
 #include "../UIWidgets/UILabelBMFont.h"
 #include "../UIWidgets/ScrollWidget/UIPageView.h"
