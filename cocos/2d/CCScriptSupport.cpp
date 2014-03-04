@@ -74,10 +74,8 @@ SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int handler, fl
 
 bool SchedulerScriptHandlerEntry::init(float interval, bool paused)
 {
-    _timer = new Timer();
+    _timer = new TimerScriptHandler();
     _timer->initWithScriptHandler(_handler, interval);
-    _timer->autorelease();
-    _timer->retain();
     _paused = paused;
     LUALOG("[LUA] ADD script schedule: %d, entryID: %d", _handler, _entryId);
     return true;

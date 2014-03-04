@@ -581,11 +581,11 @@ void LayerColor::updateColor()
     }
 }
 
-void LayerColor::draw()
+void LayerColor::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
     
     for(int i = 0; i < 4; ++i)
     {

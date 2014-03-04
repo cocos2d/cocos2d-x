@@ -770,6 +770,12 @@ Developers:
         
     seemk
         Fixed crash if invoking Director::end() on WINDOWS.
+        
+    odedsh
+        Fixed a bug that loading custom fonts from ttf file fails on windows.
+        
+    Wilhansen
+        Fixed a bug that spine::Skeleton would not be updated after re-adding to scene.
     
 Retired Core Developers:
     WenSheng Yang

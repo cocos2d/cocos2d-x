@@ -18,6 +18,7 @@ namespace
         CL(PhysicsDemoSlice),
         CL(PhysicsDemoBug3988),
         CL(PhysicsContactTest),
+        CL(PhysicsPositionRotationTest),
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -1543,6 +1544,64 @@ std::string PhysicsContactTest::title() const
 std::string PhysicsContactTest::subtitle() const
 {
     return "should not crash";
+}
+
+void PhysicsPositionRotationTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+    _scene->toggleDebug();
+    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemo::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemo::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemo::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    // anchor test
+    auto anchorNode = Sprite::create("Images/YellowSquare.png");
+    anchorNode->setAnchorPoint(Point(0.1, 0.9));
+    anchorNode->setPosition(100, 100);
+    anchorNode->setScale(0.25);
+    anchorNode->setPhysicsBody(PhysicsBody::createBox(anchorNode->getContentSize()*anchorNode->getScale()));
+    anchorNode->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(anchorNode);
+    
+    //parent test
+    auto parent = Sprite::create("Images/YellowSquare.png");
+    parent->setPosition(200, 100);
+    parent->setScale(0.25);
+    parent->setPhysicsBody(PhysicsBody::createBox(parent->getContentSize()*anchorNode->getScale()));
+    parent->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(parent);
+    
+    auto leftBall = Sprite::create("Images/ball.png");
+    leftBall->setPosition(-30, 0);
+    leftBall->cocos2d::Node::setScale(2);
+    leftBall->setPhysicsBody(PhysicsBody::createCircle(leftBall->getContentSize().width/4));
+    leftBall->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    parent->addChild(leftBall);
+    
+    // offset position rotation test
+    auto offsetPosNode = Sprite::create("Images/YellowSquare.png");
+    offsetPosNode->setPosition(100, 200);
+    offsetPosNode->setPhysicsBody(PhysicsBody::createBox(offsetPosNode->getContentSize()/2));
+    offsetPosNode->getPhysicsBody()->setPositionOffset(-Point(offsetPosNode->getContentSize()/2));
+    offsetPosNode->getPhysicsBody()->setRotationOffset(45);
+    offsetPosNode->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(offsetPosNode);
+    
+    return;
+}
+
+std::string PhysicsPositionRotationTest::title() const
+{
+    return "Position/Rotation Test";
 }
 
 #endif // ifndef CC_USE_PHYSICS

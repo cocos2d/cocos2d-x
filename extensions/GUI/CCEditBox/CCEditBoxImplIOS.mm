@@ -614,7 +614,6 @@ void EditBoxImplIOS::setAnchorPoint(const Point& anchorPoint)
 
 void EditBoxImplIOS::visit(void)
 {
-    
 }
 
 void EditBoxImplIOS::onEnter(void)
@@ -625,6 +624,15 @@ void EditBoxImplIOS::onEnter(void)
         setInactiveText(pText);
     }
 }
+
+void EditBoxImplIOS::updatePosition(float dt)
+{
+    if (nullptr != _systemControl) {
+        this->adjustTextFieldPosition();
+    }
+}
+
+
 
 void EditBoxImplIOS::adjustTextFieldPosition()
 {

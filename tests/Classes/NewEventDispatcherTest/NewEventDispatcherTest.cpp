@@ -24,6 +24,9 @@ std::function<Layer*()> createFunctions[] =
     CL(DirectorEventTest),
     CL(GlobalZTouchTest),
     CL(StopPropagationTest),
+    CL(PauseResumeTargetTest),
+    CL(Issue4129),
+    CL(Issue4160)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -185,7 +188,7 @@ void TouchableSpriteTest::onEnter()
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only Next item could be clicked");
         
-        _eventDispatcher->removeEventListeners(EventListener::Type::TOUCH_ONE_BY_ONE);
+        _eventDispatcher->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
         
         auto nextItem = MenuItemFont::create("Next", [=](Ref* sender){
             nextCallback(nullptr);
@@ -221,22 +224,32 @@ std::string TouchableSpriteTest::subtitle() const
 
 // FixedPriorityChangedTest
 
-class TouchableSpriteWithFixedPriority : public Sprite
+class TouchableSprite : public Sprite
 {
 public:
+    static TouchableSprite* create(int priority = 0)
+    {
+        auto ret = new TouchableSprite(priority);
+        if (ret && ret->init())
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            CC_SAFE_DELETE(ret);
+        }
+        return ret;
+    }
 
-    CREATE_FUNC(TouchableSpriteWithFixedPriority);
-    
-    TouchableSpriteWithFixedPriority()
+protected:
+    TouchableSprite(int priority)
     : _listener(nullptr)
-    , _fixedPriority(0)
-    , _useNodePriority(false)
+    , _fixedPriority(priority)
+    , _removeListenerOnTouchEnded(false)
     {
     }
     
-    void setPriority(int fixedPriority) { _fixedPriority = fixedPriority; _useNodePriority = false; };
-    void setPriorityWithThis(bool useNodePriority) { _useNodePriority = useNodePriority; _fixedPriority = true; }
-    
+public:
     void onEnter() override
     {
         Sprite::onEnter();
@@ -258,22 +271,24 @@ public:
             return false;
         };
         
-        listener->onTouchMoved = [=](Touch* touch, Event* event){
-            //this->setPosition(this->getPosition() + touch->getDelta());
-        };
-        
         listener->onTouchEnded = [=](Touch* touch, Event* event){
             this->setColor(Color3B::WHITE);
+            
+            if (_removeListenerOnTouchEnded)
+            {
+                _eventDispatcher->removeEventListener(listener);
+            }
         };
         
-        if (_useNodePriority)
-        {
-            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-        }
-        else
+        if (_fixedPriority != 0)
         {
             _eventDispatcher->addEventListenerWithFixedPriority(listener, _fixedPriority);
         }
+        else
+        {
+            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        }
+
         _listener = listener;
     }
     
@@ -284,10 +299,12 @@ public:
         Sprite::onExit();
     }
 
+    void removeListenerOnTouchEnded(bool toRemove) { _removeListenerOnTouchEnded = toRemove; };
+    
 private:
     EventListener* _listener;
     int _fixedPriority;
-    bool _useNodePriority;
+    bool _removeListenerOnTouchEnded;
 };
 
 void FixedPriorityTest::onEnter()
@@ -297,21 +314,18 @@ void FixedPriorityTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto sprite1 = TouchableSpriteWithFixedPriority::create();
+    auto sprite1 = TouchableSprite::create(30);
     sprite1->setTexture("Images/CyanSquare.png");
-    sprite1->setPriority(30);
     sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
     addChild(sprite1, 10);
     
-    auto sprite2 = TouchableSpriteWithFixedPriority::create();
+    auto sprite2 = TouchableSprite::create(20);
     sprite2->setTexture("Images/MagentaSquare.png");
-    sprite2->setPriority(20);
     sprite2->setPosition(origin+Point(size.width/2, size.height/2));
     addChild(sprite2, 20);
     
-    auto sprite3 = TouchableSpriteWithFixedPriority::create();
+    auto sprite3 = TouchableSprite::create(10);
     sprite3->setTexture("Images/YellowSquare.png");
-    sprite3->setPriority(10);
     sprite3->setPosition(Point(0, 0));
     sprite2->addChild(sprite3, 1);
 
@@ -703,7 +717,7 @@ void RemoveListenerAfterAddingTest::onEnter()
         };
         
         _eventDispatcher->addEventListenerWithFixedPriority(listener, -1);
-        _eventDispatcher->removeEventListeners(EventListener::Type::TOUCH_ONE_BY_ONE);
+        _eventDispatcher->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
         
         addNextButton();
     });
@@ -1087,4 +1101,171 @@ std::string StopPropagationTest::title() const
 std::string StopPropagationTest::subtitle() const
 {
     return "Shouldn't crash and only blue block could be clicked";
+}
+
+// PauseResumeTargetTest
+PauseResumeTargetTest::PauseResumeTargetTest()
+{
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto sprite1 = TouchableSprite::create();
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
+    addChild(sprite1, -10);
+    
+    auto sprite2 = TouchableSprite::create();
+    sprite2->setTexture("Images/MagentaSquare.png");
+    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite2, -20);
+    
+    auto sprite3 = TouchableSprite::create();
+    sprite3->setTexture("Images/YellowSquare.png");
+    sprite3->setPosition(Point(0, 0));
+    sprite2->addChild(sprite3, -1);
+    
+    auto popup = MenuItemFont::create("Popup", [this](Ref* sender){
+        
+        _eventDispatcher->pauseEventListenersForTarget(this, true);
+        
+        auto colorLayer = LayerColor::create(Color4B(0, 0, 255, 100));
+        this->addChild(colorLayer, 99999);
+        
+        auto closeItem = MenuItemFont::create("close", [this, colorLayer](Ref* sender){
+            colorLayer->removeFromParent();
+            _eventDispatcher->resumeEventListenersForTarget(this, true);
+        });
+        
+        closeItem->setPosition(VisibleRect::center());
+        
+        auto closeMenu = Menu::create(closeItem, NULL);
+        closeMenu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        closeMenu->setPosition(Point::ZERO);
+        
+        colorLayer->addChild(closeMenu);
+    });
+    
+    popup->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
+    popup->setPosition(VisibleRect::right());
+    
+    auto menu = Menu::create(popup, nullptr);
+    menu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    menu->setPosition(Point::ZERO);
+    
+    addChild(menu);
+}
+
+PauseResumeTargetTest::~PauseResumeTargetTest()
+{
+}
+
+std::string PauseResumeTargetTest::title() const
+{
+    return "PauseResumeTargetTest";
+}
+
+std::string PauseResumeTargetTest::subtitle() const
+{
+    return "";
+}
+
+// Issue4129
+Issue4129::Issue4129()
+: _bugFixed(false)
+{
+    _customlistener = _eventDispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
+        
+        auto label = LabelTTF::create("Yeah, this issue was fixed.", "", 20);
+        label->setAnchorPoint(Point(0, 0.5f));
+        label->setPosition(Point(VisibleRect::left()));
+        this->addChild(label);
+        
+        // After test, remove it.
+        _eventDispatcher->removeEventListener(_customlistener);
+        
+        _bugFixed = true;
+    });
+    
+    auto removeAllTouchItem = MenuItemFont::create("Remove All Listeners", [this](Ref* sender){
+        auto senderItem = static_cast<MenuItemFont*>(sender);
+        senderItem->setString("Only 'Reset' item could be clicked");
+        
+        _eventDispatcher->removeAllEventListeners();
+        
+        auto nextItem = MenuItemFont::create("Reset", [=](Ref* sender){
+            CCASSERT(_bugFixed, "This issue was not fixed!");
+            this->restartCallback(nullptr);
+        });
+        
+        nextItem->setFontSizeObj(16);
+        nextItem->setPosition(VisibleRect::right() + Point(-100, -30));
+        
+        auto menu2 = Menu::create(nextItem, NULL);
+        menu2->setPosition(Point(0, 0));
+        menu2->setAnchorPoint(Point(0, 0));
+        this->addChild(menu2);
+        
+        // Simulate to dispatch 'come to background' event
+        _eventDispatcher->dispatchCustomEvent(EVENT_COME_TO_BACKGROUND);
+    });
+    
+    removeAllTouchItem->setFontSizeObj(16);
+    removeAllTouchItem->setPosition(VisibleRect::right() + Point(-100, 0));
+    
+    auto menu = Menu::create(removeAllTouchItem, nullptr);
+    menu->setPosition(Point(0, 0));
+    menu->setAnchorPoint(Point(0, 0));
+    addChild(menu);
+}
+
+Issue4129::~Issue4129()
+{
+    _eventDispatcher->removeEventListener(_customlistener);
+}
+
+std::string Issue4129::title() const
+{
+    return "Issue 4129: Remove All Listeners";
+}
+
+std::string Issue4129::subtitle() const
+{
+    return "Should see 'Yeah, this issue was fixed.'";
+}
+
+// Issue4160
+Issue4160::Issue4160()
+{
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto sprite1 = TouchableSprite::create(-30);
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 40));
+    addChild(sprite1, -10);
+    
+    auto sprite2 = TouchableSprite::create(-20);
+    sprite2->setTexture("Images/MagentaSquare.png");
+    sprite2->removeListenerOnTouchEnded(true);
+    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite2, -20);
+    
+    auto sprite3 = TouchableSprite::create(-10);
+    sprite3->setTexture("Images/YellowSquare.png");
+    sprite3->setPosition(Point(0, 0));
+    sprite2->addChild(sprite3, -1);
+}
+
+Issue4160::~Issue4160()
+{
+}
+
+std::string Issue4160::title() const
+{
+    return "Issue 4160: Out of range exception";
+}
+
+std::string Issue4160::subtitle() const
+{
+    return "Touch the red block twice \n should not crash and the red one couldn't be touched";
 }

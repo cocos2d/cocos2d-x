@@ -191,7 +191,7 @@ void Test2::onEnter()
     sp2->runAction(action2);
 }
 
-std::string Test2::title() const
+std::string Test2::subtitle() const
 {
     return "anchorPoint and children";
 }
@@ -233,7 +233,7 @@ void Test4::delay4(float dt)
     removeChildByTag(3, false);
 }
 
-std::string Test4::title() const
+std::string Test4::subtitle() const
 {
     return "tags";
 }
@@ -286,7 +286,7 @@ void Test5::addAndRemove(float dt)
     sp2->release();
 }
 
-std::string Test5::title() const
+std::string Test5::subtitle() const
 {
     return "remove and cleanup";
 }
@@ -347,7 +347,7 @@ void Test6::addAndRemove(float dt)
 
 }
 
-std::string Test6::title() const
+std::string Test6::subtitle() const
 {
     return "remove/cleanup with children";
 }
@@ -400,7 +400,7 @@ void StressTest1::removeMe(Node* node)
 }
 
 
-std::string StressTest1::title() const
+std::string StressTest1::subtitle() const
 {
     return "stress test #1: no crashes";
 }
@@ -447,7 +447,7 @@ void StressTest2::shouldNotLeak(float dt)
     sublayer->removeAllChildrenWithCleanup(true); 
 }
 
-std::string StressTest2::title() const
+std::string StressTest2::subtitle() const
 {
     return "stress test #2: no leaks";
 }
@@ -478,7 +478,7 @@ void SchedulerTest1::doSomething(float dt)
 
 }
 
-std::string SchedulerTest1::title() const
+std::string SchedulerTest1::subtitle() const
 {
     return "cocosnode scheduler test #1";
 }
@@ -517,7 +517,7 @@ NodeToWorld::NodeToWorld()
     back->runAction(fe2);
 }
 
-std::string NodeToWorld::title() const
+std::string NodeToWorld::subtitle() const
 {
     return "nodeToParent transform";
 }
@@ -566,7 +566,7 @@ NodeToWorld3D::NodeToWorld3D()
     parent->runAction(orbit);
 }
 
-std::string NodeToWorld3D::title() const
+std::string NodeToWorld3D::subtitle() const
 {
     return "nodeToParent transform in 3D";
 }
@@ -637,7 +637,7 @@ CameraOrbitTest::CameraOrbitTest()
     setScale( 1 );
 }
 
-std::string CameraOrbitTest::title() const
+std::string CameraOrbitTest::subtitle() const
 {
     return "Camera Orbit test";
 }
@@ -706,7 +706,7 @@ void CameraZoomTest::update(float dt)
 //    cam->setEye(0, 0, -_z);    
 }
 
-std::string CameraZoomTest::title() const
+std::string CameraZoomTest::subtitle() const
 {
     return "Camera Zoom test";
 }
@@ -974,7 +974,7 @@ public:
         sprite->setShaderProgram(shader);
         return sprite;
     }
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     void onDraw();
 
 protected:
@@ -982,11 +982,11 @@ protected:
 
 };
 
-void MySprite::draw()
+void MySprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void MySprite::onDraw()
@@ -1107,8 +1107,8 @@ CameraTest2::CameraTest2()
     kmMat4 lookupMatrix;
     kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
 
-    _sprite1->setAdditionalTransform(lookupMatrix);
-    _sprite2->setAdditionalTransform(lookupMatrix);
+    _sprite1->setAdditionalTransform(&lookupMatrix);
+    _sprite2->setAdditionalTransform(&lookupMatrix);
 
 }
 

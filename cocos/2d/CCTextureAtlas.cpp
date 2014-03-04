@@ -240,14 +240,6 @@ void TextureAtlas::setupIndices()
 
     for( int i=0; i < _capacity; i++)
     {
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-        _indices[i*6+0] = i*4+0;
-        _indices[i*6+1] = i*4+0;
-        _indices[i*6+2] = i*4+2;        
-        _indices[i*6+3] = i*4+1;
-        _indices[i*6+4] = i*4+3;
-        _indices[i*6+5] = i*4+3;
-#else
         _indices[i*6+0] = i*4+0;
         _indices[i*6+1] = i*4+1;
         _indices[i*6+2] = i*4+2;
@@ -256,7 +248,6 @@ void TextureAtlas::setupIndices()
         _indices[i*6+3] = i*4+3;
         _indices[i*6+4] = i*4+2;
         _indices[i*6+5] = i*4+1;        
-#endif    
     }
 }
 
@@ -648,11 +639,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 #endif
 
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-        glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-#else
         glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 #if CC_REBIND_INDICES_BUFFER
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -689,11 +676,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-        glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
-#else
         glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
-#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

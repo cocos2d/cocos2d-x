@@ -532,7 +532,8 @@ void ProgressTimer::onDraw()
     if(_type == Type::RADIAL)
     {
         glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
-    } 
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_vertexDataCount);
+    }
     else if (_type == Type::BAR)
     {
         if (!_reverseDirection) 
@@ -550,14 +551,14 @@ void ProgressTimer::onDraw()
     }
 }
 
-void ProgressTimer::draw()
+void ProgressTimer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if( ! _vertexData || ! _sprite)
         return;
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 

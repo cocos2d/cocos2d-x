@@ -191,11 +191,11 @@ void ShaderNode::setPosition(const Point &newPosition)
     _center = Vertex2F(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
-void ShaderNode::draw()
+void ShaderNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void ShaderNode::onDraw()
@@ -433,19 +433,26 @@ public:
     ~SpriteBlur();
     void setBlurSize(float f);
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
-    void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     void initProgram();
 
     static SpriteBlur* create(const char *pszFileName);
 
-    Point blur_;
-    GLfloat    sub_[4];
-
-    GLuint    blurLocation;
-    GLuint    subLocation;
 protected:
     void onDraw();
 private:
+    int       _blurRadius;
+    Point     _pixelSize;
+
+    int       _samplingRadius;
+    //gaussian = cons * exp( (dx*dx + dy*dy) * scale);
+    float     _scale;
+    float     _cons;
+    float     _weightSum;
+
+    GLuint    pixelSizeLocation;
+    GLuint    coefficientLocation;
+
     CustomCommand _customCommand;
 };
 
@@ -470,6 +477,7 @@ SpriteBlur* SpriteBlur::create(const char *pszFileName)
 
 bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 {
+    _blurRadius = 0;
     if( Sprite::initWithTexture(texture, rect) ) 
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -483,11 +491,10 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         
         auto s = getTexture()->getContentSizeInPixels();
 
-        blur_ = Point(1/s.width, 1/s.height);
-        sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
-
+        _pixelSize = Point(1/s.width, 1/s.height);
+        _samplingRadius = 0;
         this->initProgram();
-        
+
         return true;
     }
 
@@ -497,7 +504,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 void SpriteBlur::initProgram()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
-                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();
+                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
     auto pProgram = new GLProgram();
     pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(pProgram);
@@ -519,17 +526,17 @@ void SpriteBlur::initProgram()
     
     CHECK_GL_ERROR_DEBUG();
     
-    subLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "substract");
-    blurLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "blurSize");
-    
+    pixelSizeLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "onePixelSize");
+    coefficientLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "gaussianCoefficient");
+
     CHECK_GL_ERROR_DEBUG();
 }
 
-void SpriteBlur::draw()
+void SpriteBlur::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void SpriteBlur::onDraw()
@@ -540,8 +547,8 @@ void SpriteBlur::onDraw()
     
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins();
-    getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
-    getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
+    getShaderProgram()->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
+    getShaderProgram()->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
     
     GL::bindTexture2D( getTexture()->getName());
     
@@ -571,10 +578,37 @@ void SpriteBlur::onDraw()
 
 void SpriteBlur::setBlurSize(float f)
 {
-    auto s = getTexture()->getContentSizeInPixels();
+    if(_blurRadius == (int)f)
+        return;
+    _blurRadius = (int)f;
 
-    blur_ = Point(1/s.width, 1/s.height);
-    blur_ = blur_ * f;
+    _samplingRadius = _blurRadius;
+    if (_samplingRadius > 10)
+    {
+        _samplingRadius = 10;
+    }
+    if (_blurRadius > 0)
+    {
+        float sigma = _blurRadius / 2.0f;
+        _scale = -0.5f / (sigma * sigma);
+        _cons = -1.0f * _scale / 3.141592f;
+        _weightSum = -_cons;
+
+        float weight;
+        int squareX;
+        for(int dx = 0; dx <= _samplingRadius; ++dx)
+        {
+            squareX = dx * dx;
+            weight = _cons * exp(squareX * _scale);
+            _weightSum += 2.0 * weight;
+            for (int dy = 1; dy <= _samplingRadius; ++dy)
+            {
+                weight = _cons * exp((squareX + dy * dy) * _scale);
+                _weightSum += 4.0 * weight;
+            }
+        }
+    }
+    log("_blurRadius:%d",_blurRadius);
 }
 
 // ShaderBlur
@@ -597,16 +631,17 @@ std::string ShaderBlur::subtitle() const
 ControlSlider* ShaderBlur::createSliderCtl()
 {
     auto screenSize = Director::getInstance()->getWinSize();
-
+    
     ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
     slider->setAnchorPoint(Point(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
-    slider->setMaximumValue(3.0f); // Sets the max value of range
-    slider->setValue(1.0f);
+    slider->setMaximumValue(25.0f); // Sets the max value of range
+    
     slider->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), Control::EventType::VALUE_CHANGED);
+    slider->setValue(2.0f);
 
     return slider;
  
