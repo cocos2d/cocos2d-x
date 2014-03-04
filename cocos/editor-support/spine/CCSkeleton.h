@@ -67,7 +67,7 @@ public:
 	virtual ~Skeleton ();
 
 	virtual void update (float deltaTime) override;
-	virtual void draw() override;
+	virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     void onDraw();
 	void onEnter() override;
 	void onExit() override;

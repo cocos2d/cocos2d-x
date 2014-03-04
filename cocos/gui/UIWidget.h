@@ -331,7 +331,7 @@ public:
     
     virtual void removeAllNodes();
     
-    virtual void visit() override;
+    virtual void visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     
     /**
      * Sets the touch event target/selector of the menu item

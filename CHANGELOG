@@ -3,6 +3,7 @@ cocos2d-x-3.0rc0 Feb.?? 2014
      [NEW]          Action: RotateBy supports 3D rotations
      [NEW]          Bindings: Using python to automatically generate script bindings
      [NEW]          Bindings: Added JS bindings support for Linux
+     [NEW]          ccConfig.h: removed support for CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
      [NEW]          Console: Added command: 'autotest run|main|next|back|restart'.
      [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
      [NEW]          Console: Added more commands: director resume|pause|stopanimation|startanimation.
@@ -14,8 +15,9 @@ cocos2d-x-3.0rc0 Feb.?? 2014
                     Node: set/get VertexZ() -> set/get PositionZ()
                     Node: setRotationX() -> setRotationSkewX()
                     Node: setRotationY() -> setRotationSkewY()
+                    Node: visit() and draw() new arguments: Renderer, parentTransform, and whether or not the parentTransform has changed since the last frame
      [NEW]          Language: Added Dutch support.
-     [NEW]          Sprite: Added auto-culling support
+     [NEW]          Sprite: Added auto-culling support. Performance increased in about 100% when many sprites are outside the screen
      
      [FIX]          EditBox's position would not be updated if its parent's position changed.
      [FIX]          spine::Skeleton would not be updated after being re-added to scene.
@@ -49,6 +51,8 @@ cocos2d-x-3.0rc0 Feb.?? 2014
      [FIX]          EGLView improvements: renamed to GLView, no longer a singleton, easier to customize
      [FIX]          Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo.
      [FIX]          cc.BuilderReader.load( path, null, parentSize ); was not allowed.
+     [FIX]          Node: setAdditionalTransform receives a pointer and not a const reference
+
 
 cocos2d-x-3.0beta2 Jan.24 2014
 [All]

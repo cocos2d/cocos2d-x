@@ -207,13 +207,13 @@ void Box2DView::tick(float dt)
     m_test->Step(&settings);
 }
 
-void Box2DView::draw()
+void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    Layer::draw();
+    Layer::draw(renderer, transform, transformUpdated);
 
     _customCmd.init(_globalZOrder);
     _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCmd);
+    renderer->addCommand(&_customCmd);
 }
 
 void Box2DView::onDraw()

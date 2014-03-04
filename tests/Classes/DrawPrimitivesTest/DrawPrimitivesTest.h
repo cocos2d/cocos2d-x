@@ -27,7 +27,7 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 protected:
     void onDraw();
 protected:

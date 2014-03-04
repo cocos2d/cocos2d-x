@@ -93,7 +93,8 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
         break;
     default:
     {
-        display->setAdditionalTransform(bone->getNodeToArmatureTransform());
+        kmMat4 transform = bone->getNodeToArmatureTransform();
+        display->setAdditionalTransform(&transform);
     }
     break;
     }
