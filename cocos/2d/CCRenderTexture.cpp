@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Jason Booth
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,9 +38,9 @@ THE SOFTWARE.
 #include "CCEventType.h"
 #include "CCGrid.h"
 
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -321,7 +322,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     this->begin();
 
     //clear screen
-    _beginWithClearCommand.init(0, _vertexZ);
+    _beginWithClearCommand.init(_globalZOrder);
     _beginWithClearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
     Director::getInstance()->getRenderer()->addCommand(&_beginWithClearCommand);
 }
@@ -339,7 +340,7 @@ void RenderTexture::clearDepth(float depthValue)
 
     this->begin();
 
-    _clearDepthCommand.init(0, _vertexZ);
+    _clearDepthCommand.init(_globalZOrder);
     _clearDepthCommand.func = CC_CALLBACK_0(RenderTexture::onClearDepth, this);
 
     Director::getInstance()->getRenderer()->addCommand(&_clearDepthCommand);
@@ -360,7 +361,7 @@ void RenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
-void RenderTexture::visit()
+void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // override visit.
 	// Don't call visit on its children
@@ -369,11 +370,19 @@ void RenderTexture::visit()
         return;
     }
 	
-	kmGLPushMatrix();
-    
-    transform();
-    _sprite->visit();
-    draw();
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
+    _sprite->visit(renderer, _modelViewTransform, dirty);
+    draw(renderer, _modelViewTransform, dirty);
     
 	kmGLPopMatrix();
 
@@ -445,10 +454,23 @@ Image* RenderTexture::newImage(bool fliimage)
             break;
         }
 
-        this->begin();
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+
+        //TODO move this to configration, so we don't check it every time
+        /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+         */
+        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+        {
+            // -- bind a temporary texture so we can clear the render buffer without losing our texture
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
+            CHECK_GL_ERROR_DEBUG();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
+        }
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
-        this->end();
+        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 
         if ( fliimage ) // -- flip is only required when saving image to file
         {
@@ -596,7 +618,7 @@ void RenderTexture::onClearDepth()
     glClearDepth(depthClearValue);
 }
 
-void RenderTexture::draw()
+void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_autoDraw)
     {
@@ -604,9 +626,9 @@ void RenderTexture::draw()
         begin();
 
         //clear screen
-        _clearCommand.init(0, _vertexZ);
+        _clearCommand.init(_globalZOrder);
         _clearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
-        Director::getInstance()->getRenderer()->addCommand(&_clearCommand);
+        renderer->addCommand(&_clearCommand);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -614,7 +636,7 @@ void RenderTexture::draw()
         for(const auto &child: _children)
         {
             if (child != _sprite)
-                child->visit();
+                child->visit(renderer, transform, transformUpdated);
         }
 
         //End will pop the current render group
@@ -647,13 +669,13 @@ void RenderTexture::begin()
                                  (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
     kmGLMultMatrix(&orthoMatrix);
 
-    _groupCommand.init(0, _vertexZ);
+    _groupCommand.init(_globalZOrder);
 
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    _beginCommand.init(0, _vertexZ);
+    _beginCommand.init(_globalZOrder);
     _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
 
     Director::getInstance()->getRenderer()->addCommand(&_beginCommand);
@@ -661,7 +683,7 @@ void RenderTexture::begin()
 
 void RenderTexture::end()
 {
-    _endCommand.init(0, _vertexZ);
+    _endCommand.init(_globalZOrder);
     _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
     Renderer *renderer = Director::getInstance()->getRenderer();

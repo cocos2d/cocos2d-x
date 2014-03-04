@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
-Copyright (C) 2009      Matt Oswald
+Copyright (c) 2009      Matt Oswald
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,7 +35,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
-#include "renderer/CCQuadCommand.h"
+#include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN
 
@@ -154,7 +155,7 @@ public:
     */
     virtual const BlendFunc& getBlendFunc() const override;
 
-    virtual void visit() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
@@ -163,15 +164,15 @@ public:
     virtual void removeChild(Node *child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void sortAllChildren() override;
-    virtual void draw(void) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual std::string getDescription() const override;
 
-protected:
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
     void insertQuadFromSprite(Sprite *sprite, ssize_t index);
+protected:
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
@@ -188,7 +189,7 @@ protected:
 
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
-    QuadCommand _quadCommand;     // quad command
+    BatchCommand _batchCommand;     // render command
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children

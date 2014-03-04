@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012  cocos2d-x.org
-Copyright (c) 2011 ForzeField Studios S.L.
+Copyright (c) 2011      ForzeField Studios S.L.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -77,7 +78,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     /**
     * @js NA
     * @lua NA
@@ -101,19 +102,9 @@ public:
     virtual bool isOpacityModifyRGB() const override;
 
 protected:
-    kmMat4 _cachedMV;
     //renderer callback
     void onDraw();
-
-protected:
-    /**
-     * @js ctor
-     */
     MotionStreak();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~MotionStreak();
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */

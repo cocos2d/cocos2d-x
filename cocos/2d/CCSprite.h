@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -38,6 +39,7 @@ THE SOFTWARE.
 #endif // EMSCRIPTEN
 #include "CCPhysicsBody.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/CCCustomCommand.h"
 #include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
@@ -230,8 +232,8 @@ public:
     /**
      * Sets a new SpriteFrame to the Sprite.
      */
-    virtual void setSpriteFrame(SpriteFrame* newFrame);
     virtual void setSpriteFrame(const std::string &spriteFrameName);
+    virtual void setSpriteFrame(SpriteFrame* newFrame);
 
     /** @deprecated Use `setSpriteFrame()` instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
@@ -276,7 +278,7 @@ public:
     /**
      * Makes the Sprite to be updated in the Atlas.
      */
-    virtual void setDirty(bool bDirty) { _dirty = bDirty; }
+    virtual void setDirty(bool dirty) { _dirty = dirty; }
 
     /**
      * Returns the quad (tex coords, vertex coords and color) information.
@@ -407,8 +409,8 @@ public:
     virtual void setPosition(const Point& pos) override;
     virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
-    virtual void setRotationX(float rotationX) override;
-    virtual void setRotationY(float rotationY) override;
+    virtual void setRotationSkewX(float rotationX) override;
+    virtual void setRotationSkewY(float rotationY) override;
     virtual void setSkewX(float sx) override;
     virtual void setSkewY(float sy) override;
     virtual void removeChild(Node* child, bool cleanup) override;
@@ -418,12 +420,11 @@ public:
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
-    virtual void setVertexZ(float vertexZ) override;
+    virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void updateQuadVertices();
-    virtual void draw(void) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
@@ -526,7 +527,7 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
-    bool culling() const;
+    bool isInsideBounds() const;
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -537,7 +538,6 @@ protected:
 
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
-    bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
     kmMat4              _transformToBatch;
 
@@ -547,7 +547,10 @@ protected:
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     QuadCommand      _quadCommand;          /// quad command
-
+#if CC_SPRITE_DEBUG_DRAW
+    CustomCommand   _customDebugDrawCommand;
+    void drawDebugData();
+#endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data
     //
@@ -569,6 +572,8 @@ protected:
     // image is flipped
     bool _flippedX;                         /// Whether the sprite is flipped horizontally or not
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
+
+    bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);

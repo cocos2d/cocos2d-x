@@ -1,33 +1,33 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIButton.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
@@ -151,6 +151,11 @@ void Button::setScale9Enabled(bool able)
     setCapInsetsPressedRenderer(_capInsetsPressed);
     setCapInsetsDisabledRenderer(_capInsetsDisabled);
     setBright(_bright);
+}
+    
+bool Button::isScale9Enabled()
+{
+    return _scale9Enabled;
 }
 
 void Button::ignoreContentAdaptWithSize(bool ignore)
@@ -326,6 +331,11 @@ void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
     }
     static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
+    
+const Rect& Button::getCapInsetsNormalRenderer()
+{
+    return _capInsetsNormal;
+}
 
 void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
 {
@@ -336,6 +346,11 @@ void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
     }
     static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
+    
+const Rect& Button::getCapInsetsPressedRenderer()
+{
+    return _capInsetsPressed;
+}
 
 void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
 {
@@ -345,6 +360,11 @@ void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
         return;
     }
     static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
+}
+    
+const Rect& Button::getCapInsetsDisabledRenderer()
+{
+    return _capInsetsDisabled;
 }
 
 void Button::onPressStateChangedToNormal()
@@ -366,8 +386,7 @@ void Button::onPressStateChangedToNormal()
     else
     {
         _buttonNormalRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
-        _buttonNormalRenderer->runAction(zoomAction);
+        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
     }
 }
 
@@ -393,8 +412,7 @@ void Button::onPressStateChangedToPressed()
         _buttonClickedRenderer->setVisible(true);
         _buttonDisableRenderer->setVisible(false);
         _buttonNormalRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, _pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
-        _buttonNormalRenderer->runAction(zoomAction);
+        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize + 0.1f, _normalTextureScaleYInSize + 0.1f);
     }
 }
 

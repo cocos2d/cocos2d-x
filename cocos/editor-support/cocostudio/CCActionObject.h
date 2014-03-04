@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __ActionObject_H__
 #define __ActionObject_H__
 
-#include "cocos2d.h"
 #include "CCActionNode.h"
+#include "CCActionInstant.h"
 #include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {
@@ -35,7 +35,7 @@ namespace cocostudio {
 *  @js NA
 *  @lua NA
 */
-class ActionObject:public cocos2d::Object
+class ActionObject : public cocos2d::Ref
 {
 public:
 
@@ -159,12 +159,12 @@ public:
 	void updateToFrameByTime(float fTime);
 
 	/*init properties with a json dictionary*/
-	void initWithDictionary(const rapidjson::Value& dic,Object* root);
+	void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
 
 	/*scheduler update function*/
 	void simulationActionUpdate(float dt);
 protected:
-	cocos2d::Vector<ActionNode*> _actionNodeList;/*actionnode*/
+	cocos2d::Vector<ActionNode*> _actionNodeList;
 	std::string _name;
 	bool _loop;
 	bool _bPause;

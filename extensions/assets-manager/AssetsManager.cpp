@@ -319,7 +319,7 @@ bool AssetsManager::uncompress()
             return false;
         }
         
-        string fullPath = _storagePath + fileName;
+        const string fullPath = _storagePath + fileName;
         
         // Check if this entry is a directory or a file.
         const size_t filenameLength = strlen(fileName);
@@ -339,15 +339,15 @@ bool AssetsManager::uncompress()
             //There are not directory entry in some case.
             //So we need to test whether the file directory exists when uncompressing file entry
             //, if does not exist then create directory
-            string fileNameStr(fileName);
+            const string fileNameStr(fileName);
             
             size_t startIndex=0;
             
             size_t index=fileNameStr.find("/",startIndex);
             
-            while(index!=-1)
+            while(index != std::string::npos)
             {
-                string dir=_storagePath+fileNameStr.substr(0,index);
+                const string dir=_storagePath+fileNameStr.substr(0,index);
                 
                 FILE *out = fopen(dir.c_str(), "r");
                 
@@ -434,6 +434,7 @@ bool AssetsManager::uncompress()
     }
     
     CCLOG("end uncompressing");
+    unzClose(zipfile);
     
     return true;
 }
@@ -501,7 +502,7 @@ int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownl
 bool AssetsManager::downLoad()
 {
     // Create a file to save package.
-    string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+    const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {

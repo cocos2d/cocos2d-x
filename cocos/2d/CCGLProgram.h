@@ -1,9 +1,11 @@
 /****************************************************************************
-Copyright 2012 cocos2d-x.org
 Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
-
+Copyright 2012 cocos2d-x.org
+Copyright 2013-2014 Chukong Technologies Inc.
+ 
+ 
 http://www.cocos2d-x.org
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,8 +31,7 @@ THE SOFTWARE.
 #define __CCGLPROGRAM_H__
 
 #include "ccMacros.h"
-#include "CCObject.h"
-
+#include "CCRef.h"
 #include "CCGL.h"
 #include "kazmath/kazmath.h"
 
@@ -52,7 +53,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
  
  @since v2.0.0
  */
-class CC_DLL GLProgram : public Object
+class CC_DLL GLProgram : public Ref
 {
 public:
     enum
@@ -82,6 +83,7 @@ public:
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP;
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
     static const char* SHADER_NAME_POSITION_COLOR;
+    static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
     static const char* SHADER_NAME_POSITION_TEXTURE;
     static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR;
     static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;

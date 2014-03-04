@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-
 #ifndef __CCPROCESSBASE_H__
 #define __CCPROCESSBASE_H__
 
@@ -30,6 +29,7 @@ THE SOFTWARE.
 #include "cocostudio/CCDatas.h"
 
 namespace cocostudio {
+
 
 enum AnimationType
 {
@@ -50,7 +50,7 @@ enum AnimationType
  *  @js NA
  *  @lua NA
  */
-class  ProcessBase : public cocos2d::Object
+class  ProcessBase : public cocos2d::Ref
 {
 public:
     ProcessBase(void);
@@ -156,7 +156,7 @@ protected:
     AnimationType _loopType;
 
     //! The tween easing effect
-    TweenType _tweenEasing;
+    cocos2d::tweenfunc::TweenType _tweenEasing;
 
     //! The animation update speed
     float _animationInternal;

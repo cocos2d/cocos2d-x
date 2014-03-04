@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include <math.h>
 #include "cocostudio/CCActionFrameEasing.h"
 #include "cocostudio/DictionaryHelper.h"
+#include "CCStdC.h"
+
 namespace cocostudio {
 
 #ifndef M_PI_X_2

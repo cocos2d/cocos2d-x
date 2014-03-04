@@ -1,32 +1,32 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UITextField.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 UICCTextField::UICCTextField()
 : _maxLengthEnabled(false)
@@ -300,15 +300,11 @@ TextField* TextField::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
-
-bool TextField::init()
+    
+void TextField::onEnter()
 {
-    if (Widget::init())
-    {
-        setUpdateEnabled(true);
-        return true;
-    }
-    return false;
+    Widget::onEnter();
+    scheduleUpdate();
 }
 
 void TextField::initRenderer()
@@ -322,6 +318,11 @@ void TextField::setTouchSize(const Size &size)
     _useTouchArea = true;
     _touchWidth = size.width;
     _touchHeight = size.height;
+}
+    
+Size TextField::getTouchSize()
+{
+    return Size(_touchWidth, _touchHeight);
 }
 
 void TextField::setText(const std::string& text)
@@ -349,17 +350,32 @@ void TextField::setPlaceHolder(const std::string& value)
     _textFieldRenderer->setPlaceHolder(value);
     textfieldRendererScaleChangedWithSize();
 }
+    
+const std::string& TextField::getPlaceHolder()
+{
+    return _textFieldRenderer->getPlaceHolder();
+}
 
 void TextField::setFontSize(int size)
 {
     _textFieldRenderer->setFontSize(size);
     textfieldRendererScaleChangedWithSize();
 }
+    
+int TextField::getFontSize()
+{
+    return _textFieldRenderer->getFontSize();
+}
 
 void TextField::setFontName(const std::string& name)
 {
     _textFieldRenderer->setFontName(name);
     textfieldRendererScaleChangedWithSize();
+}
+    
+const std::string& TextField::getFontName()
+{
+    return _textFieldRenderer->getFontName();
 }
 
 void TextField::didNotSelectSelf()
@@ -417,6 +433,11 @@ void TextField::setPasswordStyleText(const char *styleText)
     _textFieldRenderer->setPasswordStyleText(styleText);
     
     _passwordStyleText = styleText;
+}
+    
+const char* TextField::getPasswordStyleText()
+{
+    return _passwordStyleText.c_str();
 }
 
 void TextField::update(float dt)
@@ -517,7 +538,7 @@ void TextField::deleteBackwardEvent()
     }
 }
 
-void TextField::addEventListenerTextField(Object *target, SEL_TextFieldEvent selecor)
+void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)
 {
     _textFieldEventListener = target;
     _textFieldEventSelector = selecor;

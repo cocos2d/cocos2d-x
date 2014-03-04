@@ -58,6 +58,22 @@ public:
      * @see initWithSprites
      */
     static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
+
+    /**
+     * Creates slider with a background filename, a progress filename, a thumb
+     * and a selected thumb image filename.
+     */
+    static ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile,
+            const char* selectedThumbSpriteFile);
+
+    /**
+     * Creates a slider with a given background sprite and a progress bar, a thumb
+     * and a selected thumb .
+     *
+     * @see initWithSprites
+     */
+    static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
+            Sprite* selectedThumbSprite);
     /**
      * @js ctor
      */
@@ -68,15 +84,27 @@ public:
      */
     virtual ~ControlSlider();
 
+    /**
+    * Initializes a slider with a background sprite, a progress bar and a thumb
+    * item.
+    *
+    * @param backgroundSprite          Sprite, that is used as a background.
+    * @param progressSprite            Sprite, that is used as a progress bar.
+    * @param thumbSprite               Sprite, that is used as a thumb.
+    */
+    virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite);
+
     /** 
     * Initializes a slider with a background sprite, a progress bar and a thumb
     * item.
     *
-    * @param backgroundSprite  Sprite, that is used as a background.
-    * @param progressSprite    Sprite, that is used as a progress bar.
-    * @param thumbSprite       Sprite, that is used as a thumb.
+    * @param backgroundSprite          Sprite, that is used as a background.
+    * @param progressSprite            Sprite, that is used as a progress bar.
+    * @param thumbSprite               Sprite, that is used as a thumb.
+    * @param selectedThumbSprite       Sprite, that is used as a selected thumb.
     */
-    virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite);
+    virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
+            Sprite* selectedThumbSprite);
 
     virtual void needsLayout();
 
@@ -116,8 +144,10 @@ protected:
 
     // maybe this should be read-only
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite);
+    CC_SYNTHESIZE_RETAIN(Sprite*, _selectedThumbSprite, SelectedThumbSprite);
     CC_SYNTHESIZE_RETAIN(Sprite*, _progressSprite, ProgressSprite);
     CC_SYNTHESIZE_RETAIN(Sprite*, _backgroundSprite, BackgroundSprite);
+
 };
 
 // end of GUI group

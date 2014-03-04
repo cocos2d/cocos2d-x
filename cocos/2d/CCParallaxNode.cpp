@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class PointObject : Object
+class PointObject : public Ref
 {
 public:
     static PointObject * create(Point ratio, Point offset)
@@ -97,21 +98,22 @@ void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point&
     CCASSERT( child != nullptr, "Argument must be non-nil");
     PointObject *obj = PointObject::create(ratio, offset);
     obj->setChild(child);
-    ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);
+    ccArrayAppendObjectWithResize(_parallaxArray, (Ref*)obj);
 
-    Point pos = _position;
-    pos.x = pos.x * ratio.x + offset.x;
-    pos.y = pos.y * ratio.y + offset.y;
+    Point pos = this->absolutePosition();
+    pos.x = -pos.x + pos.x * ratio.x + offset.x;
+    pos.y = -pos.y + pos.y * ratio.y + offset.y;
     child->setPosition(pos);
 
     Node::addChild(child, z, child->getTag());
 }
+
 void ParallaxNode::removeChild(Node* child, bool cleanup)
 {
     for( int i=0;i < _parallaxArray->num;i++)
     {
         PointObject *point = (PointObject*)_parallaxArray->arr[i];
-        if( point->getChild()->isEqual(child)) 
+        if (point->getChild() == child)
         {
             ccArrayRemoveObjectAtIndex(_parallaxArray, i, true);
             break;
@@ -119,11 +121,13 @@ void ParallaxNode::removeChild(Node* child, bool cleanup)
     }
     Node::removeChild(child, cleanup);
 }
+
 void ParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
 {
     ccArrayRemoveAllObjects(_parallaxArray);
     Node::removeAllChildrenWithCleanup(cleanup);
 }
+
 Point ParallaxNode::absolutePosition()
 {
     Point ret = _position;
@@ -141,7 +145,7 @@ The positions are updated at visit because:
 - using a timer is not guaranteed that it will called after all the positions were updated
 - overriding "draw" will only precise if the children have a z > 0
 */
-void ParallaxNode::visit()
+void ParallaxNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     //    Point pos = position_;
     //    Point    pos = [self convertToWorldSpace:Point::ZERO];
@@ -157,7 +161,7 @@ void ParallaxNode::visit()
         }
         _lastPosition = pos;
     }
-    Node::visit();
+    Node::visit(renderer, parentTransform, parentTransformUpdated);
 }
 
 NS_CC_END

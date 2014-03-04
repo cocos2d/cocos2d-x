@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -89,14 +90,14 @@ void TextureCache::purgeSharedTextureCache()
 
 std::string TextureCache::getDescription() const
 {
-    return StringUtils::format("<TextureCache | Number of textures = %zd>", _textures.size());
+    return StringUtils::format("<TextureCache | Number of textures = %d>", static_cast<int>(_textures.size()));
 }
 
 void TextureCache::addImageAsync(const std::string &path, std::function<void(Texture2D*)> callback)
 {
     Texture2D *texture = nullptr;
 
-    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path.c_str());
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path);
 
     auto it = _textures.find(fullpath);
     if( it != _textures.end() )
@@ -122,7 +123,7 @@ void TextureCache::addImageAsync(const std::string &path, std::function<void(Tex
 
     if (0 == _asyncRefCount)
     {
-        Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
+        Director::getInstance()->getScheduler()->schedule(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
     }
 
     ++_asyncRefCount;
@@ -182,7 +183,7 @@ void TextureCache::loadImage()
                    break;
            }
            _imageInfoMutex.unlock();
-           if(infoSize > 0 && pos < infoSize)
+           if(infoSize == 0 || pos < infoSize)
                generateImage = true;
         }
 
@@ -276,7 +277,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
         --_asyncRefCount;
         if (0 == _asyncRefCount)
         {
-            Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(TextureCache::addImageAsyncCallBack), this);
+            Director::getInstance()->getScheduler()->unschedule(schedule_selector(TextureCache::addImageAsyncCallBack), this);
         }
     }
 }
@@ -289,7 +290,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
     // MUTEX:
     // Needed since addImageAsync calls this method from a different thread
 
-    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path.c_str());
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path);
     if (fullpath.size() == 0)
     {
         return nullptr;
@@ -306,7 +307,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
             image = new Image();
             CC_BREAK_IF(nullptr == image);
 
-            bool bRet = image->initWithImageFile(fullpath.c_str());
+            bool bRet = image->initWithImageFile(fullpath);
             CC_BREAK_IF(!bRet);
 
             texture = new Texture2D();
@@ -385,7 +386,7 @@ void TextureCache::removeUnusedTextures()
 {
     for( auto it=_textures.cbegin(); it!=_textures.cend(); /* nothing */) {
         Texture2D *tex = it->second;
-        if( tex->retainCount() == 1 ) {
+        if( tex->getReferenceCount() == 1 ) {
             CCLOG("cocos2d: TextureCache: removing unused texture: %s", it->first.c_str());
 
             tex->release();
@@ -416,16 +417,30 @@ void TextureCache::removeTexture(Texture2D* texture)
 
 void TextureCache::removeTextureForKey(const std::string &textureKeyName)
 {
-    auto it = _textures.find(textureKeyName);
+    std::string key = textureKeyName;
+    auto it = _textures.find(key);
+
+    if( it == _textures.end() ) {
+        key = FileUtils::getInstance()->fullPathForFilename(textureKeyName);
+        it = _textures.find(key);
+    }
+
     if( it != _textures.end() ) {
         (it->second)->release();
         _textures.erase(it);
     }
 }
 
-Texture2D* TextureCache::getTextureForKey(const std::string &key) const
+Texture2D* TextureCache::getTextureForKey(const std::string &textureKeyName) const
 {
+    std::string key = textureKeyName;
     auto it = _textures.find(key);
+
+    if( it == _textures.end() ) {
+        key = FileUtils::getInstance()->fullPathForFilename(textureKeyName);
+        it = _textures.find(key);
+    }
+
     if( it != _textures.end() )
         return it->second;
     return nullptr;
@@ -447,12 +462,20 @@ void TextureCache::waitForQuit()
     if (_loadingThread) _loadingThread->join();
 }
 
-void TextureCache::dumpCachedTextureInfo() const
+std::string TextureCache::getCachedTextureInfo() const
 {
+    char buffer[16386];
+    char buftmp[4096];
+
+    memset(buffer,0,sizeof(buffer));
+
     unsigned int count = 0;
     unsigned int totalBytes = 0;
 
     for( auto it = _textures.begin(); it != _textures.end(); ++it ) {
+
+        memset(buftmp,0,sizeof(buftmp));
+
 
         Texture2D* tex = it->second;
         unsigned int bpp = tex->getBitsPerPixelForFormat();
@@ -460,17 +483,21 @@ void TextureCache::dumpCachedTextureInfo() const
         auto bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;
         count++;
-        log("cocos2d: \"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB",
+        snprintf(buftmp,sizeof(buftmp)-1,"\"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB\n",
                it->first.c_str(),
-               (long)tex->retainCount(),
+               (long)tex->getReferenceCount(),
                (long)tex->getName(),
                (long)tex->getPixelsWide(),
                (long)tex->getPixelsHigh(),
                (long)bpp,
                (long)bytes / 1024);
+        strcat(buffer, buftmp);
     }
 
-    log("cocos2d: TextureCache dumpDebugInfo: %ld textures, for %lu KB (%.2f MB)", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
+    snprintf(buftmp, sizeof(buftmp)-1, "TextureCache dumpDebugInfo: %ld textures, for %lu KB (%.2f MB)\n", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
+    strcat(buffer, buftmp);
+
+    return std::string(buffer);
 }
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

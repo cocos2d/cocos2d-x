@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -32,7 +32,7 @@ THE SOFTWARE.
 namespace cocostudio {
 
 
-class BaseTriggerCondition : public cocos2d::Object
+class BaseTriggerCondition : public cocos2d::Ref
 {
 protected:
     BaseTriggerCondition(void);
@@ -44,7 +44,7 @@ public:
     virtual void removeAll();
 };
 
-class BaseTriggerAction : public cocos2d::Object
+class BaseTriggerAction : public cocos2d::Ref
 {
 protected:
     BaseTriggerAction(void);
@@ -57,7 +57,7 @@ public:
 };
 
 
-class TriggerObj : public cocos2d::Object
+class TriggerObj : public cocos2d::Ref
 {
 public:
     TriggerObj(void);

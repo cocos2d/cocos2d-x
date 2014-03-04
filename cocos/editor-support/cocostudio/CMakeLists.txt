@@ -1,5 +1,4 @@
 set(CS_SRC
-  CCActionEaseEx.cpp
   CCActionFrame.cpp
   CCActionFrameEasing.cpp
   CCActionManagerEx.cpp
@@ -22,7 +21,6 @@ set(CS_SRC
   CCDataReaderHelper.cpp
   CCSpriteFrameCacheHelper.cpp
   CCTransformHelp.cpp
-  CCTweenFunction.cpp
   CCUtilMath.cpp
   CCComAttribute.cpp
   CCComAudio.cpp
@@ -51,7 +49,7 @@ target_link_libraries(cocostudio
 
 set_target_properties(cocostudio
     PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -172,7 +173,7 @@ protected:
     bool _secureTextEntry;
 protected:
 
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     //////////////////////////////////////////////////////////////////////////
     // IMEDelegate interface

@@ -1,5 +1,5 @@
-  /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+/****************************************************************************
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -178,7 +178,6 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         CCASSERT(con != nullptr, "");
         con->serialize(subDict);
 		con->init();
-        con->autorelease();
         _cons.pushBack(con);
     }
     
@@ -199,7 +198,6 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         }
 		act->serialize(subDict);
 		act->init();
-		act->autorelease();
 		_acts.pushBack(act);
 	}
 

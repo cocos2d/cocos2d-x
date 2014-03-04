@@ -3,8 +3,9 @@
  *
  * gutf8.c - Operations on UTF-8 strings.
  *
- * Copyright (C) 1999 Tom Tromey
- * Copyright (C) 2000 Red Hat, Inc.
+ * Copyright (C) 1999      Tom Tromey
+ * Copyright (C) 2000      Red Hat, Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,6 +25,7 @@
 
 #include "ccUTF8.h"
 #include "platform/CCCommon.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
@@ -169,6 +171,18 @@ bool isspace_unicode(unsigned short ch)
     ||  ch == 0x205F || ch == 0x3000;
 }
 
+bool iscjk_unicode(unsigned short ch)
+{
+    return (ch >= 0x4E00 && ch <= 0x9FBF)   // CJK Unified Ideographs
+        || (ch >= 0x2E80 && ch <= 0x2FDF)   // CJK Radicals Supplement & Kangxi Radicals
+        || (ch >= 0x2FF0 && ch <= 0x30FF)   // Ideographic Description Characters, CJK Symbols and Punctuation & Japanese
+        || (ch >= 0x3100 && ch <= 0x31BF)   // Korean
+        || (ch >= 0xAC00 && ch <= 0xD7AF)   // Hangul Syllables
+        || (ch >= 0xF900 && ch <= 0xFAFF)   // CJK Compatibility Ideographs
+        || (ch >= 0xFE30 && ch <= 0xFE4F)   // CJK Compatibility Forms
+        || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other exiensions
+}
+
 void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 {
     int len = static_cast<int>(str->size());
@@ -277,9 +291,9 @@ cc_utf8_get_char (const char * p)
 
 unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = nullptr */)
 {
-    unsigned short len = cc_utf8_strlen(str_old, length);
+    long len = cc_utf8_strlen(str_old, length);
     if (rUtf16Size != nullptr) {
-        *rUtf16Size = len;
+        *rUtf16Size = static_cast<int>(len);
     }
     
     unsigned short* str_new = new unsigned short[len + 1];
@@ -318,10 +332,10 @@ std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* st
  * Return value: number of bytes written
  **/
 int
-cc_unichar_to_utf8 (unsigned short c,
+cc_unichar_to_utf8 (unsigned int c,
                    char   *outbuf)
 {
-    unsigned int len = 0;
+    int len = 0;
     int first;
     int i;
     
@@ -335,23 +349,21 @@ cc_unichar_to_utf8 (unsigned short c,
         first = 0xc0;
         len = 2;
     }
-    // XXX FIXME
-    // These conditions are alwasy true.
-//    else if (c < 0x10000)
-//    {
-//        first = 0xe0;
-//        len = 3;
-//    }
-//    else if (c < 0x200000)
-//    {
-//        first = 0xf0;
-//        len = 4;
-//    }
-//    else if (c < 0x4000000)
-//    {
-//        first = 0xf8;
-//        len = 5;
-//    }
+    else if (c < 0x10000)
+    {
+        first = 0xe0;
+        len = 3;
+    }
+    else if (c < 0x200000)
+    {
+        first = 0xf0;
+        len = 4;
+    }
+    else if (c < 0x4000000)
+    {
+        first = 0xf8;
+        len = 5;
+    }
     else
     {
         first = 0xfc;
@@ -400,7 +412,7 @@ cc_unichar_to_utf8 (unsigned short c,
  **/
 char *
 cc_utf16_to_utf8 (const unsigned short  *str,
-                 long             len,
+                 int             len,
                  long            *items_read,
                  long            *items_written)
 {
@@ -411,7 +423,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
     char *out;
     char *result = nullptr;
     int n_bytes;
-    unsigned short high_surrogate;
+    unsigned int high_surrogate;
     
     if (str == 0) return nullptr;
     
@@ -421,7 +433,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
     while ((len < 0 || in - str < len) && *in)
     {
         unsigned short c = *in;
-        unsigned short wc;
+        unsigned int wc;
         
         if (c >= 0xdc00 && c < 0xe000) /* low surrogate */
         {
@@ -454,7 +466,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
         }
         
         /********** DIFFERENT for UTF8/UCS4 **********/
-        n_bytes += UTF8_LENGTH (static_cast<unsigned int>(wc));
+        n_bytes += UTF8_LENGTH (wc);
         
     next1:
         in++;
@@ -477,7 +489,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
     while (out < result + n_bytes)
     {
         unsigned short c = *in;
-        unsigned short wc;
+        unsigned int wc;
         
         if (c >= 0xdc00 && c < 0xe000) /* low surrogate */
         {

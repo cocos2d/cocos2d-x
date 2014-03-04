@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+IMPLEMENT_CLASS_COMPONENT_INFO(ComAudio)
 ComAudio::ComAudio(void)
 : _filePath("")
 , _loop(false)
@@ -64,6 +65,57 @@ void ComAudio::setEnabled(bool b)
     _enabled = b;
 }
 
+
+bool ComAudio::serialize(void* r)
+{
+	bool bRet = false;
+	do 
+	{
+		CC_BREAK_IF(r == nullptr);
+		rapidjson::Value *v = (rapidjson::Value *)r;
+		const char *className = DICTOOL->getStringValue_json(*v, "classname");
+		CC_BREAK_IF(className == nullptr);
+		const char *comName = DICTOOL->getStringValue_json(*v, "name");
+		if (comName != nullptr)
+		{
+			setName(comName);
+		}
+		else
+		{
+			setName(className);
+		}
+		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
+		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
+		const char *file = DICTOOL->getStringValue_json(fileData, "path");
+		CC_BREAK_IF(file == nullptr);
+		std::string filePath;
+		if (file != nullptr)
+		{
+			filePath.assign(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(file));
+		}
+		int resType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+		CC_BREAK_IF(resType != 0);
+		if (strcmp(className, "CCBackgroundAudio") == 0)
+		{
+			preloadBackgroundMusic(filePath.c_str());
+			bool loop = DICTOOL->getIntValue_json(*v, "loop") != 0? true:false;
+			setLoop(loop);
+            playBackgroundMusic(filePath.c_str(), loop);
+		}
+		else if(strcmp(className, "CCComAudio") == 0)
+		{
+			preloadEffect(filePath.c_str());
+		}
+		else
+		{
+			CC_BREAK_IF(true);
+		}
+		bRet = true;
+	} while (0);
+
+	return bRet;
+}
+
 ComAudio* ComAudio::create(void)
 {
     ComAudio * pRet = new ComAudio();
@@ -90,9 +142,9 @@ void ComAudio::preloadBackgroundMusic(const char* pszFilePath)
 	setLoop(false);
 }
 
-void ComAudio::playBackgroundMusic(const char* pszFilePath, bool bLoop)
+void ComAudio::playBackgroundMusic(const char* pszFilePath, bool loop)
 {
-    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(pszFilePath, bLoop);
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(pszFilePath, loop);
     
 }
 
@@ -161,9 +213,9 @@ void ComAudio::setEffectsVolume(float volume)
     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(volume);
 }
 
-unsigned int ComAudio::playEffect(const char* pszFilePath, bool bLoop)
+unsigned int ComAudio::playEffect(const char* pszFilePath, bool loop)
 {
-    return CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(pszFilePath, bLoop);
+    return CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(pszFilePath, loop);
 }
 
 unsigned int ComAudio::playEffect(const char* pszFilePath)
@@ -223,9 +275,9 @@ void ComAudio::setFile(const char* pszFilePath)
 	_filePath.assign(pszFilePath);
 }
 
-void ComAudio::setLoop(bool bLoop)
+void ComAudio::setLoop(bool loop)
 {
-	_loop = bLoop;
+	_loop = loop;
 }
 
 const char* ComAudio::getFile()

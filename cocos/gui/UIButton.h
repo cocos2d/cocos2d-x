@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __UIBUTTON_H__
 #define __UIBUTTON_H__
@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui{
+namespace ui{
 
 /**
 *   @js NA
@@ -107,6 +107,8 @@ public:
      */
     void setCapInsetsNormalRenderer(const Rect &capInsets);
     
+    const Rect& getCapInsetsNormalRenderer();
+    
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
@@ -114,12 +116,16 @@ public:
      */
     void setCapInsetsPressedRenderer(const Rect &capInsets);
     
+    const Rect& getCapInsetsPressedRenderer();
+    
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
     void setCapInsetsDisabledRenderer(const Rect &capInsets);
+    
+    const Rect& getCapInsetsDisabledRenderer();
     
     //override "setAnchorPoint" of widget.
     virtual void setAnchorPoint(const Point &pt) override;
@@ -130,6 +136,8 @@ public:
      * @param true that using scale9 renderer, false otherwise.
      */
     virtual void setScale9Enabled(bool able);
+    
+    bool isScale9Enabled();
     
     //override "setFlipX" of widget.
     virtual void setFlipX(bool flipX) override;

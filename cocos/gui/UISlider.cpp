@@ -1,33 +1,33 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UISlider.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BASEBAR_RENDERER_Z = (-2);
 static const int PROGRESSBAR_RENDERER_Z = (-2);
@@ -216,6 +216,11 @@ void Slider::setScale9Enabled(bool able)
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
     setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
 }
+    
+bool Slider::isScale9Enabled()
+{
+    return _scale9Enabled;
+}
 
 void Slider::ignoreContentAdaptWithSize(bool ignore)
 {
@@ -241,6 +246,11 @@ void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
     }
     static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
+    
+const Rect& Slider::getCapInsetsBarRenderer()
+{
+    return _capInsetsBarRenderer;
+}
 
 void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
 {
@@ -250,6 +260,11 @@ void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
         return;
     }
     static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setCapInsets(capInsets);
+}
+    
+const Rect& Slider::getCapInsetsProgressBarRebderer()
+{
+    return _capInsetsProgressBarRenderer;
 }
 
 void Slider::loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
@@ -391,7 +406,7 @@ float Slider::getPercentWithBallPos(float px)
     return (((px-(-_barLength/2.0f))/_barLength)*100.0f);
 }
 
-void Slider::addEventListenerSlider(Object *target, SEL_SlidPercentChangedEvent selector)
+void Slider::addEventListenerSlider(Ref *target, SEL_SlidPercentChangedEvent selector)
 {
     _sliderEventListener = target;
     _sliderEventSelector = selector;

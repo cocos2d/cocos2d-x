@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (C) 2010      Lam Pham
+Copyright (c) 2010-2012 cocos2d-x.org
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 

@@ -1,9 +1,10 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,9 +37,10 @@ THE SOFTWARE.
 
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCValue.h"
 #include "CCMap.h"
+
 #include <set>
 #include <string>
 
@@ -55,7 +57,7 @@ class Sprite;
  It saves in a cache the sprite frames.
  @since v0.9
  */
-class CC_DLL SpriteFrameCache : public Object
+class CC_DLL SpriteFrameCache : public Ref
 {
 public:
     /** Returns the shared instance of the Sprite Frame cache */

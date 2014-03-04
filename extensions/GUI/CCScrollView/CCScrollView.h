@@ -26,7 +26,9 @@
 #ifndef __CCSCROLLVIEW_H__
 #define __CCSCROLLVIEW_H__
 
-#include "cocos2d.h"
+#include "CCLayer.h"
+#include "CCEventListenerTouch.h"
+#include "CCActionTween.h"
 #include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
@@ -63,7 +65,7 @@ public:
  * ScrollView support for cocos2d-x.
  * It provides scroll view functionalities to cocos2d projects natively.
  */
-class ScrollView : public Layer
+class ScrollView : public Layer, public ActionTweenDelegate
 {
 public:
     enum class Direction
@@ -160,11 +162,11 @@ public:
     /**
      * Provided to make scroll view compatible with SWLayer's pause method
      */
-    void pause(Object* sender);
+    void pause(Ref* sender);
     /**
      * Provided to make scroll view compatible with SWLayer's resume method
      */
-    void resume(Object* sender);
+    void resume(Ref* sender);
 
     void setTouchEnabled(bool enabled);
 	bool isTouchEnabled() const;
@@ -223,11 +225,15 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
 
+    /**
+     * CCActionTweenDelegate
+     */
+    void updateTweenAction(float value, const std::string& key);
 protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
@@ -254,11 +260,13 @@ protected:
      * clip this view so that outside of the visible bounds can be hidden.
      */
     void beforeDraw();
+    void onBeforeDraw();
     /**
      * retract what's done in beforeDraw so that there's no side effect to
      * other nodes.
      */
     void afterDraw();
+    void onAfterDraw();
     /**
      * Zoom handling
      */
@@ -351,6 +359,9 @@ protected:
     
     /** Touch listener */
     EventListenerTouchOneByOne* _touchListener;
+    
+    CustomCommand _beforeDrawCommand;
+    CustomCommand _afterDrawCommand;
 };
 
 // end of GUI group

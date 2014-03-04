@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #ifndef __TRIGGERMNG_H__
 #define __TRIGGERMNG_H__
 
@@ -32,18 +31,18 @@ namespace cocostudio {
 
 class TriggerObj;
 
-class ArmatureMovementDispatcher : public cocos2d::Object
+class ArmatureMovementDispatcher : public cocos2d::Ref
 {
 public:
 	ArmatureMovementDispatcher(void);
 	~ArmatureMovementDispatcher(void);
 public:
-	void addAnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
-	void removeAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
+	void addAnimationEventCallBack(cocos2d::Ref*pTarget, SEL_MovementEventCallFunc mecf);
+	void removeAnnimationEventCallBack(cocos2d::Ref*pTarget, SEL_MovementEventCallFunc mecf);
 	void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
     
 private:
-	std::unordered_map<Object*, SEL_MovementEventCallFunc> *_mapEventAnimation;
+	std::unordered_map<cocos2d::Ref*, SEL_MovementEventCallFunc> *_mapEventAnimation;
 
 };
 
@@ -68,8 +67,8 @@ public:
 	bool remove(unsigned int event, TriggerObj *pObj);
 	bool removeTriggerObj(unsigned int id);
     bool isEmpty(void) const;
-    void addArmatureMovementCallBack(Armature *pAr, cocos2d::Object *pTarget, SEL_MovementEventCallFunc mecf);
-	void removeArmatureMovementCallBack(Armature *pAr, cocos2d::Object *pTarget, SEL_MovementEventCallFunc mecf);
+    void addArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
+	void removeArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
 	void removeArmatureAllMovementCallBack(Armature *pAr);
 	void removeAllArmatureMovementCallBack();
 

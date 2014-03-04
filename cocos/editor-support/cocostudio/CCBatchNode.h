@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __CCBATCHNODE_H__
 #define __CCBATCHNODE_H__
 
+#include "CCNode.h"
 #include "cocostudio/CCArmatureDefine.h"
 
 namespace cocos2d {
@@ -55,15 +56,8 @@ public:
     virtual void addChild(cocos2d::Node *pChild, int zOrder) override;
     virtual void addChild(cocos2d::Node *pChild, int zOrder, int tag) override;
     virtual void removeChild(cocos2d::Node* child, bool cleanup) override;
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    virtual void visit() override;
-    /**
-     *  @js NA
-     */
-    void draw() override;
+    virtual void visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     
 protected:
     void generateGroupCommand();

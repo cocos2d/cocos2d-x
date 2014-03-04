@@ -1,32 +1,32 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIScrollView.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
@@ -93,12 +93,17 @@ ScrollView* ScrollView::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
+    
+void ScrollView::onEnter()
+{
+    Layout::onEnter();
+    scheduleUpdate();
+}
 
 bool ScrollView::init()
 {
     if (Layout::init())
     {
-        setUpdateEnabled(true);
         setTouchEnabled(true);
         setClippingEnabled(true);
         _innerContainer->setTouchEnabled(false);
@@ -267,6 +272,46 @@ Node* ScrollView::getChildByTag(int tag)
 Widget* ScrollView::getChildByName(const char *name)
 {
     return _innerContainer->getChildByName(name);
+}
+    
+void ScrollView::addNode(Node* node)
+{
+    Layout::addNode(node);
+}
+
+void ScrollView::addNode(Node * node, int zOrder)
+{
+    Layout::addNode(node, zOrder);
+}
+
+void ScrollView::addNode(Node* node, int zOrder, int tag)
+{
+    _innerContainer->addNode(node, zOrder, tag);
+}
+
+Node* ScrollView::getNodeByTag(int tag)
+{
+    return _innerContainer->getNodeByTag(tag);
+}
+
+Vector<Node*>& ScrollView::getNodes()
+{
+    return _innerContainer->getNodes();
+}
+
+void ScrollView::removeNode(Node* node)
+{
+    _innerContainer->removeNode(node);
+}
+
+void ScrollView::removeNodeByTag(int tag)
+{
+    _innerContainer->removeNodeByTag(tag);
+}
+
+void ScrollView::removeAllNodes()
+{
+    _innerContainer->removeAllNodes();
 }
 
 void ScrollView::moveChildren(float offsetX, float offsetY)
@@ -1452,11 +1497,6 @@ void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
     handleReleaseLogic(touch->getLocation());
 }
 
-void ScrollView::onTouchLongClicked(const Point &touchPoint)
-{
-    
-}
-
 void ScrollView::update(float dt)
 {
     if (_autoScroll)
@@ -1584,7 +1624,7 @@ void ScrollView::bounceRightEvent()
     }
 }
 
-void ScrollView::addEventListenerScrollView(Object *target, SEL_ScrollViewEvent selector)
+void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent selector)
 {
     _scrollViewEventListener = target;
     _scrollViewEventSelector = selector;

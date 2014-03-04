@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2011 Marco Tillemans
+ * Copyright (c) 2010-2012 cocos2d-x.org
+ * Copyright (c) 2011      Zynga Inc.
+ * Copyright (c) 2011      Marco Tillemans
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * http://www.cocos2d-x.org
  *
@@ -43,7 +44,7 @@
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "renderer/CCQuadCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -119,7 +120,7 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 
 // override visit.
 // Don't call visit on it's children
-void ParticleBatchNode::visit()
+void ParticleBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // CAREFUL:
     // This visit is almost identical to Node#visit
@@ -133,11 +134,18 @@ void ParticleBatchNode::visit()
         return;
     }
 
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
     kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
 
-    transform();
-
-    draw();
+    draw(renderer, _modelViewTransform, dirty);
 
     kmGLPopMatrix();
 }
@@ -196,7 +204,7 @@ int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
     _children.insert(pos, child);
 
     child->setTag(aTag);
-    child->_setZOrder(z);
+    child->_setLocalZOrder(z);
 
     child->setParent(this);
 
@@ -217,7 +225,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
 
-    if( zOrder == child->getZOrder() )
+    if( zOrder == child->getLocalZOrder() )
     {
         return;
     }
@@ -263,7 +271,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
         }
     }
 
-    child->_setZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z)
@@ -279,7 +287,7 @@ void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* chil
         Node* pNode = _children.at(i);
 
         // new index
-        if( pNode->getZOrder() > z &&  ! foundNewIdx )
+        if( pNode->getLocalZOrder() > z &&  ! foundNewIdx )
         {
             *newIndex = i;
             foundNewIdx = true;
@@ -324,7 +332,7 @@ int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
     for( int i=0; i < count; i++ )
     {
         Node *child = _children.at(i);
-        if (child->getZOrder() > z)
+        if (child->getLocalZOrder() > z)
         {
             return i;
         }
@@ -372,7 +380,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(void)
+void ParticleBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 
@@ -381,26 +389,13 @@ void ParticleBatchNode::draw(void)
         return;
     }
 
-//    CC_NODE_DRAW_SETUP();
-//
-//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//    _textureAtlas->drawQuads();
-
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
-    _quadCommand.init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              shader,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    _batchCommand.init(
+                       _globalZOrder,
+                       _shaderProgram,
+                       _blendFunc,
+                       _textureAtlas,
+                       _modelViewTransform);
+    renderer->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

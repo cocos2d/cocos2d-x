@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIWidget.h"
 #include "gui/UILayout.h"
@@ -28,7 +28,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 Widget::Widget():
 _enabled(true),
@@ -37,7 +37,6 @@ _touchEnabled(false),
 _touchPassedEnabled(false),
 _focus(false),
 _brightStyle(BRIGHT_NONE),
-_updateEnabled(false),
 _touchStartPos(Point::ZERO),
 _touchMovePos(Point::ZERO),
 _touchEndPos(Point::ZERO),
@@ -105,14 +104,15 @@ void Widget::onEnter()
 
 void Widget::onExit()
 {
+    unscheduleUpdate();
     Node::onExit();
 }
     
-void Widget::visit()
+void Widget::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (_enabled)
     {
-        Node::visit();
+        Node::visit(renderer, parentTransform, parentTransformUpdated);
     }    
 }
 
@@ -255,7 +255,7 @@ Widget* Widget::getChildByName(const char *name)
     
 void Widget::addNode(Node* node)
 {
-    addNode(node, node->getZOrder(), node->getTag());
+    addNode(node, node->getLocalZOrder(), node->getTag());
 }
 
 void Widget::addNode(Node * node, int zOrder)
@@ -623,28 +623,6 @@ bool Widget::isTouchEnabled() const
     return _touchEnabled;
 }
 
-void Widget::setUpdateEnabled(bool enable)
-{
-    if (enable == _updateEnabled)
-    {
-        return;
-    }
-    _updateEnabled = enable;
-    if (enable)
-    {
-        scheduleUpdate();
-    }
-    else
-    {
-        unscheduleUpdate();
-    }
-}
-
-bool Widget::isUpdateEnabled()
-{
-    return _updateEnabled;
-}
-
 bool Widget::isFocused() const
 {
     return _focus;
@@ -730,11 +708,15 @@ void Widget::didNotSelectSelf()
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
-    _touchStartPos = touch->getLocation();
-    _hitted = isEnabled()
-    & isTouchEnabled()
-    & hitTest(_touchStartPos)
-    & clippingParentAreaContainPoint(_touchStartPos);
+    _hitted = false;
+    if (isEnabled() && isTouchEnabled())
+    {
+        _touchStartPos = touch->getLocation();
+        if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
+        {
+            _hitted = true;
+        }
+    }
     if (!_hitted)
     {
         return false;
@@ -787,11 +769,6 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
     cancelUpEvent();
 }
 
-void Widget::onTouchLongClicked(const Point &touchPoint)
-{
-    longClickEvent();
-}
-
 void Widget::pushDownEvent()
 {
     if (_touchEventListener && _touchEventSelector)
@@ -824,12 +801,7 @@ void Widget::cancelUpEvent()
     }
 }
 
-void Widget::longClickEvent()
-{
-    
-}
-
-void Widget::addTouchEventListener(Object *target, SEL_TouchEvent selector)
+void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
@@ -1068,8 +1040,7 @@ void Widget::copyProperties(Widget *widget)
     setBright(widget->isBright());
     setTouchEnabled(widget->isTouchEnabled());
     _touchPassedEnabled = false;
-    setZOrder(widget->getZOrder());
-    setUpdateEnabled(widget->isUpdateEnabled());
+    setLocalZOrder(widget->getLocalZOrder());
     setTag(widget->getTag());
     setName(widget->getName());
     setActionTag(widget->getActionTag());
@@ -1094,6 +1065,11 @@ void Widget::copyProperties(Widget *widget)
     setOpacity(widget->getOpacity());
     setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
     setCascadeColorEnabled(widget->isCascadeColorEnabled());
+    Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
+    for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
+    {
+        setLayoutParameter(iter->second->clone());
+    }
     onSizeChanged();
 }
 

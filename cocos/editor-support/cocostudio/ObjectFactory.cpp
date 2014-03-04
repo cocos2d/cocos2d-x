@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -87,9 +87,9 @@ void ObjectFactory::destroyInstance()
     CC_SAFE_DELETE(_sharedFactory);
 }
 
-Object* ObjectFactory::createObject(const char *name)
+Ref* ObjectFactory::createObject(const std::string &name)
 {
-	Object *o = nullptr;
+	Ref *o = nullptr;
 	do 
 	{
 		const TInfo t = _typeMap[name];
@@ -98,6 +98,45 @@ Object* ObjectFactory::createObject(const char *name)
 	} while (0);
    
     return o;
+}
+
+Component* ObjectFactory::createComponent(const std::string &name)
+{
+    std::string comName;
+	if (name == "CCSprite" || name == "CCTMXTiledMap" || name == "CCParticleSystemQuad" || name == "CCArmature" || name == "GUIComponent")
+	{
+		comName = "ComRender";
+	}
+	else if (name == "CCComAudio" || name == "CCBackgroundAudio")
+	{
+		comName = "ComAudio";
+	}
+    else if (name == "CCComController")
+    {
+        comName = "ComController";
+    }
+    else if (name == "CCComAttribute")
+    {
+        comName = "ComAttribute";
+    }
+    else if (name == "CCScene")
+    {
+        comName = "Scene";
+    }
+    else
+    {
+        CCASSERT(false, "Unregistered Component!");
+    }
+	Ref *o = NULL;
+	do 
+	{
+		const TInfo t = _typeMap[comName];
+		CC_BREAK_IF(t._fun == NULL);
+		o = t._fun();
+	} while (0);
+
+	return (Component*)o;
+
 }
 
 void ObjectFactory::registerType(const TInfo &t)

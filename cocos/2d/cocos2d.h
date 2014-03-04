@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -50,6 +51,7 @@ THE SOFTWARE.
 #include "CCActionInstant.h"
 #include "CCActionTween.h"
 #include "CCActionCatmullRom.h"
+#include "CCTweenFunction.h"
 
 // base_nodes
 #include "CCNode.h"
@@ -58,7 +60,7 @@ THE SOFTWARE.
 // cocoa
 #include "CCAffineTransform.h"
 #include "CCDictionary.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCArray.h"
 #include "CCVector.h"
 #include "CCMap.h"
@@ -153,44 +155,44 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication.h"
-    #include "platform/ios/CCEGLView.h"
+    #include "platform/ios/CCGLView.h"
     #include "platform/ios/CCGL.h"
     #include "platform/ios/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "platform/android/CCApplication.h"
-    #include "platform/android/CCEGLView.h"
+    #include "platform/android/CCGLView.h"
     #include "platform/android/CCGL.h"
     #include "platform/android/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
     #include "platform/blackberry/CCApplication.h"
-    #include "platform/blackberry/CCEGLView.h"
+    #include "platform/blackberry/CCGLView.h"
     #include "platform/blackberry/CCGL.h"
     #include "platform/blackberry/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	#include "platform/win32/CCApplication.h"
-	#include "platform/win32/CCEGLView.h"
-	#include "platform/win32/CCGL.h"
-	#include "platform/win32/CCStdC.h"
+    #include "platform/win32/CCApplication.h"
+    #include "platform/desktop/CCGLView.h"
+    #include "platform/win32/CCGL.h"
+    #include "platform/win32/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-	#include "platform/mac/CCApplication.h"
-	#include "platform/mac/CCEGLView.h"
-	#include "platform/mac/CCGL.h"
-	#include "platform/mac/CCStdC.h"
+    #include "platform/mac/CCApplication.h"
+    #include "platform/desktop/CCGLView.h"
+    #include "platform/mac/CCGL.h"
+    #include "platform/mac/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "platform/linux/CCApplication.h"
-	#include "platform/linux/CCEGLView.h"
-	#include "platform/linux/CCGL.h"
-	#include "platform/linux/CCStdC.h"
+    #include "platform/linux/CCApplication.h"
+    #include "platform/desktop/CCGLView.h"
+    #include "platform/linux/CCGL.h"
+    #include "platform/linux/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 // script_support

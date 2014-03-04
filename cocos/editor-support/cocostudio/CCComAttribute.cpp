@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,10 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCComAttribute.h"
+
 using namespace cocos2d;
 
 namespace cocostudio {
 
+IMPLEMENT_CLASS_COMPONENT_INFO(ComAttribute)
 ComAttribute::ComAttribute(void)
 {
     _name = "CCComAttribute";
@@ -137,6 +139,42 @@ ComAttribute* ComAttribute::create(void)
 		CC_SAFE_DELETE(pRet);
 	}
 	return pRet;
+}
+
+bool ComAttribute::serialize(void* r) 
+{
+    bool bRet = false;
+	do 
+	{
+		CC_BREAK_IF(r == nullptr);
+		rapidjson::Value *v = (rapidjson::Value *)r;
+		const char *className = DICTOOL->getStringValue_json(*v, "classname");
+		CC_BREAK_IF(className == nullptr);
+		const char *comName = DICTOOL->getStringValue_json(*v, "name");
+		if (comName != nullptr)
+		{
+			setName(comName);
+		}
+		else
+		{
+			setName(className);
+		}
+		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
+		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
+		const char *file = DICTOOL->getStringValue_json(fileData, "path");
+		CC_BREAK_IF(file == nullptr);
+		std::string filePath;
+		if (file != nullptr)
+		{
+			filePath.assign(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(file));
+		}
+		int resType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+		CC_BREAK_IF(resType != 0);
+        parse(filePath.c_str());
+		bRet = true;
+	} while (0);
+
+	return bRet;
 }
 
 bool ComAttribute::parse(const std::string &jsonFile)

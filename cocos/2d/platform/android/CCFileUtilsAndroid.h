@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,6 +24,9 @@
  ****************************************************************************/
 #ifndef __CC_FILEUTILS_ANDROID_H__
 #define __CC_FILEUTILS_ANDROID_H__
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "platform/CCFileUtils.h"
 #include "CCPlatformMacros.h"
@@ -85,4 +89,6 @@ private:
 
 NS_CC_END
 
-#endif    // __CC_FILEUTILS_ANDROID_H__
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#endif // __CC_FILEUTILS_ANDROID_H__

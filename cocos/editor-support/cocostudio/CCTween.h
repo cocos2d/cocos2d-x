@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,12 +27,13 @@ THE SOFTWARE.
 #define __CCTWEEN_H__
 
 #include "cocostudio/CCProcessBase.h"
-#include "cocostudio/CCTweenFunction.h"
+#include "CCTweenFunction.h"
 
 namespace cocostudio {
 
 class Bone;
 class ArmatureAnimation;
+using cocos2d::tweenfunc::TweenType;
 
 /**
  *  @js NA

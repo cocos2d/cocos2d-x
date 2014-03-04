@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -37,7 +37,7 @@ NS_CC_BEGIN
 const char* PHYSICSCONTACT_EVENT_NAME = "PhysicsContactEvent";
 
 PhysicsContact::PhysicsContact()
-: Event(Event::Type::CUSTOM)
+: EventCustom(PHYSICSCONTACT_EVENT_NAME)
 , _world(nullptr)
 , _shapeA(nullptr)
 , _shapeB(nullptr)
@@ -118,7 +118,7 @@ PhysicsContactPreSolve::~PhysicsContactPreSolve()
     CC_SAFE_DELETE(_preContactData);
 }
 
-float PhysicsContactPreSolve::getElasticity() const
+float PhysicsContactPreSolve::getRestitution() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
@@ -133,9 +133,9 @@ Point PhysicsContactPreSolve::getSurfaceVelocity() const
     return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
 }
 
-void PhysicsContactPreSolve::setElasticity(float elasticity)
+void PhysicsContactPreSolve::setRestitution(float restitution)
 {
-    static_cast<cpArbiter*>(_contactInfo)->e = elasticity;
+    static_cast<cpArbiter*>(_contactInfo)->e = restitution;
 }
 
 void PhysicsContactPreSolve::setFriction(float friction)
@@ -165,7 +165,7 @@ PhysicsContactPostSolve::~PhysicsContactPostSolve()
     
 }
 
-float PhysicsContactPostSolve::getElasticity() const
+float PhysicsContactPostSolve::getRestitution() const
 {
     return static_cast<cpArbiter*>(_contactInfo)->e;
 }
@@ -200,32 +200,37 @@ bool EventListenerPhysicsContact::init()
 
 void EventListenerPhysicsContact::onEvent(EventCustom* event)
 {
-    PhysicsContact& contact = *(PhysicsContact*)(event->getUserData());
+    PhysicsContact* contact = dynamic_cast<PhysicsContact*>(event);
     
-    switch (contact.getEventCode())
+    if (contact == nullptr)
+    {
+        return;
+    }
+    
+    switch (contact->getEventCode())
     {
         case PhysicsContact::EventCode::BEGIN:
         {
             bool ret = true;
             
             if (onContactBegin != nullptr
-                && hitTest(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                contact._begin = true;
-                contact.generateContactData();
+                contact->_begin = true;
+                contact->generateContactData();
                 
                 // the mask has high priority than _listener->onContactBegin.
                 // so if the mask test is false, the two bodies won't have collision.
                 if (ret)
                 {
-                    ret = onContactBegin(event, contact);
+                    ret = onContactBegin(*contact);
                 }else
                 {
-                    onContactBegin(event, contact);
+                    onContactBegin(*contact);
                 }
             }
             
-            contact.setResult(ret);
+            contact->setResult(ret);
             break;
         }
         case PhysicsContact::EventCode::PRESOLVE:
@@ -233,34 +238,34 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             bool ret = true;
             
             if (onContactPreSolve != nullptr
-                && hitTest(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                PhysicsContactPreSolve solve(contact._begin ? nullptr : contact._contactData, contact._contactInfo);
-                contact._begin = false;
-                contact.generateContactData();
+                PhysicsContactPreSolve solve(contact->_begin ? nullptr : contact->_contactData, contact->_contactInfo);
+                contact->_begin = false;
+                contact->generateContactData();
                 
-                ret = onContactPreSolve(event, contact, solve);
+                ret = onContactPreSolve(*contact, solve);
             }
             
-            contact.setResult(ret);
+            contact->setResult(ret);
             break;
         }
         case PhysicsContact::EventCode::POSTSOLVE:
         {
             if (onContactPostSolve != nullptr
-                && hitTest(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                PhysicsContactPostSolve solve(contact._contactInfo);
-                onContactPostSolve(event, contact, solve);
+                PhysicsContactPostSolve solve(contact->_contactInfo);
+                onContactPostSolve(*contact, solve);
             }
             break;
         }
         case PhysicsContact::EventCode::SEPERATE:
         {
             if (onContactSeperate != nullptr
-                && hitTest(contact.getShapeA(), contact.getShapeB()))
+                && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                onContactSeperate(event, contact);
+                onContactSeperate(*contact);
             }
             break;
         }

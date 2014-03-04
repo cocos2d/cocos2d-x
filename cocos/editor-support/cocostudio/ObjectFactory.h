@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __TRIGGERFACTORY_H__
 
 #include "cocos2d.h"
-#include "CocoStudio.h"
 #include <string>
 #include <unordered_map>
 
@@ -35,7 +34,7 @@ namespace cocostudio {
 class ObjectFactory
 {
 public:
-    typedef cocos2d::Object* (*Instance)(void);
+    typedef cocos2d::Ref* (*Instance)(void);
     struct TInfo
     {
         TInfo(void);
@@ -50,7 +49,8 @@ public:
 
     static ObjectFactory* getInstance();
     static void destroyInstance();
-    cocos2d::Object* createObject(const char *name);
+    cocos2d::Ref* createObject(const std::string &name);
+    cocos2d::Component* createComponent(const std::string &name);
     void registerType(const TInfo &t);
     void removeAll();
 

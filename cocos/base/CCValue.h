@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -94,14 +94,14 @@ public:
     bool asBool() const;
     std::string asString() const;
     
-    inline ValueVector& asValueVector() { return *_vectorData; }
-    inline const ValueVector& asValueVector() const { return *_vectorData; }
+    ValueVector& asValueVector();
+    const ValueVector& asValueVector() const;
     
-    inline ValueMap& asValueMap() { return *_mapData; }
-    inline const ValueMap& asValueMap() const { return *_mapData; }
+    ValueMap& asValueMap();
+    const ValueMap& asValueMap() const;
     
-    inline ValueMapIntKey& asIntKeyMap() { return *_intKeyMapData; }
-    inline const ValueMapIntKey& asIntKeyMap() const { return *_intKeyMapData; }
+    ValueMapIntKey& asIntKeyMap();
+    const ValueMapIntKey& asIntKeyMap() const;
 
     inline bool isNull() const { return _type == Type::NONE; }
     

@@ -12,6 +12,7 @@ CCAction.cpp \
 CCActionCamera.cpp \
 CCActionCatmullRom.cpp \
 CCActionEase.cpp \
+CCTweenFunction.cpp \
 CCActionGrid.cpp \
 CCActionGrid3D.cpp \
 CCActionInstant.cpp \
@@ -47,10 +48,9 @@ CCEventListenerTouch.cpp \
 CCEventMouse.cpp \
 CCEventTouch.cpp \
 CCFont.cpp \
+CCFontCharMap.cpp \
 CCFontAtlas.cpp \
 CCFontAtlasCache.cpp \
-CCFontAtlasFactory.cpp \
-CCFontDefinition.cpp \
 CCFontFNT.cpp \
 CCFontFreeType.cpp \
 ccFPSImages.c \
@@ -90,7 +90,6 @@ CCSpriteBatchNode.cpp \
 CCSpriteFrame.cpp \
 CCSpriteFrameCache.cpp \
 CCTextFieldTTF.cpp \
-CCTextImage.cpp \
 CCTexture2D.cpp \
 CCTextureAtlas.cpp \
 CCTextureCache.cpp \
@@ -113,15 +112,17 @@ cocos2d.cpp \
 TGAlib.cpp \
 TransformUtils.cpp \
 ZipUtils.cpp \
-platform/CCEGLViewProtocol.cpp \
+platform/CCGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+platform/CCImage.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCMaterialManager.cpp \
 renderer/CCQuadCommand.cpp \
+renderer/CCBatchCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCRenderMaterial.cpp \
@@ -135,7 +136,7 @@ renderer/CCRenderMaterial.cpp \
 ../base/CCDictionary.cpp \
 ../base/CCGeometry.cpp \
 ../base/CCNS.cpp \
-../base/CCObject.cpp \
+../base/CCRef.cpp \
 ../base/CCSet.cpp \
 ../base/CCString.cpp \
 ../base/CCValue.cpp \

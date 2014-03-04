@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,49 +22,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "platform/CCCommon.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
-
-// XXX deprecated
-void CCLog(const char * pszFormat, ...)
-{
-    char szBuf[MAX_LEN];
-
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
-    va_end(ap);
-
-    WCHAR wszBuf[MAX_LEN] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
-    OutputDebugStringW(wszBuf);
-    OutputDebugStringA("\n");
-
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
-    printf("%s\n", szBuf);
-}
-
-void log(const char * pszFormat, ...)
-{
-    char szBuf[MAX_LEN];
-
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
-    va_end(ap);
-
-    WCHAR wszBuf[MAX_LEN] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
-    OutputDebugStringW(wszBuf);
-    OutputDebugStringA("\n");
-
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
-    printf("%s\n", szBuf);
-}
 
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
@@ -91,3 +59,5 @@ void LuaLog(const char *pszMsg)
 }
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

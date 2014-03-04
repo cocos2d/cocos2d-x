@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,12 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_FRAMEWORK_COMPONENT_H__
 #define __CC_FRAMEWORK_COMPONENT_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include <string>
 
 NS_CC_BEGIN
 
-class CC_DLL Component : public Object
+class Node;
+
+class CC_DLL Component : public Ref
 {
 protected:
     /**
@@ -55,7 +57,7 @@ public:
      */
     virtual void onExit();
     virtual void update(float delta);
-    virtual void serialize(void* r);
+    virtual bool serialize(void* r);
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
     static Component* create(void);

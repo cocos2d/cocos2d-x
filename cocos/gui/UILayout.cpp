@@ -1,39 +1,48 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UILayout.h"
 #include "gui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "kazmath/GL/matrix.h"
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
+#include "CCDirector.h"
+#include "CCDrawingPrimitives.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
 
 static GLint g_sStencilBits = -1;
+static GLint s_layer = -1;
 
 Layout::Layout():
 _clippingEnabled(false),
@@ -54,17 +63,50 @@ _backGroundImageTextureSize(Size::ZERO),
 _layoutType(LAYOUT_ABSOLUTE),
 _clippingType(LAYOUT_CLIPPING_STENCIL),
 _clippingStencil(nullptr),
-_handleScissor(false),
 _scissorRectDirty(false),
 _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
-_doLayoutDirty(true)
+_doLayoutDirty(true),
+_clippingRectDirty(true),
+_currentStencilEnabled(GL_FALSE),
+_currentStencilWriteMask(~0),
+_currentStencilFunc(GL_ALWAYS),
+_currentStencilRef(0),
+_currentStencilValueMask(~0),
+_currentStencilFail(GL_KEEP),
+_currentStencilPassDepthFail(GL_KEEP),
+_currentStencilPassDepthPass(GL_KEEP),
+_currentDepthWriteMask(GL_TRUE),
+_currentAlphaTestEnabled(GL_FALSE),
+_currentAlphaTestFunc(GL_ALWAYS),
+_currentAlphaTestRef(1)
 {
     _widgetType = WidgetTypeContainer;
 }
 
 Layout::~Layout()
 {
+    CC_SAFE_RELEASE(_clippingStencil);
+}
+    
+void Layout::onEnter()
+{
+    Widget::onEnter();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onEnter();
+    }
+    _doLayoutDirty = true;
+    _clippingRectDirty = true;
+}
+    
+void Layout::onExit()
+{
+    Widget::onExit();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onExit();
+    }
 }
 
 Layout* Layout::create()
@@ -111,13 +153,41 @@ void Layout::addChild(Node *child, int zOrder, int tag)
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
+    
+void Layout::removeChild(Node *child, bool cleanup)
+{
+    Widget::removeChild(child, cleanup);
+    _doLayoutDirty = true;
+}
+    
+void Layout::removeAllChildren()
+{
+    Widget::removeAllChildren();
+}
+    
+void Layout::removeAllChildrenWithCleanup(bool cleanup)
+{
+    Widget::removeAllChildrenWithCleanup(cleanup);
+    _doLayoutDirty = true;
+}
 
 bool Layout::isClippingEnabled()
 {
     return _clippingEnabled;
 }
     
-void Layout::visit()
+bool Layout::hitTest(const Point &pt)
+{
+    Point nsp = convertToNodeSpace(pt);
+    Rect bb = Rect(0.0f, 0.0f, _size.width, _size.height);
+    if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
+    {
+        return true;
+    }
+    return false;
+}
+    
+void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (!_enabled)
     {
@@ -128,10 +198,10 @@ void Layout::visit()
         switch (_clippingType)
         {
             case LAYOUT_CLIPPING_STENCIL:
-                stencilClippingVisit();
+                stencilClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
             case LAYOUT_CLIPPING_SCISSOR:
-                scissorClippingVisit();
+                scissorClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
             default:
                 break;
@@ -139,7 +209,7 @@ void Layout::visit()
     }
     else
     {
-        Node::visit();
+        Node::visit(renderer, parentTransform, parentTransformUpdated);
     }
 }
     
@@ -149,106 +219,158 @@ void Layout::sortAllChildren()
     doLayout();
 }
     
-void Layout::stencilClippingVisit()
+void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
-    if (!_clippingStencil || !_clippingStencil->isVisible())
-    {
-        Node::visit();
+    if(!_visible)
         return;
-    }
-    if (g_sStencilBits < 1)
+    
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
+    //Add group command
+
+    _groupCommand.init(_globalZOrder);
+    renderer->addCommand(&_groupCommand);
+    
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
+    
+    _beforeVisitCmdStencil.init(_globalZOrder);
+    _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
+    renderer->addCommand(&_beforeVisitCmdStencil);
+    
+    _clippingStencil->visit(renderer, _modelViewTransform, dirty);
+    
+    _afterDrawStencilCmd.init(_globalZOrder);
+    _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
+    renderer->addCommand(&_afterDrawStencilCmd);
+    
+    int i = 0;
+    
+    if(!_children.empty())
     {
-        Node::visit();
-        return;
-    }
-    static GLint layer = -1;
-    if (layer + 1 == g_sStencilBits)
-    {
-        static bool once = true;
-        if (once)
+        sortAllChildren();
+        // draw children zOrder < 0
+        for( ; i < _children.size(); i++ )
         {
-            char warning[200] = {0};
-            snprintf(warning, sizeof(warning), "Nesting more than %d stencils is not supported. Everything will be drawn without stencil for this node and its childs.", g_sStencilBits);
-            CCLOG("%s", warning);
+            auto node = _children.at(i);
             
-            once = false;
+            if ( node && node->getLocalZOrder() < 0 )
+                node->visit(renderer, _modelViewTransform, dirty);
+            else
+                break;
         }
-        Node::visit();
-        return;
+        // self draw
+        this->draw(renderer, _modelViewTransform, dirty);
+        
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit(renderer, _modelViewTransform, dirty);
     }
-    layer++;
-    GLint mask_layer = 0x1 << layer;
+    else
+    {
+        this->draw(renderer, _modelViewTransform, dirty);
+    }
+    
+    _afterVisitCmdStencil.init(_globalZOrder);
+    _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
+    renderer->addCommand(&_afterVisitCmdStencil);
+    
+    renderer->popGroup();
+    
+    kmGLPopMatrix();
+}
+    
+void Layout::onBeforeVisitStencil()
+{
+    s_layer++;
+    GLint mask_layer = 0x1 << s_layer;
     GLint mask_layer_l = mask_layer - 1;
-    GLint mask_layer_le = mask_layer | mask_layer_l;
-    GLboolean currentStencilEnabled = GL_FALSE;
-    GLuint currentStencilWriteMask = ~0;
-    GLenum currentStencilFunc = GL_ALWAYS;
-    GLint currentStencilRef = 0;
-    GLuint currentStencilValueMask = ~0;
-    GLenum currentStencilFail = GL_KEEP;
-    GLenum currentStencilPassDepthFail = GL_KEEP;
-    GLenum currentStencilPassDepthPass = GL_KEEP;
-    currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
-    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
-    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&currentStencilFunc);
-    glGetIntegerv(GL_STENCIL_REF, &currentStencilRef);
-    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&currentStencilValueMask);
-    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&currentStencilFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&currentStencilPassDepthFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&currentStencilPassDepthPass);
+    _mask_layer_le = mask_layer | mask_layer_l;
+    _currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
+    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&_currentStencilWriteMask);
+    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&_currentStencilFunc);
+    glGetIntegerv(GL_STENCIL_REF, &_currentStencilRef);
+    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&_currentStencilValueMask);
+    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&_currentStencilFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
+    
     glEnable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
     glStencilMask(mask_layer);
-    GLboolean currentDepthWriteMask = GL_TRUE;
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &currentDepthWriteMask);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
     glDepthMask(GL_FALSE);
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     kmGLLoadIdentity();
+    
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPushMatrix();
     kmGLLoadIdentity();
+    
     DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
+    
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPopMatrix();
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+}
 
-    kmGLPushMatrix();
-    transform();
-    _clippingStencil->visit();
-    kmGLPopMatrix();
-    glDepthMask(currentDepthWriteMask);
-    glStencilFunc(GL_EQUAL, mask_layer_le, mask_layer_le);
+void Layout::onAfterDrawStencil()
+{
+    glDepthMask(_currentDepthWriteMask);
+    glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-    Node::visit();
-    glStencilFunc(currentStencilFunc, currentStencilRef, currentStencilValueMask);
-    glStencilOp(currentStencilFail, currentStencilPassDepthFail, currentStencilPassDepthPass);
-    glStencilMask(currentStencilWriteMask);
-    if (!currentStencilEnabled)
+}
+
+
+void Layout::onAfterVisitStencil()
+{
+    glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
+    glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
+    glStencilMask(_currentStencilWriteMask);
+    if (!_currentStencilEnabled)
     {
         glDisable(GL_STENCIL_TEST);
     }
-    layer--;
+    s_layer--;
 }
     
-void Layout::scissorClippingVisit()
+void Layout::onBeforeVisitScissor()
 {
     Rect clippingRect = getClippingRect();
-    if (_handleScissor)
-    {
-        glEnable(GL_SCISSOR_TEST);
-    }
-    EGLView::getInstance()->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
-    Node::visit();
-    if (_handleScissor)
-    {
-        glDisable(GL_SCISSOR_TEST);
-    }
+    glEnable(GL_SCISSOR_TEST);
+    auto glview = Director::getInstance()->getOpenGLView();
+    glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+}
+
+void Layout::onAfterVisitScissor()
+{
+    glDisable(GL_SCISSOR_TEST);
+}
+    
+void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
+{
+    _beforeVisitCmdScissor.init(_globalZOrder);
+    _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
+    renderer->addCommand(&_beforeVisitCmdScissor);
+
+    Node::visit(renderer, parentTransform, parentTransformUpdated);
+    
+    _afterVisitCmdScissor.init(_globalZOrder);
+    _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
+    renderer->addCommand(&_afterVisitCmdScissor);
 }
 
 void Layout::setClippingEnabled(bool able)
@@ -263,15 +385,30 @@ void Layout::setClippingEnabled(bool able)
         case LAYOUT_CLIPPING_STENCIL:
             if (able)
             {
-                glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
+                static bool once = true;
+                if (once)
+                {
+                    glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
+                    if (g_sStencilBits <= 0)
+                    {
+                        CCLOG("Stencil buffer is not enabled.");
+                    }
+                    once = false;
+                }
                 _clippingStencil = DrawNode::create();
-                _clippingStencil->onEnter();
+                if (_running)
+                {
+                    _clippingStencil->onEnter();
+                }
                 _clippingStencil->retain();
                 setStencilClippingSize(_size);
             }
             else
             {
-                _clippingStencil->onExit();
+                if (_running)
+                {
+                    _clippingStencil->onExit();
+                }
                 _clippingStencil->release();
                 _clippingStencil = nullptr;
             }
@@ -293,6 +430,11 @@ void Layout::setClippingType(LayoutClippingType type)
     setClippingEnabled(clippingEnabled);
 }
     
+LayoutClippingType Layout::getClippingType()
+{
+    return _clippingType;
+}
+    
 void Layout::setStencilClippingSize(const Size &size)
 {
     if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
@@ -310,85 +452,83 @@ void Layout::setStencilClippingSize(const Size &size)
     
 const Rect& Layout::getClippingRect()
 {
-    _handleScissor = true;
-    Point worldPos = convertToWorldSpace(Point::ZERO);
-    AffineTransform t = getNodeToWorldAffineTransform();
-    float scissorWidth = _size.width*t.a;
-    float scissorHeight = _size.height*t.d;
-    Rect parentClippingRect;
-    Layout* parent = this;
-    bool firstClippingParentFounded = false;
-    while (parent)
+    if (_clippingRectDirty)
     {
-        parent = dynamic_cast<Layout*>(parent->getParent());
-        if(parent)
+        Point worldPos = convertToWorldSpace(Point::ZERO);
+        AffineTransform t = getNodeToWorldAffineTransform();
+        float scissorWidth = _size.width*t.a;
+        float scissorHeight = _size.height*t.d;
+        Rect parentClippingRect;
+        Layout* parent = this;
+        bool firstClippingParentFounded = false;
+        while (parent)
         {
-            if (parent->isClippingEnabled())
+            parent = dynamic_cast<Layout*>(parent->getParent());
+            if(parent)
             {
-                if (!firstClippingParentFounded)
+                if (parent->isClippingEnabled())
                 {
-                    _clippingParent = parent;
-                    firstClippingParentFounded = true;
-                }
-                
-                if (parent->_clippingType == LAYOUT_CLIPPING_SCISSOR)
-                {
-                    _handleScissor = false;
-                    break;
+                    if (!firstClippingParentFounded)
+                    {
+                        _clippingParent = parent;
+                        firstClippingParentFounded = true;
+                        break;
+                    }
                 }
             }
         }
-    }
-    
-    if (_clippingParent)
-    {
-        parentClippingRect = _clippingParent->getClippingRect();
-        float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
-        float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
-        float finalWidth = scissorWidth;
-        float finalHeight = scissorHeight;
         
-        float leftOffset = worldPos.x - parentClippingRect.origin.x;
-        if (leftOffset < 0.0f)
+        if (_clippingParent)
         {
-            finalX = parentClippingRect.origin.x;
-            finalWidth += leftOffset;
+            parentClippingRect = _clippingParent->getClippingRect();
+            float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
+            float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
+            float finalWidth = scissorWidth;
+            float finalHeight = scissorHeight;
+            
+            float leftOffset = worldPos.x - parentClippingRect.origin.x;
+            if (leftOffset < 0.0f)
+            {
+                finalX = parentClippingRect.origin.x;
+                finalWidth += leftOffset;
+            }
+            float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
+            if (rightOffset > 0.0f)
+            {
+                finalWidth -= rightOffset;
+            }
+            float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
+            if (topOffset > 0.0f)
+            {
+                finalHeight -= topOffset;
+            }
+            float bottomOffset = worldPos.y - parentClippingRect.origin.y;
+            if (bottomOffset < 0.0f)
+            {
+                finalY = parentClippingRect.origin.x;
+                finalHeight += bottomOffset;
+            }
+            if (finalWidth < 0.0f)
+            {
+                finalWidth = 0.0f;
+            }
+            if (finalHeight < 0.0f)
+            {
+                finalHeight = 0.0f;
+            }
+            _clippingRect.origin.x = finalX;
+            _clippingRect.origin.y = finalY;
+            _clippingRect.size.width = finalWidth;
+            _clippingRect.size.height = finalHeight;
         }
-        float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
-        if (rightOffset > 0.0f)
+        else
         {
-            finalWidth -= rightOffset;
+            _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
+            _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
+            _clippingRect.size.width = scissorWidth;
+            _clippingRect.size.height = scissorHeight;
         }
-        float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
-        if (topOffset > 0.0f)
-        {
-            finalHeight -= topOffset;
-        }
-        float bottomOffset = worldPos.y - parentClippingRect.origin.y;
-        if (bottomOffset < 0.0f)
-        {
-            finalY = parentClippingRect.origin.x;
-            finalHeight += bottomOffset;
-        }
-        if (finalWidth < 0.0f)
-        {
-            finalWidth = 0.0f;
-        }
-        if (finalHeight < 0.0f)
-        {
-            finalHeight = 0.0f;
-        }
-        _clippingRect.origin.x = finalX;
-        _clippingRect.origin.y = finalY;
-        _clippingRect.size.width = finalWidth;
-        _clippingRect.size.height = finalHeight;
-    }
-    else
-    {
-        _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
-        _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
-        _clippingRect.size.width = scissorWidth;
-        _clippingRect.size.height = scissorHeight;
+        _clippingRectDirty = false;
     }
     return _clippingRect;
 }
@@ -396,8 +536,10 @@ const Rect& Layout::getClippingRect()
 void Layout::onSizeChanged()
 {
     Widget::onSizeChanged();
+    setContentSize(_size);
     setStencilClippingSize(_size);
     _doLayoutDirty = true;
+    _clippingRectDirty = true;
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
@@ -505,6 +647,11 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
+    
+const Rect& Layout::getBackGroundImageCapInsets()
+{
+    return _backGroundImageCapInsets;
+}
 
 void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 {
@@ -545,14 +692,14 @@ void Layout::addBackGroundImage()
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::Scale9Sprite::create();
-        _backGroundImage->setZOrder(-1);
+        _backGroundImage->setLocalZOrder(-1);
         Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = Sprite::create();
-        _backGroundImage->setZOrder(-1);
+        _backGroundImage->setLocalZOrder(-1);
         Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
@@ -632,6 +779,11 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             break;
     }
 }
+    
+LayoutBackGroundColorType Layout::getBackGroundColorType()
+{
+    return _colorType;
+}
 
 void Layout::setBackGroundColor(const Color3B &color)
 {
@@ -640,6 +792,11 @@ void Layout::setBackGroundColor(const Color3B &color)
     {
         _colorRender->setColor(color);
     }
+}
+    
+const Color3B& Layout::getBackGroundColor()
+{
+    return _cColor;
 }
 
 void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endColor)
@@ -654,6 +811,16 @@ void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endCol
     {
         _gradientRender->setEndColor(endColor);
     }
+}
+    
+const Color3B& Layout::getBackGroundStartColor()
+{
+    return _gStartColor;
+}
+
+const Color3B& Layout::getBackGroundEndColor()
+{
+    return _gEndColor;
 }
 
 void Layout::setBackGroundColorOpacity(int opacity)
@@ -673,6 +840,11 @@ void Layout::setBackGroundColorOpacity(int opacity)
             break;
     }
 }
+    
+int Layout::getBackGroundColorOpacity()
+{
+    return _cOpacity;
+}
 
 void Layout::setBackGroundColorVector(const Point &vector)
 {
@@ -681,6 +853,11 @@ void Layout::setBackGroundColorVector(const Point &vector)
     {
         _gradientRender->setVector(vector);
     }
+}
+    
+const Point& Layout::getBackGroundColorVector()
+{
+    return _alongVector;
 }
 
 const Size& Layout::getBackGroundImageTextureSize() const
@@ -833,7 +1010,7 @@ void Layout::doLayout()
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
                         {
-                            relativeWidget = UIHelper::seekWidgetByRelativeName(this, relativeName);
+                            relativeWidget = Helper::seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
                                 relativeWidgetLP = dynamic_cast<RelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
@@ -1085,128 +1262,50 @@ void Layout::doLayout()
                                 
                             case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
                                 finalPosY += mg.bottom;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
-                                {
-                                    finalPosY += relativeWidgetMargin.top;
-                                }
                                 finalPosX += mg.left;
                                 break;
                             case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
                                 finalPosY += mg.bottom;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
-                                {
-                                    finalPosY += relativeWidgetMargin.top;
-                                }
                                 finalPosX -= mg.right;
                                 break;
                             case RELATIVE_LOCATION_ABOVE_CENTER:
                                 finalPosY += mg.bottom;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT)
-                                {
-                                    finalPosY += relativeWidgetMargin.top;
-                                }
                                 break;
                                 
                             case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
                                 finalPosX -= mg.right;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
-                                {
-                                    finalPosX -= relativeWidgetMargin.left;
-                                }
                                 finalPosY -= mg.top;
                                 break;
                             case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
                                 finalPosX -= mg.right;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
-                                {
-                                    finalPosX -= relativeWidgetMargin.left;
-                                }
                                 finalPosY += mg.bottom;
                                 break;
                             case RELATIVE_LOCATION_LEFT_OF_CENTER:
                                 finalPosX -= mg.right;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_LEFT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_NONE
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL)
-                                {
-                                    finalPosX -= relativeWidgetMargin.left;
-                                }
                                 break;
                                 
                             case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
                                 finalPosX += mg.left;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
-                                {
-                                    finalPosX += relativeWidgetMargin.right;
-                                }
                                 finalPosY -= mg.top;
                                 break;
                             case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
                                 finalPosX += mg.left;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
-                                {
-                                    finalPosX += relativeWidgetMargin.right;
-                                }
                                 finalPosY += mg.bottom;
                                 break;
                             case RELATIVE_LOCATION_RIGHT_OF_CENTER:
                                 finalPosX += mg.left;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_TOP_RIGHT
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL)
-                                {
-                                    finalPosX += relativeWidgetMargin.right;
-                                }
                                 break;
                                 
                             case RELATIVE_LOCATION_BELOW_LEFTALIGN:
                                 finalPosY -= mg.top;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
-                                {
-                                    finalPosY -= relativeWidgetMargin.bottom;
-                                }
                                 finalPosX += mg.left;
                                 break;
                             case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
                                 finalPosY -= mg.top;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
-                                {
-                                    finalPosY -= relativeWidgetMargin.bottom;
-                                }
                                 finalPosX -= mg.right;
                                 break;
                             case RELATIVE_LOCATION_BELOW_CENTER:
                                 finalPosY -= mg.top;
-                                if (relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_LEFT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM
-                                    && relativeWidgetLP->getAlign() != RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL)
-                                {
-                                    finalPosY -= relativeWidgetMargin.bottom;
-                                }
                                 break;
                             default:
                                 break;

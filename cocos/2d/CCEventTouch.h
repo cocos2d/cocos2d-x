@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -48,8 +48,8 @@ public:
 
     EventTouch();
 
-    EventCode getEventCode() { return _eventCode; };
-    std::vector<Touch*> getTouches() { return _touches; };
+    inline EventCode getEventCode() const { return _eventCode; };
+    inline const std::vector<Touch*>& getTouches() const { return _touches; };
 
 #if TOUCH_PERF_DEBUG
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
@@ -60,7 +60,7 @@ private:
     EventCode _eventCode;
     std::vector<Touch*> _touches;
 
-    friend class EGLViewProtocol;
+    friend class GLViewProtocol;
 };
 
 

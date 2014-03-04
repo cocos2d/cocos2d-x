@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -54,8 +54,9 @@ void Component::update(float delta)
 {
 }
 
-void Component::serialize(void *ar)
+bool Component::serialize(void *ar)
 {
+    return true;
 }
 
 Component* Component::create(void)

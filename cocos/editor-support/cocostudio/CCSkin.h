@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,9 +25,11 @@ THE SOFTWARE.
 #ifndef __CCSKIN_H__
 #define __CCSKIN_H__
 
+#include "CCSprite.h"
+#include "renderer/CCQuadCommand.h"
+
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
-#include "renderer/CCQuadCommand.h"
 
 namespace cocostudio {
 
@@ -52,7 +54,7 @@ public:
     kmMat4 getNodeToWorldTransform() const override;
     kmMat4 getNodeToWorldTransformAR() const;
     
-    virtual void draw() override;
+    virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     
     /**
      *  @js NA

@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Neophit
 Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,9 +29,8 @@ THE SOFTWARE.
 #define __CCTMX_OBJECT_GROUP_H__
 
 #include "CCGeometry.h"
-#include "CCString.h"
-#include "CCArray.h"
 #include "CCValue.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -42,7 +42,7 @@ NS_CC_BEGIN
 /** @brief TMXObjectGroup represents the TMX object group.
 @since v0.99.0
 */
-class CC_DLL TMXObjectGroup : public Object
+class CC_DLL TMXObjectGroup : public Ref
 {
 public:
     /**

@@ -1,4 +1,0 @@
-# resources get copied from TestCpp during build, ignore them
-Resources/*
-!Resources/luaScript
-!Resources/cocosbuilderRes

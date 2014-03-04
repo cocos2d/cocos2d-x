@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,7 +37,7 @@ THE SOFTWARE.
 #include <unordered_map>
 #include <functional>
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCTexture2D.h"
 #include "platform/CCImage.h"
 
@@ -60,7 +61,7 @@ NS_CC_BEGIN
 * Once the texture is loaded, the next time it will return
 * a reference of the previously loaded texture reducing GPU & CPU memory
 */
-class CC_DLL TextureCache : public Object
+class CC_DLL TextureCache : public Ref
 {
 public:
     /** Returns the shared instance of the cache */
@@ -105,7 +106,7 @@ public:
     * If the filename was not previously loaded, it will create a new Texture2D
     *  object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
-    * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
+    * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr
     */
     Texture2D* addImage(const std::string &filepath);
 
@@ -162,7 +163,7 @@ public:
     *
     * @since v1.0
     */
-    void dumpCachedTextureInfo() const;
+    std::string getCachedTextureInfo() const;
 
     //wait for texture cahe to quit befor destroy instance
     //called by director, please do not called outside

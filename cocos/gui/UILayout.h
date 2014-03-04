@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __LAYOUT_H__
 #define __LAYOUT_H__
@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
@@ -91,12 +91,16 @@ public:
      */
     void setBackGroundImageCapInsets(const Rect& capInsets);
     
+    const Rect& getBackGroundImageCapInsets();
+    
     /**
      * Sets Color Type for layout.
      *
      * @param type   @see LayoutBackGroundColorType.
      */
     void setBackGroundColorType(LayoutBackGroundColorType type);
+    
+    LayoutBackGroundColorType getBackGroundColorType();
     
     /**
      * Sets background iamge use scale9 renderer.
@@ -105,12 +109,16 @@ public:
      */
     void setBackGroundImageScale9Enabled(bool enabled);
     
+    bool isBackGroundImageScale9Enabled();
+    
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_SOLID
      *
      * @param color
      */
     void setBackGroundColor(const Color3B &color);
+    
+    const Color3B& getBackGroundColor();
     
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -121,6 +129,10 @@ public:
      */
     void setBackGroundColor(const Color3B &startColor, const Color3B &endColor);
     
+    const Color3B& getBackGroundStartColor();
+    
+    const Color3B& getBackGroundEndColor();
+    
     /**
      * Sets background opacity layout.
      *
@@ -128,12 +140,16 @@ public:
      */
     void setBackGroundColorOpacity(int opacity);
     
+    int getBackGroundColorOpacity();
+    
     /**
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
      *
      * @param vector
      */
     void setBackGroundColorVector(const Point &vector);
+    
+    const Point& getBackGroundColorVector();
     
     /**
      * Remove the background image of layout.
@@ -157,6 +173,8 @@ public:
     virtual void setClippingEnabled(bool enabled);
     
     void setClippingType(LayoutClippingType type);
+    
+    LayoutClippingType getClippingType();
     
     /**
      * Gets if layout is clipping enabled.
@@ -195,7 +213,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      */
     virtual void addChild(Node * child, int zOrder) override;
     /**
@@ -204,16 +222,38 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit();
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+
+    virtual void removeChild(Node* child, bool cleanup = true) override;
     
+    /**
+     * Removes all children from the container with a cleanup.
+     *
+     * @see `removeAllChildrenWithCleanup(bool)`
+     */
+    virtual void removeAllChildren() override;
+    /**
+     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+     *
+     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @js removeAllChildren
+     * @lua removeAllChildren
+     */
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+
     virtual void sortAllChildren() override;
     
     void requestDoLayout();
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual bool hitTest(const Point &pt);
 protected:
     //override "init" method of widget.
     virtual bool init() override;
@@ -229,12 +269,20 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit();
-    void scissorClippingVisit();
+    void stencilClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    void scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
     virtual void doLayout();
+    
+    //clipping
+    void onBeforeVisitStencil();
+    void onAfterDrawStencil();
+    void onAfterVisitStencil();
+    
+    void onBeforeVisitScissor();
+    void onAfterVisitScissor();
 protected:
     bool _clippingEnabled;
     
@@ -256,11 +304,36 @@ protected:
     LayoutType _layoutType;
     LayoutClippingType _clippingType;
     DrawNode* _clippingStencil;
-    bool _handleScissor;
     bool _scissorRectDirty;
     Rect _clippingRect;
     Layout* _clippingParent;
     bool _doLayoutDirty;
+    bool _clippingRectDirty;
+    
+    //clipping
+
+    GLboolean _currentStencilEnabled;
+    GLuint _currentStencilWriteMask;
+    GLenum _currentStencilFunc;
+    GLint _currentStencilRef;
+    GLuint _currentStencilValueMask;
+    GLenum _currentStencilFail;
+    GLenum _currentStencilPassDepthFail;
+    GLenum _currentStencilPassDepthPass;
+    GLboolean _currentDepthWriteMask;
+    
+    GLboolean _currentAlphaTestEnabled;
+    GLenum _currentAlphaTestFunc;
+    GLclampf _currentAlphaTestRef;
+    
+    GLint _mask_layer_le;
+    
+    GroupCommand _groupCommand;
+    CustomCommand _beforeVisitCmdStencil;
+    CustomCommand _afterDrawStencilCmd;
+    CustomCommand _afterVisitCmdStencil;
+    CustomCommand _beforeVisitCmdScissor;
+    CustomCommand _afterVisitCmdScissor;
 };
     
 }

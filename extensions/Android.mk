@@ -22,7 +22,6 @@ GUI/CCControlExtension/CCScale9Sprite.cpp \
 GUI/CCEditBox/CCEditBox.cpp \
 GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
 GUI/CCEditBox/CCEditBoxImplNone.cpp \
-GUI/CCEditBox/CCEditBoxImplTizen.cpp \
 GUI/CCEditBox/CCEditBoxImplWin.cpp \
 GUI/CCScrollView/CCScrollView.cpp \
 GUI/CCScrollView/CCTableView.cpp \
@@ -37,9 +36,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
 LOCAL_CXXFLAGS += -fexceptions
-
-LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/..
 

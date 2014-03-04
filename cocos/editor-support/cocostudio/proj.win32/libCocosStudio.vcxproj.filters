@@ -123,9 +123,6 @@
     <ClCompile Include="..\CCBone.cpp">
       <Filter>armature</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCActionEaseEx.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCActionFrame.cpp">
       <Filter>action</Filter>
     </ClCompile>
@@ -266,9 +263,6 @@
     <ClInclude Include="..\..\..\..\external\json\internal\strfunc.h">
       <Filter>json\rapidjson\internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCActionEaseEx.h">
-      <Filter>action</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCActionFrame.h">
       <Filter>action</Filter>
     </ClInclude>
@@ -295,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="..\TriggerObj.h">
       <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComBase.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

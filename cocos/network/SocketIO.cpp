@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2013 Chris Hannon
+ Copyright (c) 2013      Chris Hannon
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,9 +28,12 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
 #include "WebSocket.h"
 #include "HttpClient.h"
 #include <algorithm>
+#include <sstream>
 
 NS_CC_BEGIN
 
@@ -43,7 +46,7 @@ namespace network {
  *		   Clients/endpoints may share the same impl to accomplish multiplexing on the same websocket
  */
 class SIOClientImpl : 
-	public cocos2d::Object, 
+	public cocos2d::Ref, 
 	public WebSocket::Delegate
 {
 private: 
@@ -356,7 +359,7 @@ void SIOClientImpl::onOpen(WebSocket* ws)
         iter->second->onOpen();
     }
 
-	Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
+	Director::getInstance()->getScheduler()->schedule(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 	
 	log("SIOClientImpl::onOpen socket connected!");
 }
