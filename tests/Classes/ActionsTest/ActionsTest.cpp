@@ -33,8 +33,6 @@
 
 static std::function<Layer*()> createFunctions[] = {
 
-    CL(ActionRotateBy3D),
-
     CL(ActionManual),
     CL(ActionMove),
     CL(ActionRotate),
@@ -1344,12 +1342,12 @@ void ActionFollow::onEnter()
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
 }
 
-void ActionFollow::draw()
+void ActionFollow::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this);
     
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void ActionFollow::onDraw()
@@ -1651,9 +1649,9 @@ ActionCatmullRomStacked::~ActionCatmullRomStacked()
     CC_SAFE_RELEASE(_array2);
 }
 
-void ActionCatmullRomStacked::draw()
+void ActionCatmullRomStacked::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
@@ -1664,7 +1662,7 @@ void ActionCatmullRomStacked::draw()
     
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void ActionCatmullRomStacked::onDraw()
@@ -1760,9 +1758,9 @@ ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
     CC_SAFE_RELEASE(_array);
 }
 
-void ActionCardinalSplineStacked::draw()
+void ActionCardinalSplineStacked::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
@@ -1779,7 +1777,7 @@ void ActionCardinalSplineStacked::draw()
     
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void ActionCardinalSplineStacked::onDraw()
@@ -2127,9 +2125,9 @@ ActionCatmullRom::~ActionCatmullRom()
     _array2->release();
 }
 
-void ActionCatmullRom::draw()
+void ActionCatmullRom::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
@@ -2141,7 +2139,7 @@ void ActionCatmullRom::draw()
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 
@@ -2222,9 +2220,9 @@ ActionCardinalSpline::~ActionCardinalSpline()
     _array->release();
 }
 
-void ActionCardinalSpline::draw()
+void ActionCardinalSpline::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    ActionsDemo::draw();
+    ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
@@ -2241,7 +2239,7 @@ void ActionCardinalSpline::draw()
     
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void ActionCardinalSpline::onDraw()

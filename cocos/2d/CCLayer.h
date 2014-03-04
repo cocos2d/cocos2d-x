@@ -37,7 +37,6 @@ THE SOFTWARE.
 
 #include "CCEventKeyboard.h"
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -266,7 +265,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void onDraw();
     
     virtual void setContentSize(const Size & var) override;

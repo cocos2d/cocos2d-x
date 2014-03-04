@@ -974,7 +974,7 @@ public:
         sprite->setShaderProgram(shader);
         return sprite;
     }
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     void onDraw();
 
 protected:
@@ -982,11 +982,11 @@ protected:
 
 };
 
-void MySprite::draw()
+void MySprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void MySprite::onDraw()
@@ -1107,8 +1107,8 @@ CameraTest2::CameraTest2()
     kmMat4 lookupMatrix;
     kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
 
-    _sprite1->setAdditionalTransform(lookupMatrix);
-    _sprite2->setAdditionalTransform(lookupMatrix);
+    _sprite1->setAdditionalTransform(&lookupMatrix);
+    _sprite2->setAdditionalTransform(&lookupMatrix);
 
 }
 

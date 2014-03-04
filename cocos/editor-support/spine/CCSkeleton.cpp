@@ -125,12 +125,12 @@ void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void Skeleton::draw()
+void Skeleton::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
     
 void Skeleton::onDraw ()
