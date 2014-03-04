@@ -146,9 +146,6 @@
     <Filter Include="Classes\ExtensionsTest\ControlExtensionTest">
       <UniqueIdentifier>{92f4cbe1-bd20-40ce-903a-e14516fd42dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\EditBoxTest">
-      <UniqueIdentifier>{204085b7-6c5e-428a-8f47-4ec926e087df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\NetworkTest">
       <UniqueIdentifier>{1ff593ee-3dbf-412f-9030-9099d2fb8002}</UniqueIdentifier>
     </Filter>
@@ -675,9 +672,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
-      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1251,9 +1245,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
-      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
