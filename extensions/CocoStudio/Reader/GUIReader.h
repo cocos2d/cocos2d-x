@@ -28,8 +28,13 @@
 #include "../GUI/BaseClasses/UIWidget.h"
 #include "../Json/rapidjson/document.h"
 #include "cocos-ext.h"
+#include "WidgetReader/WidgetReaderProtocol.h"
+#include "../Trigger/ObjectFactory.h"
 
 NS_CC_EXT_BEGIN
+
+typedef void (CCObject::*SEL_ParseEvent)(const std::string&, CCObject*, const rapidjson::Value&);
+#define parseselector(_SELECTOR) (SEL_ParseEvent)(&_SELECTOR)
 
 #define kCCSVersion 1.0
 /**
@@ -60,9 +65,25 @@ public:
     int getVersionInteger(const char* str);
     void storeFileDesignSize(const char* fileName, const cocos2d::CCSize &size);
     const cocos2d::CCSize getFileDesignSize(const char* fileName) const;
+    
+    const std::string& getFilePath() const { return m_strFilePath; };
+    
+    void registerTypeAndCallBack(const std::string& classType,
+                                 ObjectFactory::Instance ins,
+                                 CCObject* object,
+                                 SEL_ParseEvent callBack);
 protected:
     std::string m_strFilePath;
     CCDictionary* _fileDesignSizes;
+    
+    typedef std::map<std::string, SEL_ParseEvent>  ParseCallBackMap;
+    ParseCallBackMap _mapParseSelector;
+    typedef std::map<std::string, CCObject*> ParseObjectMap;
+    ParseObjectMap _mapObject;
+    
+public:
+    ParseCallBackMap getParseCallBackMap() { return _mapParseSelector; };
+    ParseObjectMap getParseObjectMap() { return _mapObject; };
 };
 
 class WidgetPropertiesReader : public CCObject
@@ -70,6 +91,12 @@ class WidgetPropertiesReader : public CCObject
 public:
     virtual cocos2d::ui::Widget* createWidget(const rapidjson::Value& dic, const char* fullPath, const char* fileName)=0;
     virtual cocos2d::ui::Widget* widgetFromJsonDictionary(const rapidjson::Value& data) = 0;
+    virtual void setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* reader, cocos2d::ui::Widget* widget, const rapidjson::Value& options) = 0;
+    
+    virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
+                                                              cocos2d::ui::Widget* widget,
+                                                              const rapidjson::Value& customOptions) = 0;
+    
 protected:
     std::string m_strFilePath;
 };
@@ -105,6 +132,12 @@ public:
     
     virtual void setPropsForLayoutFromJsonDictionary(cocos2d::ui::Widget*widget,const rapidjson::Value& options);
     virtual void setPropsForScrollViewFromJsonDictionary(cocos2d::ui::Widget*widget,const rapidjson::Value& options);
+    
+    virtual void setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* reader, cocos2d::ui::Widget* widget, const rapidjson::Value& options);
+    
+    virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
+                                                              cocos2d::ui::Widget* widget,
+                                                              const rapidjson::Value& customOptions);
 };
 
 /**
@@ -138,6 +171,12 @@ public:
     virtual void setPropsForPageViewFromJsonDictionary(cocos2d::ui::Widget*widget,const rapidjson::Value& options);
     virtual void setPropsForScrollViewFromJsonDictionary(cocos2d::ui::Widget*widget,const rapidjson::Value& options);
     virtual void setPropsForListViewFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
+    
+    virtual void setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* reader, cocos2d::ui::Widget* widget, const rapidjson::Value& options);
+    
+    virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
+                                                              cocos2d::ui::Widget* widget,
+                                                              const rapidjson::Value& customOptions);    
 };
 
 NS_CC_EXT_END

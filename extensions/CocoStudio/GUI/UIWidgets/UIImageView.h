@@ -37,6 +37,8 @@ namespace ui {
 */
 class ImageView : public Widget
 {
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor

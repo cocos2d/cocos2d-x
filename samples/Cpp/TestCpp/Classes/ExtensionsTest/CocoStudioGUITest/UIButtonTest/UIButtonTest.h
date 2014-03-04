@@ -27,14 +27,13 @@
 
 #include "../UIScene.h"
 
-using namespace ui;
-
 class UIButtonTest : public UIScene
 {
 public:
     UIButtonTest();
     ~UIButtonTest();
     bool init();
+    virtual void onEnter();
     void touchEvent(CCObject *pSender, TouchEventType type);
     void selector(CCObject* pObejct);
 

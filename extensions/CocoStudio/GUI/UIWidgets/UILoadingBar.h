@@ -42,6 +42,9 @@ typedef enum
 */
 class LoadingBar : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor

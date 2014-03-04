@@ -34,6 +34,8 @@ static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BACKGROUNDCOLOR_RENDERER_Z = (-2);
 
 static GLint g_sStencilBits = -1;
+    
+IMPLEMENT_CLASS_GUI_INFO(Layout)
 
 Layout::Layout():
 _clippingEnabled(false),

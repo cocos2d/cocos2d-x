@@ -44,11 +44,16 @@ bool UIButtonTest::init()
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
-        m_pUiLayer->addWidget(button);                
+        m_pUiLayer->addWidget(button);
 
         return true;
     }
     return false;
+}
+
+void UIButtonTest::onEnter()
+{
+    UIScene::onEnter();
 }
 
 void UIButtonTest::touchEvent(CCObject *pSender, TouchEventType type)
@@ -201,7 +206,7 @@ bool UIButtonTest_PressedAction::init()
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
         button->setPressedActionEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosgui/animationbuttonnormal.png", "", "");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));
         m_pUiLayer->addWidget(button);

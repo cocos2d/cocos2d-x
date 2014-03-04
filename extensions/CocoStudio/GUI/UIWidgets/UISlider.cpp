@@ -32,6 +32,8 @@ namespace ui {
 static const int BASEBAR_RENDERER_Z = (-3);
 static const int PROGRESSBAR_RENDERER_Z = (-2);
 static const int SLIDBALL_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(Slider)
 
 Slider::Slider():
 _barRenderer(NULL),
@@ -134,6 +136,7 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
     }
     updateRGBAToRenderer(_barRenderer);
     barRendererScaleChangedWithSize();
+    progressBarRendererScaleChangedWithSize();
 }
 
 void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType)
@@ -488,6 +491,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->setPreferredSize(_size);
+            _progressBarTextureSize = _progressBarRenderer->getContentSize();
         }
         else
         {
