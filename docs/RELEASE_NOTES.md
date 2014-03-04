@@ -76,6 +76,70 @@
 * gcc 4.7 for Linux or Android. For Android ndk-r9 or newer is required.
 * Visual Studio 2012 (for Windows)
 
+## Run samples
+
+### Mac OSX & iOS
+
+* Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj`
+* Select `iOS` or `OS X` target in scheme toolbar
+* Click `run` button
+
+### Android
+
+Can run sample on Android in two ways:
+
+* Use command to run
+* Use Eclipse to run
+
+**By commnad**
+
+    $ cd cocos2d-x
+    $ ./install.py
+    $ cd build
+    $ ./android-build.py -p 10
+    $ adb install cocos2d-x/tests/proj.android/bin/TestDemo-debug.apk
+    
+Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
+
+**Using Eclipse**
+
+    $ cd cocos2d-x
+    $ ./install.py
+    $ cd build
+    $ ./android-build.py
+    
+Then
+
+* Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
+* Import `tests` Android project into Eclipse, the path used to import is `tests/proj.android`
+* Build `tests` Android project and run
+
+### Windows
+
+* Enter `cocos2d-x/build`, and open `cocos2d-win32.vs2012.sln`
+* Select `TestCpp` as running target
+* Click run button
+
+
+### Linux
+
+    $ cd cocos2d-x/build
+    $ ./install-deps-linux.sh
+    $ cd ../..
+    
+Then
+
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ make -j4
+    
+Run
+
+    $ cd bin/testcpp
+    $ ./testcpp
+    
+
 # Highlights of v3.0
 
 * Replaced Objective-C patters with C++ (C++11) patterns and best practices
@@ -378,59 +442,9 @@ Detail information of `EventDispatcher` can refer to [this document](https://git
 
 _Feature added in v3.0-pre-alpha0_
 
-Physics integration have five concepts: `PhysicsWorld`, `PhysicsBody`, `PhysicsShape`, `PhysicsJoint` and `PhysicsContact`.
-You must define `CC_USE_PHYSICS` macro in `ccConfig.h` to use the physics API.
+In v3.0, we integrate physics engien into cocos2d-x based on [Chipmunk2D](https://chipmunk-physics.net/). By using this feature, you can create physics based games without understanding physics engine.
 
-### PhysicsWorld
-
-A `PhysicsWorld` object simulates collisions and other physical properties, you do not create it directly, you can get it from scene which create with physics.
-```c++
-Scene* scene = Scene::createWithPhysics();
-PhysicsWorld* world = scene->getPhysicsWorld();
-```
-
-### PhysicsBody
-
-A `PhysicsBody` object is used to add physics simulation to a node. If you create a `PhysicsBody` and set it to a node, and add the node the a scene which create with physics, it will perform the physics simulation when update.
-```c++
-PhysicsBody* body = PhysicsBody::createCircle(5.0f);
-Node* node = Node::create();
-node->setPhysicsBody(body);
-scene->addChild(node);
-```
-
-### PhysicsShape
-
-A `PhysicsShape` object is a shape that make the body can have collisions. you can add one or more `PhysicsShape` to a `PhysicsBody`.
-Shape classes: `PhysicsShapeCircle`, `PhysicsShapeBox`, `PhysicsShapePolygon`, `PhysicsShapeEdgeSegment`, `PhysicsShapeEdgeBox`, `PhysicsShapeEdgePolygon`, `PhysicsShapeEdgeChain`.
-```c++
-PhysicsShape* shape = PhysicsShapeBox::create(Size(5.0f, 10.0f);
-body->addShape(shape);
-```
-
-### PhysicsJoint
-
-A `PhysicsJoint` object connects two physics bodies together so that they are simulated together by the physics world.
-Joint classes: `PhysicsJointFixed`, `PhysicsJointLimit`, `PhysicsJointPin`, `PhysicsJointDistance`, `PhysicsJointSpring`, `PhysicsJointGroove`, `PhysicsJointRotarySpring`, `PhysicsJointRotaryLimit`, `PhysicsJointRatchet`, `PhysicsJointGear`, `PhysicsJointMotor`.
-```c++
-PhysicsJoint* joint = PhysicsJointDistance::construct(bodyA, bodyB, Point::ZERO, Point::ZERO);
-world->addJoint(joint);
-```
-
-### PhysicsContact
-
-A `PhysicsContact` object is created automatically to describes a contact between two physical bodies in a `PhysicsWorld`. you can control the contact behavior from the physics contact event listener.
-Other classes contain the contact information: `PhysicsContactPreSolve`, `PhysicsContactPostSolve`.
-The event listener for physics: `EventListenerPhysicsContact`, `EventListenerPhysicsContactWithBodies`, `EventListenerPhysicsContactWithShapes`, `EventListenerPhysicsContactWithGroup`.
-```c++
-auto contactListener = EventListenerPhysicsContactWithBodies::create(bodyA, bodyB);
-contactListener->onContactBegin = [](EventCustom* event, const PhysicsContact& contact) -> bool
-{
-doSomething();
-return true;
-};
-_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
-```
+More detail information of this feature, please refer to [this document](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/physics/physics-integration/en.md)
 
 
 # Misc API Changes
