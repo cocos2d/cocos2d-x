@@ -537,7 +537,7 @@ void RenderTexture::onBegin()
     {
         director->setProjection(director->getProjection());
 
-            const Size& texSize = _texture->getContentSizeInPixels();
+        const Size& texSize = _texture->getContentSizeInPixels();
 
         // Calculate the adjustment ratios based on the old and new projections
         float widthRatio = size.width / texSize.width;
@@ -562,7 +562,6 @@ void RenderTexture::onBegin()
 
     // Adjust the orthographic projection and viewport
     
-
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
