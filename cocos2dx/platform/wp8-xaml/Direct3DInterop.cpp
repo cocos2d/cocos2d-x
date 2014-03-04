@@ -112,6 +112,12 @@ void Direct3DInterop::OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ t
     mInputEvents.push(e);
 }
 
+void Direct3DInterop::OnCustomControlEvent(Object^ sender, CompletedEventArgs^ args, Windows::Foundation::EventHandler<CompletedEventArgs^>^ handler)
+{
+	std::lock_guard<std::mutex> guard(mMutex);
+	std::shared_ptr<CustomControlEvent> e(new CustomControlEvent(sender, args, handler));
+	mInputEvents.push(e);
+}
 
 void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
