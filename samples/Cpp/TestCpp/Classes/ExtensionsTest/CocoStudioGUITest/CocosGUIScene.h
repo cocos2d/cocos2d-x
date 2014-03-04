@@ -29,8 +29,9 @@
 #include "cocos-ext.h"
 #include "../../testBasic.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace ui;
 
 class CocosGUITestMainLayer : public CCLayer
 {
@@ -39,6 +40,8 @@ public:
     void menuCallback(CCObject* pSender);
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    
+    void touchEvent(CCObject* pSender, TouchEventType type);
 private:
     CCPoint m_tBeginPos;
     CCMenu* m_pItemMenu;
@@ -47,7 +50,9 @@ private:
 class CocosGUITestScene : public TestScene
 {
 public:
+    virtual void onEnter();
     virtual void runThisTest();
+    void BackCallback(CCObject* pSender);
 };
 
 /*

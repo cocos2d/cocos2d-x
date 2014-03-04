@@ -80,6 +80,7 @@ static const char* s_testArray[] =
     "UITextFieldTest",
     "UITextFieldTest_MaxLength",
     "UITextFieldTest_Password",
+    "UITextFieldTest_LineWrap",
     /*===*/
     "UITextFieldTest_LineWrap",
     /**/

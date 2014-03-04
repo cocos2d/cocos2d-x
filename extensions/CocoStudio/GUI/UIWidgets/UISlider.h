@@ -45,6 +45,9 @@ typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType)
 */
 class Slider : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor

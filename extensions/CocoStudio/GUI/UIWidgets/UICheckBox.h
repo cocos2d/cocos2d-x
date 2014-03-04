@@ -46,6 +46,8 @@ typedef void (CCObject::*SEL_SelectedStateEvent)(CCObject*,CheckBoxEventType);
 */
 class CheckBox : public Widget
 {
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor

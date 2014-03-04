@@ -33,6 +33,8 @@ static const int BACKGROUNDBOXSELECTED_RENDERER_Z = (-1);
 static const int FRONTCROSS_RENDERER_Z = (-1);
 static const int BACKGROUNDBOXDISABLED_RENDERER_Z = (-1);
 static const int FRONTCROSSDISABLED_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(CheckBox)
 
 CheckBox::CheckBox():
 _backGroundBoxRenderer(NULL),

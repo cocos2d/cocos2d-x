@@ -54,6 +54,8 @@ typedef void (CCObject::*SEL_ListViewEvent)(CCObject*,ListViewEventType);
 class ListView : public ScrollView
 {
     
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     
     /**

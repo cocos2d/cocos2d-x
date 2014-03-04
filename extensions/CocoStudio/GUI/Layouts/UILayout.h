@@ -57,6 +57,9 @@ typedef enum {
  */
 class Layout : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor

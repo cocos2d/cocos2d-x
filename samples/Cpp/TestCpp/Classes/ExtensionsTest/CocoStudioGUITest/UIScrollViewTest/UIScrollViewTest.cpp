@@ -50,15 +50,17 @@ bool UIScrollViewTest_Vertical::init()
                                (backgroundSize.width - scrollView->getSize().width) / 2,
                                (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - scrollView->getSize().height) / 2));
+        scrollView->addEventListenerScrollView(this, scrollvieweventselector(UIScrollViewTest_Vertical::scrollEvent));
         m_pUiLayer->addWidget(scrollView);
         
         UIImageView* imageView = UIImageView::create();
         imageView->loadTexture("cocosgui/ccicon.png");
         
         float innerWidth = scrollView->getSize().width;
-        float innerHeight = scrollView->getSize().height + imageView->getSize().height;
+        float innerHeight = scrollView->getSize().height + imageView->getSize().height * 2;
         
-        scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));                
+        scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+        
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -84,10 +86,57 @@ bool UIScrollViewTest_Vertical::init()
         imageView->setPosition(ccp(innerWidth / 2, imageView->getSize().height / 2));
         scrollView->addChild(imageView);
         
+        
+        
+        
+//        UIButton* button_1 = UIButton::create();
+//        button_1->setTouchEnabled(true);
+//        button_1->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+//        button_1->addTouchEventListener(this, toucheventselector(UIScrollViewTest_Vertical::touchEvent));
+//        
+//        Layout* layout = Layout::create();
+//        layout->setSize(button_1->getSize());
+//        layout->setBackGroundImage("cocosgui/green_edit.png");
+//        layout->setBackGroundImageScale9Enabled(true);
+////        layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+////        layout->setBackGroundColor(ccc3(0, 255, 0));
+//        layout->setPosition(ccp(imageView->getPosition().x, layout->getSize().height * 2));
+//        
+//        button_1->setPosition(ccp(button_1->getSize().width / 2, button_1->getSize().height / 2));
+//        
+//        layout->addChild(button_1);
+//        scrollView->addChild(layout);
+        
         return true;
     }
     
     return false;
+}
+
+void UIScrollViewTest_Vertical::scrollEvent(cocos2d::CCObject *pSender, ScrollviewEventType type)
+{
+    switch (type)
+    {
+        case SCROLLVIEW_EVENT_SCROLLING:
+            CCLOG("a");
+            break;
+            
+        default:
+            break;
+    }
+}
+
+void UIScrollViewTest_Vertical::touchEvent(CCObject *pSender, TouchEventType type)
+{
+    switch (type)
+    {
+        case TOUCH_EVENT_ENDED:
+            CCLOG("button touch ended");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 // UIScrollViewTest_Horizontal
@@ -143,7 +192,7 @@ bool UIScrollViewTest_Horizontal::init()
         UIImageView* imageView = UIImageView::create();
         imageView->loadTexture("cocosgui/ccicon.png");
         
-        float innerWidth = scrollView->getSize().width + imageView->getSize().width;
+        float innerWidth = scrollView->getSize().width + imageView->getSize().width * 2;
         float innerHeight = scrollView->getSize().height;
         
         scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));

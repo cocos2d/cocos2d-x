@@ -27,6 +27,8 @@
 NS_CC_BEGIN
 
 namespace ui {
+    
+IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
 _curPageIdx(0),
