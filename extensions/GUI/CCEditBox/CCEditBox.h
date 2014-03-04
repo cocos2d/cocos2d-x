@@ -379,7 +379,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void) override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     /**
      * @js NA
      * @lua NA

@@ -82,7 +82,7 @@ void NodeGrid::onGridEndDraw()
     }
 }
 
-void NodeGrid::visit()
+void NodeGrid::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -90,13 +90,21 @@ void NodeGrid::visit()
         return;
     }
     
-    Renderer* renderer = Director::getInstance()->getRenderer();
-
     _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = this->transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
     kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     Director::Projection beforeProjectionType;
     if(_nodeGrid && _nodeGrid->isActive())
     {
@@ -108,11 +116,10 @@ void NodeGrid::visit()
     _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(&_gridBeginCommand);
 
-    this->transform();
-    
+
     if(_gridTarget)
     {
-        _gridTarget->visit();
+        _gridTarget->visit(renderer, _modelViewTransform, dirty);
     }
     
     int i = 0;
@@ -126,20 +133,20 @@ void NodeGrid::visit()
             auto node = _children.at(i);
 
             if ( node && node->getLocalZOrder() < 0 )
-                node->visit();
+                node->visit(renderer, _modelViewTransform, dirty);
             else
                 break;
         }
         // self draw,currently we have nothing to draw on NodeGrid, so there is no need to add render command
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
-            (*it)->visit();
+            (*it)->visit(renderer, _modelViewTransform, dirty);
         }
     }
     else
     {
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
     }
     
     // reset for next frame

@@ -309,4 +309,12 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class ParticleAutoBatching : public ParticleDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif

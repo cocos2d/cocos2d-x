@@ -91,7 +91,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual void cleanup() override;
@@ -609,7 +609,7 @@ public :
      * @js NA
      * @lua NA
      */
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     /**
      * @js NA
      * @lua NA
@@ -647,7 +647,7 @@ public :
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
 protected:
     TransitionTurnOffTiles();
@@ -680,7 +680,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 protected:
     TransitionSplitCols();
     virtual ~TransitionSplitCols();
@@ -731,7 +731,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 protected:
     TransitionFadeTR();
     virtual ~TransitionFadeTR();
