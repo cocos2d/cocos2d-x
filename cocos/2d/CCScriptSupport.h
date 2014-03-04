@@ -258,16 +258,18 @@ struct TouchesScriptData
     EventTouch::EventCode actionType;
     void* nativeObject;
     const std::vector<Touch*>& touches;
+    Event* event;
     
     // Constructor
     /**
      * @js NA
      * @lua NA
      */
-    TouchesScriptData(EventTouch::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches)
+    TouchesScriptData(EventTouch::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches, Event* evt)
     : actionType(inActionType),
       nativeObject(inNativeObject),
-      touches(inTouches)
+      touches(inTouches),
+      event(evt)
     {
     }
 };
@@ -277,16 +279,18 @@ struct TouchScriptData
     EventTouch::EventCode actionType;
     void* nativeObject;
     Touch* touch;
+    Event* event;
     
     // Constructor
     /**
      * @js NA
      * @lua NA
      */
-    TouchScriptData(EventTouch::EventCode inActionType, void* inNativeObject, Touch* inTouch)
+    TouchScriptData(EventTouch::EventCode inActionType, void* inNativeObject, Touch* inTouch, Event* evt)
     : actionType(inActionType),
       nativeObject(inNativeObject),
-      touch(inTouch)
+      touch(inTouch),
+      event(evt)
     {
     }
 };
