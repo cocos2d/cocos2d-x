@@ -29,7 +29,7 @@ import sys
 from optparse import OptionParser
 
 COCOS_CONSOLE_ROOT = 'COCOS_CONSOLE_ROOT'
-NDK_ROOT = 'NDK_ROOT1'
+NDK_ROOT = 'NDK_ROOT'
 
 
 class SetEnvVar:

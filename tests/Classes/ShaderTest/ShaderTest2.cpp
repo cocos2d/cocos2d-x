@@ -112,7 +112,7 @@ public:
     virtual void initShader();
     void setBackgroundNotification();
 
-    void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     void listenBackToForeground(Ref *obj);
     
 protected:
@@ -176,12 +176,12 @@ void ShaderSprite::initShader()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void ShaderSprite::draw()
+void ShaderSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCommand.init(_globalZOrder);
     _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCommand);
-    
+    renderer->addCommand(&_renderCommand);
+
 }
 
 void ShaderSprite::onDraw()
@@ -212,8 +212,8 @@ void ShaderSprite::onDraw()
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     
-    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }
 
 class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>

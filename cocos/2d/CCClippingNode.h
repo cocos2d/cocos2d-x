@@ -95,7 +95,7 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
-    virtual void visit() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     ClippingNode();

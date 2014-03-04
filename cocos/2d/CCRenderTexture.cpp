@@ -361,7 +361,7 @@ void RenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
-void RenderTexture::visit()
+void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // override visit.
 	// Don't call visit on its children
@@ -370,11 +370,19 @@ void RenderTexture::visit()
         return;
     }
 	
-	kmGLPushMatrix();
-    
-    transform();
-    _sprite->visit();
-    draw();
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
+    _sprite->visit(renderer, _modelViewTransform, dirty);
+    draw(renderer, _modelViewTransform, dirty);
     
 	kmGLPopMatrix();
 
@@ -610,7 +618,7 @@ void RenderTexture::onClearDepth()
     glClearDepth(depthClearValue);
 }
 
-void RenderTexture::draw()
+void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_autoDraw)
     {
@@ -620,7 +628,7 @@ void RenderTexture::draw()
         //clear screen
         _clearCommand.init(_globalZOrder);
         _clearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
-        Director::getInstance()->getRenderer()->addCommand(&_clearCommand);
+        renderer->addCommand(&_clearCommand);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -628,7 +636,7 @@ void RenderTexture::draw()
         for(const auto &child: _children)
         {
             if (child != _sprite)
-                child->visit();
+                child->visit(renderer, transform, transformUpdated);
         }
 
         //End will pop the current render group

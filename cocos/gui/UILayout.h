@@ -230,6 +230,8 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+
     virtual void removeChild(Node* child, bool cleanup = true) override;
     
     /**
@@ -247,9 +249,6 @@ public:
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 
-    
-    virtual void visit();
-    
     virtual void sortAllChildren() override;
     
     void requestDoLayout();
@@ -273,8 +272,8 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit();
-    void scissorClippingVisit();
+    void stencilClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    void scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();

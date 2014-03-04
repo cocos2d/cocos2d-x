@@ -182,7 +182,7 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 
 // implementation of PhysicsDebugNode
 
-void PhysicsDebugNode::draw()
+void PhysicsDebugNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (! _spacePtr)
     {
@@ -192,7 +192,7 @@ void PhysicsDebugNode::draw()
     cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
 	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
-    DrawNode::draw();
+    DrawNode::draw(renderer, transform, transformUpdated);
     DrawNode::clear();
 #endif
 }

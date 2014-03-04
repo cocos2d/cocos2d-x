@@ -187,7 +187,7 @@ bool Layout::hitTest(const Point &pt)
     return false;
 }
     
-void Layout::visit()
+void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (!_enabled)
     {
@@ -198,10 +198,10 @@ void Layout::visit()
         switch (_clippingType)
         {
             case LAYOUT_CLIPPING_STENCIL:
-                stencilClippingVisit();
+                stencilClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
             case LAYOUT_CLIPPING_SCISSOR:
-                scissorClippingVisit();
+                scissorClippingVisit(renderer, parentTransform, parentTransformUpdated);
                 break;
             default:
                 break;
@@ -209,7 +209,7 @@ void Layout::visit()
     }
     else
     {
-        Node::visit();
+        Node::visit(renderer, parentTransform, parentTransformUpdated);
     }
 }
     
@@ -219,17 +219,24 @@ void Layout::sortAllChildren()
     doLayout();
 }
     
-void Layout::stencilClippingVisit()
+void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;
     
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
     kmGLPushMatrix();
-    transform();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     //Add group command
-    
-    Renderer* renderer = Director::getInstance()->getRenderer();
-    
+
     _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
     
@@ -239,7 +246,7 @@ void Layout::stencilClippingVisit()
     _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
-    _clippingStencil->visit();
+    _clippingStencil->visit(renderer, _modelViewTransform, dirty);
     
     _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
@@ -256,19 +263,19 @@ void Layout::stencilClippingVisit()
             auto node = _children.at(i);
             
             if ( node && node->getLocalZOrder() < 0 )
-                node->visit();
+                node->visit(renderer, _modelViewTransform, dirty);
             else
                 break;
         }
         // self draw
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit();
+            (*it)->visit(renderer, _modelViewTransform, dirty);
     }
     else
     {
-        this->draw();
+        this->draw(renderer, _modelViewTransform, dirty);
     }
     
     _afterVisitCmdStencil.init(_globalZOrder);
@@ -353,15 +360,13 @@ void Layout::onAfterVisitScissor()
     glDisable(GL_SCISSOR_TEST);
 }
     
-void Layout::scissorClippingVisit()
+void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
 {
-    Renderer* renderer = Director::getInstance()->getRenderer();
-
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
-    Node::visit();
+    Node::visit(renderer, parentTransform, parentTransformUpdated);
     
     _afterVisitCmdScissor.init(_globalZOrder);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
@@ -574,6 +579,11 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     }
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
+}
+    
+bool Layout::isBackGroundImageScale9Enabled()
+{
+    return _backGroundScale9Enabled;
 }
 
 void Layout::setBackGroundImage(const char* fileName,TextureResType texType)

@@ -99,28 +99,28 @@ Layer *Layer::create()
     }
 }
 
-int Layer::executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch)
+int Layer::executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        TouchScriptData data(eventType, this, touch);
-        ScriptEvent event(kTouchEvent, &data);
-        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        TouchScriptData data(eventType, this, touch, event);
+        ScriptEvent scriptEvent(kTouchEvent, &data);
+        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 #endif
     //can not reach it
     return 0;
 }
 
-int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches)
+int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        TouchesScriptData data(eventType, this, touches);
-        ScriptEvent event(kTouchesEvent, &data);
-        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        TouchesScriptData data(eventType, this, touches, event);
+        ScriptEvent scriptEvent(kTouchesEvent, &data);
+        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 #endif
     return 0;
@@ -325,105 +325,105 @@ void Layer::setKeypadEnabled(bool enabled)
 }
 /// Callbacks
 
-bool Layer::onTouchBegan(Touch *touch, Event *unused_event)
+bool Layer::onTouchBegan(Touch *touch, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, touch) == 0 ? false : true;
+        return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
     }
 #endif
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
     CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
 }
 
-void Layer::onTouchMoved(Touch *touch, Event *unused_event)
+void Layer::onTouchMoved(Touch *touch, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        executeScriptTouchHandler(EventTouch::EventCode::MOVED, touch);
+        executeScriptTouchHandler(EventTouch::EventCode::MOVED, touch, event);
         return;
     }
 #endif
     
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
 }
 
-void Layer::onTouchEnded(Touch *touch, Event *unused_event)
+void Layer::onTouchEnded(Touch *touch, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        executeScriptTouchHandler(EventTouch::EventCode::ENDED, touch);
+        executeScriptTouchHandler(EventTouch::EventCode::ENDED, touch, event);
         return;
     }
 #endif
     
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
 }
 
-void Layer::onTouchCancelled(Touch *touch, Event *unused_event)
+void Layer::onTouchCancelled(Touch *touch, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        executeScriptTouchHandler(EventTouch::EventCode::CANCELLED, touch);
+        executeScriptTouchHandler(EventTouch::EventCode::CANCELLED, touch, event);
         return;
     }
 #endif
     
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
 }    
 
-void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event)
+void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        executeScriptTouchesHandler(EventTouch::EventCode::BEGAN, touches);
+        executeScriptTouchesHandler(EventTouch::EventCode::BEGAN, touches, event);
         return;
     }
 #endif
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
 }
 
-void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event)
+void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        executeScriptTouchesHandler(EventTouch::EventCode::MOVED, touches);
+        executeScriptTouchesHandler(EventTouch::EventCode::MOVED, touches, event);
         return;
     }
 #endif
     
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
 }
 
-void Layer::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
+void Layer::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        executeScriptTouchesHandler(EventTouch::EventCode::ENDED, touches);
+        executeScriptTouchesHandler(EventTouch::EventCode::ENDED, touches, event);
         return;
     }
 #endif
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
 }
 
-void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *unused_event)
+void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeNone != _scriptType)
+    if (kScriptTypeLua == _scriptType)
     {
-        executeScriptTouchesHandler(EventTouch::EventCode::CANCELLED, touches);
+        executeScriptTouchesHandler(EventTouch::EventCode::CANCELLED, touches, event);
         return;
     }
 #endif
-    CC_UNUSED_PARAM(unused_event);
+    CC_UNUSED_PARAM(event);
 }
 
 std::string Layer::getDescription() const
@@ -581,11 +581,11 @@ void LayerColor::updateColor()
     }
 }
 
-void LayerColor::draw()
+void LayerColor::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
     
     for(int i = 0; i < 4; ++i)
     {
