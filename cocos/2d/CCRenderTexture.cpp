@@ -532,9 +532,21 @@ void RenderTexture::onBegin()
             (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
         kmGLMultMatrix(&orthoMatrix);
     }
+    //calculate viewport
+    {
+        Rect viewport;
+        viewport.size.width = _fullviewPort.size.width;
+        viewport.size.height = _fullviewPort.size.height;
+        float viewPortRectWidthRatio = float(viewport.size.width)/_fullRect.size.width;
+        float viewPortRectHeightRatio = float(viewport.size.height)/_fullRect.size.height;
+        viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
+        viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
+        //glViewport(_fullviewPort.origin.x, _fullviewPort.origin.y, (GLsizei)_fullviewPort.size.width, (GLsizei)_fullviewPort.size.height);
+        glViewport(viewport.origin.x, viewport.origin.y, (GLsizei)viewport.size.width, (GLsizei)viewport.size.height);
+    }
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+    
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
