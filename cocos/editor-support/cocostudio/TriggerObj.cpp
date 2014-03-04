@@ -83,12 +83,10 @@ TriggerObj::TriggerObj(void)
 :_id(UINT_MAX)
 ,_enabled(true)
 {
-	_vInt.clear();
 }
 
 TriggerObj::~TriggerObj(void)
 {
-	_vInt.clear();
 }
 
 bool TriggerObj::init()
@@ -112,10 +110,10 @@ TriggerObj* TriggerObj::create()
 
 bool TriggerObj::detect()
 {
-	if (!_enabled || _cons.empty())
-	{
-		return true;
-	}
+    if (!_enabled || _cons.empty())
+    {
+        return true;
+    }
     
     bool ret = true;
 
@@ -129,10 +127,10 @@ bool TriggerObj::detect()
 
 void TriggerObj::done()
 {
-	if (!_enabled || _acts.empty())
-	{
-		return;
-	}
+    if (!_enabled || _acts.empty())
+    {
+        return;
+    }
 
     for (const auto& act : _acts)
     {
@@ -151,14 +149,20 @@ void TriggerObj::removeAll()
     {
         act->removeAll();
     }
+
+    for (const auto& lis : _listeners)
+    {
+        TriggerMng::getInstance()->removeEventListener(lis);
+    }
     
     _cons.clear();
     _acts.clear();
+    _listeners.clear();
 }
 
 void TriggerObj::serialize(const rapidjson::Value &val)
 {
-	_id = (unsigned int)(DICTOOL->getIntValue_json(val, "id"));
+    _id = (unsigned int)(DICTOOL->getIntValue_json(val, "id"));
     int count = DICTOOL->getArrayCount_json(val, "conditions");
     for (int i = 0; i < count; ++i)
     {
@@ -177,56 +181,64 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         
         CCASSERT(con != nullptr, "");
         con->serialize(subDict);
-		con->init();
+        con->init();
         _cons.pushBack(con);
     }
     
-	count = DICTOOL->getArrayCount_json(val, "actions");
-	for (int i = 0; i < count; ++i)
-	{
-		const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(val, "actions", i);
-		const char *classname = DICTOOL->getStringValue_json(subDict, "classname");
-		if (classname == nullptr)
-		{
-			continue;
-		}
-		BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
-		if(act == nullptr)
+    count = DICTOOL->getArrayCount_json(val, "actions");
+    for (int i = 0; i < count; ++i)
+    {
+        const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(val, "actions", i);
+        const char *classname = DICTOOL->getStringValue_json(subDict, "classname");
+        if (classname == nullptr)
+        {
+            continue;
+        }
+        BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
+        if(act == nullptr)
         {
             CCLOG("class %s can not be implemented!", classname);
             CCASSERT(act != nullptr, "");
         }
-		act->serialize(subDict);
-		act->init();
-		_acts.pushBack(act);
-	}
+        act->serialize(subDict);
+        act->init();
+        _acts.pushBack(act);
+    }
 
-	int length = DICTOOL->getArrayCount_json(val, "events");
-	for (int i = 0; i < length; ++i)
-	{
-		const rapidjson::Value &sub = DICTOOL->getSubDictionary_json(val, "events", i);
-		int event = DICTOOL->getIntValue_json(sub, "id");
-		if (event < 0)
-		{
-			continue;
-		}
-		_vInt.push_back(event);
-	}  
+    int length = DICTOOL->getArrayCount_json(val, "events");
+    for (int i = 0; i < length; ++i)
+    {
+        const rapidjson::Value &sub = DICTOOL->getSubDictionary_json(val, "events", i);
+        int event = DICTOOL->getIntValue_json(sub, "id");
+        if (event < 0)
+        {
+            continue;
+        }
+
+        char* buf = new char[10];
+        sprintf(buf, "%d", event);
+        std::string custom_event_name(buf);
+        CC_SAFE_DELETE_ARRAY(buf);
+
+        EventListenerCustom *_listener = EventListenerCustom::create(custom_event_name, [=](EventCustom* event){
+            if (detect())
+            {
+                done();
+            }
+        });
+        _listeners.pushBack(_listener);
+        TriggerMng::getInstance()->addEventListenerWithFixedPriority(_listener, 1);
+    }  
 }
 
 unsigned int TriggerObj::getId()
 {
-	return _id;
+    return _id;
 }
 
 void TriggerObj::setEnabled(bool enabled)
 {
-	_enabled = enabled;
-}
-
-std::vector<int>& TriggerObj::getEvents()
-{
-	return _vInt;
+    _enabled = enabled;
 }
   
 }
