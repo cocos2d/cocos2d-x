@@ -456,7 +456,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     _rend->retain();
     _rend->setKeepMatrix(true);
     Size pixelSize = Director::getInstance()->getWinSizeInPixels();
-    _rend->setVirtualViewPort(Point(size.width/2-150, size.height/2-150),Rect(0,0,size.width,size.height),Rect(0,0,pixelSize.width,pixelSize.height));
+    _rend->setVirtualViewport(Point(size.width/2-150, size.height/2-150),Rect(0,0,size.width,size.height),Rect(0,0,pixelSize.width,pixelSize.height));
     
     _rend->beginWithClear(1, 0, 0, 1);
     sprite1->visit();
