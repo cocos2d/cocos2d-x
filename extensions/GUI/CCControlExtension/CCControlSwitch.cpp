@@ -162,11 +162,11 @@ void CCControlSwitchSprite::draw()
     getShaderProgram()->setUniformsForBuiltins();
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture( GL_TEXTURE_2D, getTexture()->getName());
+    ccGLBindTexture2DN(0,getTexture()->getName());
     glUniform1i(m_uTextureLocation, 0);
 
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture( GL_TEXTURE_2D, m_pMaskTexture->getName() );
+    ccGLBindTexture2DN(1,m_pMaskTexture->getName());
     glUniform1i(m_uMaskLocation, 1);
 
 #define kQuadSize sizeof(m_sQuad.bl)

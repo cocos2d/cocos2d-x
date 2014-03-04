@@ -61,7 +61,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
     
     CCFileUtils::sharedFileUtils()->addSearchPath("res");
-    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/ArmatureComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/AttributeComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/BackgroundComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/EffectComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/LoadSceneEdtiorFileTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/ParticleComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/SpriteComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/TmxMapComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/UIComponentTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/TriggerTest");
     
 #ifdef JS_OBFUSCATED
     ScriptingCore::getInstance()->runScript("game.js");

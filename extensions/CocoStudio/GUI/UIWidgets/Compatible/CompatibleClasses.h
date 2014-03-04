@@ -2,6 +2,8 @@
 #ifndef __COMPATIBLECLASSES_H__
 #define __COMPATIBLECLASSES_H__
 
+#include "cocos2d.h"
+#include "../../BaseClasses/UIWidget.h"
 #include "../UIButton.h"
 #include "../UICheckBox.h"
 #include "../UIImageView.h"

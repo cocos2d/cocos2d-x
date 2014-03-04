@@ -280,6 +280,7 @@
     <ClInclude Include="..\CocoStudio\Armature\utils\CCUtilMath.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComAttribute.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComAudio.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComBase.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComController.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComRender.h" />
     <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h" />

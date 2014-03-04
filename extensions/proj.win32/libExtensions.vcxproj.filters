@@ -856,6 +856,9 @@
     <ClInclude Include="..\CocoStudio\GUI\System\UITouchGroup.h">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocoStudio\Components\CCComBase.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\spine\Animation.h">

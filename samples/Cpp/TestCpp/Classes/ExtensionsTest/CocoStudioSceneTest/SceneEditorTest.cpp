@@ -233,7 +233,7 @@ void LoadSceneEdtiorFileTest::onExit()
 
 cocos2d::CCNode* LoadSceneEdtiorFileTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/loadSceneEdtiorFileTest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.json");
 	if (pNode == NULL)
 	{
 		return NULL;
@@ -662,8 +662,8 @@ void AttributeComponentTest::onEnter()
 	do 
 	{
         CCNode *root = createGameScene();
+        initData();
         CC_BREAK_IF(!root);
-		initData();
         this->addChild(root, 0, 1);
 	} while (0);
 }
@@ -680,7 +680,6 @@ void AttributeComponentTest::onExit()
 bool AttributeComponentTest::initData()
 {
 	bool bRet = false;
-	rapidjson::Document jsonDict;
 	do {
 		CC_BREAK_IF(_node == NULL);
 		CCComAttribute *pAttribute = static_cast<CCComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));

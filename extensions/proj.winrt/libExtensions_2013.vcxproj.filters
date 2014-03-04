@@ -351,9 +351,6 @@
     <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp">
       <Filter>CocoStudio\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp">
-      <Filter>CocoStudio\GUI\BaseClasses</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClCompile>
@@ -402,23 +399,8 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\System\UIInputManager.cpp">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp">
-      <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
@@ -430,9 +412,6 @@
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp">
@@ -468,6 +447,15 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Trigger\TriggerObj.cpp">
       <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\UITouchGroup.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -761,9 +749,6 @@
     <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h">
       <Filter>CocoStudio\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h">
-      <Filter>CocoStudio\GUI\BaseClasses</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h">
       <Filter>CocoStudio\GUI\BaseClasses</Filter>
     </ClInclude>
@@ -812,23 +797,8 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h">
-      <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h">
-      <Filter>CocoStudio\GUI\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h">
-      <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
@@ -840,9 +810,6 @@
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h">
-      <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h">
       <Filter>CocoStudio\GUI\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h">
@@ -908,6 +875,18 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h">
       <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Components\CCComBase.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\System\UITouchGroup.h">
+      <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

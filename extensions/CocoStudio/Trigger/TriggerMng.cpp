@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "TriggerMng.h"
-#include "TriggerObj.h"
 #include "TriggerBase.h"
 #include "../Json/rapidjson/prettywriter.h"
 #include "../Json/rapidjson/filestream.h"
@@ -45,8 +43,9 @@ TriggerMng::TriggerMng(void)
 
 TriggerMng::~TriggerMng(void)
 {
-    CC_SAFE_RELEASE(_eventTriggers);
-	CC_SAFE_RELEASE(_triggerObjs);
+    removeAll();
+    CC_SAFE_DELETE(_eventTriggers);
+	CC_SAFE_RELEASE_NULL(_triggerObjs);
 
 	removeAllArmatureMovementCallBack();
 	CC_SAFE_DELETE(_movementDispatches);
@@ -68,7 +67,6 @@ TriggerMng* TriggerMng::getInstance()
 
 void TriggerMng::destroyInstance()
 {
-    removeAll();
     CC_SAFE_DELETE(_sharedTriggerMng);
 }
 
@@ -177,6 +175,7 @@ void TriggerMng::removeAll(void)
                     triobj->removeAll();
                 }
             }
+            CC_SAFE_RELEASE(pElement->getObject());
             CC_SAFE_DELETE(pElement);
         }
     }
@@ -250,6 +249,7 @@ bool TriggerMng::removeTriggerObj(unsigned int id)
 	{
 		remove(*iter, obj);
 	}
+    _triggerObjs->removeObjectForKey(id);
 	return true;
 }
 

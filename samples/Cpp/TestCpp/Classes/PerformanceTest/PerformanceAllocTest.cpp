@@ -250,11 +250,7 @@ void NodeCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    printf("Size of Node: %u\n", sizeof(CCNode));
-#else
-    printf("Size of Node: %lu\n", sizeof(CCNode));
-#endif
+    printf("Size of Node: %d\n", static_cast<int>(sizeof(CCNode)));
 
     scheduleUpdate();
 }
@@ -302,11 +298,7 @@ void NodeDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    printf("Size of Node: %u\n", sizeof(CCNode));
-#else
-    printf("Size of Node: %lu\n", sizeof(CCNode));
-#endif
+    printf("Size of Node: %d\n", static_cast<int>(sizeof(CCNode)));
 
     scheduleUpdate();
 }
@@ -359,11 +351,7 @@ void SpriteCreateEmptyTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    printf("Size of Node: %u\n", sizeof(CCSprite));
-#else
-    printf("Size of Node: %lu\n", sizeof(CCSprite));
-#endif
+    printf("Size of Node: %d\n", static_cast<int>(sizeof(CCSprite)));
 
     scheduleUpdate();
 }
@@ -413,11 +401,7 @@ void SpriteCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    printf("Size of Node: %u\n", sizeof(CCSprite));
-#else
-    printf("Size of Node: %lu\n", sizeof(CCSprite));
-#endif
+    printf("Size of Node: %d\n", static_cast<int>(sizeof(CCSprite)));
 
     scheduleUpdate();
 }
@@ -467,11 +451,7 @@ void SpriteDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    printf("Size of Node: %u\n", sizeof(CCSprite));
-#else
-    printf("Size of Node: %lu\n", sizeof(CCSprite));
-#endif
+    printf("Size of Node: %d\n", static_cast<int>(sizeof(CCSprite)));
 
     scheduleUpdate();
 }

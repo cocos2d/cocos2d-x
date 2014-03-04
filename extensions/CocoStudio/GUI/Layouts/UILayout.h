@@ -91,12 +91,16 @@ public:
      */
     void setBackGroundImageCapInsets(const CCRect& capInsets);
     
+    const CCRect& getBackGroundImageCapInsets();
+    
     /**
      * Sets Color Type for layout.
      *
      * @param type   @see LayoutBackGroundColorType.
      */
     void setBackGroundColorType(LayoutBackGroundColorType type);
+    
+    LayoutBackGroundColorType getBackGroundColorType();
     
     /**
      * Sets background iamge use scale9 renderer.
@@ -105,12 +109,16 @@ public:
      */
     void setBackGroundImageScale9Enabled(bool enabled);
     
+    bool isBackGroundImageScale9Enabled();
+    
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_SOLID
      *
      * @param color
      */
     void setBackGroundColor(const ccColor3B &color);
+    
+    const ccColor3B& getBackGroundColor();
     
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -121,6 +129,10 @@ public:
      */
     void setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor);
     
+    const ccColor3B& getBackGroundStartColor();
+    
+    const ccColor3B& getBackGroundEndColor();
+    
     /**
      * Sets background opacity layout.
      *
@@ -128,12 +140,16 @@ public:
      */
     void setBackGroundColorOpacity(int opacity);
     
+    int getBackGroundColorOpacity();
+    
     /**
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
      *
      * @param vector
      */
     void setBackGroundColorVector(const CCPoint &vector);
+    
+    const CCPoint& getBackGroundColorVector();
     
     /**
      * Remove the background image of layout.
@@ -157,6 +173,8 @@ public:
     virtual void setClippingEnabled(bool enabled);
     
     void setClippingType(LayoutClippingType type);
+    
+    LayoutClippingType getClippingType();
     
     /**
      * Gets if layout is clipping enabled.
@@ -209,12 +227,24 @@ public:
      */
     virtual void addChild(CCNode* child, int zOrder, int tag);
     
+    virtual void removeChild(CCNode* child);
+    
+    virtual void removeChild(CCNode* widget, bool cleanup);
+    
+    virtual void removeAllChildren();
+    
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    
     virtual void visit();
     
     virtual void sortAllChildren();
     
     void requestDoLayout();
     
+    virtual void onEnter();
+    virtual void onExit();
+    
+    virtual bool hitTest(const CCPoint &pt);
 protected:
     //override "init" method of widget.
     virtual bool init();
@@ -262,6 +292,7 @@ protected:
     CCRect _clippingRect;
     Layout* _clippingParent;
     bool _doLayoutDirty;
+    bool _clippingRectDirty;
 };
     
 }

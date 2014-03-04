@@ -26,7 +26,6 @@
 #define __DICTIONARYHELPER_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
 #include "ExtensionMacros.h"
 #include "rapidjson/document.h"
 

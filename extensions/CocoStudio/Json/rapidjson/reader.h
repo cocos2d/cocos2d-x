@@ -7,7 +7,7 @@
 #include "rapidjson.h"
 #include "internal/pow10.h"
 #include "internal/stack.h"
-#include <csetjmp>
+#include <setjmp.h>
 
 #ifdef RAPIDJSON_SSE42
 #include <nmmintrin.h>

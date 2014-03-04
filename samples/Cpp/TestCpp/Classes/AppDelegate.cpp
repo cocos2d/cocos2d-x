@@ -69,7 +69,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 		searchPaths.push_back("hd/scenetest/AttributeComponentTest");
 		searchPaths.push_back("hd/scenetest/BackgroundComponentTest");
 		searchPaths.push_back("hd/scenetest/EffectComponentTest");
-		searchPaths.push_back("hd/scenetest/loadSceneEdtiorFileTest");
+		searchPaths.push_back("hd/scenetest/LoadSceneEdtiorFileTest");
 		searchPaths.push_back("hd/scenetest/ParticleComponentTest");
 		searchPaths.push_back("hd/scenetest/SpriteComponentTest");
 		searchPaths.push_back("hd/scenetest/TmxMapComponentTest");
@@ -83,7 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 		searchPaths.push_back("scenetest/AttributeComponentTest");
 		searchPaths.push_back("scenetest/BackgroundComponentTest");
 		searchPaths.push_back("scenetest/EffectComponentTest");
-		searchPaths.push_back("scenetest/loadSceneEdtiorFileTest");
+		searchPaths.push_back("scenetest/LoadSceneEdtiorFileTest");
 		searchPaths.push_back("scenetest/ParticleComponentTest");
 		searchPaths.push_back("scenetest/SpriteComponentTest");
 		searchPaths.push_back("scenetest/TmxMapComponentTest");

@@ -122,6 +122,10 @@ CCNode::~CCNode(void)
     CC_SAFE_RELEASE(m_pShaderProgram);
     CC_SAFE_RELEASE(m_pUserObject);
 
+    // m_pComsContainer
+    m_pComponentContainer->removeAll();
+    CC_SAFE_DELETE(m_pComponentContainer);
+
     if(m_pChildren && m_pChildren->count() > 0)
     {
         CCObject* child;
@@ -137,10 +141,6 @@ CCNode::~CCNode(void)
 
     // children
     CC_SAFE_RELEASE(m_pChildren);
-    
-          // m_pComsContainer
-    m_pComponentContainer->removeAll();
-    CC_SAFE_DELETE(m_pComponentContainer);
 }
 
 bool CCNode::init()
@@ -910,16 +910,30 @@ void CCNode::transform()
 
 void CCNode::onEnter()
 {
+    //fix setTouchEnabled not take effect when called the function in onEnter in JSBinding.
+    m_bRunning = true;
+
     if (m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnter);
     }
-    
-    arrayMakeObjectsPerformSelector(m_pChildren, onEnter, CCNode*);
 
-    this->resumeSchedulerAndActions();
+    //Judge the running state for prevent called onEnter method more than once,it's possible that this function called by addChild  
+    if (m_pChildren && m_pChildren->count() > 0)
+    {
+        CCObject* child;
+        CCNode* node;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            node = (CCNode*)child;
+            if (!node->isRunning())
+            {
+                node->onEnter();
+            }            
+        }
+    }
 
-    m_bRunning = true;
+    this->resumeSchedulerAndActions();   
 }
 
 void CCNode::onEnterTransitionDidFinish()
@@ -1298,6 +1312,11 @@ bool CCNode::addComponent(CCComponent *pComponent)
 bool CCNode::removeComponent(const char *pName)
 {
     return m_pComponentContainer->remove(pName);
+}
+
+bool CCNode::removeComponent(CCComponent *pComponent)
+{
+    return m_pComponentContainer->remove(pComponent);
 }
 
 void CCNode::removeAllComponents()

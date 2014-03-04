@@ -180,6 +180,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
         {
             ret = kLanguageSpanish;
         }
+        else if (wcscmp(primary, L"nl") == 0)
+        {
+            ret = kLanguageDutch;
+        }
         else if (wcscmp(primary, L"ru") == 0)
         {
             ret = kLanguageRussian;

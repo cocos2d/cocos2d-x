@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on 01/02/14 14:07:29.
+** Generated automatically by tolua++-1.0.92 on Tue Feb 18 17:35:01 2014.
 */
 
 /****************************************************************************
@@ -8262,39 +8262,6 @@ static int tolua_CocoStudio_Widget_onTouchCancelled00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: onTouchLongClicked of class  Widget */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_onTouchLongClicked00
-static int tolua_CocoStudio_Widget_onTouchLongClicked00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Widget",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Widget* self = (Widget*)  tolua_tousertype(tolua_S,1,0);
-  const CCPoint* touchPoint = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'onTouchLongClicked'", NULL);
-#endif
-  {
-   self->onTouchLongClicked(*touchPoint);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'onTouchLongClicked'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: setLayoutParameter of class  Widget */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_setLayoutParameter00
 static int tolua_CocoStudio_Widget_setLayoutParameter00(lua_State* tolua_S)
@@ -8498,71 +8465,6 @@ static int tolua_CocoStudio_Widget_getVirtualRenderer00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getVirtualRenderer'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setUpdateEnabled of class  Widget */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_setUpdateEnabled00
-static int tolua_CocoStudio_Widget_setUpdateEnabled00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Widget",0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Widget* self = (Widget*)  tolua_tousertype(tolua_S,1,0);
-  bool enable = ((bool)  tolua_toboolean(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUpdateEnabled'", NULL);
-#endif
-  {
-   self->setUpdateEnabled(enable);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setUpdateEnabled'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: isUpdateEnabled of class  Widget */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_isUpdateEnabled00
-static int tolua_CocoStudio_Widget_isUpdateEnabled00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Widget",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Widget* self = (Widget*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isUpdateEnabled'", NULL);
-#endif
-  {
-   bool tolua_ret = (bool)  self->isUpdateEnabled();
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'isUpdateEnabled'.",&tolua_err);
  return 0;
 #endif
 }
@@ -14852,69 +14754,6 @@ static int tolua_CocoStudio_TextField_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: init of class  TextField */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_TextField_init00
-static int tolua_CocoStudio_TextField_init00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"TextField",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  TextField* self = (TextField*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
-#endif
-  {
-   bool tolua_ret = (bool)  self->init();
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: initRenderer of class  TextField */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_TextField_initRenderer00
-static int tolua_CocoStudio_TextField_initRenderer00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"TextField",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  TextField* self = (TextField*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initRenderer'", NULL);
-#endif
-  {
-   self->initRenderer();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'initRenderer'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: setTouchSize of class  TextField */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_TextField_setTouchSize00
 static int tolua_CocoStudio_TextField_setTouchSize00(lua_State* tolua_S)
@@ -17208,39 +17047,6 @@ static int tolua_CocoStudio_ScrollView_getChildByName00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getChildByName'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: onTouchLongClicked of class  ScrollView */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_ScrollView_onTouchLongClicked00
-static int tolua_CocoStudio_ScrollView_onTouchLongClicked00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"ScrollView",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCPoint",0,&tolua_err)) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
-  const CCPoint* touchPoint = ((const CCPoint*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'onTouchLongClicked'", NULL);
-#endif
-  {
-   self->onTouchLongClicked(*touchPoint);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'onTouchLongClicked'.",&tolua_err);
  return 0;
 #endif
 }
@@ -20733,6 +20539,32 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: playBackgroundMusic of class  CCComAudio */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCComAudio_playBackgroundMusic02
+static int tolua_CocoStudio_CCComAudio_playBackgroundMusic02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCComAudio",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCComAudio* self = (CCComAudio*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playBackgroundMusic'", NULL);
+#endif
+  {
+   self->playBackgroundMusic();
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_CocoStudio_CCComAudio_playBackgroundMusic01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: stopBackgroundMusic of class  CCComAudio */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_CCComAudio_stopBackgroundMusic00
 static int tolua_CocoStudio_CCComAudio_stopBackgroundMusic00(lua_State* tolua_S)
@@ -21141,6 +20973,33 @@ static int tolua_CocoStudio_CCComAudio_playEffect01(lua_State* tolua_S)
  return 1;
 tolua_lerror:
  return tolua_CocoStudio_CCComAudio_playEffect00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: playEffect of class  CCComAudio */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCComAudio_playEffect02
+static int tolua_CocoStudio_CCComAudio_playEffect02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCComAudio",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCComAudio* self = (CCComAudio*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playEffect'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->playEffect();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_CocoStudio_CCComAudio_playEffect01(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -22089,9 +21948,9 @@ static int tolua_CocoStudio_ActionManager_shareManager00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: purgeActionManager of class  ActionManager */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionManager_purgeActionManager00
-static int tolua_CocoStudio_ActionManager_purgeActionManager00(lua_State* tolua_S)
+/* method: purge of class  ActionManager */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_ActionManager_purge00
+static int tolua_CocoStudio_ActionManager_purge00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -22110,7 +21969,7 @@ static int tolua_CocoStudio_ActionManager_purgeActionManager00(lua_State* tolua_
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'purgeActionManager'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'purge'.",&tolua_err);
  return 0;
 #endif
 }
@@ -22337,9 +22196,9 @@ static int tolua_CocoStudio_SceneReader_sharedSceneReader00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: purgeSceneReader of class  SceneReader */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_SceneReader_purgeSceneReader00
-static int tolua_CocoStudio_SceneReader_purgeSceneReader00(lua_State* tolua_S)
+/* method: purge of class  SceneReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_SceneReader_purge00
+static int tolua_CocoStudio_SceneReader_purge00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -22353,7 +22212,7 @@ static int tolua_CocoStudio_SceneReader_purgeSceneReader00(lua_State* tolua_S)
  {
   SceneReader* self = (SceneReader*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purgeSceneReader'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purge'", NULL);
 #endif
   {
    self->purge();
@@ -22362,7 +22221,7 @@ static int tolua_CocoStudio_SceneReader_purgeSceneReader00(lua_State* tolua_S)
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'purgeSceneReader'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'purge'.",&tolua_err);
  return 0;
 #endif
 }
@@ -22584,9 +22443,9 @@ static int tolua_CocoStudio_GUIReader_shareReader00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: purgeGUIReader of class  GUIReader */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_GUIReader_purgeGUIReader00
-static int tolua_CocoStudio_GUIReader_purgeGUIReader00(lua_State* tolua_S)
+/* method: purge of class  GUIReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_GUIReader_purge00
+static int tolua_CocoStudio_GUIReader_purge00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -22605,7 +22464,7 @@ static int tolua_CocoStudio_GUIReader_purgeGUIReader00(lua_State* tolua_S)
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'purgeGUIReader'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'purge'.",&tolua_err);
  return 0;
 #endif
 }
@@ -23628,15 +23487,12 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"onTouchMoved",tolua_CocoStudio_Widget_onTouchMoved00);
    tolua_function(tolua_S,"onTouchEnded",tolua_CocoStudio_Widget_onTouchEnded00);
    tolua_function(tolua_S,"onTouchCancelled",tolua_CocoStudio_Widget_onTouchCancelled00);
-   tolua_function(tolua_S,"onTouchLongClicked",tolua_CocoStudio_Widget_onTouchLongClicked00);
    tolua_function(tolua_S,"setLayoutParameter",tolua_CocoStudio_Widget_setLayoutParameter00);
    tolua_function(tolua_S,"getLayoutParameter",tolua_CocoStudio_Widget_getLayoutParameter00);
    tolua_function(tolua_S,"ignoreContentAdaptWithSize",tolua_CocoStudio_Widget_ignoreContentAdaptWithSize00);
    tolua_function(tolua_S,"isIgnoreContentAdaptWithSize",tolua_CocoStudio_Widget_isIgnoreContentAdaptWithSize00);
    tolua_function(tolua_S,"getWorldPosition",tolua_CocoStudio_Widget_getWorldPosition00);
    tolua_function(tolua_S,"getVirtualRenderer",tolua_CocoStudio_Widget_getVirtualRenderer00);
-   tolua_function(tolua_S,"setUpdateEnabled",tolua_CocoStudio_Widget_setUpdateEnabled00);
-   tolua_function(tolua_S,"isUpdateEnabled",tolua_CocoStudio_Widget_isUpdateEnabled00);
    tolua_function(tolua_S,"getContentSize",tolua_CocoStudio_Widget_getContentSize00);
    tolua_function(tolua_S,"getDescription",tolua_CocoStudio_Widget_getDescription00);
    tolua_function(tolua_S,"clone",tolua_CocoStudio_Widget_clone00);
@@ -23929,8 +23785,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,".call",tolua_CocoStudio_TextField_new00_local);
    tolua_function(tolua_S,"delete",tolua_CocoStudio_TextField_delete00);
    tolua_function(tolua_S,"create",tolua_CocoStudio_TextField_create00);
-   tolua_function(tolua_S,"init",tolua_CocoStudio_TextField_init00);
-   tolua_function(tolua_S,"initRenderer",tolua_CocoStudio_TextField_initRenderer00);
    tolua_function(tolua_S,"setTouchSize",tolua_CocoStudio_TextField_setTouchSize00);
    tolua_function(tolua_S,"setText",tolua_CocoStudio_TextField_setText00);
    tolua_function(tolua_S,"setPlaceHolder",tolua_CocoStudio_TextField_setPlaceHolder00);
@@ -24022,7 +23876,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getChildrenCount",tolua_CocoStudio_ScrollView_getChildrenCount00);
    tolua_function(tolua_S,"getChildByTag",tolua_CocoStudio_ScrollView_getChildByTag00);
    tolua_function(tolua_S,"getChildByName",tolua_CocoStudio_ScrollView_getChildByName00);
-   tolua_function(tolua_S,"onTouchLongClicked",tolua_CocoStudio_ScrollView_onTouchLongClicked00);
    tolua_function(tolua_S,"update",tolua_CocoStudio_ScrollView_update00);
    tolua_function(tolua_S,"setBounceEnabled",tolua_CocoStudio_ScrollView_setBounceEnabled00);
    tolua_function(tolua_S,"isBounceEnabled",tolua_CocoStudio_ScrollView_isBounceEnabled00);
@@ -24234,6 +24087,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"preloadBackgroundMusic",tolua_CocoStudio_CCComAudio_preloadBackgroundMusic00);
    tolua_function(tolua_S,"playBackgroundMusic",tolua_CocoStudio_CCComAudio_playBackgroundMusic00);
    tolua_function(tolua_S,"playBackgroundMusic",tolua_CocoStudio_CCComAudio_playBackgroundMusic01);
+   tolua_function(tolua_S,"playBackgroundMusic",tolua_CocoStudio_CCComAudio_playBackgroundMusic02);
    tolua_function(tolua_S,"stopBackgroundMusic",tolua_CocoStudio_CCComAudio_stopBackgroundMusic00);
    tolua_function(tolua_S,"stopBackgroundMusic",tolua_CocoStudio_CCComAudio_stopBackgroundMusic01);
    tolua_function(tolua_S,"pauseBackgroundMusic",tolua_CocoStudio_CCComAudio_pauseBackgroundMusic00);
@@ -24247,6 +24101,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setEffectsVolume",tolua_CocoStudio_CCComAudio_setEffectsVolume00);
    tolua_function(tolua_S,"playEffect",tolua_CocoStudio_CCComAudio_playEffect00);
    tolua_function(tolua_S,"playEffect",tolua_CocoStudio_CCComAudio_playEffect01);
+   tolua_function(tolua_S,"playEffect",tolua_CocoStudio_CCComAudio_playEffect02);
    tolua_function(tolua_S,"pauseEffect",tolua_CocoStudio_CCComAudio_pauseEffect00);
    tolua_function(tolua_S,"pauseAllEffects",tolua_CocoStudio_CCComAudio_pauseAllEffects00);
    tolua_function(tolua_S,"resumeEffect",tolua_CocoStudio_CCComAudio_resumeEffect00);
@@ -24290,7 +24145,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,".call",tolua_CocoStudio_ActionManager_new00_local);
    tolua_function(tolua_S,"delete",tolua_CocoStudio_ActionManager_delete00);
    tolua_function(tolua_S,"shareManager",tolua_CocoStudio_ActionManager_shareManager00);
-   tolua_function(tolua_S,"purgeActionManager",tolua_CocoStudio_ActionManager_purgeActionManager00);
+   tolua_function(tolua_S,"purge",tolua_CocoStudio_ActionManager_purge00);
    tolua_function(tolua_S,"getActionByName",tolua_CocoStudio_ActionManager_getActionByName00);
    tolua_function(tolua_S,"playActionByName",tolua_CocoStudio_ActionManager_playActionByName00);
    tolua_function(tolua_S,"releaseActions",tolua_CocoStudio_ActionManager_releaseActions00);
@@ -24306,7 +24161,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,".call",tolua_CocoStudio_SceneReader_new00_local);
    tolua_function(tolua_S,"delete",tolua_CocoStudio_SceneReader_delete00);
    tolua_function(tolua_S,"sharedSceneReader",tolua_CocoStudio_SceneReader_sharedSceneReader00);
-   tolua_function(tolua_S,"purgeSceneReader",tolua_CocoStudio_SceneReader_purgeSceneReader00);
+   tolua_function(tolua_S,"purge",tolua_CocoStudio_SceneReader_purge00);
    tolua_function(tolua_S,"sceneReaderVersion",tolua_CocoStudio_SceneReader_sceneReaderVersion00);
    tolua_function(tolua_S,"createNodeWithSceneFile",tolua_CocoStudio_SceneReader_createNodeWithSceneFile00);
    tolua_function(tolua_S,"getNodeByTag",tolua_CocoStudio_SceneReader_getNodeByTag00);
@@ -24322,7 +24177,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,".call",tolua_CocoStudio_GUIReader_new00_local);
    tolua_function(tolua_S,"delete",tolua_CocoStudio_GUIReader_delete00);
    tolua_function(tolua_S,"shareReader",tolua_CocoStudio_GUIReader_shareReader00);
-   tolua_function(tolua_S,"purgeGUIReader",tolua_CocoStudio_GUIReader_purgeGUIReader00);
+   tolua_function(tolua_S,"purge",tolua_CocoStudio_GUIReader_purge00);
    tolua_function(tolua_S,"widgetFromJsonFile",tolua_CocoStudio_GUIReader_widgetFromJsonFile00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus

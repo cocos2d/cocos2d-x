@@ -275,13 +275,15 @@ public:
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
     
+    virtual void removeChild(CCNode* child);
+    
     /**
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      *
      * @param child     The child node which will be removed.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChild(CCNode* child, bool cleanup = true);
+    virtual void removeChild(CCNode* child, bool cleanup);
     
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
@@ -289,7 +291,7 @@ public:
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+    virtual void removeChildByTag(int tag, bool cleanup);
     /**
      * Removes all children from the container with a cleanup.
      *
@@ -551,13 +553,6 @@ public:
     virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
     /**
-     * A call back function called when widget is selected, and on touch long clicked.
-     *
-     * @param touch point
-     */
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
-    
-    /**
      * Sets a LayoutParameter to widget. 
      *
      * @see LayoutParameter
@@ -610,16 +605,6 @@ public:
     virtual CCNode* getVirtualRenderer();
     
     /**
-     * Schedules the "update" method.
-     */
-    void setUpdateEnabled(bool enable);
-    
-    /**
-     * is the "update" method scheduled.
-     */
-    bool isUpdateEnabled();
-    
-    /**
      * Gets the content size of widget.
      *
      * Content size is widget's texture size.
@@ -663,7 +648,6 @@ protected:
     void moveEvent();
     void releaseUpEvent();
     void cancelUpEvent();
-    void longClickEvent();
     void updateAnchorPoint();
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
@@ -677,7 +661,6 @@ protected:
     bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
-    bool _updateEnabled;      ///< is "update" method scheduled
     CCPoint _touchStartPos;    ///< touch began point
     CCPoint _touchMovePos;     ///< touch moved point
     CCPoint _touchEndPos;      ///< touch ended point

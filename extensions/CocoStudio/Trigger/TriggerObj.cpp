@@ -21,7 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #include "TriggerObj.h"
+#include "ObjectFactory.h"
 
 NS_CC_EXT_BEGIN
 
@@ -89,6 +91,8 @@ TriggerObj::TriggerObj(void)
 TriggerObj::~TriggerObj(void)
 {
 	_vInt.clear();
+    CC_SAFE_RELEASE_NULL(_cons);
+    CC_SAFE_RELEASE_NULL(_acts);
 }
 
 bool TriggerObj::init()

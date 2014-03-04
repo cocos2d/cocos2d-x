@@ -25,8 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "CCComBase.h"
 
 NS_CC_EXT_BEGIN
 /**
@@ -34,6 +33,7 @@ NS_CC_EXT_BEGIN
  */
 class CCComAudio : public cocos2d::CCComponent
 {
+	DECLARE_CLASS_COMPONENT_INFO
 protected:
     CCComAudio(void);
     virtual ~CCComAudio(void);
@@ -44,6 +44,7 @@ public:
    virtual void onExit();
    virtual bool isEnabled() const;
    virtual void setEnabled(bool b);
+   virtual bool serialize(void* r);
 
    static CCComAudio* create(void);
    

@@ -130,12 +130,10 @@ files
     ["CocoStudio/Json/rapidjson"]
     ("../CocoStudio/Json/rapidjson")
     "*.h"
-    "*.cpp"
 	
 	 ["CocoStudio/Json/rapidjson/internal"]
     ("../CocoStudio/Json/rapidjson/internal")
     "*.h"
-    "*.cpp"
 
 	["CocoStudio/Reader"]
     ("../CocoStudio/Reader")

@@ -26,9 +26,10 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+IMPLEMENT_CLASS_COMPONENT_INFO(CCComController)
 CCComController::CCComController(void)
 {
-    m_strName = "Constoller";
+    m_strName = "CCComController";
 }
 
 CCComController::~CCComController(void)

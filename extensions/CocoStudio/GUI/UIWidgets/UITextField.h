@@ -107,13 +107,15 @@ public:
     TextField();
     virtual ~TextField();
     static TextField* create();
-    virtual bool init();
-    virtual void initRenderer();
     void setTouchSize(const CCSize &size);
+    CCSize getTouchSize();
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
+    const char* getPlaceHolder();
     void setFontSize(int size);
+    int getFontSize();
     void setFontName(const std::string& name);
+    const char* getFontName();
     virtual void didNotSelectSelf();
     const char* getStringValue();
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
@@ -124,6 +126,7 @@ public:
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);
+    const char* getPasswordStyleText();
     virtual void update(float dt);
     bool getAttachWithIME();
     void setAttachWithIME(bool attach);
@@ -145,7 +148,9 @@ public:
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
     void attachWithIME();
+    virtual void onEnter();
 protected:
+    virtual void initRenderer();
     // event
     void attachWithIMEEvent();
     void detachWithIMEEvent();

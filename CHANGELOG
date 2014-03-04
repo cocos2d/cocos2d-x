@@ -1,4 +1,27 @@
-cocos2d-x-2.2.2 ???
+cocos2d-x-2.2.3 @?.? ????
+[All]
+     [NEW]    Adds Dutch Language support.
+     [FIX]    CocoStudio: SceneTest crash after switching to another scene.
+
+[Android]
+     [FIX]    Screen would be flickering when switching to a new activity.
+
+[WP8 | WinRT]
+     [FIX]    Added Lua bindings support for Wp8 and WinRT.
+     [FIX]    Added CCEditBox support for wp8.
+     [FIX]    Used the correct resolution policy in CCEGLView::UpdateWindowSize.
+
+[JSBindings]
+     [NEW]    Added 'setTimeout' and 'setInterval' for JSB.
+
+[Emscripten]
+     [NEW]    Added emscripten support for Windows Host.
+
+[LuaBindings]
+     [NEW]    Added more test cases for CocoStuidoTest/SceneTest.
+     [FIX]    CCComponent class wasn't exposed to LUA.
+
+cocos2d-x-2.2.2 @Jan.07 2014
 [Windows8 & WinPhone8]
      [FIX]    Updated WinRT and WP8 to pass App Certification tests
      [FIX]    Updated to latest version of ANGLE
@@ -8,7 +31,7 @@ cocos2d-x-2.2.2 ???
      [FIX]    A memory leak fix when loading JSC(JS bytecode) file.
      [NEW]    WP8 XAML support
      [FIX]    cc.BuilderReader.load( path, null, parentSize ); was not allowed.
-     [NEW]    support libcurl
+     [FIX]    Fixes the font rendering on Windows
 
 cocos2d-x-2.2.1 @Nov.19 2013
 [All platforms]

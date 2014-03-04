@@ -122,7 +122,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
-SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl
+SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl -lpthread
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk
@@ -137,7 +137,6 @@ INCLUDES +=	 -I../ \
 	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
 
 STATICLIBS += \
-	$(STATICLIBS_DIR)/libcurl.a \
 	$(LIB_DIR)/libextension.a \
 	$(LIB_DIR)/libbox2d.a \
 	$(LIB_DIR)/libchipmunk.a
@@ -145,7 +144,7 @@ STATICLIBS += \
 ####### Build rules
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
+	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(STATICLIBS) $(SHAREDLIBS) $(LIBS) 
 
 ####### Compile
 $(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
