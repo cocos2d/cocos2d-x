@@ -37,6 +37,9 @@ namespace ui {
 */    
 class TextBMFont : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor

@@ -29,6 +29,8 @@ NS_CC_BEGIN
 namespace ui {
     
 static const int LABELATLAS_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(TextAtlas)
 
 TextAtlas::TextAtlas():
 _labelAtlasRenderer(nullptr),

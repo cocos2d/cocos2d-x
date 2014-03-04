@@ -34,6 +34,8 @@ static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
     
+IMPLEMENT_CLASS_GUI_INFO(Button)
+    
 Button::Button():
 _buttonNormalRenderer(nullptr),
 _buttonClickedRenderer(nullptr),

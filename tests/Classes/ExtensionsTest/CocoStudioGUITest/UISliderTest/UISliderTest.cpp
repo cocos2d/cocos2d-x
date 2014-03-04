@@ -22,7 +22,7 @@ bool UISliderTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the slider alert will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move the slider thumb");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -31,7 +31,7 @@ bool UISliderTest::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Slider");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -45,15 +45,15 @@ bool UISliderTest::init()
         slider->loadBarTexture("cocosgui/sliderTrack.png");
         slider->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
         slider->loadProgressBarTexture("cocosgui/sliderProgress.png");
-        slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + slider->getSize().height * 2.0f));
+        slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest::sliderEvent));
         _uiLayer->addChild(slider);
-        
+
         /*
         // Create the slider that set allow min progress and allow max progress
         Slider* sliderAllow = Slider::create();
-        sliderAllow->setMinAllowPercent(20);
-        sliderAllow->setMaxAllowPercent(80);
+//        sliderAllow->setMinAllowPercent(20);
+//        sliderAllow->setMaxAllowPercent(80);
         sliderAllow->setTouchEnabled(true);
         sliderAllow->loadBarTexture("cocosgui/sliderTrack.png");
         sliderAllow->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
@@ -97,7 +97,7 @@ bool UISliderTest_Scale9::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the slider alert will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move the slider thumb");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -106,7 +106,7 @@ bool UISliderTest_Scale9::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text *alert = ui::Text::create();
+        Text *alert = Text::create();
         alert->setText("Slider scale9 render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -122,16 +122,16 @@ bool UISliderTest_Scale9::init()
         slider->loadProgressBarTexture("cocosgui/slider_bar_active_9patch.png");
         slider->setScale9Enabled(true);
         slider->setCapInsets(Rect(0, 0, 0, 0));
-        slider->setSize(Size(250.0f, 10.0f / Director::getInstance()->getContentScaleFactor()));
-        slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + slider->getSize().height * 3.0f));
+        slider->setSize(Size(250.0f, 19));
+        slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Scale9::sliderEvent));
         _uiLayer->addChild(slider);
         
         /*
         // Create the slider that set allow min progress and allow max progress
         Slider* sliderAllow = Slider::create();
-        sliderAllow->setMinAllowPercent(20);
-        sliderAllow->setMaxAllowPercent(80);
+//        sliderAllow->setMinAllowPercent(20);
+//        sliderAllow->setMaxAllowPercent(80);
         sliderAllow->setTouchEnabled(true);
         sliderAllow->loadBarTexture("cocosgui/sliderTrack2.png");
         sliderAllow->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");

@@ -34,6 +34,8 @@ namespace ui {
 #define STATIC_CAST_SCALE9SPRITE static_cast<extension::Scale9Sprite*>(_imageRenderer)
     
 static const int IMAGE_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(ImageView)
 
 ImageView::ImageView():
 _scale9Enabled(false),

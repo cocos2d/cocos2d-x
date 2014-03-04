@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "gui/UILayoutDefine.h"
 #include "gui/UILayoutParameter.h"
+#include "gui/GUIDefine.h"
 
 NS_CC_BEGIN
 
