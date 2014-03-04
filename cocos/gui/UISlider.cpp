@@ -216,6 +216,11 @@ void Slider::setScale9Enabled(bool able)
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
     setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
 }
+    
+bool Slider::isScale9Enabled()
+{
+    return _scale9Enabled;
+}
 
 void Slider::ignoreContentAdaptWithSize(bool ignore)
 {
@@ -241,6 +246,11 @@ void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
     }
     static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
+    
+const Rect& Slider::getCapInsetsBarRenderer()
+{
+    return _capInsetsBarRenderer;
+}
 
 void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
 {
@@ -250,6 +260,11 @@ void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
         return;
     }
     static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setCapInsets(capInsets);
+}
+    
+const Rect& Slider::getCapInsetsProgressBarRebderer()
+{
+    return _capInsetsProgressBarRenderer;
 }
 
 void Slider::loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)

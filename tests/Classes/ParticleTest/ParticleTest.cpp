@@ -27,7 +27,7 @@ void DemoFirework::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoFirework::title() const
+std::string DemoFirework::subtitle() const
 {
     return "ParticleFireworks";
 }
@@ -53,7 +53,7 @@ void DemoFire::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoFire::title() const
+std::string DemoFire::subtitle() const
 {
     return "ParticleFire";
 }
@@ -76,7 +76,7 @@ void DemoSun::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSun::title() const
+std::string DemoSun::subtitle() const
 {
     return "ParticleSun";
 }
@@ -99,7 +99,7 @@ void DemoGalaxy::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoGalaxy::title() const
+std::string DemoGalaxy::subtitle() const
 {
     return "ParticleGalaxy";
 }
@@ -121,7 +121,7 @@ void DemoFlower::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoFlower::title() const
+std::string DemoFlower::subtitle() const
 {
     return "ParticleFlower";
 }
@@ -204,7 +204,7 @@ void DemoBigFlower::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoBigFlower::title() const
+std::string DemoBigFlower::subtitle() const
 {
     return "ParticleBigFlower";
 }
@@ -288,7 +288,7 @@ void DemoRotFlower::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoRotFlower::title() const
+std::string DemoRotFlower::subtitle() const
 {
     return "ParticleRotFlower";
 }
@@ -311,7 +311,7 @@ void DemoMeteor::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoMeteor::title() const
+std::string DemoMeteor::subtitle() const
 {
     return "ParticleMeteor";
 }
@@ -334,7 +334,7 @@ void DemoSpiral::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSpiral::title() const
+std::string DemoSpiral::subtitle() const
 {
     return "ParticleSpiral";
 }
@@ -359,7 +359,7 @@ void DemoExplosion::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoExplosion::title() const
+std::string DemoExplosion::subtitle() const
 {
     return "ParticleExplosion";
 }
@@ -384,7 +384,7 @@ void DemoSmoke::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSmoke::title() const
+std::string DemoSmoke::subtitle() const
 {
     return "ParticleSmoke";
 }
@@ -432,7 +432,7 @@ void DemoSnow::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSnow::title() const
+std::string DemoSnow::subtitle() const
 {
     return "ParticleSnow";
 }
@@ -459,7 +459,7 @@ void DemoRain::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoRain::title() const
+std::string DemoRain::subtitle() const
 {
     return "ParticleRain";
 }
@@ -544,7 +544,7 @@ void DemoModernArt::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoModernArt::title() const
+std::string DemoModernArt::subtitle() const
 {
     return "Varying size";
 }
@@ -573,7 +573,7 @@ void DemoRing::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoRing::title() const
+std::string DemoRing::subtitle() const
 {
     return "Ring Demo";
 }
@@ -616,7 +616,7 @@ void ParallaxParticle::onEnter()
     p->runAction(RepeatForever::create(seq));
 }
 
-std::string ParallaxParticle::title() const
+std::string ParallaxParticle::subtitle() const
 {
     return "Parallax + Particles";
 }
@@ -700,7 +700,7 @@ void RadiusMode1::onEnter()
     _emitter->setBlendAdditive(false);
 }
 
-std::string RadiusMode1::title() const
+std::string RadiusMode1::subtitle() const
 {
     return "Radius Mode: Spiral";
 }
@@ -784,7 +784,7 @@ void RadiusMode2::onEnter()
     _emitter->setBlendAdditive(false);
 }
 
-std::string RadiusMode2::title() const
+std::string RadiusMode2::subtitle() const
 {
     return "Radius Mode: Semi Circle";
 }
@@ -958,8 +958,6 @@ enum
 
 static int sceneIdx = -1;
 
-#define MAX_LAYER    45
-
 Layer* createParticleLayer(int nIndex)
 {
     switch(nIndex)
@@ -1010,12 +1008,14 @@ Layer* createParticleLayer(int nIndex)
         case 42: return new PremultipliedAlphaTest();
         case 43: return new PremultipliedAlphaTest2();
         case 44: return new Issue3990();
+        case 45: return new ParticleAutoBatching();
         default:
             break;
     }
 
     return NULL;
 }
+#define MAX_LAYER    46
 
 
 Layer* nextParticleAction()
@@ -1106,7 +1106,7 @@ void ParticleDemo::onEnter(void)
 
 std::string ParticleDemo::title() const
 {
-    return "No title";
+    return "Particle Demo";
 }
 
 std::string ParticleDemo::subtitle() const
@@ -1922,6 +1922,40 @@ std::string Issue3990::subtitle() const
     return "Show '998' or '999' at bottom right side";
 }
 
+
+//
+// ParticleAutoBatching
+//
+void ParticleAutoBatching::onEnter()
+{
+    ParticleDemo::onEnter();
+
+	_color->setColor(Color3B::BLACK);
+    this->removeChild(_background, true);
+    _background = NULL;
+
+    Size s = Director::getInstance()->getWinSize();
+
+    for(int i=0; i<10; i++) {
+        auto particle = ParticleSystemQuad::create("Particles/SmallSun.plist");
+        particle->setTotalParticles(100);
+        particle->setPosition(Point(i*s.width/11, s.height/2));
+        this->addChild(particle ,10);
+    }
+}
+
+std::string ParticleAutoBatching::title() const
+{
+    return "AutoBatching";
+}
+
+std::string ParticleAutoBatching::subtitle() const
+{
+    return "All 10 particles should be drawin in one batch";
+}
+
+//
+// main
 //
 void ParticleTestScene::runThisTest()
 {

@@ -42,7 +42,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class Timer;
+class TimerScriptHandler;
 class Layer;
 class MenuItem;
 class CallFunc;
@@ -108,7 +108,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Timer* getTimer(void) {
+    TimerScriptHandler* getTimer(void) {
         return _timer;
     }
     /**
@@ -143,7 +143,7 @@ private:
     }
     bool init(float interval, bool paused);
     
-    cocos2d::Timer*   _timer;
+    TimerScriptHandler*   _timer;
     bool                _paused;
     bool                _markedForDeletion;
 };

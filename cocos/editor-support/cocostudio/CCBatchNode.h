@@ -56,15 +56,8 @@ public:
     virtual void addChild(cocos2d::Node *pChild, int zOrder) override;
     virtual void addChild(cocos2d::Node *pChild, int zOrder, int tag) override;
     virtual void removeChild(cocos2d::Node* child, bool cleanup) override;
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    virtual void visit() override;
-    /**
-     *  @js NA
-     */
-    void draw() override;
+    virtual void visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     
 protected:
     void generateGroupCommand();

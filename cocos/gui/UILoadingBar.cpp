@@ -196,6 +196,11 @@ void LoadingBar::setScale9Enabled(bool enabled)
     setCapInsets(_capInsets);
 }
 
+bool LoadingBar::isScale9Enabled()
+{
+    return _scale9Enabled;
+}
+    
 void LoadingBar::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;
@@ -206,6 +211,11 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
     static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
+const Rect& LoadingBar::getCapInsets()
+{
+    return _capInsets;
+}
+    
 void LoadingBar::setPercent(int percent)
 {
     if ( percent < 0 || percent > 100)
@@ -334,6 +344,7 @@ void LoadingBar::copySpecialProperties(Widget *widget)
         loadTexture(loadingBar->_textureFile.c_str(), loadingBar->_renderBarTexType);
         setCapInsets(loadingBar->_capInsets);
         setPercent(loadingBar->_percent);
+        setDirection(loadingBar->_barType);
     }
 }
 

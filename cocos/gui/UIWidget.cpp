@@ -108,11 +108,11 @@ void Widget::onExit()
     Node::onExit();
 }
     
-void Widget::visit()
+void Widget::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (_enabled)
     {
-        Node::visit();
+        Node::visit(renderer, parentTransform, parentTransformUpdated);
     }    
 }
 
@@ -1065,6 +1065,11 @@ void Widget::copyProperties(Widget *widget)
     setOpacity(widget->getOpacity());
     setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
     setCascadeColorEnabled(widget->isCascadeColorEnabled());
+    Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
+    for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
+    {
+        setLayoutParameter(iter->second->clone());
+    }
     onSizeChanged();
 }
 

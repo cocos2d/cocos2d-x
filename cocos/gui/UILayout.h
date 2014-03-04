@@ -91,12 +91,16 @@ public:
      */
     void setBackGroundImageCapInsets(const Rect& capInsets);
     
+    const Rect& getBackGroundImageCapInsets();
+    
     /**
      * Sets Color Type for layout.
      *
      * @param type   @see LayoutBackGroundColorType.
      */
     void setBackGroundColorType(LayoutBackGroundColorType type);
+    
+    LayoutBackGroundColorType getBackGroundColorType();
     
     /**
      * Sets background iamge use scale9 renderer.
@@ -105,12 +109,16 @@ public:
      */
     void setBackGroundImageScale9Enabled(bool enabled);
     
+    bool isBackGroundImageScale9Enabled();
+    
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_SOLID
      *
      * @param color
      */
     void setBackGroundColor(const Color3B &color);
+    
+    const Color3B& getBackGroundColor();
     
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -121,6 +129,10 @@ public:
      */
     void setBackGroundColor(const Color3B &startColor, const Color3B &endColor);
     
+    const Color3B& getBackGroundStartColor();
+    
+    const Color3B& getBackGroundEndColor();
+    
     /**
      * Sets background opacity layout.
      *
@@ -128,12 +140,16 @@ public:
      */
     void setBackGroundColorOpacity(int opacity);
     
+    int getBackGroundColorOpacity();
+    
     /**
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
      *
      * @param vector
      */
     void setBackGroundColorVector(const Point &vector);
+    
+    const Point& getBackGroundColorVector();
     
     /**
      * Remove the background image of layout.
@@ -157,6 +173,8 @@ public:
     virtual void setClippingEnabled(bool enabled);
     
     void setClippingType(LayoutClippingType type);
+    
+    LayoutClippingType getClippingType();
     
     /**
      * Gets if layout is clipping enabled.
@@ -209,8 +227,25 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit();
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+
+    virtual void removeChild(Node* child, bool cleanup = true) override;
     
+    /**
+     * Removes all children from the container with a cleanup.
+     *
+     * @see `removeAllChildrenWithCleanup(bool)`
+     */
+    virtual void removeAllChildren() override;
+    /**
+     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+     *
+     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @js removeAllChildren
+     * @lua removeAllChildren
+     */
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+
     virtual void sortAllChildren() override;
     
     void requestDoLayout();
@@ -234,8 +269,8 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit();
-    void scissorClippingVisit();
+    void stencilClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    void scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
@@ -273,6 +308,7 @@ protected:
     Rect _clippingRect;
     Layout* _clippingParent;
     bool _doLayoutDirty;
+    bool _clippingRectDirty;
     
     //clipping
 
