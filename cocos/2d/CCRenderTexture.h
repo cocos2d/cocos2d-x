@@ -158,7 +158,7 @@ public:
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     void setKeepMatrix(bool keepMatrix);
-    void setVirtualViewPort(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport);
+    void setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
     // XXX should be procted.
