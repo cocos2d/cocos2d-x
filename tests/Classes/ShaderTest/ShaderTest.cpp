@@ -781,10 +781,10 @@ gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
 ShaderFail::ShaderFail()
 {
     auto p = new GLProgram();
-    p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
+    p->initWithByteArrays(ccPositionTexture_vert, shader_frag_fail);
     
-    p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     p->link();
     p->updateUniforms();
