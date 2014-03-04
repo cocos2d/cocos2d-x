@@ -468,6 +468,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     _spriteDraw = Sprite::createWithTexture(_rend->getSprite()->getTexture());
     FiniteTimeAction* baseAction = MoveBy::create(1, Point(size.width,0));
     _spriteDraw->setPosition(0,size.height/2);
+    _spriteDraw->setScaleY(-1);
     _spriteDraw->runAction(RepeatForever::create(Sequence::create
                                           (baseAction,baseAction->reverse(), NULL)));
     addChild(_spriteDraw);
