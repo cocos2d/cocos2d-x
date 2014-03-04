@@ -670,6 +670,15 @@ public:
      * @return a Node object whose tag equals to the input parameter
      */
     virtual Node * getChildByTag(int tag);
+
+     /**
+     * Gets a child from the container with its label
+     *
+     * @param label   An C string identifier to find the child node.
+     *
+     * @return the first Node object whose label equals to the input parameter
+     */
+    virtual Node* getChildByStrTag(const char* label, bool recursive);
     /**
      * Return an array of children
      *
@@ -823,6 +832,38 @@ public:
      */
     virtual void setTag(int tag);
 
+    /// @{
+    /// @name strTag
+
+    /**
+     * Returns a label that is used to identify the node easily.
+     *
+     * You can set tags to node then identify them easily.
+     @code
+ 
+     // set tags
+     node1->setStag("player");
+     node2->setStag("monster");
+     node3->setStag("boss");
+     parent->addChild(node1);
+     parent->addChild(node2);
+     parent->addChild(node3);
+     // identify by tags
+     Node* node = nullptr;
+     node = parent->getChildByStrTag("player")
+     @endcode
+     *
+     * @return A C string that identifies the node.
+     */
+    virtual char* getStrTag();
+    /**
+     * Changes the string TAG that is used to identify the node easily.
+     *
+     * Please refer to getLabel for the sample code.
+     *
+     * @param strTag   A C String that indentifies the node.
+     */
+    virtual void setStrTag(const char* strTag);
     /**
      * Returns a custom user data pointer
      *
@@ -1470,7 +1511,9 @@ protected:
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
 
-    int _tag;                       ///< a tag. Can be any number you assigned just to identify this node
+    int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
+    
+    char _strTag[64];               ///<a string label, a user defined string to identify this node
 
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
