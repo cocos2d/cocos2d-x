@@ -810,9 +810,23 @@ bool Console::parseCommand(int fd)
         }
         auto cmd = it->second;
         cmd.callback(fd, args2);
-    }else if(strcmp(buf, "\r\n") != 0) {
-        const char err[] = "Unknown command. Type 'help' for options\n";
-        send(fd, err, sizeof(err),0);
+    }
+    else
+    {
+        Scheduler *sched = Director::getInstance()->getScheduler();
+        sched->performFunctionInCocosThread( [&](){
+            auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+            if(scriptEngine != nullptr)
+            {
+                scriptEngine->executeString(buf);
+            }
+            else
+            {
+                CCLOG("No Script Engine found!");
+            }
+        });
+        
+
     }
 
     sendPrompt(fd);
