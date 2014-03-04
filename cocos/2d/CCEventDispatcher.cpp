@@ -1017,6 +1017,10 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     
     if (listeners == nullptr)
         return;
+    auto sceneGraphListeners = listeners->getSceneGraphPriorityListeners();
+    
+    if (sceneGraphListeners == nullptr)
+        return;
     
     Node* rootNode = (Node*)Director::getInstance()->getRunningScene();
     // Reset priority index
@@ -1026,7 +1030,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     visitTarget(rootNode, true);
     
     // After sort: priority < 0, > 0
-    auto sceneGraphListeners = listeners->getSceneGraphPriorityListeners();
+
     std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
         return _nodePriorityMap[l1->getSceneGraphPriority()] > _nodePriorityMap[l2->getSceneGraphPriority()];
     });
@@ -1047,8 +1051,11 @@ void EventDispatcher::sortEventListenersOfFixedPriority(const EventListener::Lis
     if (listeners == nullptr)
         return;
     
-    // After sort: priority < 0, > 0
     auto fixedListeners = listeners->getFixedPriorityListeners();
+    if (fixedListeners == nullptr)
+        return;
+    
+    // After sort: priority < 0, > 0
     std::sort(fixedListeners->begin(), fixedListeners->end(), [](const EventListener* l1, const EventListener* l2) {
         return l1->getFixedPriority() < l2->getFixedPriority();
     });
