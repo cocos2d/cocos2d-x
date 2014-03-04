@@ -43,6 +43,8 @@ NS_CC_BEGIN
  * @{
  */
 
+class Scheduler;
+
 typedef std::function<void(float)> ccSchedulerFunc;
 //
 // Timer
@@ -69,6 +71,7 @@ public:
     
 protected:
     
+    Scheduler* _scheduler; // weak ref
     float _elapsed;
     bool _runForever;
     bool _useDelay;
@@ -85,7 +88,7 @@ public:
     TimerTargetSelector();
 
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithSelector(SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay);
+    bool initWithSelector(Scheduler* scheduler, SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay);
     
     inline SEL_SCHEDULE getSelector() const { return _selector; };
     
@@ -104,7 +107,7 @@ public:
     TimerTargetCallback();
     
     /** Initializes a timer with a target, a lambda and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    bool initWithCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay);
+    bool initWithCallback(Scheduler* scheduler, const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay);
     
     /**
      * @js NA

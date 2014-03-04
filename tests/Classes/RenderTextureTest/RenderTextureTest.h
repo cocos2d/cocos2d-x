@@ -116,6 +116,20 @@ public:
     void touched(Ref* sender);
 };
 
+class RenderTexturePartTest : public RenderTextureTest
+{
+public:
+    CREATE_FUNC(RenderTexturePartTest);
+    RenderTexturePartTest();
+    virtual ~RenderTexturePartTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    RenderTexture* _rend;
+    Sprite* _spriteDraw;
+};
+
 class SpriteRenderTextureBug : public RenderTextureTest
 {
 public:
