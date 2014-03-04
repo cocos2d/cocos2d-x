@@ -409,7 +409,6 @@
 		50F8548318C581FB0019FBFB /* UITextFieldTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8545718C581FB0019FBFB /* UITextFieldTest_Editor.cpp */; };
 		50F8548418C581FB0019FBFB /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8545A18C581FB0019FBFB /* UIWidgetAddNodeTest.cpp */; };
 		50F8548518C581FB0019FBFB /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8545C18C581FB0019FBFB /* UIWidgetAddNodeTest_Editor.cpp */; };
-		50F855C218C5DAA90019FBFB /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F855C018C5DAA90019FBFB /* UIRichText.cpp */; };
 		6442E66D17297DB40008499D /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6442E66B17297DB40008499D /* TextureAtlasEncryptionTest.cpp */; };
 		A01B534F17DE7F7900A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
@@ -1294,8 +1293,6 @@
 		50F8545B18C581FB0019FBFB /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		50F8545C18C581FB0019FBFB /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		50F8545D18C581FB0019FBFB /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
-		50F855C018C5DAA90019FBFB /* UIRichText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichText.cpp; sourceTree = "<group>"; };
-		50F855C118C5DAA90019FBFB /* UIRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichText.h; sourceTree = "<group>"; };
 		6442E66B17297DB40008499D /* TextureAtlasEncryptionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlasEncryptionTest.cpp; sourceTree = "<group>"; };
 		6442E66C17297DB40008499D /* TextureAtlasEncryptionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasEncryptionTest.h; sourceTree = "<group>"; };
 		A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceAllocTest.cpp; path = ../../Classes/PerformanceTest/PerformanceAllocTest.cpp; sourceTree = "<group>"; };
@@ -3047,8 +3044,6 @@
 				37CA1BF517D87A3300A649D0 /* UILabelBMFont.h */,
 				37CA1BF617D87A3300A649D0 /* UILoadingBar.cpp */,
 				37CA1BF717D87A3300A649D0 /* UILoadingBar.h */,
-				50F855C018C5DAA90019FBFB /* UIRichText.cpp */,
-				50F855C118C5DAA90019FBFB /* UIRichText.h */,
 				37CA1BFA17D87A3300A649D0 /* UISlider.cpp */,
 				37CA1BFB17D87A3300A649D0 /* UISlider.h */,
 				37CA1C0017D87A3300A649D0 /* UITextField.cpp */,
@@ -3890,7 +3885,6 @@
 				15A3D9B01682F7F9002FB0C5 /* cpSpatialIndex.c in Sources */,
 				15A3D9B11682F7F9002FB0C5 /* cpSweep1D.c in Sources */,
 				50D36120186AED6100828878 /* UITouchGroup.cpp in Sources */,
-				50F855C218C5DAA90019FBFB /* UIRichText.cpp in Sources */,
 				15A3D9B21682F7F9002FB0C5 /* cpVect.c in Sources */,
 				15A3DA311682F826002FB0C5 /* CCBAnimationManager.cpp in Sources */,
 				15A3DA321682F826002FB0C5 /* CCBFileLoader.cpp in Sources */,
