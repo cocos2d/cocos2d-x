@@ -580,6 +580,11 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
+    
+bool Layout::isBackGroundImageScale9Enabled()
+{
+    return _backGroundScale9Enabled;
+}
 
 void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
 {
