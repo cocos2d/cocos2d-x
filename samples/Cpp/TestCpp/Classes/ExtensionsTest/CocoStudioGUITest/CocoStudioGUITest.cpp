@@ -138,8 +138,7 @@ void CocoStudioGUIMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 void CocoStudioGUITestScene::onEnter()
 {
     CCScene::onEnter();
-    
-    /*
+
     CCLabelTTF* label = CCLabelTTF::create("Back", "Arial", 20);
     //#endif
     CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(CocoStudioGUITestScene::BackCallback));
@@ -150,7 +149,6 @@ void CocoStudioGUITestScene::onEnter()
     pMenuItem->setPosition( ccp( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
     addChild(pMenu, 1);
-     */
 }
 
 void CocoStudioGUITestScene::runThisTest()
