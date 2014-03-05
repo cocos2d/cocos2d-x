@@ -62,7 +62,7 @@ _currentPageData(nullptr)
 
         _currentPageData = new unsigned char[_currentPageDataSize];       
         memset(_currentPageData, 0, _currentPageDataSize);  
-        addTexture(*texture,0);
+        addTexture(texture,0);
         texture->release();
     }
 }
@@ -157,7 +157,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                         memset(_currentPageData, 0, _currentPageDataSize);
                         _currentPage++;
                         auto tex = new Texture2D;
-                        addTexture(*tex,_currentPage);
+                        addTexture(tex,_currentPage);
                         tex->release();
                     }  
                 }
@@ -201,15 +201,15 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     return true;
 }
 
-void FontAtlas::addTexture(Texture2D &texture, int slot)
+void FontAtlas::addTexture(Texture2D *texture, int slot)
 {
-    texture.retain();
-    _atlasTextures[slot] = &texture;
+    texture->retain();
+    _atlasTextures[slot] = texture;
 }
 
-Texture2D & FontAtlas::getTexture(int slot)
+Texture2D* FontAtlas::getTexture(int slot)
 {
-    return *(_atlasTextures[slot]);
+    return _atlasTextures[slot];
 }
 
 float FontAtlas::getCommonLineHeight() const

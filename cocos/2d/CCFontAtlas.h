@@ -70,11 +70,11 @@ public:
     bool prepareLetterDefinitions(unsigned short  *utf16String);
 
     inline const std::unordered_map<int, Texture2D*>& getTextures() const{ return _atlasTextures;}
-    void  addTexture(Texture2D &texture, int slot);
+    void  addTexture(Texture2D *texture, int slot);
     float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
     
-    Texture2D& getTexture(int slot);
+    Texture2D* getTexture(int slot);
     const Font* getFont() const;
     
 private:
