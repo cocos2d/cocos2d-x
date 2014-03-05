@@ -26,6 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef MAT4_H_INCLUDED
 #define MAT4_H_INCLUDED
 
+#include "CCPlatformMacros.h"
+
 #include "utility.h"
 
 struct kmVec3;
@@ -50,46 +52,46 @@ typedef struct kmMat4 {
 	kmScalar mat[16];
 } kmMat4;
 
-kmMat4* kmMat4Fill(kmMat4* pOut, const kmScalar* pMat);
+CC_DLL kmMat4* kmMat4Fill(kmMat4* pOut, const kmScalar* pMat);
 
 
-kmMat4* kmMat4Identity(kmMat4* pOut);
+CC_DLL kmMat4* kmMat4Identity(kmMat4* pOut);
 
-kmMat4* kmMat4Inverse(kmMat4* pOut, const kmMat4* pM);
+CC_DLL kmMat4* kmMat4Inverse(kmMat4* pOut, const kmMat4* pM);
 
 
-int kmMat4IsIdentity(const kmMat4* pIn);
+CC_DLL int kmMat4IsIdentity(const kmMat4* pIn);
 
-kmMat4* kmMat4Transpose(kmMat4* pOut, const kmMat4* pIn);
-kmMat4* kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2);
+CC_DLL kmMat4* kmMat4Transpose(kmMat4* pOut, const kmMat4* pIn);
+CC_DLL kmMat4* kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2);
 
-kmMat4* kmMat4Assign(kmMat4* pOut, const kmMat4* pIn);
-kmMat4* kmMat4AssignMat3(kmMat4* pOut, const struct kmMat3* pIn);
+CC_DLL kmMat4* kmMat4Assign(kmMat4* pOut, const kmMat4* pIn);
+CC_DLL kmMat4* kmMat4AssignMat3(kmMat4* pOut, const struct kmMat3* pIn);
 
-int kmMat4AreEqual(const kmMat4* pM1, const kmMat4* pM2);
+CC_DLL int kmMat4AreEqual(const kmMat4* pM1, const kmMat4* pM2);
 
-kmMat4* kmMat4RotationX(kmMat4* pOut, const kmScalar radians);
-kmMat4* kmMat4RotationY(kmMat4* pOut, const kmScalar radians);
-kmMat4* kmMat4RotationZ(kmMat4* pOut, const kmScalar radians);
-kmMat4* kmMat4RotationYawPitchRoll(kmMat4* pOut, const kmScalar pitch, const kmScalar yaw, const kmScalar roll);
-kmMat4* kmMat4RotationQuaternion(kmMat4* pOut, const struct kmQuaternion* pQ);
-kmMat4* kmMat4RotationTranslation(kmMat4* pOut, const struct kmMat3* rotation, const struct kmVec3* translation);
-kmMat4* kmMat4Scaling(kmMat4* pOut, const kmScalar x, const kmScalar y, const kmScalar z);
-kmMat4* kmMat4Translation(kmMat4* pOut, const kmScalar x, const kmScalar y, const kmScalar z);
+CC_DLL kmMat4* kmMat4RotationX(kmMat4* pOut, const kmScalar radians);
+CC_DLL kmMat4* kmMat4RotationY(kmMat4* pOut, const kmScalar radians);
+CC_DLL kmMat4* kmMat4RotationZ(kmMat4* pOut, const kmScalar radians);
+CC_DLL kmMat4* kmMat4RotationYawPitchRoll(kmMat4* pOut, const kmScalar pitch, const kmScalar yaw, const kmScalar roll);
+CC_DLL kmMat4* kmMat4RotationQuaternion(kmMat4* pOut, const struct kmQuaternion* pQ);
+CC_DLL kmMat4* kmMat4RotationTranslation(kmMat4* pOut, const struct kmMat3* rotation, const struct kmVec3* translation);
+CC_DLL kmMat4* kmMat4Scaling(kmMat4* pOut, const kmScalar x, const kmScalar y, const kmScalar z);
+CC_DLL kmMat4* kmMat4Translation(kmMat4* pOut, const kmScalar x, const kmScalar y, const kmScalar z);
 
-struct kmVec3* kmMat4GetUpVec3(struct kmVec3* pOut, const kmMat4* pIn);
-struct kmVec3* kmMat4GetRightVec3(struct kmVec3* pOut, const kmMat4* pIn);
-struct kmVec3* kmMat4GetForwardVec3RH(struct kmVec3* pOut, const kmMat4* pIn);
-struct kmVec3* kmMat4GetForwardVec3LH(struct kmVec3* pOut, const kmMat4* pIn);
+CC_DLL struct kmVec3* kmMat4GetUpVec3(struct kmVec3* pOut, const kmMat4* pIn);
+CC_DLL struct kmVec3* kmMat4GetRightVec3(struct kmVec3* pOut, const kmMat4* pIn);
+CC_DLL struct kmVec3* kmMat4GetForwardVec3RH(struct kmVec3* pOut, const kmMat4* pIn);
+CC_DLL struct kmVec3* kmMat4GetForwardVec3LH(struct kmVec3* pOut, const kmMat4* pIn);
 
-kmMat4* kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY, kmScalar aspect, kmScalar zNear, kmScalar zFar);
-kmMat4* kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left, kmScalar right, kmScalar bottom, kmScalar top, kmScalar nearVal, kmScalar farVal);
-kmMat4* kmMat4LookAt(kmMat4* pOut, const struct kmVec3* pEye, const struct kmVec3* pCenter, const struct kmVec3* pUp);
+CC_DLL kmMat4* kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY, kmScalar aspect, kmScalar zNear, kmScalar zFar);
+CC_DLL kmMat4* kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left, kmScalar right, kmScalar bottom, kmScalar top, kmScalar nearVal, kmScalar farVal);
+CC_DLL kmMat4* kmMat4LookAt(kmMat4* pOut, const struct kmVec3* pEye, const struct kmVec3* pCenter, const struct kmVec3* pUp);
 
-kmMat4* kmMat4RotationAxisAngle(kmMat4* pOut, const struct kmVec3* axis, kmScalar radians);
-struct kmMat3* kmMat4ExtractRotation(struct kmMat3* pOut, const kmMat4* pIn);
-struct kmPlane* kmMat4ExtractPlane(struct kmPlane* pOut, const kmMat4* pIn, const kmEnum plane);
-struct kmVec3* kmMat4RotationToAxisAngle(struct kmVec3* pAxis, kmScalar* radians, const kmMat4* pIn);
+CC_DLL kmMat4* kmMat4RotationAxisAngle(kmMat4* pOut, const struct kmVec3* axis, kmScalar radians);
+CC_DLL struct kmMat3* kmMat4ExtractRotation(struct kmMat3* pOut, const kmMat4* pIn);
+CC_DLL struct kmPlane* kmMat4ExtractPlane(struct kmPlane* pOut, const kmMat4* pIn, const kmEnum plane);
+CC_DLL struct kmVec3* kmMat4RotationToAxisAngle(struct kmVec3* pAxis, kmScalar* radians, const kmMat4* pIn);
 #ifdef __cplusplus
 }
 #endif
