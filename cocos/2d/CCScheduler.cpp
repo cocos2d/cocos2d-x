@@ -72,7 +72,8 @@ typedef struct _hashSelectorEntry
 // implementation Timer
 
 Timer::Timer()
-: _elapsed(-1)
+: _scheduler(nullptr)
+, _elapsed(-1)
 , _runForever(false)
 , _useDelay(false)
 , _timesExecuted(0)
@@ -154,8 +155,9 @@ TimerTargetSelector::TimerTargetSelector()
 {
 }
 
-bool TimerTargetSelector::initWithSelector(SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay)
+bool TimerTargetSelector::initWithSelector(Scheduler* scheduler, SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay)
 {
+    _scheduler = scheduler;
     _target = target;
     _selector = selector;
     setupTimerWithInterval(seconds, repeat, delay);
@@ -172,7 +174,7 @@ void TimerTargetSelector::trigger()
 
 void TimerTargetSelector::cancel()
 {
-    Director::getInstance()->getScheduler()->unschedule(_selector, _target);
+    _scheduler->unschedule(_selector, _target);
 }
 
 // TimerTargetCallback
@@ -183,8 +185,9 @@ TimerTargetCallback::TimerTargetCallback()
 {
 }
 
-bool TimerTargetCallback::initWithCallback(const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay)
+bool TimerTargetCallback::initWithCallback(Scheduler* scheduler, const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay)
 {
+    _scheduler = scheduler;
     _target = target;
     _callback = callback;
     _key = key;
@@ -202,7 +205,7 @@ void TimerTargetCallback::trigger()
 
 void TimerTargetCallback::cancel()
 {
-    Director::getInstance()->getScheduler()->unschedule(_key, _target);
+    _scheduler->unschedule(_key, _target);
 }
 
 #if CC_ENABLE_SCRIPT_BINDING
@@ -322,7 +325,7 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
     }
 
     TimerTargetCallback *timer = new TimerTargetCallback();
-    timer->initWithCallback(callback, target, key, interval, repeat, delay);
+    timer->initWithCallback(this, callback, target, key, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();
 }
@@ -1007,7 +1010,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
     }
     
     TimerTargetSelector *timer = new TimerTargetSelector();
-    timer->initWithSelector(selector, target, interval, repeat, delay);
+    timer->initWithSelector(this, selector, target, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();
 }
