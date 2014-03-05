@@ -402,12 +402,13 @@ void CCScrollView::deaccelerateScrolling(float dt)
     m_tScrollDistance     = ccpMult(m_tScrollDistance, SCROLL_DEACCEL_RATE);
     this->setContentOffset(ccp(newX,newY));
     
+	bool horizontal = m_eDirection == kCCScrollViewDirectionHorizontal || m_eDirection == kCCScrollViewDirectionBoth;
+	bool vertical = m_eDirection == kCCScrollViewDirectionVertical || m_eDirection == kCCScrollViewDirectionBoth;
+	bool xShouldStop = !horizontal || newX == maxInset.x || newX == minInset.x;
+	bool yShouldStop = !vertical || newY == maxInset.y || newY == minInset.y;
     if ((fabsf(m_tScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(m_tScrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        newY > maxInset.y || newY < minInset.y ||
-        newX > maxInset.x || newX < minInset.x ||
-        newX == maxInset.x || newX == minInset.x ||
-        newY == maxInset.y || newY == minInset.y)
+		(xShouldStop && yShouldStop))
     {
         this->unschedule(schedule_selector(CCScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
