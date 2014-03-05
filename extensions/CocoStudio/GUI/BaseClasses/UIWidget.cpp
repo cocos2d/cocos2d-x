@@ -578,6 +578,10 @@ SizeType Widget::getSizeType() const
 
 void Widget::ignoreContentAdaptWithSize(bool ignore)
 {
+    if (_ignoreSize == ignore)
+    {
+        return;
+    }
     _ignoreSize = ignore;
     if (_ignoreSize)
     {
