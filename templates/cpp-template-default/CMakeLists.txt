@@ -60,7 +60,7 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/base
   ${COCOS2D_ROOT}/cocos/physics
   ${COCOS2D_ROOT}/cocos/editor-support
-  ${COCOS2D_ROOT}/cocos/math/kazmath/include
+  ${COCOS2D_ROOT}/cocos/math/kazmath
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external
   ${COCOS2D_ROOT}/external/edtaa3func
