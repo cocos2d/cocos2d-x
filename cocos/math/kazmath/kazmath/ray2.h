@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2008, Luke Benstead.
+Copyright (c) 2011, Luke Benstead.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -23,41 +23,32 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "kazmath/aabb.h"
+#ifndef RAY_2_H
+#define RAY_2_H
 
-/**
- * Returns KM_TRUE if point is in the specified AABB, returns
- * KM_FALSE otherwise.
- */
-const int kmAABBContainsPoint(const kmVec3* pPoint, const kmAABB* pBox)
-{
-    if(pPoint->x >= pBox->min.x && pPoint->x <= pBox->max.x &&
-       pPoint->y >= pBox->min.y && pPoint->y <= pBox->max.y &&
-       pPoint->z >= pBox->min.z && pPoint->z <= pBox->max.z) {
-        return KM_TRUE;
-    }
+#include "utility.h"
+#include "vec2.h"
 
-    return KM_FALSE;
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct kmRay2 {
+    kmVec2 start;
+    kmVec2 dir;
+} kmRay2;
+
+void kmRay2Fill(kmRay2* ray, kmScalar px, kmScalar py, kmScalar vx, kmScalar vy);
+kmBool kmRay2IntersectLineSegment(const kmRay2* ray, const kmVec2* p1, const kmVec2* p2, kmVec2* intersection);
+kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2* p2, const kmVec2* p3, kmVec2* intersection, kmVec2* normal_out, kmScalar* distance);
+
+kmBool kmRay2IntersectBox(const kmRay2* ray, const kmVec2* p1, const kmVec2* p2, const kmVec2* p3, const kmVec2* p4,
+kmVec2* intersection, kmVec2* normal_out);
+
+kmBool kmRay2IntersectCircle(const kmRay2* ray, const kmVec2 centre, const kmScalar radius, kmVec2* intersection);
+
+#ifdef __cplusplus
 }
+#endif
 
-/**
- * Assigns pIn to pOut, returns pOut.
- */
-kmAABB* const kmAABBAssign(kmAABB* pOut, const kmAABB* pIn)
-{
-    kmVec3Assign(&pOut->min, &pIn->min);
-    kmVec3Assign(&pOut->max, &pIn->max);
-    return pOut;
-}
-
-/**
- * Scales pIn by s, stores the resulting AABB in pOut. Returns pOut
- */
-kmAABB* const kmAABBScale(kmAABB* pOut, const kmAABB* pIn, kmScalar s)
-{
-    assert(0 && "Not implemented");
-    return 0;
-}
-
-
-
+#endif
