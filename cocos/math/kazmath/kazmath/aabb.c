@@ -100,8 +100,9 @@ kmEnum kmAABBContainsAABB(const kmAABB* container, const kmAABB* to_check) {
     kmVec3Fill(&corners[5], to_check->max.x, to_check->min.y, to_check->max.z);
     kmVec3Fill(&corners[6], to_check->max.x, to_check->max.y, to_check->max.z);
     kmVec3Fill(&corners[7], to_check->min.x, to_check->max.y, to_check->max.z);
-        
-    for(kmUchar i = 0; i < 8; ++i) {
+
+    kmUchar i;
+    for(i = 0; i < 8; ++i) {
         if(!kmAABBContainsPoint(container, &corners[i])) {
             result = KM_CONTAINS_PARTIAL;
             if(found) {
