@@ -41,7 +41,6 @@ public:
 
     bool initWithEntryID(int entryId);
     std::string title() const;
-    void tick(float dt);
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
 //    virtual void registerWithTouchDispatcher();
