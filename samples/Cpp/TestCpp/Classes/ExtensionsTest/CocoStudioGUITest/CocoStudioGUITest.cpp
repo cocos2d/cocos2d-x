@@ -4,7 +4,7 @@
 #include "../../ExtensionsTest/ExtensionsTest.h"
 #include "CocosGUIScene.h"
 #include "GUIEditorTest.h"
-#include "CutomGUIScene.h"
+#include "CustomGUIScene.h"
 
 
 enum
