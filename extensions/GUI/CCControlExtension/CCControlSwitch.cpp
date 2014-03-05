@@ -194,11 +194,11 @@ bool ControlSwitchSprite::initWithMaskSprite(
         
         clipper->setStencil(_clipperStencil);
         
-        clipper->addChild(thumbSprite);
         clipper->addChild(onSprite);
         clipper->addChild(offSprite);
         clipper->addChild(onLabel);
         clipper->addChild(offLabel);
+        clipper->addChild(thumbSprite);
         
         addChild(clipper);
 
@@ -263,24 +263,6 @@ void ControlSwitchSprite::needsLayout()
             _offSprite->getContentSize().height / 2));
     }
 
-    RenderTexture *rt = RenderTexture::create((int)_maskTexture->getContentSize().width, (int)_maskTexture->getContentSize().height);
-
-    rt->begin();
-    _onSprite->visit();
-    _offSprite->visit();
-
-    if (_onLabel)
-    {
-        _onLabel->visit();
-    }
-    if (_offLabel)
-    {
-        _offLabel->visit();
-    }
-
-    rt->end();
-
-    setTexture(rt->getSprite()->getTexture());
     setFlippedY(true);
 }
 
