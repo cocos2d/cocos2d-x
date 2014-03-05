@@ -26,7 +26,7 @@
 #define __TestCpp__GUIDefine__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "../../extensions/ExtensionMacros.h"
 #include <string>
 #include "cocostudio/ObjectFactory.h"
 

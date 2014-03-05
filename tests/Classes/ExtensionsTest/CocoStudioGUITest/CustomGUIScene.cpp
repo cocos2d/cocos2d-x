@@ -1,6 +1,6 @@
 
 
-#include "CutomGUIScene.h"
+#include "CustomGUIScene.h"
 #include "CocoStudioGUITest.h"
 #include "CustomTest/CustomImageTest/CustomImageTest.h"
 

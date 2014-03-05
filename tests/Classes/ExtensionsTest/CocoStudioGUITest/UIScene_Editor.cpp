@@ -2,7 +2,7 @@
 
 #include "UIScene_Editor.h"
 #include "GUIEditorTest.h"
-#include "CocosGUI.h"
+#include "gui/CocosGUI.h"
 #include "UISceneManager_Editor.h"
 
 

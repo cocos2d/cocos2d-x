@@ -26,7 +26,7 @@
 #define __TestCpp__UIScene_Editor__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "gui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 
