@@ -23,53 +23,18 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef UTILITY_H_INCLUDED
-#define UTILITY_H_INCLUDED
+#ifndef KAZMATH_H_INCLUDED
+#define KAZMATH_H_INCLUDED
 
-#include "CCPlatformMacros.h"
-#include <math.h>
+#include "vec2.h"
+#include "vec3.h"
+#include "mat3.h"
+#include "mat4.h"
+#include "utility.h"
+#include "quaternion.h"
+#include "plane.h"
+#include "aabb.h"
+#include "ray2.h"
+#include "ray3.h"
 
-#ifndef kmScalar
-#define kmScalar float
-#endif
-
-#ifndef kmBool
-#define kmBool unsigned char
-#endif
-
-#ifndef kmEnum
-#define kmEnum unsigned int
-#endif
-
-#ifndef KM_FALSE
-#define KM_FALSE 0
-#endif
-
-#ifndef KM_TRUE
-#define KM_TRUE 1
-#endif
-
-#define kmPI 3.141592f
-#define kmPIOver180 0.017453f //  PI / 180
-#define kmPIUnder180 57.295779f // 180 / PI
-#define kmEpsilon 1.0 / 64.0
-
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-CC_DLL kmScalar kmSQR(kmScalar s);
-CC_DLL kmScalar kmDegreesToRadians(kmScalar degrees);
-CC_DLL kmScalar kmRadiansToDegrees(kmScalar radians);
-
-CC_DLL kmScalar kmMin(kmScalar lhs, kmScalar rhs);
-CC_DLL kmScalar kmMax(kmScalar lhs, kmScalar rhs);
-CC_DLL kmBool kmAlmostEqual(kmScalar lhs, kmScalar rhs);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* UTILITY_H_INCLUDED */
+#endif // KAZMATH_H_INCLUDED
