@@ -37,6 +37,10 @@ NS_CC_BEGIN
 /// The max length of CCLog message.
 static const int kMaxLogLen = 16*1024;
 
+typedef void (*loggerFuncDef) (char*);
+
+void CC_DLL setCustomLogger(loggerFuncDef);
+
 /**
 @brief Output Debug message.
 */
