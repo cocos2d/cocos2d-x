@@ -103,7 +103,7 @@ public:
 
 protected:
     //renderer callback
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
     MotionStreak();
     virtual ~MotionStreak();
 

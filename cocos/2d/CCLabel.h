@@ -154,11 +154,12 @@ public:
     virtual std::string getDescription() const override;
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
-    virtual void onDraw();
 
     FontAtlas* getFontAtlas() const {return _fontAtlas;}
 
 protected:
+    void onDraw(const kmMat4& transform, bool transformUpdated);
+
     struct LetterInfo
     {
         FontLetterDefinition def;

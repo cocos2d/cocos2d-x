@@ -117,15 +117,14 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 void DrawPrimitivesTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void DrawPrimitivesTest::onDraw()
+void DrawPrimitivesTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
     
     //draw
     CHECK_GL_ERROR_DEBUG();
@@ -236,7 +235,7 @@ void DrawPrimitivesTest::onDraw()
     CHECK_GL_ERROR_DEBUG();
     
     //end draw
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 string DrawPrimitivesTest::title() const
