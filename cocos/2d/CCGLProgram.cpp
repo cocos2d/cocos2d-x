@@ -59,8 +59,7 @@ const char* GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR = "ShaderPositi
 
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL = "ShaderLabelNormol";
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelGlow";
-const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE = "ShaderLabelOutline";
-const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW = "ShaderLabelShadow";
+const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 
 
 // uniform names

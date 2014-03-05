@@ -224,10 +224,10 @@ bool Label::init()
     bool ret = true;
     if(_fontAtlas)
     {
-        ret = SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
+        ret = SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), 30);
         if (_reusedLetter == nullptr)
         {
-            _reusedLetter = Sprite::createWithTexture(&_fontAtlas->getTexture(0));
+            _reusedLetter = Sprite::createWithTexture(_fontAtlas->getTexture(0));
             _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
             _reusedLetter->retain();
             _reusedLetter->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
@@ -255,7 +255,7 @@ void Label::initProgram()
 
         break;
     case cocos2d::LabelEffect::OUTLINE:
-            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE));
+            setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE));
         break;
     case cocos2d::LabelEffect::GLOW:
         if (_useDistanceField)
@@ -865,7 +865,7 @@ Sprite * Label::getLetter(int lettetIndex)
             uvRect.origin.x    = _lettersInfo[lettetIndex].def.U;
             uvRect.origin.y    = _lettersInfo[lettetIndex].def.V;
 
-            sp = Sprite::createWithTexture(&_fontAtlas->getTexture(_lettersInfo[lettetIndex].def.textureID),uvRect);
+            sp = Sprite::createWithTexture(_fontAtlas->getTexture(_lettersInfo[lettetIndex].def.textureID),uvRect);
             sp->setBatchNode(this);
             sp->setAnchorPoint(Point::ANCHOR_MIDDLE);
             sp->setPosition(Point(_lettersInfo[lettetIndex].position.x+uvRect.size.width/2,_lettersInfo[lettetIndex].position.y-uvRect.size.height/2));
