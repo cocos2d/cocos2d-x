@@ -700,16 +700,14 @@ bool ShaderRetroEffect::init()
         p->link();
         p->updateUniforms();
 
-
         auto director = Director::getInstance();
         auto s = director->getWinSize();
 
-        _label = LabelBMFont::create("RETRO EFFECT", "fonts/west_england-64.fnt");
-
+        _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
+        _label->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _label->setShaderProgram(p);
 
         p->release();
-
 
         _label->setPosition(Point(s.width/2,s.height/2));
 
@@ -725,10 +723,10 @@ bool ShaderRetroEffect::init()
 void ShaderRetroEffect::update(float dt)
 {
     _accum += dt;
-
-    int i=0;
-    for(const auto &sprite : _label->getChildren()) {
-        i++;
+    int letterCount = _label->getStringLenght();
+    for (int i = 0; i < letterCount; ++i)
+    {
+        auto sprite = _label->getLetter(i);
         auto oldPosition = sprite->getPosition();
         sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
         

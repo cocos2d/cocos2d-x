@@ -106,7 +106,7 @@ public:
     bool init();
     void update(float dt);
 protected:
-    LabelBMFont* _label;
+    Label* _label;
     float           _accum;
 };
 
