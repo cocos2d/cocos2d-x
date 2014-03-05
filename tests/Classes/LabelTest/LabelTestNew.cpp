@@ -2,6 +2,8 @@
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 
+using namespace ui;
+
 enum {
     kTagTileMap = 1,
     kTagSpriteManager = 1,
@@ -68,7 +70,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFUnicodeNew),
     CL(LabelBMFontTestNew),
     CL(LabelTTFDistanceField),
-    CL(LabelTTFDistanceFieldEffect),
+    CL(LabelOutlineAndGlowTest),
+    CL(LabelShadowTest),
     CL(LabelCharMapTest),
     CL(LabelCharMapColorTest),
     CL(LabelCrashTest),
@@ -1292,7 +1295,7 @@ std::string LabelTTFDistanceField::subtitle() const
     return "Testing rendering base on DistanceField";
 }
 
-LabelTTFDistanceFieldEffect::LabelTTFDistanceFieldEffect()
+LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
 {
     auto size = Director::getInstance()->getWinSize();
 
@@ -1302,36 +1305,115 @@ LabelTTFDistanceFieldEffect::LabelTTFDistanceFieldEffect()
     TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
 
     auto label1 = Label::createWithTTF(ttfConfig,"Glow", TextHAlignment::CENTER, size.width);
-    label1->setPosition( Point(size.width/2, size.height*0.65) );
+    label1->setPosition( Point(size.width/2, size.height*0.7) );
     label1->setColor( Color3B::GREEN );
     label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    label1->setLabelEffect(LabelEffect::GLOW,Color3B::YELLOW);
+    label1->enableGlow(Color3B::YELLOW);
     addChild(label1);
 
+    ttfConfig.outlineSize = 1;
     auto label2 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
-    label2->setPosition( Point(size.width/2, size.height*0.5) );
+    label2->setPosition( Point(size.width/2, size.height*0.6) );
     label2->setColor( Color3B::RED );
     label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    label2->setLabelEffect(LabelEffect::OUTLINE,Color3B::BLUE);
+    label2->enableOutline(Color4B::BLUE);
     addChild(label2);
 
-    auto label3 = Label::createWithTTF(ttfConfig,"Shadow", TextHAlignment::CENTER, size.width);
-    label3->setPosition( Point(size.width/2, size.height*0.35f) );
+    ttfConfig.outlineSize = 2;
+    auto label3 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
+    label3->setPosition( Point(size.width/2, size.height*0.48) );
     label3->setColor( Color3B::RED );
     label3->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    label3->setLabelEffect(LabelEffect::SHADOW,Color3B::BLACK);
+    label3->enableOutline(Color4B::BLUE);
     addChild(label3);
 
+    ttfConfig.outlineSize = 3;
+    auto label4 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
+    label4->setPosition( Point(size.width/2, size.height*0.36) );
+    label4->setColor( Color3B::RED );
+    label4->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    label4->enableOutline(Color4B::BLUE);
+    addChild(label4);
 }
 
-std::string LabelTTFDistanceFieldEffect::title() const
+std::string LabelOutlineAndGlowTest::title() const
 {
-    return "New Label + .TTF";
+    return "New Label";
 }
 
-std::string LabelTTFDistanceFieldEffect::subtitle() const
+std::string LabelOutlineAndGlowTest::subtitle() const
 {
-    return "Testing effect base on DistanceField";
+    return "Testing outline and glow of label";
+}
+
+LabelShadowTest::LabelShadowTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto bg = LayerColor::create(Color4B(200,191,231,255));
+    this->addChild(bg);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
+
+    shadowLabelTTF = Label::createWithTTF(ttfConfig,"TTF:Shadow", TextHAlignment::CENTER, size.width);
+    shadowLabelTTF->setPosition( Point(size.width/2, size.height*0.6f) );
+    shadowLabelTTF->setColor( Color3B::RED );
+    shadowLabelTTF->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    shadowLabelTTF->enableShadow(Color3B::BLACK);
+    addChild(shadowLabelTTF);
+
+    shadowLabelBMFont = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow");
+    shadowLabelBMFont->setPosition( Point(size.width/2, size.height*0.4f) );
+    shadowLabelBMFont->setColor( Color3B::RED );
+    shadowLabelBMFont->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    shadowLabelBMFont->enableShadow(Color3B::GREEN);
+    addChild(shadowLabelBMFont);
+
+    auto slider = ui::Slider::create();
+    slider->setTag(1);
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosgui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosgui/sliderProgress.png");
+    slider->setPosition(Point(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPercent(52);
+    slider->addEventListenerSlider(this, sliderpercentchangedselector(LabelShadowTest::sliderEvent));
+    addChild(slider);
+
+    auto slider2 = ui::Slider::create();
+    slider2->setTag(2);
+    slider2->setTouchEnabled(true);
+    slider2->loadBarTexture("cocosgui/sliderTrack.png");
+    slider2->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
+    slider2->loadProgressBarTexture("cocosgui/sliderProgress.png");
+    slider2->setPosition(Point(size.width * 0.15f, size.height / 2.0));
+    slider2->setRotation(90);
+    slider2->setPercent(52);
+    slider2->addEventListenerSlider(this, sliderpercentchangedselector(LabelShadowTest::sliderEvent));
+    addChild(slider2);
+}
+
+void LabelShadowTest::sliderEvent(Ref *pSender, ui::SliderEventType type)
+{
+    if (type == SLIDER_PERCENTCHANGED)
+    {
+        Slider*  slider = (Slider*)this->getChildByTag(1);
+        Slider*  slider2 = (Slider*)this->getChildByTag(2);
+
+        auto offset = Size(slider->getPercent()-50,50 - slider2->getPercent());
+        shadowLabelTTF->enableShadow(Color3B::BLACK,offset);
+        shadowLabelBMFont->enableShadow(Color3B::GREEN,offset);
+    }
+}
+
+std::string LabelShadowTest::title() const
+{
+    return "New Label";
+}
+
+std::string LabelShadowTest::subtitle() const
+{
+    return "Testing shadow of label";
 }
 
 LabelCharMapTest::LabelCharMapTest()

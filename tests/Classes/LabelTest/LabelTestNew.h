@@ -4,6 +4,7 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
+#include "gui/CocosGUI.h"
 
 
 class AtlasDemoNew : public BaseTest
@@ -349,15 +350,31 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class LabelTTFDistanceFieldEffect : public AtlasDemoNew
+class LabelOutlineAndGlowTest : public AtlasDemoNew
 {
 public:
-    CREATE_FUNC(LabelTTFDistanceFieldEffect);
+    CREATE_FUNC(LabelOutlineAndGlowTest);
 
-    LabelTTFDistanceFieldEffect();
+    LabelOutlineAndGlowTest();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class LabelShadowTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelShadowTest);
+
+    LabelShadowTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void sliderEvent(Ref *pSender, ui::SliderEventType type);
+private:
+    Label* shadowLabelTTF;
+    Label* shadowLabelBMFont;
 };
 
 class LabelCharMapTest : public AtlasDemoNew
