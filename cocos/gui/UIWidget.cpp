@@ -29,7 +29,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
-    
+
 Widget::Widget():
 _enabled(true),
 _bright(true),
@@ -57,7 +57,7 @@ _reorderWidgetChildDirty(true),
 _hitted(false),
 _touchListener(nullptr)
 {
-    
+
 }
 
 Widget::~Widget()
@@ -107,13 +107,13 @@ void Widget::onExit()
     unscheduleUpdate();
     Node::onExit();
 }
-    
+
 void Widget::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (_enabled)
     {
         Node::visit(renderer, parentTransform, parentTransformUpdated);
-    }    
+    }
 }
 
 void Widget::addChild(Node *child)
@@ -125,14 +125,14 @@ void Widget::addChild(Node * child, int zOrder)
 {
     Node::addChild(child, zOrder);
 }
-    
+
 void Widget::addChild(Node* child, int zOrder, int tag)
 {
     CCASSERT(dynamic_cast<Widget*>(child) != nullptr, "Widget only supports Widgets as children");
     Node::addChild(child, zOrder, tag);
     _widgetChildren.pushBack(child);
 }
-    
+
 void Widget::sortAllChildren()
 {
     _reorderWidgetChildDirty = _reorderChildDirty;
@@ -143,11 +143,11 @@ void Widget::sortAllChildren()
         _reorderWidgetChildDirty = false;
     }
 }
-    
+
 Node* Widget::getChildByTag(int aTag)
 {
     CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
-    
+
     for (auto& child : _widgetChildren)
     {
         if(child && child->getTag() == aTag)
@@ -160,12 +160,12 @@ Vector<Node*>& Widget::getChildren()
 {
     return _widgetChildren;
 }
-    
+
 const Vector<Node*>& Widget::getChildren() const
 {
     return _widgetChildren;
 }
-    
+
 ssize_t Widget::getChildrenCount() const
 {
     return _widgetChildren.size();
@@ -175,7 +175,7 @@ Widget* Widget::getWidgetParent()
 {
     return dynamic_cast<Widget*>(getParent());
 }
-    
+
 void Widget::removeFromParent()
 {
     removeFromParentAndCleanup(true);
@@ -195,9 +195,9 @@ void Widget::removeChild(Node *child, bool cleanup)
 void Widget::removeChildByTag(int tag, bool cleanup)
 {
     CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
-    
+
     Node *child = getChildByTag(tag);
-    
+
     if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
@@ -212,7 +212,7 @@ void Widget::removeAllChildren()
 {
     removeAllChildrenWithCleanup(true);
 }
-    
+
 void Widget::removeAllChildrenWithCleanup(bool cleanup)
 {
     for (auto& child : _widgetChildren)
@@ -252,7 +252,7 @@ Widget* Widget::getChildByName(const char *name)
     }
     return nullptr;
 }
-    
+
 void Widget::addNode(Node* node)
 {
     addNode(node, node->getLocalZOrder(), node->getTag());
@@ -273,7 +273,7 @@ void Widget::addNode(Node* node, int zOrder, int tag)
 Node* Widget::getNodeByTag(int tag)
 {
     CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
-    
+
     for (auto& node : _nodes)
     {
         if(node && node->getTag() == tag)
@@ -296,9 +296,9 @@ void Widget::removeNode(Node* node)
 void Widget::removeNodeByTag(int tag)
 {
     CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
-    
+
     Node *node = this->getNodeByTag(tag);
-    
+
     if (node == nullptr)
     {
         CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
@@ -688,22 +688,22 @@ void Widget::setBrightStyle(BrightStyle style)
 
 void Widget::onPressStateChangedToNormal()
 {
-    
+
 }
 
 void Widget::onPressStateChangedToPressed()
 {
-    
+
 }
 
 void Widget::onPressStateChangedToDisabled()
 {
-    
+
 }
 
 void Widget::didNotSelectSelf()
 {
-    
+
 }
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
@@ -837,13 +837,13 @@ bool Widget::clippingParentAreaContainPoint(const Point &pt)
         }
         parent = parent->getWidgetParent();
     }
-    
+
     if (!_affectByClipping)
     {
         return true;
     }
-    
-    
+
+
     if (clippingParent)
     {
         bool bRet = false;
@@ -1020,7 +1020,7 @@ Widget* Widget::createCloneInstance()
 void Widget::copyClonedWidgetChildren(Widget* model)
 {
     auto& modelChildren = model->getChildren();
-    
+
     for (auto& subWidget : modelChildren)
     {
         Widget* child = static_cast<Widget*>(subWidget);
@@ -1030,7 +1030,7 @@ void Widget::copyClonedWidgetChildren(Widget* model)
 
 void Widget::copySpecialProperties(Widget* model)
 {
-    
+
 }
 
 void Widget::copyProperties(Widget *widget)
@@ -1059,8 +1059,8 @@ void Widget::copyProperties(Widget *widget)
     setRotation(widget->getRotation());
     setRotationX(widget->getRotationX());
     setRotationY(widget->getRotationY());
-    setFlipX(widget->isFlipX());
-    setFlipY(widget->isFlipY());
+    setFlippedX(widget->isFlippedX());
+    setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
     setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
@@ -1083,7 +1083,7 @@ int Widget::getActionTag()
 {
 	return _actionTag;
 }
-    
+
 }
 
 NS_CC_END
