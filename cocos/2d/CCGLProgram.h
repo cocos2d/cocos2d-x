@@ -92,8 +92,7 @@ public:
 
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
-    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE;
-    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW;
+    static const char* SHADER_NAME_LABEL_OUTLINE;
     
     // uniform names
     static const char* UNIFORM_NAME_P_MATRIX;

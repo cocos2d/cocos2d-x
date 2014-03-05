@@ -263,11 +263,6 @@ std::string TestFilenameLookup::title() const
     return "FileUtils: filename lookup";
 }
 
-std::string TestFilenameLookup::subtitle() const
-{
-    return "See the console";
-}
-
 //#pragma mark - TestIsFileExist
 
 void TestIsFileExist::onEnter()
