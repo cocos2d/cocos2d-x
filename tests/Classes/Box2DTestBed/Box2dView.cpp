@@ -176,9 +176,7 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 }
 
 bool Box2DView::initWithEntryID(int entryId)
-{    
-    schedule( schedule_selector(Box2DView::tick) );
-
+{
     m_entry = g_testEntries + entryId;
     m_test = m_entry->createFcn();
     
@@ -200,10 +198,6 @@ bool Box2DView::initWithEntryID(int entryId)
 std::string Box2DView::title() const
 {
     return std::string(m_entry->name);
-}
-
-void Box2DView::tick(float dt)
-{
 }
 
 void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
