@@ -144,7 +144,7 @@ public:
     TextHAlignment getTextAlignment() const;
     
     // label related stuff
-    CC_DEPRECATED_ATTRIBUTE float getWidth() const { getMaxLineWidth(); }
+    CC_DEPRECATED_ATTRIBUTE float getWidth() const { return getMaxLineWidth(); }
     float getMaxLineWidth() const;
     bool breakLineWithoutSpace() const;
     

@@ -214,7 +214,7 @@ void NewSpriteTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *e
 
 std::string NewSpriteTest::title() const
 {
-    return "NewRender";
+    return "Renderer";
 }
 
 std::string NewSpriteTest::subtitle() const
@@ -241,7 +241,7 @@ NewSpriteBatchTest::~NewSpriteBatchTest()
 
 std::string NewSpriteBatchTest::title() const
 {
-    return "NewRender";
+    return "Renderer";
 }
 
 std::string NewSpriteBatchTest::subtitle() const
