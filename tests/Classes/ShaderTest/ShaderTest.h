@@ -126,9 +126,7 @@ public:
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
 
 protected:
-    void onDraw();
-
-private:
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 
     Vertex2F _center;
     Vertex2F _resolution;

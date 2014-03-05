@@ -205,21 +205,21 @@ void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transform
     Layer::draw(renderer, transform, transformUpdated);
 
     _customCmd.init(_globalZOrder);
-    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this);
+    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCmd);
 }
 
-void Box2DView::onDraw()
+void Box2DView::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
     m_test->Step(&settings);
     m_test->m_world->DrawDebugData();
     CHECK_GL_ERROR_DEBUG();
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 Box2DView::~Box2DView()
