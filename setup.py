@@ -24,8 +24,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************"""
 
+'''
+On Max OS X, when start a shell, it will read these files and execute commands in sequence:
+
+~/.bash_profile
+~/.bash_login
+~/.profile
+
+And it will read only one of them. So we will add environment variable in the same sequence.
+Which means that
+* add environment variable into ~/.bash_profile when exists
+* add environment variable into ~/.bash_login when exits and ~/.bash_profile not exits
+* add environment variable into ~/.profile when exits and ~/.bash_profile & ~/.bash_login not exist
+
+Will create ~/.bash_profile when none of them exist, and add environment variable into it.
+
+'''
+
 import os
 import sys
+import fileinput
 from optparse import OptionParser
 
 COCOS_CONSOLE_ROOT = 'COCOS_CONSOLE_ROOT'
@@ -36,6 +54,9 @@ class SetEnvVar:
 
 	current_absolute_path = os.path.dirname(os.path.realpath(__file__))
 	ndk_root = None
+	# whether the value of "ndk_root" is passed or not
+	ndk_root_passed = False 
+	file_to_write_environment = None
 
 	@staticmethod
 	def _isWindows():
@@ -58,16 +79,33 @@ class SetEnvVar:
 			                    _winreg.KEY_SET_VALUE|_winreg.KEY_READ)
 		_winreg.SetValueEx(env, key, 0, _winreg.REG_SZ, value)
 
-	# modify ~/.bash_profile to add an environment variable
 	@staticmethod
 	def _set_environment_variable_unix(key, value):
-		home = os.path.expanduser('~')
-		profile_path = os.path.join(home, '.bash_profile')
 
-		file = open(profile_path, 'a')
-		file.write('export %s=%s\n' % (key, value))
-		file.write('export PATH=$%s:$PATH\n' % key)
-		file.close()
+		home = os.path.expanduser('~')
+		if os.path.exists(os.path.join(home, '.bash_profile')):
+			file_to_write = os.path.join(home, '.bash_profile')
+		elif os.path.exists(os.path.join(home, '.bash_login')):
+			file_to_write = os.path.join(home, '.bash_login')
+		elif os.path.exists(os.path.join(home, '.profile')):
+			file_to_write = os.path.join(home, '.profile')
+		else:
+			file_to_write = os.path.join(home, '.bash_profile')
+
+		SetEnvVar.file_to_write_environment = file_to_write
+
+		file = open(file_to_write, 'a')
+		if SetEnvVar.ndk_root_passed and SetEnvVar._find_string_in_file('export '.join(key), file_to_write):
+			# if ndk_root is passed and "ndk_root" is set yet, replace existing string in the file
+			for line in fileinput.input(file_to_write, inplace=1):
+				if line.startswith('export '.join(key)):
+					line = 'export %s=%s' % (key, value)
+				sys.stdout.write(line)
+		else:
+			file.write('export %s=%s\n' % (key, value))
+			file.write('export PATH=$%s:$PATH\n' % key)
+			file.close()
+
 
 	@staticmethod
 	def _set_environment_variable(key, value):
@@ -78,49 +116,58 @@ class SetEnvVar:
 			SetEnvVar._set_environment_variable_unix(key, value)
 
 	@staticmethod
-	def set_environment_variables():
+	def _find_string_in_file(string, file_path):
+		with open(file_path) as f:
+			for line in f:
+				if line.startswith(string):
+					return True
+		return False
 
-		SetEnvVar.set_console_root()
-		SetEnvVar.set_ndk_root(None)
 
 	@staticmethod
-	def set_console_root():
+	def _find_environment_variable(var):
 		
 		try:
-			cocos_console_root = os.environ[COCOS_CONSOLE_ROOT]
+			result = os.environ[var]
+			if result:
+				return True
+			else:
+				return False
 		except Exception:
-			cocos_console_root = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'tools/cocos2d-console/bin')
-			SetEnvVar._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_console_root)
-			os.environ[COCOS_CONSOLE_ROOT] = cocos_console_root
-		finally:
-			print "'COCOS_CONSOLE_ROOT' is %s" % cocos_console_root
+			string_to_search = 'export %s' % var 
+			home = os.path.expanduser('~')
+
+			# find it in ~/.bash_profile
+			if os.path.exists(os.path.join(home, '.bash_profile')):
+				if SetEnvVar._find_string_in_file(string_to_search, os.path.join(home, '.bash_profile')):
+					return True
+
+			# find it in ~/.bash_login
+			if os.path.exists(os.path.join(home, '.bash_login')):
+				if SetEnvVar._find_string_in_file(string_to_search, os.path.join(home, '.bash_login')):
+					return True
+
+			# find it in ~/.profile if exit
+			if os.path.exists(os.path.join(home, '.profile')):
+				if SetEnvVar._find_string_in_file(string_to_search, os.path.join(home, '.profile')):
+					return True
+
+		return False
+
 
 	@staticmethod
 	def _get_ndk_root():
 
-		# python on linux doesn't include Tkinter model, so let user input in terminal
-		if SetEnvVar._isLinux():
-			while True:
+		if not SetEnvVar._find_environment_variable(NDK_ROOT):
 
-				input_value = raw_input('Enter path of ndk, press enter to skip: ')
-				if not input_value:
-					break
+			# python on linux doesn't include Tkinter model, so let user input in terminal
+			if SetEnvVar._isLinux():
+				SetEnvVar.ndk_root = raw_input('can not find envrironment variable "NDK_ROOT", please enter it: ')		
+			else:
 
-				if os.path.exists(input_value):
-					if SetEnvVar._check_validation_ndk_root(input_value):
-						print 'warning: %s is not valid path of ndk root' % input_value
+				# pop up a window to let user select path for ndk root
+				import Tkinter, tkFileDialog
 
-					break
-
-			SetEnvVar.ndk_root = input_value
-			
-		else:
-			# pop up a window to let user select path for ndk root
-			import Tkinter, tkFileDialog
-
-			try:
-				SetEnvVar.ndk_root = os.environ[NDK_ROOT]
-			except Exception:
 				root = Tkinter.Tk()
 				SetEnvVar._center(root)
 
@@ -128,23 +175,15 @@ class SetEnvVar:
 					SetEnvVar.ndk_root = tkFileDialog.askdirectory()
 					root.destroy()
 
-					# check out if it is a real ndk root
-					if not SetEnvVar._check_validation_ndk_root(SetEnvVar.ndk_root):
-						print 'warning: %s is not a valid path of ndk root' % SetEnvVar.ndk_root		
-
 				frame = Tkinter.Frame(root)
 				Tkinter.Label(frame, text='select path for ndk root').pack(side=Tkinter.LEFT)
 				Tkinter.Button(frame, text='...', command=callback).pack(side=Tkinter.LEFT)
 				frame.pack()
 				root.mainloop()
 
-	@staticmethod
-	def _check_validation_ndk_root(ndk_root):
-		ndk_build_path = os.path.join(ndk_root, 'ndk-build')
-		if os.path.isfile(ndk_build_path):
 			return True
-		else:
-			return False
+
+		return False
 
 	# display a window in center and put it on top
 	@staticmethod
@@ -161,16 +200,57 @@ class SetEnvVar:
 	@staticmethod
 	def set_ndk_root(value):
 
+		ndk_root_updated = False
+
 		if value:
 			SetEnvVar.ndk_root = value
+			ndk_root_updated = True
 		else:
-			SetEnvVar._get_ndk_root()
-
-		print "ndk_root is %s" % SetEnvVar.ndk_root
+			ndk_root_updated = SetEnvVar._get_ndk_root()
 
 		if SetEnvVar.ndk_root:
 			os.environ[NDK_ROOT] = SetEnvVar.ndk_root
 			SetEnvVar._set_environment_variable(NDK_ROOT, SetEnvVar.ndk_root)
+			ndk_root_updated = True
+		else:
+			ndk_root_updated = False
+
+		return ndk_root_updated
+
+	@staticmethod
+	def set_console_root():
+
+		if not SetEnvVar._find_environment_variable(COCOS_CONSOLE_ROOT):
+			cocos_consle_root = os.path.join(SetEnvVar.current_absolute_path, 'tools/cocos2d-console/bin')
+			SetEnvVar._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root)
+			return True
+
+		return False
+
+	@staticmethod
+	def set_environment_variables(ndk_root):
+
+		console_updated = SetEnvVar.set_console_root()
+		ndk_root_updated = SetEnvVar.set_ndk_root(ndk_root)
+
+		if SetEnvVar._isWindows():
+			if console_updated or ndk_root_updated:
+				result_string = 'Set up successful.' 
+				if console_updated:
+					result_string += 'COCOS_CONSOLE_ROOT was added into register table.\n'
+				if ndk_root_updated:
+					result_string += 'NDK_ROOT was added into register table.'
+
+				print result_string
+		else:
+			if console_updated or ndk_root_updated:
+				result_string = 'Set up successful.' 
+				if console_updated:
+					result_string += 'COCOS_CONSOLE_ROOT was added into %s.\n' % SetEnvVar.file_to_write_environment
+				if ndk_root_updated:
+					result_string += 'NDK_ROOT was added into %s.' % SetEnvVar.file_to_write_environment
+
+				print result_string
 
 
 if __name__ == '__main__':
@@ -182,9 +262,10 @@ if __name__ == '__main__':
 	# ndk_root is passed in
 	if opts.ndk_root:
 		os.environ[NDK_ROOT] = opts.ndk_root
-		SetEnvVar.set_ndk_root()
+		SetEnvVar.ndk_root_passed = True
+		SetEnvVar.set_environment_variables(opts.ndk_root)
 		exit(0)
 
 	# set environment variables
-	SetEnvVar.set_environment_variables()
+	SetEnvVar.set_environment_variables(None)
 		
