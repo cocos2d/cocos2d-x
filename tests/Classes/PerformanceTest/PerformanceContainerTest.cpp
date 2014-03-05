@@ -518,7 +518,7 @@ std::string ArrayPerfTest::subtitle() const
 void ArrayPerfTest::generateTestFunctions()
 {
     auto createArray = [this](){
-        Array* ret = Array::create();
+        __Array* ret = Array::create();
         
         for( int i=0; i<quantityOfNodes; ++i)
         {
@@ -531,7 +531,7 @@ void ArrayPerfTest::generateTestFunctions()
     
     TestFunction testFunctions[] = {
         { "addObject",    [=](){
-            Array* nodeVector = Array::create();
+            __Array* nodeVector = Array::create();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -539,7 +539,7 @@ void ArrayPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
         } } ,
         { "insertObject",      [=](){
-            Array* nodeVector = Array::create();
+            __Array* nodeVector = Array::create();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -547,7 +547,7 @@ void ArrayPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
         } } ,
         { "setObject",     [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             
             srand(time(nullptr));
             ssize_t index = rand() % quantityOfNodes;
@@ -558,7 +558,7 @@ void ArrayPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
         } } ,
         { "getIndexOfObject",    [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             Ref* objToGet = nodeVector->getObjectAtIndex(quantityOfNodes/3);
             ssize_t index = 0;
             CC_PROFILER_START(this->profilerName());
@@ -572,7 +572,7 @@ void ArrayPerfTest::generateTestFunctions()
             }
         } } ,
         { "getObjectAtIndex",          [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -580,7 +580,7 @@ void ArrayPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
         } } ,
         { "containsObject",    [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             Ref* objToGet = nodeVector->getObjectAtIndex(quantityOfNodes/3);
             
             CC_PROFILER_START(this->profilerName());
@@ -589,7 +589,7 @@ void ArrayPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
         } } ,
         { "removeObject", [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
             
             for (int i = 0; i < quantityOfNodes; ++i)
@@ -607,7 +607,7 @@ void ArrayPerfTest::generateTestFunctions()
             free(nodes);
         } } ,
         { "removeObjectAtIndex",       [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -628,7 +628,7 @@ void ArrayPerfTest::generateTestFunctions()
             CCASSERT(nodeVector->count() == 0, "nodeVector was not empty.");
         } } ,
         { "swap by index",        [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             
             int swapIndex1 = quantityOfNodes / 3;
             int swapIndex2 = quantityOfNodes / 3 * 2;
@@ -640,7 +640,7 @@ void ArrayPerfTest::generateTestFunctions()
         } } ,
         
         { "swap by object",        [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             
             Ref* swapNode1 = nodeVector->getObjectAtIndex(quantityOfNodes / 3);
             Ref* swapNode2 = nodeVector->getObjectAtIndex(quantityOfNodes / 3 * 2);
@@ -652,7 +652,7 @@ void ArrayPerfTest::generateTestFunctions()
         } } ,
         
         { "reverseObjects",     [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -661,7 +661,7 @@ void ArrayPerfTest::generateTestFunctions()
         } } ,
         
         { "CCARRAY_FOREACH",     [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             Ref* obj;
             CC_PROFILER_START(this->profilerName());
             
@@ -970,13 +970,13 @@ void DictionaryStringKeyPerfTest::generateTestFunctions()
             Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
-                auto key = static_cast<String*>(obj);
+                auto key = static_cast<__String*>(obj);
                 allKeysString += (std::string("_") + key->getCString());
             }
         } } ,
         
         { "allKeysForObject",    [=](){
-            Dictionary* dict = Dictionary::create();
+            __Dictionary* dict = Dictionary::create();
             
             Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
             Node* sameNode = Node::create();
@@ -1003,7 +1003,7 @@ void DictionaryStringKeyPerfTest::generateTestFunctions()
             Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
-                auto key = static_cast<String*>(obj);
+                auto key = static_cast<__String*>(obj);
                 allKeysString += (std::string("_") + key->getCString());
             }
             
@@ -1206,7 +1206,7 @@ std::string TemplateMapIntKeyPerfTest::subtitle() const
 void DictionaryIntKeyPerfTest::generateTestFunctions()
 {
     auto createDict = [this](){
-        Dictionary* ret = Dictionary::create();
+        __Dictionary* ret = Dictionary::create();
         
         for( int i=0; i<quantityOfNodes; ++i)
         {
@@ -1219,7 +1219,7 @@ void DictionaryIntKeyPerfTest::generateTestFunctions()
     
     TestFunction testFunctions[] = {
         { "setObject",    [=](){
-            Dictionary* dict = Dictionary::create();
+            __Dictionary* dict = Dictionary::create();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -1286,13 +1286,13 @@ void DictionaryIntKeyPerfTest::generateTestFunctions()
             Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
-                auto key = static_cast<Integer*>(obj);
+                auto key = static_cast<__Integer*>(obj);
                 allKeysInt += key->getValue();
             }
         } } ,
         
         { "allKeysForObject",    [=](){
-            Dictionary* dict = Dictionary::create();
+            __Dictionary* dict = Dictionary::create();
             
             Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
             Node* sameNode = Node::create();
@@ -1319,7 +1319,7 @@ void DictionaryIntKeyPerfTest::generateTestFunctions()
             Ref* obj;
             CCARRAY_FOREACH(keys, obj)
             {
-                auto key = static_cast<Integer*>(obj);
+                auto key = static_cast<__Integer*>(obj);
                 allKeysInt += key->getValue();
             }
             
