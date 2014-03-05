@@ -204,7 +204,6 @@ std::string Box2DView::title() const
 
 void Box2DView::tick(float dt)
 {
-    m_test->Step(&settings);
 }
 
 void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
@@ -222,6 +221,7 @@ void Box2DView::onDraw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
     kmGLLoadMatrix(&_modelViewTransform);
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
+    m_test->Step(&settings);
     m_test->m_world->DrawDebugData();
     CHECK_GL_ERROR_DEBUG();
     
