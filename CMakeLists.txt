@@ -141,7 +141,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/physics
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/editor-support
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/math/kazmath/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/math/kazmath
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
   ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2

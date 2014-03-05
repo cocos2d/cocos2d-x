@@ -45,17 +45,17 @@ public:
      * Default constructor
      */
     ImageView();
-    
+
     /**
      * Default destructor
      */
     virtual ~ImageView();
-    
+
     /**
      * Allocates and initializes.
      */
     static ImageView* create();
-    
+
     /**
      * Load texture for imageview.
      *
@@ -64,54 +64,63 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Updates the texture rect of the ImageView in points.
      * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      */
     void setTextureRect(const Rect& rect);
-    
+
     /**
      * Sets if imageview is using scale9 renderer.
      *
      * @param true that using scale9 renderer, false otherwise.
      */
     void setScale9Enabled(bool able);
-    
+
     bool isScale9Enabled();
-    
+
     /**
      * Sets capinsets for imageview, if imageview is using scale9 renderer.
      *
      * @param capInsets    capinsets for imageview
      */
     void setCapInsets(const Rect &capInsets);
-    
+
     const Rect& getCapInsets();
-    
-    //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX) override;
-    
-    //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY) override;
-    
-    //override "isFlipX" method of widget.
-    virtual bool isFlipX() override;
-    
-    //override "isFlipY" method of widget.
-    virtual bool isFlipY() override;
-    
+
+    //override "setFlippedX" method of widget.
+    virtual void setFlippedX(bool flippedX) override;
+
+    //override "setFlippedY" method of widget.
+    virtual void setFlippedY(bool flippedY) override;
+
+    //override "isFlippedX" method of widget.
+    virtual bool isFlippedX() override;
+
+    //override "isFlippedY" method of widget.
+    virtual bool isFlippedY() override;
+
+    /** @deprecated Use isFlippedX() instead */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
+    /** @deprecated Use setFlippedX() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
+    /** @deprecated Use isFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
+    /** @deprecated Use setFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
+
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const Point &pt) override;
-    
+
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
-    
+
     /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
-    
+
     virtual const Size& getContentSize() const override;
     virtual Node* getVirtualRenderer() override;
 protected:

@@ -319,30 +319,30 @@ void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent sele
     _checkBoxEventSelector = selector;
 }
 
-void CheckBox::setFlipX(bool flipX)
+void CheckBox::setFlippedX(bool flippedX)
 {
-    _backGroundBoxRenderer->setFlippedX(flipX);
-    _backGroundSelectedBoxRenderer->setFlippedX(flipX);
-    _frontCrossRenderer->setFlippedX(flipX);
-    _backGroundBoxDisabledRenderer->setFlippedX(flipX);
-    _frontCrossDisabledRenderer->setFlippedX(flipX);
+    _backGroundBoxRenderer->setFlippedX(flippedX);
+    _backGroundSelectedBoxRenderer->setFlippedX(flippedX);
+    _frontCrossRenderer->setFlippedX(flippedX);
+    _backGroundBoxDisabledRenderer->setFlippedX(flippedX);
+    _frontCrossDisabledRenderer->setFlippedX(flippedX);
 }
 
-void CheckBox::setFlipY(bool flipY)
+void CheckBox::setFlippedY(bool flippedY)
 {
-    _backGroundBoxRenderer->setFlippedY(flipY);
-    _backGroundSelectedBoxRenderer->setFlippedY(flipY);
-    _frontCrossRenderer->setFlippedY(flipY);
-    _backGroundBoxDisabledRenderer->setFlippedY(flipY);
-    _frontCrossDisabledRenderer->setFlippedY(flipY);
+    _backGroundBoxRenderer->setFlippedY(flippedY);
+    _backGroundSelectedBoxRenderer->setFlippedY(flippedY);
+    _frontCrossRenderer->setFlippedY(flippedY);
+    _backGroundBoxDisabledRenderer->setFlippedY(flippedY);
+    _frontCrossDisabledRenderer->setFlippedY(flippedY);
 }
 
-bool CheckBox::isFlipX()
+bool CheckBox::isFlippedX()
 {
     return _backGroundBoxRenderer->isFlippedX();
 }
 
-bool CheckBox::isFlipY()
+bool CheckBox::isFlippedY()
 {
     return _backGroundBoxRenderer->isFlippedY();
 }

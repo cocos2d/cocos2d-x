@@ -151,15 +151,15 @@ void ShaderSprite::initShader()
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                                                      FileUtils::getInstance()->fullPathForFilename(_fragSourceFile).c_str())->getCString();
     auto program = new GLProgram();
-    program->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    program->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(program);
     program->release();
     
     CHECK_GL_ERROR_DEBUG();
     
-    program->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    program->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    program->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -294,16 +294,17 @@ void BlurSprite::buildCustomUniforms()
     
     blur_ = Point(1/s.width, 1/s.height);
     sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
-    
-    subLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "substract");
-    blurLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "blurSize");
+
+    auto program = getShaderProgram();
+    subLocation = program->getUniformLocation("substract");
+    blurLocation = program->getUniformLocation("blurSize");
 }
 
 void BlurSprite::setCustomUniforms()
 {
-
-    getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
-    getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
+    auto program = getShaderProgram();
+    program->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
+    program->setUniformLocationWith4fv(subLocation, sub_, 1);
 }
 
 void BlurSprite::setBlurSize(float f)
@@ -335,7 +336,8 @@ NoiseSprite::NoiseSprite()
 
 void NoiseSprite::buildCustomUniforms()
 {
-    _resolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "resolution");
+    auto program = getShaderProgram();
+    _resolutionLoc = program->getUniformLocation("resolution");
 }
 
 void NoiseSprite::setCustomUniforms()
@@ -367,7 +369,8 @@ EdgeDetectionSprite::EdgeDetectionSprite()
 
 void EdgeDetectionSprite::buildCustomUniforms()
 {
-    _resolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "resolution");
+    auto program = getShaderProgram();
+    _resolutionLoc = program->getUniformLocation("resolution");
 }
 
 void EdgeDetectionSprite::setCustomUniforms()
@@ -399,7 +402,8 @@ BloomSprite::BloomSprite()
 
 void BloomSprite::buildCustomUniforms()
 {
-    _resolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "resolution");
+    auto program = getShaderProgram();
+    _resolutionLoc = program->getUniformLocation("resolution");
 }
 
 void BloomSprite::setCustomUniforms()
@@ -431,7 +435,8 @@ CelShadingSprite::CelShadingSprite()
 
 void CelShadingSprite::buildCustomUniforms()
 {
-    _resolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "resolution");
+    auto program = getShaderProgram();
+    _resolutionLoc = program->getUniformLocation("resolution");
 }
 
 void CelShadingSprite::setCustomUniforms()
@@ -465,8 +470,9 @@ LensFlareSprite::LensFlareSprite()
 
 void LensFlareSprite::buildCustomUniforms()
 {
-    _resolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "resolution");
-    _textureResolutionLoc = glGetUniformLocation( getShaderProgram()->getProgram(), "textureResolution");
+    auto program = getShaderProgram();
+    _resolutionLoc = program->getUniformLocation("resolution");
+    _textureResolutionLoc = program->getUniformLocation("textureResolution");
 }
 
 void LensFlareSprite::setCustomUniforms()

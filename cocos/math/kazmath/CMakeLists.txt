@@ -10,11 +10,12 @@ SET(KAZMATH_SOURCES
   utility.c
   aabb.c
   ray2.c
+  ray3.c
   GL/mat4stack.c
   GL/matrix.c
   )
 
-ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(kazmath)
 
 set_target_properties(kazmath
     PROPERTIES
