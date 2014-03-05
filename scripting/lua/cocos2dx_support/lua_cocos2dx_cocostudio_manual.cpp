@@ -567,7 +567,16 @@ static int tolua_Cocos2dx_CCArmatureAnimation_setMovementEventCallFunc00(lua_Sta
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         wrapper->setHandler(handler);
-        self->setUserObject(wrapper);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == self->getUserObject())
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        dict->setObject(wrapper, "moveEvent");
+        
         self->setMovementEventCallFunc(wrapper, movementEvent_selector(LuaArmatureWrapper::movementEventCallback));
     }
     return 0;
@@ -606,7 +615,16 @@ static int tolua_Cocos2dx_CCArmatureAnimation_setFrameEventCallFunc00(lua_State*
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         wrapper->setHandler(handler);
-        self->setUserObject(wrapper);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == self->getUserObject())
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        dict->setObject(wrapper, "frameEvent");
+        
         self->setFrameEventCallFunc(wrapper, frameEvent_selector(LuaArmatureWrapper::frameEventCallback));
     }
     return 0;
