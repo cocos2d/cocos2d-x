@@ -32,6 +32,13 @@ NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
+static loggerFuncDef loggerFunc = NULL;
+
+void setCustomLogger(loggerFuncDef logger)
+{
+	loggerFunc = logger;
+}
+
 void CCLog(const char * pszFormat, ...)
 {
     char buf[MAX_LEN];
@@ -41,7 +48,14 @@ void CCLog(const char * pszFormat, ...)
     vsnprintf(buf, MAX_LEN, pszFormat, args);
     va_end(args);
 
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
+    if (loggerFunc != NULL)
+    {
+    	loggerFunc(buf);
+    }
+    else
+    {
+    	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
+    }
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
