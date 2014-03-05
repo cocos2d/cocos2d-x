@@ -230,11 +230,7 @@ void TimerScriptHandler::trigger()
 
 void TimerScriptHandler::cancel()
 {
-    if (0 != _scriptHandler)
-    {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_scriptHandler);
-        _scriptHandler = 0;
-    }
+
 }
 
 #endif
