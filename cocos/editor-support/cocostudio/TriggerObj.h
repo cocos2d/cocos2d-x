@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "CocoStudio.h"
 #include <vector>
 
-namespace cocostudio {
-
 class cocos2d::EventListenerCustom;
+
+namespace cocostudio {
 
 class BaseTriggerCondition : public cocos2d::Ref
 {
