@@ -1,7 +1,7 @@
 
 
 #include "CustomImageTest.h"
-#include "../../CutomGUIScene.h"
+#include "../../CustomGUIScene.h"
 #include "../../CustomWidget/CustomImageView.h"
 #include "../../CustomWidget/CustomImageViewReader.h"
 #include "../../CustomWidget/CustomReader.h"

@@ -385,6 +385,8 @@
 		1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		1AAF5401180E39D4000584C8 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
+		50E9122B18C7596500D07E0D /* CustomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9122918C7596500D07E0D /* CustomGUIScene.cpp */; };
+		50E9122C18C7596500D07E0D /* CustomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9122918C7596500D07E0D /* CustomGUIScene.cpp */; };
 		50F8555D18C5B82A0019FBFB /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */; };
 		50F8555E18C5B82A0019FBFB /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */; };
 		50F8555F18C5B82A0019FBFB /* CocoStudioGUITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F218C5B82A0019FBFB /* CocoStudioGUITest.cpp */; };
@@ -397,8 +399,6 @@
 		50F8556C18C5B82A0019FBFB /* CustomImageViewReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8550118C5B82A0019FBFB /* CustomImageViewReader.cpp */; };
 		50F8556D18C5B82A0019FBFB /* CustomReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8550318C5B82A0019FBFB /* CustomReader.cpp */; };
 		50F8556E18C5B82A0019FBFB /* CustomReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8550318C5B82A0019FBFB /* CustomReader.cpp */; };
-		50F8557518C5B82A0019FBFB /* CutomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8550B18C5B82A0019FBFB /* CutomGUIScene.cpp */; };
-		50F8557618C5B82A0019FBFB /* CutomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8550B18C5B82A0019FBFB /* CutomGUIScene.cpp */; };
 		50F8557718C5B82A0019FBFB /* GUIEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8550D18C5B82A0019FBFB /* GUIEditorTest.cpp */; };
 		50F8557818C5B82A0019FBFB /* GUIEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8550D18C5B82A0019FBFB /* GUIEditorTest.cpp */; };
 		50F8557918C5B82A0019FBFB /* UIButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F8551018C5B82A0019FBFB /* UIButtonTest.cpp */; };
@@ -1022,6 +1022,8 @@
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		50E9122918C7596500D07E0D /* CustomGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomGUIScene.cpp; sourceTree = "<group>"; };
+		50E9122A18C7596500D07E0D /* CustomGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGUIScene.h; sourceTree = "<group>"; };
 		50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
 		50F854F118C5B82A0019FBFB /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
 		50F854F218C5B82A0019FBFB /* CocoStudioGUITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoStudioGUITest.cpp; sourceTree = "<group>"; };
@@ -1034,8 +1036,6 @@
 		50F8550218C5B82A0019FBFB /* CustomImageViewReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomImageViewReader.h; sourceTree = "<group>"; };
 		50F8550318C5B82A0019FBFB /* CustomReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomReader.cpp; sourceTree = "<group>"; };
 		50F8550418C5B82A0019FBFB /* CustomReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomReader.h; sourceTree = "<group>"; };
-		50F8550B18C5B82A0019FBFB /* CutomGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CutomGUIScene.cpp; sourceTree = "<group>"; };
-		50F8550C18C5B82A0019FBFB /* CutomGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CutomGUIScene.h; sourceTree = "<group>"; };
 		50F8550D18C5B82A0019FBFB /* GUIEditorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIEditorTest.cpp; sourceTree = "<group>"; };
 		50F8550E18C5B82A0019FBFB /* GUIEditorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIEditorTest.h; sourceTree = "<group>"; };
 		50F8551018C5B82A0019FBFB /* UIButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButtonTest.cpp; sourceTree = "<group>"; };
@@ -2336,16 +2336,16 @@
 		50F854EF18C5B82A0019FBFB /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
-				50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */,
-				50F854F118C5B82A0019FBFB /* CocosGUIScene.h */,
 				50F854F218C5B82A0019FBFB /* CocoStudioGUITest.cpp */,
 				50F854F318C5B82A0019FBFB /* CocoStudioGUITest.h */,
-				50F854F418C5B82A0019FBFB /* CustomTest */,
-				50F854F818C5B82A0019FBFB /* CustomWidget */,
-				50F8550B18C5B82A0019FBFB /* CutomGUIScene.cpp */,
-				50F8550C18C5B82A0019FBFB /* CutomGUIScene.h */,
+				50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */,
+				50F854F118C5B82A0019FBFB /* CocosGUIScene.h */,
 				50F8550D18C5B82A0019FBFB /* GUIEditorTest.cpp */,
 				50F8550E18C5B82A0019FBFB /* GUIEditorTest.h */,
+				50E9122918C7596500D07E0D /* CustomGUIScene.cpp */,
+				50E9122A18C7596500D07E0D /* CustomGUIScene.h */,
+				50F854F418C5B82A0019FBFB /* CustomTest */,
+				50F854F818C5B82A0019FBFB /* CustomWidget */,
 				50F8550F18C5B82A0019FBFB /* UIButtonTest */,
 				50F8551418C5B82A0019FBFB /* UICheckBoxTest */,
 				50F8551918C5B82A0019FBFB /* UIImageViewTest */,
@@ -2843,7 +2843,6 @@
 				50F855B318C5B82A0019FBFB /* UITextTest_Editor.cpp in Sources */,
 				50F8556918C5B82A0019FBFB /* CustomImageView.cpp in Sources */,
 				50F855B718C5B82A0019FBFB /* UIWidgetAddNodeTest_Editor.cpp in Sources */,
-				50F8557518C5B82A0019FBFB /* CutomGUIScene.cpp in Sources */,
 				1A1AF86818BE3040003374E8 /* PerformanceTextureTest.cpp in Sources */,
 				1A1AF79C18BE303F003374E8 /* Bug-1159.cpp in Sources */,
 				1A1AF85418BE3040003374E8 /* PerformanceAllocTest.cpp in Sources */,
@@ -2962,6 +2961,7 @@
 				1A1AF84418BE3040003374E8 /* MenuTest.cpp in Sources */,
 				1A1AF84E18BE3040003374E8 /* NodeTest.cpp in Sources */,
 				1A1AF86618BE3040003374E8 /* PerformanceTest.cpp in Sources */,
+				50E9122B18C7596500D07E0D /* CustomGUIScene.cpp in Sources */,
 				1A1AF88818BE3040003374E8 /* TextureAtlasEncryptionTest.cpp in Sources */,
 				1A1AF7A418BE303F003374E8 /* Bug-458.cpp in Sources */,
 				1A1AF7B818BE303F003374E8 /* CocosDenshionTest.cpp in Sources */,
@@ -3016,6 +3016,7 @@
 				1A1AF86B18BE3040003374E8 /* PerformanceTouchesTest.cpp in Sources */,
 				1A1AF83B18BE3040003374E8 /* KeyboardTest.cpp in Sources */,
 				1A1AF86918BE3040003374E8 /* PerformanceTextureTest.cpp in Sources */,
+				50E9122C18C7596500D07E0D /* CustomGUIScene.cpp in Sources */,
 				50F8557C18C5B82A0019FBFB /* UIButtonTest_Editor.cpp in Sources */,
 				1A1AF79D18BE303F003374E8 /* Bug-1159.cpp in Sources */,
 				1A1AF85518BE3040003374E8 /* PerformanceAllocTest.cpp in Sources */,
@@ -3026,7 +3027,6 @@
 				1A1AF86318BE3040003374E8 /* PerformanceScenarioTest.cpp in Sources */,
 				1A1AF82718BE303F003374E8 /* SocketIOTest.cpp in Sources */,
 				50F8559C18C5B82A0019FBFB /* UISceneManager_Editor.cpp in Sources */,
-				50F8557618C5B82A0019FBFB /* CutomGUIScene.cpp in Sources */,
 				1A1AF7DD18BE303F003374E8 /* ComponentsTestScene.cpp in Sources */,
 				1A1AF89918BE3040003374E8 /* VisibleRect.cpp in Sources */,
 				1A1AF80D18BE303F003374E8 /* acts.cpp in Sources */,

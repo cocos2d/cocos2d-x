@@ -2,7 +2,7 @@
 #ifndef __TestCpp__CustomImageView__
 #define __TestCpp__CustomImageView__
 
-#include "CocosGUI.h"
+#include "gui/CocosGUI.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;

@@ -4,7 +4,7 @@
 #define __TestCpp__CustomImageScene__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../../../../testBasic.h"
 
 USING_NS_CC;

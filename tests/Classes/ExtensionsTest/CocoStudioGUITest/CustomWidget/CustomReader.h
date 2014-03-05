@@ -3,7 +3,7 @@
 #ifndef __TestCpp__CustomReader__
 #define __TestCpp__CustomReader__
 
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "cocostudio/DictionaryHelper.h"
 #include "gui/CocosGUI.h"
 

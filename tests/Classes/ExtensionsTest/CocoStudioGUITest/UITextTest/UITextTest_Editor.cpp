@@ -1,7 +1,7 @@
 
 
 #include "UITextTest_Editor.h"
-#include "CocosGUI.h"
+#include "gui/CocosGUI.h"
 
 
 // UITextTest_Editor
