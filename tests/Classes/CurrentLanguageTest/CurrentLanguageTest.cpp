@@ -54,6 +54,12 @@ CurrentLanguageTest::CurrentLanguageTest()
     case LanguageType::POLISH:
         labelLanguage->setString("current language is Polish");
         break;
+    case LanguageType::DUTCH:
+        labelLanguage->setString("current language is Polish");
+        break;
+    default:
+        CCASSERT(false, "Invalid language type.");
+        break;
     }
 
     addChild(labelLanguage);
