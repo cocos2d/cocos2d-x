@@ -189,11 +189,13 @@ void PhysicsDebugNode::draw(Renderer *renderer, const kmMat4 &transform, bool tr
         return;
     }
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
+    // clear the shapes information before draw current shapes.
+    DrawNode::clear();
+
     cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
 	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
     DrawNode::draw(renderer, transform, transformUpdated);
-    DrawNode::clear();
 #endif
 }
 
