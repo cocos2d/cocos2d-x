@@ -678,7 +678,7 @@ public:
      *
      * @return the first Node object whose label equals to the input parameter
      */
-    virtual Node* getChildByStrTag(const char* label, bool recursive);
+    virtual Node* getChildByName(const std::string& name);
     /**
      * Return an array of children
      *
@@ -855,7 +855,7 @@ public:
      *
      * @return A C string that identifies the node.
      */
-    virtual char* getStrTag();
+    virtual std::string& getName();
     /**
      * Changes the string TAG that is used to identify the node easily.
      *
@@ -863,7 +863,7 @@ public:
      *
      * @param strTag   A C String that indentifies the node.
      */
-    virtual void setStrTag(const char* strTag);
+    virtual void setName(const std::string& name);
     /**
      * Returns a custom user data pointer
      *
@@ -1513,7 +1513,7 @@ protected:
 
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
-    char _strTag[64];               ///<a string label, a user defined string to identify this node
+    std::string _name;               ///<a string label, a user defined string to identify this node
 
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object

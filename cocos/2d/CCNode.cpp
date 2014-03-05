@@ -141,8 +141,6 @@ Node::Node(void)
     kmMat4Identity(&_transform);
     kmMat4Identity(&_inverse);
     kmMat4Identity(&_additionalTransform);
-
-    memset(_strTag, sizeof(_strTag), 0);
 }
 
 Node::~Node()
@@ -596,17 +594,16 @@ void Node::setTag(int var)
     _tag = var;
 }
 
-//StrTag getter
-char* Node::getStrTag()
+//name getter
+std::string& Node::getName()
 {
-    return &(_strTag[0]);
+    return _name;
 }
 
-//StrTag setter
-void Node::setStrTag(const char* strTag)
+//name setter
+void Node::setName(const std::string& name)
 {
-    strncpy(_strTag, strTag, sizeof(_strTag)-1);
-    _strTag[sizeof(_strTag)-1] = 0;
+    _name = name;
 }
 /// userData setter
 void Node::setUserData(void *var)
@@ -712,27 +709,22 @@ Node* Node::getChildByTag(int tag)
     return nullptr;
 }
 
-Node* Node::getChildByStrTag(const char* label, bool recursive)
+Node* Node::getChildByName(const std::string& name)
 {
 
     for (auto& child : _children)
     {
-       if(child)
-       {
-            if(strncmp(child->_strTag, label, sizeof(child->_strTag)-1) == 0)
-            {
-                return child;
-            }
-            if(recursive)
-            {
-                auto found = child->getChildByStrTag(label, true);
-                if(found != nullptr)
-                {
-                    return found;
-                }
-
-            }
-       }
+   
+        if(child->_name == name)
+        {
+            return child;
+        }
+    
+        auto found = child->getChildByName(name);
+        if(found != nullptr)
+        {
+            return found;
+        }
     }
     return nullptr;
 }
