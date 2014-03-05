@@ -27,11 +27,12 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "CocoStudio.h"
 
+class cocos2d::EventDispatcher;
+class cocos2d::EventListener;
+
 namespace cocostudio {
 
 class TriggerObj;
-class cocos2d::EventDispatcher;
-class cocos2d::EventListener;
 
 class ArmatureMovementDispatcher : public cocos2d::Ref
 {
@@ -68,8 +69,8 @@ public:
     bool removeTriggerObj(unsigned int id);
     bool isEmpty(void) const;
 
-    void addArmatureMovementCallBack(Armature *pAr, cocos2d::Object *pTarget, SEL_MovementEventCallFunc mecf);
-    void removeArmatureMovementCallBack(Armature *pAr, cocos2d::Object *pTarget, SEL_MovementEventCallFunc mecf);
+    void addArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
+    void removeArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
     void removeArmatureAllMovementCallBack(Armature *pAr);
     void removeAllArmatureMovementCallBack();
     void dispatchEvent(cocos2d::EventCustom* tEvent);
