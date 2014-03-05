@@ -351,7 +351,6 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
     CCASSERT(_children.contains(aChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
-    Node::removeChild(child, cleanup);
 
     // remove child helper
     _textureAtlas->removeQuadsAtIndex(child->getAtlasIndex(), child->getTotalParticles());
@@ -361,6 +360,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
 
     // particle could be reused for self rendering
     child->setBatchNode(nullptr);
+    Node::removeChild(child, cleanup);
 
     updateAllAtlasIndexes();
 }
