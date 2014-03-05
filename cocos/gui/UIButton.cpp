@@ -65,7 +65,7 @@ _normalTextureLoaded(false),
 _pressedTextureLoaded(false),
 _disabledTextureLoaded(false)
 {
-    
+
 }
 
 Button::~Button()
@@ -99,7 +99,7 @@ void Button::initRenderer()
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = LabelTTF::create();
-    
+
     Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
     Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
     Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
@@ -154,7 +154,7 @@ void Button::setScale9Enabled(bool able)
     setCapInsetsDisabledRenderer(_capInsetsDisabled);
     setBright(_bright);
 }
-    
+
 bool Button::isScale9Enabled()
 {
     return _scale9Enabled;
@@ -330,7 +330,7 @@ void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
     }
     static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
-    
+
 const Rect& Button::getCapInsetsNormalRenderer()
 {
     return _capInsetsNormal;
@@ -345,7 +345,7 @@ void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
     }
     static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
-    
+
 const Rect& Button::getCapInsetsPressedRenderer()
 {
     return _capInsetsPressed;
@@ -360,7 +360,7 @@ void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
     }
     static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
 }
-    
+
 const Rect& Button::getCapInsetsDisabledRenderer()
 {
     return _capInsetsDisabled;
@@ -424,31 +424,31 @@ void Button::onPressStateChangedToDisabled()
     _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
 
-void Button::setFlipX(bool flipX)
+void Button::setFlippedX(bool flippedX)
 {
-    _titleRenderer->setFlippedX(flipX);
+    _titleRenderer->setFlippedX(flippedX);
     if (_scale9Enabled)
     {
         return;
     }
-    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(flipX);
-    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(flipX);
-    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flipX);
+    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(flippedX);
+    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(flippedX);
+    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flippedX);
 }
 
-void Button::setFlipY(bool flipY)
+void Button::setFlippedY(bool flippedY)
 {
-    _titleRenderer->setFlippedY(flipY);
+    _titleRenderer->setFlippedY(flippedY);
     if (_scale9Enabled)
     {
         return;
     }
-    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(flipY);
-    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(flipY);
-    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flipY);
+    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(flippedY);
+    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(flippedY);
+    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flippedY);
 }
 
-bool Button::isFlipX()
+bool Button::isFlippedX()
 {
     if (_scale9Enabled)
     {
@@ -457,7 +457,7 @@ bool Button::isFlipX()
     return static_cast<Sprite*>(_buttonNormalRenderer)->isFlippedX();
 }
 
-bool Button::isFlipY()
+bool Button::isFlippedY()
 {
     if (_scale9Enabled)
     {
@@ -691,7 +691,7 @@ void Button::copySpecialProperties(Widget *widget)
 {
     Button* button = dynamic_cast<Button*>(widget);
     if (button)
-    {   
+    {
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
         loadTextureNormal(button->_normalFileName.c_str(), button->_normalTexType);

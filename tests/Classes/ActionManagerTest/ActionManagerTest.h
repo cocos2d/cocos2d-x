@@ -46,7 +46,7 @@ public:
     void unpause(float dt);
 };
 
-class RemoveTest : public ActionManagerTest
+class StopActionTest : public ActionManagerTest
 {
 public:
     virtual std::string subtitle() const override;

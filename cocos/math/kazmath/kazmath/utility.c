@@ -23,41 +23,47 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "kazmath/aabb.h"
+#include "utility.h"
 
 /**
- * Returns KM_TRUE if point is in the specified AABB, returns
- * KM_FALSE otherwise.
+ * Returns the square of s (e.g. s*s)
  */
-const int kmAABBContainsPoint(const kmVec3* pPoint, const kmAABB* pBox)
-{
-    if(pPoint->x >= pBox->min.x && pPoint->x <= pBox->max.x &&
-       pPoint->y >= pBox->min.y && pPoint->y <= pBox->max.y &&
-       pPoint->z >= pBox->min.z && pPoint->z <= pBox->max.z) {
-        return KM_TRUE;
-    }
-
-    return KM_FALSE;
+kmScalar kmSQR(kmScalar s) {
+	return s*s;
 }
 
 /**
- * Assigns pIn to pOut, returns pOut.
+ * Returns degrees as radians.
  */
-kmAABB* const kmAABBAssign(kmAABB* pOut, const kmAABB* pIn)
-{
-    kmVec3Assign(&pOut->min, &pIn->min);
-    kmVec3Assign(&pOut->max, &pIn->max);
-    return pOut;
+kmScalar kmDegreesToRadians(kmScalar degrees) {
+	return degrees * kmPIOver180;
 }
 
 /**
- * Scales pIn by s, stores the resulting AABB in pOut. Returns pOut
+ * Returns radians as degrees
  */
-kmAABB* const kmAABBScale(kmAABB* pOut, const kmAABB* pIn, kmScalar s)
-{
-    assert(0 && "Not implemented");
-    return 0;
+kmScalar kmRadiansToDegrees(kmScalar radians) {
+	return radians * kmPIUnder180;
 }
 
+kmScalar kmMin(kmScalar lhs, kmScalar rhs) {
+    return (lhs < rhs)? lhs : rhs;
+}
 
+kmScalar kmMax(kmScalar lhs, kmScalar rhs) {
+    return (lhs > rhs)? lhs : rhs;
+}
 
+kmBool kmAlmostEqual(kmScalar lhs, kmScalar rhs) {
+    return (lhs + kmEpsilon > rhs && lhs - kmEpsilon < rhs);
+}
+
+kmScalar kmClamp(kmScalar x, kmScalar min, kmScalar max)
+{
+    return x < min ? min : (x > max ? max : x);
+}
+
+kmScalar kmLerp(kmScalar x, kmScalar y, kmScalar t )
+{
+    return x + t * ( y - x );
+}

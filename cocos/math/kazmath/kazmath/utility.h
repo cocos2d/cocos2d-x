@@ -23,37 +23,74 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "kazmath/utility.h"
+#ifndef UTILITY_H_INCLUDED
+#define UTILITY_H_INCLUDED
 
-/**
- * Returns the square of s (e.g. s*s)
- */
-kmScalar kmSQR(kmScalar s) {
-    return s*s;
-}
+#include <math.h>
 
-/**
- * Returns degrees as radians.
- */
-kmScalar kmDegreesToRadians(kmScalar degrees) {
-    return degrees * kmPIOver180;
-}
+#ifndef kmScalar
+#ifdef USE_DOUBLE_PRECISION
+#define kmScalar double
+#else
+#define kmScalar float
+#endif
 
-/**
- * Returns radians as degrees
- */
-kmScalar kmRadiansToDegrees(kmScalar radians) {
-    return radians * kmPIUnder180;
-}
+#endif
 
-kmScalar kmMin(kmScalar lhs, kmScalar rhs) {
-    return (lhs < rhs)? lhs : rhs;
-}
+#ifndef kmBool
+#define kmBool unsigned char
+#endif
 
-kmScalar kmMax(kmScalar lhs, kmScalar rhs) {
-    return (lhs > rhs)? lhs : rhs;
-}
+#ifndef kmUchar
+#define kmUchar unsigned char
+#endif
 
-kmBool kmAlmostEqual(kmScalar lhs, kmScalar rhs) {
-    return (lhs + kmEpsilon > rhs && lhs - kmEpsilon < rhs);
+#ifndef kmEnum
+#define kmEnum unsigned int
+#endif
+
+#ifndef kmUint
+#define kmUint unsigned int
+#endif
+
+#ifndef kmInt
+#define kmInt int
+#endif
+
+#ifndef KM_FALSE
+#define KM_FALSE 0
+#endif
+
+#ifndef KM_TRUE
+#define KM_TRUE 1
+#endif
+
+#define kmPI 3.14159265358979323846f
+#define kmPIOver180  (kmPI / 180.0f)
+#define kmPIUnder180 (180.0 / kmPI)
+#define kmEpsilon 0.0001
+
+#define KM_CONTAINS_NONE 0
+#define KM_CONTAINS_PARTIAL 1
+#define KM_CONTAINS_ALL 2
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern kmScalar kmSQR(kmScalar s);
+extern kmScalar kmDegreesToRadians(kmScalar degrees);
+extern kmScalar kmRadiansToDegrees(kmScalar radians);
+
+extern kmScalar kmMin(kmScalar lhs, kmScalar rhs);
+extern kmScalar kmMax(kmScalar lhs, kmScalar rhs);
+extern kmBool kmAlmostEqual(kmScalar lhs, kmScalar rhs);
+
+extern kmScalar kmClamp(kmScalar x, kmScalar min, kmScalar max);
+extern kmScalar kmLerp(kmScalar x, kmScalar y, kmScalar factor);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* UTILITY_H_INCLUDED */
