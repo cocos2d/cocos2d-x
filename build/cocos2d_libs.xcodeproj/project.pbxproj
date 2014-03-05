@@ -1553,6 +1553,10 @@
 		50AE5EA4188749250007CFE3 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */; };
 		50AE5EA5188749250007CFE3 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AE5EA2188749250007CFE3 /* CCBatchCommand.h */; };
 		50AE5EA6188749250007CFE3 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AE5EA2188749250007CFE3 /* CCBatchCommand.h */; };
+		50E9123718C76E0100D07E0D /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9123518C76E0100D07E0D /* UIRichText.cpp */; };
+		50E9123818C76E0100D07E0D /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9123518C76E0100D07E0D /* UIRichText.cpp */; };
+		50E9123918C76E0100D07E0D /* UIRichText.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E9123618C76E0100D07E0D /* UIRichText.h */; };
+		50E9123A18C76E0100D07E0D /* UIRichText.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E9123618C76E0100D07E0D /* UIRichText.h */; };
 		50FCEB6618C72005004AD434 /* GUIDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FCEB6518C72005004AD434 /* GUIDefine.h */; };
 		50FCEB6718C72005004AD434 /* GUIDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FCEB6518C72005004AD434 /* GUIDefine.h */; };
 		50FCEB9318C72017004AD434 /* ButtonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEB6A18C72017004AD434 /* ButtonReader.cpp */; };
@@ -2663,6 +2667,8 @@
 		50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBatchCommand.cpp; sourceTree = "<group>"; };
 		50AE5EA2188749250007CFE3 /* CCBatchCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBatchCommand.h; sourceTree = "<group>"; };
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
+		50E9123518C76E0100D07E0D /* UIRichText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichText.cpp; sourceTree = "<group>"; };
+		50E9123618C76E0100D07E0D /* UIRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichText.h; sourceTree = "<group>"; };
 		50FCEB6518C72005004AD434 /* GUIDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIDefine.h; sourceTree = "<group>"; };
 		50FCEB6A18C72017004AD434 /* ButtonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonReader.cpp; sourceTree = "<group>"; };
 		50FCEB6B18C72017004AD434 /* ButtonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonReader.h; sourceTree = "<group>"; };
@@ -3644,6 +3650,8 @@
 				1A8C58DE180E92CC00EF57C3 /* UILoadingBar.h */,
 				1A8C58DF180E92CC00EF57C3 /* UIPageView.cpp */,
 				1A8C58E0180E92CC00EF57C3 /* UIPageView.h */,
+				50E9123518C76E0100D07E0D /* UIRichText.cpp */,
+				50E9123618C76E0100D07E0D /* UIRichText.h */,
 				1A8C58E3180E92CC00EF57C3 /* UIScrollInterface.h */,
 				1A8C58E4180E92CC00EF57C3 /* UIScrollView.cpp */,
 				1A8C58E5180E92CC00EF57C3 /* UIScrollView.h */,
@@ -5094,6 +5102,7 @@
 				1A570331180BCFD50088DEC7 /* CCUserDefault.h in Headers */,
 				1A57033C180BCFFA0088DEC7 /* ZipUtils.h in Headers */,
 				1A57034D180BD09B0088DEC7 /* tinyxml2.h in Headers */,
+				50E9123918C76E0100D07E0D /* UIRichText.h in Headers */,
 				A044DED318C6A58700B6CCBD /* vec3.h in Headers */,
 				1A570356180BD0B00088DEC7 /* ioapi.h in Headers */,
 				1A57035A180BD0B00088DEC7 /* unzip.h in Headers */,
@@ -5459,6 +5468,7 @@
 				1A5700EC180BC6060088DEC7 /* CCInteger.h in Headers */,
 				1A5700F0180BC6060088DEC7 /* CCNS.h in Headers */,
 				1A5700F4180BC6060088DEC7 /* CCRef.h in Headers */,
+				50E9123A18C76E0100D07E0D /* UIRichText.h in Headers */,
 				A044DEC018C6A58700B6CCBD /* quaternion.h in Headers */,
 				A044DEA618C6A58700B6CCBD /* aabb.h in Headers */,
 				1A5700F6180BC6060088DEC7 /* CCPlatformConfig.h in Headers */,
@@ -6236,6 +6246,7 @@
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				1A570300180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
 				1A570305180BCED90088DEC7 /* ccUtils.cpp in Sources */,
+				50E9123718C76E0100D07E0D /* UIRichText.cpp in Sources */,
 				1A57030C180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				1A570319180BCF430088DEC7 /* ccCArray.cpp in Sources */,
@@ -6640,6 +6651,7 @@
 				1A570235180BCC4D0088DEC7 /* CCScriptSupport.cpp in Sources */,
 				1A57026C180BCC6F0088DEC7 /* CCShaderCache.cpp in Sources */,
 				1A570272180BCC6F0088DEC7 /* ccShaders.cpp in Sources */,
+				50E9123818C76E0100D07E0D /* UIRichText.cpp in Sources */,
 				1A57027F180BCC900088DEC7 /* CCSprite.cpp in Sources */,
 				1A570283180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
 				1A570287180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
