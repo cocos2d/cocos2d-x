@@ -24,7 +24,7 @@ Layer* createActionManagerLayer(int nIndex)
         case 0: return new CrashTest();
         case 1: return new LogicTest();
         case 2: return new PauseTest();
-        case 3: return new RemoveTest();
+        case 3: return new StopActionTest();
         case 4: return new ResumeTest();
     }
 
@@ -236,7 +236,7 @@ std::string PauseTest::subtitle() const
 // RemoveTest
 //
 //------------------------------------------------------------------
-void RemoveTest::onEnter()
+void StopActionTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
@@ -245,7 +245,7 @@ void RemoveTest::onEnter()
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
     auto pMove = MoveBy::create(2, Point(200, 0));
-    auto pCallback = CallFunc::create(CC_CALLBACK_0(RemoveTest::stopAction,this));
+    auto pCallback = CallFunc::create(CC_CALLBACK_0(StopActionTest::stopAction,this));
     auto pSequence = Sequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
@@ -256,15 +256,15 @@ void RemoveTest::onEnter()
     pChild->runAction(pSequence);
 }
 
-void RemoveTest::stopAction()
+void StopActionTest::stopAction()
 {
     auto sprite = getChildByTag(kTagGrossini);
     sprite->stopActionByTag(kTagSequence);
 }
 
-std::string RemoveTest::subtitle() const
+std::string StopActionTest::subtitle() const
 {
-    return "Remove Test";
+    return "Stop Action Test";
 }
 
 //------------------------------------------------------------------
