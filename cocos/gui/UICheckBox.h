@@ -51,17 +51,17 @@ public:
      * Default constructor
      */
     CheckBox();
-    
+
     /**
      * Default destructor
      */
     virtual ~CheckBox();
-    
+
     /**
      * Allocates and initializes.
      */
     static CheckBox* create();
-    
+
     /**
      * Load textures for checkbox.
      *
@@ -76,7 +76,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load backGround texture for checkbox.
      *
@@ -85,7 +85,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGround(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load backGroundSelected texture for checkbox.
      *
@@ -94,7 +94,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGroundSelected(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load cross texture for checkbox.
      *
@@ -103,7 +103,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureFrontCross(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load backGroundDisabled texture for checkbox.
      *
@@ -112,7 +112,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGroundDisabled(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load frontCrossDisabled texture for checkbox.
      *
@@ -121,48 +121,57 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureFrontCrossDisabled(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Sets selcted state for checkbox.
      *
      * @param selected    true that checkbox is selected, false otherwise.
      */
     void setSelectedState(bool selected);
-    
+
     /**
      * Gets selcted state of checkbox.
      *
      * @return selected    true that checkbox is selected, false otherwise.
      */
     bool getSelectedState();
-    
+
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const Point &pt) override;
-    
+
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
-    
-    //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX) override;
-    
-    //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY) override;
-    
-    //override "isFlipX" method of widget.
-    virtual bool isFlipX() override;
-    
-    //override "isFlipY" method of widget.
-    virtual bool isFlipY() override;
-    
+
+    //override "setFlippedX" method of widget.
+    virtual void setFlippedX(bool flippedX) override;
+
+    //override "setFlippedY" method of widget.
+    virtual void setFlippedY(bool flippedY) override;
+
+    //override "isFlippedX" method of widget.
+    virtual bool isFlippedX() override;
+
+    //override "isFlippedY" method of widget.
+    virtual bool isFlippedY() override;
+
+    /** @deprecated Use isFlippedX() instead */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
+    /** @deprecated Use setFlippedX() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
+    /** @deprecated Use isFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
+    /** @deprecated Use setFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
+
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
-    
+
     //override "getContentSize" method of widget.
     virtual const Size& getContentSize() const override;
-    
+
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
-    
+
     /**
      * Returns the "class name" of widget.
      */
@@ -194,13 +203,13 @@ protected:
 
     Ref*       _checkBoxEventListener;
     SEL_SelectedStateEvent    _checkBoxEventSelector;
-    
+
     TextureResType _backGroundTexType;
     TextureResType _backGroundSelectedTexType;
     TextureResType _frontCrossTexType;
     TextureResType _backGroundDisabledTexType;
     TextureResType _frontCrossDisabledTexType;
-    
+
     std::string _backGroundFileName;
     std::string _backGroundSelectedFileName;
     std::string _frontCrossFileName;
