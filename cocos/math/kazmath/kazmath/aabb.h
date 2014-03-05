@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef KAZMATH_AABB_H_INCLUDED
 #define KAZMATH_AABB_H_INCLUDED
 
-#include "CCPlatformMacros.h"
 #include "vec3.h"
 #include "utility.h"
 
@@ -35,7 +34,7 @@ extern "C" {
 #endif
 
 /**
- * A structure that represents an axis-aligned
+ * A struture that represents an axis-aligned
  * bounding box.
  */
 typedef struct kmAABB {
@@ -43,9 +42,17 @@ typedef struct kmAABB {
     kmVec3 max; /** The min corner of the box */
 } kmAABB;
 
-CC_DLL const int kmAABBContainsPoint(const kmVec3* pPoint, const kmAABB* pBox);
-CC_DLL kmAABB* const kmAABBAssign(kmAABB* pOut, const kmAABB* pIn);
-CC_DLL kmAABB* const kmAABBScale(kmAABB* pOut, const kmAABB* pIn, kmScalar s);
+
+kmAABB* kmAABBInitialize(kmAABB* pBox, const kmVec3* centre, const kmScalar width, const kmScalar height, const kmScalar depth);
+int kmAABBContainsPoint(const kmAABB* pBox, const kmVec3* pPoint);
+kmAABB* kmAABBAssign(kmAABB* pOut, const kmAABB* pIn);
+kmAABB* kmAABBScale(kmAABB* pOut, const kmAABB* pIn, kmScalar s);
+kmBool kmAABBIntersectsTriangle(kmAABB* box, const kmVec3* p1, const kmVec3* p2, const kmVec3* p3);
+kmEnum kmAABBContainsAABB(const kmAABB* container, const kmAABB* to_check);
+kmScalar kmAABBDiameterX(const kmAABB* aabb);
+kmScalar kmAABBDiameterY(const kmAABB* aabb);
+kmScalar kmAABBDiameterZ(const kmAABB* aabb);
+kmVec3* kmAABBCentre(const kmAABB* aabb, kmVec3* pOut);
 
 #ifdef __cplusplus
 }

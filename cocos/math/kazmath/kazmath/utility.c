@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011, Luke Benstead.
+Copyright (c) 2008, Luke Benstead.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -23,29 +23,47 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef RAY_2_H
-#define RAY_2_H
-
-#include "CCPlatformMacros.h"
 #include "utility.h"
-#include "vec2.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct kmRay2 {
-    kmVec2 start;
-    kmVec2 dir;
-} kmRay2;
-
-CC_DLL void kmRay2Fill(kmRay2* ray, kmScalar px, kmScalar py, kmScalar vx, kmScalar vy);
-CC_DLL kmBool kmRay2IntersectLineSegment(const kmRay2* ray, const kmVec2* p1, const kmVec2* p2, kmVec2* intersection);
-CC_DLL kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2* p2, const kmVec2* p3, kmVec2* intersection, kmVec2* normal_out);
-CC_DLL kmBool kmRay2IntersectCircle(const kmRay2* ray, const kmVec2 centre, const kmScalar radius, kmVec2* intersection);
-
-#ifdef __cplusplus
+/**
+ * Returns the square of s (e.g. s*s)
+ */
+kmScalar kmSQR(kmScalar s) {
+	return s*s;
 }
-#endif
 
-#endif
+/**
+ * Returns degrees as radians.
+ */
+kmScalar kmDegreesToRadians(kmScalar degrees) {
+	return degrees * kmPIOver180;
+}
+
+/**
+ * Returns radians as degrees
+ */
+kmScalar kmRadiansToDegrees(kmScalar radians) {
+	return radians * kmPIUnder180;
+}
+
+kmScalar kmMin(kmScalar lhs, kmScalar rhs) {
+    return (lhs < rhs)? lhs : rhs;
+}
+
+kmScalar kmMax(kmScalar lhs, kmScalar rhs) {
+    return (lhs > rhs)? lhs : rhs;
+}
+
+kmBool kmAlmostEqual(kmScalar lhs, kmScalar rhs) {
+    return (lhs + kmEpsilon > rhs && lhs - kmEpsilon < rhs);
+}
+
+kmScalar kmClamp(kmScalar x, kmScalar min, kmScalar max)
+{
+    return x < min ? min : (x > max ? max : x);
+}
+
+kmScalar kmLerp(kmScalar x, kmScalar y, kmScalar t )
+{
+    return x + t * ( y - x );
+}
