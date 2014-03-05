@@ -88,7 +88,7 @@ extern const char* cocos2dVersion(void);
 const char *Director::EVENT_PROJECTION_CHANGED = "director_projection_changed";
 const char *Director::EVENT_AFTER_DRAW = "director_after_draw";
 const char *Director::EVENT_AFTER_VISIT = "director_after_visit";
-const char *Director::EVENT_AFTER_UPDATE = "director_after_udpate";
+const char *Director::EVENT_AFTER_UPDATE = "director_after_update";
 
 Director* Director::getInstance()
 {
