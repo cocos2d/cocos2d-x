@@ -826,10 +826,13 @@ void Label::setColor(const Color3B& color)
 
 void Label::updateColor()
 {
-    V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    auto count = _textureAtlas->getTotalQuads();
+    if (nullptr == _textureAtlas)
+    {
+        return;
+    }
+
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-    
+
     // special opacity for premultiplied textures
     if (_isOpacityModifyRGB)
     {
@@ -837,13 +840,23 @@ void Label::updateColor()
         color4.g *= _displayedOpacity/255.0f;
         color4.b *= _displayedOpacity/255.0f;
     }
-    for (int index=0; index<count; ++index)
+
+    cocos2d::TextureAtlas* textureAtlas;
+    V3F_C4B_T2F_Quad *quads;
+    for (const auto& batchNode:_batchNodes)
     {
-        quads[index].bl.colors = color4;
-        quads[index].br.colors = color4;
-        quads[index].tl.colors = color4;
-        quads[index].tr.colors = color4;
-        _textureAtlas->updateQuad(&quads[index], index);
+        textureAtlas = batchNode->getTextureAtlas();
+        quads = textureAtlas->getQuads();
+        auto count = textureAtlas->getTotalQuads();
+
+        for (int index = 0; index < count; ++index)
+        {
+            quads[index].bl.colors = color4;
+            quads[index].br.colors = color4;
+            quads[index].tl.colors = color4;
+            quads[index].tr.colors = color4;
+            textureAtlas->updateQuad(&quads[index], index);
+        }
     }
 }
 
