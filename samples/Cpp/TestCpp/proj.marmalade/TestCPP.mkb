@@ -454,6 +454,11 @@ files
 	UIWidgetAddNodeTest_Editor.cpp
 	UIWidgetAddNodeTest_Editor.h
 
+	[Test/ExtensionsTest/CocoStudioGUITest/UIRichTextTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest)
+	UIRichTextTest.cpp
+	UIRichTextTest.h
+
 	[Test/ExtensionsTest/CocoStudioGUITest/CustomWidget]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget)
 	CustomImageView.cpp
