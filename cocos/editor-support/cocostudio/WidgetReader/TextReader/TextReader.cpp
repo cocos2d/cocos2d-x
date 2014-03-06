@@ -3,6 +3,9 @@
 #include "TextReader.h"
 #include "gui/UIText.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static TextReader* instanceTextReader = NULL;

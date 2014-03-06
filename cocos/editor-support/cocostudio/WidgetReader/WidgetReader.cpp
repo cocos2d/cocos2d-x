@@ -2,6 +2,9 @@
 
 #include "WidgetReader.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static WidgetReader* instanceWidgetReader = NULL;
@@ -32,7 +35,7 @@ namespace cocostudio
         CC_SAFE_DELETE(instanceWidgetReader);
     }
     
-    void WidgetReader::setPropsFromJsonDictionary(cocos2d::ui::Widget *widget, const rapidjson::Value &options)
+    void WidgetReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {        
         bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, "ignoreSize");
         if (ignoreSizeExsit)
@@ -145,7 +148,7 @@ namespace cocostudio
         }
     }
     
-    void WidgetReader::setColorPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
+    void WidgetReader::setColorPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {
         bool op = DICTOOL->checkObjectExist_json(options, "opacity");
         if (op)
@@ -166,7 +169,7 @@ namespace cocostudio
         widget->setAnchorPoint(Point(apxf, apyf));
         bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
         bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
-        widget->setFlipX(flipX);
-        widget->setFlipY(flipY);
+        widget->setFlippedX(flipX);
+        widget->setFlippedY(flipY);
     }
 }

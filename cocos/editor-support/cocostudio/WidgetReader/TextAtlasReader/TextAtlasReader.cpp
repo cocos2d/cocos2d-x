@@ -3,6 +3,9 @@
 #include "TextAtlasReader.h"
 #include "gui/UITextAtlas.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static TextAtlasReader* instanceTextAtalsReader = NULL;

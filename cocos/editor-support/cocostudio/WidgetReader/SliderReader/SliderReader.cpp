@@ -3,6 +3,9 @@
 #include "SliderReader.h"
 #include "gui/UISlider.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static SliderReader* instanceSliderReader = NULL;

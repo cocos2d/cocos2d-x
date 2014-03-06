@@ -3,6 +3,9 @@
 #include "LoadingBarReader.h"
 #include "gui/UILoadingBar.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static LoadingBarReader* instanceLoadingBar = NULL;

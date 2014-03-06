@@ -3,6 +3,9 @@
 #include "TextFieldReader.h"
 #include "gui/UITextField.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static TextFieldReader* instanceTextFieldReader = NULL;
@@ -33,7 +36,7 @@ namespace cocostudio
         WidgetReader::setPropsFromJsonDictionary(widget, options);
         
         
-        cocos2d::ui::TextField* textField = static_cast<cocos2d::ui::TextField*>(widget);
+        TextField* textField = static_cast<TextField*>(widget);
         bool ph = DICTOOL->checkObjectExist_json(options, "placeHolder");
         if (ph)
         {

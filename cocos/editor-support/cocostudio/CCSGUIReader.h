@@ -34,7 +34,7 @@ namespace cocostudio {
 
 #define kCCSVersion 1.0
     
-typedef void (Ref::*SEL_ParseEvent)(const std::string&, Ref*, const rapidjson::Value&);
+    typedef void (cocos2d::Ref::*SEL_ParseEvent)(const std::string&, cocos2d::Ref*, const rapidjson::Value&);
 #define parseselector(_SELECTOR) (SEL_ParseEvent)(&_SELECTOR)
 
 class GUIReader : public cocos2d::Ref

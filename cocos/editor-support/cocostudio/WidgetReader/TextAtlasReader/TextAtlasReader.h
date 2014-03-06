@@ -39,7 +39,7 @@ namespace cocostudio
         
         static TextAtlasReader* getInstance();
         
-        virtual void setPropsFromJsonDictionary(Widget* widget, const rapidjson::Value& options);
+        virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
     };
 }
 
