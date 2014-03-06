@@ -325,10 +325,10 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::onDraw()
+void MotionStreak::onDraw(const kmMat4 &transform, bool transformUpdated)
 {  
     getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+    getShaderProgram()->setUniformsForBuiltins(transform);
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
@@ -360,9 +360,8 @@ void MotionStreak::draw(Renderer *renderer, const kmMat4 &transform, bool transf
     if(_nuPoints <= 1)
         return;
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
-
 }
 
 NS_CC_END

@@ -381,7 +381,7 @@ void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool t
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
-        CC_NODE_DRAW_SETUP();
+//        CC_NODE_DRAW_SETUP();
     }
 
 
@@ -418,7 +418,7 @@ void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool t
             default:
             {
                 node->visit(renderer, transform, transformUpdated);
-                CC_NODE_DRAW_SETUP();
+//                CC_NODE_DRAW_SETUP();
             }
             break;
             }
@@ -426,7 +426,7 @@ void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool t
         else if(Node *node = dynamic_cast<Node *>(object))
         {
             node->visit(renderer, transform, transformUpdated);
-            CC_NODE_DRAW_SETUP();
+//            CC_NODE_DRAW_SETUP();
         }
     }
 }

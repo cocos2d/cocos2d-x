@@ -34,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define KM_PLANE_FAR 5
 
 #include "CCPlatformMacros.h"
+
 #include "utility.h"
 
 struct kmVec3;
@@ -41,28 +42,33 @@ struct kmVec4;
 struct kmMat4;
 
 typedef struct kmPlane {
-    kmScalar     a, b, c, d;
+	kmScalar 	a, b, c, d;
 } kmPlane;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef enum POINT_CLASSIFICATION {
-    POINT_INFRONT_OF_PLANE = 0,
-    POINT_BEHIND_PLANE,
-    POINT_ON_PLANE,
-} POINT_CLASSIFICATION;
+typedef enum KM_POINT_CLASSIFICATION {
+    POINT_BEHIND_PLANE = -1,
+    POINT_ON_PLANE = 0,
+    POINT_INFRONT_OF_PLANE = 1
+} KM_POINT_CLASSIFICATION;
 
-CC_DLL const kmScalar kmPlaneDot(const kmPlane* pP, const struct kmVec4* pV);
-CC_DLL const kmScalar kmPlaneDotCoord(const kmPlane* pP, const struct kmVec3* pV);
-CC_DLL const kmScalar kmPlaneDotNormal(const kmPlane* pP, const struct kmVec3* pV);
-CC_DLL kmPlane* const kmPlaneFromPointNormal(kmPlane* pOut, const struct kmVec3* pPoint, const struct kmVec3* pNormal);
-CC_DLL kmPlane* const kmPlaneFromPoints(kmPlane* pOut, const struct kmVec3* p1, const struct kmVec3* p2, const struct kmVec3* p3);
-CC_DLL kmVec3*  const kmPlaneIntersectLine(struct kmVec3* pOut, const kmPlane* pP, const struct kmVec3* pV1, const struct kmVec3* pV2);
-CC_DLL kmPlane* const kmPlaneNormalize(kmPlane* pOut, const kmPlane* pP);
-CC_DLL kmPlane* const kmPlaneScale(kmPlane* pOut, const kmPlane* pP, kmScalar s);
-CC_DLL const POINT_CLASSIFICATION kmPlaneClassifyPoint(const kmPlane* pIn, const kmVec3* pP); /** Classifies a point against a plane */
+CC_DLL kmPlane* kmPlaneFill(kmPlane* plane, float a, float b, float c, float d);
+CC_DLL kmScalar kmPlaneDot(const kmPlane* pP, const struct kmVec4* pV);
+CC_DLL kmScalar kmPlaneDotCoord(const kmPlane* pP, const struct kmVec3* pV);
+CC_DLL kmScalar kmPlaneDotNormal(const kmPlane* pP, const struct kmVec3* pV);
+CC_DLL kmPlane* kmPlaneFromNormalAndDistance(kmPlane* plane, const struct kmVec3* normal, const kmScalar dist);
+CC_DLL kmPlane* kmPlaneFromPointAndNormal(kmPlane* pOut, const struct kmVec3* pPoint, const struct kmVec3* pNormal);
+CC_DLL kmPlane* kmPlaneFromPoints(kmPlane* pOut, const struct kmVec3* p1, const struct kmVec3* p2, const struct kmVec3* p3);
+CC_DLL struct kmVec3* kmPlaneIntersectLine(struct kmVec3* pOut, const kmPlane* pP, const struct kmVec3* pV1, const struct kmVec3* pV2);
+CC_DLL kmPlane* kmPlaneNormalize(kmPlane* pOut, const kmPlane* pP);
+CC_DLL kmPlane* kmPlaneScale(kmPlane* pOut, const kmPlane* pP, kmScalar s);
+CC_DLL KM_POINT_CLASSIFICATION kmPlaneClassifyPoint(const kmPlane* pIn, const struct kmVec3* pP); /** Classifys a point against a plane */
+
+CC_DLL kmPlane* kmPlaneExtractFromMat4(kmPlane* pOut, const struct kmMat4* pIn, kmInt row);
+CC_DLL struct kmVec3* kmPlaneGetIntersection(struct kmVec3* pOut, const kmPlane* p1, const kmPlane* p2, const kmPlane* p3);
 
 #ifdef __cplusplus
 }

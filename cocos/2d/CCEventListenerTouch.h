@@ -43,6 +43,7 @@ public:
     virtual ~EventListenerTouchOneByOne();
     
     void setSwallowTouches(bool needSwallow);
+    bool isSwallowTouches();
     
     /// Overrides
     virtual EventListenerTouchOneByOne* clone() override;

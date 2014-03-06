@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
-#include "CCPlatformMacros.h"
 #include "utility.h"
 
 struct kmMat4;
@@ -38,15 +37,15 @@ struct kmMat3;
 struct kmVec3;
 
 typedef struct kmQuaternion {
-    kmScalar x;
-    kmScalar y;
-    kmScalar z;
-    kmScalar w;
+	kmScalar x;
+	kmScalar y;
+	kmScalar z;
+	kmScalar w;
 } kmQuaternion;
 
-CC_DLL kmQuaternion* const kmQuaternionConjugate(kmQuaternion* pOut, const kmQuaternion* pIn); ///< Returns pOut, sets pOut to the conjugate of pIn
-
-CC_DLL const kmScalar     kmQuaternionDot(const kmQuaternion* q1, const kmQuaternion* q2); ///< Returns the dot product of the 2 quaternions
+CC_DLL int kmQuaternionAreEqual(const kmQuaternion* p1, const kmQuaternion* p2);
+CC_DLL kmQuaternion* kmQuaternionFill(kmQuaternion* pOut, kmScalar x, kmScalar y, kmScalar z, kmScalar w);
+CC_DLL kmScalar 	kmQuaternionDot(const kmQuaternion* q1, const kmQuaternion* q2); ///< Returns the dot product of the 2 quaternions
 
 CC_DLL kmQuaternion* kmQuaternionExp(kmQuaternion* pOut, const kmQuaternion* pIn); ///< Returns the exponential of the quaternion
 
@@ -56,8 +55,7 @@ CC_DLL kmQuaternion* kmQuaternionIdentity(kmQuaternion* pOut);
 
 ///< Returns the inverse of the passed Quaternion
 
-CC_DLL kmQuaternion* kmQuaternionInverse(kmQuaternion* pOut,
-                                            const kmQuaternion* pIn);
+CC_DLL kmQuaternion* kmQuaternionInverse(kmQuaternion* pOut, const kmQuaternion* pIn);
 
 ///< Returns true if the quaternion is an identity quaternion
 
@@ -85,7 +83,7 @@ CC_DLL kmQuaternion* kmQuaternionNormalize(kmQuaternion* pOut, const kmQuaternio
 
 ///< Rotates a quaternion around an axis
 
-CC_DLL kmQuaternion* kmQuaternionRotationAxis(kmQuaternion* pOut, const struct kmVec3* pV, kmScalar angle);
+CC_DLL kmQuaternion* kmQuaternionRotationAxisAngle(kmQuaternion* pOut, const struct kmVec3* pV, kmScalar angle);
 
 ///< Creates a quaternion from a rotation matrix
 
@@ -93,7 +91,7 @@ CC_DLL kmQuaternion* kmQuaternionRotationMatrix(kmQuaternion* pOut, const struct
 
 ///< Create a quaternion from yaw, pitch and roll
 
-CC_DLL kmQuaternion* kmQuaternionRotationYawPitchRoll(kmQuaternion* pOut, kmScalar yaw, kmScalar pitch, kmScalar roll);
+CC_DLL kmQuaternion* kmQuaternionRotationPitchYawRoll(kmQuaternion* pOut, kmScalar pitch, kmScalar yaw, kmScalar roll);
 ///< Interpolate between 2 quaternions
 CC_DLL kmQuaternion* kmQuaternionSlerp(kmQuaternion* pOut, const kmQuaternion* q1, const kmQuaternion* q2, kmScalar t);
 
@@ -104,8 +102,21 @@ CC_DLL void kmQuaternionToAxisAngle(const kmQuaternion* pIn, struct kmVec3* pVec
 CC_DLL kmQuaternion* kmQuaternionScale(kmQuaternion* pOut, const kmQuaternion* pIn, kmScalar s);
 CC_DLL kmQuaternion* kmQuaternionAssign(kmQuaternion* pOut, const kmQuaternion* pIn);
 CC_DLL kmQuaternion* kmQuaternionAdd(kmQuaternion* pOut, const kmQuaternion* pQ1, const kmQuaternion* pQ2);
+CC_DLL kmQuaternion* kmQuaternionSubtract(kmQuaternion* pOut, const kmQuaternion* pQ1, const kmQuaternion* pQ2);
+
 CC_DLL kmQuaternion* kmQuaternionRotationBetweenVec3(kmQuaternion* pOut, const struct kmVec3* vec1, const struct kmVec3* vec2, const struct kmVec3* fallback);
 CC_DLL struct kmVec3* kmQuaternionMultiplyVec3(struct kmVec3* pOut, const kmQuaternion* q, const struct kmVec3* v);
+
+CC_DLL kmVec3* kmQuaternionGetUpVec3(kmVec3* pOut, const kmQuaternion* pIn);
+CC_DLL kmVec3* kmQuaternionGetRightVec3(kmVec3* pOut, const kmQuaternion* pIn);
+CC_DLL kmVec3* kmQuaternionGetForwardVec3RH(kmVec3* pOut, const kmQuaternion* pIn);
+CC_DLL kmVec3* kmQuaternionGetForwardVec3LH(kmVec3* pOut, const kmQuaternion* pIn);
+
+CC_DLL kmScalar kmQuaternionGetPitch(const kmQuaternion* q);
+CC_DLL kmScalar kmQuaternionGetYaw(const kmQuaternion* q);
+CC_DLL kmScalar kmQuaternionGetRoll(const kmQuaternion* q);
+
+CC_DLL kmQuaternion* kmQuaternionLookRotation(kmQuaternion* pOut, const kmVec3* direction, const kmVec3* up);
 
 #ifdef __cplusplus
 }

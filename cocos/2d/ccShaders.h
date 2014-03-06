@@ -68,11 +68,8 @@ extern CC_DLL const GLchar * ccLabelDistanceFieldNormal_vert;
 extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_frag;
 extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_vert;
 
-extern CC_DLL const GLchar * ccLabelDistanceFieldOutline_frag;
-extern CC_DLL const GLchar * ccLabelDistanceFieldOutline_vert;
-
-extern CC_DLL const GLchar * ccLabelDistanceFieldShadow_frag;
-extern CC_DLL const GLchar * ccLabelDistanceFieldShadow_vert;
+extern CC_DLL const GLchar * ccLabelOutline_frag;
+extern CC_DLL const GLchar * ccLabelOutline_vert;
 
 extern CC_DLL const GLchar * ccExSwitchMask_frag;
 

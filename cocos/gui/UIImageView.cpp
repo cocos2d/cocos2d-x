@@ -127,29 +127,29 @@ void ImageView::setTextureRect(const Rect &rect)
     }
 }
 
-void ImageView::setFlipX(bool flipX)
+void ImageView::setFlippedX(bool flippedX)
 {
     if (_scale9Enabled)
     {
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlippedX(flipX);
+        STATIC_CAST_CCSPRITE->setFlippedX(flippedX);
     }
 }
 
-void ImageView::setFlipY(bool flipY)
+void ImageView::setFlippedY(bool flippedY)
 {
     if (_scale9Enabled)
     {
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlippedY(flipY);
+        STATIC_CAST_CCSPRITE->setFlippedY(flippedY);
     }
 }
 
-bool ImageView::isFlipX()
+bool ImageView::isFlippedX()
 {
     if (_scale9Enabled)
     {
@@ -161,7 +161,7 @@ bool ImageView::isFlipX()
     }
 }
 
-bool ImageView::isFlipY()
+bool ImageView::isFlippedY()
 {
     if (_scale9Enabled)
     {

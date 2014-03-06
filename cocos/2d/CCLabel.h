@@ -57,20 +57,29 @@ typedef struct _ttfConfig
     GlyphCollection glyphs;
     const char *customGlyphs;
     bool distanceFieldEnabled;
+    int outlineSize;
 
-    _ttfConfig(const char* filePath,int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
-        const char *customGlyphCollection = nullptr,bool useDistanceField = false)
+    _ttfConfig(const char* filePath = "",int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
+        const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
         ,glyphs(glyphCollection)
         ,customGlyphs(customGlyphCollection)
         ,distanceFieldEnabled(useDistanceField)
-    {}
+        ,outlineSize(outline)
+    {
+        if(outline > 0)
+        {
+            distanceFieldEnabled = false;
+        }
+    }
 }TTFConfig;
 
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
+    static const int DefultFontSize;
+
     static Label* create();
 
     CC_DEPRECATED_ATTRIBUTE static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::LEFT, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
@@ -82,18 +91,33 @@ public:
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     static Label * createWithCharMap(const std::string& plistFile);
 
-    bool setTTFConfig(const TTFConfig& ttfConfig);
+    virtual bool setTTFConfig(const TTFConfig& ttfConfig);
 
-    bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
 
-    bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
-    bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
-    bool setCharMap(const std::string& plistFile);
+    virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    virtual bool setCharMap(const std::string& plistFile);
 
     virtual void setString(const std::string& text) override;
 
-    //only support for TTF
-    void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
+    CC_DEPRECATED_ATTRIBUTE void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
+
+    /**
+     * Enable shadow for the label
+     *
+     * @todo support blur for shadow effect
+     */
+    virtual void enableShadow(const Color3B& shadowColor = Color3B::BLACK,const Size &offset = Size(2,-2), float opacity = 0.75f, int blurRadius = 0);
+
+    /** only support for TTF */
+    virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
+
+    /** only support for TTF */
+    virtual void enableGlow(const Color3B& glowColor);
+
+    /** disable shadow/outline/glow rendering */
+    virtual void disableEffect();
     
     virtual void setAlignment(TextHAlignment alignment);
     CC_DEPRECATED_ATTRIBUTE void setWidth(float width) { setMaxLineWidth(width);}
@@ -112,29 +136,30 @@ public:
     virtual Sprite * getLetter(int lettetIndex);
 
     // font related stuff
-    virtual int getCommonLineHeight() const;  
-
+    int getCommonLineHeight() const;  
     
     // string related stuff
-    virtual int getStringNumLines() const;
-    virtual int getStringLenght() const;
-    virtual TextHAlignment getTextAlignment() const;
+    int getStringNumLines() const;
+    int getStringLenght() const;
+    TextHAlignment getTextAlignment() const;
     
     // label related stuff
-    virtual float getMaxLineWidth() const;
-    virtual bool breakLineWithoutSpace() const;
+    CC_DEPRECATED_ATTRIBUTE float getWidth() const { return getMaxLineWidth(); }
+    float getMaxLineWidth() const;
+    bool breakLineWithoutSpace() const;
     
     virtual const std::string& getString() const override {  return _originalUTF8String; }
-    void addChild(Node * child, int zOrder=0, int tag=0) override;
+    virtual void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
-    virtual void onDraw();
 
-    virtual FontAtlas* getFontAtlas() const {return _fontAtlas;}
+    FontAtlas* getFontAtlas() const {return _fontAtlas;}
 
-private:
+protected:
+    void onDraw(const kmMat4& transform, bool transformUpdated);
+
     struct LetterInfo
     {
         FontLetterDefinition def;
@@ -150,19 +175,19 @@ private:
     * @js NA
     * @lua NA
     */
-    ~Label();
+    virtual ~Label();
 
-    bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+    virtual bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     // CCLabelTextFormat protocol implementation
-    virtual bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
-    virtual bool recordPlaceholderInfo(int spriteIndex);
+    bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
+    bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
 
-    bool init();
+    virtual bool init();
     
-    void alignText();   
+    virtual void alignText();
     
     bool computeHorizontalKernings(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
@@ -173,6 +198,10 @@ private:
     void updateSpriteWithLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture);
 
     virtual void updateColor() override;
+
+    virtual void initProgram();
+
+    void drawShadowWithoutBlur();
 
     //! used for optimization
     Sprite *_reusedLetter;
@@ -203,6 +232,19 @@ private:
     int           _currNumLines;
 
     std::vector<SpriteBatchNode*> _batchNodes;
+
+    Size    _shadowOffset;
+    float   _shadowOpacity;
+    int     _shadowBlurRadius;
+
+    Color4B _outlineColor;
+
+    TTFConfig _fontConfig;
+
+    kmMat4 _parentTransform;
+    
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Label);
 
     friend class LabelTextFormatter;
 };

@@ -975,7 +975,7 @@ public:
         return sprite;
     }
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 
 protected:
     CustomCommand _customCommand;
@@ -985,13 +985,14 @@ protected:
 void MySprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void MySprite::onDraw()
+void MySprite::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    CC_NODE_DRAW_SETUP();
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
@@ -1012,7 +1013,6 @@ void MySprite::onDraw()
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
