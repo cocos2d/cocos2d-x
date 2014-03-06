@@ -3,7 +3,10 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$DIR"/../..
 
-COMMITTAG="[AUTO][ci skip]"
+COMMITTAG="[AUTO][ci skip]: updating cocos2dx_files.json"
+PUSH_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
+OUTPUT_FILE_PATH="${PROJECT_ROOT}/templates/cocos2dx_files.json"
+
 
 # Exit on error
 set -e
@@ -11,7 +14,7 @@ set -e
 generate_cocosfiles_json()
 {
     echo "Updates cocos_files.json"
-    ./for-each-file-in-dir.sh > ${PROJECT_ROOT}/templates/cocos2dx_files.json
+    ./for-each-file-in-dir.sh > "${OUTPUT_FILE_PATH}"
 }
 
 if [ "$GEN_COCOS_FILES"x != "YES"x ]; then
@@ -32,12 +35,6 @@ generate_cocosfiles_json
 echo
 echo cocos_files.json was generated successfully
 echo
-
-
-if [ -z "${COMMITTAG+aaa}" ]; then
-# ... if COMMITTAG is not set, use this machine's hostname
-    COMMITTAG=`hostname -s`
-fi
 
 echo
 echo Using "'$COMMITTAG'" in the commit messages
@@ -85,11 +82,10 @@ COCOS_BRANCH=update_cocosfiles_"$ELAPSEDSECS"
 
 pushd "${DIR}"
 
-# 3. In Cocos2D-X repo, Checkout a branch named "updategeneratedsubmodule" Update the submodule reference to point to the commit with generated bindings
 cd "${PROJECT_ROOT}"
 git add .
 git checkout -b "$COCOS_BRANCH"
-git commit -m "$COMMITTAG : updating tools/project-creator/module/cocos_files.json"
+git commit -m "$COMMITTAG"
 #Set remotes
 git remote add upstream https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git 2> /dev/null > /dev/null
 # 4. In Cocos2D-X repo, Push the commit to cocos2d-x repository
@@ -99,6 +95,6 @@ git push -fq upstream "$COCOS_BRANCH" 2> /dev/null
 
 # 5. 
 echo "Sending Pull Request to base repo ..."
-curl --user "${GH_USER}:${GH_PASSWORD}" --request POST --data "{ \"title\": \"$COMMITTAG : updating tools/project-creator/module/cocos_files.json\", \"body\": \"\", \"head\": \"${GH_USER}:${COCOS_BRANCH}\", \"base\": \"${TRAVIS_BRANCH}\"}" https://api.github.com/repos/cocos2d/cocos2d-x/pulls 2> /dev/null > /dev/null
+curl --user "${GH_USER}:${GH_PASSWORD}" --request POST --data "{ \"title\": \"$COMMITTAG\", \"body\": \"\", \"head\": \"${GH_USER}:${COCOS_BRANCH}\", \"base\": \"${TRAVIS_BRANCH}\"}" "${PUSH_REPO}" 2> /dev/null > /dev/null
 
 popd
