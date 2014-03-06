@@ -101,6 +101,7 @@
 		15A3D5631682F20C002FB0C5 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4621682F14C002FB0C5 /* main.js */; };
 		15A3D5651682F20C002FB0C5 /* tests_resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4711682F14C002FB0C5 /* tests_resources-jsb.js */; };
 		15A3D5681682F20C002FB0C5 /* tests-main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A3D4741682F14C002FB0C5 /* tests-main.js */; };
+		15F8E09F18C87A87006C3EE8 /* FileTest in Resources */ = {isa = PBXBuildFile; fileRef = 15F8E09E18C87A87006C3EE8 /* FileTest */; };
 		1A05B4BE174F6F5400BFE80B /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A05B4BD174F6F5400BFE80B /* jsb_websocket.cpp */; };
 		1A2757BE1697FBE500504026 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B01697FAAD00504026 /* jsb_chipmunk.js */; };
 		1A2757BF1697FBE500504026 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2757B11697FAAD00504026 /* jsb_cocos2d.js */; };
@@ -201,7 +202,6 @@
 		1AA51AAA16F708FA000FDF05 /* EffectsTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A8316F708FA000FDF05 /* EffectsTest */; };
 		1AA51AAB16F708FA000FDF05 /* EventTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A8416F708FA000FDF05 /* EventTest */; };
 		1AA51AAC16F708FA000FDF05 /* ExtensionsTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A8516F708FA000FDF05 /* ExtensionsTest */; };
-		1AA51AAD16F708FA000FDF05 /* FileUtils in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A8616F708FA000FDF05 /* FileUtils */; };
 		1AA51AAE16F708FA000FDF05 /* FontTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A8716F708FA000FDF05 /* FontTest */; };
 		1AA51AAF16F708FA000FDF05 /* IntervalTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A8816F708FA000FDF05 /* IntervalTest */; };
 		1AA51AB016F708FA000FDF05 /* LabelTest in Resources */ = {isa = PBXBuildFile; fileRef = 1AA51A8916F708FA000FDF05 /* LabelTest */; };
@@ -683,6 +683,7 @@
 		15DB6536184C2ACC002905B6 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		15DB6537184C2ACC002905B6 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		15DB6538184C2ACC002905B6 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		15F8E09E18C87A87006C3EE8 /* FileTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FileTest; path = ../../Shared/tests/FileTest; sourceTree = "<group>"; };
 		1A05B47E174F34B800BFE80B /* jsb_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_helper.h; sourceTree = "<group>"; };
 		1A05B4BC174F6F4C00BFE80B /* jsb_websocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_websocket.h; sourceTree = "<group>"; };
 		1A05B4BD174F6F5400BFE80B /* jsb_websocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_websocket.cpp; sourceTree = "<group>"; };
@@ -786,7 +787,6 @@
 		1AA51A8316F708FA000FDF05 /* EffectsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EffectsTest; path = ../../Shared/tests/EffectsTest; sourceTree = "<group>"; };
 		1AA51A8416F708FA000FDF05 /* EventTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EventTest; path = ../../Shared/tests/EventTest; sourceTree = "<group>"; };
 		1AA51A8516F708FA000FDF05 /* ExtensionsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ExtensionsTest; path = ../../Shared/tests/ExtensionsTest; sourceTree = "<group>"; };
-		1AA51A8616F708FA000FDF05 /* FileUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FileUtils; path = ../../Shared/tests/FileUtils; sourceTree = "<group>"; };
 		1AA51A8716F708FA000FDF05 /* FontTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FontTest; path = ../../Shared/tests/FontTest; sourceTree = "<group>"; };
 		1AA51A8816F708FA000FDF05 /* IntervalTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = IntervalTest; path = ../../Shared/tests/IntervalTest; sourceTree = "<group>"; };
 		1AA51A8916F708FA000FDF05 /* LabelTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LabelTest; path = ../../Shared/tests/LabelTest; sourceTree = "<group>"; };
@@ -1807,6 +1807,7 @@
 		D401B5FC16FB169100F2529D /* js_src_raw */ = {
 			isa = PBXGroup;
 			children = (
+				15F8E09E18C87A87006C3EE8 /* FileTest */,
 				1AA51A7816F708FA000FDF05 /* ActionManagerTest */,
 				1AA51A7916F708FA000FDF05 /* ActionsTest */,
 				1AA51A7A16F708FA000FDF05 /* BaseTestLayer */,
@@ -1824,7 +1825,6 @@
 				1AA51A8316F708FA000FDF05 /* EffectsTest */,
 				1AA51A8416F708FA000FDF05 /* EventTest */,
 				1AA51A8516F708FA000FDF05 /* ExtensionsTest */,
-				1AA51A8616F708FA000FDF05 /* FileUtils */,
 				1AA51A8716F708FA000FDF05 /* FontTest */,
 				1AA51A8816F708FA000FDF05 /* IntervalTest */,
 				1AA51A8916F708FA000FDF05 /* LabelTest */,
@@ -2017,7 +2017,6 @@
 				1AA51AAA16F708FA000FDF05 /* EffectsTest in Resources */,
 				1AA51AAB16F708FA000FDF05 /* EventTest in Resources */,
 				1AA51AAC16F708FA000FDF05 /* ExtensionsTest in Resources */,
-				1AA51AAD16F708FA000FDF05 /* FileUtils in Resources */,
 				1AA51AAE16F708FA000FDF05 /* FontTest in Resources */,
 				1AA51AAF16F708FA000FDF05 /* IntervalTest in Resources */,
 				1AA51AB016F708FA000FDF05 /* LabelTest in Resources */,
@@ -2051,6 +2050,7 @@
 				A22656EF1743DCBB00598A2C /* ClippingNodeTest in Resources */,
 				1A729AC117E1C60B00F37B6A /* MotionStreakTest in Resources */,
 				1AAB66F51831FD6A0091F8AC /* CocoStudioTest in Resources */,
+				15F8E09F18C87A87006C3EE8 /* FileTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
