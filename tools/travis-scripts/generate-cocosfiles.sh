@@ -7,14 +7,13 @@ COMMITTAG="[AUTO][ci skip]: updating cocos2dx_files.json"
 PUSH_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 OUTPUT_FILE_PATH="${PROJECT_ROOT}/templates/cocos2dx_files.json"
 
-
 # Exit on error
 set -e
 
 generate_cocosfiles_json()
 {
     echo "Updates cocos_files.json"
-    ./for-each-file-in-dir.sh > "${OUTPUT_FILE_PATH}"
+    ./generate-template-files.py
 }
 
 if [ "$GEN_COCOS_FILES"x != "YES"x ]; then
