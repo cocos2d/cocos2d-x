@@ -163,16 +163,16 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
     auto shader = new GLProgram();
-    shader->initWithVertexShaderFilename(vert, frag);
+    shader->initWithFilenames(vert, frag);
 
-    shader->addAttribute("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
+    shader->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
     shader->link();
 
     shader->updateUniforms();
 
-    _uniformCenter = glGetUniformLocation(shader->getProgram(), "center");
-    _uniformResolution = glGetUniformLocation(shader->getProgram(), "resolution");
-    _uniformTime = glGetUniformLocation(shader->getProgram(), "time");
+    _uniformCenter = shader->getUniformLocation("center");
+    _uniformResolution = shader->getUniformLocation("resolution");
+    _uniformTime = shader->getUniformLocation("time");
 
     this->setShaderProgram(shader);
 
@@ -191,31 +191,29 @@ void ShaderNode::setPosition(const Point &newPosition)
     _center = Vertex2F(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
-void ShaderNode::draw()
+void ShaderNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw()
+void ShaderNode::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    CC_NODE_DRAW_SETUP();
-    
-    float w = SIZE_X, h = SIZE_Y;
-    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-    
-    //
-    // Uniforms
-    //
-    getShaderProgram()->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
-    getShaderProgram()->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
+    auto shader = getShaderProgram();
+    shader->use();
+    shader->setUniformsForBuiltins(transform);
+    shader->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
+    shader->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
     
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
     
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-    
+
+    float w = SIZE_X, h = SIZE_Y;
+    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
+
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -433,19 +431,26 @@ public:
     ~SpriteBlur();
     void setBlurSize(float f);
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
-    void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     void initProgram();
 
     static SpriteBlur* create(const char *pszFileName);
 
-    Point blur_;
-    GLfloat    sub_[4];
-
-    GLuint    blurLocation;
-    GLuint    subLocation;
 protected:
-    void onDraw();
-private:
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
+    int       _blurRadius;
+    Point     _pixelSize;
+
+    int       _samplingRadius;
+    //gaussian = cons * exp( (dx*dx + dy*dy) * scale);
+    float     _scale;
+    float     _cons;
+    float     _weightSum;
+
+    GLuint    pixelSizeLocation;
+    GLuint    coefficientLocation;
+
     CustomCommand _customCommand;
 };
 
@@ -470,6 +475,7 @@ SpriteBlur* SpriteBlur::create(const char *pszFileName)
 
 bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 {
+    _blurRadius = 0;
     if( Sprite::initWithTexture(texture, rect) ) 
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -483,11 +489,10 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         
         auto s = getTexture()->getContentSizeInPixels();
 
-        blur_ = Point(1/s.width, 1/s.height);
-        sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
-
+        _pixelSize = Point(1/s.width, 1/s.height);
+        _samplingRadius = 0;
         this->initProgram();
-        
+
         return true;
     }
 
@@ -497,51 +502,52 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 void SpriteBlur::initProgram()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
-                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();
-    auto pProgram = new GLProgram();
-    pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
-    setShaderProgram(pProgram);
-    pProgram->release();
+                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
+    auto program = new GLProgram();
+    program->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
+    setShaderProgram(program);
+    program->release();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+
+    CHECK_GL_ERROR_DEBUG();
+    
+    program->link();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->link();
+    program->updateUniforms();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->updateUniforms();
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    subLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "substract");
-    blurLocation = glGetUniformLocation( getShaderProgram()->getProgram(), "blurSize");
-    
+    pixelSizeLocation = program->getUniformLocation("onePixelSize");
+    coefficientLocation = program->getUniformLocation("gaussianCoefficient");
+
     CHECK_GL_ERROR_DEBUG();
 }
 
-void SpriteBlur::draw()
+void SpriteBlur::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
 
-void SpriteBlur::onDraw()
+void SpriteBlur::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
     GL::blendFunc(blend.src, blend.dst);
-    
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins();
-    getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
-    getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
+
+    auto program = getShaderProgram();
+    program->use();
+    program->setUniformsForBuiltins(transform);
+    program->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
+    program->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
     
     GL::bindTexture2D( getTexture()->getName());
     
@@ -563,7 +569,6 @@ void SpriteBlur::onDraw()
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     
-    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
@@ -571,10 +576,37 @@ void SpriteBlur::onDraw()
 
 void SpriteBlur::setBlurSize(float f)
 {
-    auto s = getTexture()->getContentSizeInPixels();
+    if(_blurRadius == (int)f)
+        return;
+    _blurRadius = (int)f;
 
-    blur_ = Point(1/s.width, 1/s.height);
-    blur_ = blur_ * f;
+    _samplingRadius = _blurRadius;
+    if (_samplingRadius > 10)
+    {
+        _samplingRadius = 10;
+    }
+    if (_blurRadius > 0)
+    {
+        float sigma = _blurRadius / 2.0f;
+        _scale = -0.5f / (sigma * sigma);
+        _cons = -1.0f * _scale / 3.141592f;
+        _weightSum = -_cons;
+
+        float weight;
+        int squareX;
+        for(int dx = 0; dx <= _samplingRadius; ++dx)
+        {
+            squareX = dx * dx;
+            weight = _cons * exp(squareX * _scale);
+            _weightSum += 2.0 * weight;
+            for (int dy = 1; dy <= _samplingRadius; ++dy)
+            {
+                weight = _cons * exp((squareX + dy * dy) * _scale);
+                _weightSum += 4.0 * weight;
+            }
+        }
+    }
+    log("_blurRadius:%d",_blurRadius);
 }
 
 // ShaderBlur
@@ -597,16 +629,17 @@ std::string ShaderBlur::subtitle() const
 ControlSlider* ShaderBlur::createSliderCtl()
 {
     auto screenSize = Director::getInstance()->getWinSize();
-
+    
     ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
     slider->setAnchorPoint(Point(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
-    slider->setMaximumValue(3.0f); // Sets the max value of range
-    slider->setValue(1.0f);
+    slider->setMaximumValue(25.0f); // Sets the max value of range
+    
     slider->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), Control::EventType::VALUE_CHANGED);
+    slider->setValue(2.0f);
 
     return slider;
  
@@ -657,24 +690,22 @@ bool ShaderRetroEffect::init()
 
         GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
         auto p = new GLProgram();
-        p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
+        p->initWithByteArrays(ccPositionTexture_vert, fragSource);
 
-        p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
         p->link();
         p->updateUniforms();
 
-
         auto director = Director::getInstance();
         auto s = director->getWinSize();
 
-        _label = LabelBMFont::create("RETRO EFFECT", "fonts/west_england-64.fnt");
-
+        _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
+        _label->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _label->setShaderProgram(p);
 
         p->release();
-
 
         _label->setPosition(Point(s.width/2,s.height/2));
 
@@ -690,10 +721,10 @@ bool ShaderRetroEffect::init()
 void ShaderRetroEffect::update(float dt)
 {
     _accum += dt;
-
-    int i=0;
-    for(const auto &sprite : _label->getChildren()) {
-        i++;
+    int letterCount = _label->getStringLenght();
+    for (int i = 0; i < letterCount; ++i)
+    {
+        auto sprite = _label->getLetter(i);
         auto oldPosition = sprite->getPosition();
         sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
         
@@ -746,10 +777,10 @@ gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
 ShaderFail::ShaderFail()
 {
     auto p = new GLProgram();
-    p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
+    p->initWithByteArrays(ccPositionTexture_vert, shader_frag_fail);
     
-    p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     p->link();
     p->updateUniforms();

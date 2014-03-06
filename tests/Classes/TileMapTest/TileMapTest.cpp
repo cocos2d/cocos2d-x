@@ -755,18 +755,17 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXOrthoObjectsTest::draw()
+void TMXOrthoObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
+    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_renderCmd);
 }
 
-void TMXOrthoObjectsTest::onDraw()
+void TMXOrthoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
     
     auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
     auto pos = map->getPosition();
@@ -793,7 +792,7 @@ void TMXOrthoObjectsTest::onDraw()
         glLineWidth(1);
     }
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 std::string TMXOrthoObjectsTest::title() const
@@ -829,19 +828,18 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
-void TMXIsoObjectsTest::draw()
+void TMXIsoObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
+    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_renderCmd);
 }
 
-void TMXIsoObjectsTest::onDraw()
+void TMXIsoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
-    
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     auto map = (TMXTiledMap*) getChildByTag(kTagTileMap);
     auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Group 1");
@@ -865,7 +863,7 @@ void TMXIsoObjectsTest::onDraw()
         glLineWidth(1);
     }
 
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 std::string TMXIsoObjectsTest::title() const
@@ -1513,19 +1511,18 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 }
 
-void TMXGIDObjectsTest::draw()
+void TMXGIDObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
+    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_renderCmd);
 }
 
-void TMXGIDObjectsTest::onDraw()
+void TMXGIDObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
-    
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
     auto pos = map->getPosition();
     auto group = map->getObjectGroup("Object Layer 1");
@@ -1550,7 +1547,7 @@ void TMXGIDObjectsTest::onDraw()
         glLineWidth(1);
     }
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 std::string TMXGIDObjectsTest::title() const

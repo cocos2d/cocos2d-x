@@ -142,19 +142,20 @@ renderer/CCRenderMaterial.cpp \
 ../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
-../math/kazmath/src/aabb.c \
-../math/kazmath/src/mat3.c \
-../math/kazmath/src/mat4.c \
-../math/kazmath/src/neon_matrix_impl.c \
-../math/kazmath/src/plane.c \
-../math/kazmath/src/quaternion.c \
-../math/kazmath/src/ray2.c \
-../math/kazmath/src/utility.c \
-../math/kazmath/src/vec2.c \
-../math/kazmath/src/vec3.c \
-../math/kazmath/src/vec4.c \
-../math/kazmath/src/GL/mat4stack.c \
-../math/kazmath/src/GL/matrix.c \
+../math/kazmath/kazmath/aabb.c \
+../math/kazmath/kazmath/mat3.c \
+../math/kazmath/kazmath/mat4.c \
+../math/kazmath/kazmath/neon_matrix_impl.c \
+../math/kazmath/kazmath/plane.c \
+../math/kazmath/kazmath/quaternion.c \
+../math/kazmath/kazmath/ray2.c \
+../math/kazmath/kazmath/ray3.c \
+../math/kazmath/kazmath/utility.c \
+../math/kazmath/kazmath/vec2.c \
+../math/kazmath/kazmath/vec3.c \
+../math/kazmath/kazmath/vec4.c \
+../math/kazmath/kazmath/GL/mat4stack.c \
+../math/kazmath/kazmath/GL/matrix.c \
 ../physics/CCPhysicsBody.cpp \
 ../physics/CCPhysicsContact.cpp \
 ../physics/CCPhysicsJoint.cpp \
@@ -173,7 +174,7 @@ renderer/CCRenderMaterial.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/renderer \
-                    $(LOCAL_PATH)/../math/kazmath/include \
+                    $(LOCAL_PATH)/../math/kazmath \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
@@ -183,7 +184,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/renderer \
-                    $(LOCAL_PATH)/../math/kazmath/include \
+                    $(LOCAL_PATH)/../math/kazmath \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \

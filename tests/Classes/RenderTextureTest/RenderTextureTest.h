@@ -86,7 +86,7 @@ public:
     virtual ~RenderTextureTestDepthStencil();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 private:
     CustomCommand _renderCmds[4];
     void onBeforeClear();
@@ -116,6 +116,20 @@ public:
     void touched(Ref* sender);
 };
 
+class RenderTexturePartTest : public RenderTextureTest
+{
+public:
+    CREATE_FUNC(RenderTexturePartTest);
+    RenderTexturePartTest();
+    virtual ~RenderTexturePartTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    RenderTexture* _rend;
+    Sprite* _spriteDraw;
+};
+
 class SpriteRenderTextureBug : public RenderTextureTest
 {
 public:
@@ -125,7 +139,7 @@ public:
     public:
         static SimpleSprite* create(const char* filename, const Rect &rect);
         SimpleSprite();
-        virtual void draw();
+        virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
         
     protected:
         void onBeforeDraw();

@@ -106,7 +106,7 @@ public:
     bool init();
     void update(float dt);
 protected:
-    LabelBMFont* _label;
+    Label* _label;
     float           _accum;
 };
 
@@ -121,14 +121,12 @@ public:
 
     virtual void update(float dt);
     virtual void setPosition(const Point &newPosition);
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
 
 protected:
-    void onDraw();
-
-private:
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 
     Vertex2F _center;
     Vertex2F _resolution;

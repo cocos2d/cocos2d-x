@@ -182,18 +182,20 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 
 // implementation of PhysicsDebugNode
 
-void PhysicsDebugNode::draw()
+void PhysicsDebugNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (! _spacePtr)
     {
         return;
     }
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
+    // clear the shapes information before draw current shapes.
+    DrawNode::clear();
+
     cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
 	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
-    DrawNode::draw();
-    DrawNode::clear();
+    DrawNode::draw(renderer, transform, transformUpdated);
 #endif
 }
 

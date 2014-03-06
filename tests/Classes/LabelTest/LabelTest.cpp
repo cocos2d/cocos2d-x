@@ -206,21 +206,17 @@ Atlas1::~Atlas1()
     _textureAtlas->release();
 }
 
-void Atlas1::draw()
+void Atlas1::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-    // GL_TEXTURE_2D
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-    
-//    [textureAtlas drawNumberOfQuads:3];
-    
+    _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
 
-void Atlas1::onDraw()
+void Atlas1::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    CC_NODE_DRAW_SETUP();
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
     _textureAtlas->drawQuads();
 }
 
@@ -529,18 +525,23 @@ Atlas4::Atlas4()
     schedule( schedule_selector(Atlas4::step), 0.1f);
 }
 
-void Atlas4::draw()
+void Atlas4::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
 
-void Atlas4::onDraw()
+void Atlas4::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     auto s = Director::getInstance()->getWinSize();
     DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
     DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
+
+    kmGLPopMatrix();
 }
 
 void Atlas4::step(float dt)
@@ -1615,15 +1616,18 @@ std::string LabelBMFontBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelBMFontBounds::draw()
+void LabelBMFontBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
 
-void LabelBMFontBounds::onDraw()
+void LabelBMFontBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     auto labelSize = label1->getContentSize();
     auto origin = Director::getInstance()->getWinSize();
     
@@ -1638,6 +1642,8 @@ void LabelBMFontBounds::onDraw()
         Point(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
+
+    kmGLPopMatrix();
 }
 
 // LabelBMFontCrashTest

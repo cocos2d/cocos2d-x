@@ -176,9 +176,7 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 }
 
 bool Box2DView::initWithEntryID(int entryId)
-{    
-    schedule( schedule_selector(Box2DView::tick) );
-
+{
     m_entry = g_testEntries + entryId;
     m_test = m_entry->createFcn();
     
@@ -202,30 +200,26 @@ std::string Box2DView::title() const
     return std::string(m_entry->name);
 }
 
-void Box2DView::tick(float dt)
+void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    m_test->Step(&settings);
-}
-
-void Box2DView::draw()
-{
-    Layer::draw();
+    Layer::draw(renderer, transform, transformUpdated);
 
     _customCmd.init(_globalZOrder);
-    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCmd);
+    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCmd);
 }
 
-void Box2DView::onDraw()
+void Box2DView::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
+    m_test->Step(&settings);
     m_test->m_world->DrawDebugData();
     CHECK_GL_ERROR_DEBUG();
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 Box2DView::~Box2DView()

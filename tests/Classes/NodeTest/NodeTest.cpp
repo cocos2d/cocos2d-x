@@ -974,24 +974,25 @@ public:
         sprite->setShaderProgram(shader);
         return sprite;
     }
-    virtual void draw() override;
-    void onDraw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 
 protected:
     CustomCommand _customCommand;
 
 };
 
-void MySprite::draw()
+void MySprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
 
-void MySprite::onDraw()
+void MySprite::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    CC_NODE_DRAW_SETUP();
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
@@ -1012,7 +1013,6 @@ void MySprite::onDraw()
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
@@ -1107,8 +1107,8 @@ CameraTest2::CameraTest2()
     kmMat4 lookupMatrix;
     kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
 
-    _sprite1->setAdditionalTransform(lookupMatrix);
-    _sprite2->setAdditionalTransform(lookupMatrix);
+    _sprite1->setAdditionalTransform(&lookupMatrix);
+    _sprite2->setAdditionalTransform(&lookupMatrix);
 
 }
 

@@ -80,22 +80,22 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 */
 class Widget : public Node
 {
-public:    
+public:
     /**
      * Default constructor
      */
     Widget(void);
-    
+
     /**
      * Default destructor
      */
     virtual ~Widget();
-    
+
     /**
      * Allocates and initializes a widget.
      */
     static Widget* create();
-    
+
     /**
      * Sets whether the widget is enabled
      *
@@ -105,14 +105,14 @@ public:
      * @param enabled   true if the widget is enabled, widget may be touched and visible, false if the widget is disabled, widget cannot be touched and hidden.
      */
     virtual void setEnabled(bool enabled);
-    
+
     /**
      * Determines if the widget is enabled
      *
      * @return true if the widget is enabled, false if the widget is disabled.
      */
     bool isEnabled() const;
-    
+
     /**
      * Sets whether the widget is bright
      *
@@ -121,14 +121,14 @@ public:
      * @param visible   true if the widget is bright, false if the widget is dark.
      */
     void setBright(bool bright);
-    
+
     /**
      * Determines if the widget is bright
      *
      * @return true if the widget is bright, false if the widget is dark.
      */
     bool isBright() const;
-    
+
     /**
      * Sets whether the widget is touch enabled
      *
@@ -137,7 +137,7 @@ public:
      * @param visible   true if the widget is touch enabled, false if the widget is touch disabled.
      */
     virtual void setTouchEnabled(bool enabled);
-    
+
     /**
      * To set the bright style of widget.
      *
@@ -146,14 +146,14 @@ public:
      * @param style   BRIGHT_NORMAL the widget is normal state, BRIGHT_HIGHLIGHT the widget is height light state.
      */
     void setBrightStyle(BrightStyle style);
-    
+
     /**
      * Determines if the widget is touch enabled
      *
      * @return true if the widget is touch enabled, false if the widget is touch disabled.
      */
     bool isTouchEnabled() const;
-    
+
     /**
      * Determines if the widget is on focused
      *
@@ -169,28 +169,28 @@ public:
      * @param fucosed   true if the widget is on focused, false if the widget is not on focused.
      */
     void setFocused(bool fucosed);
-    
+
     /**
      * Gets the left boundary position of this widget.
      *
      * @return The left boundary position of this widget.
      */
     float getLeftInParent();
-    
+
     /**
      * Gets the bottom boundary position of this widget.
      *
      * @return The bottom boundary position of this widget.
      */
     float getBottomInParent();
-    
+
     /**
      * Gets the right boundary position of this widget.
      *
      * @return The right boundary position of this widget.
      */
     float getRightInParent();
-    
+
     /**
      * Gets the top boundary position of this widget.
      *
@@ -233,7 +233,7 @@ public:
      * @return a Node object whose tag equals to the input parameter
      */
     virtual Node * getChildByTag(int tag) override;
-    
+
     virtual void sortAllChildren() override;
     /**
      * Return an array of children
@@ -253,14 +253,14 @@ public:
      */
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
-    
+
     /**
      * Get the amount of children.
      *
      * @return The amount of children.
      */
     virtual ssize_t getChildrenCount() const override;
-    
+
     /**
      * Removes this node itself from its parent node with a cleanup.
      * If the node orphan, then nothing happens.
@@ -275,7 +275,7 @@ public:
      * @lua removeFromParent
      */
     virtual void removeFromParentAndCleanup(bool cleanup) override;
-    
+
     /**
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      *
@@ -283,7 +283,7 @@ public:
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
     virtual void removeChild(Node* child, bool cleanup = true) override;
-    
+
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
      *
@@ -305,7 +305,7 @@ public:
      * @lua removeAllChildren
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    
+
     /**
      * Gets a child from the container with its name
      *
@@ -314,33 +314,33 @@ public:
      * @return a Widget object whose name equals to the input parameter
      */
     virtual Widget* getChildByName(const char* name);
-    
+
     virtual void addNode(Node* node);
-    
+
     virtual void addNode(Node * node, int zOrder);
-    
+
     virtual void addNode(Node* node, int zOrder, int tag);
-    
+
     virtual Node * getNodeByTag(int tag);
-    
+
     virtual Vector<Node*>& getNodes();
-    
+
     virtual void removeNode(Node* node);
-    
+
     virtual void removeNodeByTag(int tag);
-    
+
     virtual void removeAllNodes();
-    
-    virtual void visit() override;
-    
+
+    virtual void visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+
     /**
      * Sets the touch event target/selector of the menu item
      */
     void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
-    
-    
+
+
     //cocos2d property
-    
+
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
@@ -350,7 +350,7 @@ public:
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
     virtual void setPosition(const Point &pos) override;
-    
+
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
@@ -360,7 +360,7 @@ public:
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
     void setPositionPercent(const Point &percent);
-        
+
     /**
      * Gets the percent (x,y) of the widget in OpenGL coordinates
      *
@@ -369,7 +369,7 @@ public:
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */
     const Point& getPositionPercent();
-    
+
     /**
      * Changes the position type of the widget
      *
@@ -387,14 +387,14 @@ public:
      * @return type  the position type of widget
      */
     PositionType getPositionType() const;
-    
+
     /**
      * Sets whether the widget should be flipped horizontally or not.
      *
-     * @param bFlipX true if the widget should be flipped horizaontally, false otherwise.
+     * @param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
      */
-    virtual void setFlipX(bool flipX){};
-    
+    virtual void setFlippedX(bool flippedX){};
+
     /**
      * Returns the flag which indicates whether the widget is flipped horizontally or not.
      *
@@ -405,15 +405,15 @@ public:
      *
      * @return true if the widget is flipped horizaontally, false otherwise.
      */
-    virtual bool isFlipX(){return false;};
-    
+    virtual bool isFlippedX(){return false;};
+
     /**
      * Sets whether the widget should be flipped vertically or not.
      *
-     * @param bFlipY true if the widget should be flipped vertically, flase otherwise.
+     * @param bFlippedY true if the widget should be flipped vertically, flase otherwise.
      */
-    virtual void setFlipY(bool flipY){};
-    
+    virtual void setFlippedY(bool flippedY){};
+
     /**
      * Return the flag which indicates whether the widget is flipped vertically or not.
      *
@@ -424,13 +424,22 @@ public:
      *
      * @return true if the widget is flipped vertically, flase otherwise.
      */
-    virtual bool isFlipY(){return false;};
-    
+    virtual bool isFlippedY(){return false;};
+
+    /** @deprecated Use isFlippedX() instead */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
+    /** @deprecated Use setFlippedX() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
+    /** @deprecated Use isFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
+    /** @deprecated Use setFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
+
     /**
      * A call back function when widget lost of focus.
      */
     void didNotSelectSelf();
-    
+
     /*
      * Checks a point if in parent's area.
      *
@@ -439,40 +448,40 @@ public:
      * @return true if the point is in parent's area, flase otherwise.
      */
     bool clippingParentAreaContainPoint(const Point &pt);
-    
+
     /*
      * Sends the touch event to widget's parent
      */
     virtual void checkChildInfo(int handleState,Widget* sender,const Point &touchPoint);
-    
+
     /*
      * Gets the touch began point of widget when widget is selected.
      *
      * @return the touch began point.
      */
     const Point& getTouchStartPos();
-    
+
     /*
      * Gets the touch move point of widget when widget is selected.
      *
      * @return the touch move point.
      */
     const Point& getTouchMovePos();
-    
+
     /*
      * Gets the touch end point of widget when widget is selected.
      *
      * @return the touch end point.
      */
     const Point& getTouchEndPos();
-    
+
     /**
      * Changes the name that is used to identify the widget easily.
      *
      * @param A const char* that indentifies the widget.
      */
     void setName(const char* name);
-    
+
     /**
      * Returns a name that is used to identify the widget easily.
      *
@@ -481,7 +490,7 @@ public:
      * @return A const char* that identifies the widget.
      */
     const char* getName() const;
-    
+
     /**
      * Returns a type that is widget's type
      *
@@ -490,21 +499,21 @@ public:
      * @return A WidgetType
      */
     WidgetType getWidgetType() const;
-    
+
     /**
      * Changes the size that is widget's size
      *
      * @param size that is widget's size
      */
     virtual void setSize(const Size &size);
-    
+
     /**
      * Changes the percent that is widget's percent size
      *
      * @param percent that is widget's percent size
      */
     virtual void setSizePercent(const Point &percent);
-    
+
     /**
      * Changes the size type of widget.
      *
@@ -522,21 +531,21 @@ public:
      * @param type that is widget's size type
      */
     SizeType getSizeType() const;
-    
+
     /**
      * Returns size of widget
      *
      * @return size
      */
     const Size& getSize() const;
-    
+
     /**
      * Returns size percent of widget
      *
      * @return size percent
      */
     const Point& getSizePercent() const;
-    
+
     /**
      * Checks a point if is in widget's space
      *
@@ -545,14 +554,14 @@ public:
      * @return true if the point is in widget's space, flase otherwise.
      */
     virtual bool hitTest(const Point &pt);
-    
+
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
-        
+
     /**
-     * Sets a LayoutParameter to widget. 
+     * Sets a LayoutParameter to widget.
      *
      * @see LayoutParameter
      *
@@ -561,7 +570,7 @@ public:
      * @param type  Relative or Linear
      */
     void setLayoutParameter(LayoutParameter* parameter);
-    
+
     /**
      * Gets LayoutParameter of widget.
      *
@@ -572,21 +581,21 @@ public:
      * @return LayoutParameter
      */
     LayoutParameter* getLayoutParameter(LayoutParameterType type);
-    
+
     /**
      * Ignore the widget size
      *
      * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
      */
     virtual void ignoreContentAdaptWithSize(bool ignore);
-    
+
     /**
      * Gets the widget if is ignore it's size.
      *
      * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
      */
     bool isIgnoreContentAdaptWithSize() const;
-    
+
     /**
      * Gets world position of widget.
      *
@@ -602,45 +611,45 @@ public:
      * @return Node pointer.
      */
     virtual Node* getVirtualRenderer();
-    
+
     /**
      * Gets the content size of widget.
      *
      * Content size is widget's texture size.
      */
     virtual const Size& getContentSize() const;
-    
+
     /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
-    
+
     Widget* clone();
 
     virtual void onEnter() override;
     virtual void onExit() override;
-    
+
     void updateSizeAndPosition();
-    
+
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
-    
+
     //initializes state of widget.
     virtual bool init();
-    
+
     //initializes renderer of widget.
     virtual void initRenderer();
-    
+
     //call back function called widget's state changed to normal.
     virtual void onPressStateChangedToNormal();
-    
+
     //call back function called widget's state changed to selected.
     virtual void onPressStateChangedToPressed();
-    
+
     //call back function called widget's state changed to dark.
     virtual void onPressStateChangedToDisabled();
     void pushDownEvent();

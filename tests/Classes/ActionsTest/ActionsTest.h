@@ -375,13 +375,12 @@ public:
     CREATE_FUNC(ActionFollow);
 
     virtual void onEnter() override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual std::string subtitle() const override;
 
 protected:
-    void onDraw();
-    
-private:
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
     CustomCommand _customCommand;
 };
 
@@ -451,16 +450,17 @@ public:
     CREATE_FUNC(ActionCatmullRomStacked);
 
     virtual ~ActionCatmullRomStacked();
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+
 protected:
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
     //cached data and callback
     kmMat4 _modelViewMV1;
     kmMat4 _modelViewMV2;
-    void onDraw();
-private:
     PointArray* _array1;
     PointArray* _array2;
     CustomCommand _customCommand;
@@ -472,17 +472,18 @@ public:
     CREATE_FUNC(ActionCardinalSplineStacked);
 
     virtual ~ActionCardinalSplineStacked();
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-private:
-    PointArray* _array;
+
 protected:
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
     kmMat4 _modelViewMV1;
     kmMat4 _modelViewMV2;
     CustomCommand _customCommand;
+    PointArray* _array;
 };
 
 class Issue1305 : public ActionsDemo
@@ -567,17 +568,18 @@ public:
     ~ActionCatmullRom();
     
     virtual void onEnter() override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
-private:
-    PointArray *_array1;
-    PointArray *_array2;
+
 protected:
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
     kmMat4 _modelViewMV1;
     kmMat4 _modelViewMV2;
     CustomCommand _customCommand;
+    PointArray *_array1;
+    PointArray *_array2;
 };
 
 class ActionCardinalSpline : public ActionsDemo
@@ -588,13 +590,14 @@ public:
     ~ActionCardinalSpline();
     
     virtual void onEnter() override;
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
-private:
-    PointArray *_array;
+
 protected:
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
+    PointArray *_array;
     kmMat4 _modelViewMV1;
     kmMat4 _modelViewMV2;
     CustomCommand _customCommand;

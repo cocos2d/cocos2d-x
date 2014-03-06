@@ -1791,27 +1791,27 @@ std::string TextureDrawAtPoint::subtitle() const
     return "draws 2 textures using drawAtPoint";
 }
 
-void TextureDrawAtPoint::draw()
+void TextureDrawAtPoint::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    TextureDemo::draw();
+    TextureDemo::draw(renderer, transform, transformUpdated);
     
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_renderCmd);
 
 }
 
-void TextureDrawAtPoint::onDraw()
+void TextureDrawAtPoint::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     auto s = Director::getInstance()->getWinSize();
     
     _tex1->drawAtPoint(Point(s.width/2-50, s.height/2 - 50));
     _Tex2F->drawAtPoint(Point(s.width/2+50, s.height/2 - 50));
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 // TextureDrawInRect
@@ -1832,21 +1832,19 @@ TextureDrawInRect::~TextureDrawInRect()
     _Tex2F->release();
 }
 
-void TextureDrawInRect::draw()
+void TextureDrawInRect::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    TextureDemo::draw();
+    TextureDemo::draw(renderer, transform, transformUpdated);
 
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
-
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_renderCmd);
 }
 
-void TextureDrawInRect::onDraw()
+void TextureDrawInRect::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
     
     auto s = Director::getInstance()->getWinSize();
     
@@ -1856,7 +1854,7 @@ void TextureDrawInRect::onDraw()
     _tex1->drawInRect(rect1);
     _Tex2F->drawInRect(rect2);
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 std::string TextureDrawInRect::title() const

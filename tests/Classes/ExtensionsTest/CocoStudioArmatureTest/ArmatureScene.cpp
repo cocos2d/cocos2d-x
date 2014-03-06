@@ -845,7 +845,7 @@ void TestColliderDetector::onExit()
 
     ArmatureTestLayer::onExit();
 }
-void TestColliderDetector::draw()
+void TestColliderDetector::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     kmGLPushMatrix();
@@ -1065,24 +1065,22 @@ void TestColliderDetector::update(float delta)
         }
     }
 }
-void TestColliderDetector::draw()
+void TestColliderDetector::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
 
-void TestColliderDetector::onDraw()
+void TestColliderDetector::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
     
     armature2->drawContour();
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
-
 #endif
 
 
@@ -1106,18 +1104,18 @@ std::string TestBoundingBox::title() const
 {
     return "Test BoundingBox";
 }
-void TestBoundingBox::draw()
+void TestBoundingBox::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-    
+    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
+
 }
 
-void TestBoundingBox::onDraw()
+void TestBoundingBox::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+    getShaderProgram()->setUniformsForBuiltins(transform);
     
     rect = armature->getBoundingBox();
     

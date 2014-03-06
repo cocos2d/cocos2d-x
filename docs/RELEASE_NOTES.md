@@ -41,9 +41,14 @@
 	    - [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
 	    - [Use ScriptHandlerMgr to manage the register and unregister of Lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
 	- [Misc API changes](#misc-api-changes-1)
-		- [Use cc、ccs、ccui and sp as module name](#use-ccccsccui-and-sp-as-module-name)
+		- [Use cc、ccs、ccui、gl and sp as module name](#use-ccccsccuigl-and-sp-as-module-name)
 		- [Modified functions](#modified-functions)
 		- [Add some modules](#add-some-modules)
+		- [Add more lua bindings](#add-more-lua-bindings)
+		- [Replace some lua-bindings of Class or Struct with lua table](#replace-the-lua-bindings-of-class-or-struct-with-lua-table)
+	- [Other Changes](#other-changes)
+	    - [Support lua script codes call Obeject-C codes and Java codes](#support-lua-script-codes-call-OC-codes-and-Java-codes)
+	    - [Add some lua files to store the constants of different modules](#add-some-lua-files-to-store-the-constants-of-different-modules)			
 
 # Misc Information
 
@@ -70,6 +75,70 @@
 * Xcode 4.6 (for iOS or Mac)
 * gcc 4.7 for Linux or Android. For Android ndk-r9 or newer is required.
 * Visual Studio 2012 (for Windows)
+
+## Run samples
+
+### Mac OSX & iOS
+
+* Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj`
+* Select `iOS` or `OS X` target in scheme toolbar
+* Click `run` button
+
+### Android
+
+Can run sample on Android in two ways:
+
+* Use command to run
+* Use Eclipse to run
+
+**By commnad**
+
+    $ cd cocos2d-x
+    $ ./install.py
+    $ cd build
+    $ ./android-build.py -p 10
+    $ adb install cocos2d-x/tests/proj.android/bin/TestDemo-debug.apk
+    
+Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
+
+**Using Eclipse**
+
+    $ cd cocos2d-x
+    $ ./install.py
+    $ cd build
+    $ ./android-build.py
+    
+Then
+
+* Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
+* Import `tests` Android project into Eclipse, the path used to import is `tests/proj.android`
+* Build `tests` Android project and run
+
+### Windows
+
+* Enter `cocos2d-x/build`, and open `cocos2d-win32.vs2012.sln`
+* Select `TestCpp` as running target
+* Click run button
+
+
+### Linux
+
+    $ cd cocos2d-x/build
+    $ ./install-deps-linux.sh
+    $ cd ../..
+    
+Then
+
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ make -j4
+    
+Run
+
+    $ cd bin/testcpp
+    $ ./testcpp
+    
 
 # Highlights of v3.0
 
@@ -373,59 +442,9 @@ Detail information of `EventDispatcher` can refer to [this document](https://git
 
 _Feature added in v3.0-pre-alpha0_
 
-Physics integration have five concepts: `PhysicsWorld`, `PhysicsBody`, `PhysicsShape`, `PhysicsJoint` and `PhysicsContact`.
-You must define `CC_USE_PHYSICS` macro in `ccConfig.h` to use the physics API.
+In v3.0, we integrate physics engien into cocos2d-x based on [Chipmunk2D](https://chipmunk-physics.net/). By using this feature, you can create physics based games without understanding physics engine.
 
-### PhysicsWorld
-
-A `PhysicsWorld` object simulates collisions and other physical properties, you do not create it directly, you can get it from scene which create with physics.
-```c++
-Scene* scene = Scene::createWithPhysics();
-PhysicsWorld* world = scene->getPhysicsWorld();
-```
-
-### PhysicsBody
-
-A `PhysicsBody` object is used to add physics simulation to a node. If you create a `PhysicsBody` and set it to a node, and add the node the a scene which create with physics, it will perform the physics simulation when update.
-```c++
-PhysicsBody* body = PhysicsBody::createCircle(5.0f);
-Node* node = Node::create();
-node->setPhysicsBody(body);
-scene->addChild(node);
-```
-
-### PhysicsShape
-
-A `PhysicsShape` object is a shape that make the body can have collisions. you can add one or more `PhysicsShape` to a `PhysicsBody`.
-Shape classes: `PhysicsShapeCircle`, `PhysicsShapeBox`, `PhysicsShapePolygon`, `PhysicsShapeEdgeSegment`, `PhysicsShapeEdgeBox`, `PhysicsShapeEdgePolygon`, `PhysicsShapeEdgeChain`.
-```c++
-PhysicsShape* shape = PhysicsShapeBox::create(Size(5.0f, 10.0f);
-body->addShape(shape);
-```
-
-### PhysicsJoint
-
-A `PhysicsJoint` object connects two physics bodies together so that they are simulated together by the physics world.
-Joint classes: `PhysicsJointFixed`, `PhysicsJointLimit`, `PhysicsJointPin`, `PhysicsJointDistance`, `PhysicsJointSpring`, `PhysicsJointGroove`, `PhysicsJointRotarySpring`, `PhysicsJointRotaryLimit`, `PhysicsJointRatchet`, `PhysicsJointGear`, `PhysicsJointMotor`.
-```c++
-PhysicsJoint* joint = PhysicsJointDistance::construct(bodyA, bodyB, Point::ZERO, Point::ZERO);
-world->addJoint(joint);
-```
-
-### PhysicsContact
-
-A `PhysicsContact` object is created automatically to describes a contact between two physical bodies in a `PhysicsWorld`. you can control the contact behavior from the physics contact event listener.
-Other classes contain the contact information: `PhysicsContactPreSolve`, `PhysicsContactPostSolve`.
-The event listener for physics: `EventListenerPhysicsContact`, `EventListenerPhysicsContactWithBodies`, `EventListenerPhysicsContactWithShapes`, `EventListenerPhysicsContactWithGroup`.
-```c++
-auto contactListener = EventListenerPhysicsContactWithBodies::create(bodyA, bodyB);
-contactListener->onContactBegin = [](EventCustom* event, const PhysicsContact& contact) -> bool
-{
-doSomething();
-return true;
-};
-_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
-```
+More detail information of this feature, please refer to [this document](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/physics/physics-integration/en.md)
 
 
 # Misc API Changes
@@ -607,7 +626,7 @@ ScriptHandlerMgr:getInstance():registerScriptHandler(menuItem, luafunction,cc.HA
 
 ## Misc API changes
 
-### Use `cc`、`ccs`、`ccui` and `sp` as module name
+### Use `cc`、`ccs`、`ccui` `gl` and `sp` as module name
 
 Now classes are binded into different modules instead of using global module. This will avoid conflicts with other codes.
 
@@ -616,6 +635,7 @@ Now classes are binded into different modules instead of using global module. Th
 * classes in `spine` were bound to `sp` module
 * classes in `cocostudio` were bound to `ccs` module
 * global variables are binded to corresponding modules
+* all funcionts and constants about `openGl` were bound to `gl` module
 
 Examples:
 
@@ -628,12 +648,14 @@ Examples:
 
 Some global function names are renamed:
 
+Examples:
+
     | v2.1                    | v3.0                    |
     | CCPoint/ccp             | cc.p                    |
     | CCRect                  | cc.rect                 |
     | CCColor3B               | cc.c3b                  |
     | CCColor4B               | cc.c4b                  |
-    | TODO: add others
+    | CCColor4F               | cc.c4f                  |
 
 ### Add some modules
 
@@ -642,9 +664,45 @@ In the version 3.0, more modules were bound to lua, specific as follows:
 * physics
 * spine
 * XMLHttpRequest
+* OpenGL
  
-The `XMLHttpRequest` and `physics` are in the `cc` module, and the `spine` is in the `sp` module. Related test cases located in:
+The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the `sp` module, and the `OpenGl` is in the `gl` module. Related test cases located in:
 
 * physics   ---> TestLua/PhysicsTest
 * spine     ---> TestLua/SpineTest
-* XMLHttpRequest ---> TestLua/XMLHttpRequestTest  
+* XMLHttpRequest ---> TestLua/XMLHttpRequestTest
+* openGL    ---> TestLua/OpenGLTest
+
+### Add more lua bindings
+Such as: New Label、New EventDispatcher and AssetsManager,etc.Related test cases located in:
+
+* New Lable ---> TestLua/LabelTestNew
+* New EventDispatcher --->TestLua/NewEventDispatcherTest
+* AssetsManager  ---> TestLua/AssetsManagerTest
+
+### Replace some lua-bindings of Class or Struct with lua table
+In the version 3.0, all the lua-binding of Struct type were replaced with the lua table
+
+Examples:
+ 
+    | v2.1                    | v3.0                    |
+    | CCPoint                 | lua table               |
+    | CCRect                  | lua table               |
+    | CCColor3B               | lua table               |
+    | CCColor4B               | lua table               |
+    | CCColor4F               | lua table               |
+    | CCAffineTransform       | lua table               |
+    | CCArray                 | lua table               |    
+    | CCDictionary            | lua table               |
+    | CCPointArray            | lua table               |
+    
+### Support lua script codes call Object-C codes and Java codes 
+`LuaObjcBridge` and `LuaJavaBridge` bound to lua surpported lua script codes calls Object-C codes and java codes. 
+    
+### Add some lua files to store the constants of different modules
+
+* Cocos2DConstants.lua store the constants of `cc` moudle
+* StudioConstants.lua store the constants of  `ccs` moudle
+* GuiConstants.lua store the constants of `ccui` moudle
+* OpenglConstants.lua store the constants of `gl` moudle
+

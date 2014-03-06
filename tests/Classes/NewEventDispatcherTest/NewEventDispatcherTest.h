@@ -165,6 +165,19 @@ protected:
     bool isPointInTopHalfAreaOfScreen(Point pt);
 };
 
+class PauseResumeTargetTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(PauseResumeTargetTest);
+    PauseResumeTargetTest();
+    virtual ~PauseResumeTargetTest();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+};
+
 class Issue4129 : public EventDispatcherTestDemo
 {
 public:

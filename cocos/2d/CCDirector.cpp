@@ -88,7 +88,7 @@ extern const char* cocos2dVersion(void);
 const char *Director::EVENT_PROJECTION_CHANGED = "director_projection_changed";
 const char *Director::EVENT_AFTER_DRAW = "director_after_draw";
 const char *Director::EVENT_AFTER_VISIT = "director_after_visit";
-const char *Director::EVENT_AFTER_UPDATE = "director_after_udpate";
+const char *Director::EVENT_AFTER_UPDATE = "director_after_update";
 
 Director* Director::getInstance()
 {
@@ -273,17 +273,21 @@ void Director::drawScene()
 
     kmGLPushMatrix();
 
+    // global identity matrix is needed... come on kazmath!
+    kmMat4 identity;
+    kmMat4Identity(&identity);
+
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit();
+        _runningScene->visit(_renderer, identity, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit();
+        _notificationNode->visit(_renderer, identity, false);
     }
 
     if (_displayStats)
@@ -868,9 +872,13 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        _drawnVerticesLabel->visit();
-        _drawnBatchesLabel->visit();
-        _FPSLabel->visit();
+        // global identity matrix is needed... come on kazmath!
+        kmMat4 identity;
+        kmMat4Identity(&identity);
+
+        _drawnVerticesLabel->visit(_renderer, identity, false);
+        _drawnBatchesLabel->visit(_renderer, identity, false);
+        _FPSLabel->visit(_renderer, identity, false);
     }
 }
 
