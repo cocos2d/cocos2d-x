@@ -91,14 +91,9 @@ const GLchar * ccLabelDistanceFieldGlow_frag =
 const GLchar * ccLabelDistanceFieldGlow_vert =
 #include "ccShader_Label_vert.h"
 
-const GLchar * ccLabelDistanceFieldOutline_frag =
+const GLchar * ccLabelOutline_frag =
 #include "ccShader_Label_frag_outline.h"
-const GLchar * ccLabelDistanceFieldOutline_vert =
-#include "ccShader_Label_vert.h"
-
-const GLchar * ccLabelDistanceFieldShadow_frag =
-#include "ccShader_Label_frag_shadow.h"
-const GLchar * ccLabelDistanceFieldShadow_vert =
+const GLchar * ccLabelOutline_vert =
 #include "ccShader_Label_vert.h"
 
 NS_CC_END

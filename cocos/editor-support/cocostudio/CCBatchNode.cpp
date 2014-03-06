@@ -136,7 +136,7 @@ void BatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transform
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
+//    CC_NODE_DRAW_SETUP();
 
     bool pushed = false;
     for(auto object : _children)

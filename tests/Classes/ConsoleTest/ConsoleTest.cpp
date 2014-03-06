@@ -199,11 +199,12 @@ ConsoleUploadFile::~ConsoleUploadFile()
 {
     _thread.join();
 }
+
 void ConsoleUploadFile::uploadFile()
 {
     struct addrinfo hints;
     struct addrinfo *result, *rp;
-    int sfd, s, j;
+    int sfd, s;
 
     /* Obtain address(es) matching host/port */
 

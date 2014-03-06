@@ -882,13 +882,16 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 
 void EventDispatcher::updateListeners(Event* event)
 {
+    CCASSERT(_inDispatch > 0, "If program goes here, there should be event in dispatch.");
+    
     auto onUpdateListeners = [this](const EventListener::ListenerID& listenerID)
     {
         auto listenersIter = _listenerMap.find(listenerID);
         if (listenersIter == _listenerMap.end())
             return;
-        
+
         auto listeners = listenersIter->second;
+        
         auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
         auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
         
@@ -935,14 +938,8 @@ void EventDispatcher::updateListeners(Event* event)
         {
             listeners->clearFixedListeners();
         }
-
-        if (listenersIter->second->empty())
-        {
-            _priorityDirtyFlagMap.erase(listenersIter->first);
-            delete listenersIter->second;
-            _listenerMap.erase(listenersIter);
-        }
     };
+
     
     if (event->getType() == Event::Type::TOUCH)
     {
@@ -954,6 +951,24 @@ void EventDispatcher::updateListeners(Event* event)
         onUpdateListeners(__getListenerID(event));
     }
     
+    if (_inDispatch > 1)
+        return;
+    
+    CCASSERT(_inDispatch == 1, "_inDispatch should be 1 here.");
+    
+    for (auto iter = _listenerMap.begin(); iter != _listenerMap.end();)
+    {
+        if (iter->second->empty())
+        {
+            _priorityDirtyFlagMap.erase(iter->first);
+            delete iter->second;
+            iter = _listenerMap.erase(iter);
+        }
+        else
+        {
+            ++iter;
+        }
+    }
     
     if (!_toAddedListeners.empty())
     {
@@ -1017,6 +1032,10 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     
     if (listeners == nullptr)
         return;
+    auto sceneGraphListeners = listeners->getSceneGraphPriorityListeners();
+    
+    if (sceneGraphListeners == nullptr)
+        return;
     
     Node* rootNode = (Node*)Director::getInstance()->getRunningScene();
     // Reset priority index
@@ -1026,7 +1045,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     visitTarget(rootNode, true);
     
     // After sort: priority < 0, > 0
-    auto sceneGraphListeners = listeners->getSceneGraphPriorityListeners();
+
     std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
         return _nodePriorityMap[l1->getSceneGraphPriority()] > _nodePriorityMap[l2->getSceneGraphPriority()];
     });
@@ -1047,8 +1066,11 @@ void EventDispatcher::sortEventListenersOfFixedPriority(const EventListener::Lis
     if (listeners == nullptr)
         return;
     
-    // After sort: priority < 0, > 0
     auto fixedListeners = listeners->getFixedPriorityListeners();
+    if (fixedListeners == nullptr)
+        return;
+    
+    // After sort: priority < 0, > 0
     std::sort(fixedListeners->begin(), fixedListeners->end(), [](const EventListener* l1, const EventListener* l2) {
         return l1->getFixedPriority() < l2->getFixedPriority();
     });
