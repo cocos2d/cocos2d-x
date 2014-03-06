@@ -104,8 +104,7 @@ void QuadCommand::generateMaterialID()
 void QuadCommand::useMaterial() const
 {
     _shader->use();
-
-    _shader->setUniformsForBuiltins();
+    _shader->setUniformsForBuiltins(_mv);
 
     //Set texture
     GL::bindTexture2D(_textureID);
