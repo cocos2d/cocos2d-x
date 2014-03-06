@@ -201,6 +201,11 @@ void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
 // Menu Callbacks
 void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Ref *sender)
 {
+    if (! _wsiSendText)
+    {
+        return;
+    }
+
     if (_wsiSendText->getReadyState() == network::WebSocket::State::OPEN)
     {
         _sendTextStatus->setString("Send Text WS is waiting...");
@@ -216,6 +221,10 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Ref *sender)
 
 void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Ref *sender)
 {
+    if (! _wsiSendBinary) {
+        return;
+    }
+
     if (_wsiSendBinary->getReadyState() == network::WebSocket::State::OPEN)
     {
         _sendBinaryStatus->setString("Send Binary WS is waiting...");
