@@ -76,7 +76,7 @@
 * gcc 4.7 for Linux or Android. For Android ndk-r9 or newer is required.
 * Visual Studio 2012 (for Windows)
 
-## Run samples
+## How to run TestCpp
 
 ### Mac OSX & iOS
 
@@ -94,7 +94,7 @@ Can run sample on Android in two ways:
 **By commnad**
 
     $ cd cocos2d-x
-    $ ./install.py
+    $ ./setup.py
     $ cd build
     $ ./android-build.py -p 10
     $ adb install cocos2d-x/tests/proj.android/bin/TestDemo-debug.apk
@@ -104,7 +104,7 @@ Then click item on Android device to run tests. Available value of `-p` is the A
 **Using Eclipse**
 
     $ cd cocos2d-x
-    $ ./install.py
+    $ ./setup.py
     $ cd build
     $ ./android-build.py
     
@@ -138,6 +138,16 @@ Run
 
     $ cd bin/testcpp
     $ ./testcpp
+    
+## How to start a new game
+
+    $ cd cocos2d-x
+    $ ./setup.py
+    $ source FILE_TO_RECORD_SYSTEM_VARIABLE
+`FILE_TO_RECORD_SYSTEM_VARIABLE` may be `~/.bash_profile`, `~/.bash_login` or `~./.profile`
+
+    $ cocos new MyGame -p com.MyCompany.MyGame -l cpp -d directory_to_save
+Because `cocos run` command is not ready, so you should do it manually as running `TestCpp`. After `cocos run` command is finished, can just run `cocos run` to run the new game on demand target.
     
 
 # Highlights of v3.0
