@@ -88,18 +88,6 @@ public:
     
     const CCRect& getCapInsets();
     
-    //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX);
-    
-    //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY);
-    
-    //override "isFlipX" method of widget.
-    virtual bool isFlipX();
-    
-    //override "isFlipY" method of widget.
-    virtual bool isFlipY();
-    
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
     
@@ -119,6 +107,8 @@ protected:
     virtual void updateTextureColor();
     virtual void updateTextureOpacity();
     virtual void updateTextureRGBA();
+    virtual void updateFlippedX();
+    virtual void updateFlippedY();
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
