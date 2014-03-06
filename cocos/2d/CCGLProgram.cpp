@@ -349,7 +349,7 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     {
         return false;
     }
-    
+
     bool updated = true;
     tHashUniformEntry *element = nullptr;
     HASH_FIND_INT(_hashForUniforms, &location, element);
