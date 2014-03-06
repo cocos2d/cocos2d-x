@@ -109,55 +109,6 @@ public:
      */
     bool isTouchScaleChangeEnabled();
 
-    /**
-     * Changes both X and Y scale factor of the widget.
-     *
-     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
-     *
-     * @param scale     The scale factor for both X and Y axis.
-     */
-    virtual void setScale(float fScale) override;
-
-    /**
-     * Changes the scale factor on X axis of this widget
-     *
-     * The deafult value is 1.0 if you haven't changed it before
-     *
-     * @param fScaleX   The scale factor on X axis.
-     */
-    virtual void setScaleX(float fScaleX) override;
-
-    /**
-     * Changes the scale factor on Y axis of this widget
-     *
-     * The Default value is 1.0 if you haven't changed it before.
-     *
-     * @param fScaleY   The scale factor on Y axis.
-     */
-    virtual void setScaleY(float fScaleY) override;
-
-
-    //override "setFlippedX" method of widget.
-    virtual void setFlippedX(bool flippedX) override;
-
-    //override "setFlippedY" method of widget.
-    virtual void setFlippedY(bool flippedY) override;
-
-    //override "isFlippedX" method of widget.
-    virtual bool isFlippedX() override;
-
-    //override "isFlippedY" method of widget.
-    virtual bool isFlippedY() override;
-
-    /** @deprecated Use isFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
-    /** @deprecated Use isFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
-
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const Point &pt) override;
 
@@ -194,6 +145,8 @@ protected:
     virtual void updateTextureColor() override;
     virtual void updateTextureOpacity() override;
     virtual void updateTextureRGBA() override;
+    virtual void updateFlippedX() override;
+    virtual void updateFlippedY() override;
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;

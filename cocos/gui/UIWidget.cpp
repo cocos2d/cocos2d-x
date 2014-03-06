@@ -58,7 +58,9 @@ _hitted(false),
 _touchListener(nullptr),
 _nodes(NULL),
 _color(Color3B::WHITE),
-_opacity(255)
+_opacity(255),
+_flippedX(false),
+_flippedY(false)
 {
 
 }
@@ -1086,6 +1088,18 @@ void Widget::setOpacity(GLubyte opacity)
 {
     _opacity = opacity;
     updateTextureOpacity();
+}
+    
+void Widget::setFlippedX(bool flippedX)
+{
+    _flippedX = flippedX;
+    updateFlippedX();
+}
+
+void Widget::setFlippedY(bool flippedY)
+{
+    _flippedY = flippedY;
+    updateFlippedY();
 }
 
 void Widget::updateColorToRenderer(Node* renderer)

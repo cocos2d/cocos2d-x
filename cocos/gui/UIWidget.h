@@ -394,7 +394,7 @@ public:
      *
      * @param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
      */
-    virtual void setFlippedX(bool flippedX){};
+    virtual void setFlippedX(bool flippedX);
 
     /**
      * Returns the flag which indicates whether the widget is flipped horizontally or not.
@@ -406,14 +406,14 @@ public:
      *
      * @return true if the widget is flipped horizaontally, false otherwise.
      */
-    virtual bool isFlippedX(){return false;};
+    virtual bool isFlippedX(){return _flippedX;};
 
     /**
      * Sets whether the widget should be flipped vertically or not.
      *
      * @param bFlippedY true if the widget should be flipped vertically, flase otherwise.
      */
-    virtual void setFlippedY(bool flippedY){};
+    virtual void setFlippedY(bool flippedY);
 
     /**
      * Return the flag which indicates whether the widget is flipped vertically or not.
@@ -425,7 +425,7 @@ public:
      *
      * @return true if the widget is flipped vertically, flase otherwise.
      */
-    virtual bool isFlippedY(){return false;};
+    virtual bool isFlippedY(){return _flippedY;};
     
     virtual void setColor(const Color3B& color) override;
     
@@ -669,6 +669,8 @@ protected:
     virtual void updateTextureColor(){};
     virtual void updateTextureOpacity(){};
     virtual void updateTextureRGBA(){};
+    virtual void updateFlippedX(){};
+    virtual void updateFlippedY(){};
     void updateColorToRenderer(Node* renderer);
     void updateOpacityToRenderer(Node* renderer);
     void updateRGBAToRenderer(Node* renderer);
@@ -706,6 +708,8 @@ protected:
     Vector<Node*> _nodes;
     Color3B _color;
     GLubyte _opacity;
+    bool _flippedX;
+    bool _flippedY;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
     Vector<Node*> _widgetChildren;
 
