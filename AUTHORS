@@ -614,6 +614,7 @@ Developers:
         Configuration of VAO in runtime
         Added setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
         Fixed a bug that object which isn't in Vector would also be released when invoking Vector::eraseObject.
+        Fixed a bug that Timer::cancel always call Director::getInstance()->getScheduler() even in another Scheduler.
         
     metadao
         make create_project.py more pythonic and fix some typoes
@@ -770,6 +771,12 @@ Developers:
         
     seemk
         Fixed crash if invoking Director::end() on WINDOWS.
+        
+    odedsh
+        Fixed a bug that loading custom fonts from ttf file fails on windows.
+        
+    Wilhansen
+        Fixed a bug that spine::Skeleton would not be updated after re-adding to scene.
     
 Retired Core Developers:
     WenSheng Yang

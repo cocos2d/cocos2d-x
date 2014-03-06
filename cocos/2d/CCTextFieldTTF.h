@@ -173,7 +173,7 @@ protected:
     bool _secureTextEntry;
 protected:
 
-    virtual void draw();
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     //////////////////////////////////////////////////////////////////////////
     // IMEDelegate interface

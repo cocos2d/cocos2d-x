@@ -70,7 +70,6 @@ void Skeleton::initialize () {
 	setOpacityModifyRGB(true);
 
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-	scheduleUpdate();
 }
 
 void Skeleton::setSkeletonData (spSkeletonData *skeletonData, bool isOwnsSkeletonData) {
@@ -126,23 +125,18 @@ void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void Skeleton::draw()
+void Skeleton::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
-    
+
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
     
-void Skeleton::onDraw ()
+void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&_oldTransMatrix);
-    
-	CC_NODE_DRAW_SETUP();
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc(blendFunc.src, blendFunc.dst);
 	Color3B color = getColor();
@@ -198,46 +192,50 @@ void Skeleton::onDraw ()
 		textureAtlas->removeAllQuads();
 	}
 
-	if (debugSlots) {
-		// Slots.
-        DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
-		glLineWidth(1);
-		Point points[4];
-		V3F_C4B_T2F_Quad tmpQuad;
-		for (int i = 0, n = skeleton->slotCount; i < n; i++) {
-			spSlot* slot = skeleton->drawOrder[i];
-			if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-			spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-			spRegionAttachment_updateQuad(attachment, slot, &tmpQuad);
-			points[0] = Point(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
-			points[1] = Point(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
-			points[2] = Point(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
-			points[3] = Point(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
-            DrawPrimitives::drawPoly(points, 4, true);
-		}
-	}
-	if (debugBones) {
-		// Bone lengths.
-		glLineWidth(2);
-        DrawPrimitives::setDrawColor4B(255, 0, 0, 255);
-		for (int i = 0, n = skeleton->boneCount; i < n; i++) {
-			spBone *bone = skeleton->bones[i];
-			float x = bone->data->length * bone->m00 + bone->worldX;
-			float y = bone->data->length * bone->m10 + bone->worldY;
-            DrawPrimitives::drawLine(Point(bone->worldX, bone->worldY), Point(x, y));
-		}
-		// Bone origins.
-        DrawPrimitives::setPointSize(4);
-        DrawPrimitives::setDrawColor4B(0, 0, 255, 255); // Root bone is blue.
-		for (int i = 0, n = skeleton->boneCount; i < n; i++) {
-			spBone *bone = skeleton->bones[i];
-            DrawPrimitives::drawPoint(Point(bone->worldX, bone->worldY));
-			if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
-		}
-	}
-    
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPopMatrix();
+    if(debugBones || debugSlots) {
+        kmGLPushMatrix();
+        kmGLLoadMatrix(&transform);
+
+        if (debugSlots) {
+            // Slots.
+            DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
+            glLineWidth(1);
+            Point points[4];
+            V3F_C4B_T2F_Quad tmpQuad;
+            for (int i = 0, n = skeleton->slotCount; i < n; i++) {
+                spSlot* slot = skeleton->drawOrder[i];
+                if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
+                spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
+                spRegionAttachment_updateQuad(attachment, slot, &tmpQuad);
+                points[0] = Point(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
+                points[1] = Point(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
+                points[2] = Point(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
+                points[3] = Point(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
+                DrawPrimitives::drawPoly(points, 4, true);
+            }
+        }
+        if (debugBones) {
+            // Bone lengths.
+            glLineWidth(2);
+            DrawPrimitives::setDrawColor4B(255, 0, 0, 255);
+            for (int i = 0, n = skeleton->boneCount; i < n; i++) {
+                spBone *bone = skeleton->bones[i];
+                float x = bone->data->length * bone->m00 + bone->worldX;
+                float y = bone->data->length * bone->m10 + bone->worldY;
+                DrawPrimitives::drawLine(Point(bone->worldX, bone->worldY), Point(x, y));
+            }
+            // Bone origins.
+            DrawPrimitives::setPointSize(4);
+            DrawPrimitives::setDrawColor4B(0, 0, 255, 255); // Root bone is blue.
+            for (int i = 0, n = skeleton->boneCount; i < n; i++) {
+                spBone *bone = skeleton->bones[i];
+                DrawPrimitives::drawPoint(Point(bone->worldX, bone->worldY));
+                if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
+            }
+        }
+        
+        kmGLPopMatrix();
+    }
 }
 
 TextureAtlas* Skeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
@@ -273,6 +271,16 @@ Rect Skeleton::getBoundingBox () const {
 	}
 	Point position = getPosition();
 	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+}
+
+void Skeleton::onEnter() {
+	Node::onEnter();
+	scheduleUpdate();
+}
+	
+void Skeleton::onExit() {
+	Node::onExit();
+	unscheduleUpdate();
 }
 
 // --- Convenience methods for Skeleton_* functions.

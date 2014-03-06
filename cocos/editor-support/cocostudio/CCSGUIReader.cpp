@@ -355,8 +355,8 @@ void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(Widget
     widget->setAnchorPoint(Point(apxf, apyf));
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
-    widget->setFlipX(flipX);
-    widget->setFlipY(flipY);
+    widget->setFlippedX(flipX);
+    widget->setFlippedY(flipY);
 }
 
 void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
@@ -474,7 +474,7 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(Widget*wi
     {
         checkBox->loadTextures(backGroundFileName_tp, backGroundSelectedFileName_tp, frontCrossFileName_tp,backGroundDisabledFileName_tp,frontCrossDisabledFileName_tp);
     }
-    
+    checkBox->setSelectedState(DICTOOL->getBooleanValue_json(options, "selectedState"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
@@ -1129,8 +1129,8 @@ void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(Widget
     widget->setAnchorPoint(Point(apxf, apyf));
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
-    widget->setFlipX(flipX);
-    widget->setFlipY(flipY);
+    widget->setFlippedX(flipX);
+    widget->setFlippedY(flipY);
 }
 
 void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
@@ -1364,7 +1364,7 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(Widget*wi
         default:
             break;
     }
-    
+    checkBox->setSelectedState(DICTOOL->getBooleanValue_json(options, "selectedState"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 

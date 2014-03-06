@@ -1664,7 +1664,7 @@ FadeIn* FadeIn::create(float d)
 {
     FadeIn* action = new FadeIn();
 
-    action->initWithDuration(d);
+    action->initWithDuration(d,255.0f);
     action->autorelease();
 
     return action;
@@ -1674,24 +1674,41 @@ FadeIn* FadeIn::clone() const
 {
 	// no copy constructor
 	auto a = new FadeIn();
-    a->initWithDuration(_duration);
+    a->initWithDuration(_duration,255.0f);
 	a->autorelease();
 	return a;
 }
 
-void FadeIn::update(float time)
+void FadeIn::setReverseAction(cocos2d::FadeTo *ac)
 {
-    if (_target)
-    {
-        _target->setOpacity((GLubyte)(255 * time));
-    }
-    /*_target->setOpacity((GLubyte)(255 * time));*/
+    _reverseAction = ac;
 }
 
-ActionInterval* FadeIn::reverse() const
+
+FadeTo* FadeIn::reverse() const
 {
-    return FadeOut::create(_duration);
+    auto action = FadeOut::create(_duration);
+    action->setReverseAction(const_cast<FadeIn*>(this));
+    return action;
+    
 }
+
+void FadeIn::startWithTarget(cocos2d::Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    
+    if (nullptr != _reverseAction) {
+        this->_toOpacity = this->_reverseAction->_fromOpacity;
+    }else{
+        _toOpacity = 255.0f;
+    }
+    
+    if (target) {
+        _fromOpacity = target->getOpacity();
+    }
+}
+
+
 
 //
 // FadeOut
@@ -1701,7 +1718,7 @@ FadeOut* FadeOut::create(float d)
 {
     FadeOut* action = new FadeOut();
 
-    action->initWithDuration(d);
+    action->initWithDuration(d,0.0f);
     action->autorelease();
 
     return action;
@@ -1711,23 +1728,37 @@ FadeOut* FadeOut::clone() const
 {
 	// no copy constructor
 	auto a = new FadeOut();
-    a->initWithDuration(_duration);
+    a->initWithDuration(_duration,0.0f);
 	a->autorelease();
 	return a;
 }
 
-void FadeOut::update(float time)
+void FadeOut::startWithTarget(cocos2d::Node *target)
 {
-    if (_target)
-    {
-        _target->setOpacity(GLubyte(255 * (1 - time)));
+    ActionInterval::startWithTarget(target);
+    
+    if (nullptr != _reverseAction) {
+        _toOpacity = _reverseAction->_fromOpacity;
+    }else{
+        _toOpacity = 0.0f;
     }
-    /*_target->setOpacity(GLubyte(255 * (1 - time)));*/    
+    
+    if (target) {
+        _fromOpacity = target->getOpacity();
+    }
 }
 
-ActionInterval* FadeOut::reverse() const
+void FadeOut::setReverseAction(cocos2d::FadeTo *ac)
 {
-    return FadeIn::create(_duration);
+    _reverseAction = ac;
+}
+
+
+FadeTo* FadeOut::reverse() const
+{
+    auto action = FadeIn::create(_duration);
+    action->setReverseAction(const_cast<FadeOut*>(this));
+    return action;
 }
 
 //

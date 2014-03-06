@@ -59,8 +59,7 @@ const char* GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR = "ShaderPositi
 
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL = "ShaderLabelNormol";
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelGlow";
-const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE = "ShaderLabelOutline";
-const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW = "ShaderLabelShadow";
+const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 
 
 // uniform names
@@ -113,7 +112,7 @@ GLProgram::~GLProgram()
     }
 }
 
-bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
+bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
@@ -154,12 +153,13 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
     return true;
 }
 
-bool GLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
+bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std::string &fShaderFilename)
 {
-    std::string vertexSource = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename).c_str());
-    std::string fragmentSource = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename).c_str());
+    auto fileUtils = FileUtils::getInstance();
+    std::string vertexSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename));
+    std::string fragmentSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename));
 
-    return initWithVertexShaderByteArray(vertexSource.c_str(), fragmentSource.c_str());
+    return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str());
 }
 
 std::string GLProgram::getDescription() const
@@ -224,7 +224,17 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     return (status == GL_TRUE);
 }
 
-void GLProgram::addAttribute(const char* attributeName, GLuint index)
+GLint GLProgram::getAttribLocation(const char* attributeName) const
+{
+    return glGetAttribLocation(_program, attributeName);
+}
+
+GLint GLProgram::getUniformLocation(const char* attributeName) const
+{
+    return glGetUniformLocation(_program, attributeName);
+}
+
+void GLProgram::bindAttribLocation(const char* attributeName, GLuint index) const
 {
     glBindAttribLocation(_program, index, attributeName);
 }
@@ -339,7 +349,7 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     {
         return false;
     }
-    
+
     bool updated = true;
     tHashUniformEntry *element = nullptr;
     HASH_FIND_INT(_hashForUniforms, &location, element);

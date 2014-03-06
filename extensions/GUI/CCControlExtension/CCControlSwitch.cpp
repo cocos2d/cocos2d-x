@@ -194,36 +194,36 @@ bool ControlSwitchSprite::initWithMaskSprite(
         
         clipper->setStencil(_clipperStencil);
         
-        clipper->addChild(thumbSprite);
         clipper->addChild(onSprite);
         clipper->addChild(offSprite);
         clipper->addChild(onLabel);
         clipper->addChild(offLabel);
+        clipper->addChild(thumbSprite);
         
         addChild(clipper);
 
         // Set up the mask with the Mask shader
         setMaskTexture(maskSprite->getTexture());
-        GLProgram* pProgram = new GLProgram();
-        pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccExSwitchMask_frag);
-        setShaderProgram(pProgram);
-        pProgram->release();
+        GLProgram* program = new GLProgram();
+        program->initWithByteArrays(ccPositionTextureColor_vert, ccExSwitchMask_frag);
+        setShaderProgram(program);
+        program->release();
 
         CHECK_GL_ERROR_DEBUG();
 
-        getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-        getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
         CHECK_GL_ERROR_DEBUG();
 
-        getShaderProgram()->link();
+        program->link();
         CHECK_GL_ERROR_DEBUG();
 
-        getShaderProgram()->updateUniforms();
+        program->updateUniforms();
         CHECK_GL_ERROR_DEBUG();                
 
-        _textureLocation    = glGetUniformLocation( getShaderProgram()->getProgram(), "u_texture");
-        _maskLocation       = glGetUniformLocation( getShaderProgram()->getProgram(), "u_mask");
+        _textureLocation = program->getUniformLocation("u_texture");
+        _maskLocation = program->getUniformLocation("u_mask");
         CHECK_GL_ERROR_DEBUG();
 
         setContentSize(_maskTexture->getContentSize());
@@ -263,24 +263,6 @@ void ControlSwitchSprite::needsLayout()
             _offSprite->getContentSize().height / 2));
     }
 
-    RenderTexture *rt = RenderTexture::create((int)_maskTexture->getContentSize().width, (int)_maskTexture->getContentSize().height);
-
-    rt->begin();
-    _onSprite->visit();
-    _offSprite->visit();
-
-    if (_onLabel)
-    {
-        _onLabel->visit();
-    }
-    if (_offLabel)
-    {
-        _offLabel->visit();
-    }
-
-    rt->end();
-
-    setTexture(rt->getSprite()->getTexture());
     setFlippedY(true);
 }
 

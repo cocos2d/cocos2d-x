@@ -122,7 +122,7 @@ void ActionCamera::updateTransform()
     // But that operation needs to be done after all the 'updates'.
     // So the Director should emit an 'director_after_update' event.
     // And this object should listen to it
-    _target->setAdditionalTransform(mv);
+    _target->setAdditionalTransform(&mv);
 }
 
 //

@@ -44,6 +44,7 @@ class PhysicsContact;
 
 typedef Point Vect;
 
+class Node;
 class Sprite;
 class Scene;
 class DrawNode;
@@ -92,9 +93,9 @@ public:
     /** Adds a joint to the physics world.*/
     virtual void addJoint(PhysicsJoint* joint);
     /** Remove a joint from physics world.*/
-    virtual void removeJoint(PhysicsJoint* joint, bool destroy);
+    virtual void removeJoint(PhysicsJoint* joint, bool destroy = true);
     /** Remove all joints from physics world.*/
-    virtual void removeAllJoints(bool destroy);
+    virtual void removeAllJoints(bool destroy = true);
     
     /** Remove a body from physics world. */
     virtual void removeBody(PhysicsBody* body);
@@ -195,6 +196,7 @@ protected:
     PhysicsWorld();
     virtual ~PhysicsWorld();
     
+    friend class Node;
     friend class Sprite;
     friend class Scene;
     friend class PhysicsBody;
