@@ -330,7 +330,10 @@ void PhysicsSprite::setRotation(float fRotation)
 
 void PhysicsSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    getNodeToParentTransform();
+    if (isDirty()) {
+        getNodeToParentTransform();
+    }
+    
     Sprite::draw(renderer, _transform, transformUpdated);
 }
 
