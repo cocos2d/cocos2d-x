@@ -164,7 +164,7 @@ class SetEnvVar(object):
 
             # python on linux doesn't include Tkinter model, so let user input in terminal
             if self._isLinux():
-                self.ndk_root = raw_input('Couldn\'t find the "NDK_ROOT" envrironment variable. Please enter it: ')        
+                self.ndk_root = raw_input('\nCouldn\'t find the "NDK_ROOT" envrironment variable. Please enter its path: ')        
             else:
 
                 # pop up a window to let user select path for ndk root
