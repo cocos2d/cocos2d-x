@@ -141,12 +141,6 @@ public:
     * Return true if the reloading is succeed, otherwise return false.
     */
     bool reloadTexture(const std::string& fileName);
-    
-    /** Update the nodes & it's children which used texture
-     * The "node" parameter is the root node will be updated
-     * The "texture" parameter is the texture which was updated
-     */
-    void updateTexture(Node* node, Texture2D* texture);
 
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"

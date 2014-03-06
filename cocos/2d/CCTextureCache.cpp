@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "CCSprite.h"
 #include "platform/CCFileUtils.h"
 #include "ccUtils.h"
 #include "CCScheduler.h"
@@ -407,33 +406,6 @@ bool TextureCache::reloadTexture(const std::string& fileName)
     }
 
     return ret;
-}
-
-void TextureCache::updateTexture(Node* node, Texture2D* texture)
-{
-    if (nullptr == node || nullptr == texture) {
-        return;
-    }
-    
-    // update self
-    auto sprite = dynamic_cast<Sprite*>(node);
-    if (nullptr != sprite && sprite->getTexture() == texture) {
-        auto size = texture->getContentSize();
-        sprite->setTextureRect(Rect(0, 0, size.width, size.height));
-    }
-    
-    // update children
-    auto children = node->getChildren();
-    if (children.size() > 0)
-    {
-        for (auto obj : children)
-        {
-            auto childNode = dynamic_cast<Node*>(obj);
-            if (nullptr != childNode) {
-                updateTexture(childNode, texture);
-            }
-        }
-    }
 }
 
 // TextureCache - Remove
