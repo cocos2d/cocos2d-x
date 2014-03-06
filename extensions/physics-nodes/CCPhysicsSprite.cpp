@@ -328,6 +328,12 @@ void PhysicsSprite::setRotation(float fRotation)
 
 }
 
+void PhysicsSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+{
+    getNodeToParentTransform();
+    Sprite::draw(renderer, _transform, transformUpdated);
+}
+
 // returns the transform matrix according the Chipmunk Body values
 const kmMat4& PhysicsSprite::getNodeToParentTransform() const
 {
