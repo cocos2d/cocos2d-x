@@ -80,6 +80,7 @@ Classes/ExtensionsTest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIScene_Editor.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager_Editor.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp \

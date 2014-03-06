@@ -255,6 +255,18 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
+    {
+        "gui RichTextTest",
+        [](Ref* sender)
+        {
+            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+            pManager->setCurrentUISceneId(kUIRichTextTest);
+            pManager->setMinUISceneId(kUIRichTextTest);
+            pManager->setMaxUISceneId(kUIRichTextTest);
+            Scene* pScene = pManager->currentUIScene();
+            Director::getInstance()->replaceScene(pScene);
+        }
+	},
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);

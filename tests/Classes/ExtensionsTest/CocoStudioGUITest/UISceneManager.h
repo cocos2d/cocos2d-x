@@ -100,6 +100,7 @@ enum
     kUIPickerViewTest_Horizontal,
      */
     kUIWidgetAddNodeTest,
+    kUIRichTextTest,
     kUITestMax
 };
 

@@ -387,6 +387,8 @@
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
 		50E9122B18C7596500D07E0D /* CustomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9122918C7596500D07E0D /* CustomGUIScene.cpp */; };
 		50E9122C18C7596500D07E0D /* CustomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9122918C7596500D07E0D /* CustomGUIScene.cpp */; };
+		50E9125418C8A1FD00D07E0D /* UIRichTextTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9125218C8A1FD00D07E0D /* UIRichTextTest.cpp */; };
+		50E9125518C8A1FD00D07E0D /* UIRichTextTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9125218C8A1FD00D07E0D /* UIRichTextTest.cpp */; };
 		50F8555D18C5B82A0019FBFB /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */; };
 		50F8555E18C5B82A0019FBFB /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */; };
 		50F8555F18C5B82A0019FBFB /* CocoStudioGUITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F218C5B82A0019FBFB /* CocoStudioGUITest.cpp */; };
@@ -1024,6 +1026,8 @@
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		50E9122918C7596500D07E0D /* CustomGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomGUIScene.cpp; sourceTree = "<group>"; };
 		50E9122A18C7596500D07E0D /* CustomGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGUIScene.h; sourceTree = "<group>"; };
+		50E9125218C8A1FD00D07E0D /* UIRichTextTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichTextTest.cpp; sourceTree = "<group>"; };
+		50E9125318C8A1FD00D07E0D /* UIRichTextTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichTextTest.h; sourceTree = "<group>"; };
 		50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
 		50F854F118C5B82A0019FBFB /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
 		50F854F218C5B82A0019FBFB /* CocoStudioGUITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoStudioGUITest.cpp; sourceTree = "<group>"; };
@@ -2333,6 +2337,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		50E9125118C8A1FD00D07E0D /* UIRichTextTest */ = {
+			isa = PBXGroup;
+			children = (
+				50E9125218C8A1FD00D07E0D /* UIRichTextTest.cpp */,
+				50E9125318C8A1FD00D07E0D /* UIRichTextTest.h */,
+			);
+			path = UIRichTextTest;
+			sourceTree = "<group>";
+		};
 		50F854EF18C5B82A0019FBFB /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2368,6 +2381,7 @@
 				50F8554E18C5B82A0019FBFB /* UITextFieldTest */,
 				50F8555318C5B82A0019FBFB /* UITextTest */,
 				50F8555818C5B82A0019FBFB /* UIWidgetAddNodeTest */,
+				50E9125118C8A1FD00D07E0D /* UIRichTextTest */,
 			);
 			path = CocoStudioGUITest;
 			sourceTree = "<group>";
@@ -2941,6 +2955,7 @@
 				1A1AF79818BE303F003374E8 /* Test.cpp in Sources */,
 				1A1AF78A18BE303F003374E8 /* ActionsProgressTest.cpp in Sources */,
 				1A1AF88E18BE3040003374E8 /* Paddle.cpp in Sources */,
+				50E9125418C8A1FD00D07E0D /* UIRichTextTest.cpp in Sources */,
 				50F8557918C5B82A0019FBFB /* UIButtonTest.cpp in Sources */,
 				1A1AF81E18BE303F003374E8 /* CCControlSwitchTest.cpp in Sources */,
 				1A1AF82818BE303F003374E8 /* WebSocketTest.cpp in Sources */,
@@ -3041,6 +3056,7 @@
 				50F8558418C5B82A0019FBFB /* UIImageViewTest_Editor.cpp in Sources */,
 				1A1AF82318BE303F003374E8 /* ExtensionsTest.cpp in Sources */,
 				1A1AF7D118BE303F003374E8 /* CocosBuilderTest.cpp in Sources */,
+				50E9125518C8A1FD00D07E0D /* UIRichTextTest.cpp in Sources */,
 				50F855A418C5B82A0019FBFB /* UISliderTest_Editor.cpp in Sources */,
 				1A1AF81518BE303F003374E8 /* CCControlPotentiometerTest.cpp in Sources */,
 				50F855A018C5B82A0019FBFB /* UIScrollViewTest_Editor.cpp in Sources */,
