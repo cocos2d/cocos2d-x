@@ -4,7 +4,7 @@
 #define __TestCpp__CutomGUIScene__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../../testBasic.h"
 #include "gui/CocosGUI.h"
 
