@@ -62,9 +62,10 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+
 protected:
     CustomCommand _renderCmd;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 };
 
 class LabelFNTPadding : public AtlasDemoNew
@@ -226,11 +227,11 @@ public:
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-private:
-    Label *label1;
+
 protected:
     CustomCommand _renderCmd;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    Label *label1;
 };
 
 class LabelTTFLongLineWrapping : public AtlasDemoNew
@@ -432,9 +433,10 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+
 protected:
     CustomCommand _renderCmd;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 };
 
 class LabelTTFLargeText : public AtlasDemoNew
