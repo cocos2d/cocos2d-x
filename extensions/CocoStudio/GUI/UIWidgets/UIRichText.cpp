@@ -121,7 +121,6 @@ _elementRenderersContainer(NULL)
 RichText::~RichText()
 {
     _richElements->release();
-//    _elementRenders->release();
 }
     
 RichText* RichText::create()
@@ -142,8 +141,6 @@ bool RichText::init()
     {
         _richElements = CCArray::create();
         _richElements->retain();
-//        _elementRenders = CCArray::create();
-//        _elementRenders->retain();
         return true;
     }
     return false;
@@ -432,18 +429,6 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
         _formatTextDirty = true;
         Widget::ignoreContentAdaptWithSize(ignore);
     }
-    
-//    _ignoreSize = ignore;
-//    if (_ignoreSize)
-//    {
-//        CCSize s = getContentSize();
-//        _size = s;
-//    }
-//    else
-//    {
-//        _size = _customSize;
-//    }
-//    onSizeChanged();
 }
 
 }
