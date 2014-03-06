@@ -547,6 +547,8 @@ public:
      */
     const CCPoint& getSizePercent() const;
     
+    const CCSize& getCustomSize() const;
+    
     /**
      * Checks a point if is in widget's space
      *
