@@ -221,12 +221,14 @@ void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
+        _labelRenderer->setDimensions(Size::ZERO);
         _labelRenderer->setScale(1.0f);
         _size = _labelRenderer->getContentSize();
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
     else
     {
+        _labelRenderer->setDimensions(_size);
         Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {

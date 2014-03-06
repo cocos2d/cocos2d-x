@@ -311,7 +311,8 @@ bool UITextFieldTest_LineWrap::init()
         
         // Create the textfield
         TextField* textField = TextField::create();
-        textField->setTextAreaSize(Size(240, 160));
+        textField->ignoreContentAdaptWithSize(false);
+        textField->setSize(Size(240, 160));
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);
         textField->setTouchEnabled(true);
