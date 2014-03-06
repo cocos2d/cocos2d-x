@@ -131,8 +131,7 @@ protected:
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
-
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
     
     Tex2F textureCoordFromAlphaPoint(Point alpha);
     Vertex2F vertexFromAlphaPoint(Point alpha);

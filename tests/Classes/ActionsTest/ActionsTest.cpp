@@ -1345,13 +1345,16 @@ void ActionFollow::onEnter()
 void ActionFollow::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this, transform, transformUpdated);
     
     renderer->addCommand(&_customCommand);
 }
 
-void ActionFollow::onDraw()
+void ActionFollow::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     auto winSize = Director::getInstance()->getWinSize();
     
     float x = winSize.width*2 - 100;
@@ -1359,6 +1362,8 @@ void ActionFollow::onDraw()
     
     Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
     DrawPrimitives::drawPoly(vertices, 4, true);
+
+    kmGLPopMatrix();
 }
 
 std::string ActionFollow::subtitle() const
@@ -1661,11 +1666,11 @@ void ActionCatmullRomStacked::draw(Renderer *renderer, const kmMat4 &transform, 
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCatmullRomStacked::onDraw()
+void ActionCatmullRomStacked::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
@@ -1776,11 +1781,11 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const kmMat4 &transfo
     kmGLPopMatrix();
     
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSplineStacked::onDraw()
+void ActionCardinalSplineStacked::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
@@ -2138,12 +2143,12 @@ void ActionCatmullRom::draw(Renderer *renderer, const kmMat4 &transform, bool tr
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
 
-void ActionCatmullRom::onDraw()
+void ActionCatmullRom::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
@@ -2238,11 +2243,11 @@ void ActionCardinalSpline::draw(Renderer *renderer, const kmMat4 &transform, boo
     kmGLPopMatrix();
     
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSpline::onDraw()
+void ActionCardinalSpline::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);

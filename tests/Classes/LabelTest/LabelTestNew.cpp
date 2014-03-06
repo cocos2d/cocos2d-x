@@ -315,22 +315,21 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
 void LabelFNTSpriteActions::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 
 }
 
-void LabelFNTSpriteActions::onDraw()
+void LabelFNTSpriteActions::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
     
     auto s = Director::getInstance()->getWinSize();
     DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
     DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 void LabelFNTSpriteActions::step(float dt)
@@ -932,15 +931,14 @@ std::string LabelFNTBounds::subtitle() const
 void LabelFNTBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 }
 
-void LabelFNTBounds::onDraw()
+void LabelFNTBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
     
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
@@ -957,7 +955,7 @@ void LabelFNTBounds::onDraw()
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
@@ -1554,12 +1552,11 @@ LabelTTFOldNew::LabelTTFOldNew()
     label2->setPosition(Point(s.width/2, delta * 2));
 }
 
-void LabelTTFOldNew::onDraw()
+void LabelTTFOldNew::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 oldMat;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewTransform);
-    
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
     auto label1 = (Label*)getChildByTag(kTagBitmapAtlas1);
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
@@ -1594,13 +1591,13 @@ void LabelTTFOldNew::onDraw()
     DrawPrimitives::setDrawColor4B(Color4B::WHITE.r,Color4B::WHITE.g,Color4B::WHITE.b,Color4B::WHITE.a);
     DrawPrimitives::drawPoly(vertices2, 4, true);
     
-    kmGLLoadMatrix(&oldMat);
+    kmGLPopMatrix();
 }
 
 void LabelTTFOldNew::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this);
+    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCmd);
 }
 

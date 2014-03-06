@@ -37,7 +37,7 @@ public:
     virtual std::string subtitle() const override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 protected:
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 protected:
     CustomCommand _customCommand;
 };
@@ -107,7 +107,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 protected:
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 protected:
     CustomCommand _customCommand;
 };
@@ -381,7 +381,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 protected:
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 private:
     LabelBMFont *label1;
     CustomCommand _customCommand;

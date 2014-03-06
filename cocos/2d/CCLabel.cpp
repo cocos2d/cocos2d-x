@@ -723,7 +723,7 @@ void Label::setFontScale(float fontScale)
     Node::setScale(_fontScale);
 }
 
-void Label::onDraw()
+void Label::onDraw(const kmMat4& transform, bool transformUpdated)
 {
     CC_PROFILER_START("Label - draw");
 
@@ -751,7 +751,7 @@ void Label::onDraw()
         drawShadowWithoutBlur();
     }
 
-    _shaderProgram->setUniformsForBuiltins(_modelViewTransform);
+    _shaderProgram->setUniformsForBuiltins(transform);
    
     for(const auto &child: _children)
     {
@@ -809,7 +809,7 @@ void Label::drawShadowWithoutBlur()
 void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
