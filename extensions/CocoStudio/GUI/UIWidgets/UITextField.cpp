@@ -665,9 +665,11 @@ void TextField::textfieldRendererScaleChangedWithSize()
     {
         _textFieldRenderer->setScale(1.0f);
         _size = getContentSize();
+        _textFieldRenderer->setDimensions(CCSizeZero);
     }
     else
     {
+        _textFieldRenderer->setDimensions(_size);
         CCSize textureSize = getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
