@@ -194,28 +194,26 @@ void ShaderNode::setPosition(const Point &newPosition)
 void ShaderNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw()
+void ShaderNode::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    CC_NODE_DRAW_SETUP();
-    
-    float w = SIZE_X, h = SIZE_Y;
-    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-    
-    //
-    // Uniforms
-    //
-    getShaderProgram()->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
-    getShaderProgram()->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
+    auto shader = getShaderProgram();
+    shader->use();
+    shader->setUniformsForBuiltins(transform);
+    shader->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
+    shader->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
     
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
     
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-    
+
+    float w = SIZE_X, h = SIZE_Y;
+    GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
+
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -439,8 +437,8 @@ public:
     static SpriteBlur* create(const char *pszFileName);
 
 protected:
-    void onDraw();
-private:
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
     int       _blurRadius;
     Point     _pixelSize;
 
@@ -535,11 +533,11 @@ void SpriteBlur::initProgram()
 void SpriteBlur::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void SpriteBlur::onDraw()
+void SpriteBlur::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
@@ -547,7 +545,7 @@ void SpriteBlur::onDraw()
 
     auto program = getShaderProgram();
     program->use();
-    program->setUniformsForBuiltins();
+    program->setUniformsForBuiltins(transform);
     program->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
     program->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
     

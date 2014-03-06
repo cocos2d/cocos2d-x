@@ -123,7 +123,7 @@ protected:
     
 protected:
     CustomCommand _renderCommand;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 
 };
 
@@ -179,15 +179,17 @@ void ShaderSprite::initShader()
 void ShaderSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _renderCommand.init(_globalZOrder);
-    _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
+    _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_renderCommand);
 
 }
 
-void ShaderSprite::onDraw()
+void ShaderSprite::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    CC_NODE_DRAW_SETUP();
-    
+    auto shader = getShaderProgram();
+    shader->use();
+    shader->setUniformsForBuiltins(transform);
+
     setCustomUniforms();
     
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );

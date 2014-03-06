@@ -266,8 +266,7 @@ public:
     // Overrides
     //
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
-    virtual void onDraw();
-    
+
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
     /**
@@ -289,7 +288,8 @@ public:
 protected:
     LayerColor();
     virtual ~LayerColor();
-    virtual bool init();
+    void onDraw(const kmMat4& transform, bool transformUpdated);
+    bool init();
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     bool initWithColor(const Color4B& color);
 

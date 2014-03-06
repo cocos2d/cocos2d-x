@@ -584,7 +584,7 @@ void LayerColor::updateColor()
 void LayerColor::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
     
     for(int i = 0; i < 4; ++i)
@@ -594,12 +594,12 @@ void LayerColor::draw(Renderer *renderer, const kmMat4 &transform, bool transfor
         kmVec3TransformCoord(&pos, &pos, &_modelViewTransform);
         _noMVPVertices[i] = Vertex3F(pos.x,pos.y,pos.z);
     }
-    
 }
 
-void LayerColor::onDraw()
+void LayerColor::onDraw(const kmMat4& transform, bool transformUpdated)
 {
-    CC_NODE_DRAW_SETUP();
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
     //

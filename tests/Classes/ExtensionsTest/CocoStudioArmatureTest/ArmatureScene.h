@@ -271,7 +271,7 @@ public:
     virtual std::string title() const override;
     virtual void update(float delta);
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
@@ -297,9 +297,10 @@ public:
 
 	cocostudio::Armature *armature;
 	Rect rect;
+
 protected:
-    void onDraw();
-protected:
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+
     CustomCommand _customCommand;
 };
 
