@@ -217,6 +217,8 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
     updateRGBAToRenderer(_buttonNormalRenderer);
     normalTextureScaleChangedWithSize();
     _normalTextureLoaded = true;
@@ -263,6 +265,8 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
     updateRGBAToRenderer(_buttonClickedRenderer);
     pressedTextureScaleChangedWithSize();
     _pressedTextureLoaded = true;
@@ -309,6 +313,8 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
     updateRGBAToRenderer(_buttonDisableRenderer);
     disabledTextureScaleChangedWithSize();
     _disabledTextureLoaded = true;
@@ -423,47 +429,59 @@ void Button::onPressStateChangedToDisabled()
     _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
     _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
-
-void Button::setFlipX(bool flipX)
+    
+void Button::updateFlippedX()
 {
-    _titleRenderer->setFlipX(flipX);
+    _titleRenderer->setFlipX(_flippedX);
     if (_scale9Enabled)
     {
-        return;
+        if (_flippedX)
+        {
+            _buttonNormalRenderer->setScaleX(-1);
+            _buttonClickedRenderer->setScaleX(-1);
+            _buttonDisableRenderer->setScaleX(-1);
+        }
+        else
+        {
+            _buttonNormalRenderer->setScaleX(1);
+            _buttonClickedRenderer->setScaleX(1);
+            _buttonDisableRenderer->setScaleX(1);
+        }
+        
     }
-    static_cast<CCSprite*>(_buttonNormalRenderer)->setFlipX(flipX);
-    static_cast<CCSprite*>(_buttonClickedRenderer)->setFlipX(flipX);
-    static_cast<CCSprite*>(_buttonDisableRenderer)->setFlipX(flipX);
+    else
+    {
+        static_cast<CCSprite*>(_buttonNormalRenderer)->setFlipX(_flippedX);
+        static_cast<CCSprite*>(_buttonClickedRenderer)->setFlipX(_flippedX);
+        static_cast<CCSprite*>(_buttonDisableRenderer)->setFlipX(_flippedX);
+    }
 }
-
-void Button::setFlipY(bool flipY)
+    
+void Button::updateFlippedY()
 {
-    _titleRenderer->setFlipY(flipY);
+    _titleRenderer->setFlipY(_flippedY);
     if (_scale9Enabled)
     {
-        return;
-    }
-    static_cast<CCSprite*>(_buttonNormalRenderer)->setFlipY(flipY);
-    static_cast<CCSprite*>(_buttonClickedRenderer)->setFlipY(flipY);
-    static_cast<CCSprite*>(_buttonDisableRenderer)->setFlipY(flipY);
-}
+        if (_flippedY)
+        {
+            _buttonNormalRenderer->setScaleY(-1);
+            _buttonClickedRenderer->setScaleY(-1);
+            _buttonDisableRenderer->setScaleY(-1);
+        }
+        else
+        {
+            _buttonNormalRenderer->setScaleY(1);
+            _buttonClickedRenderer->setScaleY(1);
+            _buttonDisableRenderer->setScaleY(1);
+        }
 
-bool Button::isFlipX()
-{
-    if (_scale9Enabled)
-    {
-        return false;
     }
-    return static_cast<CCSprite*>(_buttonNormalRenderer)->isFlipX();
-}
-
-bool Button::isFlipY()
-{
-    if (_scale9Enabled)
+    else
     {
-        return false;
+        static_cast<CCSprite*>(_buttonNormalRenderer)->setFlipY(_flippedY);
+        static_cast<CCSprite*>(_buttonClickedRenderer)->setFlipY(_flippedY);
+        static_cast<CCSprite*>(_buttonDisableRenderer)->setFlipY(_flippedY);
     }
-    return static_cast<CCSprite*>(_buttonNormalRenderer)->isFlipY();
 }
 
 void Button::setAnchorPoint(const CCPoint &pt)

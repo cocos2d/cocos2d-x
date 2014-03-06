@@ -141,18 +141,6 @@ public:
     
     bool isScale9Enabled();
     
-    //override "setFlipX" of widget.
-    virtual void setFlipX(bool flipX);
-    
-    //override "setFlipY" of widget.
-    virtual void setFlipY(bool flipY);
-    
-    //override "isFlipX" of widget.
-    virtual bool isFlipX();
-    
-    //override "isFlipY" of widget.
-    virtual bool isFlipY();
-    
     /**
      * Changes if button can be clicked zoom effect.
      *
@@ -193,6 +181,8 @@ protected:
     virtual void updateTextureColor();
     virtual void updateTextureOpacity();
     virtual void updateTextureRGBA();
+    virtual void updateFlippedX();
+    virtual void updateFlippedY();
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();

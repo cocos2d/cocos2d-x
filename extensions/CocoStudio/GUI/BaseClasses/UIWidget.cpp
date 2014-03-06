@@ -59,7 +59,9 @@ _widgetChildren(NULL),
 _layoutParameterDictionary(NULL),
 _nodes(NULL),
 _color(ccWHITE),
-_opacity(255)
+_opacity(255),
+_flippedX(false),
+_flippedY(false)
 {
     
 }
@@ -1123,6 +1125,18 @@ void Widget::setOpacity(GLubyte opacity)
 {
     _opacity = opacity;
     updateTextureOpacity();
+}
+    
+void Widget::setFlipX(bool flipX)
+{
+    _flippedX = flipX;
+    updateFlippedX();
+}
+    
+void Widget::setFlipY(bool flipY)
+{
+    _flippedY = flipY;
+    updateFlippedY();
 }
     
 void Widget::updateColorToRenderer(CCNode* renderer)

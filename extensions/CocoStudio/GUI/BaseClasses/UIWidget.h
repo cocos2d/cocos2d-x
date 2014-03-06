@@ -395,7 +395,7 @@ public:
      *
      * @param bFlipX true if the widget should be flipped horizaontally, false otherwise.
      */
-    virtual void setFlipX(bool flipX){};
+    virtual void setFlipX(bool flipX);
     
     /**
      * Returns the flag which indicates whether the widget is flipped horizontally or not.
@@ -407,14 +407,14 @@ public:
      *
      * @return true if the widget is flipped horizaontally, false otherwise.
      */
-    virtual bool isFlipX(){return false;};
+    virtual bool isFlipX(){return _flippedX;};
     
     /**
      * Sets whether the widget should be flipped vertically or not.
      *
      * @param bFlipY true if the widget should be flipped vertically, flase otherwise.
      */
-    virtual void setFlipY(bool flipY){};
+    virtual void setFlipY(bool flipY);
     
     /**
      * Return the flag which indicates whether the widget is flipped vertically or not.
@@ -426,7 +426,7 @@ public:
      *
      * @return true if the widget is flipped vertically, flase otherwise.
      */
-    virtual bool isFlipY(){return false;};
+    virtual bool isFlipY(){return _flippedY;};
     
     virtual void setColor(const ccColor3B& color);
     
@@ -661,6 +661,8 @@ protected:
     virtual void updateTextureColor(){};
     virtual void updateTextureOpacity(){};
     virtual void updateTextureRGBA(){};
+    virtual void updateFlippedX(){};
+    virtual void updateFlippedY(){};
     void updateColorToRenderer(CCNode* renderer);
     void updateOpacityToRenderer(CCNode* renderer);
     void updateRGBAToRenderer(CCNode* renderer);
@@ -705,6 +707,9 @@ protected:
     
     ccColor3B _color;
     GLubyte _opacity;
+    
+    bool _flippedX;
+    bool _flippedY;
     
     friend class TouchGroup;
 };
