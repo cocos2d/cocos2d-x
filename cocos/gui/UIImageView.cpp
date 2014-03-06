@@ -113,6 +113,8 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
     }
     _imageTextureSize = _imageRenderer->getContentSize();
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
     updateRGBAToRenderer(_imageRenderer);
     imageTextureScaleChangedWithSize();
 }
@@ -127,51 +129,32 @@ void ImageView::setTextureRect(const Rect &rect)
         STATIC_CAST_CCSPRITE->setTextureRect(rect);
     }
 }
-
-void ImageView::setFlippedX(bool flippedX)
+    
+void ImageView::updateFlippedX()
 {
     if (_scale9Enabled)
     {
+        int flip = _flippedX ? -1 : 1;
+        STATIC_CAST_SCALE9SPRITE->setScaleX(flip);
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlippedX(flippedX);
+        STATIC_CAST_CCSPRITE->setFlippedX(_flippedX);
     }
 }
-
-void ImageView::setFlippedY(bool flippedY)
+    
+void ImageView::updateFlippedY()
 {
     if (_scale9Enabled)
     {
+        int flip = _flippedY ? -1 : 1;
+        STATIC_CAST_SCALE9SPRITE->setScaleY(flip);
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlippedY(flippedY);
+        STATIC_CAST_CCSPRITE->setFlippedY(_flippedY);
     }
-}
 
-bool ImageView::isFlippedX()
-{
-    if (_scale9Enabled)
-    {
-        return false;
-    }
-    else
-    {
-        return STATIC_CAST_CCSPRITE->isFlippedX();
-    }
-}
-
-bool ImageView::isFlippedY()
-{
-    if (_scale9Enabled)
-    {
-        return false;
-    }
-    else
-    {
-        return STATIC_CAST_CCSPRITE->isFlippedY();
-    }
 }
 
 void ImageView::setScale9Enabled(bool able)

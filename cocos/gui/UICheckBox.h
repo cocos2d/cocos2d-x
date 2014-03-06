@@ -145,27 +145,6 @@ public:
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
 
-    //override "setFlippedX" method of widget.
-    virtual void setFlippedX(bool flippedX) override;
-
-    //override "setFlippedY" method of widget.
-    virtual void setFlippedY(bool flippedY) override;
-
-    //override "isFlippedX" method of widget.
-    virtual bool isFlippedX() override;
-
-    //override "isFlippedY" method of widget.
-    virtual bool isFlippedY() override;
-
-    /** @deprecated Use isFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
-    /** @deprecated Use isFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
-
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
 
@@ -192,6 +171,8 @@ protected:
     virtual void updateTextureColor() override;
     virtual void updateTextureOpacity() override;
     virtual void updateTextureRGBA() override;
+    virtual void updateFlippedX() override;
+    virtual void updateFlippedY() override;
     void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();

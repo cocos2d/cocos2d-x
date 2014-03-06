@@ -156,21 +156,6 @@ void Text::setTouchScaleChangeEnabled(bool enable)
     _touchScaleChangeEnabled = enable;
 }
     
-void Text::setScale(float fScale)
-{
-    Widget::setScale(fScale);
-}
-    
-void Text::setScaleX(float fScaleX)
-{
-    Widget::setScaleX(fScaleX);
-}
-    
-void Text::setScaleY(float fScaleY)
-{
-    Widget::setScaleY(fScaleY);
-}
-
 bool Text::isTouchScaleChangeEnabled()
 {
     return _touchScaleChangeEnabled;
@@ -199,24 +184,15 @@ void Text::onPressStateChangedToDisabled()
     
 }
 
-void Text::setFlippedX(bool flippedX)
+void Text::updateFlippedX()
 {
-    _labelRenderer->setFlippedX(flippedX);
-}
+    _labelRenderer->setFlippedX(_flippedX);
 
-void Text::setFlippedY(bool flippedY)
-{
-    _labelRenderer->setFlippedY(flippedY);
 }
-
-bool Text::isFlippedX()
+    
+void Text::updateFlippedY()
 {
-    return _labelRenderer->isFlippedX();
-}
-
-bool Text::isFlippedY()
-{
-    return _labelRenderer->isFlippedY();
+    _labelRenderer->setFlippedY(_flippedY);
 }
 
 void Text::setAnchorPoint(const Point &pt)
