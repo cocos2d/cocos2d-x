@@ -61,7 +61,9 @@ _scissorRectDirty(false),
 _clippingRect(CCRectZero),
 _clippingParent(NULL),
 _doLayoutDirty(true),
-_clippingRectDirty(true)
+_clippingRectDirty(true),
+_backGroundImageColor(ccWHITE),
+_backGroundImageOpacity(255)
 {
     _widgetType = WidgetTypeContainer;
 }
@@ -563,20 +565,9 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
                 break;
         }
     }
-    if (_backGroundScale9Enabled)
-    {
-        extension::CCScale9Sprite* bgiScale9 = static_cast<extension::CCScale9Sprite*>(_backGroundImage);
-        bgiScale9->setColor(getColor());
-        bgiScale9->setOpacity(getOpacity());
-    }
-    else
-    {
-        CCSprite* bgiScale9 = static_cast<CCSprite*>(_backGroundImage);
-        bgiScale9->setColor(getColor());
-        bgiScale9->setOpacity(getOpacity());
-    }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
+    updateBackGroundImageRGBA();
 }
 
 void Layout::setBackGroundImageCapInsets(const CCRect &capInsets)
@@ -761,7 +752,7 @@ const ccColor3B& Layout::getBackGroundEndColor()
     return _gEndColor;
 }
 
-void Layout::setBackGroundColorOpacity(int opacity)
+void Layout::setBackGroundColorOpacity(GLubyte opacity)
 {
     _cOpacity = opacity;
     switch (_colorType)
@@ -779,7 +770,7 @@ void Layout::setBackGroundColorOpacity(int opacity)
     }
 }
     
-int Layout::getBackGroundColorOpacity()
+GLubyte Layout::getBackGroundColorOpacity()
 {
     return _cOpacity;
 }
@@ -796,6 +787,56 @@ void Layout::setBackGroundColorVector(const CCPoint &vector)
 const CCPoint& Layout::getBackGroundColorVector()
 {
     return _alongVector;
+}
+    
+void Layout::setBackGroundImageColor(const ccColor3B &color)
+{
+    _backGroundImageColor = color;
+    updateBackGroundImageColor();
+}
+    
+void Layout::setBackGroundImageOpacity(GLubyte opacity)
+{
+    _backGroundImageOpacity = opacity;
+    updateBackGroundImageOpacity();
+}
+    
+const ccColor3B& Layout::getBackGroundImageColor()
+{
+    return _backGroundImageColor;
+}
+    
+GLubyte Layout::getBackGroundImageOpacity()
+{
+    return _backGroundImageOpacity;
+}
+    
+void Layout::updateBackGroundImageColor()
+{
+    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
+    if (rgba)
+    {
+        rgba->setColor(_backGroundImageColor);
+    }
+}
+    
+void Layout::updateBackGroundImageOpacity()
+{
+    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
+    if (rgba)
+    {
+        rgba->setOpacity(_backGroundImageOpacity);
+    }
+}
+    
+void Layout::updateBackGroundImageRGBA()
+{
+    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
+    if (rgba)
+    {
+        rgba->setColor(_backGroundImageColor);
+        rgba->setOpacity(_backGroundImageOpacity);
+    }
 }
 
 const CCSize& Layout::getBackGroundImageTextureSize() const
