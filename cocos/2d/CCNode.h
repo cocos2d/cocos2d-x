@@ -672,11 +672,11 @@ public:
     virtual Node * getChildByTag(int tag);
 
      /**
-     * Gets a child from the container with its label
+     * Gets a child from the container with its name
      *
-     * @param label   An C string identifier to find the child node.
+     * @param name   A string identifier to find the child node.
      *
-     * @return the first Node object whose label equals to the input parameter
+     * @return the first Node object whose name equals to the input parameter
      */
     virtual Node* getChildByName(const std::string& name);
     /**
@@ -833,24 +833,24 @@ public:
     virtual void setTag(int tag);
 
     /// @{
-    /// @name strTag
+    /// @name name
 
     /**
-     * Returns a label that is used to identify the node easily.
+     * Returns a name that is used to identify the node easily.
      *
-     * You can set tags to node then identify them easily.
+     * You can set name to node then identify them easily.
      @code
  
-     // set tags
-     node1->setStag("player");
-     node2->setStag("monster");
-     node3->setStag("boss");
+     // set name
+     node1->setName("player");
+     node2->setName("monster");
+     node3->setName("boss");
      parent->addChild(node1);
      parent->addChild(node2);
      parent->addChild(node3);
-     // identify by tags
-     Node* node = nullptr;
-     node = parent->getChildByStrTag("player")
+     // identify by name
+     Node* player = nullptr;
+     player = parent->getChildByName("player")
      @endcode
      *
      * @return A C string that identifies the node.
