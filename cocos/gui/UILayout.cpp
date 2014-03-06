@@ -81,7 +81,9 @@ _currentStencilPassDepthPass(GL_KEEP),
 _currentDepthWriteMask(GL_TRUE),
 _currentAlphaTestEnabled(GL_FALSE),
 _currentAlphaTestFunc(GL_ALWAYS),
-_currentAlphaTestRef(1)
+_currentAlphaTestRef(1),
+_backGroundImageColor(Color3B::WHITE),
+_backGroundImageOpacity(255)
 {
     _widgetType = WidgetTypeContainer;
 }
@@ -628,20 +630,9 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
                 break;
         }
     }
-    if (_backGroundScale9Enabled)
-    {
-        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
-        bgiScale9->setColor(getColor());
-        bgiScale9->setOpacity(getOpacity());
-    }
-    else
-    {
-        Sprite* bgiScale9 = static_cast<Sprite*>(_backGroundImage);
-        bgiScale9->setColor(getColor());
-        bgiScale9->setOpacity(getOpacity());
-    }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
+    updateBackGroundImageRGBA();
 }
 
 void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
@@ -828,7 +819,7 @@ const Color3B& Layout::getBackGroundEndColor()
     return _gEndColor;
 }
 
-void Layout::setBackGroundColorOpacity(int opacity)
+void Layout::setBackGroundColorOpacity(GLubyte opacity)
 {
     _cOpacity = opacity;
     switch (_colorType)
@@ -846,7 +837,7 @@ void Layout::setBackGroundColorOpacity(int opacity)
     }
 }
     
-int Layout::getBackGroundColorOpacity()
+GLubyte Layout::getBackGroundColorOpacity()
 {
     return _cOpacity;
 }
@@ -863,6 +854,53 @@ void Layout::setBackGroundColorVector(const Point &vector)
 const Point& Layout::getBackGroundColorVector()
 {
     return _alongVector;
+}
+
+void Layout::setBackGroundImageColor(const Color3B &color)
+{
+    _backGroundImageColor = color;
+    updateBackGroundImageColor();
+}
+
+void Layout::setBackGroundImageOpacity(GLubyte opacity)
+{
+    _backGroundImageOpacity = opacity;
+    updateBackGroundImageOpacity();
+}
+
+const Color3B& Layout::getBackGroundImageColor()
+{
+    return _backGroundImageColor;
+}
+
+GLubyte Layout::getBackGroundImageOpacity()
+{
+    return _backGroundImageOpacity;
+}
+
+void Layout::updateBackGroundImageColor()
+{
+    if (_backGroundImage)
+    {
+        _backGroundImage->setColor(_backGroundImageColor);
+    }
+}
+
+void Layout::updateBackGroundImageOpacity()
+{
+    if (_backGroundImage)
+    {
+        _backGroundImage->setOpacity(_backGroundImageOpacity);
+    }
+}
+
+void Layout::updateBackGroundImageRGBA()
+{
+    if (_backGroundImage)
+    {
+        _backGroundImage->setColor(_backGroundImageColor);
+        _backGroundImage->setOpacity(_backGroundImageOpacity);
+    }
 }
 
 const Size& Layout::getBackGroundImageTextureSize() const

@@ -547,6 +547,8 @@ public:
      * @return size
      */
     const Size& getSize() const;
+    
+    const Size& getCustomSize() const;
 
     /**
      * Returns size percent of widget

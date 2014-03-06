@@ -568,6 +568,11 @@ const Size& Widget::getSize() const
 {
     return _size;
 }
+    
+const Size& Widget::getCustomSize() const
+{
+    return _customSize;
+}
 
 const Point& Widget::getSizePercent() const
 {
