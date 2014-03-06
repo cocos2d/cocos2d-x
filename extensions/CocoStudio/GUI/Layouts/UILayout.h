@@ -141,9 +141,9 @@ public:
      *
      * @param opacity
      */
-    void setBackGroundColorOpacity(int opacity);
+    void setBackGroundColorOpacity(GLubyte opacity);
     
-    int getBackGroundColorOpacity();
+    GLubyte getBackGroundColorOpacity();
     
     /**
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -153,6 +153,14 @@ public:
     void setBackGroundColorVector(const CCPoint &vector);
     
     const CCPoint& getBackGroundColorVector();
+    
+    void setBackGroundImageColor(const ccColor3B& color);
+    
+    void setBackGroundImageOpacity(GLubyte opacity);
+    
+    const ccColor3B& getBackGroundImageColor();
+    
+    GLubyte getBackGroundImageOpacity();
     
     /**
      * Remove the background image of layout.
@@ -269,6 +277,9 @@ protected:
     void setStencilClippingSize(const CCSize& size);
     const CCRect& getClippingRect();
     virtual void doLayout();
+    void updateBackGroundImageColor();
+    void updateBackGroundImageOpacity();
+    void updateBackGroundImageRGBA();
 protected:
     bool _clippingEnabled;
     
@@ -285,7 +296,7 @@ protected:
     ccColor3B _gStartColor;
     ccColor3B _gEndColor;
     CCPoint _alongVector;
-    int _cOpacity;
+    GLubyte _cOpacity;
     CCSize _backGroundImageTextureSize;
     LayoutType _layoutType;
     LayoutClippingType _clippingType;
@@ -296,6 +307,8 @@ protected:
     Layout* _clippingParent;
     bool _doLayoutDirty;
     bool _clippingRectDirty;
+    ccColor3B _backGroundImageColor;
+    GLubyte _backGroundImageOpacity;
 };
     
 }
