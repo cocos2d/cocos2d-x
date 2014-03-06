@@ -167,6 +167,7 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelAtlas.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelBMFont.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIRichText.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
@@ -317,6 +318,7 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILabelAtlas.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILabelBMFont.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
