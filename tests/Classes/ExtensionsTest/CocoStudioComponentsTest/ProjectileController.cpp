@@ -37,6 +37,12 @@ void ProjectileController::onExit()
 void ProjectileController::update(float delta)
 {
     auto com = _owner->getParent()->getComponent("SceneController");
+    auto& _dieProjectiles = static_cast<SceneController*>(com)->getDieProjectiles();
+    for (const auto& _dieProjectile : _dieProjectiles)
+    {
+        _dieProjectile->removeFromParentAndCleanup(true);
+    }
+
     auto _targets = ((SceneController*)com)->getTargets();
     
     auto projectile = dynamic_cast<Sprite*>(_owner);
@@ -86,7 +92,7 @@ ProjectileController* ProjectileController::create(void)
     {
         CC_SAFE_DELETE(pRet);
     }
-	return pRet;
+    return pRet;
 }
 
 void freeFunction( Node *ignore )
@@ -99,27 +105,27 @@ void ProjectileController::move(float flocationX, float flocationY)
     auto winSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
     // Determinie offset of location to projectile
-	float offX = flocationX - _owner->getPosition().x;
-	float offY = flocationY - _owner->getPosition().y;
+    float offX = flocationX - _owner->getPosition().x;
+    float offY = flocationY - _owner->getPosition().y;
 
-	// Bail out if we are shooting down or backwards
-	if (offX <= 0) return;
+    // Bail out if we are shooting down or backwards
+    if (offX <= 0) return;
 
-	// Ok to add now - we've double checked position
-	
+    // Ok to add now - we've double checked position
+    
 
-	// Determine where we wish to shoot the projectile to
-	float realX = origin.x + winSize.width + (_owner->getContentSize().width/2);
-	float ratio = offY / offX;
-	float realY = (realX * ratio) + _owner->getPosition().y;
-	Point realDest = Point(realX, realY);
+    // Determine where we wish to shoot the projectile to
+    float realX = origin.x + winSize.width + (_owner->getContentSize().width/2);
+    float ratio = offY / offX;
+    float realY = (realX * ratio) + _owner->getPosition().y;
+    Point realDest = Point(realX, realY);
 
-	// Determine the length of how far we're shooting
-	float offRealX = realX - _owner->getPosition().x;
-	float offRealY = realY - _owner->getPosition().y;
-	float length = sqrtf((offRealX * offRealX) + (offRealY*offRealY));
-	float velocity = 480/1; // 480pixels/1sec
-	float realMoveDuration = length/velocity;
+    // Determine the length of how far we're shooting
+    float offRealX = realX - _owner->getPosition().x;
+    float offRealY = realY - _owner->getPosition().y;
+    float length = sqrtf((offRealX * offRealX) + (offRealY*offRealY));
+    float velocity = 480/1; // 480pixels/1sec
+    float realMoveDuration = length/velocity;
 
     auto callfunc = CallFuncN::create(
           CC_CALLBACK_1(
@@ -127,8 +133,8 @@ void ProjectileController::move(float flocationX, float flocationY)
                 static_cast<SceneController*>( getOwner()->getParent()->getComponent("SceneController")
       ) ) );
 
-	// Move projectile to actual endpoint
-	_owner->runAction(
+    // Move projectile to actual endpoint
+    _owner->runAction(
           Sequence::create(
                MoveTo::create(realMoveDuration, realDest),
                callfunc,
@@ -141,5 +147,6 @@ void ProjectileController::die()
     auto com = _owner->getParent()->getComponent("SceneController");
     auto& _projectiles = static_cast<SceneController*>(com)->getProjectiles();
     _projectiles.eraseObject(_owner);
-    _owner->removeFromParentAndCleanup(true);
+    auto& _dieProjectiles = static_cast<SceneController*>(com)->getDieProjectiles();
+    _dieProjectiles.pushBack(_owner);
 }

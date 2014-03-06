@@ -22,6 +22,7 @@ public:
 public:
     cocos2d::Vector<cocos2d::Node*>& getTargets() {return _targets;};
     cocos2d::Vector<cocos2d::Node*>& getProjectiles() {return _projectiles;};
+    cocos2d::Vector<cocos2d::Node*>& getDieProjectiles() {return _dieProjectiles;};
     void spriteMoveFinished(cocos2d::Node* sender);
     void increaseKillCount();
 
@@ -32,6 +33,7 @@ public:
 protected:
     cocos2d::Vector<cocos2d::Node*> _targets;
 	cocos2d::Vector<cocos2d::Node*> _projectiles;
+    cocos2d::Vector<cocos2d::Node*> _dieProjectiles;
 };
 
 
