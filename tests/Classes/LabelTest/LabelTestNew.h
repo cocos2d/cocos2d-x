@@ -4,6 +4,7 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
+#include "gui/CocosGUI.h"
 
 
 class AtlasDemoNew : public BaseTest
@@ -61,9 +62,10 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+
 protected:
     CustomCommand _renderCmd;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 };
 
 class LabelFNTPadding : public AtlasDemoNew
@@ -225,11 +227,11 @@ public:
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-private:
-    Label *label1;
+
 protected:
     CustomCommand _renderCmd;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    Label *label1;
 };
 
 class LabelTTFLongLineWrapping : public AtlasDemoNew
@@ -349,15 +351,31 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class LabelTTFDistanceFieldEffect : public AtlasDemoNew
+class LabelOutlineAndGlowTest : public AtlasDemoNew
 {
 public:
-    CREATE_FUNC(LabelTTFDistanceFieldEffect);
+    CREATE_FUNC(LabelOutlineAndGlowTest);
 
-    LabelTTFDistanceFieldEffect();
+    LabelOutlineAndGlowTest();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class LabelShadowTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelShadowTest);
+
+    LabelShadowTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void sliderEvent(Ref *pSender, ui::SliderEventType type);
+private:
+    Label* shadowLabelTTF;
+    Label* shadowLabelBMFont;
 };
 
 class LabelCharMapTest : public AtlasDemoNew
@@ -415,9 +433,10 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+
 protected:
     CustomCommand _renderCmd;
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 };
 
 class LabelTTFLargeText : public AtlasDemoNew
