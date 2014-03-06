@@ -78,7 +78,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     /**
     * @js NA
     * @lua NA
@@ -102,19 +102,9 @@ public:
     virtual bool isOpacityModifyRGB() const override;
 
 protected:
-    kmMat4 _cachedMV;
     //renderer callback
-    void onDraw();
-
-protected:
-    /**
-     * @js ctor
-     */
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
     MotionStreak();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~MotionStreak();
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */

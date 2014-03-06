@@ -277,6 +277,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
 , _texture(nullptr)
+, _insideBounds(true)
 {
 }
 
@@ -502,13 +503,6 @@ void Sprite::updateTransform(void)
 {
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
-#if CC_USE_PHYSICS
-    if (updatePhysicsTransform())
-    {
-        setDirty(true);
-    };
-#endif
-
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
@@ -593,16 +587,19 @@ void Sprite::updateTransform(void)
 
 // draw
 
-void Sprite::draw(void)
+void Sprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    if(isInsideBounds())
+    // Don't do calculate the culling if the transform was not updated
+    _insideBounds = transformUpdated ? isInsideBounds() : _insideBounds;
+
+    if(_insideBounds)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, transform);
+        renderer->addCommand(&_quadCommand);
 #if CC_SPRITE_DEBUG_DRAW
         _customDebugDrawCommand.init(_globalZOrder);
         _customDebugDrawCommand.func = CC_CALLBACK_0(Sprite::drawDebugData, this);
-        Director::getInstance()->getRenderer()->addCommand(&_customDebugDrawCommand);
+        renderer->addCommand(&_customDebugDrawCommand);
 #endif //CC_SPRITE_DEBUG_DRAW
     }
 }

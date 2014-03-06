@@ -18,7 +18,7 @@ void main() \n\
   //float width = fwidth(dist); \n\
   //assign width for constant will lead to a little bit fuzzy,it's temporary measure.\n\
   float width = 0.04; \n\
-  float alpha = smoothstep(0.5-width, 0.5+width, dist); \n\
+  float alpha = smoothstep(0.5-width, 0.5+width, dist) * v_fragmentColor.a; \n\
   gl_FragColor = vec4(v_fragmentColor.rgb,alpha); \n\
 } \n\
 ";

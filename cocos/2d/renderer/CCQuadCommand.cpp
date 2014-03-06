@@ -92,20 +92,19 @@ void QuadCommand::generateMaterialID()
     //
     // Temporal hack (later, these 32-bits should be packed in 24-bits
     //
-    // +---------------------+-------------------+----------------------+
-    // | Shader ID (10 bits) | Blend ID (4 bits) | Texture ID (18 bits) |
-    // +---------------------+-------------------+----------------------+
+    // +---------------------+-------------------+----------------------------------------+
+    // | Shader ID (10 bits) | Blend ID (4 bits) | empty (18bits) |  Texture ID (32 bits) |
+    // +---------------------+-------------------+----------------------------------------+
 
-    _materialID = (uint32_t)_shader->getProgram() << 22
-            | (uint32_t)blendID << 18
-            | (uint32_t)_textureID << 0;
+    _materialID = (uint64_t)_shader->getProgram() << 54
+            | (uint64_t)blendID << 50
+            | (uint64_t)_textureID << 0;
 }
 
 void QuadCommand::useMaterial() const
 {
     _shader->use();
-
-    _shader->setUniformsForBuiltins();
+    _shader->setUniformsForBuiltins(_mv);
 
     //Set texture
     GL::bindTexture2D(_textureID);
