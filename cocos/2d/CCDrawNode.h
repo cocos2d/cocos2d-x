@@ -89,7 +89,7 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
     
     // Overrides
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
@@ -100,7 +100,6 @@ protected:
     virtual bool init();
 
     void ensureCapacity(int count);
-    void render();
 
     GLuint      _vao;
     GLuint      _vbo;

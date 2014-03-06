@@ -501,10 +501,11 @@ Point ProgressTimer::boundaryTexCoord(char index)
     return Point::ZERO;
 }
 
-void ProgressTimer::onDraw()
+void ProgressTimer::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
 
-    CC_NODE_DRAW_SETUP();
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 
@@ -557,7 +558,7 @@ void ProgressTimer::draw(Renderer *renderer, const kmMat4 &transform, bool trans
         return;
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
