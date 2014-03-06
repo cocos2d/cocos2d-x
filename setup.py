@@ -35,9 +35,9 @@ And it will read only one of them. So we will add environment variable in the sa
 Which means that
 * add environment variables into ~/.bash_profile if it exists
 * otherwise it will the add environment variables into ~/.bash_login if it exists
-* otherwise it will the add environment variable sinto ~/.profile if it exists
+* otherwise it will the add environment variables into ~/.profile if it exists
 
-Will create ~/.bash_profile when none of them exist, and add environment variable into it.
+Will create ~/.bash_profile when none of them exist, and add environment variables into it.
 
 '''
 
@@ -56,7 +56,6 @@ class SetEnvVar(object):
         self.ndk_root = ndk
         # whether the value of "ndk_root" is passed or not
         self.ndk_root_passed = False
-        self.file_to_write_environment = None
         self.file_used_for_setup = ''
         self.variable_found_in_env = False
 
@@ -89,7 +88,7 @@ class SetEnvVar(object):
         else:
             file_to_write = os.path.join(home, '.bash_profile')
 
-        self.file_to_write_environment = file_to_write
+        self.file_used_for_setup = file_to_write
 
         file = open(file_to_write, 'a')
         if self.ndk_root_passed and self._find_string_in_file('export '.join(key), file_to_write):
@@ -121,10 +120,7 @@ class SetEnvVar(object):
         try:
             result = os.environ[var]
             self.variable_found_in_env = true
-            if result:
-                return True
-            else:
-                return False
+            return True
         except Exception:
             string_to_search = 'export %s' % var
             home = os.path.expanduser('~')
@@ -134,6 +130,7 @@ class SetEnvVar(object):
             if os.path.exists(path):
                 if self._find_string_in_file(string_to_search, path):
                     self.file_used_for_setup = path
+                    self.variable_found_in_env = True
                     return True
 
             # search it in ~/.bash_login
@@ -141,6 +138,7 @@ class SetEnvVar(object):
             if os.path.exists(path):
                 if self._find_string_in_file(string_to_search, path):
                     self.file_used_for_setup = path
+                    self.variable_found_in_env = True
                     return True
 
             # search it in ~/.profile
@@ -148,7 +146,10 @@ class SetEnvVar(object):
             if os.path.exists(path):
                 if self._find_string_in_file(string_to_search, path):
                     self.file_used_for_setup = path
+                    self.variable_found_in_env = True
                     return True
+
+        self.variable_found_in_env = False
         return False
 
     def _get_ndk_root(self):
@@ -164,21 +165,28 @@ class SetEnvVar(object):
                 import tkFileDialog
 
                 root = Tkinter.Tk()
-                self._center(root)
 
                 def callback():
                     self.ndk_root = tkFileDialog.askdirectory()
                     root.destroy()
 
-                frame = Tkinter.Frame(root)
-                Tkinter.Label(frame, text='Select path for NDK_ROOT:').pack(side=Tkinter.LEFT)
-                Tkinter.Button(frame, text='...', command=callback).pack(side=Tkinter.LEFT)
-                frame.pack()
+                label_content = """
+Please select path for NDK_ROOT. NDK is needed to develop Android native application.
+More information of NDK please refer to https://developer.android.com/tools/sdk/ndk/index.html. 
+You can skip to it now without problem. But you will need it later to build the game for Android.
+                """
+
+                Tkinter.Label(root, text=label_content).pack()
+                Tkinter.Button(root, text='select ndk_root', command=callback).pack()
+                self._center(root)
                 root.mainloop()
 
-            return True
-
-        return False
+            if self.ndk_root:
+                return True
+            else:
+                return False
+        else:
+            return False
 
     # display a window in center and put it on top
     def _center(self, win):
@@ -193,23 +201,25 @@ class SetEnvVar(object):
     def set_ndk_root(self, value):
         print '-> Adding NDK_ROOT environment variable...',
 
-        self.ndk_root_updated = False
+        ndk_root_updated = False
 
         if value:
             self.ndk_root = value
-            ndk_root_updated = True
         else:
-            ndk_root_updated = self._get_ndk_root()
+            ndk_root_selected = self._get_ndk_root()
 
         if self.ndk_root:
             os.environ[NDK_ROOT] = self.ndk_root
             self._set_environment_variable(NDK_ROOT, self.ndk_root)
             ndk_root_updated = True
+            print 'OK'
         else:
             ndk_root_updated = False
+            if not ndk_root_selected:
+                print 'SKIPPED'
+            else:
+                print 'ALREADY ADDED'
 
-        if ndk_root_updated:
-            print 'OK'
         return ndk_root_updated
 
     def set_console_root(self):
@@ -246,9 +256,9 @@ class SetEnvVar(object):
             if console_updated or ndk_root_updated:
                 result_string = '\nSet up successful:\n'
                 if console_updated:
-                    result_string += '\tCOCOS_CONSOLE_ROOT was added into %s.\n' % self.file_to_write_environment
+                    result_string += '\tCOCOS_CONSOLE_ROOT was added into %s.\n' % self.file_used_for_setup
                 if ndk_root_updated:
-                    result_string += '\tNDK_ROOT was added into %s.\n' % self.file_to_write_environment
+                    result_string += '\tNDK_ROOT was added into %s.\n' % self.file_used_for_setup
 
                 print result_string
             else:
