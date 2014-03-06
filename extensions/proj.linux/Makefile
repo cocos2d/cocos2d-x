@@ -120,6 +120,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/GUI/UIWidgets/UILoadingBar.cpp \
 ../CocoStudio/GUI/UIWidgets/UISlider.cpp \
 ../CocoStudio/GUI/UIWidgets/UITextField.cpp \
+../CocoStudio/GUI/UIWidgets/UIRichText.cpp \
 ../CocoStudio/Components/CCComAttribute.cpp \
 ../CocoStudio/Components/CCComAudio.cpp \
 ../CocoStudio/Components/CCComController.cpp \

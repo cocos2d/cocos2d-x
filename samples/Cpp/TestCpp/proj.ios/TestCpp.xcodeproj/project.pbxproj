@@ -354,6 +354,7 @@
 		50181AE1185FEBAE0051CA1C /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */; };
 		50D36120186AED6100828878 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D3611E186AED6100828878 /* UITouchGroup.cpp */; };
 		50D6A4CD17E2C91100523A82 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D6A4CB17E2C91100523A82 /* GUIReader.cpp */; };
+		50E9124F18C8987500D07E0D /* UIRichTextTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9124D18C8987500D07E0D /* UIRichTextTest.cpp */; };
 		50E9E948182A355B00F6FDF1 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E946182A355B00F6FDF1 /* SceneReader.cpp */; };
 		50F853EC18C57E040019FBFB /* ButtonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F853C318C57E040019FBFB /* ButtonReader.cpp */; };
 		50F853ED18C57E040019FBFB /* CheckBoxReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F853C618C57E040019FBFB /* CheckBoxReader.cpp */; };
@@ -1182,6 +1183,8 @@
 		50D3611F186AED6100828878 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		50D6A4CB17E2C91100523A82 /* GUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIReader.cpp; sourceTree = "<group>"; };
 		50D6A4CC17E2C91100523A82 /* GUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIReader.h; sourceTree = "<group>"; };
+		50E9124D18C8987500D07E0D /* UIRichTextTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichTextTest.cpp; sourceTree = "<group>"; };
+		50E9124E18C8987500D07E0D /* UIRichTextTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichTextTest.h; sourceTree = "<group>"; };
 		50E9E946182A355B00F6FDF1 /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
 		50E9E947182A355B00F6FDF1 /* SceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneReader.h; sourceTree = "<group>"; };
 		50F853C018C57CFC0019FBFB /* GUIDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIDefine.h; sourceTree = "<group>"; };
@@ -3142,6 +3145,15 @@
 			path = ../../Classes/ExtensionsTest/CocoStudioSceneTest;
 			sourceTree = "<group>";
 		};
+		50E9124C18C8987500D07E0D /* UIRichTextTest */ = {
+			isa = PBXGroup;
+			children = (
+				50E9124D18C8987500D07E0D /* UIRichTextTest.cpp */,
+				50E9124E18C8987500D07E0D /* UIRichTextTest.h */,
+			);
+			path = UIRichTextTest;
+			sourceTree = "<group>";
+		};
 		50F853C118C57E040019FBFB /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -3317,6 +3329,7 @@
 				50F8544F18C581FB0019FBFB /* UISliderTest */,
 				50F8545418C581FB0019FBFB /* UITextFieldTest */,
 				50F8545918C581FB0019FBFB /* UIWidgetAddNodeTest */,
+				50E9124C18C8987500D07E0D /* UIRichTextTest */,
 			);
 			name = CocoStudioGUITest;
 			path = ../../Classes/ExtensionsTest/CocoStudioGUITest;
@@ -3839,6 +3852,7 @@
 				50F8546E18C581FB0019FBFB /* UILabelBMFontTest.cpp in Sources */,
 				50F8546218C581FB0019FBFB /* CustomImageViewReader.cpp in Sources */,
 				15A3D91F1682F7D5002FB0C5 /* b2PolygonContact.cpp in Sources */,
+				50E9124F18C8987500D07E0D /* UIRichTextTest.cpp in Sources */,
 				15A3D9201682F7D5002FB0C5 /* b2DistanceJoint.cpp in Sources */,
 				50F8548518C581FB0019FBFB /* UIWidgetAddNodeTest_Editor.cpp in Sources */,
 				15A3D9211682F7D5002FB0C5 /* b2FrictionJoint.cpp in Sources */,
