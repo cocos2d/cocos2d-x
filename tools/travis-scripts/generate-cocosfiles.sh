@@ -1,8 +1,8 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-COCOS2DX_ROOT="$DIR"/../..
-COCOSFILES_CREATOR_ROOT=$COCOS2DX_ROOT/tools/project-creator/config-create
+PROJECT_ROOT="$DIR"/../..
+
 COMMITTAG="[AUTO][ci skip]"
 
 # Exit on error
@@ -11,9 +11,7 @@ set -e
 generate_cocosfiles_json()
 {
     echo "Updates cocos_files.json"
-    pushd "$COCOSFILES_CREATOR_ROOT"
-    ./create_config.py
-    popd
+    ./for-each-file-in-dir.sh > ${PROJECT_ROOT}/templates/cocos2dx_files.json
 }
 
 if [ "$GEN_COCOS_FILES"x != "YES"x ]; then
@@ -21,7 +19,7 @@ if [ "$GEN_COCOS_FILES"x != "YES"x ]; then
     exit 0
 fi
 
-pushd "$COCOS2DX_ROOT"
+pushd "$PROJECT_ROOT"
 #Set git user for cocos2d-x repo
 git config user.email ${GH_EMAIL}
 git config user.name ${GH_USER}
@@ -51,7 +49,7 @@ echo Using "$ELAPSEDSECS" in the branch names for pseudo-uniqueness
 
 # 2. Check if there are any files that are different from the index
 
-pushd "$COCOS2DX_ROOT"
+pushd "$PROJECT_ROOT"
 
 # Run status to record the output in the log
 git status
@@ -88,7 +86,7 @@ COCOS_BRANCH=update_cocosfiles_"$ELAPSEDSECS"
 pushd "${DIR}"
 
 # 3. In Cocos2D-X repo, Checkout a branch named "updategeneratedsubmodule" Update the submodule reference to point to the commit with generated bindings
-cd "${COCOS2DX_ROOT}"
+cd "${PROJECT_ROOT}"
 git add .
 git checkout -b "$COCOS_BRANCH"
 git commit -m "$COMMITTAG : updating tools/project-creator/module/cocos_files.json"
