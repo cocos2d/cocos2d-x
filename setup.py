@@ -152,6 +152,13 @@ class SetEnvVar(object):
         self.variable_found_in_env = False
         return False
 
+    def _check_validation_ndk_root(self):
+        ndk_build = os.path.join(self.ndk_root, 'ndk-build')
+        if os.path.isfile(ndk_build):
+            return True
+        else:
+            return False
+
     def _get_ndk_root(self):
         if not self._find_environment_variable(NDK_ROOT):
 
@@ -173,7 +180,7 @@ class SetEnvVar(object):
                 label_content = """
 Please select path for NDK_ROOT. NDK is needed to develop Android native application.
 More information of NDK please refer to https://developer.android.com/tools/sdk/ndk/index.html. 
-You can skip to it now without problem. But you will need it later to build the game for Android.
+You can skip it now without problem. But you will need it later to build the game for Android.
                 """
 
                 Tkinter.Label(root, text=label_content).pack()
@@ -209,10 +216,14 @@ You can skip to it now without problem. But you will need it later to build the 
             ndk_root_selected = self._get_ndk_root()
 
         if self.ndk_root:
-            os.environ[NDK_ROOT] = self.ndk_root
-            self._set_environment_variable(NDK_ROOT, self.ndk_root)
-            ndk_root_updated = True
-            print 'OK'
+            if self._check_validation_ndk_root():
+                os.environ[NDK_ROOT] = self.ndk_root
+                self._set_environment_variable(NDK_ROOT, self.ndk_root)
+                ndk_root_updated = True
+                print 'OK'
+            else:
+                ndk_root_updated = False
+                print '\nWarning: %s is not a valid path of NDK_ROOT, skip it' % self.ndk_root
         else:
             ndk_root_updated = False
             if not ndk_root_selected:
