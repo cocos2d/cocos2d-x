@@ -192,6 +192,9 @@ protected:
     float  m_fScaleX;
     float  m_fScaleY;
     ResolutionPolicy m_eResolutionPolicy;
+
+    void clearTouchesDict();
+
 };
 
 // end of platform group
