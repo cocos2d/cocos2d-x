@@ -32,7 +32,7 @@
 
 namespace cocostudio
 {
-    class WidgetReader : public Ref, public WidgetReaderProtocol
+    class WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
     {
     public:
         DECLARE_CLASS_WIDGET_READER_INFO
@@ -43,8 +43,8 @@ namespace cocostudio
         static WidgetReader* getInstance();
         static void purge();
         
-        virtual void setPropsFromJsonDictionary(Widget* widget, const rapidjson::Value& options);
-        virtual void setColorPropsFromJsonDictionary(Widget* widget, const rapidjson::Value& options);
+        virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
+        virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
     };
 }
 

@@ -3,6 +3,9 @@
 #include "ScrollViewReader.h"
 #include "gui/UIScrollView.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static ScrollViewReader* instanceScrollViewReader = NULL;

@@ -3,6 +3,9 @@
 #include "LayoutReader.h"
 #include "gui/UILayout.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static LayoutReader* instanceLayoutReader = NULL;
@@ -28,7 +31,7 @@ namespace cocostudio
         return instanceLayoutReader;
     }
     
-    void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
+    void LayoutReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {
         WidgetReader::setPropsFromJsonDictionary(widget, options);
         

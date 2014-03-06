@@ -3,6 +3,9 @@
 #include "TextBMFontReader.h"
 #include "gui/UITextBMFont.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static TextBMFontReader* instanceTextBMFontReader = NULL;

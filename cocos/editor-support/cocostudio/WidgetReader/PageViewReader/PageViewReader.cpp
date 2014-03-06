@@ -3,6 +3,9 @@
 #include "PageViewReader.h"
 #include "gui/UIPageView.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static PageViewReader* instancePageViewReader = NULL;
@@ -28,7 +31,7 @@ namespace cocostudio
         return instancePageViewReader;
     }
     
-    void PageViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
+    void PageViewReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {
         LayoutReader::setPropsFromJsonDictionary(widget, options);
     }

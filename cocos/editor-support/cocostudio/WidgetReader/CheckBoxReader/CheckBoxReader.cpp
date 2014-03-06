@@ -3,6 +3,9 @@
 #include "CheckBoxReader.h"
 #include "gui/UICheckBox.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static CheckBoxReader* instanceCheckBoxReader = NULL;

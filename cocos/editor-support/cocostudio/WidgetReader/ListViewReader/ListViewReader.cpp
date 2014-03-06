@@ -3,6 +3,9 @@
 #include "ListViewReader.h"
 #include "gui/UIListView.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static ListViewReader* instanceListViewReader = NULL;
@@ -28,7 +31,7 @@ namespace cocostudio
         return instanceListViewReader;
     }
     
-    void ListViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
+    void ListViewReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {
         ScrollViewReader::setPropsFromJsonDictionary(widget, options);
         

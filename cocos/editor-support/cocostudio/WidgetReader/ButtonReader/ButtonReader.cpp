@@ -3,6 +3,9 @@
 #include "ButtonReader.h"
 #include "gui/UIButton.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static ButtonReader* instanceButtonReader = NULL;

@@ -3,6 +3,9 @@
 #include "ImageViewReader.h"
 #include "gui/UIImageView.h"
 
+USING_NS_CC;
+using namespace ui;
+
 namespace cocostudio
 {
     static ImageViewReader* instanceImageViewReader = NULL;

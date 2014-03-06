@@ -40,7 +40,7 @@ namespace cocostudio
         static PageViewReader* getInstance();
         static void purge();
         
-        virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
+        virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
     };
 }
 
