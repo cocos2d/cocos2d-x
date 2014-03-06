@@ -606,6 +606,11 @@ const CCSize& Widget::getSize() const
 {
     return _size;
 }
+    
+const CCSize& Widget::getCustomSize() const
+{
+    return _customSize;
+}
 
 const CCPoint& Widget::getSizePercent() const
 {
