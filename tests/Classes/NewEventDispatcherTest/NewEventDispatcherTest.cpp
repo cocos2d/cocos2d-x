@@ -1182,10 +1182,11 @@ Issue4129::Issue4129()
         
         // After test, remove it.
         _eventDispatcher->removeEventListener(_customlistener);
-        
+        _customlistener = nullptr;
+
         _bugFixed = true;
     });
-    
+
     auto removeAllTouchItem = MenuItemFont::create("Remove All Listeners", [this](Ref* sender){
         auto senderItem = static_cast<MenuItemFont*>(sender);
         senderItem->setString("Only 'Reset' item could be clicked");
@@ -1220,7 +1221,10 @@ Issue4129::Issue4129()
 
 Issue4129::~Issue4129()
 {
-    _eventDispatcher->removeEventListener(_customlistener);
+    if (_customlistener)
+    {
+        _eventDispatcher->removeEventListener(_customlistener);
+    }
 }
 
 std::string Issue4129::title() const
