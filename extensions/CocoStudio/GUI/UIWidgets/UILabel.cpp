@@ -225,9 +225,11 @@ void Label::labelScaleChangedWithSize()
         _labelRenderer->setScale(1.0f);
         _size = _labelRenderer->getContentSize();
         _normalScaleValueX = _normalScaleValueY = 1.0f;
+        _labelRenderer->setDimensions(CCSizeZero);
     }
     else
     {
+        _labelRenderer->setDimensions(_size);
         CCSize textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
