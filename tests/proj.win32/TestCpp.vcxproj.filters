@@ -319,6 +319,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget">
       <UniqueIdentifier>{c3353e37-e25e-4fa2-bc37-ebd7a8854efe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest">
+      <UniqueIdentifier>{8bc33078-56ce-48a6-85fd-b9d67db67c13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -810,6 +813,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1500,6 +1506,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIRichTextTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
