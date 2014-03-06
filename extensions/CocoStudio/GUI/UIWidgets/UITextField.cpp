@@ -663,9 +663,9 @@ void TextField::textfieldRendererScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _textFieldRenderer->setScale(1.0f);
-        _size = getContentSize();
         _textFieldRenderer->setDimensions(CCSizeZero);
+        _textFieldRenderer->setScale(1.0f);
+        _size = getContentSize();        
     }
     else
     {

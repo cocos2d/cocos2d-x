@@ -222,10 +222,10 @@ void Label::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
+        _labelRenderer->setDimensions(CCSizeZero);
         _labelRenderer->setScale(1.0f);
         _size = _labelRenderer->getContentSize();
-        _normalScaleValueX = _normalScaleValueY = 1.0f;
-        _labelRenderer->setDimensions(CCSizeZero);
+        _normalScaleValueX = _normalScaleValueY = 1.0f;        
     }
     else
     {
