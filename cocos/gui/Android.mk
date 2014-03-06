@@ -23,7 +23,8 @@ UITextAtlas.cpp \
 UITextBMFont.cpp \
 UILoadingBar.cpp \
 UISlider.cpp \
-UITextField.cpp
+UITextField.cpp \
+UIRichText.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \

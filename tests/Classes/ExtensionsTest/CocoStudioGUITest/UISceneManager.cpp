@@ -16,6 +16,7 @@
 #include "UIPageViewTest/UIPageViewTest.h"
 #include "UIListViewTest/UIListViewTest.h"
 #include "UIWidgetAddNodeTest/UIWidgetAddNodeTest.h"
+#include "UIRichTextTest/UIRichTextTest.h"
 /*
 #include "UISwitchTest/UISwitchTest.h"
  */
@@ -107,6 +108,7 @@ static const char* s_testArray[] =
     "UIPickerViewTest_Horizontal",
      */
     "UIWidgetAddNodeTest",
+    "UIRichTextTest",
 };
 
 static UISceneManager *sharedInstance = NULL;
@@ -354,6 +356,9 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIWidgetAddNodeTest:
             return UIWidgetAddNodeTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+            
+        case kUIRichTextTest:
+            return UIRichTextTest::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return NULL;
 }
