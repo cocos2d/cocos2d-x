@@ -410,7 +410,7 @@ CCDictionary* CCDictionary::createWithContentsOfFileThreadSafe(const char *pFile
 
 void CCDictionary::acceptVisitor(CCDataVisitor &visitor)
 {
-    return visitor.visit(this);
+    visitor.visit(this);
 }
 
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
