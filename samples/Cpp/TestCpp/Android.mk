@@ -107,6 +107,9 @@ Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageView.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomReader.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidget.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidgetReader.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \
