@@ -48,7 +48,7 @@
 		- [Replace some lua-bindings of Class or Struct with lua table](#replace-the-lua-bindings-of-class-or-struct-with-lua-table)
 	- [Other Changes](#other-changes)
 	    - [Support lua script codes call Obeject-C codes and Java codes](#support-lua-script-codes-call-OC-codes-and-Java-codes)
-	    - [Add some lua files to store the constants of different modules](#add-some-lua-files-to-store-the-constants-of-different-modules)			
+	    - [Add some lua files to store the constants of different modules](#add-some-lua-files-to-store-the-constants-of-different-modules)
 
 # Misc Information
 
@@ -400,34 +400,79 @@ For detailed information, please read the following doc: [Renderer Specification
 
 #### Auto-batching
 
-TODO
+Auto-batching means that the `Renderer` will package "multiple draw calls" in just one "big draw call" (AKA batch). In order to group "draw calls" certain conditions are needed:
+
+- It only works with `QuadCommand` commands (used by Sprite and ParticleSystem objects)
+- The `QuadCommands` must share the same Material ID: same Texture ID, same GLProgram and same blending function
+- The `QuadCommands` must consecutive 
+
+If those conditions are met, the `Renderer` will create create a batch (one draw call) with all those `QuadCommand` objects.
+
+In case you are unfamiliar with the OpenGL best practices, batching is very important to have decent speed in your games. The less batches (draw calls) the more performance your game is going to be.
 
 #### Auto-culling
 
-With auto-culling, sprites that are outside screen won't be renderer.
+For the moment auto-culling is only implemented on `Sprite` objects.
+
+When the method `Sprite::draw()` is called, it will check if the `Sprite` is outside the screen. If so, it won't send the `QuadCommand` command to the `Renderer`, and thus, it will gain some performance.
+
 
 #### Global Z order
 
-A new method called `setGlobalZOrder()` / `getGlobalZOrder()` was added to `Node`, and the old  methods `setZOrder()` / `getZOrder()` were renamed to `setLocalZOrder()` / `getLocalZOrder()`.
+A new method called `setGlobalZOrder()` / `getGlobalZOrder()` was added to `Node`, and the old methods `setZOrder()` / `getZOrder()` were renamed to `setLocalZOrder()` / `getLocalZOrder()`.
 
-`globalZOrder` receives a `float` (and not an `int`) as argument. And this value is used to sort the Nodes in the Renderer. Lower values have higher priority over higher values. That means that a Node with a `globalZOrder` of `-10` is going to be drawn BEFORE a Node with `globalZOrder` of `10`.
+`globalZOrder` receives a `float` (and not an `int`) as argument. And this value is used to sort the `RenderCommand` objects in the `Renderer`. Lower values have higher priority over higher values. That means that a Node with a `globalZOrder` of `-10` is going to be drawn BEFORE a Node with `globalZOrder` of `10`.
 
 Nodes that have a `globalZOrder` of `0` (default value) will be drawn according to the Scene Graph order.
 
-So, if the `globalZOrder` is not changed, cocos2d-x v3.0 will behave exaclty as cocos2d-x v2.2.
+If the `globalZOrder` is not changed, cocos2d-x v3.0 will behave exactly as cocos2d-x v2.2.
 
 __`globalZOrder()` vs. `localZOrder()`__:
 
-* `globalZOrder` is used to sort the "draw commands" in the Renderer
-* `localZOrder` is used to sort the Node in its parent's children Array
+* `globalZOrder` is used to sort the "draw commands" in the `Renderer`
+* `localZOrder` is used to sort the `Node` objects in its parent's children Array
 
 __Exceptions__:
 
 TODO
 
-### SpriteBatchNode vs. Sprite
+### Sprite vs. SpriteBatchNode
 
-TODO
+In v2.2 the recommended way to have good performance was to parent `Sprite` objects to a `SpriteBatchNode` object.
+Although the performance was (is still) very good by using `SpriteBatchNode` objects, they had (still have) some limitations like:
+
+- `Sprite` objects can only have `Sprite` objects as children (if not, cocos2d-x will raise an Assert)
+    - You cannot add a `ParticleSystem` as a child of `Sprite`, when the `Sprite` is parented to a `SpriteBatchNode`
+    - As a consequence of that, you cannot use `ParallaxNode` with `Sprites` parented to `SpriteBatchNode`
+- All `Sprite` objects must share the same TextureId (if not, cocos2d-x will raise an Assert)
+- `Sprite` objects use the `SpriteBatchNode`'s blending function and shader.
+
+
+And although v3.0 still supports `SpriteBatchNode` (with the same features and limitations), we no longer encourage its usage. Instead, we recommend to use `Sprite` objects without parenting them to a `SpriteBatchNode`.
+
+But in order to have a very good performance in v3.0, you have to make sure that your `Sprite` objects:
+
+- Share the same TextureId (place them in a spritesheet, like if you were using a `SpriteBatchNode`)
+- Make sure all of them use the same shader and blending function (like if you were using a `SpriteBatchNode`)
+
+If you do so, the `Sprites` will perform almost as fast as to using `SpriteBatchNode`... (about 10% slower on old devices. On newer devices the difference is almost imperceptible)
+
+The big differences between v2.2 and v3.0 are:
+
+- `Sprite` objects can have different Texture IDs. 
+- `Sprite` objects can have any kind of `Node` as children, including `ParticleSystem`. 
+- `Sprite` objects can have different blending functions and use different shaders. 
+
+But if you do that, the `Renderer` might not be able to batch all its children (less performant). But the game will keep running, without raising any Assert.
+
+__To summarize__:
+
+- Keep putting all your sprites in a big spritesheet
+- Use the same Blending Function (just use the default one)
+- Use the same Shader (just use the default one)
+- And don't parent your sprites to a `SpriteBatchNode`
+
+Just use the `SpriteBatchNode` as a last resort, when you really need an extra boost in performance (and you are OK with its limitations).
 
 
 ## Improved LabelTTF / LabelBMFont / LabelAtlas
