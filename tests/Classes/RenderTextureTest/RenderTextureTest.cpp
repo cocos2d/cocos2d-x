@@ -145,12 +145,16 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
     _target->saveToFile(jpg, Image::Format::JPG);
     
     std::string fileName = FileUtils::getInstance()->getWritablePath() + jpg;
-    auto sprite = Sprite::create(fileName);
-
-    sprite->setScale(0.3f);
-    addChild(sprite);
-    sprite->setPosition(Point(40, 40));
-    sprite->setRotation(counter * 3);
+    auto action1 = DelayTime::create(1);
+    auto func = [&,fileName]()
+    {
+        auto sprite = Sprite::create(fileName);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Point(40, 40));
+        sprite->setRotation(counter * 3);
+    };
+    runAction(Sequence::create(action1, CallFunc::create(func), NULL));
 
     CCLOG("Image saved %s and %s", png, jpg);
 
