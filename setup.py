@@ -159,67 +159,69 @@ class SetEnvVar(object):
 
     def _get_input_value(self, sys_var):
 
-        # python on linux doesn't include Tkinter model, so let user input in terminal
-        if self._isLinux():
-            input_value = raw_input('Couldn\'t find the "%s" envrironment variable. Please enter it: ' % sys_var)        
-        else:
+        return raw_input('Couldn\'t find the "%s" envrironment variable. Please enter its path: ' % sys_var)
 
-            # pop up a window to let user select path for ndk root
-            import Tkinter
-            import tkFileDialog
+#         # python on linux doesn't include Tkinter model, so let user input in terminal
+#         if self._isLinux():
+#             input_value = raw_input('Couldn\'t find the "%s" envrironment variable. Please enter it: ' % sys_var)        
+#         else:
 
-            self.tmp_input_value = None
+#             # pop up a window to let user select path for ndk root
+#             import Tkinter
+#             import tkFileDialog
 
-            root = Tkinter.Tk()
+#             self.tmp_input_value = None
 
-            if sys_var == NDK_ROOT:
-                root.wm_title('Set NDK_ROOT')
-            else:
-                root.wm_title('Set ANDROID_SDK_ROOT')
+#             root = Tkinter.Tk()
 
-            def callback():
-                self.tmp_input_value = tkFileDialog.askdirectory()
-                root.destroy()
+#             if sys_var == NDK_ROOT:
+#                 root.wm_title('Set NDK_ROOT')
+#             else:
+#                 root.wm_title('Set ANDROID_SDK_ROOT')
 
-            if sys_var == NDK_ROOT:
-                label_content = 'Select path for Android NDK:'
-                label_help = """
-The Android NDK is needed to develop games for Android. 
-For further information, go to:
-http://developer.android.com/tools/sdk/ndk/index.html.
+#             def callback():
+#                 self.tmp_input_value = tkFileDialog.askdirectory()
+#                 root.destroy()
 
-You can safely skip this step now. You can set the NDK_ROOT later.
-                """
+#             if sys_var == NDK_ROOT:
+#                 label_content = 'Select path for Android NDK:'
+#                 label_help = """
+# The Android NDK is needed to develop games for Android. 
+# For further information, go to:
+# http://developer.android.com/tools/sdk/ndk/index.html.
 
-            if sys_var == ANDROID_SDK_ROOT:
-                label_content = 'Select path for Android SDK'
-                label_help = """
-The Android SDK is needed to develop games for Android. 
-For further information, go to:
-https://developer.android.com/tools/sdk/ndk/index.html. 
+# You can safely skip this step now. You can set the NDK_ROOT later.
+#                 """
 
-You can safely skip this step now. You can set the ANDROID_SDK_ROOT later.
-                """
+#             if sys_var == ANDROID_SDK_ROOT:
+#                 label_content = 'Select path for Android SDK'
+#                 label_help = """
+# The Android SDK is needed to develop games for Android. 
+# For further information, go to:
+# https://developer.android.com/tools/sdk/ndk/index.html. 
 
-            Tkinter.Label(root, text=label_help).pack()
-            Tkinter.Button(root, text=label_content, command=callback).pack()
-            self._center(root)
-            root.mainloop()
+# You can safely skip this step now. You can set the ANDROID_SDK_ROOT later.
+#                 """
 
-            input_value = self.tmp_input_value
-            self.tmp_input_value = None
+#             Tkinter.Label(root, text=label_help).pack()
+#             Tkinter.Button(root, text=label_content, command=callback).pack()
+#             self._center(root)
+#             root.mainloop()
+
+#             input_value = self.tmp_input_value
+#             self.tmp_input_value = None
        
-        return input_value
+#         return input_value
 
-    # display a window in center and put it on top
-    def _center(self, win):
-        win.update_idletasks()
-        width = win.winfo_width()
-        height = win.winfo_height()
-        x = (win.winfo_screenwidth() / 2) - (width / 2)
-        y = (win.winfo_screenheight() / 2) - (height / 2)
-        win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-        win.wm_attributes('-topmost', 1)
+#     # display a window in center and put it on top
+#     def _center(self, win):
+#         win.update_idletasks()
+#         width = win.winfo_width()
+#         height = win.winfo_height()
+#         x = (win.winfo_screenwidth() / 2) - (width / 2)
+#         y = (win.winfo_screenheight() / 2) - (height / 2)
+#         win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+#         win.wm_attributes('-topmost', 1)
 
     def _is_ndk_root_valid(self, ndk_root):
         if not ndk_root:
@@ -321,13 +323,6 @@ if __name__ == '__main__':
     parser.add_option('-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
     parser.add_option('-a', '--androidsdkroot', dest='android_sdk_root', help='directory of android sdk root')
     opts, args = parser.parse_args()
-
-    # ndk_root is passed in
-    if opts.ndk_root:
-        os.environ[NDK_ROOT] = opts.ndk_root
-
-    if opts.android_sdk_root:
-        os.environ[ANDROID_SDK_ROOT] = opts.android_sdk_root
 
     # set environment variables
     env = SetEnvVar()
