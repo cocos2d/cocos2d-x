@@ -256,6 +256,7 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
         thiz->getDelegate()->editBoxReturn(thiz->getEditBox());
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
     EditBox* pEditBox = thiz->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
@@ -271,6 +272,7 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
         event.data = (void*)&data;
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
 }
 
 void EditBoxImplAndroid::openKeyboard()
@@ -279,6 +281,8 @@ void EditBoxImplAndroid::openKeyboard()
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
+    
+#if CC_ENABLE_SCRIPT_BINDING
     EditBox* pEditBox = this->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
@@ -286,6 +290,7 @@ void EditBoxImplAndroid::openKeyboard()
         ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
 	
     showEditTextDialogJNI(  _placeHolder.c_str(),
 						  _text.c_str(),

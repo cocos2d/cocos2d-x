@@ -1,9 +1,10 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -292,7 +293,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
     for (auto iter = _spriteFrames.begin(); iter != _spriteFrames.end(); ++iter)
     {
         SpriteFrame* spriteFrame = iter->second;
-        if( spriteFrame->retainCount() == 1 ) 
+        if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());

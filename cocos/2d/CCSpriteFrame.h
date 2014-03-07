@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +30,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 NS_CC_BEGIN
@@ -51,7 +52,7 @@ class Texture2D;
     SpriteFrame *frame = SpriteFrame::frameWithTexture(texture, rect, offset);
     sprite->setDisplayFrame(frame);
  */
-class CC_DLL SpriteFrame : public Object, public Clonable
+class CC_DLL SpriteFrame : public Ref, public Clonable
 {
 public:
 

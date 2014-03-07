@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,13 +25,12 @@ THE SOFTWARE.
 #ifndef __ActionMANAGER_H__
 #define __ActionMANAGER_H__
 
-#include "cocos2d.h"
 #include "cocostudio/CCActionObject.h"
 #include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {
 
-class ActionManagerEx:public cocos2d::Object
+class ActionManagerEx:public cocos2d::Ref
 {
 public:
 
@@ -96,7 +95,7 @@ public:
 	ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
 
 	/*init properties with json dictionay*/
-	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Object* root);
+	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
 	/**
 	* Release all actions.
 	*

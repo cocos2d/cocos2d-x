@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -25,7 +26,7 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRID_H__
 #define __EFFECTS_CCGRID_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCNode.h"
 #include "ccTypes.h"
 #include "CCTexture2D.h"
@@ -48,7 +49,7 @@ class GLProgram;
 
 /** Base class for other
 */
-class CC_DLL GridBase : public Object
+class CC_DLL GridBase : public Ref
 {
 public:
     /** create one Grid */

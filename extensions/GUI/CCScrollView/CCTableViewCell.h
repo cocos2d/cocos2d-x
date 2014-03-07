@@ -26,8 +26,8 @@
 #ifndef __CCTABLEVIEWCELL_H__
 #define __CCTABLEVIEWCELL_H__
 
-#include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
+#include "CCNode.h"
 
 NS_CC_EXT_BEGIN
 
@@ -37,21 +37,21 @@ NS_CC_EXT_BEGIN
 class TableViewCell: public Node
 {
 public:
+    CREATE_FUNC(TableViewCell);
+    
     TableViewCell() {}
     /**
      * The index used internally by SWTableView and its subclasses
      */
-    long getIdx();
-    void setIdx(long uIdx);
+    ssize_t getIdx() const;
+    void setIdx(ssize_t uIdx);
     /**
      * Cleans up any resources linked to this cell and resets <code>idx</code> property.
      */
     void reset();
 
-    void setObjectID(long uIdx);
-    long getObjectID();
 private:
-    long _idx;
+    ssize_t _idx;
 };
 
 NS_CC_EXT_END

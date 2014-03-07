@@ -30,7 +30,7 @@
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 

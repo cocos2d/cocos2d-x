@@ -75,6 +75,9 @@
     <ClInclude Include="..\UITextAtlas.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\UIRichText.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -129,6 +132,9 @@
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UITextAtlas.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIRichText.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>

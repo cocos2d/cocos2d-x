@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,8 +24,10 @@ THE SOFTWARE.
 #ifndef __CCSPRITEFRAMECACHEHELPER_H__
 #define __CCSPRITEFRAMECACHEHELPER_H__
 
+#include "CCPlatformMacros.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include <stack>
+#include <string>
 
 namespace cocostudio {
 

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,9 +28,11 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
-#include "renderer/CCQuadCommand.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
+
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "CCShaderCache.h"
+#include "CCDrawingPrimitives.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -101,7 +103,7 @@ Armature::~Armature(void)
 
 bool Armature::init()
 {
-    return init(nullptr);
+    return init("");
 }
 
 
@@ -375,11 +377,11 @@ void Armature::update(float dt)
     _armatureTransformDirty = false;
 }
 
-void Armature::draw()
+void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
-        CC_NODE_DRAW_SETUP();
+//        CC_NODE_DRAW_SETUP();
     }
 
 
@@ -405,26 +407,26 @@ void Armature::draw()
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
-                skin->draw();
+                skin->draw(renderer, transform, transformUpdated);
             }
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                node->draw();
+                node->draw(renderer, transform, transformUpdated);
             }
             break;
             default:
             {
-                node->visit();
-                CC_NODE_DRAW_SETUP();
+                node->visit(renderer, transform, transformUpdated);
+//                CC_NODE_DRAW_SETUP();
             }
             break;
             }
         }
         else if(Node *node = dynamic_cast<Node *>(object))
         {
-            node->visit();
-            CC_NODE_DRAW_SETUP();
+            node->visit(renderer, transform, transformUpdated);
+//            CC_NODE_DRAW_SETUP();
         }
     }
 }
@@ -442,18 +444,27 @@ void Armature::onExit()
 }
 
 
-void Armature::visit()
+void Armature::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
     {
         return;
     }
-    kmGLPushMatrix();
 
-    transform();
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     sortAllChildren();
-    draw();
+    draw(renderer, _modelViewTransform, dirty);
 
     // reset for next frame
     _orderOfArrival = 0;
@@ -570,7 +581,7 @@ void CCArmature::drawContour()
             }
             DrawPrimitives::drawPoly( points, (unsigned int)length, true );
 
-            delete points;
+            delete []points;
         }
     }
 }

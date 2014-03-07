@@ -1,5 +1,4 @@
 set(CS_SRC
-  CCActionEaseEx.cpp
   CCActionFrame.cpp
   CCActionFrameEasing.cpp
   CCActionManagerEx.cpp
@@ -22,7 +21,6 @@ set(CS_SRC
   CCDataReaderHelper.cpp
   CCSpriteFrameCacheHelper.cpp
   CCTransformHelp.cpp
-  CCTweenFunction.cpp
   CCUtilMath.cpp
   CCComAttribute.cpp
   CCComAudio.cpp
@@ -36,6 +34,20 @@ set(CS_SRC
   TriggerBase.cpp
   TriggerMng.cpp
   TriggerObj.cpp
+  WidgetReader/WidgetReader.cpp
+  WidgetReader/ButtonReader/ButtonReader.cpp
+  WidgetReader/CheckBoxReader/CheckBoxReader.cpp
+  WidgetReader/ImageViewReader/ImageViewReader.cpp
+  WidgetReader/LayoutReader/LayoutReader.cpp
+  WidgetReader/ListViewReader/ListViewReader.cpp
+  WidgetReader/LoadingBarReader/LoadingBarReader.cpp
+  WidgetReader/PageViewReader/PageViewReader.cpp
+  WidgetReader/ScrollViewReader/ScrollViewReader.cpp
+  WidgetReader/SliderReader/SliderReader.cpp
+  WidgetReader/TextAtlasReader/TextAtlasReader.cpp
+  WidgetReader/TextBMFontReader/TextBMFontReader.cpp
+  WidgetReader/TextFieldReader/TextFieldReader.cpp
+  WidgetReader/TextReader/TextReader.cpp
 )
 
 include_directories(
@@ -51,7 +63,7 @@ target_link_libraries(cocostudio
 
 set_target_properties(cocostudio
     PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 

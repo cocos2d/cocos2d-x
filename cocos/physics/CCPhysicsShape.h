@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,7 +28,7 @@
 #include "ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 
 NS_CC_BEGIN
@@ -62,7 +62,7 @@ const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT(0.0f, 0.5f, 0.5f);
 /**
  * @brief A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.
  */
-class PhysicsShape : public Object
+class PhysicsShape : public Ref
 {
 public:
     enum class Type
@@ -114,7 +114,7 @@ public:
     bool containsPoint(const Point& point) const;
     
     /** move the points to the center */
-    static Point* recenterPoints(Point* points, int count, const Point& center = Point::ZERO);
+    static void recenterPoints(Point* points, int count, const Point& center = Point::ZERO);
     /** get center of the polyon points */
     static Point getPolyonCenter(const Point* points, int count);
     
@@ -212,6 +212,7 @@ public:
     virtual float calculateDefaultMoment() override;
     
     void getPoints(Point* outPoints) const;
+    int getPointsCount() const { return 4; }
     Size getSize() const;
     virtual Point getOffset() override { return _offset; }
     
@@ -282,8 +283,8 @@ class PhysicsShapeEdgeBox : public PhysicsShape
 public:
     static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Point& offset = Point::ZERO);
     virtual Point getOffset() override { return _offset; }
-    void getPoints(const Point* outPoints) const;
-    int getPointsCount() const;
+    void getPoints(Point* outPoints) const;
+    int getPointsCount() const { return 4; }
     
 protected:
     bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, const Point& offset = Point::ZERO);

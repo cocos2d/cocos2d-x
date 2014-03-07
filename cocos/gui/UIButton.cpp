@@ -1,38 +1,40 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIButton.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(Button)
     
 Button::Button():
 _buttonNormalRenderer(nullptr),
@@ -63,7 +65,7 @@ _normalTextureLoaded(false),
 _pressedTextureLoaded(false),
 _disabledTextureLoaded(false)
 {
-    
+
 }
 
 Button::~Button()
@@ -97,7 +99,7 @@ void Button::initRenderer()
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = LabelTTF::create();
-    
+
     Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
     Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
     Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
@@ -151,6 +153,11 @@ void Button::setScale9Enabled(bool able)
     setCapInsetsPressedRenderer(_capInsetsPressed);
     setCapInsetsDisabledRenderer(_capInsetsDisabled);
     setBright(_bright);
+}
+
+bool Button::isScale9Enabled()
+{
+    return _scale9Enabled;
 }
 
 void Button::ignoreContentAdaptWithSize(bool ignore)
@@ -209,9 +216,10 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
         }
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_buttonNormalRenderer);
     normalTextureScaleChangedWithSize();
     _normalTextureLoaded = true;
 }
@@ -256,9 +264,10 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
         }
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_buttonDisableRenderer);
     pressedTextureScaleChangedWithSize();
     _pressedTextureLoaded = true;
 }
@@ -303,9 +312,10 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
         }
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_buttonDisableRenderer);
     disabledTextureScaleChangedWithSize();
     _disabledTextureLoaded = true;
 }
@@ -327,6 +337,11 @@ void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
     static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
 
+const Rect& Button::getCapInsetsNormalRenderer()
+{
+    return _capInsetsNormal;
+}
+
 void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
 {
     _capInsetsPressed = capInsets;
@@ -337,6 +352,11 @@ void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
     static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
 
+const Rect& Button::getCapInsetsPressedRenderer()
+{
+    return _capInsetsPressed;
+}
+
 void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
 {
     _capInsetsDisabled = capInsets;
@@ -345,6 +365,11 @@ void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
         return;
     }
     static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
+}
+
+const Rect& Button::getCapInsetsDisabledRenderer()
+{
+    return _capInsetsDisabled;
 }
 
 void Button::onPressStateChangedToNormal()
@@ -366,8 +391,7 @@ void Button::onPressStateChangedToNormal()
     else
     {
         _buttonNormalRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
-        _buttonNormalRenderer->runAction(zoomAction);
+        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
     }
 }
 
@@ -393,8 +417,7 @@ void Button::onPressStateChangedToPressed()
         _buttonClickedRenderer->setVisible(true);
         _buttonDisableRenderer->setVisible(false);
         _buttonNormalRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, _pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
-        _buttonNormalRenderer->runAction(zoomAction);
+        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize + 0.1f, _normalTextureScaleYInSize + 0.1f);
     }
 }
 
@@ -407,46 +430,40 @@ void Button::onPressStateChangedToDisabled()
     _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
 
-void Button::setFlipX(bool flipX)
+void Button::updateFlippedX()
 {
-    _titleRenderer->setFlippedX(flipX);
+    _titleRenderer->setFlippedX(_flippedX);
     if (_scale9Enabled)
     {
-        return;
+        int flip = _flippedX ? -1 : 1;
+        _buttonNormalRenderer->setScaleX(flip);
+        _buttonClickedRenderer->setScaleX(flip);
+        _buttonDisableRenderer->setScaleX(flip);
     }
-    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(flipX);
-    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(flipX);
-    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flipX);
+    else
+    {
+        static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(_flippedX);
+        static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(_flippedX);
+        static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(_flippedX);
+    }
 }
-
-void Button::setFlipY(bool flipY)
+    
+void Button::updateFlippedY()
 {
-    _titleRenderer->setFlippedY(flipY);
+    _titleRenderer->setFlippedY(_flippedY);
     if (_scale9Enabled)
     {
-        return;
+        int flip = _flippedY ? -1 : 1;
+        _buttonNormalRenderer->setScaleY(flip);
+        _buttonClickedRenderer->setScaleY(flip);
+        _buttonDisableRenderer->setScaleY(flip);
     }
-    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(flipY);
-    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(flipY);
-    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flipY);
-}
-
-bool Button::isFlipX()
-{
-    if (_scale9Enabled)
+    else
     {
-        return false;
+        static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(_flippedY);
+        static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(_flippedY);
+        static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(_flippedY);
     }
-    return static_cast<Sprite*>(_buttonNormalRenderer)->isFlippedX();
-}
-
-bool Button::isFlipY()
-{
-    if (_scale9Enabled)
-    {
-        return false;
-    }
-    return static_cast<Sprite*>(_buttonNormalRenderer)->isFlippedY();
 }
 
 void Button::setAnchorPoint(const Point &pt)
@@ -638,16 +655,31 @@ const char* Button::getTitleFontName() const
 {
     return _titleRenderer->getFontName().c_str();
 }
-
-void Button::setColor(const Color3B &color)
-{
-    Widget::setColor(color);
-    setTitleColor(_titleColor);
-}
-
+    
 std::string Button::getDescription() const
 {
     return "Button";
+}
+    
+void Button::updateTextureColor()
+{
+    updateColorToRenderer(_buttonNormalRenderer);
+    updateColorToRenderer(_buttonClickedRenderer);
+    updateColorToRenderer(_buttonDisableRenderer);
+}
+
+void Button::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_buttonNormalRenderer);
+    updateOpacityToRenderer(_buttonClickedRenderer);
+    updateOpacityToRenderer(_buttonDisableRenderer);
+}
+
+void Button::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_buttonNormalRenderer);
+    updateRGBAToRenderer(_buttonClickedRenderer);
+    updateRGBAToRenderer(_buttonDisableRenderer);
 }
 
 Widget* Button::createCloneInstance()
@@ -659,7 +691,7 @@ void Button::copySpecialProperties(Widget *widget)
 {
     Button* button = dynamic_cast<Button*>(widget);
     if (button)
-    {   
+    {
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
         loadTextureNormal(button->_normalFileName.c_str(), button->_normalTexType);

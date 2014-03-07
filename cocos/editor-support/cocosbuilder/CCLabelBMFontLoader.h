@@ -1,6 +1,9 @@
 #ifndef _CCB_CCLABELBMFONTLOADER_H_
 #define _CCB_CCLABELBMFONTLOADER_H_
 
+#include "CCRef.h"
+#include "CCLabelBMFont.h"
+
 #include "CCNodeLoader.h"
 
 namespace cocosbuilder {

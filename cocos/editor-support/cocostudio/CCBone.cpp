@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -145,7 +145,7 @@ void Bone::setBoneData(BoneData *boneData)
     }
 
     _name = _boneData->name;
-    _ZOrder = _boneData->zOrder;
+    _localZOrder = _boneData->zOrder;
 
     _displayManager->initDisplayList(boneData);
 }
@@ -283,11 +283,11 @@ void Bone::updateZOrder()
     if (_dataVersion >= VERSION_COMBINED)
     {
         int zorder = _tweenData->zOrder + _boneData->zOrder;
-        setZOrder(zorder);
+        setLocalZOrder(zorder);
     }
     else
     {
-        setZOrder(_tweenData->zOrder);
+        setLocalZOrder(_tweenData->zOrder);
     }
 }
 
@@ -374,10 +374,10 @@ Tween *Bone::getTween()
     return _tween;
 }
 
-void Bone::setZOrder(int zOrder)
+void Bone::setLocalZOrder(int zOrder)
 {
-    if (_ZOrder != zOrder)
-        Node::setZOrder(zOrder);
+    if (_localZOrder != zOrder)
+        Node::setLocalZOrder(zOrder);
 }
 
 kmMat4 Bone::getNodeToArmatureTransform() const

@@ -1,5 +1,8 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -104,9 +107,9 @@ Color4B::Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
 {}
 
 Color4B::Color4B(const Color3B& color)
-: r(color.r * 255)
-, g(color.g * 255)
-, b(color.b * 255)
+: r(color.r)
+, g(color.g)
+, b(color.b)
 , a(255)
 {}
 

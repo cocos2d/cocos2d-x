@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -122,10 +122,12 @@ void ComponentContainer::visit(float delta)
 {
     if (_components != nullptr)
     {
+        CC_SAFE_RETAIN(_owner);
         for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
             iter->second->update(delta);
         }
+        CC_SAFE_RELEASE(_owner);
     }
 }
 

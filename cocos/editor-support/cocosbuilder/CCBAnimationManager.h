@@ -1,7 +1,11 @@
 #ifndef __CCB_CCBANIMATION_MANAGER_H__
 #define __CCB_CCBANIMATION_MANAGER_H__
 
-#include "cocos2d.h"
+#include "CCMap.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
+#include "CCActionEase.h"
+
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
 #include "CCBSequenceProperty.h"
@@ -16,7 +20,7 @@ public:
     virtual void completedAnimationSequenceNamed(const char *name) = 0;
 };
 
-class CCBAnimationManager : public cocos2d::Object
+class CCBAnimationManager : public cocos2d::Ref
 {
 public:
     bool _jsControlled;
@@ -31,7 +35,7 @@ public:
     ~CCBAnimationManager();
 
 
-    cocos2d::Object *_owner;
+    cocos2d::Ref *_owner;
     
     virtual bool init();
     
@@ -78,7 +82,7 @@ public:
     
     void addNode(cocos2d::Node *pNode, const std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>& seq);
     void setBaseValue(const cocos2d::Value& value, cocos2d::Node *pNode, const std::string& propName);
-    void setObject(cocos2d::Object* obj, cocos2d::Node *pNode, const std::string& propName);
+    void setObject(cocos2d::Ref* obj, cocos2d::Node *pNode, const std::string& propName);
     
     void moveAnimationsFromNode(cocos2d::Node* fromNode, cocos2d::Node* toNode);
 
@@ -96,7 +100,7 @@ public:
      * when this function bound to js ,the second param are callfunc_selector
      * @lua NA
      */
-    void setAnimationCompletedCallback(cocos2d::Object *target, cocos2d::SEL_CallFunc callbackFunc);
+    void setAnimationCompletedCallback(cocos2d::Ref *target, cocos2d::SEL_CallFunc callbackFunc);
 
     void debug();
     /**
@@ -104,8 +108,8 @@ public:
      */
     void setCallFunc(cocos2d::CallFunc *callFunc, const std::string &callbackNamed);
 
-    cocos2d::Object* actionForCallbackChannel(CCBSequenceProperty* channel);
-    cocos2d::Object* actionForSoundChannel(CCBSequenceProperty* channel);
+    cocos2d::Sequence* actionForCallbackChannel(CCBSequenceProperty* channel);
+    cocos2d::Sequence* actionForSoundChannel(CCBSequenceProperty* channel);
 
 	// return -1 if timeline not exsit
     int getSequenceId(const char* pSequenceName);
@@ -115,11 +119,11 @@ public:
     
 private:
     const cocos2d::Value& getBaseValue(cocos2d::Node *pNode, const std::string& propName);
-    Object* getObject(cocos2d::Node *pNode, const std::string& propName);
+    Ref* getObject(cocos2d::Node *pNode, const std::string& propName);
     
     CCBSequence* getSequence(int nSequenceId);
     cocos2d::ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const std::string& propName, cocos2d::Node *pNode);
-    void setAnimatedProperty(const std::string& propName,cocos2d::Node *pNode, const cocos2d::Value& value, Object* obj, float fTweenDuraion);
+    void setAnimatedProperty(const std::string& propName,cocos2d::Node *pNode, const cocos2d::Value& value, Ref* obj, float fTweenDuraion);
     void setFirstFrame(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     cocos2d::ActionInterval* getEaseAction(cocos2d::ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
     void runAction(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
@@ -129,7 +133,7 @@ private:
     cocos2d::Vector<CCBSequence*> _sequences;
     std::unordered_map<cocos2d::Node*, std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>> _nodeSequences;
     std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Value>> _baseValues;
-    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Object*>> _objects;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Ref*>> _objects;
     
     int _autoPlaySequenceId;
     
@@ -152,7 +156,8 @@ private:
     std::string _lastCompletedSequenceName;
     
     cocos2d::SEL_CallFunc _animationCompleteCallbackFunc;
-    cocos2d::Object *_target;
+    cocos2d::Ref *_target;
+    
 };
 
 class CCBSetSpriteFrame : public cocos2d::ActionInstant

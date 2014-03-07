@@ -1,38 +1,40 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UICheckBox.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BACKGROUNDBOX_RENDERER_Z = (-1);
 static const int BACKGROUNDSELECTEDBOX_RENDERER_Z = (-1);
 static const int FRONTCROSS_RENDERER_Z = (-1);
 static const int BACKGROUNDBOXDISABLED_RENDERER_Z = (-1);
 static const int FRONTCROSSDISABLED_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(CheckBox)
 
 CheckBox::CheckBox():
 _backGroundBoxRenderer(nullptr),
@@ -127,9 +129,10 @@ void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texTy
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_backGroundBoxRenderer);
     backGroundTextureScaleChangedWithSize();
 }
 
@@ -152,9 +155,10 @@ void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
     backGroundSelectedTextureScaleChangedWithSize();
 }
 
@@ -177,9 +181,10 @@ void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_frontCrossRenderer);
     frontCrossTextureScaleChangedWithSize();
 }
 
@@ -202,9 +207,10 @@ void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
     backGroundDisabledTextureScaleChangedWithSize();
 }
 
@@ -227,9 +233,10 @@ void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
@@ -316,38 +323,28 @@ void CheckBox::unSelectedEvent()
     }
 }
 
-void CheckBox::addEventListenerCheckBox(Object *target, SEL_SelectedStateEvent selector)
+void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
 {
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;
 }
-
-void CheckBox::setFlipX(bool flipX)
+    
+void CheckBox::updateFlippedX()
 {
-    _backGroundBoxRenderer->setFlippedX(flipX);
-    _backGroundSelectedBoxRenderer->setFlippedX(flipX);
-    _frontCrossRenderer->setFlippedX(flipX);
-    _backGroundBoxDisabledRenderer->setFlippedX(flipX);
-    _frontCrossDisabledRenderer->setFlippedX(flipX);
+    _backGroundBoxRenderer->setFlippedX(_flippedX);
+    _backGroundSelectedBoxRenderer->setFlippedX(_flippedX);
+    _frontCrossRenderer->setFlippedX(_flippedX);
+    _backGroundBoxDisabledRenderer->setFlippedX(_flippedX);
+    _frontCrossDisabledRenderer->setFlippedX(_flippedX);
 }
-
-void CheckBox::setFlipY(bool flipY)
+    
+void CheckBox::updateFlippedY()
 {
-    _backGroundBoxRenderer->setFlippedY(flipY);
-    _backGroundSelectedBoxRenderer->setFlippedY(flipY);
-    _frontCrossRenderer->setFlippedY(flipY);
-    _backGroundBoxDisabledRenderer->setFlippedY(flipY);
-    _frontCrossDisabledRenderer->setFlippedY(flipY);
-}
-
-bool CheckBox::isFlipX()
-{
-    return _backGroundBoxRenderer->isFlippedX();
-}
-
-bool CheckBox::isFlipY()
-{
-    return _backGroundBoxRenderer->isFlippedY();
+    _backGroundBoxRenderer->setFlippedY(_flippedY);
+    _backGroundSelectedBoxRenderer->setFlippedY(_flippedY);
+    _frontCrossRenderer->setFlippedY(_flippedY);
+    _backGroundBoxDisabledRenderer->setFlippedY(_flippedY);
+    _frontCrossDisabledRenderer->setFlippedY(_flippedY);
 }
 
 void CheckBox::setAnchorPoint(const Point &pt)
@@ -489,6 +486,33 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
 std::string CheckBox::getDescription() const
 {
     return "CheckBox";
+}
+    
+void CheckBox::updateTextureColor()
+{
+    updateColorToRenderer(_backGroundBoxRenderer);
+    updateColorToRenderer(_backGroundSelectedBoxRenderer);
+    updateColorToRenderer(_frontCrossRenderer);
+    updateColorToRenderer(_backGroundBoxDisabledRenderer);
+    updateColorToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_backGroundBoxRenderer);
+    updateOpacityToRenderer(_backGroundSelectedBoxRenderer);
+    updateOpacityToRenderer(_frontCrossRenderer);
+    updateOpacityToRenderer(_backGroundBoxDisabledRenderer);
+    updateOpacityToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_backGroundBoxRenderer);
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
+    updateRGBAToRenderer(_frontCrossRenderer);
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
 }
 
 Widget* CheckBox::createCloneInstance()

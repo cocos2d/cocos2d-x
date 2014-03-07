@@ -60,7 +60,6 @@ build_*_vc10/
 *.mode*v*
 *.pbxuser
 *.xcbkptlist
-*.xcscheme
 *.xcworkspacedata
 *.xcuserstate
 *.xccheckout
@@ -105,3 +104,8 @@ tags
 /lib
 /build/linux-build
 
+# Cmake files
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake

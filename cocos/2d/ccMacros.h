@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,21 +32,25 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include "platform/CCCommon.h"
+#include "CCConsole.h"
 #include "CCStdC.h"
 
 #ifndef CCASSERT
 #if COCOS2D_DEBUG > 0
-extern bool CC_DLL cc_assert_script_compatible(const char *msg);
-#define CCASSERT(cond, msg) do {                              \
-      if (!(cond)) {                                          \
-        if (!cc_assert_script_compatible(msg) && strlen(msg)) \
-          cocos2d::log("Assert failed: %s", msg);             \
-        CC_ASSERT(cond);                                      \
-      } \
-    } while (0)
+    #if CC_ENABLE_SCRIPT_BINDING
+    extern bool CC_DLL cc_assert_script_compatible(const char *msg);
+    #define CCASSERT(cond, msg) do {                              \
+          if (!(cond)) {                                          \
+            if (!cc_assert_script_compatible(msg) && strlen(msg)) \
+              cocos2d::log("Assert failed: %s", msg);             \
+            CC_ASSERT(cond);                                      \
+          } \
+        } while (0)
+    #else
+    #define CCASSERT(cond, msg) CC_ASSERT(cond)
+    #endif
 #else
-#define CCASSERT(cond, msg)
+    #define CCASSERT(cond, msg)
 #endif
 // XXX: Backward compatible
 #define CCAssert CCASSERT
@@ -246,8 +251,13 @@ It should work same as apples CFSwapInt32LittleToHost(..)
  Increments the GL Draws counts by one.
  The number of calls per frame are displayed on the screen when the Director's stats are enabled.
  */
-extern unsigned int CC_DLL g_uNumberOfDraws;
-#define CC_INCREMENT_GL_DRAWS(__n__) g_uNumberOfDraws += __n__
+#define CC_INCREMENT_GL_DRAWS(__n__) Director::getInstance()->getRenderer()->addDrawnBatches(__n__)
+#define CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(__drawcalls__, __vertices__) \
+    do {                                                                \
+        auto __renderer__ = Director::getInstance()->getRenderer();     \
+        __renderer__->addDrawnBatches(__drawcalls__);                   \
+        __renderer__->addDrawnVertices(__vertices__);                   \
+    } while(0)
 
 /*******************/
 /** Notifications **/
@@ -256,5 +266,11 @@ extern unsigned int CC_DLL g_uNumberOfDraws;
  Notification name when a SpriteFrame is displayed
  */
 #define AnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
+
+// new callbacks based on C++11
+#define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)
+#define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
+#define CC_CALLBACK_2(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
+#define CC_CALLBACK_3(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 ##__VA_ARGS__)
 
 #endif // __CCMACROS_H__

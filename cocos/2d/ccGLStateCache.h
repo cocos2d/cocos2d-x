@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011      Ricardo Quesada
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (C) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,7 +44,7 @@ namespace GL {
 
 /** vertex attrib flags */
 enum {
-    VERTEX_ATTRIB_FLAT_NONE       = 0,
+    VERTEX_ATTRIB_FLAG_NONE       = 0,
 
     VERTEX_ATTRIB_FLAG_POSITION   = 1 << 0,
     VERTEX_ATTRIB_FLAG_COLOR      = 1 << 1,
@@ -127,6 +128,12 @@ void CC_DLL deleteTexture(GLuint textureId);
  @since v2.1.0
  */
 void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
+
+/** Select active texture unit.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
+ @since v3.0
+ */
+void CC_DLL activeTexture(GLenum texture);
 
 /** If the vertex array is not already bound, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindVertexArray() directly.

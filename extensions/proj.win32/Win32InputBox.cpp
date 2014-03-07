@@ -133,7 +133,11 @@ INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
   if (param->DlgTemplateName != 0)
   {
     HMODULE hModule = (HMODULE)param->hInstance;
+#ifdef __MINGW32__
+    HRSRC rcDlg = ::FindResource(hModule, (LPWSTR)(ULONG_PTR)(size_t)(param->DlgTemplateName), RT_DIALOG);
+#else
     HRSRC rcDlg = ::FindResource(hModule, MAKEINTRESOURCE(param->DlgTemplateName), RT_DIALOG);
+#endif
     if (rcDlg == NULL)
       return 0;
 
@@ -206,7 +210,7 @@ INT_PTR CWin32InputBox::InputBox(
   param.szResult = szResult;
   param.nResultSize = nResultSize;
   param.bMultiline = bMultiLine;
-
+  param.hwndOwner = hwndParent;
   return InputBoxEx(&param);
 }
 
@@ -276,14 +280,14 @@ void CWin32InputBox::InitDialog()
 // Message handler for about box.
 LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  CWin32InputBox *_this = (CWin32InputBox *) ::GetWindowLong(hDlg, GWL_USERDATA);
+  CWin32InputBox *_this = (CWin32InputBox *) ::GetWindowLongPtr(hDlg, GWLP_USERDATA);
   WIN32INPUTBOX_PARAM *param = _this ? _this->GetParam() : 0;
 
   switch (message)
   {
     case WM_INITDIALOG:
     {
-      ::SetWindowLong(hDlg, GWL_USERDATA, (LONG) lParam);
+      SetWindowLongPtr(hDlg, GWLP_USERDATA, (LONG_PTR) lParam);
       
       _this = (CWin32InputBox *)  lParam;
       _this->_param->hDlg = hDlg;

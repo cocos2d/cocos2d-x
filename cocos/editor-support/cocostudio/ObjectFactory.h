@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,12 +29,24 @@ THE SOFTWARE.
 #include <string>
 #include <unordered_map>
 
+namespace cocos2d
+{
+    namespace ui
+    {
+        class Widget;
+    }
+}
+namespace cocostudio
+{
+    class WidgetReaderProtocol;
+}
+
 namespace cocostudio {
 
 class ObjectFactory
 {
 public:
-    typedef cocos2d::Object* (*Instance)(void);
+    typedef cocos2d::Ref* (*Instance)(void);
     struct TInfo
     {
         TInfo(void);
@@ -49,8 +61,10 @@ public:
 
     static ObjectFactory* getInstance();
     static void destroyInstance();
-    cocos2d::Object* createObject(const std::string &name);
+    cocos2d::Ref* createObject(const std::string &name);
     cocos2d::Component* createComponent(const std::string &name);
+    cocos2d::ui::Widget* createGUI(std::string name);
+    WidgetReaderProtocol* createWidgetReaderProtocol(std::string name);
     void registerType(const TInfo &t);
     void removeAll();
 

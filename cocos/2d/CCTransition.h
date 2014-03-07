@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -48,7 +49,7 @@ class NodeGrid;
 /** @brief TransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
 */
-class CC_DLL TransitionEaseScene// : public Object
+class CC_DLL TransitionEaseScene// : public Ref
 {
 public:
     virtual ~TransitionEaseScene() {}
@@ -90,7 +91,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual void cleanup() override;
@@ -569,12 +570,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit();
+    virtual void onExit() override;
 
 protected:
     TransitionFade();
@@ -608,7 +609,7 @@ public :
      * @js NA
      * @lua NA
      */
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     /**
      * @js NA
      * @lua NA
@@ -646,7 +647,7 @@ public :
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
 protected:
     TransitionTurnOffTiles();
@@ -679,7 +680,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 protected:
     TransitionSplitCols();
     virtual ~TransitionSplitCols();
@@ -730,7 +731,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 protected:
     TransitionFadeTR();
     virtual ~TransitionFadeTR();

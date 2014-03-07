@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -33,8 +34,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "TransformUtils.h"
-#include "CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
+#include "renderer/CCRenderer.h"
 
 // external
 #include "kazmath/GL/matrix.h"
@@ -109,8 +109,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR));
-    _uniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
     return true;
 }
@@ -137,30 +136,18 @@ void AtlasNode::updateAtlasValues()
 }
 
 // AtlasNode - draw
-void AtlasNode::draw(void)
+void AtlasNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-//    CC_NODE_DRAW_SETUP();
-//
-//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//    GLfloat colors[4] = {_displayedColor.r / 255.0f, _displayedColor.g / 255.0f, _displayedColor.b / 255.0f, _displayedOpacity / 255.0f};
-//    getShaderProgram()->setUniformLocationWith4fv(_uniformColor, colors, 1);
-//
-//    _textureAtlas->drawNumberOfQuads(_quadsToDraw, 0);
-
-
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-    _quadCommand.init(0,
-              _vertexZ,
+    _quadCommand.init(
+              _globalZOrder,
               _textureAtlas->getTexture()->getName(),
-              shader,
+              _shaderProgram,
               _blendFunc,
               _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              _modelViewTransform);
+              _quadsToDraw,
+              transform);
 
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    renderer->addCommand(&_quadCommand);
 
 }
 

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCSkin.h"
+
+#include "CCParticleSystemQuad.h"
 
 using namespace cocos2d;
 
@@ -63,7 +65,7 @@ DisplayManager::~DisplayManager()
     if( _displayRenderNode )
     {
         _displayRenderNode->removeFromParentAndCleanup(true);
-        if(_displayRenderNode->retainCount() > 0)
+        if(_displayRenderNode->getReferenceCount() > 0)
             CC_SAFE_RELEASE_NULL(_displayRenderNode);
     }
 
@@ -168,6 +170,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         displayData = ParticleDisplayData::create();
 
         display->removeFromParent();
+        display->cleanup();
         
         Armature *armature = _bone->getArmature();
         if (armature)

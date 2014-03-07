@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,11 +29,11 @@ THE SOFTWARE.
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
 
-#include "CCArray.h"
 #include "CCGeometry.h"
 #include "platform/CCSAXParser.h"
 #include "CCVector.h"
 #include "CCValue.h"
+
 #include <string>
 
 NS_CC_BEGIN
@@ -70,13 +71,13 @@ enum {
     TMXPropertyTile
 };
 
-typedef enum ccTMXTileFlags_ {
-    kTMXTileHorizontalFlag        = 0x80000000,
-    kTMXTileVerticalFlag            = 0x40000000,
-    kTMXTileDiagonalFlag            = 0x20000000,
-    kFlipedAll                    = (kTMXTileHorizontalFlag|kTMXTileVerticalFlag|kTMXTileDiagonalFlag),
-    kFlippedMask                    = ~(kFlipedAll)
-} ccTMXTileFlags;
+typedef enum TMXTileFlags_ {
+    kTMXTileHorizontalFlag  = 0x80000000,
+    kTMXTileVerticalFlag    = 0x40000000,
+    kTMXTileDiagonalFlag    = 0x20000000,
+    kTMXFlipedAll           = (kTMXTileHorizontalFlag|kTMXTileVerticalFlag|kTMXTileDiagonalFlag),
+    kTMXFlippedMask         = ~(kTMXFlipedAll)
+} TMXTileFlags;
 
 // Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
 
@@ -88,7 +89,7 @@ typedef enum ccTMXTileFlags_ {
 
 This information is obtained from the TMX file.
 */
-class CC_DLL TMXLayerInfo : public Object
+class CC_DLL TMXLayerInfo : public Ref
 {
 public:
     /**
@@ -104,10 +105,10 @@ public:
     void setProperties(ValueMap properties);
     ValueMap& getProperties();
 
-    ValueMap           _properties;
+    ValueMap            _properties;
     std::string         _name;
     Size                _layerSize;
-    int                 *_tiles;
+    uint32_t            *_tiles;
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
@@ -124,7 +125,7 @@ public:
 
 This information is obtained from the TMX file. 
 */
-class CC_DLL TMXTilesetInfo : public Object
+class CC_DLL TMXTilesetInfo : public Ref
 {
 public:
     std::string     _name;
@@ -146,7 +147,7 @@ public:
      * @lua NA
      */
     virtual ~TMXTilesetInfo();
-    Rect rectForGID(int gid);
+    Rect getRectForGID(uint32_t gid);
 };
 
 /** @brief TMXMapInfo contains the information about the map like:
@@ -162,7 +163,7 @@ And it also contains:
 This information is obtained from the TMX file.
 
 */
-class CC_DLL TMXMapInfo : public Object, public SAXDelegator
+class CC_DLL TMXMapInfo : public Ref, public SAXDelegator
 {    
 public:    
     /** creates a TMX Format with a tmx file */
@@ -249,8 +250,9 @@ public:
     inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
 
     /// properties
-    inline ValueMap getProperties() const { return _properties; };
-    inline void setProperties(ValueMap properties) {
+    inline const ValueMap& getProperties() const { return _properties; }
+    inline ValueMap& getProperties() { return _properties; }
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
@@ -301,6 +303,8 @@ protected:
     bool _storingCharacters;
     /// properties
     ValueMap _properties;
+    //! xml format tile index
+    int _xmlTileIndex;
     
     //! tmx filename
     std::string _TMXFileName;

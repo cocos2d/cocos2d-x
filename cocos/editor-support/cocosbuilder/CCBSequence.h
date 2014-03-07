@@ -2,12 +2,13 @@
 #define __CCB_CCSEQUENCE_H__
 
 #include <string>
-#include "cocos2d.h"
+
+#include "CCRef.h"
 #include "CCBSequenceProperty.h"
 
 namespace cocosbuilder {
 
-class CCBSequence : public cocos2d::Object
+class CCBSequence : public cocos2d::Ref
 {
 public:
     CCBSequence();

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -36,19 +36,43 @@
 NS_CC_BEGIN
 
 class EventListenerCustom;
+class QuadCommand;
 
-typedef std::vector<RenderCommand*> RenderQueue;
+/** Class that knows how to sort `RenderCommand` objects.
+ Since the commands that have `z == 0` are "pushed back" in
+ the correct order, the only `RenderCommand` objects that need to be sorted,
+ are the ones that have `z < 0` and `z > 0`.
+*/
+class RenderQueue {
+
+public:
+    void push_back(RenderCommand* command);
+    ssize_t size() const;
+    void sort();
+    RenderCommand* operator[](ssize_t index) const;
+    void clear();
+
+protected:
+    std::vector<RenderCommand*> _queueNegZ;
+    std::vector<RenderCommand*> _queue0;
+    std::vector<RenderCommand*> _queuePosZ;
+};
 
 struct RenderStackElement
 {
     int renderQueueID;
-    size_t currentIndex;
+    ssize_t currentIndex;
 };
 
+/* Class responsible for the rendering in.
+
+Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
+ */
 class Renderer
 {
 public:
     static const int VBO_SIZE = 65536 / 6;
+    static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
 
     Renderer();
     ~Renderer();
@@ -56,14 +80,32 @@ public:
     //TODO manage GLView inside Render itself
     void initGLView();
     
-    //TODO support multiple viewport
+    /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
+
+    /** Adds a `RenderComamnd` into the renderer specifying a particular render queue ID */
     void addCommand(RenderCommand* command, int renderQueue);
+
+    /** Pushes a group into the render queue */
     void pushGroup(int renderQueueID);
+
+    /** Pops a group from the render queue */
     void popGroup();
-    
+
+    /** Creates a render queue and returns its Id */
     int createRenderQueue();
+
+    /** Renders into the GLView all the queued `RenderCommand` objects */
     void render();
+
+    /* returns the number of drawn batches in the last frame */
+    ssize_t getDrawnBatches() const { return _drawnBatches; }
+    /* RenderCommands (except) QuadCommand should update this value */
+    void addDrawnBatches(ssize_t number) { _drawnBatches += number; };
+    /* returns the number of drawn triangles in the last frame */
+    ssize_t getDrawnVertices() const { return _drawnVertices; }
+    /* RenderCommands (except) QuadCommand should update this value */
+    void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
 
 protected:
 
@@ -75,18 +117,20 @@ protected:
     void mapBuffers();
 
     void drawBatchedQuads();
+
     //Draw the previews queued quads and flush previous context
     void flush();
+
+    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
     std::stack<int> _commandGroupStack;
     
     std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
-    int _lastMaterialID;
+    uint64_t _lastMaterialID;
 
-    size_t _firstCommand;
-    size_t _lastCommand;
+    std::vector<QuadCommand*> _batchedQuadCommands;
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
     GLushort _indices[6 * VBO_SIZE];
@@ -96,6 +140,10 @@ protected:
     int _numQuads;
     
     bool _glViewAssigned;
+
+    // stats
+    ssize_t _drawnBatches;
+    ssize_t _drawnVertices;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;

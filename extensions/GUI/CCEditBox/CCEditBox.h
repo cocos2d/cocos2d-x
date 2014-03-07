@@ -26,7 +26,7 @@
 #ifndef __CCEDITTEXT_H__
 #define __CCEDITTEXT_H__
 
-#include "cocos2d.h"
+#include "CCIMEDelegate.h"
 #include "extensions/ExtensionMacros.h"
 #include "../CCControlExtension/CCControlExtensions.h"
 
@@ -217,6 +217,8 @@ public:
      * @lua NA
      */
     EditBoxDelegate* getDelegate();
+    
+#if CC_ENABLE_SCRIPT_BINDING
     /**
      * Registers a script function that will be called for EditBox events.
      *
@@ -257,6 +259,9 @@ public:
      * @lua NA
      */
     int  getScriptEditBoxHandler(void){ return _scriptEditBoxHandler ;}
+    
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     /**
      * Set the text entered in the edit box.
      * @param pText The given text.
@@ -374,7 +379,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void) override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     /**
      * @js NA
      * @lua NA
@@ -410,9 +415,10 @@ public:
      * @js NA
      * @lua NA
      */
-    void touchDownAction(Object *sender, Control::EventType controlEvent);
+    void touchDownAction(Ref *sender, Control::EventType controlEvent);
     
 protected:
+    void updatePosition(float dt);
     EditBoxImpl*      _editBoxImpl;
     EditBoxDelegate*  _delegate;
     
@@ -434,7 +440,9 @@ protected:
     
     int   _maxLength;
     float _adjustHeight;
+#if CC_ENABLE_SCRIPT_BINDING
     int   _scriptEditBoxHandler;
+#endif
 };
 
 NS_CC_EXT_END

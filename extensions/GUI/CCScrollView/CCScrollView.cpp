@@ -24,6 +24,13 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
+#include "CCGLView.h"
+#include "platform/CCDevice.h"
+#include "CCActionInstant.h"
+#include "CCActionInterval.h"
+#include "CCActionTween.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #include <algorithm>
 
@@ -37,7 +44,8 @@ NS_CC_EXT_BEGIN
 
 static float convertDistanceFromPointToInch(float pointDis)
 {
-    float factor = ( EGLView::getInstance()->getScaleX() + EGLView::getInstance()->getScaleY() ) / 2;
+    auto glview = Director::getInstance()->getOpenGLView();
+    float factor = ( glview->getScaleX() + glview->getScaleY() ) / 2;
     return pointDis * factor / Device::getDPI();
 }
 
@@ -46,10 +54,10 @@ ScrollView::ScrollView()
 : _zoomScale(0.0f)
 , _minZoomScale(0.0f)
 , _maxZoomScale(0.0f)
-, _delegate(NULL)
+, _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
-, _container(NULL)
+, _container(nullptr)
 , _touchMoved(false)
 , _bounceable(false)
 , _clippingToBounds(false)
@@ -104,8 +112,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            this->_container->ignoreAnchorPointForPosition(false);
-            this->_container->setAnchorPoint(Point(0.0f, 0.0f));
+            _container->ignoreAnchorPointForPosition(false);
+            _container->setAnchorPoint(Point(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -149,7 +157,7 @@ bool ScrollView::isNodeVisible(Node* node)
     return viewRect.intersectsRect(node->getBoundingBox());
 }
 
-void ScrollView::pause(Object* sender)
+void ScrollView::pause(Ref* sender)
 {
     _container->pause();
 
@@ -159,7 +167,7 @@ void ScrollView::pause(Object* sender)
     }
 }
 
-void ScrollView::resume(Object* sender)
+void ScrollView::resume(Ref* sender)
 {
     auto& children = _container->getChildren();
     for(const auto &child : children) {
@@ -302,6 +310,11 @@ void ScrollView::setZoomScaleInDuration(float s, float dt)
     }
 }
 
+void ScrollView::updateTweenAction(float value, const std::string& key)
+{
+    this->setZoomScale(value);
+}
+
 void ScrollView::setViewSize(Size size)
 {
     _viewSize = size;
@@ -396,25 +409,16 @@ void ScrollView::deaccelerateScrolling(float dt)
         minInset = this->minContainerOffset();
     }
     
-    //check to see if offset lies within the inset bounds
-    newX     = MIN(_container->getPosition().x, maxInset.x);
-    newX     = MAX(newX, minInset.x);
-    newY     = MIN(_container->getPosition().y, maxInset.y);
-    newY     = MAX(newY, minInset.y);
-    
     newX = _container->getPosition().x;
     newY = _container->getPosition().y;
     
-    _scrollDistance     = _scrollDistance - Point(newX - _container->getPosition().x, newY - _container->getPosition().y);
     _scrollDistance     = _scrollDistance * SCROLL_DEACCEL_RATE;
     this->setContentOffset(Point(newX,newY));
     
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        newY > maxInset.y || newY < minInset.y ||
-        newX > maxInset.x || newX < minInset.x ||
-        newX == maxInset.x || newX == minInset.x ||
-        newY == maxInset.y || newY == minInset.y)
+        newY >= maxInset.y || newY <= minInset.y ||
+        newX >= maxInset.x || newX <= minInset.x)
     {
         this->unschedule(schedule_selector(ScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
@@ -485,44 +489,62 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
+void ScrollView::beforeDraw()
+{
+    _beforeDrawCommand.init(_globalZOrder);
+    _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
+}
+
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
-void ScrollView::beforeDraw()
+void ScrollView::onBeforeDraw()
 {
     if (_clippingToBounds)
     {
 		_scissorRestored = false;
         Rect frame = getViewRect();
-        if (EGLView::getInstance()->isScissorEnabled()) {
+        auto glview = Director::getInstance()->getOpenGLView();
+
+        if (glview->isScissorEnabled()) {
             _scissorRestored = true;
-            _parentScissorRect = EGLView::getInstance()->getScissorRect();
+            _parentScissorRect = glview->getScissorRect();
             //set the intersection of _parentScissorRect and frame as the new scissor rect
             if (frame.intersectsRect(_parentScissorRect)) {
                 float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
                 float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
                 float xx = MIN(frame.origin.x+frame.size.width, _parentScissorRect.origin.x+_parentScissorRect.size.width);
                 float yy = MIN(frame.origin.y+frame.size.height, _parentScissorRect.origin.y+_parentScissorRect.size.height);
-                EGLView::getInstance()->setScissorInPoints(x, y, xx-x, yy-y);
+                glview->setScissorInPoints(x, y, xx-x, yy-y);
             }
         }
         else {
             glEnable(GL_SCISSOR_TEST);
-            EGLView::getInstance()->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+            glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
         }
     }
+}
+
+void ScrollView::afterDraw()
+{
+    _afterDrawCommand.init(_globalZOrder);
+    _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
 }
 
 /**
  * retract what's done in beforeDraw so that there's no side effect to
  * other nodes.
  */
-void ScrollView::afterDraw()
+void ScrollView::onAfterDraw()
 {
     if (_clippingToBounds)
     {
         if (_scissorRestored) {//restore the parent's scissor rect
-            EGLView::getInstance()->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
+            auto glview = Director::getInstance()->getOpenGLView();
+
+            glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
         }
         else {
             glDisable(GL_SCISSOR_TEST);
@@ -530,7 +552,7 @@ void ScrollView::afterDraw()
     }
 }
 
-void ScrollView::visit()
+void ScrollView::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
 	// quick return if not visible
 	if (!isVisible())
@@ -538,9 +560,17 @@ void ScrollView::visit()
 		return;
     }
 
-	kmGLPushMatrix();
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = this->transform(parentTransform);
+    _transformUpdated = false;
 
-	this->transform();
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     this->beforeDraw();
 
 	if (!_children.empty())
@@ -551,9 +581,9 @@ void ScrollView::visit()
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			if ( child->getZOrder() < 0 )
+			if ( child->getLocalZOrder() < 0 )
             {
-				child->visit();
+				child->visit(renderer, _modelViewTransform, dirty);
 			}
             else
             {
@@ -562,19 +592,19 @@ void ScrollView::visit()
 		}
 		
 		// this draw
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
         
 		// draw children zOrder >= 0
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			child->visit();
+			child->visit(renderer, _modelViewTransform, dirty);
 		}
         
 	}
     else
     {
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
     }
 
     this->afterDraw();
@@ -636,7 +666,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
     {
         if (_touches.size() == 1 && _dragging)
         { // scrolling
-            Point moveDistance, newPoint, maxInset, minInset;
+            Point moveDistance, newPoint;
             Rect  frame;
             float newX, newY;
             
@@ -686,9 +716,6 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                     default:
                         break;
                 }
-                
-                maxInset = _maxInset;
-                minInset = _minInset;
 
                 newX     = _container->getPosition().x + moveDistance.x;
                 newY     = _container->getPosition().y + moveDistance.y;

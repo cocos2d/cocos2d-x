@@ -1,9 +1,11 @@
 /****************************************************************************
-Copyright 2012 cocos2d-x.org
 Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
-
+Copyright 2012 cocos2d-x.org
+Copyright 2013-2014 Chukong Technologies Inc.
+ 
+ 
 http://www.cocos2d-x.org
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,8 +31,7 @@ THE SOFTWARE.
 #define __CCGLPROGRAM_H__
 
 #include "ccMacros.h"
-#include "CCObject.h"
-
+#include "CCRef.h"
 #include "CCGL.h"
 #include "kazmath/kazmath.h"
 
@@ -52,7 +53,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
  
  @since v2.0.0
  */
-class CC_DLL GLProgram : public Object
+class CC_DLL GLProgram : public Ref
 {
 public:
     enum
@@ -82,6 +83,7 @@ public:
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP;
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
     static const char* SHADER_NAME_POSITION_COLOR;
+    static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
     static const char* SHADER_NAME_POSITION_TEXTURE;
     static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR;
     static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;
@@ -90,8 +92,7 @@ public:
 
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
-    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE;
-    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW;
+    static const char* SHADER_NAME_LABEL_OUTLINE;
     
     // uniform names
     static const char* UNIFORM_NAME_P_MATRIX;
@@ -121,14 +122,22 @@ public:
      * @js initWithString
      * @lua initWithString
      */
-    bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+    bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
      * @js init
      * @lua init
      */
-    bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
-    /**  It will add a new attribute to the shader */
-    void addAttribute(const char* attributeName, GLuint index);
+    bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
+
+    /**  It will add a new attribute to the shader by calling glBindAttribLocation */
+    void bindAttribLocation(const char* attributeName, GLuint index) const;
+
+    /** calls glGetAttribLocation */
+    GLint getAttribLocation(const char* attributeName) const;
+
+    /** calls glGetUniformLocation() */
+    GLint getUniformLocation(const char* attributeName) const;
+
     /** links the glProgram */
     bool link();
     /** it will call glUseProgram() */
@@ -232,6 +241,13 @@ public:
     void reset();
     
     inline const GLuint getProgram() const { return _program; }
+
+    // DEPRECATED
+    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
+    { return initWithByteArrays(vShaderByteArray, fShaderByteArray); }
+    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderFilename(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
+    { return initWithFilenames(vShaderByteArray, fShaderByteArray); }
+    CC_DEPRECATED_ATTRIBUTE void addAttribute(const char* attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
 
 private:
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);

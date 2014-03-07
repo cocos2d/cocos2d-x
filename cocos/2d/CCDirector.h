@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2010-2013 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,13 +30,13 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
 #include "CCVector.h"
 #include "CCGL.h"
-#include "kazmath/mat4.h"
 #include "CCLabelAtlas.h"
+#include "kazmath/mat4.h"
 
 
 NS_CC_BEGIN
@@ -48,7 +49,7 @@ NS_CC_BEGIN
 /* Forward declarations. */
 class LabelAtlas;
 class Scene;
-class EGLView;
+class GLView;
 class DirectorDelegate;
 class Node;
 class Scheduler;
@@ -57,8 +58,8 @@ class EventDispatcher;
 class EventCustom;
 class EventListenerCustom;
 class TextureCache;
-class Frustum;
 class Renderer;
+class Console;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -80,7 +81,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CC_DLL Director : public Object
+class CC_DLL Director : public Ref
 {
 public:
     static const char *EVENT_PROJECTION_CHANGED;
@@ -120,8 +121,8 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~Director(void);
-    virtual bool init(void);
+    virtual ~Director();
+    virtual bool init();
 
     // attribute
 
@@ -141,12 +142,12 @@ public:
     /** seconds per frame */
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
-    /** Get the EGLView, where everything is rendered
+    /** Get the GLView, where everything is rendered
     * @js NA
     * @lua NA
     */
-    inline EGLView* getOpenGLView() { return _openGLView; }
-    void setOpenGLView(EGLView *openGLView);
+    inline GLView* getOpenGLView() { return _openGLView; }
+    void setOpenGLView(GLView *openGLView);
 
     TextureCache* getTextureCache() const;
 
@@ -185,21 +186,9 @@ public:
      Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
-    Node* getNotificationNode();
+    Node* getNotificationNode() const { return _notificationNode; }
     void setNotificationNode(Node *node);
     
-    /** Director delegate. It shall implement the DirectorDelegate protocol
-     @since v0.99.5
-     * @js NA
-     * @lua NA
-     */
-    DirectorDelegate* getDelegate() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void setDelegate(DirectorDelegate* delegate);
-
     // window size
 
     /** returns the size of the OpenGL view in points.
@@ -212,7 +201,7 @@ public:
     
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
-     *  EGLView::setDesignResolutionSize()
+     *  GLView::setDesignResolutionSize()
      */
     Size getVisibleSize() const;
     
@@ -339,18 +328,12 @@ public:
     @since v0.99.4
     */
     void setContentScaleFactor(float scaleFactor);
-    float getContentScaleFactor() const;
-    
-    /**
-     Get the Culling Frustum
-     */
-    
-    Frustum* getFrustum() const { return _cullingFrustum; }
+    float getContentScaleFactor() const { return _contentScaleFactor; }
 
     /** Gets the Scheduler associated with this director
      @since v2.0
      */
-    Scheduler* getScheduler() const;
+    Scheduler* getScheduler() const { return _scheduler; }
     
     /** Sets the Scheduler associated with this director
      @since v2.0
@@ -360,7 +343,7 @@ public:
     /** Gets the ActionManager associated with this director
      @since v2.0
      */
-    ActionManager* getActionManager() const;
+    ActionManager* getActionManager() const { return _actionManager; }
     
     /** Sets the ActionManager associated with this director
      @since v2.0
@@ -370,7 +353,7 @@ public:
     /** Gets the EventDispatcher associated with this director 
      @since v3.0
      */
-    EventDispatcher* getEventDispatcher() const;
+    EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
     
     /** Sets the EventDispatcher associated with this director 
      @since v3.0
@@ -380,7 +363,12 @@ public:
     /** Returns the Renderer
      @since v3.0
      */
-    Renderer* getRenderer() const;
+    Renderer* getRenderer() const { return _renderer; }
+
+    /** Returns the Console 
+     @since v3.0
+     */
+    Console* getConsole() const { return _console; }
 
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
@@ -427,8 +415,8 @@ protected:
     /* delta time since last tick to main loop */
 	float _deltaTime;
     
-    /* The EGLView, where everything is rendered */
-    EGLView *_openGLView;
+    /* The GLView, where everything is rendered */
+    GLView *_openGLView;
 
     //texture cache belongs to this director
     TextureCache *_textureCache;
@@ -444,8 +432,8 @@ protected:
     float _frameRate;
     
     LabelAtlas *_FPSLabel;
-    LabelAtlas *_SPFLabel;
-    LabelAtlas *_drawsLabel;
+    LabelAtlas *_drawnBatchesLabel;
+    LabelAtlas *_drawnVerticesLabel;
     
     /** Whether or not the Director is paused */
     bool _paused;
@@ -455,8 +443,6 @@ protected:
     unsigned int _frames;
     float _secondsPerFrame;
     
-    Frustum *_cullingFrustum;
-     
     /* The running scene */
     Scene *_runningScene;
     
@@ -485,19 +471,17 @@ protected:
     /* content scale factor */
     float _contentScaleFactor;
 
-    /* store the fps string */
-    char *_FPS;
-
     /* This object will be visited after the scene. Useful to hook a notification node */
     Node *_notificationNode;
 
-    /* Projection protocol delegate */
-    DirectorDelegate *_projectionDelegate;
-
+    /* Renderer for the Director */
     Renderer *_renderer;
+
+    /* Console for the director */
+    Console *_console;
     
-    // EGLViewProtocol will recreate stats labels to fit visible rect
-    friend class EGLViewProtocol;
+    // GLViewProtocol will recreate stats labels to fit visible rect
+    friend class GLViewProtocol;
 };
 
 /** 
