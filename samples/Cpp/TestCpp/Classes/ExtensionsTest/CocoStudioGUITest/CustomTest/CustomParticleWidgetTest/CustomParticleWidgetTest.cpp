@@ -9,7 +9,7 @@
 #include "CustomParticleWidgetTest.h"
 #include "../../CustomGUIScene.h"
 #include "../../CustomWidget/CustomParticleWidget.h"
-#include "../../CustomWidget/CustomImageViewReader.h"
+#include "../../CustomWidget/CustomParticleWidgetReader.h"
 
 
 USING_NS_CC;
@@ -27,8 +27,8 @@ void CustomParticleWidgetLayer::onEnter()
     GUIReader* guiReader = GUIReader::shareReader();
     guiReader->registerTypeAndCallBack("CustomParticleWidget",
                                        &CustomParticleWidget::createInstance,
-                                       CustomImageViewReader::getInstance(),
-                                       parseselector(CustomImageViewReader::setProperties));
+                                       CustomParticleWidgetReader::getInstance(),
+                                       parseselector(CustomParticleWidgetReader::setProperties));
     
     TouchGroup* touchGroup = TouchGroup::create();
     addChild(touchGroup);
