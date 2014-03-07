@@ -22,15 +22,10 @@
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
                "proj.win32/main.cpp",
-               "proj.win32/Runtime_win32.cpp",
-               "proj.anroid/.project",
-               "proj.anroid/.cproject",
-               "proj.anroid/AndroidManifest.xml",
-               "proj.anroid/build.xml",
-               "proj.anroid/build_native.sh",
-               "proj.anroid/build_native.cmd",
-               "proj.anroid/res/values/strings.xml",
-               "proj.ios_mac/Info.plist",
+               "proj.android/.project",
+               "proj.android/AndroidManifest.xml",
+               "proj.android/build.xml",
+               "proj.android/res/values/strings.xml",
                "proj.ios_mac/ios/main.m",
                "proj.ios_mac/ios/Prefix.pch",
                "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
@@ -40,8 +35,7 @@
          "project_replace_package_name":{
             "src_package_name":"org.cocos2dx.hellocpp",
             "files":[
-               "proj.android/AndroidManifest.xml",
-               "proj.ios_mac/Info.plist"
+               "proj.android/AndroidManifest.xml"
             ]
          }
       }
