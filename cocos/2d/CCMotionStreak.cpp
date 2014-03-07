@@ -139,13 +139,19 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
 void MotionStreak::setPosition(const Point& position)
 {
-    _startingPositionInitialized = true;
+    if (!_startingPositionInitialized) {
+        _startingPositionInitialized = true;
+    }
     _positionR = position;
 }
 
 void MotionStreak::setPosition(float x, float y)
 {
-    setPosition(Point(x, y));
+    if (!_startingPositionInitialized) {
+        _startingPositionInitialized = true;
+    }
+    _positionR.x = x;
+    _positionR.y = y;
 }
 
 const Point& MotionStreak::getPosition() const
@@ -166,7 +172,10 @@ float MotionStreak::getPositionX() const
 
 void MotionStreak::setPositionX(float x)
 {
-    setPosition(Point(x, _positionR.y));
+    if (!_startingPositionInitialized) {
+        _startingPositionInitialized = true;
+    }
+    _positionR.x = x;
 }
 
 float MotionStreak::getPositionY() const
@@ -176,7 +185,10 @@ float MotionStreak::getPositionY() const
 
 void MotionStreak::setPositionY(float y)
 {
-    setPosition(Point(_positionR.x, y));
+    if (!_startingPositionInitialized) {
+        _startingPositionInitialized = true;
+    }
+    _positionR.y = y;
 }
 
 void MotionStreak::tintWithColor(const Color3B& colors)
