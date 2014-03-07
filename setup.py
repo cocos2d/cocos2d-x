@@ -164,7 +164,7 @@ class SetEnvVar(object):
 
             # python on linux doesn't include Tkinter model, so let user input in terminal
             if self._isLinux():
-                self.ndk_root = raw_input('Couldn\'t find the "NDK_ROOT" envrironment variable. Please enter it: ')        
+                self.ndk_root = raw_input('\nCouldn\'t find the "NDK_ROOT" envrironment variable. Please enter its path: ')        
             else:
 
                 # pop up a window to let user select path for ndk root
@@ -172,19 +172,24 @@ class SetEnvVar(object):
                 import tkFileDialog
 
                 root = Tkinter.Tk()
-
+		root.wm_title("Set NDK_ROOT")
+		
                 def callback():
                     self.ndk_root = tkFileDialog.askdirectory()
                     root.destroy()
 
-                label_content = """
-Please select path for NDK_ROOT. NDK is needed to develop Android native application.
-More information of NDK please refer to https://developer.android.com/tools/sdk/ndk/index.html. 
-You can skip it now without problem. But you will need it later to build the game for Android.
+                label_content = """Select path for Android NDK:"""
+		label_help = """
+The Android NDK is needed to develop games for Android. 
+For further information, go to:
+https://developer.android.com/tools/sdk/ndk/index.html. 
+
+You can safely skip this step now. You can set the NDK_ROOT later.
                 """
 
                 Tkinter.Label(root, text=label_content).pack()
-                Tkinter.Button(root, text='select ndk_root', command=callback).pack()
+                Tkinter.Button(root, text='Path for NDK_ROOT ...', command=callback).pack()
+                Tkinter.Label(root, text=label_help).pack()
                 self._center(root)
                 root.mainloop()
 

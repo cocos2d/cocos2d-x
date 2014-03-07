@@ -1083,8 +1083,8 @@ void SchedulerIssue2268::update(float dt)
 		testNode->removeFromParentAndCleanup(false);
 
 		// at some other point we are completely done with the node and want to clear it
-		testNode->release();
 		testNode->unscheduleAllSelectors();
+		testNode->release();
 		testNode = NULL;
 
 	}
