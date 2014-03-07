@@ -110,10 +110,17 @@ ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char*
 	}
 	return action;
 }
-
+    
 void ActionManagerEx::releaseActions()
 {
-	_actionDic.clear();
+    std::unordered_map<std::string, cocos2d::Vector<ActionObject*>>::iterator iter;
+    for (iter = _actionDic.begin(); iter != _actionDic.end(); iter++)
+    {
+        cocos2d::Vector<ActionObject*> objList = iter->second;
+        objList.clear();
+    }
+    
+    _actionDic.clear();
 }
 
 }
