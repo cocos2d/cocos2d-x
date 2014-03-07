@@ -295,6 +295,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget">
       <UniqueIdentifier>{ff30896b-30e0-4031-969b-d252a33b465e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest">
+      <UniqueIdentifier>{af497767-91b8-4628-ac6b-1783a98f7865}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -737,6 +740,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1363,6 +1375,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
