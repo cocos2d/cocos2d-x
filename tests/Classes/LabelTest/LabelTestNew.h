@@ -450,6 +450,29 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelAlignmentTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelAlignmentTest);
+
+    LabelAlignmentTest();
+    virtual ~LabelAlignmentTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+private:
+    void  setAlignmentLeft(Ref* sender);
+    void  setAlignmentCenter(Ref* sender);
+    void  setAlignmentRight(Ref* sender);
+    void  setAlignmentTop(Ref* sender);
+    void  setAlignmentMiddle(Ref* sender);
+    void  setAlignmentBottom(Ref* sender);
+    const char* getCurrentAlignment();
+
+    Label* _label;
+    TextHAlignment _horizAlign;
+    TextVAlignment _vertAlign;
+};
+
 // we don't support linebreak mode
 
 #endif
