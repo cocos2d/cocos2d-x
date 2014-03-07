@@ -154,8 +154,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDi
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomGUIScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\GUIEditorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp" />
@@ -328,8 +331,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDi
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocoStudioGUITest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomGUIScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageView.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\GUIEditorTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h" />

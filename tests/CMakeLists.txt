@@ -113,8 +113,11 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageView.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidget.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidgetReader.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomReader.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp
   Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
