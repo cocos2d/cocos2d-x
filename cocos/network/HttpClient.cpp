@@ -469,12 +469,14 @@ void HttpClient::send(HttpRequest* request)
         
     request->retain();
     
-    s_requestQueueMutex.lock();
-    s_requestQueue->pushBack(request);
-    s_requestQueueMutex.unlock();
-    
-    // Notify thread start to work
-    s_SleepCondition.notify_one();
+    if (nullptr != s_requestQueue) {
+        s_requestQueueMutex.lock();
+        s_requestQueue->pushBack(request);
+        s_requestQueueMutex.unlock();
+        
+        // Notify thread start to work
+        s_SleepCondition.notify_one();
+    }
 }
 
 // Poll and notify main thread if responses exists in queue
