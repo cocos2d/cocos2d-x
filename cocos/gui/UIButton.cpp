@@ -33,7 +33,9 @@ static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
-
+    
+IMPLEMENT_CLASS_GUI_INFO(Button)
+    
 Button::Button():
 _buttonNormalRenderer(nullptr),
 _buttonClickedRenderer(nullptr),
@@ -214,9 +216,10 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
         }
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_buttonNormalRenderer);
     normalTextureScaleChangedWithSize();
     _normalTextureLoaded = true;
 }
@@ -261,9 +264,10 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
         }
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_buttonDisableRenderer);
     pressedTextureScaleChangedWithSize();
     _pressedTextureLoaded = true;
 }
@@ -308,9 +312,10 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
         }
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_buttonDisableRenderer);
     disabledTextureScaleChangedWithSize();
     _disabledTextureLoaded = true;
 }
@@ -425,46 +430,40 @@ void Button::onPressStateChangedToDisabled()
     _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
 
-void Button::setFlippedX(bool flippedX)
+void Button::updateFlippedX()
 {
-    _titleRenderer->setFlippedX(flippedX);
+    _titleRenderer->setFlippedX(_flippedX);
     if (_scale9Enabled)
     {
-        return;
+        int flip = _flippedX ? -1 : 1;
+        _buttonNormalRenderer->setScaleX(flip);
+        _buttonClickedRenderer->setScaleX(flip);
+        _buttonDisableRenderer->setScaleX(flip);
     }
-    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(flippedX);
-    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(flippedX);
-    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flippedX);
+    else
+    {
+        static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(_flippedX);
+        static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(_flippedX);
+        static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(_flippedX);
+    }
 }
-
-void Button::setFlippedY(bool flippedY)
+    
+void Button::updateFlippedY()
 {
-    _titleRenderer->setFlippedY(flippedY);
+    _titleRenderer->setFlippedY(_flippedY);
     if (_scale9Enabled)
     {
-        return;
+        int flip = _flippedY ? -1 : 1;
+        _buttonNormalRenderer->setScaleY(flip);
+        _buttonClickedRenderer->setScaleY(flip);
+        _buttonDisableRenderer->setScaleY(flip);
     }
-    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(flippedY);
-    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(flippedY);
-    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flippedY);
-}
-
-bool Button::isFlippedX()
-{
-    if (_scale9Enabled)
+    else
     {
-        return false;
+        static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(_flippedY);
+        static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(_flippedY);
+        static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(_flippedY);
     }
-    return static_cast<Sprite*>(_buttonNormalRenderer)->isFlippedX();
-}
-
-bool Button::isFlippedY()
-{
-    if (_scale9Enabled)
-    {
-        return false;
-    }
-    return static_cast<Sprite*>(_buttonNormalRenderer)->isFlippedY();
 }
 
 void Button::setAnchorPoint(const Point &pt)
@@ -656,16 +655,31 @@ const char* Button::getTitleFontName() const
 {
     return _titleRenderer->getFontName().c_str();
 }
-
-void Button::setColor(const Color3B &color)
-{
-    Widget::setColor(color);
-    setTitleColor(_titleColor);
-}
-
+    
 std::string Button::getDescription() const
 {
     return "Button";
+}
+    
+void Button::updateTextureColor()
+{
+    updateColorToRenderer(_buttonNormalRenderer);
+    updateColorToRenderer(_buttonClickedRenderer);
+    updateColorToRenderer(_buttonDisableRenderer);
+}
+
+void Button::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_buttonNormalRenderer);
+    updateOpacityToRenderer(_buttonClickedRenderer);
+    updateOpacityToRenderer(_buttonDisableRenderer);
+}
+
+void Button::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_buttonNormalRenderer);
+    updateRGBAToRenderer(_buttonClickedRenderer);
+    updateRGBAToRenderer(_buttonDisableRenderer);
 }
 
 Widget* Button::createCloneInstance()

@@ -11,7 +11,7 @@ bool UIImageViewTest::init()
     {
         Size widgetSize = _widget->getSize();
         
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ImageView");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -56,7 +56,7 @@ bool UIImageViewTest::init()
         _uiLayer->addChild(sprite);
          */
         
-//        imageView->setLocalZOrder(20);
+//        imageView->setZOrder(20);
         
         return true;
     }
@@ -72,7 +72,7 @@ bool UIImageViewTest_Scale9::init()
     {
         Size widgetSize = _widget->getSize();
         
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ImageView scale9 render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(26);

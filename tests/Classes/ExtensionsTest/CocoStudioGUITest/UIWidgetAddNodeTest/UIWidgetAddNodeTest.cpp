@@ -21,7 +21,7 @@ bool UIWidgetAddNodeTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Widget Add Node");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -36,7 +36,7 @@ bool UIWidgetAddNodeTest::init()
         
         Sprite* sprite = Sprite::create("cocosgui/ccicon.png");
         sprite->setPosition(Point(0, sprite->getBoundingBox().size.height / 4));
-        widget->addNode(sprite, 0);
+        widget->addNode(sprite);
         
         return true;
     }

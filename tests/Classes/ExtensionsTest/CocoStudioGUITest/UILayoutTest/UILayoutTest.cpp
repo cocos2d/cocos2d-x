@@ -20,7 +20,7 @@ bool UILayoutTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -86,7 +86,7 @@ bool UILayoutTest_Color::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout color render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -153,7 +153,7 @@ bool UILayoutTest_Gradient::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout gradient render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -220,7 +220,7 @@ bool UILayoutTest_BackGroundImage::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout background image");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -287,7 +287,7 @@ bool UILayoutTest_BackGroundImage_Scale9::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout background image scale9");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -354,7 +354,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout Linear Vertical");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -439,7 +439,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout Linear Horizontal");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -524,7 +524,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout Relative Align Parent");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -673,7 +673,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("Layout Relative Location");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -760,9 +760,8 @@ bool UILayoutTest_Layout_Relative_Location::init()
     return false;
 }
 
-/*
 // UILayoutTest_Layout_Grid
-
+/*
 UILayoutTest_Layout_Grid::UILayoutTest_Layout_Grid()
 {
 }
@@ -778,7 +777,7 @@ bool UILayoutTest_Layout_Grid::init()
         Size widgetSize = _widget->getSize();
         
         // Add the alert
-        ui::Label* alert = ui::Label::create();
+        Text* alert = Text::create();
         alert->setText("Layout Grid");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);

@@ -55,7 +55,12 @@ _positionType(POSITION_ABSOLUTE),
 _positionPercent(Point::ZERO),
 _reorderWidgetChildDirty(true),
 _hitted(false),
-_touchListener(nullptr)
+_touchListener(nullptr),
+_nodes(NULL),
+_color(Color3B::WHITE),
+_opacity(255),
+_flippedX(false),
+_flippedY(false)
 {
 
 }
@@ -86,8 +91,6 @@ bool Widget::init()
     if (Node::init())
     {
         initRenderer();
-        setCascadeColorEnabled(true);
-        setCascadeOpacityEnabled(true);
         setBright(true);
         ignoreContentAdaptWithSize(true);
         setAnchorPoint(Point(0.5f, 0.5f));
@@ -539,6 +542,10 @@ SizeType Widget::getSizeType() const
 
 void Widget::ignoreContentAdaptWithSize(bool ignore)
 {
+    if (_ignoreSize == ignore)
+    {
+        return;
+    }
     _ignoreSize = ignore;
     if (_ignoreSize)
     {
@@ -560,6 +567,11 @@ bool Widget::isIgnoreContentAdaptWithSize() const
 const Size& Widget::getSize() const
 {
     return _size;
+}
+    
+const Size& Widget::getCustomSize() const
+{
+    return _customSize;
 }
 
 const Point& Widget::getSizePercent() const
@@ -1063,14 +1075,52 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
-    setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
-    setCascadeColorEnabled(widget->isCascadeColorEnabled());
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
     for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
     {
         setLayoutParameter(iter->second->clone());
     }
     onSizeChanged();
+}
+    
+void Widget::setColor(const Color3B& color)
+{
+    _color = color;
+    updateTextureColor();
+}
+
+void Widget::setOpacity(GLubyte opacity)
+{
+    _opacity = opacity;
+    updateTextureOpacity();
+}
+    
+void Widget::setFlippedX(bool flippedX)
+{
+    _flippedX = flippedX;
+    updateFlippedX();
+}
+
+void Widget::setFlippedY(bool flippedY)
+{
+    _flippedY = flippedY;
+    updateFlippedY();
+}
+
+void Widget::updateColorToRenderer(Node* renderer)
+{
+    renderer->setColor(_color);
+}
+
+void Widget::updateOpacityToRenderer(Node* renderer)
+{
+    renderer->setOpacity(_opacity);
+}
+
+void Widget::updateRGBAToRenderer(Node* renderer)
+{
+    renderer->setColor(_color);
+    renderer->setOpacity(_opacity);
 }
 
 /*temp action*/

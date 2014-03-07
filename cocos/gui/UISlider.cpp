@@ -33,6 +33,8 @@ static const int BASEBAR_RENDERER_Z = (-2);
 static const int PROGRESSBAR_RENDERER_Z = (-2);
 static const int SLIDBALL_RENDERER_Z = (-1);
     
+IMPLEMENT_CLASS_GUI_INFO(Slider)
+    
 Slider::Slider():
 _barRenderer(nullptr),
 _progressBarRenderer(nullptr),
@@ -132,9 +134,9 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_barRenderer);
     barRendererScaleChangedWithSize();
+    progressBarRendererScaleChangedWithSize();
 }
 
 void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType)
@@ -170,8 +172,7 @@ void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_progressBarRenderer);
     _progressBarRenderer->setAnchorPoint(Point(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
     progressBarRendererScaleChangedWithSize();
@@ -293,8 +294,7 @@ void Slider::loadSlidBallTextureNormal(const char* normal,TextureResType texType
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_slidBallNormalRenderer);
 }
 
 void Slider::loadSlidBallTexturePressed(const char* pressed,TextureResType texType)
@@ -316,8 +316,7 @@ void Slider::loadSlidBallTexturePressed(const char* pressed,TextureResType texTy
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_slidBallPressedRenderer);
 }
 
 void Slider::loadSlidBallTextureDisabled(const char* disabled,TextureResType texType)
@@ -339,8 +338,7 @@ void Slider::loadSlidBallTextureDisabled(const char* disabled,TextureResType tex
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_slidBallDisabledRenderer);
 }
 
 void Slider::setPercent(int percent)
@@ -493,6 +491,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setPreferredSize(_size);
+            _progressBarTextureSize = _progressBarRenderer->getContentSize();
         }
         else
         {
@@ -536,6 +535,33 @@ void Slider::onPressStateChangedToDisabled()
 std::string Slider::getDescription() const
 {
     return "Slider";
+}
+    
+void Slider::updateTextureColor()
+{
+    updateColorToRenderer(_barRenderer);
+    updateColorToRenderer(_progressBarRenderer);
+    updateColorToRenderer(_slidBallNormalRenderer);
+    updateColorToRenderer(_slidBallPressedRenderer);
+    updateColorToRenderer(_slidBallDisabledRenderer);
+}
+
+void Slider::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_barRenderer);
+    updateOpacityToRenderer(_progressBarRenderer);
+    updateOpacityToRenderer(_slidBallNormalRenderer);
+    updateOpacityToRenderer(_slidBallPressedRenderer);
+    updateOpacityToRenderer(_slidBallDisabledRenderer);
+}
+
+void Slider::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_barRenderer);
+    updateRGBAToRenderer(_progressBarRenderer);
+    updateRGBAToRenderer(_slidBallNormalRenderer);
+    updateRGBAToRenderer(_slidBallPressedRenderer);
+    updateRGBAToRenderer(_slidBallDisabledRenderer);
 }
 
 Widget* Slider::createCloneInstance()

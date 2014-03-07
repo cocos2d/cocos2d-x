@@ -30,14 +30,14 @@
 #include "../../testBasic.h"
 #include "gui/CocosGUI.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
-using namespace ui;
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
 
 class CocosGUITestMainLayer : public Layer
 {
 public:
-    virtual void onEnter() override;
+    virtual void onEnter();
     
 	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
@@ -51,7 +51,9 @@ public:
 class CocosGUITestScene : public TestScene
 {
 public:
+    virtual void onEnter();
     virtual void runThisTest();
+    void BackCallback(Ref* pSender);
 };
 
 /*

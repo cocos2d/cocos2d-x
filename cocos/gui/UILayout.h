@@ -57,6 +57,9 @@ typedef enum {
  */
 class Layout : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -138,9 +141,9 @@ public:
      *
      * @param opacity
      */
-    void setBackGroundColorOpacity(int opacity);
+    void setBackGroundColorOpacity(GLubyte opacity);
     
-    int getBackGroundColorOpacity();
+    GLubyte getBackGroundColorOpacity();
     
     /**
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -150,6 +153,14 @@ public:
     void setBackGroundColorVector(const Point &vector);
     
     const Point& getBackGroundColorVector();
+    
+    void setBackGroundImageColor(const ccColor3B& color);
+    
+    void setBackGroundImageOpacity(GLubyte opacity);
+    
+    const ccColor3B& getBackGroundImageColor();
+    
+    GLubyte getBackGroundImageOpacity();
     
     /**
      * Remove the background image of layout.
@@ -283,6 +294,9 @@ protected:
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();
+    void updateBackGroundImageColor();
+    void updateBackGroundImageOpacity();
+    void updateBackGroundImageRGBA();
 protected:
     bool _clippingEnabled;
     
@@ -299,7 +313,7 @@ protected:
     Color3B _gStartColor;
     Color3B _gEndColor;
     Point _alongVector;
-    int _cOpacity;
+    GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
     LayoutType _layoutType;
     LayoutClippingType _clippingType;
@@ -326,8 +340,11 @@ protected:
     GLenum _currentAlphaTestFunc;
     GLclampf _currentAlphaTestRef;
     
-    GLint _mask_layer_le;
     
+    Color3B _backGroundImageColor;
+    GLubyte _backGroundImageOpacity;
+    
+    GLint _mask_layer_le;
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmdStencil;
     CustomCommand _afterDrawStencilCmd;
