@@ -972,6 +972,8 @@ void Console::loop()
             for(const auto &fd: _fds) {
                 if(FD_ISSET(fd,&copy_set)) 
                 {
+//fix Bug #4302 Test case ConsoleTest--ConsoleUploadFile crashed on Linux
+#if defined(LINUX)
                     int n = 0;
                     ioctl(fd, FIONREAD, &n);
                     if(n == 0)
@@ -980,6 +982,7 @@ void Console::loop()
                         continue;
 
                     }
+#endif
                     if(!_file_uploading)
                     {
                         if( ! parseCommand(fd) )
