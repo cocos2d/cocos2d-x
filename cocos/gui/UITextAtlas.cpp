@@ -1,80 +1,36 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UITextAtlas.h"
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int LABELATLAS_RENDERER_Z = (-1);
-
-
-UICCLabelAtlas::UICCLabelAtlas()
-{
     
-}
-
-UICCLabelAtlas::~UICCLabelAtlas()
-{
-    
-}
-
-UICCLabelAtlas* UICCLabelAtlas::create()
-{
-    UICCLabelAtlas *pRet = new UICCLabelAtlas();
-    if(pRet)
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    
-    return nullptr;
-}
-
-void UICCLabelAtlas::setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
-{
-    initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap);
-}
-
-void UICCLabelAtlas::setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
-{
-    initWithString(string, texture, itemWidth, itemHeight, startCharMap);
-}
-
-void UICCLabelAtlas::draw()
-{
-    if (!_textureAtlas)
-    {
-        return;
-    }
-    
-    AtlasNode::draw();
-}
-
-
+IMPLEMENT_CLASS_GUI_INFO(TextAtlas)
 
 TextAtlas::TextAtlas():
 _labelAtlasRenderer(nullptr),
@@ -84,7 +40,6 @@ _itemWidth(0),
 _itemHeight(0),
 _startCharMap("")
 {
-    
 }
 
 TextAtlas::~TextAtlas()
@@ -106,7 +61,7 @@ TextAtlas* TextAtlas::create()
 
 void TextAtlas::initRenderer()
 {
-    _labelAtlasRenderer = UICCLabelAtlas::create();
+    _labelAtlasRenderer = LabelAtlas::create();
     Node::addChild(_labelAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
 
@@ -117,7 +72,7 @@ void TextAtlas::setProperty(const std::string& stringValue, const std::string& c
     _itemWidth = itemWidth;
     _itemHeight = itemHeight;
     _startCharMap = startCharMap;
-    _labelAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
+    _labelAtlasRenderer->initWithString(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
     updateAnchorPoint();
     labelAtlasScaleChangedWithSize();
 }
@@ -181,6 +136,21 @@ void TextAtlas::labelAtlasScaleChangedWithSize()
 std::string TextAtlas::getDescription() const
 {
     return "TextAtlas";
+}
+    
+void TextAtlas::updateTextureColor()
+{
+    updateColorToRenderer(_labelAtlasRenderer);
+}
+
+void TextAtlas::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelAtlasRenderer);
+}
+
+void TextAtlas::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelAtlasRenderer);
 }
 
 Widget* TextAtlas::createCloneInstance()

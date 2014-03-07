@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
 
  http://www.cocos2d-x.org
 
@@ -25,7 +25,8 @@
 #ifndef __CCINTEGER_H__
 #define __CCINTEGER_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
+#include "CCDataVisitor.h"
 #include "platform/CCCommon.h"
 
 NS_CC_BEGIN
@@ -35,7 +36,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL __Integer : public Object, public Clonable
+class CC_DLL __Integer : public Ref, public Clonable
 {
 public:
     static __Integer* create(int v)

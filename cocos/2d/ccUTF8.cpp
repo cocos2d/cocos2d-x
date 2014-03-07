@@ -3,8 +3,9 @@
  *
  * gutf8.c - Operations on UTF-8 strings.
  *
- * Copyright (C) 1999 Tom Tromey
- * Copyright (C) 2000 Red Hat, Inc.
+ * Copyright (C) 1999      Tom Tromey
+ * Copyright (C) 2000      Red Hat, Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,6 +25,7 @@
 
 #include "ccUTF8.h"
 #include "platform/CCCommon.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
@@ -169,6 +171,18 @@ bool isspace_unicode(unsigned short ch)
     ||  ch == 0x205F || ch == 0x3000;
 }
 
+bool iscjk_unicode(unsigned short ch)
+{
+    return (ch >= 0x4E00 && ch <= 0x9FBF)   // CJK Unified Ideographs
+        || (ch >= 0x2E80 && ch <= 0x2FDF)   // CJK Radicals Supplement & Kangxi Radicals
+        || (ch >= 0x2FF0 && ch <= 0x30FF)   // Ideographic Description Characters, CJK Symbols and Punctuation & Japanese
+        || (ch >= 0x3100 && ch <= 0x31BF)   // Korean
+        || (ch >= 0xAC00 && ch <= 0xD7AF)   // Hangul Syllables
+        || (ch >= 0xF900 && ch <= 0xFAFF)   // CJK Compatibility Ideographs
+        || (ch >= 0xFE30 && ch <= 0xFE4F)   // CJK Compatibility Forms
+        || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other exiensions
+}
+
 void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 {
     int len = static_cast<int>(str->size());
@@ -277,9 +291,9 @@ cc_utf8_get_char (const char * p)
 
 unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = nullptr */)
 {
-    unsigned short len = cc_utf8_strlen(str_old, length);
+    long len = cc_utf8_strlen(str_old, length);
     if (rUtf16Size != nullptr) {
-        *rUtf16Size = len;
+        *rUtf16Size = static_cast<int>(len);
     }
     
     unsigned short* str_new = new unsigned short[len + 1];
@@ -399,8 +413,8 @@ cc_unichar_to_utf8 (unsigned int c,
 char *
 cc_utf16_to_utf8 (const unsigned short  *str,
                  int             len,
-                 int            *items_read,
-                 int            *items_written)
+                 long            *items_read,
+                 long            *items_written)
 {
     /* This function and g_utf16_to_ucs4 are almost exactly identical - The lines that differ
      * are marked.

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,6 +22,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include "CCStdC.h"
 
@@ -64,5 +68,6 @@ int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
     return 0;
 }
 
-
 #endif  // CC_PLATFORM_WIN32
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX

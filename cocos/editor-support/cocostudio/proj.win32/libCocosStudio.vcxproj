@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CCActionFrame.cpp" />
     <ClCompile Include="..\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CCActionManagerEx.cpp" />
@@ -41,13 +40,26 @@
     <ClCompile Include="..\CCSSceneReader.cpp" />
     <ClCompile Include="..\CCTransformHelp.cpp" />
     <ClCompile Include="..\CCTween.cpp" />
-    <ClCompile Include="..\CCTweenFunction.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
     <ClCompile Include="..\ObjectFactory.cpp" />
     <ClCompile Include="..\TriggerBase.cpp" />
     <ClCompile Include="..\TriggerMng.cpp" />
     <ClCompile Include="..\TriggerObj.cpp" />
+    <ClCompile Include="..\WidgetReader\ButtonReader\ButtonReader.cpp" />
+    <ClCompile Include="..\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
+    <ClCompile Include="..\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="..\WidgetReader\ListViewReader\ListViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
+    <ClCompile Include="..\WidgetReader\PageViewReader\PageViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\ScrollViewReader\ScrollViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\SliderReader\SliderReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextReader\TextReader.cpp" />
+    <ClCompile Include="..\WidgetReader\WidgetReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\external\json\document.h" />
@@ -60,7 +72,6 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
-    <ClInclude Include="..\CCActionEaseEx.h" />
     <ClInclude Include="..\CCActionFrame.h" />
     <ClInclude Include="..\CCActionFrameEasing.h" />
     <ClInclude Include="..\CCActionManagerEx.h" />
@@ -91,13 +102,27 @@
     <ClInclude Include="..\CCSSceneReader.h" />
     <ClInclude Include="..\CCTransformHelp.h" />
     <ClInclude Include="..\CCTween.h" />
-    <ClInclude Include="..\CCTweenFunction.h" />
     <ClInclude Include="..\CCUtilMath.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
     <ClInclude Include="..\ObjectFactory.h" />
     <ClInclude Include="..\TriggerBase.h" />
     <ClInclude Include="..\TriggerMng.h" />
     <ClInclude Include="..\TriggerObj.h" />
+    <ClInclude Include="..\WidgetReader\ButtonReader\ButtonReader.h" />
+    <ClInclude Include="..\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
+    <ClInclude Include="..\WidgetReader\ImageViewReader\ImageViewReader.h" />
+    <ClInclude Include="..\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="..\WidgetReader\ListViewReader\ListViewReader.h" />
+    <ClInclude Include="..\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
+    <ClInclude Include="..\WidgetReader\PageViewReader\PageViewReader.h" />
+    <ClInclude Include="..\WidgetReader\ScrollViewReader\ScrollViewReader.h" />
+    <ClInclude Include="..\WidgetReader\SliderReader\SliderReader.h" />
+    <ClInclude Include="..\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
+    <ClInclude Include="..\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
+    <ClInclude Include="..\WidgetReader\TextFieldReader\TextFieldReader.h" />
+    <ClInclude Include="..\WidgetReader\TextReader\TextReader.h" />
+    <ClInclude Include="..\WidgetReader\WidgetReader.h" />
+    <ClInclude Include="..\WidgetReader\WidgetReaderProtocol.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B57CF53F-2E49-4031-9822-047CC0E6BDE2}</ProjectGuid>

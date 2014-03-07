@@ -28,7 +28,10 @@ THE SOFTWARE.
 #ifndef __CCScale9Sprite_H__
 #define __CCScale9Sprite_H__
 
-#include "cocos2d.h"
+#include "CCNode.h"
+#include "CCSpriteFrame.h"
+#include "CCSpriteBatchNode.h"
+
 #include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
@@ -258,7 +261,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     virtual void setOpacityModifyRGB(bool bValue) override;
     virtual bool isOpacityModifyRGB(void) const override;
     virtual void setOpacity(GLubyte opacity) override;

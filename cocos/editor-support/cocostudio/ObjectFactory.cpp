@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ObjectFactory.h"
+#include "gui/UIWidget.h"
+#include "cocostudio/WidgetReader/WidgetReaderProtocol.h"
 
 using namespace cocos2d;
 
@@ -87,9 +89,9 @@ void ObjectFactory::destroyInstance()
     CC_SAFE_DELETE(_sharedFactory);
 }
 
-Object* ObjectFactory::createObject(const std::string &name)
+Ref* ObjectFactory::createObject(const std::string &name)
 {
-	Object *o = nullptr;
+	Ref *o = nullptr;
 	do 
 	{
 		const TInfo t = _typeMap[name];
@@ -127,7 +129,7 @@ Component* ObjectFactory::createComponent(const std::string &name)
     {
         CCASSERT(false, "Unregistered Component!");
     }
-	Object *o = NULL;
+	Ref *o = NULL;
 	do 
 	{
 		const TInfo t = _typeMap[comName];
@@ -137,6 +139,59 @@ Component* ObjectFactory::createComponent(const std::string &name)
 
 	return (Component*)o;
 
+}
+    
+ui::Widget* ObjectFactory::createGUI(std::string name)
+{
+    Object* object = NULL;
+    
+    if (name == "Panel")
+    {
+        name = "Layout";
+    }
+    else if (name == "TextArea")
+    {
+        name = "Text";
+    }
+    else if (name == "TextButton")
+    {
+        name = "Button";
+    }
+    else if (name == "Label")
+    {
+        name = "Text";
+    }
+    else if (name == "LabelAtlas")
+    {
+        name = "TextAtlas";
+    }
+    else if (name == "LabelBMFont")
+    {
+        name = "TextBMFont";
+    }
+    
+    do
+    {
+        const TInfo t = _typeMap[name];
+        CC_BREAK_IF(t._fun == NULL);
+        object = t._fun();
+    } while (0);
+    
+    return static_cast<ui::Widget*>(object);
+}
+
+WidgetReaderProtocol* ObjectFactory::createWidgetReaderProtocol(std::string name)
+{
+    Object* object = NULL;
+    
+    do
+    {
+        const TInfo t = _typeMap[name];
+        CC_BREAK_IF(t._fun == NULL);
+        object = t._fun();
+    } while (0);
+    
+    return dynamic_cast<WidgetReaderProtocol*>(object);
 }
 
 void ObjectFactory::registerType(const TInfo &t)

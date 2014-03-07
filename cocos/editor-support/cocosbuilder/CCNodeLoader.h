@@ -2,7 +2,6 @@
 #define _CCB_CCNODELOADER_H_
 
 #include "extensions/GUI/CCControlExtension/CCInvocation.h"
-#include "cocos2d.h"
 #include "CCBReader.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
@@ -31,19 +30,19 @@ namespace cocosbuilder {
 
 struct BlockData {
     cocos2d::SEL_MenuHandler mSELMenuHandler;
-    cocos2d::Object * _target;
+    cocos2d::Ref * _target;
 };
 
 struct BlockControlData {
     cocos2d::extension::Control::Handler mSELControlHandler;
-    cocos2d::Object * _target;
+    cocos2d::Ref * _target;
     cocos2d::extension::Control::EventType mControlEvents;
 };
 
 /* Forward declaration. */
 class CCBReader;
 
-class NodeLoader : public cocos2d::Object {
+class NodeLoader : public cocos2d::Ref {
     public:
         /**
          * @js NA

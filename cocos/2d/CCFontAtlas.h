@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,11 +26,14 @@
 #define _CCFontAtlas_h_
 
 #include <unordered_map>
+#include "CCPlatformMacros.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
 //fwd
 class Font;
+class Texture2D;
 
 struct FontLetterDefinition
 {
@@ -41,15 +45,15 @@ struct FontLetterDefinition
     float offsetX;
     float offsetY;
     int textureID;
-    float commonLineHeight;
-    float anchorX;
-    float anchorY;
     bool validDefinition;
+    int xAdvance;
 };
 
-class CC_DLL FontAtlas : public Object
+class CC_DLL FontAtlas : public Ref
 {
 public:
+    static const int CacheTextureWidth;
+    static const int CacheTextureHeight;
     /**
      * @js ctor
      */
@@ -65,11 +69,12 @@ public:
     
     bool prepareLetterDefinitions(unsigned short  *utf16String);
 
-    void  addTexture(Texture2D &texture, int slot);
+    inline const std::unordered_map<int, Texture2D*>& getTextures() const{ return _atlasTextures;}
+    void  addTexture(Texture2D *texture, int slot);
     float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
     
-    Texture2D& getTexture(int slot);
+    Texture2D* getTexture(int slot);
     const Font* getFont() const;
     
 private:
@@ -86,9 +91,10 @@ private:
     int _currentPageDataSize;
     float _currentPageOrigX;
     float _currentPageOrigY;
-    float _currentPageLineHeight;
     float _letterPadding;
     bool  _makeDistanceMap;
+
+    int _fontAscender;
 };
 
 

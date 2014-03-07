@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -38,6 +39,7 @@ THE SOFTWARE.
 #endif // EMSCRIPTEN
 #include "CCPhysicsBody.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/CCCustomCommand.h"
 #include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
@@ -61,21 +63,19 @@ struct transformValues_;
  *
  * Sprite can be created with an image, or with a sub-rectangle of an image.
  *
- * If the parent or any of its ancestors is a SpriteBatchNode then the following features/limitations are valid
- *    - Features when the parent is a BatchNode:
- *        - MUCH faster rendering, specially if the SpriteBatchNode has many children. All the children will be drawn in a single batch.
+ * To optimize the Sprite rendering, please follow the following best practices:
  *
- *    - Limitations
- *        - Camera is not supported yet (eg: OrbitCamera action doesn't work)
- *        - GridBase actions are not supported (eg: Lens, Ripple, Twirl)
- *        - The Alias/Antialias property belongs to SpriteBatchNode, so you can't individually set the aliased property.
- *        - The Blending function property belongs to SpriteBatchNode, so you can't individually set the blending function property.
- *        - Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
+ *  - Put all your sprites in the same spritesheet (http://www.codeandweb.com/what-is-a-sprite-sheet)
+ *  - Use the same blending function for all your sprites
+ *  - ...and the Renderer will automatically "batch" your sprites (will draw all of them in one OpenGL call).
  *
- *  If the parent is an standard Node, then Sprite behaves like any other Node:
- *    - It supports blending functions
- *    - It supports aliasing / antialiasing
- *    - But the rendering will be slower: 1 draw per children.
+ *  To gain an additional 5% ~ 10% more in the rendering, you can parent your sprites into a `SpriteBatchNode`.
+ *  But doing so carries the following limitations:
+ *
+ *  - The Alias/Antialias property belongs to `SpriteBatchNode`, so you can't individually set the aliased property.
+ *  - The Blending function property belongs to `SpriteBatchNode`, so you can't individually set the blending function property.
+ *  - `ParallaxNode` is not supported, but can be simulated with a "proxy" sprite.
+ *  - Sprites can only have other Sprites (or subclasses of Sprite) as children.
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
@@ -91,7 +91,7 @@ public:
     /**
      * Creates an empty sprite without texture. You can call setTexture method subsequently.
      *
-     * @return An empty sprite object that is marked as autoreleased.
+     * @return An autoreleased sprite object.
      */
     static Sprite* create();
 
@@ -101,26 +101,27 @@ public:
      * After creation, the rect of sprite will be the size of the image,
      * and the offset will be (0,0).
      *
-     * @param   filename The string which indicates a path to image file, e.g., "scene1/monster.png".
-     * @return  A valid sprite object that is marked as autoreleased.
+     * @param   filename A path to image file, e.g., "scene1/monster.png"
+     * @return  An autoreleased sprite object.
      */
     static Sprite* create(const std::string& filename);
 
     /**
      * Creates a sprite with an image filename and a rect.
      *
-     * @param   filename The string wich indicates a path to image file, e.g., "scene1/monster.png"
-     * @param   rect        Only the contents inside rect of filename's texture will be applied for this sprite.
-     * @return  A valid sprite object that is marked as autoreleased.
+     * @param   filename A path to image file, e.g., "scene1/monster.png"
+     * @param   rect     A subrect of the image file
+     * @return  An autoreleased sprite object
      */
     static Sprite* create(const std::string& filename, const Rect& rect);
 
     /**
-     * Creates a sprite with an exsiting texture contained in a Texture2D object
+     * Creates a sprite with a Texture2D object.
+     *
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
      *
      * @param   texture    A pointer to a Texture2D object.
-     * @return  A valid sprite object that is marked as autoreleased.
+     * @return  An autoreleased sprite object
      */
     static Sprite* createWithTexture(Texture2D *texture);
 
@@ -133,17 +134,17 @@ public:
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
      * @param   rotated     Whether or not the rect is rotated
-     * @return  A valid sprite object that is marked as autoreleased.
+     * @return  An autoreleased sprite object
      */
     static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated=false);
 
     /**
      * Creates a sprite with an sprite frame.
      *
-     * @param   pSpriteFrame    A sprite frame which involves a texture and a rect
-     * @return  A valid sprite object that is marked as autoreleased.
+     * @param   spriteFrame    A sprite frame which involves a texture and a rect
+     * @return  An autoreleased sprite object
      */
-    static Sprite* createWithSpriteFrame(SpriteFrame *pSpriteFrame);
+    static Sprite* createWithSpriteFrame(SpriteFrame *spriteFrame);
 
     /**
      * Creates a sprite with an sprite frame name.
@@ -152,7 +153,7 @@ public:
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
      * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
-     * @return  A valid sprite object that is marked as autoreleased.
+     * @return  An autoreleased sprite object
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
@@ -276,7 +277,7 @@ public:
     /**
      * Makes the Sprite to be updated in the Atlas.
      */
-    virtual void setDirty(bool bDirty) { _dirty = bDirty; }
+    virtual void setDirty(bool dirty) { _dirty = dirty; }
 
     /**
      * Returns the quad (tex coords, vertex coords and color) information.
@@ -407,8 +408,8 @@ public:
     virtual void setPosition(const Point& pos) override;
     virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
-    virtual void setRotationX(float rotationX) override;
-    virtual void setRotationY(float rotationY) override;
+    virtual void setRotationSkewX(float rotationX) override;
+    virtual void setRotationSkewY(float rotationY) override;
     virtual void setSkewX(float sx) override;
     virtual void setSkewY(float sy) override;
     virtual void removeChild(Node* child, bool cleanup) override;
@@ -418,12 +419,11 @@ public:
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
-    virtual void setVertexZ(float vertexZ) override;
+    virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void updateQuadVertices();
-    virtual void draw(void) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
@@ -526,7 +526,7 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
-    bool culling() const;
+    bool isInsideBounds() const;
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -537,7 +537,6 @@ protected:
 
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
-    bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
     kmMat4              _transformToBatch;
 
@@ -547,7 +546,10 @@ protected:
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     QuadCommand      _quadCommand;          /// quad command
-
+#if CC_SPRITE_DEBUG_DRAW
+    CustomCommand   _customDebugDrawCommand;
+    void drawDebugData();
+#endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data
     //
@@ -569,6 +571,8 @@ protected:
     // image is flipped
     bool _flippedX;                         /// Whether the sprite is flipped horizontally or not
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
+
+    bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);

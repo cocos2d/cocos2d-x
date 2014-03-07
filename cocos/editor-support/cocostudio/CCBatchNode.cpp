@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,8 +26,11 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
+
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "CCShaderCache.h"
+#include "CCDirector.h"
 
 using namespace cocos2d;
 
@@ -98,18 +101,27 @@ void BatchNode::removeChild(Node* child, bool cleanup)
     Node::removeChild(child, cleanup);
 }
 
-void BatchNode::visit()
+void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
     {
         return;
     }
-    kmGLPushMatrix();
 
-    transform();
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     sortAllChildren();
-    draw();
+    draw(renderer, _modelViewTransform, dirty);
 
     // reset for next frame
     _orderOfArrival = 0;
@@ -117,14 +129,14 @@ void BatchNode::visit()
     kmGLPopMatrix();
 }
 
-void BatchNode::draw()
+void BatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (_children.empty())
     {
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
+//    CC_NODE_DRAW_SETUP();
 
     bool pushed = false;
     for(auto object : _children)
@@ -138,14 +150,14 @@ void BatchNode::draw()
                 pushed = true;
             }
         
-            armature->visit();
+            armature->visit(renderer, transform, transformUpdated);
         }
         else
         {
-            Director::getInstance()->getRenderer()->popGroup();
+            renderer->popGroup();
             pushed = false;
             
-            ((Node *)object)->visit();
+            ((Node *)object)->visit(renderer, transform, transformUpdated);
         }
     }
 }
@@ -153,7 +165,7 @@ void BatchNode::draw()
 void BatchNode::generateGroupCommand()
 {
     Renderer* renderer = Director::getInstance()->getRenderer();
-    _groupCommand->init(0,_vertexZ);
+    _groupCommand->init(_globalZOrder);
     renderer->addCommand(_groupCommand);
 
     renderer->pushGroup(_groupCommand->getRenderQueueID());

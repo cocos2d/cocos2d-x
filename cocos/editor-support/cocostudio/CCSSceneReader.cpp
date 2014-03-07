@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "cocostudio/CocoStudio.h"
 #include "gui/CocosGUI.h"
@@ -28,7 +28,7 @@
 #include "ObjectFactory.h"
 
 using namespace cocos2d;
-using namespace gui;
+using namespace ui;
 
 namespace cocostudio {
 
@@ -144,10 +144,10 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
 				{
 					gb->addComponent(com);
 				}
-				else
-				{
-					CC_SAFE_RELEASE_NULL(com);
-				}
+                else
+                {
+                    com = nullptr;
+                }
 			}
             if(_fnSelector != nullptr)
             {
@@ -172,7 +172,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
     return nullptr;
 }
 
-void SceneReader::setTarget(const std::function<void(cocos2d::Object* obj, void* doc)>& selector)
+void SceneReader::setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector)
 {
     _fnSelector = selector;
 }
@@ -203,7 +203,7 @@ void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d:
     node->setTag(nTag);
     
     int nZorder = DICTOOL->getIntValue_json(root, "zorder");
-    node->setZOrder(nZorder);
+    node->setLocalZOrder(nZorder);
     
     float fScaleX = DICTOOL->getFloatValue_json(root, "scalex", 1.0);
     float fScaleY = DICTOOL->getFloatValue_json(root, "scaley", 1.0);

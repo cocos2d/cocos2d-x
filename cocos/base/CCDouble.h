@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -25,7 +25,8 @@
 #ifndef __CCDOUBLE_H__
 #define __CCDOUBLE_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
+#include "CCDataVisitor.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +35,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL __Double : public Object, public Clonable
+class CC_DLL __Double : public Ref, public Clonable
 {
 public:
     __Double(double v)

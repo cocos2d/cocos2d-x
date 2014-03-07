@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGL.h"
 #include "CCString.h"
 #include "CCValue.h"
@@ -42,7 +43,7 @@ NS_CC_BEGIN
  @brief Configuration contains some openGL variables
  @since v0.99.0
  */
-class CC_DLL Configuration : public Object
+class CC_DLL Configuration : public Ref
 {
 public:
     
@@ -121,8 +122,8 @@ public:
 	/** sets a new key/value pair  in the configuration dictionary */
 	void setValue(const std::string& key, const Value& value);
 
-	/** dumps the current configuration on the console */
-	void dumpInfo() const;
+    /** returns the Configuration info */
+    std::string getInfo() const;
 
 	/** gathers OpenGL / GPU information */
 	void gatherGPUInfo();

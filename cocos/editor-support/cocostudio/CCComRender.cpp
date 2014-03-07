@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -149,7 +149,7 @@ bool ComRender::serialize(void* r)
 			}
 			else if(strcmp(className, "GUIComponent") == 0)
 			{
-				cocos2d::gui::Widget* widget = GUIReader::getInstance()->widgetFromJsonFile(filePath.c_str());
+				cocos2d::ui::Widget* widget = GUIReader::getInstance()->widgetFromJsonFile(filePath.c_str());
                 _render = widget;
 			}
 			else

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __ActionFrameEasing_H__
 #define __ActionFrameEasing_H__
 
-#include "cocos2d.h"
+#include "CCRef.h"
 
 namespace cocostudio {
 
@@ -56,7 +56,7 @@ enum FrameEasingType
 *  @js NA
 *  @lua NA
 */
-class ActionFrameEasing:public cocos2d::Object
+class ActionFrameEasing:public cocos2d::Ref
 {
 protected:
 	FrameEasingType _type;

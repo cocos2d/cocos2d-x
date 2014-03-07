@@ -22,9 +22,12 @@
 #include "CCPhysicsDebugNode.h"
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
+#include "chipmunk.h"
+#endif
 
 #include "ccTypes.h"
 #include "CCGeometry.h"
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -34,6 +37,7 @@
 
 NS_CC_EXT_BEGIN
 
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
 /*
  IMPORTANT - READ ME!
  
@@ -174,25 +178,29 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
         //		printf("Cannot draw constraint\n");
 	}
 }
+#endif // #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
 // implementation of PhysicsDebugNode
 
-void PhysicsDebugNode::draw()
+void PhysicsDebugNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     if (! _spacePtr)
     {
         return;
     }
-    
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+    // clear the shapes information before draw current shapes.
+    DrawNode::clear();
+
     cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
 	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
-    DrawNode::draw();
-    DrawNode::clear();
+    DrawNode::draw(renderer, transform, transformUpdated);
+#endif
 }
 
 PhysicsDebugNode::PhysicsDebugNode()
-: _spacePtr(NULL)
+: _spacePtr(nullptr)
 {}
 
 PhysicsDebugNode* PhysicsDebugNode::create(cpSpace *space)
@@ -201,9 +209,11 @@ PhysicsDebugNode* PhysicsDebugNode::create(cpSpace *space)
     if (node)
     {
         node->init();
-        
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
         node->_spacePtr = space;
-        
+#else
+        CCASSERT(false, "CC_ENABLE_CHIPMUNK_INTEGRATION was not enabled!");
+#endif
         node->autorelease();
     }
     else
@@ -220,14 +230,21 @@ PhysicsDebugNode::~PhysicsDebugNode()
 
 cpSpace* PhysicsDebugNode::getSpace() const
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
     return _spacePtr;
+#else
+    CCASSERT(false, "Can't call chipmunk methods when Chipmunk is disabled");
+    return nullptr;
+#endif
 }
 
 void PhysicsDebugNode::setSpace(cpSpace *space)
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
     _spacePtr = space;
+#else
+    CCASSERT(false, "Can't call chipmunk methods when Chipmunk is disabled");
+#endif
 }
 
 NS_CC_EXT_END
-
-#endif // CC_ENABLE_CHIPMUNK_INTEGRATION

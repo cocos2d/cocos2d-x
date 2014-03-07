@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -33,8 +33,7 @@ NS_CC_BEGIN
 class EventAcceleration : public Event
 {
 public:
-
-    EventAcceleration(Acceleration acc);
+    EventAcceleration(const Acceleration& acc);
     
 private:
     Acceleration _acc;

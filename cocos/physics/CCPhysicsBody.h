@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,12 +28,14 @@
 #include "ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 #include "CCPhysicsShape.h"
 #include "CCVector.h"
 
 NS_CC_BEGIN
+
+class Node;
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
@@ -51,7 +53,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
-class PhysicsBody : public Object
+class PhysicsBody : public Ref
 {
 public:
     /** create a body with defult mass and moment. */
@@ -190,6 +192,15 @@ public:
     /** get the body rotation. */
     float getRotation() const;
     
+    /** set body position offset, it's the position witch relative to node */
+    void setPositionOffset(const Point& position);
+    /** get body position offset. */
+    Point getPositionOffset() const;
+    /** set body rotation offset, it's the rotation witch relative to node */
+    void setRotationOffset(float rotation);
+    /** set the body rotation offset */
+    float getRotationOffset() const;
+    
     /**
      * @brief test the body is dynamic or not.
      * a dynamic body will effect with gravity.
@@ -241,7 +252,7 @@ public:
      * it is used to simulate fluid or air friction forces on the body. 
      * the value is 0.0f to 1.0f. 
      */
-    inline void setLinearDamping(float damping) { _linearDamping = damping; }
+    inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
     /** get angular damping. */
     inline float getAngularDamping() const { return _angularDamping; }
     /**
@@ -249,10 +260,12 @@ public:
      * it is used to simulate fluid or air friction forces on the body.
      * the value is 0.0f to 1.0f.
      */
-    inline void setAngularDamping(float damping) { _angularDamping = damping; }
+    inline void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
     
     /** whether the body is at rest */
     bool isResting() const;
+    /** set body to rest */
+    void setResting(bool rest) const;
     /** 
      * whether the body is enabled
      * if the body it isn't enabled, it will not has simulation by world
@@ -291,38 +304,45 @@ protected:
     virtual void setPosition(Point position);
     virtual void setRotation(float rotation);
     
-    virtual void update(float delta) override;
+    void update(float delta);
     
     void removeJoint(PhysicsJoint* joint);
+    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
     
 protected:
     PhysicsBody();
     virtual ~PhysicsBody();
     
 protected:
-    Node*                       _node;
-    std::vector<PhysicsJoint*>  _joints;
-    Vector<PhysicsShape*>       _shapes;
-    PhysicsWorld*               _world;
-    PhysicsBodyInfo*            _info;
-    bool                        _dynamic;
-    bool                        _enable;
-    bool                        _rotationEnable;
-    bool                        _gravityEnable;
-    bool                        _massDefault;
-    bool                        _momentDefault;
-    float                       _mass;
-    float                       _area;
-    float                       _density;
-    float                       _moment;
-    float                       _linearDamping;
-    float                       _angularDamping;
-    int                         _tag;
+    Node* _node;
+    std::vector<PhysicsJoint*> _joints;
+    Vector<PhysicsShape*> _shapes;
+    PhysicsWorld* _world;
+    PhysicsBodyInfo* _info;
+    bool _dynamic;
+    bool _enable;
+    bool _rotationEnable;
+    bool _gravityEnable;
+    bool _massDefault;
+    bool _momentDefault;
+    float _mass;
+    float _area;
+    float _density;
+    float _moment;
+    bool _isDamping;
+    float _linearDamping;
+    float _angularDamping;
+    int _tag;
     
-    int                         _categoryBitmask;
-    int                         _collisionBitmask;
-    int                         _contactTestBitmask;
-    int                         _group;
+    int _categoryBitmask;
+    int _collisionBitmask;
+    int _contactTestBitmask;
+    int _group;
+    
+    bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
+    bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
+    Point _positionOffset;
+    float _rotationOffset;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

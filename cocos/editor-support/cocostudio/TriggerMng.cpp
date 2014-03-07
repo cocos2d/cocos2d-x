@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,16 +36,19 @@ TriggerMng* TriggerMng::_sharedTriggerMng = nullptr;
 TriggerMng::TriggerMng(void)
 : _movementDispatches(new std::unordered_map<Armature*, ArmatureMovementDispatcher*>)
 {
+    _eventDispatcher = CCDirector::getInstance()->getEventDispatcher();
+    _eventDispatcher->retain();
 }
 
 TriggerMng::~TriggerMng(void)
 {
     removeAll();
-    _eventTriggers.clear();
 	_triggerObjs.clear();
 
 	removeAllArmatureMovementCallBack();
 	CC_SAFE_DELETE(_movementDispatches);
+
+    CC_SAFE_RELEASE(_eventDispatcher);
 }
 
 const char* TriggerMng::triggerMngVersion()
@@ -71,6 +74,8 @@ void TriggerMng::parse(const rapidjson::Value &root)
 {
     CCLOG("%s", triggerMngVersion());
     int count = DICTOOL->getArrayCount_json(root, "Triggers");
+    
+#if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     bool useBindings = engine != nullptr;
 
@@ -87,33 +92,17 @@ void TriggerMng::parse(const rapidjson::Value &root)
         }
     }
     else
+#endif // #if CC_ENABLE_SCRIPT_BINDING
     {
         for (int i = 0; i < count; ++i)
         {
             const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
             TriggerObj *obj = TriggerObj::create();
             obj->serialize(subDict);
-            auto &vInt = obj->getEvents();
-            for (const auto& e : vInt)
-            {
-                add((unsigned int)e, obj);
-            }
-            
             _triggerObjs.insert(std::pair<unsigned int, TriggerObj*>(obj->getId(), obj));
+            obj->retain();
         }
     }
-}
-
-cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
-{
-    CCAssert(event >= 0, "Argument must be larger than 0");
-    
-    auto iter = _eventTriggers.find(event);
-    if (iter == _eventTriggers.end())
-    {
-        return nullptr;
-    }
-    return iter->second;
 }
 
 TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
@@ -126,96 +115,24 @@ TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
     return iter->second;
 }
 
-bool TriggerMng::add(unsigned int event, TriggerObj *obj)
-{
-    bool ret = false;
-    CCAssert(obj != nullptr, "Argument must be non-nil");
-    do
-    {
-        auto iterator = _eventTriggers.find(event);
-        if (iterator == _eventTriggers.end())
-        {
-            auto array = new cocos2d::Vector<TriggerObj*>();
-            array->pushBack(obj);
-            _eventTriggers.insert(std::make_pair(event, array));
-        }
-        else
-        {
-            Vector<TriggerObj*>* temp = iterator->second;
-            if(temp->find(obj) == temp->end())
-            {
-                temp->pushBack(obj);
-            }
-        }
-        ret = true;
-    } while(0);
-    return ret;
-}
-
 void TriggerMng::removeAll(void)
 {
-    auto etIter = _eventTriggers.begin();
-    for (;etIter != _eventTriggers.end(); ++etIter)
+    auto etIter = _triggerObjs.begin();
+    for (;etIter != _triggerObjs.end(); ++etIter)
     {
-        for (auto toIter = etIter->second->begin(); toIter != etIter->second->end(); ++toIter)
-        {
-            (*toIter)->removeAll();
-        }
-        etIter->second->clear();
+        etIter->second->removeAll();
         CC_SAFE_DELETE(etIter->second);
     }
-    _eventTriggers.clear();
+    _triggerObjs.clear();
 }
 
-bool TriggerMng::remove(unsigned int event)
+bool TriggerMng::removeTriggerObj(TriggerObj *Obj)
 {
-    bool bRet = false;
-    CCAssert(event >= 0, "event must be larger than 0");
-    do 
+    if (Obj == nullptr)
     {
-        auto iterator = _eventTriggers.find(event);
-        if(iterator != _eventTriggers.end())
-        {
-            for(auto &obj : *iterator->second)
-            {
-                obj->removeAll();
-            }
-            iterator->second->clear();
-            CC_SAFE_DELETE(iterator->second);
-        }
-        
-        _eventTriggers.erase(event);
-        
-        bRet = true;
-    } while(0);
-    return bRet;
-}
-
-bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
-{
-	bool bRet = false;
-	CCAssert(event >= 0, "event must be larger than 0");
-	CCAssert(Obj != 0, "TriggerObj must be not 0");
-	do 
-	{
-        auto iterator = _eventTriggers.find(event);
-        if(iterator != _eventTriggers.end())
-        {
-            for(auto &triobj : *iterator->second)
-            {
-                if (triobj != nullptr && triobj == Obj)
-                {
-                    triobj->removeAll();
-                    break;
-                }
-            }
-            
-            iterator->second->eraseObject(Obj);
-        }
-        
-		bRet = true;
-	} while(0);
-	return bRet;
+        return false;
+    }
+    return removeTriggerObj(Obj->getId());
 }
 
 bool TriggerMng::removeTriggerObj(unsigned int id)
@@ -225,20 +142,17 @@ bool TriggerMng::removeTriggerObj(unsigned int id)
 	{
 		return false;
 	}
-	auto &_vInt = obj->getEvents();
-	for (auto iter = _vInt.begin(); iter != _vInt.end(); ++iter)
-	{
-		remove(*iter, obj);
-	}
+    obj->removeAll();
+    _triggerObjs.erase(id);
 	return true;
 }
 
 bool TriggerMng::isEmpty(void) const
 {
-    return _eventTriggers.empty();
+    return _triggerObjs.empty();
 }
 
-void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL_MovementEventCallFunc mecf)
+void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Ref *pTarget, SEL_MovementEventCallFunc mecf)
 {
 	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
@@ -262,7 +176,7 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 	}
 }
 
-void TriggerMng::removeArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL_MovementEventCallFunc mecf)
+void TriggerMng::removeArmatureMovementCallBack(Armature *pAr, Ref *pTarget, SEL_MovementEventCallFunc mecf)
 {
 	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
@@ -311,10 +225,25 @@ void TriggerMng::removeAllArmatureMovementCallBack()
 	_movementDispatches->clear();
 }
 
+void TriggerMng::dispatchEvent(cocos2d::EventCustom* tEvent)
+{
+    _eventDispatcher->dispatchEvent(tEvent);
+}
+
+void TriggerMng::removeEventListener(cocos2d::EventListener* listener)
+{
+    _eventDispatcher->removeEventListener(listener);
+}
+
+void TriggerMng::addEventListenerWithFixedPriority(cocos2d::EventListener* listener, int fixedPriority)
+{
+    _eventDispatcher->addEventListenerWithFixedPriority(listener, fixedPriority);
+}
+
 ArmatureMovementDispatcher::ArmatureMovementDispatcher(void)
 : _mapEventAnimation(nullptr)
 {
-	_mapEventAnimation = new std::unordered_map<Object*, SEL_MovementEventCallFunc> ;
+	_mapEventAnimation = new std::unordered_map<Ref*, SEL_MovementEventCallFunc> ;
 }
 
 ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
@@ -331,12 +260,12 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 	 }
  }
 
-  void ArmatureMovementDispatcher::addAnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::addAnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->insert(std::make_pair(pTarget, mecf));
   }
 
-  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->erase(pTarget);
   }

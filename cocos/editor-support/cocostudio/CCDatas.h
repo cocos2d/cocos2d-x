@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,8 +25,14 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
+#include "CCRef.h"
+#include "ccTypes.h"
+#include "CCVector.h"
+#include "CCMap.h"
+#include "CCAffineTransform.h"
+
 #include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCTweenFunction.h"
+#include "CCTweenFunction.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
@@ -62,7 +68,7 @@ namespace cocostudio {
  * @js NA
  * @lua NA
  */
-class  BaseData : public cocos2d::Object
+class  BaseData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(BaseData)
@@ -131,7 +137,7 @@ enum DisplayType
  *  @js NA
  *  @lua NA
  */
-class  DisplayData : public cocos2d::Object
+class  DisplayData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
@@ -262,7 +268,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  ArmatureData : public cocos2d::Object
+class  ArmatureData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(ArmatureData)
@@ -328,7 +334,7 @@ public:
     int frameID;
     int duration;                //! The frame will last duration frames
 
-    TweenType tweenEasing;     //! Every frame's tween easing effect
+    cocos2d::tweenfunc::TweenType tweenEasing;     //! Every frame's tween easing effect
     int easingParamNumber;
     float *easingParams;
 
@@ -355,7 +361,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class  MovementBoneData : public cocos2d::Object
+class  MovementBoneData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(MovementBoneData)
@@ -387,7 +393,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class  MovementData : public cocos2d::Object
+class  MovementData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(MovementData)
@@ -431,7 +437,7 @@ public:
     * Which tween easing effect the movement use
     * TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
     */
-    TweenType tweenEasing;
+    cocos2d::tweenfunc::TweenType tweenEasing;
 
     /**
     * @brief	save movment bone data
@@ -449,7 +455,7 @@ public:
 *  @js NA
 *  @lua NA
 */
-class  AnimationData : public cocos2d::Object
+class  AnimationData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(AnimationData)
@@ -480,7 +486,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  ContourData : public cocos2d::Object
+class  ContourData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(ContourData)
@@ -509,7 +515,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  TextureData : public cocos2d::Object
+class  TextureData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(TextureData)

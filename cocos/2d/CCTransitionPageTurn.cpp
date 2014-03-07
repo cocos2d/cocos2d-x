@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Sindesso Pty Ltd http://www.sindesso.com/
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -91,31 +92,31 @@ void TransitionPageTurn::onDisablePolygonOffset()
     glPolygonOffset(0, 0);
 }
 
-void TransitionPageTurn::draw()
+void TransitionPageTurn::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    Scene::draw();
+    Scene::draw(renderer, transform, transformUpdated);
     
     if( _isInSceneOnTop ) {
-        _outSceneProxy->visit();
-        _enableOffsetCmd.init(0, _vertexZ);
+        _outSceneProxy->visit(renderer, transform, transformUpdated);
+        _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
-        _inSceneProxy->visit();
-        _disableOffsetCmd.init(0, _vertexZ);
+        renderer->addCommand(&_enableOffsetCmd);
+        _inSceneProxy->visit(renderer, transform, transformUpdated);
+        _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_disableOffsetCmd);
+        renderer->addCommand(&_disableOffsetCmd);
     } else {
-        _inSceneProxy->visit();
+        _inSceneProxy->visit(renderer, transform, transformUpdated);
         
-        _enableOffsetCmd.init(0, _vertexZ);
+        _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
+        renderer->addCommand(&_enableOffsetCmd);
         
-        _outSceneProxy->visit();
+        _outSceneProxy->visit(renderer, transform, transformUpdated);
         
-        _disableOffsetCmd.init(0, _vertexZ);
+        _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
-        Director::getInstance()->getRenderer()->addCommand(&_disableOffsetCmd);
+        renderer->addCommand(&_disableOffsetCmd);
     }
 }
 

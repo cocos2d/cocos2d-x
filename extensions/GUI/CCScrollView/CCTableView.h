@@ -148,6 +148,10 @@ public:
         TOP_DOWN,
         BOTTOM_UP
     };
+    
+    /** Empty contructor of TableView */
+    static TableView* create();
+    
     /**
      * An intialized table view object
      *

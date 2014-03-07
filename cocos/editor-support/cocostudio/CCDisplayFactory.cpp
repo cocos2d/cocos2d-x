@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCTransformHelp.h"
+
+#include "CCParticleSystemQuad.h"
 
 using namespace cocos2d;
 
@@ -91,7 +93,8 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
         break;
     default:
     {
-        display->setAdditionalTransform(bone->getNodeToArmatureTransform());
+        kmMat4 transform = bone->getNodeToArmatureTransform();
+        display->setAdditionalTransform(&transform);
     }
     break;
     }
@@ -115,7 +118,7 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
                 anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
                 displayTransform.mat[12] = anchorPoint.x;
                 displayTransform.mat[13] = anchorPoint.y;
-                kmMat4 t = TransformConcat(displayTransform, bone->getArmature()->getNodeToParentTransform());
+                kmMat4 t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
                 detector->updateTransform(t);
             }
             while (0);
@@ -260,6 +263,7 @@ void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDi
     ParticleSystem *system = ParticleSystemQuad::create(displayData->displayName.c_str());
 
     system->removeFromParent();
+    system->cleanup();
     
     Armature *armature = bone->getArmature();
     if (armature)

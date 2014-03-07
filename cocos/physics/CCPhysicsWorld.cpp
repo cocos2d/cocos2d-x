@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -207,7 +207,7 @@ void PhysicsWorld::debugDraw()
         {
             if (_debugDrawMask & DEBUGDRAW_SHAPE)
             {
-                for (Object* obj : _bodies)
+                for (Ref* obj : _bodies)
                 {
                     PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
                     
@@ -263,7 +263,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     
     // bitmask check
     if ((shapeA->getCategoryBitmask() & shapeB->getContactTestBitmask()) == 0
-        || (shapeB->getContactTestBitmask() & shapeA->getCategoryBitmask()) == 0)
+        || (shapeA->getContactTestBitmask() & shapeB->getCategoryBitmask()) == 0)
     {
         contact.setNotificationEnable(false);
     }
@@ -281,11 +281,12 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
         }
     }
     
-    contact.setEventCode(PhysicsContact::EventCode::BEGIN);
-    contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    if (contact.isNotificationEnabled())
+    {
+        contact.setEventCode(PhysicsContact::EventCode::BEGIN);
+        contact.setWorld(this);
+        _scene->getEventDispatcher()->dispatchEvent(&contact);
+    }
     
     return ret ? contact.resetResult() : false;
 }
@@ -300,9 +301,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -316,9 +315,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -330,9 +327,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
     contact.setWorld(this);
-    EventCustom event(PHYSICSCONTACT_EVENT_NAME);
-    event.setUserData(&contact);
-    _scene->getEventDispatcher()->dispatchEvent(&event);
+    _scene->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data)
@@ -697,11 +692,11 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
         // set destroy param to false to keep the iterator available
         removeJoint(joint, false);
         
-        PhysicsBody* other = (joint->getBodyA() == body ? joint->getBodyB() : body);
+        PhysicsBody* other = (joint->getBodyA() == body ? joint->getBodyB() : joint->getBodyA());
         other->removeJoint(joint);
         
         // test the distraction is delaied or not
-        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+        if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) != _delayRemoveJoints.rend())
         {
             joint->_destoryMark = true;
         }
@@ -780,7 +775,7 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
         }
         
         // test the distraction is delaied or not
-        if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+        if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) != _delayRemoveJoints.rend())
         {
             joint->_destoryMark = true;
         }
@@ -858,7 +853,7 @@ void PhysicsWorld::removeJointOrDelay(PhysicsJoint* joint)
     
     if (_info->isLocked())
     {
-        if (std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint) == _delayRemoveJoints.end())
+        if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) == _delayRemoveJoints.rend())
         {
             _delayRemoveJoints.push_back(joint);
             _delayDirty = true;
@@ -902,7 +897,7 @@ void PhysicsWorld::removeAllJoints(bool destroy)
             }
             
             // test the distraction is delaied or not
-            if (_delayRemoveJoints.size() > 0 && _delayRemoveJoints.back() == joint)
+            if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) != _delayRemoveJoints.rend())
             {
                 joint->_destoryMark = true;
             }
@@ -1017,15 +1012,14 @@ void PhysicsWorld::update(float delta)
         _delayDirty = !(_delayAddBodies.size() == 0 && _delayRemoveBodies.size() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
     }
     
-    for (auto& body : _bodies)
-    {
-        body->update(delta);
-    }
-    
     _updateTime += delta;
     if (++_updateRateCount >= _updateRate)
     {
         _info->step(_updateTime * _speed);
+        for (auto& body : _bodies)
+        {
+            body->update(_updateTime * _speed);
+        }
         _updateRateCount = 0;
         _updateTime = 0.0f;
     }

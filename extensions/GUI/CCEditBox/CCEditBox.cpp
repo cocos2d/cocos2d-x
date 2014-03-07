@@ -28,6 +28,8 @@
 
 NS_CC_EXT_BEGIN
 
+static const float CHECK_EDITBOX_POSITION_INTERVAL = 0.1f;
+
 EditBox::EditBox(void)
 : _editBoxImpl(NULL)
 , _delegate(NULL)
@@ -40,18 +42,22 @@ EditBox::EditBox(void)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
+#if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
+#endif
 {
 }
 
 EditBox::~EditBox(void)
 {
     CC_SAFE_DELETE(_editBoxImpl);
+#if CC_ENABLE_SCRIPT_BINDING
     unregisterScriptEditBoxHandler();
+#endif
 }
 
 
-void EditBox::touchDownAction(Object *sender, Control::EventType controlEvent)
+void EditBox::touchDownAction(Ref *sender, Control::EventType controlEvent)
 {
     _editBoxImpl->openKeyboard();
 }
@@ -312,9 +318,9 @@ void EditBox::setAnchorPoint(const Point& anchorPoint)
     }
 }
 
-void EditBox::visit(void)
+void EditBox::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
-    ControlButton::visit();
+    ControlButton::visit(renderer, parentTransform, parentTransformUpdated);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->visit();
@@ -328,7 +334,18 @@ void EditBox::onEnter(void)
     {
         _editBoxImpl->onEnter();
     }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    this->schedule(schedule_selector(EditBox::updatePosition), CHECK_EDITBOX_POSITION_INTERVAL);
+#endif
 }
+
+void EditBox::updatePosition(float dt)
+{
+    if (nullptr != _editBoxImpl) {
+        _editBoxImpl->updatePosition(dt);
+    }
+}
+
 
 void EditBox::onExit(void)
 {
@@ -390,6 +407,7 @@ void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& info)
 	
 }
 
+#if CC_ENABLE_SCRIPT_BINDING
 void EditBox::registerScriptEditBoxHandler(int handler)
 {
     unregisterScriptEditBoxHandler();
@@ -404,6 +422,6 @@ void EditBox::unregisterScriptEditBoxHandler(void)
         _scriptEditBoxHandler = 0;
     }
 }
-
+#endif
 
 NS_CC_EXT_END

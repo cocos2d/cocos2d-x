@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,7 +37,7 @@ class Bone;
  *  @js NA
  *  @lua NA
  */
-class  DisplayManager : public cocos2d::Object
+class  DisplayManager : public cocos2d::Ref
 {
 public:
     static DisplayManager *create(Bone *bone);

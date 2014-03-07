@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -59,6 +59,11 @@ bool EventListenerTouchOneByOne::init()
 void EventListenerTouchOneByOne::setSwallowTouches(bool needSwallow)
 {
     _needSwallow = needSwallow;
+}
+
+bool EventListenerTouchOneByOne::isSwallowTouches()
+{
+    return _needSwallow;
 }
 
 EventListenerTouchOneByOne* EventListenerTouchOneByOne::create()

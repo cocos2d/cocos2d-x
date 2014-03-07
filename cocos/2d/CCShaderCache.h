@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,10 +28,10 @@ THE SOFTWARE.
 #ifndef __CCSHADERCACHE_H__
 #define __CCSHADERCACHE_H__
 
+#include "CCRef.h"
+
 #include <string>
 #include <unordered_map>
-
-#include "CCDictionary.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +46,7 @@ class GLProgram;
  Singleton that stores manages GL shaders
  @since v2.0
  */
-class CC_DLL ShaderCache : public Object 
+class CC_DLL ShaderCache : public Ref 
 {
 public:
     /**

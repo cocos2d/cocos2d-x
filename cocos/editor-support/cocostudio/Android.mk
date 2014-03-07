@@ -6,7 +6,6 @@ LOCAL_MODULE := cocostudio_static
 LOCAL_MODULE_FILENAME := libcocostudio
 
 LOCAL_SRC_FILES := CCActionFrame.cpp \
-CCActionEaseEx.cpp \
 CCActionFrameEasing.cpp \
 CCActionManagerEx.cpp \
 CCActionNode.cpp \
@@ -28,7 +27,6 @@ CCArmatureDefine.cpp \
 CCDataReaderHelper.cpp \
 CCSpriteFrameCacheHelper.cpp \
 CCTransformHelp.cpp \
-CCTweenFunction.cpp \
 CCUtilMath.cpp \
 CCComAttribute.cpp \
 CCComAudio.cpp \
@@ -41,7 +39,21 @@ CCSSceneReader.cpp \
 ObjectFactory.cpp \
 TriggerBase.cpp \
 TriggerMng.cpp \
-TriggerObj.cpp
+TriggerObj.cpp \
+WidgetReader/WidgetReader.cpp \
+WidgetReader/ButtonReader/ButtonReader.cpp \
+WidgetReader/CheckBoxReader/CheckBoxReader.cpp \
+WidgetReader/ImageViewReader/ImageViewReader.cpp \
+WidgetReader/LayoutReader/LayoutReader.cpp \
+WidgetReader/ListViewReader/ListViewReader.cpp \
+WidgetReader/LoadingBarReader/LoadingBarReader.cpp \
+WidgetReader/PageViewReader/PageViewReader.cpp \
+WidgetReader/ScrollViewReader/ScrollViewReader.cpp \
+WidgetReader/SliderReader/SliderReader.cpp \
+WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
+WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
+WidgetReader/TextFieldReader/TextFieldReader.cpp \
+WidgetReader/TextReader/TextReader.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external

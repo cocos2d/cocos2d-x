@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -249,7 +249,7 @@ BoneData *ArmatureData::getBoneData(const std::string& boneName)
 FrameData::FrameData(void)
     : frameID(0)
     , duration(1)
-    , tweenEasing(Linear)
+    , tweenEasing(cocos2d::tweenfunc::Linear)
     , easingParamNumber(0)
     , easingParams(NULL)
     , isTween(true)
@@ -330,7 +330,7 @@ MovementData::MovementData(void)
     , durationTo(0)
     , durationTween(0)
     , loop(true)
-    , tweenEasing(Linear)
+    , tweenEasing(cocos2d::tweenfunc::Linear)
 {
 }
 
