@@ -67,8 +67,6 @@
 * ~~Windows Phone 8 or newer~~ N/A for the moment
 * Linux Ubuntu 12.04 (or newer)
 * ~~Browsers via Emscripten~~ N/A for the moment
-* ~~Marmalade~~ N/A for the moment
-* ~~BlackBerry~~ N/A for the moment
 
 ## Compiler Requirements
 
@@ -86,12 +84,9 @@
 
 ### Android
 
-Can run sample on Android in two ways:
+You can run the samples...
 
-* Use command to run
-* Use Eclipse to run
-
-**By commnad**
+**Using command line:**
 
     $ cd cocos2d-x
     $ ./setup.py
@@ -101,7 +96,7 @@ Can run sample on Android in two ways:
     
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
-**Using Eclipse**
+**Using Eclipse:**
 
     $ cd cocos2d-x
     $ ./setup.py
@@ -154,10 +149,10 @@ Because `cocos run` command is not ready, so you should do it manually as runnin
 
 * Replaced Objective-C patters with C++ (C++11) patterns and best practices
 * Improved Labels
-* Improved renderer
+* Improved renderer (much faster than in v2.2!!)
 * New Event Dispatcher
 * Physics integration
-* New GUI
+* New UI objects
 * [JavaScript remote debugger](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/scripting/javascript/js-remote-debugger/en.md)
 * Remote Console support
 * Refactor Image - release memory in time and uniform the api of supported file format
@@ -178,7 +173,7 @@ A subset of C++11 features are being used in cocos2d-x:
 * `std::function`, including lambda objects for callbacks
 * strongly typed enums, for most of the cocos2d-x enums and constants
 * `std::thread` for threading
-* `override` context keyword, for overriden methods
+* `override` and `final` context keywords, for overriden and final methods
 
 
 ### std::function
@@ -213,7 +208,8 @@ auto action1 = CallFunc::create(
 ```
 
 `MenuItem` example:
-```c++
+
+```cpp
 // in v2.1
 CCMenuItemLabel *item = CCMenuItemLabel::create(label, this, menu_selector(MyClass::callback));
 
@@ -230,7 +226,7 @@ auto item = MenuItemLabel::create(label,
                   });
 ```
 
-### strongly typed enums
+### Strongly typed enums
 
 _Feature added in v3.0-pre-alpha0_
 
@@ -255,7 +251,7 @@ The old values can still be used, but are deprecated.
 
 To catch possible errors while overriding methods, subclasses with override methods have the `override` context keyword.
 Example:
-```c++
+```cpp
 class Sprite : public Node {
     bool isFlipY(void) const;
     void setFlipY(bool bFlipY);
@@ -317,7 +313,7 @@ v2.1 free functions are still available, but they were tagged as deprecated.
 `copy()` is no longer supported. If you use it, it will compile, but the code will crash.
 
 Example:
-```c++
+```cpp
 // v2.1
 CCMoveBy *action = (CCMoveBy*) move->copy();
 action->autorelease();
@@ -343,7 +339,7 @@ v2.1 methods are still available, but they were tagged as deprecated.
 
 ### Object is replaced with Ref
 
-Because the name `Object` is confused, so rename it to `Ref`, and remove functions that are not related with referenct count. All classes that inherit from `Object` now inherit from `Ref`.
+Because the name `Object` is confused, so rename it to `Ref`, and remove functions that are not related with reference count. All classes that inherit from `Object` now inherit from `Ref`.
 
 ### getters
 
@@ -358,7 +354,7 @@ Examples:
 
 And getters were also tagged as `const` in their declaration. Example:
 
-```c++
+```cpp
 // v2.1
 virtual float getScale();
 
@@ -373,7 +369,7 @@ v2.1 methods are still available, but they were tagged as deprecated.
 Methods that were receiving POD types as arguments (eg: `TexParams`, `Point`, `Size`, etc.) are being passed as `const` reference.
 
 Example:
-```c++
+```cpp
 // v2.1
 void setTexParameters(ccTexParams* texParams);
 
@@ -386,11 +382,11 @@ void setTexParameters(const ccTexParams& texParams);
 
 _Feature added in v3.0-beta and improved in v3.0-beta2_
 
-The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the object.
+The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the scene graph.
 
-Auto-batching and auto-culling support have been added.
+Auto-batching and auto-culling is supported.
 
-Please, see this document for detail information about its internal funcitonality: [Renderer Specification document](https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit)
+For detailed documentation, please read the following doc: [Renderer Specification document](https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit)
 
 ### Renderer features
 
@@ -400,7 +396,7 @@ TODO
 
 #### Auto-culling
 
-With auto-culling, sprites that outside screen will be thrown away.
+With auto-culling, sprites that are outside screen won't be renderer.
 
 #### Global Z order
 
@@ -410,7 +406,7 @@ A new method called `setGlobalZOrder()` / `getGlobalZOrder()` was added to `Node
 
 Nodes that have a `globalZOrder` of `0` (default value) will be drawn according to the Scene Graph order.
 
-So, if the `globalZOrder` is not changed, cocos2d-x v3.0 will behave exaclty as cocos2d-x v2.2. 
+So, if the `globalZOrder` is not changed, cocos2d-x v3.0 will behave exaclty as cocos2d-x v2.2.
 
 __`globalZOrder()` vs. `localZOrder()`__:
 
@@ -426,7 +422,7 @@ TODO
 
 _Feature added in v3.0-alpha0_
 
-`LabelTTF`, `LabelBMFont` and `LabelAtlas` will be replaced by new `Label`. The benifits of new `Label` are:
+`LabelTTF`, `LabelBMFont` and `LabelAtlas` will be replaced by new `Label`. The benefits of new `Label` are:
 
 * uniform api to create `LabelTTF`, `LabelBMFont` and `LabelAtlas`
 * use `freetype` to generate texture for labels, which make sure that labels have the same effect on different platforms
@@ -452,7 +448,7 @@ Detail information of `EventDispatcher` can refer to [this document](https://git
 
 _Feature added in v3.0-pre-alpha0_
 
-In v3.0, we integrate physics engien into cocos2d-x based on [Chipmunk2D](https://chipmunk-physics.net/). By using this feature, you can create physics based games without understanding physics engine.
+In v3.0, we integrate physics engine into cocos2d-x based on [Chipmunk2D](https://chipmunk-physics.net/). By using this feature, you can create physics based games without understanding physics engine.
 
 More detail information of this feature, please refer to [this document](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/physics/physics-integration/en.md)
 
@@ -638,13 +634,13 @@ ScriptHandlerMgr:getInstance():registerScriptHandler(menuItem, luafunction,cc.HA
 
 ### Use `cc`、`ccs`、`ccui` `gl` and `sp` as module name
 
-Now classes are binded into different modules instead of using global module. This will avoid conflicts with other codes.
+Now classes are bound into different modules instead of using global module. This will avoid conflicts with other codes.
 
 * classes in `cocos2d`、`cocos2d::extension`、`CocosDenshion` and `cocosbuilder`  were bound to `cc` module
-* classes in `cocos2d::gui` were bound to `ccui` module
+* classes in `cocos2d::ui` were bound to `ccui` module
 * classes in `spine` were bound to `sp` module
 * classes in `cocostudio` were bound to `ccs` module
-* global variables are binded to corresponding modules
+* global variables are bound to corresponding modules
 * all funcionts and constants about `openGl` were bound to `gl` module
 
 Examples:
@@ -676,7 +672,7 @@ In the version 3.0, more modules were bound to lua, specific as follows:
 * XMLHttpRequest
 * OpenGL
  
-The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the `sp` module, and the `OpenGl` is in the `gl` module. Related test cases located in:
+The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the `sp` module, and the `OpenGL` is in the `gl` module. Related test cases located in:
 
 * physics   ---> TestLua/PhysicsTest
 * spine     ---> TestLua/SpineTest
@@ -686,7 +682,7 @@ The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the
 ### Add more lua bindings
 Such as: New Label、New EventDispatcher and AssetsManager,etc.Related test cases located in:
 
-* New Lable ---> TestLua/LabelTestNew
+* New Label ---> TestLua/LabelTestNew
 * New EventDispatcher --->TestLua/NewEventDispatcherTest
 * AssetsManager  ---> TestLua/AssetsManagerTest
 
@@ -707,12 +703,12 @@ Examples:
     | CCPointArray            | lua table               |
     
 ### Support lua script codes call Object-C codes and Java codes 
-`LuaObjcBridge` and `LuaJavaBridge` bound to lua surpported lua script codes calls Object-C codes and java codes. 
+`LuaObjcBridge` and `LuaJavaBridge` bound to lua supported lua script codes calls Object-C codes and java codes.
     
 ### Add some lua files to store the constants of different modules
 
-* Cocos2DConstants.lua store the constants of `cc` moudle
-* StudioConstants.lua store the constants of  `ccs` moudle
-* GuiConstants.lua store the constants of `ccui` moudle
-* OpenglConstants.lua store the constants of `gl` moudle
+* Cocos2DConstants.lua store the constants of `cc` module
+* StudioConstants.lua store the constants of  `ccs` module
+* GuiConstants.lua store the constants of `ccui` module
+* OpenglConstants.lua store the constants of `gl` module
 
