@@ -77,7 +77,19 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 
 		const rapidjson::Value& actionFrameDic = DICTOOL->getDictionaryFromArray_json(dic, "actionframelist", i);
 		int frameInex = DICTOOL->getIntValue_json(actionFrameDic,"frameid");
-
+        
+        int frameTweenType = DICTOOL->getIntValue_json(actionFrameDic,"tweenType");
+        
+        std::vector<float> frameTweenParameter;
+        int frameTweenParameterNum = DICTOOL->getArrayCount_json(actionFrameDic, "tweenParameter");
+        
+        for (int j = 0; j < frameTweenParameterNum; j++)
+        {
+            float value = DICTOOL->getFloatValueFromArray_json(actionFrameDic, "tweenParameter", j);
+            frameTweenParameter.push_back(value);
+        }
+        
+        
 		bool existPosition = DICTOOL->checkObjectExist_json(actionFrameDic,"positionx");
 		if (existPosition)
 		{
@@ -85,6 +97,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 			float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
 			ActionMoveFrame* actionFrame = new ActionMoveFrame();
 			actionFrame->setFrameIndex(frameInex);
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setPosition(Point(positionX, positionY));
 			auto cActionArray = _frameArray.at((int)kKeyframeMove);
 			cActionArray->pushBack(actionFrame);
@@ -98,6 +112,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 			float scaleY = DICTOOL->getFloatValue_json(actionFrameDic, "scaley");
 			ActionScaleFrame* actionFrame = new ActionScaleFrame();
 			actionFrame->setFrameIndex(frameInex);
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setScaleX(scaleX);
 			actionFrame->setScaleY(scaleY);
 			auto cActionArray = _frameArray.at((int)kKeyframeScale);
@@ -111,6 +127,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 			float rotation = DICTOOL->getFloatValue_json(actionFrameDic, "rotation");
 			ActionRotationFrame* actionFrame = new ActionRotationFrame();
 			actionFrame->setFrameIndex(frameInex);
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setRotation(rotation);
 			auto cActionArray = _frameArray.at((int)kKeyframeRotate);
 			cActionArray->pushBack(actionFrame);
@@ -123,6 +141,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 			int opacity = DICTOOL->getIntValue_json(actionFrameDic, "opacity");
 			ActionFadeFrame* actionFrame = new ActionFadeFrame();
 			actionFrame->setFrameIndex(frameInex);
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setOpacity(opacity);
 			auto cActionArray = _frameArray.at((int)kKeyframeTint);
 			cActionArray->pushBack(actionFrame);
@@ -137,6 +157,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 			int colorB = DICTOOL->getIntValue_json(actionFrameDic, "colorb");
 			ActionTintFrame* actionFrame = new ActionTintFrame();
 			actionFrame->setFrameIndex(frameInex);
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setColor(Color3B(colorR,colorG,colorB));
 			auto cActionArray = _frameArray.at((int)kKeyframeFade);
 			cActionArray->pushBack(actionFrame);
