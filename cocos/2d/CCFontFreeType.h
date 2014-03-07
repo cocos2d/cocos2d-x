@@ -56,6 +56,7 @@ public:
     unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight, Rect &outRect,int &xAdvance);
     
     virtual int           getFontMaxHeight() const override;  
+    virtual int           getFontAscender() const;
 
 protected:
     
