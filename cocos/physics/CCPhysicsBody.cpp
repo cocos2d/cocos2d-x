@@ -350,7 +350,6 @@ void PhysicsBody::setPosition(Point position)
     {
         cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position + _positionOffset));
     }
-    _positionResetTag = false;
 }
 
 void PhysicsBody::setRotation(float rotation)
@@ -359,8 +358,6 @@ void PhysicsBody::setRotation(float rotation)
     {
         cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat((rotation + _rotationOffset) * (M_PI / 180.0f)));
     }
-    
-    _rotationResetTag = false;
 }
 
 Point PhysicsBody::getPosition() const
@@ -777,6 +774,8 @@ void PhysicsBody::update(float delta)
         _rotationResetTag = true;
         _node->setPosition(position);
         _node->setRotation(getRotation());
+        _positionResetTag = false;
+        _rotationResetTag = false;
         
         // damping compute
         if (_isDamping && _dynamic && !isResting())
