@@ -40,7 +40,7 @@ namespace cocostudio
         
         Slider* slider = static_cast<Slider*>(widget);
         
-        bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "barTextureScale9Enable");
+        bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
         slider->setScale9Enabled(barTextureScale9Enable);
         bool bt = DICTOOL->checkObjectExist_json(options, "barFileName");
         float barLength = DICTOOL->getFloatValue_json(options, "length");
