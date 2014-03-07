@@ -48,6 +48,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <sys/ioctl.h>
 #endif
 
 #include "CCDirector.h"
@@ -971,6 +972,14 @@ void Console::loop()
             for(const auto &fd: _fds) {
                 if(FD_ISSET(fd,&copy_set)) 
                 {
+                    int n = 0;
+                    ioctl(fd, FIONREAD, &n);
+                    if(n == 0)
+                    {
+                        //fd is closed
+                        continue;
+
+                    }
                     if(!_file_uploading)
                     {
                         if( ! parseCommand(fd) )

@@ -187,6 +187,7 @@ ConsoleUploadFile::ConsoleUploadFile()
 
    _src_file_path = FileUtils::getInstance()->fullPathForFilename(s_pathGrossini);
     _thread = std::thread( &ConsoleUploadFile::uploadFile, this);
+    _thread.detach();
 }
 
 void ConsoleUploadFile::onEnter()
@@ -197,7 +198,7 @@ void ConsoleUploadFile::onEnter()
 
 ConsoleUploadFile::~ConsoleUploadFile()
 {
-    _thread.join();
+    
 }
 
 void ConsoleUploadFile::uploadFile()
