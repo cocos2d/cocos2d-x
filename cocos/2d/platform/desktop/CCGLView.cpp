@@ -649,7 +649,7 @@ void GLView::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int heig
 {
     if (_resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
-        updateDesignResolution();
+        updateDesignResolutionSize();
         Director::getInstance()->setViewport();
     }
 }
