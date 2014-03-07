@@ -382,11 +382,19 @@ void setTexParameters(const ccTexParams& texParams);
 
 _Feature added in v3.0-beta and improved in v3.0-beta2_
 
-The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the scene graph.
+The way currently cocos2d-x v2.2 does rendering is OK but it is difficult to optimize, difficult to add new functionality and difficult to port to new platforms.
+So cocos2d-x v3.0 has a new renderer that is more performing, elegant, scalable, flexible but still simple to use and to understand. Also existing cocos2d-x users will find the new API familiar and they will feel immediately comfortable with, without having to bother about what’s changed or what's new under the hood.
 
-Auto-batching and auto-culling is supported.
+Features of the new renderer:
 
-For detailed documentation, please read the following doc: [Renderer Specification document](https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit)
+- It has been decoupled from the Scene Graph. The `draw method, instead of "drawing" it sends a `RenderCommand` to the `Renderer`, and `Renderer` is responsible for drawing the `RenderCommand`
+- `QuadCommands` (used by `Sprite` and `ParticleSystem` objects) will be automatically batched.
+- `CustomCommand` objects allow the user to use custom OpenGL code, using a API similar to v2.2
+- `GroupCommand` objects allow to have "stacks" in the Renderer with different OpenGL values.
+- Auto-culling for `Sprite` objects (although, technically, Auto-culling is not performed in `Renderer` code, but in the `Sprite` code)
+- Global Z ordering (local Z ordering is still supported)
+
+For detailed information, please read the following doc: [Renderer Specification document](https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit)
 
 ### Renderer features
 
@@ -414,6 +422,10 @@ __`globalZOrder()` vs. `localZOrder()`__:
 * `localZOrder` is used to sort the Node in its parent's children Array
 
 __Exceptions__:
+
+TODO
+
+### SpriteBatchNode vs. Sprite
 
 TODO
 
