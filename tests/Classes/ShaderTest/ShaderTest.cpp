@@ -721,7 +721,7 @@ bool ShaderRetroEffect::init()
 void ShaderRetroEffect::update(float dt)
 {
     _accum += dt;
-    int letterCount = _label->getStringLenght();
+    int letterCount = _label->getStringLength();
     for (int i = 0; i < letterCount; ++i)
     {
         auto sprite = _label->getLetter(i);

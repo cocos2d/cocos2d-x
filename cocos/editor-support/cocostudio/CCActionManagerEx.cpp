@@ -63,7 +63,6 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
 	for (int i=0; i<actionCount; i++) {
 		ActionObject* action = new ActionObject();
-		action->autorelease();
 		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
 		action->initWithDictionary(actionDic,root);
 		actionList.pushBack(action);
@@ -110,10 +109,17 @@ ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char*
 	}
 	return action;
 }
-
+    
 void ActionManagerEx::releaseActions()
 {
-	_actionDic.clear();
+    std::unordered_map<std::string, cocos2d::Vector<ActionObject*>>::iterator iter;
+    for (iter = _actionDic.begin(); iter != _actionDic.end(); iter++)
+    {
+        cocos2d::Vector<ActionObject*> objList = iter->second;
+        objList.clear();
+    }
+    
+    _actionDic.clear();
 }
 
 }

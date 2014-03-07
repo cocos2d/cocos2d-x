@@ -82,6 +82,16 @@ Slider* Slider::create()
     return nullptr;
 }
 
+bool Slider::init()
+{
+    if (Widget::init())
+    {
+        setTouchEnabled(true);
+        return true;
+    }
+    return false;
+}
+
 void Slider::initRenderer()
 {
     _barRenderer = Sprite::create();

@@ -373,6 +373,16 @@ TextField* TextField::create()
     return nullptr;
 }
     
+bool TextField::init()
+{
+    if (Widget::init())
+    {
+        setTouchEnabled(true);
+        return true;
+    }
+    return false;
+}
+    
 void TextField::onEnter()
 {
     Widget::onEnter();
@@ -387,7 +397,6 @@ void TextField::initRenderer()
 
 void TextField::setTouchSize(const Size &size)
 {
-//    _useTouchArea = true;
     _touchWidth = size.width;
     _touchHeight = size.height;
 }
