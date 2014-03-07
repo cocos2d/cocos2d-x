@@ -72,17 +72,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         auto resourceSize = Size(960, 640);
         searchPaths.push_back("hd");
-        searchPaths.push_back("hd/scenetest");
-        searchPaths.push_back("hd/scenetest/ArmatureComponentTest");
-        searchPaths.push_back("hd/scenetest/AttributeComponentTest");
-        searchPaths.push_back("hd/scenetest/BackgroundComponentTest");
-        searchPaths.push_back("hd/scenetest/EffectComponentTest");
-        searchPaths.push_back("hd/scenetest/LoadSceneEdtiorFileTest");
-        searchPaths.push_back("hd/scenetest/ParticleComponentTest");
-        searchPaths.push_back("hd/scenetest/SpriteComponentTest");
-        searchPaths.push_back("hd/scenetest/TmxMapComponentTest");
-        searchPaths.push_back("hd/scenetest/UIComponentTest");
-        searchPaths.push_back("hd/scenetest/TriggerTest");
+//        searchPaths.push_back("hd/scenetest");
+//        searchPaths.push_back("hd/scenetest/ArmatureComponentTest");
+//        searchPaths.push_back("hd/scenetest/AttributeComponentTest");
+//        searchPaths.push_back("hd/scenetest/BackgroundComponentTest");
+//        searchPaths.push_back("hd/scenetest/EffectComponentTest");
+//        searchPaths.push_back("hd/scenetest/LoadSceneEdtiorFileTest");
+//        searchPaths.push_back("hd/scenetest/ParticleComponentTest");
+//        searchPaths.push_back("hd/scenetest/SpriteComponentTest");
+//        searchPaths.push_back("hd/scenetest/TmxMapComponentTest");
+//        searchPaths.push_back("hd/scenetest/UIComponentTest");
+//        searchPaths.push_back("hd/scenetest/TriggerTest");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
     else

@@ -7,10 +7,7 @@
 #include "extensions/cocos-ext.h"
 #include "../../../../testBasic.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-
-class CustomImageLayer : public Layer
+class CustomImageLayer : public cocos2d::Layer
 {
 public:
     virtual void onEnter();
@@ -21,7 +18,7 @@ class CustomImageScene : public TestScene
 public:
     virtual void onEnter();
     virtual void runThisTest();
-    void BackCallback(Ref* pSender);
+    void BackCallback(cocos2d::Ref* pSender);
 };
 
 #endif /* defined(__TestCpp__CustomUIScene__) */
