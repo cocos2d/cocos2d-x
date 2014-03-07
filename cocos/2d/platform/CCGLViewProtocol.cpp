@@ -87,6 +87,49 @@ void GLViewProtocol::pollInputEvents()
 {
 }
 
+
+void GLViewProtocol::updateDesignResolutionSize()
+{
+    if (_screenSize.width > 0 && _screenSize.height > 0
+        && _designResolutionSize.width > 0 && _designResolutionSize.height > 0)
+    {
+        _scaleX = (float)_screenSize.width / _designResolutionSize.width;
+        _scaleY = (float)_screenSize.height / _designResolutionSize.height;
+        
+        if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
+        {
+            _scaleX = _scaleY = MAX(_scaleX, _scaleY);
+        }
+        
+        else if (_resolutionPolicy == ResolutionPolicy::SHOW_ALL)
+        {
+            _scaleX = _scaleY = MIN(_scaleX, _scaleY);
+        }
+        
+        else if ( _resolutionPolicy == ResolutionPolicy::FIXED_HEIGHT) {
+            _scaleX = _scaleY;
+            _designResolutionSize.width = ceilf(_screenSize.width/_scaleX);
+        }
+        
+        else if ( _resolutionPolicy == ResolutionPolicy::FIXED_WIDTH) {
+            _scaleY = _scaleX;
+            _designResolutionSize.height = ceilf(_screenSize.height/_scaleY);
+        }
+        
+        // calculate the rect of viewport
+        float viewPortW = _designResolutionSize.width * _scaleX;
+        float viewPortH = _designResolutionSize.height * _scaleY;
+        
+        _viewPortRect.setRect((_screenSize.width - viewPortW) / 2, (_screenSize.height - viewPortH) / 2, viewPortW, viewPortH);
+        
+        // reset director's member variables to fit visible rect
+        auto director = Director::getInstance();
+        director->_winSizeInPoints = getDesignResolutionSize();
+        director->createStatsLabel();
+        director->setGLDefaultValues();
+    }
+}
+
 void GLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
     CCASSERT(resolutionPolicy != ResolutionPolicy::UNKNOWN, "should set resolutionPolicy");
@@ -97,44 +140,10 @@ void GLViewProtocol::setDesignResolutionSize(float width, float height, Resoluti
     }
 
     _designResolutionSize.setSize(width, height);
-    
-    _scaleX = (float)_screenSize.width / _designResolutionSize.width;
-    _scaleY = (float)_screenSize.height / _designResolutionSize.height;
-    
-    if (resolutionPolicy == ResolutionPolicy::NO_BORDER)
-    {
-        _scaleX = _scaleY = MAX(_scaleX, _scaleY);
-    }
-    
-    else if (resolutionPolicy == ResolutionPolicy::SHOW_ALL)
-    {
-        _scaleX = _scaleY = MIN(_scaleX, _scaleY);
-    }
-
-    else if ( resolutionPolicy == ResolutionPolicy::FIXED_HEIGHT) {
-    	_scaleX = _scaleY;
-    	_designResolutionSize.width = ceilf(_screenSize.width/_scaleX);
-    }
-
-    else if ( resolutionPolicy == ResolutionPolicy::FIXED_WIDTH) {
-    	_scaleY = _scaleX;
-    	_designResolutionSize.height = ceilf(_screenSize.height/_scaleY);
-    }
-
-    // calculate the rect of viewport    
-    float viewPortW = _designResolutionSize.width * _scaleX;
-    float viewPortH = _designResolutionSize.height * _scaleY;
-
-    _viewPortRect.setRect((_screenSize.width - viewPortW) / 2, (_screenSize.height - viewPortH) / 2, viewPortW, viewPortH);
-    
     _resolutionPolicy = resolutionPolicy;
     
-	// reset director's member variables to fit visible rect
-    auto director = Director::getInstance();
-    director->_winSizeInPoints = getDesignResolutionSize();
-    director->createStatsLabel();
-    director->setGLDefaultValues();
-}
+    updateDesignResolutionSize();
+ }
 
 const Size& GLViewProtocol::getDesignResolutionSize() const 
 {
