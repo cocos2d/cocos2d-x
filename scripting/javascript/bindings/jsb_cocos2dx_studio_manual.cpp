@@ -83,8 +83,15 @@ static JSBool js_cocos2dx_Widget_addTouchEventListener(JSContext *cx, uint32_t a
         jsval *argv = JS_ARGV(cx, vp);
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "widgetTouchEvent");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -108,8 +115,15 @@ static JSBool js_cocos2dx_CheckBox_addEventListener(JSContext *cx, uint32_t argc
         jsval *argv = JS_ARGV(cx, vp);
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "checkBoxEventListener");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -133,8 +147,15 @@ static JSBool js_cocos2dx_Slider_addEventListener(JSContext *cx, uint32_t argc, 
         jsval *argv = JS_ARGV(cx, vp);
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "sliderEventListener");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -158,8 +179,15 @@ static JSBool js_cocos2dx_TextField_addEventListener(JSContext *cx, uint32_t arg
         jsval *argv = JS_ARGV(cx, vp);
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "textfieldEventListener");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -183,14 +211,53 @@ static JSBool js_cocos2dx_PageView_addEventListener(JSContext *cx, uint32_t argc
         jsval *argv = JS_ARGV(cx, vp);
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "pageViewEventListener");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
 
         cobj->addEventListenerPageView(tmpObj, pagevieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
 
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "Invalid number of arguments");
+    return JS_FALSE;
+}
+
+static JSBool js_cocos2dx_ScrollView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::gui::ScrollView* cobj = (cocos2d::gui::ScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 2) {
+        jsval *argv = JS_ARGV(cx, vp);
+        
+        JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "scrollViewEventListener");
+        
+        tmpObj->setJSCallbackFunc(argv[0]);
+        tmpObj->setJSCallbackThis(argv[1]);
+        
+        cobj->addEventListenerScrollView(tmpObj, scrollvieweventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
+        
         return JS_TRUE;
     }
     JS_ReportError(cx, "Invalid number of arguments");
@@ -208,8 +275,15 @@ static JSBool js_cocos2dx_ListView_addEventListener(JSContext *cx, uint32_t argc
         jsval *argv = JS_ARGV(cx, vp);
 
         JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "listViewEventListener");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -304,8 +378,15 @@ static JSBool js_cocos2dx_CCArmatureAnimation_setMovementEventCallFunc(JSContext
 		jsval *argv = JS_ARGV(cx, vp);
         
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == cobj->getUserObject())
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "moveEvent");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -329,8 +410,15 @@ static JSBool js_cocos2dx_CCArmatureAnimation_setFrameEventCallFunc(JSContext *c
 		jsval *argv = JS_ARGV(cx, vp);
         
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
-        cobj->setUserObject(tmpObj);
-        tmpObj->release();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getUserObject());
+        if (NULL == cobj->getUserObject())
+        {
+            dict = CCDictionary::create();
+            cobj->setUserObject(dict);
+        }
+        dict->setObject(tmpObj, "frameEvent");
 
         tmpObj->setJSCallbackFunc(argv[0]);
         tmpObj->setJSCallbackThis(argv[1]);
@@ -560,6 +648,7 @@ extern JSObject* jsb_CheckBox_prototype;
 extern JSObject* jsb_Slider_prototype;
 extern JSObject* jsb_TextField_prototype;
 extern JSObject* jsb_LayoutParameter_prototype;
+extern JSObject* jsb_ScrollView_prototype;
 extern JSObject* jsb_PageView_prototype;
 extern JSObject* jsb_ListView_prototype;
 extern JSObject* jsb_CCArmatureAnimation_prototype;
@@ -580,6 +669,8 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_TextField_prototype, "addEventListenerTextField", js_cocos2dx_TextField_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_PageView_prototype, "addEventListenerPageView", js_cocos2dx_PageView_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, jsb_ScrollView_prototype, "addEventListenerScrollView", js_cocos2dx_ScrollView_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, jsb_ListView_prototype, "addEventListenerListView", js_cocos2dx_ListView_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 

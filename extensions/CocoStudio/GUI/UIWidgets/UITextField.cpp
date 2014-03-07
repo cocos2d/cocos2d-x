@@ -372,6 +372,16 @@ TextField* TextField::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
+    
+bool TextField::init()
+{
+    if (Widget::init())
+    {
+        setTouchEnabled(true);
+        return true;
+    }
+    return false;
+}
 
 void TextField::onEnter()
 {

@@ -161,6 +161,7 @@ public:
     /*=*/
     
 protected:
+    virtual bool init();
     virtual void initRenderer();
     // event
     void attachWithIMEEvent();
