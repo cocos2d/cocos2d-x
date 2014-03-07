@@ -469,6 +469,8 @@ files
 	CustomReader.h
 	CustomParticleWidget.cpp
 	CustomParticleWidget.h	
+	CustomParticleWidgetReader.cpp
+	CustomParticleWidgetReader.h
 
 	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest)
