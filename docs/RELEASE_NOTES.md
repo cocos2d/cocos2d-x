@@ -387,7 +387,7 @@ So cocos2d-x v3.0 has a new renderer that is more performing, elegant, scalable,
 
 Features of the new renderer:
 
-- It has been decoupled from the Scene Graph. The `draw method, instead of "drawing" it sends a `RenderCommand` to the `Renderer`, and `Renderer` is responsible for drawing the `RenderCommand`
+- It has been decoupled from the Scene Graph. The `draw()` method, instead of "drawing" it sends a `RenderCommand` to the `Renderer`, and `Renderer` is responsible for drawing the queued `RenderCommand` commands.
 - `QuadCommands` (used by `Sprite` and `ParticleSystem` objects) will be automatically batched.
 - `CustomCommand` objects allow the user to use custom OpenGL code, using a API similar to v2.2
 - `GroupCommand` objects allow to have "stacks" in the Renderer with different OpenGL values.
@@ -472,7 +472,7 @@ __To summarize__:
 - Use the same Shader (just use the default one)
 - And don't parent your sprites to a `SpriteBatchNode`
 
-Just use the `SpriteBatchNode` as a last resort, when you really need an extra boost in performance (and you are OK with its limitations).
+Only use `SpriteBatchNode` as the last resort, when you really need an extra (although minor) boost in performance (and you are OK with its limitations).
 
 
 ## Improved LabelTTF / LabelBMFont / LabelAtlas
@@ -768,4 +768,3 @@ Examples:
 * StudioConstants.lua store the constants of  `ccs` module
 * GuiConstants.lua store the constants of `ccui` module
 * OpenglConstants.lua store the constants of `gl` module
-
