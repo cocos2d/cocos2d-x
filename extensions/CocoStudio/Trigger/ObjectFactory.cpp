@@ -23,6 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ObjectFactory.h"
+#include "../GUI/BaseClasses/UIWidget.h"
+#include "../Reader/WidgetReader/WidgetReaderProtocol.h"
+
 
 NS_CC_EXT_BEGIN
 
@@ -135,6 +138,47 @@ CCComponent* ObjectFactory::createComponent(std::string name)
 
 	return (CCComponent*)o;
 
+}
+
+ui::Widget* ObjectFactory::createGUI(std::string name)
+{
+    CCObject* object = NULL;
+    
+    if (name == "Panel")
+    {
+        name = "Layout";
+    }
+    else if (name == "TextArea")
+    {
+        name = "Label";
+    }
+    else if (name == "TextButton")
+    {
+        name = "Button";
+    }
+    
+    do
+    {
+        const TInfo t = _typeMap[name];
+        CC_BREAK_IF(t._fun == NULL);
+        object = t._fun();
+    } while (0);
+    
+    return static_cast<ui::Widget*>(object);
+}
+
+WidgetReaderProtocol* ObjectFactory::createWidgetReaderProtocol(std::string name)
+{
+    CCObject* object = NULL;
+    
+    do
+    {
+        const TInfo t = _typeMap[name];
+        CC_BREAK_IF(t._fun == NULL);
+        object = t._fun();
+    } while (0);
+    
+    return dynamic_cast<WidgetReaderProtocol*>(object);
 }
 
 void ObjectFactory::registerType(const TInfo &t)

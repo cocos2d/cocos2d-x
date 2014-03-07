@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
@@ -47,6 +47,8 @@ typedef enum {
 
 class PageView : public Layout , public UIScrollInterface
 {
+    
+    DECLARE_CLASS_GUI_INFO
     
 public:
     /**

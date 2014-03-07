@@ -27,11 +27,13 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BASEBAR_RENDERER_Z = (-3);
 static const int PROGRESSBAR_RENDERER_Z = (-2);
 static const int SLIDBALL_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(Slider)
 
 Slider::Slider():
 _barRenderer(NULL),
@@ -85,8 +87,8 @@ void Slider::initRenderer()
     _barRenderer = CCSprite::create();
     _progressBarRenderer = CCSprite::create();
     _progressBarRenderer->setAnchorPoint(CCPoint(0.0f, 0.5f));
-    CCNodeRGBA::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
+    CCNode::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
+    CCNode::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     _slidBallNormalRenderer = CCSprite::create();
     _slidBallPressedRenderer = CCSprite::create();
     _slidBallPressedRenderer->setVisible(false);
@@ -96,7 +98,7 @@ void Slider::initRenderer()
     _slidBallRenderer->addChild(_slidBallNormalRenderer);
     _slidBallRenderer->addChild(_slidBallPressedRenderer);
     _slidBallRenderer->addChild(_slidBallDisabledRenderer);
-    CCNodeRGBA::addChild(_slidBallRenderer, SLIDBALL_RENDERER_Z, -1);
+    CCNode::addChild(_slidBallRenderer, SLIDBALL_RENDERER_Z, -1);
 }
 
 void Slider::loadBarTexture(const char* fileName, TextureResType texType)
@@ -132,9 +134,9 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_barRenderer);
     barRendererScaleChangedWithSize();
+    progressBarRendererScaleChangedWithSize();
 }
 
 void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType)
@@ -170,8 +172,7 @@ void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_progressBarRenderer);
     _progressBarRenderer->setAnchorPoint(CCPoint(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
     progressBarRendererScaleChangedWithSize();
@@ -185,8 +186,8 @@ void Slider::setScale9Enabled(bool able)
     }
     
     _scale9Enabled = able;
-    CCNodeRGBA::removeChild(_barRenderer, true);
-    CCNodeRGBA::removeChild(_progressBarRenderer, true);
+    CCNode::removeChild(_barRenderer, true);
+    CCNode::removeChild(_progressBarRenderer, true);
     _barRenderer = NULL;
     _progressBarRenderer = NULL;
     if (_scale9Enabled)
@@ -201,8 +202,8 @@ void Slider::setScale9Enabled(bool able)
     }
     loadBarTexture(_textureFile.c_str(), _barTexType);
     loadProgressBarTexture(_progressBarTextureFile.c_str(), _progressBarTexType);
-    CCNodeRGBA::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
-    CCNodeRGBA::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
+    CCNode::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
+    CCNode::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -293,8 +294,7 @@ void Slider::loadSlidBallTextureNormal(const char* normal,TextureResType texType
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_slidBallNormalRenderer);
 }
 
 void Slider::loadSlidBallTexturePressed(const char* pressed,TextureResType texType)
@@ -316,8 +316,7 @@ void Slider::loadSlidBallTexturePressed(const char* pressed,TextureResType texTy
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_slidBallPressedRenderer);
 }
 
 void Slider::loadSlidBallTextureDisabled(const char* disabled,TextureResType texType)
@@ -339,8 +338,7 @@ void Slider::loadSlidBallTextureDisabled(const char* disabled,TextureResType tex
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_slidBallDisabledRenderer);
 }
 
 void Slider::setPercent(int percent)
@@ -493,6 +491,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->setPreferredSize(_size);
+            _progressBarTextureSize = _progressBarRenderer->getContentSize();
         }
         else
         {
@@ -531,6 +530,33 @@ void Slider::onPressStateChangedToDisabled()
     _slidBallNormalRenderer->setVisible(false);
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(true);
+}
+    
+void Slider::updateTextureColor()
+{
+    updateColorToRenderer(_barRenderer);
+    updateColorToRenderer(_progressBarRenderer);
+    updateColorToRenderer(_slidBallNormalRenderer);
+    updateColorToRenderer(_slidBallPressedRenderer);
+    updateColorToRenderer(_slidBallDisabledRenderer);
+}
+
+void Slider::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_barRenderer);
+    updateOpacityToRenderer(_progressBarRenderer);
+    updateOpacityToRenderer(_slidBallNormalRenderer);
+    updateOpacityToRenderer(_slidBallPressedRenderer);
+    updateOpacityToRenderer(_slidBallDisabledRenderer);
+}
+
+void Slider::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_barRenderer);
+    updateRGBAToRenderer(_progressBarRenderer);
+    updateRGBAToRenderer(_slidBallNormalRenderer);
+    updateRGBAToRenderer(_slidBallPressedRenderer);
+    updateRGBAToRenderer(_slidBallDisabledRenderer);
 }
 
 std::string Slider::getDescription() const

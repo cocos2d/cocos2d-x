@@ -26,9 +26,11 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const int LABEL_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(Label)
 
 Label::Label():
 _touchScaleChangeEnabled(false),
@@ -70,7 +72,7 @@ bool Label::init()
 void Label::initRenderer()
 {
     _labelRenderer = CCLabelTTF::create();
-    CCNodeRGBA::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
+    CCNode::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
 void Label::setText(const std::string& text)
@@ -153,21 +155,6 @@ void Label::setTouchScaleChangeEnabled(bool enable)
 {
     _touchScaleChangeEnabled = enable;
 }
-    
-void Label::setScale(float fScale)
-{
-    Widget::setScale(fScale);
-}
-    
-void Label::setScaleX(float fScaleX)
-{
-    Widget::setScaleX(fScaleX);
-}
-    
-void Label::setScaleY(float fScaleY)
-{
-    Widget::setScaleY(fScaleY);
-}
 
 bool Label::isTouchScaleChangeEnabled()
 {
@@ -198,25 +185,15 @@ void Label::onPressStateChangedToDisabled()
 {
     
 }
-
-void Label::setFlipX(bool flipX)
+    
+void Label::updateFlippedX()
 {
-    _labelRenderer->setFlipX(flipX);
+    _labelRenderer->setFlipX(_flippedX);
 }
-
-void Label::setFlipY(bool flipY)
+    
+void Label::updateFlippedY()
 {
-    _labelRenderer->setFlipY(flipY);
-}
-
-bool Label::isFlipX()
-{
-    return _labelRenderer->isFlipX();
-}
-
-bool Label::isFlipY()
-{
-    return _labelRenderer->isFlipY();
+    _labelRenderer->setFlipY(_flippedY);
 }
 
 void Label::setAnchorPoint(const CCPoint &pt)
@@ -245,12 +222,14 @@ void Label::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
+        _labelRenderer->setDimensions(CCSizeZero);
         _labelRenderer->setScale(1.0f);
         _size = _labelRenderer->getContentSize();
-        _normalScaleValueX = _normalScaleValueY = 1.0f;
+        _normalScaleValueX = _normalScaleValueY = 1.0f;        
     }
     else
     {
+        _labelRenderer->setDimensions(_size);
         CCSize textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
@@ -264,7 +243,21 @@ void Label::labelScaleChangedWithSize()
         _normalScaleValueX = scaleX;
         _normalScaleValueY = scaleY;
     }
+}
     
+void Label::updateTextureColor()
+{
+    updateColorToRenderer(_labelRenderer);
+}
+
+void Label::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelRenderer);
+}
+
+void Label::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelRenderer);
 }
 
 std::string Label::getDescription() const

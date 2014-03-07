@@ -28,7 +28,9 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
+    
+IMPLEMENT_CLASS_GUI_INFO(ListView)
 
 ListView::ListView():
 _model(NULL),

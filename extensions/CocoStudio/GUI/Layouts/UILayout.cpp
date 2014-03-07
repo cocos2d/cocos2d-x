@@ -28,12 +28,14 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BACKGROUNDCOLOR_RENDERER_Z = (-2);
 
 static GLint g_sStencilBits = -1;
+    
+IMPLEMENT_CLASS_GUI_INFO(Layout)
 
 Layout::Layout():
 _clippingEnabled(false),
@@ -59,7 +61,9 @@ _scissorRectDirty(false),
 _clippingRect(CCRectZero),
 _clippingParent(NULL),
 _doLayoutDirty(true),
-_clippingRectDirty(true)
+_clippingRectDirty(true),
+_backGroundImageColor(ccWHITE),
+_backGroundImageOpacity(255)
 {
     _widgetType = WidgetTypeContainer;
 }
@@ -103,7 +107,7 @@ void Layout::onExit()
 
 bool Layout::init()
 {
-    if (CCNodeRGBA::init())
+    if (CCNode::init())
     {
         _widgetChildren = CCArray::create();
         CC_SAFE_RETAIN(_widgetChildren);
@@ -112,8 +116,6 @@ bool Layout::init()
         _nodes = CCArray::create();
         CC_SAFE_RETAIN(_nodes);
         initRenderer();
-        setCascadeColorEnabled(true);
-        setCascadeOpacityEnabled(true);
         setBright(true);
         ignoreContentAdaptWithSize(false);
         setSize(CCSizeZero);
@@ -200,7 +202,7 @@ void Layout::visit()
     }
     else
     {
-        CCNodeRGBA::visit();
+        CCNode::visit();
     }
 }
     
@@ -214,12 +216,12 @@ void Layout::stencilClippingVisit()
 {
     if (!_clippingStencil || !_clippingStencil->isVisible())
     {
-        CCNodeRGBA::visit();
+        CCNode::visit();
         return;
     }
     if (g_sStencilBits < 1)
     {
-        CCNodeRGBA::visit();
+        CCNode::visit();
         return;
     }
     static GLint layer = -1;
@@ -234,7 +236,7 @@ void Layout::stencilClippingVisit()
             
             once = false;
         }
-        CCNodeRGBA::visit();
+        CCNode::visit();
         return;
     }
     layer++;
@@ -285,7 +287,7 @@ void Layout::stencilClippingVisit()
     glDepthMask(currentDepthWriteMask);
     glStencilFunc(GL_EQUAL, mask_layer_le, mask_layer_le);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-    CCNodeRGBA::visit();
+    CCNode::visit();
     glStencilFunc(currentStencilFunc, currentStencilRef, currentStencilValueMask);
     glStencilOp(currentStencilFail, currentStencilPassDepthFail, currentStencilPassDepthPass);
     glStencilMask(currentStencilWriteMask);
@@ -304,7 +306,7 @@ void Layout::scissorClippingVisit()
         glEnable(GL_SCISSOR_TEST);
     }
     CCEGLView::sharedOpenGLView()->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
-    CCNodeRGBA::visit();
+    CCNode::visit();
     if (_handleScissor)
     {
         glDisable(GL_SCISSOR_TEST);
@@ -499,18 +501,18 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     {
         return;
     }
-    CCNodeRGBA::removeChild(_backGroundImage, true);
+    CCNode::removeChild(_backGroundImage, true);
     _backGroundImage = NULL;
     _backGroundScale9Enabled = able;
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::CCScale9Sprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+        CCNode::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     else
     {
         _backGroundImage = CCSprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+        CCNode::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);    
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -563,20 +565,9 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
                 break;
         }
     }
-    if (_backGroundScale9Enabled)
-    {
-        extension::CCScale9Sprite* bgiScale9 = static_cast<extension::CCScale9Sprite*>(_backGroundImage);
-        bgiScale9->setColor(getColor());
-        bgiScale9->setOpacity(getOpacity());
-    }
-    else
-    {
-        CCSprite* bgiScale9 = static_cast<CCSprite*>(_backGroundImage);
-        bgiScale9->setColor(getColor());
-        bgiScale9->setOpacity(getOpacity());
-    }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
+    updateBackGroundImageRGBA();
 }
 
 void Layout::setBackGroundImageCapInsets(const CCRect &capInsets)
@@ -632,13 +623,13 @@ void Layout::addBackGroundImage()
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::CCScale9Sprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+        CCNode::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
         static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = CCSprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+        CCNode::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
 }
@@ -649,7 +640,7 @@ void Layout::removeBackGroundImage()
     {
         return;
     }
-    CCNodeRGBA::removeChild(_backGroundImage, true);
+    CCNode::removeChild(_backGroundImage, true);
     _backGroundImage = NULL;
     _backGroundImageFileName = "";
     _backGroundImageTextureSize = CCSizeZero;
@@ -666,26 +657,26 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
         case LAYOUT_COLOR_NONE:
             if (_colorRender)
             {
-                CCNodeRGBA::removeChild(_colorRender, true);
+                CCNode::removeChild(_colorRender, true);
                 _colorRender = NULL;
             }
             if (_gradientRender)
             {
-                CCNodeRGBA::removeChild(_gradientRender, true);
+                CCNode::removeChild(_gradientRender, true);
                 _gradientRender = NULL;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (_colorRender)
             {
-                CCNodeRGBA::removeChild(_colorRender, true);
+                CCNode::removeChild(_colorRender, true);
                 _colorRender = NULL;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (_gradientRender)
             {
-                CCNodeRGBA::removeChild(_gradientRender, true);
+                CCNode::removeChild(_gradientRender, true);
                 _gradientRender = NULL;
             }
             break;
@@ -702,7 +693,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
-            CCNodeRGBA::addChild(_colorRender, BACKGROUNDCOLOR_RENDERER_Z, -1);
+            CCNode::addChild(_colorRender, BACKGROUNDCOLOR_RENDERER_Z, -1);
             break;
         case LAYOUT_COLOR_GRADIENT:
             _gradientRender = CCLayerGradient::create();
@@ -711,7 +702,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
             _gradientRender->setVector(_alongVector);
-            CCNodeRGBA::addChild(_gradientRender, BACKGROUNDCOLOR_RENDERER_Z, -1);
+            CCNode::addChild(_gradientRender, BACKGROUNDCOLOR_RENDERER_Z, -1);
             break;
         default:
             break;
@@ -761,7 +752,7 @@ const ccColor3B& Layout::getBackGroundEndColor()
     return _gEndColor;
 }
 
-void Layout::setBackGroundColorOpacity(int opacity)
+void Layout::setBackGroundColorOpacity(GLubyte opacity)
 {
     _cOpacity = opacity;
     switch (_colorType)
@@ -779,7 +770,7 @@ void Layout::setBackGroundColorOpacity(int opacity)
     }
 }
     
-int Layout::getBackGroundColorOpacity()
+GLubyte Layout::getBackGroundColorOpacity()
 {
     return _cOpacity;
 }
@@ -796,6 +787,56 @@ void Layout::setBackGroundColorVector(const CCPoint &vector)
 const CCPoint& Layout::getBackGroundColorVector()
 {
     return _alongVector;
+}
+    
+void Layout::setBackGroundImageColor(const ccColor3B &color)
+{
+    _backGroundImageColor = color;
+    updateBackGroundImageColor();
+}
+    
+void Layout::setBackGroundImageOpacity(GLubyte opacity)
+{
+    _backGroundImageOpacity = opacity;
+    updateBackGroundImageOpacity();
+}
+    
+const ccColor3B& Layout::getBackGroundImageColor()
+{
+    return _backGroundImageColor;
+}
+    
+GLubyte Layout::getBackGroundImageOpacity()
+{
+    return _backGroundImageOpacity;
+}
+    
+void Layout::updateBackGroundImageColor()
+{
+    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
+    if (rgba)
+    {
+        rgba->setColor(_backGroundImageColor);
+    }
+}
+    
+void Layout::updateBackGroundImageOpacity()
+{
+    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
+    if (rgba)
+    {
+        rgba->setOpacity(_backGroundImageOpacity);
+    }
+}
+    
+void Layout::updateBackGroundImageRGBA()
+{
+    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
+    if (rgba)
+    {
+        rgba->setColor(_backGroundImageColor);
+        rgba->setOpacity(_backGroundImageOpacity);
+    }
 }
 
 const CCSize& Layout::getBackGroundImageTextureSize() const

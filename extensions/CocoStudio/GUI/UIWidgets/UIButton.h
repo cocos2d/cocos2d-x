@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui{
+namespace ui{
 
 /**
 *   @js NA
@@ -37,6 +37,8 @@ namespace gui{
 */
 class Button : public Widget
 {
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -139,18 +141,6 @@ public:
     
     bool isScale9Enabled();
     
-    //override "setFlipX" of widget.
-    virtual void setFlipX(bool flipX);
-    
-    //override "setFlipY" of widget.
-    virtual void setFlipY(bool flipY);
-    
-    //override "isFlipX" of widget.
-    virtual bool isFlipX();
-    
-    //override "isFlipY" of widget.
-    virtual bool isFlipY();
-    
     /**
      * Changes if button can be clicked zoom effect.
      *
@@ -166,15 +156,6 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
-    
-    /**
-     * Sets color to widget
-     *
-     * It default change the color of widget's children.
-     *
-     * @param color
-     */
-    virtual void setColor(const ccColor3B &color);
     
     /**
      * Returns the "class name" of widget.
@@ -197,7 +178,11 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
-    
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
+    virtual void updateFlippedX();
+    virtual void updateFlippedY();
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
