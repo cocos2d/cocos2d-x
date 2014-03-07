@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "CocoStudio.h"
 #include <vector>
 
-class cocos2d::EventListenerCustom;
+namespace cocos2d {
+class EventListenerCustom;
+}
 
 namespace cocostudio {
 
