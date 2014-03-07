@@ -17,7 +17,7 @@ extern "C" {
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace cocos2d::gui;
+using namespace cocos2d::ui;
 
 class LuaCocoStudioEventListener:public CCObject
 {
