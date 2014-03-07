@@ -74,6 +74,13 @@ public:
 
     // Overrides
     virtual void setPosition(const Point& position) override;
+    virtual void setPosition(float x, float y);
+    virtual const Point& getPosition() const override;
+    virtual void getPosition(float* x, float* y) const override;
+    virtual void setPositionX(float x) override;
+    virtual void setPositionY(float y) override;
+    virtual float getPositionX(void) const override;
+    virtual float getPositionY(void) const override;
     /**
     * @js NA
     * @lua NA

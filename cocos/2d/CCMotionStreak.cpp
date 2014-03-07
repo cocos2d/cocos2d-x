@@ -143,6 +143,42 @@ void MotionStreak::setPosition(const Point& position)
     _positionR = position;
 }
 
+void MotionStreak::setPosition(float x, float y)
+{
+    setPosition(Point(x, y));
+}
+
+const Point& MotionStreak::getPosition() const
+{
+    return _positionR;
+}
+
+void MotionStreak::getPosition(float* x, float* y) const
+{
+    *x = _positionR.x;
+    *y = _positionR.y;
+}
+
+float MotionStreak::getPositionX() const
+{
+    return _positionR.x;
+}
+
+void MotionStreak::setPositionX(float x)
+{
+    setPosition(Point(x, _positionR.y));
+}
+
+float MotionStreak::getPositionY() const
+{
+    return  _positionR.y;
+}
+
+void MotionStreak::setPositionY(float y)
+{
+    setPosition(Point(_positionR.x, y));
+}
+
 void MotionStreak::tintWithColor(const Color3B& colors)
 {
     setColor(colors);
