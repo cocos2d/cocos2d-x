@@ -854,7 +854,7 @@ void LabelFNTMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touch
 
     float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
 
-    this->_labelShouldRetain->setWidth(labelWidth);
+    this->_labelShouldRetain->setMaxLineWidth(labelWidth);
 }
 
 void LabelFNTMultiLineAlignment::snapArrowsToEdge()
@@ -1540,14 +1540,14 @@ LabelTTFOldNew::LabelTTFOldNew()
     auto s = Director::getInstance()->getWinSize();
     float delta = s.height/4;
 
-    auto label1 = LabelTTF::create("Cocos2d-x Label Top", "arial", 24);
+    auto label1 = LabelTTF::create("Cocos2d-x Label Test", "arial", 24);
     addChild(label1, 0, kTagBitmapAtlas1);
     label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label1->setPosition(Point(s.width/2, delta * 2));
     label1->setColor(Color3B::RED);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 48);
-    auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Top");
+    auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label2->setPosition(Point(s.width/2, delta * 2));
@@ -1666,43 +1666,43 @@ LabelAlignmentTest::~LabelAlignmentTest()
 void LabelAlignmentTest::setAlignmentLeft(Ref* sender)
 {
     _horizAlign = TextHAlignment::LEFT;
+    _label->setHorizontalAlignment(_horizAlign,false);
     _label->setString(getCurrentAlignment());
-    _label->setHorizontalAlignment(_horizAlign);
 }
 
 void LabelAlignmentTest::setAlignmentCenter(Ref* sender)
 {
     _horizAlign = TextHAlignment::CENTER;
-    _label->setString(getCurrentAlignment());
-    _label->setHorizontalAlignment(_horizAlign);
+    _label->setHorizontalAlignment(_horizAlign,false);
+    _label->setString(getCurrentAlignment()); 
 }
 
 void LabelAlignmentTest::setAlignmentRight(Ref* sender)
 {
     _horizAlign = TextHAlignment::RIGHT;
+    _label->setHorizontalAlignment(_horizAlign,false);
     _label->setString(getCurrentAlignment());
-    _label->setHorizontalAlignment(_horizAlign);
 }
 
 void LabelAlignmentTest::setAlignmentTop(Ref* sender)
 {
     _vertAlign = TextVAlignment::TOP;
+    _label->setVerticalAlignment(_vertAlign,false);
     _label->setString(getCurrentAlignment());
-    _label->setVerticalAlignment(_vertAlign);
 }
 
 void LabelAlignmentTest::setAlignmentMiddle(Ref* sender)
 {
     _vertAlign = TextVAlignment::CENTER;
+    _label->setVerticalAlignment(_vertAlign,false);
     _label->setString(getCurrentAlignment());
-    _label->setVerticalAlignment(_vertAlign);
 }
 
 void LabelAlignmentTest::setAlignmentBottom(Ref* sender)
 {
     _vertAlign = TextVAlignment::BOTTOM;
+    _label->setVerticalAlignment(_vertAlign,false);
     _label->setString(getCurrentAlignment());
-    _label->setVerticalAlignment(_vertAlign);
 }
 
 const char* LabelAlignmentTest::getCurrentAlignment()
