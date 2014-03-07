@@ -506,7 +506,11 @@ bool Node::isVisible() const
 /// isVisible setter
 void Node::setVisible(bool var)
 {
-    _visible = var;
+    if(var != _visible)
+    {
+        _visible = var;
+        if(_visible) _transformUpdated = _transformDirty = _inverseDirty = true;
+    }
 }
 
 const Point& Node::getAnchorPointInPoints() const
