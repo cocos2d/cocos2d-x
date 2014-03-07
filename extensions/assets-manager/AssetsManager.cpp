@@ -87,17 +87,24 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _connectionTimeout(0)
 , _delegate(NULL)
 , _isDownloading(false)
-, _shouldDeleteDelegateWhenExit(false)
+, _thread(nullptr)
+, _isDestroy(false)
 {
     checkStoragePath();
 }
 
 AssetsManager::~AssetsManager()
 {
-    if (_shouldDeleteDelegateWhenExit)
+    _isDestroy = true;
+    
+    if (nullptr != _thread)
     {
-        delete _delegate;
+        _thread->join();
     }
+    
+    CC_SAFE_DELETE(_thread);
+    
+    CC_SAFE_DELETE(_delegate);
 }
 
 void AssetsManager::checkStoragePath()
@@ -163,10 +170,13 @@ bool AssetsManager::checkUpdate()
     
     if (res != 0)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::NETWORK);
-        });
+        if (!_isDestroy)
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+                if (this->_delegate)
+                    this->_delegate->onError(ErrorCode::NETWORK);
+            });
+        }
         CCLOG("can not get version file content, error code is %d", res);
         curl_easy_cleanup(_curl);
         return false;
@@ -175,10 +185,13 @@ bool AssetsManager::checkUpdate()
     string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
     if (recordedVersion == _version)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::NO_NEW_VERSION);
-        });
+        if (!_isDestroy)
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+                if (this->_delegate)
+                    this->_delegate->onError(ErrorCode::NO_NEW_VERSION);
+            });
+        }
         CCLOG("there is not new version");
         // Set resource search path.
         setSearchPath();
@@ -197,7 +210,8 @@ void AssetsManager::downloadAndUncompress()
         if (_downloadedVersion != _version)
         {
             if (! downLoad()) break;
-            
+            if (_isDestroy)
+                break;
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
                 UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),
                                                             this->_version.c_str());
@@ -208,6 +222,8 @@ void AssetsManager::downloadAndUncompress()
         // Uncompress zip file.
         if (! uncompress())
         {
+            if (_isDestroy)
+                break;
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
                 if (this->_delegate)
                     this->_delegate->onError(ErrorCode::UNCOMPRESS);
@@ -215,6 +231,8 @@ void AssetsManager::downloadAndUncompress()
             break;
         }
         
+        if (_isDestroy)
+            break;
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this] {
             
             // Record new version code.
@@ -269,8 +287,8 @@ void AssetsManager::update()
     // Is package already downloaded?
     _downloadedVersion = UserDefault::getInstance()->getStringForKey(keyOfDownloadedVersion().c_str());
     
-    auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
-    t.detach();
+    _thread = new std::thread(&AssetsManager::downloadAndUncompress, this);
+    //t.detach();
 }
 
 bool AssetsManager::uncompress()
@@ -487,13 +505,14 @@ int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownl
     if (percent != tmp)
     {
         percent = tmp;
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-            auto manager = static_cast<AssetsManager*>(ptr);
-            if (manager->_delegate)
-                manager->_delegate->onProgress(percent);
-        });
-        
-        CCLOG("downloading... %d%%", percent);
+        auto manager = static_cast<AssetsManager*>(ptr);
+        if (nullptr != manager && manager->_delegate && !manager->_isDestroy) {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+                if (manager->_delegate)
+                    manager->_delegate->onProgress(percent);
+            });
+            CCLOG("downloading... %d%%", percent);
+        }
     }
     
     return 0;
@@ -506,11 +525,14 @@ bool AssetsManager::downLoad()
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::CREATE_FILE);
-        });
-        CCLOG("can not create file %s", outFileName.c_str());
+        if (!_isDestroy)
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+                if (this->_delegate)
+                    this->_delegate->onError(ErrorCode::CREATE_FILE);
+            });
+            CCLOG("can not create file %s", outFileName.c_str());
+        }
         return false;
     }
     
@@ -530,10 +552,14 @@ bool AssetsManager::downLoad()
     curl_easy_cleanup(_curl);
     if (res != 0)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
-            if (this->_delegate)
-                this->_delegate->onError(ErrorCode::NETWORK);
-        });
+        if (!_isDestroy)
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+                if (this->_delegate)
+                    this->_delegate->onError(ErrorCode::NETWORK);
+            });
+        }
+
         CCLOG("error when download package");
         fclose(fp);
         return false;
@@ -623,7 +649,6 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
     auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
     manager->setDelegate(delegate);
-    manager->_shouldDeleteDelegateWhenExit = true;
     manager->autorelease();
     return manager;
 }
