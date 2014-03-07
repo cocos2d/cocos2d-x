@@ -454,6 +454,11 @@ files
 	UIWidgetAddNodeTest_Editor.cpp
 	UIWidgetAddNodeTest_Editor.h
 
+	[Test/ExtensionsTest/CocoStudioGUITest/UIRichTextTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest)
+	UIRichTextTest.cpp
+	UIRichTextTest.h
+
 	[Test/ExtensionsTest/CocoStudioGUITest/CustomWidget]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget)
 	CustomImageView.cpp
@@ -462,11 +467,18 @@ files
 	CustomImageViewReader.h
 	CustomReader.cpp
 	CustomReader.h
+	CustomParticleWidget.cpp
+	CustomParticleWidget.h	
 
 	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest)
 	CustomImageTest.cpp
 	CustomImageTest.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest)
+	CustomParticleWidgetTest.cpp
+	CustomParticleWidgetTest.h
 	
 	[Test/ExtensionsTest/CocoStudioSceneTest]
 	(../Classes/ExtensionsTest/CocoStudioSceneTest)

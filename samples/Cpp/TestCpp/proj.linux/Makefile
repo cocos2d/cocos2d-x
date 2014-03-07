@@ -77,6 +77,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIScene_Editor.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager_Editor.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp \
@@ -97,6 +98,9 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomReader.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidget.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomParticleWidgetReader.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
         ../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
         ../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \

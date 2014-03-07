@@ -81,6 +81,16 @@ Slider* Slider::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
+    
+bool Slider::init()
+{
+    if (Widget::init())
+    {
+        setTouchEnabled(true);
+        return true;
+    }
+    return false;
+}
 
 void Slider::initRenderer()
 {

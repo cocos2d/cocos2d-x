@@ -522,6 +522,9 @@
     <ClCompile Include="..\CocoStudio\Reader\WidgetReader\TextFieldReader\TextFieldReader.cpp">
       <Filter>CocoStudio\Reader\WidgetReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIRichText.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -948,6 +951,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Reader\WidgetReader\TextFieldReader\TextFieldReader.h">
       <Filter>CocoStudio\Reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

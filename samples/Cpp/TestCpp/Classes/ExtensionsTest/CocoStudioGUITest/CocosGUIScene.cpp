@@ -35,6 +35,7 @@ enum
     TEST_PICKERVIEW,
      */
     TEST_WIDGETADDNODE,
+    TEST_RICHTEXT,
     TEST_MAX_COUNT,
 };
 
@@ -65,6 +66,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "gui PickerViewTest",
      */
     "gui WidgetAddNodeTest",
+    "gui RichTextTest",
 };
 
 ////////////////////////////////////////////////////////
@@ -273,6 +275,14 @@ void CocosGUITestMainLayer::menuCallback(CCObject* pSender)
             pManager->setCurrentUISceneId(kUIWidgetAddNodeTest);
             pManager->setMinUISceneId(kUIWidgetAddNodeTest);
             pManager->setMaxUISceneId(kUIWidgetAddNodeTest);
+        }
+            break;
+            
+        case TEST_RICHTEXT:
+        {
+            pManager->setCurrentUISceneId(kUIRichTextTest);
+            pManager->setMinUISceneId(kUIRichTextTest);
+            pManager->setMaxUISceneId(kUIRichTextTest);
         }
             break;
             
