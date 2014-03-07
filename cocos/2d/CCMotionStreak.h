@@ -74,7 +74,7 @@ public:
 
     // Overrides
     virtual void setPosition(const Point& position) override;
-    virtual void setPosition(float x, float y);
+    virtual void setPosition(float x, float y) override;
     virtual const Point& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual void setPositionX(float x) override;
