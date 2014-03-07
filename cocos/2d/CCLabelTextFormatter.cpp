@@ -304,7 +304,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             nextFontPositionY = (labelHeightPixel + totalHeight) / 2.0f;
             break;
         case TextVAlignment::BOTTOM:
-            nextFontPositionY = labelHeightPixel;
+            nextFontPositionY = totalHeight;
             break;
         default:
             break;
