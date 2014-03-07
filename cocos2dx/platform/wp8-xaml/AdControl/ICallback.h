@@ -22,6 +22,8 @@ namespace PhoneDirect3DXamlAppComponent
 			// purchase product from market
 			void PurchaseProduct();
 			//... other event and other function
+
+			bool GetIsTrial();
 		};
 	}
 }
