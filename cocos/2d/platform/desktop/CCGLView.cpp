@@ -37,6 +37,78 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+// GLFWEventHandler
+
+class GLFWEventHandler
+{
+public:
+    static void onGLFWError(int errorID, const char* errorDesc)
+    {
+        if (_view)
+            _view->onGLFWError(errorID, errorDesc);
+    }
+    
+    static void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+    {
+        if (_view)
+            _view->onGLFWMouseCallBack(window, button, action, modify);
+    }
+    
+    static void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
+    {
+        if (_view)
+            _view->onGLFWMouseMoveCallBack(window, x, y);
+    }
+    
+    static void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+    {
+        if (_view)
+            _view->onGLFWMouseScrollCallback(window, x, y);
+    }
+    
+    static void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+    {
+        if (_view)
+            _view->onGLFWKeyCallback(window, key, scancode, action, mods);
+    }
+    
+    static void onGLFWCharCallback(GLFWwindow* window, unsigned int character)
+    {
+        if (_view)
+            _view->onGLFWCharCallback(window, character);
+    }
+    
+    static void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y)
+    {
+        if (_view)
+            _view->onGLFWWindowPosCallback(windows, x, y);
+    }
+    
+    static void onGLFWframebuffersize(GLFWwindow* window, int w, int h)
+    {
+        if (_view)
+            _view->onGLFWframebuffersize(window, w, h);
+    }
+    
+    static void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
+    {
+        if (_view)
+            _view->onGLFWWindowSizeFunCallback(window, width, height);
+    }
+    
+    static void setGLView(GLView* view)
+    {
+        _view = view;
+    }
+    
+private:
+    static GLView* _view;
+};
+
+GLView* GLFWEventHandler::_view = nullptr;
+
+////////////////////////////////////////////////////
+
 struct keyCodeItem
 {
     int glfwKeyCode;
@@ -175,185 +247,42 @@ static keyCodeItem g_keyCodeStructArray[] = {
     { GLFW_KEY_LAST            , EventKeyboard::KeyCode::KEY_NONE          }
 };
 
-
-//begin GLViewEventHandler
-class GLViewEventHandler
-{
-public:
-    static bool s_captured;
-    static float s_mouseX;
-    static float s_mouseY;
-    
-    static void onGLFWError(int errorID, const char* errorDesc);
-    static void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
-    static void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
-    static void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
-    static void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-    static void onGLFWCharCallback(GLFWwindow* window, unsigned int character);
-    static void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
-    static void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
-	static void OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int width, int height);
-};
-
-bool GLViewEventHandler::s_captured = false;
-float GLViewEventHandler::s_mouseX = 0;
-float GLViewEventHandler::s_mouseY = 0;
-
-void GLViewEventHandler::onGLFWError(int errorID, const char* errorDesc)
-{
-    CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
-}
-
-void GLViewEventHandler::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
-{
-    GLView* eglView = Director::getInstance()->getOpenGLView();
-    if(nullptr == eglView) return;
-    if(GLFW_MOUSE_BUTTON_LEFT == button)
-    {
-        if(GLFW_PRESS == action)
-        {
-            s_captured = true;
-            if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
-            {
-                int id = 0;
-                eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
-            }
-        }
-        else if(GLFW_RELEASE == action)
-        {
-            s_captured = false;
-            if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
-            {
-                int id = 0;
-                eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
-            }
-        }
-    }
-    
-    if(GLFW_PRESS == action)
-    {
-        EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
-        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
-        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
-        event.setMouseButton(button);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-    }
-    else if(GLFW_RELEASE == action)
-    {
-        EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
-        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
-        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
-        event.setMouseButton(button);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-    }
-}
-
-void GLViewEventHandler::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
-{
-    GLView* eglView = Director::getInstance()->getOpenGLView();
-    if(nullptr == eglView) return;
-    
-    if (eglView->isRetina()) {
-        x *= 2;
-        y *= 2;
-    }
-    
-    s_mouseX = (float)x;
-    s_mouseY = (float)y;
-    
-    s_mouseX /= eglView->getFrameZoomFactor();
-    s_mouseY /= eglView->getFrameZoomFactor();
-    
-    if(s_captured)
-    {
-        if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,eglView->getFrameSize().height - s_mouseY)))
-        {
-            int id = 0;
-            eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
-        }
-    }
-    
-    EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
-    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
-    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-}
-
-void GLViewEventHandler::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
-{
-    GLView* eglView = Director::getInstance()->getOpenGLView();
-    if(nullptr == eglView) return;
-    
-    EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
-    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
-    event.setScrollData((float)x, -(float)y);
-    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-}
-
-void GLViewEventHandler::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
-{
-    if (GLFW_REPEAT != action)
-    {
-        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
-        auto dispatcher = Director::getInstance()->getEventDispatcher();
-        dispatcher->dispatchEvent(&event);
-    }
-}
-
-void GLViewEventHandler::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
-{
-    IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char*) &character, 1);
-}
-
-void GLViewEventHandler::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
-{
-    Director::getInstance()->setViewport();
-}
-
-void GLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
-{
-    auto view = Director::getInstance()->getOpenGLView();
-
-    float frameSizeW = view->getFrameSize().width;
-    float frameSizeH = view->getFrameSize().height;
-    float factorX = frameSizeW / w * view->getFrameZoomFactor();
-    float factorY = frameSizeH / h * view->getFrameZoomFactor();;
-    
-    if (fabs(factorX - 0.5f) < FLT_EPSILON && fabs(factorY - 0.5f) < FLT_EPSILON )
-    {
-        view->_isRetina = true;
-        view->setFrameZoomFactor(2.0f * view->getFrameZoomFactor());
-        glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * view->getFrameZoomFactor()) , static_cast<int>(frameSizeH * 0.5f * view->getFrameZoomFactor()));
-    }
-    else if(fabs(factorX - 2.0f) < FLT_EPSILON && fabs(factorY - 2.0f) < FLT_EPSILON)
-    {
-        view->_isRetina = false;
-        view->setFrameZoomFactor(0.5f * view->getFrameZoomFactor());
-        glfwSetWindowSize(window, static_cast<int>(frameSizeW * view->getFrameZoomFactor()), static_cast<int>(frameSizeH * view->getFrameZoomFactor()));
-    }
-}
-
-void GLViewEventHandler::OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int width, int height)
-{	
-	auto view = Director::getInstance()->getOpenGLView();
-	if(view && view->getResolutionPolicy() != ResolutionPolicy::UNKNOWN)
-	{
-		Size resSize=view->getDesignResolutionSize();
-		ResolutionPolicy resPolicy=view->getResolutionPolicy();
-		view->setFrameSize(width, height);
- 		view->setDesignResolutionSize(resSize.width, resSize.height, resPolicy);
-		Director::getInstance()->setViewport();
-	}
-}
-
-//end GLViewEventHandler
-
-
 //////////////////////////////////////////////////////////////////////////
 // implement GLView
 //////////////////////////////////////////////////////////////////////////
 
+
+GLView::GLView()
+: _captured(false)
+, _supportTouch(false)
+, _isInRetinaMonitor(false)
+, _isRetinaEnabled(false)
+, _retinaFactor(1)
+, _frameZoomFactor(1.0f)
+, _mainWindow(nullptr)
+, _primaryMonitor(nullptr)
+, _mouseX(0.0f)
+, _mouseY(0.0f)
+{
+    _viewName = "cocos2dx";
+    g_keyCodeMap.clear();
+    for (auto& item : g_keyCodeStructArray)
+    {
+        g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
+    }
+    
+    GLFWEventHandler::setGLView(this);
+    
+    glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
+    glfwInit();
+}
+
+GLView::~GLView()
+{
+    CCLOGINFO("deallocing GLView: %p", this);
+    GLFWEventHandler::setGLView(nullptr);
+    glfwTerminate();
+}
 
 GLView* GLView::create(const std::string& viewName)
 {
@@ -362,7 +291,7 @@ GLView* GLView::create(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    
     return nullptr;
 }
 
@@ -373,7 +302,7 @@ GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float fra
         ret->autorelease();
         return ret;
     }
-
+    
     return nullptr;
 }
 
@@ -384,69 +313,36 @@ GLView* GLView::createWithFullScreen(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    
     return nullptr;
-}
-
-GLView::GLView()
-: _captured(false)
-, _frameZoomFactor(1.0f)
-, _supportTouch(false)
-, _isRetina(false)
-, _mainWindow(nullptr)
-, _primaryMonitor(nullptr)
-{
-    _viewName = "cocos2dx";
-    g_keyCodeMap.clear();
-    for (auto& item : g_keyCodeStructArray)
-    {
-        g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
-    }
-    glfwSetErrorCallback(GLViewEventHandler::onGLFWError);
-    glfwInit();
-}
-
-GLView::~GLView()
-{
-    CCLOGINFO("deallocing GLView: %p", this);
-    glfwTerminate();
 }
 
 bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     setViewName(viewName);
-    setFrameSize(rect.size.width, rect.size.height);
-    setFrameZoomFactor(frameZoomFactor);
+    
+    _frameZoomFactor = frameZoomFactor;
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
     
-    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor,
-                                   _screenSize.height * _frameZoomFactor,
+    _mainWindow = glfwCreateWindow(rect.size.width * _frameZoomFactor,
+                                   rect.size.height * _frameZoomFactor,
                                    _viewName.c_str(),
                                    _primaryMonitor,
-                                   NULL);
+                                   nullptr);
     glfwMakeContextCurrent(_mainWindow);
     
-    int w, h;
-    glfwGetWindowSize(_mainWindow, &w, &h);
-    int frameBufferW, frameBufferH;
-    glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
+    glfwSetMouseButtonCallback(_mainWindow, GLFWEventHandler::onGLFWMouseCallBack);
+    glfwSetCursorPosCallback(_mainWindow, GLFWEventHandler::onGLFWMouseMoveCallBack);
+    glfwSetScrollCallback(_mainWindow, GLFWEventHandler::onGLFWMouseScrollCallback);
+    glfwSetCharCallback(_mainWindow, GLFWEventHandler::onGLFWCharCallback);
+    glfwSetKeyCallback(_mainWindow, GLFWEventHandler::onGLFWKeyCallback);
+    glfwSetWindowPosCallback(_mainWindow, GLFWEventHandler::onGLFWWindowPosCallback);
+    glfwSetFramebufferSizeCallback(_mainWindow, GLFWEventHandler::onGLFWframebuffersize);
+	glfwSetWindowSizeCallback(_mainWindow, GLFWEventHandler::onGLFWWindowSizeFunCallback);
     
-    if (frameBufferW == 2 * w && frameBufferH == 2 * h)
-    {
-        _isRetina = true;
-        setFrameZoomFactor(frameZoomFactor * 2);
-        glfwSetWindowSize(_mainWindow, rect.size.width/2 * _frameZoomFactor, rect.size.height/2 * _frameZoomFactor);
-    }
+    setFrameSize(rect.size.width, rect.size.height);
     
-    glfwSetMouseButtonCallback(_mainWindow, GLViewEventHandler::onGLFWMouseCallBack);
-    glfwSetCursorPosCallback(_mainWindow, GLViewEventHandler::onGLFWMouseMoveCallBack);
-    glfwSetScrollCallback(_mainWindow, GLViewEventHandler::onGLFWMouseScrollCallback);
-    glfwSetCharCallback(_mainWindow, GLViewEventHandler::onGLFWCharCallback);
-    glfwSetKeyCallback(_mainWindow, GLViewEventHandler::onGLFWKeyCallback);
-    glfwSetWindowPosCallback(_mainWindow, GLViewEventHandler::onGLFWWindowPosCallback);
-    glfwSetFramebufferSizeCallback(_mainWindow, GLViewEventHandler::onGLFWframebuffersize);
-	glfwSetWindowSizeCallback(_mainWindow, GLViewEventHandler::OnGLFWWindowSizeFunCallback);
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
     
@@ -512,6 +408,24 @@ void GLView::pollEvents()
     glfwPollEvents();
 }
 
+
+void GLView::enableRetina(bool enabled)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    _isRetinaEnabled = enabled;
+    if (_isRetinaEnabled)
+    {
+        _retinaFactor = 1;
+    }
+    else
+    {
+        _retinaFactor = 2;
+    }
+    updateFrameSize();
+#endif
+}
+
+
 void GLView::setIMEKeyboardState(bool /*bOpen*/)
 {
     
@@ -519,8 +433,15 @@ void GLView::setIMEKeyboardState(bool /*bOpen*/)
 
 void GLView::setFrameZoomFactor(float zoomFactor)
 {
+    CCASSERT(zoomFactor > 0.0f, "zoomFactor must be larger than 0");
+    
+    if (fabs(_frameZoomFactor - zoomFactor) < FLT_EPSILON)
+    {
+        return;
+    }
+    
     _frameZoomFactor = zoomFactor;
-    Director::getInstance()->setProjection(Director::getInstance()->getProjection());
+    updateFrameSize();
 }
 
 float GLView::getFrameZoomFactor()
@@ -528,25 +449,209 @@ float GLView::getFrameZoomFactor()
     return _frameZoomFactor;
 }
 
+void GLView::updateFrameSize()
+{
+    if (_screenSize.width > 0 && _screenSize.height > 0)
+    {
+        int w = 0, h = 0;
+        glfwGetWindowSize(_mainWindow, &w, &h);
+        
+        int frameBufferW = 0, frameBufferH = 0;
+        glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
+        
+        if (frameBufferW == 2 * w && frameBufferH == 2 * h)
+        {
+            if (_isRetinaEnabled)
+            {
+                _retinaFactor = 1;
+            }
+            else
+            {
+                _retinaFactor = 2;
+            }
+            glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
+            
+            _isInRetinaMonitor = true;
+        }
+        else
+        {
+            if (_isInRetinaMonitor)
+            {
+                _retinaFactor = 1;
+            }
+            glfwSetWindowSize(_mainWindow, _screenSize.width * _retinaFactor * _frameZoomFactor, _screenSize.height *_retinaFactor * _frameZoomFactor);
+            
+            _isInRetinaMonitor = false;
+        }
+    }
+}
+
 void GLView::setFrameSize(float width, float height)
 {
     GLViewProtocol::setFrameSize(width, height);
+    updateFrameSize();
 }
 
 void GLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
-               (GLint)(y * _scaleY  * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
-               (GLsizei)(w * _scaleX * _frameZoomFactor),
-               (GLsizei)(h * _scaleY * _frameZoomFactor));
+    glViewport((GLint)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor),
+               (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
+               (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor),
+               (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor));
 }
 
 void GLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    glScissor((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
-               (GLint)(y * _scaleY  * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
-               (GLsizei)(w * _scaleX * _frameZoomFactor),
-               (GLsizei)(h * _scaleY * _frameZoomFactor));
+    glScissor((GLint)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor),
+               (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
+               (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor),
+               (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor));
+}
+
+void GLView::onGLFWError(int errorID, const char* errorDesc)
+{
+    CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
+}
+
+void GLView::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+{
+    if(GLFW_MOUSE_BUTTON_LEFT == button)
+    {
+        if(GLFW_PRESS == action)
+        {
+            _captured = true;
+            if (this->getViewPortRect().equals(Rect::ZERO) || this->getViewPortRect().containsPoint(Point(_mouseX,_mouseY)))
+            {
+                int id = 0;
+                this->handleTouchesBegin(1, &id, &_mouseX, &_mouseY);
+            }
+        }
+        else if(GLFW_RELEASE == action)
+        {
+            _captured = false;
+            if (this->getViewPortRect().equals(Rect::ZERO) || this->getViewPortRect().containsPoint(Point(_mouseX,_mouseY)))
+            {
+                int id = 0;
+                this->handleTouchesEnd(1, &id, &_mouseX, &_mouseY);
+            }
+        }
+    }
+    
+    if(GLFW_PRESS == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
+        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+        event.setCursorPosition(_mouseX, this->getViewPortRect().size.height - _mouseY);
+        event.setMouseButton(button);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
+    else if(GLFW_RELEASE == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
+        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+        event.setCursorPosition(_mouseX, this->getViewPortRect().size.height - _mouseY);
+        event.setMouseButton(button);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
+}
+
+void GLView::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
+{
+    _mouseX = (float)x;
+    _mouseY = (float)y;
+    
+    _mouseX /= this->getFrameZoomFactor();
+    _mouseY /= this->getFrameZoomFactor();
+    
+    if (_isInRetinaMonitor)
+    {
+        if (_retinaFactor == 1)
+        {
+            _mouseX *= 2;
+            _mouseY *= 2;
+        }
+    }
+    
+    if (_captured)
+    {
+        if (this->getViewPortRect().equals(Rect::ZERO) || this->getViewPortRect().containsPoint(Point(_mouseX, _mouseY)))
+        {
+            int id = 0;
+            this->handleTouchesMove(1, &id, &_mouseX, &_mouseY);
+        }
+    }
+    
+    EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+    event.setCursorPosition(_mouseX, this->getViewPortRect().size.height - _mouseY);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void GLView::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+{
+    EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
+    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+    event.setScrollData((float)x, -(float)y);
+    event.setCursorPosition(_mouseX, this->getViewPortRect().size.height - _mouseY);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void GLView::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
+}
+
+void GLView::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
+{
+    IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char*) &character, 1);
+}
+
+void GLView::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
+{
+    Director::getInstance()->setViewport();
+}
+
+void GLView::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
+{
+    float frameSizeW = _screenSize.width;
+    float frameSizeH = _screenSize.height;
+    float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
+    float factorY = frameSizeH / h * _retinaFactor * _frameZoomFactor;
+    
+    if (fabs(factorX - 0.5f) < FLT_EPSILON && fabs(factorY - 0.5f) < FLT_EPSILON )
+    {
+        _isInRetinaMonitor = true;
+        if (_isRetinaEnabled)
+        {
+            _retinaFactor = 1;
+        }
+        else
+        {
+            _retinaFactor = 2;
+        }
+
+        glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor) , static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
+    }
+    else if(fabs(factorX - 2.0f) < FLT_EPSILON && fabs(factorY - 2.0f) < FLT_EPSILON)
+    {
+        _isInRetinaMonitor = false;
+        _retinaFactor = 1;
+        glfwSetWindowSize(window, static_cast<int>(frameSizeW * _retinaFactor * _frameZoomFactor), static_cast<int>(frameSizeH * _retinaFactor * _frameZoomFactor));
+    }
+}
+
+void GLView::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
+{
+	if (_resolutionPolicy != ResolutionPolicy::UNKNOWN)
+	{
+        updateDesignResolution();
+		Director::getInstance()->setViewport();
+	}
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
