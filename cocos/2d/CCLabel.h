@@ -135,15 +135,16 @@ public:
     virtual void disableEffect();
     
 
-    virtual void setAlignment(TextHAlignment hAlignment);
+    virtual void setAlignment(TextHAlignment hAlignment,bool aligntext = true);
     TextHAlignment getTextAlignment() const { return _hAlignment;}
 
-    virtual void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment);
+    virtual void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment,bool aligntext = true);
 
+    virtual void setHorizontalAlignment(TextHAlignment alignment,bool aligntext = true);
     TextHAlignment getHorizontalAlignment() const { return _hAlignment; }
-    virtual void setHorizontalAlignment(TextHAlignment alignment);
+
+    virtual void setVerticalAlignment(TextVAlignment verticalAlignment,bool aligntext = true);
     TextVAlignment getVerticalAlignment() const { return _vAlignment; }
-    virtual void setVerticalAlignment(TextVAlignment verticalAlignment);
 
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
 

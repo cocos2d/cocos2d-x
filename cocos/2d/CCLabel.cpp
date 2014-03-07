@@ -189,8 +189,9 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 : _reusedLetter(nullptr)
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
-, _labelWidth(0.0f)
-, _labelHeight(0.0f)
+, _maxLineWidth(0)
+, _labelWidth(0)
+, _labelHeight(0)
 , _hAlignment(alignment)
 , _currentUTF16String(nullptr)
 , _originalUTF16String(nullptr)
@@ -362,28 +363,28 @@ void Label::setString(const std::string& text)
     }
 }
 
-void Label::setAlignment(TextHAlignment hAlignment)
+void Label::setAlignment(TextHAlignment hAlignment,bool aligntext /* = true */)
 {
-    setAlignment(hAlignment,_vAlignment);
+    setAlignment(hAlignment,_vAlignment,aligntext);
 }
 
-inline void Label::setHorizontalAlignment(TextHAlignment hAlignment)
+inline void Label::setHorizontalAlignment(TextHAlignment hAlignment,bool aligntext /* = true */)
 {
-    setAlignment(hAlignment,_vAlignment);
+    setAlignment(hAlignment,_vAlignment,aligntext);
 }
 
-inline void Label::setVerticalAlignment(TextVAlignment vAlignment)
+inline void Label::setVerticalAlignment(TextVAlignment vAlignment,bool aligntext /* = true */)
 {
-    setAlignment(_hAlignment,vAlignment);
+    setAlignment(_hAlignment,vAlignment,aligntext);
 }
 
-void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
+void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment,bool aligntext /* = true */)
 {
     if (hAlignment != _hAlignment || vAlignment != _vAlignment)
     {
         _hAlignment = hAlignment;
         _vAlignment = vAlignment;
-        if (_currentUTF16String)
+        if (_currentUTF16String && aligntext)
         {
             resetCurrentString();
             alignText();
@@ -553,7 +554,7 @@ void Label::alignText()
     }
 
     int index;
-    for (int ctr = 0; ctr < strLen; ++ctr)
+    for (int ctr = 0; ctr < _limitShowCount; ++ctr)
     {        
         if (_lettersInfo[ctr].def.validDefinition)
         {
@@ -881,7 +882,7 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
 ///// PROTOCOL STUFF
 Sprite * Label::getLetter(int lettetIndex)
 {
-    if (lettetIndex < getStringLength())
+    if (lettetIndex < _limitShowCount)
     {
         if(_lettersInfo[lettetIndex].def.validDefinition == false)
             return nullptr;
@@ -1012,6 +1013,5 @@ std::string Label::getDescription() const
 {
     return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, cc_utf16_to_utf8(_currentUTF16String,-1,nullptr,nullptr));
 }
-
 
 NS_CC_END
