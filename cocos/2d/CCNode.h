@@ -76,53 +76,29 @@ bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
-/** @brief Node is the base element of the Scene Graph. Element of the Scene Graph must be Node objects or subclasses of it.
- The most common Node objects are: Scene, Layer, Sprite, Menu.
+/** @brief Node is the base element of the Scene Graph. Elements of the Scene Graph must be Node objects or subclasses of it.
+ The most common Node objects are: Scene, Layer, Sprite, Menu, Label.
 
  The main features of a Node are:
  - They can contain other Node objects (`addChild`, `getChildByTag`, `removeChild`, etc)
  - They can schedule periodic callback (`schedule`, `unschedule`, etc)
  - They can execute actions (`runAction`, `stopAction`, etc)
 
- Some Node objects provide extra functionality for them or their children.
-
  Subclassing a Node usually means (one/all) of:
  - overriding init to initialize resources and schedule callbacks
  - create callbacks to handle the advancement of time
- - overriding draw to render the node
+ - overriding `draw` to render the node
 
  Properties of Node:
- - position
- - scale (x, y)
- - rotation (in degrees, clockwise)
- - GridBase (to do mesh transformations)
- - anchor point
- - size
- - visible
- - z-order
- - openGL z position
-
- Default values:
- - rotation: 0
- - position: (x=0,y=0)
- - scale: (x=1,y=1)
- - contentSize: (x=0,y=0)
- - anchorPoint: (x=0,y=0)
+ - position (default: x=0, y=0)
+ - scale (default: x=1, y=1)
+ - rotation (in degrees, clockwise) (default: 0)
+ - anchor point (default: x=0, y=0)
+ - contentSize (default: width=0, height=0)
+ - visible (default: true)
 
  Limitations:
- - A Node is a "invisible" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
-
- Order in transformations with grid disabled
- -# The node will be translated (position)
- -# The node will be rotated (rotation)
- -# The node will be scaled (scale)
-
- Order in transformations with grid enabled
- -# The node will be translated (position)
- -# The node will be rotated (rotation)
- -# The node will be scaled (scale)
- -# The grid will capture the screen
- -# The grid will render the captured screen
+ - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
 
  */
 
@@ -215,9 +191,9 @@ public:
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
     /**
-     * Changes the scale factor on X axis of this node
+     * Sets the scale (x) of the node.
      *
-     * The deafult value is 1.0 if you haven't changed it before
+     * It is a scaling factor that multiplies the width of the node and its children.
      *
      * @param scaleX   The scale factor on X axis.
      */
@@ -233,9 +209,9 @@ public:
 
 
     /**
-     * Changes the scale factor on Y axis of this node
+     * Sets the scale (y) of the node.
      *
-     * The Default value is 1.0 if you haven't changed it before.
+     * It is a scaling factor that multiplies the height of the node and its children.
      *
      * @param scaleY   The scale factor on Y axis.
      */
@@ -268,9 +244,9 @@ public:
 
 
     /**
-     * Changes both X and Y scale factor of the node.
+     * Sets the scale (x,y,z) of the node.
      *
-     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
+     * It is a scaling factor that multiplies the width, height and depth of the node and its children.
      *
      * @param scale     The scale factor for both X and Y axis.
      */
@@ -286,21 +262,20 @@ public:
     virtual float getScale() const;
 
      /**
-     * Changes both X and Y scale factor of the node.
+     * Sets the scale (x,y) of the node.
      *
-     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
+     * It is a scaling factor that multiplies the width and height of the node and its children.
      *
      * @param scaleX     The scale factor on X axis.
      * @param scaleY     The scale factor on Y axis.
      */
-    virtual void setScale(float scaleX,float scaleY);
+    virtual void setScale(float scaleX, float scaleY);
 
     /**
-     * Changes the position (x,y) of the node in OpenGL coordinates
+     * Sets the position (x,y) of the node in its parent's coordinate system.
      *
      * Usually we use `Point(x,y)` to compose Point object.
-     * The original point (0,0) is at the left-bottom corner of screen.
-     * For example, this codesnip sets the node in the center of screen.
+     * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
      node->setPosition( Point(size.width/2, size.height/2) )
@@ -310,7 +285,7 @@ public:
      */
     virtual void setPosition(const Point &position);
     /**
-     * Gets the position (x,y) of the node in OpenGL coordinates
+     * Gets the position (x,y) of the node in its parent's coordinate system.
      *
      * @see setPosition(const Point&)
      *
@@ -321,14 +296,14 @@ public:
      */
     virtual const Point& getPosition() const;
     /**
-     * Sets position in a more efficient way.
+     * Sets the position (x,y) of the node in its parent's coordinate system.
      *
      * Passing two numbers (x,y) is much efficient than passing Point object.
-     * This method is binded to lua and javascript.
-     * Passing a number is 10 times faster than passing a object from lua to c++
+     * This method is bound to Lua and JavaScript.
+     * Passing a number is 10 times faster than passing a object from Lua to c++
      *
      @code
-     // sample code in lua
+     // sample code in Lua
      local pos  = node::getPosition()  -- returns Point object from C++
      node:setPosition(x, y)            -- pass x, y coordinate to C++
      @endcode
@@ -354,16 +329,16 @@ public:
     virtual float getPositionY(void) const;
 
     /**
-     * Sets the X, Y, and Z axis position
+     * Sets the position (X, Y, and Z) in its parent's coordinate system
      */
     virtual void setPosition3D(const Vertex3F& position);
     /**
-     * returns the X, Y and Z axis position
+     * returns the position (X,Y,Z) in its parent's coordinate system
      */
     virtual Vertex3F getPosition3D() const;
 
     /**
-     * Sets the 'z' axis in the position. It is the OpenGL Z vertex value.
+     * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
      *
      * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on
      * in order to use this property correctly.
@@ -378,11 +353,11 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
 
     /**
-     * Gets position Z axis of this node.
+     * Gets position Z coordinate of this node.
      *
      * @see setPositionZ(float)
      *
-     * @return the position Z axis of this node.
+     * @return the position Z coordinate of this node.
      */
     virtual float getPositionZ() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
@@ -391,10 +366,10 @@ public:
      * Changes the X skew angle of the node in degrees.
      *
      * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew funciton.
+     * while the second one uses the real skew function.
      *
      * This angle describes the shear distortion in the X direction.
-     * Thus, it is the angle between the Y axis and the left edge of the shape
+     * Thus, it is the angle between the Y coordinate and the left edge of the shape
      * The default skewX angle is 0. Positive values distort the node in a CW direction.
      *
      * @param skewX The X skew angle of the node in degrees.
@@ -414,10 +389,10 @@ public:
      * Changes the Y skew angle of the node in degrees.
      *
      * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew funciton.
+     * while the second one uses the real skew function.
      *
      * This angle describes the shear distortion in the Y direction.
-     * Thus, it is the angle between the X axis and the bottom edge of the shape
+     * Thus, it is the angle between the X coordinate and the bottom edge of the shape
      * The default skewY angle is 0. Positive values distort the node in a CCW direction.
      *
      * @param skewY    The Y skew angle of the node in degrees.
@@ -521,20 +496,20 @@ public:
     virtual float getRotation() const;
 
     /**
-     * Sets the X, Y and Z axis rotation
+     * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
      */
     virtual void setRotation3D(const Vertex3F& rotation);
     /**
-     * returns the X, Y and Z axis rotation
+     * returns the rotation (X,Y,Z) in degrees.
      */
     virtual Vertex3F getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
      *
-     * The difference between setRotationalSkew() and setSkew() is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew funciton.
+     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
+     * while the second one uses the real skew function.
      *
      * 0 is the default rotation angle.
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
@@ -557,8 +532,8 @@ public:
     /**
      * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
      *
-     * The difference between setRotationalSkew() and setSkew() is that the first one simulate Flash's skew functionality
-     * while the second one uses the real skew funciton.
+     * The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality
+     * while the second one uses the real skew function.
      *
      * 0 is the default rotation angle.
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
@@ -590,7 +565,7 @@ public:
      */
     void setOrderOfArrival(int orderOfArrival);
     /**
-     * Returns the arrival order, indecates which children is added previously.
+     * Returns the arrival order, indicates which children is added previously.
      *
      * @see `setOrderOfArrival(unsigned int)`
      *
@@ -617,7 +592,7 @@ public:
      * The default value is false, while in Layer and Scene are true
      *
      * @param ignore    true if anchor point will be (0,0) when you position this node
-     * @todo This method shoud be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set"
+     * @todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set"
      */
     virtual void ignoreAnchorPointForPosition(bool ignore);
     /**
@@ -629,7 +604,7 @@ public:
      */
     virtual bool isIgnoreAnchorPointForPosition() const;
 
-    /// @}  end of Setters & Getters for Graphic Peroperties
+    /// @}  end of Setters & Getters for Graphic Properties
 
 
     /// @{
@@ -658,8 +633,8 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
      */
     virtual void addChild(Node* child, int localZOrder, int tag);
     /**
@@ -671,26 +646,15 @@ public:
      */
     virtual Node * getChildByTag(int tag);
     /**
-     * Return an array of children
+     * Returns the array of the node's children
      *
-     * Composing a "tree" structure is a very important feature of Node
-     * Here's a sample code of traversing children array:
-     @code
-     Node* node = nullptr;
-     CCARRAY_FOREACH(parent->getChildren(), node)
-     {
-        node->setPosition(0,0);
-     }
-     @endcode
-     * This sample code traverses all children nodes, and set their position to (0,0)
-     *
-     * @return An array of children
+     * @return the array the node's children
      */
     virtual Vector<Node*>& getChildren() { return _children; }
     virtual const Vector<Node*>& getChildren() const { return _children; }
     
     /** 
-     * Get the amount of children.
+     * Returns the amount of children
      *
      * @return The amount of children.
      */
@@ -783,35 +747,7 @@ public:
     /**
      * Returns a tag that is used to identify the node easily.
      *
-     * You can set tags to node then identify them easily.
-     @code
-     #define TAG_PLAYER  1
-     #define TAG_MONSTER 2
-     #define TAG_BOSS    3
-     // set tags
-     node1->setTag(TAG_PLAYER);
-     node2->setTag(TAG_MONSTER);
-     node3->setTag(TAG_BOSS);
-     parent->addChild(node1);
-     parent->addChild(node2);
-     parent->addChild(node3);
-     // identify by tags
-     Node* node = nullptr;
-     CCARRAY_FOREACH(parent->getChildren(), node)
-     {
-         switch(node->getTag())
-         {
-             case TAG_PLAYER:
-                 break;
-             case TAG_MONSTER:
-                 break;
-             case TAG_BOSS:
-                 break;
-         }
-     }
-     @endcode
-     *
-     * @return A interger that identifies the node.
+     * @return An integer that identifies the node.
      */
     virtual int getTag() const;
     /**
@@ -819,7 +755,7 @@ public:
      *
      * Please refer to getTag for the sample code.
      *
-     * @param tag   A interger that indentifies the node.
+     * @param tag   A integer that identifies the node.
      */
     virtual void setTag(int tag);
 
@@ -873,8 +809,8 @@ public:
      *
      * Similar to UserData, but instead of holding a void* it holds an object.
      * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be relese.
-     * The UserObject will be released in Node's destructure.
+     * and the previous UserObject (if existed) will be released.
+     * The UserObject will be released in Node's destructor.
      *
      * @param userObject    A user assigned Object
      */
@@ -888,7 +824,7 @@ public:
     /**
      * Return the shader program currently used for this node
      *
-     * @return The shader program currelty used for this node
+     * @return The shader program currently used for this node
      */
     virtual GLProgram* getShaderProgram() { return _shaderProgram; }
     virtual const GLProgram* getShaderProgram() const { return _shaderProgram; }
@@ -902,16 +838,16 @@ public:
      node->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      @endcode
      *
-     * @param shaderProgram The shader program which fetchs from ShaderCache.
+     * @param shaderProgram The shader program
      */
     virtual void setShaderProgram(GLProgram *shaderProgram);
     /// @} end of Shader Program
 
 
     /**
-     * Returns whether or not the node accepts event callbacks.
+     * Returns whether or not the node is "running".
      *
-     * Running means the node accept event callbacks like onEnter(), onExit(), update()
+     * If the node is running it will accept event callbacks like onEnter(), onExit(), update()
      *
      * @return Whether or not the node is running.
      */
@@ -1000,13 +936,9 @@ public:
     virtual Scene* getScene();
 
     /**
-     * Returns a "local" axis aligned bounding box of the node.
-     * The returned box is relative only to its parent.
+     * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
      *
-     * @note This method returns a temporaty variable, so it can't returns const Rect&
-     * @todo Rename to `getBoundingBox()` in the future versions.
-     *
-     * @return A "local" axis aligned boudning box of the node.
+     * @return An AABB (axis-aligned bounding-box) in its parent's coordinate system
      */
     virtual Rect getBoundingBox() const;
 
