@@ -77,9 +77,6 @@ void Text::initRenderer()
 
 void Text::setText(const std::string& text)
 {
-	if (text.size()==0)
-		return;
-
     _labelRenderer->setString(text);
     labelScaleChangedWithSize();
 }
