@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace cocos2d::gui;
+using namespace cocos2d::ui;
 
 class JSStudioEventListenerWrapper: public JSCallbackWrapper {
 public:
@@ -76,7 +76,7 @@ static JSBool js_cocos2dx_Widget_addTouchEventListener(JSContext *cx, uint32_t a
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::Widget* cobj = (cocos2d::gui::Widget *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -108,7 +108,7 @@ static JSBool js_cocos2dx_CheckBox_addEventListener(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::CheckBox* cobj = (cocos2d::gui::CheckBox *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::CheckBox* cobj = (cocos2d::ui::CheckBox *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -140,7 +140,7 @@ static JSBool js_cocos2dx_Slider_addEventListener(JSContext *cx, uint32_t argc, 
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::Slider* cobj = (cocos2d::gui::Slider *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -172,7 +172,7 @@ static JSBool js_cocos2dx_TextField_addEventListener(JSContext *cx, uint32_t arg
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::TextField* cobj = (cocos2d::gui::TextField *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::TextField* cobj = (cocos2d::ui::TextField *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -204,7 +204,7 @@ static JSBool js_cocos2dx_PageView_addEventListener(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::PageView* cobj = (cocos2d::gui::PageView *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::PageView* cobj = (cocos2d::ui::PageView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -236,7 +236,7 @@ static JSBool js_cocos2dx_ScrollView_addEventListener(JSContext *cx, uint32_t ar
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::ScrollView* cobj = (cocos2d::gui::ScrollView *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 2) {
@@ -268,7 +268,7 @@ static JSBool js_cocos2dx_ListView_addEventListener(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::ListView* cobj = (cocos2d::gui::ListView *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::ListView* cobj = (cocos2d::ui::ListView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 2) {
@@ -542,7 +542,7 @@ static JSBool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::LayoutParameter* cobj = (cocos2d::gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::LayoutParameter* cobj = (cocos2d::ui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 1) {
@@ -564,7 +564,7 @@ static JSBool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc
 
         JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
-        cobj->setMargin(cocos2d::gui::Margin(left,top,right,bottom));
+        cobj->setMargin(cocos2d::ui::Margin(left,top,right,bottom));
         return JS_TRUE;
     }
     JS_ReportError(cx, "Invalid number of arguments");
@@ -575,13 +575,13 @@ static JSBool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::gui::LayoutParameter* cobj = (cocos2d::gui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
+    cocos2d::ui::LayoutParameter* cobj = (cocos2d::ui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 
     if (argc == 0) {
         JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
         if (!tmp) return JS_FALSE;
-        cocos2d::gui::Margin margin = cobj->getMargin();
+        cocos2d::ui::Margin margin = cobj->getMargin();
         JSBool ok = JS_DefineProperty(cx, tmp, "left", DOUBLE_TO_JSVAL(margin.left), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "top", DOUBLE_TO_JSVAL(margin.top), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
             JS_DefineProperty(cx, tmp, "right", DOUBLE_TO_JSVAL(margin.right), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
