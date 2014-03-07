@@ -193,6 +193,7 @@ public:
     static void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
     static void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
 	static void OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int width, int height);
+    static void OnGLFWWindowCloseFunCallback(GLFWwindow *windows);
 };
 
 bool GLViewEventHandler::s_captured = false;
@@ -347,6 +348,11 @@ void GLViewEventHandler::OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int wi
 	}
 }
 
+void GLViewEventHandler::OnGLFWWindowCloseFunCallback(GLFWwindow *windows)
+{
+    exit(0);
+}
+
 //end GLViewEventHandler
 
 
@@ -447,6 +453,7 @@ bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoo
     glfwSetWindowPosCallback(_mainWindow, GLViewEventHandler::onGLFWWindowPosCallback);
     glfwSetFramebufferSizeCallback(_mainWindow, GLViewEventHandler::onGLFWframebuffersize);
 	glfwSetWindowSizeCallback(_mainWindow, GLViewEventHandler::OnGLFWWindowSizeFunCallback);
+    glfwSetWindowCloseCallback(_mainWindow, GLViewEventHandler::OnGLFWWindowCloseFunCallback);
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
     
