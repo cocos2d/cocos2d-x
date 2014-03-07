@@ -100,15 +100,23 @@ class SetEnvVar(object):
         return False
 
     # modify register table to add an environment variable on windows
-    # TODO: test in on windows
     def _set_environment_variable_win32(self, key, value):
 
         import _winreg
-        env = _winreg.OpenKeyEx(_winreg._winreg.HKEY_LOCAL_MACHINE,
-                                r'SYSTEM\ControlSet001\Control\Session Manager\Environment',
+        try:
+            env = None
+            env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
+                                'Environment',
                                 0,
                                 _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
-        _winreg.SetValueEx(env, key, 0, _winreg.REG_SZ, value)
+            _winreg.SetValueEx(env, key, 0, _winreg.REG_SZ, value)
+            _winreg.CloseKey(env)
+            return True
+        except Exception:
+            if env:
+                _winreg.CloseKey(env)
+            print 'Warning: Can not set %s into register' % key
+            return False
 
     def _set_environment_variable_unix(self, key, value):
 
@@ -122,40 +130,56 @@ class SetEnvVar(object):
     def _set_environment_variable(self, key, value):
 
         if self._isWindows():
-            self._set_environment_variable_win32(key, value)
+            return self._set_environment_variable_win32(key, value)
         else:
             self._set_environment_variable_unix(key, value)
+            return True
 
     def _find_environment_variable(self, var):
         try:
             os.environ[var]
             return True
         except Exception:
-            string_to_search = 'export %s' % var
-            home = os.path.expanduser('~')
+            if not self._isWindows():
+                string_to_search = 'export %s' % var
+                home = os.path.expanduser('~')
 
-            # search it in ~/.bash_profile
-            path = os.path.join(home, '.bash_profile')
-            if os.path.exists(path):
-                if self._find_string_in_file(string_to_search, path):
-                    self.file_used_for_setup = path
+                # search it in ~/.bash_profile
+                path = os.path.join(home, '.bash_profile')
+                if os.path.exists(path):
+                    if self._find_string_in_file(string_to_search, path):
+                        self.file_used_for_setup = path
+                        return True
+
+                # search it in ~/.bash_login
+                path = os.path.join(home, '.bash_login')
+                if os.path.exists(path):
+                    if self._find_string_in_file(string_to_search, path):
+                        self.file_used_for_setup = path
+                        return True
+
+                # search it in ~/.profile
+                path = os.path.join(home, '.profile')
+                if os.path.exists(path):
+                    if self._find_string_in_file(string_to_search, path):
+                        self.file_used_for_setup = path
+                        return True
+            else:
+                import _winreg
+                try:
+                    env = None
+                    env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
+                                'Environment',
+                                0,
+                                _winreg.KEY_READ)
+
+                    _winreg.QueryValueEx(env, var)
+                    _winreg.CloseKey(env)
                     return True
-
-            # search it in ~/.bash_login
-            path = os.path.join(home, '.bash_login')
-            if os.path.exists(path):
-                if self._find_string_in_file(string_to_search, path):
-                    self.file_used_for_setup = path
-                    return True
-
-            # search it in ~/.profile
-            path = os.path.join(home, '.profile')
-            if os.path.exists(path):
-                if self._find_string_in_file(string_to_search, path):
-                    self.file_used_for_setup = path
-                    return True
-
-        return False
+                except Exception:
+                    if env:
+                        _winreg.CloseKey(env)
+                    return False
 
     def _get_input_value(self, sys_var):
 
@@ -248,12 +272,12 @@ class SetEnvVar(object):
         print '-> Adding COCOS2D_CONSOLE_ROOT environment variable...',
         if not self._find_environment_variable(COCOS_CONSOLE_ROOT):
             cocos_consle_root = os.path.join(self.current_absolute_path, 'tools/cocos2d-console/bin')
-            self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root)
-            print 'OK'
-            return True
-
-        print 'ALREADY ADDED'
-        return False
+            if self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root):
+                print 'OK'
+                return True
+        else:
+            print 'ALREADY ADDED'
+            return False
 
 
     def set_environment_variables(self, ndk_root, android_sdk_root):
@@ -269,38 +293,38 @@ class SetEnvVar(object):
         ndk_root_added = False
         ndk_root_found = self._find_environment_variable(NDK_ROOT)
 
-        if not ndk_root:
+        if not ndk_root and not ndk_root_found:
             ndk_root = self._get_input_value(NDK_ROOT)
 
-        if not self._is_ndk_root_valid(ndk_root):
+        if not self._is_ndk_root_valid(ndk_root) and not ndk_root_found:
             print 'Warning: %s is not a valid path of NDK_ROOT, skip' % ndk_root
 
         if ndk_root_found:
             print 'ALREADY ADDED'
         else:
             if ndk_root and self._is_ndk_root_valid(ndk_root):
-                self._set_environment_variable(NDK_ROOT, ndk_root)
-                ndk_root_added = True
-                print 'OK'
+                if self._set_environment_variable(NDK_ROOT, ndk_root):
+                    ndk_root_added = True
+                    print 'OK'
 
         print '\n-> Adding ANDROID_SDK_ROOT envrironment variable...'
 
         android_sdk_root_added = False
         android_sdk_root_found = self._find_environment_variable(ANDROID_SDK_ROOT)
 
-        if not android_sdk_root:
+        if not android_sdk_root and not android_sdk_root_found:
             android_sdk_root = self._get_input_value(ANDROID_SDK_ROOT)
         
-        if not self._is_android_sdk_root_valid(android_sdk_root):
+        if not self._is_android_sdk_root_valid(android_sdk_root) and not android_sdk_root_found:
             print 'Warning: %s is not a valid path of ANDROID_SDK_ROOT, skip' % android_sdk_root
 
         if android_sdk_root_found:
             print 'ALREADY ADDED'
         else:
             if android_sdk_root and self._is_android_sdk_root_valid(android_sdk_root):
-                self._set_environment_variable(ANDROID_SDK_ROOT, android_sdk_root)
-                android_sdk_root_added = True
-                print 'OK'
+                if self._set_environment_variable(ANDROID_SDK_ROOT, android_sdk_root):
+                    android_sdk_root_added = True
+                    print 'OK'
 
         if console_added or ndk_root_added or android_sdk_root_added:
             print '\nSet up successfule.'
