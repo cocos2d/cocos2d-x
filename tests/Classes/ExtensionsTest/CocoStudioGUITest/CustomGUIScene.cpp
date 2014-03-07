@@ -3,6 +3,7 @@
 #include "CustomGUIScene.h"
 #include "CocoStudioGUITest.h"
 #include "CustomTest/CustomImageTest/CustomImageTest.h"
+#include "CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.h"
 
 
 enum
@@ -23,6 +24,15 @@ g_guisTests[] =
         [](Ref* sender)
         {
             CustomImageScene* pScene = new CustomImageScene();
+            pScene->runThisTest();
+            pScene->release();
+        }
+	},
+    {
+        "custom gui particle widget Test",
+        [](Ref* sender)
+        {
+            CustomParticleWidgetScene* pScene = new CustomParticleWidgetScene();
             pScene->runThisTest();
             pScene->release();
         }
@@ -53,8 +63,8 @@ void CustomGUITestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Point(s.width / 2, s.height / 2));
-//        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+//        pItem->setPosition(Point(s.width / 2, s.height / 2));
+        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     

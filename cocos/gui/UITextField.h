@@ -159,7 +159,7 @@ public:
     void setTextHorizontalAlignment(TextHAlignment alignment);
     void setTextVerticalAlignment(TextVAlignment alignment);
 protected:
-    // event
+    virtual bool init() override;
     virtual void initRenderer() override;
     void attachWithIMEEvent();
     void detachWithIMEEvent();
