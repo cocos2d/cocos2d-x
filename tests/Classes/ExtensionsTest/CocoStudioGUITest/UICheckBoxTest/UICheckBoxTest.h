@@ -37,7 +37,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UICheckBoxTest)
-    ui::Text* _displayValueLabel;
+    Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UICheckBoxTest__) */

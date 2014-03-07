@@ -59,6 +59,9 @@ typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 
 class ScrollView : public Layout , public UIScrollInterface
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor

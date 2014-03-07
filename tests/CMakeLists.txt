@@ -74,23 +74,47 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp
   Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp
   Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CocoStudioGUITest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/GUIEditorTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UITextTest/UITextTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIScene_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UITextTest/UITextTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageView.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget/CustomReader.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp
   Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp

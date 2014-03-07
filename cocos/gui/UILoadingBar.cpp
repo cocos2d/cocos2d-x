@@ -31,6 +31,8 @@ namespace ui {
     
 static const int BAR_RENDERER_Z = (-1);
     
+IMPLEMENT_CLASS_GUI_INFO(LoadingBar)
+    
 LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
 _percent(100),
@@ -140,8 +142,7 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_barRenderer);
     _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_barType)
@@ -194,6 +195,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
+    setPercent(_percent);
 }
 
 bool LoadingBar::isScale9Enabled()
@@ -327,6 +329,21 @@ void LoadingBar::setScale9Scale()
 std::string LoadingBar::getDescription() const
 {
     return "LoadingBar";
+}
+    
+void LoadingBar::updateTextureColor()
+{
+    updateColorToRenderer(_barRenderer);
+}
+
+void LoadingBar::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_barRenderer);
+}
+
+void LoadingBar::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_barRenderer);
 }
 
 Widget* LoadingBar::createCloneInstance()

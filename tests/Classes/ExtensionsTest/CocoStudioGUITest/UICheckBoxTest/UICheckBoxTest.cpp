@@ -21,7 +21,7 @@ bool UICheckBoxTest::init()
         Size widgetSize = _widget->getSize();;
         
         // Add a label in which the checkbox events will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -30,7 +30,7 @@ bool UICheckBoxTest::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("CheckBox");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);

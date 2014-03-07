@@ -37,6 +37,9 @@ namespace ui{
 */
 class Button : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -139,27 +142,6 @@ public:
 
     bool isScale9Enabled();
 
-    //override "setFlippedX" of widget.
-    virtual void setFlippedX(bool flippedX) override;
-
-    //override "setFlippedY" of widget.
-    virtual void setFlippedY(bool flippedY) override;
-
-    //override "isFlippedX" of widget.
-    virtual bool isFlippedX() override;
-
-    //override "isFlippedY" of widget.
-    virtual bool isFlippedY() override;
-
-    /** @deprecated Use isFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
-    /** @deprecated Use isFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
-
     /**
      * Changes if button can be clicked zoom effect.
      *
@@ -175,15 +157,6 @@ public:
 
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
-
-    /**
-     * Sets color to widget
-     *
-     * It default change the color of widget's children.
-     *
-     * @param color
-     */
-    virtual void setColor(const Color3B &color) override;
 
     /**
      * Returns the "class name" of widget.
@@ -206,7 +179,11 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
+    virtual void updateFlippedX() override;
+    virtual void updateFlippedY() override;
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();

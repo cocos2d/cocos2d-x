@@ -22,6 +22,7 @@
     <ClInclude Include="..\UIListView.h" />
     <ClInclude Include="..\UILoadingBar.h" />
     <ClInclude Include="..\UIPageView.h" />
+    <ClInclude Include="..\UIRichText.h" />
     <ClInclude Include="..\UIScrollInterface.h" />
     <ClInclude Include="..\UIScrollView.h" />
     <ClInclude Include="..\UISlider.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="..\UIListView.cpp" />
     <ClCompile Include="..\UILoadingBar.cpp" />
     <ClCompile Include="..\UIPageView.cpp" />
+    <ClCompile Include="..\UIRichText.cpp" />
     <ClCompile Include="..\UIScrollView.cpp" />
     <ClCompile Include="..\UISlider.cpp" />
     <ClCompile Include="..\UIText.cpp" />

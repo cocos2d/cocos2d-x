@@ -17,6 +17,7 @@ set(GUI_SRC
   UILoadingBar.cpp
   UISlider.cpp
   UITextField.cpp
+  UIRichText.cpp
 )
 
 add_library(gui STATIC

@@ -13,12 +13,14 @@ const char* font_UIListViewTest =
 
 UIListViewTest_Vertical::UIListViewTest_Vertical()
 : _displayValueLabel(nullptr)
+, _array(nullptr)
 {
     
 }
 
 UIListViewTest_Vertical::~UIListViewTest_Vertical()
 {
+    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Vertical::init()
@@ -27,7 +29,7 @@ bool UIListViewTest_Vertical::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move by vertical direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -36,7 +38,7 @@ bool UIListViewTest_Vertical::init()
         _uiLayer->addChild(_displayValueLabel);
         
         
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ListView vertical");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -51,9 +53,12 @@ bool UIListViewTest_Vertical::init()
         
         
         // create list view ex data
+        _array = Array::create();
+        CC_SAFE_RETAIN(_array);
         for (int i = 0; i < 20; ++i)
         {
-            _array.push_back(StringUtils::format("listview_item_%d", i));
+            __String* ccstr = __String::createWithFormat("listview_item_%d", i);
+            _array->addObject(ccstr);
         }
         
         
@@ -90,19 +95,19 @@ bool UIListViewTest_Vertical::init()
         listView->setItemModel(default_item);
         
         // add default item
-        size_t count = _array.size();
-        for (size_t i = 0; i < count / 4; ++i)
+        int count = _array->count();
+        for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
         }
         // insert default item
-        for (size_t i = 0; i < count / 4; ++i)
+        for (int i = 0; i < count / 4; ++i)
         {
             listView->insertDefaultItem(0);
         }
         
         // add custom item
-        for (size_t i = 0; i < count / 4; ++i)
+        for (int i = 0; i < count / 4; ++i)
         {
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
@@ -120,8 +125,8 @@ bool UIListViewTest_Vertical::init()
         }
         // insert custom item
         Vector<Widget*>& items = listView->getItems();
-        ssize_t items_count = items.size();
-        for (size_t i = 0; i < count / 4; ++i)
+        int items_count = items.size();
+        for (int i = 0; i < count / 4; ++i)
         {
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
@@ -140,12 +145,12 @@ bool UIListViewTest_Vertical::init()
         
         // set item data
         items_count = items.size();
-        for (ssize_t i = 0; i < items_count; ++i)
+        for (int i = 0; i < items_count; ++i)
         {
             Widget* item = listView->getItem(i);
             Button* button = static_cast<Button*>(item->getChildByName("Title Button"));
             int index = listView->getIndex(item);
-            button->setTitleText(_array[index]);
+            button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
         }
         
         // remove last item
@@ -187,11 +192,13 @@ void UIListViewTest_Vertical::selectedItemEvent(Ref *pSender, ListViewEventType 
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
 : _displayValueLabel(nullptr)
+, _array(nullptr)
 {
 }
 
 UIListViewTest_Horizontal::~UIListViewTest_Horizontal()
 {
+    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Horizontal::init()
@@ -200,7 +207,7 @@ bool UIListViewTest_Horizontal::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move by horizontal direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -209,7 +216,7 @@ bool UIListViewTest_Horizontal::init()
         _uiLayer->addChild(_displayValueLabel);
         
         
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ListView horizontal");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -224,9 +231,12 @@ bool UIListViewTest_Horizontal::init()
         
         
         // create list view ex data
+        _array = Array::create();
+        CC_SAFE_RETAIN(_array);
         for (int i = 0; i < 20; ++i)
         {
-            _array.push_back(StringUtils::format("listview_item_%d", i));
+            __String* ccstr = __String::createWithFormat("listview_item_%d", i);
+            _array->addObject(ccstr);
         }
         
         
@@ -263,7 +273,7 @@ bool UIListViewTest_Horizontal::init()
         listView->setItemModel(default_item);
         
         // add default item
-        size_t count = _array.size();
+        int count = _array->count();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -318,7 +328,7 @@ bool UIListViewTest_Horizontal::init()
             Widget *item = listView->getItem(i);
             Button *button = static_cast<Button*>(item->getChildByName("Title Button"));
             int index = listView->getIndex(item);
-            button->setTitleText(_array[index]);
+            button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
         }
         
         // remove last item

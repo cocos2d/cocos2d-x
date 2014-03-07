@@ -29,6 +29,8 @@ NS_CC_BEGIN
 namespace ui {
 
 static const int LABEL_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(Text)
 
 Text::Text():
 _touchScaleChangeEnabled(false),
@@ -154,21 +156,6 @@ void Text::setTouchScaleChangeEnabled(bool enable)
     _touchScaleChangeEnabled = enable;
 }
     
-void Text::setScale(float fScale)
-{
-    Widget::setScale(fScale);
-}
-    
-void Text::setScaleX(float fScaleX)
-{
-    Widget::setScaleX(fScaleX);
-}
-    
-void Text::setScaleY(float fScaleY)
-{
-    Widget::setScaleY(fScaleY);
-}
-
 bool Text::isTouchScaleChangeEnabled()
 {
     return _touchScaleChangeEnabled;
@@ -197,24 +184,15 @@ void Text::onPressStateChangedToDisabled()
     
 }
 
-void Text::setFlippedX(bool flippedX)
+void Text::updateFlippedX()
 {
-    _labelRenderer->setFlippedX(flippedX);
-}
+    _labelRenderer->setFlippedX(_flippedX);
 
-void Text::setFlippedY(bool flippedY)
-{
-    _labelRenderer->setFlippedY(flippedY);
 }
-
-bool Text::isFlippedX()
+    
+void Text::updateFlippedY()
 {
-    return _labelRenderer->isFlippedX();
-}
-
-bool Text::isFlippedY()
-{
-    return _labelRenderer->isFlippedY();
+    _labelRenderer->setFlippedY(_flippedY);
 }
 
 void Text::setAnchorPoint(const Point &pt)
@@ -243,12 +221,14 @@ void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
+        _labelRenderer->setDimensions(Size::ZERO);
         _labelRenderer->setScale(1.0f);
         _size = _labelRenderer->getContentSize();
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
     else
     {
+        _labelRenderer->setDimensions(_size);
         Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
@@ -268,6 +248,21 @@ void Text::labelScaleChangedWithSize()
 std::string Text::getDescription() const
 {
     return "Label";
+}
+    
+void Text::updateTextureColor()
+{
+    updateColorToRenderer(_labelRenderer);
+}
+
+void Text::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelRenderer);
+}
+
+void Text::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelRenderer);
 }
 
 Widget* Text::createCloneInstance()
