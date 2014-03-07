@@ -91,9 +91,10 @@ private:
     int _currentPageDataSize;
     float _currentPageOrigX;
     float _currentPageOrigY;
-    float _currentPageLineHeight;
     float _letterPadding;
     bool  _makeDistanceMap;
+
+    int _fontAscender;
 };
 
 
