@@ -33,8 +33,9 @@
 
 NS_CC_BEGIN
 
-/** Base class of the RenderCommand hierarchy.
- The Renderer knows how to render RenderCommands.
+/** Base class of the `RenderCommand` hierarchy.
+*
+ The `Renderer` knows how to render `RenderCommands` objects.
  */
 class RenderCommand
 {
