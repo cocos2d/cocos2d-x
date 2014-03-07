@@ -81,6 +81,7 @@ bool CheckBox::init()
     if (Widget::init())
     {
         setSelectedState(false);
+        setTouchEnabled(true);
         return true;
     }
     return false;

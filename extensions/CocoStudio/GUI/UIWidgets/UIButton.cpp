@@ -88,6 +88,7 @@ bool Button::init()
 {
     if (Widget::init())
     {
+        setTouchEnabled(true);
         return true;
     }
     return false;
