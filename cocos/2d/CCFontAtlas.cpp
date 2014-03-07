@@ -33,17 +33,18 @@ NS_CC_BEGIN
 const int FontAtlas::CacheTextureWidth = 1024;
 const int FontAtlas::CacheTextureHeight = 1024;
 
-FontAtlas::FontAtlas(Font &theFont) : 
-_font(&theFont),
-_currentPageData(nullptr)
+FontAtlas::FontAtlas(Font &theFont) 
+: _font(&theFont)
+, _currentPageData(nullptr)
+, _fontAscender(0)
 {
     _font->retain();
 
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf)
     {
-        _currentPageLineHeight = _font->getFontMaxHeight();
-        _commonLineHeight = _currentPageLineHeight * 0.8f;
+        _commonLineHeight = _font->getFontMaxHeight();
+        _fontAscender = fontTTf->getFontAscender();
         auto texture = new Texture2D;
         _currentPage = 0;
         _currentPageOrigX = 0;
@@ -139,13 +140,13 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.width            = tempRect.size.width + _letterPadding;
                 tempDef.height           = tempRect.size.height + _letterPadding;
                 tempDef.offsetX          = tempRect.origin.x + offsetAdjust;
-                tempDef.offsetY          = _commonLineHeight + tempRect.origin.y - offsetAdjust;
+                tempDef.offsetY          = _fontAscender + tempRect.origin.y - offsetAdjust;
 
                 if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
                 {
-                    _currentPageOrigY += _currentPageLineHeight;
+                    _currentPageOrigY += _commonLineHeight;
                     _currentPageOrigX = 0;
-                    if(_currentPageOrigY + _currentPageLineHeight >= CacheTextureHeight)
+                    if(_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
                     {             
                         _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
                         _currentPageOrigY = 0;
