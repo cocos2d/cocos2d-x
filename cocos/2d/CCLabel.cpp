@@ -189,8 +189,9 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 : _reusedLetter(nullptr)
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
-, _maxLineWidth(0.0f)
-, _alignment(alignment)
+, _labelWidth(0.0f)
+, _labelHeight(0.0f)
+, _hAlignment(alignment)
 , _currentUTF16String(nullptr)
 , _originalUTF16String(nullptr)
 , _horizontalKernings(nullptr)
@@ -201,7 +202,6 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _fontScale(1.0f)
 , _uniformEffectColor(0)
 ,_currNumLines(-1)
-,_fontConfig(TTFConfig(""))
 {
     _cascadeColorEnabled = true;
     _batchNodes.push_back(this);
@@ -214,9 +214,11 @@ Label::~Label()
     delete [] _horizontalKernings;
 
     if (_fontAtlas)
+    {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
+    }
 
-    _reusedLetter->release();
+    CC_SAFE_RELEASE_NULL(_reusedLetter);
 }
 
 bool Label::init()
@@ -282,7 +284,7 @@ bool Label::initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = fa
     {
         if (ret)
         {
-            FontAtlasCache::releaseFontAtlas(oldAtlas);        
+            FontAtlasCache::releaseFontAtlas(oldAtlas);
         }
         else
         {
@@ -350,52 +352,78 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Point& im
 
 void Label::setString(const std::string& text)
 {
-    if (!_fontAtlas || _commonLineHeight <= 0)
-        return ;
-
-    unsigned short* utf16String = cc_utf8_to_utf16(text.c_str());
-    if(!utf16String)
-        return ;
-    _originalUTF8String = text;
-    setCurrentString(utf16String);
-    setOriginalString(utf16String);
-
-    // align text
-    alignText();
+    auto utf16String = cc_utf8_to_utf16(text.c_str());
+    if(utf16String)
+    {
+        _originalUTF8String = text;
+        setCurrentString(utf16String);
+        setOriginalString(utf16String);
+        alignText();
+    }
 }
 
-void Label::setAlignment(TextHAlignment alignment)
+void Label::setAlignment(TextHAlignment hAlignment)
 {
-    // store the new alignment
-    if (alignment != _alignment)
-    {
-        // store
-        _alignment = alignment;
+    setAlignment(hAlignment,_vAlignment);
+}
 
+inline void Label::setHorizontalAlignment(TextHAlignment hAlignment)
+{
+    setAlignment(hAlignment,_vAlignment);
+}
+
+inline void Label::setVerticalAlignment(TextVAlignment vAlignment)
+{
+    setAlignment(_hAlignment,vAlignment);
+}
+
+void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
+{
+    if (hAlignment != _hAlignment || vAlignment != _vAlignment)
+    {
+        _hAlignment = hAlignment;
+        _vAlignment = vAlignment;
         if (_currentUTF16String)
         {
-            // reset the string
             resetCurrentString();
-
-            // need to align text again
             alignText();
         }
     }
 }
 
-void Label::setMaxLineWidth(float width)
+void Label::setMaxLineWidth(unsigned int maxLineWidth)
 {
-    if (width != _maxLineWidth)
+    if (_maxLineWidth != maxLineWidth)
     {
-        // store
-        _maxLineWidth = width;
-
+        _maxLineWidth = maxLineWidth;
         if (_currentUTF16String)
         {
-            // reset the string
             resetCurrentString();
+            alignText();
+        }
+    }
+}
 
-            // need to align text again
+inline void Label::setWidth(unsigned int width)
+{
+    setDimensions(width,_labelHeight);
+}
+
+inline void Label::setHeight(unsigned int height)
+{
+    setDimensions(_labelWidth,height);
+}
+
+void Label::setDimensions(unsigned int width,unsigned int height)
+{
+    if (height != _labelHeight || width != _labelWidth)
+    {
+        _labelHeight = height;
+        _labelWidth = width;
+        _maxLineWidth = width;
+        if (_currentUTF16String)
+        {
+            resetCurrentString();
             alignText();
         }
     }
@@ -470,7 +498,7 @@ float Label::getScaleX() const
 
 void Label::alignText()
 {
-    if (_reusedLetter == nullptr)
+    if (_fontAtlas == nullptr)
     {
         return;
     }
@@ -496,7 +524,7 @@ void Label::alignText()
     if(_maxLineWidth > 0 && _contentSize.width > _maxLineWidth && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
 
-    if(_currNumLines > 1 && _alignment != TextHAlignment::LEFT)
+    if(_labelWidth >0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
         LabelTextFormatter::alignText(this);
 
     int strLen = cc_wcslen(_currentUTF16String);
@@ -544,7 +572,7 @@ bool Label::computeHorizontalKernings(unsigned short int *stringToRender)
     if (_horizontalKernings)
     {
         delete [] _horizontalKernings;
-        _horizontalKernings = 0;
+        _horizontalKernings = nullptr;
     }
 
     int letterCount = 0;
@@ -582,6 +610,7 @@ bool Label::setCurrentString(unsigned short *stringToSet)
 
     _currentUTF16String  = stringToSet;
     computeStringNumLines();
+
     // compute the advances
     return computeHorizontalKernings(stringToSet);
 }
@@ -629,6 +658,7 @@ bool Label::recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinit
     _lettersInfo[spriteIndex].position = point;
     _lettersInfo[spriteIndex].contentSize.width = _lettersInfo[spriteIndex].def.width;
     _lettersInfo[spriteIndex].contentSize.height = _lettersInfo[spriteIndex].def.height;
+    _limitShowCount++;
 
     return _lettersInfo[spriteIndex].def.validDefinition;
 }
@@ -642,6 +672,7 @@ bool Label::recordPlaceholderInfo(int spriteIndex)
     }
 
     _lettersInfo[spriteIndex].def.validDefinition = false;
+    _limitShowCount++;
 
     return false;
 }
@@ -850,8 +881,8 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
 ///// PROTOCOL STUFF
 Sprite * Label::getLetter(int lettetIndex)
 {
-    if (lettetIndex < getStringLenght())
-    {       
+    if (lettetIndex < getStringLength())
+    {
         if(_lettersInfo[lettetIndex].def.validDefinition == false)
             return nullptr;
 
@@ -913,25 +944,9 @@ void Label::computeStringNumLines()
     _currNumLines = quantityOfLines;
 }
 
-int Label::getStringLenght() const
+int Label::getStringLength() const
 {
     return _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
-}
-
-TextHAlignment Label::getTextAlignment() const
-{
-    return _alignment;
-}
-
-// label related stuff
-float Label::getMaxLineWidth() const
-{
-    return _maxLineWidth;
-}
-
-bool Label::breakLineWithoutSpace() const
-{
-    return _lineBreakWithoutSpaces;
 }
 
 // RGBA protocol
