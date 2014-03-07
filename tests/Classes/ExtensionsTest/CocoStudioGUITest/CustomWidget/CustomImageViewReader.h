@@ -7,12 +7,7 @@
 #include "cocostudio/DictionaryHelper.h"
 #include "gui/CocosGUI.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-using namespace cocos2d::ui;
-using namespace cocostudio;
-
-class CustomImageViewReader : public Ref
+class CustomImageViewReader : public cocos2d::Ref
 {
 public:
     
@@ -22,7 +17,7 @@ public:
     static CustomImageViewReader* getInstance();
     static void purge();
     
-    virtual void setProperties(const std::string& classType, Widget* widget, const rapidjson::Value& customOptions);
+    virtual void setProperties(const std::string& classType, cocos2d::ui::Widget* widget, const rapidjson::Value& customOptions);
 };
 
 #endif /* defined(__TestCpp__CustomImageViewReader__) */

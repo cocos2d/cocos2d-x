@@ -389,6 +389,12 @@
 		50E9122C18C7596500D07E0D /* CustomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9122918C7596500D07E0D /* CustomGUIScene.cpp */; };
 		50E9125418C8A1FD00D07E0D /* UIRichTextTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9125218C8A1FD00D07E0D /* UIRichTextTest.cpp */; };
 		50E9125518C8A1FD00D07E0D /* UIRichTextTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9125218C8A1FD00D07E0D /* UIRichTextTest.cpp */; };
+		50E9128118C9A23600D07E0D /* CustomParticleWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9127D18C9A23600D07E0D /* CustomParticleWidget.cpp */; };
+		50E9128218C9A23600D07E0D /* CustomParticleWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9127D18C9A23600D07E0D /* CustomParticleWidget.cpp */; };
+		50E9128318C9A23600D07E0D /* CustomParticleWidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9127F18C9A23600D07E0D /* CustomParticleWidgetReader.cpp */; };
+		50E9128418C9A23600D07E0D /* CustomParticleWidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9127F18C9A23600D07E0D /* CustomParticleWidgetReader.cpp */; };
+		50E9128A18C9A47500D07E0D /* CustomParticleWidgetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9128818C9A47500D07E0D /* CustomParticleWidgetTest.cpp */; };
+		50E9128B18C9A47500D07E0D /* CustomParticleWidgetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9128818C9A47500D07E0D /* CustomParticleWidgetTest.cpp */; };
 		50F8555D18C5B82A0019FBFB /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */; };
 		50F8555E18C5B82A0019FBFB /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */; };
 		50F8555F18C5B82A0019FBFB /* CocoStudioGUITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F854F218C5B82A0019FBFB /* CocoStudioGUITest.cpp */; };
@@ -1028,6 +1034,12 @@
 		50E9122A18C7596500D07E0D /* CustomGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGUIScene.h; sourceTree = "<group>"; };
 		50E9125218C8A1FD00D07E0D /* UIRichTextTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichTextTest.cpp; sourceTree = "<group>"; };
 		50E9125318C8A1FD00D07E0D /* UIRichTextTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichTextTest.h; sourceTree = "<group>"; };
+		50E9127D18C9A23600D07E0D /* CustomParticleWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidget.cpp; sourceTree = "<group>"; };
+		50E9127E18C9A23600D07E0D /* CustomParticleWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidget.h; sourceTree = "<group>"; };
+		50E9127F18C9A23600D07E0D /* CustomParticleWidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidgetReader.cpp; sourceTree = "<group>"; };
+		50E9128018C9A23600D07E0D /* CustomParticleWidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidgetReader.h; sourceTree = "<group>"; };
+		50E9128818C9A47500D07E0D /* CustomParticleWidgetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidgetTest.cpp; sourceTree = "<group>"; };
+		50E9128918C9A47500D07E0D /* CustomParticleWidgetTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidgetTest.h; sourceTree = "<group>"; };
 		50F854F018C5B82A0019FBFB /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
 		50F854F118C5B82A0019FBFB /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
 		50F854F218C5B82A0019FBFB /* CocoStudioGUITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoStudioGUITest.cpp; sourceTree = "<group>"; };
@@ -2346,6 +2358,15 @@
 			path = UIRichTextTest;
 			sourceTree = "<group>";
 		};
+		50E9128718C9A47500D07E0D /* CustomParticleWidgetTest */ = {
+			isa = PBXGroup;
+			children = (
+				50E9128818C9A47500D07E0D /* CustomParticleWidgetTest.cpp */,
+				50E9128918C9A47500D07E0D /* CustomParticleWidgetTest.h */,
+			);
+			path = CustomParticleWidgetTest;
+			sourceTree = "<group>";
+		};
 		50F854EF18C5B82A0019FBFB /* CocoStudioGUITest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2390,6 +2411,7 @@
 			isa = PBXGroup;
 			children = (
 				50F854F518C5B82A0019FBFB /* CustomImageTest */,
+				50E9128718C9A47500D07E0D /* CustomParticleWidgetTest */,
 			);
 			path = CustomTest;
 			sourceTree = "<group>";
@@ -2410,6 +2432,10 @@
 				50F8550018C5B82A0019FBFB /* CustomImageView.h */,
 				50F8550118C5B82A0019FBFB /* CustomImageViewReader.cpp */,
 				50F8550218C5B82A0019FBFB /* CustomImageViewReader.h */,
+				50E9127D18C9A23600D07E0D /* CustomParticleWidget.cpp */,
+				50E9127E18C9A23600D07E0D /* CustomParticleWidget.h */,
+				50E9127F18C9A23600D07E0D /* CustomParticleWidgetReader.cpp */,
+				50E9128018C9A23600D07E0D /* CustomParticleWidgetReader.h */,
 				50F8550318C5B82A0019FBFB /* CustomReader.cpp */,
 				50F8550418C5B82A0019FBFB /* CustomReader.h */,
 			);
@@ -2902,6 +2928,7 @@
 				1A1AF83818BE3040003374E8 /* IntervalTest.cpp in Sources */,
 				50F8558B18C5B82A0019FBFB /* UIListViewTest_Editor.cpp in Sources */,
 				1A1AF82C18BE303F003374E8 /* Scale9SpriteTest.cpp in Sources */,
+				50E9128318C9A23600D07E0D /* CustomParticleWidgetReader.cpp in Sources */,
 				1A1AF82018BE303F003374E8 /* EditBoxTest.cpp in Sources */,
 				1A1AF7A818BE303F003374E8 /* Bug-624.cpp in Sources */,
 				1A1AF7C018BE303F003374E8 /* CurlTest.cpp in Sources */,
@@ -2934,6 +2961,7 @@
 				50F8556118C5B82A0019FBFB /* CustomImageTest.cpp in Sources */,
 				1A1AF83C18BE3040003374E8 /* KeypadTest.cpp in Sources */,
 				1A1AF87018BE3040003374E8 /* RenderTextureTest.cpp in Sources */,
+				50E9128118C9A23600D07E0D /* CustomParticleWidget.cpp in Sources */,
 				1A1AF7BA18BE303F003374E8 /* ConfigurationTest.cpp in Sources */,
 				1A1AF7AC18BE303F003374E8 /* Bug-899.cpp in Sources */,
 				50F855B518C5B82A0019FBFB /* UIWidgetAddNodeTest.cpp in Sources */,
@@ -2952,6 +2980,7 @@
 				1A1AF88218BE3040003374E8 /* TextInputTest.cpp in Sources */,
 				1A1AF7E618BE303F003374E8 /* SceneController.cpp in Sources */,
 				1A1AF83618BE3040003374E8 /* MouseTest.cpp in Sources */,
+				50E9128A18C9A47500D07E0D /* CustomParticleWidgetTest.cpp in Sources */,
 				1A1AF79818BE303F003374E8 /* Test.cpp in Sources */,
 				1A1AF78A18BE303F003374E8 /* ActionsProgressTest.cpp in Sources */,
 				1A1AF88E18BE3040003374E8 /* Paddle.cpp in Sources */,
@@ -3052,6 +3081,7 @@
 				50F8558218C5B82A0019FBFB /* UIImageViewTest.cpp in Sources */,
 				1A1AF7B118BE303F003374E8 /* BugsTest.cpp in Sources */,
 				1A1AF89318BE3040003374E8 /* TransitionsTest.cpp in Sources */,
+				50E9128B18C9A47500D07E0D /* CustomParticleWidgetTest.cpp in Sources */,
 				1A1AF7DF18BE303F003374E8 /* EnemyController.cpp in Sources */,
 				50F8558418C5B82A0019FBFB /* UIImageViewTest_Editor.cpp in Sources */,
 				1A1AF82318BE303F003374E8 /* ExtensionsTest.cpp in Sources */,
@@ -3069,6 +3099,7 @@
 				1A1AF7C718BE303F003374E8 /* DrawPrimitivesTest.cpp in Sources */,
 				1A1AF81118BE303F003374E8 /* CCControlButtonTest.cpp in Sources */,
 				50F855B418C5B82A0019FBFB /* UITextTest_Editor.cpp in Sources */,
+				50E9128418C9A23600D07E0D /* CustomParticleWidgetReader.cpp in Sources */,
 				1A1AF78D18BE303F003374E8 /* ActionsTest.cpp in Sources */,
 				1A1AF83918BE3040003374E8 /* IntervalTest.cpp in Sources */,
 				1A1AF82D18BE3040003374E8 /* Scale9SpriteTest.cpp in Sources */,
@@ -3098,6 +3129,7 @@
 				1A1AF86D18BE3040003374E8 /* PhysicsTest.cpp in Sources */,
 				50F8558818C5B82A0019FBFB /* UILayoutTest_Editor.cpp in Sources */,
 				50F8559418C5B82A0019FBFB /* UIPageViewTest_Editor.cpp in Sources */,
+				50E9128218C9A23600D07E0D /* CustomParticleWidget.cpp in Sources */,
 				1A1AF85118BE3040003374E8 /* ParallaxTest.cpp in Sources */,
 				50F8556E18C5B82A0019FBFB /* CustomReader.cpp in Sources */,
 				1A1AF79318BE303F003374E8 /* Box2dTest.cpp in Sources */,

@@ -2,6 +2,9 @@
 
 #include "CustomImageView.h"
 
+USING_NS_CC;
+using namespace ui;
+
 CustomImageView::CustomImageView()
 : _label(NULL)
 {
