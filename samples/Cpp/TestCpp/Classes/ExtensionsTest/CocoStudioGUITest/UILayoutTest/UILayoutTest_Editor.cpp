@@ -34,7 +34,7 @@ bool UILayoutTest_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
@@ -43,7 +43,7 @@ bool UILayoutTest_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
@@ -89,7 +89,7 @@ bool UILayoutTest_Color_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
@@ -98,7 +98,7 @@ bool UILayoutTest_Color_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
@@ -144,7 +144,7 @@ bool UILayoutTest_Gradient_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
@@ -153,7 +153,7 @@ bool UILayoutTest_Gradient_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
@@ -199,7 +199,7 @@ bool UILayoutTest_BackGroundImage_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
@@ -208,7 +208,7 @@ bool UILayoutTest_BackGroundImage_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
@@ -254,7 +254,7 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
@@ -263,7 +263,7 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
@@ -309,7 +309,7 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
@@ -318,7 +318,7 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
@@ -364,7 +364,7 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
@@ -373,7 +373,7 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
@@ -420,7 +420,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
@@ -429,7 +429,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
@@ -475,7 +475,7 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         Button* left_button = Button::create();
-        left_button->loadTextures("images/b1.png", "images/b2.png", "");
+        left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button->setPosition(ccp(_layout->getSize().width / 2 - left_button->getSize().width,
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
@@ -484,7 +484,7 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
-        right_button->loadTextures("images/f1.png", "images/f2.png", "");
+        right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button->setPosition(ccp(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
