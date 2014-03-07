@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-namespace gui{
+namespace ui{
 
 typedef enum
 {
@@ -53,6 +53,8 @@ typedef void (CCObject::*SEL_ListViewEvent)(CCObject*,ListViewEventType);
 
 class ListView : public ScrollView
 {
+    
+    DECLARE_CLASS_GUI_INFO
     
 public:
     
@@ -171,6 +173,7 @@ public:
     
     void requestRefreshView();
     
+    void refreshView();
 protected:
     virtual void addChild(CCNode* child) {ScrollView::addChild(child);};
     virtual void addChild(CCNode * child, int zOrder) {ScrollView::addChild(child, zOrder);};
@@ -193,7 +196,6 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model);
     void selectedItemEvent();
     virtual void interceptTouchEvent(int handleState,Widget* sender,const CCPoint &touchPoint);
-    void refreshView();
 protected:
     
     Widget* _model;

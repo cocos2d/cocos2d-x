@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
  *  @js NA
@@ -103,12 +103,17 @@ typedef void (CCObject::*SEL_TextFieldEvent)(CCObject*, TextFiledEventType);
 */
 class TextField : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     TextField();
     virtual ~TextField();
     static TextField* create();
     void setTouchSize(const CCSize &size);
     CCSize getTouchSize();
+    void setTouchAreaEnabled(bool enable);
+    virtual bool hitTest(const CCPoint &pt);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
     const char* getPlaceHolder();
@@ -149,6 +154,12 @@ public:
     virtual CCNode* getVirtualRenderer();
     void attachWithIME();
     virtual void onEnter();
+    
+    void setTextAreaSize(const CCSize &size);
+    void setTextHorizontalAlignment(CCTextAlignment alignment);
+    void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
+    /*=*/
+    
 protected:
     virtual void initRenderer();
     // event
@@ -157,6 +168,9 @@ protected:
     void insertTextEvent();
     void deleteBackwardEvent();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void textfieldRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);

@@ -7,7 +7,7 @@
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
-using namespace cocos2d::gui;
+using namespace cocos2d::ui;
 
 CCLayer *Next();
 CCLayer *Back();
@@ -394,7 +394,7 @@ cocos2d::CCNode* UIComponentTest::createGameScene()
 	
     
     CCComRender *render = static_cast<CCComRender*>(_node->getChildByTag(10025)->getComponent("GUIComponent"));
-	cocos2d::gui::TouchGroup* touchGroup = static_cast<cocos2d::gui::TouchGroup*>(render->getNode());
+	cocos2d::ui::TouchGroup* touchGroup = static_cast<cocos2d::ui::TouchGroup*>(render->getNode());
 	UIWidget* widget = static_cast<UIWidget*>(touchGroup->getWidgetByName("Panel_154"));
 	UIButton* button = static_cast<UIButton*>(widget->getChildByName("Button_156"));
 	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));

@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
@@ -45,6 +45,9 @@ typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType)
 */
 class Slider : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -199,6 +202,9 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance();

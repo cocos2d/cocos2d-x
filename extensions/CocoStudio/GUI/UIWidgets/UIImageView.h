@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
 *   @js NA
@@ -37,6 +37,8 @@ namespace gui {
 */
 class ImageView : public Widget
 {
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -86,18 +88,6 @@ public:
     
     const CCRect& getCapInsets();
     
-    //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX);
-    
-    //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY);
-    
-    //override "isFlipX" method of widget.
-    virtual bool isFlipX();
-    
-    //override "isFlipY" method of widget.
-    virtual bool isFlipY();
-    
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
     
@@ -114,6 +104,11 @@ public:
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
+    virtual void updateFlippedX();
+    virtual void updateFlippedY();
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);

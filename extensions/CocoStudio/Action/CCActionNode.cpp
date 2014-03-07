@@ -155,10 +155,10 @@ void ActionNode::initActionNodeFromRoot(CCObject* root)
 	CCNode* rootNode = dynamic_cast<CCNode*>(root);
 	if (rootNode != NULL)
 	{
-        cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(root);
+        cocos2d::ui::Widget* rootWidget = dynamic_cast<cocos2d::ui::Widget*>(root);
 		if (rootWidget != NULL)
 		{
-			cocos2d::gui::Widget* widget = cocos2d::gui::UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+			cocos2d::ui::Widget* widget = cocos2d::ui::UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
 			if (widget != NULL)
 			{
 				setObject(widget);
@@ -207,7 +207,7 @@ CCNode* ActionNode::getActionNode()
 	}
 	else
 	{
-		cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(m_Object);
+		cocos2d::ui::Widget* rootWidget = dynamic_cast<cocos2d::ui::Widget*>(m_Object);
 		if (rootWidget != NULL)
 		{
 			return rootWidget;

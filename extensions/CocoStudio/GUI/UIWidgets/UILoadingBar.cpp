@@ -27,9 +27,11 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BAR_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(LoadingBar)
     
 LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
@@ -65,7 +67,7 @@ LoadingBar* LoadingBar::create()
 void LoadingBar::initRenderer()
 {
     _barRenderer = CCSprite::create();
-    CCNodeRGBA::addChild(_barRenderer, BAR_RENDERER_Z, -1);
+    CCNode::addChild(_barRenderer, BAR_RENDERER_Z, -1);
     _barRenderer->setAnchorPoint(CCPoint(0.0,0.5));
 }
 
@@ -140,8 +142,7 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
+    updateRGBAToRenderer(_barRenderer);
     _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_barType)
@@ -171,7 +172,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     _scale9Enabled = enabled;
-    CCNodeRGBA::removeChild(_barRenderer, true);
+    CCNode::removeChild(_barRenderer, true);
     _barRenderer = NULL;
     if (_scale9Enabled)
     {
@@ -182,7 +183,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         _barRenderer = CCSprite::create();
     }
     loadTexture(_textureFile.c_str(),_renderBarTexType);
-    CCNodeRGBA::addChild(_barRenderer, BAR_RENDERER_Z, -1);
+    CCNode::addChild(_barRenderer, BAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -194,6 +195,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
+    setPercent(_percent);
 }
     
 bool LoadingBar::isScale9Enabled()
@@ -321,6 +323,21 @@ void LoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100.0f * _totalLength;
     static_cast<extension::CCScale9Sprite*>(_barRenderer)->setPreferredSize(CCSize(width, _size.height));
+}
+
+void LoadingBar::updateTextureColor()
+{
+    updateColorToRenderer(_barRenderer);
+}
+
+void LoadingBar::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_barRenderer);
+}
+
+void LoadingBar::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_barRenderer);
 }
 
 std::string LoadingBar::getDescription() const

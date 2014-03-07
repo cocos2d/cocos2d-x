@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
@@ -42,6 +42,9 @@ typedef enum
 */
 class LoadingBar : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -133,6 +136,9 @@ public:
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance();
