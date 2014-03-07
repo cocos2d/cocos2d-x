@@ -135,7 +135,7 @@ extern "C" {
 #include "cocos-ext.h"
 
 using namespace cocos2d;
-using namespace cocos2d::gui;
+using namespace cocos2d::ui;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;]])
 
