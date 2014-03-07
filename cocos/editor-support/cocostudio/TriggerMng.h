@@ -27,8 +27,10 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "CocoStudio.h"
 
-class cocos2d::EventDispatcher;
-class cocos2d::EventListener;
+namespace cocos2d {
+class EventDispatcher;
+class EventListener;
+}
 
 namespace cocostudio {
 
