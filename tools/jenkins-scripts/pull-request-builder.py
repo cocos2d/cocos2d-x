@@ -125,6 +125,11 @@ def main():
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
         ret = os.system("tools/jenkins-scripts/ios-build.sh")
+      elif(node_name == 'linux_centos'):
+        os.chdir("build/")
+        ret = os.system("cmake ../")
+        ret = os.system("make -j10")
+        os.chdir("../")
     elif(branch == 'master'):
       if(platform.system() == 'Darwin'):
         ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")
