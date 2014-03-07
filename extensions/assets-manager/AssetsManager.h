@@ -196,10 +196,11 @@ private:
     AssetsManagerDelegateProtocol *_delegate; 
     
     bool _isDownloading;
-    bool _shouldDeleteDelegateWhenExit;
     
     std::string keyOfVersion() const;
     std::string keyOfDownloadedVersion() const;
+    std::thread* _thread;
+    bool _isDestroy;
 };
 
 class AssetsManagerDelegateProtocol
