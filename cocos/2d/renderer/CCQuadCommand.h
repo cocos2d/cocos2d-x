@@ -34,6 +34,7 @@ NS_CC_BEGIN
 
 #define CC_NO_TEXTURE 0
 
+/** Command used to render one or more Quads */
 class QuadCommand : public RenderCommand
 {
 public:
@@ -41,7 +42,9 @@ public:
     QuadCommand();
     ~QuadCommand();
 
-    void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
+     * quantity of quads, and the Model View transform to be used for the quads */
+    void init(float globalOrder, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const kmMat4& mv);
 
     void useMaterial() const;
@@ -71,7 +74,6 @@ protected:
     GLuint _textureID;
 
     GLProgram* _shader;
-//    GLuint _shaderID;
 
     BlendFunc _blendType;
 
