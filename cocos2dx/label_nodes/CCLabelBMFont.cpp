@@ -293,7 +293,7 @@ void CCBMFontConfiguration::parseInfoArguments(std::string line)
     int index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
     sscanf(value.c_str(), "padding=%d,%d,%d,%d", &m_tPadding.top, &m_tPadding.right, &m_tPadding.bottom, &m_tPadding.left);
-    CCLOG("cocos2d: padding: %d,%d,%d,%d", m_tPadding.left, m_tPadding.top, m_tPadding.right, m_tPadding.bottom);
+    //CCLOG("cocos2d: padding: %d,%d,%d,%d", m_tPadding.left, m_tPadding.top, m_tPadding.right, m_tPadding.bottom);
 }
 
 void CCBMFontConfiguration::parseCommonArguments(std::string line)
@@ -323,6 +323,9 @@ void CCBMFontConfiguration::parseCommonArguments(std::string line)
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
     CCAssert(atoi(value.c_str()) == 1, "CCBitfontAtlas: only supports 1 page");
+
+    // add for padding
+    m_nCommonHeight -= (m_tPadding.top + m_tPadding.bottom);
 
     // packed (ignore) What does this mean ??
 }
@@ -375,6 +378,9 @@ void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontD
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
     sscanf(value.c_str(), "xadvance=%hd", &characterDefinition->xAdvance);
+    
+    //add for padding
+    characterDefinition->xAdvance -= (m_tPadding.left + m_tPadding.right);
 }
 
 void CCBMFontConfiguration::parseKerningEntry(std::string line)
