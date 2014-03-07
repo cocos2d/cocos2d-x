@@ -40,6 +40,8 @@ enum
     kUISliderTest_Scale9,
     /*
     kUIPotentiometerTest,
+     */
+    /*
     kUISwitchTest_Horizontal,
     kUISwitchTest_Vertical,
     kUISwitchTest_VerticalAndTitleVertical,
@@ -58,18 +60,19 @@ enum
     kUIProgressTimerTest_BarVarious,
     kUIProgressTimerTest_BarTintAndFade,
     kUIProgressTimerTest_WithSpriteFrame,
-    */
-    kUILabelAtlasTest,
-    kUILabelTest,
-    kUILabelTest_LineWrap,
+     */
+    kUITextAtlasTest,
+    kUITextTest,
+    kUITextTest_LineWrap,
     /*
     kUILabelTest_Effect,
      */
-    kUILabelTest_TTF,
-    kUILabelBMFontTest,
+    kUITextTest_TTF,
+    kUITextBMFontTest,
     kUITextFieldTest,
     kUITextFieldTest_MaxLength,
     kUITextFieldTest_Password,
+    kUITextFieldTest_LineWrap,
     kUILayoutTest,
     kUILayoutTest_Color,
     kUILayoutTest_Gradient,
@@ -97,6 +100,7 @@ enum
     kUIPickerViewTest_Horizontal,
      */
     kUIWidgetAddNodeTest,
+    kUIRichTextTest,
     kUITestMax
 };
 

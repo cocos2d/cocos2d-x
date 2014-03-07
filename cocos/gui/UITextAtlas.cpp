@@ -29,6 +29,8 @@ NS_CC_BEGIN
 namespace ui {
     
 static const int LABELATLAS_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(TextAtlas)
 
 TextAtlas::TextAtlas():
 _labelAtlasRenderer(nullptr),
@@ -134,6 +136,21 @@ void TextAtlas::labelAtlasScaleChangedWithSize()
 std::string TextAtlas::getDescription() const
 {
     return "TextAtlas";
+}
+    
+void TextAtlas::updateTextureColor()
+{
+    updateColorToRenderer(_labelAtlasRenderer);
+}
+
+void TextAtlas::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelAtlasRenderer);
+}
+
+void TextAtlas::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelAtlasRenderer);
 }
 
 Widget* TextAtlas::createCloneInstance()

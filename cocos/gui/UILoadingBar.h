@@ -42,6 +42,9 @@ typedef enum
 */
 class LoadingBar : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -133,6 +136,9 @@ public:
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;

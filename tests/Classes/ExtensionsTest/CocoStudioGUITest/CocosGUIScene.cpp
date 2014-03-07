@@ -1,4 +1,5 @@
 #include "CocosGUIScene.h"
+#include "CocoStudioGUITest.h"
 #include "UISceneManager.h"
 #include "../ExtensionsTest.h"
 #include "cocostudio/CocoStudio.h"
@@ -65,6 +66,8 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
+     */
+    /*
     {
         "gui SwitchTest",
         [](Ref* sender)
@@ -117,37 +120,37 @@ g_guisTests[] =
 	},
      */
     {
-        "gui LabelAtalsTest",
+        "gui TextAtalsTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUILabelAtlasTest);
-            pManager->setMinUISceneId(kUILabelAtlasTest);
-            pManager->setMaxUISceneId(kUILabelAtlasTest);
+            pManager->setCurrentUISceneId(kUITextAtlasTest);
+            pManager->setMinUISceneId(kUITextAtlasTest);
+            pManager->setMaxUISceneId(kUITextAtlasTest);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);
         }
 	},
     {
-        "gui LabelTest",
+        "gui TextTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUILabelTest);
-            pManager->setMinUISceneId(kUILabelTest);
-            pManager->setMaxUISceneId(kUILabelTest_TTF);
+            pManager->setCurrentUISceneId(kUITextTest);
+            pManager->setMinUISceneId(kUITextTest);
+            pManager->setMaxUISceneId(kUITextTest_TTF);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);
         }
 	},
     {
-        "gui LabelBMFontTest",
+        "gui TextBMFontTest",
         [](Ref* sender)
         {
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            pManager->setCurrentUISceneId(kUILabelBMFontTest);
-            pManager->setMinUISceneId(kUILabelBMFontTest);
-            pManager->setMaxUISceneId(kUILabelBMFontTest);
+            pManager->setCurrentUISceneId(kUITextBMFontTest);
+            pManager->setMinUISceneId(kUITextBMFontTest);
+            pManager->setMaxUISceneId(kUITextBMFontTest);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);
         }
@@ -159,7 +162,7 @@ g_guisTests[] =
             UISceneManager* pManager = UISceneManager::sharedUISceneManager();
             pManager->setCurrentUISceneId(kUITextFieldTest);
             pManager->setMinUISceneId(kUITextFieldTest);
-            pManager->setMaxUISceneId(kUITextFieldTest_Password);
+            pManager->setMaxUISceneId(kUITextFieldTest_LineWrap);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);
         }
@@ -225,6 +228,8 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
+     */
+    /*
     {
         "gui PickerViewTest",
         [](Ref* sender)
@@ -246,6 +251,18 @@ g_guisTests[] =
             pManager->setCurrentUISceneId(kUIWidgetAddNodeTest);
             pManager->setMinUISceneId(kUIWidgetAddNodeTest);
             pManager->setMaxUISceneId(kUIWidgetAddNodeTest);
+            Scene* pScene = pManager->currentUIScene();
+            Director::getInstance()->replaceScene(pScene);
+        }
+	},
+    {
+        "gui RichTextTest",
+        [](Ref* sender)
+        {
+            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+            pManager->setCurrentUISceneId(kUIRichTextTest);
+            pManager->setMinUISceneId(kUIRichTextTest);
+            pManager->setMaxUISceneId(kUIRichTextTest);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);
         }
@@ -327,6 +344,22 @@ void CocosGUITestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, E
 //
 ////////////////////////////////////////////////////////
 
+void CocosGUITestScene::onEnter()
+{
+    Scene::onEnter();
+    
+    LabelTTF* label = CCLabelTTF::create("Back", "Arial", 20);
+    //#endif
+    auto pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocosGUITestScene::BackCallback, this));
+    
+    Menu* pMenu =Menu::create(pMenuItem, NULL);
+    
+    pMenu->setPosition( Point::ZERO );
+    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    
+    addChild(pMenu, 1);
+}
+
 void CocosGUITestScene::runThisTest()
 {
     auto layer = new CocosGUITestMainLayer();
@@ -335,3 +368,85 @@ void CocosGUITestScene::runThisTest()
     
     Director::getInstance()->replaceScene(this);
 }
+
+void CocosGUITestScene::BackCallback(Ref* pSender)
+{
+    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    pScene->runThisTest();
+    pScene->release();
+}
+
+/*
+const char* gui_scene_names[1] =
+{
+    "CocosGUIWidgetTest",
+};
+
+CocosGUITestScene::CocosGUITestScene(bool bPortrait)
+: _ul(nullptr)
+, _label(nullptr)
+, _itemMenu(nullptr)
+{
+	TestScene::init();
+}
+
+CocosGUITestScene::~CocosGUITestScene()
+{
+	cocostudio::SceneReader::getInstance()->purgeSceneReader();
+	cocostudio::ActionManagerEx::purgeActionManager();
+}
+
+void CocosGUITestScene::runThisTest()
+{
+    
+	Director::getInstance()->replaceScene(this);
+
+    Size s = Director::getInstance()->getWinSize();
+    
+    _itemMenu = Menu::create();
+    _itemMenu->setPosition(Point::ZERO);
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
+    for (int i = 0; i < sizeof(gui_scene_names) / sizeof(gui_scene_names[0]); ++i)
+    {
+        auto item = MenuItemFont::create(gui_scene_names[i],
+                                         CC_CALLBACK_1( CocosGUITestScene::menuCallback, this));
+        item->setPosition(Point(s.width / 2, s.height - s.height / 4 - (i + 1) * 40));
+        item->setTag(i);
+        _itemMenu->addChild(item);
+    }
+    addChild(_itemMenu);
+}
+void CocosGUITestScene::MainMenuCallback(Ref* pSender)
+{
+    auto pScene = new ExtensionsTestScene();
+	pScene->runThisTest();
+}
+
+void CocosGUITestScene::load(Ref *pSender, int count)
+{
+    char tmp[10];
+    sprintf(tmp,"%d", count);
+    _label->setString(CCString::createWithFormat("%i", count)->getCString());
+}
+
+void CocosGUITestScene::menuCallback(Ref *pSender)
+{
+    auto pItem = static_cast<MenuItemFont*>(pSender);
+    
+    switch (pItem->getTag())
+    {
+        case 0:
+            {
+                UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+                Scene* pScene = pManager->currentUIScene();
+                Director::getInstance()->replaceScene(pScene);
+            }
+            break;
+            break;
+            
+        default:
+            break;
+    }
+}
+*/

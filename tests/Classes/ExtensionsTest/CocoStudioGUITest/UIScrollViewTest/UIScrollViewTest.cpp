@@ -21,7 +21,7 @@ bool UIScrollViewTest_Vertical::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the scrollview alert will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move by vertical direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -30,7 +30,7 @@ bool UIScrollViewTest_Vertical::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ScrollView vertical");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -109,7 +109,7 @@ bool UIScrollViewTest_Horizontal::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the scrollview alert will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move by horizontal direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -117,7 +117,7 @@ bool UIScrollViewTest_Horizontal::init()
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);            
         
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ScrollView horizontal");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -203,7 +203,7 @@ bool UIScrollViewTest_Both::init()
         Size widgetSize = _widget->getSize();;
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move by any direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -212,7 +212,7 @@ bool UIScrollViewTest_Both::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ScrollView both");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -272,7 +272,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
 //        _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -281,7 +281,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ScrollView scroll to percent both directrion");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
@@ -334,7 +334,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = ui::Text::create();
+        _displayValueLabel = Text::create();
 //        _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -343,7 +343,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        ui::Text* alert = ui::Text::create();
+        Text* alert = Text::create();
         alert->setText("ScrollView scroll to percent both directrion bounce");
         alert->setFontName("Marker Felt");
         alert->setFontSize(20);
