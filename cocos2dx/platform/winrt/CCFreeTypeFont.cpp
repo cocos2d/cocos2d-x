@@ -293,6 +293,7 @@ void CCFreeTypeFont::newLine()
     m_currentLine->width = 0;
     m_currentLine->pen.x = 0;
     m_currentLine->pen.y = 0;
+    memset(&m_currentLine->bbox, 0, sizeof(m_currentLine->bbox)); 
 }
 
 
