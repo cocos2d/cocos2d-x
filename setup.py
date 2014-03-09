@@ -124,7 +124,7 @@ class SetEnvVar(object):
         file.write('export %s=%s\n' % (key, value))
         file.write('export PATH=$%s:$PATH\n' % key)
         if key == ANDROID_SDK_ROOT:
-            file.write('export PATH=$%s/sdk/tools:$%s/sdk/platform-tools:$PATH\n' % (key, key))
+            file.write('export PATH=$%s/tools:$%s/platform-tools:$PATH\n' % (key, key))
         file.close()
         return True
 
@@ -263,7 +263,7 @@ class SetEnvVar(object):
         if not android_sdk_root:
             return False
 
-        android_path = os.path.join(android_sdk_root, 'sdk/tools/android')
+        android_path = os.path.join(android_sdk_root, 'tools/android')
         if os.path.isfile(android_path):
             return True
         else:
@@ -348,7 +348,7 @@ class SetEnvVar(object):
             target = 'registry'
         else:
             target = self.file_used_for_setup
-
+s
         if console_added or ndk_root_added or android_sdk_root_added:
             print '\nSet up successfull:'
 
