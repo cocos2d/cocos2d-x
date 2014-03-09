@@ -92,7 +92,7 @@ You can run the samples...
     $ ./setup.py
     $ cd build
     $ ./android-build.py -p 10
-    $ adb install cocos2d-x/tests/proj.android/bin/TestDemo-debug.apk
+    $ adb install ../tests/proj.android/bin/TestsDemo-debug.apk
     
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
