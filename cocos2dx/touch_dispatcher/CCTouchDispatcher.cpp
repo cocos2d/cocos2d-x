@@ -141,8 +141,12 @@ void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPri
          */
         if (ccCArrayContainsValue(m_pHandlersToRemove, pDelegate))
         {
-            ccCArrayRemoveValue(m_pHandlersToRemove, pDelegate);
-            return;
+            CCTouchHandler *pOldHandler = findHandler(pDelegate);
+            if (pOldHandler && pOldHandler->getPriority() == nPriority)
+            {
+                ccCArrayRemoveValue(m_pHandlersToRemove, pDelegate);
+                return;
+            }
         }
 
         m_pHandlersToAdd->addObject(pHandler);
@@ -164,8 +168,12 @@ void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPri
          */
         if (ccCArrayContainsValue(m_pHandlersToRemove, pDelegate))
         {
-            ccCArrayRemoveValue(m_pHandlersToRemove, pDelegate);
-            return;
+            CCTouchHandler *pOldHandler = findHandler(pDelegate);
+            if (pOldHandler && pOldHandler->getPriority() == nPriority)
+            {
+                ccCArrayRemoveValue(m_pHandlersToRemove, pDelegate);
+                return;
+            }
         }
         
         m_pHandlersToAdd->addObject(pHandler);
