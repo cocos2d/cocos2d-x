@@ -836,6 +836,13 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
             child->onExit();
         }
 
+#if CC_USE_PHYSICS
+        if (child->_physicsBody != nullptr)
+        {
+            child->_physicsBody->removeFromWorld();
+        }
+#endif
+
         if (cleanup)
         {
             child->cleanup();
@@ -982,78 +989,131 @@ kmMat4 Node::transform(const kmMat4& parentTransform)
     return ret;
 }
 
-void Node::onEnter()
-{
-    _isTransitionFinished = false;
 
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType != kScriptTypeNone)
+
+static bool sendNodeEventToJS(Node* node, int action)
+{
+    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+
+    if (scriptEngine->isCalledFromScript())
     {
-        int action = kNodeOnEnter;
-        BasicScriptData data(this,(void*)&action);
+        scriptEngine->setCalledFromScript(false);
+    }
+    else
+    {
+        BasicScriptData data(node,(void*)&action);
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        if (scriptEngine->sendEvent(&scriptEvent))
+            return true;
+    }
+    
+    return false;
+}
+
+static void sendNodeEventToLua(Node* node, int action)
+{
+    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    
+    BasicScriptData data(node,(void*)&action);
+    ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+    
+    scriptEngine->sendEvent(&scriptEvent);
+}
+
+#endif
+
+void Node::onEnter()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnEnter))
+            return;
     }
 #endif
     
+    _isTransitionFinished = false;
+    
     for( const auto &child: _children)
         child->onEnter();
-
+    
     this->resume();
     
     _running = true;
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeLua)
+    {
+        sendNodeEventToLua(this, kNodeOnEnter);
+    }
+#endif
 }
 
 void Node::onEnterTransitionDidFinish()
 {
-    _isTransitionFinished = true;
-
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeJavascript)
     {
-        int action = kNodeOnEnterTransitionDidFinish;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        if (sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+            return;
     }
 #endif
-    
+
+    _isTransitionFinished = true;
     for( const auto &child: _children)
         child->onEnterTransitionDidFinish();
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeLua)
+    {
+        sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+    }
+#endif
 }
 
 void Node::onExitTransitionDidStart()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+            return;
+    }
+#endif
+    
     for( const auto &child: _children)
         child->onExitTransitionDidStart();
-
+    
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
     {
-        int action = kNodeOnExitTransitionDidStart;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
     }
 #endif
 }
 
 void Node::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendNodeEventToJS(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     this->pause();
-
+    
     _running = false;
-
+    
     for( const auto &child: _children)
         child->onExit();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType != kScriptTypeNone)
+    if (_scriptType == kScriptTypeLua)
     {
-        int action = kNodeOnExit;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        sendNodeEventToLua(this, kNodeOnExit);
     }
 #endif
 }

@@ -93,7 +93,7 @@ def main():
     os.system(git_update_submodule)
 
     # Generate binding glue codes
-    os.system("python tools/jenkins-scripts/gen_jsb.py")
+    # os.system("python tools/jenkins-scripts/gen_jsb.py")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']
@@ -120,11 +120,16 @@ def main():
     node_name = os.environ['NODE_NAME']
     if(branch == 'develop'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
-        ret = os.system("python build/android-build.py -n -j10 all")
+        ret = os.system("python build/android-build.py -n -j10 testcpp")
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
         ret = os.system("tools/jenkins-scripts/ios-build.sh")
+      elif(node_name == 'linux_centos'):
+        os.chdir("build/")
+        ret = os.system("cmake ../")
+        ret = os.system("make -j10")
+        os.chdir("../")
     elif(branch == 'master'):
       if(platform.system() == 'Darwin'):
         ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")

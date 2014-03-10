@@ -96,6 +96,7 @@ void PhysicsContact::generateContactData()
     }
     
     cpArbiter* arb = static_cast<cpArbiter*>(_contactInfo);
+    CC_SAFE_DELETE(_contactData);
     _contactData = new PhysicsContactData();
     _contactData->count = cpArbiterGetCount(arb);
     for (int i=0; i<_contactData->count && i<PhysicsContactData::POINT_MAX; ++i)
@@ -218,16 +219,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             {
                 contact->_begin = true;
                 contact->generateContactData();
-                
-                // the mask has high priority than _listener->onContactBegin.
-                // so if the mask test is false, the two bodies won't have collision.
-                if (ret)
-                {
-                    ret = onContactBegin(*contact);
-                }else
-                {
-                    onContactBegin(*contact);
-                }
+                ret = onContactBegin(*contact);
             }
             
             contact->setResult(ret);

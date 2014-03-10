@@ -53,6 +53,8 @@ typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 
 class ListView : public ScrollView
 {
+ 
+    DECLARE_CLASS_GUI_INFO
     
 public:
     
@@ -170,7 +172,7 @@ public:
     virtual std::string getDescription() const override;
     
     void requestRefreshView();
-    
+    void refreshView();
 protected:
     virtual void addChild(Node* child) override{ScrollView::addChild(child);};
     virtual void addChild(Node * child, int zOrder) override{ScrollView::addChild(child, zOrder);};
@@ -193,7 +195,6 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model) override;
     void selectedItemEvent();
     virtual void interceptTouchEvent(int handleState,Widget* sender,const Point &touchPoint) override;
-    void refreshView();
 protected:
     
     Widget* _model;

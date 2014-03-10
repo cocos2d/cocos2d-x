@@ -37,6 +37,9 @@ namespace ui {
 */
 class ImageView : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -86,27 +89,6 @@ public:
 
     const Rect& getCapInsets();
 
-    //override "setFlippedX" method of widget.
-    virtual void setFlippedX(bool flippedX) override;
-
-    //override "setFlippedY" method of widget.
-    virtual void setFlippedY(bool flippedY) override;
-
-    //override "isFlippedX" method of widget.
-    virtual bool isFlippedX() override;
-
-    //override "isFlippedY" method of widget.
-    virtual bool isFlippedY() override;
-
-    /** @deprecated Use isFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
-    /** @deprecated Use isFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
-
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const Point &pt) override;
 
@@ -123,6 +105,11 @@ public:
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
+    virtual void updateFlippedX() override;
+    virtual void updateFlippedY() override;
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;

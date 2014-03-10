@@ -34,6 +34,8 @@ const Point SCROLLDIR_UP = Point(0.0f, 1.0f);
 const Point SCROLLDIR_DOWN = Point(0.0f, -1.0f);
 const Point SCROLLDIR_LEFT = Point(-1.0f, 0.0f);
 const Point SCROLLDIR_RIGHT = Point(1.0f, 0.0f);
+    
+IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
 ScrollView::ScrollView():
 _innerContainer(nullptr),

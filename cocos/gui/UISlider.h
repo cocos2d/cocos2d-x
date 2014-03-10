@@ -45,6 +45,9 @@ typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 */
 class Slider : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -192,6 +195,7 @@ public:
     virtual std::string getDescription() const override;
 
 protected:
+    virtual bool init() override;
     virtual void initRenderer() override;
     float getPercentWithBallPos(float location);
     void percentChangedEvent();
@@ -199,6 +203,9 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;

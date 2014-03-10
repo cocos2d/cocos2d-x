@@ -33,6 +33,8 @@ static const int BACKGROUNDSELECTEDBOX_RENDERER_Z = (-1);
 static const int FRONTCROSS_RENDERER_Z = (-1);
 static const int BACKGROUNDBOXDISABLED_RENDERER_Z = (-1);
 static const int FRONTCROSSDISABLED_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(CheckBox)
 
 CheckBox::CheckBox():
 _backGroundBoxRenderer(nullptr),
@@ -79,6 +81,7 @@ bool CheckBox::init()
     if (Widget::init())
     {
         setSelectedState(false);
+        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -127,9 +130,10 @@ void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texTy
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_backGroundBoxRenderer);
     backGroundTextureScaleChangedWithSize();
 }
 
@@ -152,9 +156,10 @@ void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
     backGroundSelectedTextureScaleChangedWithSize();
 }
 
@@ -177,9 +182,10 @@ void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_frontCrossRenderer);
     frontCrossTextureScaleChangedWithSize();
 }
 
@@ -202,9 +208,10 @@ void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
     backGroundDisabledTextureScaleChangedWithSize();
 }
 
@@ -227,9 +234,10 @@ void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Text
         default:
             break;
     }
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
@@ -321,33 +329,23 @@ void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent sele
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;
 }
-
-void CheckBox::setFlippedX(bool flippedX)
+    
+void CheckBox::updateFlippedX()
 {
-    _backGroundBoxRenderer->setFlippedX(flippedX);
-    _backGroundSelectedBoxRenderer->setFlippedX(flippedX);
-    _frontCrossRenderer->setFlippedX(flippedX);
-    _backGroundBoxDisabledRenderer->setFlippedX(flippedX);
-    _frontCrossDisabledRenderer->setFlippedX(flippedX);
+    _backGroundBoxRenderer->setFlippedX(_flippedX);
+    _backGroundSelectedBoxRenderer->setFlippedX(_flippedX);
+    _frontCrossRenderer->setFlippedX(_flippedX);
+    _backGroundBoxDisabledRenderer->setFlippedX(_flippedX);
+    _frontCrossDisabledRenderer->setFlippedX(_flippedX);
 }
-
-void CheckBox::setFlippedY(bool flippedY)
+    
+void CheckBox::updateFlippedY()
 {
-    _backGroundBoxRenderer->setFlippedY(flippedY);
-    _backGroundSelectedBoxRenderer->setFlippedY(flippedY);
-    _frontCrossRenderer->setFlippedY(flippedY);
-    _backGroundBoxDisabledRenderer->setFlippedY(flippedY);
-    _frontCrossDisabledRenderer->setFlippedY(flippedY);
-}
-
-bool CheckBox::isFlippedX()
-{
-    return _backGroundBoxRenderer->isFlippedX();
-}
-
-bool CheckBox::isFlippedY()
-{
-    return _backGroundBoxRenderer->isFlippedY();
+    _backGroundBoxRenderer->setFlippedY(_flippedY);
+    _backGroundSelectedBoxRenderer->setFlippedY(_flippedY);
+    _frontCrossRenderer->setFlippedY(_flippedY);
+    _backGroundBoxDisabledRenderer->setFlippedY(_flippedY);
+    _frontCrossDisabledRenderer->setFlippedY(_flippedY);
 }
 
 void CheckBox::setAnchorPoint(const Point &pt)
@@ -489,6 +487,33 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
 std::string CheckBox::getDescription() const
 {
     return "CheckBox";
+}
+    
+void CheckBox::updateTextureColor()
+{
+    updateColorToRenderer(_backGroundBoxRenderer);
+    updateColorToRenderer(_backGroundSelectedBoxRenderer);
+    updateColorToRenderer(_frontCrossRenderer);
+    updateColorToRenderer(_backGroundBoxDisabledRenderer);
+    updateColorToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_backGroundBoxRenderer);
+    updateOpacityToRenderer(_backGroundSelectedBoxRenderer);
+    updateOpacityToRenderer(_frontCrossRenderer);
+    updateOpacityToRenderer(_backGroundBoxDisabledRenderer);
+    updateOpacityToRenderer(_frontCrossDisabledRenderer);
+}
+
+void CheckBox::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_backGroundBoxRenderer);
+    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
+    updateRGBAToRenderer(_frontCrossRenderer);
+    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
+    updateRGBAToRenderer(_frontCrossDisabledRenderer);
 }
 
 Widget* CheckBox::createCloneInstance()
