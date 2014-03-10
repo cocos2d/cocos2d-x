@@ -93,7 +93,7 @@ def main():
     os.system(git_update_submodule)
 
     # Generate binding glue codes
-    os.system("python tools/jenkins-scripts/gen_jsb.py")
+    # os.system("python tools/jenkins-scripts/gen_jsb.py")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']
