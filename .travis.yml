@@ -1,6 +1,7 @@
 language: cpp
 env:
   matrix:
+  - GEN_BINDING=YES
   - GEN_COCOS_FILES=YES
   - PLATFORM=linux DEBUG=1 CC_COMPILER=gcc CXX_COMPILER=g++
   - PLATFORM=linux DEBUG=1 CC_COMPILER=clang CXX_COMPILER=clang++
