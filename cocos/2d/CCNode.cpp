@@ -836,6 +836,13 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
             child->onExit();
         }
 
+#if CC_USE_PHYSICS
+        if (child->_physicsBody != nullptr)
+        {
+            child->_physicsBody->removeFromWorld();
+        }
+#endif
+
         if (cleanup)
         {
             child->cleanup();
