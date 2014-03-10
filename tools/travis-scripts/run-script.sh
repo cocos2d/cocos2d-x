@@ -54,7 +54,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Build all samples
     echo "Building all samples ..."
     cd $COCOS2DX_ROOT/build
-    ./android-build.py -n "NDK_BUG=0 -j10" all
+    ./android-build.py -n "NDK_BUG=0 -j10" testcpp
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
     export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary

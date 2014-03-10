@@ -1,0 +1,4 @@
+
+--------------------------------
+-- @module EaseBounce
+return nil

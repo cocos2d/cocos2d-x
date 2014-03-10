@@ -29,6 +29,18 @@ THE SOFTWARE.
 #include <string>
 #include <unordered_map>
 
+namespace cocos2d
+{
+    namespace ui
+    {
+        class Widget;
+    }
+}
+namespace cocostudio
+{
+    class WidgetReaderProtocol;
+}
+
 namespace cocostudio {
 
 class ObjectFactory
@@ -51,6 +63,8 @@ public:
     static void destroyInstance();
     cocos2d::Ref* createObject(const std::string &name);
     cocos2d::Component* createComponent(const std::string &name);
+    cocos2d::ui::Widget* createGUI(std::string name);
+    WidgetReaderProtocol* createWidgetReaderProtocol(std::string name);
     void registerType(const TInfo &t);
     void removeAll();
 

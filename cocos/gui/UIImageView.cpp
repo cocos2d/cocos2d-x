@@ -34,6 +34,8 @@ namespace ui {
 #define STATIC_CAST_SCALE9SPRITE static_cast<extension::Scale9Sprite*>(_imageRenderer)
     
 static const int IMAGE_RENDERER_Z = (-1);
+    
+IMPLEMENT_CLASS_GUI_INFO(ImageView)
 
 ImageView::ImageView():
 _scale9Enabled(false),
@@ -110,9 +112,10 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
-    updateDisplayedColor(getColor());
-    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
+    updateFlippedX();
+    updateFlippedY();
+    updateRGBAToRenderer(_imageRenderer);
     imageTextureScaleChangedWithSize();
 }
 
@@ -126,51 +129,32 @@ void ImageView::setTextureRect(const Rect &rect)
         STATIC_CAST_CCSPRITE->setTextureRect(rect);
     }
 }
-
-void ImageView::setFlippedX(bool flippedX)
+    
+void ImageView::updateFlippedX()
 {
     if (_scale9Enabled)
     {
+        int flip = _flippedX ? -1 : 1;
+        STATIC_CAST_SCALE9SPRITE->setScaleX(flip);
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlippedX(flippedX);
+        STATIC_CAST_CCSPRITE->setFlippedX(_flippedX);
     }
 }
-
-void ImageView::setFlippedY(bool flippedY)
+    
+void ImageView::updateFlippedY()
 {
     if (_scale9Enabled)
     {
+        int flip = _flippedY ? -1 : 1;
+        STATIC_CAST_SCALE9SPRITE->setScaleY(flip);
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlippedY(flippedY);
+        STATIC_CAST_CCSPRITE->setFlippedY(_flippedY);
     }
-}
 
-bool ImageView::isFlippedX()
-{
-    if (_scale9Enabled)
-    {
-        return false;
-    }
-    else
-    {
-        return STATIC_CAST_CCSPRITE->isFlippedX();
-    }
-}
-
-bool ImageView::isFlippedY()
-{
-    if (_scale9Enabled)
-    {
-        return false;
-    }
-    else
-    {
-        return STATIC_CAST_CCSPRITE->isFlippedY();
-    }
 }
 
 void ImageView::setScale9Enabled(bool able)
@@ -293,6 +277,21 @@ void ImageView::imageTextureScaleChangedWithSize()
 std::string ImageView::getDescription() const
 {
     return "ImageView";
+}
+    
+void ImageView::updateTextureColor()
+{
+    updateColorToRenderer(_imageRenderer);
+}
+
+void ImageView::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_imageRenderer);
+}
+
+void ImageView::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_imageRenderer);
 }
 
 Widget* ImageView::createCloneInstance()

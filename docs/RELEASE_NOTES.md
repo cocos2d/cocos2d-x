@@ -2,16 +2,21 @@
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.0 Release Notes](#cocos2d-x-v30-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
 	- [Runtime Requirements](#runtime-requirements)
 	- [Compiler Requirements](#compiler-requirements)
+	- [How to run TestCpp](#how-to-run-testcpp)
+		- [Mac OSX & iOS](#mac-osx--ios)
+		- [Android](#android)
+		- [Windows](#windows)
+		- [Linux](#linux)
+	- [How to start a new game](#how-to-start-a-new-game)
 - [Highlights of v3.0](#highlights-of-v30)
 - [Features in detail](#features-in-detail)
 	- [C++11 features](#c11-features)
 		- [std::function](#stdfunction)
-		- [strongly typed enums](#strongly-typed-enums)
+		- [Strongly typed enums](#strongly-typed-enums)
 		- [override](#override)
 	- [Removed Objective-C patterns](#removed-objective-c-patterns)
 		- [No more 'CC' prefix for C++ classes and free functions](#no-more-cc-prefix-for-c-classes-and-free-functions)
@@ -25,30 +30,25 @@
 			- [Auto-batching](#auto-batching)
 			- [Auto-culling](#auto-culling)
 			- [Global Z order](#global-z-order)
+		- [Sprite vs. SpriteBatchNode](#sprite-vs-spritebatchnode)
 	- [Improved LabelTTF / LabelBMFont / LabelAtlas](#improved-labelttf--labelbmfont--labelatlas)
 	- [New EventDispatcher](#new-eventdispatcher)
 	- [Physics Integration](#physics-integration)
-		- [PhysicsWorld](#physicsworld)
-		- [PhysicsBody](#physicsbody)
-		- [PhysicsShape](#physicsshape)
-		- [PhysicsJoint](#physicsjoint)
-		- [PhysicsContact](#physicscontact)
 - [Misc API Changes](#misc-api-changes)
 	- [ccTypes.h](#cctypesh)
 	- [deprecated functions and  global variables](#deprecated-functions-and--global-variables)
 - [Changes in the Lua bindings](#changes-in-the-lua-bindings)
-    - [Use bindings-generator tool for lua binding](#use-bindings-generator-tool-for-lua-binding)
-	    - [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
-	    - [Use ScriptHandlerMgr to manage the register and unregister of Lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
+	- [Use bindings-generator tool for lua binding](#use-bindings-generator-tool-for-lua-binding)
+		- [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
+		- [Use ScriptHandlerMgr to manage the register and unregister of Lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
 	- [Misc API changes](#misc-api-changes-1)
-		- [Use cc、ccs、ccui、gl and sp as module name](#use-ccccsccuigl-and-sp-as-module-name)
+		- [Use cc、ccs、ccui gl and sp as module name](#use-ccccsccui-gl-and-sp-as-module-name)
 		- [Modified functions](#modified-functions)
 		- [Add some modules](#add-some-modules)
 		- [Add more lua bindings](#add-more-lua-bindings)
-		- [Replace some lua-bindings of Class or Struct with lua table](#replace-the-lua-bindings-of-class-or-struct-with-lua-table)
-	- [Other Changes](#other-changes)
-	    - [Support lua script codes call Obeject-C codes and Java codes](#support-lua-script-codes-call-OC-codes-and-Java-codes)
-	    - [Add some lua files to store the constants of different modules](#add-some-lua-files-to-store-the-constants-of-different-modules)			
+		- [Replace some lua-bindings of Class or Struct with lua table](#replace-some-lua-bindings-of-class-or-struct-with-lua-table)
+		- [Support lua script codes call Object-C codes and Java codes](#support-lua-script-codes-call-object-c-codes-and-java-codes)
+		- [Add some lua files to store the constants of different modules](#add-some-lua-files-to-store-the-constants-of-different-modules)
 
 # Misc Information
 
@@ -67,8 +67,6 @@
 * ~~Windows Phone 8 or newer~~ N/A for the moment
 * Linux Ubuntu 12.04 (or newer)
 * ~~Browsers via Emscripten~~ N/A for the moment
-* ~~Marmalade~~ N/A for the moment
-* ~~BlackBerry~~ N/A for the moment
 
 ## Compiler Requirements
 
@@ -86,12 +84,9 @@
 
 ### Android
 
-Can run sample on Android in two ways:
+You can run the samples...
 
-* Use command to run
-* Use Eclipse to run
-
-**By commnad**
+**Using command line:**
 
     $ cd cocos2d-x
     $ ./setup.py
@@ -101,7 +96,7 @@ Can run sample on Android in two ways:
     
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
-**Using Eclipse**
+**Using Eclipse:**
 
     $ cd cocos2d-x
     $ ./setup.py
@@ -154,10 +149,10 @@ Because `cocos run` command is not ready, so you should do it manually as runnin
 
 * Replaced Objective-C patters with C++ (C++11) patterns and best practices
 * Improved Labels
-* Improved renderer
+* Improved renderer (much faster than in v2.2!!)
 * New Event Dispatcher
 * Physics integration
-* New GUI
+* New UI objects
 * [JavaScript remote debugger](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/scripting/javascript/js-remote-debugger/en.md)
 * Remote Console support
 * Refactor Image - release memory in time and uniform the api of supported file format
@@ -178,7 +173,7 @@ A subset of C++11 features are being used in cocos2d-x:
 * `std::function`, including lambda objects for callbacks
 * strongly typed enums, for most of the cocos2d-x enums and constants
 * `std::thread` for threading
-* `override` context keyword, for overriden methods
+* `override` and `final` context keywords, for overriden and final methods
 
 
 ### std::function
@@ -213,7 +208,8 @@ auto action1 = CallFunc::create(
 ```
 
 `MenuItem` example:
-```c++
+
+```cpp
 // in v2.1
 CCMenuItemLabel *item = CCMenuItemLabel::create(label, this, menu_selector(MyClass::callback));
 
@@ -230,7 +226,7 @@ auto item = MenuItemLabel::create(label,
                   });
 ```
 
-### strongly typed enums
+### Strongly typed enums
 
 _Feature added in v3.0-pre-alpha0_
 
@@ -255,7 +251,7 @@ The old values can still be used, but are deprecated.
 
 To catch possible errors while overriding methods, subclasses with override methods have the `override` context keyword.
 Example:
-```c++
+```cpp
 class Sprite : public Node {
     bool isFlipY(void) const;
     void setFlipY(bool bFlipY);
@@ -317,7 +313,7 @@ v2.1 free functions are still available, but they were tagged as deprecated.
 `copy()` is no longer supported. If you use it, it will compile, but the code will crash.
 
 Example:
-```c++
+```cpp
 // v2.1
 CCMoveBy *action = (CCMoveBy*) move->copy();
 action->autorelease();
@@ -343,7 +339,7 @@ v2.1 methods are still available, but they were tagged as deprecated.
 
 ### Object is replaced with Ref
 
-Because the name `Object` is confused, so rename it to `Ref`, and remove functions that are not related with referenct count. All classes that inherit from `Object` now inherit from `Ref`.
+Because the name `Object` is confused, so rename it to `Ref`, and remove functions that are not related with reference count. All classes that inherit from `Object` now inherit from `Ref`.
 
 ### getters
 
@@ -358,7 +354,7 @@ Examples:
 
 And getters were also tagged as `const` in their declaration. Example:
 
-```c++
+```cpp
 // v2.1
 virtual float getScale();
 
@@ -373,7 +369,7 @@ v2.1 methods are still available, but they were tagged as deprecated.
 Methods that were receiving POD types as arguments (eg: `TexParams`, `Point`, `Size`, etc.) are being passed as `const` reference.
 
 Example:
-```c++
+```cpp
 // v2.1
 void setTexParameters(ccTexParams* texParams);
 
@@ -386,47 +382,104 @@ void setTexParameters(const ccTexParams& texParams);
 
 _Feature added in v3.0-beta and improved in v3.0-beta2_
 
-The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the object.
+The way currently cocos2d-x v2.2 does rendering is OK but it is difficult to optimize, difficult to add new functionality and difficult to port to new platforms.
+So cocos2d-x v3.0 has a new renderer that is more performing, elegant, scalable, flexible but still simple to use and to understand. Also existing cocos2d-x users will find the new API familiar and they will feel immediately comfortable with, without having to bother about what’s changed or what's new under the hood.
 
-Auto-batching and auto-culling support have been added.
+Features of the new renderer:
 
-Please, see this document for detail information about its internal funcitonality: [Renderer Specification document](https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit)
+- It has been decoupled from the Scene Graph. The `draw()` method, instead of "drawing" it sends a `RenderCommand` to the `Renderer`, and `Renderer` is responsible for drawing the queued `RenderCommand` commands.
+- `QuadCommands` (used by `Sprite` and `ParticleSystem` objects) will be automatically batched.
+- `CustomCommand` objects allow the user to use custom OpenGL code, using a API similar to v2.2
+- `GroupCommand` objects allow to have "stacks" in the Renderer with different OpenGL values.
+- Auto-culling for `Sprite` objects (although, technically, Auto-culling is not performed in `Renderer` code, but in the `Sprite` code)
+- Global Z ordering (local Z ordering is still supported)
+
+For detailed information, please read the following doc: [Renderer Specification document](https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit)
 
 ### Renderer features
 
 #### Auto-batching
 
-TODO
+Auto-batching means that the `Renderer` will package "multiple draw calls" in just one "big draw call" (AKA batch). In order to group "draw calls" certain conditions are needed:
+
+- It only works with `QuadCommand` commands (used by Sprite and ParticleSystem objects)
+- The `QuadCommands` must share the same Material ID: same Texture ID, same GLProgram and same blending function
+- The `QuadCommands` must consecutive 
+
+If those conditions are met, the `Renderer` will create create a batch (one draw call) with all those `QuadCommand` objects.
+
+In case you are unfamiliar with the OpenGL best practices, batching is very important to have decent speed in your games. The less batches (draw calls) the more performance your game is going to be.
 
 #### Auto-culling
 
-With auto-culling, sprites that outside screen will be thrown away.
+For the moment auto-culling is only implemented on `Sprite` objects.
+
+When the method `Sprite::draw()` is called, it will check if the `Sprite` is outside the screen. If so, it won't send the `QuadCommand` command to the `Renderer`, and thus, it will gain some performance.
+
 
 #### Global Z order
 
-A new method called `setGlobalZOrder()` / `getGlobalZOrder()` was added to `Node`, and the old  methods `setZOrder()` / `getZOrder()` were renamed to `setLocalZOrder()` / `getLocalZOrder()`.
+A new method called `setGlobalZOrder()` / `getGlobalZOrder()` was added to `Node`, and the old methods `setZOrder()` / `getZOrder()` were renamed to `setLocalZOrder()` / `getLocalZOrder()`.
 
-`globalZOrder` receives a `float` (and not an `int`) as argument. And this value is used to sort the Nodes in the Renderer. Lower values have higher priority over higher values. That means that a Node with a `globalZOrder` of `-10` is going to be drawn BEFORE a Node with `globalZOrder` of `10`.
+`globalZOrder` receives a `float` (and not an `int`) as argument. And this value is used to sort the `RenderCommand` objects in the `Renderer`. Lower values have higher priority over higher values. That means that a Node with a `globalZOrder` of `-10` is going to be drawn BEFORE a Node with `globalZOrder` of `10`.
 
 Nodes that have a `globalZOrder` of `0` (default value) will be drawn according to the Scene Graph order.
 
-So, if the `globalZOrder` is not changed, cocos2d-x v3.0 will behave exaclty as cocos2d-x v2.2. 
+If the `globalZOrder` is not changed, cocos2d-x v3.0 will behave exactly as cocos2d-x v2.2.
 
 __`globalZOrder()` vs. `localZOrder()`__:
 
-* `globalZOrder` is used to sort the "draw commands" in the Renderer
-* `localZOrder` is used to sort the Node in its parent's children Array
+* `globalZOrder` is used to sort the "draw commands" in the `Renderer`
+* `localZOrder` is used to sort the `Node` objects in its parent's children Array
 
 __Exceptions__:
 
 TODO
+
+### Sprite vs. SpriteBatchNode
+
+In v2.2 the recommended way to have good performance was to parent `Sprite` objects to a `SpriteBatchNode` object.
+Although the performance was (is still) very good by using `SpriteBatchNode` objects, they had (still have) some limitations like:
+
+- `Sprite` objects can only have `Sprite` objects as children (if not, cocos2d-x will raise an Assert)
+    - You cannot add a `ParticleSystem` as a child of `Sprite`, when the `Sprite` is parented to a `SpriteBatchNode`
+    - As a consequence of that, you cannot use `ParallaxNode` with `Sprites` parented to `SpriteBatchNode`
+- All `Sprite` objects must share the same TextureId (if not, cocos2d-x will raise an Assert)
+- `Sprite` objects use the `SpriteBatchNode`'s blending function and shader.
+
+
+And although v3.0 still supports `SpriteBatchNode` (with the same features and limitations), we no longer encourage its usage. Instead, we recommend to use `Sprite` objects without parenting them to a `SpriteBatchNode`.
+
+But in order to have a very good performance in v3.0, you have to make sure that your `Sprite` objects:
+
+- Share the same TextureId (place them in a spritesheet, like if you were using a `SpriteBatchNode`)
+- Make sure all of them use the same shader and blending function (like if you were using a `SpriteBatchNode`)
+
+If you do so, the `Sprites` will perform almost as fast as to using `SpriteBatchNode`... (about 10% slower on old devices. On newer devices the difference is almost imperceptible)
+
+The big differences between v2.2 and v3.0 are:
+
+- `Sprite` objects can have different Texture IDs. 
+- `Sprite` objects can have any kind of `Node` as children, including `ParticleSystem`. 
+- `Sprite` objects can have different blending functions and use different shaders. 
+
+But if you do that, the `Renderer` might not be able to batch all its children (less performant). But the game will keep running, without raising any Assert.
+
+__To summarize__:
+
+- Keep putting all your sprites in a big spritesheet
+- Use the same Blending Function (just use the default one)
+- Use the same Shader (just use the default one)
+- And don't parent your sprites to a `SpriteBatchNode`
+
+Only use `SpriteBatchNode` as the last resort, when you really need an extra (although minor) boost in performance (and you are OK with its limitations).
 
 
 ## Improved LabelTTF / LabelBMFont / LabelAtlas
 
 _Feature added in v3.0-alpha0_
 
-`LabelTTF`, `LabelBMFont` and `LabelAtlas` will be replaced by new `Label`. The benifits of new `Label` are:
+`LabelTTF`, `LabelBMFont` and `LabelAtlas` will be replaced by new `Label`. The benefits of new `Label` are:
 
 * uniform api to create `LabelTTF`, `LabelBMFont` and `LabelAtlas`
 * use `freetype` to generate texture for labels, which make sure that labels have the same effect on different platforms
@@ -452,7 +505,7 @@ Detail information of `EventDispatcher` can refer to [this document](https://git
 
 _Feature added in v3.0-pre-alpha0_
 
-In v3.0, we integrate physics engien into cocos2d-x based on [Chipmunk2D](https://chipmunk-physics.net/). By using this feature, you can create physics based games without understanding physics engine.
+In v3.0, we integrate physics engine into cocos2d-x based on [Chipmunk2D](https://chipmunk-physics.net/). By using this feature, you can create physics based games without understanding physics engine.
 
 More detail information of this feature, please refer to [this document](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/physics/physics-integration/en.md)
 
@@ -638,13 +691,13 @@ ScriptHandlerMgr:getInstance():registerScriptHandler(menuItem, luafunction,cc.HA
 
 ### Use `cc`、`ccs`、`ccui` `gl` and `sp` as module name
 
-Now classes are binded into different modules instead of using global module. This will avoid conflicts with other codes.
+Now classes are bound into different modules instead of using global module. This will avoid conflicts with other codes.
 
 * classes in `cocos2d`、`cocos2d::extension`、`CocosDenshion` and `cocosbuilder`  were bound to `cc` module
-* classes in `cocos2d::gui` were bound to `ccui` module
+* classes in `cocos2d::ui` were bound to `ccui` module
 * classes in `spine` were bound to `sp` module
 * classes in `cocostudio` were bound to `ccs` module
-* global variables are binded to corresponding modules
+* global variables are bound to corresponding modules
 * all funcionts and constants about `openGl` were bound to `gl` module
 
 Examples:
@@ -676,7 +729,7 @@ In the version 3.0, more modules were bound to lua, specific as follows:
 * XMLHttpRequest
 * OpenGL
  
-The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the `sp` module, and the `OpenGl` is in the `gl` module. Related test cases located in:
+The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the `sp` module, and the `OpenGL` is in the `gl` module. Related test cases located in:
 
 * physics   ---> TestLua/PhysicsTest
 * spine     ---> TestLua/SpineTest
@@ -686,7 +739,7 @@ The `XMLHttpRequest` and `physics` are in the `cc` module, the `spine` is in the
 ### Add more lua bindings
 Such as: New Label、New EventDispatcher and AssetsManager,etc.Related test cases located in:
 
-* New Lable ---> TestLua/LabelTestNew
+* New Label ---> TestLua/LabelTestNew
 * New EventDispatcher --->TestLua/NewEventDispatcherTest
 * AssetsManager  ---> TestLua/AssetsManagerTest
 
@@ -707,12 +760,11 @@ Examples:
     | CCPointArray            | lua table               |
     
 ### Support lua script codes call Object-C codes and Java codes 
-`LuaObjcBridge` and `LuaJavaBridge` bound to lua surpported lua script codes calls Object-C codes and java codes. 
+`LuaObjcBridge` and `LuaJavaBridge` bound to lua supported lua script codes calls Object-C codes and java codes.
     
 ### Add some lua files to store the constants of different modules
 
-* Cocos2DConstants.lua store the constants of `cc` moudle
-* StudioConstants.lua store the constants of  `ccs` moudle
-* GuiConstants.lua store the constants of `ccui` moudle
-* OpenglConstants.lua store the constants of `gl` moudle
-
+* Cocos2DConstants.lua store the constants of `cc` module
+* StudioConstants.lua store the constants of  `ccs` module
+* GuiConstants.lua store the constants of `ccui` module
+* OpenglConstants.lua store the constants of `gl` module
