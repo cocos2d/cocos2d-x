@@ -85,8 +85,6 @@
 		1ABCA33F18CD94440087CE3A /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA33718CD94440087CE3A /* Icon.icns */; };
 		1ABCA34118CD94440087CE3A /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCA33A18CD94440087CE3A /* LuaObjectCBridgeTest.mm */; };
 		1ABCA34218CD94440087CE3A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCA33B18CD94440087CE3A /* main.cpp */; };
-		1ABCA34518CD94580087CE3A /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA34318CD94580087CE3A /* res */; };
-		1ABCA34618CD94580087CE3A /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA34318CD94580087CE3A /* res */; };
 		1ABCA34718CD94580087CE3A /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA34418CD94580087CE3A /* src */; };
 		1ABCA34818CD94580087CE3A /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA34418CD94580087CE3A /* src */; };
 		1ABCA35518CD9A820087CE3A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35418CD9A820087CE3A /* OpenGL.framework */; };
@@ -143,6 +141,74 @@
 		1ABCA3A918CD9F130087CE3A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3A818CD9F130087CE3A /* AudioToolbox.framework */; };
 		1ABCA3AA18CD9F1A0087CE3A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		1ABCA3B018CDA06D0087CE3A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3AF18CDA06D0087CE3A /* libz.dylib */; };
+		1ABCA3B618CDA3600087CE3A /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA3B518CDA3600087CE3A /* cocosbuilderRes */; };
+		1ABCA3B718CDA3600087CE3A /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCA3B518CDA3600087CE3A /* cocosbuilderRes */; };
+		1ABCA3B918CDA3820087CE3A /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE818CD5C0000B0E990 /* animations */; };
+		1ABCA3BA18CDA3820087CE3A /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE918CD5C0000B0E990 /* armature */; };
+		1ABCA3BB18CDA3820087CE3A /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAED18CD5C0000B0E990 /* ccb */; };
+		1ABCA3BC18CDA3820087CE3A /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosgui */; };
+		1ABCA3BD18CDA3820087CE3A /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF218CD5C0000B0E990 /* components */; };
+		1ABCA3BE18CDA3820087CE3A /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF318CD5C0000B0E990 /* configs */; };
+		1ABCA3BF18CDA3820087CE3A /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF718CD5C0000B0E990 /* extensions */; };
+		1ABCA3C018CDA3820087CE3A /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF918CD5C0000B0E990 /* fonts */; };
+		1ABCA3C118CDA3820087CE3A /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFB18CD5C0000B0E990 /* hd */; };
+		1ABCA3C218CDA3820087CE3A /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFD18CD5C0000B0E990 /* Images */; };
+		1ABCA3C318CDA3820087CE3A /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFE18CD5C0000B0E990 /* ipad */; };
+		1ABCA3C418CDA3820087CE3A /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFF18CD5C0000B0E990 /* ipadhd */; };
+		1ABCA3C518CDA3820087CE3A /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0018CD5C0000B0E990 /* Misc */; };
+		1ABCA3C618CDA3820087CE3A /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0218CD5C0000B0E990 /* Particles */; };
+		1ABCA3C718CDA3820087CE3A /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0418CD5C0000B0E990 /* scenetest */; };
+		1ABCA3C818CDA3820087CE3A /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0518CD5C0000B0E990 /* Shaders */; };
+		1ABCA3C918CDA3820087CE3A /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0618CD5C0000B0E990 /* spine */; };
+		1ABCA3CA18CDA3820087CE3A /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0718CD5C0000B0E990 /* TileMaps */; };
+		1ABCA3CB18CDA3820087CE3A /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0818CD5C0000B0E990 /* zwoptex */; };
+		1ABCA3CC18CDA3830087CE3A /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE818CD5C0000B0E990 /* animations */; };
+		1ABCA3CD18CDA3830087CE3A /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE918CD5C0000B0E990 /* armature */; };
+		1ABCA3CE18CDA3830087CE3A /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAED18CD5C0000B0E990 /* ccb */; };
+		1ABCA3CF18CDA3830087CE3A /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosgui */; };
+		1ABCA3D018CDA3830087CE3A /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF218CD5C0000B0E990 /* components */; };
+		1ABCA3D118CDA3830087CE3A /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF318CD5C0000B0E990 /* configs */; };
+		1ABCA3D218CDA3830087CE3A /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF718CD5C0000B0E990 /* extensions */; };
+		1ABCA3D318CDA3830087CE3A /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF918CD5C0000B0E990 /* fonts */; };
+		1ABCA3D418CDA3830087CE3A /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFB18CD5C0000B0E990 /* hd */; };
+		1ABCA3D518CDA3830087CE3A /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFD18CD5C0000B0E990 /* Images */; };
+		1ABCA3D618CDA3830087CE3A /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFE18CD5C0000B0E990 /* ipad */; };
+		1ABCA3D718CDA3830087CE3A /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFF18CD5C0000B0E990 /* ipadhd */; };
+		1ABCA3D818CDA3830087CE3A /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0018CD5C0000B0E990 /* Misc */; };
+		1ABCA3D918CDA3830087CE3A /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0218CD5C0000B0E990 /* Particles */; };
+		1ABCA3DA18CDA3830087CE3A /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0418CD5C0000B0E990 /* scenetest */; };
+		1ABCA3DB18CDA3830087CE3A /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0518CD5C0000B0E990 /* Shaders */; };
+		1ABCA3DC18CDA3830087CE3A /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0618CD5C0000B0E990 /* spine */; };
+		1ABCA3DD18CDA3830087CE3A /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0718CD5C0000B0E990 /* TileMaps */; };
+		1ABCA3DE18CDA3830087CE3A /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0818CD5C0000B0E990 /* zwoptex */; };
+		1ABCA3DF18CDA38A0087CE3A /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEE18CD5C0000B0E990 /* CocosBuilderExample.ccbproj */; };
+		1ABCA3E018CDA38A0087CE3A /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEF18CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog */; };
+		1ABCA3E118CDA38A0087CE3A /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0118CD5C0000B0E990 /* music.mid */; };
+		1ABCA3E218CDA38A0087CE3A /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEB18CD5C0000B0E990 /* background.mp3 */; };
+		1ABCA3E318CDA38A0087CE3A /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEC18CD5C0000B0E990 /* background.ogg */; };
+		1ABCA3E418CDA38A0087CE3A /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF618CD5C0000B0E990 /* effect2.ogg */; };
+		1ABCA3E518CDA38A0087CE3A /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF818CD5C0000B0E990 /* fileLookup.plist */; };
+		1ABCA3E618CDA38A0087CE3A /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFA18CD5C0000B0E990 /* fps_images.png */; };
+		1ABCA3E718CDA38A0087CE3A /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFC18CD5C0000B0E990 /* Hello.png */; };
+		1ABCA3E818CDA38A0087CE3A /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF418CD5C0000B0E990 /* effect1.raw */; };
+		1ABCA3E918CDA38A0087CE3A /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF118CD5C0000B0E990 /* commonly_used_words.txt */; };
+		1ABCA3EA18CDA38A0087CE3A /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEA18CD5C0000B0E990 /* background-music-aac.wav */; };
+		1ABCA3EB18CDA38A0087CE3A /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF518CD5C0000B0E990 /* effect1.wav */; };
+		1ABCA3EC18CDA38A0087CE3A /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0318CD5C0000B0E990 /* pew-pew-lei.wav */; };
+		1ABCA3ED18CDA38B0087CE3A /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEE18CD5C0000B0E990 /* CocosBuilderExample.ccbproj */; };
+		1ABCA3EE18CDA38B0087CE3A /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEF18CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog */; };
+		1ABCA3EF18CDA38B0087CE3A /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0118CD5C0000B0E990 /* music.mid */; };
+		1ABCA3F018CDA38B0087CE3A /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEB18CD5C0000B0E990 /* background.mp3 */; };
+		1ABCA3F118CDA38B0087CE3A /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEC18CD5C0000B0E990 /* background.ogg */; };
+		1ABCA3F218CDA38B0087CE3A /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF618CD5C0000B0E990 /* effect2.ogg */; };
+		1ABCA3F318CDA38B0087CE3A /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF818CD5C0000B0E990 /* fileLookup.plist */; };
+		1ABCA3F418CDA38B0087CE3A /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFA18CD5C0000B0E990 /* fps_images.png */; };
+		1ABCA3F518CDA38B0087CE3A /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAFC18CD5C0000B0E990 /* Hello.png */; };
+		1ABCA3F618CDA38B0087CE3A /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF418CD5C0000B0E990 /* effect1.raw */; };
+		1ABCA3F718CDA38B0087CE3A /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF118CD5C0000B0E990 /* commonly_used_words.txt */; };
+		1ABCA3F818CDA38B0087CE3A /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEA18CD5C0000B0E990 /* background-music-aac.wav */; };
+		1ABCA3F918CDA38B0087CE3A /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF518CD5C0000B0E990 /* effect1.wav */; };
+		1ABCA3FA18CDA38B0087CE3A /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FB0318CD5C0000B0E990 /* pew-pew-lei.wav */; };
 		1AE5F95E18CD5BB600B0E990 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE5F76518CD5BB400B0E990 /* AccelerometerTest.cpp */; };
 		1AE5F95F18CD5BB600B0E990 /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE5F76518CD5BB400B0E990 /* AccelerometerTest.cpp */; };
 		1AE5F96018CD5BB600B0E990 /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE5F76818CD5BB400B0E990 /* ActionManagerTest.cpp */; };
@@ -869,7 +935,6 @@
 		1ABCA33A18CD94440087CE3A /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1ABCA33B18CD94440087CE3A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1ABCA33C18CD94440087CE3A /* TestLua_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLua_Prefix.pch; sourceTree = "<group>"; };
-		1ABCA34318CD94580087CE3A /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../samples/lua-tests/res"; sourceTree = "<group>"; };
 		1ABCA34418CD94580087CE3A /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../samples/lua-tests/src"; sourceTree = "<group>"; };
 		1ABCA35418CD9A820087CE3A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		1ABCA35618CD9A890087CE3A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -903,6 +968,7 @@
 		1ABCA3A618CD9F0D0087CE3A /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/OpenAL.framework; sourceTree = DEVELOPER_DIR; };
 		1ABCA3A818CD9F130087CE3A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		1ABCA3AF18CDA06D0087CE3A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		1ABCA3B518CDA3600087CE3A /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../samples/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AE5F76518CD5BB400B0E990 /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
 		1AE5F76618CD5BB400B0E990 /* AccelerometerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerTest.h; sourceTree = "<group>"; };
 		1AE5F76818CD5BB400B0E990 /* ActionManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionManagerTest.cpp; sourceTree = "<group>"; };
@@ -1493,7 +1559,7 @@
 			isa = PBXGroup;
 			children = (
 				1ABCA34918CD945D0087CE3A /* project */,
-				1ABCA34318CD94580087CE3A /* res */,
+				1ABCA3B818CDA36B0087CE3A /* res */,
 				1ABCA34418CD94580087CE3A /* src */,
 			);
 			name = "lua-tests";
@@ -1597,6 +1663,14 @@
 				1ABCA37718CD9E180087CE3A /* StudioConstants.lua */,
 			);
 			name = "Lua Common";
+			sourceTree = "<group>";
+		};
+		1ABCA3B818CDA36B0087CE3A /* res */ = {
+			isa = PBXGroup;
+			children = (
+				1ABCA3B518CDA3600087CE3A /* cocosbuilderRes */,
+			);
+			name = res;
 			sourceTree = "<group>";
 		};
 		1AE5F76218CD5B9C00B0E990 /* cpp-tests */ = {
@@ -2924,37 +2998,37 @@
 			children = (
 				1AE5FAE818CD5C0000B0E990 /* animations */,
 				1AE5FAE918CD5C0000B0E990 /* armature */,
-				1AE5FAEA18CD5C0000B0E990 /* background-music-aac.wav */,
-				1AE5FAEB18CD5C0000B0E990 /* background.mp3 */,
-				1AE5FAEC18CD5C0000B0E990 /* background.ogg */,
 				1AE5FAED18CD5C0000B0E990 /* ccb */,
-				1AE5FAEE18CD5C0000B0E990 /* CocosBuilderExample.ccbproj */,
-				1AE5FAEF18CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog */,
 				1AE5FAF018CD5C0000B0E990 /* cocosgui */,
-				1AE5FAF118CD5C0000B0E990 /* commonly_used_words.txt */,
 				1AE5FAF218CD5C0000B0E990 /* components */,
 				1AE5FAF318CD5C0000B0E990 /* configs */,
-				1AE5FAF418CD5C0000B0E990 /* effect1.raw */,
-				1AE5FAF518CD5C0000B0E990 /* effect1.wav */,
-				1AE5FAF618CD5C0000B0E990 /* effect2.ogg */,
 				1AE5FAF718CD5C0000B0E990 /* extensions */,
-				1AE5FAF818CD5C0000B0E990 /* fileLookup.plist */,
 				1AE5FAF918CD5C0000B0E990 /* fonts */,
-				1AE5FAFA18CD5C0000B0E990 /* fps_images.png */,
 				1AE5FAFB18CD5C0000B0E990 /* hd */,
-				1AE5FAFC18CD5C0000B0E990 /* Hello.png */,
 				1AE5FAFD18CD5C0000B0E990 /* Images */,
 				1AE5FAFE18CD5C0000B0E990 /* ipad */,
 				1AE5FAFF18CD5C0000B0E990 /* ipadhd */,
 				1AE5FB0018CD5C0000B0E990 /* Misc */,
-				1AE5FB0118CD5C0000B0E990 /* music.mid */,
 				1AE5FB0218CD5C0000B0E990 /* Particles */,
-				1AE5FB0318CD5C0000B0E990 /* pew-pew-lei.wav */,
 				1AE5FB0418CD5C0000B0E990 /* scenetest */,
 				1AE5FB0518CD5C0000B0E990 /* Shaders */,
 				1AE5FB0618CD5C0000B0E990 /* spine */,
 				1AE5FB0718CD5C0000B0E990 /* TileMaps */,
 				1AE5FB0818CD5C0000B0E990 /* zwoptex */,
+				1AE5FAEE18CD5C0000B0E990 /* CocosBuilderExample.ccbproj */,
+				1AE5FAEF18CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog */,
+				1AE5FB0118CD5C0000B0E990 /* music.mid */,
+				1AE5FAEB18CD5C0000B0E990 /* background.mp3 */,
+				1AE5FAEC18CD5C0000B0E990 /* background.ogg */,
+				1AE5FAF618CD5C0000B0E990 /* effect2.ogg */,
+				1AE5FAF818CD5C0000B0E990 /* fileLookup.plist */,
+				1AE5FAFA18CD5C0000B0E990 /* fps_images.png */,
+				1AE5FAFC18CD5C0000B0E990 /* Hello.png */,
+				1AE5FAF418CD5C0000B0E990 /* effect1.raw */,
+				1AE5FAF118CD5C0000B0E990 /* commonly_used_words.txt */,
+				1AE5FAEA18CD5C0000B0E990 /* background-music-aac.wav */,
+				1AE5FAF518CD5C0000B0E990 /* effect1.wav */,
+				1AE5FB0318CD5C0000B0E990 /* pew-pew-lei.wav */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -3256,27 +3330,60 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ABCA3D818CDA3830087CE3A /* Misc in Resources */,
+				1ABCA3D718CDA3830087CE3A /* ipadhd in Resources */,
+				1ABCA3D618CDA3830087CE3A /* ipad in Resources */,
+				1ABCA3DB18CDA3830087CE3A /* Shaders in Resources */,
+				1ABCA3D018CDA3830087CE3A /* components in Resources */,
+				1ABCA3E418CDA38A0087CE3A /* effect2.ogg in Resources */,
 				1ABCA39A18CD9E180087CE3A /* StudioConstants.lua in Resources */,
 				1ABCA39218CD9E180087CE3A /* luaj.lua in Resources */,
+				1ABCA3DF18CDA38A0087CE3A /* CocosBuilderExample.ccbproj in Resources */,
 				1ABCA38018CD9E180087CE3A /* CocoStudio.lua in Resources */,
+				1ABCA3CD18CDA3830087CE3A /* armature in Resources */,
 				1ABCA33F18CD94440087CE3A /* Icon.icns in Resources */,
+				1ABCA3D418CDA3830087CE3A /* hd in Resources */,
 				1ABCA33D18CD94440087CE3A /* InfoPlist.strings in Resources */,
+				1ABCA3DD18CDA3830087CE3A /* TileMaps in Resources */,
 				1ABCA37C18CD9E180087CE3A /* Cocos2d.lua in Resources */,
+				1ABCA3D318CDA3830087CE3A /* fonts in Resources */,
+				1ABCA3E018CDA38A0087CE3A /* CocosBuilderExample.ccbresourcelog in Resources */,
+				1ABCA3D118CDA3830087CE3A /* configs in Resources */,
+				1ABCA3B618CDA3600087CE3A /* cocosbuilderRes in Resources */,
+				1ABCA3E318CDA38A0087CE3A /* background.ogg in Resources */,
+				1ABCA3E918CDA38A0087CE3A /* commonly_used_words.txt in Resources */,
 				1ABCA34718CD94580087CE3A /* src in Resources */,
+				1ABCA3E118CDA38A0087CE3A /* music.mid in Resources */,
 				1ABCA38818CD9E180087CE3A /* DeprecatedOpenglEnum.lua in Resources */,
+				1ABCA3E218CDA38A0087CE3A /* background.mp3 in Resources */,
+				1ABCA3EB18CDA38A0087CE3A /* effect1.wav in Resources */,
 				1ABCA37A18CD9E180087CE3A /* CCBReaderLoad.lua in Resources */,
 				1ABCA38E18CD9E180087CE3A /* GuiConstants.lua in Resources */,
+				1ABCA3E718CDA38A0087CE3A /* Hello.png in Resources */,
 				1ABCA37E18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
+				1ABCA3EC18CDA38A0087CE3A /* pew-pew-lei.wav in Resources */,
+				1ABCA3CF18CDA3830087CE3A /* cocosgui in Resources */,
+				1ABCA3E618CDA38A0087CE3A /* fps_images.png in Resources */,
+				1ABCA3D918CDA3830087CE3A /* Particles in Resources */,
+				1ABCA3CE18CDA3830087CE3A /* ccb in Resources */,
 				1ABCA38618CD9E180087CE3A /* DeprecatedEnum.lua in Resources */,
-				1ABCA34518CD94580087CE3A /* res in Resources */,
 				1ABCA33E18CD94440087CE3A /* MainMenu.xib in Resources */,
+				1ABCA3E518CDA38A0087CE3A /* fileLookup.plist in Resources */,
+				1ABCA3DA18CDA3830087CE3A /* scenetest in Resources */,
+				1ABCA3E818CDA38A0087CE3A /* effect1.raw in Resources */,
 				1ABCA38A18CD9E180087CE3A /* DrawPrimitives.lua in Resources */,
+				1ABCA3D518CDA3830087CE3A /* Images in Resources */,
 				1ABCA39818CD9E180087CE3A /* OpenglConstants.lua in Resources */,
 				1ABCA37818CD9E180087CE3A /* AudioEngine.lua in Resources */,
 				1ABCA39418CD9E180087CE3A /* luaoc.lua in Resources */,
+				1ABCA3EA18CDA38A0087CE3A /* background-music-aac.wav in Resources */,
 				1ABCA39018CD9E180087CE3A /* json.lua in Resources */,
 				1ABCA38218CD9E180087CE3A /* Deprecated.lua in Resources */,
 				1ABCA38C18CD9E180087CE3A /* extern.lua in Resources */,
+				1ABCA3DE18CDA3830087CE3A /* zwoptex in Resources */,
+				1ABCA3D218CDA3830087CE3A /* extensions in Resources */,
+				1ABCA3DC18CDA3830087CE3A /* spine in Resources */,
+				1ABCA3CC18CDA3830087CE3A /* animations in Resources */,
 				1ABCA38418CD9E180087CE3A /* DeprecatedClass.lua in Resources */,
 				1ABCA39618CD9E180087CE3A /* Opengl.lua in Resources */,
 			);
@@ -3286,28 +3393,60 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ABCA3C418CDA3820087CE3A /* ipadhd in Resources */,
+				1ABCA3C518CDA3820087CE3A /* Misc in Resources */,
 				1ABCA32B18CD943D0087CE3A /* Icon-57.png in Resources */,
+				1ABCA3F918CDA38B0087CE3A /* effect1.wav in Resources */,
 				1ABCA32618CD943D0087CE3A /* Default@2x.png in Resources */,
 				1ABCA32C18CD943D0087CE3A /* Icon-72.png in Resources */,
+				1ABCA3C018CDA3820087CE3A /* fonts in Resources */,
+				1ABCA3BB18CDA3820087CE3A /* ccb in Resources */,
+				1ABCA3C118CDA3820087CE3A /* hd in Resources */,
+				1ABCA3C618CDA3820087CE3A /* Particles in Resources */,
 				1ABCA37B18CD9E180087CE3A /* CCBReaderLoad.lua in Resources */,
 				1ABCA34818CD94580087CE3A /* src in Resources */,
+				1ABCA3B718CDA3600087CE3A /* cocosbuilderRes in Resources */,
+				1ABCA3F318CDA38B0087CE3A /* fileLookup.plist in Resources */,
 				1ABCA32418CD943D0087CE3A /* Default-568h@2x.png in Resources */,
+				1ABCA3F118CDA38B0087CE3A /* background.ogg in Resources */,
 				1ABCA38518CD9E180087CE3A /* DeprecatedClass.lua in Resources */,
+				1ABCA3FA18CDA38B0087CE3A /* pew-pew-lei.wav in Resources */,
 				1ABCA39318CD9E180087CE3A /* luaj.lua in Resources */,
+				1ABCA3BA18CDA3820087CE3A /* armature in Resources */,
 				1ABCA37F18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
+				1ABCA3BC18CDA3820087CE3A /* cocosgui in Resources */,
+				1ABCA3F418CDA38B0087CE3A /* fps_images.png in Resources */,
 				1ABCA39518CD9E180087CE3A /* luaoc.lua in Resources */,
+				1ABCA3C718CDA3820087CE3A /* scenetest in Resources */,
+				1ABCA3BD18CDA3820087CE3A /* components in Resources */,
 				1ABCA32A18CD943D0087CE3A /* Icon-152.png in Resources */,
+				1ABCA3F818CDA38B0087CE3A /* background-music-aac.wav in Resources */,
+				1ABCA3CB18CDA3820087CE3A /* zwoptex in Resources */,
 				1ABCA32518CD943D0087CE3A /* Default.png in Resources */,
+				1ABCA3EE18CDA38B0087CE3A /* CocosBuilderExample.ccbresourcelog in Resources */,
+				1ABCA3C318CDA3820087CE3A /* ipad in Resources */,
+				1ABCA3EF18CDA38B0087CE3A /* music.mid in Resources */,
+				1ABCA3BF18CDA3820087CE3A /* extensions in Resources */,
+				1ABCA3C218CDA3820087CE3A /* Images in Resources */,
+				1ABCA3F218CDA38B0087CE3A /* effect2.ogg in Resources */,
 				1ABCA38318CD9E180087CE3A /* Deprecated.lua in Resources */,
 				1ABCA38918CD9E180087CE3A /* DeprecatedOpenglEnum.lua in Resources */,
 				1ABCA37D18CD9E180087CE3A /* Cocos2d.lua in Resources */,
+				1ABCA3ED18CDA38B0087CE3A /* CocosBuilderExample.ccbproj in Resources */,
+				1ABCA3F718CDA38B0087CE3A /* commonly_used_words.txt in Resources */,
+				1ABCA3B918CDA3820087CE3A /* animations in Resources */,
 				1ABCA32818CD943D0087CE3A /* Icon-120.png in Resources */,
 				1ABCA39B18CD9E180087CE3A /* StudioConstants.lua in Resources */,
 				1ABCA32D18CD943D0087CE3A /* Icon-76.png in Resources */,
+				1ABCA3F618CDA38B0087CE3A /* effect1.raw in Resources */,
+				1ABCA3C818CDA3820087CE3A /* Shaders in Resources */,
+				1ABCA3BE18CDA3820087CE3A /* configs in Resources */,
 				1ABCA38D18CD9E180087CE3A /* extern.lua in Resources */,
 				1ABCA38718CD9E180087CE3A /* DeprecatedEnum.lua in Resources */,
-				1ABCA34618CD94580087CE3A /* res in Resources */,
+				1ABCA3C918CDA3820087CE3A /* spine in Resources */,
 				1ABCA38F18CD9E180087CE3A /* GuiConstants.lua in Resources */,
+				1ABCA3CA18CDA3820087CE3A /* TileMaps in Resources */,
+				1ABCA3F518CDA38B0087CE3A /* Hello.png in Resources */,
 				1ABCA39118CD9E180087CE3A /* json.lua in Resources */,
 				1ABCA39718CD9E180087CE3A /* Opengl.lua in Resources */,
 				1ABCA38118CD9E180087CE3A /* CocoStudio.lua in Resources */,
@@ -3315,6 +3454,7 @@
 				1ABCA32918CD943D0087CE3A /* Icon-144.png in Resources */,
 				1ABCA39918CD9E180087CE3A /* OpenglConstants.lua in Resources */,
 				1ABCA32718CD943D0087CE3A /* Icon-114.png in Resources */,
+				1ABCA3F018CDA38B0087CE3A /* background.mp3 in Resources */,
 				1ABCA37918CD9E180087CE3A /* AudioEngine.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -58,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     register_assetsmanager_test_sample(stack->getLuaState());
 #endif
     
-    std::string resPrefix("res/");
+    std::string resPrefix("");
     
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), resPrefix);
