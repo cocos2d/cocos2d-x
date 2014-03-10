@@ -33,8 +33,8 @@ include_directories(
   ../../editor-support/cocostudio
   ../../editor-support/spine
   ../../gui
-  ../../../../external/lua/lua
-  ../../../../external/lua/tolua
+  ../../../external/lua/lua
+  ../../../external/lua/tolua
 )
 
 

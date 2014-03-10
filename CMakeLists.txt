@@ -284,7 +284,7 @@ add_subdirectory(external/lua/lua)
 add_subdirectory(external/lua/tolua)
 
 # luabinding
-add_subdirectory(cocos/scripting/lua)
+add_subdirectory(cocos/scripting/lua-bindings)
 endif(BUILD_LIBS_LUA)
 
 # build tests 
