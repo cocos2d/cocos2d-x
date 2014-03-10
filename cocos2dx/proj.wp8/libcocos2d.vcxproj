@@ -96,7 +96,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -119,7 +119,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -143,7 +143,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -166,7 +166,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d11.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4264</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
