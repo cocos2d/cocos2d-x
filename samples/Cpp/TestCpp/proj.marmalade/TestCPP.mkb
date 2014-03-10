@@ -467,11 +467,20 @@ files
 	CustomImageViewReader.h
 	CustomReader.cpp
 	CustomReader.h
+	CustomParticleWidget.cpp
+	CustomParticleWidget.h	
+	CustomParticleWidgetReader.cpp
+	CustomParticleWidgetReader.h
 
 	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest)
 	CustomImageTest.cpp
 	CustomImageTest.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest)
+	CustomParticleWidgetTest.cpp
+	CustomParticleWidgetTest.h
 	
 	[Test/ExtensionsTest/CocoStudioSceneTest]
 	(../Classes/ExtensionsTest/CocoStudioSceneTest)

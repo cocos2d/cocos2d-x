@@ -3,6 +3,7 @@
 #include "CustomGUIScene.h"
 #include "CocoStudioGUITest.h"
 #include "CustomTest/CustomImageTest/CustomImageTest.h"
+#include "CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.h"
 
 
 enum
@@ -14,12 +15,14 @@ enum
 enum
 {
     CUSTOM_IMAGE = 0,
+    CUSTOM_PARTICLE_WIDGET,
     CUSTOM_MAX_COUNT,
 };
 
 static const std::string testsName[CUSTOM_MAX_COUNT] =
 {
     "custom gui ImageTest",
+    "custom gui ParticleWidgetTest",
 };
 
 ////////////////////////////////////////////////////////
@@ -65,6 +68,13 @@ void CustomGUITestMainLayer::menuCallback(CCObject* pSender)
             pScene->release();
         }
             break;
+            
+        case CUSTOM_PARTICLE_WIDGET:
+        {
+            CustomParticleWidgetScene* pScene = new CustomParticleWidgetScene();
+            pScene->runThisTest();
+            pScene->release();
+        }
             
         default:
             break;
