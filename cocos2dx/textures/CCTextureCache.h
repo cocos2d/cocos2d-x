@@ -133,6 +133,15 @@ public:
     @since v0.99.5
     */
     CCTexture2D* textureForKey(const char* key);
+    
+    /** Reload texture from the image file
+     * If the file image hasn't loaded before, load it.
+     * Otherwise the texture will be reloaded from the file image.
+     * The "filenName" parameter is the related/absolute path of the file image.
+     * Return true if the reloading is succeed, otherwise return false.
+     */
+    bool reloadTexture(const char* fileName);
+
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
     * In the short term: it will free some resources preventing your app from being killed
