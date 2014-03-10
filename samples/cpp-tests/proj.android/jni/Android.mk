@@ -14,4 +14,4 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_testcpp_common
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,tests)
+$(call import-module,samples/cpp-tests)
