@@ -16,9 +16,11 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace ui;
 
+#ifdef __apple__
 #pragma mark -
 #pragma mark CustomParticleWidgetLayer
 #pragma mark -
+#endif
 
 void CustomParticleWidgetLayer::onEnter()
 {
