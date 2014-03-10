@@ -40,9 +40,11 @@ void CustomParticleWidgetLayer::onEnter()
     touchGroup->addWidget(custom);
 }
 
+#ifdef __apple__
 #pragma mark -
 #pragma mark CustomImageScene
 #pragma mark -
+#endif
 
 void CustomParticleWidgetScene::onEnter()
 {
