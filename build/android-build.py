@@ -148,18 +148,18 @@ def copy_resources(target, app_android_root):
 
     # copy resources(cpp samples and lua samples)
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../Resources")
+    resources_dir = os.path.join(app_android_root, "../../res")
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
 
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/lua/script")
+        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
         copy_files(resources_dir, assets_dir)
 
         # TestLua shared resources with TestCpp
         if target == "testlua":
-            resources_dir = os.path.join(app_android_root, "../../cpp-tests/Resources")
+            resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
             copy_files(resources_dir, assets_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
@@ -190,7 +190,7 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
         if target == 'testcpp':
             app_android_root = os.path.join(cocos_root, 'samples/cpp-tests/proj.android')
         elif target == 'testlua':
-            app_android_root = os.path.join(cocos_root, 'samples/lua-tests/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/lua-tests/project/proj.android')
         else:
             print 'unknown target: %s' % target
             continue
