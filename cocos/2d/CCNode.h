@@ -861,7 +861,7 @@ public:
      *
      * Please refer to getLabel for the sample code.
      *
-     * @param strTag   A C String that indentifies the node.
+     * @param name  A  string that indentifies the node.
      */
     virtual void setName(const std::string& name);
     /**
@@ -1513,7 +1513,7 @@ protected:
 
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
-    std::string _name;               ///<a string label, a user defined string to identify this node
+    std::string _name;               ///<a string label, an user defined string to identify this node
 
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
