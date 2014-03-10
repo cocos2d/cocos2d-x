@@ -973,7 +973,7 @@ void Console::loop()
                 if(FD_ISSET(fd,&copy_set)) 
                 {
 //fix Bug #4302 Test case ConsoleTest--ConsoleUploadFile crashed on Linux
-#if defined(LINUX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
                     int n = 0;
                     ioctl(fd, FIONREAD, &n);
                     if(n == 0)
