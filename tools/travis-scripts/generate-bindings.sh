@@ -17,7 +17,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$DIR/../.."
 TOLUA_ROOT="$PROJECT_ROOT/tools/tolua"
-AUTO_GENERATED_DIR="$PROJECT_ROOT/cocos/lua-bindings/auto"
+AUTO_GENERATED_DIR="$PROJECT_ROOT/cocos/scripting/lua-bindings/auto"
 COMMITTAG="[AUTO]: updating luabinding automatically"
 ELAPSEDSECS=`date +%s`
 COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
