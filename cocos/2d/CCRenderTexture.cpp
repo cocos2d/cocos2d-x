@@ -425,7 +425,7 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
     _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile,this,fullpath);
     
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
-    return false;
+    return true;
 }
 
 void RenderTexture::onSaveToFile(const std::string& filename)
