@@ -99,7 +99,7 @@ class SetEnvVar(object):
                     return True
         return False
 
-    # modify register table to add an environment variable on windows
+    # modify registry table to add an environment variable on windows
     def _set_environment_variable_win32(self, key, value):
 
         import _winreg
@@ -111,12 +111,12 @@ class SetEnvVar(object):
                                 _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
             _winreg.SetValueEx(env, key, 0, _winreg.REG_SZ, value)
             _winreg.CloseKey(env)
-            return True
         except Exception:
             if env:
                 _winreg.CloseKey(env)
-            print 'Warning: Can not set %s into register' % key
+            print 'Warning: Could not add "%s" into registry' % key
             return False
+        return True
 
     def _set_environment_variable_unix(self, key, value):
 
@@ -126,14 +126,16 @@ class SetEnvVar(object):
         if key == ANDROID_SDK_ROOT:
             file.write('export PATH=$%s/sdk/tools:$%s/sdk/platform-tools:$PATH\n' % (key, key))
         file.close()
+        return True
 
     def _set_environment_variable(self, key, value):
 
+        ret = False
         if self._isWindows():
-            return self._set_environment_variable_win32(key, value)
+            ret = self._set_environment_variable_win32(key, value)
         else:
-            self._set_environment_variable_unix(key, value)
-            return True
+            ret = self._set_environment_variable_unix(key, value)
+        return ret
 
     def _find_environment_variable(self, var):
         try:
@@ -183,7 +185,7 @@ class SetEnvVar(object):
 
     def _get_input_value(self, sys_var):
 
-        return raw_input('Couldn\'t find the "%s" envrironment variable. Please enter its path: ' % sys_var)
+        return raw_input('\tPlease enter its path (or press Enter to skip): ')
 
 #         # python on linux doesn't include Tkinter model, so let user input in terminal
 #         if self._isLinux():
@@ -269,11 +271,13 @@ class SetEnvVar(object):
 
     def set_console_root(self):
 
+    	print ""
         print '-> Adding COCOS2D_CONSOLE_ROOT environment variable...',
         if not self._find_environment_variable(COCOS_CONSOLE_ROOT):
             cocos_consle_root = os.path.join(self.current_absolute_path, 'tools/cocos2d-console/bin')
             if self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root):
                 print 'OK'
+                print '  -> Added: %s = %s' % (COCOS_CONSOLE_ROOT, cocos_consle_root)
                 return True
         else:
             print 'ALREADY ADDED'
@@ -282,56 +286,71 @@ class SetEnvVar(object):
 
     def set_environment_variables(self, ndk_root, android_sdk_root):
 
-        print 'Setting up cocos2d-x...'
+        print '\nSetting up cocos2d-x...'
 
         self.file_used_for_setup = self._get_filepath_for_setup()
         
         console_added = self.set_console_root()
 
-        print '\n-> Adding NDK_ROOT envrironment variable...'
+        #
+        # NDK_ROOT
+        #
+        print ""
+        print '-> Looking for NDK_ROOT envrironment variable...',
 
         ndk_root_added = False
         ndk_root_found = self._find_environment_variable(NDK_ROOT)
 
         if not ndk_root and not ndk_root_found:
+            print "NOT FOUND"
             ndk_root = self._get_input_value(NDK_ROOT)
 
-        if not self._is_ndk_root_valid(ndk_root) and not ndk_root_found:
-            print 'Warning: %s is not a valid path of NDK_ROOT, skip' % ndk_root
+        if ndk_root != "" and not self._is_ndk_root_valid(ndk_root) and not ndk_root_found:
+            print 'Error: %s is not a valid path of NDK_ROOT. Ignoring it.' % ndk_root
 
         if ndk_root_found:
-            print 'ALREADY ADDED'
+            print 'FOUND'
         else:
             if ndk_root and self._is_ndk_root_valid(ndk_root):
                 if self._set_environment_variable(NDK_ROOT, ndk_root):
                     ndk_root_added = True
-                    print 'OK'
+                    print 'ADDED'
+                    print '  -- Added: %s = %s' % (NDK_ROOT, ndk_root)
 
-        print '\n-> Adding ANDROID_SDK_ROOT envrironment variable...'
+
+        #
+        # ANDROID_SDK_ROOT
+        #
+        print ""        
+        print '-> Looking for ANDROID_SDK_ROOT envrironment variable...',
 
         android_sdk_root_added = False
         android_sdk_root_found = self._find_environment_variable(ANDROID_SDK_ROOT)
 
         if not android_sdk_root and not android_sdk_root_found:
+            print "NOT FOUND"
             android_sdk_root = self._get_input_value(ANDROID_SDK_ROOT)
         
-        if not self._is_android_sdk_root_valid(android_sdk_root) and not android_sdk_root_found:
-            print 'Warning: %s is not a valid path of ANDROID_SDK_ROOT, skip' % android_sdk_root
+        if android_sdk_root != "" and not self._is_android_sdk_root_valid(android_sdk_root) and not android_sdk_root_found:
+            print 'Error: %s is not a valid path of ANDROID_SDK_ROOT. Ignoring it.' % android_sdk_root
 
         if android_sdk_root_found:
-            print 'ALREADY ADDED'
+            print 'FOUND'
         else:
             if android_sdk_root and self._is_android_sdk_root_valid(android_sdk_root):
                 if self._set_environment_variable(ANDROID_SDK_ROOT, android_sdk_root):
                     android_sdk_root_added = True
-                    print 'OK'
+                    print 'ADDED'
+                    print '  -> Added: %s = %s' % (ANDROID_SDK_ROOT, android_sdk_root)
+
+        #
+        if self._isWindows():
+            target = 'registry'
+        else:
+            target = self.file_used_for_setup
 
         if console_added or ndk_root_added or android_sdk_root_added:
-            print '\nSet up successfule.'
-            if self._isWindows():
-                target = 'register'
-            else:
-                target = self.file_used_for_setup
+            print '\nSet up successfull:'
 
             if console_added:
                 print '\tCOCOS_CONSOLE_ROOT was added into %s' % target
@@ -340,7 +359,7 @@ class SetEnvVar(object):
             if android_sdk_root_added:
                 print '\tANDROID_SDK_ROOT was added into %s' % target
         else:
-            print '\nFound cocos2d-x envrironment variables or invlid value passed or got. No action needed.'
+            print '\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target
 
 if __name__ == '__main__':
     parser = OptionParser()
