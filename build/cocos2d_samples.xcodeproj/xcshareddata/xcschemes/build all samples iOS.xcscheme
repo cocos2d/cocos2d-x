@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A07A517F1783A1D20073F6A7"
-               BuildableName = "Test cpp iOS.app"
-               BlueprintName = "Test cpp iOS"
-               ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+               BlueprintIdentifier = "A07A517B1783A1CC0073F6A7"
+               BuildableName = "build all samples iOS"
+               BlueprintName = "build all samples iOS"
+               ReferencedContainer = "container:cocos2d_samples.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A07A517F1783A1D20073F6A7"
-            BuildableName = "Test cpp iOS.app"
-            BlueprintName = "Test cpp iOS"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,15 +39,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A07A517F1783A1D20073F6A7"
-            BuildableName = "Test cpp iOS.app"
-            BlueprintName = "Test cpp iOS"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +48,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A07A517F1783A1D20073F6A7"
-            BuildableName = "Test cpp iOS.app"
-            BlueprintName = "Test cpp iOS"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

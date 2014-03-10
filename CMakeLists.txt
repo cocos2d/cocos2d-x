@@ -276,7 +276,7 @@ endif(BUILD_EDITOR_COCOSTUDIO)
 # build tests 
 
 if(BUILD_TestCpp)
-add_subdirectory(tests)
+add_subdirectory(samples/cpp-tests)
 endif(BUILD_TestCpp)
 
 

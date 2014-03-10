@@ -648,7 +648,6 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp">
       <Filter>Classes\NewEventDispatcherTest</Filter>
     </ClCompile>
@@ -828,6 +827,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp">
+      <Filter>Classes\ShaderTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1329,7 +1331,6 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h">
       <Filter>Classes\NewEventDispatcherTest</Filter>
     </ClInclude>
@@ -1530,6 +1531,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h">
+      <Filter>Classes\ShaderTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
