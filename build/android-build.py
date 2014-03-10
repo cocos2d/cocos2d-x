@@ -7,6 +7,10 @@ import os, os.path
 import shutil
 from optparse import OptionParser
 
+CPP_SAMPLES = ['testcpp']
+LUA_SAMPLES = ['testlua']
+ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
+
 def get_num_of_cpu():
 	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
 	'''
@@ -67,6 +71,30 @@ def select_toolchain_version():
         print "Couldn't find the gcc toolchain."
         exit(1)
 
+def caculate_built_samples(args):
+    ''' Compute the sampels to be built
+    'cpp' for short of all cpp tests
+    'lua' for short of all lua tests 
+    '''
+
+    if 'all' in args:
+        return ALL_SAMPLES
+
+    targets = []
+    if 'cpp' in args:
+        targets += CPP_SAMPLES
+        args.remove('cpp')
+    if 'lua' in args:
+        targets += LUA_SAMPLES
+        args.remove('lua')
+
+    targets += args
+
+    # remove duplicate elements, for example
+    # python android-build.py cpp hellocpp
+    targets = set(targets)
+    return list(targets)
+
 def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode):
 
     ndk_path = os.path.join(ndk_root, "ndk-build")
@@ -124,11 +152,22 @@ def copy_resources(target, app_android_root):
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
 
+    # lua samples should copy lua script
+    if target in LUA_SAMPLES:
+        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/lua/script")
+        copy_files(resources_dir, assets_dir)
+
+        # TestLua shared resources with TestCpp
+        if target == "testlua":
+            resources_dir = os.path.join(app_android_root, "../../cpp-tests/Resources")
+            copy_files(resources_dir, assets_dir)
+
 def build_samples(target,ndk_build_param,android_platform,build_mode):
 
     ndk_root = check_environment_variables()
     sdk_root = None
     select_toolchain_version()
+    build_targets = caculate_built_samples(target)
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(current_dir, "..")
@@ -146,7 +185,15 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
     elif build_mode != 'release':
         build_mode = 'debug'
        
-    app_android_root = os.path.join(cocos_root, 'tests/proj.android')
+    app_android_root = ''
+    for target in build_targets:
+        if target == 'testcpp':
+            app_android_root = os.path.join(cocos_root, 'samples/cpp-tests/proj.android')
+        elif target == 'testlua':
+            app_android_root = os.path.join(cocos_root, 'samples/lua-tests/proj.android')
+        else:
+            print 'unknown target: %s' % target
+            continue
 
     copy_resources(target, app_android_root)
     do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode)
@@ -158,14 +205,14 @@ if __name__ == '__main__':
     usage = """
     This script is mainy used for building tests built-in with cocos2d-x.
     
-    Usage: %prog [options] [testcpp]
+    Usage: %prog [options] [testcpp|testlua]
 
-    If you are new to cocos2d-x, I recommend you start with testcpp.
+    If you are new to cocos2d-x, I recommend you start with testcpp, testlua.
 
     You can combine these targets like this:
 
     //1. to build simplegame and assetsmanager 
-    python android-build.py -p 10
+    python android-build.py -p 10 testcpp testlua
 
 
     Note: You should install ant to generate apk while building the andriod tests. But it is optional. You can generate apk with eclipse.
@@ -180,7 +227,7 @@ if __name__ == '__main__':
     help='The build mode for java project,debug[default] or release. Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
 
-    if len(args) == 1 and cmp(args[0], 'testcpp') != 0:
+    if len(args) == 0:
         parser.print_help()
     else:
         try:
