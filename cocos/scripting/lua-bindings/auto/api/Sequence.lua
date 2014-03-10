@@ -1,0 +1,4 @@
+
+--------------------------------
+-- @module Sequence
+return nil

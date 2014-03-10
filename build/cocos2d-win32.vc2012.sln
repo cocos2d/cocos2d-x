@@ -25,6 +25,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos\editor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libLocalStorage", "..\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj", "{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "..\cocos\scripting\lua-bindings\proj.win32\liblua.vcxproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLua", "..\samples\lua-tests\project\proj.win32\TestLua.win32.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -79,6 +83,14 @@ Global
 		{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}.Debug|Win32.Build.0 = Debug|Win32
 		{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}.Release|Win32.ActiveCfg = Release|Win32
 		{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}.Release|Win32.Build.0 = Release|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.Build.0 = Debug|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.ActiveCfg = Release|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.Build.0 = Release|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.Build.0 = Debug|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.ActiveCfg = Release|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

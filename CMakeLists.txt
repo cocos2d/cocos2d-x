@@ -37,6 +37,7 @@ if(WIN32 OR APPLE)
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
+option(BUILD_LIBS_LUA "Build lua libraries" OFF)
 option(BUILD_GUI "Build GUI library" ON)
 option(BUILD_NETWORK "Build network library" ON)
 option(BUILD_STORAGE "Build storage library" ON)
@@ -46,12 +47,13 @@ option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
 option(BUILD_TestCpp "Only build TestCpp sample" ON)
-
+option(BUILD_TestLua "Only build TestLua sample" OFF)
 else()#temp
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
+option(BUILD_LIBS_LUA "Build lua libraries" ON)
 option(BUILD_GUI "Build GUI library" ON)
 option(BUILD_NETWORK "Build network library" ON)
 option(BUILD_STORAGE "Build storage library" ON)
@@ -61,7 +63,7 @@ option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
 option(BUILD_TestCpp "Only build TestCpp sample" ON)
-
+option(BUILD_TestLua "Only build TestLua sample" ON)
 endif()#temp
 
 
@@ -273,10 +275,24 @@ if(BUILD_EDITOR_COCOSTUDIO)
 add_subdirectory(cocos/editor-support/cocostudio)
 endif(BUILD_EDITOR_COCOSTUDIO)
 
+## Scripting
+if(BUILD_LIBS_LUA)
+# lua
+add_subdirectory(external/lua/lua)
+
+# tolua
+add_subdirectory(external/lua/tolua)
+
+# luabinding
+add_subdirectory(cocos/scripting/lua-bindings)
+endif(BUILD_LIBS_LUA)
+
 # build tests 
 
 if(BUILD_TestCpp)
 add_subdirectory(samples/cpp-tests)
 endif(BUILD_TestCpp)
 
-
+if(BUILD_TestLua)
+add_subdirectory(samples/lua-tests/project)
+endif(BUILD_TestLua)
