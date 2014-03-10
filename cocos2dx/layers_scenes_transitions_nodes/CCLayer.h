@@ -187,7 +187,7 @@ private:
     int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
 };
 
-#ifdef __apple__
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #pragma mark -
 #pragma mark CCLayerRGBA
 #endif

@@ -16,7 +16,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace ui;
 
-#ifdef __apple__
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #pragma mark -
 #pragma mark CustomParticleWidgetLayer
 #pragma mark -
@@ -40,7 +40,7 @@ void CustomParticleWidgetLayer::onEnter()
     touchGroup->addWidget(custom);
 }
 
-#ifdef __apple__
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #pragma mark -
 #pragma mark CustomImageScene
 #pragma mark -
