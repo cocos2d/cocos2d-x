@@ -72,7 +72,7 @@ void LabelBMFont::setFntFile(const char *fileName)
     }
     _fntFileName = fileName;
     
-    if (!_labelBMFontRenderer)
+    if (_labelBMFontRenderer)
     {
         CCNode::removeChild(_labelBMFontRenderer, true);
         initRenderer();

@@ -195,6 +195,7 @@ public:
     virtual std::string getDescription() const;
 
 protected:
+    virtual bool init();
     virtual void initRenderer();
     float getPercentWithBallPos(float location);
     void percentChangedEvent();
