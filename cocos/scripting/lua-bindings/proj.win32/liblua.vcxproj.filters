@@ -10,17 +10,8 @@
     <Filter Include="script">
       <UniqueIdentifier>{af4b7d5f-f563-4069-ade8-c1a954e6fe5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="external">
-      <UniqueIdentifier>{c7f15f4c-4cd4-4eca-9b7c-20cbdc8729b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\luasocket">
-      <UniqueIdentifier>{f17eeffe-a10d-444d-85df-4536a518b83b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\tolua">
-      <UniqueIdentifier>{6f3bf370-42ec-4bcc-a584-e18563132475}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\luajit">
-      <UniqueIdentifier>{5d43cfdf-ca93-40f8-98bc-336728014044}</UniqueIdentifier>
+    <Filter Include="luasocket">
+      <UniqueIdentifier>{c36f2204-a252-47c0-b36c-b84cda218746}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,65 +96,65 @@
     <ClCompile Include="..\manual\tolua_fix.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\auxiliar.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\except.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\inet.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\luasocket.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\luasocket_buffer.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\luasocket_io.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\mime.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\options.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\select.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\socket_scripts.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\tcp.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\timeout.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\udp.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\luasocket\wsocket.c">
-      <Filter>external\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\tolua\tolua_event.c">
-      <Filter>external\tolua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\tolua\tolua_is.c">
-      <Filter>external\tolua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\tolua\tolua_map.c">
-      <Filter>external\tolua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\tolua\tolua_push.c">
-      <Filter>external\tolua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\tolua\tolua_to.c">
-      <Filter>external\tolua</Filter>
-    </ClCompile>
     <ClCompile Include="..\manual\lua_debugger.c">
       <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\auxiliar.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\except.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\inet.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_buffer.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_io.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\mime.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\options.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\select.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\socket_scripts.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\tcp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_event.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_is.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_push.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c">
+      <Filter>luasocket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,71 +239,71 @@
     <ClInclude Include="..\manual\tolua_fix.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\auxiliar.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\except.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\inet.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\luasocket.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\luasocket_buffer.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\luasocket_io.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\mime.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\options.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\select.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\socket.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\socket_scripts.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\tcp.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\timeout.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\udp.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luasocket\wsocket.h">
-      <Filter>external\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\tolua\tolua++.h">
-      <Filter>external\tolua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\tolua\tolua_event.h">
-      <Filter>external\tolua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luajit\include\lauxlib.h">
-      <Filter>external\luajit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luajit\include\lua.h">
-      <Filter>external\luajit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luajit\include\luaconf.h">
-      <Filter>external\luajit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\luajit\include\lualib.h">
-      <Filter>external\luajit</Filter>
-    </ClInclude>
     <ClInclude Include="..\manual\lua_debugger.h">
       <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\auxiliar.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\except.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\inet.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_buffer.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_io.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\mime.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\options.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\select.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\socket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\socket_scripts.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\tcp.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h">
+      <Filter>luasocket</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
