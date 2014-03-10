@@ -212,7 +212,7 @@ bool Label::setCharMap(const std::string& plistFile)
 
     if (initWithFontAtlas(newAtlas))
     {
-        _currLabelType = LabelType::TypeCHARMAP;
+        _currentLabelType = LabelType::CHARMAP;
         return true;
     }
 
@@ -228,7 +228,7 @@ bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int st
 
     if (initWithFontAtlas(newAtlas))
     {
-        _currLabelType = LabelType::TypeCHARMAP;
+        _currentLabelType = LabelType::CHARMAP;
         return true;
     }
 
@@ -244,7 +244,7 @@ bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHe
 
     if (initWithFontAtlas(newAtlas))
     {
-        _currLabelType = LabelType::TypeCHARMAP;
+        _currentLabelType = LabelType::CHARMAP;
         return true;
     }
 
@@ -402,7 +402,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
         {
             this->setFontScale(1.0f * ttfConfig.fontSize / DefultFontSize);
         }
-        _currLabelType = LabelType::TypeTTF;
+        _currentLabelType = LabelType::TTF;
         return true;
     }
     else
@@ -420,39 +420,24 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Point& im
 
     if (initWithFontAtlas(newAtlas))
     {
-        _currLabelType = LabelType::TypeBMFONT;
+        _currentLabelType = LabelType::BMFONT;
         return true;
     }
 
     return false;
 }
 
-inline void Label::setFontDefinition(const FontDefinition& textDefinition)
+void Label::setFontDefinition(const FontDefinition& textDefinition)
 {
     _fontDefinition = textDefinition;
-    _currLabelType = LabelType::TypeSPRITE;
+    _currentLabelType = LabelType::STRING_TEXTURE;
     _contentDirty = true;
 }
 
-inline void Label::setString(const std::string& text)
+void Label::setString(const std::string& text)
 {
     _originalUTF8String = text;
     _contentDirty = true;
-}
-
-void Label::setAlignment(TextHAlignment hAlignment)
-{
-    setAlignment(hAlignment,_vAlignment);
-}
-
-inline void Label::setHorizontalAlignment(TextHAlignment hAlignment)
-{
-    setAlignment(hAlignment,_vAlignment);
-}
-
-inline void Label::setVerticalAlignment(TextVAlignment vAlignment)
-{
-    setAlignment(_hAlignment,vAlignment);
 }
 
 void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
@@ -476,16 +461,6 @@ void Label::setMaxLineWidth(unsigned int maxLineWidth)
         _maxLineWidth = maxLineWidth;
         _contentDirty = true;
     }
-}
-
-inline void Label::setWidth(unsigned int width)
-{
-    setDimensions(width,_labelHeight);
-}
-
-inline void Label::setHeight(unsigned int height)
-{
-    setDimensions(_labelWidth,height);
 }
 
 void Label::setDimensions(unsigned int width,unsigned int height)
@@ -795,7 +770,7 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = 1 */)
 
     if (outlineSize > 0)
     {
-        if (_currLabelType == LabelType::TypeTTF)
+        if (_currentLabelType == LabelType::TTF)
         {
             if (_fontConfig.outlineSize != outlineSize)
             { 
@@ -941,7 +916,7 @@ void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpda
 
 void Label::createSpriteWithFontDefinition()
 {
-    _currLabelType = LabelType::TypeSPRITE;
+    _currentLabelType = LabelType::STRING_TEXTURE;
     auto texture = new Texture2D;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     if (_fontDefinition._shadow._shadowEnabled || _fontDefinition._stroke._strokeEnabled)
@@ -1039,14 +1014,9 @@ void Label::setFontName(const std::string& fontName)
     _contentDirty = true;
 }
 
-inline const std::string& Label::getFontName() const
-{
-    return _fontDefinition._fontName;
-}
-
 void Label::setFontSize(int fontSize)
 {
-    if (_currLabelType == LabelType::TypeTTF)
+    if (_currentLabelType == LabelType::TTF)
     {
         if (_fontConfig.distanceFieldEnabled == true)
         {
@@ -1068,10 +1038,6 @@ void Label::setFontSize(int fontSize)
     }
 }
 
-inline int Label::getFontSize() const
-{
-    return _fontDefinition._fontSize;
-}
 ///// PROTOCOL STUFF
 Sprite * Label::getLetter(int lettetIndex)
 {
@@ -1114,12 +1080,6 @@ int Label::getCommonLineHeight() const
     return _textSprite ? 0 : _commonLineHeight;
 }
 
-// string related stuff
-inline int Label::getStringNumLines() const
-{
-    return _currNumLines;
-}
-
 void Label::computeStringNumLines()
 {
     int quantityOfLines = 1;
@@ -1149,7 +1109,7 @@ int Label::getStringLength() const
 }
 
 // RGBA protocol
-inline bool Label::isOpacityModifyRGB() const
+bool Label::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
