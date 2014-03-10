@@ -155,15 +155,15 @@ public:
     virtual void disableEffect();
     
 
-    virtual void setAlignment(TextHAlignment hAlignment);
+    void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
     TextHAlignment getTextAlignment() const { return _hAlignment;}
 
     virtual void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment);
 
-    virtual void setHorizontalAlignment(TextHAlignment alignment);
+    void setHorizontalAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment); }
     TextHAlignment getHorizontalAlignment() const { return _hAlignment; }
 
-    virtual void setVerticalAlignment(TextVAlignment verticalAlignment);
+    void setVerticalAlignment(TextVAlignment vAlignment) { setAlignment(_hAlignment,vAlignment); }
     TextVAlignment getVerticalAlignment() const { return _vAlignment; }
 
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
@@ -179,14 +179,14 @@ public:
      * The label's width be used for text align if the set value not equal zero.
      * The label's max line width will be equal to the same value.
      */
-    virtual void setWidth(unsigned int width);
+    void setWidth(unsigned int width) { setDimensions(width,_labelHeight);}
     unsigned int getWidth() const { return _labelWidth; }  
 
     /** Sets the untransformed size of the label.
      * The label's height be used for text align if the set value not equal zero.
      * The text will display of incomplete when the size of label not enough to support display all text.
      */
-    virtual void setHeight(unsigned int height);
+    void setHeight(unsigned int height){ setDimensions(_labelWidth,height);}
     unsigned int getHeight() const { return _labelHeight;}   
 
     /** Sets the untransformed size of the label in a more efficient way. */
@@ -196,10 +196,10 @@ public:
     virtual void updateContent();
 
     virtual void setFontName(const std::string& fontName);
-    const std::string& getFontName() const;
+    const std::string& getFontName() const { return _fontDefinition._fontName;}
 
     virtual void setFontSize(int fontSize);
-    int getFontSize() const;
+    int getFontSize() const { return _fontDefinition._fontSize;}
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
@@ -211,7 +211,7 @@ public:
     int getCommonLineHeight() const;
     
     // string related stuff
-    int getStringNumLines() const;
+    int getStringNumLines() const { return _currNumLines;}
     CC_DEPRECATED_ATTRIBUTE int getStringLenght() const { return getStringLength(); }
     int getStringLength() const;
     
@@ -241,10 +241,10 @@ protected:
     };
     enum class LabelType {
 
-        TypeTTF,
-        TypeBMFONT,
-        TypeCHARMAP,
-        TypeSPRITE
+        TTF,
+        BMFONT,
+        CHARMAP,
+        STRING_TEXTURE
     };
 
     /**
@@ -286,7 +286,7 @@ protected:
 
     bool _isOpacityModifyRGB;
     bool _contentDirty;
-    LabelType _currLabelType;
+    LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;
     FontAtlas *                   _fontAtlas;
