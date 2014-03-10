@@ -35,45 +35,45 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           auto/lua_cocos2dx_gui_auto.cpp \
           auto/lua_cocos2dx_spine_auto.cpp \
           auto/lua_cocos2dx_physics_auto.cpp \
-          ../external/tolua/tolua_event.c \
-          ../external/tolua/tolua_is.c \
-          ../external/tolua/tolua_map.c \
-          ../external/tolua/tolua_push.c \
-          ../external/tolua/tolua_to.c \
-          ../external/luasocket/auxiliar.c \
-          ../external/luasocket/luasocket_buffer.c \
-          ../external/luasocket/except.c \
-          ../external/luasocket/inet.c \
-          ../external/luasocket/luasocket_io.c \
-          ../external/luasocket/luasocket.c \
-          ../external/luasocket/mime.c \
-          ../external/luasocket/options.c \
-          ../external/luasocket/select.c \
-          ../external/luasocket/serial.c \
-          ../external/luasocket/socket_scripts.c \
-          ../external/luasocket/tcp.c \
-          ../external/luasocket/timeout.c \
-          ../external/luasocket/udp.c \
-          ../external/luasocket/unix.c \
-          ../external/luasocket/usocket.c
+          ../../../external/lua/tolua/tolua_event.c \
+          ../../../external/lua/tolua/tolua_is.c \
+          ../../../external/lua/tolua/tolua_map.c \
+          ../../../external/lua/tolua/tolua_push.c \
+          ../../../external/lua/tolua/tolua_to.c \
+          ../../../external/lua/luasocket/auxiliar.c \
+          ../../../external/lua/luasocket/luasocket_buffer.c \
+          ../../../external/lua/luasocket/except.c \
+          ../../../external/lua/luasocket/inet.c \
+          ../../../external/lua/luasocket/luasocket_io.c \
+          ../../../external/lua/luasocket/luasocket.c \
+          ../../../external/lua/luasocket/mime.c \
+          ../../../external/lua/luasocket/options.c \
+          ../../../external/lua/luasocket/select.c \
+          ../../../external/lua/luasocket/serial.c \
+          ../../../external/lua/luasocket/socket_scripts.c \
+          ../../../external/lua/luasocket/tcp.c \
+          ../../../external/lua/luasocket/timeout.c \
+          ../../../external/lua/luasocket/udp.c \
+          ../../../external/lua/luasocket/unix.c \
+          ../../../external/lua/luasocket/usocket.c
 
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../external/tolua \
-                    $(LOCAL_PATH)/../external/luajit/include \
-                    $(LOCAL_PATH)/../external \
-                    $(LOCAL_PATH)/../cocos2d-x/extensions \
-                    $(LOCAL_PATH)/../cocos2d-x/cocos/editor-support/spine \
-                    $(LOCAL_PATH)/../cocos2d-x/cocos/editor-support/cocosbuilder \
-                    $(LOCAL_PATH)/../cocos2d-x/cocos/editor-support/cocostudio \
-                    $(LOCAL_PATH)/../cocos2d-x/cocos/gui \
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
+                    $(LOCAL_PATH)/../../../external/lua/luajit/include \
+                    $(LOCAL_PATH)/../../../external/lua \
+                    $(LOCAL_PATH)/../../../extensions \
+                    $(LOCAL_PATH)/../../editor-support/spine \
+                    $(LOCAL_PATH)/../../editor-support/cocosbuilder \
+                    $(LOCAL_PATH)/../../editor-support/cocostudio \
+                    $(LOCAL_PATH)/../../gui \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/platform/android \
                     $(LOCAL_PATH)/manual/platform/android/jni
 
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../external/tolua \
-                           $(LOCAL_PATH)/../external/luajit/include \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
+                           $(LOCAL_PATH)/../../../external/lua/luajit/include \
                            $(LOCAL_PATH)/../external \
                            $(LOCAL_PATH)/auto \
                            $(LOCAL_PATH)/manual
@@ -93,7 +93,7 @@ LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,luajit/prebuilt/android)
+$(call import-module,lua/luajit/prebuilt/android)
 $(call import-module,extensions)
 $(call import-module,2d)
 $(call import-module,websockets/prebuilt/android)

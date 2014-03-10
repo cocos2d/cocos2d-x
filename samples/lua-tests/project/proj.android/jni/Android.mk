@@ -19,4 +19,4 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,bindings)
+$(call import-module,scripting/lua-bindings)
