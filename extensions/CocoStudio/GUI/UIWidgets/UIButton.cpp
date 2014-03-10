@@ -217,11 +217,11 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
         }
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
+    normalTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_buttonNormalRenderer);
-    normalTextureScaleChangedWithSize();
     _normalTextureLoaded = true;
 }
 
@@ -265,11 +265,11 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
         }
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
+    pressedTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_buttonClickedRenderer);
-    pressedTextureScaleChangedWithSize();
     _pressedTextureLoaded = true;
 }
 
@@ -313,11 +313,11 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
         }
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
+    disabledTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_buttonDisableRenderer);
-    disabledTextureScaleChangedWithSize();
     _disabledTextureLoaded = true;
 }
 
