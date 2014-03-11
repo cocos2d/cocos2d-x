@@ -6,24 +6,6 @@
 using namespace std;
 using namespace cocos2d;
 
-string getSDCardPath();
-string getProjSearchPath()
-{
-	extern std::string getPackageNameJNI();
-	string searchPath = getSDCardPath();
-	searchPath += "/";
-	searchPath += getPackageNameJNI();
-	return searchPath;
-}
-
-vector<string> getSearchPath()
-{
-	extern std::string getPackageNameJNI();
-	vector<string> searchPathArray;
-	searchPathArray.push_back(getProjSearchPath());
-	return searchPathArray;
-}
-
 string getSDCardPath()
 {
 	JniMethodInfo t;

@@ -32,7 +32,7 @@ NSString* projectPath=nil;
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [self.window makeFirstResponder:textFieldProjectDirectory];
-    if (projectPath)
+    if (nil != projectPath &&  0 != projectPath.length)
     {
         [textFieldProjectDirectory setStringValue:projectPath];
     }
@@ -89,6 +89,8 @@ NSString* projectPath=nil;
         return;
     }
     projectPath =  [textFieldProjectDirectory stringValue];
+    [self close];
+    [NSApp endSheet:self.window returnCode:NSRunAbortedResponse];
 }
 
 

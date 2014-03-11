@@ -92,7 +92,16 @@
 		C03781F218BF656A00FE4F13 /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781CE18BF656A00FE4F13 /* StudioConstants.lua */; };
 		C03781F518BF65A900FE4F13 /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C03781B418BF654500FE4F13 /* libluabindings Mac.a */; };
 		C03781F618BF65B100FE4F13 /* libluabindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C03781B618BF654500FE4F13 /* libluabindings iOS.a */; };
-		C06E23C418CEF9740093C81A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06E23C318CEF9740093C81A /* main.cpp */; };
+		C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0619CD61896894800872C26 /* Runtime_ios-mac.mm */; };
+		C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0619CD61896894800872C26 /* Runtime_ios-mac.mm */; };
+		C07828F818B4D72E00BD2287 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C07828F418B4D72E00BD2287 /* main.m */; };
+		C07828F918B4D72E00BD2287 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C07828F518B4D72E00BD2287 /* MainMenu.xib */; };
+		C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = C07828F718B4D72E00BD2287 /* SimulatorApp.mm */; };
+		C07828FD18B4DC6F00BD2287 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C07828FB18B4DC6F00BD2287 /* Runtime.cpp */; };
+		C07828FE18B4DC7000BD2287 /* Runtime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C07828FB18B4DC6F00BD2287 /* Runtime.cpp */; };
+		C09BA7E718BC929700A85A3E /* WorkSpaceDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */; };
+		C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */; };
+		C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */; };
 		D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -332,7 +341,18 @@
 		C03781CC18BF656A00FE4F13 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Opengl.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/Opengl.lua"; sourceTree = "<group>"; };
 		C03781CD18BF656A00FE4F13 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/OpenglConstants.lua"; sourceTree = "<group>"; };
 		C03781CE18BF656A00FE4F13 /* StudioConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = StudioConstants.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/StudioConstants.lua"; sourceTree = "<group>"; };
-		C06E23C318CEF9740093C81A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C0619CD61896894800872C26 /* Runtime_ios-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Runtime_ios-mac.mm"; sourceTree = "<group>"; };
+		C07828F418B4D72E00BD2287 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C07828F518B4D72E00BD2287 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		C07828F618B4D72E00BD2287 /* SimulatorApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorApp.h; sourceTree = "<group>"; };
+		C07828F718B4D72E00BD2287 /* SimulatorApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimulatorApp.mm; sourceTree = "<group>"; };
+		C07828FB18B4DC6F00BD2287 /* Runtime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Runtime.cpp; path = ../Classes/Runtime.cpp; sourceTree = "<group>"; };
+		C07828FC18B4DC6F00BD2287 /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Runtime.h; path = ../Classes/Runtime.h; sourceTree = "<group>"; };
+		C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkSpaceDialog.xib; sourceTree = "<group>"; };
+		C09BA7E518BC929700A85A3E /* WorkSpaceDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkSpaceDialogController.h; sourceTree = "<group>"; };
+		C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorkSpaceDialogController.mm; sourceTree = "<group>"; };
+		C09BA7EC18BCA49600A85A3E /* NSAppSheetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAppSheetAdditions.h; sourceTree = "<group>"; };
+		C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSAppSheetAdditions.m; sourceTree = "<group>"; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		F293B3C815EB7BE500256477 /* HelloLua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloLua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -459,8 +479,16 @@
 		5023817117EBBE3400990C9B /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				C06E23C318CEF9740093C81A /* main.cpp */,
+				C09BA7EC18BCA49600A85A3E /* NSAppSheetAdditions.h */,
+				C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */,
+				C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */,
+				C09BA7E518BC929700A85A3E /* WorkSpaceDialogController.h */,
+				C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */,
 				5023817217EBBE3400990C9B /* Icon.icns */,
+				C07828F418B4D72E00BD2287 /* main.m */,
+				C07828F518B4D72E00BD2287 /* MainMenu.xib */,
+				C07828F618B4D72E00BD2287 /* SimulatorApp.h */,
+				C07828F718B4D72E00BD2287 /* SimulatorApp.mm */,
 				5023817317EBBE3400990C9B /* Info.plist */,
 				5023817517EBBE3400990C9B /* Prefix.pch */,
 			);
@@ -547,6 +575,9 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C07828FB18B4DC6F00BD2287 /* Runtime.cpp */,
+				C07828FC18B4DC6F00BD2287 /* Runtime.h */,
+				C0619CD61896894800872C26 /* Runtime_ios-mac.mm */,
 				F293BB7E15EB831F00256477 /* AppDelegate.cpp */,
 				F293BB7F15EB831F00256477 /* AppDelegate.h */,
 			);
@@ -751,11 +782,13 @@
 				C03781E618BF656A00FE4F13 /* GuiConstants.lua in Resources */,
 				C03781D418BF656A00FE4F13 /* Cocos2d.lua in Resources */,
 				C03781BA18BF655400FE4F13 /* res in Resources */,
+				C09BA7E718BC929700A85A3E /* WorkSpaceDialog.xib in Resources */,
 				C03781BC18BF655400FE4F13 /* src in Resources */,
 				C03781E218BF656A00FE4F13 /* DrawPrimitives.lua in Resources */,
 				C03781DA18BF656A00FE4F13 /* Deprecated.lua in Resources */,
 				C03781E018BF656A00FE4F13 /* DeprecatedOpenglEnum.lua in Resources */,
 				C03781EC18BF656A00FE4F13 /* luaoc.lua in Resources */,
+				C07828F918B4D72E00BD2287 /* MainMenu.xib in Resources */,
 				5023817617EBBE3400990C9B /* Icon.icns in Resources */,
 				C03781D218BF656A00FE4F13 /* CCBReaderLoad.lua in Resources */,
 				C03781D018BF656A00FE4F13 /* AudioEngine.lua in Resources */,
@@ -819,8 +852,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C06E23C418CEF9740093C81A /* main.cpp in Sources */,
+				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
+				C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */,
+				C07828FE18B4DC7000BD2287 /* Runtime.cpp in Sources */,
+				C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */,
+				C07828F818B4D72E00BD2287 /* main.m in Sources */,
+				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,6 +869,8 @@
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
 				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
 				5023812417EBBCAC00990C9B /* main.m in Sources */,
+				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				C07828FD18B4DC6F00BD2287 /* Runtime.cpp in Sources */,
 				5023811817EBBCAC00990C9B /* AppController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
