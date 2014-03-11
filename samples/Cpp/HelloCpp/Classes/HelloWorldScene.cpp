@@ -18,6 +18,18 @@ CCScene* HelloWorld::scene()
     return scene;
 }
 
+BOOL WCharToMByte(LPCWSTR lpcwszStr, LPSTR lpszStr, DWORD dwSize)
+{
+	DWORD dwMinSize;
+	dwMinSize = WideCharToMultiByte(CP_UTF8,NULL,lpcwszStr,-1,NULL,0,NULL,FALSE);
+	if(dwSize < dwMinSize)
+	{
+		return false;
+	}
+	WideCharToMultiByte(CP_UTF8,NULL,lpcwszStr,-1,lpszStr,dwSize,NULL,FALSE);
+	return true;
+}
+
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
@@ -55,8 +67,10 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
+	wchar_t str[100] = {L"English 中文a 中文和英文自动换行问题 english world自动换行"};
+	char strs[200] = {0};
+	WCharToMByte(str,strs,sizeof(str)/sizeof(strs[0]));
+    CCLabelTTF* pLabel = CCLabelTTF::create(strs, "fonts/arialuni.ttf", TITLE_FONT_SIZE, CCSizeMake(300, 200), CCTextAlignment::kCCTextAlignmentLeft);
     
     // position the label on the center of the screen
     pLabel->setPosition(ccp(origin.x + visibleSize.width/2,

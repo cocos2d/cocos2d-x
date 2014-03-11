@@ -111,6 +111,8 @@ private:
 
     FT_Vector getPenForAlignment(FTLineInfo* pInfo, CCImage::ETextAlign eAlignMask, int lineNumber, int totalLines);
 
+	int getNextWord(std::string strLine, int nStart);
+
     FT_Error addWord(const std::string& word);
     void newLine();
     void endLine();
