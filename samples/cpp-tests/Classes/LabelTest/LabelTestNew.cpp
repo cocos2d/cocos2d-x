@@ -169,7 +169,7 @@ LabelTTFAlignmentNew::LabelTTFAlignmentNew()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    TTFConfig config("fonts/tahoma.ttf",32);
+    TTFConfig config("fonts/tahoma.ttf",16);
 
     auto ttf0 = Label::createWithTTF(config,"Alignment 0\nnew line",TextHAlignment::LEFT);
     ttf0->setPosition(Point(s.width/2,(s.height/6)*2 - 30));
@@ -523,7 +523,7 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
     label1->setPosition(Point(s.width/2, s.height - 100));
 
     // LabelTTF
-    TTFConfig ttfConfig("fonts/arial.ttf",48);
+    TTFConfig ttfConfig("fonts/arial.ttf",24);
     auto label2 = Label::createWithTTF(ttfConfig,"", TextHAlignment::CENTER,s.width);
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -623,7 +623,7 @@ LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
     auto size = Director::getInstance()->getWinSize();
     // Adding "啊" letter at the end of string to make VS2012 happy, otherwise VS will generate errors  
     // like "Error 3 error C2146: syntax error : missing ')' before identifier 'label'"; 
-    TTFConfig ttfConfig("fonts/wt021.ttf",55,GlyphCollection::CUSTOM, "美好的一天啊");
+    TTFConfig ttfConfig("fonts/wt021.ttf",28,GlyphCollection::CUSTOM, "美好的一天啊");
     auto label = Label::createWithTTF(ttfConfig,"美好的一天啊", TextHAlignment::CENTER, size.width);
     label->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label->setPosition(Point(size.width / 2, size.height /2));
@@ -965,7 +965,7 @@ LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
     auto size = Director::getInstance()->getWinSize();
 
     // Long sentence
-    TTFConfig ttfConfig("fonts/arial.ttf", 28);
+    TTFConfig ttfConfig("fonts/arial.ttf", 14);
     auto label1 = Label::createWithTTF(ttfConfig, LongSentencesExample, TextHAlignment::CENTER,size.width);
     label1->setPosition( Point(size.width/2, size.height/2) );
     label1->setAnchorPoint(Point(0.5, 1.0));
@@ -987,7 +987,7 @@ LabelTTFLargeText::LabelTTFLargeText()
     auto size = Director::getInstance()->getWinSize();
 
     // Long sentence
-    TTFConfig ttfConfig("fonts/wt021.ttf",36,GlyphCollection::DYNAMIC);
+    TTFConfig ttfConfig("fonts/wt021.ttf",18,GlyphCollection::DYNAMIC);
     std::string text = FileUtils::getInstance()->getStringFromFile("commonly_used_words.txt");
     auto label = Label::createWithTTF(ttfConfig,text, TextHAlignment::CENTER, size.width);
     label->setPosition( Point(size.width/2, size.height/2) );
@@ -1009,7 +1009,7 @@ LabelTTFColor::LabelTTFColor()
 {
     auto size = Director::getInstance()->getWinSize();
 
-    TTFConfig ttfConfig("fonts/arial.ttf", 35);
+    TTFConfig ttfConfig("fonts/arial.ttf", 18);
     // Green
     auto label1 = Label::createWithTTF(ttfConfig,"Green", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, size.height/5 * 1.5) );
@@ -1045,7 +1045,7 @@ std::string LabelTTFColor::subtitle() const
 LabelTTFDynamicAlignment::LabelTTFDynamicAlignment()
 {
     auto size = Director::getInstance()->getWinSize();
-    TTFConfig ttfConfig("fonts/arial.ttf", 45);
+    TTFConfig ttfConfig("fonts/arial.ttf", 23);
     _label = Label::createWithTTF(ttfConfig,LongSentencesExample, TextHAlignment::CENTER, size.width);
     _label->setPosition( Point(size.width/2, size.height/2) );
     _label->setAnchorPoint(Point::ANCHOR_MIDDLE);  
@@ -1116,7 +1116,7 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         Point(size.width * 0.85, size.height * 0.8),
         Point(size.width * 0.85, 0), 1, Color4F(1, 0, 0, 1));
     
-    TTFConfig ttfConfig("fonts/wt021.ttf", 50, GlyphCollection::DYNAMIC);
+    TTFConfig ttfConfig("fonts/wt021.ttf", 25, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
         "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
     label1->setColor(Color3B(128, 255, 255));
@@ -1166,7 +1166,7 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
     float vStep = size.height/9;
     float vSize = size.height;
      
-    TTFConfig ttfConfig("fonts/arial.ttf", 45,GlyphCollection::ASCII);
+    TTFConfig ttfConfig("fonts/arial.ttf", 23,GlyphCollection::ASCII);
     // Spanish
     auto label1 = Label::createWithTTF(ttfConfig,"Buen día, ¿cómo te llamas?", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, vSize - (vStep * 4.5)) );
@@ -1213,7 +1213,7 @@ LabelTTFFontsTestNew::LabelTTFFontsTestNew()
 #define arraysize(ar)  (sizeof(ar) / sizeof(ar[0]))
 
     auto size = Director::getInstance()->getWinSize();
-    TTFConfig ttfConfig(ttfpaths[0],40, GlyphCollection::NEHE);
+    TTFConfig ttfConfig(ttfpaths[0],20, GlyphCollection::NEHE);
     for(size_t i=0;i < arraysize(ttfpaths); ++i) {
         ttfConfig.fontFilePath = ttfpaths[i];
         auto label = Label::createWithTTF(ttfConfig, ttfpaths[i], TextHAlignment::CENTER,0);
@@ -1262,7 +1262,7 @@ std::string LabelBMFontTestNew::subtitle() const
 LabelTTFDistanceField::LabelTTFDistanceField()
 {
     auto size = Director::getInstance()->getWinSize();
-    TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
+    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,true);
 
     auto label1 = Label::createWithTTF(ttfConfig,"Distance Field",TextHAlignment::CENTER,size.width);
     label1->setPosition( Point(size.width/2, size.height * 0.6f) );
@@ -1302,7 +1302,7 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
     auto bg = LayerColor::create(Color4B(200,191,231,255));
     this->addChild(bg);
 
-    TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
+    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,true);
 
     auto label1 = Label::createWithTTF(ttfConfig,"Glow", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, size.height*0.7) );
@@ -1353,7 +1353,7 @@ LabelShadowTest::LabelShadowTest()
     auto bg = LayerColor::create(Color4B(200,191,231,255));
     this->addChild(bg);
 
-    TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
+    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,true);
 
     shadowLabelTTF = Label::createWithTTF(ttfConfig,"TTF:Shadow", TextHAlignment::CENTER, size.width);
     shadowLabelTTF->setPosition( Point(size.width/2, size.height*0.6f) );
@@ -1518,7 +1518,7 @@ LabelCrashTest::LabelCrashTest()
 {
     auto size = Director::getInstance()->getWinSize();
 
-    TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
+    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,true);
 
     auto label1 = Label::createWithTTF(ttfConfig,"Test崩溃123", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, size.height/2) );
@@ -1547,7 +1547,7 @@ LabelTTFOldNew::LabelTTFOldNew()
     label1->setPosition(Point(s.width/2, delta * 2));
     label1->setColor(Color3B::RED);
 
-    TTFConfig ttfConfig("fonts/arial.ttf", 48);
+    TTFConfig ttfConfig("fonts/arial.ttf", 24);
     auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -1681,7 +1681,7 @@ LabelAlignmentTest::LabelAlignmentTest()
     _horizAlign = TextHAlignment::LEFT;
     _vertAlign = TextVAlignment::TOP;
 
-    TTFConfig ttfConfig("fonts/arial.ttf", 64);
+    TTFConfig ttfConfig("fonts/arial.ttf", 32);
     _label = Label::create();
     _label->setDimensions(200,160);
     _label->setAlignment(_horizAlign,_vertAlign);
