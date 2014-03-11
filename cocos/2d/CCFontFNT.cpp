@@ -413,7 +413,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
              */
 
             uint16_t lineHeight = 0; memcpy(&lineHeight, pData, 2);
-            _commonHeight = lineHeight;
+            _commonHeight = lineHeight - _padding.top - _padding.bottom;
 
             uint16_t scaleW = 0; memcpy(&scaleW, pData + 4, 2);
             uint16_t scaleH = 0; memcpy(&scaleH, pData + 6, 2);
@@ -477,7 +477,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
                 element->fontDef.yOffset = yoffset;
 
                 int16_t xadvance = 0; memcpy(&xadvance, pData + (i * 20) + 16, 2);
-                element->fontDef.xAdvance = xadvance;
+                element->fontDef.xAdvance = xadvance - _padding.right - _padding.left;
 
                 element->key = element->fontDef.charID;
                 HASH_ADD_INT(_fontDefDictionary, key, element);
@@ -547,7 +547,7 @@ void BMFontConfiguration::parseInfoArguments(std::string line)
     auto index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
     sscanf(value.c_str(), "padding=%d,%d,%d,%d", &_padding.top, &_padding.right, &_padding.bottom, &_padding.left);
-    CCLOG("cocos2d: padding: %d,%d,%d,%d", _padding.left, _padding.top, _padding.right, _padding.bottom);
+    //CCLOG("cocos2d: padding: %d,%d,%d,%d", _padding.left, _padding.top, _padding.right, _padding.bottom);
 }
 
 void BMFontConfiguration::parseCommonArguments(std::string line)
@@ -578,6 +578,9 @@ void BMFontConfiguration::parseCommonArguments(std::string line)
     value = line.substr(index, index2-index);
     CCASSERT(atoi(value.c_str()) == 1, "CCBitfontAtlas: only supports 1 page");
 
+    // add for padding
+    _commonHeight -= (_padding.top + _padding.bottom);
+    
     // packed (ignore) What does this mean ??
 }
 
@@ -629,6 +632,9 @@ void BMFontConfiguration::parseCharacterDefinition(std::string line, BMFontDef *
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
     sscanf(value.c_str(), "xadvance=%hd", &characterDefinition->xAdvance);
+    
+    // add for padding
+    characterDefinition->xAdvance -= (_padding.right + _padding.left);
 }
 
 void BMFontConfiguration::parseKerningEntry(std::string line)
