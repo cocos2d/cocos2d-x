@@ -27,20 +27,19 @@
 
 #include "../UIScene.h"
 
-using namespace gui;
-
 class UIButtonTest : public UIScene
 {
 public:
     UIButtonTest();
     ~UIButtonTest();
     bool init();
+    virtual void onEnter();
     void touchEvent(CCObject *pSender, TouchEventType type);
     void selector(CCObject* pObejct);
 
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest)
-    gui::Label* m_pDisplayValueLabel;
+    ui::Label* m_pDisplayValueLabel;
 };
 
 class UIButtonTest_Scale9 : public UIScene
@@ -53,7 +52,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_Scale9)
-    gui::Label* m_pDisplayValueLabel;
+    ui::Label* m_pDisplayValueLabel;
 };
 
 class UIButtonTest_PressedAction : public UIScene
@@ -66,7 +65,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_PressedAction)
-    gui::Label* m_pDisplayValueLabel;
+    ui::Label* m_pDisplayValueLabel;
 };
 
 /*===*/
@@ -80,7 +79,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_Title)
-    gui::Label* m_pDisplayValueLabel;
+    ui::Label* m_pDisplayValueLabel;
 };
 /*=*/
 

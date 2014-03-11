@@ -339,82 +339,148 @@ files
 
 	[Test/ExtensionsTest/CocoStudioGUITest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest)	
+	CocoStudioGUITest.cpp
+	CocoStudioGUITest.h
 	CocosGUIScene.cpp
 	CocosGUIScene.h
+	GUIEditorTest.cpp
+	GUIEditorTest.h
+	CustomGUIScene.cpp
+	CustomGUIScene.h
 	UIScene.cpp
 	UIScene.h
 	UISceneManager.cpp
 	UISceneManager.h
+	UIScene_Editor.cpp
+	UIScene_Editor.h
+	UISceneManager_Editor.cpp
+	UISceneManager_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIButtonTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest)
 	UIButtonTest.cpp
 	UIButtonTest.h
+	UIButtonTest_Editor.cpp
+	UIButtonTest_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest)
 	UICheckBoxTest.cpp
-	UICheckBoxTest.h		
+	UICheckBoxTest.h
+	UICheckBoxTest_Editor.cpp
+	UICheckBoxTest_Editor.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIImageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest)
 	UIImageViewTest.cpp
 	UIImageViewTest.h
+	UIImageViewTest_Editor.cpp
+	UIImageViewTest_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest)
 	UILabelAtlasTest.cpp
 	UILabelAtlasTest.h
+	UILabelAtlasTest_Editor.cpp
+	UILabelAtlasTest_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest)
 	UILabelBMFontTest.cpp
 	UILabelBMFontTest.h
+	UILabelBMFontTest_Editor.cpp
+	UILabelBMFontTest_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILabelTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest)
 	UILabelTest.cpp
 	UILabelTest.h
+	UILabelTest_Editor.cpp
+	UILabelTest_Editor.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/UILayoutTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest)
+	UILayoutTest.cpp
+	UILayoutTest.h
+	UILayoutTest_Editor.cpp
+	UILayoutTest_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIListViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest)
 	UIListViewTest.cpp
 	UIListViewTest.h
+	UIListViewTest_Editor.cpp
+	UIListViewTest_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest)
 	UILoadingBarTest.cpp
-	UILoadingBarTest.h		
+	UILoadingBarTest.h
+	UILoadingBarTest_Editor.cpp
+	UILoadingBarTest_Editor.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIPageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest)
 	UIPageViewTest.cpp
-	UIPageViewTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UILayoutTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest)
-	UILayoutTest.cpp
-	UILayoutTest.h
+	UIPageViewTest.h	
+	UIPageViewTest_Editor.cpp
+	UIPageViewTest_Editor.h	
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest)
 	UIScrollViewTest.cpp
 	UIScrollViewTest.h
+	UIScrollViewTest_Editor.cpp
+	UIScrollViewTest_Editor.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UISliderTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest)
 	UISliderTest.cpp
-	UISliderTest.h		
+	UISliderTest.h	
+	UISliderTest.cpp
+	UISliderTest.h	
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UITextFieldTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest)
 	UITextFieldTest.cpp
 	UITextFieldTest.h
+	UITextFieldTest_Editor.cpp
+	UITextFieldTest_Editor.h
 
 	[Test/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest)
 	UIWidgetAddNodeTest.cpp
 	UIWidgetAddNodeTest.h
+	UIWidgetAddNodeTest_Editor.cpp
+	UIWidgetAddNodeTest_Editor.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/UIRichTextTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIRichTextTest)
+	UIRichTextTest.cpp
+	UIRichTextTest.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomWidget]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomWidget)
+	CustomImageView.cpp
+	CustomImageView.h
+	CustomImageViewReader.cpp
+	CustomImageViewReader.h
+	CustomReader.cpp
+	CustomReader.h
+	CustomParticleWidget.cpp
+	CustomParticleWidget.h	
+	CustomParticleWidgetReader.cpp
+	CustomParticleWidgetReader.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomImageTest)
+	CustomImageTest.cpp
+	CustomImageTest.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest)
+	CustomParticleWidgetTest.cpp
+	CustomParticleWidgetTest.h
 	
 	[Test/ExtensionsTest/CocoStudioSceneTest]
 	(../Classes/ExtensionsTest/CocoStudioSceneTest)

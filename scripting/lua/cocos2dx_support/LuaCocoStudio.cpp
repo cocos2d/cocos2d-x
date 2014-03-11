@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Tue Feb 18 17:35:01 2014.
+** Generated automatically by tolua++-1.0.92 on Fri Mar  7 11:07:43 2014.
 */
 
 /****************************************************************************
@@ -39,7 +39,7 @@ extern "C" {
 #include "cocos-ext.h"
 
 using namespace cocos2d;
-using namespace cocos2d::gui;
+using namespace cocos2d::ui;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;
 

@@ -99,7 +99,7 @@ public:
 	virtual void onEnter();
     virtual void onExit();
     cocos2d::CCNode* createGameScene();
-	void touchEvent(CCObject *pSender, cocos2d::gui::TouchEventType type);
+	void touchEvent(CCObject *pSender, cocos2d::ui::TouchEventType type);
 private:
 	cocos2d::CCNode* _node;
 };
