@@ -1,4 +1,4 @@
-set(APP_NAME testcpp)
+set(APP_NAME cpp-tests)
 
 if(WIN32)
   set(PLATFORM_SRC

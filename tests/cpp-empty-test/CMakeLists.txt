@@ -1,4 +1,4 @@
-set(APP_NAME hellocpp)
+set(APP_NAME cpp-empty-test)
 
 if(QT)
   set(PLATFORM_SRC
