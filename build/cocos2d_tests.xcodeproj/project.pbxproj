@@ -13,6 +13,9 @@
 			buildPhases = (
 			);
 			dependencies = (
+				1ADA8BA418CF277400AE24B9 /* PBXTargetDependency */,
+				1ADA8BA618CF277400AE24B9 /* PBXTargetDependency */,
+				1ADA8BA818CF277400AE24B9 /* PBXTargetDependency */,
 				A035ACC0178246BD00987F6C /* PBXTargetDependency */,
 			);
 			name = "build all tests Mac";
@@ -24,6 +27,9 @@
 			buildPhases = (
 			);
 			dependencies = (
+				1ADA8BAC18CF277C00AE24B9 /* PBXTargetDependency */,
+				1ADA8BAE18CF277C00AE24B9 /* PBXTargetDependency */,
+				1ADA8BB018CF277C00AE24B9 /* PBXTargetDependency */,
 				A07A526D1783AB980073F6A7 /* PBXTargetDependency */,
 			);
 			name = "build all tests iOS";
@@ -1062,6 +1068,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1A119716178526AA00D62A44;
 			remoteInfo = "luabindings iOS";
+		};
+		1ADA8BA318CF277400AE24B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A0EE1C618CDF6DA004CD58F;
+			remoteInfo = "cpp-empty-test Mac";
+		};
+		1ADA8BA518CF277400AE24B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1ABCA28518CD91510087CE3A;
+			remoteInfo = "lua-tests Mac";
+		};
+		1ADA8BA718CF277400AE24B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A0EE2B818CDF733004CD58F;
+			remoteInfo = "lua-empty-test Mac";
+		};
+		1ADA8BAB18CF277C00AE24B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A0EE31818CDF775004CD58F;
+			remoteInfo = "cpp-empty-test iOS";
+		};
+		1ADA8BAD18CF277C00AE24B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1ABCA2CC18CD93580087CE3A;
+			remoteInfo = "lua-tests iOS";
+		};
+		1ADA8BAF18CF277C00AE24B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A0EE41918CDF799004CD58F;
+			remoteInfo = "lua-empty-test iOS";
 		};
 		46A15FAF1807A4F9005B8026 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4921,6 +4969,36 @@
 			isa = PBXTargetDependency;
 			name = "luabindings iOS";
 			targetProxy = 1ABCA2FF18CD93850087CE3A /* PBXContainerItemProxy */;
+		};
+		1ADA8BA418CF277400AE24B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A0EE1C618CDF6DA004CD58F /* cpp-empty-test Mac */;
+			targetProxy = 1ADA8BA318CF277400AE24B9 /* PBXContainerItemProxy */;
+		};
+		1ADA8BA618CF277400AE24B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1ABCA28518CD91510087CE3A /* lua-tests Mac */;
+			targetProxy = 1ADA8BA518CF277400AE24B9 /* PBXContainerItemProxy */;
+		};
+		1ADA8BA818CF277400AE24B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A0EE2B818CDF733004CD58F /* lua-empty-test Mac */;
+			targetProxy = 1ADA8BA718CF277400AE24B9 /* PBXContainerItemProxy */;
+		};
+		1ADA8BAC18CF277C00AE24B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A0EE31818CDF775004CD58F /* cpp-empty-test iOS */;
+			targetProxy = 1ADA8BAB18CF277C00AE24B9 /* PBXContainerItemProxy */;
+		};
+		1ADA8BAE18CF277C00AE24B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1ABCA2CC18CD93580087CE3A /* lua-tests iOS */;
+			targetProxy = 1ADA8BAD18CF277C00AE24B9 /* PBXContainerItemProxy */;
+		};
+		1ADA8BB018CF277C00AE24B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A0EE41918CDF799004CD58F /* lua-empty-test iOS */;
+			targetProxy = 1ADA8BAF18CF277C00AE24B9 /* PBXContainerItemProxy */;
 		};
 		A035ACC0178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
