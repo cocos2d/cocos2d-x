@@ -78,7 +78,7 @@ def main():
     os.system("git checkout develop")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
-    print "git clean -xdf -f"    
+    print "Before checkout: git clean -xdf -f"    
     os.system("git clean -xdf -f")
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/merge"
@@ -88,6 +88,10 @@ def main():
     git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"
     os.system(git_checkout)
  
+    # After checkout a new branch, clean workspace again
+    print "After checkout: git clean -xdf -f"    
+    os.system("git clean -xdf -f")
+
     #update submodule
     git_update_submodule = "git submodule update --init --force"
     os.system(git_update_submodule)
