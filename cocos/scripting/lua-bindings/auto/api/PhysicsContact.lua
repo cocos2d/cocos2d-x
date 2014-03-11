@@ -12,6 +12,11 @@
 -- @return PhysicsContact::EventCode#PhysicsContact::EventCode ret (return value: cc.PhysicsContact::EventCode)
         
 --------------------------------
+-- @function [parent=#PhysicsContact] getPreContactData 
+-- @param self
+-- @return PhysicsContactData#PhysicsContactData ret (return value: cc.PhysicsContactData)
+        
+--------------------------------
 -- @function [parent=#PhysicsContact] getShapeA 
 -- @param self
 -- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
