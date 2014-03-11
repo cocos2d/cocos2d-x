@@ -112,11 +112,11 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
+    imageTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_imageRenderer);
-    imageTextureScaleChangedWithSize();
 }
 
 void ImageView::setTextureRect(const Rect &rect)

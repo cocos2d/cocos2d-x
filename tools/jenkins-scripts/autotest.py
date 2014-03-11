@@ -39,14 +39,14 @@ def autotest(type):
 #----------------autotest build and run----------------#
 def MAC_BUILD():
 	def cleanProj():
-		infoClean = os.system('xcodebuild -project ./build/cocos2d_tests.xcodeproj -target Test\ cpp\ Mac clean')
+		infoClean = os.system('xcodebuild -project ./build/cocos2d_samples.xcodeproj -target Test\ cpp\ Mac clean')
 		print 'infoClean: ', infoClean
 		if infoClean != 0:
 			return False
 		time.sleep(sleep_time)
 		return True
 	def buildProj():
-		infoBuild = os.system('xcodebuild -project ./build/cocos2d_tests.xcodeproj -target Test\ cpp\ Mac')
+		infoBuild = os.system('xcodebuild -project ./build/cocos2d_samples.xcodeproj -target Test\ cpp\ Mac')
 		print 'infoBuild: ', infoBuild
 		if infoBuild != 0:
 			return False
