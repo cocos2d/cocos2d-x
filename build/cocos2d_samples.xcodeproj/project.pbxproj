@@ -146,7 +146,7 @@
 		1ABCA3B918CDA3820087CE3A /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE818CD5C0000B0E990 /* animations */; };
 		1ABCA3BA18CDA3820087CE3A /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE918CD5C0000B0E990 /* armature */; };
 		1ABCA3BB18CDA3820087CE3A /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAED18CD5C0000B0E990 /* ccb */; };
-		1ABCA3BC18CDA3820087CE3A /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosgui */; };
+		1ABCA3BC18CDA3820087CE3A /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosui */; };
 		1ABCA3BD18CDA3820087CE3A /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF218CD5C0000B0E990 /* components */; };
 		1ABCA3BE18CDA3820087CE3A /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF318CD5C0000B0E990 /* configs */; };
 		1ABCA3BF18CDA3820087CE3A /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF718CD5C0000B0E990 /* extensions */; };
@@ -165,7 +165,7 @@
 		1ABCA3CC18CDA3830087CE3A /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE818CD5C0000B0E990 /* animations */; };
 		1ABCA3CD18CDA3830087CE3A /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAE918CD5C0000B0E990 /* armature */; };
 		1ABCA3CE18CDA3830087CE3A /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAED18CD5C0000B0E990 /* ccb */; };
-		1ABCA3CF18CDA3830087CE3A /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosgui */; };
+		1ABCA3CF18CDA3830087CE3A /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosui */; };
 		1ABCA3D018CDA3830087CE3A /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF218CD5C0000B0E990 /* components */; };
 		1ABCA3D118CDA3830087CE3A /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF318CD5C0000B0E990 /* configs */; };
 		1ABCA3D218CDA3830087CE3A /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF718CD5C0000B0E990 /* extensions */; };
@@ -582,8 +582,8 @@
 		1AE5FB1618CD5C0000B0E990 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEE18CD5C0000B0E990 /* CocosBuilderExample.ccbproj */; };
 		1AE5FB1718CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEF18CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog */; };
 		1AE5FB1818CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAEF18CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog */; };
-		1AE5FB1918CD5C0000B0E990 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosgui */; };
-		1AE5FB1A18CD5C0000B0E990 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosgui */; };
+		1AE5FB1918CD5C0000B0E990 /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosui */; };
+		1AE5FB1A18CD5C0000B0E990 /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF018CD5C0000B0E990 /* cocosui */; };
 		1AE5FB1B18CD5C0000B0E990 /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF118CD5C0000B0E990 /* commonly_used_words.txt */; };
 		1AE5FB1C18CD5C0000B0E990 /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF118CD5C0000B0E990 /* commonly_used_words.txt */; };
 		1AE5FB1D18CD5C0000B0E990 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AE5FAF218CD5C0000B0E990 /* components */; };
@@ -1406,7 +1406,7 @@
 		1AE5FAED18CD5C0000B0E990 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccb; path = "../samples/cpp-tests/Resources/ccb"; sourceTree = "<group>"; };
 		1AE5FAEE18CD5C0000B0E990 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocosBuilderExample.ccbproj; path = "../samples/cpp-tests/Resources/CocosBuilderExample.ccbproj"; sourceTree = "<group>"; };
 		1AE5FAEF18CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocosBuilderExample.ccbresourcelog; path = "../samples/cpp-tests/Resources/CocosBuilderExample.ccbresourcelog"; sourceTree = "<group>"; };
-		1AE5FAF018CD5C0000B0E990 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = "../samples/cpp-tests/Resources/cocosgui"; sourceTree = "<group>"; };
+		1AE5FAF018CD5C0000B0E990 /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosui; path = "../samples/cpp-tests/Resources/cocosui"; sourceTree = "<group>"; };
 		1AE5FAF118CD5C0000B0E990 /* commonly_used_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = commonly_used_words.txt; path = "../samples/cpp-tests/Resources/commonly_used_words.txt"; sourceTree = "<group>"; };
 		1AE5FAF218CD5C0000B0E990 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = "../samples/cpp-tests/Resources/components"; sourceTree = "<group>"; };
 		1AE5FAF318CD5C0000B0E990 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = "../samples/cpp-tests/Resources/configs"; sourceTree = "<group>"; };
@@ -2999,7 +2999,7 @@
 				1AE5FAE818CD5C0000B0E990 /* animations */,
 				1AE5FAE918CD5C0000B0E990 /* armature */,
 				1AE5FAED18CD5C0000B0E990 /* ccb */,
-				1AE5FAF018CD5C0000B0E990 /* cocosgui */,
+				1AE5FAF018CD5C0000B0E990 /* cocosui */,
 				1AE5FAF218CD5C0000B0E990 /* components */,
 				1AE5FAF318CD5C0000B0E990 /* configs */,
 				1AE5FAF718CD5C0000B0E990 /* extensions */,
@@ -3362,7 +3362,7 @@
 				1ABCA3E718CDA38A0087CE3A /* Hello.png in Resources */,
 				1ABCA37E18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
 				1ABCA3EC18CDA38A0087CE3A /* pew-pew-lei.wav in Resources */,
-				1ABCA3CF18CDA3830087CE3A /* cocosgui in Resources */,
+				1ABCA3CF18CDA3830087CE3A /* cocosui in Resources */,
 				1ABCA3E618CDA38A0087CE3A /* fps_images.png in Resources */,
 				1ABCA3D918CDA3830087CE3A /* Particles in Resources */,
 				1ABCA3CE18CDA3830087CE3A /* ccb in Resources */,
@@ -3414,7 +3414,7 @@
 				1ABCA39318CD9E180087CE3A /* luaj.lua in Resources */,
 				1ABCA3BA18CDA3820087CE3A /* armature in Resources */,
 				1ABCA37F18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
-				1ABCA3BC18CDA3820087CE3A /* cocosgui in Resources */,
+				1ABCA3BC18CDA3820087CE3A /* cocosui in Resources */,
 				1ABCA3F418CDA38B0087CE3A /* fps_images.png in Resources */,
 				1ABCA39518CD9E180087CE3A /* luaoc.lua in Resources */,
 				1ABCA3C718CDA3820087CE3A /* scenetest in Resources */,
@@ -3473,7 +3473,7 @@
 				1AE5FB4318CD5C0000B0E990 /* Shaders in Resources */,
 				1AE5FB1718CD5C0000B0E990 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AE5FB1B18CD5C0000B0E990 /* commonly_used_words.txt in Resources */,
-				1AE5FB1918CD5C0000B0E990 /* cocosgui in Resources */,
+				1AE5FB1918CD5C0000B0E990 /* cocosui in Resources */,
 				1AE5FB4518CD5C0000B0E990 /* spine in Resources */,
 				1AE5FB2718CD5C0000B0E990 /* extensions in Resources */,
 				1AE5FB1D18CD5C0000B0E990 /* components in Resources */,
@@ -3534,7 +3534,7 @@
 				1AE5FACB18CD5BE100B0E990 /* Icon-114.png in Resources */,
 				1AE5FB3018CD5C0000B0E990 /* hd in Resources */,
 				1AE5FAD218CD5BE100B0E990 /* Icon-57.png in Resources */,
-				1AE5FB1A18CD5C0000B0E990 /* cocosgui in Resources */,
+				1AE5FB1A18CD5C0000B0E990 /* cocosui in Resources */,
 				1AE5FB0E18CD5C0000B0E990 /* background-music-aac.wav in Resources */,
 				1AE5FB3A18CD5C0000B0E990 /* Misc in Resources */,
 				1AE5FB3218CD5C0000B0E990 /* Hello.png in Resources */,
