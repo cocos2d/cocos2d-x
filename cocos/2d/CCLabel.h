@@ -228,7 +228,7 @@ public:
     virtual void addChild(Node * child, int zOrder=0, int tag=0) override;
     virtual std::string getDescription() const override;
 
-    virtual const Size& getContentSize();
+    virtual const Size& getContentSize() const override;
 
 protected:
     void onDraw(const kmMat4& transform, bool transformUpdated);
