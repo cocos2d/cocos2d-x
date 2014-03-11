@@ -407,12 +407,24 @@ void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
     _listViewEventSelector = selector;
 }
     
-void ListView::selectedItemEvent()
+void ListView::selectedItemEvent(int state)
 {
-    if (_listViewEventListener && _listViewEventSelector)
+    switch (state)
     {
-        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM);
+        case 0:
+            if (_listViewEventListener && _listViewEventSelector)
+            {
+                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_START);
+            }
+            break;
+        default:
+            if (_listViewEventListener && _listViewEventSelector)
+            {
+                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_END);
+            }
+            break;
     }
+
 }
     
 void ListView::interceptTouchEvent(int handleState, Widget *sender, const Point &touchPoint)
@@ -430,7 +442,7 @@ void ListView::interceptTouchEvent(int handleState, Widget *sender, const Point 
             }
             parent = dynamic_cast<Widget*>(parent->getParent());
         }
-        selectedItemEvent();
+        selectedItemEvent(handleState);
     }
 }
     
