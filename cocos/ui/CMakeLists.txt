@@ -20,11 +20,11 @@ set(GUI_SRC
   UIRichText.cpp
 )
 
-add_library(gui STATIC
+add_library(ui STATIC
   ${GUI_SRC}
 )
 
-set_target_properties(gui
+set_target_properties(ui
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"

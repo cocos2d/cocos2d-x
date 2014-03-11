@@ -244,8 +244,8 @@ add_subdirectory(cocos/storage)
 endif(BUILD_STORAGE)
 
 if(BUILD_GUI)
-# gui
-add_subdirectory(cocos/gui)
+# ui
+add_subdirectory(cocos/ui)
 endif(BUILD_GUI)
 
 if(BUILD_NETWORK)
