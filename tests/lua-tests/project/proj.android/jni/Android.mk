@@ -2,11 +2,11 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := testlua_shared
+LOCAL_MODULE := lua_tests_shared
 
-LOCAL_MODULE_FILENAME := libtestlua
+LOCAL_MODULE_FILENAME := liblua_tests
 
-LOCAL_SRC_FILES += testlua/main.cpp \
+LOCAL_SRC_FILES += main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/lua_assetsmanager_test_sample.cpp
 

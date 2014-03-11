@@ -1,4 +1,4 @@
-package org.cocos2dx.testlua;
+package org.cocos2dx.lua_tests;
 
 import android.app.NativeActivity;
 import android.os.Bundle;

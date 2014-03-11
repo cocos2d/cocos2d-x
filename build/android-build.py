@@ -158,15 +158,22 @@ def copy_resources(target, app_android_root):
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../res")
-        copy_files(resources_dir, assets_dir)
+        assets_res_dir = os.path.join(assets_dir, "res");
+        os.mkdir(assets_res_dir)
+        copy_files(resources_dir, assets_res_dir)
 
+        resources_dir = os.path.join(app_android_root, "../../src")
+        assets_src_dir = os.path.join(assets_dir, "src");
+        os.mkdir(assets_src_dir)
+        copy_files(resources_dir, assets_src_dir)
+        
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
         copy_files(resources_dir, assets_dir)
 
         # lua-tests shared resources with cpp-tests
         if target == "lua-tests":
             resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
-            copy_files(resources_dir, assets_dir)
+            copy_files(resources_dir, assets_res_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
 

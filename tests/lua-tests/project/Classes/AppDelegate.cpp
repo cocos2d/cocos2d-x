@@ -22,7 +22,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithRect("Test Lua", Rect(0,0,900,640));
+        glview = GLView::createWithRect("Lua Tests", Rect(0,0,900,640));
         director->setOpenGLView(glview);
     }
 
@@ -58,11 +58,15 @@ bool AppDelegate::applicationDidFinishLaunching()
     register_assetsmanager_test_sample(stack->getLuaState());
 #endif
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     std::string resPrefix("");
+#else
+    std::string resPrefix("res/");
+#endif
     
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), resPrefix);
-    searchPaths.insert(searchPaths.begin(), resPrefix + "Images");
+
     searchPaths.insert(searchPaths.begin(), resPrefix + "cocosbuilderRes");
     if (screenSize.height > 320)
     {
@@ -81,6 +85,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     else
     {
+        searchPaths.insert(searchPaths.begin(), resPrefix + "Images");
         searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/ArmatureComponentTest");
         searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/AttributeComponentTest");
         searchPaths.insert(searchPaths.begin(), resPrefix + "scenetest/BackgroundComponentTest");

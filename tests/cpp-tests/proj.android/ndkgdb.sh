@@ -1,5 +1,5 @@
-APPNAME="TestCpp"
-APP_ANDROID_NAME="org.cocos2dx.testcpp"
+APPNAME="CppTests"
+APP_ANDROID_NAME="org.cocos2dx.cpp_tests"
 
 # read local.properties
 

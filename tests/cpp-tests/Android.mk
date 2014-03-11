@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos_testcpp_common
+LOCAL_MODULE := cocos_cpp_tests_common
 
-LOCAL_MODULE_FILENAME := libtestcppcommon
+LOCAL_MODULE_FILENAME := libcpp_tests_common
 
 LOCAL_SRC_FILES := \
 Classes/AppDelegate.cpp \
