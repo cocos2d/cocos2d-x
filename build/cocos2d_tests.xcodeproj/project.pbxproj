@@ -5148,12 +5148,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -5164,12 +5165,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -5181,12 +5183,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -5197,12 +5200,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -5251,12 +5255,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -5267,12 +5272,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -5341,12 +5347,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -5357,12 +5364,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../cocos/2d/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
