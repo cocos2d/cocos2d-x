@@ -295,7 +295,7 @@ if(BUILD_CppTests)
 add_subdirectory(tests/cpp-tests)
 endif(BUILD_CppTests)
 
-add_subdirectory(tests/lua-empty-test)
+add_subdirectory(tests/lua-empty-test/project)
 
 if(BUILD_LuaTests)
 add_subdirectory(tests/lua-tests/project)
