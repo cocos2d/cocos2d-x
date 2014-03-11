@@ -79,6 +79,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @function [parent=#Node] getChildByName 
+-- @param self
+-- @param #string str
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
 -- @function [parent=#Node] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char char
@@ -203,6 +209,11 @@
 -- @function [parent=#Node] setParent 
 -- @param self
 -- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#Node] getName 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Node] getRotation3D 
@@ -378,6 +389,11 @@
 -- @param self
 -- @param #int int
 -- @return Action#Action ret (return value: cc.Action)
+        
+--------------------------------
+-- @function [parent=#Node] setName 
+-- @param self
+-- @param #string str
         
 --------------------------------
 -- overload function: setAdditionalTransform(cc.AffineTransform)

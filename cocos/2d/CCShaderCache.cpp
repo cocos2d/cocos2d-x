@@ -36,6 +36,7 @@ enum {
     kShaderType_PositionTextureColor,
     kShaderType_PositionTextureColor_noMVP,
     kShaderType_PositionTextureColorAlphaTest,
+    kShaderType_PositionTextureColorAlphaTestNoMV,
     kShaderType_PositionColor,
     kShaderType_PositionColor_noMVP,
     kShaderType_PositionTexture,
@@ -118,6 +119,10 @@ void ShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTest);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST, p) );
 
+    // Position Texture Color alpha test
+    p = new GLProgram();
+    loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTestNoMV);
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV, p) );
     //
     // Position, Color shader
     //
@@ -199,6 +204,10 @@ void ShaderCache::reloadDefaultShaders()
     p->reset();    
     loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTest);
     
+    // Position Texture Color alpha test
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
+    p->reset();    
+    loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTestNoMV);
     //
     // Position, Color shader
     //
@@ -288,6 +297,15 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
             p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
             break;
+        case kShaderType_PositionTextureColorAlphaTestNoMV:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColorAlphaTest_frag);
+            
+            p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+            p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+
+            break;
+
         case kShaderType_PositionColor:  
             p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
             
