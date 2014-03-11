@@ -33,7 +33,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 template <class T>
-bool array_to_vector_t_deprecated(Array& array,Vector<T>& vec)
+bool array_to_vector_t_deprecated(__Array& array,Vector<T>& vec)
 {
     if ( 0 == array.count() )
         return false;
@@ -50,38 +50,38 @@ bool array_to_vector_t_deprecated(Array& array,Vector<T>& vec)
     return true;
 }
 
-bool array_to_valuevector_deprecated(Array& array,ValueVector& valueVec)
+bool array_to_valuevector_deprecated(__Array& array,ValueVector& valueVec)
 {
     if (0 == array.count())
         return false;
     
     valueVec.clear();
     
-    String* strVal = nullptr;
-    Double* doubleVal = nullptr;
-    Bool* boolVal = nullptr;
-    Float* floatVal = nullptr;
-    Integer* intVal = nullptr;
+    __String* strVal = nullptr;
+    __Double* doubleVal = nullptr;
+    __Bool* boolVal = nullptr;
+    __Float* floatVal = nullptr;
+    __Integer* intVal = nullptr;
     
     for (int i = 0; i < array.count(); i++)
     {
-        if( (strVal = dynamic_cast<cocos2d::String *>(array.getObjectAtIndex(i))))
+        if( (strVal = dynamic_cast<__String *>(array.getObjectAtIndex(i))))
         {
             valueVec.push_back(Value(strVal->getCString()));
         }
-        else if ((doubleVal = dynamic_cast<cocos2d::Double*>(array.getObjectAtIndex(i))))
+        else if ((doubleVal = dynamic_cast<__Double*>(array.getObjectAtIndex(i))))
         {
             valueVec.push_back(Value(doubleVal->getValue()));
         }
-        else if ((floatVal = dynamic_cast<cocos2d::Float*>(array.getObjectAtIndex(i))))
+        else if ((floatVal = dynamic_cast<__Float*>(array.getObjectAtIndex(i))))
         {
             valueVec.push_back(Value(floatVal->getValue()));
         }
-        else if ((intVal = dynamic_cast<cocos2d::Integer*>(array.getObjectAtIndex(i))))
+        else if ((intVal = dynamic_cast<__Integer*>(array.getObjectAtIndex(i))))
         {
             valueVec.push_back(Value(intVal->getValue()));
         }
-        else if ((boolVal = dynamic_cast<cocos2d::Bool*>(array.getObjectAtIndex(i))))
+        else if ((boolVal = dynamic_cast<__Bool*>(array.getObjectAtIndex(i))))
         {
             valueVec.push_back(Value(boolVal->getValue()));
         }
@@ -487,7 +487,7 @@ static int tolua_Cocos2d_CCArray_create00(lua_State* tolua_S)
 #endif
     {
         {
-            Array* tolua_ret = (Array*)  Array::create();
+            __Array* tolua_ret = (__Array*)  Array::create();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -519,7 +519,7 @@ static int tolua_Cocos2d_CCArray_createWithObject00(lua_State* tolua_S)
     {
         Ref* pObject = ((Ref*)  tolua_tousertype(tolua_S,2,0));
         {
-            Array* tolua_ret = (Array*)  Array::createWithObject(pObject);
+            __Array* tolua_ret = (__Array*)  __Array::createWithObject(pObject);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -549,9 +549,9 @@ static int tolua_Cocos2d_CCArray_createWithArray00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* otherArray = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* otherArray = ((__Array*)  tolua_tousertype(tolua_S,2,0));
         {
-            Array* tolua_ret = (Array*)  Array::createWithArray(otherArray);
+            __Array* tolua_ret = (__Array*)  __Array::createWithArray(otherArray);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -584,7 +584,7 @@ static int tolua_Cocos2d_CCArray_createWithCapacity00(lua_State* tolua_S)
     {
         unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
         {
-            Array* tolua_ret = (Array*)  Array::createWithCapacity(capacity);
+            __Array* tolua_ret = (__Array*)  __Array::createWithCapacity(capacity);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -616,7 +616,7 @@ static int tolua_Cocos2d_CCArray_createWithContentsOfFile00(lua_State* tolua_S)
     {
         const char* pFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
         {
-            Array* tolua_ret = (Array*)  Array::createWithContentsOfFile(pFileName);
+            __Array* tolua_ret = (__Array*)  __Array::createWithContentsOfFile(pFileName);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -645,7 +645,7 @@ static int tolua_Cocos2d_CCArray_count00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'count'", NULL);
 #endif
@@ -675,7 +675,7 @@ static int tolua_Cocos2d_CCArray_capacity00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'capacity'", NULL);
 #endif
@@ -708,7 +708,7 @@ static int tolua_Cocos2d_CCArray_indexOfObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         Ref* object = ((Ref*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'indexOfObject'", NULL);
@@ -742,7 +742,7 @@ static int tolua_Cocos2d_CCArray_objectAtIndex00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'objectAtIndex'", NULL);
@@ -777,7 +777,7 @@ static int tolua_Cocos2d_CCArray_lastObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lastObject'", NULL);
 #endif
@@ -811,7 +811,7 @@ static int tolua_Cocos2d_CCArray_randomObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'randomObject'", NULL);
 #endif
@@ -846,8 +846,8 @@ static int tolua_Cocos2d_CCArray_isEqualToArray00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
-        Array* pOtherArray = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* pOtherArray = ((__Array*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isEqualToArray'", NULL);
 #endif
@@ -880,7 +880,7 @@ static int tolua_Cocos2d_CCArray_containsObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         Ref* object = ((Ref*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'containsObject'", NULL);
@@ -914,7 +914,7 @@ static int tolua_Cocos2d_CCArray_addObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         Ref* object = ((Ref*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addObject'", NULL);
@@ -946,8 +946,8 @@ static int tolua_Cocos2d_CCArray_addObjectsFromArray00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
-        Array* otherArray = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* otherArray = ((__Array*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addObjectsFromArray'", NULL);
 #endif
@@ -980,7 +980,7 @@ static int tolua_Cocos2d_CCArray_insertObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         Ref* object = ((Ref*)  tolua_tousertype(tolua_S,2,0));
         unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -1013,7 +1013,7 @@ static int tolua_Cocos2d_CCArray_removeLastObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         bool bReleaseObj = ((bool)  tolua_toboolean(tolua_S,2,true));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeLastObject'", NULL);
@@ -1047,7 +1047,7 @@ static int tolua_Cocos2d_CCArray_removeObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         Ref* object = ((Ref*)  tolua_tousertype(tolua_S,2,0));
         bool bReleaseObj = ((bool)  tolua_toboolean(tolua_S,3,true));
 #ifndef TOLUA_RELEASE
@@ -1082,7 +1082,7 @@ static int tolua_Cocos2d_CCArray_removeObjectAtIndex00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
         bool bReleaseObj = ((bool)  tolua_toboolean(tolua_S,3,true));
 #ifndef TOLUA_RELEASE
@@ -1115,8 +1115,8 @@ static int tolua_Cocos2d_CCArray_removeObjectsInArray00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
-        Array* otherArray = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* otherArray = ((__Array*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeObjectsInArray'", NULL);
 #endif
@@ -1146,7 +1146,7 @@ static int tolua_Cocos2d_CCArray_removeAllObjects00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAllObjects'", NULL);
 #endif
@@ -1177,7 +1177,7 @@ static int tolua_Cocos2d_CCArray_fastRemoveObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         Ref* object = ((Ref*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fastRemoveObject'", NULL);
@@ -1209,7 +1209,7 @@ static int tolua_Cocos2d_CCArray_fastRemoveObjectAtIndex00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fastRemoveObjectAtIndex'", NULL);
@@ -1243,7 +1243,7 @@ static int tolua_Cocos2d_CCArray_exchangeObject00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         Ref* object1 = ((Ref*)  tolua_tousertype(tolua_S,2,0));
         Ref* object2 = ((Ref*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -1277,7 +1277,7 @@ static int tolua_Cocos2d_CCArray_exchangeObjectAtIndex00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         unsigned int index1 = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
         unsigned int index2 = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -1310,7 +1310,7 @@ static int tolua_Cocos2d_CCArray_reverseObjects00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverseObjects'", NULL);
 #endif
@@ -1341,7 +1341,7 @@ static int tolua_Cocos2d_CCArray_reduceMemoryFootprint00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reduceMemoryFootprint'", NULL);
 #endif
@@ -1375,7 +1375,7 @@ static int tolua_Cocos2d_CCArray_replaceObjectAtIndex00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* self = (Array*)  tolua_tousertype(tolua_S,1,0);
+        __Array* self = (__Array*)  tolua_tousertype(tolua_S,1,0);
         unsigned int uIndex = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
         Ref* pObject = ((Ref*)  tolua_tousertype(tolua_S,3,0));
         bool bReleaseObject = ((bool)  tolua_toboolean(tolua_S,4,true));
@@ -1521,7 +1521,7 @@ static int tolua_Cocos2d_CCString_intValue00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'intValue'", NULL);
 #endif
@@ -1553,7 +1553,7 @@ static int tolua_Cocos2d_CCString_uintValue00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'uintValue'", NULL);
 #endif
@@ -1585,7 +1585,7 @@ static int tolua_Cocos2d_CCString_floatValue00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'floatValue'", NULL);
 #endif
@@ -1617,7 +1617,7 @@ static int tolua_Cocos2d_CCString_doubleValue00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'doubleValue'", NULL);
 #endif
@@ -1649,7 +1649,7 @@ static int tolua_Cocos2d_CCString_boolValue00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'boolValue'", NULL);
 #endif
@@ -1681,7 +1681,7 @@ static int tolua_Cocos2d_CCString_getCString00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCString'", NULL);
 #endif
@@ -1714,7 +1714,7 @@ static int tolua_Cocos2d_CCString_length00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'length'", NULL);
 #endif
@@ -1747,7 +1747,7 @@ static int tolua_Cocos2d_CCString_compare00(lua_State* tolua_S)
     else
 #endif
     {
-        const String* self = (const String*)  tolua_tousertype(tolua_S,1,0);
+        const __String* self = (const __String*)  tolua_tousertype(tolua_S,1,0);
         const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'compare'", NULL);
@@ -1782,7 +1782,7 @@ static int tolua_Cocos2d_CCString_isEqual00(lua_State* tolua_S)
     else
 #endif
     {
-        String* self = (String*)  tolua_tousertype(tolua_S,1,0);
+        __String* self = (__String*)  tolua_tousertype(tolua_S,1,0);
         const Ref* pObject = ((const Ref*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isEqual'", NULL);
@@ -1818,7 +1818,7 @@ static int tolua_Cocos2d_CCString_create00(lua_State* tolua_S)
     {
         const char* pStr = ((const char*)  tolua_tostring(tolua_S,2,0));
         {
-            String* tolua_ret = (String*)  String::create(pStr);
+            __String* tolua_ret = (__String*)  String::create(pStr);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
@@ -1852,7 +1852,7 @@ static int tolua_Cocos2d_CCString_createWithData00(lua_State* tolua_S)
         unsigned char* pData = ((unsigned char*)  tolua_tostring(tolua_S,2,0));
         unsigned long nLen = ((unsigned long)  tolua_tonumber(tolua_S,3,0));
         {
-            String* tolua_ret = (String*)  String::createWithData(pData,nLen);
+            __String* tolua_ret = (__String*)  String::createWithData(pData,nLen);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
@@ -1884,7 +1884,7 @@ static int tolua_Cocos2d_CCString_createWithContentsOfFile00(lua_State* tolua_S)
     {
         const char* pszFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
         {
-            String* tolua_ret = (String*)  String::createWithContentsOfFile(pszFileName);
+            __String* tolua_ret = (__String*)  String::createWithContentsOfFile(pszFileName);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
@@ -1953,7 +1953,7 @@ static int tolua_cocos2d_Animation_createWithSpriteFrames_deprecated00(lua_State
         goto tolua_lerror;
     else
     {
-        Array* arrayOfSpriteFrameNames = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* arrayOfSpriteFrameNames = ((__Array*)  tolua_tousertype(tolua_S,2,0));
         Vector<SpriteFrame*> vec;
         array_to_vector_t_deprecated(*arrayOfSpriteFrameNames, vec);
         float delay = ((float)  tolua_tonumber(tolua_S,3,0));
@@ -1979,7 +1979,7 @@ static int tolua_cocos2d_Animation_createWithSpriteFrames_deprecated01(lua_State
         goto tolua_lerror;
     else
     {
-        Array* arrayOfSpriteFrameNames = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* arrayOfSpriteFrameNames = ((__Array*)  tolua_tousertype(tolua_S,2,0));
         Vector<SpriteFrame*> vec;
         array_to_vector_t_deprecated(*arrayOfSpriteFrameNames, vec);
         cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::createWithSpriteFrames(vec);
@@ -2052,7 +2052,7 @@ static int tolua_Cocos2d_Sequence_create_deprecated00(lua_State* tolua_S)
         goto tolua_lerror;
     else
     {
-        Array* actions = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* actions = ((__Array*)  tolua_tousertype(tolua_S,2,0));
         Vector<FiniteTimeAction*> vec;
         array_to_vector_t_deprecated(*actions, vec);
         Sequence* tolua_ret = (Sequence*)  Sequence::create(vec);
@@ -2203,7 +2203,7 @@ static int tolua_cocos2d_Menu_createWithArray00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* arrayOfItems = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* arrayOfItems = ((__Array*)  tolua_tousertype(tolua_S,2,0));
         Vector<MenuItem*> vec;
         array_to_vector_t_deprecated(*arrayOfItems, vec);
         Menu* tolua_ret = (Menu*)  Menu::createWithArray(vec);
@@ -2233,7 +2233,7 @@ static int tolua_cocos2d_Menu_alignItemsInColumnsWithArray00(lua_State* tolua_S)
 #endif
     {
         Menu* self = (Menu*)  tolua_tousertype(tolua_S,1,0);
-        Array* rows = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* rows = ((__Array*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInColumnsWithArray'", NULL);
 #endif
@@ -2264,7 +2264,7 @@ static int tolua_cocos2d_Menu_alignItemsInRowsWithArray00(lua_State* tolua_S)
 #endif
     {
         Menu* self = (Menu*)  tolua_tousertype(tolua_S,1,0);
-        Array* columns = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* columns = ((__Array*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInRowsWithArray'", NULL);
 #endif
@@ -2307,7 +2307,7 @@ static int tolua_cocos2d_LayerMultiplex_createWithArray00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* arrayOfLayers = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        __Array* arrayOfLayers = ((__Array*)  tolua_tousertype(tolua_S,2,0));
         Vector<Layer*> vec;
         array_to_vector_t_deprecated(*arrayOfLayers, vec);
         LayerMultiplex* tolua_ret = (LayerMultiplex*)  LayerMultiplex::createWithArray(vec);
