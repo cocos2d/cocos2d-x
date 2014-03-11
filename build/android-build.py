@@ -7,8 +7,8 @@ import os, os.path
 import shutil
 from optparse import OptionParser
 
-CPP_SAMPLES = ['testcpp']
-LUA_SAMPLES = ['testlua']
+CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests']
+LUA_SAMPLES = ['lua-empty-test', 'lua-tests']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
 
 def get_num_of_cpu():
@@ -146,19 +146,25 @@ def copy_resources(target, app_android_root):
     if os.path.isdir(assets_dir):
         shutil.rmtree(assets_dir)
 
-    # copy resources(cpp samples and lua samples)
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../../res")
-    if os.path.isdir(resources_dir):
-        copy_files(resources_dir, assets_dir)
+
+    # copy resources(cpp samples)
+    if target in CPP_SAMPLES:
+        resources_dir = os.path.join(app_android_root, "../Resources")
+        if os.path.isdir(resources_dir):
+            copy_files(resources_dir, assets_dir)
+
 
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
+        resources_dir = os.path.join(app_android_root, "../../res")
+        copy_files(resources_dir, assets_dir)
+
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
         copy_files(resources_dir, assets_dir)
 
-        # TestLua shared resources with TestCpp
-        if target == "testlua":
+        # lua-tests shared resources with cpp-tests
+        if target == "lua-tests":
             resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
             copy_files(resources_dir, assets_dir)
 
@@ -186,11 +192,17 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
         build_mode = 'debug'
        
     app_android_root = ''
+
+    target_proj_path_map = {
+        "cpp-empty-test": "tests/cpp-empty-test/proj.android",
+        "cpp-tests": "tests/cpp-tests/proj.android",
+        "lua-empty-test": "tests/lua-empty-test/project/proj.android",
+        "lua-tests": "tests/lua-tests/project/proj.android"
+    }
+
     for target in build_targets:
-        if target == 'testcpp':
-            app_android_root = os.path.join(cocos_root, 'samples/cpp-tests/proj.android')
-        elif target == 'testlua':
-            app_android_root = os.path.join(cocos_root, 'samples/lua-tests/project/proj.android')
+        if target in target_proj_path_map:
+            app_android_root = os.path.join(cocos_root, target_proj_path_map[target])
         else:
             print 'unknown target: %s' % target
             continue
@@ -205,14 +217,13 @@ if __name__ == '__main__':
     usage = """
     This script is mainy used for building tests built-in with cocos2d-x.
     
-    Usage: %prog [options] [testcpp|testlua]
+    Usage: %prog [options] [cpp-empty-test|cpp-tests|lua-empty-test|lua-tests]
 
-    If you are new to cocos2d-x, I recommend you start with testcpp, testlua.
+    If you are new to cocos2d-x, I recommend you start with cpp-empty-test, lua-empty-test.
 
     You can combine these targets like this:
 
-    //1. to build simplegame and assetsmanager 
-    python android-build.py -p 10 testcpp testlua
+    python android-build.py -p 10 cpp-empty-test lua-empty-test
 
 
     Note: You should install ant to generate apk while building the andriod tests. But it is optional. You can generate apk with eclipse.
