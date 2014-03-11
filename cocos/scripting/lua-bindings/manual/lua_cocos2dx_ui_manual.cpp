@@ -27,7 +27,7 @@
 #include "LuaBasicConversions.h"
 #include "LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
-#include "CocosGUI.h"
+#include "ui/CocosGUI.h"
 #include "CCLuaEngine.h"
 
 using namespace ui;
