@@ -1,8 +1,6 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
-#include "CCEventListenerTouch.h"
-
 USING_NS_CC;
 
 
@@ -78,7 +76,7 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::menuCloseCallback(Object* sender)
+void HelloWorld::menuCloseCallback(Ref* sender)
 {
     Director::getInstance()->end();
 
