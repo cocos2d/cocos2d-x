@@ -121,6 +121,18 @@ CCSpriteBatchNode::CCSpriteBatchNode()
 
 CCSpriteBatchNode::~CCSpriteBatchNode()
 {
+    if(m_pChildren && m_pChildren->count() > 0)
+    {
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCSprite* pChild = static_cast<CCSprite*>( child );
+            if (pChild)
+            {
+                pChild->setBatchNode(NULL);
+            }
+        }
+    }
     CC_SAFE_RELEASE(m_pobTextureAtlas);
     CC_SAFE_RELEASE(m_pobDescendants);
 }
