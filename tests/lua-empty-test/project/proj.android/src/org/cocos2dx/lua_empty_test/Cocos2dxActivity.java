@@ -1,7 +1,6 @@
-package org.cocos2dx.hellolua;
+package org.cocos2dx.lua_empty_test;
 
 import android.app.NativeActivity;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 
 public class Cocos2dxActivity extends NativeActivity {

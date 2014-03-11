@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.cocos2dx.hellolua"
+      package="org.cocos2dx.lua_empty_test"
       android:versionCode="1"
       android:versionName="1.0">
 
@@ -18,7 +18,7 @@
 
             <!-- Tell NativeActivity the name of our .so -->
             <meta-data android:name="android.app.lib_name"
-                       android:value="hellolua" />
+                       android:value="lua_empty_test" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

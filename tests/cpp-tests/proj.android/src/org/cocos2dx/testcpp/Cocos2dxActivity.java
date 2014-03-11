@@ -1,4 +1,4 @@
-package org.cocos2dx.testcpp;
+package org.cocos2dx.cpp_tests;
 
 import android.app.NativeActivity;
 import android.graphics.PixelFormat;
