@@ -6553,6 +6553,50 @@ int lua_cocos2dx_physics_PhysicsContact_getEventCode(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsContact_getPreContactData(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsContact* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsContact",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsContact*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getPreContactData'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const cocos2d::PhysicsContactData* ret = cobj->getPreContactData();
+        physics_contactdata_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPreContactData",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsContact_getPreContactData'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsContact_getShapeA(lua_State* tolua_S)
 {
     int argc = 0;
@@ -6655,6 +6699,7 @@ int lua_register_cocos2dx_physics_PhysicsContact(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"PhysicsContact");
         tolua_function(tolua_S,"getContactData",lua_cocos2dx_physics_PhysicsContact_getContactData);
         tolua_function(tolua_S,"getEventCode",lua_cocos2dx_physics_PhysicsContact_getEventCode);
+        tolua_function(tolua_S,"getPreContactData",lua_cocos2dx_physics_PhysicsContact_getPreContactData);
         tolua_function(tolua_S,"getShapeA",lua_cocos2dx_physics_PhysicsContact_getShapeA);
         tolua_function(tolua_S,"getShapeB",lua_cocos2dx_physics_PhysicsContact_getShapeB);
     tolua_endmodule(tolua_S);
