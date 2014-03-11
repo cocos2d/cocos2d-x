@@ -210,8 +210,8 @@ protected:
 class PhysicsDebugDraw
 {
 protected:
-    virtual bool begin();
-    virtual void end();
+    virtual bool attachToScene();
+    virtual void detachFromScene();
     virtual void drawShape(PhysicsShape& shape);
     virtual void drawJoint(PhysicsJoint& joint);
     virtual void drawContact();

@@ -201,9 +201,11 @@ void PhysicsWorld::debugDraw()
         _debugDraw = new PhysicsDebugDraw(*this);
     }
     
-    if (_debugDraw && !_bodies.empty())
+    if (_debugDraw)
     {
-        if (_debugDraw->begin())
+        _debugDraw->detachFromScene();
+
+        if (!_bodies.empty() && _debugDraw->attachToScene())
         {
             if (_debugDrawMask & DEBUGDRAW_SHAPE)
             {
@@ -225,8 +227,6 @@ void PhysicsWorld::debugDraw()
                     _debugDraw->drawJoint(*joint);
                 }
             }
-            
-            _debugDraw->end();
         }
     }
 }
@@ -1061,35 +1061,30 @@ PhysicsDebugDraw::PhysicsDebugDraw(PhysicsWorld& world)
 
 PhysicsDebugDraw::~PhysicsDebugDraw()
 {
-    if (_drawNode != nullptr)
-    {
-        _drawNode->removeFromParent();
-        _drawNode = nullptr;
-    }
+     detachFromScene();
 }
 
-bool PhysicsDebugDraw::begin()
+bool PhysicsDebugDraw::attachToScene()
 {
-    if (_drawNode != nullptr)
-    {
-        _drawNode->removeFromParent();
-        _drawNode = nullptr;
-    }
-    
     _drawNode = DrawNode::create();
-    
+
     if (_drawNode == nullptr)
     {
         return false;
     }
-    
+
     _world.getScene().addChild(_drawNode);
-    
+
     return true;
 }
 
-void PhysicsDebugDraw::end()
+void PhysicsDebugDraw::detachFromScene()
 {
+    if (_drawNode != nullptr)
+    {
+        _drawNode->removeFromParent();
+        _drawNode = nullptr;
+    }
 }
 
 NS_CC_END
