@@ -78,8 +78,8 @@ def main():
     os.system("git checkout develop")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
-    print "git clean -xdf"    
-    os.system("git clean -xdf")
+    print "git clean -xdf -f"    
+    os.system("git clean -xdf -f")
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/merge"
     os.system(git_fetch_pr)
@@ -96,7 +96,7 @@ def main():
     os.system("python tools/jenkins-scripts/gen_jsb.py")
 
     #make temp dir
-    print "current dir is" + os.environ['WORKSPACE']
+    print "current dir is: " + os.environ['WORKSPACE']
     os.system("cd " + os.environ['WORKSPACE']);
     os.mkdir("android_build_objs")
     #add symbol link
@@ -120,6 +120,7 @@ def main():
     node_name = os.environ['NODE_NAME']
     if(branch == 'develop'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
+        print "Start build android..."
         ret = os.system("python build/android-build.py -n -j10 cpp")
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
