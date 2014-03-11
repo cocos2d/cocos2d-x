@@ -46,8 +46,8 @@ option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
-option(BUILD_TestCpp "Only build TestCpp sample" ON)
-option(BUILD_TestLua "Only build TestLua sample" OFF)
+option(BUILD_CppTests "Only build TestCpp sample" ON)
+option(BUILD_LuaTests "Only build TestLua sample" OFF)
 else()#temp
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
@@ -62,8 +62,8 @@ option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
-option(BUILD_TestCpp "Only build TestCpp sample" ON)
-option(BUILD_TestLua "Only build TestLua sample" ON)
+option(BUILD_CppTests "Only build TestCpp sample" ON)
+option(BUILD_LuaTests "Only build TestLua sample" ON)
 endif()#temp
 
 
@@ -289,10 +289,14 @@ endif(BUILD_LIBS_LUA)
 
 # build tests 
 
-if(BUILD_TestCpp)
-add_subdirectory(samples/cpp-tests)
-endif(BUILD_TestCpp)
+add_subdirectory(tests/cpp-empty-test)
 
-if(BUILD_TestLua)
-add_subdirectory(samples/lua-tests/project)
-endif(BUILD_TestLua)
+if(BUILD_CppTests)
+add_subdirectory(tests/cpp-tests)
+endif(BUILD_CppTests)
+
+add_subdirectory(tests/lua-empty-test)
+
+if(BUILD_LuaTests)
+add_subdirectory(tests/lua-tests/project)
+endif(BUILD_LuaTests)
