@@ -129,12 +129,12 @@ bool TriggerObj::detect()
 	{
 		return true;
 	}
-    bool bRet = true;  
+    bool bRet = false;  
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(_cons, pObj)
     {
         BaseTriggerCondition* con = (BaseTriggerCondition*)pObj;
-        bRet = bRet && con->detect();
+        bRet = bRet || con->detect();
     }
 
     return bRet;
