@@ -814,7 +814,6 @@ bool Console::parseCommand(int fd)
         const char err[] = "Unknown command. Type 'help' for options\n";
         send(fd, err, sizeof(err),0);
     }
-
     sendPrompt(fd);
 
     return true;

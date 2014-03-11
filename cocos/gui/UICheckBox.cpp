@@ -81,6 +81,7 @@ bool CheckBox::init()
     if (Widget::init())
     {
         setSelectedState(false);
+        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -129,11 +130,11 @@ void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texTy
         default:
             break;
     }
+    backGroundTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_backGroundBoxRenderer);
-    backGroundTextureScaleChangedWithSize();
 }
 
 void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,TextureResType texType)
@@ -155,11 +156,11 @@ void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Text
         default:
             break;
     }
+    backGroundSelectedTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
-    backGroundSelectedTextureScaleChangedWithSize();
 }
 
 void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
@@ -181,11 +182,11 @@ void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
         default:
             break;
     }
+    frontCrossTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_frontCrossRenderer);
-    frontCrossTextureScaleChangedWithSize();
 }
 
 void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,TextureResType texType)
@@ -207,11 +208,11 @@ void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Text
         default:
             break;
     }
+    backGroundDisabledTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
-    backGroundDisabledTextureScaleChangedWithSize();
 }
 
 void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,TextureResType texType)
@@ -233,11 +234,11 @@ void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Text
         default:
             break;
     }
+    frontCrossDisabledTextureScaleChangedWithSize();
     updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_frontCrossDisabledRenderer);
-    frontCrossDisabledTextureScaleChangedWithSize();
 }
 
 void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)

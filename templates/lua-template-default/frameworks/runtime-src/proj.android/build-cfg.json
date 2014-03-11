@@ -1,0 +1,13 @@
+{
+    "ndk_module_path" :[
+        "../../js-bindings/cocos2d-x",
+        "../../js-bindings/cocos2d-x/cocos/",
+        "../../js-bindings/cocos2d-x/external",
+        "../../js-bindings/external"
+    ],
+    "copy_to_assets" :[
+        "../../../src",
+        "../../../res",
+        "../../js-bindings/bindings/script"
+    ]
+}
