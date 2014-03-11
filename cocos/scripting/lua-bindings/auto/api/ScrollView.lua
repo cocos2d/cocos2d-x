@@ -2,176 +2,197 @@
 --------------------------------
 -- @module ScrollView
 --------------------------------
--- @function [parent=#ScrollView] scrollToTop 
--- @param self
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] scrollToPercentHorizontal 
--- @param self
--- @param #float float
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] isInertiaScrollEnabled 
+-- @function [parent=#ScrollView] isClippingToBounds 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToPercentBothDirection 
+-- @function [parent=#ScrollView] setContainer 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#ScrollView] onTouchEnded 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ScrollView] setContentOffsetInDuration 
 -- @param self
 -- @param #point_table point
 -- @param #float float
+        
+--------------------------------
+-- @function [parent=#ScrollView] setZoomScaleInDuration 
+-- @param self
+-- @param #float float
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#ScrollView] setBounceable 
+-- @param self
 -- @param #bool bool
         
 --------------------------------
 -- @function [parent=#ScrollView] getDirection 
 -- @param self
--- @return SCROLLVIEW_DIR#SCROLLVIEW_DIR ret (return value: ccui.SCROLLVIEW_DIR)
+-- @return ScrollView::Direction#ScrollView::Direction ret (return value: cc.ScrollView::Direction)
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToBottomLeft 
+-- @function [parent=#ScrollView] getContainer 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#ScrollView] updateTweenAction 
 -- @param self
 -- @param #float float
--- @param #bool bool
+-- @param #string str
         
 --------------------------------
--- @function [parent=#ScrollView] getInnerContainer 
+-- @function [parent=#ScrollView] getZoomScale 
 -- @param self
--- @return Layout#Layout ret (return value: ccui.Layout)
+-- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#ScrollView] jumpToBottom 
+-- @function [parent=#ScrollView] updateInset 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#ScrollView] initWithViewSize 
+-- @param self
+-- @param #size_table size
+-- @param #cc.Node node
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] pause 
+-- @param self
+-- @param #cc.Ref ref
         
 --------------------------------
 -- @function [parent=#ScrollView] setDirection 
 -- @param self
--- @param #ccui.SCROLLVIEW_DIR scrollview_dir
+-- @param #cc.ScrollView::Direction direction
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToTopLeft 
--- @param self
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToTopRight 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToBottomLeft 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] setInnerContainerSize 
--- @param self
--- @param #size_table size
-        
---------------------------------
--- @function [parent=#ScrollView] getInnerContainerSize 
--- @param self
--- @return size_table#size_table ret (return value: size_table)
-        
---------------------------------
--- @function [parent=#ScrollView] isBounceEnabled 
+-- @function [parent=#ScrollView] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#ScrollView] jumpToPercentVertical 
--- @param self
--- @param #float float
-        
---------------------------------
--- @function [parent=#ScrollView] setInertiaScrollEnabled 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToTopLeft 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToPercentHorizontal 
--- @param self
--- @param #float float
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToBottomRight 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] setBounceEnabled 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToTop 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] scrollToLeft 
--- @param self
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToPercentBothDirection 
+-- @function [parent=#ScrollView] setContentOffset 
 -- @param self
 -- @param #point_table point
-        
---------------------------------
--- @function [parent=#ScrollView] scrollToPercentVertical 
--- @param self
--- @param #float float
--- @param #float float
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToBottom 
+-- @function [parent=#ScrollView] isDragging 
 -- @param self
--- @param #float float
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] isTouchEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] isBounceable 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] setTouchEnabled 
+-- @param self
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToBottomRight 
+-- @function [parent=#ScrollView] onTouchMoved 
 -- @param self
--- @param #float float
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ScrollView] getContentOffset 
+-- @param self
+-- @return point_table#point_table ret (return value: point_table)
+        
+--------------------------------
+-- @function [parent=#ScrollView] resume 
+-- @param self
+-- @param #cc.Ref ref
+        
+--------------------------------
+-- @function [parent=#ScrollView] setClippingToBounds 
+-- @param self
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] jumpToLeft 
+-- @function [parent=#ScrollView] setViewSize 
 -- @param self
+-- @param #size_table size
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToRight 
+-- @function [parent=#ScrollView] onTouchCancelled 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ScrollView] getViewSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#ScrollView] maxContainerOffset 
+-- @param self
+-- @return point_table#point_table ret (return value: point_table)
+        
+--------------------------------
+-- @function [parent=#ScrollView] onTouchBegan 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] isTouchMoved 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] isNodeVisible 
+-- @param self
+-- @param #cc.Node node
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] minContainerOffset 
+-- @param self
+-- @return point_table#point_table ret (return value: point_table)
+        
+--------------------------------
+-- overload function: setZoomScale(float, bool)
+--          
+-- overload function: setZoomScale(float)
+--          
+-- @function [parent=#ScrollView] setZoomScale
 -- @param self
 -- @param #float float
 -- @param #bool bool
-        
+
 --------------------------------
--- @function [parent=#ScrollView] jumpToRight 
+-- overload function: create()
+--          
+-- overload function: create(size_table, cc.Node)
+--          
+-- @function [parent=#ScrollView] create
 -- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] scrollToTopRight 
--- @param self
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] create 
--- @param self
--- @return ScrollView#ScrollView ret (return value: ccui.ScrollView)
-        
---------------------------------
--- @function [parent=#ScrollView] createInstance 
--- @param self
--- @return Ref#Ref ret (return value: cc.Ref)
-        
+-- @param #size_table size
+-- @param #cc.Node node
+-- @return ScrollView#ScrollView ret (retunr value: cc.ScrollView)
+
 --------------------------------
 -- @function [parent=#ScrollView] ScrollView 
 -- @param self
