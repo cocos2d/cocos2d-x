@@ -507,7 +507,7 @@ int LuaStack::reallocateScriptHandler(int nHandler)
 
 }
 
-int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray)
+int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,__Array& resultArray)
 {
     if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
     {
