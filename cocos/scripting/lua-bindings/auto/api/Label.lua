@@ -12,6 +12,11 @@
 -- @param #unsigned int int
         
 --------------------------------
+-- @function [parent=#Label] getFontSize 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @function [parent=#Label] getString 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -34,6 +39,11 @@
 -- @function [parent=#Label] setWidth 
 -- @param self
 -- @param #unsigned int int
+        
+--------------------------------
+-- @function [parent=#Label] setFontName 
+-- @param self
+-- @param #string str
         
 --------------------------------
 -- @function [parent=#Label] getMaxLineWidth 
@@ -61,6 +71,20 @@
 -- @param #string str
 -- @param #point_table point
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Label] getFontDefinition 
+-- @param self
+-- @return FontDefinition#FontDefinition ret (return value: cc.FontDefinition)
+        
+--------------------------------
+-- @function [parent=#Label] getFontName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Label] updateContent 
+-- @param self
         
 --------------------------------
 -- @function [parent=#Label] getStringLength 
@@ -99,6 +123,11 @@
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
+-- @function [parent=#Label] getDimensions 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- @function [parent=#Label] setMaxLineWidth 
 -- @param self
 -- @param #unsigned int int
@@ -107,7 +136,11 @@
 -- @function [parent=#Label] setVerticalAlignment 
 -- @param self
 -- @param #cc.TextVAlignment textvalignment
--- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Label] setFontSize 
+-- @param self
+-- @param #int int
         
 --------------------------------
 -- @function [parent=#Label] getVerticalAlignment 
@@ -139,18 +172,21 @@
 -- @function [parent=#Label] setHorizontalAlignment 
 -- @param self
 -- @param #cc.TextHAlignment texthalignment
--- @param #bool bool
         
 --------------------------------
--- overload function: setAlignment(cc.TextHAlignment, cc.TextVAlignment, bool)
+-- @function [parent=#Label] setFontDefinition 
+-- @param self
+-- @param #cc.FontDefinition fontdefinition
+        
+--------------------------------
+-- overload function: setAlignment(cc.TextHAlignment, cc.TextVAlignment)
 --          
--- overload function: setAlignment(cc.TextHAlignment, bool)
+-- overload function: setAlignment(cc.TextHAlignment)
 --          
 -- @function [parent=#Label] setAlignment
 -- @param self
 -- @param #cc.TextHAlignment texthalignment
 -- @param #cc.TextVAlignment textvalignment
--- @param #bool bool
 
 --------------------------------
 -- @function [parent=#Label] createWithBMFont 
@@ -163,10 +199,20 @@
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
--- @function [parent=#Label] create 
+-- overload function: create(string, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
+--          
+-- overload function: create()
+--          
+-- @function [parent=#Label] create
 -- @param self
--- @return Label#Label ret (return value: cc.Label)
-        
+-- @param #string str
+-- @param #string str
+-- @param #float float
+-- @param #size_table size
+-- @param #cc.TextHAlignment texthalignment
+-- @param #cc.TextVAlignment textvalignment
+-- @return Label#Label ret (retunr value: cc.Label)
+
 --------------------------------
 -- overload function: createWithCharMap(cc.Texture2D, int, int, int)
 --          
@@ -182,4 +228,11 @@
 -- @param #int int
 -- @return Label#Label ret (retunr value: cc.Label)
 
+--------------------------------
+-- @function [parent=#Label] createWithFontDefinition 
+-- @param self
+-- @param #string str
+-- @param #cc.FontDefinition fontdefinition
+-- @return Label#Label ret (return value: cc.Label)
+        
 return nil
