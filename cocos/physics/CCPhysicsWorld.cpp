@@ -1066,7 +1066,10 @@ PhysicsDebugDraw::~PhysicsDebugDraw()
 
 bool PhysicsDebugDraw::attachToScene()
 {
-    _drawNode = DrawNode::create();
+    if (_drawNode == nullptr)
+    {
+        _drawNode = DrawNode::create();
+    }
 
     if (_drawNode == nullptr)
     {
