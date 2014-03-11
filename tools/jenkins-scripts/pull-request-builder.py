@@ -100,19 +100,19 @@ def main():
     os.system("cd " + os.environ['WORKSPACE']);
     os.mkdir("android_build_objs")
     #add symbol link
-    # PROJECTS=["test-cpp",
-    #         "test-javascript","test-lua"]
-    # print platform.system()
-    # if(platform.system() == 'Darwin'):
-    #     for item in PROJECTS:
-    #       cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"  
-    #       os.system(cmd)
-    # elif(platform.system() == 'Windows'):
-    #     for item in PROJECTS:
-    #       p = item.replace("/", os.sep)
-    #       cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
-    #       print cmd
-    #       os.system(cmd)
+    PROJECTS=["cpp-empty-test", "cpp-tests"]
+
+    print platform.system()
+    if(platform.system() == 'Darwin'):
+        for item in PROJECTS:
+          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"  
+          os.system(cmd)
+    elif(platform.system() == 'Windows'):
+        for item in PROJECTS:
+          p = item.replace("/", os.sep)
+          cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
+          print cmd
+          os.system(cmd)
  
     #build
     #TODO: add android-linux build
@@ -120,7 +120,7 @@ def main():
     node_name = os.environ['NODE_NAME']
     if(branch == 'develop'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
-        ret = os.system("python build/android-build.py -n -j10 testcpp")
+        ret = os.system("python build/android-build.py -n -j10 cpp")
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
