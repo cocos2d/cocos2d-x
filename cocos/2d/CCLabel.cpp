@@ -1116,12 +1116,17 @@ void Label::setColor(const Color3B& color)
 
 void Label::updateColor()
 {
+    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+    if (_textSprite)
+    {
+        _textSprite->setColor(_displayedColor);
+        _textSprite->setOpacity(_displayedOpacity);
+    }
+
     if (nullptr == _textureAtlas)
     {
         return;
     }
-
-    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
     // special opacity for premultiplied textures
     if (_isOpacityModifyRGB)
@@ -1163,4 +1168,5 @@ const Size& Label::getContentSize() const
     }
     return Node::getContentSize();
 }
+
 NS_CC_END
