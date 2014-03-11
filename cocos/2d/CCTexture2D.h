@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <map>
 #include <map>
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "CCGeometry.h"
 #include "ccTypes.h"
 #ifdef EMSCRIPTEN
@@ -60,7 +60,7 @@ class GLProgram;
 * Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
 * Be aware that the content of the generated textures will be upside-down!
 */
-class CC_DLL Texture2D : public Object
+class CC_DLL Texture2D : public Ref
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN

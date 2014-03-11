@@ -63,14 +63,14 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const std::string& fontFileName, int
     return tempAtlas;
 }
 
-FontAtlas * FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName)
+FontAtlas * FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const Point& imageOffset /* = Point::ZERO */)
 {
     std::string atlasName = generateFontName(fontFileName, 0, GlyphCollection::CUSTOM,false);
     FontAtlas *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
     {
-        Font *font = FontFNT::create(fontFileName);
+        Font *font = FontFNT::create(fontFileName,imageOffset);
 
         if(font)
         {

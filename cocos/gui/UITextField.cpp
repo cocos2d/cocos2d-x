@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 UICCTextField::UICCTextField()
 : _maxLengthEnabled(false)
@@ -513,7 +513,7 @@ void TextField::deleteBackwardEvent()
     }
 }
 
-void TextField::addEventListenerTextField(Object *target, SEL_TextFieldEvent selecor)
+void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)
 {
     _textFieldEventListener = target;
     _textFieldEventSelector = selecor;

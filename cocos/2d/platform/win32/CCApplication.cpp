@@ -94,13 +94,13 @@ int Application::run()
         }
     }
 
-    /* Only work on Desktop
-    *  Director::mainLoop is really one frame logic
-    *  when we want to close the window, we should call Director::end();
-    *  then call Director::mainLoop to do release of internal resources
-    */
-    director->end();
-    director->mainLoop();
+    // Director should still do a cleanup if the window was closed manually.
+    if (glview->isOpenGLReady())
+    {
+        director->end();
+        director->mainLoop();
+        director = nullptr;
+    }
     return true;
 }
 

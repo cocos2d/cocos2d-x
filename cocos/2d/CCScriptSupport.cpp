@@ -24,6 +24,9 @@
  ****************************************************************************/
 
 #include "CCScriptSupport.h"
+
+#if CC_ENABLE_SCRIPT_BINDING
+
 #include "CCScheduler.h"
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
@@ -50,7 +53,12 @@ ScriptHandlerEntry* ScriptHandlerEntry::create(int handler)
 
 ScriptHandlerEntry::~ScriptHandlerEntry(void)
 {
-    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+    if (_handler != 0 )
+    {
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
+        LUALOG("[LUA] Remove event handler: %d", _handler);
+        _handler = 0;
+    }
 }
 
 // #pragma mark -
@@ -66,10 +74,8 @@ SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int handler, fl
 
 bool SchedulerScriptHandlerEntry::init(float interval, bool paused)
 {
-    _timer = new Timer();
+    _timer = new TimerScriptHandler();
     _timer->initWithScriptHandler(_handler, interval);
-    _timer->autorelease();
-    _timer->retain();
     _paused = paused;
     LUALOG("[LUA] ADD script schedule: %d, entryID: %d", _handler, _entryId);
     return true;
@@ -98,8 +104,6 @@ TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int handler,
 
 TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
 {
-    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
-    LUALOG("[LUA] Remove touch event handler: %d", _handler);
 }
 
 bool TouchScriptHandlerEntry::init(bool isMultiTouches, int priority, bool swallowsTouches)
@@ -159,3 +163,5 @@ void ScriptEngineManager::destroyInstance()
 }
 
 NS_CC_END
+
+#endif // #if CC_ENABLE_SCRIPT_BINDING

@@ -948,7 +948,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         }
         png_read_image(png_ptr, row_pointers);
 
-        png_read_end(png_ptr, NULL);
+        png_read_end(png_ptr, nullptr);
 
         _preMulti = false;
 
@@ -1094,7 +1094,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
             tiffMapProc,
             tiffUnmapProc);
 
-        CC_BREAK_IF(NULL == tif);
+        CC_BREAK_IF(nullptr == tif);
 
         uint32 w = 0, h = 0;
         uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
@@ -1116,7 +1116,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
-        if (raster != NULL) 
+        if (raster != nullptr) 
         {
            if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
            {
@@ -1584,11 +1584,11 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
     
     _width = header->ddsd.width;
     _height = header->ddsd.height;
-    _numberOfMipmaps = header->ddsd.DUMMYUNIONNAMEN2.mipMapCount;
+    _numberOfMipmaps = MAX(1, header->ddsd.DUMMYUNIONNAMEN2.mipMapCount); //if dds header reports 0 mipmaps, set to 1 to force correct software decoding (if needed).
     _dataLen = 0;
     int blockSize = (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC) ? 8 : 16;
     
-    /* caculate the dataLen */
+    /* calculate the dataLen */
     
     int width = _width;
     int height = _height;
@@ -1614,6 +1614,26 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     }
     
+    /* if hardware supports s3tc, set pixelformat before loading mipmaps, to support non-mipmapped textures  */
+    if (Configuration::getInstance()->supportsS3TC())
+    {   //decode texture throught hardware
+        
+        if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
+        }
+        else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
+        }
+        else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
+        }
+    } else { //will software decode
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
+    }
+    
     /* load the mipmaps */
     
     int encodeOffset = 0;
@@ -1629,20 +1649,6 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
                 
         if (Configuration::getInstance()->supportsS3TC())
         {   //decode texture throught hardware
-            
-            if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
-            {
-                _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
-            }
-            else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
-            {
-                _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
-            }
-            else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
-            {
-                _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
-            }
-
             _mipmaps[i].address = (unsigned char *)_data + encodeOffset;
             _mipmaps[i].len = size;
         }
@@ -1653,7 +1659,6 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 
             int bytePerPixel = 4;
             unsigned int stride = width * bytePerPixel;
-            _renderFormat = Texture2D::PixelFormat::RGBA8888;
 
             std::vector<unsigned char> decodeImageData(stride * height);
             if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
@@ -1851,7 +1856,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
         {
             free(_data);
-            _data = NULL;
+            _data = nullptr;
             break;
         }
         
@@ -1941,21 +1946,21 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         png_bytep *row_pointers;
 
         fp = fopen(filePath.c_str(), "wb");
-        CC_BREAK_IF(NULL == fp);
+        CC_BREAK_IF(nullptr == fp);
 
-        png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
 
-        if (NULL == png_ptr)
+        if (nullptr == png_ptr)
         {
             fclose(fp);
             break;
         }
 
         info_ptr = png_create_info_struct(png_ptr);
-        if (NULL == info_ptr)
+        if (nullptr == info_ptr)
         {
             fclose(fp);
-            png_destroy_write_struct(&png_ptr, NULL);
+            png_destroy_write_struct(&png_ptr, nullptr);
             break;
         }
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
@@ -1987,14 +1992,14 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         png_set_packing(png_ptr);
 
         row_pointers = (png_bytep *)malloc(_height * sizeof(png_bytep));
-        if(row_pointers == NULL)
+        if(row_pointers == nullptr)
         {
             fclose(fp);
             png_destroy_write_struct(&png_ptr, &info_ptr);
             break;
         }
 
-        if (hasAlpha())
+        if (!hasAlpha())
         {
             for (int i = 0; i < (int)_height; i++)
             {
@@ -2004,14 +2009,14 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
             png_write_image(png_ptr, row_pointers);
 
             free(row_pointers);
-            row_pointers = NULL;
+            row_pointers = nullptr;
         }
         else
         {
             if (isToRGB)
             {
                 unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char*)));
-                if (NULL == pTempData)
+                if (nullptr == pTempData)
                 {
                     fclose(fp);
                     png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -2036,7 +2041,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
                 png_write_image(png_ptr, row_pointers);
 
                 free(row_pointers);
-                row_pointers = NULL;
+                row_pointers = nullptr;
 
                 if (pTempData != nullptr)
                 {
@@ -2053,14 +2058,14 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
                 png_write_image(png_ptr, row_pointers);
 
                 free(row_pointers);
-                row_pointers = NULL;
+                row_pointers = nullptr;
             }
         }
 
         png_write_end(png_ptr, info_ptr);
 
         png_free(png_ptr, palette);
-        palette = NULL;
+        palette = nullptr;
 
         png_destroy_write_struct(&png_ptr, &info_ptr);
 
@@ -2085,7 +2090,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == NULL);
+        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == nullptr);
         
         jpeg_stdio_dest(&cinfo, outfile);
 
@@ -2103,7 +2108,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         if (hasAlpha())
         {
             unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
-            if (NULL == pTempData)
+            if (nullptr == pTempData)
             {
                 jpeg_finish_compress(&cinfo);
                 jpeg_destroy_compress(&cinfo);

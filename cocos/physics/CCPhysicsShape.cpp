@@ -49,7 +49,7 @@ PhysicsShape::PhysicsShape()
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
 , _collisionBitmask(UINT_MAX)
-, _contactTestBitmask(UINT_MAX)
+, _contactTestBitmask(0)
 , _group(0)
 {
     

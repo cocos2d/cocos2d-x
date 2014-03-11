@@ -1,5 +1,4 @@
 set(CS_SRC
-  CCActionEaseEx.cpp
   CCActionFrame.cpp
   CCActionFrameEasing.cpp
   CCActionManagerEx.cpp
@@ -22,7 +21,6 @@ set(CS_SRC
   CCDataReaderHelper.cpp
   CCSpriteFrameCacheHelper.cpp
   CCTransformHelp.cpp
-  CCTweenFunction.cpp
   CCUtilMath.cpp
   CCComAttribute.cpp
   CCComAudio.cpp

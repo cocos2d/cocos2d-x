@@ -40,18 +40,22 @@ EditBox::EditBox(void)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
+#if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
+#endif
 {
 }
 
 EditBox::~EditBox(void)
 {
     CC_SAFE_DELETE(_editBoxImpl);
+#if CC_ENABLE_SCRIPT_BINDING
     unregisterScriptEditBoxHandler();
+#endif
 }
 
 
-void EditBox::touchDownAction(Object *sender, Control::EventType controlEvent)
+void EditBox::touchDownAction(Ref *sender, Control::EventType controlEvent)
 {
     _editBoxImpl->openKeyboard();
 }
@@ -390,6 +394,7 @@ void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& info)
 	
 }
 
+#if CC_ENABLE_SCRIPT_BINDING
 void EditBox::registerScriptEditBoxHandler(int handler)
 {
     unregisterScriptEditBoxHandler();
@@ -404,6 +409,6 @@ void EditBox::unregisterScriptEditBoxHandler(void)
         _scriptEditBoxHandler = 0;
     }
 }
-
+#endif
 
 NS_CC_EXT_END

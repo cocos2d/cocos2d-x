@@ -30,7 +30,7 @@
 #ifndef __CCINVOCATION_H__
 #define __CCINVOCATION_H__
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "../../ExtensionMacros.h"
 #include "CCControl.h"
 
@@ -45,28 +45,28 @@ NS_CC_EXT_BEGIN
 
 #define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::Control::Handler>(&_SELECTOR)
 
-class Invocation : public Object
+class Invocation : public Ref
 {
 public:
     /**
      * @js NA
      * @lua NA
      */
-    static Invocation* create(Object* target, Control::Handler action, Control::EventType controlEvent);
+    static Invocation* create(Ref* target, Control::Handler action, Control::EventType controlEvent);
     /**
      * @js NA
      * @lua NA
      */
-    Invocation(Object* target, Control::Handler action, Control::EventType controlEvent);
+    Invocation(Ref* target, Control::Handler action, Control::EventType controlEvent);
     /**
      * @js NA
      * @lua NA
      */
-    void invoke(Object* sender);
+    void invoke(Ref* sender);
 
 protected:
     CC_SYNTHESIZE_READONLY(Control::Handler, _action, Action);
-    CC_SYNTHESIZE_READONLY(Object*, _target, Target);
+    CC_SYNTHESIZE_READONLY(Ref*, _target, Target);
     CC_SYNTHESIZE_READONLY(Control::EventType, _controlEvent, ControlEvent);
 };
 

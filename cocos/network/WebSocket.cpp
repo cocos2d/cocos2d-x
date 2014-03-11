@@ -56,7 +56,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public Object
+class WsThreadHelper : public Ref
 {
 public:
     WsThreadHelper();
@@ -122,7 +122,7 @@ WsThreadHelper::WsThreadHelper()
     _UIWsMessageQueue = new std::list<WsMessage*>();
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
     
-    Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::getInstance()->getScheduler()->scheduleUpdate(this, 0, false);
 }
 
 WsThreadHelper::~WsThreadHelper()
@@ -160,7 +160,6 @@ void WsThreadHelper::wsThreadEntryFunc()
         }
     }
     
-    _ws->onSubThreadEnded();
 }
 
 void WsThreadHelper::sendMessageToUIThread(WsMessage *msg)
@@ -442,6 +441,14 @@ void WebSocket::onSubThreadStarted()
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                              _path.c_str(), _host.c_str(), _host.c_str(),
                                              name.c_str(), -1);
+                                             
+        if(NULL == _wsInstance) {
+            WsMessage* msg = new WsMessage();
+            msg->what = WS_MSG_TO_UITHREAD_ERROR;
+            _readyState = State::CLOSING;
+            _wsHelper->sendMessageToUIThread(msg);
+        }
+
 	}
 }
 
@@ -692,6 +699,8 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
             break;
         case WS_MSG_TO_UITHREAD_CLOSE:
             {
+                //Waiting for the subThread safety exit
+                _wsHelper->joinSubThread();
                 _delegate->onClose(this);
             }
             break;

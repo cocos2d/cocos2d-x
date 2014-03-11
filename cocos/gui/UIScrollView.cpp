@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
@@ -1584,7 +1584,7 @@ void ScrollView::bounceRightEvent()
     }
 }
 
-void ScrollView::addEventListenerScrollView(Object *target, SEL_ScrollViewEvent selector)
+void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent selector)
 {
     _scrollViewEventListener = target;
     _scrollViewEventSelector = selector;

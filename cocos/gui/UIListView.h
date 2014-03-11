@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui{
+namespace ui{
 
 typedef enum
 {
@@ -48,7 +48,7 @@ typedef enum
     LISTVIEW_ONSELECTEDITEM
 }ListViewEventType;
 
-typedef void (Object::*SEL_ListViewEvent)(Object*,ListViewEventType);
+typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
 class ListView : public ScrollView
@@ -154,7 +154,7 @@ public:
     
     ssize_t getCurSelectedIndex() const;
     
-    void addEventListenerListView(Object* target, SEL_ListViewEvent selector);
+    void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
     
     /**
      * Changes scroll direction of scrollview.
@@ -198,7 +198,7 @@ protected:
     Vector<Widget*> _items;
     ListViewGravity _gravity;
     float _itemsMargin;
-    Object*       _listViewEventListener;
+    Ref*       _listViewEventListener;
     SEL_ListViewEvent    _listViewEventSelector;
     ssize_t _curSelectedIndex;
     bool _refreshViewDirty;

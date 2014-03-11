@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class PointObject : Object
+class PointObject : public Ref
 {
 public:
     static PointObject * create(Point ratio, Point offset)
@@ -98,7 +98,7 @@ void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point&
     CCASSERT( child != nullptr, "Argument must be non-nil");
     PointObject *obj = PointObject::create(ratio, offset);
     obj->setChild(child);
-    ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);
+    ccArrayAppendObjectWithResize(_parallaxArray, (Ref*)obj);
 
     Point pos = this->absolutePosition();
     pos.x = -pos.x + pos.x * ratio.x + offset.x;
@@ -107,12 +107,13 @@ void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point&
 
     Node::addChild(child, z, child->getTag());
 }
+
 void ParallaxNode::removeChild(Node* child, bool cleanup)
 {
     for( int i=0;i < _parallaxArray->num;i++)
     {
         PointObject *point = (PointObject*)_parallaxArray->arr[i];
-        if( point->getChild()->isEqual(child)) 
+        if (point->getChild() == child)
         {
             ccArrayRemoveObjectAtIndex(_parallaxArray, i, true);
             break;
@@ -120,11 +121,13 @@ void ParallaxNode::removeChild(Node* child, bool cleanup)
     }
     Node::removeChild(child, cleanup);
 }
+
 void ParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
 {
     ccArrayRemoveAllObjects(_parallaxArray);
     Node::removeAllChildrenWithCleanup(cleanup);
 }
+
 Point ParallaxNode::absolutePosition()
 {
     Point ret = _position;

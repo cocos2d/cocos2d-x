@@ -95,22 +95,22 @@ public:
         removeCustomFont();
     }
 
-    wchar_t * utf8ToUtf16(std::string nString)
+    wchar_t * utf8ToUtf16(const std::string& str)
     {
         wchar_t * pwszBuffer = NULL;
         do 
         {
-            if (nString.size() < 0)
+            if (str.empty())
             {
                 break;
             }
             // utf-8 to utf-16
-            int nLen = nString.size();
+            int nLen = str.size();
             int nBufLen  = nLen + 1;			
             pwszBuffer = new wchar_t[nBufLen];
             CC_BREAK_IF(! pwszBuffer);
             memset(pwszBuffer,0,nBufLen);
-            nLen = MultiByteToWideChar(CP_UTF8, 0, nString.c_str(), nLen, pwszBuffer, nBufLen);		
+            nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);		
             pwszBuffer[nLen] = '\0';
         } while (0);	
         return pwszBuffer;
@@ -412,7 +412,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
         CC_BREAK_IF(! dc.drawText(text, size, align));
 
         int dataLen = size.cx * size.cy * 4;
-        unsigned char* dataBuf = new unsigned char[dataLen];
+        unsigned char* dataBuf = (unsigned char*)malloc(sizeof(unsigned char) * dataLen);
         CC_BREAK_IF(! dataBuf);
 
         struct

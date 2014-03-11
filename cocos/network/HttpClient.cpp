@@ -214,7 +214,9 @@ void HttpClient::networkThread()
         s_responseQueue->pushBack(response);
         s_responseQueueMutex.unlock();
         
-        scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
+        if (nullptr != s_pHttpClient) {
+            scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
+        }
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
@@ -479,7 +481,10 @@ void HttpClient::send(HttpRequest* request)
 void HttpClient::dispatchResponseCallbacks()
 {
     // log("CCHttpClient::dispatchResponseCallbacks is running");
-    
+    //occurs when cocos thread fires but the network thread has already quited
+    if (nullptr == s_responseQueue) {
+        return;
+    }
     HttpResponse* response = nullptr;
     
     s_responseQueueMutex.lock();
@@ -495,7 +500,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
-        Object *pTarget = request->getTarget();
+        Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
         if (pTarget && pSelector) 

@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 enum SCROLLVIEW_DIR
 {
@@ -53,7 +53,7 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
-typedef void (Object::*SEL_ScrollViewEvent)(Object*, ScrollviewEventType);
+typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
@@ -233,7 +233,7 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListenerScrollView(Object* target, SEL_ScrollViewEvent selector);
+    void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
         
     virtual void addChild(Node * child) override;
     /**
@@ -402,7 +402,7 @@ protected:
 
 
     
-    Object* _scrollViewEventListener;
+    Ref* _scrollViewEventListener;
     SEL_ScrollViewEvent _scrollViewEventSelector;
 };
 
