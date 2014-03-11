@@ -1,4 +1,4 @@
-cocos2d-x-3.0rc0 March.8 2014
+cocos2d-x-3.0final March.? 2014
 [All]
      [NEW]          Action: RotateBy supports 3D rotations
      [NEW]          Bindings: Using python to automatically generate script bindings
@@ -15,6 +15,7 @@ cocos2d-x-3.0rc0 March.8 2014
      [NEW]          GLProgram: addAttribute() -> bindAttributeLocation()
      [NEW]          Label: can custom shadow and outline size
      [NEW]          Node: Added set/get Position3D() and set/get Rotation3D()
+     [NEW]          Node: Added string tag
      [NEW]          Node: Calculates rotation X and Y correctly.
      [NEW]          Node: set/get VertexZ() -> set/get PositionZ()
      [NEW]          Node: setRotationX() -> setRotationSkewX()
@@ -51,6 +52,7 @@ cocos2d-x-3.0rc0 March.8 2014
      [FIX]          Object: Object -> Ref, and remove unneeded functions
      [FIX]          Other: Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo
      [FIX]          Physics integartion: Improves physical performance
+     [FIX]          Physics integartion: PhysicsContact::_contactData may be double freed.
      [FIX]          ParticleSystemQuad: setTotalParticles() can not set a value larger than initialized value
      [FIX]          Renderer: Expand textureID bit from 18bits to 32bits. Resolves probably crash on Linux / Android
      [FIX]          RenderTexture: save screen with RenderTexture got unexpected result

@@ -14,6 +14,12 @@ def main():
     #parse to json obj
     payload = json.loads(payload_str)
 
+    issue = payload['issue']
+    #get pull number
+    pr_num = issue['number']
+    print 'pr_num:' + str(pr_num)
+    payload_forword = {"number":pr_num}
+    
     comment = payload['comment']
     #get comment body
     comment_body = comment['body']
@@ -23,12 +29,6 @@ def main():
     if result is None:
         print 'skip build for pull request #' + str(pr_num)
         return(0)
-
-    issue = payload['issue']
-    #get pull number
-    pr_num = issue['number']
-    print 'pr_num:' + str(pr_num)
-    payload_forword = {"number":pr_num}
     
     #build for pull request action 'open' and 'synchronize', skip 'close'
     action = issue['state']

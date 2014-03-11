@@ -6232,6 +6232,53 @@ int lua_cocos2dx_Node_isIgnoreAnchorPointForPosition(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Node_getChildByName(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getChildByName'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::Node* ret = cobj->getChildByName(arg0);
+        object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getChildByName",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getChildByName'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Node_updateDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
@@ -7329,6 +7376,50 @@ int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setParent'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Node_getName(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getName'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        std::string& ret = cobj->getName();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getName",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getName'.",&tolua_err);
 #endif
 
     return 0;
@@ -8799,6 +8890,52 @@ int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getActionByTag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Node_setName(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setName'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->setName(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setName",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setName'.",&tolua_err);
 #endif
 
     return 0;
@@ -11202,6 +11339,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"pause",lua_cocos2dx_Node_pause);
         tolua_function(tolua_S,"convertToWorldSpaceAR",lua_cocos2dx_Node_convertToWorldSpaceAR);
         tolua_function(tolua_S,"isIgnoreAnchorPointForPosition",lua_cocos2dx_Node_isIgnoreAnchorPointForPosition);
+        tolua_function(tolua_S,"getChildByName",lua_cocos2dx_Node_getChildByName);
         tolua_function(tolua_S,"updateDisplayedOpacity",lua_cocos2dx_Node_updateDisplayedOpacity);
         tolua_function(tolua_S,"setRotation",lua_cocos2dx_Node_setRotation);
         tolua_function(tolua_S,"setScaleZ",lua_cocos2dx_Node_setScaleZ);
@@ -11226,6 +11364,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getNodeToParentAffineTransform",lua_cocos2dx_Node_getNodeToParentAffineTransform);
         tolua_function(tolua_S,"isCascadeOpacityEnabled",lua_cocos2dx_Node_isCascadeOpacityEnabled);
         tolua_function(tolua_S,"setParent",lua_cocos2dx_Node_setParent);
+        tolua_function(tolua_S,"getName",lua_cocos2dx_Node_getName);
         tolua_function(tolua_S,"getRotation3D",lua_cocos2dx_Node_getRotation3D);
         tolua_function(tolua_S,"getNodeToParentTransform",lua_cocos2dx_Node_getNodeToParentTransform);
         tolua_function(tolua_S,"convertTouchToNodeSpaceAR",lua_cocos2dx_Node_convertTouchToNodeSpaceAR);
@@ -11258,6 +11397,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getSkewY",lua_cocos2dx_Node_getSkewY);
         tolua_function(tolua_S,"getDisplayedColor",lua_cocos2dx_Node_getDisplayedColor);
         tolua_function(tolua_S,"getActionByTag",lua_cocos2dx_Node_getActionByTag);
+        tolua_function(tolua_S,"setName",lua_cocos2dx_Node_setName);
         tolua_function(tolua_S,"setAdditionalTransform",lua_cocos2dx_Node_setAdditionalTransform);
         tolua_function(tolua_S,"getDisplayedOpacity",lua_cocos2dx_Node_getDisplayedOpacity);
         tolua_function(tolua_S,"getLocalZOrder",lua_cocos2dx_Node_getLocalZOrder);
