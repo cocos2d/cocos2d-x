@@ -12,7 +12,5 @@ int main(int argc, char **argv)
 {
     // create the application instance
     AppDelegate app;
-    EGLView eglView;
-    eglView.init("HelloLua",900,640);
     return Application::getInstance()->run();
 }
