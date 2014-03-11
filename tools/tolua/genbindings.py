@@ -106,7 +106,7 @@ def main():
     if platform == 'win32':
         config.set('DEFAULT', 'extra_flags', '-D__WCHAR_MAX__=0x7fffffff -U__MINGW32__')
 
-    conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini')) 
+    conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini'))
 
     print 'generating userconf.ini...'
     with open(conf_ini_file, 'w') as configfile:
@@ -128,7 +128,7 @@ def main():
 
         cmd_args = {'cocos2dx.ini' : ('cocos2d-x', 'lua_cocos2dx_auto'), \
                     'cocos2dx_extension.ini' : ('cocos2dx_extension', 'lua_cocos2dx_extension_auto'), \
-                    'cocos2dx_gui.ini' : ('cocos2dx_gui', 'lua_cocos2dx_gui_auto'), \
+                    'cocos2dx_ui.ini' : ('cocos2dx_ui', 'lua_cocos2dx_ui_auto'), \
                     'cocos2dx_studio.ini' : ('cocos2dx_studio', 'lua_cocos2dx_studio_auto'), \
                     'cocos2dx_spine.ini' : ('cocos2dx_spine', 'lua_cocos2dx_spine_auto'), \
                     'cocos2dx_physics.ini' : ('cocos2dx_physics', 'lua_cocos2dx_physics_auto'), \
@@ -158,7 +158,7 @@ def main():
             sys.exit(1)
         else:
             raise
-    
+
 
 # -------------- main --------------
 if __name__ == '__main__':
