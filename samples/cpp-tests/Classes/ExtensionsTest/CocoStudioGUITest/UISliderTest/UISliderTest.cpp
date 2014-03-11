@@ -42,9 +42,9 @@ bool UISliderTest::init()
         // Create the slider
         Slider* slider = Slider::create();
         slider->setTouchEnabled(true);
-        slider->loadBarTexture("cocosgui/sliderTrack.png");
-        slider->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
-        slider->loadProgressBarTexture("cocosgui/sliderProgress.png");
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
         slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest::sliderEvent));
         _uiLayer->addChild(slider);
@@ -55,9 +55,9 @@ bool UISliderTest::init()
 //        sliderAllow->setMinAllowPercent(20);
 //        sliderAllow->setMaxAllowPercent(80);
         sliderAllow->setTouchEnabled(true);
-        sliderAllow->loadBarTexture("cocosgui/sliderTrack.png");
-        sliderAllow->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
-        sliderAllow->loadProgressBarTexture("cocosgui/sliderProgress.png");
+        sliderAllow->loadBarTexture("cocosui/sliderTrack.png");
+        sliderAllow->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        sliderAllow->loadProgressBarTexture("cocosui/sliderProgress.png");
         sliderAllow->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - sliderAllow->getSize().height * 2.0f));
         sliderAllow->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest::sliderEvent));
         _uiLayer->addChild(sliderAllow);
@@ -117,9 +117,9 @@ bool UISliderTest_Scale9::init()
         // Create the slider
         Slider* slider = Slider::create();
         slider->setTouchEnabled(true);
-        slider->loadBarTexture("cocosgui/sliderTrack2.png");
-        slider->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
-        slider->loadProgressBarTexture("cocosgui/slider_bar_active_9patch.png");
+        slider->loadBarTexture("cocosui/sliderTrack2.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/slider_bar_active_9patch.png");
         slider->setScale9Enabled(true);
         slider->setCapInsets(Rect(0, 0, 0, 0));
         slider->setSize(Size(250.0f, 19));
@@ -133,9 +133,9 @@ bool UISliderTest_Scale9::init()
 //        sliderAllow->setMinAllowPercent(20);
 //        sliderAllow->setMaxAllowPercent(80);
         sliderAllow->setTouchEnabled(true);
-        sliderAllow->loadBarTexture("cocosgui/sliderTrack2.png");
-        sliderAllow->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
-        sliderAllow->loadProgressBarTexture("cocosgui/slider_bar_active_9patch.png");
+        sliderAllow->loadBarTexture("cocosui/sliderTrack2.png");
+        sliderAllow->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        sliderAllow->loadProgressBarTexture("cocosui/slider_bar_active_9patch.png");
         sliderAllow->setScale9Enabled(true);
         sliderAllow->setCapInsets(Rect(0, 0, 0, 0));
         sliderAllow->setSize(Size(250.0f, 10.0f / Director::getInstance()->getContentScaleFactor()));

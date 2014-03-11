@@ -42,7 +42,7 @@ bool UIButtonTest::init()
         // Create the button
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));        
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         _uiLayer->addChild(button);        
@@ -119,7 +119,7 @@ bool UIButtonTest_Scale9::init()
         button->setTouchEnabled(true);
         // open scale9 render
         button->setScale9Enabled(true);
-        button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setSize(Size(150, button->getContentSize().height * 1.5f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
@@ -194,7 +194,7 @@ bool UIButtonTest_PressedAction::init()
         Button* button = Button::create();
         button->setTouchEnabled(true);
         button->setPressedActionEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));        
         _uiLayer->addChild(button);
@@ -267,7 +267,7 @@ bool UIButtonTest_Title::init()
         // Create the button with title
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
+        button->loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "");
         button->setTitleText("Title Button");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Title::touchEvent));

@@ -44,20 +44,20 @@ bool UILayoutTest::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(button->getSize().width / 2.0f, layout->getSize().height - button->getSize().height / 2.0f));
         layout->addChild(button);
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         button_scale9->setPosition(Point(layout->getSize().width - button_scale9->getSize().width / 2.0f, button_scale9->getSize().height / 2.0f));
@@ -112,20 +112,20 @@ bool UILayoutTest_Color::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(button->getSize().width / 2.0f, layout->getSize().height - button->getSize().height / 2.0f));
         layout->addChild(button);
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         button_scale9->setPosition(Point(layout->getSize().width - button_scale9->getSize().width / 2.0f, button_scale9->getSize().height / 2.0f));
@@ -179,20 +179,20 @@ bool UILayoutTest_Gradient::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(button->getSize().width / 2.0f, layout->getSize().height - button->getSize().height / 2.0f));
         layout->addChild(button);
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         button_scale9->setPosition(Point(layout->getSize().width - button_scale9->getSize().width / 2.0f, button_scale9->getSize().height / 2.0f));
@@ -235,7 +235,7 @@ bool UILayoutTest_BackGroundImage::init()
         // Create the layout with background image
         Layout* layout = Layout::create();
         layout->setClippingEnabled(true);
-        layout->setBackGroundImage("cocosgui/Hello.png");
+        layout->setBackGroundImage("cocosui/Hello.png");
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
         layout->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -246,20 +246,20 @@ bool UILayoutTest_BackGroundImage::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(button->getSize().width / 2.0f, layout->getSize().height - button->getSize().height / 2.0f));
         layout->addChild(button);
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         button_scale9->setPosition(Point(layout->getSize().width - button_scale9->getSize().width / 2.0f, button_scale9->getSize().height / 2.0f));
@@ -302,7 +302,7 @@ bool UILayoutTest_BackGroundImage_Scale9::init()
         // Create the layout with background image
         Layout* layout = Layout::create();
         layout->setBackGroundImageScale9Enabled(true);
-        layout->setBackGroundImage("cocosgui/green_edit.png");
+        layout->setBackGroundImage("cocosui/green_edit.png");
         layout->setSize(Size(280, 150));
         Size backgroundSize = background->getContentSize();
         layout->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -313,20 +313,20 @@ bool UILayoutTest_BackGroundImage_Scale9::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(button->getSize().width / 2.0f, layout->getSize().height - button->getSize().height / 2.0f));
         layout->addChild(button);
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
         layout->addChild(titleButton);
         
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         button_scale9->setPosition(Point(layout->getSize().width - button_scale9->getSize().width / 2.0f, button_scale9->getSize().height / 2.0f));
@@ -380,7 +380,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button);
         
         LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
@@ -391,7 +391,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         layout->addChild(titleButton);
         
@@ -403,7 +403,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         layout->addChild(button_scale9);
@@ -465,7 +465,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button);
         
         LinearLayoutParameter* lp1 = LinearLayoutParameter::create();
@@ -476,7 +476,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         layout->addChild(titleButton);
         
@@ -488,7 +488,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         layout->addChild(button_scale9);
@@ -552,7 +552,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // top left
         Button* button_TopLeft = Button::create();
         button_TopLeft->setTouchEnabled(true);
-        button_TopLeft->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_TopLeft->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_TopLeft);
         
         RelativeLayoutParameter* rp_TopLeft = RelativeLayoutParameter::create();
@@ -563,7 +563,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // top center horizontal
         Button* button_TopCenter = Button::create();
         button_TopCenter->setTouchEnabled(true);
-        button_TopCenter->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_TopCenter->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_TopCenter);
         
         RelativeLayoutParameter* rp_TopCenter = RelativeLayoutParameter::create();
@@ -574,7 +574,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // top right
         Button* button_TopRight = Button::create();
         button_TopRight->setTouchEnabled(true);
-        button_TopRight->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_TopRight->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_TopRight);
         
         RelativeLayoutParameter* rp_TopRight = RelativeLayoutParameter::create();
@@ -585,7 +585,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // left center
         Button* button_LeftCenter = Button::create();
         button_LeftCenter->setTouchEnabled(true);
-        button_LeftCenter->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_LeftCenter->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_LeftCenter);
         
         RelativeLayoutParameter* rp_LeftCenter = RelativeLayoutParameter::create();
@@ -596,7 +596,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // center
         Button* buttonCenter = Button::create();
         buttonCenter->setTouchEnabled(true);
-        buttonCenter->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        buttonCenter->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(buttonCenter);
         
         RelativeLayoutParameter* rpCenter = RelativeLayoutParameter::create();
@@ -607,7 +607,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // right center
         Button* button_RightCenter = Button::create();
         button_RightCenter->setTouchEnabled(true);
-        button_RightCenter->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_RightCenter->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_RightCenter);
         
         RelativeLayoutParameter* rp_RightCenter = RelativeLayoutParameter::create();
@@ -618,7 +618,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // left bottom
         Button* button_LeftBottom = Button::create();
         button_LeftBottom->setTouchEnabled(true);
-        button_LeftBottom->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_LeftBottom->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_LeftBottom);
         
         RelativeLayoutParameter* rp_LeftBottom = RelativeLayoutParameter::create();
@@ -629,7 +629,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // bottom center
         Button* button_BottomCenter = Button::create();
         button_BottomCenter->setTouchEnabled(true);
-        button_BottomCenter->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_BottomCenter->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_BottomCenter);
         
         RelativeLayoutParameter* rp_BottomCenter = RelativeLayoutParameter::create();
@@ -640,7 +640,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent::init()
         // right bottom
         Button* button_RightBottom = Button::create();
         button_RightBottom->setTouchEnabled(true);
-        button_RightBottom->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button_RightBottom->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         layout->addChild(button_RightBottom);
         
         RelativeLayoutParameter* rp_RightBottom = RelativeLayoutParameter::create();
@@ -698,7 +698,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         // center
         ImageView* imageView_Center = ImageView::create();
-        imageView_Center->loadTexture("cocosgui/scrollviewbg.png");
+        imageView_Center->loadTexture("cocosui/scrollviewbg.png");
         layout->addChild(imageView_Center);
         
         RelativeLayoutParameter* rp_Center = RelativeLayoutParameter::create();
@@ -709,7 +709,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         // above center
         ImageView* imageView_AboveCenter = ImageView::create();
-        imageView_AboveCenter->loadTexture("cocosgui/switch-mask.png");
+        imageView_AboveCenter->loadTexture("cocosui/switch-mask.png");
         layout->addChild(imageView_AboveCenter);
         
         RelativeLayoutParameter* rp_AboveCenter = RelativeLayoutParameter::create();
@@ -720,7 +720,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         // below center
         ImageView* imageView_BelowCenter = ImageView::create();
-        imageView_BelowCenter->loadTexture("cocosgui/switch-mask.png");
+        imageView_BelowCenter->loadTexture("cocosui/switch-mask.png");
         layout->addChild(imageView_BelowCenter);
         
         RelativeLayoutParameter* rp_BelowCenter = RelativeLayoutParameter::create();
@@ -731,7 +731,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         // left center
         ImageView* imageView_LeftCenter = ImageView::create();
-        imageView_LeftCenter->loadTexture("cocosgui/switch-mask.png");
+        imageView_LeftCenter->loadTexture("cocosui/switch-mask.png");
         layout->addChild(imageView_LeftCenter);
         
         RelativeLayoutParameter* rp_LeftCenter = RelativeLayoutParameter::create();
@@ -743,7 +743,7 @@ bool UILayoutTest_Layout_Relative_Location::init()
         
         // right center
         ImageView* imageView_RightCenter = ImageView::create();
-        imageView_RightCenter->loadTexture("cocosgui/switch-mask.png");
+        imageView_RightCenter->loadTexture("cocosui/switch-mask.png");
         layout->addChild(imageView_RightCenter);
         
         RelativeLayoutParameter* rp_RightCenter = RelativeLayoutParameter::create();
@@ -807,7 +807,7 @@ bool UILayoutTest_Layout_Grid::init()
             Button* button = Button::create();
             button->setName("TextButton");
             button->setTouchEnabled(true);
-            button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             button->setScale9Enabled(true);
             AffineTransform transform = AffineTransformMakeIdentity();
             transform = AffineTransformScale(transform, 3.0f, 1.3f);

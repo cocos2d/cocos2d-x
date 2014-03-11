@@ -2,7 +2,7 @@
 #ifndef __TestCpp__CustomImageView__
 #define __TestCpp__CustomImageView__
 
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 
 class CustomImageView : public cocos2d::ui::ImageView
 {

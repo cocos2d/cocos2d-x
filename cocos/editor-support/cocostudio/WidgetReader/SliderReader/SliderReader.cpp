@@ -1,7 +1,7 @@
 
 
 #include "SliderReader.h"
-#include "gui/UISlider.h"
+#include "ui/UISlider.h"
 
 USING_NS_CC;
 using namespace ui;

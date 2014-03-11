@@ -21,7 +21,7 @@ bool UIImageViewTest::init()
         
         // Create the imageview
         ImageView* imageView = ImageView::create();
-        imageView->loadTexture("cocosgui/ccicon.png");
+        imageView->loadTexture("cocosui/ccicon.png");
         imageView->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
         
 //        imageView->setOpacity(64);
@@ -31,7 +31,7 @@ bool UIImageViewTest::init()
         NodeRGBA* root = NodeRGBA::create();
         root->setCascadeOpacityEnabled(true);
         NodeRGBA* render = Sprite::create();
-        static_cast<Sprite*>(render)->setTexture("cocosgui/ccicon.png");
+        static_cast<Sprite*>(render)->setTexture("cocosui/ccicon.png");
         root->addChild(render);
 //        root->setOpacity(64);
         root->setPosition(Point(200, 180));
@@ -41,7 +41,7 @@ bool UIImageViewTest::init()
         /*
         NodeRGBA* nodergba = NodeRGBA::create();
         Sprite* child = Sprite::create();
-        child->setTexture("cocosgui/ccicon.png");
+        child->setTexture("cocosui/ccicon.png");
         nodergba->addChild(child);
         nodergba->setPosition(Point(120, 80));
         nodergba->setOpacity(64);
@@ -50,7 +50,7 @@ bool UIImageViewTest::init()
         
         /*
         Sprite* sprite = Sprite::create();
-        sprite->setTexture("cocosgui/ccicon.png");
+        sprite->setTexture("cocosui/ccicon.png");
         sprite->setPosition(Point(200, 180));
 //        sprite->setOpacity(64);
         _uiLayer->addChild(sprite);
@@ -83,7 +83,7 @@ bool UIImageViewTest_Scale9::init()
         // Create the imageview
         ImageView* imageView = ImageView::create();
         imageView->setScale9Enabled(true);
-        imageView->loadTexture("cocosgui/buttonHighlighted.png");
+        imageView->loadTexture("cocosui/buttonHighlighted.png");
         imageView->setSize(Size(200, 85));
         imageView->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
         _uiLayer->addChild(imageView);                
