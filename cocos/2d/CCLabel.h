@@ -110,7 +110,7 @@ public:
      * @warning It will generate texture by the platform-dependent code and create Sprite for show text.
      * To obtain better performance use createWithTTF/createWithBMFont/createWithCharMap
      */
-    static Label * createWithFontDefinition(const std::string& text, FontDefinition &textDefinition);
+    static Label * createWithFontDefinition(const std::string& text, const FontDefinition &textDefinition);
 
     /** set TTF configuration for Label */
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
@@ -130,7 +130,7 @@ public:
     const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
     /** changes the string to render
-    * @warning It is as expensive as changing the string if you havn¡¯t set up using TTF/BMFont/CharMap for label.
+    * @warning It is as expensive as changing the string if you haven't set up TTF/BMFont/CharMap for the label.
     */
     virtual void setString(const std::string& text) override;
 
@@ -158,7 +158,7 @@ public:
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
     TextHAlignment getTextAlignment() const { return _hAlignment;}
 
-    virtual void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment);
+    void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment);
 
     void setHorizontalAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment); }
     TextHAlignment getHorizontalAlignment() const { return _hAlignment; }
@@ -166,13 +166,13 @@ public:
     void setVerticalAlignment(TextVAlignment vAlignment) { setAlignment(_hAlignment,vAlignment); }
     TextVAlignment getVerticalAlignment() const { return _vAlignment; }
 
-    virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
+    void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
     /** Sets the max line width of the label.
      * The label's max line width be used for force line breaks if the set value not equal zero.
      * The label's width and max line width has not always to be equal.
      */
-    virtual void setMaxLineWidth(unsigned int maxLineWidth);
+    void setMaxLineWidth(unsigned int maxLineWidth);
     unsigned int getMaxLineWidth() { return _maxLineWidth;}
 
     /** Sets the untransformed size of the label.
@@ -190,16 +190,17 @@ public:
     unsigned int getHeight() const { return _labelHeight;}   
 
     /** Sets the untransformed size of the label in a more efficient way. */
-    virtual void setDimensions(unsigned int width,unsigned int height);
-    
+    void setDimensions(unsigned int width,unsigned int height);
+    const Size& getDimensions() const{ return _labelDimensions;}
+
     /** update content immediately.*/
     virtual void updateContent();
 
     virtual void setFontName(const std::string& fontName);
-    const std::string& getFontName() const { return _fontDefinition._fontName;}
+    virtual const std::string& getFontName() const { return _fontDefinition._fontName;}
 
     virtual void setFontSize(int fontSize);
-    int getFontSize() const { return _fontDefinition._fontSize;}
+    virtual int getFontSize() const { return _fontDefinition._fontSize;}
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
@@ -212,8 +213,8 @@ public:
     
     // string related stuff
     int getStringNumLines() const { return _currNumLines;}
-    CC_DEPRECATED_ATTRIBUTE int getStringLenght() const { return getStringLength(); }
     int getStringLength() const;
+    CC_DEPRECATED_ATTRIBUTE int getStringLenght() const { return getStringLength(); }
     
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
@@ -271,7 +272,6 @@ protected:
     bool computeHorizontalKernings(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
-    void resetCurrentString();
     void computeStringNumLines();
 
     void updateSpriteWithLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture);
@@ -308,6 +308,7 @@ protected:
     int * _horizontalKernings;
 
     unsigned int _maxLineWidth;
+    Size         _labelDimensions;
     unsigned int _labelWidth;
     unsigned int _labelHeight;
     TextHAlignment _hAlignment;

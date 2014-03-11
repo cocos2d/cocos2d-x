@@ -50,7 +50,7 @@ Label* Label::create()
     return ret;
 }
 
-Label* Label::createWithFontDefinition(const std::string& text, FontDefinition &textDefinition)
+Label* Label::createWithFontDefinition(const std::string& text, const FontDefinition &textDefinition)
 {
     auto ret = new Label();
 
@@ -258,6 +258,7 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _maxLineWidth(0)
 , _labelWidth(0)
 , _labelHeight(0)
+, _labelDimensions(Size::ZERO)
 , _hAlignment(alignment)
 , _currentUTF16String(nullptr)
 , _originalUTF16String(nullptr)
@@ -456,7 +457,7 @@ void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
 
 void Label::setMaxLineWidth(unsigned int maxLineWidth)
 {
-    if (_maxLineWidth != maxLineWidth)
+    if (_labelWidth == 0 && _maxLineWidth != maxLineWidth)
     {
         _maxLineWidth = maxLineWidth;
         _contentDirty = true;
@@ -470,8 +471,11 @@ void Label::setDimensions(unsigned int width,unsigned int height)
         _fontDefinition._dimensions.width = width;
         _fontDefinition._dimensions.height = height;
 
-        _labelHeight = height;
         _labelWidth = width;
+        _labelHeight = height;
+        _labelDimensions.width = width;
+        _labelDimensions.height = height;
+
         _maxLineWidth = width;
         _contentDirty = true;
     }  
@@ -481,15 +485,8 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
 {
     if (breakWithoutSpace != _lineBreakWithoutSpaces)
     {
-        // store
         _lineBreakWithoutSpaces = breakWithoutSpace;
-
-        // need to align text again
-        if(_currentUTF16String)
-        {
-            resetCurrentString();
-            alignText();
-        }
+        _contentDirty = true;     
     }
 }
 
@@ -572,7 +569,7 @@ void Label::alignText()
     if(_maxLineWidth > 0 && _contentSize.width > _maxLineWidth && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
 
-    if(_labelWidth >0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
+    if(_labelWidth > 0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
         LabelTextFormatter::alignText(this);
 
     int strLen = cc_wcslen(_currentUTF16String);
@@ -667,25 +664,6 @@ bool Label::setCurrentString(unsigned short *stringToSet)
     return true;
 }
 
-void Label::resetCurrentString()
-{
-    if ((!_currentUTF16String) && (!_originalUTF16String))
-        return;
-
-    // set the new string
-    if (_currentUTF16String)
-    {
-        delete [] _currentUTF16String;
-        _currentUTF16String = 0;
-    }
-
-    int stringLenght = cc_wcslen(_originalUTF16String);
-    _currentUTF16String = new unsigned short int [stringLenght + 1];
-    memcpy(_currentUTF16String, _originalUTF16String, stringLenght * 2);
-    _currentUTF16String[stringLenght] = 0;
-
-}
-
 void Label::updateSpriteWithLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture)
 {
     _reusedRect.size.height = theDefinition.height;
@@ -757,7 +735,7 @@ void Label::setLabelEffect(LabelEffect effect,const Color3B& effectColor)
 
 void Label::enableGlow(const Color3B& glowColor)
 {
-    if(_useDistanceField == false)
+    if(! _useDistanceField)
         return;
     _currLabelEffect = LabelEffect::GLOW;
     _effectColor = glowColor;
@@ -943,7 +921,7 @@ void Label::updateContent()
     setOriginalString(utf16String);
     if (_textSprite)
     {
-        _textSprite->removeFromParent();
+        Node::removeChild(_textSprite,true);
         _textSprite = nullptr;
     }
     if (_fontAtlas)
@@ -1018,7 +996,7 @@ void Label::setFontSize(int fontSize)
 {
     if (_currentLabelType == LabelType::TTF)
     {
-        if (_fontConfig.distanceFieldEnabled == true)
+        if (_fontConfig.distanceFieldEnabled)
         {
             _fontConfig.fontSize = fontSize;
             this->setFontScale(1.0f * fontSize / DefultFontSize);
@@ -1048,7 +1026,7 @@ Sprite * Label::getLetter(int lettetIndex)
     
     if (! _textSprite && lettetIndex < _limitShowCount)
     {
-        if(_lettersInfo[lettetIndex].def.validDefinition == false)
+        if(! _lettersInfo[lettetIndex].def.validDefinition)
             return nullptr;
 
         Sprite* sp = static_cast<Sprite*>(this->getChildByTag(lettetIndex));
