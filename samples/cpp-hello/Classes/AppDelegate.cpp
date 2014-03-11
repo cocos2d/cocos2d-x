@@ -20,14 +20,18 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
-    auto glView = EGLView::getInstance();
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLView::create("Hello Cpp");
+        director->setOpenGLView(glview);
+    }
 
-    director->setOpenGLView(glView);
+    director->setOpenGLView(glview);
 
     // Set the design resolution
-    glView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
 
-	Size frameSize = glView->getFrameSize();
+	Size frameSize = glview->getFrameSize();
     
     vector<string> searchPath;
 

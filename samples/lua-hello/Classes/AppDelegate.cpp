@@ -24,9 +24,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-    director->setOpenGLView(EGLView::getInstance());
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLView::create("Hello Cpp");
+        director->setOpenGLView(glview);
+    }
     
-    EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
+    director->setOpenGLView(glview);
+    
+    glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     director->setDisplayStats(true);
