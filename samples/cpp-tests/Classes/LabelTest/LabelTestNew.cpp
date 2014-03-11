@@ -76,6 +76,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelCharMapColorTest),
     CL(LabelCrashTest),
     CL(LabelTTFOldNew),
+    CL(LabelFontNameTest),
     CL(LabelAlignmentTest)
 };
 
@@ -1558,7 +1559,7 @@ void LabelTTFOldNew::onDraw(const kmMat4 &transform, bool transformUpdated)
     kmGLPushMatrix();
     kmGLLoadMatrix(&transform);
 
-    auto label1 = (Label*)getChildByTag(kTagBitmapAtlas1);
+    auto label1 = (LabelTTF*)getChildByTag(kTagBitmapAtlas1);
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
     
@@ -1610,6 +1611,40 @@ std::string LabelTTFOldNew::title() const
 std::string LabelTTFOldNew::subtitle() const
 {
     return "Comparison between old(red) and new(white) TTF label";
+}
+
+LabelFontNameTest::LabelFontNameTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto label1 = Label::create();
+    label1->setString("Default Font");
+    label1->setPosition( Point(size.width/2, size.height * 0.7) );
+    label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    addChild(label1);
+
+    FontDefinition fontDef;
+    fontDef._fontName = "Marker Felt";
+    fontDef._fontSize = 32;
+    auto label2 = Label::createWithFontDefinition("Create with FontDefinition",fontDef);
+    label2->setPosition( Point(size.width/2, size.height * 0.6) );
+    label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    addChild(label2);
+
+    auto label3 = Label::create("Marker Felt","Marker Felt",32);
+    label3->setPosition( Point(size.width/2, size.height * 0.5) );
+    label3->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    addChild(label3);
+}
+
+std::string LabelFontNameTest::title() const
+{
+    return "New Label Test";
+}
+
+std::string LabelFontNameTest::subtitle() const
+{
+    return "create label by font name,compatible with old labelTTF";
 }
 
 LabelAlignmentTest::LabelAlignmentTest()
@@ -1666,42 +1701,42 @@ LabelAlignmentTest::~LabelAlignmentTest()
 void LabelAlignmentTest::setAlignmentLeft(Ref* sender)
 {
     _horizAlign = TextHAlignment::LEFT;
-    _label->setHorizontalAlignment(_horizAlign,false);
+    _label->setHorizontalAlignment(_horizAlign);
     _label->setString(getCurrentAlignment());
 }
 
 void LabelAlignmentTest::setAlignmentCenter(Ref* sender)
 {
     _horizAlign = TextHAlignment::CENTER;
-    _label->setHorizontalAlignment(_horizAlign,false);
+    _label->setHorizontalAlignment(_horizAlign);
     _label->setString(getCurrentAlignment()); 
 }
 
 void LabelAlignmentTest::setAlignmentRight(Ref* sender)
 {
     _horizAlign = TextHAlignment::RIGHT;
-    _label->setHorizontalAlignment(_horizAlign,false);
+    _label->setHorizontalAlignment(_horizAlign);
     _label->setString(getCurrentAlignment());
 }
 
 void LabelAlignmentTest::setAlignmentTop(Ref* sender)
 {
     _vertAlign = TextVAlignment::TOP;
-    _label->setVerticalAlignment(_vertAlign,false);
+    _label->setVerticalAlignment(_vertAlign);
     _label->setString(getCurrentAlignment());
 }
 
 void LabelAlignmentTest::setAlignmentMiddle(Ref* sender)
 {
     _vertAlign = TextVAlignment::CENTER;
-    _label->setVerticalAlignment(_vertAlign,false);
+    _label->setVerticalAlignment(_vertAlign);
     _label->setString(getCurrentAlignment());
 }
 
 void LabelAlignmentTest::setAlignmentBottom(Ref* sender)
 {
     _vertAlign = TextVAlignment::BOTTOM;
-    _label->setVerticalAlignment(_vertAlign,false);
+    _label->setVerticalAlignment(_vertAlign);
     _label->setString(getCurrentAlignment());
 }
 
