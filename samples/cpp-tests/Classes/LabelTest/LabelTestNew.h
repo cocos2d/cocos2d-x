@@ -450,6 +450,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelFontNameTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFontNameTest);
+
+    LabelFontNameTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class LabelAlignmentTest : public AtlasDemoNew
 {
 public:
