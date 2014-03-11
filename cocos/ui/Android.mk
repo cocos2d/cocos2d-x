@@ -1,9 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos_gui_static
+LOCAL_MODULE := cocos_ui_static
 
-LOCAL_MODULE_FILENAME := libgui
+LOCAL_MODULE_FILENAME := libui
 
 LOCAL_SRC_FILES := \
 UIWidget.cpp \
