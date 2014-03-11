@@ -6,7 +6,6 @@ LOCAL_MODULE := cocostudio_static
 LOCAL_MODULE_FILENAME := libcocostudio
 
 LOCAL_SRC_FILES := CCActionFrame.cpp \
-CCActionEaseEx.cpp \
 CCActionFrameEasing.cpp \
 CCActionManagerEx.cpp \
 CCActionNode.cpp \
@@ -28,7 +27,6 @@ CCArmatureDefine.cpp \
 CCDataReaderHelper.cpp \
 CCSpriteFrameCacheHelper.cpp \
 CCTransformHelp.cpp \
-CCTweenFunction.cpp \
 CCUtilMath.cpp \
 CCComAttribute.cpp \
 CCComAudio.cpp \

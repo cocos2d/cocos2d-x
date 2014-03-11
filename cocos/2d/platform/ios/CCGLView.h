@@ -29,7 +29,7 @@
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "CCObject.h"
+#include "CCRef.h"
 #include "platform/CCCommon.h"
 #include "platform/CCGLViewProtocol.h"
 
@@ -38,7 +38,7 @@ NS_CC_BEGIN
 
 /** Class that represent the OpenGL View
  */
-class CC_DLL GLView : public Object, public GLViewProtocol
+class CC_DLL GLView : public Ref, public GLViewProtocol
 {
 public:
     /** creates a GLView with a objective-c CCEAGLView instance */

@@ -585,14 +585,16 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd)
             // The window is being hidden or closed, clean it up.
             engine_term_display(engine);
             break;
-        case APP_CMD_GAINED_FOCUS:
+        case APP_CMD_RESUME:
             if (cocos2d::Director::getInstance()->getOpenGLView()) {
                 cocos2d::Application::getInstance()->applicationWillEnterForeground();
-                engine->animating = 1;
+                if (engine->display != nullptr)
+                {
+                    engine->animating = 1;
+                }
             }
-
             break;
-        case APP_CMD_LOST_FOCUS:
+        case APP_CMD_PAUSE:
             {
                 cocos2d::Application::getInstance()->applicationDidEnterBackground();
                 cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);

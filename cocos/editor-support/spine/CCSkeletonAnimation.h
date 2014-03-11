@@ -40,7 +40,7 @@
 namespace spine {
 
 class SkeletonAnimation;
-typedef void (cocos2d::Object::*SEL_AnimationStateEvent)(spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
+typedef void (cocos2d::Ref::*SEL_AnimationStateEvent)(spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
 #define animationStateEvent_selector(_SELECTOR) (SEL_AnimationStateEvent)(&_SELECTOR)
 
 /** Draws an animated skeleton, providing an AnimationState for applying one or more animations and queuing animations to be
@@ -64,7 +64,7 @@ public:
 	void setAnimationStateData (spAnimationStateData* stateData);
 	void setMix (const char* fromAnimation, const char* toAnimation, float duration);
 
-	void setAnimationListener (cocos2d::Object* instance, SEL_AnimationStateEvent method);
+	void setAnimationListener (cocos2d::Ref* instance, SEL_AnimationStateEvent method);
 	spTrackEntry* setAnimation (int trackIndex, const char* name, bool loop);
 	spTrackEntry* addAnimation (int trackIndex, const char* name, bool loop, float delay = 0);
 	spTrackEntry* getCurrent (int trackIndex = 0);
@@ -78,7 +78,7 @@ protected:
 
 private:
 	typedef Skeleton super;
-    cocos2d::Object* listenerInstance;
+    cocos2d::Ref* listenerInstance;
 	SEL_AnimationStateEvent listenerMethod;
 	bool ownsAnimationStateData;
 

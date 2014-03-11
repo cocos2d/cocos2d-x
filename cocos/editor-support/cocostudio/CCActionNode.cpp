@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "gui/UIHelper.h"
 
 using namespace cocos2d;
-using namespace gui;
+using namespace ui;
 
 namespace cocostudio {
 
@@ -69,7 +69,7 @@ ActionNode::~ActionNode()
 	_frameArray.clear();
 }
 
-void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
+void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 {
 	setActionTag(DICTOOL->getIntValue_json(dic, "ActionTag"));
 	int actionFrameCount = DICTOOL->getArrayCount_json(dic, "actionframelist");
@@ -146,7 +146,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 	initActionNodeFromRoot(root);
 }
 
-void ActionNode::initActionNodeFromRoot(Object* root)
+void ActionNode::initActionNodeFromRoot(Ref* root)
 {	
 	Node* rootNode = dynamic_cast<Node*>(root);
 	if (rootNode != nullptr)
@@ -184,12 +184,12 @@ int ActionNode::getActionTag()
 	return _actionTag;
 }
 
-void ActionNode::setObject(Object* node)
+void ActionNode::setObject(Ref* node)
 {
 	_object = node;
 }
 
-Object* ActionNode::getObject()
+Ref*  ActionNode::getObject()
 {
 	return _object;
 }

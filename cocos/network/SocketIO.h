@@ -129,7 +129,7 @@ typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
      *  @brief A single connection to a socket.io endpoint
      */
 class SIOClient
-	: public cocos2d::Object
+	: public cocos2d::Ref
 {
 private:
 	int _port;

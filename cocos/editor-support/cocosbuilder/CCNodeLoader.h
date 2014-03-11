@@ -30,19 +30,19 @@ namespace cocosbuilder {
 
 struct BlockData {
     cocos2d::SEL_MenuHandler mSELMenuHandler;
-    cocos2d::Object * _target;
+    cocos2d::Ref * _target;
 };
 
 struct BlockControlData {
     cocos2d::extension::Control::Handler mSELControlHandler;
-    cocos2d::Object * _target;
+    cocos2d::Ref * _target;
     cocos2d::extension::Control::EventType mControlEvents;
 };
 
 /* Forward declaration. */
 class CCBReader;
 
-class NodeLoader : public cocos2d::Object {
+class NodeLoader : public cocos2d::Ref {
     public:
         /**
          * @js NA

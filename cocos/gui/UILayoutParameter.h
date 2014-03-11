@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
@@ -41,7 +41,7 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class LayoutParameter : public Object
+class LayoutParameter : public Ref
 {
 public:
     /**

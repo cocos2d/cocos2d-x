@@ -37,7 +37,7 @@ class Bone;
  *  @js NA
  *  @lua NA
  */
-class  DisplayManager : public cocos2d::Object
+class  DisplayManager : public cocos2d::Ref
 {
 public:
     static DisplayManager *create(Bone *bone);

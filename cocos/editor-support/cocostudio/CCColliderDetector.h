@@ -85,7 +85,7 @@ protected:
 #endif
 };
 
-class ColliderBody : public cocos2d::Object
+class ColliderBody : public cocos2d::Ref
 {
 public:
     ColliderBody(ContourData *contourData);
@@ -130,7 +130,7 @@ private:
  *  @js NA
  *  @lua NA
  */
-class ColliderDetector : public cocos2d::Object
+class ColliderDetector : public cocos2d::Ref
 {
 public:
     static ColliderDetector *create();

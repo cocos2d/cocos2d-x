@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 // external
 #include "kazmath/GL/matrix.h"
+#include "CCString.h"
 
 NS_CC_BEGIN
 

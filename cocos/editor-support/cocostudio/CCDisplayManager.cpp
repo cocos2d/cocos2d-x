@@ -170,6 +170,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         displayData = ParticleDisplayData::create();
 
         display->removeFromParent();
+        display->cleanup();
         
         Armature *armature = _bone->getArmature();
         if (armature)

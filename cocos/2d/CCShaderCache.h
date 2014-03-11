@@ -28,10 +28,10 @@ THE SOFTWARE.
 #ifndef __CCSHADERCACHE_H__
 #define __CCSHADERCACHE_H__
 
+#include "CCRef.h"
+
 #include <string>
 #include <unordered_map>
-
-#include "CCDictionary.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +46,7 @@ class GLProgram;
  Singleton that stores manages GL shaders
  @since v2.0
  */
-class CC_DLL ShaderCache : public Object 
+class CC_DLL ShaderCache : public Ref 
 {
 public:
     /**

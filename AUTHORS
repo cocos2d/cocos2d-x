@@ -96,6 +96,7 @@ Developers:
         CMake support for windows.
         Added support for x64 target of windows.
         Added Dutch Language support.
+        Added clang support for Windows.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -609,9 +610,10 @@ Developers:
         Makes Colors are now comparable and explicit convertible
         
     bmanGH
-        Use gl caching functions in TexturePVR::createGLTexture()
+        Used gl caching functions in TexturePVR::createGLTexture()
         Configuration of VAO in runtime
-        Add setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
+        Added setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
+        Fixed a bug that object which isn't in Vector would also be released when invoking Vector::eraseObject.
         
     metadao
         make create_project.py more pythonic and fix some typoes
@@ -645,7 +647,8 @@ Developers:
         Fixed a bug that CCBReader can't play sequence automatically in JSB.
         Could not set next animation in CCBAnimationCompleted callback.
         Fixed missing to add JSAutoCompartment when invoking JS functions from C++.
-        CCBReader: To set anchor point to 0,0 when created by loader
+        CCBReader: To set anchor point to 0,0 when created by loader.
+        Potential crash when websocket connection closes.
         
     lite3
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
@@ -680,6 +683,8 @@ Developers:
     zhiqiangxu
         Fixed a logic error in ControlUtils::RectUnion.
         Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
+        Deleted several lines of useless code in ScrollView::deaccelerateScrolling.
+        Fixed that ScrollView should implement ActionTweenDelegate.
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
@@ -714,6 +719,7 @@ Developers:
     daltomi
         Fixed a typo in Director class.
         Removed an unnecessary boolean flag in CCFontAtlasCache.cpp.
+        Used 'cbegin/cend', 'const std::string' where it's reasonable.
         
     v1ctor
         ControlSlider supports to set selected thumb sprite.
@@ -746,6 +752,30 @@ Developers:
         
     ucchen
         Exposed the missing data structures of Spine to JS.
+        
+    justmao945
+        Corrected the definition of CMake variables.
+        
+    maksqwe
+        Fixed string size check in BitmapDC::utf8ToUtf16 on win32 and assert condition in TriggerMng.
+        
+    wefiends
+        s3tc compressed textures with no mipmaps fail to be loaded.
+        
+    floatinghotpot
+        Fixed a bug that no callback is invoked when websocket connection fails
+        
+    Linghui
+        Updated README of template: fix wrong platform java path.
+        
+    seemk
+        Fixed crash if invoking Director::end() on WINDOWS.
+        
+    odedsh
+        Fixed a bug that loading custom fonts from ttf file fails on windows.
+        
+    Wilhansen
+        Fixed a bug that spine::Skeleton would not be updated after re-adding to scene.
     
 Retired Core Developers:
     WenSheng Yang

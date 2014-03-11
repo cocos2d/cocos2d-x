@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int BACKGROUNDBOX_RENDERER_Z = (-1);
 static const int BACKGROUNDSELECTEDBOX_RENDERER_Z = (-1);
@@ -316,7 +316,7 @@ void CheckBox::unSelectedEvent()
     }
 }
 
-void CheckBox::addEventListenerCheckBox(Object *target, SEL_SelectedStateEvent selector)
+void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
 {
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;

@@ -104,7 +104,7 @@ bool ActionObject::isPlaying()
 	return _bPlaying;
 }
 
-void ActionObject::initWithDictionary(const rapidjson::Value& dic, Object* root)
+void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 {
 	setName(DICTOOL->getStringValue_json(dic, "name"));
 	setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));
@@ -154,11 +154,11 @@ void ActionObject::play()
 	}
 	if (_loop)
 	{
-		_pScheduler->scheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kRepeatForever, 0.0f, false);
+		_pScheduler->schedule(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kRepeatForever, 0.0f, false);
 	}
 	else
 	{
-		_pScheduler->scheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f, false);
+		_pScheduler->schedule(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f, false);
 	}
 }
 
@@ -178,7 +178,7 @@ void ActionObject::stop()
 	{
 		e->stopAction();
 	}
-	_pScheduler->unscheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this);
+	_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
 	_bPause = false;
 }
 
