@@ -26,7 +26,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("Hello Cpp");
+        glview = GLView::create("Lua Empty Test");
         director->setOpenGLView(glview);
     }
     
@@ -45,8 +45,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
-    //engine->executeScriptFile("hello.lua");
-    engine->executeString("require 'hello.lua'");
+    //engine->executeScriptFile("src/hello.lua");
+    engine->executeString("require 'src/hello.lua'");
 
     return true;
 }
