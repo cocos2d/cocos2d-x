@@ -1,4 +1,4 @@
-set(APP_NAME testlua)
+set(APP_NAME lua-tests)
 
 set(SAMPLE_SRC
   proj.linux/main.cpp

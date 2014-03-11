@@ -1,4 +1,4 @@
-set(APP_NAME hellolua)
+set(APP_NAME lua-empty-test)
 
 set(SAMPLE_SRC
   proj.linux/main.cpp
