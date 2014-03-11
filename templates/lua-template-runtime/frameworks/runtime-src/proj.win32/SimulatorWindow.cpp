@@ -103,19 +103,49 @@ void updateMenu()
 		}
 		CheckMenuItem(viewMenu, i, MF_BYPOSITION | (bSel? MF_CHECKED : MF_UNCHECKED));
 	}
+
+	int scale=g_eglView->getFrameZoomFactor()*100;
+	CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT100, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT75, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT50, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT25, MF_BYCOMMAND | MF_UNCHECKED);
+	switch (scale)
+	{
+	case 100:
+		CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT100, MF_BYCOMMAND | MF_CHECKED);
+		break;
+	case 75:
+		CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT75, MF_BYCOMMAND | MF_CHECKED);
+		break;
+	case 50:
+		CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT50, MF_BYCOMMAND | MF_CHECKED);
+		break;
+	case 25:
+		CheckMenuItem(viewMenu, ID_VIEW_ZOOMOUT25, MF_BYCOMMAND | MF_CHECKED);
+		break;
+	default:
+		break;
+	}
 }
 
 /*@brief updateView*/
 void updateView()
 {
+
+	auto policy = g_eglView->getResolutionPolicy();
+	auto designSize = g_eglView->getDesignResolutionSize();
+
 	if (g_landscape)
 	{
-		glfwSetWindowSize(g_eglView->getWindow(),g_screenSize.width,g_screenSize.height);
+		g_eglView->setFrameSize(g_screenSize.width, g_screenSize.height);
 	}
 	else
 	{
-		glfwSetWindowSize(g_eglView->getWindow(),g_screenSize.height,g_screenSize.width);
+		g_eglView->setFrameSize(g_screenSize.height, g_screenSize.width);
 	}
+
+	g_eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+
 	updateMenu();
 }
 
@@ -131,6 +161,30 @@ void onViewChangeOrientation(int viewMenuID)
 		g_landscape = true;
 		updateView();
 	}
+}
+
+void onViewZoomOut(int viewMenuID)
+{
+	float scale = 1.0;
+	switch (viewMenuID)
+	{
+	case ID_VIEW_ZOOMOUT100:
+		scale=1.0;
+		break;
+	case ID_VIEW_ZOOMOUT75:
+		scale=0.75;
+		break;
+	case ID_VIEW_ZOOMOUT50:
+		scale=0.50;
+		break;
+	case ID_VIEW_ZOOMOUT25:
+		scale=0.25;
+		break;
+	default:
+		break;
+	}
+	g_eglView->setFrameZoomFactor(scale);
+	updateView();
 }
 
 void onViewChangeFrameSize(int viewMenuID)
@@ -172,8 +226,15 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 				onViewChangeOrientation(wmId);
 				break;
 
+			case ID_VIEW_ZOOMOUT100:
+			case ID_VIEW_ZOOMOUT75:
+			case ID_VIEW_ZOOMOUT50:
+			case ID_VIEW_ZOOMOUT25:
+				onViewZoomOut(wmId);
+				break;
+
 			case ID_CONTROL_RELOAD:
-				reloadScript();
+				reloadScript("");
 				break;
 
 			case ID_HELP_ABOUT:

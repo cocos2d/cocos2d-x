@@ -1,6 +1,7 @@
 #include "main.h"
 #include "AppDelegate.h"
 #include "cocos2d.h"
+#include "SimulatorWindow.h"
 
 USING_NS_CC;
 
@@ -24,6 +25,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
+	createSimulator("HelloLua",960,640);
+
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
@@ -31,4 +34,26 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 #endif
 
     return ret;
+}
+std::string getCurAppPath(void)
+{
+	TCHAR szAppDir[MAX_PATH]={0};
+	if (!GetModuleFileName(NULL,szAppDir,MAX_PATH))
+		return "";
+	int nEnd=0;
+	for (int i=0;szAppDir[i];i++)
+	{
+		if(szAppDir[i]=='\\')
+			nEnd = i;
+	}
+	szAppDir[nEnd] = 0;
+	int iLen = 2*wcslen(szAppDir);    
+	char* chRtn = new char[iLen+1];    
+	wcstombs(chRtn,szAppDir,iLen+1);
+	std::string strPath = chRtn;
+	delete [] chRtn;
+	chRtn=NULL;
+	char fuldir[MAX_PATH]={0};
+	_fullpath(fuldir,strPath.c_str(),MAX_PATH);
+	return fuldir;    
 }

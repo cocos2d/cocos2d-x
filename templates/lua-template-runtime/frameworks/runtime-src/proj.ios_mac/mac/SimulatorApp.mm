@@ -65,7 +65,7 @@ using namespace cocos2d;
 {
 
     AppDelegate app;
-	[self createSimulator:[NSString stringWithUTF8String:"HelloJavascript"] viewWidth:960 viewHeight:640 factor:1.0];
+	[self createSimulator:[NSString stringWithUTF8String:"HelloLua"] viewWidth:960 viewHeight:640 factor:1.0];
     int ret = Application::getInstance()->run();
     
 }
@@ -138,7 +138,7 @@ using namespace cocos2d;
         [itemLandscape setState:NSOffState];
     }
 
-    int scale = 100;
+    int scale = g_eglView->getFrameZoomFactor()*100;
 
     NSMenuItem *itemZoom100 = [menuScreen itemWithTitle:@"Actual (100%)"];
     NSMenuItem *itemZoom75 = [menuScreen itemWithTitle:@"Zoom Out (75%)"];
@@ -194,14 +194,20 @@ using namespace cocos2d;
 
 - (void) updateView
 {
+    auto policy = g_eglView->getResolutionPolicy();
+    auto designSize = g_eglView->getDesignResolutionSize();
+    
 	if (g_landscape)
 	{
-		glfwSetWindowSize(g_eglView->getWindow(),g_screenSize.width,g_screenSize.height);
+        g_eglView->setFrameSize(g_screenSize.width, g_screenSize.height);
 	}
 	else
 	{
-		glfwSetWindowSize(g_eglView->getWindow(),g_screenSize.height,g_screenSize.width);
+        g_eglView->setFrameSize(g_screenSize.height, g_screenSize.width);
 	}
+    
+    g_eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+    
     [self updateMenu];
 }
 
@@ -255,7 +261,7 @@ using namespace cocos2d;
 
 - (IBAction) onReloadScript:(id)sender
 {
-    reloadScript();
+    reloadScript("");
 }
 
 
@@ -276,7 +282,8 @@ using namespace cocos2d;
 {
     if ([sender state] == NSOnState) return;
     float scale = (float)[sender tag] / 100.0f;
-    [self setZoom:scale];
+    g_eglView->setFrameZoomFactor(scale);
+    [self updateView];
 }
 
 

@@ -40,8 +40,10 @@ using namespace std;
 using namespace cocos2d;
 
 extern string getIPAddress();
-extern string getProjSearchPath();
-
+string getRuntimeVersion()
+{
+    return "0.0.1";
+}
 void startScript(string strDebugArg)
 {
     // register lua engine
@@ -54,9 +56,14 @@ void startScript(string strDebugArg)
     engine->executeScriptFile("src/main.lua");
 }
 
-void reloadScript()
+void reloadScript(const string& modulefile)
 {
-    LuaEngine::getInstance()->reload("src/main.lua");
+	string strfile = modulefile;
+	if (strfile.empty())
+	{
+		strfile = "src/main.lua";
+	}
+    LuaEngine::getInstance()->reload(strfile.c_str());
 }
 
 
@@ -462,9 +469,20 @@ void FileServer::loop()
 
 	// clean up: ignore stdin, stdout and stderr
 	for(const auto &fd: _fds )
+	{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		closesocket(fd);
+#else
 		close(fd);
-	close(_listenfd);
+#endif
+	}
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	closesocket(_listenfd);
+	WSACleanup();
+#else
+	close(_listenfd);
+#endif
 	_running = false;
 }
 
@@ -480,14 +498,15 @@ public:
             {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
             {"start-logic","run game logic script.Arg:[debugArg]",std::bind(&ConsoleCustomCommand::onRunLogicScript, this, std::placeholders::_1, std::placeholders::_2)},
             {"reload","reload script.Args:[filepath]",std::bind(&ConsoleCustomCommand::onReloadScriptFile, this, std::placeholders::_1, std::placeholders::_2)},
+            {"getversion","get runtime version.",std::bind(&ConsoleCustomCommand::onRuntimeVersion, this, std::placeholders::_1, std::placeholders::_2)},
         };
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
-        _console->listenOnTCP(5678);
+        _console->listenOnTCP(6001);
         
         _fileserver=new FileServer();
-        _fileserver->listenOnTCP(6666);
+        _fileserver->listenOnTCP(6002);
     }
     ~ConsoleCustomCommand()
     {
@@ -509,9 +528,15 @@ public:
     
     void onReloadScriptFile(int fd,const std::string &args)
     {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-             reloadScript();
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+             reloadScript(args.c_str());
         });
+    }
+    
+    void onRuntimeVersion(int fd, const std::string &args)
+    {
+        string runtimeVer=getRuntimeVersion();
+        send(fd, runtimeVer.c_str(), runtimeVer.size(),0);
     }
     
     void onShutDownApp(int fd, const std::string &args)
