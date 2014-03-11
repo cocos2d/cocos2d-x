@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_gui_manual.hpp"
+#include "lua_cocos2dx_ui_manual.hpp"
 #include "cocos2d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
