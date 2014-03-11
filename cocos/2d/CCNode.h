@@ -807,7 +807,7 @@ public:
      *  node: A node that matches the name.
      *  stop: A pointer to a Boolean variable. Your callback can set this to YES to terminate the enumeration.
      */
-     virtual void EnumChildNodesByName(const std::string& name, std::function<void(Node* node, bool* stop)> callback);
+     virtual void enumChildNodesByName(const std::string& name, std::function<void(Node* node, bool* stop)> callback);
     /**
      * Returns a custom user data pointer
      *
