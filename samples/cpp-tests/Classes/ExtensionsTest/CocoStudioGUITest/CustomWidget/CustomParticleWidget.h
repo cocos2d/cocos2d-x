@@ -9,7 +9,7 @@
 #ifndef __CustomUI__CustomParticleWidget__
 #define __CustomUI__CustomParticleWidget__
 
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 
 class CustomParticleWidget : public cocos2d::ui::Widget
 {

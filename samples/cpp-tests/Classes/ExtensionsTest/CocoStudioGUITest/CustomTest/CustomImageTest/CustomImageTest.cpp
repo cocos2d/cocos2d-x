@@ -24,7 +24,7 @@ void CustomImageLayer::onEnter()
                                        CustomImageViewReader::getInstance(),
                                        parseselector(CustomImageViewReader::setProperties));
     
-    Layout* layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosgui/CustomImageViewTest/NewProject_2_1.ExportJson"));
+    Layout* layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/CustomImageViewTest/NewProject_2_1.ExportJson"));
     addChild(layout);        
 }
 

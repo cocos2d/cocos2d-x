@@ -6,7 +6,7 @@ const char* font_UIListViewTest =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 "Marker Felt";
 #else
-"cocosgui/Marker Felt.ttf";
+"cocosui/Marker Felt.ttf";
 #endif
 
 // UIListViewTest_Vertical
@@ -68,7 +68,7 @@ bool UIListViewTest_Vertical::init()
         listView->setDirection(SCROLLVIEW_DIR_VERTICAL);
         listView->setTouchEnabled(true);
         listView->setBounceEnabled(true);
-        listView->setBackGroundImage("cocosgui/green_edit.png");
+        listView->setBackGroundImage("cocosui/green_edit.png");
         listView->setBackGroundImageScale9Enabled(true);
         listView->setSize(Size(240, 130));
         listView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -83,7 +83,7 @@ bool UIListViewTest_Vertical::init()
         Button* default_button = Button::create();
         default_button->setName("Title Button");
         default_button->setTouchEnabled(true);
-        default_button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
+        default_button->loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "");
         
         Layout* default_item = Layout::create();
         default_item->setTouchEnabled(true);
@@ -112,7 +112,7 @@ bool UIListViewTest_Vertical::init()
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
             custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -131,7 +131,7 @@ bool UIListViewTest_Vertical::init()
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
             custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -246,7 +246,7 @@ bool UIListViewTest_Horizontal::init()
         listView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
         listView->setTouchEnabled(true);
         listView->setBounceEnabled(true);
-        listView->setBackGroundImage("cocosgui/green_edit.png");
+        listView->setBackGroundImage("cocosui/green_edit.png");
         listView->setBackGroundImageScale9Enabled(true);
         listView->setSize(Size(240, 130));
         listView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -261,7 +261,7 @@ bool UIListViewTest_Horizontal::init()
         Button* default_button = Button::create();
         default_button->setName("Title Button");
         default_button->setTouchEnabled(true);
-        default_button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
+        default_button->loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "");
         
         Layout *default_item = Layout::create();
         default_item->setTouchEnabled(true);
@@ -290,7 +290,7 @@ bool UIListViewTest_Horizontal::init()
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
             custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -309,7 +309,7 @@ bool UIListViewTest_Horizontal::init()
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
             custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             

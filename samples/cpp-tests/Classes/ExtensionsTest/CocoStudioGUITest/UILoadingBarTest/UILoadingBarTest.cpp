@@ -36,7 +36,7 @@ bool UILoadingBarTest_Left::init()
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create();
         loadingBar->setTag(0);
-        loadingBar->loadTexture("cocosgui/sliderProgress.png");
+        loadingBar->loadTexture("cocosui/sliderProgress.png");
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
@@ -118,7 +118,7 @@ bool UILoadingBarTest_Right::init()
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create();
         loadingBar->setTag(0);
-        loadingBar->loadTexture("cocosgui/sliderProgress.png");
+        loadingBar->loadTexture("cocosui/sliderProgress.png");
         loadingBar->setDirection(LoadingBarTypeRight);
         loadingBar->setPercent(0);
         
@@ -201,7 +201,7 @@ bool UILoadingBarTest_Left_Scale9::init()
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create();
         loadingBar->setTag(0);
-        loadingBar->loadTexture("cocosgui/slider_bar_active_9patch.png");
+        loadingBar->loadTexture("cocosui/slider_bar_active_9patch.png");
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
         loadingBar->setSize(Size(300, loadingBar->getContentSize().height));
@@ -286,7 +286,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create();
         loadingBar->setTag(0);
-        loadingBar->loadTexture("cocosgui/slider_bar_active_9patch.png");
+        loadingBar->loadTexture("cocosui/slider_bar_active_9patch.png");
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
         loadingBar->setSize(Size(300, loadingBar->getContentSize().height));

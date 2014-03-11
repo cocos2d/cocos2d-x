@@ -54,7 +54,7 @@ bool UIScrollViewTest_Vertical::init()
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create();
-        imageView->loadTexture("cocosgui/ccicon.png");
+        imageView->loadTexture("cocosui/ccicon.png");
         
         float innerWidth = scrollView->getSize().width;
         float innerHeight = scrollView->getSize().height + imageView->getSize().height;
@@ -63,13 +63,13 @@ bool UIScrollViewTest_Vertical::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(innerWidth / 2.0f, scrollView->getInnerContainerSize().height - button->getSize().height / 2.0f));
         scrollView->addChild(button);
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(Point(innerWidth / 2.0f, button->getBottomInParent() - button->getSize().height));
         scrollView->addChild(titleButton);
@@ -77,7 +77,7 @@ bool UIScrollViewTest_Vertical::init()
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
         button_scale9->setScale9Enabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         button_scale9->setPosition(Point(innerWidth / 2.0f, titleButton->getBottomInParent() - titleButton->getSize().height));
         scrollView->addChild(button_scale9);
@@ -144,7 +144,7 @@ bool UIScrollViewTest_Horizontal::init()
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create();
-        imageView->loadTexture("cocosgui/ccicon.png");
+        imageView->loadTexture("cocosui/ccicon.png");
         
         float innerWidth = scrollView->getSize().width + imageView->getSize().width;
         float innerHeight = scrollView->getSize().height;
@@ -153,14 +153,14 @@ bool UIScrollViewTest_Horizontal::init()
         
         Button* button = Button::create();
         button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
         button->setPosition(Point(button->getSize().width / 2.0f,
                                 scrollView->getInnerContainerSize().height - button->getSize().height / 2.0f));
         scrollView->addChild(button);
         
         Button* titleButton = Button::create();
         titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        titleButton->loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(Point(button->getRightInParent() + button->getSize().width / 2.0f,
                                     button->getBottomInParent() - button->getSize().height / 2.0f));
@@ -169,7 +169,7 @@ bool UIScrollViewTest_Horizontal::init()
         Button* button_scale9 = Button::create();
         button_scale9->setTouchEnabled(true);
         button_scale9->setScale9Enabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
         button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
         button_scale9->setPosition(Point(titleButton->getRightInParent() + titleButton->getSize().width / 2.0f,
                                        titleButton->getBottomInParent() - titleButton->getSize().height / 2.0f));
@@ -230,7 +230,7 @@ bool UIScrollViewTest_Both::init()
         scrollView->setTouchEnabled(true);
         scrollView->setBounceEnabled(true);
         scrollView->setBackGroundImageScale9Enabled(true);
-        scrollView->setBackGroundImage("cocosgui/green_edit.png");
+        scrollView->setBackGroundImage("cocosui/green_edit.png");
         scrollView->setSize(Size(210, 122.5));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Point((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -306,7 +306,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
                               (backgroundSize.height - sc->getSize().height) / 2.0f));
         sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
         ImageView* iv = ImageView::create();
-        iv->loadTexture("cocosgui/Hello.png");
+        iv->loadTexture("cocosui/Hello.png");
         iv->setPosition(Point(240, 160));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
@@ -369,7 +369,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
                               (backgroundSize.height - sc->getSize().height) / 2.0f));
         sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
         ImageView* iv = ImageView::create();
-        iv->loadTexture("cocosgui/Hello.png");
+        iv->loadTexture("cocosui/Hello.png");
         iv->setPosition(Point(240, 160));
         sc->addChild(iv);
         _uiLayer->addChild(sc);
