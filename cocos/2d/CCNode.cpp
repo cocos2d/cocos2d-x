@@ -732,7 +732,7 @@ Node* Node::getChildByName(const std::string& name)
     return nullptr;
 }
 
-void Node::EnumChildNodesByName(const std::string& name, std::function<void(Node* node, bool* stop)> callback)
+void Node::enumChildNodesByName(const std::string& name, std::function<void(Node* node, bool* stop)> callback)
 {
     for (auto& child : _children)
     {
@@ -746,7 +746,7 @@ void Node::EnumChildNodesByName(const std::string& name, std::function<void(Node
                 return;
             }
         }
-        child->EnumChildNodesByName(name, callback);
+        child->enumChildNodesByName(name, callback);
     }
     return;
 }

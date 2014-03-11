@@ -392,8 +392,8 @@ void NodeEnumChildByNameTest::onEnter()
     auto fn1 = std::bind(&NodeEnumChildByNameTest::runAction1, this, std::placeholders::_1, std::placeholders::_2);
     auto fn2 = std::bind(&NodeEnumChildByNameTest::runAction2, this, std::placeholders::_1, std::placeholders::_2);
     
-    EnumChildNodesByName("sister1", fn1);
-    EnumChildNodesByName("sister2", fn2);
+    enumChildNodesByName("sister1", fn1);
+    enumChildNodesByName("sister2", fn2);
 }
 
 void NodeEnumChildByNameTest::runAction1(Node* node, bool* stop)
