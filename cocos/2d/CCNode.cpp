@@ -715,7 +715,6 @@ Node* Node::getChildByTag(int tag)
 
 Node* Node::getChildByName(const std::string& name)
 {
-
     for (auto& child : _children)
     {
    
@@ -731,6 +730,25 @@ Node* Node::getChildByName(const std::string& name)
         }
     }
     return nullptr;
+}
+
+void Node::EnumChildNodesByName(const std::string& name, std::function<void(Node* node, bool* stop)> callback)
+{
+    for (auto& child : _children)
+    {
+   
+        if(child->_name == name)
+        {
+            bool stop = false;
+            callback(child, &stop);
+            if(stop == true)
+            {
+                return;
+            }
+        }
+        child->EnumChildNodesByName(name, callback);
+    }
+    return;
 }
 
 /* "add" logic MUST only be on this method
