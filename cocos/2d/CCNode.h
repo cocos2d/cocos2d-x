@@ -789,17 +789,25 @@ public:
      player = parent->getChildByName("player")
      @endcode
      *
-     * @return A C string that identifies the node.
+     * @return A  string that identifies the node.
      */
     virtual std::string& getName();
     /**
-     * Changes the string TAG that is used to identify the node easily.
+     * Changes the name that is used to identify the node easily.
      *
-     * Please refer to getLabel for the sample code.
+     * Please refer to getName for the sample code.
      *
      * @param name  A  string that indentifies the node.
      */
     virtual void setName(const std::string& name);
+    /**
+     * Search the children to perform processing for nodes which share a name.
+     * @param name  the name to search for
+     * @param callback, A callback to execute on nodes that match the name parameter. The callback takes the following arguments:
+     *  node: A node that matches the name.
+     *  stop: A pointer to a Boolean variable. Your callback can set this to YES to terminate the enumeration.
+     */
+     virtual void EnumChildNodesByName(const std::string& name, std::function<void(Node* node, bool* stop)> callback);
     /**
      * Returns a custom user data pointer
      *

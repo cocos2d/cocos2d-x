@@ -263,6 +263,16 @@ protected:
     Sprite *_sprite;
 };
 
+class NodeEnumChildByNameTest : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeEnumChildByNameTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    void runAction1(Node* node, bool* stop);
+    void runAction2(Node* node, bool* stop);
+};
+
 class CocosNodeTestScene : public TestScene
 {
 public:
