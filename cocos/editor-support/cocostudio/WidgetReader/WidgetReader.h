@@ -27,8 +27,8 @@
 
 #include "WidgetReaderProtocol.h"
 #include "../CCSGUIReader.h"
-#include "gui/GUIDefine.h"
-#include "gui/UIWidget.h"
+#include "ui/GUIDefine.h"
+#include "ui/UIWidget.h"
 
 namespace cocostudio
 {

@@ -67,10 +67,10 @@ extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue);
 extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMaterial* outValue);
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue);
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue );
-extern bool luaval_to_array(lua_State* L,int lo, Array** outValue);
-extern bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue);
+extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue);
+extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue);
 extern bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints);
-extern bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret);
+extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 
 template <class T>
@@ -224,8 +224,8 @@ extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo
 extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data);
 extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue);
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
-extern void array_to_luaval(lua_State* L,Array* inValue);
-extern void dictionary_to_luaval(lua_State* L, Dictionary* dict);
+extern void array_to_luaval(lua_State* L, __Array* inValue);
+extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
 
 template <class T>
 void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)

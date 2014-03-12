@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "cocostudio/CCSGUIReader.h"
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 #include "cocostudio/CCActionManagerEx.h"
 #include <fstream>
 #include <iostream>

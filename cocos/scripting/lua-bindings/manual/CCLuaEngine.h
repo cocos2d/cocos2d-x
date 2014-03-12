@@ -113,10 +113,10 @@ public:
 
     virtual int executeNodeEvent(Node* pNode, int nAction);
     virtual int executeMenuItemEvent(MenuItem* pMenuItem);
-    virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName);
+    virtual int executeNotificationEvent(__NotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CallFunc* pAction, Ref* pTarget = NULL);
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
-    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches);
+    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, __Set *pTouches);
     virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch);
     virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
     /** execute a accelerometer event */

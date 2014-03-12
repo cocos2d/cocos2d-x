@@ -672,11 +672,6 @@
 
 
 --------------------------------------------------------
--- the cc Sprite
--- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
-
-
---------------------------------------------------------
 -- the cc LabelTTF
 -- @field [parent=#cc] LabelTTF#LabelTTF LabelTTF preloaded module
 
@@ -954,6 +949,11 @@
 --------------------------------------------------------
 -- the cc MotionStreak
 -- @field [parent=#cc] MotionStreak#MotionStreak MotionStreak preloaded module
+
+
+--------------------------------------------------------
+-- the cc Sprite
+-- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
 
 
 --------------------------------------------------------

@@ -36,7 +36,7 @@ TriggerMng* TriggerMng::_sharedTriggerMng = nullptr;
 TriggerMng::TriggerMng(void)
 : _movementDispatches(new std::unordered_map<Armature*, ArmatureMovementDispatcher*>)
 {
-    _eventDispatcher = CCDirector::getInstance()->getEventDispatcher();
+    _eventDispatcher = Director::getInstance()->getEventDispatcher();
     _eventDispatcher->retain();
 }
 
