@@ -47,7 +47,9 @@ void GLESDebugDraw::initShader( void )
 
 void GLESDebugDraw::resetVertexBuffers()
 {
-    glBindVertexArray(0);
+#if CC_TEXTURE_ATLAS_USE_VAO
+    ccGLBindVAO(0);
+#endif
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
