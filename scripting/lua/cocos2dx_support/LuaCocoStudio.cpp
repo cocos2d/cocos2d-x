@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Fri Mar  7 11:07:43 2014.
+** Generated automatically by tolua++-1.0.92 on Wed Mar 12 16:46:14 2014.
 */
 
 /****************************************************************************
@@ -23926,7 +23926,8 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"LISTVIEW_GRAVITY_TOP",LISTVIEW_GRAVITY_TOP);
   tolua_constant(tolua_S,"LISTVIEW_GRAVITY_BOTTOM",LISTVIEW_GRAVITY_BOTTOM);
   tolua_constant(tolua_S,"LISTVIEW_GRAVITY_CENTER_VERTICAL",LISTVIEW_GRAVITY_CENTER_VERTICAL);
-  tolua_constant(tolua_S,"LISTVIEW_ONSELECTEDITEM",LISTVIEW_ONSELECTEDITEM);
+  tolua_constant(tolua_S,"LISTVIEW_ONSELECTEDITEM_START",LISTVIEW_ONSELECTEDITEM_START);
+  tolua_constant(tolua_S,"LISTVIEW_ONSELECTEDITEM_END",LISTVIEW_ONSELECTEDITEM_END);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"ListView","ListView","ScrollView",tolua_collect_ListView);
   #else
