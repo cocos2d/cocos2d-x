@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 
 #include <algorithm>
-
+#include <regex>
 #include "CCString.h"
 #include "ccCArray.h"
 #include "TransformUtils.h"
@@ -734,10 +734,11 @@ Node* Node::getChildByName(const std::string& name)
 
 void Node::enumerateChildrenByName(const std::string& name, const std::function<void(Node* node, bool* stop)>& callback)
 {
+    std::regex r(name);
     for (auto& child : _children)
     {
    
-        if(child->_name == name)
+        if(regex_match(child->_name, r))    
         {
             bool stop = false;
             callback(child, &stop);
