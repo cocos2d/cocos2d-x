@@ -12,7 +12,8 @@ typedef enum
     
 typedef enum
 {
-    LISTVIEW_ONSELECTEDITEM
+    LISTVIEW_ONSELECTEDITEM_START,
+    LISTVIEW_ONSELECTEDITEM_END,
 }ListViewEventType;
 
 class ListView : public ScrollView
