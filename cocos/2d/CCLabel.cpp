@@ -982,20 +982,30 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
 
 void Label::setFontName(const std::string& fontName)
 {
-    _fontDefinition._fontName = fontName;
     if (fontName.find('.') != fontName.npos)
     {
         auto config = _fontConfig;
         config.fontFilePath = fontName;
-        setTTFConfig(config);
+        if (setTTFConfig(config))
+        {
+            return;
+        }
     }
-    _contentDirty = true;
+    if (_fontDefinition._fontName != fontName)
+    {
+        _fontDefinition._fontName = fontName;
+        _contentDirty = true;
+    }
 }
 
 void Label::setFontSize(int fontSize)
 {
     if (_currentLabelType == LabelType::TTF)
     {
+        if (_fontConfig.fontSize == fontSize)
+        {
+            return;
+        }
         if (_fontConfig.distanceFieldEnabled)
         {
             _fontConfig.fontSize = fontSize;
@@ -1008,7 +1018,7 @@ void Label::setFontSize(int fontSize)
             setTTFConfig(fontConfig);
         }
     }
-    else
+    else if(_fontDefinition._fontSize != fontSize)
     {
         _fontDefinition._fontSize = fontSize;
         _fontConfig.fontSize = fontSize;
