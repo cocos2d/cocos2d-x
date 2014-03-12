@@ -72,12 +72,4 @@ public: \
 #define CREATE_CLASS_WIDGET_READER_INFO(className) \
     cocos2d::extension::ObjectFactory::TInfo(#className, &className::createInstance)
 
-
-
-
-
-
-//#define CUSTOM_GUI_PARSE_FUNCTION(className, functionName) \
-//    className::functionName \
-
 #endif /* defined(__TestCpp__GUIDefine__) */
