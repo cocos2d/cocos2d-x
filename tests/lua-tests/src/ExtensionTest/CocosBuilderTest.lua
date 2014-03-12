@@ -30,7 +30,7 @@ ccb["TestScrollViewsLayer"] = TestScrollViewsLayer
 
 local function onMenuItemAClicked()
     if nil ~= TestMenusLayer["mMenuItemStatusLabelBMFont"] then
-        local labelBmFt = tolua.cast(TestMenusLayer["mMenuItemStatusLabelBMFont"],"cc.LabelBMFont")
+        local labelBmFt = TestMenusLayer["mMenuItemStatusLabelBMFont"]
         if nil ~= labelBmFt then
             labelBmFt:setString("Menu Item A clicked.");
         end
@@ -39,7 +39,7 @@ end
 
 local function onMenuItemBClicked()
     if nil ~= TestMenusLayer["mMenuItemStatusLabelBMFont"] then
-        local labelBmFt = tolua.cast(TestMenusLayer["mMenuItemStatusLabelBMFont"],"cc.LabelBMFont")
+        local labelBmFt = TestMenusLayer["mMenuItemStatusLabelBMFont"]
         if nil ~= labelBmFt then
             labelBmFt:setString("Menu Item B clicked.");
         end
@@ -48,7 +48,7 @@ end
 
 local function pressedC( ... )
     if nil ~= TestMenusLayer["mMenuItemStatusLabelBMFont"] then
-        local labelBmFt = tolua.cast(TestMenusLayer["mMenuItemStatusLabelBMFont"],"cc.LabelBMFont")
+        local labelBmFt = TestMenusLayer["mMenuItemStatusLabelBMFont"]
         if nil ~= labelBmFt then
             labelBmFt:setString("Menu Item C clicked.");
         end
@@ -59,9 +59,9 @@ local function onMenuTestClicked()
     local scene = cc.Scene:create()
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestMenus.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     if nil ~= HelloCocosBuilderLayer["mTestTitleLabelTTF"] then
-        local ccLabelTTF = tolua.cast(HelloCocosBuilderLayer["mTestTitleLabelTTF"],"cc.LabelTTF")
+        local ccLabelTTF = HelloCocosBuilderLayer["mTestTitleLabelTTF"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:setString("ccb/ccb/TestMenus.ccbi")
         end
@@ -88,9 +88,9 @@ local function onSpriteTestClicked()
     local scene  = cc.Scene:create()
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestSprites.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     if nil ~= HelloCocosBuilderLayer["mTestTitleLabelTTF"] then
-        local ccLabelTTF = tolua.cast(HelloCocosBuilderLayer["mTestTitleLabelTTF"],"cc.LabelTTF")
+        local ccLabelTTF = HelloCocosBuilderLayer["mTestTitleLabelTTF"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:setString("ccb/ccb/TestSprites.ccbi")
         end
@@ -107,9 +107,9 @@ local function onButtonTestClicked()
     local scene  = cc.Scene:create()
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestButtons.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     if nil ~= HelloCocosBuilderLayer["mTestTitleLabelTTF"] then
-        local ccLabelTTF = tolua.cast(HelloCocosBuilderLayer["mTestTitleLabelTTF"],"cc.LabelTTF")
+        local ccLabelTTF = HelloCocosBuilderLayer["mTestTitleLabelTTF"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:setString("ccb/ccb/TestButtons.ccbi")
         end
@@ -122,7 +122,7 @@ local function onButtonTestClicked()
 end
 
 local function onCCControlButtonClicked(sender,controlEvent)
-    local labelTTF = tolua.cast(TestButtonsLayer["mCCControlEventLabel"],"cc.LabelBMFont")
+    local labelTTF = TestButtonsLayer["mCCControlEventLabel"]
 
     if nil == labelTTF then
         return
@@ -158,9 +158,9 @@ local function onAnimationsTestClicked()
     local scene  = cc.Scene:create()
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestAnimations.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     if nil ~= HelloCocosBuilderLayer["mTestTitleLabelTTF"] then
-        local ccLabelTTF = tolua.cast(HelloCocosBuilderLayer["mTestTitleLabelTTF"],"cc.LabelTTF")
+        local ccLabelTTF = HelloCocosBuilderLayer["mTestTitleLabelTTF"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:setString("ccb/ccb/TestAnimations.ccbi")
         end
@@ -177,9 +177,9 @@ local function onParticleSystemTestClicked()
     local scene  = cc.Scene:create()
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestParticleSystems.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     if nil ~= HelloCocosBuilderLayer["mTestTitleLabelTTF"] then
-        local ccLabelTTF = tolua.cast(HelloCocosBuilderLayer["mTestTitleLabelTTF"],"cc.LabelTTF")
+        local ccLabelTTF = HelloCocosBuilderLayer["mTestTitleLabelTTF"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:setString("ccb/ccb/TestParticleSystems.ccbi")
         end
@@ -193,7 +193,7 @@ end
 
 local function onCCControlButtonIdleClicked()
     if nil ~= TestAnimationsLayer["mAnimationManager"] then
-        local animationMgr = tolua.cast(TestAnimationsLayer["mAnimationManager"],"cc.CCBAnimationManager")
+        local animationMgr = TestAnimationsLayer["mAnimationManager"]
         if nil ~= animationMgr then
             animationMgr:runAnimationsForSequenceNamedTweenDuration("Idle", 0.3)
         end
@@ -202,7 +202,7 @@ end
 
 local function onCCControlButtonWaveClicked()
     if nil ~= TestAnimationsLayer["mAnimationManager"] then
-        local animationMgr = tolua.cast(TestAnimationsLayer["mAnimationManager"],"cc.CCBAnimationManager")
+        local animationMgr = TestAnimationsLayer["mAnimationManager"]
         if nil ~= animationMgr then
             animationMgr:runAnimationsForSequenceNamedTweenDuration("Wave", 0.3)
         end
@@ -211,7 +211,7 @@ end
 
 local function onCCControlButtonJumpClicked()
     if nil ~= TestAnimationsLayer["mAnimationManager"] then
-        local animationMgr = tolua.cast(TestAnimationsLayer["mAnimationManager"],"cc.CCBAnimationManager")
+        local animationMgr = TestAnimationsLayer["mAnimationManager"]
         if nil ~= animationMgr then
             animationMgr:runAnimationsForSequenceNamedTweenDuration("Jump", 0.3)
         end
@@ -220,7 +220,7 @@ end
 
 local function onCCControlButtonFunkyClicked()
     if nil ~= TestAnimationsLayer["mAnimationManager"] then
-        local animationMgr = tolua.cast(TestAnimationsLayer["mAnimationManager"],"cc.CCBAnimationManager")
+        local animationMgr = TestAnimationsLayer["mAnimationManager"]
         if nil ~= animationMgr then
             animationMgr:runAnimationsForSequenceNamedTweenDuration("Funky", 0.3)
         end
@@ -237,9 +237,9 @@ local function onScrollViewTestClicked()
     local scene  = cc.Scene:create()
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestScrollViews.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     if nil ~= HelloCocosBuilderLayer["mTestTitleLabelTTF"] then
-        local ccLabelTTF = tolua.cast(HelloCocosBuilderLayer["mTestTitleLabelTTF"],"cc.LabelTTF")
+        local ccLabelTTF = HelloCocosBuilderLayer["mTestTitleLabelTTF"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:setString("ccb/ccb/TestScrollViews.ccbi")
         end
@@ -256,9 +256,9 @@ local function onTimelineCallbackSoundClicked()
     local scene  = cc.Scene:create()
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/ccb/TestTimelineCallback.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     if nil ~= HelloCocosBuilderLayer["mTestTitleLabelTTF"] then
-        local ccLabelTTF = tolua.cast(HelloCocosBuilderLayer["mTestTitleLabelTTF"],"cc.LabelTTF")
+        local ccLabelTTF = HelloCocosBuilderLayer["mTestTitleLabelTTF"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:setString("ccb/ccb/TestTimelineCallback.ccbi")
         end
@@ -272,7 +272,7 @@ end
 
 function onCallback1()
     if nil ~= TestTimelineLayer["helloLabel"] then
-        local ccLabelTTF = tolua.cast(TestTimelineLayer["helloLabel"],"cc.LabelTTF")
+        local ccLabelTTF = TestTimelineLayer["helloLabel"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:runAction(cc.RotateBy:create(1, 360))
             ccLabelTTF:setString("Callback 1");
@@ -282,7 +282,7 @@ end
 
 function onCallback2()
     if nil ~= TestTimelineLayer["helloLabel"] then
-        local ccLabelTTF = tolua.cast(TestTimelineLayer["helloLabel"],"cc.LabelTTF")
+        local ccLabelTTF = TestTimelineLayer["helloLabel"]
         if nil ~= ccLabelTTF then
             ccLabelTTF:runAction(cc.RotateBy:create(2, 360))
             ccLabelTTF:setString("Callback 2");
@@ -306,7 +306,7 @@ local function HelloCCBTestMainLayer()
     print(type(cc.Scene))
     local  proxy = cc.CCBProxy:create()
     local  node  = CCBReaderLoad("cocosbuilderRes/ccb/HelloCocosBuilder.ccbi",proxy,HelloCocosBuilderLayer)
-    local  layer = tolua.cast(node,"cc.Layer")
+    local  layer = node
     return layer
 end
 
