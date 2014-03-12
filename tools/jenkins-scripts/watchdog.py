@@ -6,12 +6,14 @@ import os
 
 def main():
     
-    J = Jenkins('http://115.28.134.83:8000','redmine','cocos2dx2013')
+    J = Jenkins('http://115.28.134.83:8000')
     job = J['cocos-2dx-pull-request-build']
     duration = os.environ['duration']
     #Get the numerical ID of the last build.
     buildnu = job.get_last_buildnumber()
+    #Get the last build
     build = job.get_last_build()
+    #Get the build running
     running = build.is_running()
     print 'running:',running
 
