@@ -68,7 +68,8 @@ local function LayerTestCascadingOpacityA()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt", "Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -109,7 +110,8 @@ local function LayerTestCascadingOpacityB()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -142,7 +144,8 @@ local function LayerTestCascadingOpacityC()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -172,7 +175,8 @@ local function LayerTestCascadingColorA()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -218,7 +222,8 @@ local function LayerTestCascadingColorB()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -263,7 +268,8 @@ local function LayerTestCascadingColorC()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
