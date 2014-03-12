@@ -1,7 +1,7 @@
 
 
 #include "ScrollViewReader.h"
-#include "gui/UIScrollView.h"
+#include "ui/UIScrollView.h"
 
 USING_NS_CC;
 using namespace ui;

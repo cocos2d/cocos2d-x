@@ -1,7 +1,7 @@
 
 
 #include "TextReader.h"
-#include "gui/UIText.h"
+#include "ui/UIText.h"
 
 USING_NS_CC;
 using namespace ui;

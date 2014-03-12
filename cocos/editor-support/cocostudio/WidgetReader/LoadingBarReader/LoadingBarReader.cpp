@@ -1,7 +1,7 @@
 
 
 #include "LoadingBarReader.h"
-#include "gui/UILoadingBar.h"
+#include "ui/UILoadingBar.h"
 
 USING_NS_CC;
 using namespace ui;

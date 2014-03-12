@@ -362,13 +362,14 @@ void EditBoxImplIOS::setInactiveText(const char* pText)
         _label->setString(getText());
 
     // Clip the text width to fit to the text box
-    float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
-    Rect clippingRect = _label->getTextureRect();
-    if(clippingRect.size.width > fMaxWidth)
-    {
-        clippingRect.size.width = fMaxWidth;
-        _label->setTextureRect(clippingRect);
-    }
+    // FIXME: After re-implement LabelTTF by Label, '(g|s)etTextureRect' will not work, it's because LabelTTF is inherited from Node rather than Sprite now.
+    // float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
+    // Rect clippingRect = _label->getTextureRect();
+    // if(clippingRect.size.width > fMaxWidth)
+    // {
+    //     clippingRect.size.width = fMaxWidth;
+    //     _label->setTextureRect(clippingRect);
+    // }
 }
 
 void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
@@ -574,7 +575,7 @@ static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bI
         screenPos.x = screenPos.x / 2.0f;
         screenPos.y = screenPos.y / 2.0f;
     }
-    CCLOG("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
+    CCLOGINFO("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
 }
 
