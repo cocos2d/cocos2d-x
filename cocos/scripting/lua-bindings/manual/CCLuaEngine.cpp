@@ -33,7 +33,7 @@
 #include "lua_cocos2dx_manual.hpp"
 #include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_gui_manual.hpp"
+#include "lua_cocos2dx_ui_manual.hpp"
 
 NS_CC_BEGIN
 

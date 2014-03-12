@@ -1,7 +1,7 @@
 
 
 #include "ImageViewReader.h"
-#include "gui/UIImageView.h"
+#include "ui/UIImageView.h"
 
 USING_NS_CC;
 using namespace ui;
