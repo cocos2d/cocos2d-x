@@ -940,7 +940,7 @@ void Label::updateContent()
 
 void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
-    if (! _visible || _originalUTF8String.length() == 0)
+    if (! _visible || _originalUTF8String.empty())
     {
         return;
     }
@@ -1005,10 +1005,8 @@ const std::string& Label::getFontName() const
 {
     switch (_currentLabelType)
     {
-    case cocos2d::Label::LabelType::TTF:
+    case LabelType::TTF:
         return _fontConfig.fontFilePath;
-    case cocos2d::Label::LabelType::STRING_TEXTURE:
-        return _fontDefinition._fontName;
     default:
         return _fontDefinition._fontName;
     }
@@ -1046,9 +1044,9 @@ int Label::getFontSize() const
 {
     switch (_currentLabelType)
     {
-    case cocos2d::Label::LabelType::TTF:
+    case LabelType::TTF:
         return _fontConfig.fontSize;
-    case cocos2d::Label::LabelType::STRING_TEXTURE:
+    case LabelType::STRING_TEXTURE:
         return _fontDefinition._fontSize;
     default:
         return 0;
