@@ -31,8 +31,8 @@ class PageView : public Layout , public UIScrollInterface
     virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
     
     virtual void update(float dt);
-    virtual void setLayoutType(LayoutType type){};
-    virtual LayoutType getLayoutType() const {return LAYOUT_ABSOLUTE;};
+    virtual void setLayoutType(LayoutType type);
+    virtual LayoutType getLayoutType() const;
     virtual std::string getDescription() const;
 
 };

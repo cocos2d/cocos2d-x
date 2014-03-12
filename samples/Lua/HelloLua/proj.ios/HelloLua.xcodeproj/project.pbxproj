@@ -11,6 +11,7 @@
 		150E36F417F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150E36F217F27AB60021A6EA /* lua_cocos2dx_extensions_manual.cpp */; };
 		1515AC291847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1515AC251847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp */; };
 		1515AC2A1847277400E1CD27 /* LuaCocoStudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1515AC271847277400E1CD27 /* LuaCocoStudio.cpp */; };
+		1583F15818D09DAC00F3D630 /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1583F15618D09DAC00F3D630 /* UIRichText.cpp */; };
 		15A3DB9F1682FB86002FB0C5 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB3A1682FB86002FB0C5 /* CDAudioManager.m */; };
 		15A3DBA01682FB86002FB0C5 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB3D1682FB86002FB0C5 /* CDOpenALSupport.m */; };
 		15A3DBA11682FB86002FB0C5 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DB3F1682FB86002FB0C5 /* CocosDenshion.m */; };
@@ -243,6 +244,8 @@
 		1515AC261847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_cocostudio_manual.h; sourceTree = "<group>"; };
 		1515AC271847277400E1CD27 /* LuaCocoStudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCocoStudio.cpp; sourceTree = "<group>"; };
 		1515AC281847277400E1CD27 /* LuaCocoStudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocoStudio.h; sourceTree = "<group>"; };
+		1583F15618D09DAC00F3D630 /* UIRichText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichText.cpp; sourceTree = "<group>"; };
+		1583F15718D09DAC00F3D630 /* UIRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichText.h; sourceTree = "<group>"; };
 		15A3DB161682FB66002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3DB361682FB86002FB0C5 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15A3DB371682FB86002FB0C5 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
@@ -1573,6 +1576,8 @@
 				ED531405183311CE008CD8A5 /* UILabelBMFont.h */,
 				ED531406183311CE008CD8A5 /* UILoadingBar.cpp */,
 				ED531407183311CE008CD8A5 /* UILoadingBar.h */,
+				1583F15618D09DAC00F3D630 /* UIRichText.cpp */,
+				1583F15718D09DAC00F3D630 /* UIRichText.h */,
 				ED531408183311CE008CD8A5 /* UISlider.cpp */,
 				ED531409183311CE008CD8A5 /* UISlider.h */,
 				ED53140C183311CE008CD8A5 /* UITextField.cpp */,
@@ -1860,6 +1865,7 @@
 				ED531449183311CE008CD8A5 /* UILayout.cpp in Sources */,
 				464EA46B175DC6D5004C192B /* cpPivotJoint.c in Sources */,
 				464EA46C175DC6D5004C192B /* cpRatchetJoint.c in Sources */,
+				1583F15818D09DAC00F3D630 /* UIRichText.cpp in Sources */,
 				464EA46D175DC6D5004C192B /* cpRotaryLimitJoint.c in Sources */,
 				464EA46E175DC6D5004C192B /* cpSimpleMotor.c in Sources */,
 				ED53144C183311CE008CD8A5 /* CocosGUI.cpp in Sources */,
