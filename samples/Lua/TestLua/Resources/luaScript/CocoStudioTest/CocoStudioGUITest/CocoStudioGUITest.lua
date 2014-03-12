@@ -2570,7 +2570,9 @@ function UIListViewVerticalTest:initExtend()
                               (backgroundSize.height - lv:getSize().height) / 2))
 
     local function listViewEvent(sender, eventType)
-        if eventType == LISTVIEW_ONSELECTEDITEM then
+        if eventType == LISTVIEW_ONSELECTEDITEM_START then
+            print("select child index = ",sender:getCurSelectedIndex())
+        elseif eventType == LISTVIEW_ONSELECTEDITEM_END then
             print("select child index = ",sender:getCurSelectedIndex())
         end
     end
@@ -2733,8 +2735,10 @@ function UIListViewHorizontalTest:initExtend()
                               (backgroundSize.height - lv:getSize().height) / 2))
 
     local function listViewEvent(sender, eventType)
-        if eventType == LISTVIEW_ONSELECTEDITEM then
-            print("select child index = ", sender:getCurSelectedIndex())
+        if eventType == LISTVIEW_ONSELECTEDITEM_START then
+            print("select child index = ",sender:getCurSelectedIndex())
+        elseif eventType == LISTVIEW_ONSELECTEDITEM_END then
+            print("select child index = ",sender:getCurSelectedIndex())
         end
     end
     lv:addEventListenerListView(listViewEvent)
