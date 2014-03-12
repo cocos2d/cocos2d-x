@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CocoStudio.h"
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 #include "SimpleAudioEngine.h"
 #include "ObjectFactory.h"
 

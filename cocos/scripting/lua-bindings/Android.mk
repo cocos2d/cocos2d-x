@@ -20,7 +20,7 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           manual/lua_cocos2dx_manual.cpp \
           manual/lua_cocos2dx_extension_manual.cpp \
           manual/lua_cocos2dx_coco_studio_manual.cpp \
-          manual/lua_cocos2dx_gui_manual.cpp \
+          manual/lua_cocos2dx_ui_manual.cpp \
           manual/lua_cocos2dx_spine_manual.cpp \
           manual/lua_cocos2dx_physics_manual.cpp \
           manual/lua_cocos2dx_deprecated.cpp \
@@ -32,7 +32,7 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           auto/lua_cocos2dx_auto.cpp \
           auto/lua_cocos2dx_extension_auto.cpp \
           auto/lua_cocos2dx_studio_auto.cpp \
-          auto/lua_cocos2dx_gui_auto.cpp \
+          auto/lua_cocos2dx_ui_auto.cpp \
           auto/lua_cocos2dx_spine_auto.cpp \
           auto/lua_cocos2dx_physics_auto.cpp \
           ../../../external/lua/tolua/tolua_event.c \
@@ -65,7 +65,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../editor-support/spine \
                     $(LOCAL_PATH)/../../editor-support/cocosbuilder \
                     $(LOCAL_PATH)/../../editor-support/cocostudio \
-                    $(LOCAL_PATH)/../../gui \
+                    $(LOCAL_PATH)/../../ui \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/platform/android \

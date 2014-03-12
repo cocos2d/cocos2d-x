@@ -3,7 +3,7 @@
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
 #include "cocostudio/CocoStudio.h"
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 #include "TriggerCode/EventDef.h"
 #include "../../testResource.h"
 

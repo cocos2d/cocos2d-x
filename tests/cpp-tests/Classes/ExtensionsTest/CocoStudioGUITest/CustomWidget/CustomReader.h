@@ -5,7 +5,7 @@
 
 #include "extensions/cocos-ext.h"
 #include "cocostudio/DictionaryHelper.h"
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
