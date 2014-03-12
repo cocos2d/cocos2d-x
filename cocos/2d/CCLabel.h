@@ -197,10 +197,10 @@ public:
     virtual void updateContent();
 
     virtual void setFontName(const std::string& fontName);
-    virtual const std::string& getFontName() const { return _fontDefinition._fontName;}
+    virtual const std::string& getFontName() const;
 
     virtual void setFontSize(int fontSize);
-    virtual int getFontSize() const { return _fontDefinition._fontSize;}
+    virtual int getFontSize() const;
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
