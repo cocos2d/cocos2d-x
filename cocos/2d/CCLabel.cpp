@@ -273,6 +273,8 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _textSprite(nullptr)
 , _contentDirty(false)
 , _currentLabelType(LabelType::STRING_TEXTURE)
+, _currLabelEffect(LabelEffect::NORMAL)
+, _shadowBlurRadius(0)
 {
     _cascadeColorEnabled = true;
     _batchNodes.push_back(this);
@@ -938,7 +940,7 @@ void Label::updateContent()
 
 void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
-    if (! _visible)
+    if (! _visible || _originalUTF8String.length() == 0)
     {
         return;
     }
@@ -999,6 +1001,19 @@ void Label::setFontName(const std::string& fontName)
     }
 }
 
+const std::string& Label::getFontName() const
+{
+    switch (_currentLabelType)
+    {
+    case cocos2d::Label::LabelType::TTF:
+        return _fontConfig.fontFilePath;
+    case cocos2d::Label::LabelType::STRING_TEXTURE:
+        return _fontDefinition._fontName;
+    default:
+        return _fontDefinition._fontName;
+    }
+}
+
 void Label::setFontSize(int fontSize)
 {
     if (_currentLabelType == LabelType::TTF)
@@ -1024,6 +1039,19 @@ void Label::setFontSize(int fontSize)
         _fontDefinition._fontSize = fontSize;
         _fontConfig.fontSize = fontSize;
         _contentDirty = true;
+    }
+}
+
+int Label::getFontSize() const
+{
+    switch (_currentLabelType)
+    {
+    case cocos2d::Label::LabelType::TTF:
+        return _fontConfig.fontSize;
+    case cocos2d::Label::LabelType::STRING_TEXTURE:
+        return _fontDefinition._fontSize;
+    default:
+        return 0;
     }
 }
 
