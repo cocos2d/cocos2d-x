@@ -43,7 +43,7 @@ class CocosFileList:
         self.fileList_com=[]
         self.fileList_lua=[]
 
-        self.luaPath ="cocos/scripting/lua-bindings"
+        self.luaPath = ["cocos/scripting/lua-bindings", "external/lua"]
 
     def readIngoreFile(self, fileName):
         """
@@ -88,7 +88,12 @@ class CocosFileList:
                       self.__bInclude(item) or
                       self.__bInclude("%s/" %item)
                     ):
-                        if relativePath.upper().find(self.luaPath.upper())==0:
+                        foundLuaModule = False
+                        for luaPath in self.luaPath:
+                            if relativePath.upper().find(luaPath.upper()) == 0:
+                                foundLuaModule = True
+                                break
+                        if foundLuaModule:
                             self.fileList_lua.append("%s/" %relativePath)
                         else:
                             self.fileList_com.append("%s/" %relativePath)
@@ -112,7 +117,12 @@ class CocosFileList:
                         ):
                             continue
                 # print(relativePath)
-                if relativePath.upper().find(self.luaPath.upper())==0:
+                foundLuaModule = False
+                for luaPath in self.luaPath:
+                    if relativePath.upper().find(luaPath.upper()) == 0:
+                        foundLuaModule = True
+                        break
+                if foundLuaModule:
                     self.fileList_lua.append(relativePath)
                 else:
                     self.fileList_com.append(relativePath)
