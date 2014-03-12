@@ -77,6 +77,7 @@ cocos2d-x-3.0final March.? 2014
      [FIX]          TMXXMLParser: Refactored the codes of parsing pure xml layer format for tilemap 
      [FIX]          TMXXMLParser: 'y' value is parsed incorrectly    
      [FIX]          UI: Changes namespace from 'cocos2d::gui' to 'cocos2d::ui'.
+     [FIX]          UI: Supports RichText
      [FIX]          Vector: Object which isn't in Vector would also be released when invoking Vector::eraseObject.
      [FIX]          Websocket: Potential crash when websocket connection closes.
      [FIX]          Websocket: No callback is invoked when websocket connection fails    
