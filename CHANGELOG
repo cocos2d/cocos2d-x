@@ -2,7 +2,6 @@ cocos2d-x-3.0final March.? 2014
 [All]
      [NEW]          Action: RotateBy supports 3D rotations
      [NEW]          Bindings: Using python to automatically generate script bindings
-     [NEW]          Bindings: Added JS bindings support for Linux
      [NEW]          ccConfig.h: removed support for CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
      [NEW]          Console: Added command: 'autotest run|main|next|back|restart'.
      [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
@@ -14,6 +13,7 @@ cocos2d-x-3.0final March.? 2014
      [NEW]          GLProgram: initWithVertexShaderFilename()a -> initWithFilenames()
      [NEW]          GLProgram: addAttribute() -> bindAttributeLocation()
      [NEW]          Label: can custom shadow and outline size
+     [NEW]          Label: LabelTTF was re-implemented as a wrapper of Label
      [NEW]          Node: Added set/get Position3D() and set/get Rotation3D()
      [NEW]          Node: Added string tag
      [NEW]          Node: Calculates rotation X and Y correctly.
@@ -34,6 +34,7 @@ cocos2d-x-3.0final March.? 2014
      [FIX]          Bindngs: Exposes the missing data structures of Spine to JS
      [FIX]          Bindings: cc.BuilderReader.load( path, null, parentSize ); was not allowed
      [FIX]          Console: crashes on Windows
+     [FIX]          CocoStudio: Logical error in 'TriggerObj::detect()'
      [FIX]          Director: Crash if invoking Director::end() on WINDOWS
      [FIX]          Director: setAnimationInterval has not effect on Mac
      [FIX]          EditBox: position would not be updated if its parent's position changed
@@ -42,9 +43,11 @@ cocos2d-x-3.0final March.? 2014
      [FIX]          EventDispatcher: removeAllEventListeners() remove event listeners used internally, make textures not reload on Android when come from background
      [FIX]          EventDispatcher: dispatchEventToListeners() causes "out of range" exception
      [FIX]          Image: s3tc compressed textures with no mipmaps fail to be loaded
-     [FIX]          Label: loading custom fonts from ttf file fails on windows
-     [FIX]          Label: Character would not be aligned on the baseline when label using distance field
      [FIX]          Label: A string which only contains CJK characters can't make a line-break when it's needed
+     [FIX]          Label: Character would not be aligned on the baseline when label using distance field
+     [FIX]          Label: Color and opacity can't take effect
+     [FIX]          Label: Font size passed to new Label didn't consider 'contentScaleFactor'
+     [FIX]          Label: loading custom fonts from ttf file fails on windows
      [FIX]          MotionStreak: Added unimplemented position getter/setter
      [FIX]          Node: setAdditionalTransform receives a pointer and not a const reference
      [FIX]          Node: setRotation() moves opposite when node has a physics body
@@ -52,6 +55,7 @@ cocos2d-x-3.0final March.? 2014
      [FIX]          Object: Object -> Ref, and remove unneeded functions
      [FIX]          Other: Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo
      [FIX]          Physics integartion: Improves physical performance
+     [FIX]          Physics integartion: PhysicsContact::_contactData may be double freed.
      [FIX]          ParticleSystemQuad: setTotalParticles() can not set a value larger than initialized value
      [FIX]          Renderer: Expand textureID bit from 18bits to 32bits. Resolves probably crash on Linux / Android
      [FIX]          RenderTexture: save screen with RenderTexture got unexpected result
@@ -73,6 +77,7 @@ cocos2d-x-3.0final March.? 2014
      [FIX]          TMXXMLParser: Refactored the codes of parsing pure xml layer format for tilemap 
      [FIX]          TMXXMLParser: 'y' value is parsed incorrectly    
      [FIX]          UI: Changes namespace from 'cocos2d::gui' to 'cocos2d::ui'.
+     [FIX]          UI: Supports RichText
      [FIX]          Vector: Object which isn't in Vector would also be released when invoking Vector::eraseObject.
      [FIX]          Websocket: Potential crash when websocket connection closes.
      [FIX]          Websocket: No callback is invoked when websocket connection fails    

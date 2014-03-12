@@ -68,11 +68,11 @@ LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_gui_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ui_static
 
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,2d)
 $(call import-module,audio/android)
-$(call import-module,gui)
+$(call import-module,ui)
 

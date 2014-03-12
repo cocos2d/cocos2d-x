@@ -214,6 +214,7 @@ protected:
     CustomCommand _clearCommand;
     CustomCommand _beginCommand;
     CustomCommand _endCommand;
+    CustomCommand _saveToFileCommand;
 protected:
     //renderer caches and callbacks
     void onBegin();
@@ -221,6 +222,8 @@ protected:
 
     void onClear();
     void onClearDepth();
+
+    void onSaveToFile(const std::string& fileName);
     
     kmMat4 _oldTransMatrix, _oldProjMatrix;
     kmMat4 _transformMatrix, _projectionMatrix;

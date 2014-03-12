@@ -121,7 +121,7 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
         return "cc.Layer";
     }
 
-    if (NULL != dynamic_cast<String*>(pNode)) {
+    if (NULL != dynamic_cast<__String*>(pNode)) {
         return "cc.String";
     }
     

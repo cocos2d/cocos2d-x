@@ -115,11 +115,11 @@ bool TriggerObj::detect()
         return true;
     }
     
-    bool ret = true;
+    bool ret = false;
 
     for (const auto& con : _cons)
     {
-        ret = ret && con->detect();
+        ret = ret || con->detect();
     }
 
     return ret;
