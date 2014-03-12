@@ -1070,6 +1070,10 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
         {
             readerName = "PageViewReader";
         }
+        else if (dynamic_cast<Widget*>(widget))
+        {
+            readerName = "WidgetReader";
+        }
         reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
         setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);
         
