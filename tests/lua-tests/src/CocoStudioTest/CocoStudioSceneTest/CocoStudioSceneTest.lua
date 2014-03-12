@@ -63,7 +63,8 @@ function SceneEditorTestLayer.create()
 end
 
 function SceneEditorTestLayer:createTitle()
-    local title = cc.LabelTTF:create(self.title[sceneEditorTestIdx],"Arial",18)
+    local title = cc.Label:create(self.title[sceneEditorTestIdx], s_arialPath, 18)
+    title:setAnchorPoint(cc.p(0.5, 0.5))
     title:setColor(cc.c3b(255, 255, 255))
     self:addChild(title, 1, 10000)
     title:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 30))
