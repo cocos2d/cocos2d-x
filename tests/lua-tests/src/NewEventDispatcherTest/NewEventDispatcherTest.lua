@@ -184,7 +184,7 @@ function TouchableSpriteTest:onEnter()
     sprite2:addChild(sprite3, 1)
 
     local function onTouchBegan(touch, event)
-        local target = tolua.cast(event:getCurrentTarget(),"cc.Sprite")
+        local target = event:getCurrentTarget()
         
         local locationInNode = target:convertToNodeSpace(touch:getLocation())
         local s = target:getContentSize()
@@ -199,14 +199,14 @@ function TouchableSpriteTest:onEnter()
     end
 
     local function onTouchMoved(touch, event)
-        local target = tolua.cast(event:getCurrentTarget(), "cc.Sprite")
+        local target = event:getCurrentTarget()
         local posX,posY = target:getPosition()
         local delta = touch:getDelta()
         target:setPosition(cc.p(posX + delta.x, posY + delta.y))
     end
 
     local function onTouchEnded(touch, event)
-        local target = tolua.cast(event:getCurrentTarget(), "cc.Sprite")
+        local target = event:getCurrentTarget()
         print("sprite onTouchesEnded..")
         target:setOpacity(255)
         if target == sprite2 then
