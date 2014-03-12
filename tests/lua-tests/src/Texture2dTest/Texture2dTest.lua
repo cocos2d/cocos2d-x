@@ -959,7 +959,8 @@ local function TextureAsync()
 
     local size =cc.Director:getInstance():getWinSize()
 
-    local label = cc.LabelTTF:create("Loading...", "Marker Felt", 32)
+    local label = cc.Label:create("Loading...", s_markerFeltFontPath, 32)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p( size.width/2, size.height/2))
     ret:addChild(label, 10)
 
