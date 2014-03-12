@@ -1,7 +1,7 @@
 
 
 #include "LayoutReader.h"
-#include "gui/UILayout.h"
+#include "ui/UILayout.h"
 
 USING_NS_CC;
 using namespace ui;
