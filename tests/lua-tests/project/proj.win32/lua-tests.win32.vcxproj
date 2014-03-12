@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}</ProjectGuid>
-    <ProjectName>TestLua</ProjectName>
+    <ProjectName>lua-tests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -95,11 +95,11 @@
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>TestLua.h</HeaderFileName>
-      <InterfaceIdentifierFileName>TestLua_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>TestLua_p.c</ProxyFileName>
+      <HeaderFileName>lua-tests.h</HeaderFileName>
+      <InterfaceIdentifierFileName>lua-tests_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>lua-tests_p.c</ProxyFileName>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)/TestLua.tlb</TypeLibraryName>
+      <TypeLibraryName>$(IntDir)/lua-tests.tlb</TypeLibraryName>
       <DllDataFileName>
       </DllDataFileName>
     </Midl>
@@ -149,11 +149,11 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>TestLua.h</HeaderFileName>
-      <InterfaceIdentifierFileName>TestLua_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>TestLua_p.c</ProxyFileName>
+      <HeaderFileName>lua-tests.h</HeaderFileName>
+      <InterfaceIdentifierFileName>lua-tests_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>lua-tests_p.c</ProxyFileName>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)/TestLua.tlb</TypeLibraryName>
+      <TypeLibraryName>$(IntDir)/lua-tests.tlb</TypeLibraryName>
       <DllDataFileName>
       </DllDataFileName>
     </Midl>
