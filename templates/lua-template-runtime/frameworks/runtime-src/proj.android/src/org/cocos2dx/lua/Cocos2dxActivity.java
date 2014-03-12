@@ -16,6 +16,9 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+// The name of .so is specified in AndroidMenifest.xml. NativityActivity will load it automatically for you.
+// You can use "System.loadLibrary()" to load other .so files.
+
 public class Cocos2dxActivity extends NativeActivity{
 
 	@Override
