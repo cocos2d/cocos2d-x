@@ -27,6 +27,7 @@ THE SOFTWARE.
 import os
 import sys
 import re
+import json
 
 class CocosFileList:
     """
@@ -39,7 +40,10 @@ class CocosFileList:
         self.excludeConfig=[]
         self.inludeConfig=[]
         self.rootDir = ""
-        self.fileList=[]
+        self.fileList_com=[]
+        self.fileList_lua=[]
+
+        self.luaPath ="cocos/scripting/lua-bindings"
 
     def readIngoreFile(self, fileName):
         """
@@ -84,7 +88,10 @@ class CocosFileList:
                       self.__bInclude(item) or
                       self.__bInclude("%s/" %item)
                     ):
-                        self.fileList.append("%s/" %relativePath)
+                        if relativePath.upper().find(self.luaPath.upper())==0:
+                            self.fileList_lua.append("%s/" %relativePath)
+                        else:
+                            self.fileList_com.append("%s/" %relativePath)
                         continue
                 if (
                      self.__bExclude("/%s" %relativePath) or
@@ -105,7 +112,10 @@ class CocosFileList:
                         ):
                             continue
                 # print(relativePath)
-                self.fileList.append(relativePath)
+                if relativePath.upper().find(self.luaPath.upper())==0:
+                    self.fileList_lua.append(relativePath)
+                else:
+                    self.fileList_com.append(relativePath)
 
     def __bExclude(self, item):
         bexclude = False
@@ -128,9 +138,8 @@ class CocosFileList:
             Save content to file with json format.
         """
         f = open(fileName,"w")
-        self.fileList.sort()
-        content = "[\n\"%s\"\n]" % ("\",\n\"".join(self.fileList))
-        f.write(content)
+        content ={'common':self.fileList_com,'lua':self.fileList_lua}
+        json.dump(content,f,sort_keys=True,indent=4)
         f.close()
         return True
 
