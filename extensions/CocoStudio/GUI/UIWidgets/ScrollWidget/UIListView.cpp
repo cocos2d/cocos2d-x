@@ -416,11 +416,19 @@ void ListView::addEventListenerListView(CCObject *target, SEL_ListViewEvent sele
     _listViewEventSelector = selector;
 }
     
-void ListView::selectedItemEvent()
+void ListView::selectedItemEvent(int state)
 {
     if (_listViewEventListener && _listViewEventSelector)
     {
-        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM);
+        switch (state)
+        {
+            case 0:
+                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_START);
+                break;
+            default:
+                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_END);
+                break;
+        }
     }
 }
     
@@ -439,7 +447,7 @@ void ListView::interceptTouchEvent(int handleState, Widget *sender, const CCPoin
             }
             parent = dynamic_cast<Widget*>(parent->getParent());
         }
-        selectedItemEvent();
+        selectedItemEvent(handleState);
     }
 }
     
