@@ -181,7 +181,7 @@ class Widget : public CCNodeRGBA
     
     WidgetType getWidgetType() const;
     
-    
+    virtual void setColor(const ccColor3B& color);
     virtual void setSize(const CCSize &size);
     
     
