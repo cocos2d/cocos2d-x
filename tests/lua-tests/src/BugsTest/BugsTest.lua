@@ -90,7 +90,8 @@ local function BugTest458()
     
     local function InitQuestionContainerSprite(pSprite)
         --Add label
-        local pLabel = cc.LabelTTF:create("Answer 1", "Arial", 12)
+        local pLabel = cc.Label:create("Answer 1", s_arialPath, 12)
+        pLabel:setAnchorPoint(cc.p(0.5,0.5))
         pLabel:setTag(100)
         
         --Add the background
@@ -189,7 +190,8 @@ local BugTest624_2_entry = nil
 local function BugTest624()
     local pLayer = cc.Layer:create()
     
-    local pLabel = cc.LabelTTF:create("Layer1", "Marker Felt", 36)
+    local pLabel = cc.Label:create("Layer1", s_markerFeltFontPath, 36)
+    pLabel:setAnchorPoint(cc.p(0.5, 0.5))
     pLabel:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2))
     pLayer:addChild(pLabel)
     pLayer:setAccelerometerEnabled(true)
@@ -228,7 +230,8 @@ end
 function BugTest624_2()
 	local pLayer = cc.Layer:create()
 	
-	local pLabel = cc.LabelTTF:create("Layer2", "Marker Felt", 36)
+	local pLabel = cc.Label:create("Layer2", s_markerFeltFontPath, 36)
+    pLabel:setAnchorPoint(cc.p(0.5, 0.5))
 	pLabel:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2))
     pLayer:addChild(pLabel)
     pLayer:setAccelerometerEnabled(true)
@@ -316,7 +319,8 @@ local function BugTest914()
        cc.Director:getInstance():replaceScene(scene)
 	end
 
-    local label = cc.LabelTTF:create("Hello World", "Marker Felt", 64)
+    local label = cc.Label:create("Hello World", s_markerFeltFontPath, 64)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     --position the label on the center of the screen
     label:setPosition(cc.p( Winsize.width /2 , Winsize.height/2 ))
     layer:addChild(label)
@@ -378,7 +382,8 @@ local function BugTest1159()
        pScene:addChild(pLayer)
        cc.Director:getInstance():replaceScene(cc.TransitionPageTurn:create(1.0, pScene, false))
 	end
-    local label = cc.MenuItemLabel:create(cc.LabelTTF:create("Flip Me", "Helvetica", 24))
+    local label = cc.MenuItemLabel:create(cc.Label:create("Flip Me", "Helvetica", 24))
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:registerScriptTapHandler(menuCallback)
     local menu = cc.Menu:create()
     menu:addChild(label)
@@ -589,7 +594,8 @@ local function BugsTestMainLayer()
     
     local i = 1
     for  i = 1, nTestCount do
-        local  label = cc.LabelTTF:create(testNames[i], "Arial", 24)
+        local  label = cc.Label:create(testNames[i], s_arialPath, 24)
+        label:setAnchorPoint(cc.p(0.5, 0.5))
         local  pMenuItem = cc.MenuItemLabel:create(label)
         pMenuItem:registerScriptTapHandler(menuCallback)
         pItemMenu:addChild(pMenuItem, i + kItemTagBasic)

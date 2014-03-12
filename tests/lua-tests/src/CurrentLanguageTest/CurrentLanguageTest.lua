@@ -1,10 +1,12 @@
 local function CurrentLanguageTest()
     local ret = cc.Layer:create()
-    local  label = cc.LabelTTF:create("Current language Test", "Arial", 28)
+    local  label = cc.Label:create("Current language Test", s_arialPath, 28)
     ret:addChild(label, 0)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y-50) )
 
-    local labelLanguage = cc.LabelTTF:create("", "Arial", 20)
+    local labelLanguage = cc.LabelTTF:create("", s_arialPath, 20)
+    labelLanguage:setAnchorPoint(cc.p(0.5, 0.5))
     labelLanguage:setPosition(VisibleRect:center())
 
     local currentLanguageType = cc.Application:getInstance():getCurrentLanguage()

@@ -39,3 +39,8 @@ s_LevelMapTga         = "TileMaps/levelmap.tga"
 -- spine test resource
 s_pPathSpineBoyJson       = "spine/spineboy.json"
 s_pPathSpineBoyAtlas       = "spine/spineboy.atlas"
+
+-- fonts resource
+s_markerFeltFontPath   = "fonts/Marker Felt.ttf"
+s_arialPath            = "fonts/arial.ttf"
+s_thonburiPath         = "fonts/Thonburi.ttf"
