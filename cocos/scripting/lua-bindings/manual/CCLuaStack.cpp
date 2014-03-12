@@ -63,8 +63,8 @@ extern "C" {
 #include "lua_cocos2dx_spine_manual.hpp"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
-#include "lua_cocos2dx_gui_auto.hpp"
-#include "lua_cocos2dx_gui_manual.hpp"
+#include "lua_cocos2dx_ui_auto.hpp"
+#include "lua_cocos2dx_ui_manual.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -507,7 +507,7 @@ int LuaStack::reallocateScriptHandler(int nHandler)
 
 }
 
-int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray)
+int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,__Array& resultArray)
 {
     if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
     {

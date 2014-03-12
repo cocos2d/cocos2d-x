@@ -25,6 +25,8 @@
 #include "LuaBasicConversions.h"
 #include "tolua_fix.h"
 
+
+
 std::unordered_map<std::string, std::string>  g_luaType;
 std::unordered_map<std::string, std::string>  g_typeCast;
 
@@ -778,7 +780,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue )
     return ok;
 }
 
-bool luaval_to_array(lua_State* L,int lo, Array** outValue)
+bool luaval_to_array(lua_State* L,int lo, __Array** outValue)
 {
     if (NULL == L || NULL == outValue)
         return false;
@@ -799,7 +801,7 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
         size_t len = lua_objlen(L, lo);
         if (len > 0)
         {
-            Array* arr =  Array::createWithCapacity(len);
+            __Array* arr =  __Array::createWithCapacity(len);
             if (NULL == arr)
                 return false;
             
@@ -828,7 +830,7 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
                     if (lua_isnil(L, -1) )
                     {
                         lua_pop(L,1);
-                        Dictionary* dictVal = NULL;
+                        __Dictionary* dictVal = NULL;
                         if (luaval_to_dictionary(L,-1,&dictVal))
                         {
                             arr->addObject(dictVal);
@@ -837,7 +839,7 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
                     else
                     {
                        lua_pop(L,1);
-                       Array* arrVal = NULL;
+                       __Array* arrVal = NULL;
                        if(luaval_to_array(L, -1, &arrVal))
                        {
                            arr->addObject(arrVal);
@@ -878,7 +880,7 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
     return ok;
 }
 
-bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
+bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue)
 {
     if (NULL == L || NULL == outValue)
         return  false;
@@ -899,7 +901,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
         std::string stringKey = "";
         std::string stringValue = "";
         bool boolVal = false;
-        Dictionary* dict = NULL;
+        __Dictionary* dict = NULL;
         lua_pushnil(L);                                             /* L: lotable ..... nil */
         while ( 0 != lua_next(L, lo ) )                             /* L: lotable ..... key value */
         {
@@ -932,7 +934,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
                     if (lua_isnil(L, -1) )
                     {
                         lua_pop(L,1);
-                        Dictionary* dictVal = NULL;
+                        __Dictionary* dictVal = NULL;
                         if (luaval_to_dictionary(L,-1,&dictVal))
                         {
                             dict->setObject(dictVal,stringKey);
@@ -941,7 +943,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
                     else
                     {
                         lua_pop(L,1);
-                        Array* arrVal = NULL;
+                        __Array* arrVal = NULL;
                         if(luaval_to_array(L, -1, &arrVal))
                         {
                             dict->setObject(arrVal,stringKey);
@@ -976,6 +978,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
         }
         
                                                                     /* L: lotable ..... */
+        *outValue = dict;
     }
     
     return ok;
@@ -1037,14 +1040,14 @@ bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints
 }
 
 
-bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
+bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret)
 {
     if (nullptr == L || argc == 0 )
         return false;
     
     bool ok = true;
     
-    Array* array = Array::create();
+    __Array* array = __Array::create();
     for (int i = 0; i < argc; i++)
     {
         double num = 0.0;
@@ -1804,7 +1807,7 @@ void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue)
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
 }
 
-void array_to_luaval(lua_State* L,Array* inValue)
+void array_to_luaval(lua_State* L,__Array* inValue)
 {
     lua_newtable(L);
     
@@ -1814,13 +1817,13 @@ void array_to_luaval(lua_State* L,Array* inValue)
     Ref* obj = nullptr;
     
     std::string className = "";
-    String* strVal = nullptr;
-    Dictionary* dictVal = nullptr;
-    Array* arrVal = nullptr;
-    Double* doubleVal = nullptr;
-    Bool* boolVal = nullptr;
-    Float* floatVal = nullptr;
-    Integer* intVal = nullptr;
+    __String* strVal = nullptr;
+    __Dictionary* dictVal = nullptr;
+    __Array* arrVal = nullptr;
+    __Double* doubleVal = nullptr;
+    __Bool* boolVal = nullptr;
+    __Float* floatVal = nullptr;
+    __Integer* intVal = nullptr;
     int indexTable = 1;
     
     CCARRAY_FOREACH(inValue, obj)
@@ -1844,43 +1847,43 @@ void array_to_luaval(lua_State* L,Array* inValue)
                 ++indexTable;
             }
         }
-        else if((strVal = dynamic_cast<cocos2d::String *>(obj)))
+        else if((strVal = dynamic_cast<__String *>(obj)))
         {
             lua_pushnumber(L, (lua_Number)indexTable);   
             lua_pushstring(L, strVal->getCString());
             lua_rawset(L, -3);
             ++indexTable;
         }
-        else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(obj)))
+        else if ((dictVal = dynamic_cast<__Dictionary*>(obj)))
         {
             dictionary_to_luaval(L, dictVal);
         }
-        else if ((arrVal = dynamic_cast<cocos2d::Array*>(obj)))
+        else if ((arrVal = dynamic_cast<__Array*>(obj)))
         {
             array_to_luaval(L, arrVal);
         }
-        else if ((doubleVal = dynamic_cast<Double*>(obj)))
+        else if ((doubleVal = dynamic_cast<__Double*>(obj)))
         {
             lua_pushnumber(L, (lua_Number)indexTable);   
             lua_pushnumber(L, (lua_Number)doubleVal->getValue());
             lua_rawset(L, -3);
             ++indexTable;
         }
-        else if ((floatVal = dynamic_cast<Float*>(obj)))
+        else if ((floatVal = dynamic_cast<__Float*>(obj)))
         {
             lua_pushnumber(L, (lua_Number)indexTable);   
             lua_pushnumber(L, (lua_Number)floatVal->getValue());
             lua_rawset(L, -3);
             ++indexTable;
         }
-        else if ((intVal = dynamic_cast<Integer*>(obj)))
+        else if ((intVal = dynamic_cast<__Integer*>(obj)))
         {
             lua_pushnumber(L, (lua_Number)indexTable);   
             lua_pushinteger(L, (lua_Integer)intVal->getValue());
             lua_rawset(L, -3);
             ++indexTable;
         }
-        else if ((boolVal = dynamic_cast<Bool*>(obj)))
+        else if ((boolVal = dynamic_cast<__Bool*>(obj)))
         {
             lua_pushnumber(L, (lua_Number)indexTable);   
             lua_pushboolean(L, boolVal->getValue());
@@ -1894,7 +1897,7 @@ void array_to_luaval(lua_State* L,Array* inValue)
     }
 }
 
-void dictionary_to_luaval(lua_State* L, Dictionary* dict)
+void dictionary_to_luaval(lua_State* L, __Dictionary* dict)
 {
     lua_newtable(L);
     
@@ -1904,13 +1907,13 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
     DictElement* element = nullptr;
     
     std::string className = "";
-    String* strVal = nullptr;
-    Dictionary* dictVal = nullptr;
-    Array* arrVal = nullptr;
-    Double* doubleVal = nullptr;
-    Bool* boolVal = nullptr;
-    Float* floatVal = nullptr;
-    Integer* intVal = nullptr;
+    __String* strVal = nullptr;
+    __Dictionary* dictVal = nullptr;
+    __Array* arrVal = nullptr;
+    __Double* doubleVal = nullptr;
+    __Bool* boolVal = nullptr;
+    __Float* floatVal = nullptr;
+    __Integer* intVal = nullptr;
     
     CCDICT_FOREACH(dict, element)
     {
@@ -1923,7 +1926,7 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         if (g_luaType.end() != iter)
         {
             className = iter->second;
-            if ( nullptr != dynamic_cast<cocos2d::Ref *>(element->getObject()))
+            if ( nullptr != dynamic_cast<Ref*>(element->getObject()))
             {
                 lua_pushstring(L, element->getStrKey());
                 int ID = (element->getObject()) ? (int)element->getObject()->_ID : -1;
@@ -1933,39 +1936,39 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
                 element->getObject()->retain();
             }
         }
-        else if((strVal = dynamic_cast<cocos2d::String *>(element->getObject())))
+        else if((strVal = dynamic_cast<__String *>(element->getObject())))
         {
             lua_pushstring(L, element->getStrKey());
             lua_pushstring(L, strVal->getCString());
             lua_rawset(L, -3);
         }
-        else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(element->getObject())))
+        else if ((dictVal = dynamic_cast<__Dictionary*>(element->getObject())))
         {
             dictionary_to_luaval(L, dictVal);
         }
-        else if ((arrVal = dynamic_cast<cocos2d::Array*>(element->getObject())))
+        else if ((arrVal = dynamic_cast<__Array*>(element->getObject())))
         {
             array_to_luaval(L, arrVal);
         }
-        else if ((doubleVal = dynamic_cast<Double*>(element->getObject())))
+        else if ((doubleVal = dynamic_cast<__Double*>(element->getObject())))
         {
             lua_pushstring(L, element->getStrKey());
             lua_pushnumber(L, (lua_Number)doubleVal->getValue());
             lua_rawset(L, -3);
         }
-        else if ((floatVal = dynamic_cast<Float*>(element->getObject())))
+        else if ((floatVal = dynamic_cast<__Float*>(element->getObject())))
         {
             lua_pushstring(L, element->getStrKey());
             lua_pushnumber(L, (lua_Number)floatVal->getValue());
             lua_rawset(L, -3);
         }
-        else if ((intVal = dynamic_cast<Integer*>(element->getObject())))
+        else if ((intVal = dynamic_cast<__Integer*>(element->getObject())))
         {
             lua_pushstring(L, element->getStrKey());
             lua_pushinteger(L, (lua_Integer)intVal->getValue());
             lua_rawset(L, -3);
         }
-        else if ((boolVal = dynamic_cast<Bool*>(element->getObject())))
+        else if ((boolVal = dynamic_cast<__Bool*>(element->getObject())))
         {
             lua_pushstring(L, element->getStrKey());
             lua_pushboolean(L, boolVal->getValue());

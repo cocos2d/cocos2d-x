@@ -1,7 +1,7 @@
 
 
 #include "PageViewReader.h"
-#include "gui/UIPageView.h"
+#include "ui/UIPageView.h"
 
 USING_NS_CC;
 using namespace ui;

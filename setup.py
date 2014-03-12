@@ -132,7 +132,7 @@ class SetEnvVar(object):
         file.write('export %s=%s\n' % (key, value))
         file.write('export PATH=$%s:$PATH\n' % key)
         if key == ANDROID_SDK_ROOT:
-            file.write('export PATH=$%s/sdk/tools:$%s/sdk/platform-tools:$PATH\n' % (key, key))
+            file.write('export PATH=$%s/tools:$%s/platform-tools:$PATH\n' % (key, key))
         file.close()
         return True
 
@@ -271,31 +271,11 @@ class SetEnvVar(object):
         if not android_sdk_root:
             return False
 
-        android_path = os.path.join(android_sdk_root, 'sdk/tools/android')
+        android_path = os.path.join(android_sdk_root, 'tools/android')
         if os.path.isfile(android_path):
             return True
         else:
             return False
-
-    def _is_ant_exists(self):
-
-        try:
-            os.environ[ANT_ROOT]
-            return True
-        except Exception:
-            pass
-
-        ant_found = False
-        commands = ['ant', '-version']
-        child = subprocess.Popen(commands, stdout=subprocess.PIPE)
-        for line in child.stdout:
-            if 'Ant' in line:
-                ant_found = True
-                break
-
-        child.wait()
-
-        return ant_found
 
     def _is_ant_root_valid(self, ant_root):
 
@@ -391,7 +371,7 @@ class SetEnvVar(object):
         print ""
         print '-> Looking for ANT_ROOT envrironment variable...',
         ant_root_added = False
-        ant_found = self._is_ant_exists()
+        ant_found = self._find_environment_variable(ANT_ROOT)
 
         if not ant_root and not ant_found:
             print 'NOT FOUND'
@@ -427,7 +407,12 @@ class SetEnvVar(object):
             if ant_root_added:
                 print '\tANT_ROOT was added into %s' % target
         else:
-            print '\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target
+            print '\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target   
+
+        if self._isWindows():
+            print '\nPlease restart the terminal to make added system variables take effect'
+        else:
+            print '\nPlease execute command: "source %s" to make added system variables take effect' % target
 
 if __name__ == '__main__':
     parser = OptionParser()
