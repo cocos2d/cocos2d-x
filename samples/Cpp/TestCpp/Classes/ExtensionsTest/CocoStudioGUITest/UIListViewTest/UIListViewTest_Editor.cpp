@@ -34,7 +34,8 @@ bool UIListViewTest_Vertical_Editor::init()
         _sceneTitle = static_cast<ui::Label*>(UIHelper::seekWidgetByName(root, "UItest"));
         
         ListView* listView = static_cast<ListView*>(UIHelper::seekWidgetByName(root, "ListView_1214"));
-        CCLOG("listView isBounceEnabled = %d", listView->isBounceEnabled());
+        if (listView)
+            CCLOG("listView isBounceEnabled = %d", listView->isBounceEnabled());
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
