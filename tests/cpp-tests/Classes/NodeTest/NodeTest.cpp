@@ -390,7 +390,7 @@ void NodeEnumChildByNameTest::onEnter()
     addChild(sp22);
 
     enumChildNodesByName("sister1", 
-        [&](Node* node, bool* stop)
+        [](Node* node, bool* stop)
         {
             auto rot = RotateBy::create(2, 360);
             auto rot_back = rot->reverse();
@@ -398,7 +398,7 @@ void NodeEnumChildByNameTest::onEnter()
             node->runAction(forever1);
         });
     enumChildNodesByName("sister2", 
-        [&](Node* node, bool* stop)
+        [](Node* node, bool* stop)
         {
             auto actionUp = JumpBy::create(2, Point(0,0), 80, 4);
             auto forever2 = RepeatForever::create(Sequence::create(actionUp, NULL));
