@@ -84,29 +84,7 @@ bool UIScrollViewTest_Vertical::init()
         scrollView->addChild(button_scale9);
         
         imageView->setPosition(ccp(innerWidth / 2, imageView->getSize().height / 2));
-        scrollView->addChild(imageView);
-        
-        
-        
-        
-//        UIButton* button_1 = UIButton::create();
-//        button_1->setTouchEnabled(true);
-//        button_1->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
-//        button_1->addTouchEventListener(this, toucheventselector(UIScrollViewTest_Vertical::touchEvent));
-//        
-//        Layout* layout = Layout::create();
-//        layout->setSize(button_1->getSize());
-//        layout->setBackGroundImage("cocosgui/green_edit.png");
-//        layout->setBackGroundImageScale9Enabled(true);
-////        layout->setBackGroundColorType(LAYOUT_COLOR_SOLID);
-////        layout->setBackGroundColor(ccc3(0, 255, 0));
-//        layout->setPosition(ccp(imageView->getPosition().x, layout->getSize().height * 2));
-//        
-//        button_1->setPosition(ccp(button_1->getSize().width / 2, button_1->getSize().height / 2));
-//        
-//        layout->addChild(button_1);
-//        scrollView->addChild(layout);
-        
+        scrollView->addChild(imageView);        
         return true;
     }
     
@@ -118,7 +96,7 @@ void UIScrollViewTest_Vertical::scrollEvent(cocos2d::CCObject *pSender, Scrollvi
     switch (type)
     {
         case SCROLLVIEW_EVENT_SCROLLING:
-            CCLOG("a");
+            CCLOG("Scrolling");
             break;
             
         default:

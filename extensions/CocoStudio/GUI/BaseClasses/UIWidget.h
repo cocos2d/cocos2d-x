@@ -540,6 +540,8 @@ public:
      */
     const CCSize& getSize() const;
     
+    virtual const CCSize& getLayoutSize() {return _size;};
+    
     /**
      * Returns size percent of widget
      *
@@ -633,6 +635,8 @@ public:
     virtual void onExit();
     
     void updateSizeAndPosition();
+    
+    void updateSizeAndPosition(const CCSize& parentSize);
     
     /*temp action*/
     void setActionTag(int tag);
