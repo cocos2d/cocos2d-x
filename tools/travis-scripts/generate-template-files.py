@@ -148,6 +148,8 @@ class CocosFileList:
             Save content to file with json format.
         """
         f = open(fileName,"w")
+        self.fileList_com.sort()
+        self.fileList_lua.sort()
         content ={'common':self.fileList_com,'lua':self.fileList_lua}
         json.dump(content,f,sort_keys=True,indent=4)
         f.close()
