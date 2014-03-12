@@ -38,7 +38,7 @@ NS_CC_BEGIN
 
 /** Class that represent the OpenGL View
  */
-class CC_DLL GLView : public Ref, public GLViewProtocol
+class CC_DLL GLView : public GLViewProtocol, public Ref
 {
 public:
     /** creates a GLView with a objective-c CCEAGLView instance */
