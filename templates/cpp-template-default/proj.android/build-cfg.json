@@ -5,6 +5,6 @@
         "../cocos2d/external"
     ],
     "copy_to_assets" :[
-        "../Resources"
+        "../Resources/"
     ]
 }

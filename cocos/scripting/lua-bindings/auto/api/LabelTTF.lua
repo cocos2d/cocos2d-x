@@ -25,6 +25,16 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- @function [parent=#LabelTTF] setFlippedY 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#LabelTTF] setFlippedX 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#LabelTTF] setTextDefinition 
 -- @param self
 -- @param #cc.FontDefinition fontdefinition
@@ -52,13 +62,7 @@
 -- @param #string str
         
 --------------------------------
--- overload function: initWithString(string, string, float, size_table, cc.TextHAlignment)
---          
--- overload function: initWithString(string, string, float)
---          
--- overload function: initWithString(string, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
---          
--- @function [parent=#LabelTTF] initWithString
+-- @function [parent=#LabelTTF] initWithString 
 -- @param self
 -- @param #string str
 -- @param #string str
@@ -66,11 +70,6 @@
 -- @param #size_table size
 -- @param #cc.TextHAlignment texthalignment
 -- @param #cc.TextVAlignment textvalignment
--- @return bool#bool ret (retunr value: bool)
-
---------------------------------
--- @function [parent=#LabelTTF] init 
--- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -78,6 +77,11 @@
 -- @param self
 -- @param #color3B_table color3b
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#LabelTTF] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- @function [parent=#LabelTTF] enableStroke 
@@ -112,6 +116,11 @@
 -- @return FontDefinition#FontDefinition ret (return value: cc.FontDefinition)
         
 --------------------------------
+-- @function [parent=#LabelTTF] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendfunc
+        
+--------------------------------
 -- @function [parent=#LabelTTF] getFontName 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -130,13 +139,9 @@
 -- @param self
         
 --------------------------------
--- overload function: create(string, string, float, size_table, cc.TextHAlignment)
---          
--- overload function: create(string, string, float)
+-- overload function: create()
 --          
 -- overload function: create(string, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
---          
--- overload function: create()
 --          
 -- @function [parent=#LabelTTF] create
 -- @param self

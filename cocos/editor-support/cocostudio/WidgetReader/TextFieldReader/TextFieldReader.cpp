@@ -1,7 +1,7 @@
 
 
 #include "TextFieldReader.h"
-#include "gui/UITextField.h"
+#include "ui/UITextField.h"
 
 USING_NS_CC;
 using namespace ui;
