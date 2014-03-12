@@ -5,7 +5,7 @@ local function CurrentLanguageTest()
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y-50) )
 
-    local labelLanguage = cc.LabelTTF:create("", s_arialPath, 20)
+    local labelLanguage = cc.Label:create("", s_arialPath, 20)
     labelLanguage:setAnchorPoint(cc.p(0.5, 0.5))
     labelLanguage:setPosition(VisibleRect:center())
 

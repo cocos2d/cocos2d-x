@@ -72,7 +72,7 @@ local function drawPrimitivesMainLayer()
         lableTitle:setPosition(cc.p(size.width / 2, size.height - 32))
         lableTitle:setColor(cc.c3b(255, 255, 40))
         --SubTitle
-        local subLabelTitle = cc.LabelTTF:create(GetSubTitle(), s_thonburiPath, 16)
+        local subLabelTitle = cc.Label:create(GetSubTitle(), s_thonburiPath, 16)
         layer:addChild(subLabelTitle, 15)
         subLabelTitle:setAnchorPoint(cc.p(0.5, 0.5))
         subLabelTitle:setPosition(cc.p(size.width / 2, size.height - 80)) 

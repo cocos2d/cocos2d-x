@@ -40,7 +40,8 @@ end
 
 -- add the menu item for back to main menu
 function CreateBackMenuItem()
-    local label = cc.LabelTTF:create("MainMenu", "Arial", 20)
+    local label = cc.Label:create("MainMenu", s_arialPath, 20)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     local MenuItem = cc.MenuItemLabel:create(label)
     MenuItem:registerScriptTapHandler(MainMenuCallback)
 
@@ -100,11 +101,13 @@ function Helper.initWithLayer(layer)
     Helper.currentLayer = layer
 
     local size = cc.Director:getInstance():getWinSize()
-    Helper.titleLabel = cc.LabelTTF:create("", "Arial", 28)
+    Helper.titleLabel = cc.Label:create("", s_arialPath, 28)
+    Helper.titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     layer:addChild(Helper.titleLabel, 1)
     Helper.titleLabel:setPosition(size.width / 2, size.height - 50)
 
-    Helper.subtitleLabel = cc.LabelTTF:create("", "Thonburi", 16)
+    Helper.subtitleLabel = cc.Label:create("", s_thonburiPath, 16)
+    Helper.subtitleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     layer:addChild(Helper.subtitleLabel, 1)
     Helper.subtitleLabel:setPosition(size.width / 2, size.height - 80)
 
