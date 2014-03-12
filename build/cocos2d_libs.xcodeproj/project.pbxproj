@@ -1214,6 +1214,10 @@
 		1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3C842184F14F700CF29B5 /* CCValue.cpp */; };
 		1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
 		1AE3C847184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
+		1EAB055418C08F90006557E5 /* pvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1EAB055218C08F90006557E5 /* pvr.cpp */; };
+		1EAB055518C08F90006557E5 /* pvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1EAB055218C08F90006557E5 /* pvr.cpp */; };
+		1EAB055618C08F90006557E5 /* pvr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EAB055318C08F90006557E5 /* pvr.h */; };
+		1EAB055718C08F90006557E5 /* pvr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EAB055318C08F90006557E5 /* pvr.h */; };
 		2986667C18B1B079000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		2986667D18B1B079000E39CA /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
@@ -2354,6 +2358,8 @@
 		1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		1AE3C842184F14F700CF29B5 /* CCValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCValue.cpp; path = ../base/CCValue.cpp; sourceTree = "<group>"; };
 		1AE3C843184F14F700CF29B5 /* CCValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCValue.h; path = ../base/CCValue.h; sourceTree = "<group>"; };
+		1EAB055218C08F90006557E5 /* pvr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pvr.cpp; path = ../base/pvr.cpp; sourceTree = "<group>"; };
+		1EAB055318C08F90006557E5 /* pvr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvr.h; path = ../base/pvr.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
@@ -3015,6 +3021,8 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				1EAB055218C08F90006557E5 /* pvr.cpp */,
+				1EAB055318C08F90006557E5 /* pvr.h */,
 				1A5700A3180BC6060088DEC7 /* atitc.cpp */,
 				1A5700A4180BC6060088DEC7 /* atitc.h */,
 				1A5700A5180BC6060088DEC7 /* CCAffineTransform.cpp */,
@@ -5215,6 +5223,7 @@
 				1A8C5995180E930E00EF57C3 /* CCActionManagerEx.h in Headers */,
 				1A8C5999180E930E00EF57C3 /* CCActionNode.h in Headers */,
 				1A8C599D180E930E00EF57C3 /* CCActionObject.h in Headers */,
+				1EAB055618C08F90006557E5 /* pvr.h in Headers */,
 				1A8C59A1180E930E00EF57C3 /* CCArmature.h in Headers */,
 				1A8C59A5180E930E00EF57C3 /* CCArmatureAnimation.h in Headers */,
 				1A8C59A9180E930E00EF57C3 /* CCArmatureDataManager.h in Headers */,
@@ -5716,6 +5725,7 @@
 				1A8C59CA180E930E00EF57C3 /* CCComRender.h in Headers */,
 				1A8C59CE180E930E00EF57C3 /* CCDataReaderHelper.h in Headers */,
 				1A8C59D2180E930E00EF57C3 /* CCDatas.h in Headers */,
+				1EAB055718C08F90006557E5 /* pvr.h in Headers */,
 				ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */,
 				1A8C59D6180E930E00EF57C3 /* CCDecorativeDisplay.h in Headers */,
 				1A8C59DA180E930E00EF57C3 /* CCDisplayFactory.h in Headers */,
@@ -6122,6 +6132,9 @@
 				3E26D40818ACB63900834404 /* CCDevice.mm in Sources */,
 				46A170151807CBFC005B8026 /* CCLock.cpp in Sources */,
 				A04583F2189053B500E32FE8 /* CCGLView.cpp in Sources */,
+				46A170C91807CEBB005B8026 /* neon_matrix_impl.c in Sources */,
+				46A170CF1807CEBB005B8026 /* vec3.c in Sources */,
+				1EAB055418C08F90006557E5 /* pvr.cpp in Sources */,
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
 				46A170251807CBFC005B8026 /* CCThread.cpp in Sources */,
 				1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */,
@@ -6544,6 +6557,7 @@
 				46A171001807CECB005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170441807CC07005B8026 /* CCES2Renderer.m in Sources */,
 				46A170281807CBFE005B8026 /* CCFileUtilsApple.mm in Sources */,
+				1EAB055518C08F90006557E5 /* pvr.cpp in Sources */,
 				46A170311807CBFE005B8026 /* CCFileUtils.cpp in Sources */,
 				46A171051807CECB005B8026 /* CCPhysicsWorld.cpp in Sources */,
 				46A1704E1807CC11005B8026 /* AccelerometerSimulation.m in Sources */,
