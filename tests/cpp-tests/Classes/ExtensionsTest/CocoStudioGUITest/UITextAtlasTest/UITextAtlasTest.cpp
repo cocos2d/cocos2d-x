@@ -22,7 +22,7 @@ bool UITextAtlasTest::init()
         
         // Create the text atlas
         TextAtlas* textAtlas = TextAtlas::create();
-        textAtlas->setProperty("1234567890", "cocosgui/labelatlas.png", 17, 22, "0");
+        textAtlas->setProperty("1234567890", "cocosui/labelatlas.png", 17, 22, "0");
         textAtlas->setPosition(Point((widgetSize.width) / 2, widgetSize.height / 2.0f));
         _uiLayer->addChild(textAtlas);                
         

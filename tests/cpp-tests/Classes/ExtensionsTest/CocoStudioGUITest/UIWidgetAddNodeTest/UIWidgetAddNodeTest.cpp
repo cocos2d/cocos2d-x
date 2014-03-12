@@ -34,7 +34,7 @@ bool UIWidgetAddNodeTest::init()
         widget->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(widget);
         
-        Sprite* sprite = Sprite::create("cocosgui/ccicon.png");
+        Sprite* sprite = Sprite::create("cocosui/ccicon.png");
         sprite->setPosition(Point(0, sprite->getBoundingBox().size.height / 4));
         widget->addNode(sprite);
         

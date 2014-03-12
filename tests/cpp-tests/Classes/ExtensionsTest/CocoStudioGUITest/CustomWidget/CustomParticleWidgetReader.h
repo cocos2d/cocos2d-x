@@ -11,7 +11,7 @@
 
 #include "extensions/cocos-ext.h"
 #include "cocostudio/DictionaryHelper.h"
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 
 class CustomParticleWidgetReader : public cocos2d::Ref
 {

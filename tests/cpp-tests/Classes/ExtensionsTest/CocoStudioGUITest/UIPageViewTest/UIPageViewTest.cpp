@@ -60,7 +60,7 @@ bool UIPageViewTest::init()
             ImageView* imageView = ImageView::create();
             imageView->setTouchEnabled(true);
             imageView->setScale9Enabled(true);
-            imageView->loadTexture("cocosgui/scrollviewbg.png");
+            imageView->loadTexture("cocosui/scrollviewbg.png");
             imageView->setSize(Size(240, 130));
             imageView->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
             layout->addChild(imageView);

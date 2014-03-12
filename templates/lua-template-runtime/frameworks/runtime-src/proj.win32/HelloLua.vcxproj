@@ -206,7 +206,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ProjectReference Include="..\..\cocos2d-x\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
       <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\gui\proj.win32\libGUI.vcxproj">
+    <ProjectReference Include="..\..\cocos2d-x\cocos\ui\proj.win32\libGUI.vcxproj">
       <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\cocos2d-x\cocos\network\proj.win32\libNetwork.vcxproj">

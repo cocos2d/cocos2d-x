@@ -378,7 +378,7 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord
         screenPos.y = screenPos.y / 2.0f;
     }
     
-    CCLOG("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
+    CCLOGINFO("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
 }
 

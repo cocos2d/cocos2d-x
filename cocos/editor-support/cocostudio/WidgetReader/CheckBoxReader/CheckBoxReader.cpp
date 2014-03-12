@@ -1,7 +1,7 @@
 
 
 #include "CheckBoxReader.h"
-#include "gui/UICheckBox.h"
+#include "ui/UICheckBox.h"
 
 USING_NS_CC;
 using namespace ui;

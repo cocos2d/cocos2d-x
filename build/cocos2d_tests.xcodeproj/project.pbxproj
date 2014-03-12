@@ -622,8 +622,6 @@
 		1AC35CD718CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
 		1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
 		1AC35CD918CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
-		1AC35CDA18CED84500F37B72 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB118CED84500F37B72 /* cocosgui */; };
-		1AC35CDB18CED84500F37B72 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB118CED84500F37B72 /* cocosgui */; };
 		1AC35CDC18CED84500F37B72 /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB218CED84500F37B72 /* commonly_used_words.txt */; };
 		1AC35CDD18CED84500F37B72 /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB218CED84500F37B72 /* commonly_used_words.txt */; };
 		1AC35CDE18CED84500F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
@@ -725,7 +723,6 @@
 		1AC35DB718CEE65100F37B72 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
 		1AC35DB818CEE65100F37B72 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAA18CED84500F37B72 /* armature */; };
 		1AC35DB918CEE65100F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		1AC35DBA18CEE65100F37B72 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB118CED84500F37B72 /* cocosgui */; };
 		1AC35DBB18CEE65100F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		1AC35DBC18CEE65100F37B72 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
 		1AC35DBD18CEE65100F37B72 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
@@ -744,7 +741,6 @@
 		1AC35DCA18CEE65200F37B72 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
 		1AC35DCB18CEE65200F37B72 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAA18CED84500F37B72 /* armature */; };
 		1AC35DCC18CEE65200F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		1AC35DCD18CEE65200F37B72 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB118CED84500F37B72 /* cocosgui */; };
 		1AC35DCE18CEE65200F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		1AC35DCF18CEE65200F37B72 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
 		1AC35DD018CEE65200F37B72 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
@@ -788,6 +784,10 @@
 		1AC35DF618CEE65B00F37B72 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAB18CED84500F37B72 /* background-music-aac.wav */; };
 		1AC35DF718CEE65B00F37B72 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
 		1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
+		298B28F818CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
+		298B28F918CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
+		298B28FA18CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
+		298B28FB18CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1718,7 +1718,6 @@
 		1AC35CAE18CED84500F37B72 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccb; path = "../tests/cpp-tests/Resources/ccb"; sourceTree = "<group>"; };
 		1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocosBuilderExample.ccbproj; path = "../tests/cpp-tests/Resources/CocosBuilderExample.ccbproj"; sourceTree = "<group>"; };
 		1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocosBuilderExample.ccbresourcelog; path = "../tests/cpp-tests/Resources/CocosBuilderExample.ccbresourcelog"; sourceTree = "<group>"; };
-		1AC35CB118CED84500F37B72 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = "../tests/cpp-tests/Resources/cocosgui"; sourceTree = "<group>"; };
 		1AC35CB218CED84500F37B72 /* commonly_used_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = commonly_used_words.txt; path = "../tests/cpp-tests/Resources/commonly_used_words.txt"; sourceTree = "<group>"; };
 		1AC35CB318CED84500F37B72 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = "../tests/cpp-tests/Resources/components"; sourceTree = "<group>"; };
 		1AC35CB418CED84500F37B72 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = "../tests/cpp-tests/Resources/configs"; sourceTree = "<group>"; };
@@ -1804,6 +1803,7 @@
 		1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1AC35DB018CEE5DA00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		298B28F718CFF9EC00C1920F /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosui; path = "../tests/cpp-tests/Resources/cocosui"; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3448,10 +3448,10 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				298B28F718CFF9EC00C1920F /* cocosui */,
 				1AC35CA918CED84500F37B72 /* animations */,
 				1AC35CAA18CED84500F37B72 /* armature */,
 				1AC35CAE18CED84500F37B72 /* ccb */,
-				1AC35CB118CED84500F37B72 /* cocosgui */,
 				1AC35CB318CED84500F37B72 /* components */,
 				1AC35CB418CED84500F37B72 /* configs */,
 				1AC35CB818CED84500F37B72 /* extensions */,
@@ -4170,7 +4170,6 @@
 				1AC35DE518CEE65900F37B72 /* Hello.png in Resources */,
 				1ABCA38618CD9E180087CE3A /* DeprecatedEnum.lua in Resources */,
 				1AC35DEA18CEE65900F37B72 /* pew-pew-lei.wav in Resources */,
-				1AC35DBA18CEE65100F37B72 /* cocosgui in Resources */,
 				1AC35DE418CEE65900F37B72 /* fps_images.png in Resources */,
 				1AC35DC418CEE65100F37B72 /* Particles in Resources */,
 				1AC35DB918CEE65100F37B72 /* ccb in Resources */,
@@ -4183,6 +4182,7 @@
 				1AC35DC018CEE65100F37B72 /* Images in Resources */,
 				1ABCA37818CD9E180087CE3A /* AudioEngine.lua in Resources */,
 				1ABCA39418CD9E180087CE3A /* luaoc.lua in Resources */,
+				298B28F918CFF9EC00C1920F /* cocosui in Resources */,
 				1ABCA39018CD9E180087CE3A /* json.lua in Resources */,
 				1AC35DE818CEE65900F37B72 /* background-music-aac.wav in Resources */,
 				1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */,
@@ -4222,7 +4222,6 @@
 				1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */,
 				1AC35DCB18CEE65200F37B72 /* armature in Resources */,
 				1AC35D9B18CEE5D100F37B72 /* Default@2x.png in Resources */,
-				1AC35DCD18CEE65200F37B72 /* cocosgui in Resources */,
 				1AC35DF218CEE65B00F37B72 /* fps_images.png in Resources */,
 				1ABCA38318CD9E180087CE3A /* Deprecated.lua in Resources */,
 				1AC35DD818CEE65200F37B72 /* scenetest in Resources */,
@@ -4232,6 +4231,7 @@
 				1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */,
 				1ABCA38918CD9E180087CE3A /* DeprecatedOpenglEnum.lua in Resources */,
 				1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
+				298B28FB18CFF9EC00C1920F /* cocosui in Resources */,
 				1AC35DD418CEE65200F37B72 /* ipad in Resources */,
 				1AC35DED18CEE65B00F37B72 /* music.mid in Resources */,
 				1AC35DD018CEE65200F37B72 /* extensions in Resources */,
@@ -4281,9 +4281,9 @@
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35CDC18CED84500F37B72 /* commonly_used_words.txt in Resources */,
-				1AC35CDA18CED84500F37B72 /* cocosgui in Resources */,
 				1AC35D0618CED84500F37B72 /* spine in Resources */,
 				1AC35CE818CED84500F37B72 /* extensions in Resources */,
+				298B28F818CFF9EC00C1920F /* cocosui in Resources */,
 				1AC35CDE18CED84500F37B72 /* components in Resources */,
 				1AC35D0818CED84500F37B72 /* TileMaps in Resources */,
 				1AC35CCC18CED84500F37B72 /* armature in Resources */,
@@ -4316,6 +4316,7 @@
 			files = (
 				1AC35CDF18CED84500F37B72 /* components in Resources */,
 				1AC35C8E18CECF1400F37B72 /* Icon-144.png in Resources */,
+				298B28FA18CFF9EC00C1920F /* cocosui in Resources */,
 				1AC35C9218CECF1400F37B72 /* Icon-50.png in Resources */,
 				1AC35CE518CED84500F37B72 /* effect1.wav in Resources */,
 				1AC35C9618CECF1400F37B72 /* Icon-76.png in Resources */,
@@ -4342,7 +4343,6 @@
 				1AC35C8C18CECF1400F37B72 /* Icon-114.png in Resources */,
 				1AC35CF118CED84500F37B72 /* hd in Resources */,
 				1AC35C9318CECF1400F37B72 /* Icon-57.png in Resources */,
-				1AC35CDB18CED84500F37B72 /* cocosgui in Resources */,
 				1AC35CCF18CED84500F37B72 /* background-music-aac.wav in Resources */,
 				1AC35CFB18CED84500F37B72 /* Misc in Resources */,
 				1AC35CF318CED84500F37B72 /* Hello.png in Resources */,
@@ -5403,7 +5403,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/ui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Debug;
 		};
@@ -5428,7 +5428,7 @@
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/ui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Release;
 		};
