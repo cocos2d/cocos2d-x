@@ -6,10 +6,11 @@
 #include "../../CustomWidget/CustomImageViewReader.h"
 #include "../../CustomWidget/CustomReader.h"
 
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #pragma mark -
 #pragma mark CustomImageLayer
 #pragma mark -
+#endif
 
 void CustomImageLayer::onEnter()
 {
@@ -27,9 +28,11 @@ void CustomImageLayer::onEnter()
     addChild(layout);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #pragma mark -
 #pragma mark CustomImageScene
 #pragma mark -
+#endif
 
 void CustomImageScene::onEnter()
 {
