@@ -269,9 +269,10 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _useA8Shader(useA8Shader)
 , _fontScale(1.0f)
 , _uniformEffectColor(0)
-,_currNumLines(-1)
-,_textSprite(nullptr)
-,_contentDirty(false)
+, _currNumLines(-1)
+, _textSprite(nullptr)
+, _contentDirty(false)
+, _currentLabelType(LabelType::STRING_TEXTURE)
 {
     _cascadeColorEnabled = true;
     _batchNodes.push_back(this);
