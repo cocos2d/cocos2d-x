@@ -1613,7 +1613,8 @@ local function runTouchesTest()
         
         pLayer:scheduleUpdateWithPriorityLua(update,0)  
     
-        pClassLabel = cc.LabelBMFont:create("00.0", "fonts/arial16.fnt")
+        pClassLabel = cc.Label:createWithBMFont("fonts/arial16.fnt", "00.0")
+        pClassLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pClassLabel:setPosition(cc.p(s.width/2, s.height/2))
         pLayer:addChild(pClassLabel) 
     

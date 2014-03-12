@@ -166,7 +166,8 @@ local function OpenGLTestMainLayer()
         program:link()
         program:updateUniforms()
 
-        label = cc.LabelBMFont:create("RETRO EFFECT","fonts/west_england-64.fnt")
+        label = cc.Label:createWithBMFont("fonts/west_england-64.fnt", "RETRO EFFECT")
+        label:setAnchorPoint(cc.p(0.5, 0.5))
         label:setShaderProgram( program )
 
         label:setPosition(size.width/2, size.height/2)

@@ -126,7 +126,7 @@ local function XMLHttpRequestLayer()
             labelStatusCode:setString("waiting...")
         end
 
-        local labelPostJson = cc.LabelTTF:create("Test Post Json", s_arialPath, 22)
+        local labelPostJson = cc.Label:create("Test Post Json", s_arialPath, 22)
         labelPostJson:setAnchorPoint(cc.p(0.5, 0.5))
         local itemPostJson = cc.MenuItemLabel:create(labelPostJson)
         itemPostJson:registerScriptTapHandler(onMenuPostJsonClicked)
