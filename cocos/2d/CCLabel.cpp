@@ -66,7 +66,7 @@ Label* Label::createWithFontDefinition(const std::string& text, const FontDefini
 
 Label* Label::create(const std::string& text, const std::string& fontName, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
-    auto ret = new Label(nullptr,hAlignment);
+    auto ret = new Label(nullptr,hAlignment,vAlignment);
 
     if (ret)
     {
@@ -251,7 +251,8 @@ bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHe
     return false;
 }
 
-Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,bool useA8Shader)
+Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
+             TextVAlignment vAlignment /* = TextVAlignment::TOP */,bool useDistanceField /* = false */,bool useA8Shader /* = false */)
 : _reusedLetter(nullptr)
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
@@ -259,7 +260,8 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _labelWidth(0)
 , _labelHeight(0)
 , _labelDimensions(Size::ZERO)
-, _hAlignment(alignment)
+, _hAlignment(hAlignment)
+, _vAlignment(vAlignment)
 , _currentUTF16String(nullptr)
 , _originalUTF16String(nullptr)
 , _horizontalKernings(nullptr)
