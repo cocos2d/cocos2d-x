@@ -105,13 +105,13 @@
     </Midl>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\test-lua-res" rd /s /q "$(OutDir)\test-lua-res"
-mkdir "$(OutDir)\test-lua-res"
-mkdir "$(OutDir)\test-lua-res\src"
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)\test-lua-res" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\test-lua-res\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\test-lua-res" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\test-lua-res" /e /Y</Command>
+if exist "$(OutDir)\lua-tests-res" rd /s /q "$(OutDir)\lua-tests-res"
+mkdir "$(OutDir)\lua-tests-res"
+mkdir "$(OutDir)\lua-tests-res\src"
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)\lua-tests-res" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\lua-tests-res\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\lua-tests-res" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\lua-tests-res" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
@@ -159,13 +159,13 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     </Midl>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\test-lua-res" rd /s /q "$(OutDir)\test-lua-res"
-mkdir "$(OutDir)\test-lua-res"
-mkdir "$(OutDir)\test-lua-res\src"
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)\test-lua-res" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\test-lua-res\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\test-lua-res" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\test-lua-res" /e /Y</Command>
+if exist "$(OutDir)\lua-tests-res" rd /s /q "$(OutDir)\lua-tests-res"
+mkdir "$(OutDir)\lua-tests-res"
+mkdir "$(OutDir)\lua-tests-res\src"
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)\lua-tests-res" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\lua-tests-res\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\lua-tests-res" /e /Y
+xcopy "$(ProjectDir)..\..\res" "$(OutDir)\lua-tests-res" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
