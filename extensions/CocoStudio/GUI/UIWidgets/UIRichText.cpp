@@ -110,7 +110,6 @@ bool RichElementCustomNode::init(int tag, const ccColor3B &color, GLubyte opacit
 RichText::RichText():
 _formatTextDirty(true),
 _richElements(NULL),
-_elementRenders(NULL),
 _leftSpaceWidth(0.0f),
 _verticalSpace(0.0f),
 _elementRenderersContainer(NULL)
@@ -186,7 +185,7 @@ void RichText::formatText()
         if (_ignoreSize)
         {
             addNewLine();
-            for (int i=0; i<_richElements->count(); i++)
+            for (unsigned int i=0; i<_richElements->count(); i++)
             {
                 RichElement* element = static_cast<RichElement*>(_richElements->objectAtIndex(i));
                 CCNode* elementRenderer = NULL;
@@ -222,7 +221,7 @@ void RichText::formatText()
         else
         {
             addNewLine();
-            for (int i=0; i<_richElements->count(); i++)
+            for (unsigned int i=0; i<_richElements->count(); i++)
             {
                 
                 RichElement* element = static_cast<RichElement*>(_richElements->objectAtIndex(i));
@@ -325,7 +324,7 @@ void RichText::formarRenderers()
         
         CCArray* row = (CCArray*)(_elementRenders[0]);
         float nextPosX = 0.0f;
-        for (int j=0; j<row->count(); j++)
+        for (unsigned int j=0; j<row->count(); j++)
         {
             CCNode* l = (CCNode*)(row->objectAtIndex(j));
             l->setAnchorPoint(CCPointZero);
@@ -343,11 +342,11 @@ void RichText::formarRenderers()
         float newContentSizeHeight = 0.0f;
         float *maxHeights = new float[_elementRenders.size()];
         
-        for (int i=0; i<_elementRenders.size(); i++)
+        for (unsigned int i=0; i<_elementRenders.size(); i++)
         {
             CCArray* row = (CCArray*)(_elementRenders[i]);
             float maxHeight = 0.0f;
-            for (int j=0; j<row->count(); j++)
+            for (unsigned int j=0; j<row->count(); j++)
             {
                 CCNode* l = (CCNode*)(row->objectAtIndex(j));
                 maxHeight = MAX(l->getContentSize().height, maxHeight);
@@ -358,13 +357,13 @@ void RichText::formarRenderers()
         
         
         float nextPosY = _customSize.height;
-        for (int i=0; i<_elementRenders.size(); i++)
+        for (unsigned int i=0; i<_elementRenders.size(); i++)
         {
             CCArray* row = (CCArray*)(_elementRenders[i]);
             float nextPosX = 0.0f;
             nextPosY -= (maxHeights[i] + _verticalSpace);
             
-            for (int j=0; j<row->count(); j++)
+            for (unsigned int j=0; j<row->count(); j++)
             {
                 CCNode* l = (CCNode*)(row->objectAtIndex(j));
                 l->setAnchorPoint(CCPointZero);
