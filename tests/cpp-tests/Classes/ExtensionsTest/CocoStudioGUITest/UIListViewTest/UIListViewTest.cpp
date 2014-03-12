@@ -176,13 +176,18 @@ void UIListViewTest_Vertical::selectedItemEvent(Ref *pSender, ListViewEventType 
 {
     switch (type)
     {
-        case LISTVIEW_ONSELECTEDITEM:
+        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_START:
         {
             ListView* listView = static_cast<ListView*>(pSender);
-            CCLOG("select child index = %ld", listView->getCurSelectedIndex());
-        }
+            CCLOG("select child start index = %ld", listView->getCurSelectedIndex());
             break;
-            
+        }
+        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_END:
+        {
+            ListView* listView = static_cast<ListView*>(pSender);
+            CCLOG("select child end index = %ld", listView->getCurSelectedIndex());
+            break;
+        }
         default:
             break;
     }
@@ -354,13 +359,18 @@ void UIListViewTest_Horizontal::selectedItemEvent(Ref *pSender, ListViewEventTyp
 {
     switch (type)
     {
-        case LISTVIEW_ONSELECTEDITEM:
+        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_START:
         {
             ListView* listView = static_cast<ListView*>(pSender);
-            CCLOG("select child index = %ld", listView->getCurSelectedIndex());
-        }
+            CCLOG("select child start index = %ld", listView->getCurSelectedIndex());
             break;
-            
+        }
+        case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_END:
+        {
+            ListView* listView = static_cast<ListView*>(pSender);
+            CCLOG("select child end index = %ld", listView->getCurSelectedIndex());
+            break;
+        }
         default:
             break;
     }
