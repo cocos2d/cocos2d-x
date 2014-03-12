@@ -26,10 +26,11 @@ THE SOFTWARE.
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
 
-#include "CCTexture2D.h"
-#include "CCSprite.h"
+#include "CCNode.h"
 
 NS_CC_BEGIN
+
+class Label;
 
 /**
  * @addtogroup GUI
@@ -55,7 +56,7 @@ NS_CC_BEGIN
  * @endcode
  *
  */
-class CC_DLL LabelTTF : public Sprite, public LabelProtocol
+class CC_DLL LabelTTF : public Node, public LabelProtocol, public BlendProtocol
 {
 public:
     /**
@@ -68,39 +69,21 @@ public:
      */
     virtual ~LabelTTF();
 
-    /** creates a LabelTTF with a font name and font size in points
-     @since v2.0.1
-     */
-    static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize);
-    
-    /** creates a LabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
-     @since v2.0.1
-     */
-    static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize,
-                             const Size& dimensions, TextHAlignment hAlignment);
-  
     /** creates a Label from a fontname, alignment, dimension in points and font size in points
      @since v2.0.1
      */
     static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize,
-                             const Size& dimensions, TextHAlignment hAlignment,
-                             TextVAlignment vAlignment);
+                             const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::CENTER,
+                             TextVAlignment vAlignment = TextVAlignment::TOP);
     
     
     /** Create a lable with string and a font definition*/
     static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
-    /** initializes the LabelTTF with a font name and font size */
-    bool initWithString(const std::string& string, const std::string& fontName, float fontSize);
-    
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
     bool initWithString(const std::string& string, const std::string& fontName, float fontSize,
-                        const Size& dimensions, TextHAlignment hAlignment);
-
-    /** initializes the LabelTTF with a font name, alignment, dimension and font size */
-    bool initWithString(const std::string& string, const std::string& fontName, float fontSize,
-                        const Size& dimensions, TextHAlignment hAlignment, 
-                        TextVAlignment vAlignment);
+                        const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT, 
+                        TextVAlignment vAlignment = TextVAlignment::TOP);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
     bool initWithStringAndTextDefinition(const std::string& string, FontDefinition &textDefinition);
@@ -109,7 +92,7 @@ public:
     void setTextDefinition(const FontDefinition& theDefinition);
     
     /** get the text definition used by this label */
-    FontDefinition getTextDefinition();
+    const FontDefinition& getTextDefinition() const;
     
     
     
@@ -128,11 +111,6 @@ public:
     /** set text tinting */
     void setFontFillColor(const Color3B &tintColor, bool mustUpdateTexture = true);
 
-    
-    
-    /** initializes the LabelTTF */
-    bool init();
-
     /** Creates an label.
      */
     static LabelTTF * create();
@@ -141,7 +119,7 @@ public:
     * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
     */
     virtual void setString(const std::string &label) override;
-    virtual const std::string& getString(void) const override;
+    virtual const std::string& getString(void) const override ;
     
     TextHAlignment getHorizontalAlignment() const;
     void setHorizontalAlignment(TextHAlignment alignment);
@@ -158,46 +136,23 @@ public:
     const std::string& getFontName() const;
     void setFontName(const std::string& fontName);
 
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+
+    virtual const BlendFunc &getBlendFunc() const override;
+
+    virtual void setFlippedX(bool flippedX);
+    virtual void setFlippedY(bool flippedY);
+
     /**
      * @js NA
      * @lua NA
      */
     virtual std::string getDescription() const override;
-
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual const Size& getContentSize() const override;
 protected:
-    bool updateTexture();
-
-    /** set the text definition for this label */
-    void _updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture = true);
-    FontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
-    
-    /** Dimensions of the label in Points */
-    Size _dimensions;
-    /** The alignment of the label */
-    TextHAlignment         _alignment;
-    /** The vertical alignment of the label */
-    TextVAlignment _vAlignment;
-    /** Font name used in the label */
-    std::string _fontName;
-    /** Font size of the label */
-    float _fontSize;
-    /** label's string */
-    std::string _string;
-    
-    /** font shadow */
-    bool    _shadowEnabled;
-    Size    _shadowOffset;
-    float   _shadowOpacity;
-    float   _shadowBlur;
-    
-    
-    /** font stroke */
-    bool        _strokeEnabled;
-    Color3B     _strokeColor;
-    float       _strokeSize;
-        
-    /** font tint */
-    Color3B   _textFillColor;
+    Label*    _renderLabel;
+    bool _contentDirty;
 };
 
 

@@ -30,6 +30,7 @@
 #include "CCFontFNT.h"
 #include "CCFontFreeType.h"
 #include "CCFontCharMap.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +59,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 
     if ( !tempAtlas )
     {
-        FontFreeType *font = FontFreeType::create(config.fontFilePath, fontSize, config.glyphs, config.customGlyphs,useDistanceField,config.outlineSize);
+        FontFreeType *font = FontFreeType::create(config.fontFilePath, fontSize * CC_CONTENT_SCALE_FACTOR(), config.glyphs, config.customGlyphs,useDistanceField,config.outlineSize);
         if (font)
         {
             tempAtlas = font->createFontAtlas();

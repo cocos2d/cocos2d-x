@@ -33,7 +33,7 @@
 #include "lua_cocos2dx_manual.hpp"
 #include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_gui_manual.hpp"
+#include "lua_cocos2dx_ui_manual.hpp"
 
 NS_CC_BEGIN
 
@@ -117,7 +117,7 @@ int LuaEngine::executeMenuItemEvent(MenuItem* pMenuItem)
     return 0;
 }
 
-int LuaEngine::executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName)
+int LuaEngine::executeNotificationEvent(__NotificationCenter* pNotificationCenter, const char* pszName)
 {
     int nHandler = pNotificationCenter->getObserverHandlerByName(pszName);
     if (!nHandler) return 0;
@@ -147,7 +147,7 @@ int LuaEngine::executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouc
     return 0;
 }
 
-int LuaEngine::executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches)
+int LuaEngine::executeLayerTouchesEvent(Layer* pLayer, int eventType, __Set *pTouches)
 {
     return 0;
 }
