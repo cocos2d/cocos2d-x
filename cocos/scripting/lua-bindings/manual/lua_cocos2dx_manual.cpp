@@ -537,10 +537,10 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     if (nullptr == layer)
         return;
     
-    auto dict = static_cast<Dictionary*>(layer->getUserObject());
+    auto dict = static_cast<__Dictionary*>(layer->getUserObject());
     if (dict == nullptr)
     {
-        dict = Dictionary::create();
+        dict = __Dictionary::create();
         layer->setUserObject(dict);
     }
     
@@ -548,9 +548,9 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     
     auto touchListenerAllAtOnce = static_cast<EventListenerTouchAllAtOnce*>(dict->objectForKey("touchListenerAllAtOnce"));
     auto touchListenerOneByOne = static_cast<EventListenerTouchOneByOne*>(dict->objectForKey("touchListenerOneByOne"));
-    auto touchMode = static_cast<Integer*>(dict->objectForKey("touchMode"));
-    auto swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
-    auto priority  = static_cast<Integer*>(dict->objectForKey("priority"));
+    auto touchMode = static_cast<__Integer*>(dict->objectForKey("touchMode"));
+    auto swallowTouches = static_cast<__Bool*>(dict->objectForKey("swallowTouches"));
+    auto priority  = static_cast<__Integer*>(dict->objectForKey("priority"));
     
     auto dispatcher = layer->getEventDispatcher();
     if (nullptr != dispatcher && (touchListenerAllAtOnce != nullptr || touchListenerOneByOne != nullptr))
@@ -702,10 +702,10 @@ static int lua_cocos2dx_Layer_isTouchEnabled(lua_State* L)
     argc = lua_gettop(L) - 1;
     if (0 == argc)
     {
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             bool ret = enabled ? enabled->getValue() : false;
             tolua_pushboolean(L, ret);
             return 1;
@@ -759,19 +759,19 @@ static int lua_cocos2dx_Layer_setTouchMode(lua_State* L)
 #endif
         int32_t mode = (int32_t)tolua_tonumber(L, 2, 0);
         
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if ( nullptr == dict)
         {
             dict = Dictionary::create();
             self->setUserObject(dict);
         }
         
-        Integer* touchModeObj = static_cast<Integer*>(dict->objectForKey("touchMode"));
+        __Integer* touchModeObj = static_cast<__Integer*>(dict->objectForKey("touchMode"));
         int32_t touchMode = touchModeObj ? touchModeObj->getValue() : 0;
         if (touchMode != mode)
         {
             dict->setObject(Integer::create(mode), "touchMode");
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
                 setTouchEnabledForLayer(self, false);
@@ -817,10 +817,10 @@ static int lua_cocos2dx_Layer_getTouchMode(lua_State* L)
     if (0 == argc)
     {
         int32_t ret = 0;
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
-            Integer* mode = static_cast<Integer*>(dict->objectForKey("touchMode"));
+            __Integer* mode = static_cast<__Integer*>(dict->objectForKey("touchMode"));
             ret = mode ? mode->getValue() : 0;
             tolua_pushnumber(L, (lua_Number)ret);
             return 1;
@@ -870,22 +870,22 @@ static int lua_cocos2dx_Layer_setSwallowsTouches(lua_State* L)
 #endif
         
         bool swallowsTouches = tolua_toboolean(L, 2, 0);
-        Bool* swallowsTouchesObj = nullptr;
+        __Bool* swallowsTouchesObj = nullptr;
         
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict == nullptr)
         {
             dict = Dictionary::create();
             self->setUserObject(dict);
         }
         
-        swallowsTouchesObj = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+        swallowsTouchesObj = static_cast<__Bool*>(dict->objectForKey("swallowTouches"));
         bool oldSwallowsTouches = swallowsTouchesObj ? swallowsTouchesObj->getValue() : false;
         
         if (oldSwallowsTouches != swallowsTouches)
         {
             dict->setObject(Integer::create(swallowsTouches), "swallowTouches");
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
                 setTouchEnabledForLayer(self, false);
@@ -931,10 +931,10 @@ static int lua_cocos2dx_Layer_isSwallowsTouches(lua_State* L)
     argc = lua_gettop(L) - 1;
     if (0 == argc)
     {
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
-            Bool* swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
+            __Bool* swallowTouches = static_cast<__Bool*>(dict->objectForKey("swallowTouches"));
             bool ret = swallowTouches ? swallowTouches->getValue() : false;
             lua_pushboolean(L, ret);
             return 1;
@@ -982,10 +982,10 @@ static int lua_cocos2dx_Layer_setKeyboardEnabled(lua_State* L)
             goto tolua_lerror;
 #endif
         bool enabled = tolua_toboolean(L, 2, 0);
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict == nullptr)
         {
-            dict = Dictionary::create();
+            dict = __Dictionary::create();
             self->setUserObject(dict);
         }
         
@@ -1050,10 +1050,10 @@ static int lua_cocos2dx_Layer_isKeyboardEnabled(lua_State* L)
     argc = lua_gettop(L) - 1;
     if (0 == argc)
     {
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("keyboardEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("keyboardEnabled"));
             bool ret = enabled ? enabled->getValue() : false;
             tolua_pushboolean(L, ret);
             return 1;
@@ -1102,7 +1102,7 @@ static int lua_cocos2dx_Layer_setAccelerometerEnabled(lua_State* L)
             goto tolua_lerror;
 #endif
         bool enabled = tolua_toboolean(L, 2, 0);
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict == nullptr)
         {
             dict = Dictionary::create();
@@ -1170,10 +1170,10 @@ static int lua_cocos2dx_Layer_isAccelerometerEnabled(lua_State* L)
     argc = lua_gettop(L) - 1;
     if (0 == argc)
     {
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("accelerometerEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("accelerometerEnabled"));
             bool ret = enabled ? enabled->getValue() : false;
             tolua_pushboolean(L, ret);
             return 1;
@@ -1305,23 +1305,23 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         if (!isMultiTouches)
             touchesMode = Touch::DispatchMode::ONE_BY_ONE;
         
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict == nullptr)
         {
-            dict = Dictionary::create();
+            dict = __Dictionary::create();
             self->setUserObject(dict);
         }
         
-        auto touchModeValue = static_cast<Integer*>(dict->objectForKey("touchMode"));
-        auto swallowTouchesValue = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
-        auto priorityValue = static_cast<Integer*>(dict->objectForKey("priority"));
+        auto touchModeValue = static_cast<__Integer*>(dict->objectForKey("touchMode"));
+        auto swallowTouchesValue = static_cast<__Bool*>(dict->objectForKey("swallowTouches"));
+        auto priorityValue = static_cast<__Integer*>(dict->objectForKey("priority"));
         
         //touch model
         int32_t mode = touchModeValue?touchModeValue->getValue() : 0;
         if (mode != (int)touchesMode)
         {
             dict->setObject(Integer::create((int)touchesMode), "touchMode");
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
                 setTouchEnabledForLayer(self, false);
@@ -1333,7 +1333,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         if (priority != oldPriorityValue)
         {
             dict->setObject(Integer::create(priority), "priority");
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
                 setTouchEnabledForLayer(self, false);
@@ -1346,7 +1346,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         if (oldSwallowTouchesValue != swallowTouches)
         {
             dict->setObject(Integer::create(swallowTouches), "swallowTouches");
-            Bool* enabled = static_cast<Bool*>(dict->objectForKey("touchEnabled"));
+            __Bool* enabled = static_cast<__Bool*>(dict->objectForKey("touchEnabled"));
             if (enabled && enabled->getValue())
             {
                 setTouchEnabledForLayer(self, false);
@@ -1394,7 +1394,7 @@ static int tolua_cocos2d_Layer_unregisterScriptTouchHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
             auto touchListenerAllAtOnce = static_cast<EventListenerTouchAllAtOnce*>(dict->objectForKey("touchListenerAllAtOnce"));
@@ -1495,7 +1495,7 @@ static int tolua_cocos2d_Layer_unregisterScriptKeypadHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
             auto keyboardListener = static_cast<EventListenerKeyboard*>(dict->objectForKey("keyboardListener"));
@@ -1592,7 +1592,7 @@ static int tolua_cocos2d_Layer_unregisterScriptAccelerateHandler(lua_State* tolu
     
     if (0 == argc)
     {
-        auto dict = static_cast<Dictionary*>(self->getUserObject());
+        auto dict = static_cast<__Dictionary*>(self->getUserObject());
         if (dict != nullptr)
         {
             auto accListener = static_cast<EventListenerAcceleration*>(dict->objectForKey("accListener"));
@@ -2833,7 +2833,7 @@ static int tolua_cocos2dx_FileUtils_getStringFromFile(lua_State* tolua_S)
         if (ok)
         {
             std::string fullPathName = FileUtils::getInstance()->fullPathForFilename(arg0);
-            String* contentsOfFile = String::createWithContentsOfFile(fullPathName.c_str());
+            __String* contentsOfFile = __String::createWithContentsOfFile(fullPathName.c_str());
             if (nullptr != contentsOfFile)
             {
                 const char* tolua_ret = contentsOfFile->getCString();
@@ -2910,7 +2910,7 @@ static int tolua_cocos2dx_GLProgram_create(lua_State* tolua_S)
             return 0;        
 
         tolua_ret->autorelease();
-        tolua_ret->initWithVertexShaderFilename(arg0, arg1);
+        tolua_ret->initWithFilenames(arg0, arg1);
         int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
         toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.GLProgram");

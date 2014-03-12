@@ -9,7 +9,7 @@
 "build/build-mingw32-gcc-make.sh",
 "build/cocos2d-win32.vc2012.sln",
 "build/cocos2d_libs.xcodeproj/project.pbxproj",
-"build/cocos2d_samples.xcodeproj/project.pbxproj",
+"build/cocos2d_tests.xcodeproj/project.pbxproj",
 "build/install-deps-linux.sh",
 "build/win32-msvc-2012-x86.cmd",
 "build/win32-msvc-2013-x86.cmd",

@@ -40,49 +40,6 @@ public class Cocos2dxActivity extends NativeActivity{
 		
 		//2.Set the format of window
 		// getWindow().setFormat(PixelFormat.TRANSLUCENT);
-		if(!isWifiConnected())
-		{
-			Toast.makeText(this, "wifi is closed!", Toast.LENGTH_SHORT).show();
-			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-		}
-	}
-	
-	 private boolean isWifiConnected() {  
-	        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);  
-	        if (cm != null) {  
-	            NetworkInfo networkInfo = cm.getActiveNetworkInfo();  
-	            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {  
-	                return true;  
-	            }  
-	        }  
-	        return false;  
-	    } 
-	 
-	public static String getLocalIpAddress() {
-		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface
-					.getNetworkInterfaces(); en.hasMoreElements();) {
-				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf
-						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-					InetAddress inetAddress = enumIpAddr.nextElement();
-					if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress()) {
-						return inetAddress.getHostAddress().toString();
-					}
-				}
-			}
-		} catch (SocketException ex) {
-			Log.e("WifiPreference IpAddress", ex.toString());
-		}
-		return null;
-	}
-	
-	public static String getSDCardPath() {
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			String strSDCardPathString = Environment.getExternalStorageDirectory().getPath();
-           return  strSDCardPathString;
-		}
-		return null;
 	}
 	
 }

@@ -1116,10 +1116,10 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         if (nullptr == delegate)
             return 0;
         
-        Dictionary* userDict = static_cast<Dictionary*>(self->getUserObject());
+        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new Dictionary();
+            userDict = new __Dictionary();
             if (NULL == userDict)
                 return 0;
             
@@ -1253,10 +1253,10 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         if (nullptr == dataSource)
             return 0;
         
-        Dictionary* userDict = static_cast<Dictionary*>(self->getUserObject());
+        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new Dictionary();
+            userDict = new __Dictionary();
             if (NULL == userDict)
                 return 0;
             
@@ -1324,7 +1324,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         ret->reloadData();
         
-        Dictionary* userDict = new Dictionary();
+        __Dictionary* userDict = new __Dictionary();
         userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
         ret->setUserObject(userDict);
         userDict->release();
