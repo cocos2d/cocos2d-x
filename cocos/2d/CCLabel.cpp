@@ -280,7 +280,7 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
     _batchNodes.push_back(this);
 
     _fontDefinition._fontName = "Helvetica";
-    _fontDefinition._fontSize = 32;
+    _fontDefinition._fontSize = 12;
     _fontDefinition._alignment = TextHAlignment::LEFT;
     _fontDefinition._vertAlignment = TextVAlignment::TOP;
 }
