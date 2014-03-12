@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{13E55395-94A2-4CD9-BFC2-1A051F80C17D}</ProjectGuid>
-    <RootNamespace>HelloLua.win32</RootNamespace>
+    <RootNamespace>lua-empty-test.win32</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -70,12 +70,12 @@
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)HelloLua.tlb</TypeLibraryName>
-      <HeaderFileName>HelloLua.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)lua-empty-test.tlb</TypeLibraryName>
+      <HeaderFileName>lua-empty-test.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>HelloLua_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>HelloLua_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>lua-empty-test_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>lua-empty-test_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -104,7 +104,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua\script" "$(ProjectDir)..\..\HelloLua\Resources" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua\script" "$(ProjectDir)..\..\lua-empty-test\Resources" /e /Y</Command>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -118,12 +118,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)HelloLua.tlb</TypeLibraryName>
-      <HeaderFileName>HelloLua.h</HeaderFileName>
+      <TypeLibraryName>$(IntDir)lua-empty-test.tlb</TypeLibraryName>
+      <HeaderFileName>lua-empty-test.h</HeaderFileName>
       <DllDataFileName>
       </DllDataFileName>
-      <InterfaceIdentifierFileName>HelloLua_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>HelloLua_p.c</ProxyFileName>
+      <InterfaceIdentifierFileName>lua-empty-test_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>lua-empty-test_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\auto-generated\lua-bindings;$(EngineRoot)cocos\scripting\lua\bindings;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
