@@ -27,6 +27,10 @@ public:
     void setParticlePosition(const cocos2d::Point& pos);
     const cocos2d::Point& getParticlePosition() const;
     
+    void playParticle();
+    
+    void stopParticle();
+    
 protected:
     virtual bool init();
     virtual void initRenderer();
