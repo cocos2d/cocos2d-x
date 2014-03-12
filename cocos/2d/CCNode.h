@@ -803,7 +803,7 @@ public:
     /**
      * Search the children to perform processing for nodes which share a name.
      * Note: this function will search the whole node tree recursively.
-     * @param name  the name to search for
+     * @param name, the name to search for, To perform an advanced search, you can use regular expression here.
      * @param callback, A callback to execute on nodes that match the name parameter. The callback takes the following arguments:
      *  node: A node that matches the name.
      *  stop: A pointer to a Boolean variable. Your callback can set this to true to terminate the enumeration.

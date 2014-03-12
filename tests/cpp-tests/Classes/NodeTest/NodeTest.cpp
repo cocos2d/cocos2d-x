@@ -375,12 +375,12 @@ void NodeEnumChildByNameTest::onEnter()
     sp21->setPosition(Point(380,160));
     sp22->setPosition(Point(380,260));  
 
-    sp10->setName("sister1");
-    sp11->setName("sister1");
-    sp12->setName("sister1");
-    sp20->setName("sister2");
-    sp21->setName("sister2");
-    sp22->setName("sister2");
+    sp10->setName("tamara00");
+    sp11->setName("tamara01");
+    sp12->setName("tamara02");
+    sp20->setName("cathia");
+    sp21->setName("cathia");
+    sp22->setName("cathia");
 
     addChild(sp10);
     addChild(sp11);
@@ -389,7 +389,7 @@ void NodeEnumChildByNameTest::onEnter()
     addChild(sp21);
     addChild(sp22);
 
-    enumerateChildrenByName("sister1",
+    enumerateChildrenByName("tamara.*",
         [](Node* node, bool* stop)
         {
             auto rot = RotateBy::create(2, 360);
@@ -397,7 +397,7 @@ void NodeEnumChildByNameTest::onEnter()
             auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
             node->runAction(forever1);
         });
-    enumerateChildrenByName("sister2",
+    enumerateChildrenByName("cathia",
         [](Node* node, bool* stop)
         {
             auto actionUp = JumpBy::create(2, Point(0,0), 80, 4);
