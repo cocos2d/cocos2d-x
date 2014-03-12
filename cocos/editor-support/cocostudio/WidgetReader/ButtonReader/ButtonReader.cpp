@@ -1,7 +1,7 @@
 
 
 #include "ButtonReader.h"
-#include "gui/UIButton.h"
+#include "ui/UIButton.h"
 
 USING_NS_CC;
 using namespace ui;

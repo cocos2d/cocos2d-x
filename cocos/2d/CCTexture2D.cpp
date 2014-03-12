@@ -1083,7 +1083,12 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 
     int imageWidth;
     int imageHeight;
-    Data outData = Device::getTextureDataForText(text,textDefinition,align,imageWidth,imageHeight);
+    auto textDef = textDefinition;
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
+    textDef._fontSize *= contentScaleFactor;
+    textDef._dimensions.width *= contentScaleFactor;
+    textDef._dimensions.height *= contentScaleFactor;
+    Data outData = Device::getTextureDataForText(text,textDef,align,imageWidth,imageHeight);
     if(outData.isNull())
         return false;
 

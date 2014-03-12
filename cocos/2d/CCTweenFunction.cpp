@@ -121,13 +121,13 @@ float tweenTo(float time, TweenType type, float *easingParam)
             break;
             
         case Elastic_EaseIn:
-            delta = elasticEaseIn(time, easingParam);
+            delta = elasticEaseIn(time, easingParam[0]);
             break;
         case Elastic_EaseOut:
-            delta = elasticEaseOut(time, easingParam);
+            delta = elasticEaseOut(time, easingParam[0]);
             break;
         case Elastic_EaseInOut:
-            delta = elasticEaseInOut(time, easingParam);
+            delta = elasticEaseInOut(time, easingParam[0]);
             break;
             
             
@@ -315,14 +315,8 @@ float circEaseInOut(float time)
 
 
 // Elastic Ease
-float elasticEaseIn(float time, float *easingParam)
+float elasticEaseIn(float time, float period)
 {
-    float period = 0.3f;
-
-    if (easingParam != NULL)
-    {
-        period = easingParam[0];
-    }
 
     float newT = 0;
     if (time == 0 || time == 1)
@@ -338,14 +332,8 @@ float elasticEaseIn(float time, float *easingParam)
 
     return newT;
 }
-float elasticEaseOut(float time, float *easingParam)
+float elasticEaseOut(float time, float period)
 {
-    float period = 0.3f;
-
-    if (easingParam != NULL)
-    {
-        period = easingParam[0];
-    }
 
     float newT = 0;
     if (time == 0 || time == 1)
@@ -360,14 +348,8 @@ float elasticEaseOut(float time, float *easingParam)
 
     return newT;
 }
-float elasticEaseInOut(float time, float *easingParam)
+float elasticEaseInOut(float time, float period)
 {
-    float period = 0.3f;
-
-    if (easingParam != NULL)
-    {
-        period = easingParam[0];
-    }
 
     float newT = 0;
     if (time == 0 || time == 1)
