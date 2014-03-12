@@ -5,8 +5,9 @@ import time
 import os
 
 def main():
-    
-    J = Jenkins('http://115.28.134.83:8000')
+    username = os.environ['username']
+    password = os.environ['password']
+    J = Jenkins('http://115.28.134.83:8000',username,password)
     job = J['cocos-2dx-pull-request-build']
     duration = os.environ['duration']
     #Get the numerical ID of the last build.
@@ -20,6 +21,7 @@ def main():
     if not running:
         return False
     print "buildnumber:#",buildnu
+    #get nowtime
     nowtime = time.strftime('%M',time.localtime(time.time()))
     #print 'nowtime:',nowtime
     timeb = build.get_timestamp()
