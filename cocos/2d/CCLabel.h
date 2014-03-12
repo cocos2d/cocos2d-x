@@ -197,10 +197,10 @@ public:
     virtual void updateContent();
 
     virtual void setFontName(const std::string& fontName);
-    virtual const std::string& getFontName() const { return _fontDefinition._fontName;}
+    virtual const std::string& getFontName() const;
 
     virtual void setFontSize(int fontSize);
-    virtual int getFontSize() const { return _fontDefinition._fontSize;}
+    virtual int getFontSize() const;
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
@@ -251,7 +251,8 @@ protected:
     /**
     * @js NA
     */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment alignment = TextHAlignment::LEFT, bool useDistanceField = false,bool useA8Shader = false);
+    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT, 
+        TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
     /**
     * @js NA
     * @lua NA
