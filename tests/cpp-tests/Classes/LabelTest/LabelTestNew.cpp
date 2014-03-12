@@ -1372,9 +1372,9 @@ LabelShadowTest::LabelShadowTest()
     auto slider = ui::Slider::create();
     slider->setTag(1);
     slider->setTouchEnabled(true);
-    slider->loadBarTexture("cocosgui/sliderTrack.png");
-    slider->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
-    slider->loadProgressBarTexture("cocosgui/sliderProgress.png");
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
     slider->setPosition(Point(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
     slider->setPercent(52);
     slider->addEventListenerSlider(this, sliderpercentchangedselector(LabelShadowTest::sliderEvent));
@@ -1383,9 +1383,9 @@ LabelShadowTest::LabelShadowTest()
     auto slider2 = ui::Slider::create();
     slider2->setTag(2);
     slider2->setTouchEnabled(true);
-    slider2->loadBarTexture("cocosgui/sliderTrack.png");
-    slider2->loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
-    slider2->loadProgressBarTexture("cocosgui/sliderProgress.png");
+    slider2->loadBarTexture("cocosui/sliderTrack.png");
+    slider2->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider2->loadProgressBarTexture("cocosui/sliderProgress.png");
     slider2->setPosition(Point(size.width * 0.15f, size.height / 2.0));
     slider2->setRotation(90);
     slider2->setPercent(52);

@@ -20,7 +20,7 @@ bool UISliderTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosgui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _layout->getSize();

@@ -2,7 +2,7 @@ set(LUABINDING_SRC
   auto/lua_cocos2dx_auto.cpp
   auto/lua_cocos2dx_extension_auto.cpp
   auto/lua_cocos2dx_studio_auto.cpp
-  auto/lua_cocos2dx_gui_auto.cpp
+  auto/lua_cocos2dx_ui_auto.cpp
   auto/lua_cocos2dx_spine_auto.cpp
   auto/lua_cocos2dx_physics_auto.cpp
   manual/tolua_fix.cpp
@@ -18,7 +18,7 @@ set(LUABINDING_SRC
   manual/lua_cocos2dx_manual.cpp
   manual/lua_cocos2dx_extension_manual.cpp
   manual/lua_cocos2dx_coco_studio_manual.cpp
-  manual/lua_cocos2dx_gui_manual.cpp
+  manual/lua_cocos2dx_ui_manual.cpp
   manual/lua_cocos2dx_spine_manual.cpp
   manual/lua_cocos2dx_physics_manual.cpp
   manual/lua_cocos2dx_deprecated.cpp
@@ -32,7 +32,7 @@ include_directories(
   ../../editor-support/cocosbuilder
   ../../editor-support/cocostudio
   ../../editor-support/spine
-  ../../gui
+  ../../ui
   ../../../external/lua/lua
   ../../../external/lua/tolua
 )

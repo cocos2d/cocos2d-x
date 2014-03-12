@@ -114,8 +114,8 @@ add_subdirectory(${COCOS2D_ROOT}/cocos/2d)
 # cocos storage
 add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
 
-# gui
-add_subdirectory(${COCOS2D_ROOT}/cocos/gui)
+# ui
+add_subdirectory(${COCOS2D_ROOT}/cocos/ui)
 
 # network
 add_subdirectory(${COCOS2D_ROOT}/cocos/network)
@@ -146,7 +146,7 @@ set(FMOD_LIB "fmodex")
 endif()
 
 target_link_libraries(${APP_NAME}
-  gui
+  ui
   network
   storage
   spine

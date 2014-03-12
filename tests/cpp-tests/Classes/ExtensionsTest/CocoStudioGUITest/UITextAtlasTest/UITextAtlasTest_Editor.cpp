@@ -8,7 +8,7 @@ bool UITextAtlasTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosgui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _layout->getSize();

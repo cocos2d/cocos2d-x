@@ -19,7 +19,7 @@ bool UIWidgetAddNodeTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosgui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _layout->getSize();
@@ -40,7 +40,7 @@ bool UIWidgetAddNodeTest_Editor::init()
         widget->setZOrder(_layout->getZOrder() + 1);
         _layout->addChild(widget);
         
-        Sprite* sprite = Sprite::create("cocosgui/ccicon.png");
+        Sprite* sprite = Sprite::create("cocosui/ccicon.png");
         widget->addNode(sprite);
         
         return true;

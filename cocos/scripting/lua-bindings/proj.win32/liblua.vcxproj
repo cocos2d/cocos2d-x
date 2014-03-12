@@ -32,10 +32,10 @@
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c" />
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp" />
-    <ClCompile Include="..\auto\lua_cocos2dx_gui_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_spine_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_studio_auto.cpp" />
+    <ClCompile Include="..\auto\lua_cocos2dx_ui_auto.cpp" />
     <ClCompile Include="..\manual\CCBProxy.cpp" />
     <ClCompile Include="..\manual\CCLuaBridge.cpp" />
     <ClCompile Include="..\manual\CCLuaEngine.cpp" />
@@ -49,10 +49,10 @@
     <ClCompile Include="..\manual\lua_cocos2dx_coco_studio_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_deprecated.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_extension_manual.cpp" />
-    <ClCompile Include="..\manual\lua_cocos2dx_gui_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_physics_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_spine_manual.cpp" />
+    <ClCompile Include="..\manual\lua_cocos2dx_ui_manual.cpp" />
     <ClCompile Include="..\manual\lua_debugger.c" />
     <ClCompile Include="..\manual\lua_extensions.c" />
     <ClCompile Include="..\manual\Lua_web_socket.cpp" />
@@ -83,10 +83,10 @@
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h" />
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp" />
-    <ClInclude Include="..\auto\lua_cocos2dx_gui_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_spine_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_studio_auto.hpp" />
+    <ClInclude Include="..\auto\lua_cocos2dx_ui_auto.hpp" />
     <ClInclude Include="..\manual\CCBProxy.h" />
     <ClInclude Include="..\manual\CCLuaBridge.h" />
     <ClInclude Include="..\manual\CCLuaEngine.h" />
@@ -100,10 +100,10 @@
     <ClInclude Include="..\manual\lua_cocos2dx_coco_studio_manual.hpp" />
     <ClInclude Include="..\manual\lua_cocos2dx_deprecated.h" />
     <ClInclude Include="..\manual\lua_cocos2dx_extension_manual.h" />
-    <ClInclude Include="..\manual\lua_cocos2dx_gui_manual.hpp" />
     <ClInclude Include="..\manual\lua_cocos2dx_manual.hpp" />
     <ClInclude Include="..\manual\lua_cocos2dx_physics_manual.hpp" />
     <ClInclude Include="..\manual\lua_cocos2dx_spine_manual.hpp" />
+    <ClInclude Include="..\manual\lua_cocos2dx_ui_manual.hpp" />
     <ClInclude Include="..\manual\lua_debugger.h" />
     <ClInclude Include="..\manual\lua_extensions.h" />
     <ClInclude Include="..\manual\Lua_web_socket.h" />
