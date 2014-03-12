@@ -148,7 +148,7 @@ local function runNodeChildrenTest()
    local function updateQuantityLabel()
          if nQuantityOfNodes ~= nLastRenderedCount then 
  --         local pInfoLabel = pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
-            local  pInfoLabel = tolua.cast(pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
+            local  pInfoLabel = pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
             local strNode = nQuantityOfNodes.." nodes"
             pInfoLabel:setString(strNode)
             nLastRenderedCount = nQuantityOfNodes
@@ -167,7 +167,7 @@ local function runNodeChildrenTest()
             local i = 0
             local len = table.getn(pChildren)
             for i = 0, len - 1, 1 do
-                local  child = tolua.cast(pChildren[i + 1], "cc.Sprite")
+                local  child = pChildren[i + 1]
                 child:setVisible(false)
             end
     end
@@ -190,7 +190,7 @@ local function runNodeChildrenTest()
             end
             
             for i = 0 , nTotalToAdd - 1 do
-                local pChild = tolua.cast(pSprites[i + 1],"cc.Node")
+                local pChild = pSprites[i + 1]
                 pBatchNode:addChild(pChild, zs[i], NodeChildrenTestParam.kTagBase + i)
             end
             
@@ -217,7 +217,7 @@ local function runNodeChildrenTest()
             end
             -- add them with random Z (very important!)
             for i=0, nTotalToAdd - 1  do
-                local pChild = tolua.cast(pSprites[i + 1],"cc.Node")
+                local pChild = pSprites[i + 1]
                 pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)
             end
                     
@@ -245,7 +245,7 @@ local function runNodeChildrenTest()
 
             --dd them with random Z (very important!)
             for i = 0, nTotalToAdd - 1 do 
-                local pChild = tolua.cast(pSprites[i + 1] ,"cc.Node")
+                local pChild = pSprites[i + 1]
                 pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)             
             end
 
@@ -253,7 +253,7 @@ local function runNodeChildrenTest()
 
             -- reorder them
             for i = 0, nTotalToAdd - 1 do       
-                local pNode =  tolua.cast(pSprites[i + 1],"cc.Node")
+                local pNode =  pSprites[i + 1]
                 pBatchNode:reorderChild(pNode,  math.random(-1,1) * 50)
             end       
             pBatchNode:sortAllChildren()
@@ -509,7 +509,7 @@ local function runParticleTest()
     
     local function UpdateQuantityLabel()
         if nQuantityParticles ~= nLastRenderedCount then
-            local  pInfoLabel = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer), "cc.LabelTTF")
+            local  pInfoLabel = pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer)
             local  strInfo    = string.format("%u particles", nQuantityParticles)
             pInfoLabel:setString(strInfo)
             
@@ -519,7 +519,7 @@ local function runParticleTest()
     
     local function doTest()
         local s = cc.Director:getInstance():getWinSize()
-        local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"cc.ParticleSystem")
+        local pParticleSystem = pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem)
         if nil == pParticleSystem then
             return
         end
@@ -764,8 +764,8 @@ local function runParticleTest()
     end
     
     local function step(t)
-          local pAtlas = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas),"cc.LabelAtlas")
-          local pEmitter = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"cc.ParticleSystem")
+          local pAtlas = pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas)
+          local pEmitter = pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem)
           local strInfo = string.format("%4d",pEmitter:getParticleCount())
           pAtlas:setString(strInfo)
     end
@@ -990,7 +990,7 @@ local function runSpriteTest()
     
     local function UpdateNodes()
           if  nQuantityNodes ~= nLastRenderedCount then         
-             local pInfoLabel = tolua.cast(pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer), "cc.LabelTTF")
+             local pInfoLabel = pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer)
              local strInfo = string.format("%u nodes", nQuantityNodes)
              pInfoLabel:setString(strInfo)
              nLastRenderedCount = nQuantityNodes
@@ -1701,14 +1701,14 @@ local function runFuncRelateWithTable()
         if quantityOfNodes == 0 then
             quantityOfNodes = 100
         end
-        local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
+        local  numLabel = layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
         local  strNum = string.format("%d", quantityOfNodes)
         numLabel:setString(strNum)    
     end
 
     local function onIncrease()
         quantityOfNodes = quantityOfNodes + 100
-        local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
+        local  numLabel = layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
         local  strNum = string.format("%d", quantityOfNodes)
         numLabel:setString(strNum)  
     end

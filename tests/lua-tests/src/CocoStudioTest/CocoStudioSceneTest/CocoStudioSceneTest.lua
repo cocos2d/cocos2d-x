@@ -193,9 +193,9 @@ function SpriteComponentTest:createGameScene()
         local action1 = cc.Blink:create(2, 10)
         local action2 = cc.Blink:create(2, 5)
 
-        local sister1 = tolua.cast(node:getChildByTag(10003):getComponent("CCSprite"),"ccs.ComRender")
+        local sister1 = node:getChildByTag(10003):getComponent("CCSprite")
         sister1:getNode():runAction(action1)
-        local sister2 = tolua.cast(node:getChildByTag(10004):getComponent("CCSprite"),"ccs.ComRender")
+        local sister2 = node:getChildByTag(10004):getComponent("CCSprite")
         sister2:getNode():runAction(action2)
     end
 
@@ -245,10 +245,10 @@ end
 function ArmatureComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.json")
     if nil ~= node then
-        local blowFish = tolua.cast(node:getChildByTag(10007):getComponent("CCArmature"),"ccs.ComRender")
+        local blowFish = node:getChildByTag(10007):getComponent("CCArmature")
         blowFish:getNode():runAction(cc.MoveBy:create(10.0, cc.p(-1000.0, 0)))
 
-        local butterflyfish = tolua.cast(node:getChildByTag(10008):getComponent("CCArmature"),"ccs.ComRender")
+        local butterflyfish = node:getChildByTag(10008):getComponent("CCArmature")
         butterflyfish:getNode():runAction(CCMoveBy:create(10.0, cc.p(-1000.0, 0)))
     end
 
@@ -298,15 +298,15 @@ end
 function UIComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.json")
     if nil ~= node then
-        local render = tolua.cast(node:getChildByTag(10025):getComponent("GUIComponent"),"ccs.ComRender")
-        local widget = tolua.cast(render:getNode(), "ccui.Widget")
-        local button = tolua.cast(widget:getChildByName("Button_156"),"ccui.Button")
+        local render = node:getChildByTag(10025):getComponent("GUIComponent")
+        local widget = render:getNode()
+        local button = widget:getChildByName("Button_156")
         local function onTouch(sender, eventType)
             if eventType == ccui.TouchEventType.began then
-                local blowFish = tolua.cast(node:getChildByTag(10010):getComponent("CCArmature"), "ccs.ComRender")
+                local blowFish = node:getChildByTag(10010):getComponent("CCArmature")
                 blowFish:getNode():runAction(cc.MoveBy:create(10.0, cc.p(-1000.0, 0)))
 
-                local butterflyfish = tolua.cast(node:getChildByTag(10011):getComponent("CCArmature"), "ccs.ComRender")
+                local butterflyfish = node:getChildByTag(10011):getComponent("CCArmature")
                 butterflyfish:getNode():runAction(cc.MoveBy:create(10.0, cc.p(-1000.0, 0)))
             end
         end
@@ -360,7 +360,7 @@ end
 function TmxMapComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.json")
     if nil ~= node then
-        local tmxMap = tolua.cast(node:getChildByTag(10015):getComponent("CCTMXTiledMap"),"ccs.ComRender")
+        local tmxMap = node:getChildByTag(10015):getComponent("CCTMXTiledMap")
         local actionTo = cc.SkewTo:create(2, 0.0, 2.0)
         local rotateTo = cc.RotateTo:create(2, 61.0)
         local actionScaleTo = cc.ScaleTo:create(2, -0.44, 0.47)
@@ -420,7 +420,7 @@ end
 function ParticleComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.json")
     if nil ~= node then
-        local particle = tolua.cast(node:getChildByTag(10020):getComponent("CCParticleSystemQuad"),"ccs.ComRender")
+        local particle = node:getChildByTag(10020):getComponent("CCParticleSystemQuad")
         local jump = cc.JumpBy:create(5, cc.p(-500,0), 50, 4)
         local action = cc.Sequence:create( jump, jump:reverse())
         particle:getNode():runAction(action)
@@ -472,13 +472,13 @@ end
 function EffectComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.json")
     if nil ~= node then
-        local render = tolua.cast(node:getChildByTag(10015):getComponent("CCArmature"),"ccs.ComRender")
-        local armature = tolua.cast(render:getNode(),"ccs.Armature")
+        local render = node:getChildByTag(10015):getComponent("CCArmature")
+        local armature = render:getNode()
         local function animationEvent(armatureBack,movementType,movementID)
             local id = movementID
             if movementType == ccs.MovementEventType.loopComplete then
                 if id == "Fire" then
-                    local audio = tolua.cast(node:getChildByTag(10015):getComponent("CCComAudio"), "ccs.ComAudio")
+                    local audio = node:getChildByTag(10015):getComponent("CCComAudio")
                     audio:playEffect()
                 end
             end
@@ -533,7 +533,7 @@ end
 function BackgroundComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.json")
     if nil ~= node then
-        local audio = tolua.cast(node:getComponent("CCBackgroundAudio"),"ccs.ComAudio")
+        local audio = node:getComponent("CCBackgroundAudio")
         audio:playBackgroundMusic()
     end
 
@@ -582,7 +582,7 @@ end
 
 function AttributeComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.json")
-    local attribute = tolua.cast(node:getChildByTag(10015):getComponent("CCComAttribute"), "ccs.ComAttribute")
+    local attribute = node:getChildByTag(10015):getComponent("CCComAttribute")
     print(string.format("Name: %s, HP: %f, MP: %f", attribute:getString("name"), attribute:getFloat("maxHP"), attribute:getFloat("maxMP")))
     return node
 end
