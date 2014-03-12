@@ -413,34 +413,30 @@ void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, boo
 
 bool RenderTexture::saveToFile(const std::string& filename)
 {
-    bool ret = false;
-
-    Image *image = newImage(true);
-    if (image)
-    {
-        ret = image->saveToFile(filename);
-    }
-
-    CC_SAFE_DELETE(image);
-    return ret;
+    return saveToFile(filename,Image::Format::JPG);
 }
 bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format)
 {
-    bool ret = false;
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
              "the image can only be saved as JPG or PNG format");
+    
+    std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
+    _saveToFileCommand.init(_globalZOrder);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile,this,fullpath);
+    
+    Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
+    return true;
+}
 
+void RenderTexture::onSaveToFile(const std::string& filename)
+{
     Image *image = newImage(true);
     if (image)
     {
-        std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
-        
-        ret = image->saveToFile(fullpath.c_str(), true);
+        image->saveToFile(filename.c_str(), true);
     }
 
     CC_SAFE_DELETE(image);
-
-    return ret;
 }
 
 /* get buffer as Image */
