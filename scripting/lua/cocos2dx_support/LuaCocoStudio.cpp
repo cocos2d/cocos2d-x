@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Wed Mar 12 16:46:14 2014.
+** Generated automatically by tolua++-1.0.92 on Wed Mar 12 20:12:18 2014.
 */
 
 /****************************************************************************
@@ -7887,6 +7887,39 @@ static int tolua_CocoStudio_Widget_getWidgetType00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getWidgetType'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setColor of class  Widget */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_setColor00
+static int tolua_CocoStudio_Widget_setColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Widget",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor3B",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Widget* self = (Widget*)  tolua_tousertype(tolua_S,1,0);
+  const ccColor3B* color = ((const ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColor'", NULL);
+#endif
+  {
+   self->setColor(*color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setColor'.",&tolua_err);
  return 0;
 #endif
 }
@@ -23476,6 +23509,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setName",tolua_CocoStudio_Widget_setName00);
    tolua_function(tolua_S,"getName",tolua_CocoStudio_Widget_getName00);
    tolua_function(tolua_S,"getWidgetType",tolua_CocoStudio_Widget_getWidgetType00);
+   tolua_function(tolua_S,"setColor",tolua_CocoStudio_Widget_setColor00);
    tolua_function(tolua_S,"setSize",tolua_CocoStudio_Widget_setSize00);
    tolua_function(tolua_S,"setSizePercent",tolua_CocoStudio_Widget_setSizePercent00);
    tolua_function(tolua_S,"setSizeType",tolua_CocoStudio_Widget_setSizeType00);
