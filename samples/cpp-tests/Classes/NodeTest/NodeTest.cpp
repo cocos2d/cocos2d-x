@@ -389,28 +389,23 @@ void NodeEnumChildByNameTest::onEnter()
     addChild(sp21);
     addChild(sp22);
 
-    auto fn1 = std::bind(&NodeEnumChildByNameTest::runAction1, this, std::placeholders::_1, std::placeholders::_2);
-    auto fn2 = std::bind(&NodeEnumChildByNameTest::runAction2, this, std::placeholders::_1, std::placeholders::_2);
-    
-    enumChildNodesByName("sister1", fn1);
-    enumChildNodesByName("sister2", fn2);
+    enumChildNodesByName("sister1", 
+        [&](Node* node, bool* stop)
+        {
+            auto rot = RotateBy::create(2, 360);
+            auto rot_back = rot->reverse();
+            auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+            node->runAction(forever1);
+        });
+    enumChildNodesByName("sister2", 
+        [&](Node* node, bool* stop)
+        {
+            auto actionUp = JumpBy::create(2, Point(0,0), 80, 4);
+            auto forever2 = RepeatForever::create(Sequence::create(actionUp, NULL));
+            node->runAction(forever2);
+        });
 }
 
-void NodeEnumChildByNameTest::runAction1(Node* node, bool* stop)
-{
-    auto rot = RotateBy::create(2, 360);
-    auto rot_back = rot->reverse();
-    auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    node->runAction(forever1);
-
-}
-
-void NodeEnumChildByNameTest::runAction2(Node* node, bool* stop)
-{
-    auto actionUp = JumpBy::create(2, Point(0,0), 80, 4);
-    auto forever2 = RepeatForever::create(Sequence::create(actionUp, NULL));
-    node->runAction(forever2);
-}
 
 std::string NodeEnumChildByNameTest::subtitle() const
 {

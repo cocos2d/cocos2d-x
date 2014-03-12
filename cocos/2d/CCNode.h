@@ -805,9 +805,9 @@ public:
      * @param name  the name to search for
      * @param callback, A callback to execute on nodes that match the name parameter. The callback takes the following arguments:
      *  node: A node that matches the name.
-     *  stop: A pointer to a Boolean variable. Your callback can set this to YES to terminate the enumeration.
+     *  stop: A pointer to a Boolean variable. Your callback can set this to true to terminate the enumeration.
      */
-     virtual void enumChildNodesByName(const std::string& name, std::function<void(Node* node, bool* stop)> callback);
+     virtual void enumChildNodesByName(const std::string& name, const std::function<void(Node* node, bool* stop)>& callback);
     /**
      * Returns a custom user data pointer
      *
