@@ -68,17 +68,17 @@ elif [ "$PLATFORM"x = "android"x ]; then
     cd $COCOS2DX_ROOT
 
     # Create a directory for temporary objects
-    # mkdir android_build_objs
+    mkdir android_build_objs
 
-    # PROJECTS=("test-cpp" "test-javascript" "test-lua")
-    # for i in ${PROJECTS[*]}; do
-    #     ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/tests/$i/proj.android/obj
-    # done
+    PROJECTS=("cpp-empty-test" "cpp-tests" "lua-empty-test/project" "lua-tests/project")
+    for i in ${PROJECTS[*]}; do
+        ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/tests/$i/proj.android/obj
+    done
 
     # Build all samples
     echo "Building all samples ..."
     cd $COCOS2DX_ROOT/build
-    ./android-build.py -n "NDK_BUG=0 -j10" testcpp
+    ./android-build.py -n "NDK_BUG=0 -j10" all
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
     export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary

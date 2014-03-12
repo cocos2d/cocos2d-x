@@ -1,7 +1,7 @@
 
 
 #include "TextBMFontReader.h"
-#include "gui/UITextBMFont.h"
+#include "ui/UITextBMFont.h"
 
 USING_NS_CC;
 using namespace ui;

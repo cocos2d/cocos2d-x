@@ -1,7 +1,7 @@
 
 
 #include "TextAtlasReader.h"
-#include "gui/UITextAtlas.h"
+#include "ui/UITextAtlas.h"
 
 USING_NS_CC;
 using namespace ui;

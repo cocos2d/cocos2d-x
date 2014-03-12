@@ -664,7 +664,6 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
             return 0;
         }
         
-        int nRet = 0;
         LuaValueArray array;
         
         uint8_t* tmpData = new uint8_t[self->getDataSize()];
