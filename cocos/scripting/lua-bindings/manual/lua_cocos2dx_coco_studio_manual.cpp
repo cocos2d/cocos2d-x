@@ -107,7 +107,6 @@ static int lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(lua_State* L)
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
                 
         self->setMovementEventCallFunc([=](Armature *armature, MovementEventType movementType, const std::string& movementID){
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)vec.at(0), ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
             
             if (0 != handler)
             {
@@ -178,7 +177,6 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
 
         self->setFrameEventCallFunc([=](Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex){
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)vec.at(0), ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
             
             if (0 != handler)
             {

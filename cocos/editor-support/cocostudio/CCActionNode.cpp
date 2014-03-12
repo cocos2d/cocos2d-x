@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "cocostudio/CCActionNode.h"
 #include "cocostudio/CCActionFrameEasing.h"
 #include "cocostudio/DictionaryHelper.h"
-#include "gui/UIWidget.h"
-#include "gui/UIHelper.h"
+#include "ui/UIWidget.h"
+#include "ui/UIHelper.h"
 
 using namespace cocos2d;
 using namespace ui;

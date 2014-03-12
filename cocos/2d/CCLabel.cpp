@@ -269,9 +269,10 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _useA8Shader(useA8Shader)
 , _fontScale(1.0f)
 , _uniformEffectColor(0)
-,_currNumLines(-1)
-,_textSprite(nullptr)
-,_contentDirty(false)
+, _currNumLines(-1)
+, _textSprite(nullptr)
+, _contentDirty(false)
+, _currentLabelType(LabelType::STRING_TEXTURE)
 {
     _cascadeColorEnabled = true;
     _batchNodes.push_back(this);
@@ -982,20 +983,30 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
 
 void Label::setFontName(const std::string& fontName)
 {
-    _fontDefinition._fontName = fontName;
     if (fontName.find('.') != fontName.npos)
     {
         auto config = _fontConfig;
         config.fontFilePath = fontName;
-        setTTFConfig(config);
+        if (setTTFConfig(config))
+        {
+            return;
+        }
     }
-    _contentDirty = true;
+    if (_fontDefinition._fontName != fontName)
+    {
+        _fontDefinition._fontName = fontName;
+        _contentDirty = true;
+    }
 }
 
 void Label::setFontSize(int fontSize)
 {
     if (_currentLabelType == LabelType::TTF)
     {
+        if (_fontConfig.fontSize == fontSize)
+        {
+            return;
+        }
         if (_fontConfig.distanceFieldEnabled)
         {
             _fontConfig.fontSize = fontSize;
@@ -1008,7 +1019,7 @@ void Label::setFontSize(int fontSize)
             setTTFConfig(fontConfig);
         }
     }
-    else
+    else if(_fontDefinition._fontSize != fontSize)
     {
         _fontDefinition._fontSize = fontSize;
         _fontConfig.fontSize = fontSize;
@@ -1116,12 +1127,17 @@ void Label::setColor(const Color3B& color)
 
 void Label::updateColor()
 {
+    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+    if (_textSprite)
+    {
+        _textSprite->setColor(_displayedColor);
+        _textSprite->setOpacity(_displayedOpacity);
+    }
+
     if (nullptr == _textureAtlas)
     {
         return;
     }
-
-    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
     // special opacity for premultiplied textures
     if (_isOpacityModifyRGB)
@@ -1163,4 +1179,5 @@ const Size& Label::getContentSize() const
     }
     return Node::getContentSize();
 }
+
 NS_CC_END
