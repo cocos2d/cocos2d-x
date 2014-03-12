@@ -2,6 +2,16 @@
 -- @module cc
 
 --------------------------------------------------------
+-- the cc PhysicsWorld
+-- @field [parent=#cc] PhysicsWorld#PhysicsWorld PhysicsWorld preloaded module
+
+
+--------------------------------------------------------
+-- the cc PhysicsDebugDraw
+-- @field [parent=#cc] PhysicsDebugDraw#PhysicsDebugDraw PhysicsDebugDraw preloaded module
+
+
+--------------------------------------------------------
 -- the cc PhysicsShape
 -- @field [parent=#cc] PhysicsShape#PhysicsShape PhysicsShape preloaded module
 
@@ -44,16 +54,6 @@
 --------------------------------------------------------
 -- the cc PhysicsBody
 -- @field [parent=#cc] PhysicsBody#PhysicsBody PhysicsBody preloaded module
-
-
---------------------------------------------------------
--- the cc PhysicsWorld
--- @field [parent=#cc] PhysicsWorld#PhysicsWorld PhysicsWorld preloaded module
-
-
---------------------------------------------------------
--- the cc PhysicsDebugDraw
--- @field [parent=#cc] PhysicsDebugDraw#PhysicsDebugDraw PhysicsDebugDraw preloaded module
 
 
 --------------------------------------------------------

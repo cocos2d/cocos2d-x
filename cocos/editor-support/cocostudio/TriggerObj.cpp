@@ -115,11 +115,11 @@ bool TriggerObj::detect()
         return true;
     }
     
-    bool ret = true;
+    bool ret = false;
 
     for (const auto& con : _cons)
     {
-        ret = ret && con->detect();
+        ret = ret || con->detect();
     }
 
     return ret;
@@ -220,14 +220,14 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         std::string custom_event_name(buf);
         CC_SAFE_DELETE_ARRAY(buf);
 
-        EventListenerCustom *_listener = EventListenerCustom::create(custom_event_name, [=](EventCustom* event){
+        EventListenerCustom* listener = EventListenerCustom::create(custom_event_name, [=](EventCustom* evt){
             if (detect())
             {
                 done();
             }
         });
-        _listeners.pushBack(_listener);
-        TriggerMng::getInstance()->addEventListenerWithFixedPriority(_listener, 1);
+        _listeners.pushBack(listener);
+        TriggerMng::getInstance()->addEventListenerWithFixedPriority(listener, 1);
     }  
 }
 

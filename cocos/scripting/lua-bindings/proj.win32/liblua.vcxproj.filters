@@ -21,7 +21,7 @@
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_gui_auto.cpp">
+    <ClCompile Include="..\auto\lua_cocos2dx_ui_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp">
@@ -60,7 +60,7 @@
     <ClCompile Include="..\manual\lua_cocos2dx_extension_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\lua_cocos2dx_gui_manual.cpp">
+    <ClCompile Include="..\manual\lua_cocos2dx_ui_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\lua_cocos2dx_manual.cpp">
@@ -164,7 +164,7 @@
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_gui_auto.hpp">
+    <ClInclude Include="..\auto\lua_cocos2dx_ui_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp">
@@ -203,7 +203,7 @@
     <ClInclude Include="..\manual\lua_cocos2dx_extension_manual.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\lua_cocos2dx_gui_manual.hpp">
+    <ClInclude Include="..\manual\lua_cocos2dx_ui_manual.hpp">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\lua_cocos2dx_manual.hpp">

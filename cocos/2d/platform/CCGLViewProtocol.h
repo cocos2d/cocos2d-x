@@ -58,8 +58,6 @@ enum class ResolutionPolicy
 
 NS_CC_BEGIN
 
-class EGLTouchDelegate;
-
 /**
  * @addtogroup platform
  * @{
