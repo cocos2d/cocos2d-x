@@ -27,6 +27,41 @@
 NS_CC_BEGIN
 
 namespace ui {
+    
+ScrollInnerContainer::ScrollInnerContainer()
+{
+    
+}
+    
+ScrollInnerContainer::~ScrollInnerContainer()
+{
+    
+}
+    
+ScrollInnerContainer* ScrollInnerContainer::create()
+{
+    ScrollInnerContainer* widget = new ScrollInnerContainer();
+    if (widget && widget->init())
+    {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return NULL;
+}
+    
+const CCSize& ScrollInnerContainer::getLayoutSize()
+{
+    Widget* parent = getWidgetParent();
+    if (parent)
+    {
+        return parent->getSize();
+    }
+    else
+    {
+        return _size;
+    }
+}
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
@@ -117,7 +152,7 @@ bool ScrollView::init()
 void ScrollView::initRenderer()
 {
     Layout::initRenderer();
-    _innerContainer = Layout::create();
+    _innerContainer = ScrollInnerContainer::create();
     Layout::addChild(_innerContainer,1,1);
 }
 
