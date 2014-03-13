@@ -226,6 +226,9 @@
 		15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23A168318C3006C7997 /* CocosDenshion.m */; };
 		15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */; };
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
+		1A1A289A18D1FE01009627D6 /* CustomParticleWidgetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A289818D1FE01009627D6 /* CustomParticleWidgetTest.cpp */; };
+		1A1A289F18D1FE6B009627D6 /* CustomParticleWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A289B18D1FE6B009627D6 /* CustomParticleWidget.cpp */; };
+		1A1A28A018D1FE6B009627D6 /* CustomParticleWidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A289D18D1FE6B009627D6 /* CustomParticleWidgetReader.cpp */; };
 		1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136015FD90240013D092 /* CustomTableViewCell.cpp */; };
 		1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136215FD90240013D092 /* TableViewTestScene.cpp */; };
 		1A40DFC91727AE7E006D4861 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40DFA21727AE7E006D4861 /* Animation.cpp */; };
@@ -937,6 +940,12 @@
 		15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15D8B23C168318C3006C7997 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		1A1A289818D1FE01009627D6 /* CustomParticleWidgetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidgetTest.cpp; sourceTree = "<group>"; };
+		1A1A289918D1FE01009627D6 /* CustomParticleWidgetTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidgetTest.h; sourceTree = "<group>"; };
+		1A1A289B18D1FE6B009627D6 /* CustomParticleWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidget.cpp; sourceTree = "<group>"; };
+		1A1A289C18D1FE6B009627D6 /* CustomParticleWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidget.h; sourceTree = "<group>"; };
+		1A1A289D18D1FE6B009627D6 /* CustomParticleWidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidgetReader.cpp; sourceTree = "<group>"; };
+		1A1A289E18D1FE6B009627D6 /* CustomParticleWidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidgetReader.h; sourceTree = "<group>"; };
 		1A20136015FD90240013D092 /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
 		1A20136115FD90240013D092 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A20136215FD90240013D092 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
@@ -2578,6 +2587,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1A1A289718D1FE01009627D6 /* CustomParticleWidgetTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A1A289818D1FE01009627D6 /* CustomParticleWidgetTest.cpp */,
+				1A1A289918D1FE01009627D6 /* CustomParticleWidgetTest.h */,
+			);
+			path = CustomParticleWidgetTest;
+			sourceTree = "<group>";
+		};
 		1A20135F15FD90240013D092 /* TableViewTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2876,6 +2894,7 @@
 			isa = PBXGroup;
 			children = (
 				2961DFE318C9B6B30017F5DB /* CustomImageTest */,
+				1A1A289718D1FE01009627D6 /* CustomParticleWidgetTest */,
 			);
 			path = CustomTest;
 			sourceTree = "<group>";
@@ -2896,6 +2915,10 @@
 				2961DFE818C9B6B30017F5DB /* CustomImageView.h */,
 				2961DFE918C9B6B30017F5DB /* CustomImageViewReader.cpp */,
 				2961DFEA18C9B6B30017F5DB /* CustomImageViewReader.h */,
+				1A1A289B18D1FE6B009627D6 /* CustomParticleWidget.cpp */,
+				1A1A289C18D1FE6B009627D6 /* CustomParticleWidget.h */,
+				1A1A289D18D1FE6B009627D6 /* CustomParticleWidgetReader.cpp */,
+				1A1A289E18D1FE6B009627D6 /* CustomParticleWidgetReader.h */,
 				2961DFEB18C9B6B30017F5DB /* CustomReader.cpp */,
 				2961DFEC18C9B6B30017F5DB /* CustomReader.h */,
 			);
@@ -3707,6 +3730,7 @@
 				2961DFCF18C9B4E80017F5DB /* LabelReader.cpp in Sources */,
 				2961E05818C9B6B30017F5DB /* UILoadingBarTest.cpp in Sources */,
 				15AA9D5D15B7EC460033D6C2 /* Bug-350.cpp in Sources */,
+				1A1A289A18D1FE01009627D6 /* CustomParticleWidgetTest.cpp in Sources */,
 				15AA9D5E15B7EC460033D6C2 /* Bug-422.cpp in Sources */,
 				15AA9D5F15B7EC460033D6C2 /* Bug-458.cpp in Sources */,
 				2961DFD318C9B4E80017F5DB /* PageViewReader.cpp in Sources */,
@@ -3927,6 +3951,7 @@
 				15C15935168315E500D239F2 /* CCControlHuePicker.cpp in Sources */,
 				15C15936168315E500D239F2 /* CCControlPotentiometer.cpp in Sources */,
 				15C15937168315E500D239F2 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
+				1A1A289F18D1FE6B009627D6 /* CustomParticleWidget.cpp in Sources */,
 				15C15938168315E500D239F2 /* CCControlSlider.cpp in Sources */,
 				15C15939168315E500D239F2 /* CCControlStepper.cpp in Sources */,
 				15C1593A168315E500D239F2 /* CCControlSwitch.cpp in Sources */,
@@ -4007,6 +4032,7 @@
 				37CA1DCD17D87B5700A649D0 /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				37CA1DCE17D87B5700A649D0 /* CCTransformHelp.cpp in Sources */,
 				37CA1DCF17D87B5700A649D0 /* CCTweenFunction.cpp in Sources */,
+				1A1A28A018D1FE6B009627D6 /* CustomParticleWidgetReader.cpp in Sources */,
 				37CA1DD017D87B5700A649D0 /* CCUtilMath.cpp in Sources */,
 				37CA1DD117D87B5700A649D0 /* CCComAttribute.cpp in Sources */,
 				2961DFD218C9B4E80017F5DB /* LoadingBarReader.cpp in Sources */,
