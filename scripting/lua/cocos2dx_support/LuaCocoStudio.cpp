@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Wed Mar 12 21:51:46 2014.
+** Generated automatically by tolua++-1.0.92 on Thu Mar 13 10:59:24 2014.
 */
 
 /****************************************************************************
@@ -8516,6 +8516,38 @@ static int tolua_CocoStudio_Widget_getSize00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getLayoutSize of class  Widget */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_getLayoutSize00
+static int tolua_CocoStudio_Widget_getLayoutSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Widget",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Widget* self = (Widget*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLayoutSize'", NULL);
+#endif
+  {
+   const CCSize& tolua_ret = (const CCSize&)  self->getLayoutSize();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCSize");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLayoutSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getSizePercent of class  Widget */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_getSizePercent00
 static int tolua_CocoStudio_Widget_getSizePercent00(lua_State* tolua_S)
@@ -8543,6 +8575,38 @@ static int tolua_CocoStudio_Widget_getSizePercent00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getSizePercent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getCustomSize of class  Widget */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_getCustomSize00
+static int tolua_CocoStudio_Widget_getCustomSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const Widget",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Widget* self = (const Widget*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCustomSize'", NULL);
+#endif
+  {
+   const CCSize& tolua_ret = (const CCSize&)  self->getCustomSize();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const CCSize");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getCustomSize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -9119,6 +9183,34 @@ static int tolua_CocoStudio_Widget_updateSizeAndPosition00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'updateSizeAndPosition'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: updateSizeAndPosition of class  Widget */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_Widget_updateSizeAndPosition01
+static int tolua_CocoStudio_Widget_updateSizeAndPosition01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Widget",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  Widget* self = (Widget*)  tolua_tousertype(tolua_S,1,0);
+  const CCSize* parentSize = ((const CCSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateSizeAndPosition'", NULL);
+#endif
+  {
+   self->updateSizeAndPosition(*parentSize);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_CocoStudio_Widget_updateSizeAndPosition00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -26460,7 +26552,9 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setSizeType",tolua_CocoStudio_Widget_setSizeType00);
    tolua_function(tolua_S,"getSizeType",tolua_CocoStudio_Widget_getSizeType00);
    tolua_function(tolua_S,"getSize",tolua_CocoStudio_Widget_getSize00);
+   tolua_function(tolua_S,"getLayoutSize",tolua_CocoStudio_Widget_getLayoutSize00);
    tolua_function(tolua_S,"getSizePercent",tolua_CocoStudio_Widget_getSizePercent00);
+   tolua_function(tolua_S,"getCustomSize",tolua_CocoStudio_Widget_getCustomSize00);
    tolua_function(tolua_S,"hitTest",tolua_CocoStudio_Widget_hitTest00);
    tolua_function(tolua_S,"onTouchBegan",tolua_CocoStudio_Widget_onTouchBegan00);
    tolua_function(tolua_S,"onTouchMoved",tolua_CocoStudio_Widget_onTouchMoved00);
@@ -26478,6 +26572,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"onEnter",tolua_CocoStudio_Widget_onEnter00);
    tolua_function(tolua_S,"onExit",tolua_CocoStudio_Widget_onExit00);
    tolua_function(tolua_S,"updateSizeAndPosition",tolua_CocoStudio_Widget_updateSizeAndPosition00);
+   tolua_function(tolua_S,"updateSizeAndPosition",tolua_CocoStudio_Widget_updateSizeAndPosition01);
    tolua_function(tolua_S,"setActionTag",tolua_CocoStudio_Widget_setActionTag00);
    tolua_function(tolua_S,"getActionTag",tolua_CocoStudio_Widget_getActionTag00);
   tolua_endmodule(tolua_S);
