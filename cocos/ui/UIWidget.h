@@ -226,14 +226,7 @@ public:
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
-    /**
-     * Gets a child from the container with its tag
-     *
-     * @param tag   An identifier to find the child node.
-     *
-     * @return a Node object whose tag equals to the input parameter
-     */
-    virtual Node * getChildByTag(int tag) override;
+
 
     virtual void sortAllChildren() override;
     /**
@@ -255,7 +248,10 @@ public:
     virtual Vector<Widget*>& getWidgets();
     virtual const Vector<Widget*>& getWidgets() const;
     
-
+    virtual Node* getChildByName(const std::string& name);
+    
+    void setName(const std::string& name) {_name = name;};
+    const std::string& getName() const {return _name;};
 
     /**
      * Removes this node itself from its parent node with a cleanup.

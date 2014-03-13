@@ -154,11 +154,6 @@ void Widget::sortAllChildren()
     }
 }
 
-Node* Widget::getChildByTag(int aTag)
-{
-    return Node::getChildByTag(aTag);
-}
-
 Vector<Widget*>& Widget::getWidgets()
 {
     return _widgetChildren;
@@ -167,6 +162,16 @@ Vector<Widget*>& Widget::getWidgets()
 const Vector<Widget*>& Widget::getWidgets() const
 {
     return _widgetChildren;
+}
+    
+Node* Widget::getChildByName(const std::string& name)
+{
+    for (auto& child : _widgetChildren)
+    {
+        if(child && child->_name == name)
+            return child;
+    }
+    return nullptr;
 }
 
 Widget* Widget::getWidgetParent()
