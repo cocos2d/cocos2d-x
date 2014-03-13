@@ -19,12 +19,20 @@ runSupport = {
 }
 
 _argvs = sys.argv
-print 'input argvs:', _argvs[1], _argvs[2]
+
+strArgv1 = ''
+strArgv2 = ''
+if len(_argvs) == 2:
+	strArgv1 = _argvs[1]
+if len(_argvs) == 3:
+	strArgv2 = _argvs[2]
+
+# print 'input argvs:', _argvs[1], _argvs[2]
 _will_create = False
 _will_run = False
-if _argvs[1]=='create' || _argvs[2]=='create':
+if strArgv1=='create' and strArgv2=='create':
 	_will_create = True
-if _argvs[1]=='run' || _argvs[2]=='run':
+if strArgv1=='run' and strArgv2=='run':
 	_will_create = True
 	_will_run = True
 if _will_create == False and _will_run == False:
