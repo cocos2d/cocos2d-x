@@ -181,6 +181,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCString.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
+    <ClCompile Include="..\base\pvr.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
     <ClCompile Include="..\math\kazmath\kazmath\aabb.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
@@ -380,6 +381,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCValue.h" />
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
+    <ClInclude Include="..\base\pvr.h" />
     <ClInclude Include="..\base\s3tc.h" />
     <ClInclude Include="..\math\kazmath\kazmath\aabb.h" />
     <ClInclude Include="..\math\kazmath\kazmath\GL\mat4stack.h" />
