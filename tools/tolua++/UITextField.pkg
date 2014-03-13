@@ -43,7 +43,6 @@ class TextField : public Widget
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListenerTextField(CCObject* target, SEL_TextFieldEvent selecor);
     virtual void setAnchorPoint(const CCPoint &pt);
     virtual std::string getDescription() const;
     virtual const CCSize& getContentSize() const;
