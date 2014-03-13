@@ -386,7 +386,8 @@ void GLView::end()
         glfwSetWindowShouldClose(_mainWindow,1);
         _mainWindow = nullptr;
     }
-
+    // Release self. Otherwise, GLView could not be freed.
+    release();
 }
 
 void GLView::swapBuffers()
