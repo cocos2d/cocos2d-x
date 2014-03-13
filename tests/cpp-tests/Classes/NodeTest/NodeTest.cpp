@@ -57,7 +57,6 @@ static std::function<Layer*()> createFunctions[] =
     CL(Test4),
     CL(Test5),
     CL(Test6),
-    CL(NodeEnumChildByNameTest),
     CL(StressTest1),
     CL(StressTest2),
     CL(NodeToWorld),
@@ -353,64 +352,6 @@ std::string Test6::subtitle() const
     return "remove/cleanup with children";
 }
 
-//------------------------------------------------------------------
-//
-// NodeEnumChildByNameTest
-//
-//------------------------------------------------------------------
-void NodeEnumChildByNameTest::onEnter()
-{
-    TestCocosNodeDemo::onEnter();
-    auto sp10 = Sprite::create(s_pathSister1);
-    auto sp11 = Sprite::create(s_pathSister1);
-    auto sp12 = Sprite::create(s_pathSister1);
-    auto sp20 = Sprite::create(s_pathSister2);
-    auto sp21 = Sprite::create(s_pathSister2);
-    auto sp22 = Sprite::create(s_pathSister2);
-           
-    sp10->setPosition(Point(100,60));
-    sp11->setPosition(Point(100,160));
-    sp12->setPosition(Point(100,260));
-    sp20->setPosition(Point(380,60));
-    sp21->setPosition(Point(380,160));
-    sp22->setPosition(Point(380,260));  
-
-    sp10->setName("sister1");
-    sp11->setName("sister1");
-    sp12->setName("sister1");
-    sp20->setName("sister2");
-    sp21->setName("sister2");
-    sp22->setName("sister2");
-
-    addChild(sp10);
-    addChild(sp11);
-    addChild(sp12);
-    addChild(sp20);
-    addChild(sp21);
-    addChild(sp22);
-
-    enumerateChildrenByName("sister1",
-        [](Node* node, bool* stop)
-        {
-            auto rot = RotateBy::create(2, 360);
-            auto rot_back = rot->reverse();
-            auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-            node->runAction(forever1);
-        });
-    enumerateChildrenByName("sister2",
-        [](Node* node, bool* stop)
-        {
-            auto actionUp = JumpBy::create(2, Point(0,0), 80, 4);
-            auto forever2 = RepeatForever::create(Sequence::create(actionUp, NULL));
-            node->runAction(forever2);
-        });
-}
-
-
-std::string NodeEnumChildByNameTest::subtitle() const
-{
-    return "Enum child nodes by name";
-}
 
 //------------------------------------------------------------------
 //
