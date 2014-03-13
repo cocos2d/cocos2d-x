@@ -6,8 +6,8 @@ import os
 
 #check & kill dead buid
 def build_time(_job):
-    #get build duration
-    duration = os.environ['duration']
+    #get jenkins-job-watchdog-threshold
+    threshold = os.environ['jenkins-job-watchdog-threshold']
     #Get last build running
     build = _job.get_last_build()
     running = build.is_running()
@@ -30,7 +30,7 @@ def build_time(_job):
         subtime = int(nowtime)-buildtime
     else:
         subtime = 60-buildtime+int(nowtime)
-    if subtime > duration:
+    if subtime > threshold:
         #print 'subtime',subtime
         #kill dead buid
         build.stop()
