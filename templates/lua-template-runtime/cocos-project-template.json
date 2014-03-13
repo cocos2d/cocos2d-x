@@ -14,9 +14,9 @@
                "proj.android/libs",
                "proj.ios_mac/HelloLua.xcodeproj/project.xcworkspace",
                "proj.ios_mac/HelloLua.xcodeproj/xcuserdata",
-	           "proj.win32/Debug.win32",
-	           "proj.win32/Release.win32",
-	           "proj.win32/HelloLua.sdf"
+	       "proj.win32/Debug.win32",
+	       "proj.win32/Release.win32",
+	       "proj.win32/HelloLua.sdf"
             ]
          },
          "append_x_engine":{
