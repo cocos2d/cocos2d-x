@@ -26,7 +26,7 @@ int lua_cocos2dx_Ref_release(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ref_release'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ref_release'", nullptr);
         return 0;
     }
 #endif
@@ -69,7 +69,7 @@ int lua_cocos2dx_Ref_retain(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ref_retain'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ref_retain'", nullptr);
         return 0;
     }
 #endif
@@ -112,7 +112,7 @@ int lua_cocos2dx_Ref_getReferenceCount(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ref_getReferenceCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ref_getReferenceCount'", nullptr);
         return 0;
     }
 #endif
@@ -145,7 +145,7 @@ static int lua_cocos2dx_Ref_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Ref(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Ref");
-    tolua_cclass(tolua_S,"Ref","cc.Ref","",NULL);
+    tolua_cclass(tolua_S,"Ref","cc.Ref","",nullptr);
 
     tolua_beginmodule(tolua_S,"Ref");
         tolua_function(tolua_S,"release",lua_cocos2dx_Ref_release);
@@ -178,7 +178,7 @@ int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_startWithTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_startWithTarget'", nullptr);
         return 0;
     }
 #endif
@@ -224,7 +224,7 @@ int lua_cocos2dx_Action_setOriginalTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_setOriginalTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_setOriginalTarget'", nullptr);
         return 0;
     }
 #endif
@@ -270,7 +270,7 @@ int lua_cocos2dx_Action_clone(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_clone'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_clone'", nullptr);
         return 0;
     }
 #endif
@@ -314,7 +314,7 @@ int lua_cocos2dx_Action_getOriginalTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_getOriginalTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_getOriginalTarget'", nullptr);
         return 0;
     }
 #endif
@@ -358,7 +358,7 @@ int lua_cocos2dx_Action_stop(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_stop'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_stop'", nullptr);
         return 0;
     }
 #endif
@@ -401,7 +401,7 @@ int lua_cocos2dx_Action_update(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_update'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_update'", nullptr);
         return 0;
     }
 #endif
@@ -447,7 +447,7 @@ int lua_cocos2dx_Action_getTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_getTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_getTarget'", nullptr);
         return 0;
     }
 #endif
@@ -491,7 +491,7 @@ int lua_cocos2dx_Action_step(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_step'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_step'", nullptr);
         return 0;
     }
 #endif
@@ -537,7 +537,7 @@ int lua_cocos2dx_Action_setTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_setTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_setTag'", nullptr);
         return 0;
     }
 #endif
@@ -583,7 +583,7 @@ int lua_cocos2dx_Action_getTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_getTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_getTag'", nullptr);
         return 0;
     }
 #endif
@@ -627,7 +627,7 @@ int lua_cocos2dx_Action_setTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_setTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_setTarget'", nullptr);
         return 0;
     }
 #endif
@@ -673,7 +673,7 @@ int lua_cocos2dx_Action_isDone(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_isDone'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_isDone'", nullptr);
         return 0;
     }
 #endif
@@ -717,7 +717,7 @@ int lua_cocos2dx_Action_reverse(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_reverse'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Action_reverse'", nullptr);
         return 0;
     }
 #endif
@@ -750,7 +750,7 @@ static int lua_cocos2dx_Action_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Action(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Action");
-    tolua_cclass(tolua_S,"Action","cc.Action","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Action","cc.Action","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Action");
         tolua_function(tolua_S,"startWithTarget",lua_cocos2dx_Action_startWithTarget);
@@ -793,7 +793,7 @@ int lua_cocos2dx_FiniteTimeAction_setDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FiniteTimeAction_setDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FiniteTimeAction_setDuration'", nullptr);
         return 0;
     }
 #endif
@@ -839,7 +839,7 @@ int lua_cocos2dx_FiniteTimeAction_getDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FiniteTimeAction_getDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FiniteTimeAction_getDuration'", nullptr);
         return 0;
     }
 #endif
@@ -872,7 +872,7 @@ static int lua_cocos2dx_FiniteTimeAction_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FiniteTimeAction(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FiniteTimeAction");
-    tolua_cclass(tolua_S,"FiniteTimeAction","cc.FiniteTimeAction","cc.Action",NULL);
+    tolua_cclass(tolua_S,"FiniteTimeAction","cc.FiniteTimeAction","cc.Action",nullptr);
 
     tolua_beginmodule(tolua_S,"FiniteTimeAction");
         tolua_function(tolua_S,"setDuration",lua_cocos2dx_FiniteTimeAction_setDuration);
@@ -904,7 +904,7 @@ int lua_cocos2dx_Speed_setInnerAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_setInnerAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_setInnerAction'", nullptr);
         return 0;
     }
 #endif
@@ -950,7 +950,7 @@ int lua_cocos2dx_Speed_setSpeed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_setSpeed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_setSpeed'", nullptr);
         return 0;
     }
 #endif
@@ -996,7 +996,7 @@ int lua_cocos2dx_Speed_getInnerAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_getInnerAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_getInnerAction'", nullptr);
         return 0;
     }
 #endif
@@ -1040,7 +1040,7 @@ int lua_cocos2dx_Speed_getSpeed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_getSpeed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Speed_getSpeed'", nullptr);
         return 0;
     }
 #endif
@@ -1108,7 +1108,7 @@ static int lua_cocos2dx_Speed_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Speed(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Speed");
-    tolua_cclass(tolua_S,"Speed","cc.Speed","cc.Action",NULL);
+    tolua_cclass(tolua_S,"Speed","cc.Speed","cc.Action",nullptr);
 
     tolua_beginmodule(tolua_S,"Speed");
         tolua_function(tolua_S,"setInnerAction",lua_cocos2dx_Speed_setInnerAction);
@@ -1143,7 +1143,7 @@ int lua_cocos2dx_Follow_setBoudarySet(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Follow_setBoudarySet'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Follow_setBoudarySet'", nullptr);
         return 0;
     }
 #endif
@@ -1189,7 +1189,7 @@ int lua_cocos2dx_Follow_isBoundarySet(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Follow_isBoundarySet'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Follow_isBoundarySet'", nullptr);
         return 0;
     }
 #endif
@@ -1267,7 +1267,7 @@ static int lua_cocos2dx_Follow_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Follow(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Follow");
-    tolua_cclass(tolua_S,"Follow","cc.Follow","cc.Action",NULL);
+    tolua_cclass(tolua_S,"Follow","cc.Follow","cc.Action",nullptr);
 
     tolua_beginmodule(tolua_S,"Follow");
         tolua_function(tolua_S,"setBoudarySet",lua_cocos2dx_Follow_setBoudarySet);
@@ -1300,7 +1300,7 @@ int lua_cocos2dx_GLProgram_getFragmentShaderLog(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getFragmentShaderLog'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getFragmentShaderLog'", nullptr);
         return 0;
     }
 #endif
@@ -1344,7 +1344,7 @@ int lua_cocos2dx_GLProgram_initWithByteArrays(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_initWithByteArrays'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_initWithByteArrays'", nullptr);
         return 0;
     }
 #endif
@@ -1394,7 +1394,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv'", nullptr);
         return 0;
     }
 #endif
@@ -1446,7 +1446,7 @@ int lua_cocos2dx_GLProgram_initWithFilenames(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_initWithFilenames'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_initWithFilenames'", nullptr);
         return 0;
     }
 #endif
@@ -1496,7 +1496,7 @@ int lua_cocos2dx_GLProgram_getUniformLocationForName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getUniformLocationForName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getUniformLocationForName'", nullptr);
         return 0;
     }
 #endif
@@ -1543,7 +1543,7 @@ int lua_cocos2dx_GLProgram_use(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_use'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_use'", nullptr);
         return 0;
     }
 #endif
@@ -1586,7 +1586,7 @@ int lua_cocos2dx_GLProgram_getVertexShaderLog(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getVertexShaderLog'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getVertexShaderLog'", nullptr);
         return 0;
     }
 #endif
@@ -1613,7 +1613,7 @@ int lua_cocos2dx_GLProgram_getVertexShaderLog(lua_State* tolua_S)
 int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::GLProgram* cobj = NULL;
+    cocos2d::GLProgram* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -1626,7 +1626,7 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformsForBuiltins'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformsForBuiltins'", nullptr);
         return 0;
     }
 #endif
@@ -1679,7 +1679,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith3i(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith3i'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith3i'", nullptr);
         return 0;
     }
 #endif
@@ -1734,7 +1734,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith3iv(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith3iv'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith3iv'", nullptr);
         return 0;
     }
 #endif
@@ -1786,7 +1786,7 @@ int lua_cocos2dx_GLProgram_updateUniforms(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_updateUniforms'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_updateUniforms'", nullptr);
         return 0;
     }
 #endif
@@ -1829,7 +1829,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith4iv(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith4iv'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith4iv'", nullptr);
         return 0;
     }
 #endif
@@ -1881,7 +1881,7 @@ int lua_cocos2dx_GLProgram_getUniformLocation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getUniformLocation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getUniformLocation'", nullptr);
         return 0;
     }
 #endif
@@ -1928,7 +1928,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith1i(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith1i'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith1i'", nullptr);
         return 0;
     }
 #endif
@@ -1977,7 +1977,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith2iv(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith2iv'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith2iv'", nullptr);
         return 0;
     }
 #endif
@@ -2029,7 +2029,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv'", nullptr);
         return 0;
     }
 #endif
@@ -2081,7 +2081,7 @@ int lua_cocos2dx_GLProgram_reset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_reset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_reset'", nullptr);
         return 0;
     }
 #endif
@@ -2124,7 +2124,7 @@ int lua_cocos2dx_GLProgram_bindAttribLocation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_bindAttribLocation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_bindAttribLocation'", nullptr);
         return 0;
     }
 #endif
@@ -2173,7 +2173,7 @@ int lua_cocos2dx_GLProgram_getAttribLocation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getAttribLocation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getAttribLocation'", nullptr);
         return 0;
     }
 #endif
@@ -2220,7 +2220,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv'", nullptr);
         return 0;
     }
 #endif
@@ -2272,7 +2272,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith4i(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith4i'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith4i'", nullptr);
         return 0;
     }
 #endif
@@ -2330,7 +2330,7 @@ int lua_cocos2dx_GLProgram_link(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_link'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_link'", nullptr);
         return 0;
     }
 #endif
@@ -2374,7 +2374,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith2i(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith2i'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_setUniformLocationWith2i'", nullptr);
         return 0;
     }
 #endif
@@ -2449,7 +2449,7 @@ static int lua_cocos2dx_GLProgram_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_GLProgram(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.GLProgram");
-    tolua_cclass(tolua_S,"GLProgram","cc.GLProgram","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"GLProgram","cc.GLProgram","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"GLProgram");
         tolua_function(tolua_S,"getFragmentShaderLog",lua_cocos2dx_GLProgram_getFragmentShaderLog);
@@ -2503,7 +2503,7 @@ int lua_cocos2dx_Touch_getPreviousLocationInView(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getPreviousLocationInView'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getPreviousLocationInView'", nullptr);
         return 0;
     }
 #endif
@@ -2547,7 +2547,7 @@ int lua_cocos2dx_Touch_getLocation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getLocation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getLocation'", nullptr);
         return 0;
     }
 #endif
@@ -2591,7 +2591,7 @@ int lua_cocos2dx_Touch_getDelta(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getDelta'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getDelta'", nullptr);
         return 0;
     }
 #endif
@@ -2635,7 +2635,7 @@ int lua_cocos2dx_Touch_getStartLocationInView(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getStartLocationInView'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getStartLocationInView'", nullptr);
         return 0;
     }
 #endif
@@ -2679,7 +2679,7 @@ int lua_cocos2dx_Touch_getStartLocation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getStartLocation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getStartLocation'", nullptr);
         return 0;
     }
 #endif
@@ -2723,7 +2723,7 @@ int lua_cocos2dx_Touch_getID(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getID'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getID'", nullptr);
         return 0;
     }
 #endif
@@ -2767,7 +2767,7 @@ int lua_cocos2dx_Touch_setTouchInfo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_setTouchInfo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_setTouchInfo'", nullptr);
         return 0;
     }
 #endif
@@ -2819,7 +2819,7 @@ int lua_cocos2dx_Touch_getLocationInView(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getLocationInView'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getLocationInView'", nullptr);
         return 0;
     }
 #endif
@@ -2863,7 +2863,7 @@ int lua_cocos2dx_Touch_getPreviousLocation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getPreviousLocation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Touch_getPreviousLocation'", nullptr);
         return 0;
     }
 #endif
@@ -2930,7 +2930,7 @@ static int lua_cocos2dx_Touch_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Touch(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Touch");
-    tolua_cclass(tolua_S,"Touch","cc.Touch","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Touch","cc.Touch","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Touch");
         tolua_function(tolua_S,"getPreviousLocationInView",lua_cocos2dx_Touch_getPreviousLocationInView);
@@ -2970,7 +2970,7 @@ int lua_cocos2dx_Event_isStopped(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_isStopped'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_isStopped'", nullptr);
         return 0;
     }
 #endif
@@ -3014,7 +3014,7 @@ int lua_cocos2dx_Event_getType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_getType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_getType'", nullptr);
         return 0;
     }
 #endif
@@ -3058,7 +3058,7 @@ int lua_cocos2dx_Event_getCurrentTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_getCurrentTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_getCurrentTarget'", nullptr);
         return 0;
     }
 #endif
@@ -3102,7 +3102,7 @@ int lua_cocos2dx_Event_stopPropagation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_stopPropagation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Event_stopPropagation'", nullptr);
         return 0;
     }
 #endif
@@ -3134,7 +3134,7 @@ static int lua_cocos2dx_Event_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Event(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Event");
-    tolua_cclass(tolua_S,"Event","cc.Event","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Event","cc.Event","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Event");
         tolua_function(tolua_S,"isStopped",lua_cocos2dx_Event_isStopped);
@@ -3168,7 +3168,7 @@ int lua_cocos2dx_EventTouch_getEventCode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventTouch_getEventCode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventTouch_getEventCode'", nullptr);
         return 0;
     }
 #endif
@@ -3212,7 +3212,7 @@ int lua_cocos2dx_EventTouch_setEventCode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventTouch_setEventCode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventTouch_setEventCode'", nullptr);
         return 0;
     }
 #endif
@@ -3281,7 +3281,7 @@ static int lua_cocos2dx_EventTouch_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventTouch(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventTouch");
-    tolua_cclass(tolua_S,"EventTouch","cc.EventTouch","cc.Event",NULL);
+    tolua_cclass(tolua_S,"EventTouch","cc.EventTouch","cc.Event",nullptr);
 
     tolua_beginmodule(tolua_S,"EventTouch");
         tolua_function(tolua_S,"getEventCode",lua_cocos2dx_EventTouch_getEventCode);
@@ -3343,7 +3343,7 @@ static int lua_cocos2dx_EventKeyboard_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventKeyboard(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventKeyboard");
-    tolua_cclass(tolua_S,"EventKeyboard","cc.EventKeyboard","cc.Event",NULL);
+    tolua_cclass(tolua_S,"EventKeyboard","cc.EventKeyboard","cc.Event",nullptr);
 
     tolua_beginmodule(tolua_S,"EventKeyboard");
     tolua_endmodule(tolua_S);
@@ -3373,7 +3373,7 @@ int lua_cocos2dx_Texture2D_getShaderProgram(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getShaderProgram'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getShaderProgram'", nullptr);
         return 0;
     }
 #endif
@@ -3417,7 +3417,7 @@ int lua_cocos2dx_Texture2D_getMaxT(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getMaxT'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getMaxT'", nullptr);
         return 0;
     }
 #endif
@@ -3461,7 +3461,7 @@ int lua_cocos2dx_Texture2D_getStringForFormat(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getStringForFormat'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getStringForFormat'", nullptr);
         return 0;
     }
 #endif
@@ -3488,7 +3488,7 @@ int lua_cocos2dx_Texture2D_getStringForFormat(lua_State* tolua_S)
 int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Texture2D* cobj = NULL;
+    cocos2d::Texture2D* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -3501,7 +3501,7 @@ int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_initWithImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_initWithImage'", nullptr);
         return 0;
     }
 #endif
@@ -3564,7 +3564,7 @@ int lua_cocos2dx_Texture2D_setShaderProgram(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setShaderProgram'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setShaderProgram'", nullptr);
         return 0;
     }
 #endif
@@ -3610,7 +3610,7 @@ int lua_cocos2dx_Texture2D_getMaxS(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getMaxS'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getMaxS'", nullptr);
         return 0;
     }
 #endif
@@ -3654,7 +3654,7 @@ int lua_cocos2dx_Texture2D_hasPremultipliedAlpha(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_hasPremultipliedAlpha'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_hasPremultipliedAlpha'", nullptr);
         return 0;
     }
 #endif
@@ -3698,7 +3698,7 @@ int lua_cocos2dx_Texture2D_initWithMipmaps(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_initWithMipmaps'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_initWithMipmaps'", nullptr);
         return 0;
     }
 #endif
@@ -3757,7 +3757,7 @@ int lua_cocos2dx_Texture2D_getPixelsHigh(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getPixelsHigh'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getPixelsHigh'", nullptr);
         return 0;
     }
 #endif
@@ -3784,7 +3784,7 @@ int lua_cocos2dx_Texture2D_getPixelsHigh(lua_State* tolua_S)
 int lua_cocos2dx_Texture2D_getBitsPerPixelForFormat(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Texture2D* cobj = NULL;
+    cocos2d::Texture2D* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -3797,7 +3797,7 @@ int lua_cocos2dx_Texture2D_getBitsPerPixelForFormat(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getBitsPerPixelForFormat'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getBitsPerPixelForFormat'", nullptr);
         return 0;
     }
 #endif
@@ -3852,7 +3852,7 @@ int lua_cocos2dx_Texture2D_getName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getName'", nullptr);
         return 0;
     }
 #endif
@@ -3879,7 +3879,7 @@ int lua_cocos2dx_Texture2D_getName(lua_State* tolua_S)
 int lua_cocos2dx_Texture2D_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Texture2D* cobj = NULL;
+    cocos2d::Texture2D* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -3892,7 +3892,7 @@ int lua_cocos2dx_Texture2D_initWithString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_initWithString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_initWithString'", nullptr);
         return 0;
     }
 #endif
@@ -4047,7 +4047,7 @@ int lua_cocos2dx_Texture2D_setMaxT(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setMaxT'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setMaxT'", nullptr);
         return 0;
     }
 #endif
@@ -4093,7 +4093,7 @@ int lua_cocos2dx_Texture2D_drawInRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_drawInRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_drawInRect'", nullptr);
         return 0;
     }
 #endif
@@ -4139,7 +4139,7 @@ int lua_cocos2dx_Texture2D_getContentSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getContentSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getContentSize'", nullptr);
         return 0;
     }
 #endif
@@ -4183,7 +4183,7 @@ int lua_cocos2dx_Texture2D_setAliasTexParameters(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setAliasTexParameters'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setAliasTexParameters'", nullptr);
         return 0;
     }
 #endif
@@ -4226,7 +4226,7 @@ int lua_cocos2dx_Texture2D_setAntiAliasTexParameters(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setAntiAliasTexParameters'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setAntiAliasTexParameters'", nullptr);
         return 0;
     }
 #endif
@@ -4269,7 +4269,7 @@ int lua_cocos2dx_Texture2D_generateMipmap(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_generateMipmap'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_generateMipmap'", nullptr);
         return 0;
     }
 #endif
@@ -4312,7 +4312,7 @@ int lua_cocos2dx_Texture2D_getDescription(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getDescription'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getDescription'", nullptr);
         return 0;
     }
 #endif
@@ -4356,7 +4356,7 @@ int lua_cocos2dx_Texture2D_getPixelFormat(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getPixelFormat'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getPixelFormat'", nullptr);
         return 0;
     }
 #endif
@@ -4400,7 +4400,7 @@ int lua_cocos2dx_Texture2D_getContentSizeInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getContentSizeInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getContentSizeInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -4444,7 +4444,7 @@ int lua_cocos2dx_Texture2D_getPixelsWide(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getPixelsWide'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_getPixelsWide'", nullptr);
         return 0;
     }
 #endif
@@ -4488,7 +4488,7 @@ int lua_cocos2dx_Texture2D_drawAtPoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_drawAtPoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_drawAtPoint'", nullptr);
         return 0;
     }
 #endif
@@ -4534,7 +4534,7 @@ int lua_cocos2dx_Texture2D_hasMipmaps(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_hasMipmaps'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_hasMipmaps'", nullptr);
         return 0;
     }
 #endif
@@ -4578,7 +4578,7 @@ int lua_cocos2dx_Texture2D_setMaxS(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setMaxS'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_setMaxS'", nullptr);
         return 0;
     }
 #endif
@@ -4742,7 +4742,7 @@ static int lua_cocos2dx_Texture2D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Texture2D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Texture2D");
-    tolua_cclass(tolua_S,"Texture2D","cc.Texture2D","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Texture2D","cc.Texture2D","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Texture2D");
         tolua_function(tolua_S,"getShaderProgram",lua_cocos2dx_Texture2D_getShaderProgram);
@@ -4801,7 +4801,7 @@ int lua_cocos2dx_EventListener_clone(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListener_clone'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListener_clone'", nullptr);
         return 0;
     }
 #endif
@@ -4845,7 +4845,7 @@ int lua_cocos2dx_EventListener_checkAvailable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListener_checkAvailable'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListener_checkAvailable'", nullptr);
         return 0;
     }
 #endif
@@ -4878,7 +4878,7 @@ static int lua_cocos2dx_EventListener_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventListener(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListener");
-    tolua_cclass(tolua_S,"EventListener","cc.EventListener","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"EventListener","cc.EventListener","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListener");
         tolua_function(tolua_S,"clone",lua_cocos2dx_EventListener_clone);
@@ -4910,7 +4910,7 @@ int lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget'", nullptr);
         return 0;
     }
 #endif
@@ -4969,7 +4969,7 @@ int lua_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority(lua_Stat
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority'", nullptr);
         return 0;
     }
 #endif
@@ -5018,7 +5018,7 @@ int lua_cocos2dx_EventDispatcher_setEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_setEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_setEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -5064,7 +5064,7 @@ int lua_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority(lua_State* to
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority'", nullptr);
         return 0;
     }
 #endif
@@ -5113,7 +5113,7 @@ int lua_cocos2dx_EventDispatcher_removeEventListener(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeEventListener'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeEventListener'", nullptr);
         return 0;
     }
 #endif
@@ -5159,7 +5159,7 @@ int lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget'", nullptr);
         return 0;
     }
 #endif
@@ -5218,7 +5218,7 @@ int lua_cocos2dx_EventDispatcher_removeEventListenersForTarget(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeEventListenersForTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeEventListenersForTarget'", nullptr);
         return 0;
     }
 #endif
@@ -5277,7 +5277,7 @@ int lua_cocos2dx_EventDispatcher_setPriority(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_setPriority'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_setPriority'", nullptr);
         return 0;
     }
 #endif
@@ -5326,7 +5326,7 @@ int lua_cocos2dx_EventDispatcher_addCustomEventListener(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_addCustomEventListener'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_addCustomEventListener'", nullptr);
         return 0;
     }
 #endif
@@ -5380,7 +5380,7 @@ int lua_cocos2dx_EventDispatcher_dispatchEvent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_dispatchEvent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_dispatchEvent'", nullptr);
         return 0;
     }
 #endif
@@ -5426,7 +5426,7 @@ int lua_cocos2dx_EventDispatcher_removeAllEventListeners(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeAllEventListeners'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeAllEventListeners'", nullptr);
         return 0;
     }
 #endif
@@ -5469,7 +5469,7 @@ int lua_cocos2dx_EventDispatcher_removeCustomEventListeners(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeCustomEventListeners'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeCustomEventListeners'", nullptr);
         return 0;
     }
 #endif
@@ -5515,7 +5515,7 @@ int lua_cocos2dx_EventDispatcher_isEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_isEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_isEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -5559,7 +5559,7 @@ int lua_cocos2dx_EventDispatcher_removeEventListenersForType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeEventListenersForType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_removeEventListenersForType'", nullptr);
         return 0;
     }
 #endif
@@ -5628,7 +5628,7 @@ static int lua_cocos2dx_EventDispatcher_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventDispatcher(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventDispatcher");
-    tolua_cclass(tolua_S,"EventDispatcher","cc.EventDispatcher","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"EventDispatcher","cc.EventDispatcher","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"EventDispatcher");
         tolua_function(tolua_S,"pauseEventListenersForTarget",lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget);
@@ -5656,7 +5656,7 @@ int lua_register_cocos2dx_EventDispatcher(lua_State* tolua_S)
 int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -5669,7 +5669,7 @@ int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_addChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_addChild'", nullptr);
         return 0;
     }
 #endif
@@ -5749,7 +5749,7 @@ int lua_cocos2dx_Node_removeComponent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeComponent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeComponent'", nullptr);
         return 0;
     }
 #endif
@@ -5796,7 +5796,7 @@ int lua_cocos2dx_Node_setPhysicsBody(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPhysicsBody'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPhysicsBody'", nullptr);
         return 0;
     }
 #endif
@@ -5825,7 +5825,7 @@ int lua_cocos2dx_Node_setPhysicsBody(lua_State* tolua_S)
 int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -5838,7 +5838,7 @@ int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getShaderProgram'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getShaderProgram'", nullptr);
         return 0;
     }
 #endif
@@ -5889,7 +5889,7 @@ int lua_cocos2dx_Node_getDescription(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getDescription'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getDescription'", nullptr);
         return 0;
     }
 #endif
@@ -5933,7 +5933,7 @@ int lua_cocos2dx_Node_setRotationSkewY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotationSkewY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotationSkewY'", nullptr);
         return 0;
     }
 #endif
@@ -5979,7 +5979,7 @@ int lua_cocos2dx_Node_setOpacityModifyRGB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOpacityModifyRGB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOpacityModifyRGB'", nullptr);
         return 0;
     }
 #endif
@@ -6025,7 +6025,7 @@ int lua_cocos2dx_Node_setCascadeOpacityEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setCascadeOpacityEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setCascadeOpacityEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -6054,7 +6054,7 @@ int lua_cocos2dx_Node_setCascadeOpacityEnabled(lua_State* tolua_S)
 int lua_cocos2dx_Node_getChildren(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -6067,7 +6067,7 @@ int lua_cocos2dx_Node_getChildren(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getChildren'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getChildren'", nullptr);
         return 0;
     }
 #endif
@@ -6118,7 +6118,7 @@ int lua_cocos2dx_Node_pause(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_pause'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_pause'", nullptr);
         return 0;
     }
 #endif
@@ -6161,7 +6161,7 @@ int lua_cocos2dx_Node_convertToWorldSpaceAR(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToWorldSpaceAR'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToWorldSpaceAR'", nullptr);
         return 0;
     }
 #endif
@@ -6208,7 +6208,7 @@ int lua_cocos2dx_Node_isIgnoreAnchorPointForPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isIgnoreAnchorPointForPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isIgnoreAnchorPointForPosition'", nullptr);
         return 0;
     }
 #endif
@@ -6252,7 +6252,7 @@ int lua_cocos2dx_Node_updateDisplayedOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_updateDisplayedOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_updateDisplayedOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -6298,7 +6298,7 @@ int lua_cocos2dx_Node_setRotation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotation'", nullptr);
         return 0;
     }
 #endif
@@ -6344,7 +6344,7 @@ int lua_cocos2dx_Node_setScaleZ(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScaleZ'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScaleZ'", nullptr);
         return 0;
     }
 #endif
@@ -6390,7 +6390,7 @@ int lua_cocos2dx_Node_setScaleY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScaleY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScaleY'", nullptr);
         return 0;
     }
 #endif
@@ -6436,7 +6436,7 @@ int lua_cocos2dx_Node_setScaleX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScaleX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScaleX'", nullptr);
         return 0;
     }
 #endif
@@ -6482,7 +6482,7 @@ int lua_cocos2dx_Node_setRotationSkewX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotationSkewX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotationSkewX'", nullptr);
         return 0;
     }
 #endif
@@ -6528,7 +6528,7 @@ int lua_cocos2dx_Node_removeAllComponents(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeAllComponents'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeAllComponents'", nullptr);
         return 0;
     }
 #endif
@@ -6571,7 +6571,7 @@ int lua_cocos2dx_Node__setLocalZOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node__setLocalZOrder'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node__setLocalZOrder'", nullptr);
         return 0;
     }
 #endif
@@ -6617,7 +6617,7 @@ int lua_cocos2dx_Node_getTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getTag'", nullptr);
         return 0;
     }
 #endif
@@ -6661,7 +6661,7 @@ int lua_cocos2dx_Node_getNodeToWorldAffineTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToWorldAffineTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToWorldAffineTransform'", nullptr);
         return 0;
     }
 #endif
@@ -6705,7 +6705,7 @@ int lua_cocos2dx_Node_getNodeToWorldTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToWorldTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToWorldTransform'", nullptr);
         return 0;
     }
 #endif
@@ -6749,7 +6749,7 @@ int lua_cocos2dx_Node_getPosition3D(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPosition3D'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPosition3D'", nullptr);
         return 0;
     }
 #endif
@@ -6793,7 +6793,7 @@ int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeChild'", nullptr);
         return 0;
     }
 #endif
@@ -6852,7 +6852,7 @@ int lua_cocos2dx_Node_convertToWorldSpace(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToWorldSpace'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToWorldSpace'", nullptr);
         return 0;
     }
 #endif
@@ -6899,7 +6899,7 @@ int lua_cocos2dx_Node_getScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScene'", nullptr);
         return 0;
     }
 #endif
@@ -6943,7 +6943,7 @@ int lua_cocos2dx_Node_getEventDispatcher(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getEventDispatcher'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getEventDispatcher'", nullptr);
         return 0;
     }
 #endif
@@ -6987,7 +6987,7 @@ int lua_cocos2dx_Node_setSkewX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setSkewX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setSkewX'", nullptr);
         return 0;
     }
 #endif
@@ -7033,7 +7033,7 @@ int lua_cocos2dx_Node_setSkewY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setSkewY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setSkewY'", nullptr);
         return 0;
     }
 #endif
@@ -7079,7 +7079,7 @@ int lua_cocos2dx_Node_getOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -7123,7 +7123,7 @@ int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertTouchToNodeSpace'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertTouchToNodeSpace'", nullptr);
         return 0;
     }
 #endif
@@ -7153,7 +7153,7 @@ int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
 int lua_cocos2dx_Node_removeAllChildrenWithCleanup(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -7166,7 +7166,7 @@ int lua_cocos2dx_Node_removeAllChildrenWithCleanup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeAllChildrenWithCleanup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeAllChildrenWithCleanup'", nullptr);
         return 0;
     }
 #endif
@@ -7219,7 +7219,7 @@ int lua_cocos2dx_Node_getNodeToParentAffineTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToParentAffineTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToParentAffineTransform'", nullptr);
         return 0;
     }
 #endif
@@ -7263,7 +7263,7 @@ int lua_cocos2dx_Node_isCascadeOpacityEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isCascadeOpacityEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isCascadeOpacityEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -7307,7 +7307,7 @@ int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setParent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setParent'", nullptr);
         return 0;
     }
 #endif
@@ -7353,7 +7353,7 @@ int lua_cocos2dx_Node_getRotation3D(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotation3D'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotation3D'", nullptr);
         return 0;
     }
 #endif
@@ -7397,7 +7397,7 @@ int lua_cocos2dx_Node_getNodeToParentTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToParentTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNodeToParentTransform'", nullptr);
         return 0;
     }
 #endif
@@ -7441,7 +7441,7 @@ int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertTouchToNodeSpaceAR'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertTouchToNodeSpaceAR'", nullptr);
         return 0;
     }
 #endif
@@ -7488,7 +7488,7 @@ int lua_cocos2dx_Node_convertToNodeSpace(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToNodeSpace'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToNodeSpace'", nullptr);
         return 0;
     }
 #endif
@@ -7535,7 +7535,7 @@ int lua_cocos2dx_Node_resume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_resume'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_resume'", nullptr);
         return 0;
     }
 #endif
@@ -7578,7 +7578,7 @@ int lua_cocos2dx_Node_getPhysicsBody(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPhysicsBody'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPhysicsBody'", nullptr);
         return 0;
     }
 #endif
@@ -7605,7 +7605,7 @@ int lua_cocos2dx_Node_getPhysicsBody(lua_State* tolua_S)
 int lua_cocos2dx_Node_setPosition(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -7618,7 +7618,7 @@ int lua_cocos2dx_Node_setPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPosition'", nullptr);
         return 0;
     }
 #endif
@@ -7679,7 +7679,7 @@ int lua_cocos2dx_Node_stopActionByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_stopActionByTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_stopActionByTag'", nullptr);
         return 0;
     }
 #endif
@@ -7725,7 +7725,7 @@ int lua_cocos2dx_Node_reorderChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_reorderChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_reorderChild'", nullptr);
         return 0;
     }
 #endif
@@ -7774,7 +7774,7 @@ int lua_cocos2dx_Node_ignoreAnchorPointForPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_ignoreAnchorPointForPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_ignoreAnchorPointForPosition'", nullptr);
         return 0;
     }
 #endif
@@ -7820,7 +7820,7 @@ int lua_cocos2dx_Node_setPositionZ(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPositionZ'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPositionZ'", nullptr);
         return 0;
     }
 #endif
@@ -7866,7 +7866,7 @@ int lua_cocos2dx_Node_setRotation3D(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotation3D'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotation3D'", nullptr);
         return 0;
     }
 #endif
@@ -7912,7 +7912,7 @@ int lua_cocos2dx_Node_setPositionX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPositionX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPositionX'", nullptr);
         return 0;
     }
 #endif
@@ -7958,7 +7958,7 @@ int lua_cocos2dx_Node_setNodeToParentTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setNodeToParentTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setNodeToParentTransform'", nullptr);
         return 0;
     }
 #endif
@@ -8004,7 +8004,7 @@ int lua_cocos2dx_Node_getAnchorPoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getAnchorPoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getAnchorPoint'", nullptr);
         return 0;
     }
 #endif
@@ -8048,7 +8048,7 @@ int lua_cocos2dx_Node_getNumberOfRunningActions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNumberOfRunningActions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getNumberOfRunningActions'", nullptr);
         return 0;
     }
 #endif
@@ -8092,7 +8092,7 @@ int lua_cocos2dx_Node_updateTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_updateTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_updateTransform'", nullptr);
         return 0;
     }
 #endif
@@ -8135,7 +8135,7 @@ int lua_cocos2dx_Node_isVisible(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isVisible'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isVisible'", nullptr);
         return 0;
     }
 #endif
@@ -8179,7 +8179,7 @@ int lua_cocos2dx_Node_getChildrenCount(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getChildrenCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getChildrenCount'", nullptr);
         return 0;
     }
 #endif
@@ -8223,7 +8223,7 @@ int lua_cocos2dx_Node_convertToNodeSpaceAR(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToNodeSpaceAR'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_convertToNodeSpaceAR'", nullptr);
         return 0;
     }
 #endif
@@ -8270,7 +8270,7 @@ int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_addComponent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_addComponent'", nullptr);
         return 0;
     }
 #endif
@@ -8300,7 +8300,7 @@ int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 int lua_cocos2dx_Node_visit(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -8313,7 +8313,7 @@ int lua_cocos2dx_Node_visit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_visit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_visit'", nullptr);
         return 0;
     }
 #endif
@@ -8374,7 +8374,7 @@ int lua_cocos2dx_Node_setShaderProgram(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setShaderProgram'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setShaderProgram'", nullptr);
         return 0;
     }
 #endif
@@ -8420,7 +8420,7 @@ int lua_cocos2dx_Node_getRotation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotation'", nullptr);
         return 0;
     }
 #endif
@@ -8464,7 +8464,7 @@ int lua_cocos2dx_Node_getAnchorPointInPoints(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getAnchorPointInPoints'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getAnchorPointInPoints'", nullptr);
         return 0;
     }
 #endif
@@ -8508,7 +8508,7 @@ int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_runAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_runAction'", nullptr);
         return 0;
     }
 #endif
@@ -8555,7 +8555,7 @@ int lua_cocos2dx_Node_setScheduler(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScheduler'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScheduler'", nullptr);
         return 0;
     }
 #endif
@@ -8601,7 +8601,7 @@ int lua_cocos2dx_Node_stopAllActions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_stopAllActions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_stopAllActions'", nullptr);
         return 0;
     }
 #endif
@@ -8644,7 +8644,7 @@ int lua_cocos2dx_Node_getSkewX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getSkewX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getSkewX'", nullptr);
         return 0;
     }
 #endif
@@ -8688,7 +8688,7 @@ int lua_cocos2dx_Node_getSkewY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getSkewY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getSkewY'", nullptr);
         return 0;
     }
 #endif
@@ -8732,7 +8732,7 @@ int lua_cocos2dx_Node_getDisplayedColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getDisplayedColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getDisplayedColor'", nullptr);
         return 0;
     }
 #endif
@@ -8776,7 +8776,7 @@ int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getActionByTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getActionByTag'", nullptr);
         return 0;
     }
 #endif
@@ -8806,7 +8806,7 @@ int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
 int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -8819,7 +8819,7 @@ int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setAdditionalTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setAdditionalTransform'", nullptr);
         return 0;
     }
 #endif
@@ -8876,7 +8876,7 @@ int lua_cocos2dx_Node_getDisplayedOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getDisplayedOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getDisplayedOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -8920,7 +8920,7 @@ int lua_cocos2dx_Node_getLocalZOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getLocalZOrder'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getLocalZOrder'", nullptr);
         return 0;
     }
 #endif
@@ -8947,7 +8947,7 @@ int lua_cocos2dx_Node_getLocalZOrder(lua_State* tolua_S)
 int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -8960,7 +8960,7 @@ int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScheduler'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScheduler'", nullptr);
         return 0;
     }
 #endif
@@ -9011,7 +9011,7 @@ int lua_cocos2dx_Node_getParentToNodeAffineTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getParentToNodeAffineTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getParentToNodeAffineTransform'", nullptr);
         return 0;
     }
 #endif
@@ -9055,7 +9055,7 @@ int lua_cocos2dx_Node_getOrderOfArrival(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOrderOfArrival'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOrderOfArrival'", nullptr);
         return 0;
     }
 #endif
@@ -9099,7 +9099,7 @@ int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setActionManager'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setActionManager'", nullptr);
         return 0;
     }
 #endif
@@ -9145,7 +9145,7 @@ int lua_cocos2dx_Node_setColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setColor'", nullptr);
         return 0;
     }
 #endif
@@ -9191,7 +9191,7 @@ int lua_cocos2dx_Node_isRunning(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isRunning'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isRunning'", nullptr);
         return 0;
     }
 #endif
@@ -9218,7 +9218,7 @@ int lua_cocos2dx_Node_isRunning(lua_State* tolua_S)
 int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -9231,7 +9231,7 @@ int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getParent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getParent'", nullptr);
         return 0;
     }
 #endif
@@ -9282,7 +9282,7 @@ int lua_cocos2dx_Node_getPositionZ(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionZ'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionZ'", nullptr);
         return 0;
     }
 #endif
@@ -9326,7 +9326,7 @@ int lua_cocos2dx_Node_getPositionY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionY'", nullptr);
         return 0;
     }
 #endif
@@ -9370,7 +9370,7 @@ int lua_cocos2dx_Node_getPositionX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionX'", nullptr);
         return 0;
     }
 #endif
@@ -9414,7 +9414,7 @@ int lua_cocos2dx_Node_removeChildByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeChildByTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeChildByTag'", nullptr);
         return 0;
     }
 #endif
@@ -9473,7 +9473,7 @@ int lua_cocos2dx_Node_setPositionY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPositionY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPositionY'", nullptr);
         return 0;
     }
 #endif
@@ -9519,7 +9519,7 @@ int lua_cocos2dx_Node_updateDisplayedColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_updateDisplayedColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_updateDisplayedColor'", nullptr);
         return 0;
     }
 #endif
@@ -9565,7 +9565,7 @@ int lua_cocos2dx_Node_setVisible(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setVisible'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setVisible'", nullptr);
         return 0;
     }
 #endif
@@ -9611,7 +9611,7 @@ int lua_cocos2dx_Node_getParentToNodeTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getParentToNodeTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getParentToNodeTransform'", nullptr);
         return 0;
     }
 #endif
@@ -9655,7 +9655,7 @@ int lua_cocos2dx_Node_setGlobalZOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setGlobalZOrder'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setGlobalZOrder'", nullptr);
         return 0;
     }
 #endif
@@ -9684,7 +9684,7 @@ int lua_cocos2dx_Node_setGlobalZOrder(lua_State* tolua_S)
 int lua_cocos2dx_Node_setScale(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -9697,7 +9697,7 @@ int lua_cocos2dx_Node_setScale(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScale'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setScale'", nullptr);
         return 0;
     }
 #endif
@@ -9758,7 +9758,7 @@ int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getChildByTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getChildByTag'", nullptr);
         return 0;
     }
 #endif
@@ -9805,7 +9805,7 @@ int lua_cocos2dx_Node_setOrderOfArrival(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOrderOfArrival'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOrderOfArrival'", nullptr);
         return 0;
     }
 #endif
@@ -9851,7 +9851,7 @@ int lua_cocos2dx_Node_getScaleZ(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScaleZ'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScaleZ'", nullptr);
         return 0;
     }
 #endif
@@ -9895,7 +9895,7 @@ int lua_cocos2dx_Node_getScaleY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScaleY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScaleY'", nullptr);
         return 0;
     }
 #endif
@@ -9939,7 +9939,7 @@ int lua_cocos2dx_Node_getScaleX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScaleX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScaleX'", nullptr);
         return 0;
     }
 #endif
@@ -9983,7 +9983,7 @@ int lua_cocos2dx_Node_setLocalZOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setLocalZOrder'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setLocalZOrder'", nullptr);
         return 0;
     }
 #endif
@@ -10029,7 +10029,7 @@ int lua_cocos2dx_Node_getWorldToNodeAffineTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getWorldToNodeAffineTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getWorldToNodeAffineTransform'", nullptr);
         return 0;
     }
 #endif
@@ -10073,7 +10073,7 @@ int lua_cocos2dx_Node_setCascadeColorEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setCascadeColorEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setCascadeColorEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -10119,7 +10119,7 @@ int lua_cocos2dx_Node_setOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -10165,7 +10165,7 @@ int lua_cocos2dx_Node_cleanup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_cleanup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_cleanup'", nullptr);
         return 0;
     }
 #endif
@@ -10208,7 +10208,7 @@ int lua_cocos2dx_Node_getComponent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getComponent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getComponent'", nullptr);
         return 0;
     }
 #endif
@@ -10255,7 +10255,7 @@ int lua_cocos2dx_Node_getContentSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getContentSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getContentSize'", nullptr);
         return 0;
     }
 #endif
@@ -10299,7 +10299,7 @@ int lua_cocos2dx_Node_getColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getColor'", nullptr);
         return 0;
     }
 #endif
@@ -10343,7 +10343,7 @@ int lua_cocos2dx_Node_getBoundingBox(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getBoundingBox'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getBoundingBox'", nullptr);
         return 0;
     }
 #endif
@@ -10387,7 +10387,7 @@ int lua_cocos2dx_Node_setEventDispatcher(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setEventDispatcher'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setEventDispatcher'", nullptr);
         return 0;
     }
 #endif
@@ -10433,7 +10433,7 @@ int lua_cocos2dx_Node_getGlobalZOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getGlobalZOrder'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getGlobalZOrder'", nullptr);
         return 0;
     }
 #endif
@@ -10460,7 +10460,7 @@ int lua_cocos2dx_Node_getGlobalZOrder(lua_State* tolua_S)
 int lua_cocos2dx_Node_draw(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -10473,7 +10473,7 @@ int lua_cocos2dx_Node_draw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_draw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_draw'", nullptr);
         return 0;
     }
 #endif
@@ -10534,7 +10534,7 @@ int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setUserObject'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setUserObject'", nullptr);
         return 0;
     }
 #endif
@@ -10563,7 +10563,7 @@ int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
 int lua_cocos2dx_Node_removeFromParentAndCleanup(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -10576,7 +10576,7 @@ int lua_cocos2dx_Node_removeFromParentAndCleanup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeFromParentAndCleanup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeFromParentAndCleanup'", nullptr);
         return 0;
     }
 #endif
@@ -10629,7 +10629,7 @@ int lua_cocos2dx_Node_setPosition3D(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPosition3D'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPosition3D'", nullptr);
         return 0;
     }
 #endif
@@ -10675,7 +10675,7 @@ int lua_cocos2dx_Node_update(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_update'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_update'", nullptr);
         return 0;
     }
 #endif
@@ -10721,7 +10721,7 @@ int lua_cocos2dx_Node_sortAllChildren(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_sortAllChildren'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_sortAllChildren'", nullptr);
         return 0;
     }
 #endif
@@ -10764,7 +10764,7 @@ int lua_cocos2dx_Node_getWorldToNodeTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getWorldToNodeTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getWorldToNodeTransform'", nullptr);
         return 0;
     }
 #endif
@@ -10808,7 +10808,7 @@ int lua_cocos2dx_Node_getScale(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScale'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getScale'", nullptr);
         return 0;
     }
 #endif
@@ -10852,7 +10852,7 @@ int lua_cocos2dx_Node_getRotationSkewX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotationSkewX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotationSkewX'", nullptr);
         return 0;
     }
 #endif
@@ -10896,7 +10896,7 @@ int lua_cocos2dx_Node_getRotationSkewY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotationSkewY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getRotationSkewY'", nullptr);
         return 0;
     }
 #endif
@@ -10940,7 +10940,7 @@ int lua_cocos2dx_Node_setTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setTag'", nullptr);
         return 0;
     }
 #endif
@@ -10986,7 +10986,7 @@ int lua_cocos2dx_Node_isCascadeColorEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isCascadeColorEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isCascadeColorEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -11030,7 +11030,7 @@ int lua_cocos2dx_Node_isOpacityModifyRGB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isOpacityModifyRGB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_isOpacityModifyRGB'", nullptr);
         return 0;
     }
 #endif
@@ -11074,7 +11074,7 @@ int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_stopAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_stopAction'", nullptr);
         return 0;
     }
 #endif
@@ -11103,7 +11103,7 @@ int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
 int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Node* cobj = NULL;
+    cocos2d::Node* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -11116,7 +11116,7 @@ int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getActionManager'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getActionManager'", nullptr);
         return 0;
     }
 #endif
@@ -11187,7 +11187,7 @@ static int lua_cocos2dx_Node_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Node(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Node");
-    tolua_cclass(tolua_S,"Node","cc.Node","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Node","cc.Node","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Node");
         tolua_function(tolua_S,"addChild",lua_cocos2dx_Node_addChild);
@@ -11337,7 +11337,7 @@ int lua_cocos2dx_SpriteFrame_clone(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_clone'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_clone'", nullptr);
         return 0;
     }
 #endif
@@ -11381,7 +11381,7 @@ int lua_cocos2dx_SpriteFrame_setRotated(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setRotated'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setRotated'", nullptr);
         return 0;
     }
 #endif
@@ -11427,7 +11427,7 @@ int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setTexture'", nullptr);
         return 0;
     }
 #endif
@@ -11456,7 +11456,7 @@ int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
 int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::SpriteFrame* cobj = NULL;
+    cocos2d::SpriteFrame* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -11469,7 +11469,7 @@ int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_initWithTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_initWithTexture'", nullptr);
         return 0;
     }
 #endif
@@ -11548,7 +11548,7 @@ int lua_cocos2dx_SpriteFrame_setRectInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setRectInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setRectInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -11594,7 +11594,7 @@ int lua_cocos2dx_SpriteFrame_getTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getTexture'", nullptr);
         return 0;
     }
 #endif
@@ -11638,7 +11638,7 @@ int lua_cocos2dx_SpriteFrame_getRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getRect'", nullptr);
         return 0;
     }
 #endif
@@ -11682,7 +11682,7 @@ int lua_cocos2dx_SpriteFrame_setOffsetInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOffsetInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOffsetInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -11728,7 +11728,7 @@ int lua_cocos2dx_SpriteFrame_getRectInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getRectInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getRectInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -11772,7 +11772,7 @@ int lua_cocos2dx_SpriteFrame_setOriginalSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOriginalSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOriginalSize'", nullptr);
         return 0;
     }
 #endif
@@ -11818,7 +11818,7 @@ int lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -11862,7 +11862,7 @@ int lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -11908,7 +11908,7 @@ int lua_cocos2dx_SpriteFrame_setOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setOffset'", nullptr);
         return 0;
     }
 #endif
@@ -11954,7 +11954,7 @@ int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOffset'", nullptr);
         return 0;
     }
 #endif
@@ -11998,7 +11998,7 @@ int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_isRotated'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_isRotated'", nullptr);
         return 0;
     }
 #endif
@@ -12025,7 +12025,7 @@ int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
 int lua_cocos2dx_SpriteFrame_initWithTextureFilename(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::SpriteFrame* cobj = NULL;
+    cocos2d::SpriteFrame* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -12038,7 +12038,7 @@ int lua_cocos2dx_SpriteFrame_initWithTextureFilename(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_initWithTextureFilename'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_initWithTextureFilename'", nullptr);
         return 0;
     }
 #endif
@@ -12117,7 +12117,7 @@ int lua_cocos2dx_SpriteFrame_setRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setRect'", nullptr);
         return 0;
     }
 #endif
@@ -12163,7 +12163,7 @@ int lua_cocos2dx_SpriteFrame_getOffsetInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOffsetInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOffsetInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -12207,7 +12207,7 @@ int lua_cocos2dx_SpriteFrame_getOriginalSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOriginalSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getOriginalSize'", nullptr);
         return 0;
     }
 #endif
@@ -12366,7 +12366,7 @@ static int lua_cocos2dx_SpriteFrame_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SpriteFrame(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SpriteFrame");
-    tolua_cclass(tolua_S,"SpriteFrame","cc.SpriteFrame","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"SpriteFrame","cc.SpriteFrame","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"SpriteFrame");
         tolua_function(tolua_S,"clone",lua_cocos2dx_SpriteFrame_clone);
@@ -12417,7 +12417,7 @@ int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_setSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_setSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -12446,7 +12446,7 @@ int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
 int lua_cocos2dx_AnimationFrame_getUserInfo(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::AnimationFrame* cobj = NULL;
+    cocos2d::AnimationFrame* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -12459,7 +12459,7 @@ int lua_cocos2dx_AnimationFrame_getUserInfo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_getUserInfo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_getUserInfo'", nullptr);
         return 0;
     }
 #endif
@@ -12510,7 +12510,7 @@ int lua_cocos2dx_AnimationFrame_setDelayUnits(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_setDelayUnits'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_setDelayUnits'", nullptr);
         return 0;
     }
 #endif
@@ -12556,7 +12556,7 @@ int lua_cocos2dx_AnimationFrame_clone(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_clone'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_clone'", nullptr);
         return 0;
     }
 #endif
@@ -12600,7 +12600,7 @@ int lua_cocos2dx_AnimationFrame_getSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_getSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_getSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -12644,7 +12644,7 @@ int lua_cocos2dx_AnimationFrame_getDelayUnits(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_getDelayUnits'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_getDelayUnits'", nullptr);
         return 0;
     }
 #endif
@@ -12688,7 +12688,7 @@ int lua_cocos2dx_AnimationFrame_setUserInfo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_setUserInfo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationFrame_setUserInfo'", nullptr);
         return 0;
     }
 #endif
@@ -12760,7 +12760,7 @@ static int lua_cocos2dx_AnimationFrame_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_AnimationFrame(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.AnimationFrame");
-    tolua_cclass(tolua_S,"AnimationFrame","cc.AnimationFrame","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"AnimationFrame","cc.AnimationFrame","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"AnimationFrame");
         tolua_function(tolua_S,"setSpriteFrame",lua_cocos2dx_AnimationFrame_setSpriteFrame);
@@ -12798,7 +12798,7 @@ int lua_cocos2dx_Animation_getLoops(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getLoops'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getLoops'", nullptr);
         return 0;
     }
 #endif
@@ -12842,7 +12842,7 @@ int lua_cocos2dx_Animation_addSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_addSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_addSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -12888,7 +12888,7 @@ int lua_cocos2dx_Animation_setRestoreOriginalFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setRestoreOriginalFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setRestoreOriginalFrame'", nullptr);
         return 0;
     }
 #endif
@@ -12934,7 +12934,7 @@ int lua_cocos2dx_Animation_clone(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_clone'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_clone'", nullptr);
         return 0;
     }
 #endif
@@ -12978,7 +12978,7 @@ int lua_cocos2dx_Animation_getDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getDuration'", nullptr);
         return 0;
     }
 #endif
@@ -13022,7 +13022,7 @@ int lua_cocos2dx_Animation_setFrames(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setFrames'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setFrames'", nullptr);
         return 0;
     }
 #endif
@@ -13068,7 +13068,7 @@ int lua_cocos2dx_Animation_getFrames(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getFrames'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getFrames'", nullptr);
         return 0;
     }
 #endif
@@ -13112,7 +13112,7 @@ int lua_cocos2dx_Animation_setLoops(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setLoops'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setLoops'", nullptr);
         return 0;
     }
 #endif
@@ -13158,7 +13158,7 @@ int lua_cocos2dx_Animation_setDelayPerUnit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setDelayPerUnit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_setDelayPerUnit'", nullptr);
         return 0;
     }
 #endif
@@ -13204,7 +13204,7 @@ int lua_cocos2dx_Animation_addSpriteFrameWithFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_addSpriteFrameWithFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_addSpriteFrameWithFile'", nullptr);
         return 0;
     }
 #endif
@@ -13250,7 +13250,7 @@ int lua_cocos2dx_Animation_getTotalDelayUnits(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getTotalDelayUnits'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getTotalDelayUnits'", nullptr);
         return 0;
     }
 #endif
@@ -13294,7 +13294,7 @@ int lua_cocos2dx_Animation_getDelayPerUnit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getDelayPerUnit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getDelayPerUnit'", nullptr);
         return 0;
     }
 #endif
@@ -13338,7 +13338,7 @@ int lua_cocos2dx_Animation_getRestoreOriginalFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getRestoreOriginalFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_getRestoreOriginalFrame'", nullptr);
         return 0;
     }
 #endif
@@ -13382,7 +13382,7 @@ int lua_cocos2dx_Animation_addSpriteFrameWithTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_addSpriteFrameWithTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation_addSpriteFrameWithTexture'", nullptr);
         return 0;
     }
 #endif
@@ -13532,7 +13532,7 @@ static int lua_cocos2dx_Animation_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Animation(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Animation");
-    tolua_cclass(tolua_S,"Animation","cc.Animation","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Animation","cc.Animation","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Animation");
         tolua_function(tolua_S,"getLoops",lua_cocos2dx_Animation_getLoops);
@@ -13578,7 +13578,7 @@ int lua_cocos2dx_ActionInterval_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionInterval_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionInterval_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -13622,7 +13622,7 @@ int lua_cocos2dx_ActionInterval_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionInterval_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionInterval_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -13668,7 +13668,7 @@ int lua_cocos2dx_ActionInterval_getElapsed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionInterval_getElapsed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionInterval_getElapsed'", nullptr);
         return 0;
     }
 #endif
@@ -13701,7 +13701,7 @@ static int lua_cocos2dx_ActionInterval_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ActionInterval(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ActionInterval");
-    tolua_cclass(tolua_S,"ActionInterval","cc.ActionInterval","cc.FiniteTimeAction",NULL);
+    tolua_cclass(tolua_S,"ActionInterval","cc.ActionInterval","cc.FiniteTimeAction",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionInterval");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_ActionInterval_getAmplitudeRate);
@@ -13723,7 +13723,7 @@ static int lua_cocos2dx_Sequence_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Sequence(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Sequence");
-    tolua_cclass(tolua_S,"Sequence","cc.Sequence","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"Sequence","cc.Sequence","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"Sequence");
     tolua_endmodule(tolua_S);
@@ -13753,7 +13753,7 @@ int lua_cocos2dx_Repeat_setInnerAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Repeat_setInnerAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Repeat_setInnerAction'", nullptr);
         return 0;
     }
 #endif
@@ -13799,7 +13799,7 @@ int lua_cocos2dx_Repeat_getInnerAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Repeat_getInnerAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Repeat_getInnerAction'", nullptr);
         return 0;
     }
 #endif
@@ -13867,7 +13867,7 @@ static int lua_cocos2dx_Repeat_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Repeat(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Repeat");
-    tolua_cclass(tolua_S,"Repeat","cc.Repeat","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"Repeat","cc.Repeat","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"Repeat");
         tolua_function(tolua_S,"setInnerAction",lua_cocos2dx_Repeat_setInnerAction);
@@ -13900,7 +13900,7 @@ int lua_cocos2dx_RepeatForever_setInnerAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RepeatForever_setInnerAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RepeatForever_setInnerAction'", nullptr);
         return 0;
     }
 #endif
@@ -13946,7 +13946,7 @@ int lua_cocos2dx_RepeatForever_getInnerAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RepeatForever_getInnerAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RepeatForever_getInnerAction'", nullptr);
         return 0;
     }
 #endif
@@ -14012,7 +14012,7 @@ static int lua_cocos2dx_RepeatForever_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_RepeatForever(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.RepeatForever");
-    tolua_cclass(tolua_S,"RepeatForever","cc.RepeatForever","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"RepeatForever","cc.RepeatForever","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"RepeatForever");
         tolua_function(tolua_S,"setInnerAction",lua_cocos2dx_RepeatForever_setInnerAction);
@@ -14034,7 +14034,7 @@ static int lua_cocos2dx_Spawn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Spawn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Spawn");
-    tolua_cclass(tolua_S,"Spawn","cc.Spawn","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"Spawn","cc.Spawn","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"Spawn");
     tolua_endmodule(tolua_S);
@@ -14110,7 +14110,7 @@ static int lua_cocos2dx_RotateTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_RotateTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.RotateTo");
-    tolua_cclass(tolua_S,"RotateTo","cc.RotateTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"RotateTo","cc.RotateTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"RotateTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_RotateTo_create);
@@ -14203,7 +14203,7 @@ static int lua_cocos2dx_RotateBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_RotateBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.RotateBy");
-    tolua_cclass(tolua_S,"RotateBy","cc.RotateBy","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"RotateBy","cc.RotateBy","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"RotateBy");
         tolua_function(tolua_S,"create", lua_cocos2dx_RotateBy_create);
@@ -14258,7 +14258,7 @@ static int lua_cocos2dx_MoveBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MoveBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MoveBy");
-    tolua_cclass(tolua_S,"MoveBy","cc.MoveBy","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"MoveBy","cc.MoveBy","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"MoveBy");
         tolua_function(tolua_S,"create", lua_cocos2dx_MoveBy_create);
@@ -14313,7 +14313,7 @@ static int lua_cocos2dx_MoveTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MoveTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MoveTo");
-    tolua_cclass(tolua_S,"MoveTo","cc.MoveTo","cc.MoveBy",NULL);
+    tolua_cclass(tolua_S,"MoveTo","cc.MoveTo","cc.MoveBy",nullptr);
 
     tolua_beginmodule(tolua_S,"MoveTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_MoveTo_create);
@@ -14370,7 +14370,7 @@ static int lua_cocos2dx_SkewTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SkewTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SkewTo");
-    tolua_cclass(tolua_S,"SkewTo","cc.SkewTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"SkewTo","cc.SkewTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"SkewTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_SkewTo_create);
@@ -14427,7 +14427,7 @@ static int lua_cocos2dx_SkewBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SkewBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SkewBy");
-    tolua_cclass(tolua_S,"SkewBy","cc.SkewBy","cc.SkewTo",NULL);
+    tolua_cclass(tolua_S,"SkewBy","cc.SkewBy","cc.SkewTo",nullptr);
 
     tolua_beginmodule(tolua_S,"SkewBy");
         tolua_function(tolua_S,"create", lua_cocos2dx_SkewBy_create);
@@ -14486,7 +14486,7 @@ static int lua_cocos2dx_JumpBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_JumpBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.JumpBy");
-    tolua_cclass(tolua_S,"JumpBy","cc.JumpBy","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"JumpBy","cc.JumpBy","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"JumpBy");
         tolua_function(tolua_S,"create", lua_cocos2dx_JumpBy_create);
@@ -14545,7 +14545,7 @@ static int lua_cocos2dx_JumpTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_JumpTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.JumpTo");
-    tolua_cclass(tolua_S,"JumpTo","cc.JumpTo","cc.JumpBy",NULL);
+    tolua_cclass(tolua_S,"JumpTo","cc.JumpTo","cc.JumpBy",nullptr);
 
     tolua_beginmodule(tolua_S,"JumpTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_JumpTo_create);
@@ -14565,7 +14565,7 @@ static int lua_cocos2dx_BezierBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_BezierBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.BezierBy");
-    tolua_cclass(tolua_S,"BezierBy","cc.BezierBy","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"BezierBy","cc.BezierBy","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"BezierBy");
     tolua_endmodule(tolua_S);
@@ -14584,7 +14584,7 @@ static int lua_cocos2dx_BezierTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_BezierTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.BezierTo");
-    tolua_cclass(tolua_S,"BezierTo","cc.BezierTo","cc.BezierBy",NULL);
+    tolua_cclass(tolua_S,"BezierTo","cc.BezierTo","cc.BezierBy",nullptr);
 
     tolua_beginmodule(tolua_S,"BezierTo");
     tolua_endmodule(tolua_S);
@@ -14660,7 +14660,7 @@ static int lua_cocos2dx_ScaleTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ScaleTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ScaleTo");
-    tolua_cclass(tolua_S,"ScaleTo","cc.ScaleTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"ScaleTo","cc.ScaleTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"ScaleTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_ScaleTo_create);
@@ -14737,7 +14737,7 @@ static int lua_cocos2dx_ScaleBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ScaleBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ScaleBy");
-    tolua_cclass(tolua_S,"ScaleBy","cc.ScaleBy","cc.ScaleTo",NULL);
+    tolua_cclass(tolua_S,"ScaleBy","cc.ScaleBy","cc.ScaleTo",nullptr);
 
     tolua_beginmodule(tolua_S,"ScaleBy");
         tolua_function(tolua_S,"create", lua_cocos2dx_ScaleBy_create);
@@ -14792,7 +14792,7 @@ static int lua_cocos2dx_Blink_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Blink(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Blink");
-    tolua_cclass(tolua_S,"Blink","cc.Blink","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"Blink","cc.Blink","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"Blink");
         tolua_function(tolua_S,"create", lua_cocos2dx_Blink_create);
@@ -14847,7 +14847,7 @@ static int lua_cocos2dx_FadeTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FadeTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FadeTo");
-    tolua_cclass(tolua_S,"FadeTo","cc.FadeTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"FadeTo","cc.FadeTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"FadeTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeTo_create);
@@ -14878,7 +14878,7 @@ int lua_cocos2dx_FadeIn_setReverseAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeIn_setReverseAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeIn_setReverseAction'", nullptr);
         return 0;
     }
 #endif
@@ -14946,7 +14946,7 @@ static int lua_cocos2dx_FadeIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FadeIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FadeIn");
-    tolua_cclass(tolua_S,"FadeIn","cc.FadeIn","cc.FadeTo",NULL);
+    tolua_cclass(tolua_S,"FadeIn","cc.FadeIn","cc.FadeTo",nullptr);
 
     tolua_beginmodule(tolua_S,"FadeIn");
         tolua_function(tolua_S,"setReverseAction",lua_cocos2dx_FadeIn_setReverseAction);
@@ -14978,7 +14978,7 @@ int lua_cocos2dx_FadeOut_setReverseAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOut_setReverseAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOut_setReverseAction'", nullptr);
         return 0;
     }
 #endif
@@ -15046,7 +15046,7 @@ static int lua_cocos2dx_FadeOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FadeOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FadeOut");
-    tolua_cclass(tolua_S,"FadeOut","cc.FadeOut","cc.FadeTo",NULL);
+    tolua_cclass(tolua_S,"FadeOut","cc.FadeOut","cc.FadeTo",nullptr);
 
     tolua_beginmodule(tolua_S,"FadeOut");
         tolua_function(tolua_S,"setReverseAction",lua_cocos2dx_FadeOut_setReverseAction);
@@ -15106,7 +15106,7 @@ static int lua_cocos2dx_TintTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TintTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TintTo");
-    tolua_cclass(tolua_S,"TintTo","cc.TintTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"TintTo","cc.TintTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"TintTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_TintTo_create);
@@ -15165,7 +15165,7 @@ static int lua_cocos2dx_TintBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TintBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TintBy");
-    tolua_cclass(tolua_S,"TintBy","cc.TintBy","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"TintBy","cc.TintBy","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"TintBy");
         tolua_function(tolua_S,"create", lua_cocos2dx_TintBy_create);
@@ -15218,7 +15218,7 @@ static int lua_cocos2dx_DelayTime_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_DelayTime(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.DelayTime");
-    tolua_cclass(tolua_S,"DelayTime","cc.DelayTime","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"DelayTime","cc.DelayTime","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"DelayTime");
         tolua_function(tolua_S,"create", lua_cocos2dx_DelayTime_create);
@@ -15232,7 +15232,7 @@ int lua_register_cocos2dx_DelayTime(lua_State* tolua_S)
 int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Animate* cobj = NULL;
+    cocos2d::Animate* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -15245,7 +15245,7 @@ int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate_getAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate_getAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -15296,7 +15296,7 @@ int lua_cocos2dx_Animate_setAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate_setAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate_setAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -15364,7 +15364,7 @@ static int lua_cocos2dx_Animate_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Animate(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Animate");
-    tolua_cclass(tolua_S,"Animate","cc.Animate","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"Animate","cc.Animate","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"Animate");
         tolua_function(tolua_S,"getAnimation",lua_cocos2dx_Animate_getAnimation);
@@ -15380,7 +15380,7 @@ int lua_register_cocos2dx_Animate(lua_State* tolua_S)
 int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TargetedAction* cobj = NULL;
+    cocos2d::TargetedAction* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -15393,7 +15393,7 @@ int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TargetedAction_getForcedTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TargetedAction_getForcedTarget'", nullptr);
         return 0;
     }
 #endif
@@ -15444,7 +15444,7 @@ int lua_cocos2dx_TargetedAction_setForcedTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TargetedAction_setForcedTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TargetedAction_setForcedTarget'", nullptr);
         return 0;
     }
 #endif
@@ -15514,7 +15514,7 @@ static int lua_cocos2dx_TargetedAction_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TargetedAction(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TargetedAction");
-    tolua_cclass(tolua_S,"TargetedAction","cc.TargetedAction","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"TargetedAction","cc.TargetedAction","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"TargetedAction");
         tolua_function(tolua_S,"getForcedTarget",lua_cocos2dx_TargetedAction_getForcedTarget);
@@ -15530,7 +15530,7 @@ int lua_register_cocos2dx_TargetedAction(lua_State* tolua_S)
 int lua_cocos2dx_ActionCamera_setEye(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::ActionCamera* cobj = NULL;
+    cocos2d::ActionCamera* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -15543,7 +15543,7 @@ int lua_cocos2dx_ActionCamera_setEye(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_setEye'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_setEye'", nullptr);
         return 0;
     }
 #endif
@@ -15608,7 +15608,7 @@ int lua_cocos2dx_ActionCamera_getEye(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_getEye'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_getEye'", nullptr);
         return 0;
     }
 #endif
@@ -15652,7 +15652,7 @@ int lua_cocos2dx_ActionCamera_setUp(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_setUp'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_setUp'", nullptr);
         return 0;
     }
 #endif
@@ -15698,7 +15698,7 @@ int lua_cocos2dx_ActionCamera_getCenter(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_getCenter'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_getCenter'", nullptr);
         return 0;
     }
 #endif
@@ -15742,7 +15742,7 @@ int lua_cocos2dx_ActionCamera_setCenter(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_setCenter'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_setCenter'", nullptr);
         return 0;
     }
 #endif
@@ -15788,7 +15788,7 @@ int lua_cocos2dx_ActionCamera_getUp(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_getUp'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionCamera_getUp'", nullptr);
         return 0;
     }
 #endif
@@ -15855,7 +15855,7 @@ static int lua_cocos2dx_ActionCamera_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ActionCamera(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ActionCamera");
-    tolua_cclass(tolua_S,"ActionCamera","cc.ActionCamera","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"ActionCamera","cc.ActionCamera","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionCamera");
         tolua_function(tolua_S,"setEye",lua_cocos2dx_ActionCamera_setEye);
@@ -15892,7 +15892,7 @@ int lua_cocos2dx_OrbitCamera_sphericalRadius(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_OrbitCamera_sphericalRadius'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_OrbitCamera_sphericalRadius'", nullptr);
         return 0;
     }
 #endif
@@ -15944,7 +15944,7 @@ int lua_cocos2dx_OrbitCamera_initWithDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_OrbitCamera_initWithDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_OrbitCamera_initWithDuration'", nullptr);
         return 0;
     }
 #endif
@@ -16077,7 +16077,7 @@ static int lua_cocos2dx_OrbitCamera_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_OrbitCamera(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.OrbitCamera");
-    tolua_cclass(tolua_S,"OrbitCamera","cc.OrbitCamera","cc.ActionCamera",NULL);
+    tolua_cclass(tolua_S,"OrbitCamera","cc.OrbitCamera","cc.ActionCamera",nullptr);
 
     tolua_beginmodule(tolua_S,"OrbitCamera");
         tolua_function(tolua_S,"sphericalRadius",lua_cocos2dx_OrbitCamera_sphericalRadius);
@@ -16111,7 +16111,7 @@ int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_getActionByTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_getActionByTag'", nullptr);
         return 0;
     }
 #endif
@@ -16161,7 +16161,7 @@ int lua_cocos2dx_ActionManager_removeActionByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeActionByTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeActionByTag'", nullptr);
         return 0;
     }
 #endif
@@ -16210,7 +16210,7 @@ int lua_cocos2dx_ActionManager_removeAllActions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeAllActions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeAllActions'", nullptr);
         return 0;
     }
 #endif
@@ -16253,7 +16253,7 @@ int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_addAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_addAction'", nullptr);
         return 0;
     }
 #endif
@@ -16305,7 +16305,7 @@ int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_resumeTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_resumeTarget'", nullptr);
         return 0;
     }
 #endif
@@ -16351,7 +16351,7 @@ int lua_cocos2dx_ActionManager_update(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_update'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_update'", nullptr);
         return 0;
     }
 #endif
@@ -16397,7 +16397,7 @@ int lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(lua_State* tolu
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget'", nullptr);
         return 0;
     }
 #endif
@@ -16444,7 +16444,7 @@ int lua_cocos2dx_ActionManager_removeAllActionsFromTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeAllActionsFromTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeAllActionsFromTarget'", nullptr);
         return 0;
     }
 #endif
@@ -16490,7 +16490,7 @@ int lua_cocos2dx_ActionManager_resumeTargets(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_resumeTargets'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_resumeTargets'", nullptr);
         return 0;
     }
 #endif
@@ -16536,7 +16536,7 @@ int lua_cocos2dx_ActionManager_removeAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_removeAction'", nullptr);
         return 0;
     }
 #endif
@@ -16582,7 +16582,7 @@ int lua_cocos2dx_ActionManager_pauseTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_pauseTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_pauseTarget'", nullptr);
         return 0;
     }
 #endif
@@ -16628,7 +16628,7 @@ int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_pauseAllRunningActions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_pauseAllRunningActions'", nullptr);
         return 0;
     }
 #endif
@@ -16695,7 +16695,7 @@ static int lua_cocos2dx_ActionManager_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ActionManager(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ActionManager");
-    tolua_cclass(tolua_S,"ActionManager","cc.ActionManager","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"ActionManager","cc.ActionManager","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionManager");
         tolua_function(tolua_S,"getActionByTag",lua_cocos2dx_ActionManager_getActionByTag);
@@ -16738,7 +16738,7 @@ int lua_cocos2dx_ActionEase_getInnerAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionEase_getInnerAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionEase_getInnerAction'", nullptr);
         return 0;
     }
 #endif
@@ -16771,7 +16771,7 @@ static int lua_cocos2dx_ActionEase_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ActionEase(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ActionEase");
-    tolua_cclass(tolua_S,"ActionEase","cc.ActionEase","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"ActionEase","cc.ActionEase","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionEase");
         tolua_function(tolua_S,"getInnerAction",lua_cocos2dx_ActionEase_getInnerAction);
@@ -16802,7 +16802,7 @@ int lua_cocos2dx_EaseRateAction_setRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseRateAction_setRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseRateAction_setRate'", nullptr);
         return 0;
     }
 #endif
@@ -16848,7 +16848,7 @@ int lua_cocos2dx_EaseRateAction_getRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseRateAction_getRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseRateAction_getRate'", nullptr);
         return 0;
     }
 #endif
@@ -16881,7 +16881,7 @@ static int lua_cocos2dx_EaseRateAction_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseRateAction(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseRateAction");
-    tolua_cclass(tolua_S,"EaseRateAction","cc.EaseRateAction","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseRateAction","cc.EaseRateAction","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseRateAction");
         tolua_function(tolua_S,"setRate",lua_cocos2dx_EaseRateAction_setRate);
@@ -16937,7 +16937,7 @@ static int lua_cocos2dx_EaseIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseIn");
-    tolua_cclass(tolua_S,"EaseIn","cc.EaseIn","cc.EaseRateAction",NULL);
+    tolua_cclass(tolua_S,"EaseIn","cc.EaseIn","cc.EaseRateAction",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseIn_create);
@@ -16992,7 +16992,7 @@ static int lua_cocos2dx_EaseOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseOut");
-    tolua_cclass(tolua_S,"EaseOut","cc.EaseOut","cc.EaseRateAction",NULL);
+    tolua_cclass(tolua_S,"EaseOut","cc.EaseOut","cc.EaseRateAction",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseOut_create);
@@ -17047,7 +17047,7 @@ static int lua_cocos2dx_EaseInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseInOut");
-    tolua_cclass(tolua_S,"EaseInOut","cc.EaseInOut","cc.EaseRateAction",NULL);
+    tolua_cclass(tolua_S,"EaseInOut","cc.EaseInOut","cc.EaseRateAction",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseInOut_create);
@@ -17100,7 +17100,7 @@ static int lua_cocos2dx_EaseExponentialIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseExponentialIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseExponentialIn");
-    tolua_cclass(tolua_S,"EaseExponentialIn","cc.EaseExponentialIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseExponentialIn","cc.EaseExponentialIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseExponentialIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseExponentialIn_create);
@@ -17153,7 +17153,7 @@ static int lua_cocos2dx_EaseExponentialOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseExponentialOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseExponentialOut");
-    tolua_cclass(tolua_S,"EaseExponentialOut","cc.EaseExponentialOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseExponentialOut","cc.EaseExponentialOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseExponentialOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseExponentialOut_create);
@@ -17206,7 +17206,7 @@ static int lua_cocos2dx_EaseExponentialInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseExponentialInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseExponentialInOut");
-    tolua_cclass(tolua_S,"EaseExponentialInOut","cc.EaseExponentialInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseExponentialInOut","cc.EaseExponentialInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseExponentialInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseExponentialInOut_create);
@@ -17259,7 +17259,7 @@ static int lua_cocos2dx_EaseSineIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseSineIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseSineIn");
-    tolua_cclass(tolua_S,"EaseSineIn","cc.EaseSineIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseSineIn","cc.EaseSineIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseSineIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseSineIn_create);
@@ -17312,7 +17312,7 @@ static int lua_cocos2dx_EaseSineOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseSineOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseSineOut");
-    tolua_cclass(tolua_S,"EaseSineOut","cc.EaseSineOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseSineOut","cc.EaseSineOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseSineOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseSineOut_create);
@@ -17365,7 +17365,7 @@ static int lua_cocos2dx_EaseSineInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseSineInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseSineInOut");
-    tolua_cclass(tolua_S,"EaseSineInOut","cc.EaseSineInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseSineInOut","cc.EaseSineInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseSineInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseSineInOut_create);
@@ -17396,7 +17396,7 @@ int lua_cocos2dx_EaseElastic_setPeriod(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_setPeriod'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_setPeriod'", nullptr);
         return 0;
     }
 #endif
@@ -17442,7 +17442,7 @@ int lua_cocos2dx_EaseElastic_getPeriod(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_getPeriod'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_getPeriod'", nullptr);
         return 0;
     }
 #endif
@@ -17475,7 +17475,7 @@ static int lua_cocos2dx_EaseElastic_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseElastic(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseElastic");
-    tolua_cclass(tolua_S,"EaseElastic","cc.EaseElastic","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseElastic","cc.EaseElastic","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseElastic");
         tolua_function(tolua_S,"setPeriod",lua_cocos2dx_EaseElastic_setPeriod);
@@ -17547,7 +17547,7 @@ static int lua_cocos2dx_EaseElasticIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseElasticIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseElasticIn");
-    tolua_cclass(tolua_S,"EaseElasticIn","cc.EaseElasticIn","cc.EaseElastic",NULL);
+    tolua_cclass(tolua_S,"EaseElasticIn","cc.EaseElasticIn","cc.EaseElastic",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseElasticIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticIn_create);
@@ -17618,7 +17618,7 @@ static int lua_cocos2dx_EaseElasticOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseElasticOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseElasticOut");
-    tolua_cclass(tolua_S,"EaseElasticOut","cc.EaseElasticOut","cc.EaseElastic",NULL);
+    tolua_cclass(tolua_S,"EaseElasticOut","cc.EaseElasticOut","cc.EaseElastic",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseElasticOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticOut_create);
@@ -17689,7 +17689,7 @@ static int lua_cocos2dx_EaseElasticInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseElasticInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseElasticInOut");
-    tolua_cclass(tolua_S,"EaseElasticInOut","cc.EaseElasticInOut","cc.EaseElastic",NULL);
+    tolua_cclass(tolua_S,"EaseElasticInOut","cc.EaseElasticInOut","cc.EaseElastic",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseElasticInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticInOut_create);
@@ -17709,7 +17709,7 @@ static int lua_cocos2dx_EaseBounce_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBounce(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBounce");
-    tolua_cclass(tolua_S,"EaseBounce","cc.EaseBounce","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseBounce","cc.EaseBounce","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBounce");
     tolua_endmodule(tolua_S);
@@ -17761,7 +17761,7 @@ static int lua_cocos2dx_EaseBounceIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBounceIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBounceIn");
-    tolua_cclass(tolua_S,"EaseBounceIn","cc.EaseBounceIn","cc.EaseBounce",NULL);
+    tolua_cclass(tolua_S,"EaseBounceIn","cc.EaseBounceIn","cc.EaseBounce",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBounceIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBounceIn_create);
@@ -17814,7 +17814,7 @@ static int lua_cocos2dx_EaseBounceOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBounceOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBounceOut");
-    tolua_cclass(tolua_S,"EaseBounceOut","cc.EaseBounceOut","cc.EaseBounce",NULL);
+    tolua_cclass(tolua_S,"EaseBounceOut","cc.EaseBounceOut","cc.EaseBounce",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBounceOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBounceOut_create);
@@ -17867,7 +17867,7 @@ static int lua_cocos2dx_EaseBounceInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBounceInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBounceInOut");
-    tolua_cclass(tolua_S,"EaseBounceInOut","cc.EaseBounceInOut","cc.EaseBounce",NULL);
+    tolua_cclass(tolua_S,"EaseBounceInOut","cc.EaseBounceInOut","cc.EaseBounce",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBounceInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBounceInOut_create);
@@ -17920,7 +17920,7 @@ static int lua_cocos2dx_EaseBackIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBackIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBackIn");
-    tolua_cclass(tolua_S,"EaseBackIn","cc.EaseBackIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseBackIn","cc.EaseBackIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBackIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBackIn_create);
@@ -17973,7 +17973,7 @@ static int lua_cocos2dx_EaseBackOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBackOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBackOut");
-    tolua_cclass(tolua_S,"EaseBackOut","cc.EaseBackOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseBackOut","cc.EaseBackOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBackOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBackOut_create);
@@ -18026,7 +18026,7 @@ static int lua_cocos2dx_EaseBackInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBackInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBackInOut");
-    tolua_cclass(tolua_S,"EaseBackInOut","cc.EaseBackInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseBackInOut","cc.EaseBackInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBackInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBackInOut_create);
@@ -18057,7 +18057,7 @@ int lua_cocos2dx_EaseBezierAction_setBezierParamer(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'", nullptr);
         return 0;
     }
 #endif
@@ -18134,7 +18134,7 @@ static int lua_cocos2dx_EaseBezierAction_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBezierAction(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBezierAction");
-    tolua_cclass(tolua_S,"EaseBezierAction","cc.EaseBezierAction","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseBezierAction","cc.EaseBezierAction","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBezierAction");
         tolua_function(tolua_S,"setBezierParamer",lua_cocos2dx_EaseBezierAction_setBezierParamer);
@@ -18188,7 +18188,7 @@ static int lua_cocos2dx_EaseQuadraticActionIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuadraticActionIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuadraticActionIn");
-    tolua_cclass(tolua_S,"EaseQuadraticActionIn","cc.EaseQuadraticActionIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuadraticActionIn","cc.EaseQuadraticActionIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuadraticActionIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuadraticActionIn_create);
@@ -18241,7 +18241,7 @@ static int lua_cocos2dx_EaseQuadraticActionOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuadraticActionOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuadraticActionOut");
-    tolua_cclass(tolua_S,"EaseQuadraticActionOut","cc.EaseQuadraticActionOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuadraticActionOut","cc.EaseQuadraticActionOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuadraticActionOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuadraticActionOut_create);
@@ -18294,7 +18294,7 @@ static int lua_cocos2dx_EaseQuadraticActionInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuadraticActionInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuadraticActionInOut");
-    tolua_cclass(tolua_S,"EaseQuadraticActionInOut","cc.EaseQuadraticActionInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuadraticActionInOut","cc.EaseQuadraticActionInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuadraticActionInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuadraticActionInOut_create);
@@ -18347,7 +18347,7 @@ static int lua_cocos2dx_EaseQuarticActionIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuarticActionIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuarticActionIn");
-    tolua_cclass(tolua_S,"EaseQuarticActionIn","cc.EaseQuarticActionIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuarticActionIn","cc.EaseQuarticActionIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuarticActionIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuarticActionIn_create);
@@ -18400,7 +18400,7 @@ static int lua_cocos2dx_EaseQuarticActionOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuarticActionOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuarticActionOut");
-    tolua_cclass(tolua_S,"EaseQuarticActionOut","cc.EaseQuarticActionOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuarticActionOut","cc.EaseQuarticActionOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuarticActionOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuarticActionOut_create);
@@ -18453,7 +18453,7 @@ static int lua_cocos2dx_EaseQuarticActionInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuarticActionInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuarticActionInOut");
-    tolua_cclass(tolua_S,"EaseQuarticActionInOut","cc.EaseQuarticActionInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuarticActionInOut","cc.EaseQuarticActionInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuarticActionInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuarticActionInOut_create);
@@ -18506,7 +18506,7 @@ static int lua_cocos2dx_EaseQuinticActionIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuinticActionIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuinticActionIn");
-    tolua_cclass(tolua_S,"EaseQuinticActionIn","cc.EaseQuinticActionIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuinticActionIn","cc.EaseQuinticActionIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuinticActionIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuinticActionIn_create);
@@ -18559,7 +18559,7 @@ static int lua_cocos2dx_EaseQuinticActionOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuinticActionOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuinticActionOut");
-    tolua_cclass(tolua_S,"EaseQuinticActionOut","cc.EaseQuinticActionOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuinticActionOut","cc.EaseQuinticActionOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuinticActionOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuinticActionOut_create);
@@ -18612,7 +18612,7 @@ static int lua_cocos2dx_EaseQuinticActionInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseQuinticActionInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseQuinticActionInOut");
-    tolua_cclass(tolua_S,"EaseQuinticActionInOut","cc.EaseQuinticActionInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseQuinticActionInOut","cc.EaseQuinticActionInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseQuinticActionInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseQuinticActionInOut_create);
@@ -18665,7 +18665,7 @@ static int lua_cocos2dx_EaseCircleActionIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseCircleActionIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseCircleActionIn");
-    tolua_cclass(tolua_S,"EaseCircleActionIn","cc.EaseCircleActionIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseCircleActionIn","cc.EaseCircleActionIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseCircleActionIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseCircleActionIn_create);
@@ -18718,7 +18718,7 @@ static int lua_cocos2dx_EaseCircleActionOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseCircleActionOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseCircleActionOut");
-    tolua_cclass(tolua_S,"EaseCircleActionOut","cc.EaseCircleActionOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseCircleActionOut","cc.EaseCircleActionOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseCircleActionOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseCircleActionOut_create);
@@ -18771,7 +18771,7 @@ static int lua_cocos2dx_EaseCircleActionInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseCircleActionInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseCircleActionInOut");
-    tolua_cclass(tolua_S,"EaseCircleActionInOut","cc.EaseCircleActionInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseCircleActionInOut","cc.EaseCircleActionInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseCircleActionInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseCircleActionInOut_create);
@@ -18824,7 +18824,7 @@ static int lua_cocos2dx_EaseCubicActionIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseCubicActionIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseCubicActionIn");
-    tolua_cclass(tolua_S,"EaseCubicActionIn","cc.EaseCubicActionIn","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseCubicActionIn","cc.EaseCubicActionIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseCubicActionIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseCubicActionIn_create);
@@ -18877,7 +18877,7 @@ static int lua_cocos2dx_EaseCubicActionOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseCubicActionOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseCubicActionOut");
-    tolua_cclass(tolua_S,"EaseCubicActionOut","cc.EaseCubicActionOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseCubicActionOut","cc.EaseCubicActionOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseCubicActionOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseCubicActionOut_create);
@@ -18930,7 +18930,7 @@ static int lua_cocos2dx_EaseCubicActionInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseCubicActionInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseCubicActionInOut");
-    tolua_cclass(tolua_S,"EaseCubicActionInOut","cc.EaseCubicActionInOut","cc.ActionEase",NULL);
+    tolua_cclass(tolua_S,"EaseCubicActionInOut","cc.EaseCubicActionInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseCubicActionInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseCubicActionInOut_create);
@@ -18950,7 +18950,7 @@ static int lua_cocos2dx_ActionInstant_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ActionInstant(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ActionInstant");
-    tolua_cclass(tolua_S,"ActionInstant","cc.ActionInstant","cc.FiniteTimeAction",NULL);
+    tolua_cclass(tolua_S,"ActionInstant","cc.ActionInstant","cc.FiniteTimeAction",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionInstant");
     tolua_endmodule(tolua_S);
@@ -19000,7 +19000,7 @@ static int lua_cocos2dx_Show_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Show(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Show");
-    tolua_cclass(tolua_S,"Show","cc.Show","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"Show","cc.Show","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"Show");
         tolua_function(tolua_S,"create", lua_cocos2dx_Show_create);
@@ -19051,7 +19051,7 @@ static int lua_cocos2dx_Hide_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Hide(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Hide");
-    tolua_cclass(tolua_S,"Hide","cc.Hide","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"Hide","cc.Hide","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"Hide");
         tolua_function(tolua_S,"create", lua_cocos2dx_Hide_create);
@@ -19102,7 +19102,7 @@ static int lua_cocos2dx_ToggleVisibility_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ToggleVisibility(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ToggleVisibility");
-    tolua_cclass(tolua_S,"ToggleVisibility","cc.ToggleVisibility","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"ToggleVisibility","cc.ToggleVisibility","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"ToggleVisibility");
         tolua_function(tolua_S,"create", lua_cocos2dx_ToggleVisibility_create);
@@ -19163,7 +19163,7 @@ static int lua_cocos2dx_RemoveSelf_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_RemoveSelf(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.RemoveSelf");
-    tolua_cclass(tolua_S,"RemoveSelf","cc.RemoveSelf","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"RemoveSelf","cc.RemoveSelf","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"RemoveSelf");
         tolua_function(tolua_S,"create", lua_cocos2dx_RemoveSelf_create);
@@ -19216,7 +19216,7 @@ static int lua_cocos2dx_FlipX_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FlipX(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FlipX");
-    tolua_cclass(tolua_S,"FlipX","cc.FlipX","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"FlipX","cc.FlipX","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"FlipX");
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipX_create);
@@ -19269,7 +19269,7 @@ static int lua_cocos2dx_FlipY_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FlipY(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FlipY");
-    tolua_cclass(tolua_S,"FlipY","cc.FlipY","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"FlipY","cc.FlipY","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"FlipY");
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipY_create);
@@ -19322,7 +19322,7 @@ static int lua_cocos2dx_Place_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Place(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Place");
-    tolua_cclass(tolua_S,"Place","cc.Place","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"Place","cc.Place","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"Place");
         tolua_function(tolua_S,"create", lua_cocos2dx_Place_create);
@@ -19353,7 +19353,7 @@ int lua_cocos2dx_CallFunc_execute(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CallFunc_execute'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CallFunc_execute'", nullptr);
         return 0;
     }
 #endif
@@ -19396,7 +19396,7 @@ int lua_cocos2dx_CallFunc_getTargetCallback(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CallFunc_getTargetCallback'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CallFunc_getTargetCallback'", nullptr);
         return 0;
     }
 #endif
@@ -19440,7 +19440,7 @@ int lua_cocos2dx_CallFunc_setTargetCallback(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CallFunc_setTargetCallback'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CallFunc_setTargetCallback'", nullptr);
         return 0;
     }
 #endif
@@ -19475,7 +19475,7 @@ static int lua_cocos2dx_CallFunc_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_CallFunc(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CallFunc");
-    tolua_cclass(tolua_S,"CallFunc","cc.CallFunc","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"CallFunc","cc.CallFunc","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"CallFunc");
         tolua_function(tolua_S,"execute",lua_cocos2dx_CallFunc_execute);
@@ -19508,7 +19508,7 @@ int lua_cocos2dx_GridAction_getGrid(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridAction_getGrid'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridAction_getGrid'", nullptr);
         return 0;
     }
 #endif
@@ -19541,7 +19541,7 @@ static int lua_cocos2dx_GridAction_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_GridAction(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.GridAction");
-    tolua_cclass(tolua_S,"GridAction","cc.GridAction","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"GridAction","cc.GridAction","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"GridAction");
         tolua_function(tolua_S,"getGrid",lua_cocos2dx_GridAction_getGrid);
@@ -19572,7 +19572,7 @@ int lua_cocos2dx_Grid3DAction_getGrid(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Grid3DAction_getGrid'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Grid3DAction_getGrid'", nullptr);
         return 0;
     }
 #endif
@@ -19605,7 +19605,7 @@ static int lua_cocos2dx_Grid3DAction_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Grid3DAction(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Grid3DAction");
-    tolua_cclass(tolua_S,"Grid3DAction","cc.Grid3DAction","cc.GridAction",NULL);
+    tolua_cclass(tolua_S,"Grid3DAction","cc.Grid3DAction","cc.GridAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Grid3DAction");
         tolua_function(tolua_S,"getGrid",lua_cocos2dx_Grid3DAction_getGrid);
@@ -19636,7 +19636,7 @@ int lua_cocos2dx_TiledGrid3DAction_getGrid(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TiledGrid3DAction_getGrid'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TiledGrid3DAction_getGrid'", nullptr);
         return 0;
     }
 #endif
@@ -19669,7 +19669,7 @@ static int lua_cocos2dx_TiledGrid3DAction_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TiledGrid3DAction(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TiledGrid3DAction");
-    tolua_cclass(tolua_S,"TiledGrid3DAction","cc.TiledGrid3DAction","cc.GridAction",NULL);
+    tolua_cclass(tolua_S,"TiledGrid3DAction","cc.TiledGrid3DAction","cc.GridAction",nullptr);
 
     tolua_beginmodule(tolua_S,"TiledGrid3DAction");
         tolua_function(tolua_S,"getGrid",lua_cocos2dx_TiledGrid3DAction_getGrid);
@@ -19720,7 +19720,7 @@ static int lua_cocos2dx_StopGrid_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_StopGrid(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.StopGrid");
-    tolua_cclass(tolua_S,"StopGrid","cc.StopGrid","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"StopGrid","cc.StopGrid","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"StopGrid");
         tolua_function(tolua_S,"create", lua_cocos2dx_StopGrid_create);
@@ -19773,7 +19773,7 @@ static int lua_cocos2dx_ReuseGrid_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ReuseGrid(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ReuseGrid");
-    tolua_cclass(tolua_S,"ReuseGrid","cc.ReuseGrid","cc.ActionInstant",NULL);
+    tolua_cclass(tolua_S,"ReuseGrid","cc.ReuseGrid","cc.ActionInstant",nullptr);
 
     tolua_beginmodule(tolua_S,"ReuseGrid");
         tolua_function(tolua_S,"create", lua_cocos2dx_ReuseGrid_create);
@@ -19804,7 +19804,7 @@ int lua_cocos2dx_Waves3D_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -19848,7 +19848,7 @@ int lua_cocos2dx_Waves3D_setAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_setAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_setAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -19894,7 +19894,7 @@ int lua_cocos2dx_Waves3D_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -19940,7 +19940,7 @@ int lua_cocos2dx_Waves3D_getAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_getAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves3D_getAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -20012,7 +20012,7 @@ static int lua_cocos2dx_Waves3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Waves3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Waves3D");
-    tolua_cclass(tolua_S,"Waves3D","cc.Waves3D","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"Waves3D","cc.Waves3D","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Waves3D");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_Waves3D_getAmplitudeRate);
@@ -20069,7 +20069,7 @@ static int lua_cocos2dx_FlipX3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FlipX3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FlipX3D");
-    tolua_cclass(tolua_S,"FlipX3D","cc.FlipX3D","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"FlipX3D","cc.FlipX3D","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"FlipX3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipX3D_create);
@@ -20122,7 +20122,7 @@ static int lua_cocos2dx_FlipY3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FlipY3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FlipY3D");
-    tolua_cclass(tolua_S,"FlipY3D","cc.FlipY3D","cc.FlipX3D",NULL);
+    tolua_cclass(tolua_S,"FlipY3D","cc.FlipY3D","cc.FlipX3D",nullptr);
 
     tolua_beginmodule(tolua_S,"FlipY3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipY3D_create);
@@ -20153,7 +20153,7 @@ int lua_cocos2dx_Lens3D_setPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_setPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_setPosition'", nullptr);
         return 0;
     }
 #endif
@@ -20199,7 +20199,7 @@ int lua_cocos2dx_Lens3D_setConcave(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_setConcave'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_setConcave'", nullptr);
         return 0;
     }
 #endif
@@ -20245,7 +20245,7 @@ int lua_cocos2dx_Lens3D_setLensEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_setLensEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_setLensEffect'", nullptr);
         return 0;
     }
 #endif
@@ -20291,7 +20291,7 @@ int lua_cocos2dx_Lens3D_getPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_getPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_getPosition'", nullptr);
         return 0;
     }
 #endif
@@ -20335,7 +20335,7 @@ int lua_cocos2dx_Lens3D_getLensEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_getLensEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Lens3D_getLensEffect'", nullptr);
         return 0;
     }
 #endif
@@ -20407,7 +20407,7 @@ static int lua_cocos2dx_Lens3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Lens3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Lens3D");
-    tolua_cclass(tolua_S,"Lens3D","cc.Lens3D","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"Lens3D","cc.Lens3D","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Lens3D");
         tolua_function(tolua_S,"setPosition",lua_cocos2dx_Lens3D_setPosition);
@@ -20443,7 +20443,7 @@ int lua_cocos2dx_Ripple3D_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -20489,7 +20489,7 @@ int lua_cocos2dx_Ripple3D_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -20533,7 +20533,7 @@ int lua_cocos2dx_Ripple3D_setAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_setAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_setAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -20579,7 +20579,7 @@ int lua_cocos2dx_Ripple3D_getAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_getAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_getAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -20623,7 +20623,7 @@ int lua_cocos2dx_Ripple3D_setPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_setPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_setPosition'", nullptr);
         return 0;
     }
 #endif
@@ -20669,7 +20669,7 @@ int lua_cocos2dx_Ripple3D_getPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_getPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Ripple3D_getPosition'", nullptr);
         return 0;
     }
 #endif
@@ -20745,7 +20745,7 @@ static int lua_cocos2dx_Ripple3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Ripple3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Ripple3D");
-    tolua_cclass(tolua_S,"Ripple3D","cc.Ripple3D","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"Ripple3D","cc.Ripple3D","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Ripple3D");
         tolua_function(tolua_S,"setAmplitudeRate",lua_cocos2dx_Ripple3D_setAmplitudeRate);
@@ -20844,7 +20844,7 @@ static int lua_cocos2dx_Shaky3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Shaky3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Shaky3D");
-    tolua_cclass(tolua_S,"Shaky3D","cc.Shaky3D","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"Shaky3D","cc.Shaky3D","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Shaky3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_Shaky3D_create);
@@ -20875,7 +20875,7 @@ int lua_cocos2dx_Liquid_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -20919,7 +20919,7 @@ int lua_cocos2dx_Liquid_setAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_setAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_setAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -20965,7 +20965,7 @@ int lua_cocos2dx_Liquid_getAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_getAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_getAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -21009,7 +21009,7 @@ int lua_cocos2dx_Liquid_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -21117,7 +21117,7 @@ static int lua_cocos2dx_Liquid_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Liquid(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Liquid");
-    tolua_cclass(tolua_S,"Liquid","cc.Liquid","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"Liquid","cc.Liquid","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Liquid");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_Liquid_getAmplitudeRate);
@@ -21153,7 +21153,7 @@ int lua_cocos2dx_Waves_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -21197,7 +21197,7 @@ int lua_cocos2dx_Waves_setAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_setAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_setAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -21243,7 +21243,7 @@ int lua_cocos2dx_Waves_getAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_getAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_getAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -21287,7 +21287,7 @@ int lua_cocos2dx_Waves_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -21399,7 +21399,7 @@ static int lua_cocos2dx_Waves_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Waves(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Waves");
-    tolua_cclass(tolua_S,"Waves","cc.Waves","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"Waves","cc.Waves","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Waves");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_Waves_getAmplitudeRate);
@@ -21435,7 +21435,7 @@ int lua_cocos2dx_Twirl_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -21481,7 +21481,7 @@ int lua_cocos2dx_Twirl_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -21525,7 +21525,7 @@ int lua_cocos2dx_Twirl_setAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_setAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_setAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -21571,7 +21571,7 @@ int lua_cocos2dx_Twirl_getAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_getAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_getAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -21615,7 +21615,7 @@ int lua_cocos2dx_Twirl_setPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_setPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_setPosition'", nullptr);
         return 0;
     }
 #endif
@@ -21661,7 +21661,7 @@ int lua_cocos2dx_Twirl_getPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_getPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Twirl_getPosition'", nullptr);
         return 0;
     }
 #endif
@@ -21769,7 +21769,7 @@ static int lua_cocos2dx_Twirl_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Twirl(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Twirl");
-    tolua_cclass(tolua_S,"Twirl","cc.Twirl","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"Twirl","cc.Twirl","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"Twirl");
         tolua_function(tolua_S,"setAmplitudeRate",lua_cocos2dx_Twirl_setAmplitudeRate);
@@ -21831,7 +21831,7 @@ static int lua_cocos2dx_PageTurn3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_PageTurn3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PageTurn3D");
-    tolua_cclass(tolua_S,"PageTurn3D","cc.PageTurn3D","cc.Grid3DAction",NULL);
+    tolua_cclass(tolua_S,"PageTurn3D","cc.PageTurn3D","cc.Grid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"PageTurn3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_PageTurn3D_create);
@@ -21886,7 +21886,7 @@ static int lua_cocos2dx_ProgressTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ProgressTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ProgressTo");
-    tolua_cclass(tolua_S,"ProgressTo","cc.ProgressTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"ProgressTo","cc.ProgressTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"ProgressTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_ProgressTo_create);
@@ -21943,7 +21943,7 @@ static int lua_cocos2dx_ProgressFromTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ProgressFromTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ProgressFromTo");
-    tolua_cclass(tolua_S,"ProgressFromTo","cc.ProgressFromTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"ProgressFromTo","cc.ProgressFromTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"ProgressFromTo");
         tolua_function(tolua_S,"create", lua_cocos2dx_ProgressFromTo_create);
@@ -22002,7 +22002,7 @@ static int lua_cocos2dx_ShakyTiles3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ShakyTiles3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ShakyTiles3D");
-    tolua_cclass(tolua_S,"ShakyTiles3D","cc.ShakyTiles3D","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"ShakyTiles3D","cc.ShakyTiles3D","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"ShakyTiles3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_ShakyTiles3D_create);
@@ -22061,7 +22061,7 @@ static int lua_cocos2dx_ShatteredTiles3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ShatteredTiles3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ShatteredTiles3D");
-    tolua_cclass(tolua_S,"ShatteredTiles3D","cc.ShatteredTiles3D","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"ShatteredTiles3D","cc.ShatteredTiles3D","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"ShatteredTiles3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_ShatteredTiles3D_create);
@@ -22092,7 +22092,7 @@ int lua_cocos2dx_ShuffleTiles_placeTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShuffleTiles_placeTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShuffleTiles_placeTile'", nullptr);
         return 0;
     }
 #endif
@@ -22141,7 +22141,7 @@ int lua_cocos2dx_ShuffleTiles_shuffle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShuffleTiles_shuffle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShuffleTiles_shuffle'", nullptr);
         return 0;
     }
 #endif
@@ -22190,7 +22190,7 @@ int lua_cocos2dx_ShuffleTiles_getDelta(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShuffleTiles_getDelta'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShuffleTiles_getDelta'", nullptr);
         return 0;
     }
 #endif
@@ -22263,7 +22263,7 @@ static int lua_cocos2dx_ShuffleTiles_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ShuffleTiles(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ShuffleTiles");
-    tolua_cclass(tolua_S,"ShuffleTiles","cc.ShuffleTiles","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"ShuffleTiles","cc.ShuffleTiles","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"ShuffleTiles");
         tolua_function(tolua_S,"placeTile",lua_cocos2dx_ShuffleTiles_placeTile);
@@ -22297,7 +22297,7 @@ int lua_cocos2dx_FadeOutTRTiles_turnOnTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_turnOnTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_turnOnTile'", nullptr);
         return 0;
     }
 #endif
@@ -22343,7 +22343,7 @@ int lua_cocos2dx_FadeOutTRTiles_turnOffTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_turnOffTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_turnOffTile'", nullptr);
         return 0;
     }
 #endif
@@ -22389,7 +22389,7 @@ int lua_cocos2dx_FadeOutTRTiles_transformTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_transformTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_transformTile'", nullptr);
         return 0;
     }
 #endif
@@ -22438,7 +22438,7 @@ int lua_cocos2dx_FadeOutTRTiles_testFunc(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_testFunc'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutTRTiles_testFunc'", nullptr);
         return 0;
     }
 #endif
@@ -22512,7 +22512,7 @@ static int lua_cocos2dx_FadeOutTRTiles_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FadeOutTRTiles(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FadeOutTRTiles");
-    tolua_cclass(tolua_S,"FadeOutTRTiles","cc.FadeOutTRTiles","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"FadeOutTRTiles","cc.FadeOutTRTiles","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"FadeOutTRTiles");
         tolua_function(tolua_S,"turnOnTile",lua_cocos2dx_FadeOutTRTiles_turnOnTile);
@@ -22571,7 +22571,7 @@ static int lua_cocos2dx_FadeOutBLTiles_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FadeOutBLTiles(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FadeOutBLTiles");
-    tolua_cclass(tolua_S,"FadeOutBLTiles","cc.FadeOutBLTiles","cc.FadeOutTRTiles",NULL);
+    tolua_cclass(tolua_S,"FadeOutBLTiles","cc.FadeOutBLTiles","cc.FadeOutTRTiles",nullptr);
 
     tolua_beginmodule(tolua_S,"FadeOutBLTiles");
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeOutBLTiles_create);
@@ -22602,7 +22602,7 @@ int lua_cocos2dx_FadeOutUpTiles_transformTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutUpTiles_transformTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FadeOutUpTiles_transformTile'", nullptr);
         return 0;
     }
 #endif
@@ -22675,7 +22675,7 @@ static int lua_cocos2dx_FadeOutUpTiles_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FadeOutUpTiles(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FadeOutUpTiles");
-    tolua_cclass(tolua_S,"FadeOutUpTiles","cc.FadeOutUpTiles","cc.FadeOutTRTiles",NULL);
+    tolua_cclass(tolua_S,"FadeOutUpTiles","cc.FadeOutUpTiles","cc.FadeOutTRTiles",nullptr);
 
     tolua_beginmodule(tolua_S,"FadeOutUpTiles");
         tolua_function(tolua_S,"transformTile",lua_cocos2dx_FadeOutUpTiles_transformTile);
@@ -22731,7 +22731,7 @@ static int lua_cocos2dx_FadeOutDownTiles_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FadeOutDownTiles(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FadeOutDownTiles");
-    tolua_cclass(tolua_S,"FadeOutDownTiles","cc.FadeOutDownTiles","cc.FadeOutUpTiles",NULL);
+    tolua_cclass(tolua_S,"FadeOutDownTiles","cc.FadeOutDownTiles","cc.FadeOutUpTiles",nullptr);
 
     tolua_beginmodule(tolua_S,"FadeOutDownTiles");
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeOutDownTiles_create);
@@ -22762,7 +22762,7 @@ int lua_cocos2dx_TurnOffTiles_turnOnTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TurnOffTiles_turnOnTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TurnOffTiles_turnOnTile'", nullptr);
         return 0;
     }
 #endif
@@ -22808,7 +22808,7 @@ int lua_cocos2dx_TurnOffTiles_turnOffTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TurnOffTiles_turnOffTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TurnOffTiles_turnOffTile'", nullptr);
         return 0;
     }
 #endif
@@ -22854,7 +22854,7 @@ int lua_cocos2dx_TurnOffTiles_shuffle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TurnOffTiles_shuffle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TurnOffTiles_shuffle'", nullptr);
         return 0;
     }
 #endif
@@ -22949,7 +22949,7 @@ static int lua_cocos2dx_TurnOffTiles_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TurnOffTiles(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TurnOffTiles");
-    tolua_cclass(tolua_S,"TurnOffTiles","cc.TurnOffTiles","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"TurnOffTiles","cc.TurnOffTiles","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"TurnOffTiles");
         tolua_function(tolua_S,"turnOnTile",lua_cocos2dx_TurnOffTiles_turnOnTile);
@@ -22983,7 +22983,7 @@ int lua_cocos2dx_WavesTiles3D_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -23027,7 +23027,7 @@ int lua_cocos2dx_WavesTiles3D_setAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_setAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_setAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -23073,7 +23073,7 @@ int lua_cocos2dx_WavesTiles3D_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -23119,7 +23119,7 @@ int lua_cocos2dx_WavesTiles3D_getAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_getAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_WavesTiles3D_getAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -23191,7 +23191,7 @@ static int lua_cocos2dx_WavesTiles3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_WavesTiles3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.WavesTiles3D");
-    tolua_cclass(tolua_S,"WavesTiles3D","cc.WavesTiles3D","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"WavesTiles3D","cc.WavesTiles3D","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"WavesTiles3D");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_WavesTiles3D_getAmplitudeRate);
@@ -23226,7 +23226,7 @@ int lua_cocos2dx_JumpTiles3D_getAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_getAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_getAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -23270,7 +23270,7 @@ int lua_cocos2dx_JumpTiles3D_setAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_setAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_setAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -23316,7 +23316,7 @@ int lua_cocos2dx_JumpTiles3D_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_setAmplitudeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_setAmplitudeRate'", nullptr);
         return 0;
     }
 #endif
@@ -23362,7 +23362,7 @@ int lua_cocos2dx_JumpTiles3D_getAmplitude(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_getAmplitude'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_JumpTiles3D_getAmplitude'", nullptr);
         return 0;
     }
 #endif
@@ -23434,7 +23434,7 @@ static int lua_cocos2dx_JumpTiles3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_JumpTiles3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.JumpTiles3D");
-    tolua_cclass(tolua_S,"JumpTiles3D","cc.JumpTiles3D","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"JumpTiles3D","cc.JumpTiles3D","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"JumpTiles3D");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_JumpTiles3D_getAmplitudeRate);
@@ -23493,7 +23493,7 @@ static int lua_cocos2dx_SplitRows_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SplitRows(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SplitRows");
-    tolua_cclass(tolua_S,"SplitRows","cc.SplitRows","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"SplitRows","cc.SplitRows","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"SplitRows");
         tolua_function(tolua_S,"create", lua_cocos2dx_SplitRows_create);
@@ -23548,7 +23548,7 @@ static int lua_cocos2dx_SplitCols_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SplitCols(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SplitCols");
-    tolua_cclass(tolua_S,"SplitCols","cc.SplitCols","cc.TiledGrid3DAction",NULL);
+    tolua_cclass(tolua_S,"SplitCols","cc.SplitCols","cc.TiledGrid3DAction",nullptr);
 
     tolua_beginmodule(tolua_S,"SplitCols");
         tolua_function(tolua_S,"create", lua_cocos2dx_SplitCols_create);
@@ -23579,7 +23579,7 @@ int lua_cocos2dx_ActionTween_initWithDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionTween_initWithDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionTween_initWithDuration'", nullptr);
         return 0;
     }
 #endif
@@ -23663,7 +23663,7 @@ static int lua_cocos2dx_ActionTween_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ActionTween(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ActionTween");
-    tolua_cclass(tolua_S,"ActionTween","cc.ActionTween","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"ActionTween","cc.ActionTween","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionTween");
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_ActionTween_initWithDuration);
@@ -23695,7 +23695,7 @@ int lua_cocos2dx_CardinalSplineTo_getPoints(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CardinalSplineTo_getPoints'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CardinalSplineTo_getPoints'", nullptr);
         return 0;
     }
 #endif
@@ -23739,7 +23739,7 @@ int lua_cocos2dx_CardinalSplineTo_updatePosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CardinalSplineTo_updatePosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CardinalSplineTo_updatePosition'", nullptr);
         return 0;
     }
 #endif
@@ -23785,7 +23785,7 @@ int lua_cocos2dx_CardinalSplineTo_initWithDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CardinalSplineTo_initWithDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CardinalSplineTo_initWithDuration'", nullptr);
         return 0;
     }
 #endif
@@ -23861,7 +23861,7 @@ static int lua_cocos2dx_CardinalSplineTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_CardinalSplineTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CardinalSplineTo");
-    tolua_cclass(tolua_S,"CardinalSplineTo","cc.CardinalSplineTo","cc.ActionInterval",NULL);
+    tolua_cclass(tolua_S,"CardinalSplineTo","cc.CardinalSplineTo","cc.ActionInterval",nullptr);
 
     tolua_beginmodule(tolua_S,"CardinalSplineTo");
         tolua_function(tolua_S,"getPoints",lua_cocos2dx_CardinalSplineTo_getPoints);
@@ -23918,7 +23918,7 @@ static int lua_cocos2dx_CardinalSplineBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_CardinalSplineBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CardinalSplineBy");
-    tolua_cclass(tolua_S,"CardinalSplineBy","cc.CardinalSplineBy","cc.CardinalSplineTo",NULL);
+    tolua_cclass(tolua_S,"CardinalSplineBy","cc.CardinalSplineBy","cc.CardinalSplineTo",nullptr);
 
     tolua_beginmodule(tolua_S,"CardinalSplineBy");
     tolua_endmodule(tolua_S);
@@ -23948,7 +23948,7 @@ int lua_cocos2dx_CatmullRomTo_initWithDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CatmullRomTo_initWithDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CatmullRomTo_initWithDuration'", nullptr);
         return 0;
     }
 #endif
@@ -23987,7 +23987,7 @@ static int lua_cocos2dx_CatmullRomTo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_CatmullRomTo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CatmullRomTo");
-    tolua_cclass(tolua_S,"CatmullRomTo","cc.CatmullRomTo","cc.CardinalSplineTo",NULL);
+    tolua_cclass(tolua_S,"CatmullRomTo","cc.CatmullRomTo","cc.CardinalSplineTo",nullptr);
 
     tolua_beginmodule(tolua_S,"CatmullRomTo");
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_CatmullRomTo_initWithDuration);
@@ -24018,7 +24018,7 @@ int lua_cocos2dx_CatmullRomBy_initWithDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CatmullRomBy_initWithDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_CatmullRomBy_initWithDuration'", nullptr);
         return 0;
     }
 #endif
@@ -24057,7 +24057,7 @@ static int lua_cocos2dx_CatmullRomBy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_CatmullRomBy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CatmullRomBy");
-    tolua_cclass(tolua_S,"CatmullRomBy","cc.CatmullRomBy","cc.CardinalSplineBy",NULL);
+    tolua_cclass(tolua_S,"CatmullRomBy","cc.CatmullRomBy","cc.CardinalSplineBy",nullptr);
 
     tolua_beginmodule(tolua_S,"CatmullRomBy");
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_CatmullRomBy_initWithDuration);
@@ -24088,7 +24088,7 @@ int lua_cocos2dx_AtlasNode_updateAtlasValues(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_updateAtlasValues'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_updateAtlasValues'", nullptr);
         return 0;
     }
 #endif
@@ -24131,7 +24131,7 @@ int lua_cocos2dx_AtlasNode_getTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_getTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_getTexture'", nullptr);
         return 0;
     }
 #endif
@@ -24175,7 +24175,7 @@ int lua_cocos2dx_AtlasNode_setTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_setTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_setTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -24221,7 +24221,7 @@ int lua_cocos2dx_AtlasNode_getTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_getTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_getTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -24265,7 +24265,7 @@ int lua_cocos2dx_AtlasNode_getQuadsToDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_getQuadsToDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_getQuadsToDraw'", nullptr);
         return 0;
     }
 #endif
@@ -24309,7 +24309,7 @@ int lua_cocos2dx_AtlasNode_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_setTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_setTexture'", nullptr);
         return 0;
     }
 #endif
@@ -24355,7 +24355,7 @@ int lua_cocos2dx_AtlasNode_setQuadsToDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_setQuadsToDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AtlasNode_setQuadsToDraw'", nullptr);
         return 0;
     }
 #endif
@@ -24429,7 +24429,7 @@ static int lua_cocos2dx_AtlasNode_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_AtlasNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.AtlasNode");
-    tolua_cclass(tolua_S,"AtlasNode","cc.AtlasNode","cc.Node",NULL);
+    tolua_cclass(tolua_S,"AtlasNode","cc.AtlasNode","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"AtlasNode");
         tolua_function(tolua_S,"updateAtlasValues",lua_cocos2dx_AtlasNode_updateAtlasValues);
@@ -24467,7 +24467,7 @@ int lua_cocos2dx_DrawNode_drawQuadraticBezier(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawQuadraticBezier'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawQuadraticBezier'", nullptr);
         return 0;
     }
 #endif
@@ -24525,7 +24525,7 @@ int lua_cocos2dx_DrawNode_onDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_onDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_onDraw'", nullptr);
         return 0;
     }
 #endif
@@ -24574,7 +24574,7 @@ int lua_cocos2dx_DrawNode_clear(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_clear'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_clear'", nullptr);
         return 0;
     }
 #endif
@@ -24617,7 +24617,7 @@ int lua_cocos2dx_DrawNode_drawTriangle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawTriangle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawTriangle'", nullptr);
         return 0;
     }
 #endif
@@ -24672,7 +24672,7 @@ int lua_cocos2dx_DrawNode_drawDot(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawDot'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawDot'", nullptr);
         return 0;
     }
 #endif
@@ -24724,7 +24724,7 @@ int lua_cocos2dx_DrawNode_drawCubicBezier(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawCubicBezier'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawCubicBezier'", nullptr);
         return 0;
     }
 #endif
@@ -24785,7 +24785,7 @@ int lua_cocos2dx_DrawNode_drawSegment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawSegment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawSegment'", nullptr);
         return 0;
     }
 #endif
@@ -24860,7 +24860,7 @@ static int lua_cocos2dx_DrawNode_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_DrawNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.DrawNode");
-    tolua_cclass(tolua_S,"DrawNode","cc.DrawNode","cc.Node",NULL);
+    tolua_cclass(tolua_S,"DrawNode","cc.DrawNode","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"DrawNode");
         tolua_function(tolua_S,"drawQuadraticBezier",lua_cocos2dx_DrawNode_drawQuadraticBezier);
@@ -24898,7 +24898,7 @@ int lua_cocos2dx_LabelAtlas_setString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_setString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_setString'", nullptr);
         return 0;
     }
 #endif
@@ -24927,7 +24927,7 @@ int lua_cocos2dx_LabelAtlas_setString(lua_State* tolua_S)
 int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::LabelAtlas* cobj = NULL;
+    cocos2d::LabelAtlas* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -24940,7 +24940,7 @@ int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_initWithString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_initWithString'", nullptr);
         return 0;
     }
 #endif
@@ -25047,7 +25047,7 @@ int lua_cocos2dx_LabelAtlas_updateAtlasValues(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_updateAtlasValues'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_updateAtlasValues'", nullptr);
         return 0;
     }
 #endif
@@ -25090,7 +25090,7 @@ int lua_cocos2dx_LabelAtlas_getString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_getString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelAtlas_getString'", nullptr);
         return 0;
     }
 #endif
@@ -25196,7 +25196,7 @@ static int lua_cocos2dx_LabelAtlas_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_LabelAtlas(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.LabelAtlas");
-    tolua_cclass(tolua_S,"LabelAtlas","cc.LabelAtlas","cc.AtlasNode",NULL);
+    tolua_cclass(tolua_S,"LabelAtlas","cc.LabelAtlas","cc.AtlasNode",nullptr);
 
     tolua_beginmodule(tolua_S,"LabelAtlas");
         tolua_function(tolua_S,"setString",lua_cocos2dx_LabelAtlas_setString);
@@ -25231,7 +25231,7 @@ int lua_cocos2dx_Director_pause(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pause'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pause'", nullptr);
         return 0;
     }
 #endif
@@ -25274,7 +25274,7 @@ int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setContentScaleFactor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setContentScaleFactor'", nullptr);
         return 0;
     }
 #endif
@@ -25320,7 +25320,7 @@ int lua_cocos2dx_Director_getContentScaleFactor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getContentScaleFactor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getContentScaleFactor'", nullptr);
         return 0;
     }
 #endif
@@ -25364,7 +25364,7 @@ int lua_cocos2dx_Director_getWinSizeInPixels(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getWinSizeInPixels'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getWinSizeInPixels'", nullptr);
         return 0;
     }
 #endif
@@ -25408,7 +25408,7 @@ int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getDeltaTime'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getDeltaTime'", nullptr);
         return 0;
     }
 #endif
@@ -25452,7 +25452,7 @@ int lua_cocos2dx_Director_setGLDefaultValues(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setGLDefaultValues'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setGLDefaultValues'", nullptr);
         return 0;
     }
 #endif
@@ -25495,7 +25495,7 @@ int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setActionManager'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setActionManager'", nullptr);
         return 0;
     }
 #endif
@@ -25541,7 +25541,7 @@ int lua_cocos2dx_Director_setAlphaBlending(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAlphaBlending'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAlphaBlending'", nullptr);
         return 0;
     }
 #endif
@@ -25587,7 +25587,7 @@ int lua_cocos2dx_Director_popToRootScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_popToRootScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_popToRootScene'", nullptr);
         return 0;
     }
 #endif
@@ -25630,7 +25630,7 @@ int lua_cocos2dx_Director_getNotificationNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getNotificationNode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getNotificationNode'", nullptr);
         return 0;
     }
 #endif
@@ -25674,7 +25674,7 @@ int lua_cocos2dx_Director_getWinSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getWinSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getWinSize'", nullptr);
         return 0;
     }
 #endif
@@ -25718,7 +25718,7 @@ int lua_cocos2dx_Director_getTextureCache(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getTextureCache'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getTextureCache'", nullptr);
         return 0;
     }
 #endif
@@ -25762,7 +25762,7 @@ int lua_cocos2dx_Director_isSendCleanupToScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isSendCleanupToScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isSendCleanupToScene'", nullptr);
         return 0;
     }
 #endif
@@ -25806,7 +25806,7 @@ int lua_cocos2dx_Director_getVisibleOrigin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getVisibleOrigin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getVisibleOrigin'", nullptr);
         return 0;
     }
 #endif
@@ -25850,7 +25850,7 @@ int lua_cocos2dx_Director_mainLoop(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_mainLoop'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_mainLoop'", nullptr);
         return 0;
     }
 #endif
@@ -25893,7 +25893,7 @@ int lua_cocos2dx_Director_setDepthTest(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setDepthTest'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setDepthTest'", nullptr);
         return 0;
     }
 #endif
@@ -25939,7 +25939,7 @@ int lua_cocos2dx_Director_getFrameRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getFrameRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getFrameRate'", nullptr);
         return 0;
     }
 #endif
@@ -25983,7 +25983,7 @@ int lua_cocos2dx_Director_getSecondsPerFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getSecondsPerFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getSecondsPerFrame'", nullptr);
         return 0;
     }
 #endif
@@ -26027,7 +26027,7 @@ int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_convertToUI'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_convertToUI'", nullptr);
         return 0;
     }
 #endif
@@ -26074,7 +26074,7 @@ int lua_cocos2dx_Director_setDefaultValues(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setDefaultValues'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setDefaultValues'", nullptr);
         return 0;
     }
 #endif
@@ -26117,7 +26117,7 @@ int lua_cocos2dx_Director_init(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_init'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_init'", nullptr);
         return 0;
     }
 #endif
@@ -26161,7 +26161,7 @@ int lua_cocos2dx_Director_setScheduler(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setScheduler'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setScheduler'", nullptr);
         return 0;
     }
 #endif
@@ -26207,7 +26207,7 @@ int lua_cocos2dx_Director_startAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_startAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_startAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -26250,7 +26250,7 @@ int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getRunningScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getRunningScene'", nullptr);
         return 0;
     }
 #endif
@@ -26294,7 +26294,7 @@ int lua_cocos2dx_Director_setViewport(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setViewport'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setViewport'", nullptr);
         return 0;
     }
 #endif
@@ -26337,7 +26337,7 @@ int lua_cocos2dx_Director_stopAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_stopAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_stopAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -26380,7 +26380,7 @@ int lua_cocos2dx_Director_popToSceneStackLevel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_popToSceneStackLevel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_popToSceneStackLevel'", nullptr);
         return 0;
     }
 #endif
@@ -26426,7 +26426,7 @@ int lua_cocos2dx_Director_resume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_resume'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_resume'", nullptr);
         return 0;
     }
 #endif
@@ -26469,7 +26469,7 @@ int lua_cocos2dx_Director_isNextDeltaTimeZero(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isNextDeltaTimeZero'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isNextDeltaTimeZero'", nullptr);
         return 0;
     }
 #endif
@@ -26513,7 +26513,7 @@ int lua_cocos2dx_Director_end(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_end'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_end'", nullptr);
         return 0;
     }
 #endif
@@ -26556,7 +26556,7 @@ int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setOpenGLView'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setOpenGLView'", nullptr);
         return 0;
     }
 #endif
@@ -26602,7 +26602,7 @@ int lua_cocos2dx_Director_convertToGL(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_convertToGL'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_convertToGL'", nullptr);
         return 0;
     }
 #endif
@@ -26649,7 +26649,7 @@ int lua_cocos2dx_Director_purgeCachedData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_purgeCachedData'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_purgeCachedData'", nullptr);
         return 0;
     }
 #endif
@@ -26692,7 +26692,7 @@ int lua_cocos2dx_Director_getTotalFrames(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getTotalFrames'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getTotalFrames'", nullptr);
         return 0;
     }
 #endif
@@ -26736,7 +26736,7 @@ int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_runWithScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_runWithScene'", nullptr);
         return 0;
     }
 #endif
@@ -26782,7 +26782,7 @@ int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setNotificationNode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setNotificationNode'", nullptr);
         return 0;
     }
 #endif
@@ -26828,7 +26828,7 @@ int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_drawScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_drawScene'", nullptr);
         return 0;
     }
 #endif
@@ -26871,7 +26871,7 @@ int lua_cocos2dx_Director_popScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_popScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_popScene'", nullptr);
         return 0;
     }
 #endif
@@ -26914,7 +26914,7 @@ int lua_cocos2dx_Director_isDisplayStats(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isDisplayStats'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isDisplayStats'", nullptr);
         return 0;
     }
 #endif
@@ -26958,7 +26958,7 @@ int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setProjection'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setProjection'", nullptr);
         return 0;
     }
 #endif
@@ -27004,7 +27004,7 @@ int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getConsole'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getConsole'", nullptr);
         return 0;
     }
 #endif
@@ -27048,7 +27048,7 @@ int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getZEye'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getZEye'", nullptr);
         return 0;
     }
 #endif
@@ -27092,7 +27092,7 @@ int lua_cocos2dx_Director_setNextDeltaTimeZero(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setNextDeltaTimeZero'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setNextDeltaTimeZero'", nullptr);
         return 0;
     }
 #endif
@@ -27138,7 +27138,7 @@ int lua_cocos2dx_Director_getVisibleSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getVisibleSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getVisibleSize'", nullptr);
         return 0;
     }
 #endif
@@ -27182,7 +27182,7 @@ int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getScheduler'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getScheduler'", nullptr);
         return 0;
     }
 #endif
@@ -27226,7 +27226,7 @@ int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushScene'", nullptr);
         return 0;
     }
 #endif
@@ -27272,7 +27272,7 @@ int lua_cocos2dx_Director_getAnimationInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getAnimationInterval'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getAnimationInterval'", nullptr);
         return 0;
     }
 #endif
@@ -27316,7 +27316,7 @@ int lua_cocos2dx_Director_isPaused(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isPaused'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_isPaused'", nullptr);
         return 0;
     }
 #endif
@@ -27360,7 +27360,7 @@ int lua_cocos2dx_Director_setDisplayStats(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setDisplayStats'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setDisplayStats'", nullptr);
         return 0;
     }
 #endif
@@ -27406,7 +27406,7 @@ int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_replaceScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_replaceScene'", nullptr);
         return 0;
     }
 #endif
@@ -27452,7 +27452,7 @@ int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAnimationInterval'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAnimationInterval'", nullptr);
         return 0;
     }
 #endif
@@ -27498,7 +27498,7 @@ int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getActionManager'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getActionManager'", nullptr);
         return 0;
     }
 #endif
@@ -27562,7 +27562,7 @@ static int lua_cocos2dx_Director_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Director(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Director");
-    tolua_cclass(tolua_S,"Director","cc.Director","",NULL);
+    tolua_cclass(tolua_S,"Director","cc.Director","",nullptr);
 
     tolua_beginmodule(tolua_S,"Director");
         tolua_function(tolua_S,"pause",lua_cocos2dx_Director_pause);
@@ -27645,7 +27645,7 @@ int lua_cocos2dx_GridBase_setGridSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setGridSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setGridSize'", nullptr);
         return 0;
     }
 #endif
@@ -27691,7 +27691,7 @@ int lua_cocos2dx_GridBase_calculateVertexPoints(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_calculateVertexPoints'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_calculateVertexPoints'", nullptr);
         return 0;
     }
 #endif
@@ -27734,7 +27734,7 @@ int lua_cocos2dx_GridBase_afterDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_afterDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_afterDraw'", nullptr);
         return 0;
     }
 #endif
@@ -27780,7 +27780,7 @@ int lua_cocos2dx_GridBase_beforeDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_beforeDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_beforeDraw'", nullptr);
         return 0;
     }
 #endif
@@ -27823,7 +27823,7 @@ int lua_cocos2dx_GridBase_isTextureFlipped(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_isTextureFlipped'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_isTextureFlipped'", nullptr);
         return 0;
     }
 #endif
@@ -27867,7 +27867,7 @@ int lua_cocos2dx_GridBase_getGridSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_getGridSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_getGridSize'", nullptr);
         return 0;
     }
 #endif
@@ -27911,7 +27911,7 @@ int lua_cocos2dx_GridBase_getStep(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_getStep'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_getStep'", nullptr);
         return 0;
     }
 #endif
@@ -27955,7 +27955,7 @@ int lua_cocos2dx_GridBase_set2DProjection(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_set2DProjection'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_set2DProjection'", nullptr);
         return 0;
     }
 #endif
@@ -27998,7 +27998,7 @@ int lua_cocos2dx_GridBase_setStep(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setStep'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setStep'", nullptr);
         return 0;
     }
 #endif
@@ -28044,7 +28044,7 @@ int lua_cocos2dx_GridBase_setTextureFlipped(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setTextureFlipped'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setTextureFlipped'", nullptr);
         return 0;
     }
 #endif
@@ -28090,7 +28090,7 @@ int lua_cocos2dx_GridBase_blit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_blit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_blit'", nullptr);
         return 0;
     }
 #endif
@@ -28133,7 +28133,7 @@ int lua_cocos2dx_GridBase_setActive(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setActive'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setActive'", nullptr);
         return 0;
     }
 #endif
@@ -28179,7 +28179,7 @@ int lua_cocos2dx_GridBase_getReuseGrid(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_getReuseGrid'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_getReuseGrid'", nullptr);
         return 0;
     }
 #endif
@@ -28206,7 +28206,7 @@ int lua_cocos2dx_GridBase_getReuseGrid(lua_State* tolua_S)
 int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::GridBase* cobj = NULL;
+    cocos2d::GridBase* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -28219,7 +28219,7 @@ int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_initWithSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_initWithSize'", nullptr);
         return 0;
     }
 #endif
@@ -28286,7 +28286,7 @@ int lua_cocos2dx_GridBase_setReuseGrid(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setReuseGrid'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_setReuseGrid'", nullptr);
         return 0;
     }
 #endif
@@ -28332,7 +28332,7 @@ int lua_cocos2dx_GridBase_isActive(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_isActive'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_isActive'", nullptr);
         return 0;
     }
 #endif
@@ -28376,7 +28376,7 @@ int lua_cocos2dx_GridBase_reuse(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_reuse'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GridBase_reuse'", nullptr);
         return 0;
     }
 #endif
@@ -28462,7 +28462,7 @@ static int lua_cocos2dx_GridBase_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_GridBase(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.GridBase");
-    tolua_cclass(tolua_S,"GridBase","cc.GridBase","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"GridBase","cc.GridBase","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"GridBase");
         tolua_function(tolua_S,"setGridSize",lua_cocos2dx_GridBase_setGridSize);
@@ -28587,7 +28587,7 @@ static int lua_cocos2dx_Grid3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Grid3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Grid3D");
-    tolua_cclass(tolua_S,"Grid3D","cc.Grid3D","cc.GridBase",NULL);
+    tolua_cclass(tolua_S,"Grid3D","cc.Grid3D","cc.GridBase",nullptr);
 
     tolua_beginmodule(tolua_S,"Grid3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_Grid3D_create);
@@ -28695,7 +28695,7 @@ static int lua_cocos2dx_TiledGrid3D_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TiledGrid3D(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TiledGrid3D");
-    tolua_cclass(tolua_S,"TiledGrid3D","cc.TiledGrid3D","cc.GridBase",NULL);
+    tolua_cclass(tolua_S,"TiledGrid3D","cc.TiledGrid3D","cc.GridBase",nullptr);
 
     tolua_beginmodule(tolua_S,"TiledGrid3D");
         tolua_function(tolua_S,"create", lua_cocos2dx_TiledGrid3D_create);
@@ -28726,7 +28726,7 @@ int lua_cocos2dx_LabelTTF_enableShadow(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_enableShadow'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_enableShadow'", nullptr);
         return 0;
     }
 #endif
@@ -28797,7 +28797,7 @@ int lua_cocos2dx_LabelTTF_setDimensions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setDimensions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setDimensions'", nullptr);
         return 0;
     }
 #endif
@@ -28843,7 +28843,7 @@ int lua_cocos2dx_LabelTTF_getFontSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getFontSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getFontSize'", nullptr);
         return 0;
     }
 #endif
@@ -28887,7 +28887,7 @@ int lua_cocos2dx_LabelTTF_getString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getString'", nullptr);
         return 0;
     }
 #endif
@@ -28931,7 +28931,7 @@ int lua_cocos2dx_LabelTTF_setFlippedY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFlippedY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFlippedY'", nullptr);
         return 0;
     }
 #endif
@@ -28977,7 +28977,7 @@ int lua_cocos2dx_LabelTTF_setFlippedX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFlippedX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFlippedX'", nullptr);
         return 0;
     }
 #endif
@@ -29023,7 +29023,7 @@ int lua_cocos2dx_LabelTTF_setTextDefinition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setTextDefinition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setTextDefinition'", nullptr);
         return 0;
     }
 #endif
@@ -29069,7 +29069,7 @@ int lua_cocos2dx_LabelTTF_setFontName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFontName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFontName'", nullptr);
         return 0;
     }
 #endif
@@ -29115,7 +29115,7 @@ int lua_cocos2dx_LabelTTF_getHorizontalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getHorizontalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getHorizontalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -29159,7 +29159,7 @@ int lua_cocos2dx_LabelTTF_initWithStringAndTextDefinition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_initWithStringAndTextDefinition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_initWithStringAndTextDefinition'", nullptr);
         return 0;
     }
 #endif
@@ -29209,7 +29209,7 @@ int lua_cocos2dx_LabelTTF_setString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setString'", nullptr);
         return 0;
     }
 #endif
@@ -29255,7 +29255,7 @@ int lua_cocos2dx_LabelTTF_initWithString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_initWithString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_initWithString'", nullptr);
         return 0;
     }
 #endif
@@ -29377,7 +29377,7 @@ int lua_cocos2dx_LabelTTF_setFontFillColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFontFillColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFontFillColor'", nullptr);
         return 0;
     }
 #endif
@@ -29436,7 +29436,7 @@ int lua_cocos2dx_LabelTTF_getBlendFunc(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getBlendFunc'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getBlendFunc'", nullptr);
         return 0;
     }
 #endif
@@ -29480,7 +29480,7 @@ int lua_cocos2dx_LabelTTF_enableStroke(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_enableStroke'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_enableStroke'", nullptr);
         return 0;
     }
 #endif
@@ -29545,7 +29545,7 @@ int lua_cocos2dx_LabelTTF_getDimensions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getDimensions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getDimensions'", nullptr);
         return 0;
     }
 #endif
@@ -29589,7 +29589,7 @@ int lua_cocos2dx_LabelTTF_setVerticalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setVerticalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setVerticalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -29635,7 +29635,7 @@ int lua_cocos2dx_LabelTTF_setFontSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFontSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setFontSize'", nullptr);
         return 0;
     }
 #endif
@@ -29681,7 +29681,7 @@ int lua_cocos2dx_LabelTTF_getVerticalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getVerticalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getVerticalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -29725,7 +29725,7 @@ int lua_cocos2dx_LabelTTF_getTextDefinition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getTextDefinition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getTextDefinition'", nullptr);
         return 0;
     }
 #endif
@@ -29769,7 +29769,7 @@ int lua_cocos2dx_LabelTTF_setBlendFunc(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setBlendFunc'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setBlendFunc'", nullptr);
         return 0;
     }
 #endif
@@ -29815,7 +29815,7 @@ int lua_cocos2dx_LabelTTF_getFontName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getFontName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_getFontName'", nullptr);
         return 0;
     }
 #endif
@@ -29859,7 +29859,7 @@ int lua_cocos2dx_LabelTTF_setHorizontalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setHorizontalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_setHorizontalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -29905,7 +29905,7 @@ int lua_cocos2dx_LabelTTF_disableShadow(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_disableShadow'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_disableShadow'", nullptr);
         return 0;
     }
 #endif
@@ -29958,7 +29958,7 @@ int lua_cocos2dx_LabelTTF_disableStroke(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_disableStroke'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelTTF_disableStroke'", nullptr);
         return 0;
     }
 #endif
@@ -30195,7 +30195,7 @@ static int lua_cocos2dx_LabelTTF_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_LabelTTF(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.LabelTTF");
-    tolua_cclass(tolua_S,"LabelTTF","cc.LabelTTF","cc.Node",NULL);
+    tolua_cclass(tolua_S,"LabelTTF","cc.LabelTTF","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"LabelTTF");
         tolua_function(tolua_S,"enableShadow",lua_cocos2dx_LabelTTF_enableShadow);
@@ -30253,7 +30253,7 @@ int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_appendChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_appendChild'", nullptr);
         return 0;
     }
 #endif
@@ -30299,7 +30299,7 @@ int lua_cocos2dx_SpriteBatchNode_reorderBatch(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_reorderBatch'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_reorderBatch'", nullptr);
         return 0;
     }
 #endif
@@ -30345,7 +30345,7 @@ int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_initWithTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_initWithTexture'", nullptr);
         return 0;
     }
 #endif
@@ -30395,7 +30395,7 @@ int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'", nullptr);
         return 0;
     }
 #endif
@@ -30442,7 +30442,7 @@ int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_atlasIndexForChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_atlasIndexForChild'", nullptr);
         return 0;
     }
 #endif
@@ -30492,7 +30492,7 @@ int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -30538,7 +30538,7 @@ int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder'", nullptr);
         return 0;
     }
 #endif
@@ -30588,7 +30588,7 @@ int lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity'", nullptr);
         return 0;
     }
 #endif
@@ -30631,7 +30631,7 @@ int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_getTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_getTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -30675,7 +30675,7 @@ int lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite'", nullptr);
         return 0;
     }
 #endif
@@ -30707,7 +30707,7 @@ int lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite(lua_State* tolua_S)
 int lua_cocos2dx_SpriteBatchNode_init(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = NULL;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -30720,7 +30720,7 @@ int lua_cocos2dx_SpriteBatchNode_init(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_init'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_init'", nullptr);
         return 0;
     }
 #endif
@@ -30779,7 +30779,7 @@ int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_setTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_setTexture'", nullptr);
         return 0;
     }
 #endif
@@ -30825,7 +30825,7 @@ int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_getTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_getTexture'", nullptr);
         return 0;
     }
 #endif
@@ -30869,7 +30869,7 @@ int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'", nullptr);
         return 0;
     }
 #endif
@@ -30916,7 +30916,7 @@ int lua_cocos2dx_SpriteBatchNode_removeChildAtIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeChildAtIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeChildAtIndex'", nullptr);
         return 0;
     }
 #endif
@@ -30965,7 +30965,7 @@ int lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup'", nullptr);
         return 0;
     }
 #endif
@@ -31011,7 +31011,7 @@ int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -31170,7 +31170,7 @@ static int lua_cocos2dx_SpriteBatchNode_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SpriteBatchNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SpriteBatchNode");
-    tolua_cclass(tolua_S,"SpriteBatchNode","cc.SpriteBatchNode","cc.Node",NULL);
+    tolua_cclass(tolua_S,"SpriteBatchNode","cc.SpriteBatchNode","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"SpriteBatchNode");
         tolua_function(tolua_S,"appendChild",lua_cocos2dx_SpriteBatchNode_appendChild);
@@ -31220,7 +31220,7 @@ int lua_cocos2dx_Label_enableShadow(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_enableShadow'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_enableShadow'", nullptr);
         return 0;
     }
 #endif
@@ -31321,7 +31321,7 @@ int lua_cocos2dx_Label_setDimensions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setDimensions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setDimensions'", nullptr);
         return 0;
     }
 #endif
@@ -31370,7 +31370,7 @@ int lua_cocos2dx_Label_getFontSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontSize'", nullptr);
         return 0;
     }
 #endif
@@ -31414,7 +31414,7 @@ int lua_cocos2dx_Label_getString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getString'", nullptr);
         return 0;
     }
 #endif
@@ -31458,7 +31458,7 @@ int lua_cocos2dx_Label_disableEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_disableEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_disableEffect'", nullptr);
         return 0;
     }
 #endif
@@ -31501,7 +31501,7 @@ int lua_cocos2dx_Label_getWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getWidth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getWidth'", nullptr);
         return 0;
     }
 #endif
@@ -31545,7 +31545,7 @@ int lua_cocos2dx_Label_getCommonLineHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getCommonLineHeight'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getCommonLineHeight'", nullptr);
         return 0;
     }
 #endif
@@ -31589,7 +31589,7 @@ int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setWidth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setWidth'", nullptr);
         return 0;
     }
 #endif
@@ -31635,7 +31635,7 @@ int lua_cocos2dx_Label_setFontName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setFontName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setFontName'", nullptr);
         return 0;
     }
 #endif
@@ -31681,7 +31681,7 @@ int lua_cocos2dx_Label_getMaxLineWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getMaxLineWidth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getMaxLineWidth'", nullptr);
         return 0;
     }
 #endif
@@ -31725,7 +31725,7 @@ int lua_cocos2dx_Label_getHorizontalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getHorizontalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getHorizontalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -31769,7 +31769,7 @@ int lua_cocos2dx_Label_setString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setString'", nullptr);
         return 0;
     }
 #endif
@@ -31815,7 +31815,7 @@ int lua_cocos2dx_Label_getHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getHeight'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getHeight'", nullptr);
         return 0;
     }
 #endif
@@ -31859,7 +31859,7 @@ int lua_cocos2dx_Label_setBMFontFilePath(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setBMFontFilePath'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setBMFontFilePath'", nullptr);
         return 0;
     }
 #endif
@@ -31920,7 +31920,7 @@ int lua_cocos2dx_Label_getFontDefinition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontDefinition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontDefinition'", nullptr);
         return 0;
     }
 #endif
@@ -31964,7 +31964,7 @@ int lua_cocos2dx_Label_getFontName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontName'", nullptr);
         return 0;
     }
 #endif
@@ -32008,7 +32008,7 @@ int lua_cocos2dx_Label_updateContent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_updateContent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_updateContent'", nullptr);
         return 0;
     }
 #endif
@@ -32051,7 +32051,7 @@ int lua_cocos2dx_Label_getStringLength(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getStringLength'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getStringLength'", nullptr);
         return 0;
     }
 #endif
@@ -32095,7 +32095,7 @@ int lua_cocos2dx_Label_setLineBreakWithoutSpace(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setLineBreakWithoutSpace'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setLineBreakWithoutSpace'", nullptr);
         return 0;
     }
 #endif
@@ -32141,7 +32141,7 @@ int lua_cocos2dx_Label_getStringNumLines(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getStringNumLines'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getStringNumLines'", nullptr);
         return 0;
     }
 #endif
@@ -32185,7 +32185,7 @@ int lua_cocos2dx_Label_enableOutline(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_enableOutline'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_enableOutline'", nullptr);
         return 0;
     }
 #endif
@@ -32227,7 +32227,7 @@ int lua_cocos2dx_Label_enableOutline(lua_State* tolua_S)
 int lua_cocos2dx_Label_setCharMap(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Label* cobj = NULL;
+    cocos2d::Label* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -32240,7 +32240,7 @@ int lua_cocos2dx_Label_setCharMap(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setCharMap'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setCharMap'", nullptr);
         return 0;
     }
 #endif
@@ -32335,7 +32335,7 @@ int lua_cocos2dx_Label_getDimensions(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getDimensions'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getDimensions'", nullptr);
         return 0;
     }
 #endif
@@ -32379,7 +32379,7 @@ int lua_cocos2dx_Label_setMaxLineWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setMaxLineWidth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setMaxLineWidth'", nullptr);
         return 0;
     }
 #endif
@@ -32425,7 +32425,7 @@ int lua_cocos2dx_Label_setVerticalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setVerticalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setVerticalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -32471,7 +32471,7 @@ int lua_cocos2dx_Label_setFontSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setFontSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setFontSize'", nullptr);
         return 0;
     }
 #endif
@@ -32517,7 +32517,7 @@ int lua_cocos2dx_Label_getVerticalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getVerticalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getVerticalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -32561,7 +32561,7 @@ int lua_cocos2dx_Label_setHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setHeight'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setHeight'", nullptr);
         return 0;
     }
 #endif
@@ -32607,7 +32607,7 @@ int lua_cocos2dx_Label_enableGlow(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_enableGlow'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_enableGlow'", nullptr);
         return 0;
     }
 #endif
@@ -32653,7 +32653,7 @@ int lua_cocos2dx_Label_getLetter(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getLetter'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getLetter'", nullptr);
         return 0;
     }
 #endif
@@ -32700,7 +32700,7 @@ int lua_cocos2dx_Label_getTextAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getTextAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getTextAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -32744,7 +32744,7 @@ int lua_cocos2dx_Label_setHorizontalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setHorizontalAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setHorizontalAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -32790,7 +32790,7 @@ int lua_cocos2dx_Label_setFontDefinition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setFontDefinition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setFontDefinition'", nullptr);
         return 0;
     }
 #endif
@@ -32819,7 +32819,7 @@ int lua_cocos2dx_Label_setFontDefinition(lua_State* tolua_S)
 int lua_cocos2dx_Label_setAlignment(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Label* cobj = NULL;
+    cocos2d::Label* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -32832,7 +32832,7 @@ int lua_cocos2dx_Label_setAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -33205,7 +33205,7 @@ static int lua_cocos2dx_Label_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Label(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Label");
-    tolua_cclass(tolua_S,"Label","cc.Label","cc.SpriteBatchNode",NULL);
+    tolua_cclass(tolua_S,"Label","cc.Label","cc.SpriteBatchNode",nullptr);
 
     tolua_beginmodule(tolua_S,"Label");
         tolua_function(tolua_S,"enableShadow",lua_cocos2dx_Label_enableShadow);
@@ -33273,7 +33273,7 @@ int lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace'", nullptr);
         return 0;
     }
 #endif
@@ -33319,7 +33319,7 @@ int lua_cocos2dx_LabelBMFont_getBlendFunc(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getBlendFunc'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getBlendFunc'", nullptr);
         return 0;
     }
 #endif
@@ -33363,7 +33363,7 @@ int lua_cocos2dx_LabelBMFont_isOpacityModifyRGB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_isOpacityModifyRGB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_isOpacityModifyRGB'", nullptr);
         return 0;
     }
 #endif
@@ -33407,7 +33407,7 @@ int lua_cocos2dx_LabelBMFont_getLetter(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getLetter'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getLetter'", nullptr);
         return 0;
     }
 #endif
@@ -33454,7 +33454,7 @@ int lua_cocos2dx_LabelBMFont_getString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getString'", nullptr);
         return 0;
     }
 #endif
@@ -33498,7 +33498,7 @@ int lua_cocos2dx_LabelBMFont_setBlendFunc(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setBlendFunc'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setBlendFunc'", nullptr);
         return 0;
     }
 #endif
@@ -33544,7 +33544,7 @@ int lua_cocos2dx_LabelBMFont_setString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setString'", nullptr);
         return 0;
     }
 #endif
@@ -33590,7 +33590,7 @@ int lua_cocos2dx_LabelBMFont_initWithString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_initWithString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_initWithString'", nullptr);
         return 0;
     }
 #endif
@@ -33700,7 +33700,7 @@ int lua_cocos2dx_LabelBMFont_setOpacityModifyRGB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setOpacityModifyRGB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setOpacityModifyRGB'", nullptr);
         return 0;
     }
 #endif
@@ -33746,7 +33746,7 @@ int lua_cocos2dx_LabelBMFont_getFntFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getFntFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_getFntFile'", nullptr);
         return 0;
     }
 #endif
@@ -33790,7 +33790,7 @@ int lua_cocos2dx_LabelBMFont_setFntFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setFntFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setFntFile'", nullptr);
         return 0;
     }
 #endif
@@ -33849,7 +33849,7 @@ int lua_cocos2dx_LabelBMFont_setAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setAlignment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setAlignment'", nullptr);
         return 0;
     }
 #endif
@@ -33895,7 +33895,7 @@ int lua_cocos2dx_LabelBMFont_setWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setWidth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LabelBMFont_setWidth'", nullptr);
         return 0;
     }
 #endif
@@ -34078,7 +34078,7 @@ static int lua_cocos2dx_LabelBMFont_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_LabelBMFont(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.LabelBMFont");
-    tolua_cclass(tolua_S,"LabelBMFont","cc.LabelBMFont","cc.Node",NULL);
+    tolua_cclass(tolua_S,"LabelBMFont","cc.LabelBMFont","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"LabelBMFont");
         tolua_function(tolua_S,"setLineBreakWithoutSpace",lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace);
@@ -34143,7 +34143,7 @@ static int lua_cocos2dx_Layer_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Layer(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Layer");
-    tolua_cclass(tolua_S,"Layer","cc.Layer","cc.Node",NULL);
+    tolua_cclass(tolua_S,"Layer","cc.Layer","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Layer");
         tolua_function(tolua_S,"create", lua_cocos2dx_Layer_create);
@@ -34174,7 +34174,7 @@ int lua_cocos2dx_LayerColor_changeWidthAndHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerColor_changeWidthAndHeight'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerColor_changeWidthAndHeight'", nullptr);
         return 0;
     }
 #endif
@@ -34223,7 +34223,7 @@ int lua_cocos2dx_LayerColor_changeHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerColor_changeHeight'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerColor_changeHeight'", nullptr);
         return 0;
     }
 #endif
@@ -34269,7 +34269,7 @@ int lua_cocos2dx_LayerColor_changeWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerColor_changeWidth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerColor_changeWidth'", nullptr);
         return 0;
     }
 #endif
@@ -34368,7 +34368,7 @@ static int lua_cocos2dx_LayerColor_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_LayerColor(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.LayerColor");
-    tolua_cclass(tolua_S,"LayerColor","cc.LayerColor","cc.Layer",NULL);
+    tolua_cclass(tolua_S,"LayerColor","cc.LayerColor","cc.Layer",nullptr);
 
     tolua_beginmodule(tolua_S,"LayerColor");
         tolua_function(tolua_S,"changeWidthAndHeight",lua_cocos2dx_LayerColor_changeWidthAndHeight);
@@ -34402,7 +34402,7 @@ int lua_cocos2dx_LayerGradient_getStartColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getStartColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getStartColor'", nullptr);
         return 0;
     }
 #endif
@@ -34446,7 +34446,7 @@ int lua_cocos2dx_LayerGradient_isCompressedInterpolation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_isCompressedInterpolation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_isCompressedInterpolation'", nullptr);
         return 0;
     }
 #endif
@@ -34490,7 +34490,7 @@ int lua_cocos2dx_LayerGradient_getStartOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getStartOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getStartOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -34534,7 +34534,7 @@ int lua_cocos2dx_LayerGradient_setVector(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setVector'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setVector'", nullptr);
         return 0;
     }
 #endif
@@ -34580,7 +34580,7 @@ int lua_cocos2dx_LayerGradient_setStartOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setStartOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setStartOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -34626,7 +34626,7 @@ int lua_cocos2dx_LayerGradient_setCompressedInterpolation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setCompressedInterpolation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setCompressedInterpolation'", nullptr);
         return 0;
     }
 #endif
@@ -34672,7 +34672,7 @@ int lua_cocos2dx_LayerGradient_setEndOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setEndOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setEndOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -34718,7 +34718,7 @@ int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getVector'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getVector'", nullptr);
         return 0;
     }
 #endif
@@ -34745,7 +34745,7 @@ int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
 int lua_cocos2dx_LayerGradient_initWithColor(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::LayerGradient* cobj = NULL;
+    cocos2d::LayerGradient* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -34758,7 +34758,7 @@ int lua_cocos2dx_LayerGradient_initWithColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_initWithColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_initWithColor'", nullptr);
         return 0;
     }
 #endif
@@ -34837,7 +34837,7 @@ int lua_cocos2dx_LayerGradient_setEndColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setEndColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setEndColor'", nullptr);
         return 0;
     }
 #endif
@@ -34883,7 +34883,7 @@ int lua_cocos2dx_LayerGradient_getEndColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getEndColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getEndColor'", nullptr);
         return 0;
     }
 #endif
@@ -34927,7 +34927,7 @@ int lua_cocos2dx_LayerGradient_getEndOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getEndOpacity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_getEndOpacity'", nullptr);
         return 0;
     }
 #endif
@@ -34971,7 +34971,7 @@ int lua_cocos2dx_LayerGradient_setStartColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setStartColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_setStartColor'", nullptr);
         return 0;
     }
 #endif
@@ -35073,7 +35073,7 @@ static int lua_cocos2dx_LayerGradient_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_LayerGradient(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.LayerGradient");
-    tolua_cclass(tolua_S,"LayerGradient","cc.LayerGradient","cc.LayerColor",NULL);
+    tolua_cclass(tolua_S,"LayerGradient","cc.LayerGradient","cc.LayerColor",nullptr);
 
     tolua_beginmodule(tolua_S,"LayerGradient");
         tolua_function(tolua_S,"getStartColor",lua_cocos2dx_LayerGradient_getStartColor);
@@ -35117,7 +35117,7 @@ int lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe'", nullptr);
         return 0;
     }
 #endif
@@ -35163,7 +35163,7 @@ int lua_cocos2dx_LayerMultiplex_addLayer(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerMultiplex_addLayer'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerMultiplex_addLayer'", nullptr);
         return 0;
     }
 #endif
@@ -35209,7 +35209,7 @@ int lua_cocos2dx_LayerMultiplex_switchTo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerMultiplex_switchTo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerMultiplex_switchTo'", nullptr);
         return 0;
     }
 #endif
@@ -35244,7 +35244,7 @@ static int lua_cocos2dx_LayerMultiplex_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_LayerMultiplex(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.LayerMultiplex");
-    tolua_cclass(tolua_S,"LayerMultiplex","cc.LayerMultiplex","cc.Layer",NULL);
+    tolua_cclass(tolua_S,"LayerMultiplex","cc.LayerMultiplex","cc.Layer",nullptr);
 
     tolua_beginmodule(tolua_S,"LayerMultiplex");
         tolua_function(tolua_S,"switchToAndReleaseMe",lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe);
@@ -35277,7 +35277,7 @@ int lua_cocos2dx_Scene_getPhysicsWorld(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_getPhysicsWorld'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_getPhysicsWorld'", nullptr);
         return 0;
     }
 #endif
@@ -35372,7 +35372,7 @@ static int lua_cocos2dx_Scene_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Scene(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Scene");
-    tolua_cclass(tolua_S,"Scene","cc.Scene","cc.Node",NULL);
+    tolua_cclass(tolua_S,"Scene","cc.Scene","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Scene");
         tolua_function(tolua_S,"getPhysicsWorld",lua_cocos2dx_Scene_getPhysicsWorld);
@@ -35405,7 +35405,7 @@ int lua_cocos2dx_TransitionEaseScene_easeActionWithAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionEaseScene_easeActionWithAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionEaseScene_easeActionWithAction'", nullptr);
         return 0;
     }
 #endif
@@ -35441,7 +35441,7 @@ static int lua_cocos2dx_TransitionEaseScene_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionEaseScene(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionEaseScene");
-    tolua_cclass(tolua_S,"TransitionEaseScene","cc.TransitionEaseScene","",NULL);
+    tolua_cclass(tolua_S,"TransitionEaseScene","cc.TransitionEaseScene","",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionEaseScene");
         tolua_function(tolua_S,"easeActionWithAction",lua_cocos2dx_TransitionEaseScene_easeActionWithAction);
@@ -35472,7 +35472,7 @@ int lua_cocos2dx_TransitionScene_finish(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionScene_finish'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionScene_finish'", nullptr);
         return 0;
     }
 #endif
@@ -35515,7 +35515,7 @@ int lua_cocos2dx_TransitionScene_hideOutShowIn(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionScene_hideOutShowIn'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionScene_hideOutShowIn'", nullptr);
         return 0;
     }
 #endif
@@ -35582,7 +35582,7 @@ static int lua_cocos2dx_TransitionScene_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionScene(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionScene");
-    tolua_cclass(tolua_S,"TransitionScene","cc.TransitionScene","cc.Scene",NULL);
+    tolua_cclass(tolua_S,"TransitionScene","cc.TransitionScene","cc.Scene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionScene");
         tolua_function(tolua_S,"finish",lua_cocos2dx_TransitionScene_finish);
@@ -35641,7 +35641,7 @@ static int lua_cocos2dx_TransitionSceneOriented_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionSceneOriented(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionSceneOriented");
-    tolua_cclass(tolua_S,"TransitionSceneOriented","cc.TransitionSceneOriented","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionSceneOriented","cc.TransitionSceneOriented","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionSceneOriented");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSceneOriented_create);
@@ -35696,7 +35696,7 @@ static int lua_cocos2dx_TransitionRotoZoom_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionRotoZoom(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionRotoZoom");
-    tolua_cclass(tolua_S,"TransitionRotoZoom","cc.TransitionRotoZoom","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionRotoZoom","cc.TransitionRotoZoom","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionRotoZoom");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionRotoZoom_create);
@@ -35751,7 +35751,7 @@ static int lua_cocos2dx_TransitionJumpZoom_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionJumpZoom(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionJumpZoom");
-    tolua_cclass(tolua_S,"TransitionJumpZoom","cc.TransitionJumpZoom","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionJumpZoom","cc.TransitionJumpZoom","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionJumpZoom");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionJumpZoom_create);
@@ -35782,7 +35782,7 @@ int lua_cocos2dx_TransitionMoveInL_action(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionMoveInL_action'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionMoveInL_action'", nullptr);
         return 0;
     }
 #endif
@@ -35826,7 +35826,7 @@ int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionMoveInL_easeActionWithAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionMoveInL_easeActionWithAction'", nullptr);
         return 0;
     }
 #endif
@@ -35897,7 +35897,7 @@ static int lua_cocos2dx_TransitionMoveInL_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionMoveInL(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionMoveInL");
-    tolua_cclass(tolua_S,"TransitionMoveInL","cc.TransitionMoveInL","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionMoveInL","cc.TransitionMoveInL","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionMoveInL");
         tolua_function(tolua_S,"action",lua_cocos2dx_TransitionMoveInL_action);
@@ -35954,7 +35954,7 @@ static int lua_cocos2dx_TransitionMoveInR_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionMoveInR(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionMoveInR");
-    tolua_cclass(tolua_S,"TransitionMoveInR","cc.TransitionMoveInR","cc.TransitionMoveInL",NULL);
+    tolua_cclass(tolua_S,"TransitionMoveInR","cc.TransitionMoveInR","cc.TransitionMoveInL",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionMoveInR");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionMoveInR_create);
@@ -36009,7 +36009,7 @@ static int lua_cocos2dx_TransitionMoveInT_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionMoveInT(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionMoveInT");
-    tolua_cclass(tolua_S,"TransitionMoveInT","cc.TransitionMoveInT","cc.TransitionMoveInL",NULL);
+    tolua_cclass(tolua_S,"TransitionMoveInT","cc.TransitionMoveInT","cc.TransitionMoveInL",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionMoveInT");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionMoveInT_create);
@@ -36064,7 +36064,7 @@ static int lua_cocos2dx_TransitionMoveInB_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionMoveInB(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionMoveInB");
-    tolua_cclass(tolua_S,"TransitionMoveInB","cc.TransitionMoveInB","cc.TransitionMoveInL",NULL);
+    tolua_cclass(tolua_S,"TransitionMoveInB","cc.TransitionMoveInB","cc.TransitionMoveInL",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionMoveInB");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionMoveInB_create);
@@ -36095,7 +36095,7 @@ int lua_cocos2dx_TransitionSlideInL_action(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInL_action'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInL_action'", nullptr);
         return 0;
     }
 #endif
@@ -36139,7 +36139,7 @@ int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInL_easeActionWithAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInL_easeActionWithAction'", nullptr);
         return 0;
     }
 #endif
@@ -36210,7 +36210,7 @@ static int lua_cocos2dx_TransitionSlideInL_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionSlideInL(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionSlideInL");
-    tolua_cclass(tolua_S,"TransitionSlideInL","cc.TransitionSlideInL","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionSlideInL","cc.TransitionSlideInL","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionSlideInL");
         tolua_function(tolua_S,"action",lua_cocos2dx_TransitionSlideInL_action);
@@ -36243,7 +36243,7 @@ int lua_cocos2dx_TransitionSlideInR_action(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInR_action'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInR_action'", nullptr);
         return 0;
     }
 #endif
@@ -36311,7 +36311,7 @@ static int lua_cocos2dx_TransitionSlideInR_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionSlideInR(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionSlideInR");
-    tolua_cclass(tolua_S,"TransitionSlideInR","cc.TransitionSlideInR","cc.TransitionSlideInL",NULL);
+    tolua_cclass(tolua_S,"TransitionSlideInR","cc.TransitionSlideInR","cc.TransitionSlideInL",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionSlideInR");
         tolua_function(tolua_S,"action",lua_cocos2dx_TransitionSlideInR_action);
@@ -36343,7 +36343,7 @@ int lua_cocos2dx_TransitionSlideInB_action(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInB_action'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInB_action'", nullptr);
         return 0;
     }
 #endif
@@ -36411,7 +36411,7 @@ static int lua_cocos2dx_TransitionSlideInB_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionSlideInB(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionSlideInB");
-    tolua_cclass(tolua_S,"TransitionSlideInB","cc.TransitionSlideInB","cc.TransitionSlideInL",NULL);
+    tolua_cclass(tolua_S,"TransitionSlideInB","cc.TransitionSlideInB","cc.TransitionSlideInL",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionSlideInB");
         tolua_function(tolua_S,"action",lua_cocos2dx_TransitionSlideInB_action);
@@ -36443,7 +36443,7 @@ int lua_cocos2dx_TransitionSlideInT_action(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInT_action'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSlideInT_action'", nullptr);
         return 0;
     }
 #endif
@@ -36511,7 +36511,7 @@ static int lua_cocos2dx_TransitionSlideInT_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionSlideInT(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionSlideInT");
-    tolua_cclass(tolua_S,"TransitionSlideInT","cc.TransitionSlideInT","cc.TransitionSlideInL",NULL);
+    tolua_cclass(tolua_S,"TransitionSlideInT","cc.TransitionSlideInT","cc.TransitionSlideInL",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionSlideInT");
         tolua_function(tolua_S,"action",lua_cocos2dx_TransitionSlideInT_action);
@@ -36543,7 +36543,7 @@ int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction'", nullptr);
         return 0;
     }
 #endif
@@ -36614,7 +36614,7 @@ static int lua_cocos2dx_TransitionShrinkGrow_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionShrinkGrow(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionShrinkGrow");
-    tolua_cclass(tolua_S,"TransitionShrinkGrow","cc.TransitionShrinkGrow","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionShrinkGrow","cc.TransitionShrinkGrow","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionShrinkGrow");
         tolua_function(tolua_S,"easeActionWithAction",lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction);
@@ -36692,7 +36692,7 @@ static int lua_cocos2dx_TransitionFlipX_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFlipX(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFlipX");
-    tolua_cclass(tolua_S,"TransitionFlipX","cc.TransitionFlipX","cc.TransitionSceneOriented",NULL);
+    tolua_cclass(tolua_S,"TransitionFlipX","cc.TransitionFlipX","cc.TransitionSceneOriented",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFlipX");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFlipX_create);
@@ -36769,7 +36769,7 @@ static int lua_cocos2dx_TransitionFlipY_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFlipY(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFlipY");
-    tolua_cclass(tolua_S,"TransitionFlipY","cc.TransitionFlipY","cc.TransitionSceneOriented",NULL);
+    tolua_cclass(tolua_S,"TransitionFlipY","cc.TransitionFlipY","cc.TransitionSceneOriented",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFlipY");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFlipY_create);
@@ -36846,7 +36846,7 @@ static int lua_cocos2dx_TransitionFlipAngular_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFlipAngular(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFlipAngular");
-    tolua_cclass(tolua_S,"TransitionFlipAngular","cc.TransitionFlipAngular","cc.TransitionSceneOriented",NULL);
+    tolua_cclass(tolua_S,"TransitionFlipAngular","cc.TransitionFlipAngular","cc.TransitionSceneOriented",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFlipAngular");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFlipAngular_create);
@@ -36923,7 +36923,7 @@ static int lua_cocos2dx_TransitionZoomFlipX_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionZoomFlipX(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionZoomFlipX");
-    tolua_cclass(tolua_S,"TransitionZoomFlipX","cc.TransitionZoomFlipX","cc.TransitionSceneOriented",NULL);
+    tolua_cclass(tolua_S,"TransitionZoomFlipX","cc.TransitionZoomFlipX","cc.TransitionSceneOriented",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionZoomFlipX");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionZoomFlipX_create);
@@ -37000,7 +37000,7 @@ static int lua_cocos2dx_TransitionZoomFlipY_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionZoomFlipY(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionZoomFlipY");
-    tolua_cclass(tolua_S,"TransitionZoomFlipY","cc.TransitionZoomFlipY","cc.TransitionSceneOriented",NULL);
+    tolua_cclass(tolua_S,"TransitionZoomFlipY","cc.TransitionZoomFlipY","cc.TransitionSceneOriented",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionZoomFlipY");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionZoomFlipY_create);
@@ -37077,7 +37077,7 @@ static int lua_cocos2dx_TransitionZoomFlipAngular_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionZoomFlipAngular(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionZoomFlipAngular");
-    tolua_cclass(tolua_S,"TransitionZoomFlipAngular","cc.TransitionZoomFlipAngular","cc.TransitionSceneOriented",NULL);
+    tolua_cclass(tolua_S,"TransitionZoomFlipAngular","cc.TransitionZoomFlipAngular","cc.TransitionSceneOriented",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionZoomFlipAngular");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionZoomFlipAngular_create);
@@ -37154,7 +37154,7 @@ static int lua_cocos2dx_TransitionFade_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFade(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFade");
-    tolua_cclass(tolua_S,"TransitionFade","cc.TransitionFade","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionFade","cc.TransitionFade","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFade");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFade_create);
@@ -37209,7 +37209,7 @@ static int lua_cocos2dx_TransitionCrossFade_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionCrossFade(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionCrossFade");
-    tolua_cclass(tolua_S,"TransitionCrossFade","cc.TransitionCrossFade","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionCrossFade","cc.TransitionCrossFade","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionCrossFade");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionCrossFade_create);
@@ -37240,7 +37240,7 @@ int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction'", nullptr);
         return 0;
     }
 #endif
@@ -37311,7 +37311,7 @@ static int lua_cocos2dx_TransitionTurnOffTiles_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionTurnOffTiles(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionTurnOffTiles");
-    tolua_cclass(tolua_S,"TransitionTurnOffTiles","cc.TransitionTurnOffTiles","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionTurnOffTiles","cc.TransitionTurnOffTiles","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionTurnOffTiles");
         tolua_function(tolua_S,"easeActionWithAction",lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction);
@@ -37343,7 +37343,7 @@ int lua_cocos2dx_TransitionSplitCols_action(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSplitCols_action'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSplitCols_action'", nullptr);
         return 0;
     }
 #endif
@@ -37387,7 +37387,7 @@ int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSplitCols_easeActionWithAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionSplitCols_easeActionWithAction'", nullptr);
         return 0;
     }
 #endif
@@ -37458,7 +37458,7 @@ static int lua_cocos2dx_TransitionSplitCols_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionSplitCols(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionSplitCols");
-    tolua_cclass(tolua_S,"TransitionSplitCols","cc.TransitionSplitCols","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionSplitCols","cc.TransitionSplitCols","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionSplitCols");
         tolua_function(tolua_S,"action",lua_cocos2dx_TransitionSplitCols_action);
@@ -37515,7 +37515,7 @@ static int lua_cocos2dx_TransitionSplitRows_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionSplitRows(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionSplitRows");
-    tolua_cclass(tolua_S,"TransitionSplitRows","cc.TransitionSplitRows","cc.TransitionSplitCols",NULL);
+    tolua_cclass(tolua_S,"TransitionSplitRows","cc.TransitionSplitRows","cc.TransitionSplitCols",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionSplitRows");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSplitRows_create);
@@ -37546,7 +37546,7 @@ int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionFadeTR_easeActionWithAction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionFadeTR_easeActionWithAction'", nullptr);
         return 0;
     }
 #endif
@@ -37593,7 +37593,7 @@ int lua_cocos2dx_TransitionFadeTR_actionWithSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionFadeTR_actionWithSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionFadeTR_actionWithSize'", nullptr);
         return 0;
     }
 #endif
@@ -37664,7 +37664,7 @@ static int lua_cocos2dx_TransitionFadeTR_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFadeTR(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFadeTR");
-    tolua_cclass(tolua_S,"TransitionFadeTR","cc.TransitionFadeTR","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionFadeTR","cc.TransitionFadeTR","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFadeTR");
         tolua_function(tolua_S,"easeActionWithAction",lua_cocos2dx_TransitionFadeTR_easeActionWithAction);
@@ -37721,7 +37721,7 @@ static int lua_cocos2dx_TransitionFadeBL_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFadeBL(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFadeBL");
-    tolua_cclass(tolua_S,"TransitionFadeBL","cc.TransitionFadeBL","cc.TransitionFadeTR",NULL);
+    tolua_cclass(tolua_S,"TransitionFadeBL","cc.TransitionFadeBL","cc.TransitionFadeTR",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFadeBL");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFadeBL_create);
@@ -37776,7 +37776,7 @@ static int lua_cocos2dx_TransitionFadeUp_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFadeUp(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFadeUp");
-    tolua_cclass(tolua_S,"TransitionFadeUp","cc.TransitionFadeUp","cc.TransitionFadeTR",NULL);
+    tolua_cclass(tolua_S,"TransitionFadeUp","cc.TransitionFadeUp","cc.TransitionFadeTR",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFadeUp");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFadeUp_create);
@@ -37831,7 +37831,7 @@ static int lua_cocos2dx_TransitionFadeDown_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionFadeDown(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionFadeDown");
-    tolua_cclass(tolua_S,"TransitionFadeDown","cc.TransitionFadeDown","cc.TransitionFadeTR",NULL);
+    tolua_cclass(tolua_S,"TransitionFadeDown","cc.TransitionFadeDown","cc.TransitionFadeTR",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionFadeDown");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFadeDown_create);
@@ -37862,7 +37862,7 @@ int lua_cocos2dx_TransitionPageTurn_actionWithSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionPageTurn_actionWithSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionPageTurn_actionWithSize'", nullptr);
         return 0;
     }
 #endif
@@ -37909,7 +37909,7 @@ int lua_cocos2dx_TransitionPageTurn_initWithDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionPageTurn_initWithDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TransitionPageTurn_initWithDuration'", nullptr);
         return 0;
     }
 #endif
@@ -38022,7 +38022,7 @@ static int lua_cocos2dx_TransitionPageTurn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionPageTurn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionPageTurn");
-    tolua_cclass(tolua_S,"TransitionPageTurn","cc.TransitionPageTurn","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionPageTurn","cc.TransitionPageTurn","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionPageTurn");
         tolua_function(tolua_S,"actionWithSize",lua_cocos2dx_TransitionPageTurn_actionWithSize);
@@ -38114,7 +38114,7 @@ static int lua_cocos2dx_TransitionProgress_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionProgress(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionProgress");
-    tolua_cclass(tolua_S,"TransitionProgress","cc.TransitionProgress","cc.TransitionScene",NULL);
+    tolua_cclass(tolua_S,"TransitionProgress","cc.TransitionProgress","cc.TransitionScene",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionProgress");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgress_create);
@@ -38169,7 +38169,7 @@ static int lua_cocos2dx_TransitionProgressRadialCCW_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionProgressRadialCCW(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionProgressRadialCCW");
-    tolua_cclass(tolua_S,"TransitionProgressRadialCCW","cc.TransitionProgressRadialCCW","cc.TransitionProgress",NULL);
+    tolua_cclass(tolua_S,"TransitionProgressRadialCCW","cc.TransitionProgressRadialCCW","cc.TransitionProgress",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionProgressRadialCCW");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressRadialCCW_create);
@@ -38224,7 +38224,7 @@ static int lua_cocos2dx_TransitionProgressRadialCW_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionProgressRadialCW(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionProgressRadialCW");
-    tolua_cclass(tolua_S,"TransitionProgressRadialCW","cc.TransitionProgressRadialCW","cc.TransitionProgress",NULL);
+    tolua_cclass(tolua_S,"TransitionProgressRadialCW","cc.TransitionProgressRadialCW","cc.TransitionProgress",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionProgressRadialCW");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressRadialCW_create);
@@ -38279,7 +38279,7 @@ static int lua_cocos2dx_TransitionProgressHorizontal_finalize(lua_State* tolua_S
 int lua_register_cocos2dx_TransitionProgressHorizontal(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionProgressHorizontal");
-    tolua_cclass(tolua_S,"TransitionProgressHorizontal","cc.TransitionProgressHorizontal","cc.TransitionProgress",NULL);
+    tolua_cclass(tolua_S,"TransitionProgressHorizontal","cc.TransitionProgressHorizontal","cc.TransitionProgress",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionProgressHorizontal");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressHorizontal_create);
@@ -38334,7 +38334,7 @@ static int lua_cocos2dx_TransitionProgressVertical_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionProgressVertical(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionProgressVertical");
-    tolua_cclass(tolua_S,"TransitionProgressVertical","cc.TransitionProgressVertical","cc.TransitionProgress",NULL);
+    tolua_cclass(tolua_S,"TransitionProgressVertical","cc.TransitionProgressVertical","cc.TransitionProgress",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionProgressVertical");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressVertical_create);
@@ -38389,7 +38389,7 @@ static int lua_cocos2dx_TransitionProgressInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionProgressInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionProgressInOut");
-    tolua_cclass(tolua_S,"TransitionProgressInOut","cc.TransitionProgressInOut","cc.TransitionProgress",NULL);
+    tolua_cclass(tolua_S,"TransitionProgressInOut","cc.TransitionProgressInOut","cc.TransitionProgress",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionProgressInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressInOut_create);
@@ -38444,7 +38444,7 @@ static int lua_cocos2dx_TransitionProgressOutIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TransitionProgressOutIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TransitionProgressOutIn");
-    tolua_cclass(tolua_S,"TransitionProgressOutIn","cc.TransitionProgressOutIn","cc.TransitionProgress",NULL);
+    tolua_cclass(tolua_S,"TransitionProgressOutIn","cc.TransitionProgressOutIn","cc.TransitionProgress",nullptr);
 
     tolua_beginmodule(tolua_S,"TransitionProgressOutIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressOutIn_create);
@@ -38475,7 +38475,7 @@ int lua_cocos2dx_MenuItem_setEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_setEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_setEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -38521,7 +38521,7 @@ int lua_cocos2dx_MenuItem_activate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_activate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_activate'", nullptr);
         return 0;
     }
 #endif
@@ -38564,7 +38564,7 @@ int lua_cocos2dx_MenuItem_isEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_isEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_isEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -38608,7 +38608,7 @@ int lua_cocos2dx_MenuItem_selected(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_selected'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_selected'", nullptr);
         return 0;
     }
 #endif
@@ -38651,7 +38651,7 @@ int lua_cocos2dx_MenuItem_isSelected(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_isSelected'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_isSelected'", nullptr);
         return 0;
     }
 #endif
@@ -38695,7 +38695,7 @@ int lua_cocos2dx_MenuItem_unselected(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_unselected'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_unselected'", nullptr);
         return 0;
     }
 #endif
@@ -38738,7 +38738,7 @@ int lua_cocos2dx_MenuItem_rect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_rect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItem_rect'", nullptr);
         return 0;
     }
 #endif
@@ -38771,7 +38771,7 @@ static int lua_cocos2dx_MenuItem_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MenuItem(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MenuItem");
-    tolua_cclass(tolua_S,"MenuItem","cc.MenuItem","cc.Node",NULL);
+    tolua_cclass(tolua_S,"MenuItem","cc.MenuItem","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"MenuItem");
         tolua_function(tolua_S,"setEnabled",lua_cocos2dx_MenuItem_setEnabled);
@@ -38808,7 +38808,7 @@ int lua_cocos2dx_MenuItemLabel_getDisabledColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_getDisabledColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_getDisabledColor'", nullptr);
         return 0;
     }
 #endif
@@ -38852,7 +38852,7 @@ int lua_cocos2dx_MenuItemLabel_setString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_setString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_setString'", nullptr);
         return 0;
     }
 #endif
@@ -38898,7 +38898,7 @@ int lua_cocos2dx_MenuItemLabel_setLabel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_setLabel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_setLabel'", nullptr);
         return 0;
     }
 #endif
@@ -38944,7 +38944,7 @@ int lua_cocos2dx_MenuItemLabel_setDisabledColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_setDisabledColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_setDisabledColor'", nullptr);
         return 0;
     }
 #endif
@@ -38990,7 +38990,7 @@ int lua_cocos2dx_MenuItemLabel_getLabel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_getLabel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemLabel_getLabel'", nullptr);
         return 0;
     }
 #endif
@@ -39023,7 +39023,7 @@ static int lua_cocos2dx_MenuItemLabel_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MenuItemLabel(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MenuItemLabel");
-    tolua_cclass(tolua_S,"MenuItemLabel","cc.MenuItemLabel","cc.MenuItem",NULL);
+    tolua_cclass(tolua_S,"MenuItemLabel","cc.MenuItemLabel","cc.MenuItem",nullptr);
 
     tolua_beginmodule(tolua_S,"MenuItemLabel");
         tolua_function(tolua_S,"getDisabledColor",lua_cocos2dx_MenuItemLabel_getDisabledColor);
@@ -39047,7 +39047,7 @@ static int lua_cocos2dx_MenuItemAtlasFont_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MenuItemAtlasFont(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MenuItemAtlasFont");
-    tolua_cclass(tolua_S,"MenuItemAtlasFont","cc.MenuItemAtlasFont","cc.MenuItemLabel",NULL);
+    tolua_cclass(tolua_S,"MenuItemAtlasFont","cc.MenuItemAtlasFont","cc.MenuItemLabel",nullptr);
 
     tolua_beginmodule(tolua_S,"MenuItemAtlasFont");
     tolua_endmodule(tolua_S);
@@ -39077,7 +39077,7 @@ int lua_cocos2dx_MenuItemFont_getFontSizeObj(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_getFontSizeObj'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_getFontSizeObj'", nullptr);
         return 0;
     }
 #endif
@@ -39121,7 +39121,7 @@ int lua_cocos2dx_MenuItemFont_getFontNameObj(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_getFontNameObj'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_getFontNameObj'", nullptr);
         return 0;
     }
 #endif
@@ -39165,7 +39165,7 @@ int lua_cocos2dx_MenuItemFont_setFontSizeObj(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_setFontSizeObj'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_setFontSizeObj'", nullptr);
         return 0;
     }
 #endif
@@ -39211,7 +39211,7 @@ int lua_cocos2dx_MenuItemFont_setFontNameObj(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_setFontNameObj'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemFont_setFontNameObj'", nullptr);
         return 0;
     }
 #endif
@@ -39372,7 +39372,7 @@ static int lua_cocos2dx_MenuItemFont_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MenuItemFont(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MenuItemFont");
-    tolua_cclass(tolua_S,"MenuItemFont","cc.MenuItemFont","cc.MenuItemLabel",NULL);
+    tolua_cclass(tolua_S,"MenuItemFont","cc.MenuItemFont","cc.MenuItemLabel",nullptr);
 
     tolua_beginmodule(tolua_S,"MenuItemFont");
         tolua_function(tolua_S,"getFontSizeObj",lua_cocos2dx_MenuItemFont_getFontSizeObj);
@@ -39410,7 +39410,7 @@ int lua_cocos2dx_MenuItemSprite_setEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -39456,7 +39456,7 @@ int lua_cocos2dx_MenuItemSprite_selected(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_selected'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_selected'", nullptr);
         return 0;
     }
 #endif
@@ -39499,7 +39499,7 @@ int lua_cocos2dx_MenuItemSprite_setNormalImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setNormalImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setNormalImage'", nullptr);
         return 0;
     }
 #endif
@@ -39545,7 +39545,7 @@ int lua_cocos2dx_MenuItemSprite_setDisabledImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setDisabledImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setDisabledImage'", nullptr);
         return 0;
     }
 #endif
@@ -39591,7 +39591,7 @@ int lua_cocos2dx_MenuItemSprite_setSelectedImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setSelectedImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_setSelectedImage'", nullptr);
         return 0;
     }
 #endif
@@ -39637,7 +39637,7 @@ int lua_cocos2dx_MenuItemSprite_getDisabledImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_getDisabledImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_getDisabledImage'", nullptr);
         return 0;
     }
 #endif
@@ -39681,7 +39681,7 @@ int lua_cocos2dx_MenuItemSprite_getSelectedImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_getSelectedImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_getSelectedImage'", nullptr);
         return 0;
     }
 #endif
@@ -39725,7 +39725,7 @@ int lua_cocos2dx_MenuItemSprite_getNormalImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_getNormalImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_getNormalImage'", nullptr);
         return 0;
     }
 #endif
@@ -39769,7 +39769,7 @@ int lua_cocos2dx_MenuItemSprite_unselected(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_unselected'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemSprite_unselected'", nullptr);
         return 0;
     }
 #endif
@@ -39801,7 +39801,7 @@ static int lua_cocos2dx_MenuItemSprite_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MenuItemSprite(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MenuItemSprite");
-    tolua_cclass(tolua_S,"MenuItemSprite","cc.MenuItemSprite","cc.MenuItem",NULL);
+    tolua_cclass(tolua_S,"MenuItemSprite","cc.MenuItemSprite","cc.MenuItem",nullptr);
 
     tolua_beginmodule(tolua_S,"MenuItemSprite");
         tolua_function(tolua_S,"setEnabled",lua_cocos2dx_MenuItemSprite_setEnabled);
@@ -39840,7 +39840,7 @@ int lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -39886,7 +39886,7 @@ int lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -39932,7 +39932,7 @@ int lua_cocos2dx_MenuItemImage_setNormalSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemImage_setNormalSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemImage_setNormalSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -39967,7 +39967,7 @@ static int lua_cocos2dx_MenuItemImage_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MenuItemImage(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MenuItemImage");
-    tolua_cclass(tolua_S,"MenuItemImage","cc.MenuItemImage","cc.MenuItemSprite",NULL);
+    tolua_cclass(tolua_S,"MenuItemImage","cc.MenuItemImage","cc.MenuItemSprite",nullptr);
 
     tolua_beginmodule(tolua_S,"MenuItemImage");
         tolua_function(tolua_S,"setDisabledSpriteFrame",lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame);
@@ -40000,7 +40000,7 @@ int lua_cocos2dx_MenuItemToggle_setSubItems(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_setSubItems'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_setSubItems'", nullptr);
         return 0;
     }
 #endif
@@ -40046,7 +40046,7 @@ int lua_cocos2dx_MenuItemToggle_getSelectedIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_getSelectedIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_getSelectedIndex'", nullptr);
         return 0;
     }
 #endif
@@ -40090,7 +40090,7 @@ int lua_cocos2dx_MenuItemToggle_addSubItem(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_addSubItem'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_addSubItem'", nullptr);
         return 0;
     }
 #endif
@@ -40136,7 +40136,7 @@ int lua_cocos2dx_MenuItemToggle_getSelectedItem(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_getSelectedItem'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_getSelectedItem'", nullptr);
         return 0;
     }
 #endif
@@ -40180,7 +40180,7 @@ int lua_cocos2dx_MenuItemToggle_setSelectedIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_setSelectedIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MenuItemToggle_setSelectedIndex'", nullptr);
         return 0;
     }
 #endif
@@ -40215,7 +40215,7 @@ static int lua_cocos2dx_MenuItemToggle_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MenuItemToggle(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MenuItemToggle");
-    tolua_cclass(tolua_S,"MenuItemToggle","cc.MenuItemToggle","cc.MenuItem",NULL);
+    tolua_cclass(tolua_S,"MenuItemToggle","cc.MenuItemToggle","cc.MenuItem",nullptr);
 
     tolua_beginmodule(tolua_S,"MenuItemToggle");
         tolua_function(tolua_S,"setSubItems",lua_cocos2dx_MenuItemToggle_setSubItems);
@@ -40250,7 +40250,7 @@ int lua_cocos2dx_Menu_setEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_setEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_setEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -40296,7 +40296,7 @@ int lua_cocos2dx_Menu_alignItemsVertically(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsVertically'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsVertically'", nullptr);
         return 0;
     }
 #endif
@@ -40339,7 +40339,7 @@ int lua_cocos2dx_Menu_isEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_isEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_isEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -40383,7 +40383,7 @@ int lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding'", nullptr);
         return 0;
     }
 #endif
@@ -40429,7 +40429,7 @@ int lua_cocos2dx_Menu_alignItemsVerticallyWithPadding(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsVerticallyWithPadding'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsVerticallyWithPadding'", nullptr);
         return 0;
     }
 #endif
@@ -40475,7 +40475,7 @@ int lua_cocos2dx_Menu_alignItemsHorizontally(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsHorizontally'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Menu_alignItemsHorizontally'", nullptr);
         return 0;
     }
 #endif
@@ -40507,7 +40507,7 @@ static int lua_cocos2dx_Menu_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Menu(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Menu");
-    tolua_cclass(tolua_S,"Menu","cc.Menu","cc.Layer",NULL);
+    tolua_cclass(tolua_S,"Menu","cc.Menu","cc.Layer",nullptr);
 
     tolua_beginmodule(tolua_S,"Menu");
         tolua_function(tolua_S,"setEnabled",lua_cocos2dx_Menu_setEnabled);
@@ -40543,7 +40543,7 @@ int lua_cocos2dx_ClippingNode_isInverted(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_isInverted'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_isInverted'", nullptr);
         return 0;
     }
 #endif
@@ -40587,7 +40587,7 @@ int lua_cocos2dx_ClippingNode_setInverted(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_setInverted'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_setInverted'", nullptr);
         return 0;
     }
 #endif
@@ -40633,7 +40633,7 @@ int lua_cocos2dx_ClippingNode_setStencil(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_setStencil'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_setStencil'", nullptr);
         return 0;
     }
 #endif
@@ -40679,7 +40679,7 @@ int lua_cocos2dx_ClippingNode_getAlphaThreshold(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_getAlphaThreshold'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_getAlphaThreshold'", nullptr);
         return 0;
     }
 #endif
@@ -40723,7 +40723,7 @@ int lua_cocos2dx_ClippingNode_getStencil(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_getStencil'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_getStencil'", nullptr);
         return 0;
     }
 #endif
@@ -40767,7 +40767,7 @@ int lua_cocos2dx_ClippingNode_setAlphaThreshold(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_setAlphaThreshold'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ClippingNode_setAlphaThreshold'", nullptr);
         return 0;
     }
 #endif
@@ -40847,7 +40847,7 @@ static int lua_cocos2dx_ClippingNode_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ClippingNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ClippingNode");
-    tolua_cclass(tolua_S,"ClippingNode","cc.ClippingNode","cc.Node",NULL);
+    tolua_cclass(tolua_S,"ClippingNode","cc.ClippingNode","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"ClippingNode");
         tolua_function(tolua_S,"isInverted",lua_cocos2dx_ClippingNode_isInverted);
@@ -40884,7 +40884,7 @@ int lua_cocos2dx_MotionStreak_reset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_reset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_reset'", nullptr);
         return 0;
     }
 #endif
@@ -40927,7 +40927,7 @@ int lua_cocos2dx_MotionStreak_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_setTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_setTexture'", nullptr);
         return 0;
     }
 #endif
@@ -40973,7 +40973,7 @@ int lua_cocos2dx_MotionStreak_getTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_getTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_getTexture'", nullptr);
         return 0;
     }
 #endif
@@ -41017,7 +41017,7 @@ int lua_cocos2dx_MotionStreak_tintWithColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_tintWithColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_tintWithColor'", nullptr);
         return 0;
     }
 #endif
@@ -41063,7 +41063,7 @@ int lua_cocos2dx_MotionStreak_setStartingPositionInitialized(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_setStartingPositionInitialized'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_setStartingPositionInitialized'", nullptr);
         return 0;
     }
 #endif
@@ -41109,7 +41109,7 @@ int lua_cocos2dx_MotionStreak_isStartingPositionInitialized(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_isStartingPositionInitialized'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_isStartingPositionInitialized'", nullptr);
         return 0;
     }
 #endif
@@ -41153,7 +41153,7 @@ int lua_cocos2dx_MotionStreak_isFastMode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_isFastMode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_isFastMode'", nullptr);
         return 0;
     }
 #endif
@@ -41197,7 +41197,7 @@ int lua_cocos2dx_MotionStreak_setFastMode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_setFastMode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak_setFastMode'", nullptr);
         return 0;
     }
 #endif
@@ -41304,7 +41304,7 @@ static int lua_cocos2dx_MotionStreak_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_MotionStreak(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.MotionStreak");
-    tolua_cclass(tolua_S,"MotionStreak","cc.MotionStreak","cc.Node",NULL);
+    tolua_cclass(tolua_S,"MotionStreak","cc.MotionStreak","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"MotionStreak");
         tolua_function(tolua_S,"reset",lua_cocos2dx_MotionStreak_reset);
@@ -41326,7 +41326,7 @@ int lua_register_cocos2dx_MotionStreak(lua_State* tolua_S)
 int lua_cocos2dx_Sprite_setSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Sprite* cobj = NULL;
+    cocos2d::Sprite* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -41339,7 +41339,7 @@ int lua_cocos2dx_Sprite_setSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -41379,7 +41379,7 @@ int lua_cocos2dx_Sprite_setSpriteFrame(lua_State* tolua_S)
 int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Sprite* cobj = NULL;
+    cocos2d::Sprite* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -41392,7 +41392,7 @@ int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setTexture'", nullptr);
         return 0;
     }
 #endif
@@ -41449,7 +41449,7 @@ int lua_cocos2dx_Sprite_getTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getTexture'", nullptr);
         return 0;
     }
 #endif
@@ -41493,7 +41493,7 @@ int lua_cocos2dx_Sprite_setFlippedY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setFlippedY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setFlippedY'", nullptr);
         return 0;
     }
 #endif
@@ -41539,7 +41539,7 @@ int lua_cocos2dx_Sprite_setFlippedX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setFlippedX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setFlippedX'", nullptr);
         return 0;
     }
 #endif
@@ -41585,7 +41585,7 @@ int lua_cocos2dx_Sprite_getBatchNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getBatchNode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getBatchNode'", nullptr);
         return 0;
     }
 #endif
@@ -41629,7 +41629,7 @@ int lua_cocos2dx_Sprite_getOffsetPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getOffsetPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getOffsetPosition'", nullptr);
         return 0;
     }
 #endif
@@ -41673,7 +41673,7 @@ int lua_cocos2dx_Sprite_removeAllChildrenWithCleanup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_removeAllChildrenWithCleanup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_removeAllChildrenWithCleanup'", nullptr);
         return 0;
     }
 #endif
@@ -41719,7 +41719,7 @@ int lua_cocos2dx_Sprite_updateTransform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_updateTransform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_updateTransform'", nullptr);
         return 0;
     }
 #endif
@@ -41745,7 +41745,7 @@ int lua_cocos2dx_Sprite_updateTransform(lua_State* tolua_S)
 int lua_cocos2dx_Sprite_setTextureRect(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::Sprite* cobj = NULL;
+    cocos2d::Sprite* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -41758,7 +41758,7 @@ int lua_cocos2dx_Sprite_setTextureRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setTextureRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setTextureRect'", nullptr);
         return 0;
     }
 #endif
@@ -41823,7 +41823,7 @@ int lua_cocos2dx_Sprite_isFrameDisplayed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isFrameDisplayed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isFrameDisplayed'", nullptr);
         return 0;
     }
 #endif
@@ -41870,7 +41870,7 @@ int lua_cocos2dx_Sprite_getAtlasIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getAtlasIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getAtlasIndex'", nullptr);
         return 0;
     }
 #endif
@@ -41914,7 +41914,7 @@ int lua_cocos2dx_Sprite_setBatchNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setBatchNode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setBatchNode'", nullptr);
         return 0;
     }
 #endif
@@ -41960,7 +41960,7 @@ int lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName'", nullptr);
         return 0;
     }
 #endif
@@ -42009,7 +42009,7 @@ int lua_cocos2dx_Sprite_setTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -42055,7 +42055,7 @@ int lua_cocos2dx_Sprite_getSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -42099,7 +42099,7 @@ int lua_cocos2dx_Sprite_isDirty(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isDirty'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isDirty'", nullptr);
         return 0;
     }
 #endif
@@ -42143,7 +42143,7 @@ int lua_cocos2dx_Sprite_setAtlasIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setAtlasIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setAtlasIndex'", nullptr);
         return 0;
     }
 #endif
@@ -42189,7 +42189,7 @@ int lua_cocos2dx_Sprite_setDirty(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setDirty'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setDirty'", nullptr);
         return 0;
     }
 #endif
@@ -42235,7 +42235,7 @@ int lua_cocos2dx_Sprite_isTextureRectRotated(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isTextureRectRotated'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isTextureRectRotated'", nullptr);
         return 0;
     }
 #endif
@@ -42279,7 +42279,7 @@ int lua_cocos2dx_Sprite_getTextureRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getTextureRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getTextureRect'", nullptr);
         return 0;
     }
 #endif
@@ -42323,7 +42323,7 @@ int lua_cocos2dx_Sprite_getTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_getTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -42367,7 +42367,7 @@ int lua_cocos2dx_Sprite_isFlippedX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isFlippedX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isFlippedX'", nullptr);
         return 0;
     }
 #endif
@@ -42411,7 +42411,7 @@ int lua_cocos2dx_Sprite_isFlippedY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isFlippedY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isFlippedY'", nullptr);
         return 0;
     }
 #endif
@@ -42455,7 +42455,7 @@ int lua_cocos2dx_Sprite_setVertexRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setVertexRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setVertexRect'", nullptr);
         return 0;
     }
 #endif
@@ -42687,7 +42687,7 @@ static int lua_cocos2dx_Sprite_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Sprite(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Sprite");
-    tolua_cclass(tolua_S,"Sprite","cc.Sprite","cc.Node",NULL);
+    tolua_cclass(tolua_S,"Sprite","cc.Sprite","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Sprite");
         tolua_function(tolua_S,"setSpriteFrame",lua_cocos2dx_Sprite_setSpriteFrame);
@@ -42746,7 +42746,7 @@ int lua_cocos2dx_ProgressTimer_isReverseDirection(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_isReverseDirection'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_isReverseDirection'", nullptr);
         return 0;
     }
 #endif
@@ -42790,7 +42790,7 @@ int lua_cocos2dx_ProgressTimer_setBarChangeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setBarChangeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setBarChangeRate'", nullptr);
         return 0;
     }
 #endif
@@ -42836,7 +42836,7 @@ int lua_cocos2dx_ProgressTimer_getPercentage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getPercentage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getPercentage'", nullptr);
         return 0;
     }
 #endif
@@ -42880,7 +42880,7 @@ int lua_cocos2dx_ProgressTimer_setSprite(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setSprite'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setSprite'", nullptr);
         return 0;
     }
 #endif
@@ -42926,7 +42926,7 @@ int lua_cocos2dx_ProgressTimer_getType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getType'", nullptr);
         return 0;
     }
 #endif
@@ -42970,7 +42970,7 @@ int lua_cocos2dx_ProgressTimer_getSprite(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getSprite'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getSprite'", nullptr);
         return 0;
     }
 #endif
@@ -43014,7 +43014,7 @@ int lua_cocos2dx_ProgressTimer_setMidpoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setMidpoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setMidpoint'", nullptr);
         return 0;
     }
 #endif
@@ -43060,7 +43060,7 @@ int lua_cocos2dx_ProgressTimer_getBarChangeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getBarChangeRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getBarChangeRate'", nullptr);
         return 0;
     }
 #endif
@@ -43087,7 +43087,7 @@ int lua_cocos2dx_ProgressTimer_getBarChangeRate(lua_State* tolua_S)
 int lua_cocos2dx_ProgressTimer_setReverseDirection(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::ProgressTimer* cobj = NULL;
+    cocos2d::ProgressTimer* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -43100,7 +43100,7 @@ int lua_cocos2dx_ProgressTimer_setReverseDirection(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setReverseDirection'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setReverseDirection'", nullptr);
         return 0;
     }
 #endif
@@ -43157,7 +43157,7 @@ int lua_cocos2dx_ProgressTimer_getMidpoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getMidpoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_getMidpoint'", nullptr);
         return 0;
     }
 #endif
@@ -43201,7 +43201,7 @@ int lua_cocos2dx_ProgressTimer_setPercentage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setPercentage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setPercentage'", nullptr);
         return 0;
     }
 #endif
@@ -43247,7 +43247,7 @@ int lua_cocos2dx_ProgressTimer_setType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setType'", nullptr);
         return 0;
     }
 #endif
@@ -43315,7 +43315,7 @@ static int lua_cocos2dx_ProgressTimer_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ProgressTimer(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ProgressTimer");
-    tolua_cclass(tolua_S,"ProgressTimer","cc.ProgressTimer","cc.Node",NULL);
+    tolua_cclass(tolua_S,"ProgressTimer","cc.ProgressTimer","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"ProgressTimer");
         tolua_function(tolua_S,"isReverseDirection",lua_cocos2dx_ProgressTimer_isReverseDirection);
@@ -43358,7 +43358,7 @@ int lua_cocos2dx_Image_hasPremultipliedAlpha(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_hasPremultipliedAlpha'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_hasPremultipliedAlpha'", nullptr);
         return 0;
     }
 #endif
@@ -43402,7 +43402,7 @@ int lua_cocos2dx_Image_getDataLen(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getDataLen'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getDataLen'", nullptr);
         return 0;
     }
 #endif
@@ -43446,7 +43446,7 @@ int lua_cocos2dx_Image_saveToFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_saveToFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_saveToFile'", nullptr);
         return 0;
     }
 #endif
@@ -43507,7 +43507,7 @@ int lua_cocos2dx_Image_getBitPerPixel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getBitPerPixel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getBitPerPixel'", nullptr);
         return 0;
     }
 #endif
@@ -43551,7 +43551,7 @@ int lua_cocos2dx_Image_hasAlpha(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_hasAlpha'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_hasAlpha'", nullptr);
         return 0;
     }
 #endif
@@ -43595,7 +43595,7 @@ int lua_cocos2dx_Image_isCompressed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_isCompressed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_isCompressed'", nullptr);
         return 0;
     }
 #endif
@@ -43639,7 +43639,7 @@ int lua_cocos2dx_Image_getHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getHeight'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getHeight'", nullptr);
         return 0;
     }
 #endif
@@ -43683,7 +43683,7 @@ int lua_cocos2dx_Image_initWithImageFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_initWithImageFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_initWithImageFile'", nullptr);
         return 0;
     }
 #endif
@@ -43730,7 +43730,7 @@ int lua_cocos2dx_Image_getWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getWidth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getWidth'", nullptr);
         return 0;
     }
 #endif
@@ -43774,7 +43774,7 @@ int lua_cocos2dx_Image_isPremultipliedAlpha(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_isPremultipliedAlpha'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_isPremultipliedAlpha'", nullptr);
         return 0;
     }
 #endif
@@ -43818,7 +43818,7 @@ int lua_cocos2dx_Image_getFileType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getFileType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getFileType'", nullptr);
         return 0;
     }
 #endif
@@ -43862,7 +43862,7 @@ int lua_cocos2dx_Image_getNumberOfMipmaps(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getNumberOfMipmaps'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getNumberOfMipmaps'", nullptr);
         return 0;
     }
 #endif
@@ -43906,7 +43906,7 @@ int lua_cocos2dx_Image_getRenderFormat(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getRenderFormat'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getRenderFormat'", nullptr);
         return 0;
     }
 #endif
@@ -43950,7 +43950,7 @@ int lua_cocos2dx_Image_getData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getData'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getData'", nullptr);
         return 0;
     }
 #endif
@@ -43994,7 +43994,7 @@ int lua_cocos2dx_Image_getMipmaps(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getMipmaps'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_getMipmaps'", nullptr);
         return 0;
     }
 #endif
@@ -44061,7 +44061,7 @@ static int lua_cocos2dx_Image_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Image(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Image");
-    tolua_cclass(tolua_S,"Image","cc.Image","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Image","cc.Image","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Image");
         tolua_function(tolua_S,"hasPremultipliedAlpha",lua_cocos2dx_Image_hasPremultipliedAlpha);
@@ -44107,7 +44107,7 @@ int lua_cocos2dx_RenderTexture_setVirtualViewport(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setVirtualViewport'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setVirtualViewport'", nullptr);
         return 0;
     }
 #endif
@@ -44159,7 +44159,7 @@ int lua_cocos2dx_RenderTexture_clearStencil(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_clearStencil'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_clearStencil'", nullptr);
         return 0;
     }
 #endif
@@ -44205,7 +44205,7 @@ int lua_cocos2dx_RenderTexture_getClearDepth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearDepth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearDepth'", nullptr);
         return 0;
     }
 #endif
@@ -44249,7 +44249,7 @@ int lua_cocos2dx_RenderTexture_getClearStencil(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearStencil'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearStencil'", nullptr);
         return 0;
     }
 #endif
@@ -44293,7 +44293,7 @@ int lua_cocos2dx_RenderTexture_end(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_end'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_end'", nullptr);
         return 0;
     }
 #endif
@@ -44336,7 +44336,7 @@ int lua_cocos2dx_RenderTexture_setClearStencil(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearStencil'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearStencil'", nullptr);
         return 0;
     }
 #endif
@@ -44382,7 +44382,7 @@ int lua_cocos2dx_RenderTexture_setSprite(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setSprite'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setSprite'", nullptr);
         return 0;
     }
 #endif
@@ -44428,7 +44428,7 @@ int lua_cocos2dx_RenderTexture_getSprite(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getSprite'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getSprite'", nullptr);
         return 0;
     }
 #endif
@@ -44472,7 +44472,7 @@ int lua_cocos2dx_RenderTexture_isAutoDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_isAutoDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_isAutoDraw'", nullptr);
         return 0;
     }
 #endif
@@ -44516,7 +44516,7 @@ int lua_cocos2dx_RenderTexture_setKeepMatrix(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setKeepMatrix'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setKeepMatrix'", nullptr);
         return 0;
     }
 #endif
@@ -44562,7 +44562,7 @@ int lua_cocos2dx_RenderTexture_setClearFlags(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearFlags'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearFlags'", nullptr);
         return 0;
     }
 #endif
@@ -44608,7 +44608,7 @@ int lua_cocos2dx_RenderTexture_begin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_begin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_begin'", nullptr);
         return 0;
     }
 #endif
@@ -44634,7 +44634,7 @@ int lua_cocos2dx_RenderTexture_begin(lua_State* tolua_S)
 int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::RenderTexture* cobj = NULL;
+    cocos2d::RenderTexture* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -44647,7 +44647,7 @@ int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_saveToFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_saveToFile'", nullptr);
         return 0;
     }
 #endif
@@ -44710,7 +44710,7 @@ int lua_cocos2dx_RenderTexture_setAutoDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setAutoDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setAutoDraw'", nullptr);
         return 0;
     }
 #endif
@@ -44756,7 +44756,7 @@ int lua_cocos2dx_RenderTexture_setClearColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearColor'", nullptr);
         return 0;
     }
 #endif
@@ -44802,7 +44802,7 @@ int lua_cocos2dx_RenderTexture_endToLua(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_endToLua'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_endToLua'", nullptr);
         return 0;
     }
 #endif
@@ -44828,7 +44828,7 @@ int lua_cocos2dx_RenderTexture_endToLua(lua_State* tolua_S)
 int lua_cocos2dx_RenderTexture_beginWithClear(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::RenderTexture* cobj = NULL;
+    cocos2d::RenderTexture* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -44841,7 +44841,7 @@ int lua_cocos2dx_RenderTexture_beginWithClear(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_beginWithClear'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_beginWithClear'", nullptr);
         return 0;
     }
 #endif
@@ -44957,7 +44957,7 @@ int lua_cocos2dx_RenderTexture_clearDepth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_clearDepth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_clearDepth'", nullptr);
         return 0;
     }
 #endif
@@ -45003,7 +45003,7 @@ int lua_cocos2dx_RenderTexture_getClearColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearColor'", nullptr);
         return 0;
     }
 #endif
@@ -45047,7 +45047,7 @@ int lua_cocos2dx_RenderTexture_clear(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_clear'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_clear'", nullptr);
         return 0;
     }
 #endif
@@ -45102,7 +45102,7 @@ int lua_cocos2dx_RenderTexture_getClearFlags(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearFlags'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_getClearFlags'", nullptr);
         return 0;
     }
 #endif
@@ -45146,7 +45146,7 @@ int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_newImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_newImage'", nullptr);
         return 0;
     }
 #endif
@@ -45201,7 +45201,7 @@ int lua_cocos2dx_RenderTexture_setClearDepth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearDepth'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_setClearDepth'", nullptr);
         return 0;
     }
 #endif
@@ -45230,7 +45230,7 @@ int lua_cocos2dx_RenderTexture_setClearDepth(lua_State* tolua_S)
 int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::RenderTexture* cobj = NULL;
+    cocos2d::RenderTexture* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -45243,7 +45243,7 @@ int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_initWithWidthAndHeight'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_initWithWidthAndHeight'", nullptr);
         return 0;
     }
 #endif
@@ -45424,7 +45424,7 @@ static int lua_cocos2dx_RenderTexture_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_RenderTexture(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.RenderTexture");
-    tolua_cclass(tolua_S,"RenderTexture","cc.RenderTexture","cc.Node",NULL);
+    tolua_cclass(tolua_S,"RenderTexture","cc.RenderTexture","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"RenderTexture");
         tolua_function(tolua_S,"setVirtualViewport",lua_cocos2dx_RenderTexture_setVirtualViewport);
@@ -45480,7 +45480,7 @@ int lua_cocos2dx_NodeGrid_setTarget(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_NodeGrid_setTarget'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_NodeGrid_setTarget'", nullptr);
         return 0;
     }
 #endif
@@ -45509,7 +45509,7 @@ int lua_cocos2dx_NodeGrid_setTarget(lua_State* tolua_S)
 int lua_cocos2dx_NodeGrid_getGrid(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::NodeGrid* cobj = NULL;
+    cocos2d::NodeGrid* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -45522,7 +45522,7 @@ int lua_cocos2dx_NodeGrid_getGrid(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_NodeGrid_getGrid'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_NodeGrid_getGrid'", nullptr);
         return 0;
     }
 #endif
@@ -45573,7 +45573,7 @@ int lua_cocos2dx_NodeGrid_setGrid(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_NodeGrid_setGrid'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_NodeGrid_setGrid'", nullptr);
         return 0;
     }
 #endif
@@ -45639,7 +45639,7 @@ static int lua_cocos2dx_NodeGrid_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_NodeGrid(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.NodeGrid");
-    tolua_cclass(tolua_S,"NodeGrid","cc.NodeGrid","cc.Node",NULL);
+    tolua_cclass(tolua_S,"NodeGrid","cc.NodeGrid","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"NodeGrid");
         tolua_function(tolua_S,"setTarget",lua_cocos2dx_NodeGrid_setTarget);
@@ -45673,7 +45673,7 @@ int lua_cocos2dx_ParticleBatchNode_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_setTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_setTexture'", nullptr);
         return 0;
     }
 #endif
@@ -45719,7 +45719,7 @@ int lua_cocos2dx_ParticleBatchNode_disableParticle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_disableParticle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_disableParticle'", nullptr);
         return 0;
     }
 #endif
@@ -45765,7 +45765,7 @@ int lua_cocos2dx_ParticleBatchNode_getTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_getTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_getTexture'", nullptr);
         return 0;
     }
 #endif
@@ -45809,7 +45809,7 @@ int lua_cocos2dx_ParticleBatchNode_setTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_setTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_setTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -45855,7 +45855,7 @@ int lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup'", nullptr);
         return 0;
     }
 #endif
@@ -45901,7 +45901,7 @@ int lua_cocos2dx_ParticleBatchNode_getTextureAtlas(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_getTextureAtlas'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_getTextureAtlas'", nullptr);
         return 0;
     }
 #endif
@@ -45945,7 +45945,7 @@ int lua_cocos2dx_ParticleBatchNode_insertChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_insertChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_insertChild'", nullptr);
         return 0;
     }
 #endif
@@ -45994,7 +45994,7 @@ int lua_cocos2dx_ParticleBatchNode_removeChildAtIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_removeChildAtIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleBatchNode_removeChildAtIndex'", nullptr);
         return 0;
     }
 #endif
@@ -46122,7 +46122,7 @@ static int lua_cocos2dx_ParticleBatchNode_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleBatchNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleBatchNode");
-    tolua_cclass(tolua_S,"ParticleBatchNode","cc.ParticleBatchNode","cc.Node",NULL);
+    tolua_cclass(tolua_S,"ParticleBatchNode","cc.ParticleBatchNode","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleBatchNode");
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_ParticleBatchNode_setTexture);
@@ -46162,7 +46162,7 @@ int lua_cocos2dx_ParticleSystem_getStartSizeVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSizeVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSizeVar'", nullptr);
         return 0;
     }
 #endif
@@ -46206,7 +46206,7 @@ int lua_cocos2dx_ParticleSystem_getTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTexture'", nullptr);
         return 0;
     }
 #endif
@@ -46250,7 +46250,7 @@ int lua_cocos2dx_ParticleSystem_isFull(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isFull'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isFull'", nullptr);
         return 0;
     }
 #endif
@@ -46294,7 +46294,7 @@ int lua_cocos2dx_ParticleSystem_getBatchNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getBatchNode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getBatchNode'", nullptr);
         return 0;
     }
 #endif
@@ -46338,7 +46338,7 @@ int lua_cocos2dx_ParticleSystem_getStartColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartColor'", nullptr);
         return 0;
     }
 #endif
@@ -46382,7 +46382,7 @@ int lua_cocos2dx_ParticleSystem_getPositionType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getPositionType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getPositionType'", nullptr);
         return 0;
     }
 #endif
@@ -46426,7 +46426,7 @@ int lua_cocos2dx_ParticleSystem_setPosVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setPosVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setPosVar'", nullptr);
         return 0;
     }
 #endif
@@ -46472,7 +46472,7 @@ int lua_cocos2dx_ParticleSystem_getEndSpin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSpin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSpin'", nullptr);
         return 0;
     }
 #endif
@@ -46516,7 +46516,7 @@ int lua_cocos2dx_ParticleSystem_setRotatePerSecondVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotatePerSecondVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotatePerSecondVar'", nullptr);
         return 0;
     }
 #endif
@@ -46562,7 +46562,7 @@ int lua_cocos2dx_ParticleSystem_getStartSpinVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSpinVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSpinVar'", nullptr);
         return 0;
     }
 #endif
@@ -46606,7 +46606,7 @@ int lua_cocos2dx_ParticleSystem_getRadialAccelVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRadialAccelVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRadialAccelVar'", nullptr);
         return 0;
     }
 #endif
@@ -46650,7 +46650,7 @@ int lua_cocos2dx_ParticleSystem_getEndSizeVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSizeVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSizeVar'", nullptr);
         return 0;
     }
 #endif
@@ -46694,7 +46694,7 @@ int lua_cocos2dx_ParticleSystem_setRotation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotation'", nullptr);
         return 0;
     }
 #endif
@@ -46740,7 +46740,7 @@ int lua_cocos2dx_ParticleSystem_setTangentialAccel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTangentialAccel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTangentialAccel'", nullptr);
         return 0;
     }
 #endif
@@ -46786,7 +46786,7 @@ int lua_cocos2dx_ParticleSystem_setScaleY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setScaleY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setScaleY'", nullptr);
         return 0;
     }
 #endif
@@ -46832,7 +46832,7 @@ int lua_cocos2dx_ParticleSystem_setScaleX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setScaleX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setScaleX'", nullptr);
         return 0;
     }
 #endif
@@ -46878,7 +46878,7 @@ int lua_cocos2dx_ParticleSystem_getRadialAccel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRadialAccel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRadialAccel'", nullptr);
         return 0;
     }
 #endif
@@ -46922,7 +46922,7 @@ int lua_cocos2dx_ParticleSystem_setStartRadius(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartRadius'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartRadius'", nullptr);
         return 0;
     }
 #endif
@@ -46968,7 +46968,7 @@ int lua_cocos2dx_ParticleSystem_setRotatePerSecond(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotatePerSecond'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotatePerSecond'", nullptr);
         return 0;
     }
 #endif
@@ -47014,7 +47014,7 @@ int lua_cocos2dx_ParticleSystem_setEndSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSize'", nullptr);
         return 0;
     }
 #endif
@@ -47060,7 +47060,7 @@ int lua_cocos2dx_ParticleSystem_getGravity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getGravity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getGravity'", nullptr);
         return 0;
     }
 #endif
@@ -47104,7 +47104,7 @@ int lua_cocos2dx_ParticleSystem_getTangentialAccel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTangentialAccel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTangentialAccel'", nullptr);
         return 0;
     }
 #endif
@@ -47148,7 +47148,7 @@ int lua_cocos2dx_ParticleSystem_setEndRadius(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndRadius'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndRadius'", nullptr);
         return 0;
     }
 #endif
@@ -47194,7 +47194,7 @@ int lua_cocos2dx_ParticleSystem_getSpeed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getSpeed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getSpeed'", nullptr);
         return 0;
     }
 #endif
@@ -47238,7 +47238,7 @@ int lua_cocos2dx_ParticleSystem_getAngle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getAngle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getAngle'", nullptr);
         return 0;
     }
 #endif
@@ -47282,7 +47282,7 @@ int lua_cocos2dx_ParticleSystem_setEndColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndColor'", nullptr);
         return 0;
     }
 #endif
@@ -47328,7 +47328,7 @@ int lua_cocos2dx_ParticleSystem_setStartSpin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSpin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSpin'", nullptr);
         return 0;
     }
 #endif
@@ -47374,7 +47374,7 @@ int lua_cocos2dx_ParticleSystem_setDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setDuration'", nullptr);
         return 0;
     }
 #endif
@@ -47420,7 +47420,7 @@ int lua_cocos2dx_ParticleSystem_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTexture'", nullptr);
         return 0;
     }
 #endif
@@ -47466,7 +47466,7 @@ int lua_cocos2dx_ParticleSystem_getPosVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getPosVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getPosVar'", nullptr);
         return 0;
     }
 #endif
@@ -47510,7 +47510,7 @@ int lua_cocos2dx_ParticleSystem_updateWithNoTime(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_updateWithNoTime'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_updateWithNoTime'", nullptr);
         return 0;
     }
 #endif
@@ -47553,7 +47553,7 @@ int lua_cocos2dx_ParticleSystem_isBlendAdditive(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isBlendAdditive'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isBlendAdditive'", nullptr);
         return 0;
     }
 #endif
@@ -47597,7 +47597,7 @@ int lua_cocos2dx_ParticleSystem_getSpeedVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getSpeedVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getSpeedVar'", nullptr);
         return 0;
     }
 #endif
@@ -47641,7 +47641,7 @@ int lua_cocos2dx_ParticleSystem_setPositionType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setPositionType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setPositionType'", nullptr);
         return 0;
     }
 #endif
@@ -47687,7 +47687,7 @@ int lua_cocos2dx_ParticleSystem_stopSystem(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_stopSystem'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_stopSystem'", nullptr);
         return 0;
     }
 #endif
@@ -47730,7 +47730,7 @@ int lua_cocos2dx_ParticleSystem_getSourcePosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getSourcePosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getSourcePosition'", nullptr);
         return 0;
     }
 #endif
@@ -47774,7 +47774,7 @@ int lua_cocos2dx_ParticleSystem_setLifeVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setLifeVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setLifeVar'", nullptr);
         return 0;
     }
 #endif
@@ -47820,7 +47820,7 @@ int lua_cocos2dx_ParticleSystem_setTotalParticles(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTotalParticles'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTotalParticles'", nullptr);
         return 0;
     }
 #endif
@@ -47866,7 +47866,7 @@ int lua_cocos2dx_ParticleSystem_setEndColorVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndColorVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndColorVar'", nullptr);
         return 0;
     }
 #endif
@@ -47912,7 +47912,7 @@ int lua_cocos2dx_ParticleSystem_updateQuadWithParticle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_updateQuadWithParticle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_updateQuadWithParticle'", nullptr);
         return 0;
     }
 #endif
@@ -47961,7 +47961,7 @@ int lua_cocos2dx_ParticleSystem_getAtlasIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getAtlasIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getAtlasIndex'", nullptr);
         return 0;
     }
 #endif
@@ -48005,7 +48005,7 @@ int lua_cocos2dx_ParticleSystem_getStartSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSize'", nullptr);
         return 0;
     }
 #endif
@@ -48049,7 +48049,7 @@ int lua_cocos2dx_ParticleSystem_setStartSpinVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSpinVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSpinVar'", nullptr);
         return 0;
     }
 #endif
@@ -48095,7 +48095,7 @@ int lua_cocos2dx_ParticleSystem_resetSystem(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_resetSystem'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_resetSystem'", nullptr);
         return 0;
     }
 #endif
@@ -48138,7 +48138,7 @@ int lua_cocos2dx_ParticleSystem_setAtlasIndex(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAtlasIndex'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAtlasIndex'", nullptr);
         return 0;
     }
 #endif
@@ -48184,7 +48184,7 @@ int lua_cocos2dx_ParticleSystem_setTangentialAccelVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTangentialAccelVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setTangentialAccelVar'", nullptr);
         return 0;
     }
 #endif
@@ -48230,7 +48230,7 @@ int lua_cocos2dx_ParticleSystem_setEndRadiusVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndRadiusVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndRadiusVar'", nullptr);
         return 0;
     }
 #endif
@@ -48276,7 +48276,7 @@ int lua_cocos2dx_ParticleSystem_getEndRadius(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndRadius'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndRadius'", nullptr);
         return 0;
     }
 #endif
@@ -48320,7 +48320,7 @@ int lua_cocos2dx_ParticleSystem_isOpacityModifyRGB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isOpacityModifyRGB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isOpacityModifyRGB'", nullptr);
         return 0;
     }
 #endif
@@ -48364,7 +48364,7 @@ int lua_cocos2dx_ParticleSystem_isActive(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isActive'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isActive'", nullptr);
         return 0;
     }
 #endif
@@ -48408,7 +48408,7 @@ int lua_cocos2dx_ParticleSystem_setRadialAccelVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRadialAccelVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRadialAccelVar'", nullptr);
         return 0;
     }
 #endif
@@ -48454,7 +48454,7 @@ int lua_cocos2dx_ParticleSystem_setStartSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSize'", nullptr);
         return 0;
     }
 #endif
@@ -48500,7 +48500,7 @@ int lua_cocos2dx_ParticleSystem_setSpeed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setSpeed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setSpeed'", nullptr);
         return 0;
     }
 #endif
@@ -48546,7 +48546,7 @@ int lua_cocos2dx_ParticleSystem_getStartSpin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSpin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartSpin'", nullptr);
         return 0;
     }
 #endif
@@ -48590,7 +48590,7 @@ int lua_cocos2dx_ParticleSystem_getRotatePerSecond(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotatePerSecond'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotatePerSecond'", nullptr);
         return 0;
     }
 #endif
@@ -48634,7 +48634,7 @@ int lua_cocos2dx_ParticleSystem_initParticle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_initParticle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_initParticle'", nullptr);
         return 0;
     }
 #endif
@@ -48680,7 +48680,7 @@ int lua_cocos2dx_ParticleSystem_setEmitterMode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEmitterMode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEmitterMode'", nullptr);
         return 0;
     }
 #endif
@@ -48726,7 +48726,7 @@ int lua_cocos2dx_ParticleSystem_getDuration(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getDuration'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getDuration'", nullptr);
         return 0;
     }
 #endif
@@ -48770,7 +48770,7 @@ int lua_cocos2dx_ParticleSystem_setSourcePosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setSourcePosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setSourcePosition'", nullptr);
         return 0;
     }
 #endif
@@ -48816,7 +48816,7 @@ int lua_cocos2dx_ParticleSystem_getEndSpinVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSpinVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSpinVar'", nullptr);
         return 0;
     }
 #endif
@@ -48860,7 +48860,7 @@ int lua_cocos2dx_ParticleSystem_setBlendAdditive(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setBlendAdditive'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setBlendAdditive'", nullptr);
         return 0;
     }
 #endif
@@ -48906,7 +48906,7 @@ int lua_cocos2dx_ParticleSystem_setLife(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setLife'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setLife'", nullptr);
         return 0;
     }
 #endif
@@ -48952,7 +48952,7 @@ int lua_cocos2dx_ParticleSystem_setAngleVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAngleVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAngleVar'", nullptr);
         return 0;
     }
 #endif
@@ -48998,7 +48998,7 @@ int lua_cocos2dx_ParticleSystem_setRotationIsDir(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotationIsDir'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRotationIsDir'", nullptr);
         return 0;
     }
 #endif
@@ -49044,7 +49044,7 @@ int lua_cocos2dx_ParticleSystem_setEndSizeVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSizeVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSizeVar'", nullptr);
         return 0;
     }
 #endif
@@ -49090,7 +49090,7 @@ int lua_cocos2dx_ParticleSystem_setAngle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAngle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAngle'", nullptr);
         return 0;
     }
 #endif
@@ -49136,7 +49136,7 @@ int lua_cocos2dx_ParticleSystem_setBatchNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setBatchNode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setBatchNode'", nullptr);
         return 0;
     }
 #endif
@@ -49182,7 +49182,7 @@ int lua_cocos2dx_ParticleSystem_getTangentialAccelVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTangentialAccelVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTangentialAccelVar'", nullptr);
         return 0;
     }
 #endif
@@ -49226,7 +49226,7 @@ int lua_cocos2dx_ParticleSystem_getEmitterMode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEmitterMode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEmitterMode'", nullptr);
         return 0;
     }
 #endif
@@ -49270,7 +49270,7 @@ int lua_cocos2dx_ParticleSystem_setEndSpinVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSpinVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSpinVar'", nullptr);
         return 0;
     }
 #endif
@@ -49316,7 +49316,7 @@ int lua_cocos2dx_ParticleSystem_getAngleVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getAngleVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getAngleVar'", nullptr);
         return 0;
     }
 #endif
@@ -49360,7 +49360,7 @@ int lua_cocos2dx_ParticleSystem_setStartColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartColor'", nullptr);
         return 0;
     }
 #endif
@@ -49406,7 +49406,7 @@ int lua_cocos2dx_ParticleSystem_getRotatePerSecondVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotatePerSecondVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotatePerSecondVar'", nullptr);
         return 0;
     }
 #endif
@@ -49450,7 +49450,7 @@ int lua_cocos2dx_ParticleSystem_getEndSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndSize'", nullptr);
         return 0;
     }
 #endif
@@ -49494,7 +49494,7 @@ int lua_cocos2dx_ParticleSystem_getLife(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getLife'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getLife'", nullptr);
         return 0;
     }
 #endif
@@ -49538,7 +49538,7 @@ int lua_cocos2dx_ParticleSystem_setSpeedVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setSpeedVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setSpeedVar'", nullptr);
         return 0;
     }
 #endif
@@ -49584,7 +49584,7 @@ int lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish'", nullptr);
         return 0;
     }
 #endif
@@ -49630,7 +49630,7 @@ int lua_cocos2dx_ParticleSystem_setGravity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setGravity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setGravity'", nullptr);
         return 0;
     }
 #endif
@@ -49676,7 +49676,7 @@ int lua_cocos2dx_ParticleSystem_postStep(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_postStep'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_postStep'", nullptr);
         return 0;
     }
 #endif
@@ -49719,7 +49719,7 @@ int lua_cocos2dx_ParticleSystem_setEmissionRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEmissionRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEmissionRate'", nullptr);
         return 0;
     }
 #endif
@@ -49765,7 +49765,7 @@ int lua_cocos2dx_ParticleSystem_getEndColorVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndColorVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndColorVar'", nullptr);
         return 0;
     }
 #endif
@@ -49809,7 +49809,7 @@ int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotationIsDir'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotationIsDir'", nullptr);
         return 0;
     }
 #endif
@@ -49853,7 +49853,7 @@ int lua_cocos2dx_ParticleSystem_setScale(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setScale'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setScale'", nullptr);
         return 0;
     }
 #endif
@@ -49899,7 +49899,7 @@ int lua_cocos2dx_ParticleSystem_getEmissionRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEmissionRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEmissionRate'", nullptr);
         return 0;
     }
 #endif
@@ -49943,7 +49943,7 @@ int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndColor'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndColor'", nullptr);
         return 0;
     }
 #endif
@@ -49987,7 +49987,7 @@ int lua_cocos2dx_ParticleSystem_getLifeVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getLifeVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getLifeVar'", nullptr);
         return 0;
     }
 #endif
@@ -50031,7 +50031,7 @@ int lua_cocos2dx_ParticleSystem_setStartSizeVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSizeVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartSizeVar'", nullptr);
         return 0;
     }
 #endif
@@ -50077,7 +50077,7 @@ int lua_cocos2dx_ParticleSystem_setOpacityModifyRGB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setOpacityModifyRGB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setOpacityModifyRGB'", nullptr);
         return 0;
     }
 #endif
@@ -50123,7 +50123,7 @@ int lua_cocos2dx_ParticleSystem_addParticle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_addParticle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_addParticle'", nullptr);
         return 0;
     }
 #endif
@@ -50167,7 +50167,7 @@ int lua_cocos2dx_ParticleSystem_getStartRadius(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartRadius'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartRadius'", nullptr);
         return 0;
     }
 #endif
@@ -50211,7 +50211,7 @@ int lua_cocos2dx_ParticleSystem_getParticleCount(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getParticleCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getParticleCount'", nullptr);
         return 0;
     }
 #endif
@@ -50255,7 +50255,7 @@ int lua_cocos2dx_ParticleSystem_getStartRadiusVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartRadiusVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartRadiusVar'", nullptr);
         return 0;
     }
 #endif
@@ -50299,7 +50299,7 @@ int lua_cocos2dx_ParticleSystem_setStartColorVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartColorVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartColorVar'", nullptr);
         return 0;
     }
 #endif
@@ -50345,7 +50345,7 @@ int lua_cocos2dx_ParticleSystem_setEndSpin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSpin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setEndSpin'", nullptr);
         return 0;
     }
 #endif
@@ -50391,7 +50391,7 @@ int lua_cocos2dx_ParticleSystem_setRadialAccel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRadialAccel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setRadialAccel'", nullptr);
         return 0;
     }
 #endif
@@ -50437,7 +50437,7 @@ int lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish'", nullptr);
         return 0;
     }
 #endif
@@ -50481,7 +50481,7 @@ int lua_cocos2dx_ParticleSystem_getTotalParticles(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTotalParticles'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getTotalParticles'", nullptr);
         return 0;
     }
 #endif
@@ -50525,7 +50525,7 @@ int lua_cocos2dx_ParticleSystem_setStartRadiusVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartRadiusVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_setStartRadiusVar'", nullptr);
         return 0;
     }
 #endif
@@ -50571,7 +50571,7 @@ int lua_cocos2dx_ParticleSystem_getEndRadiusVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndRadiusVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndRadiusVar'", nullptr);
         return 0;
     }
 #endif
@@ -50615,7 +50615,7 @@ int lua_cocos2dx_ParticleSystem_getStartColorVar(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartColorVar'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getStartColorVar'", nullptr);
         return 0;
     }
 #endif
@@ -50714,7 +50714,7 @@ static int lua_cocos2dx_ParticleSystem_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleSystem(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleSystem");
-    tolua_cclass(tolua_S,"ParticleSystem","cc.ParticleSystem","cc.Node",NULL);
+    tolua_cclass(tolua_S,"ParticleSystem","cc.ParticleSystem","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleSystem");
         tolua_function(tolua_S,"getStartSizeVar",lua_cocos2dx_ParticleSystem_getStartSizeVar);
@@ -50846,7 +50846,7 @@ int lua_cocos2dx_ParticleSystemQuad_setDisplayFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystemQuad_setDisplayFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystemQuad_setDisplayFrame'", nullptr);
         return 0;
     }
 #endif
@@ -50892,7 +50892,7 @@ int lua_cocos2dx_ParticleSystemQuad_setTextureWithRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystemQuad_setTextureWithRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystemQuad_setTextureWithRect'", nullptr);
         return 0;
     }
 #endif
@@ -51008,7 +51008,7 @@ static int lua_cocos2dx_ParticleSystemQuad_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleSystemQuad(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleSystemQuad");
-    tolua_cclass(tolua_S,"ParticleSystemQuad","cc.ParticleSystemQuad","cc.ParticleSystem",NULL);
+    tolua_cclass(tolua_S,"ParticleSystemQuad","cc.ParticleSystemQuad","cc.ParticleSystem",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleSystemQuad");
         tolua_function(tolua_S,"setDisplayFrame",lua_cocos2dx_ParticleSystemQuad_setDisplayFrame);
@@ -51095,7 +51095,7 @@ static int lua_cocos2dx_ParticleFire_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleFire(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleFire");
-    tolua_cclass(tolua_S,"ParticleFire","cc.ParticleFire","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleFire","cc.ParticleFire","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleFire");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleFire_create);
@@ -51180,7 +51180,7 @@ static int lua_cocos2dx_ParticleFireworks_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleFireworks(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleFireworks");
-    tolua_cclass(tolua_S,"ParticleFireworks","cc.ParticleFireworks","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleFireworks","cc.ParticleFireworks","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleFireworks");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleFireworks_create);
@@ -51265,7 +51265,7 @@ static int lua_cocos2dx_ParticleSun_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleSun(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleSun");
-    tolua_cclass(tolua_S,"ParticleSun","cc.ParticleSun","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleSun","cc.ParticleSun","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleSun");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSun_create);
@@ -51350,7 +51350,7 @@ static int lua_cocos2dx_ParticleGalaxy_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleGalaxy(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleGalaxy");
-    tolua_cclass(tolua_S,"ParticleGalaxy","cc.ParticleGalaxy","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleGalaxy","cc.ParticleGalaxy","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleGalaxy");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleGalaxy_create);
@@ -51435,7 +51435,7 @@ static int lua_cocos2dx_ParticleFlower_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleFlower(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleFlower");
-    tolua_cclass(tolua_S,"ParticleFlower","cc.ParticleFlower","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleFlower","cc.ParticleFlower","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleFlower");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleFlower_create);
@@ -51520,7 +51520,7 @@ static int lua_cocos2dx_ParticleMeteor_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleMeteor(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleMeteor");
-    tolua_cclass(tolua_S,"ParticleMeteor","cc.ParticleMeteor","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleMeteor","cc.ParticleMeteor","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleMeteor");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleMeteor_create);
@@ -51605,7 +51605,7 @@ static int lua_cocos2dx_ParticleSpiral_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleSpiral(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleSpiral");
-    tolua_cclass(tolua_S,"ParticleSpiral","cc.ParticleSpiral","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleSpiral","cc.ParticleSpiral","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleSpiral");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSpiral_create);
@@ -51690,7 +51690,7 @@ static int lua_cocos2dx_ParticleExplosion_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleExplosion(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleExplosion");
-    tolua_cclass(tolua_S,"ParticleExplosion","cc.ParticleExplosion","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleExplosion","cc.ParticleExplosion","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleExplosion");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleExplosion_create);
@@ -51775,7 +51775,7 @@ static int lua_cocos2dx_ParticleSmoke_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleSmoke(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleSmoke");
-    tolua_cclass(tolua_S,"ParticleSmoke","cc.ParticleSmoke","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleSmoke","cc.ParticleSmoke","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleSmoke");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSmoke_create);
@@ -51860,7 +51860,7 @@ static int lua_cocos2dx_ParticleSnow_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleSnow(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleSnow");
-    tolua_cclass(tolua_S,"ParticleSnow","cc.ParticleSnow","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleSnow","cc.ParticleSnow","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleSnow");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSnow_create);
@@ -51945,7 +51945,7 @@ static int lua_cocos2dx_ParticleRain_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParticleRain(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParticleRain");
-    tolua_cclass(tolua_S,"ParticleRain","cc.ParticleRain","cc.ParticleSystemQuad",NULL);
+    tolua_cclass(tolua_S,"ParticleRain","cc.ParticleRain","cc.ParticleSystemQuad",nullptr);
 
     tolua_beginmodule(tolua_S,"ParticleRain");
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleRain_create);
@@ -51966,7 +51966,7 @@ static int lua_cocos2dx_EventListenerCustom_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventListenerCustom(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerCustom");
-    tolua_cclass(tolua_S,"EventListenerCustom","cc.EventListenerCustom","cc.EventListener",NULL);
+    tolua_cclass(tolua_S,"EventListenerCustom","cc.EventListenerCustom","cc.EventListener",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerCustom");
     tolua_endmodule(tolua_S);
@@ -51996,7 +51996,7 @@ int lua_cocos2dx_EventCustom_getEventName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventCustom_getEventName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventCustom_getEventName'", nullptr);
         return 0;
     }
 #endif
@@ -52066,7 +52066,7 @@ static int lua_cocos2dx_EventCustom_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventCustom(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventCustom");
-    tolua_cclass(tolua_S,"EventCustom","cc.EventCustom","cc.Event",NULL);
+    tolua_cclass(tolua_S,"EventCustom","cc.EventCustom","cc.Event",nullptr);
 
     tolua_beginmodule(tolua_S,"EventCustom");
         tolua_function(tolua_S,"getEventName",lua_cocos2dx_EventCustom_getEventName);
@@ -52098,7 +52098,7 @@ int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_fullPathForFilename'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_fullPathForFilename'", nullptr);
         return 0;
     }
 #endif
@@ -52145,7 +52145,7 @@ int lua_cocos2dx_FileUtils_getStringFromFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getStringFromFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getStringFromFile'", nullptr);
         return 0;
     }
 #endif
@@ -52192,7 +52192,7 @@ int lua_cocos2dx_FileUtils_setFilenameLookupDictionary(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_setFilenameLookupDictionary'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_setFilenameLookupDictionary'", nullptr);
         return 0;
     }
 #endif
@@ -52238,7 +52238,7 @@ int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_isAbsolutePath'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_isAbsolutePath'", nullptr);
         return 0;
     }
 #endif
@@ -52285,7 +52285,7 @@ int lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile'", nullptr);
         return 0;
     }
 #endif
@@ -52331,7 +52331,7 @@ int lua_cocos2dx_FileUtils_isPopupNotify(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_isPopupNotify'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_isPopupNotify'", nullptr);
         return 0;
     }
 #endif
@@ -52375,7 +52375,7 @@ int lua_cocos2dx_FileUtils_getValueVectorFromFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getValueVectorFromFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getValueVectorFromFile'", nullptr);
         return 0;
     }
 #endif
@@ -52422,7 +52422,7 @@ int lua_cocos2dx_FileUtils_writeToFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_writeToFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_writeToFile'", nullptr);
         return 0;
     }
 #endif
@@ -52472,7 +52472,7 @@ int lua_cocos2dx_FileUtils_getValueMapFromFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getValueMapFromFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getValueMapFromFile'", nullptr);
         return 0;
     }
 #endif
@@ -52519,7 +52519,7 @@ int lua_cocos2dx_FileUtils_addSearchResolutionsOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_addSearchResolutionsOrder'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_addSearchResolutionsOrder'", nullptr);
         return 0;
     }
 #endif
@@ -52565,7 +52565,7 @@ int lua_cocos2dx_FileUtils_addSearchPath(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_addSearchPath'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_addSearchPath'", nullptr);
         return 0;
     }
 #endif
@@ -52611,7 +52611,7 @@ int lua_cocos2dx_FileUtils_isFileExist(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_isFileExist'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_isFileExist'", nullptr);
         return 0;
     }
 #endif
@@ -52658,7 +52658,7 @@ int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_purgeCachedEntries'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_purgeCachedEntries'", nullptr);
         return 0;
     }
 #endif
@@ -52701,7 +52701,7 @@ int lua_cocos2dx_FileUtils_fullPathFromRelativeFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_fullPathFromRelativeFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_fullPathFromRelativeFile'", nullptr);
         return 0;
     }
 #endif
@@ -52751,7 +52751,7 @@ int lua_cocos2dx_FileUtils_setPopupNotify(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_setPopupNotify'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_setPopupNotify'", nullptr);
         return 0;
     }
 #endif
@@ -52797,7 +52797,7 @@ int lua_cocos2dx_FileUtils_getWritablePath(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getWritablePath'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getWritablePath'", nullptr);
         return 0;
     }
 #endif
@@ -52891,7 +52891,7 @@ static int lua_cocos2dx_FileUtils_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.FileUtils");
-    tolua_cclass(tolua_S,"FileUtils","cc.FileUtils","",NULL);
+    tolua_cclass(tolua_S,"FileUtils","cc.FileUtils","",nullptr);
 
     tolua_beginmodule(tolua_S,"FileUtils");
         tolua_function(tolua_S,"fullPathForFilename",lua_cocos2dx_FileUtils_fullPathForFilename);
@@ -52939,7 +52939,7 @@ int lua_cocos2dx_Application_getTargetPlatform(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_getTargetPlatform'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_getTargetPlatform'", nullptr);
         return 0;
     }
 #endif
@@ -52983,7 +52983,7 @@ int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_setAnimationInterval'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_setAnimationInterval'", nullptr);
         return 0;
     }
 #endif
@@ -53029,7 +53029,7 @@ int lua_cocos2dx_Application_getCurrentLanguage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_getCurrentLanguage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_getCurrentLanguage'", nullptr);
         return 0;
     }
 #endif
@@ -53093,7 +53093,7 @@ static int lua_cocos2dx_Application_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Application(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Application");
-    tolua_cclass(tolua_S,"Application","cc.Application","",NULL);
+    tolua_cclass(tolua_S,"Application","cc.Application","",nullptr);
 
     tolua_beginmodule(tolua_S,"Application");
         tolua_function(tolua_S,"getTargetPlatform",lua_cocos2dx_Application_getTargetPlatform);
@@ -53127,7 +53127,7 @@ int lua_cocos2dx_GLViewProtocol_setFrameSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setFrameSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setFrameSize'", nullptr);
         return 0;
     }
 #endif
@@ -53176,7 +53176,7 @@ int lua_cocos2dx_GLViewProtocol_getViewPortRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getViewPortRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getViewPortRect'", nullptr);
         return 0;
     }
 #endif
@@ -53220,7 +53220,7 @@ int lua_cocos2dx_GLViewProtocol_setIMEKeyboardState(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setIMEKeyboardState'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setIMEKeyboardState'", nullptr);
         return 0;
     }
 #endif
@@ -53266,7 +53266,7 @@ int lua_cocos2dx_GLViewProtocol_setScissorInPoints(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setScissorInPoints'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setScissorInPoints'", nullptr);
         return 0;
     }
 #endif
@@ -53321,7 +53321,7 @@ int lua_cocos2dx_GLViewProtocol_getViewName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getViewName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getViewName'", nullptr);
         return 0;
     }
 #endif
@@ -53365,7 +53365,7 @@ int lua_cocos2dx_GLViewProtocol_isOpenGLReady(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_isOpenGLReady'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_isOpenGLReady'", nullptr);
         return 0;
     }
 #endif
@@ -53409,7 +53409,7 @@ int lua_cocos2dx_GLViewProtocol_end(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_end'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_end'", nullptr);
         return 0;
     }
 #endif
@@ -53452,7 +53452,7 @@ int lua_cocos2dx_GLViewProtocol_getScaleY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getScaleY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getScaleY'", nullptr);
         return 0;
     }
 #endif
@@ -53496,7 +53496,7 @@ int lua_cocos2dx_GLViewProtocol_getScaleX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getScaleX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getScaleX'", nullptr);
         return 0;
     }
 #endif
@@ -53540,7 +53540,7 @@ int lua_cocos2dx_GLViewProtocol_getVisibleOrigin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getVisibleOrigin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getVisibleOrigin'", nullptr);
         return 0;
     }
 #endif
@@ -53584,7 +53584,7 @@ int lua_cocos2dx_GLViewProtocol_getFrameSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getFrameSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getFrameSize'", nullptr);
         return 0;
     }
 #endif
@@ -53628,7 +53628,7 @@ int lua_cocos2dx_GLViewProtocol_getDesignResolutionSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getDesignResolutionSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getDesignResolutionSize'", nullptr);
         return 0;
     }
 #endif
@@ -53672,7 +53672,7 @@ int lua_cocos2dx_GLViewProtocol_pollInputEvents(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_pollInputEvents'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_pollInputEvents'", nullptr);
         return 0;
     }
 #endif
@@ -53715,7 +53715,7 @@ int lua_cocos2dx_GLViewProtocol_swapBuffers(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_swapBuffers'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_swapBuffers'", nullptr);
         return 0;
     }
 #endif
@@ -53758,7 +53758,7 @@ int lua_cocos2dx_GLViewProtocol_setDesignResolutionSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setDesignResolutionSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setDesignResolutionSize'", nullptr);
         return 0;
     }
 #endif
@@ -53810,7 +53810,7 @@ int lua_cocos2dx_GLViewProtocol_getResolutionPolicy(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getResolutionPolicy'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getResolutionPolicy'", nullptr);
         return 0;
     }
 #endif
@@ -53854,7 +53854,7 @@ int lua_cocos2dx_GLViewProtocol_setViewPortInPoints(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setViewPortInPoints'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setViewPortInPoints'", nullptr);
         return 0;
     }
 #endif
@@ -53909,7 +53909,7 @@ int lua_cocos2dx_GLViewProtocol_getScissorRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getScissorRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getScissorRect'", nullptr);
         return 0;
     }
 #endif
@@ -53953,7 +53953,7 @@ int lua_cocos2dx_GLViewProtocol_setViewName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setViewName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_setViewName'", nullptr);
         return 0;
     }
 #endif
@@ -53999,7 +53999,7 @@ int lua_cocos2dx_GLViewProtocol_getVisibleRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getVisibleRect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getVisibleRect'", nullptr);
         return 0;
     }
 #endif
@@ -54043,7 +54043,7 @@ int lua_cocos2dx_GLViewProtocol_getVisibleSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getVisibleSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_getVisibleSize'", nullptr);
         return 0;
     }
 #endif
@@ -54087,7 +54087,7 @@ int lua_cocos2dx_GLViewProtocol_isScissorEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_isScissorEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLViewProtocol_isScissorEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -54120,7 +54120,7 @@ static int lua_cocos2dx_GLViewProtocol_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_GLViewProtocol(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.GLViewProtocol");
-    tolua_cclass(tolua_S,"GLViewProtocol","cc.GLViewProtocol","",NULL);
+    tolua_cclass(tolua_S,"GLViewProtocol","cc.GLViewProtocol","",nullptr);
 
     tolua_beginmodule(tolua_S,"GLViewProtocol");
         tolua_function(tolua_S,"setFrameSize",lua_cocos2dx_GLViewProtocol_setFrameSize);
@@ -54276,7 +54276,7 @@ static int lua_cocos2dx_GLView_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_GLView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.GLView");
-    tolua_cclass(tolua_S,"GLView","cc.GLView","cc.GLViewProtocol",NULL);
+    tolua_cclass(tolua_S,"GLView","cc.GLView","cc.GLViewProtocol",nullptr);
 
     tolua_beginmodule(tolua_S,"GLView");
         tolua_function(tolua_S,"createWithRect", lua_cocos2dx_GLView_createWithRect);
@@ -54309,7 +54309,7 @@ int lua_cocos2dx_ShaderCache_reloadDefaultShaders(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_reloadDefaultShaders'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_reloadDefaultShaders'", nullptr);
         return 0;
     }
 #endif
@@ -54352,7 +54352,7 @@ int lua_cocos2dx_ShaderCache_addProgram(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_addProgram'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_addProgram'", nullptr);
         return 0;
     }
 #endif
@@ -54401,7 +54401,7 @@ int lua_cocos2dx_ShaderCache_getProgram(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_getProgram'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_getProgram'", nullptr);
         return 0;
     }
 #endif
@@ -54448,7 +54448,7 @@ int lua_cocos2dx_ShaderCache_loadDefaultShaders(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_loadDefaultShaders'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_loadDefaultShaders'", nullptr);
         return 0;
     }
 #endif
@@ -54575,7 +54575,7 @@ static int lua_cocos2dx_ShaderCache_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ShaderCache(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ShaderCache");
-    tolua_cclass(tolua_S,"ShaderCache","cc.ShaderCache","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"ShaderCache","cc.ShaderCache","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ShaderCache");
         tolua_function(tolua_S,"reloadDefaultShaders",lua_cocos2dx_ShaderCache_reloadDefaultShaders);
@@ -54612,7 +54612,7 @@ int lua_cocos2dx_AnimationCache_getAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_getAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_getAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -54659,7 +54659,7 @@ int lua_cocos2dx_AnimationCache_addAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_addAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_addAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -54708,7 +54708,7 @@ int lua_cocos2dx_AnimationCache_init(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_init'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_init'", nullptr);
         return 0;
     }
 #endif
@@ -54752,7 +54752,7 @@ int lua_cocos2dx_AnimationCache_addAnimationsWithDictionary(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_addAnimationsWithDictionary'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_addAnimationsWithDictionary'", nullptr);
         return 0;
     }
 #endif
@@ -54801,7 +54801,7 @@ int lua_cocos2dx_AnimationCache_removeAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_removeAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_removeAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -54847,7 +54847,7 @@ int lua_cocos2dx_AnimationCache_addAnimationsWithFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_addAnimationsWithFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AnimationCache_addAnimationsWithFile'", nullptr);
         return 0;
     }
 #endif
@@ -54977,7 +54977,7 @@ static int lua_cocos2dx_AnimationCache_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_AnimationCache(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.AnimationCache");
-    tolua_cclass(tolua_S,"AnimationCache","cc.AnimationCache","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"AnimationCache","cc.AnimationCache","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"AnimationCache");
         tolua_function(tolua_S,"getAnimation",lua_cocos2dx_AnimationCache_getAnimation);
@@ -54999,7 +54999,7 @@ int lua_register_cocos2dx_AnimationCache(lua_State* tolua_S)
 int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::SpriteFrameCache* cobj = NULL;
+    cocos2d::SpriteFrameCache* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -55012,7 +55012,7 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile'", nullptr);
         return 0;
     }
 #endif
@@ -55088,7 +55088,7 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFrame(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_addSpriteFrame'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_addSpriteFrame'", nullptr);
         return 0;
     }
 #endif
@@ -55137,7 +55137,7 @@ int lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames'", nullptr);
         return 0;
     }
 #endif
@@ -55180,7 +55180,7 @@ int lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName'", nullptr);
         return 0;
     }
 #endif
@@ -55227,7 +55227,7 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile'", nullptr);
         return 0;
     }
 #endif
@@ -55273,7 +55273,7 @@ int lua_cocos2dx_SpriteFrameCache_init(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_init'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_init'", nullptr);
         return 0;
     }
 #endif
@@ -55317,7 +55317,7 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFrames(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFrames'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFrames'", nullptr);
         return 0;
     }
 #endif
@@ -55360,7 +55360,7 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture'", nullptr);
         return 0;
     }
 #endif
@@ -55406,7 +55406,7 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName'", nullptr);
         return 0;
     }
 #endif
@@ -55502,7 +55502,7 @@ static int lua_cocos2dx_SpriteFrameCache_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SpriteFrameCache(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SpriteFrameCache");
-    tolua_cclass(tolua_S,"SpriteFrameCache","cc.SpriteFrameCache","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"SpriteFrameCache","cc.SpriteFrameCache","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"SpriteFrameCache");
         tolua_function(tolua_S,"addSpriteFrames",lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile);
@@ -55543,7 +55543,7 @@ int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setIntegerForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setIntegerForKey'", nullptr);
         return 0;
     }
 #endif
@@ -55575,7 +55575,7 @@ int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
 int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::UserDefault* cobj = NULL;
+    cocos2d::UserDefault* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -55588,7 +55588,7 @@ int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getFloatForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getFloatForKey'", nullptr);
         return 0;
     }
 #endif
@@ -55634,7 +55634,7 @@ int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
 int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::UserDefault* cobj = NULL;
+    cocos2d::UserDefault* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -55647,7 +55647,7 @@ int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getBoolForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getBoolForKey'", nullptr);
         return 0;
     }
 #endif
@@ -55710,7 +55710,7 @@ int lua_cocos2dx_UserDefault_setDoubleForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setDoubleForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setDoubleForKey'", nullptr);
         return 0;
     }
 #endif
@@ -55759,7 +55759,7 @@ int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setFloatForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setFloatForKey'", nullptr);
         return 0;
     }
 #endif
@@ -55791,7 +55791,7 @@ int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
 int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::UserDefault* cobj = NULL;
+    cocos2d::UserDefault* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -55804,7 +55804,7 @@ int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getStringForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getStringForKey'", nullptr);
         return 0;
     }
 #endif
@@ -55867,7 +55867,7 @@ int lua_cocos2dx_UserDefault_setStringForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setStringForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setStringForKey'", nullptr);
         return 0;
     }
 #endif
@@ -55916,7 +55916,7 @@ int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_flush'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_flush'", nullptr);
         return 0;
     }
 #endif
@@ -55942,7 +55942,7 @@ int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
 int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::UserDefault* cobj = NULL;
+    cocos2d::UserDefault* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -55955,7 +55955,7 @@ int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getIntegerForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getIntegerForKey'", nullptr);
         return 0;
     }
 #endif
@@ -56001,7 +56001,7 @@ int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
 int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::UserDefault* cobj = NULL;
+    cocos2d::UserDefault* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -56014,7 +56014,7 @@ int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getDoubleForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_getDoubleForKey'", nullptr);
         return 0;
     }
 #endif
@@ -56077,7 +56077,7 @@ int lua_cocos2dx_UserDefault_setBoolForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setBoolForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_UserDefault_setBoolForKey'", nullptr);
         return 0;
     }
 #endif
@@ -56207,7 +56207,7 @@ static int lua_cocos2dx_UserDefault_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_UserDefault(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.UserDefault");
-    tolua_cclass(tolua_S,"UserDefault","cc.UserDefault","",NULL);
+    tolua_cclass(tolua_S,"UserDefault","cc.UserDefault","",nullptr);
 
     tolua_beginmodule(tolua_S,"UserDefault");
         tolua_function(tolua_S,"setIntegerForKey",lua_cocos2dx_UserDefault_setIntegerForKey);
@@ -56251,7 +56251,7 @@ int lua_cocos2dx_TextureCache_reloadTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_reloadTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_reloadTexture'", nullptr);
         return 0;
     }
 #endif
@@ -56298,7 +56298,7 @@ int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTextureForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTextureForKey'", nullptr);
         return 0;
     }
 #endif
@@ -56344,7 +56344,7 @@ int lua_cocos2dx_TextureCache_removeAllTextures(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeAllTextures'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeAllTextures'", nullptr);
         return 0;
     }
 #endif
@@ -56387,7 +56387,7 @@ int lua_cocos2dx_TextureCache_getDescription(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getDescription'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getDescription'", nullptr);
         return 0;
     }
 #endif
@@ -56431,7 +56431,7 @@ int lua_cocos2dx_TextureCache_getCachedTextureInfo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getCachedTextureInfo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getCachedTextureInfo'", nullptr);
         return 0;
     }
 #endif
@@ -56458,7 +56458,7 @@ int lua_cocos2dx_TextureCache_getCachedTextureInfo(lua_State* tolua_S)
 int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TextureCache* cobj = NULL;
+    cocos2d::TextureCache* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -56471,7 +56471,7 @@ int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_addImage'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_addImage'", nullptr);
         return 0;
     }
 #endif
@@ -56534,7 +56534,7 @@ int lua_cocos2dx_TextureCache_getTextureForKey(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getTextureForKey'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getTextureForKey'", nullptr);
         return 0;
     }
 #endif
@@ -56581,7 +56581,7 @@ int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeUnusedTextures'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeUnusedTextures'", nullptr);
         return 0;
     }
 #endif
@@ -56624,7 +56624,7 @@ int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTexture'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_removeTexture'", nullptr);
         return 0;
     }
 #endif
@@ -56670,7 +56670,7 @@ int lua_cocos2dx_TextureCache_waitForQuit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_waitForQuit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_waitForQuit'", nullptr);
         return 0;
     }
 #endif
@@ -56736,7 +56736,7 @@ static int lua_cocos2dx_TextureCache_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TextureCache");
-    tolua_cclass(tolua_S,"TextureCache","cc.TextureCache","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"TextureCache","cc.TextureCache","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"TextureCache");
         tolua_function(tolua_S,"reloadTexture",lua_cocos2dx_TextureCache_reloadTexture);
@@ -56760,7 +56760,7 @@ int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
 int lua_cocos2dx_ParallaxNode_getParallaxArray(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::ParallaxNode* cobj = NULL;
+    cocos2d::ParallaxNode* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -56773,7 +56773,7 @@ int lua_cocos2dx_ParallaxNode_getParallaxArray(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_getParallaxArray'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_getParallaxArray'", nullptr);
         return 0;
     }
 #endif
@@ -56824,7 +56824,7 @@ int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_addChild'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_addChild'", nullptr);
         return 0;
     }
 #endif
@@ -56879,7 +56879,7 @@ int lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup'", nullptr);
         return 0;
     }
 #endif
@@ -56925,7 +56925,7 @@ int lua_cocos2dx_ParallaxNode_setParallaxArray(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_setParallaxArray'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParallaxNode_setParallaxArray'", nullptr);
         return 0;
     }
 #endif
@@ -56991,7 +56991,7 @@ static int lua_cocos2dx_ParallaxNode_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ParallaxNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ParallaxNode");
-    tolua_cclass(tolua_S,"ParallaxNode","cc.ParallaxNode","cc.Node",NULL);
+    tolua_cclass(tolua_S,"ParallaxNode","cc.ParallaxNode","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"ParallaxNode");
         tolua_function(tolua_S,"getParallaxArray",lua_cocos2dx_ParallaxNode_getParallaxArray);
@@ -57026,7 +57026,7 @@ int lua_cocos2dx_TMXObjectGroup_setPositionOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setPositionOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setPositionOffset'", nullptr);
         return 0;
     }
 #endif
@@ -57072,7 +57072,7 @@ int lua_cocos2dx_TMXObjectGroup_getProperty(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getProperty'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getProperty'", nullptr);
         return 0;
     }
 #endif
@@ -57119,7 +57119,7 @@ int lua_cocos2dx_TMXObjectGroup_getPositionOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getPositionOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getPositionOffset'", nullptr);
         return 0;
     }
 #endif
@@ -57163,7 +57163,7 @@ int lua_cocos2dx_TMXObjectGroup_getObject(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getObject'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getObject'", nullptr);
         return 0;
     }
 #endif
@@ -57193,7 +57193,7 @@ int lua_cocos2dx_TMXObjectGroup_getObject(lua_State* tolua_S)
 int lua_cocos2dx_TMXObjectGroup_getObjects(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXObjectGroup* cobj = NULL;
+    cocos2d::TMXObjectGroup* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -57206,7 +57206,7 @@ int lua_cocos2dx_TMXObjectGroup_getObjects(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getObjects'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getObjects'", nullptr);
         return 0;
     }
 #endif
@@ -57257,7 +57257,7 @@ int lua_cocos2dx_TMXObjectGroup_setGroupName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setGroupName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setGroupName'", nullptr);
         return 0;
     }
 #endif
@@ -57286,7 +57286,7 @@ int lua_cocos2dx_TMXObjectGroup_setGroupName(lua_State* tolua_S)
 int lua_cocos2dx_TMXObjectGroup_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXObjectGroup* cobj = NULL;
+    cocos2d::TMXObjectGroup* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -57299,7 +57299,7 @@ int lua_cocos2dx_TMXObjectGroup_getProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getProperties'", nullptr);
         return 0;
     }
 #endif
@@ -57350,7 +57350,7 @@ int lua_cocos2dx_TMXObjectGroup_getGroupName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getGroupName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_getGroupName'", nullptr);
         return 0;
     }
 #endif
@@ -57394,7 +57394,7 @@ int lua_cocos2dx_TMXObjectGroup_setProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setProperties'", nullptr);
         return 0;
     }
 #endif
@@ -57440,7 +57440,7 @@ int lua_cocos2dx_TMXObjectGroup_setObjects(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setObjects'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXObjectGroup_setObjects'", nullptr);
         return 0;
     }
 #endif
@@ -57509,7 +57509,7 @@ static int lua_cocos2dx_TMXObjectGroup_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TMXObjectGroup(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TMXObjectGroup");
-    tolua_cclass(tolua_S,"TMXObjectGroup","cc.TMXObjectGroup","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"TMXObjectGroup","cc.TMXObjectGroup","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"TMXObjectGroup");
         tolua_function(tolua_S,"setPositionOffset",lua_cocos2dx_TMXObjectGroup_setPositionOffset);
@@ -57550,7 +57550,7 @@ int lua_cocos2dx_TMXLayerInfo_setProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayerInfo_setProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayerInfo_setProperties'", nullptr);
         return 0;
     }
 #endif
@@ -57596,7 +57596,7 @@ int lua_cocos2dx_TMXLayerInfo_getProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayerInfo_getProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayerInfo_getProperties'", nullptr);
         return 0;
     }
 #endif
@@ -57663,7 +57663,7 @@ static int lua_cocos2dx_TMXLayerInfo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TMXLayerInfo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TMXLayerInfo");
-    tolua_cclass(tolua_S,"TMXLayerInfo","cc.TMXLayerInfo","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"TMXLayerInfo","cc.TMXLayerInfo","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"TMXLayerInfo");
         tolua_function(tolua_S,"setProperties",lua_cocos2dx_TMXLayerInfo_setProperties);
@@ -57696,7 +57696,7 @@ int lua_cocos2dx_TMXTilesetInfo_getRectForGID(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTilesetInfo_getRectForGID'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTilesetInfo_getRectForGID'", nullptr);
         return 0;
     }
 #endif
@@ -57766,7 +57766,7 @@ static int lua_cocos2dx_TMXTilesetInfo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TMXTilesetInfo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TMXTilesetInfo");
-    tolua_cclass(tolua_S,"TMXTilesetInfo","cc.TMXTilesetInfo","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"TMXTilesetInfo","cc.TMXTilesetInfo","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"TMXTilesetInfo");
         tolua_function(tolua_S,"getRectForGID",lua_cocos2dx_TMXTilesetInfo_getRectForGID);
@@ -57798,7 +57798,7 @@ int lua_cocos2dx_TMXMapInfo_setObjectGroups(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setObjectGroups'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setObjectGroups'", nullptr);
         return 0;
     }
 #endif
@@ -57844,7 +57844,7 @@ int lua_cocos2dx_TMXMapInfo_setTileSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTileSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTileSize'", nullptr);
         return 0;
     }
 #endif
@@ -57890,7 +57890,7 @@ int lua_cocos2dx_TMXMapInfo_initWithTMXFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_initWithTMXFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_initWithTMXFile'", nullptr);
         return 0;
     }
 #endif
@@ -57937,7 +57937,7 @@ int lua_cocos2dx_TMXMapInfo_getOrientation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getOrientation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getOrientation'", nullptr);
         return 0;
     }
 #endif
@@ -57981,7 +57981,7 @@ int lua_cocos2dx_TMXMapInfo_isStoringCharacters(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_isStoringCharacters'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_isStoringCharacters'", nullptr);
         return 0;
     }
 #endif
@@ -58025,7 +58025,7 @@ int lua_cocos2dx_TMXMapInfo_setLayers(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setLayers'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setLayers'", nullptr);
         return 0;
     }
 #endif
@@ -58071,7 +58071,7 @@ int lua_cocos2dx_TMXMapInfo_parseXMLFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_parseXMLFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_parseXMLFile'", nullptr);
         return 0;
     }
 #endif
@@ -58118,7 +58118,7 @@ int lua_cocos2dx_TMXMapInfo_getParentElement(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getParentElement'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getParentElement'", nullptr);
         return 0;
     }
 #endif
@@ -58162,7 +58162,7 @@ int lua_cocos2dx_TMXMapInfo_setTMXFileName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTMXFileName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTMXFileName'", nullptr);
         return 0;
     }
 #endif
@@ -58208,7 +58208,7 @@ int lua_cocos2dx_TMXMapInfo_parseXMLString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_parseXMLString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_parseXMLString'", nullptr);
         return 0;
     }
 #endif
@@ -58238,7 +58238,7 @@ int lua_cocos2dx_TMXMapInfo_parseXMLString(lua_State* tolua_S)
 int lua_cocos2dx_TMXMapInfo_getLayers(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXMapInfo* cobj = NULL;
+    cocos2d::TMXMapInfo* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -58251,7 +58251,7 @@ int lua_cocos2dx_TMXMapInfo_getLayers(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getLayers'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getLayers'", nullptr);
         return 0;
     }
 #endif
@@ -58285,7 +58285,7 @@ int lua_cocos2dx_TMXMapInfo_getLayers(lua_State* tolua_S)
 int lua_cocos2dx_TMXMapInfo_getTilesets(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXMapInfo* cobj = NULL;
+    cocos2d::TMXMapInfo* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -58298,7 +58298,7 @@ int lua_cocos2dx_TMXMapInfo_getTilesets(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTilesets'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTilesets'", nullptr);
         return 0;
     }
 #endif
@@ -58349,7 +58349,7 @@ int lua_cocos2dx_TMXMapInfo_getParentGID(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getParentGID'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getParentGID'", nullptr);
         return 0;
     }
 #endif
@@ -58393,7 +58393,7 @@ int lua_cocos2dx_TMXMapInfo_setParentElement(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setParentElement'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setParentElement'", nullptr);
         return 0;
     }
 #endif
@@ -58439,7 +58439,7 @@ int lua_cocos2dx_TMXMapInfo_initWithXML(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_initWithXML'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_initWithXML'", nullptr);
         return 0;
     }
 #endif
@@ -58489,7 +58489,7 @@ int lua_cocos2dx_TMXMapInfo_setParentGID(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setParentGID'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setParentGID'", nullptr);
         return 0;
     }
 #endif
@@ -58535,7 +58535,7 @@ int lua_cocos2dx_TMXMapInfo_getLayerAttribs(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getLayerAttribs'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getLayerAttribs'", nullptr);
         return 0;
     }
 #endif
@@ -58579,7 +58579,7 @@ int lua_cocos2dx_TMXMapInfo_getTileSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTileSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTileSize'", nullptr);
         return 0;
     }
 #endif
@@ -58623,7 +58623,7 @@ int lua_cocos2dx_TMXMapInfo_getTileProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTileProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTileProperties'", nullptr);
         return 0;
     }
 #endif
@@ -58650,7 +58650,7 @@ int lua_cocos2dx_TMXMapInfo_getTileProperties(lua_State* tolua_S)
 int lua_cocos2dx_TMXMapInfo_getObjectGroups(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXMapInfo* cobj = NULL;
+    cocos2d::TMXMapInfo* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -58663,7 +58663,7 @@ int lua_cocos2dx_TMXMapInfo_getObjectGroups(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getObjectGroups'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getObjectGroups'", nullptr);
         return 0;
     }
 #endif
@@ -58714,7 +58714,7 @@ int lua_cocos2dx_TMXMapInfo_getTMXFileName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTMXFileName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getTMXFileName'", nullptr);
         return 0;
     }
 #endif
@@ -58758,7 +58758,7 @@ int lua_cocos2dx_TMXMapInfo_setCurrentString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setCurrentString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setCurrentString'", nullptr);
         return 0;
     }
 #endif
@@ -58804,7 +58804,7 @@ int lua_cocos2dx_TMXMapInfo_setProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setProperties'", nullptr);
         return 0;
     }
 #endif
@@ -58850,7 +58850,7 @@ int lua_cocos2dx_TMXMapInfo_setOrientation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setOrientation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setOrientation'", nullptr);
         return 0;
     }
 #endif
@@ -58896,7 +58896,7 @@ int lua_cocos2dx_TMXMapInfo_setTileProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTileProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTileProperties'", nullptr);
         return 0;
     }
 #endif
@@ -58942,7 +58942,7 @@ int lua_cocos2dx_TMXMapInfo_setMapSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setMapSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setMapSize'", nullptr);
         return 0;
     }
 #endif
@@ -58988,7 +58988,7 @@ int lua_cocos2dx_TMXMapInfo_setStoringCharacters(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setStoringCharacters'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setStoringCharacters'", nullptr);
         return 0;
     }
 #endif
@@ -59034,7 +59034,7 @@ int lua_cocos2dx_TMXMapInfo_getMapSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getMapSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getMapSize'", nullptr);
         return 0;
     }
 #endif
@@ -59078,7 +59078,7 @@ int lua_cocos2dx_TMXMapInfo_setTilesets(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTilesets'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setTilesets'", nullptr);
         return 0;
     }
 #endif
@@ -59107,7 +59107,7 @@ int lua_cocos2dx_TMXMapInfo_setTilesets(lua_State* tolua_S)
 int lua_cocos2dx_TMXMapInfo_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXMapInfo* cobj = NULL;
+    cocos2d::TMXMapInfo* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -59120,7 +59120,7 @@ int lua_cocos2dx_TMXMapInfo_getProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getProperties'", nullptr);
         return 0;
     }
 #endif
@@ -59171,7 +59171,7 @@ int lua_cocos2dx_TMXMapInfo_getCurrentString(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getCurrentString'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_getCurrentString'", nullptr);
         return 0;
     }
 #endif
@@ -59215,7 +59215,7 @@ int lua_cocos2dx_TMXMapInfo_setLayerAttribs(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setLayerAttribs'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXMapInfo_setLayerAttribs'", nullptr);
         return 0;
     }
 #endif
@@ -59352,7 +59352,7 @@ static int lua_cocos2dx_TMXMapInfo_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TMXMapInfo(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TMXMapInfo");
-    tolua_cclass(tolua_S,"TMXMapInfo","cc.TMXMapInfo","",NULL);
+    tolua_cclass(tolua_S,"TMXMapInfo","cc.TMXMapInfo","",nullptr);
 
     tolua_beginmodule(tolua_S,"TMXMapInfo");
         tolua_function(tolua_S,"setObjectGroups",lua_cocos2dx_TMXMapInfo_setObjectGroups);
@@ -59417,7 +59417,7 @@ int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getTileGIDAt'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getTileGIDAt'", nullptr);
         return 0;
     }
 #endif
@@ -59478,7 +59478,7 @@ int lua_cocos2dx_TMXLayer_getPositionAt(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getPositionAt'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getPositionAt'", nullptr);
         return 0;
     }
 #endif
@@ -59525,7 +59525,7 @@ int lua_cocos2dx_TMXLayer_setLayerOrientation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setLayerOrientation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setLayerOrientation'", nullptr);
         return 0;
     }
 #endif
@@ -59571,7 +59571,7 @@ int lua_cocos2dx_TMXLayer_releaseMap(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_releaseMap'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_releaseMap'", nullptr);
         return 0;
     }
 #endif
@@ -59614,7 +59614,7 @@ int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setTiles'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setTiles'", nullptr);
         return 0;
     }
 #endif
@@ -59660,7 +59660,7 @@ int lua_cocos2dx_TMXLayer_getLayerSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getLayerSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getLayerSize'", nullptr);
         return 0;
     }
 #endif
@@ -59704,7 +59704,7 @@ int lua_cocos2dx_TMXLayer_setMapTileSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setMapTileSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setMapTileSize'", nullptr);
         return 0;
     }
 #endif
@@ -59750,7 +59750,7 @@ int lua_cocos2dx_TMXLayer_getLayerOrientation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getLayerOrientation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getLayerOrientation'", nullptr);
         return 0;
     }
 #endif
@@ -59794,7 +59794,7 @@ int lua_cocos2dx_TMXLayer_setProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setProperties'", nullptr);
         return 0;
     }
 #endif
@@ -59840,7 +59840,7 @@ int lua_cocos2dx_TMXLayer_setLayerName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setLayerName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setLayerName'", nullptr);
         return 0;
     }
 #endif
@@ -59886,7 +59886,7 @@ int lua_cocos2dx_TMXLayer_removeTileAt(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_removeTileAt'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_removeTileAt'", nullptr);
         return 0;
     }
 #endif
@@ -59932,7 +59932,7 @@ int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_initWithTilesetInfo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_initWithTilesetInfo'", nullptr);
         return 0;
     }
 #endif
@@ -59985,7 +59985,7 @@ int lua_cocos2dx_TMXLayer_setupTiles(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setupTiles'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setupTiles'", nullptr);
         return 0;
     }
 #endif
@@ -60011,7 +60011,7 @@ int lua_cocos2dx_TMXLayer_setupTiles(lua_State* tolua_S)
 int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXLayer* cobj = NULL;
+    cocos2d::TMXLayer* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -60024,7 +60024,7 @@ int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setTileGID'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setTileGID'", nullptr);
         return 0;
     }
 #endif
@@ -60093,7 +60093,7 @@ int lua_cocos2dx_TMXLayer_getMapTileSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getMapTileSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getMapTileSize'", nullptr);
         return 0;
     }
 #endif
@@ -60137,7 +60137,7 @@ int lua_cocos2dx_TMXLayer_getProperty(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getProperty'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getProperty'", nullptr);
         return 0;
     }
 #endif
@@ -60184,7 +60184,7 @@ int lua_cocos2dx_TMXLayer_setLayerSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setLayerSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setLayerSize'", nullptr);
         return 0;
     }
 #endif
@@ -60230,7 +60230,7 @@ int lua_cocos2dx_TMXLayer_getLayerName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getLayerName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getLayerName'", nullptr);
         return 0;
     }
 #endif
@@ -60274,7 +60274,7 @@ int lua_cocos2dx_TMXLayer_setTileSet(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setTileSet'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_setTileSet'", nullptr);
         return 0;
     }
 #endif
@@ -60320,7 +60320,7 @@ int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getTileSet'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getTileSet'", nullptr);
         return 0;
     }
 #endif
@@ -60347,7 +60347,7 @@ int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
 int lua_cocos2dx_TMXLayer_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXLayer* cobj = NULL;
+    cocos2d::TMXLayer* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -60360,7 +60360,7 @@ int lua_cocos2dx_TMXLayer_getProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getProperties'", nullptr);
         return 0;
     }
 #endif
@@ -60411,7 +60411,7 @@ int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getTileAt'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXLayer_getTileAt'", nullptr);
         return 0;
     }
 #endif
@@ -60518,7 +60518,7 @@ static int lua_cocos2dx_TMXLayer_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TMXLayer(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TMXLayer");
-    tolua_cclass(tolua_S,"TMXLayer","cc.TMXLayer","cc.SpriteBatchNode",NULL);
+    tolua_cclass(tolua_S,"TMXLayer","cc.TMXLayer","cc.SpriteBatchNode",nullptr);
 
     tolua_beginmodule(tolua_S,"TMXLayer");
         tolua_function(tolua_S,"getTileGIDAt",lua_cocos2dx_TMXLayer_getTileGIDAt);
@@ -60572,7 +60572,7 @@ int lua_cocos2dx_TMXTiledMap_setObjectGroups(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setObjectGroups'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setObjectGroups'", nullptr);
         return 0;
     }
 #endif
@@ -60618,7 +60618,7 @@ int lua_cocos2dx_TMXTiledMap_getProperty(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getProperty'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getProperty'", nullptr);
         return 0;
     }
 #endif
@@ -60665,7 +60665,7 @@ int lua_cocos2dx_TMXTiledMap_setMapSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setMapSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setMapSize'", nullptr);
         return 0;
     }
 #endif
@@ -60711,7 +60711,7 @@ int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getObjectGroup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getObjectGroup'", nullptr);
         return 0;
     }
 #endif
@@ -60741,7 +60741,7 @@ int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
 int lua_cocos2dx_TMXTiledMap_getObjectGroups(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::TMXTiledMap* cobj = NULL;
+    cocos2d::TMXTiledMap* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -60754,7 +60754,7 @@ int lua_cocos2dx_TMXTiledMap_getObjectGroups(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getObjectGroups'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getObjectGroups'", nullptr);
         return 0;
     }
 #endif
@@ -60805,7 +60805,7 @@ int lua_cocos2dx_TMXTiledMap_getTileSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getTileSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getTileSize'", nullptr);
         return 0;
     }
 #endif
@@ -60849,7 +60849,7 @@ int lua_cocos2dx_TMXTiledMap_getMapSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getMapSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getMapSize'", nullptr);
         return 0;
     }
 #endif
@@ -60893,7 +60893,7 @@ int lua_cocos2dx_TMXTiledMap_getProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getProperties'", nullptr);
         return 0;
     }
 #endif
@@ -60937,7 +60937,7 @@ int lua_cocos2dx_TMXTiledMap_setTileSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setTileSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setTileSize'", nullptr);
         return 0;
     }
 #endif
@@ -60983,7 +60983,7 @@ int lua_cocos2dx_TMXTiledMap_setProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setProperties'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setProperties'", nullptr);
         return 0;
     }
 #endif
@@ -61029,7 +61029,7 @@ int lua_cocos2dx_TMXTiledMap_getLayer(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getLayer'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getLayer'", nullptr);
         return 0;
     }
 #endif
@@ -61076,7 +61076,7 @@ int lua_cocos2dx_TMXTiledMap_getMapOrientation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getMapOrientation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_getMapOrientation'", nullptr);
         return 0;
     }
 #endif
@@ -61120,7 +61120,7 @@ int lua_cocos2dx_TMXTiledMap_setMapOrientation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setMapOrientation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TMXTiledMap_setMapOrientation'", nullptr);
         return 0;
     }
 #endif
@@ -61223,7 +61223,7 @@ static int lua_cocos2dx_TMXTiledMap_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TMXTiledMap(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TMXTiledMap");
-    tolua_cclass(tolua_S,"TMXTiledMap","cc.TMXTiledMap","cc.Node",NULL);
+    tolua_cclass(tolua_S,"TMXTiledMap","cc.TMXTiledMap","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"TMXTiledMap");
         tolua_function(tolua_S,"setObjectGroups",lua_cocos2dx_TMXTiledMap_setObjectGroups);
@@ -61268,7 +61268,7 @@ int lua_cocos2dx_TileMapAtlas_initWithTileFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_initWithTileFile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_initWithTileFile'", nullptr);
         return 0;
     }
 #endif
@@ -61324,7 +61324,7 @@ int lua_cocos2dx_TileMapAtlas_releaseMap(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_releaseMap'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_releaseMap'", nullptr);
         return 0;
     }
 #endif
@@ -61367,7 +61367,7 @@ int lua_cocos2dx_TileMapAtlas_getTGAInfo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_getTGAInfo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_getTGAInfo'", nullptr);
         return 0;
     }
 #endif
@@ -61411,7 +61411,7 @@ int lua_cocos2dx_TileMapAtlas_getTileAt(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_getTileAt'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_getTileAt'", nullptr);
         return 0;
     }
 #endif
@@ -61458,7 +61458,7 @@ int lua_cocos2dx_TileMapAtlas_setTile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_setTile'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_setTile'", nullptr);
         return 0;
     }
 #endif
@@ -61507,7 +61507,7 @@ int lua_cocos2dx_TileMapAtlas_setTGAInfo(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_setTGAInfo'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TileMapAtlas_setTGAInfo'", nullptr);
         return 0;
     }
 #endif
@@ -61615,7 +61615,7 @@ static int lua_cocos2dx_TileMapAtlas_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_TileMapAtlas(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TileMapAtlas");
-    tolua_cclass(tolua_S,"TileMapAtlas","cc.TileMapAtlas","cc.AtlasNode",NULL);
+    tolua_cclass(tolua_S,"TileMapAtlas","cc.TileMapAtlas","cc.AtlasNode",nullptr);
 
     tolua_beginmodule(tolua_S,"TileMapAtlas");
         tolua_function(tolua_S,"initWithTileFile",lua_cocos2dx_TileMapAtlas_initWithTileFile);
@@ -61653,7 +61653,7 @@ int lua_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches'", nullptr);
         return 0;
     }
 #endif
@@ -61697,7 +61697,7 @@ int lua_cocos2dx_EventListenerTouchOneByOne_setSwallowTouches(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListenerTouchOneByOne_setSwallowTouches'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventListenerTouchOneByOne_setSwallowTouches'", nullptr);
         return 0;
     }
 #endif
@@ -61732,7 +61732,7 @@ static int lua_cocos2dx_EventListenerTouchOneByOne_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventListenerTouchOneByOne(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerTouchOneByOne");
-    tolua_cclass(tolua_S,"EventListenerTouchOneByOne","cc.EventListenerTouchOneByOne","cc.EventListener",NULL);
+    tolua_cclass(tolua_S,"EventListenerTouchOneByOne","cc.EventListenerTouchOneByOne","cc.EventListener",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerTouchOneByOne");
         tolua_function(tolua_S,"isSwallowTouches",lua_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches);
@@ -61753,7 +61753,7 @@ static int lua_cocos2dx_EventListenerTouchAllAtOnce_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventListenerTouchAllAtOnce(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerTouchAllAtOnce");
-    tolua_cclass(tolua_S,"EventListenerTouchAllAtOnce","cc.EventListenerTouchAllAtOnce","cc.EventListener",NULL);
+    tolua_cclass(tolua_S,"EventListenerTouchAllAtOnce","cc.EventListenerTouchAllAtOnce","cc.EventListener",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerTouchAllAtOnce");
     tolua_endmodule(tolua_S);
@@ -61772,7 +61772,7 @@ static int lua_cocos2dx_EventListenerKeyboard_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventListenerKeyboard(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerKeyboard");
-    tolua_cclass(tolua_S,"EventListenerKeyboard","cc.EventListenerKeyboard","cc.EventListener",NULL);
+    tolua_cclass(tolua_S,"EventListenerKeyboard","cc.EventListenerKeyboard","cc.EventListener",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerKeyboard");
     tolua_endmodule(tolua_S);
@@ -61802,7 +61802,7 @@ int lua_cocos2dx_EventMouse_getMouseButton(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getMouseButton'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getMouseButton'", nullptr);
         return 0;
     }
 #endif
@@ -61846,7 +61846,7 @@ int lua_cocos2dx_EventMouse_setScrollData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_setScrollData'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_setScrollData'", nullptr);
         return 0;
     }
 #endif
@@ -61895,7 +61895,7 @@ int lua_cocos2dx_EventMouse_setMouseButton(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_setMouseButton'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_setMouseButton'", nullptr);
         return 0;
     }
 #endif
@@ -61941,7 +61941,7 @@ int lua_cocos2dx_EventMouse_getScrollY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getScrollY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getScrollY'", nullptr);
         return 0;
     }
 #endif
@@ -61985,7 +61985,7 @@ int lua_cocos2dx_EventMouse_getScrollX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getScrollX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getScrollX'", nullptr);
         return 0;
     }
 #endif
@@ -62029,7 +62029,7 @@ int lua_cocos2dx_EventMouse_getCursorX(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getCursorX'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getCursorX'", nullptr);
         return 0;
     }
 #endif
@@ -62073,7 +62073,7 @@ int lua_cocos2dx_EventMouse_getCursorY(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getCursorY'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getCursorY'", nullptr);
         return 0;
     }
 #endif
@@ -62117,7 +62117,7 @@ int lua_cocos2dx_EventMouse_setCursorPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_setCursorPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_setCursorPosition'", nullptr);
         return 0;
     }
 #endif
@@ -62192,7 +62192,7 @@ static int lua_cocos2dx_EventMouse_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventMouse(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventMouse");
-    tolua_cclass(tolua_S,"EventMouse","cc.EventMouse","cc.Event",NULL);
+    tolua_cclass(tolua_S,"EventMouse","cc.EventMouse","cc.Event",nullptr);
 
     tolua_beginmodule(tolua_S,"EventMouse");
         tolua_function(tolua_S,"getMouseButton",lua_cocos2dx_EventMouse_getMouseButton);
@@ -62220,7 +62220,7 @@ static int lua_cocos2dx_EventListenerMouse_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventListenerMouse(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerMouse");
-    tolua_cclass(tolua_S,"EventListenerMouse","cc.EventListenerMouse","cc.EventListener",NULL);
+    tolua_cclass(tolua_S,"EventListenerMouse","cc.EventListenerMouse","cc.EventListener",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerMouse");
     tolua_endmodule(tolua_S);
@@ -62239,7 +62239,7 @@ static int lua_cocos2dx_EventAcceleration_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventAcceleration(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventAcceleration");
-    tolua_cclass(tolua_S,"EventAcceleration","cc.EventAcceleration","cc.Event",NULL);
+    tolua_cclass(tolua_S,"EventAcceleration","cc.EventAcceleration","cc.Event",nullptr);
 
     tolua_beginmodule(tolua_S,"EventAcceleration");
     tolua_endmodule(tolua_S);
@@ -62258,7 +62258,7 @@ static int lua_cocos2dx_EventListenerAcceleration_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EventListenerAcceleration(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerAcceleration");
-    tolua_cclass(tolua_S,"EventListenerAcceleration","cc.EventListenerAcceleration","cc.EventListener",NULL);
+    tolua_cclass(tolua_S,"EventListenerAcceleration","cc.EventListenerAcceleration","cc.EventListener",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerAcceleration");
     tolua_endmodule(tolua_S);
@@ -62288,7 +62288,7 @@ int lua_cocos2dx_Timer_getInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_getInterval'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_getInterval'", nullptr);
         return 0;
     }
 #endif
@@ -62332,7 +62332,7 @@ int lua_cocos2dx_Timer_setupTimerWithInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_setupTimerWithInterval'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_setupTimerWithInterval'", nullptr);
         return 0;
     }
 #endif
@@ -62384,7 +62384,7 @@ int lua_cocos2dx_Timer_setInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_setInterval'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_setInterval'", nullptr);
         return 0;
     }
 #endif
@@ -62430,7 +62430,7 @@ int lua_cocos2dx_Timer_update(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_update'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_update'", nullptr);
         return 0;
     }
 #endif
@@ -62476,7 +62476,7 @@ int lua_cocos2dx_Timer_trigger(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_trigger'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_trigger'", nullptr);
         return 0;
     }
 #endif
@@ -62519,7 +62519,7 @@ int lua_cocos2dx_Timer_cancel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_cancel'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_cancel'", nullptr);
         return 0;
     }
 #endif
@@ -62551,7 +62551,7 @@ static int lua_cocos2dx_Timer_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Timer(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Timer");
-    tolua_cclass(tolua_S,"Timer","cc.Timer","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Timer","cc.Timer","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Timer");
         tolua_function(tolua_S,"getInterval",lua_cocos2dx_Timer_getInterval);
@@ -62587,7 +62587,7 @@ int lua_cocos2dx_Scheduler_setTimeScale(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scheduler_setTimeScale'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scheduler_setTimeScale'", nullptr);
         return 0;
     }
 #endif
@@ -62633,7 +62633,7 @@ int lua_cocos2dx_Scheduler_performFunctionInCocosThread(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scheduler_performFunctionInCocosThread'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scheduler_performFunctionInCocosThread'", nullptr);
         return 0;
     }
 #endif
@@ -62683,7 +62683,7 @@ int lua_cocos2dx_Scheduler_getTimeScale(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scheduler_getTimeScale'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scheduler_getTimeScale'", nullptr);
         return 0;
     }
 #endif
@@ -62750,7 +62750,7 @@ static int lua_cocos2dx_Scheduler_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Scheduler(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Scheduler");
-    tolua_cclass(tolua_S,"Scheduler","cc.Scheduler","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Scheduler","cc.Scheduler","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Scheduler");
         tolua_function(tolua_S,"setTimeScale",lua_cocos2dx_Scheduler_setTimeScale);
@@ -62784,7 +62784,7 @@ int lua_cocos2dx_Component_setEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_setEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_setEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -62830,7 +62830,7 @@ int lua_cocos2dx_Component_setName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_setName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_setName'", nullptr);
         return 0;
     }
 #endif
@@ -62876,7 +62876,7 @@ int lua_cocos2dx_Component_isEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_isEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_isEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -62920,7 +62920,7 @@ int lua_cocos2dx_Component_update(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_update'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_update'", nullptr);
         return 0;
     }
 #endif
@@ -62966,7 +62966,7 @@ int lua_cocos2dx_Component_getOwner(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_getOwner'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_getOwner'", nullptr);
         return 0;
     }
 #endif
@@ -63010,7 +63010,7 @@ int lua_cocos2dx_Component_init(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_init'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_init'", nullptr);
         return 0;
     }
 #endif
@@ -63054,7 +63054,7 @@ int lua_cocos2dx_Component_setOwner(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_setOwner'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_setOwner'", nullptr);
         return 0;
     }
 #endif
@@ -63100,7 +63100,7 @@ int lua_cocos2dx_Component_getName(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_getName'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Component_getName'", nullptr);
         return 0;
     }
 #endif
@@ -63164,7 +63164,7 @@ static int lua_cocos2dx_Component_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Component(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Component");
-    tolua_cclass(tolua_S,"Component","cc.Component","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"Component","cc.Component","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Component");
         tolua_function(tolua_S,"setEnabled",lua_cocos2dx_Component_setEnabled);
@@ -63203,7 +63203,7 @@ int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic'", nullptr);
         return 0;
     }
 #endif
@@ -63249,7 +63249,7 @@ int lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic'", nullptr);
         return 0;
     }
 #endif
@@ -63302,7 +63302,7 @@ int lua_cocos2dx_SimpleAudioEngine_stopAllEffects(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopAllEffects'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopAllEffects'", nullptr);
         return 0;
     }
 #endif
@@ -63345,7 +63345,7 @@ int lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume'", nullptr);
         return 0;
     }
 #endif
@@ -63389,7 +63389,7 @@ int lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic'", nullptr);
         return 0;
     }
 #endif
@@ -63432,7 +63432,7 @@ int lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume'", nullptr);
         return 0;
     }
 #endif
@@ -63478,7 +63478,7 @@ int lua_cocos2dx_SimpleAudioEngine_preloadEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadEffect'", nullptr);
         return 0;
     }
 #endif
@@ -63524,7 +63524,7 @@ int lua_cocos2dx_SimpleAudioEngine_isBackgroundMusicPlaying(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_isBackgroundMusicPlaying'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_isBackgroundMusicPlaying'", nullptr);
         return 0;
     }
 #endif
@@ -63568,7 +63568,7 @@ int lua_cocos2dx_SimpleAudioEngine_getEffectsVolume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_getEffectsVolume'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_getEffectsVolume'", nullptr);
         return 0;
     }
 #endif
@@ -63612,7 +63612,7 @@ int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic'", nullptr);
         return 0;
     }
 #endif
@@ -63656,7 +63656,7 @@ int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseEffect'", nullptr);
         return 0;
     }
 #endif
@@ -63702,7 +63702,7 @@ int lua_cocos2dx_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_playEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_playEffect'", nullptr);
         return 0;
     }
 #endif
@@ -63823,7 +63823,7 @@ int lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic'", nullptr);
         return 0;
     }
 #endif
@@ -63866,7 +63866,7 @@ int lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic'", nullptr);
         return 0;
     }
 #endif
@@ -63925,7 +63925,7 @@ int lua_cocos2dx_SimpleAudioEngine_resumeAllEffects(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeAllEffects'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeAllEffects'", nullptr);
         return 0;
     }
 #endif
@@ -63968,7 +63968,7 @@ int lua_cocos2dx_SimpleAudioEngine_setEffectsVolume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_setEffectsVolume'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_setEffectsVolume'", nullptr);
         return 0;
     }
 #endif
@@ -64014,7 +64014,7 @@ int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopEffect'", nullptr);
         return 0;
     }
 #endif
@@ -64060,7 +64060,7 @@ int lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic'", nullptr);
         return 0;
     }
 #endif
@@ -64103,7 +64103,7 @@ int lua_cocos2dx_SimpleAudioEngine_pauseAllEffects(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseAllEffects'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseAllEffects'", nullptr);
         return 0;
     }
 #endif
@@ -64146,7 +64146,7 @@ int lua_cocos2dx_SimpleAudioEngine_unloadEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_unloadEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_unloadEffect'", nullptr);
         return 0;
     }
 #endif
@@ -64192,7 +64192,7 @@ int lua_cocos2dx_SimpleAudioEngine_resumeEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeEffect'", nullptr);
         return 0;
     }
 #endif
@@ -64288,7 +64288,7 @@ static int lua_cocos2dx_SimpleAudioEngine_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_SimpleAudioEngine(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.SimpleAudioEngine");
-    tolua_cclass(tolua_S,"SimpleAudioEngine","cc.SimpleAudioEngine","",NULL);
+    tolua_cclass(tolua_S,"SimpleAudioEngine","cc.SimpleAudioEngine","",nullptr);
 
     tolua_beginmodule(tolua_S,"SimpleAudioEngine");
         tolua_function(tolua_S,"preloadMusic",lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic);
