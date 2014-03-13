@@ -1,6 +1,7 @@
 
 class Button : public Widget
 {
+
     Button();
     virtual ~Button();
     static Button* create();
@@ -10,20 +11,19 @@ class Button : public Widget
     void loadTextureDisabled(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setCapInsets(const CCRect &capInsets);
     void setCapInsetsNormalRenderer(const CCRect &capInsets);
-    void setCapInsetsPressedRenderer(const CCRect &capInsets);
-    void setCapInsetsDisabledRenderer(const CCRect &capInsets);
+    const CCRect& getCapInsetNormalRenderer();
+    void setCapInsetsPressedRenderer(const CCRect &capInsets);   
+    const CCRect& getCapInsetPressedRenderer();
+    void setCapInsetsDisabledRenderer(const CCRect &capInsets);  
+    const CCRect& getCapInsetDisabledRenderer();
     virtual void setAnchorPoint(const CCPoint &pt);
-    virtual void setScale9Enabled(bool able);
-    virtual void setFlipX(bool flipX);
-    virtual void setFlipY(bool flipY);
-    virtual bool isFlipX();
-    virtual bool isFlipY();
+    virtual void setScale9Enabled(bool able); 
+    bool isScale9Enabled();
     void setPressedActionEnabled(bool enabled);
     virtual void ignoreContentAdaptWithSize(bool ignore);
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
-    virtual void setColor(const ccColor3B &color);
-    virtual std::string getDescription() const;
+    virtual std::string getDescription() const;   
     void setTitleText(const std::string& text);
     const char* getTitleText() const;
     void setTitleColor(const ccColor3B& color);
@@ -32,5 +32,4 @@ class Button : public Widget
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
-
 };

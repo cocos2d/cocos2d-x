@@ -39,4 +39,5 @@ class ListView : public ScrollView
     virtual void setDirection(SCROLLVIEW_DIR dir);
     virtual std::string getDescription() const;
     void requestRefreshView();
+    void refreshView();
 };
