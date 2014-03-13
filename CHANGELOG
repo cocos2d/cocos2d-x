@@ -1,4 +1,4 @@
-cocos2d-x-2.2.3 @Mar.10 2014
+cocos2d-x-2.2.3 @Mar.14 2014
 [All]
      [NEW]    Adds Dutch Language support.
      [FIX]    CocoStudio: SceneTest crash after switching to another scene.
