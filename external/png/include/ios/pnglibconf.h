@@ -1,8 +1,10 @@
+/* libpng 1.6.9 STANDARD API DEFINITION */
+
 /* pnglibconf.h - library build configuration */
 
-/* libpng version 1.6.2 - April 25, 2013 */
+/* Libpng version 1.6.9 - February 6, 2014 */
 
-/* Copyright (c) 1998-2012 Glenn Randers-Pehrson */
+/* Copyright (c) 1998-2013 Glenn Randers-Pehrson */
 
 /* This code is released under the libpng license. */
 /* For conditions of distribution and use, see the disclaimer */
@@ -18,7 +20,6 @@
 #define PNG_ALIGNED_MEMORY_SUPPORTED
 /*#undef PNG_ARM_NEON_API_SUPPORTED*/
 /*#undef PNG_ARM_NEON_CHECK_SUPPORTED*/
-/*#undef PNG_ARM_NEON_SUPPORTED*/
 #define PNG_BENIGN_ERRORS_SUPPORTED
 #define PNG_BENIGN_READ_ERRORS_SUPPORTED
 /*#undef PNG_BENIGN_WRITE_ERRORS_SUPPORTED*/
@@ -103,7 +104,7 @@
 #define PNG_SETJMP_SUPPORTED
 #define PNG_SET_CHUNK_CACHE_LIMIT_SUPPORTED
 #define PNG_SET_CHUNK_MALLOC_LIMIT_SUPPORTED
-/*#undef PNG_SET_OPTION_SUPPORTED*/
+#define PNG_SET_OPTION_SUPPORTED
 #define PNG_SET_UNKNOWN_CHUNKS_SUPPORTED
 #define PNG_SET_USER_LIMITS_SUPPORTED
 #define PNG_SIMPLIFIED_READ_AFIRST_SUPPORTED
@@ -200,6 +201,7 @@
 #define PNG_TEXT_Z_DEFAULT_STRATEGY 0
 #define PNG_WEIGHT_SHIFT 8
 #define PNG_ZBUF_SIZE 8192
+#define PNG_ZLIB_VERNUM 0 /* unknown */
 #define PNG_Z_DEFAULT_COMPRESSION (-1)
 #define PNG_Z_DEFAULT_NOFILTER_STRATEGY 0
 #define PNG_Z_DEFAULT_STRATEGY 1
