@@ -74,24 +74,6 @@ public:
         {
             DeleteDC(_DC);
         }
-        /*HFONT hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-        if (hDefFont != _font)
-        {
-            DeleteObject(_font);
-            _font = hDefFont;
-        }
-        // release temp font resource	
-        if (_curFontPath.size() > 0)
-        {
-            wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-            if (pwszBuffer)
-            {
-                RemoveFontResource(pwszBuffer);
-                SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-                delete [] pwszBuffer;
-                pwszBuffer = NULL;
-            }
-        }*/
         removeCustomFont();
     }
 
@@ -441,10 +423,7 @@ Data Device::getTextureDataForText(const char * text,const FontDefinition& textD
             for (int x = 0; x < width; ++x)
             {
                 COLORREF& clr = *pPixel;
-                if (GetRValue(clr) || GetGValue(clr) || GetBValue(clr))
-                {
-                    clr |= 0xff000000;
-                }
+                clr = (0xffffff | (GetRValue(clr) << 24));
                 ++pPixel;
             }
         }

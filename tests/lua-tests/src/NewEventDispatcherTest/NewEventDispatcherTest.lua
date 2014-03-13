@@ -140,15 +140,17 @@ function EventDispatcherTestDemo:createMenu()
 end
 
 function EventDispatcherTestDemo:creatTitleAndSubTitle(idx)
-    local title = cc.LabelTTF:create(EventDispatcherTestDemo.title(idx),"Arial",18)
+    local title = cc.Label:create(EventDispatcherTestDemo.title(idx),s_arialPath,18)
     title:setColor(cc.c3b(128,128,0))
     self:addChild(title, 1, 10000)
+    title:setAnchorPoint(cc.p(0.5, 0.5))
     title:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 30))
     local subTitle = nil
     if "" ~= EventDispatcherTestDemo.subTitle(idx) then
-        local subTitle = cc.LabelTTF:create(EventDispatcherTestDemo.subTitle(idx), "Arial", 18)
+        local subTitle = cc.Label:create(EventDispatcherTestDemo.subTitle(idx), s_arialPath, 18)
         subTitle:setColor(cc.c3b(128,128,0))
         self:addChild(subTitle, 1, 10001)
+        subTitle:setAnchorPoint(cc.p(0.5, 0.5))
         subTitle:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 60) )
     end
 end
@@ -463,7 +465,8 @@ function RemoveListenerWhenDispatchingTest:onEnter()
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener1, sprite1)
 
-    local statusLabel = cc.LabelTTF:create("The sprite could be touched!", "", 20)
+    local statusLabel = cc.Label:create("The sprite could be touched!", "", 20)
+    statusLabel:setAnchorPoint(cc.p(0.5, 0.5))
     statusLabel:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height - 90))
     self:addChild(statusLabel)
 
@@ -529,7 +532,8 @@ function CustomEventTest:onEnter()
     
     cc.MenuItemFont:setFontSize(20)
 
-    local statusLabel1 = cc.LabelTTF:create("No custom event 1 received!", "", 20)
+    local statusLabel1 = cc.Label:create("No custom event 1 received!", "", 20)
+    statusLabel1:setAnchorPoint(cc.p(0.5, 0.5))
     statusLabel1:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height-90 ))
     self:addChild(statusLabel1)
 
@@ -554,7 +558,8 @@ function CustomEventTest:onEnter()
     sendItem1:registerScriptTapHandler(sendCallback1)
     sendItem1:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2))
 
-    local statusLabel2 = cc.LabelTTF:create("No custom event 2 received!", "", 20)
+    local statusLabel2 = cc.Label:create("No custom event 2 received!", "", 20)
+    statusLabel2:setAnchorPoint(cc.p(0.5, 0.5))
     statusLabel2:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height-120 ))
     self:addChild(statusLabel2)
 
@@ -626,7 +631,8 @@ function LabelKeyboardEventTest:onEnter()
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local size = cc.Director:getInstance():getVisibleSize()
     
-    local statusLabel = cc.LabelTTF:create("No keyboard event received!", "", 20)
+    local statusLabel = cc.Label:create("No keyboard event received!", "", 20)
+    statusLabel:setAnchorPoint(cc.p(0.5, 0.5))
     statusLabel:setPosition(cc.p(origin.x + size.width/2,origin.y + size.height/2))
     self:addChild(statusLabel)
 
@@ -905,7 +911,7 @@ function RemoveListenerAfterAddingTest:onEnter()
         listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
         
         eventDispatcher:addEventListenerWithFixedPriority(listener, -1)
-        eventDispatcher:removeEventListeners(cc.EVENT_TOUCH_ONE_BY_ONE)
+        eventDispatcher:removeEventListenersForType(cc.EVENT_TOUCH_ONE_BY_ONE)
         
         addNextButton()
 
