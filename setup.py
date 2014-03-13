@@ -271,7 +271,10 @@ class SetEnvVar(object):
         if not android_sdk_root:
             return False
 
-        android_path = os.path.join(android_sdk_root, 'tools/android')
+        if self._isWindows():
+            android_path = os.path.join(android_sdk_root, 'tools/android.bat')
+        else:
+            android_path = os.path.join(android_sdk_root, 'tools/android')
         if os.path.isfile(android_path):
             return True
         else:
@@ -281,7 +284,7 @@ class SetEnvVar(object):
 
         ant_path = ''
         if self._isWindows():
-            ant_path = os.path.join(ant_root, 'ant.exe')
+            ant_path = os.path.join(ant_root, 'ant.bat')
         else:
             ant_path = os.path.join(ant_root, 'ant')
 
