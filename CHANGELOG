@@ -1,4 +1,4 @@
-cocos2d-x-2.2.3 @?.? ????
+cocos2d-x-2.2.3 @Mar.10 2014
 [All]
      [NEW]    Adds Dutch Language support.
      [FIX]    CocoStudio: SceneTest crash after switching to another scene.
@@ -6,11 +6,13 @@ cocos2d-x-2.2.3 @?.? ????
 
 [Android]
      [FIX]    Screen would be flickering when switching to a new activity.
+     [FIX]    CCDirectory::m_f
 
 [WP8 | WinRT]
      [FIX]    Added Lua bindings support for Wp8 and WinRT.
      [FIX]    Added CCEditBox support for wp8.
      [FIX]    Used the correct resolution policy in CCEGLView::UpdateWindowSize.
+     [FIX]    Added lost XAML project template
 
 [JSBindings]
      [NEW]    Added 'setTimeout' and 'setInterval' for JSB.
