@@ -397,6 +397,21 @@ void Widget::setSizePercent(const Point &percent)
 
 void Widget::updateSizeAndPosition()
 {
+    Widget* widgetParent = getWidgetParent();
+    Size pSize;
+    if (widgetParent)
+    {
+        pSize = widgetParent->getLayoutSize();
+    }
+    else
+    {
+        pSize = _parent->getContentSize();
+    }
+    updateSizeAndPosition(pSize);
+}
+    
+void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
+{
     switch (_sizeType)
     {
         case SIZE_ABSOLUTE:
@@ -409,70 +424,33 @@ void Widget::updateSizeAndPosition()
             {
                 _size = _customSize;
             }
-            Widget* widgetParent = getWidgetParent();
-            if (widgetParent)
+            float spx = 0.0f;
+            float spy = 0.0f;
+            if (parentSize.width > 0.0f)
             {
-                Size pSize = widgetParent->getSize();
-                float spx = 0.0f;
-                float spy = 0.0f;
-                if (pSize.width > 0.0f)
-                {
-                    spx = _customSize.width / pSize.width;
-                }
-                if (pSize.height > 0.0f)
-                {
-                    spy = _customSize.height / pSize.height;
-                }
-                _sizePercent = Point(spx, spy);
+                spx = _customSize.width / parentSize.width;
             }
-            else
+            if (parentSize.height > 0.0f)
             {
-                Size pSize = _parent->getContentSize();
-                float spx = 0.0f;
-                float spy = 0.0f;
-                if (pSize.width > 0.0f)
-                {
-                    spx = _customSize.width / pSize.width;
-                }
-                if (pSize.height > 0.0f)
-                {
-                    spy = _customSize.height / pSize.height;
-                }
-                _sizePercent = Point(spx, spy);
+                spy = _customSize.height / parentSize.height;
             }
+            _sizePercent = Point(spx, spy);
             break;
         }
         case SIZE_PERCENT:
         {
-            Widget* widgetParent = getWidgetParent();
-            if (widgetParent)
+            Size cSize = Size(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
+            if (_ignoreSize)
             {
-                Size cSize = Size(widgetParent->getSize().width * _sizePercent.x , widgetParent->getSize().height * _sizePercent.y);
-                if (_ignoreSize)
-                {
-                    _size = getContentSize();
-                }
-                else
-                {
-                    _size = cSize;
-                }
-                _customSize = cSize;
+                _size = getContentSize();
             }
             else
             {
-                Size cSize = Size(_parent->getContentSize().width * _sizePercent.x , _parent->getContentSize().height * _sizePercent.y);
-                if (_ignoreSize)
-                {
-                    _size = getContentSize();
-                }
-                else
-                {
-                    _size = cSize;
-                }
-                _customSize = cSize;
+                _size = cSize;
             }
-        }
+            _customSize = cSize;
             break;
+        }
         default:
             break;
     }
@@ -482,46 +460,19 @@ void Widget::updateSizeAndPosition()
     {
         case POSITION_ABSOLUTE:
         {
-            Widget* widgetParent = getWidgetParent();
-            if (widgetParent)
+            if (parentSize.width <= 0.0f || parentSize.height <= 0.0f)
             {
-                Size pSize = widgetParent->getSize();
-                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
-                {
-                    _positionPercent = Point::ZERO;
-                }
-                else
-                {
-                    _positionPercent = Point(absPos.x / pSize.width, absPos.y / pSize.height);
-                }
+                _positionPercent = Point::ZERO;
             }
             else
             {
-                Size pSize = _parent->getContentSize();
-                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
-                {
-                    _positionPercent = Point::ZERO;
-                }
-                else
-                {
-                    _positionPercent = Point(absPos.x / pSize.width, absPos.y / pSize.height);
-                }
+                _positionPercent = Point(absPos.x / parentSize.width, absPos.y / parentSize.height);
             }
             break;
         }
         case POSITION_PERCENT:
         {
-            Widget* widgetParent = getWidgetParent();
-            if (widgetParent)
-            {
-                Size parentSize = widgetParent->getSize();
-                absPos = Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-            }
-            else
-            {
-                Size parentSize = _parent->getContentSize();
-                absPos = Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-            }
+            absPos = Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
             break;
         }
         default:
