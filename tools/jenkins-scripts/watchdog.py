@@ -4,26 +4,24 @@ import sys
 import time
 import os
 
-def main():
-    username = os.environ['username']
-    password = os.environ['password']
-    J = Jenkins('http://115.28.134.83:8000',username,password)
-    job = J['cocos-2dx-pull-request-build']
+#check & kill dead buid
+def build_time(_job):
+    #get build duration
     duration = os.environ['duration']
-    #Get the numerical ID of the last build.
-    buildnu = job.get_last_buildnumber()
-    #Get the last build
-    build = job.get_last_build()
-    #Get the build running
+    #Get last build running
+    build = _job.get_last_build()
     running = build.is_running()
-    print 'running:',running
-
+    print 'build_job:',_job,'running:',running
     if not running:
         return False
+    
+    #Get numerical ID of the last build.
+    buildnu = _job.get_last_buildnumber()
     print "buildnumber:#",buildnu
     #get nowtime
     nowtime = time.strftime('%M',time.localtime(time.time()))
     #print 'nowtime:',nowtime
+    #get build start time
     timeb = build.get_timestamp()
     #print 'buildtime:',str(timeb)[14:16]
     buildtime = int(str(timeb)[14:16])
@@ -34,8 +32,16 @@ def main():
         subtime = 60-buildtime+int(nowtime)
     if subtime > duration:
         #print 'subtime',subtime
+        #kill dead buid
         build.stop()
     
+def main():
+    username = os.environ['username']
+    password = os.environ['password']
+    J = Jenkins('http://115.28.134.83:8000',username,password)
+    #get all jenkins jobs
+    for key,job in J.iteritems():
+        build_time(job)
     return(0)
     
 
@@ -49,3 +55,4 @@ if __name__ == '__main__':
         sys_ret = 1
     finally:
         sys.exit(sys_ret)
+
