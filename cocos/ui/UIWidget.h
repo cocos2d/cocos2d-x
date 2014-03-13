@@ -549,6 +549,8 @@ public:
     const Size& getSize() const;
     
     const Size& getCustomSize() const;
+    
+    virtual const Size& getLayoutSize() {return _size;};
 
     /**
      * Returns size percent of widget
@@ -642,6 +644,8 @@ public:
 
     void updateSizeAndPosition();
 
+    void updateSizeAndPosition(const Size& parentSize);
+    
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
