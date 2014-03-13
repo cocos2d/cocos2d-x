@@ -3603,18 +3603,15 @@ int lua_cocos2dx_physics_PhysicsBody_getMoment(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        double ret = cobj->getMoment(arg0);
+        double ret = cobj->getMoment();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMoment",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMoment",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
