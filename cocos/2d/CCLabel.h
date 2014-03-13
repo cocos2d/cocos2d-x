@@ -277,7 +277,7 @@ protected:
 
     virtual void updateColor() override;
 
-    virtual void configureShaderProgram();
+    virtual void updateShaderProgram();
 
     void drawShadowWithoutBlur();
 
