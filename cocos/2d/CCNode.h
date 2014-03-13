@@ -645,15 +645,6 @@ public:
      * @return a Node object whose tag equals to the input parameter
      */
     virtual Node * getChildByTag(int tag);
-
-     /**
-     * get a child node with its name, will recursively search the whole node tree
-     *
-     * @param name   A string identifier to find the child node.
-     *
-     * @return the first Node object whose name equals to the input parameter
-     */
-    virtual Node* getChildByName(const std::string& name);
     /**
      * Returns the array of the node's children
      *
@@ -768,47 +759,7 @@ public:
      */
     virtual void setTag(int tag);
 
-    /// @{
-    /// @name name
-
-    /**
-     * Returns a name that is used to identify the node easily.
-     *
-     * You can set name to node then identify them easily.
-     @code
- 
-     // set name
-     node1->setName("player");
-     node2->setName("monster");
-     node3->setName("boss");
-     parent->addChild(node1);
-     parent->addChild(node2);
-     parent->addChild(node3);
-     // identify by name
-     Node* player = nullptr;
-     player = parent->getChildByName("player")
-     @endcode
-     *
-     * @return A  string that identifies the node.
-     */
-    virtual std::string& getName();
-    /**
-     * Changes the name that is used to identify the node easily.
-     *
-     * Please refer to getName for the sample code.
-     *
-     * @param name  A  string that indentifies the node.
-     */
-    virtual void setName(const std::string& name);
-    /**
-     * Search the children to perform processing for nodes which share a name.
-     * Note: this function will search the whole node tree recursively.
-     * @param name  the name to search for
-     * @param callback, A callback to execute on nodes that match the name parameter. The callback takes the following arguments:
-     *  node: A node that matches the name.
-     *  stop: A pointer to a Boolean variable. Your callback can set this to true to terminate the enumeration.
-     */
-     virtual void enumerateChildrenByName(const std::string& name, const std::function<void(Node* node, bool* stop)>& callback);
+    
     /**
      * Returns a custom user data pointer
      *
