@@ -59,7 +59,7 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
@@ -265,8 +265,6 @@ protected:
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
-
-    virtual bool init();
     
     virtual void alignText();
     
@@ -285,8 +283,14 @@ protected:
 
     void createSpriteWithFontDefinition();
 
+    void updateFont();
+    void reset();
+
     bool _isOpacityModifyRGB;
     bool _contentDirty;
+    bool _fontDirty;
+    std::string _fontName;
+    int         _fontSize;
     LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;
