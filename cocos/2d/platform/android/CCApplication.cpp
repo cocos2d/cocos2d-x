@@ -86,6 +86,14 @@ Application* Application::sharedApplication()
     return Application::getInstance();
 }
 
+const char * Application::getCurrentLanguageCode()
+{
+    static char code[3]={0};
+    strncpy(code,getCurrentLanguageJNI().c_str(),2);
+    code[2]='\0';
+    return code;
+}
+
 LanguageType Application::getCurrentLanguage()
 {
     std::string languageName = getCurrentLanguageJNI();

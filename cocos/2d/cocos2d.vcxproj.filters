@@ -327,6 +327,9 @@
     <ClCompile Include="..\base\s3tc.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\pvr.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
     <ClCompile Include="CCGLProgram.cpp">
       <Filter>shaders</Filter>
     </ClCompile>
@@ -851,6 +854,9 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\base\s3tc.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\pvr.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="ccShader_Position_uColor_frag.h">
