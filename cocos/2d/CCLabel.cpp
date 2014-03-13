@@ -66,7 +66,7 @@ Label* Label::createWithFontDefinition(const std::string& text, const FontDefini
 
 Label* Label::create(const std::string& text, const std::string& fontName, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
-    auto ret = new Label(nullptr,hAlignment);
+    auto ret = new Label(nullptr,hAlignment,vAlignment);
 
     if (ret)
     {
@@ -251,7 +251,8 @@ bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHe
     return false;
 }
 
-Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,bool useA8Shader)
+Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
+             TextVAlignment vAlignment /* = TextVAlignment::TOP */,bool useDistanceField /* = false */,bool useA8Shader /* = false */)
 : _reusedLetter(nullptr)
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
@@ -259,7 +260,8 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _labelWidth(0)
 , _labelHeight(0)
 , _labelDimensions(Size::ZERO)
-, _hAlignment(alignment)
+, _hAlignment(hAlignment)
+, _vAlignment(vAlignment)
 , _currentUTF16String(nullptr)
 , _originalUTF16String(nullptr)
 , _horizontalKernings(nullptr)
@@ -970,7 +972,7 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
 
         if (_textSprite)
         {
-            _textSprite->visit();
+            _textSprite->visit(renderer, _modelViewTransform, dirty);
         }
         else
         {
@@ -1147,7 +1149,10 @@ void Label::setColor(const Color3B& color)
     {
         updateContent();
     }
-    _reusedLetter->setColor(color);
+    if (_reusedLetter)
+    {
+        _reusedLetter->setColor(color);
+    }
     SpriteBatchNode::setColor(color);
 }
 

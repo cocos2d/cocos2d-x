@@ -89,9 +89,27 @@ void CustomParticleWidget::setParticlePosition(const Point &pos)
     _emitterPostion = pos;
 }
 
-const CCPoint& CustomParticleWidget::getParticlePosition() const
+const Point& CustomParticleWidget::getParticlePosition() const
 {
     return _emitterPostion;
+}
+
+void CustomParticleWidget::playParticle()
+{
+    if (_emitter)
+    {
+        _emitter->resetSystem();
+    }
+    
+}
+
+void CustomParticleWidget::stopParticle()
+{
+    if (_emitter)
+    {
+        _emitter->stopSystem();
+    }
+    
 }
 
 
