@@ -27,6 +27,41 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
+    
+ScrollInnerContainer::ScrollInnerContainer()
+{
+    
+}
+    
+ScrollInnerContainer::~ScrollInnerContainer()
+{
+    
+}
+    
+ScrollInnerContainer* ScrollInnerContainer::create()
+{
+    ScrollInnerContainer* widget = new ScrollInnerContainer();
+    if (widget && widget->init())
+    {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
+    
+const Size& ScrollInnerContainer::getLayoutSize()
+{
+    Widget* parent = getWidgetParent();
+    if (parent)
+    {
+        return parent->getSize();
+    }
+    else
+    {
+        return _size;
+    }
+}
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
@@ -233,7 +268,7 @@ void ScrollView::addChild(Node * child, int zOrder)
 
 void ScrollView::addChild(Node *child, int zOrder, int tag)
 {
-    return _innerContainer->addChild(child, zOrder, tag);
+    _innerContainer->addChild(child, zOrder, tag);
 }
 
 void ScrollView::removeAllChildren()

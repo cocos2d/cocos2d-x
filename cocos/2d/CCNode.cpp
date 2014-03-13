@@ -598,17 +598,6 @@ void Node::setTag(int var)
     _tag = var;
 }
 
-//name getter
-std::string& Node::getName()
-{
-    return _name;
-}
-
-//name setter
-void Node::setName(const std::string& name)
-{
-    _name = name;
-}
 /// userData setter
 void Node::setUserData(void *var)
 {
@@ -711,44 +700,6 @@ Node* Node::getChildByTag(int tag)
             return child;
     }
     return nullptr;
-}
-
-Node* Node::getChildByName(const std::string& name)
-{
-    for (auto& child : _children)
-    {
-   
-        if(child->_name == name)
-        {
-            return child;
-        }
-    
-        auto found = child->getChildByName(name);
-        if(found != nullptr)
-        {
-            return found;
-        }
-    }
-    return nullptr;
-}
-
-void Node::enumerateChildrenByName(const std::string& name, const std::function<void(Node* node, bool* stop)>& callback)
-{
-    for (auto& child : _children)
-    {
-   
-        if(child->_name == name)
-        {
-            bool stop = false;
-            callback(child, &stop);
-            if(stop == true)
-            {
-                return;
-            }
-        }
-        child->enumerateChildrenByName(name, callback);
-    }
-    return;
 }
 
 /* "add" logic MUST only be on this method
