@@ -155,7 +155,8 @@ function CreateTestMenu()
     local index = 0
     local obj = nil
     for index, obj in pairs(_allTests) do
-        local testLabel = cc.LabelTTF:create(obj.name, "Arial", 24)
+        local testLabel = cc.Label:create(obj.name, s_arialPath, 24)
+        testLabel:setAnchorPoint(cc.p(0.5, 0.5))
         local testMenuItem = cc.MenuItemLabel:create(testLabel)
         if not obj.isSupported then
             testMenuItem:setEnabled(false)

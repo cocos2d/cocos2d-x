@@ -41,9 +41,9 @@
 
 using namespace cocos2d;
 
-bool g_landscape=false;
-CCSize g_screenSize;
-GLView* g_eglView=NULL;
+bool g_landscape = false;
+cocos2d::Size g_screenSize;
+GLView* g_eglView = nullptr;
 
 using namespace std;
 using namespace cocos2d;
@@ -54,7 +54,7 @@ using namespace cocos2d;
 
 -(void) dealloc
 {
-    CCDirector::sharedDirector()->end();
+    Director::getInstance()->end();
     [super dealloc];
 }
 
@@ -63,11 +63,11 @@ using namespace cocos2d;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-
     AppDelegate app;
 	[self createSimulator:[NSString stringWithUTF8String:"HelloLua"] viewWidth:960 viewHeight:640 factor:1.0];
-    int ret = Application::getInstance()->run();
-    
+    Application::getInstance()->run();
+    // After run, application needs to be terminated immediately.
+    [NSApp terminate: self];
 }
 
 

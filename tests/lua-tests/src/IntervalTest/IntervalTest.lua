@@ -23,11 +23,16 @@ local function IntervalLayer()
     ret:addChild(sun)
 
     -- timers
-    m_label0 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label1 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label2 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label3 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label4 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
+    m_label0 = cc.Label:createWithBMFont("fonts/bitmapFontTest4.fnt", "0")
+    m_label0:setAnchorPoint(cc.p(0.5, 0.5))
+    m_label1 = cc.Label:createWithBMFont("fonts/bitmapFontTest4.fnt", "0")
+    m_label1:setAnchorPoint(cc.p(0.5, 0.5))
+    m_label2 = cc.Label:createWithBMFont("fonts/bitmapFontTest4.fnt", "0")
+    m_label2:setAnchorPoint(cc.p(0.5, 0.5))
+    m_label3 = cc.Label:createWithBMFont("fonts/bitmapFontTest4.fnt", "0")
+    m_label3:setAnchorPoint(cc.p(0.5, 0.5))
+    m_label4 = cc.Label:createWithBMFont("fonts/bitmapFontTest4.fnt", "0")
+    m_label4:setAnchorPoint(cc.p(0.5, 0.5))
 
     local function update(dt)
         m_time0 = m_time0 + dt

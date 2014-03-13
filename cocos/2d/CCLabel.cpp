@@ -972,7 +972,7 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
 
         if (_textSprite)
         {
-            _textSprite->visit();
+            _textSprite->visit(renderer, _modelViewTransform, dirty);
         }
         else
         {
@@ -1149,7 +1149,10 @@ void Label::setColor(const Color3B& color)
     {
         updateContent();
     }
-    _reusedLetter->setColor(color);
+    if (_reusedLetter)
+    {
+        _reusedLetter->setColor(color);
+    }
     SpriteBatchNode::setColor(color);
 }
 
