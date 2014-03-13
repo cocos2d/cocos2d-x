@@ -169,7 +169,7 @@ void EditBoxImplAndroid::setText(const char* pText)
                 long length = cc_utf8_strlen(_text.c_str(), -1);
                 for (long i = 0; i < length; i++)
                 {
-                    strToShow.append("\u25CF");
+                    strToShow.append("*");
                 }
             }
             else
