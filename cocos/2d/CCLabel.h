@@ -78,7 +78,7 @@ typedef struct _ttfConfig
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
-    static const int DefultFontSize;
+    static const int DistanceFieldFontSize;
 
     static Label* create();
 
@@ -259,7 +259,7 @@ protected:
     */
     virtual ~Label();
 
-    virtual bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+    virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
     bool recordPlaceholderInfo(int spriteIndex);
@@ -277,7 +277,7 @@ protected:
 
     virtual void updateColor() override;
 
-    virtual void initProgram();
+    virtual void configureShaderProgram();
 
     void drawShadowWithoutBlur();
 
