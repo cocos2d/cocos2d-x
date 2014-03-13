@@ -143,14 +143,14 @@ const char* RelativeLayoutParameter::getRelativeToWidgetName() const
     return _relativeWidgetName.c_str();
 }
 
-void RelativeLayoutParameter::setRelativeName(const char* name)
+void RelativeLayoutParameter::setRelativeName(const std::string& name)
 {
     _relativeLayoutName = name;
 }
 
-const char* RelativeLayoutParameter::getRelativeName() const
+const std::string& RelativeLayoutParameter::getRelativeName() const
 {
-    return _relativeLayoutName.c_str();
+    return _relativeLayoutName;
 }
     
 LayoutParameter* RelativeLayoutParameter::createCloneInstance()

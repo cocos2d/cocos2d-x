@@ -252,15 +252,10 @@ public:
      *
      * @return An array of children
      */
-    virtual Vector<Node*>& getChildren() override;
-    virtual const Vector<Node*>& getChildren() const override;
+    virtual Vector<Widget*>& getWidgets();
+    virtual const Vector<Widget*>& getWidgets() const;
+    
 
-    /**
-     * Get the amount of children.
-     *
-     * @return The amount of children.
-     */
-    virtual ssize_t getChildrenCount() const override;
 
     /**
      * Removes this node itself from its parent node with a cleanup.
@@ -286,13 +281,6 @@ public:
     virtual void removeChild(Node* child, bool cleanup = true) override;
 
     /**
-     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
-     *
-     * @param tag       An interger number that identifies a child node
-     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
-     */
-    virtual void removeChildByTag(int tag, bool cleanup = true) override;
-    /**
      * Removes all children from the container with a cleanup.
      *
      * @see `removeAllChildrenWithCleanup(bool)`
@@ -307,30 +295,6 @@ public:
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 
-    /**
-     * Gets a child from the container with its name
-     *
-     * @param name   An key to find the child widget.
-     *
-     * @return a Widget object whose name equals to the input parameter
-     */
-    virtual Widget* getChildByName(const char* name);
-
-    virtual void addNode(Node* node);
-
-    virtual void addNode(Node * node, int zOrder);
-
-    virtual void addNode(Node* node, int zOrder, int tag);
-
-    virtual Node * getNodeByTag(int tag);
-
-    virtual Vector<Node*>& getNodes();
-
-    virtual void removeNode(Node* node);
-
-    virtual void removeNodeByTag(int tag);
-
-    virtual void removeAllNodes();
 
     virtual void visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
 
@@ -483,22 +447,6 @@ public:
      * @return the touch end point.
      */
     const Point& getTouchEndPos();
-
-    /**
-     * Changes the name that is used to identify the widget easily.
-     *
-     * @param A const char* that indentifies the widget.
-     */
-    void setName(const char* name);
-
-    /**
-     * Returns a name that is used to identify the widget easily.
-     *
-     * You can set tags to widget then identify them easily.
-     *
-     * @return A const char* that identifies the widget.
-     */
-    const char* getName() const;
 
     /**
      * Returns a type that is widget's type
@@ -685,6 +633,9 @@ protected:
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
     Widget* getWidgetParent();
+    virtual void addNode(Node* node);
+    virtual void addNode(Node * node, int zOrder);
+    virtual void addNode(Node* node, int zOrder, int tag);
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
@@ -717,7 +668,7 @@ protected:
     bool _flippedX;
     bool _flippedY;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
-    Vector<Node*> _widgetChildren;
+    Vector<Widget*> _widgetChildren;
 
 };
 }

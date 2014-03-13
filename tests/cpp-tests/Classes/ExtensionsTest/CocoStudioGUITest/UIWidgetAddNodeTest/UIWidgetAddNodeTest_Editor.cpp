@@ -41,7 +41,7 @@ bool UIWidgetAddNodeTest_Editor::init()
         _layout->addChild(widget);
         
         Sprite* sprite = Sprite::create("cocosui/ccicon.png");
-        widget->addNode(sprite);
+        widget->addChild(sprite);
         
         return true;
     }

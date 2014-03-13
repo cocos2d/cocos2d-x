@@ -38,7 +38,7 @@ Widget* Helper::seekWidgetByTag(Widget* root, int tag)
     {
         return root;
     }
-    const auto& arrayRootChildren = root->getChildren();
+    const auto& arrayRootChildren = root->getWidgets();
     ssize_t length = arrayRootChildren.size();
     for (ssize_t i=0;i<length;i++)
     {
@@ -52,17 +52,17 @@ Widget* Helper::seekWidgetByTag(Widget* root, int tag)
     return nullptr;
 }
 
-Widget* Helper::seekWidgetByName(Widget* root, const char *name)
+Widget* Helper::seekWidgetByName(Widget* root, const std::string& name)
 {
     if (!root)
     {
         return nullptr;
     }
-    if (strcmp(root->getName(), name) == 0)
+    if (root->getName() == name)
     {
         return root;
     }
-    const auto& arrayRootChildren = root->getChildren();
+    const auto& arrayRootChildren = root->getWidgets();
     for (auto& subWidget : arrayRootChildren)
     {
         Widget* child = static_cast<Widget*>(subWidget);
@@ -75,18 +75,18 @@ Widget* Helper::seekWidgetByName(Widget* root, const char *name)
     return nullptr;
 }
 
-Widget* Helper::seekWidgetByRelativeName(Widget *root, const char *name)
+Widget* Helper::seekWidgetByRelativeName(Widget *root, const std::string& name)
 {
     if (!root)
     {
         return nullptr;
     }
-    const auto& arrayRootChildren = root->getChildren();
+    const auto& arrayRootChildren = root->getWidgets();
     for (auto& subWidget : arrayRootChildren)
     {
         Widget* child = static_cast<Widget*>(subWidget);
         RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-        if (layoutParameter && strcmp(layoutParameter->getRelativeName(), name) == 0)
+        if (layoutParameter && layoutParameter->getRelativeName() == name)
         {
             return child;
         }
@@ -105,7 +105,7 @@ Widget* Helper::seekActionWidgetByActionTag(Widget* root, int tag)
 	{
 		return root;
 	}
-    const auto& arrayRootChildren = root->getChildren();
+    const auto& arrayRootChildren = root->getWidgets();
     for (auto& subWidget : arrayRootChildren)
 	{
 		Widget* child = static_cast<Widget*>(subWidget);
