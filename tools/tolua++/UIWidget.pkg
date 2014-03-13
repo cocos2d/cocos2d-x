@@ -214,9 +214,12 @@ class Widget : public CCNode
     
     
     const CCSize& getSize() const;
-    
+
+    virtual const CCSize& getLayoutSize();
     
     const CCPoint& getSizePercent() const;
+
+    const CCSize& getCustomSize() const;
     
     
     virtual bool hitTest(const CCPoint &pt);
@@ -255,7 +258,8 @@ class Widget : public CCNode
     
     void updateSizeAndPosition();
     
-    
+    void updateSizeAndPosition(const CCSize& parentSize);
+
     void setActionTag(int tag);
 	int getActionTag();
 
