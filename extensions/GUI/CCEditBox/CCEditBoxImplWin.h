@@ -84,8 +84,8 @@ public:
     virtual void onEnter(void);
 private:
 
-    LabelTTF* _label;
-    LabelTTF* _labelPlaceHolder;
+    Label* _label;
+    Label* _labelPlaceHolder;
     EditBox::InputMode    _editBoxInputMode;
     EditBox::InputFlag    _editBoxInputFlag;
     EditBox::KeyboardReturnType  _keyboardReturnType;
