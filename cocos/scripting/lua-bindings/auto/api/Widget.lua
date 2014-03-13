@@ -48,6 +48,11 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
+-- @function [parent=#Widget] getLayoutSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- @function [parent=#Widget] setPositionType 
 -- @param self
 -- @param #ccui.PositionType positiontype
@@ -63,9 +68,14 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Widget] updateSizeAndPosition 
+-- overload function: updateSizeAndPosition(size_table)
+--          
+-- overload function: updateSizeAndPosition()
+--          
+-- @function [parent=#Widget] updateSizeAndPosition
 -- @param self
-        
+-- @param #size_table size
+
 --------------------------------
 -- @function [parent=#Widget] getBottomInParent 
 -- @param self
