@@ -9,8 +9,8 @@ NACL_ARCH ?= x86_64
 NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
-CCFLAGS += -Wall -Werror
-CXXFLAGS += -Wall -Werror
+CCFLAGS += -Wall # -Werror
+CXXFLAGS += -Wall # -Werror
 ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
