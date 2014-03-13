@@ -49,7 +49,8 @@ INCLUDES += -I$(COCOS_SRC) \
 	-I$(COCOS_SRC)/platform/nacl \
 	-I$(NACL_SDK_ROOT)/include \
 	-isystem $(NACLPORTS_INCLUDE) \
-	-isystem $(NACLPORTS_INCLUDE)/libxml2
+	-isystem $(NACLPORTS_INCLUDE)/libxml2 \
+	-isystem $(NACLPORTS_INCLUDE)/freetype2
 
 ifeq ($(DEBUG), 1)
 BIN_DIR = bin/debug
