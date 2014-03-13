@@ -31,6 +31,15 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
+    
+class ScrollInnerContainer : public Layout
+{
+public:
+    ScrollInnerContainer();
+    virtual ~ScrollInnerContainer();
+    static ScrollInnerContainer* create();
+    virtual const Size& getLayoutSize() override;
+};
 
 enum SCROLLVIEW_DIR
 {
