@@ -7,7 +7,7 @@ class GUIReader : public CCObject
     static void purge();
     Widget* widgetFromJsonFile(const char* fileName);
     int getVersionInteger(const char* str);
-    void storeFileDesignSize(const char* fileName, const cocos2d::CCSize &size);
-    const cocos2d::CCSize getFileDesignSize(const char* fileName) const;
+    void storeFileDesignSize(const char* fileName, const CCSize &size);
+    const CCSize getFileDesignSize(const char* fileName) const;
     const std::string& getFilePath() const;
 };
