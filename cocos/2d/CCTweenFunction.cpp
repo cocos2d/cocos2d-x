@@ -121,13 +121,31 @@ float tweenTo(float time, TweenType type, float *easingParam)
             break;
             
         case Elastic_EaseIn:
-            delta = elasticEaseIn(time, easingParam[0]);
+        {
+            float period = 0.3f;
+            if (nullptr != easingParam) {
+                period = easingParam[0];
+            }
+            delta = elasticEaseIn(time, period);
+        }
             break;
         case Elastic_EaseOut:
-            delta = elasticEaseOut(time, easingParam[0]);
+        {
+            float period = 0.3f;
+            if (nullptr != easingParam) {
+                period = easingParam[0];
+            }
+            delta = elasticEaseOut(time, period);
+        }
             break;
         case Elastic_EaseInOut:
-            delta = elasticEaseInOut(time, easingParam[0]);
+        {
+            float period = 0.3f;
+            if (nullptr != easingParam) {
+                period = easingParam[0];
+            }
+            delta = elasticEaseInOut(time, period);
+        }
             break;
             
             
