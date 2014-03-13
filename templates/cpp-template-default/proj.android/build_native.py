@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # build_native.py
 # Build native codes
 

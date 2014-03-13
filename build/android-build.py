@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # android-build.py
 # Build android 
 

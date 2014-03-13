@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # This script is used to generate luabinding glue codes.
 # Android ndk version must be ndk-r9b.
