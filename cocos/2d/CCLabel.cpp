@@ -36,7 +36,7 @@
 
 NS_CC_BEGIN
 
-const int Label::DefultFontSize = 50;
+const int Label::DistanceFieldFontSize = 50;
 
 Label* Label::create()
 {
@@ -213,7 +213,7 @@ bool Label::setCharMap(const std::string& plistFile)
         return false;
     }
 
-    initWithFontAtlas(newAtlas);
+    setFontAtlas(newAtlas);
     _currentLabelType = LabelType::CHARMAP;
 
     return true;
@@ -229,7 +229,7 @@ bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int st
         return false;
     }
 
-    initWithFontAtlas(newAtlas);
+    setFontAtlas(newAtlas);
     _currentLabelType = LabelType::CHARMAP;
 
     return true;
@@ -245,7 +245,7 @@ bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHe
         return false;
     }
 
-    initWithFontAtlas(newAtlas);
+    setFontAtlas(newAtlas);
     _currentLabelType = LabelType::CHARMAP;
 
     return true;
@@ -327,7 +327,7 @@ void Label::reset()
     CC_SAFE_RELEASE_NULL(_reusedLetter);
 }
 
-void Label::initProgram()
+void Label::configureShaderProgram()
 {
     switch (_currLabelEffect)
     {
@@ -354,12 +354,12 @@ void Label::initProgram()
     _uniformEffectColor = glGetUniformLocation(_shaderProgram->getProgram(), "v_effectColor");
 }
 
-bool Label::initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
+void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
 {
     if (atlas == _fontAtlas)
     {
         FontAtlasCache::releaseFontAtlas(atlas);
-        return true;
+        return;
     }
 
     if (_fontAtlas)
@@ -391,9 +391,7 @@ bool Label::initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = fa
     _useDistanceField = distanceFieldEnabled;
     _useA8Shader = useA8Shader;
     _currLabelEffect = LabelEffect::NORMAL;
-    initProgram();
-
-    return true;
+    configureShaderProgram();
 }
 
 bool Label::setTTFConfig(const TTFConfig& ttfConfig)
@@ -413,14 +411,14 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
         _useDistanceField = false;
         _useA8Shader = false;
         _currLabelEffect = LabelEffect::OUTLINE;
-        initProgram();
+        configureShaderProgram();
     }
     else if(ttfConfig.distanceFieldEnabled)
     {
-        this->setFontScale(1.0f * ttfConfig.fontSize / DefultFontSize);
+        this->setFontScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
     }
 
-    initWithFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
+    setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
 
     _currentLabelType = LabelType::TTF;
 
@@ -437,7 +435,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Point& im
         return false;
     }
 
-    initWithFontAtlas(newAtlas);
+    setFontAtlas(newAtlas);
     _currentLabelType = LabelType::BMFONT;
 
     return true;
@@ -756,7 +754,7 @@ void Label::enableGlow(const Color3B& glowColor)
         return;
     _currLabelEffect = LabelEffect::GLOW;
     _effectColor = glowColor;
-    initProgram();
+    configureShaderProgram();
 }
 
 void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = 1 */)
@@ -772,7 +770,7 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = 1 */)
                 auto config = _fontConfig;
                 config.outlineSize = outlineSize;
                 setTTFConfig(config);
-                initProgram();
+                configureShaderProgram();
             }
         }
         _fontDefinition._stroke._strokeEnabled = true;
@@ -809,7 +807,7 @@ void Label::disableEffect()
         setTTFConfig(_fontConfig);
     }
     _currLabelEffect = LabelEffect::NORMAL;
-    initProgram();
+    configureShaderProgram();
     _contentDirty = true;
 }
 
