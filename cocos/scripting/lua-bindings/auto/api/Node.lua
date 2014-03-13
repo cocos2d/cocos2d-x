@@ -79,12 +79,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Node] getChildByName 
--- @param self
--- @param #string str
--- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
 -- @function [parent=#Node] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char char
@@ -100,10 +94,9 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Node] enumerateChildrenByName 
+-- @function [parent=#Node] setScaleY 
 -- @param self
--- @param #string str
--- @param #function func
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Node] setScaleX 
@@ -210,11 +203,6 @@
 -- @function [parent=#Node] setParent 
 -- @param self
 -- @param #cc.Node node
-        
---------------------------------
--- @function [parent=#Node] getName 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Node] getRotation3D 
@@ -330,11 +318,16 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Node] runAction 
+-- overload function: visit()
+--          
+-- overload function: visit(cc.Renderer, kmMat4, bool)
+--          
+-- @function [parent=#Node] visit
 -- @param self
--- @param #cc.Action action
--- @return Action#Action ret (return value: cc.Action)
-        
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+
 --------------------------------
 -- @function [parent=#Node] setShaderProgram 
 -- @param self
@@ -351,16 +344,11 @@
 -- @return point_table#point_table ret (return value: point_table)
         
 --------------------------------
--- overload function: visit()
---          
--- overload function: visit(cc.Renderer, kmMat4, bool)
---          
--- @function [parent=#Node] visit
+-- @function [parent=#Node] runAction 
 -- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
-
+-- @param #cc.Action action
+-- @return Action#Action ret (return value: cc.Action)
+        
 --------------------------------
 -- @function [parent=#Node] setScheduler 
 -- @param self
@@ -390,11 +378,6 @@
 -- @param self
 -- @param #int int
 -- @return Action#Action ret (return value: cc.Action)
-        
---------------------------------
--- @function [parent=#Node] setName 
--- @param self
--- @param #string str
         
 --------------------------------
 -- overload function: setAdditionalTransform(cc.AffineTransform)
@@ -501,11 +484,6 @@
         
 --------------------------------
 -- @function [parent=#Node] setGlobalZOrder 
--- @param self
--- @param #float float
-        
---------------------------------
--- @function [parent=#Node] setScaleY 
 -- @param self
 -- @param #float float
         
