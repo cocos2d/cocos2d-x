@@ -327,7 +327,7 @@ void Label::reset()
     CC_SAFE_RELEASE_NULL(_reusedLetter);
 }
 
-void Label::configureShaderProgram()
+void Label::updateShaderProgram()
 {
     switch (_currLabelEffect)
     {
@@ -391,7 +391,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     _useDistanceField = distanceFieldEnabled;
     _useA8Shader = useA8Shader;
     _currLabelEffect = LabelEffect::NORMAL;
-    configureShaderProgram();
+    updateShaderProgram();
 }
 
 bool Label::setTTFConfig(const TTFConfig& ttfConfig)
@@ -411,7 +411,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
         _useDistanceField = false;
         _useA8Shader = false;
         _currLabelEffect = LabelEffect::OUTLINE;
-        configureShaderProgram();
+        updateShaderProgram();
     }
     else if(ttfConfig.distanceFieldEnabled)
     {
@@ -754,7 +754,7 @@ void Label::enableGlow(const Color3B& glowColor)
         return;
     _currLabelEffect = LabelEffect::GLOW;
     _effectColor = glowColor;
-    configureShaderProgram();
+    updateShaderProgram();
 }
 
 void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = 1 */)
@@ -770,7 +770,7 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = 1 */)
                 auto config = _fontConfig;
                 config.outlineSize = outlineSize;
                 setTTFConfig(config);
-                configureShaderProgram();
+                updateShaderProgram();
             }
         }
         _fontDefinition._stroke._strokeEnabled = true;
@@ -807,7 +807,7 @@ void Label::disableEffect()
         setTTFConfig(_fontConfig);
     }
     _currLabelEffect = LabelEffect::NORMAL;
-    configureShaderProgram();
+    updateShaderProgram();
     _contentDirty = true;
 }
 
