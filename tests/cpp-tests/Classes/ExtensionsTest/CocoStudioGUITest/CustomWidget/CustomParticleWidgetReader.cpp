@@ -8,6 +8,7 @@
 
 #include "CustomParticleWidgetReader.h"
 #include "CustomParticleWidget.h"
+#include "cocostudio/CCSGUIReader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -39,13 +40,16 @@ void CustomParticleWidgetReader::setProperties(const std::string& classType,
                                           Widget *widget,
                                           const rapidjson::Value &customOptions)
 {
+    GUIReader* guiReader = GUIReader::getInstance();
     
     CustomParticleWidget* custom = static_cast<CustomParticleWidget*>(widget);
     
-    bool isExistParticlePlist = DICTOOL->checkObjectExist_json(customOptions, "ParticlePlist");
-    if (isExistParticlePlist)
+    bool isExistPlistFile = DICTOOL->checkObjectExist_json(customOptions, "PlistFile");
+    if (isExistPlistFile)
     {
-        const char* ParticlePlist = DICTOOL->getStringValue_json(customOptions, "ParticlePlist");
-        custom->setParticlePlist(ParticlePlist);
+        const char* PlistFile = DICTOOL->getStringValue_json(customOptions, "PlistFile");
+        std::string PlistFilePath = guiReader->getFilePath();
+        PlistFilePath.append(PlistFile);
+        custom->setParticlePlist(PlistFilePath.c_str());
     }
 }

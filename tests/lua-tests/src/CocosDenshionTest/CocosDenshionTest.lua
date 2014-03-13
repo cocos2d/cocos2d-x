@@ -98,7 +98,8 @@ local function CocosDenshionTest()
     m_nTestCount = table.getn(testItems)
     local i = 1
     for  i = 1, m_nTestCount do
-        local  label = cc.LabelTTF:create(testItems[i], "Arial", 24)
+        local  label = cc.Label:create(testItems[i], s_arialPath, 24)
+        label:setAnchorPoint(cc.p(0.5, 0.5))
         local  pMenuItem = cc.MenuItemLabel:create(label)
         pMenuItem:registerScriptTapHandler(menuCallback)
         m_pItmeMenu:addChild(pMenuItem, i + 10000 -1)

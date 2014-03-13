@@ -102,6 +102,7 @@ Control::~Control()
 
 void Control::sendActionsForControlEvents(EventType controlEvents)
 {
+	retain();
     // For each control events
     for (int i = 0; i < kControlEventTotalNumber; i++)
     {
@@ -126,6 +127,7 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
 #endif
         }
     }
+	release();
 }
 void Control::addTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents)
 {

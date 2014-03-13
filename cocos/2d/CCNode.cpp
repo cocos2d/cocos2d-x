@@ -598,17 +598,6 @@ void Node::setTag(int var)
     _tag = var;
 }
 
-//name getter
-std::string& Node::getName()
-{
-    return _name;
-}
-
-//name setter
-void Node::setName(const std::string& name)
-{
-    _name = name;
-}
 /// userData setter
 void Node::setUserData(void *var)
 {
@@ -709,26 +698,6 @@ Node* Node::getChildByTag(int tag)
     {
         if(child && child->_tag == tag)
             return child;
-    }
-    return nullptr;
-}
-
-Node* Node::getChildByName(const std::string& name)
-{
-
-    for (auto& child : _children)
-    {
-   
-        if(child->_name == name)
-        {
-            return child;
-        }
-    
-        auto found = child->getChildByName(name);
-        if(found != nullptr)
-        {
-            return found;
-        }
     }
     return nullptr;
 }

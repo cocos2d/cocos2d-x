@@ -7,12 +7,14 @@ local function XMLHttpRequestLayer()
     local space  = 35
 
     local function init()
-        local label = cc.LabelTTF:create("XML Http Request Test", "Arial", 28)
+        local label = cc.Label:create("XML Http Request Test", s_arialPath, 28)
+        label:setAnchorPoint(cc.p(0.5, 0.5))
         label:setPosition(cc.p(winSize.width / 2, winSize.height - margin))
         layer:addChild(label, 0)
 
         --Response Code Label
-        local labelStatusCode = cc.LabelTTF:create("HTTP Status Code", "Marker Felt", 20)
+        local labelStatusCode = cc.Label:create("HTTP Status Code", s_markerFeltFontPath, 20)
+        labelStatusCode:setAnchorPoint(cc.p(0.5, 0.5))
         labelStatusCode:setPosition(cc.p(winSize.width / 2,  winSize.height - margin - 6 * space))
         layer:addChild(labelStatusCode)
 
@@ -38,7 +40,8 @@ local function XMLHttpRequestLayer()
             labelStatusCode:setString("waiting...")
         end
 
-        local labelGet  = cc.LabelTTF:create("Test Get", "Arial", 22)
+        local labelGet  = cc.Label:create("Test Get", s_arialPath, 22)
+        labelGet:setAnchorPoint(cc.p(0.5, 0.5))
         local itemGet  =  cc.MenuItemLabel:create(labelGet)
         itemGet:registerScriptTapHandler(onMenuGetClicked)
         itemGet:setPosition(cc.p(winSize.width / 2, winSize.height - margin - space))
@@ -59,7 +62,8 @@ local function XMLHttpRequestLayer()
             labelStatusCode:setString("waiting...")
         end
 
-        local labelPost = cc.LabelTTF:create("Test Post", "Arial", 22)
+        local labelPost = cc.Label:create("Test Post", s_arialPath, 22)
+        labelPost:setAnchorPoint(cc.p(0.5, 0.5))
         local itemPost =  cc.MenuItemLabel:create(labelPost)
         itemPost:registerScriptTapHandler(onMenuPostClicked)
         itemPost:setPosition(cc.p(winSize.width / 2, winSize.height - margin - 2 * space))
@@ -93,7 +97,8 @@ local function XMLHttpRequestLayer()
             labelStatusCode:setString("waiting...")
         end
 
-        local labelPostBinary = cc.LabelTTF:create("Test Post Binary", "Arial", 22)
+        local labelPostBinary = cc.Label:create("Test Post Binary", s_arialPath, 22)
+        labelPostBinary:setAnchorPoint(cc.p(0.5, 0.5))
         local itemPostBinary = cc.MenuItemLabel:create(labelPostBinary)
         itemPostBinary:registerScriptTapHandler(onMenuPostBinaryClicked)
         itemPostBinary:setPosition(cc.p(winSize.width / 2, winSize.height - margin - 3 * space))
@@ -121,7 +126,8 @@ local function XMLHttpRequestLayer()
             labelStatusCode:setString("waiting...")
         end
 
-        local labelPostJson = cc.LabelTTF:create("Test Post Json", "Arial", 22)
+        local labelPostJson = cc.Label:create("Test Post Json", s_arialPath, 22)
+        labelPostJson:setAnchorPoint(cc.p(0.5, 0.5))
         local itemPostJson = cc.MenuItemLabel:create(labelPostJson)
         itemPostJson:registerScriptTapHandler(onMenuPostJsonClicked)
         itemPostJson:setPosition(cc.p(winSize.width / 2, winSize.height - margin - 4 * space))
