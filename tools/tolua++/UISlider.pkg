@@ -24,7 +24,6 @@ class Slider : public Widget
     void loadProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setPercent(int percent);
     int getPercent();
-    void addEventListenerSlider(CCObject* target,SEL_SlidPercentChangedEvent selector);
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
     virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
