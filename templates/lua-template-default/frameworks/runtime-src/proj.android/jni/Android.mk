@@ -10,8 +10,7 @@ LOCAL_SRC_FILES := hellolua/main.cpp \
                    ../../Classes/AppDelegate.cpp
 
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
-                    $(LOCAL_PATH)/../../cocos2d-x/external/lua/tolua
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 					
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
 
@@ -19,4 +18,4 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,bindings)
+$(call import-module,scripting/lua-bindings)

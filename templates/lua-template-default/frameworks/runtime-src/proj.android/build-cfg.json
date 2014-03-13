@@ -3,7 +3,7 @@
         "../../cocos2d-x",
         "../../cocos2d-x/cocos/",
         "../../cocos2d-x/external",
-        "../../cocos2d-x/cocos/scripting/lua-bindings"
+        "../../cocos2d-x/cocos/scripting"
     ],
     "copy_to_assets" :[
         "../../../src",
