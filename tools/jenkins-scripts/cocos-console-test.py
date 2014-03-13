@@ -18,6 +18,19 @@ runSupport = {
 	'linux' : [0, 0, 1]
 }
 
+_argvs = sys.argv
+print 'input argvs:', _argvs[1], _argvs[2]
+_will_create = False
+_will_run = False
+if _argvs[1]=='create' || _argvs[2]=='create':
+	_will_create = True
+if _argvs[1]=='run' || _argvs[2]=='run':
+	_will_create = True
+	_will_run = True
+if _will_create == False and _will_run == False:
+	_will_create = True
+	_will_run = True
+
 curPlat = sys.platform
 if curPlat.find('linux') >= 0:
 	curPlat = 'linux'
@@ -37,7 +50,7 @@ def create_project():
 	idx = 0
 	for proj in project_types:
 		print 'proj: ', proj
-		cmd = './'+cocos_console_dir+'cocos new -l '+proj+' '+proj+PROJ_SUFFIX
+		cmd = 'cocos new -l '+proj+' '+proj+PROJ_SUFFIX
 		print proj,'cmd:',cmd
 		idx += 1
 		info_create = os.system(cmd)	#call cmd on win is diff
@@ -47,7 +60,7 @@ def build_run():
 	for proj in project_types:
 		idx = 0
 		for phone in phonePlats:
-			cmd = './'+cocos_console_dir+'cocos run -p '+phone+' -s '+proj+PROJ_SUFFIX
+			cmd = 'cocos run -p '+phone+' -s '+proj+PROJ_SUFFIX
 			print proj,'cmd:',cmd
 			if runSupport[curPlat][idx]:
 				info_run = os.system(cmd)
@@ -55,9 +68,11 @@ def build_run():
 			idx += 1
 
 def main():
-	clean_project()
-	create_project()
-	build_run()
+	if _will_create:
+		clean_project()
+		create_project()
+	if _will_run:
+	 	build_run()
 
 # -------------- main --------------
 if __name__ == '__main__':
