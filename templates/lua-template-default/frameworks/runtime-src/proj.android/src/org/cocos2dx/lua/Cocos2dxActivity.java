@@ -1,20 +1,10 @@
 package org.cocos2dx.lua;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
-
 import android.app.NativeActivity;
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
-import android.util.Log;
-import android.widget.Toast;
+
+// The name of .so is specified in AndroidMenifest.xml. NativityActivity will load it automatically for you.
+// You can use "System.loadLibrary()" to load other .so files.
 
 public class Cocos2dxActivity extends NativeActivity{
 
