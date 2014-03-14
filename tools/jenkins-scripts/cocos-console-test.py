@@ -8,11 +8,14 @@ import json
 
 
 #get payload from os env
-payload_str = os.environ['payload']
-#parse to json obj
-payload = json.loads(payload_str)
-console_param = payload['console']
-# console_param = 'create'
+console_param=''
+if os.environ.has_key('payload'):
+	payload_str = os.environ['payload']
+	#parse to json obj
+	payload = json.loads(payload_str)
+	console_param = payload['console']
+else:
+	console_param = 'create'
 print 'console_param is:', console_param
 
 project_types = ['cpp', 'lua']
