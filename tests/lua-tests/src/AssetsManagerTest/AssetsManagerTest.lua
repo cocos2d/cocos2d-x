@@ -100,7 +100,8 @@ local function updateLayer()
     local function enter(sender)
 
         if not isUpdateItemClicked then
-            addSearchPath(pathToSave,true)
+            local realPath = pathToSave .. "/package"
+            addSearchPath(realPath,true)
         end
 
         assetsManagerModule = reloadModule("src/AssetsManagerTest/AssetsManagerModule")
