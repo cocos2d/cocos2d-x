@@ -42,7 +42,7 @@ bool HelloWorld::init()
     
     // the anchor point of the close image is in the bottom-right corner
     closeItem->setAnchorPoint(Point(1, 0));
-    closeItem->setPosition(Point(origin.x + visSize.width, origin.y));
+    closeItem->setPosition(Point(origin.x + visibleSize.width, origin.y));
 
     // create menu, it's an autorelease object
     auto menu = Menu::create(closeItem, NULL);
