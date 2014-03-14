@@ -133,14 +133,14 @@
 
 /* Configure process defines this to 1 when it finds out that system */
 /* header file stdint.h must be included by the external interface.  */
-#define CURL_PULL_STDINT_H 1
+/* #undef CURL_PULL_STDINT_H */
 #ifdef CURL_PULL_STDINT_H
 #  include <stdint.h>
 #endif
 
 /* Configure process defines this to 1 when it finds out that system  */
 /* header file inttypes.h must be included by the external interface. */
-#define CURL_PULL_INTTYPES_H 1
+/* #undef CURL_PULL_INTTYPES_H */
 #ifdef CURL_PULL_INTTYPES_H
 #  include <inttypes.h>
 #endif
@@ -165,7 +165,7 @@
 typedef CURL_TYPEOF_CURL_SOCKLEN_T curl_socklen_t;
 
 /* Signed integral data type used for curl_off_t. */
-#define CURL_TYPEOF_CURL_OFF_T int64_t
+#define CURL_TYPEOF_CURL_OFF_T long long
 
 /* Data type definition of curl_off_t. */
 typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;
