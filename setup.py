@@ -433,7 +433,7 @@ class SetEnvVar(object):
             print '\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target   
 
         if self._isWindows():
-            print '\nPlease restart the terminal to make added system variables take effect'
+            print '\nPlease restart the terminal or restart computer to make added system variables take effect'
         else:
             print '\nPlease execute command: "source %s" to make added system variables take effect' % target
 
@@ -441,7 +441,7 @@ if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
     parser.add_option('-a', '--androidsdkroot', dest='android_sdk_root', help='directory of android sdk root')
-    parser.add_option('-t', '--antroot', dest='ant_root', help='directory of ant root')
+    parser.add_option('-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
     opts, args = parser.parse_args()
 
     # set environment variables
