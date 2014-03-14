@@ -164,6 +164,10 @@ function CreateTestMenu()
     CloseMenu:setPosition(0, 0)
     CloseMenu:addChild(CloseItem)
     menuLayer:addChild(CloseMenu)
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()       
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
+        CloseMenu:setVisible(false)
+    end
 
     -- add menu items for tests
     local MainMenu = cc.Menu:create()
