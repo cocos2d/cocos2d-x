@@ -82,7 +82,8 @@ cocos2d-x-3.0rc0 March.14 2014
      [FIX]          UI: Supports RichText
      [FIX]          Vector: Object which isn't in Vector would also be released when invoking Vector::eraseObject.
      [FIX]          Websocket: Potential crash when websocket connection closes.
-     [FIX]          Websocket: No callback is invoked when websocket connection fails    
+     [FIX]          Websocket: No callback is invoked when websocket connection fails  
+     [FIX]          Xcode 5.1: Added Xcode 5.1 to build arm64 version, but lua project can not work, will fix it soon
 
      [3RD]          Kazmath: Upgraded to latest version of Kazmath
 
