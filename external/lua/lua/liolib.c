@@ -1,5 +1,5 @@
 /*
-** $Id: liolib.c,v 2.73.1.4 2010/05/14 15:33:51 roberto Exp $
+** $Id: liolib.c,v 2.73.1.3 2008/01/18 17:47:43 roberto Exp $
 ** Standard I/O (and system) library
 ** See Copyright Notice in lua.h
 */
@@ -180,13 +180,11 @@ static int io_popen (lua_State *L) {
 }
 
 
-#ifndef __native_client__
 static int io_tmpfile (lua_State *L) {
   FILE **pf = newfile(L);
   *pf = tmpfile();
   return (*pf == NULL) ? pushresult(L, 0, NULL) : 1;
 }
-#endif
 
 
 static FILE *getiofile (lua_State *L, int findex) {
@@ -278,10 +276,7 @@ static int read_number (lua_State *L, FILE *f) {
     lua_pushnumber(L, d);
     return 1;
   }
-  else {
-    lua_pushnil(L);  /* "result" to be removed */
-    return 0;  /* read fails */
-  }
+  else return 0;  /* read fails */
 }
 
 
@@ -488,9 +483,7 @@ static const luaL_Reg iolib[] = {
   {"output", io_output},
   {"popen", io_popen},
   {"read", io_read},
-#ifndef __native_client__
   {"tmpfile", io_tmpfile},
-#endif
   {"type", io_type},
   {"write", io_write},
   {NULL, NULL}
