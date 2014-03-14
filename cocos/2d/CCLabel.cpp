@@ -33,6 +33,10 @@
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
 #include "CCFont.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
+#include "CCEventType.h"
+#include "CCEventCustom.h"
 
 NS_CC_BEGIN
 
@@ -278,6 +282,14 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
     _cascadeColorEnabled = true;
     
     reset();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto toBackgroundListener = EventListenerCustom::create(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(Label::listenToBackground, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(toBackgroundListener, this);
+#endif
+
+    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::EVENT_PURGE_TEXTURES, CC_CALLBACK_1(Label::listenToFontAtlasPurge, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
 }
 
 Label::~Label()
@@ -813,7 +825,7 @@ void Label::disableEffect()
 
 void Label::setFontScale(float fontScale)
 {
-    _fontScale = fontScale;
+    _fontScale = fontScale * CC_CONTENT_SCALE_FACTOR();
     Node::setScale(_fontScale);
 }
 
@@ -1213,6 +1225,26 @@ const Size& Label::getContentSize() const
         const_cast<Label*>(this)->updateContent();
     }
     return Node::getContentSize();
+}
+
+void Label::listenToBackground(EventCustom *event)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if (_fontAtlas && _currentLabelType == LabelType::TTF)
+    {
+        _batchNodes.clear();
+        _batchNodes.push_back(this);
+        Node::removeAllChildrenWithCleanup(true);
+    }
+#endif
+}
+
+void Label::listenToFontAtlasPurge(EventCustom *event)
+{
+    if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
+    {
+        alignText();
+    }
 }
 
 NS_CC_END
