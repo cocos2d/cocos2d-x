@@ -7295,7 +7295,7 @@
 					"-ltiff_arm64",
 					"-lwebp_arm64",
 					"-lwebsockets_arm64",
-					"-lfreetyep_arm64",
+					"-lfreetype_arm64",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7324,6 +7324,15 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
+				);
+				"OTHER_LDFLAGS[arch=arm64]" = (
+					"-lcurl_arm64",
+					"-ljpeg_arm64",
+					"-lpng_arm64",
+					"-ltiff_arm64",
+					"-lwebp_arm64",
+					"-lwebsockets_arm64",
+					"-lfreetype_arm64",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
