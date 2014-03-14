@@ -340,7 +340,7 @@ void RichText::formarRenderers()
         float newContentSizeHeight = 0.0f;
         float *maxHeights = new float[_elementRenders.size()];
         
-        for (int i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
@@ -355,7 +355,7 @@ void RichText::formarRenderers()
         
         
         float nextPosY = _customSize.height;
-        for (int i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float nextPosX = 0.0f;
@@ -374,7 +374,7 @@ void RichText::formarRenderers()
         delete [] maxHeights;
     }
     
-    int length = _elementRenders.size();
+    size_t length = _elementRenders.size();
     for (size_t i = 0; i<length; i++)
 	{
         Vector<Node*>* l = _elementRenders[i];
