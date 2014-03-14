@@ -46,7 +46,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
     int fontSize = config.fontSize;
     if (useDistanceField)
     {
-        fontSize = Label::DefultFontSize;
+        fontSize = Label::DistanceFieldFontSize;
     }
 
     std::string atlasName = generateFontName(config.fontFilePath, fontSize, GlyphCollection::DYNAMIC, useDistanceField);
