@@ -78,6 +78,7 @@ int Application::run()
 
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
+    glview->retain();
 
     while(!glview->windowShouldClose())
     {
@@ -101,6 +102,7 @@ int Application::run()
         director->mainLoop();
         director = nullptr;
     }
+    glview->release();
     return true;
 }
 
