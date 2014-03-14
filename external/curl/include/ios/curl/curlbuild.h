@@ -171,13 +171,13 @@ typedef CURL_TYPEOF_CURL_SOCKLEN_T curl_socklen_t;
 typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;
 
 /* curl_off_t formatting string directive without "%" conversion specifier. */
-#define CURL_FORMAT_CURL_OFF_T "lld"
+#define CURL_FORMAT_CURL_OFF_T PRId64
 
 /* unsigned curl_off_t formatting string without "%" conversion specifier. */
-#define CURL_FORMAT_CURL_OFF_TU "llu"
+#define CURL_FORMAT_CURL_OFF_TU PRIu64
 
 /* curl_off_t formatting string directive with "%" conversion specifier. */
-#define CURL_FORMAT_OFF_T "%lld"
+#define CURL_FORMAT_OFF_T "%" PRId64
 
 /* The size of `curl_off_t', as computed by sizeof. */
 #define CURL_SIZEOF_CURL_OFF_T 8
