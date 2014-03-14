@@ -86,6 +86,7 @@ link_directories(
   ${COCOS2D_ROOT}/external/jpeg/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/tiff/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/webp/prebuilt/linux/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/websockets/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/freetype2/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
@@ -175,6 +176,7 @@ set_target_properties(${APP_NAME} PROPERTIES
 pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script ${APP_BIN_DIR}/Resources
   )
   
