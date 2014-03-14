@@ -99,6 +99,11 @@ private:
     unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, unsigned long *size);
 
     FT_Error CCFreeTypeFont::initGlyphs(const char* text);
+
+	int measureText(const std::string& str, int startIndex, int endIndex);
+
+	std::vector<std::string> divideStringWithMaxWidth(const std::string& str, int maxWidth);
+
     FT_Error CCFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen);
 
 	void compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox);
