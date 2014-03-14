@@ -404,6 +404,8 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
         return false;
     }
 
+    setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
+
     _fontConfig = ttfConfig;
     if (_fontConfig.outlineSize > 0)
     {
@@ -417,8 +419,6 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     {
         this->setFontScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
     }
-
-    setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
 
     _currentLabelType = LabelType::TTF;
 
