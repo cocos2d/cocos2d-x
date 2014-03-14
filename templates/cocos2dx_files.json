@@ -3436,6 +3436,7 @@
         "external/lua/lua/lvm.h", 
         "external/lua/lua/lzio.c", 
         "external/lua/lua/lzio.h", 
+        "external/lua/lua/prebuilt/ios/liblua.a", 
         "external/lua/lua/print.c", 
         "external/lua/luajit/build_android.sh", 
         "external/lua/luajit/build_ios.sh", 
