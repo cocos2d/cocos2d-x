@@ -1036,13 +1036,7 @@ void Label::setFontName(const std::string& fontName)
 
 const std::string& Label::getFontName() const
 {
-    switch (_currentLabelType)
-    {
-    case LabelType::TTF:
-        return _fontConfig.fontFilePath;
-    default:
-        return _fontDefinition._fontName;
-    }
+    return _fontName;
 }
 
 void Label::setFontSize(int fontSize)
@@ -1056,15 +1050,7 @@ void Label::setFontSize(int fontSize)
 
 int Label::getFontSize() const
 {
-    switch (_currentLabelType)
-    {
-    case LabelType::TTF:
-        return _fontConfig.fontSize;
-    case LabelType::STRING_TEXTURE:
-        return _fontDefinition._fontSize;
-    default:
-        return 0;
-    }
+    return _fontSize;
 }
 
 ///// PROTOCOL STUFF
