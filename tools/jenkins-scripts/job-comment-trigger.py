@@ -40,6 +40,7 @@ def main():
     payload_forword['action'] = action
     
     pr = issue['pull_request']
+    # url = pr['html_url']
     url = pr['html_url']
     print "url:" + url
     payload_forword['html_url'] = url
@@ -91,6 +92,7 @@ def main():
     #send trigger and payload
     post_data = {'payload':""}
     post_data['payload']= json.dumps(payload_forword)
+    print 'post_data:', post_data
     requests.post(job_trigger_url, data=post_data)
 
     return(0)
