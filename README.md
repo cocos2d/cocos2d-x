@@ -155,9 +155,10 @@ Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 ```
 $ cd cocos2d-x/build
 $ python ./android-build.py cpp-empty-test -p 10
-$ adb install ../tests/cpp-empty-tst/proj.android/bin/cpp-empty-test.apk
-Then click the icon on Android device to start it
+$ adb install ../tests/cpp-empty-tst/proj.android/bin/CppEmptyTest-debug.apk
 ```
+
+Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 
 Contributing to the Project

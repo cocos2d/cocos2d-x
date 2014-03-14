@@ -91,8 +91,8 @@ You can run the samples...
     $ cd cocos2d-x
     $ ./setup.py
     $ cd build
-    $ ./android-build.py -p 10
-    $ adb install cocos2d-x/tests/proj.android/bin/TestDemo-debug.apk
+    $ ./android-build.py cpp-empty-test -p 10
+    $ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
     
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
@@ -101,18 +101,18 @@ Then click item on Android device to run tests. Available value of `-p` is the A
     $ cd cocos2d-x
     $ ./setup.py
     $ cd build
-    $ ./android-build.py
+    $ ./android-build.py cpp-empty-test -p 10
     
 Then
 
 * Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
-* Import `tests` Android project into Eclipse, the path used to import is `tests/proj.android`
-* Build `tests` Android project and run
+* Import `cpp-empty-test` Android project into Eclipse, the path used to import is `tests/cpp-empty-test/proj.android`
+* Build `cpp-empty-test` Android project and run
 
 ### Windows
 
 * Enter `cocos2d-x/build`, and open `cocos2d-win32.vs2012.sln`
-* Select `TestCpp` as running target
+* Select `cpp-empty-test` as running target
 * Click run button
 
 
@@ -126,23 +126,17 @@ Then
 
     $ mkdir build
     $ cd build
-    $ cmake ..
+    $ cmake ../cocos2d-x
     $ make -j4
     
 Run
 
-    $ cd bin/testcpp
-    $ ./testcpp
+    $ cd bin/cpp-empty-test
+    $ ./cpp-empty-test
     
 ## How to start a new game
 
-    $ cd cocos2d-x
-    $ ./setup.py
-    $ source FILE_TO_RECORD_SYSTEM_VARIABLE
-`FILE_TO_RECORD_SYSTEM_VARIABLE` may be `~/.bash_profile`, `~/.bash_login` or `~./.profile`
-
-    $ cocos new MyGame -p com.MyCompany.MyGame -l cpp -d directory_to_save
-Because `cocos run` command is not ready, so you should do it manually as running `TestCpp`. After `cocos run` command is finished, can just run `cocos run` to run the new game on demand target.
+Please refer to [ReadMe](../README.md)
     
 
 # Highlights of v3.0
