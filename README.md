@@ -107,6 +107,7 @@ Build Requirements
 * Mac OS X 10.7+, Xcode 4.6+
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
+* Python 2.7.5
 
 
 Runtime Requirements
