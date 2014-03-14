@@ -23,6 +23,59 @@
             "from":".",
             "to":"frameworks/cocos2d-x"
          },
+         "append_dir":{
+            "from":"frameworks/js-bindings",
+            "to":"frameworks/js-bindings",
+            "exclude":[
+               "cocos2d-x",
+               "bindings/proj.win32/Debug.win32",
+               "bindings/proj.win32/Release.win32",
+               "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/project.xcworkspace",
+               "bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj/xcuserdata"
+            ]
+         },
+         "append_dir":{
+            "from":"cocos/scripting/lua-bindings/script",
+            "to":"runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+         },
+         "append_dir":{
+            "from":"cocos/scripting/lua-bindings/script",
+            "to":"runtime/ios/PrebuiltRuntimeLua.app",
+         },
+         "append_dir":{
+            "from":"cocos/scripting/lua-bindings/script",
+            "to":"runtime/win32",
+         },
+         "append_file":[
+            {
+               "from":"external/win32-specific/gles/prebuilt/glew32.dll",
+               "to":"runtime/win32/glew32.dll",
+            },
+            {
+               "from":"external/win32-specific/zlib/prebuilt/zlib1.dll",
+               "to":"runtime/win32/zlib1.dll",
+            },
+            {
+               "from":"external/win32-specific/icon/prebuilt/iconv.dll",
+               "to":"runtime/win32/iconv.dll",
+            },
+            {
+               "from":"external/curl/prebuilt/win32/libcurl.dll",
+               "to":"runtime/win32/libcurl.dll",
+            },
+            {
+               "from":"external/lua/luajit/prebuilt/win32/lua51.dll",
+               "to":"runtime/win32/lua51.dll",
+            },
+            {
+               "from":"external/websockets/prebuilt/win32/websockets.dll",
+               "to":"runtime/win32/websockets.dll",
+            },
+            {
+               "from":"external/libtiff/prebuilt/win32/libtiff.dll",
+               "to":"runtime/win32/libtiff.dll",
+            }
+         ]
          "project_rename":{
             "src_project_name":"HelloLua",
             "files":[
