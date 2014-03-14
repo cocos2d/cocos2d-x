@@ -436,7 +436,7 @@ void Button::updateFlippedX()
     _titleRenderer->setFlippedX(_flippedX);
     if (_scale9Enabled)
     {
-        int flip = _flippedX ? -1 : 1;
+        float flip = _flippedX ? -1.0f : 1.0f;
         _buttonNormalRenderer->setScaleX(flip);
         _buttonClickedRenderer->setScaleX(flip);
         _buttonDisableRenderer->setScaleX(flip);
@@ -454,7 +454,7 @@ void Button::updateFlippedY()
     _titleRenderer->setFlippedY(_flippedY);
     if (_scale9Enabled)
     {
-        int flip = _flippedY ? -1 : 1;
+        float flip = _flippedY ? -1.0f : 1.0f;
         _buttonNormalRenderer->setScaleY(flip);
         _buttonClickedRenderer->setScaleY(flip);
         _buttonDisableRenderer->setScaleY(flip);

@@ -224,7 +224,7 @@ void TMXLayer::parseInternalProperties()
 void TMXLayer::setupTileSprite(Sprite* sprite, Point pos, int gid)
 {
     sprite->setPosition(getPositionAt(pos));
-    sprite->setVertexZ((float)getVertexZForPos(pos));
+    sprite->setPositionZ((float)getVertexZForPos(pos));
     sprite->setAnchorPoint(Point::ZERO);
     sprite->setOpacity(_opacity);
 
@@ -326,7 +326,7 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
             tile = Sprite::createWithTexture(this->getTexture(), rect);
             tile->setBatchNode(this);
             tile->setPosition(getPositionAt(pos));
-            tile->setVertexZ((float)getVertexZForPos(pos));
+            tile->setPositionZ((float)getVertexZForPos(pos));
             tile->setAnchorPoint(Point::ZERO);
             tile->setOpacity(_opacity);
 

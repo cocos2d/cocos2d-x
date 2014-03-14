@@ -143,7 +143,7 @@ Component* ObjectFactory::createComponent(const std::string &name)
     
 ui::Widget* ObjectFactory::createGUI(std::string name)
 {
-    Object* object = NULL;
+    Ref* object = nullptr;
     
     if (name == "Panel")
     {
@@ -182,7 +182,7 @@ ui::Widget* ObjectFactory::createGUI(std::string name)
 
 WidgetReaderProtocol* ObjectFactory::createWidgetReaderProtocol(std::string name)
 {
-    Object* object = NULL;
+    Ref* object = NULL;
     
     do
     {
