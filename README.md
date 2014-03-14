@@ -36,7 +36,7 @@ Example:
 
 ### Build and run new project for android ###
 
-    $ cocos run -p -j4 android
+    $ cocos run -p -j 4 android
 
 ### Build and run new project for iOS ###
 
@@ -57,8 +57,7 @@ script in **cocos2d/build/install-deps-linux.sh**
 Then
 
     $ cd /home/MyGame
-    $ cmake .
-    $ make
+    $ cocos run -p linux
     
 Run
 
