@@ -88,8 +88,9 @@ void WinRTWindow::Initialize(CoreWindow^ window, SwapChainBackgroundPanel^ panel
     // width and height are ignored and determined from the CoreWindow the SwapChainBackgroundPanel is in.
     esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
-	m_window->PointerPressed +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerPressed);
+	m_pointerPressedEvent = m_window->PointerPressed += 
+		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerPressed);
+        
     m_window->PointerReleased +=
         ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerReleased);
     m_window->PointerMoved +=
@@ -333,6 +334,17 @@ void WinRTWindow::OnRendering(Object^ sender, Object^ args)
 	CCEGLView::sharedOpenGLView()->OnRendering();
 }
 
+void WinRTWindow::ReleasePointerPressed()
+{
+	m_window->PointerPressed -= m_pointerPressedEvent;
+}
+
+void WinRTWindow::EnablePointerPressed()
+{
+	m_pointerPressedEvent = m_window->PointerPressed += 
+		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerPressed);
+}
+
 
 CCEGLView::CCEGLView()
 	: m_window(nullptr)
@@ -510,5 +522,28 @@ void CCEGLView::UpdateForWindowSizeChange()
         CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
    }
 }
+
+void CCEGLView::openEditBox(CCEditBoxParam^ param)
+{
+	m_winRTWindow->ReleasePointerPressed();
+
+	if (m_editBoxhandler)
+	{		
+		m_editBoxhandler->Invoke(nullptr, param);
+	}	
+}
+
+void CCEGLView::SetCocosEditBoxHandler( EventHandler<Object^>^ handler )
+{
+	m_editBoxhandler = handler;
+}
+
+void CCEGLView::OnCloseEditBox()
+{
+	m_winRTWindow->EnablePointerPressed();
+}
+
+
+
 
 NS_CC_END

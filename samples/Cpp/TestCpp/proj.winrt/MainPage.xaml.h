@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include "MainPage.g.h"
 #include "../Classes/AppDelegate.h"
+using namespace Windows::UI::Xaml::Input;
 
 namespace TestCpp
 {
@@ -47,6 +48,7 @@ namespace TestCpp
 		void OnNextPressed(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void SaveInternalState(Windows::Foundation::Collections::IPropertySet^ state);
 		void LoadInternalState(Windows::Foundation::Collections::IPropertySet^ state);
+		void OnOpenEditBox(Object^ sender, Object^ args);
 
 	private:
 		AppDelegate mApp;
