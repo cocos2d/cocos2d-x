@@ -351,7 +351,7 @@ class SetEnvVar(object):
             ndk_root = self._get_input_value()
 
         if ndk_root and not self._is_ndk_root_valid(ndk_root) and not ndk_root_found:
-            print 'Error: %s is not a valid path of NDK_ROOT. Ignoring it.' % ndk_root
+            print 'Error: "%s" is not a valid path of NDK_ROOT. Ignoring it.' % ndk_root
 
         if ndk_root_found:
             print 'FOUND'
@@ -377,7 +377,7 @@ class SetEnvVar(object):
             android_sdk_root = self._get_input_value()
         
         if android_sdk_root and not self._is_android_sdk_root_valid(android_sdk_root) and not android_sdk_root_found:
-            print 'Error: %s is not a valid path of ANDROID_SDK_ROOT. Ignoring it.' % android_sdk_root
+            print 'Error: "%s" is not a valid path of ANDROID_SDK_ROOT. Ignoring it.' % android_sdk_root
 
         if android_sdk_root_found:
             print 'FOUND'
@@ -401,7 +401,7 @@ class SetEnvVar(object):
             ant_root = self._get_input_value()
 
         if ant_root and not self._is_ant_root_valid(ant_root) and not ant_found:
-            print 'Error: %s is not a valid path of ANT_ROOT. Ignoring it.' % ant_root
+            print 'Error: "%s" is not a valid path of ANT_ROOT. Ignoring it.' % ant_root
 
 
         if ant_found:
