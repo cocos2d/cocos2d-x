@@ -70,18 +70,27 @@ int Application::run()
         return 0;
     }
 
+    long lastTime = 0L;
+    long curTime = 0L;
+
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
+
+    // Retain glview to avoid glview being released in the while loop
     glview->retain();
 
     while (!glview->windowShouldClose())
     {
-        long iLastTime = getCurrentMillSecond();
-        director->mainLoop();
+        lastTime = getCurrentMillSecond();
+
+        // Poll event before mainloop
         glview->pollEvents();
-        long iCurTime = getCurrentMillSecond();
-        if (iCurTime-iLastTime<_animationInterval){
-            usleep((_animationInterval - iCurTime+iLastTime)*1000);
+        director->mainLoop();
+
+        curTime = getCurrentMillSecond();
+        if (curTime - lastTime < _animationInterval)
+        {
+            usleep((_animationInterval - curTime + lastTime)*1000);
         }
     }
     /* Only work on Desktop
