@@ -41,11 +41,6 @@
 -- @param #unsigned int int
         
 --------------------------------
--- @function [parent=#Label] listenToFontAtlasPurge 
--- @param self
--- @param #cc.EventCustom eventcustom
-        
---------------------------------
 -- @function [parent=#Label] setFontName 
 -- @param self
 -- @param #string str
@@ -167,11 +162,6 @@
 -- @param self
 -- @param #int int
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
-        
---------------------------------
--- @function [parent=#Label] listenToBackground 
--- @param self
--- @param #cc.EventCustom eventcustom
         
 --------------------------------
 -- @function [parent=#Label] getTextAlignment 
