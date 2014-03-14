@@ -31615,6 +31615,52 @@ int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_listenToFontAtlasPurge(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_listenToFontAtlasPurge'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::EventCustom* arg0;
+
+        ok &= luaval_to_object<cocos2d::EventCustom>(tolua_S, 2, "cc.EventCustom",&arg0);
+        if(!ok)
+            return 0;
+        cobj->listenToFontAtlasPurge(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "listenToFontAtlasPurge",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_listenToFontAtlasPurge'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_setFontName(lua_State* tolua_S)
 {
     int argc = 0;
@@ -32680,6 +32726,52 @@ int lua_cocos2dx_Label_getLetter(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_listenToBackground(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_listenToBackground'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::EventCustom* arg0;
+
+        ok &= luaval_to_object<cocos2d::EventCustom>(tolua_S, 2, "cc.EventCustom",&arg0);
+        if(!ok)
+            return 0;
+        cobj->listenToBackground(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "listenToBackground",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_listenToBackground'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_getTextAlignment(lua_State* tolua_S)
 {
     int argc = 0;
@@ -33216,6 +33308,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"getWidth",lua_cocos2dx_Label_getWidth);
         tolua_function(tolua_S,"getCommonLineHeight",lua_cocos2dx_Label_getCommonLineHeight);
         tolua_function(tolua_S,"setWidth",lua_cocos2dx_Label_setWidth);
+        tolua_function(tolua_S,"listenToFontAtlasPurge",lua_cocos2dx_Label_listenToFontAtlasPurge);
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_Label_setFontName);
         tolua_function(tolua_S,"getMaxLineWidth",lua_cocos2dx_Label_getMaxLineWidth);
         tolua_function(tolua_S,"getHorizontalAlignment",lua_cocos2dx_Label_getHorizontalAlignment);
@@ -33238,6 +33331,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"setHeight",lua_cocos2dx_Label_setHeight);
         tolua_function(tolua_S,"enableGlow",lua_cocos2dx_Label_enableGlow);
         tolua_function(tolua_S,"getLetter",lua_cocos2dx_Label_getLetter);
+        tolua_function(tolua_S,"listenToBackground",lua_cocos2dx_Label_listenToBackground);
         tolua_function(tolua_S,"getTextAlignment",lua_cocos2dx_Label_getTextAlignment);
         tolua_function(tolua_S,"setHorizontalAlignment",lua_cocos2dx_Label_setHorizontalAlignment);
         tolua_function(tolua_S,"setFontDefinition",lua_cocos2dx_Label_setFontDefinition);
