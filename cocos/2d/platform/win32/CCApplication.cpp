@@ -89,9 +89,8 @@ int Application::run()
         {
             nLast.QuadPart = nNow.QuadPart;
             
-            // Poll event before mainloop
-            glview->pollEvents();
             director->mainLoop();
+            glview->pollEvents();
         }
         else
         {
