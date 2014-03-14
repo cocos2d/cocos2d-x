@@ -25,7 +25,7 @@ int lua_cocos2dx_spine_Skeleton_setToSetupPose(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setToSetupPose'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setToSetupPose'", nullptr);
         return 0;
     }
 #endif
@@ -68,7 +68,7 @@ int lua_cocos2dx_spine_Skeleton_setBlendFunc(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setBlendFunc'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setBlendFunc'", nullptr);
         return 0;
     }
 #endif
@@ -114,7 +114,7 @@ int lua_cocos2dx_spine_Skeleton_onDraw(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_onDraw'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_onDraw'", nullptr);
         return 0;
     }
 #endif
@@ -163,7 +163,7 @@ int lua_cocos2dx_spine_Skeleton_setSlotsToSetupPose(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setSlotsToSetupPose'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setSlotsToSetupPose'", nullptr);
         return 0;
     }
 #endif
@@ -206,7 +206,7 @@ int lua_cocos2dx_spine_Skeleton_getBlendFunc(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_getBlendFunc'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_getBlendFunc'", nullptr);
         return 0;
     }
 #endif
@@ -250,7 +250,7 @@ int lua_cocos2dx_spine_Skeleton_setSkin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setSkin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setSkin'", nullptr);
         return 0;
     }
 #endif
@@ -297,7 +297,7 @@ int lua_cocos2dx_spine_Skeleton_setBonesToSetupPose(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setBonesToSetupPose'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_Skeleton_setBonesToSetupPose'", nullptr);
         return 0;
     }
 #endif
@@ -329,7 +329,7 @@ static int lua_cocos2dx_spine_Skeleton_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_spine_Skeleton(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"sp.Skeleton");
-    tolua_cclass(tolua_S,"Skeleton","sp.Skeleton","cc.Node",NULL);
+    tolua_cclass(tolua_S,"Skeleton","sp.Skeleton","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Skeleton");
         tolua_function(tolua_S,"setToSetupPose",lua_cocos2dx_spine_Skeleton_setToSetupPose);
@@ -366,7 +366,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_addAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_addAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_addAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -439,7 +439,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_getCurrent(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_getCurrent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_getCurrent'", nullptr);
         return 0;
     }
 #endif
@@ -494,7 +494,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_setMix(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_setMix'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_setMix'", nullptr);
         return 0;
     }
 #endif
@@ -546,7 +546,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_setAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_setAnimation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_setAnimation'", nullptr);
         return 0;
     }
 #endif
@@ -599,7 +599,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_clearTracks(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_clearTracks'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_clearTracks'", nullptr);
         return 0;
     }
 #endif
@@ -642,7 +642,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_clearTrack(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_clearTrack'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_clearTrack'", nullptr);
         return 0;
     }
 #endif
@@ -695,7 +695,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_onAnimationStateEvent(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_onAnimationStateEvent'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_spine_SkeletonAnimation_onAnimationStateEvent'", nullptr);
         return 0;
     }
 #endif
@@ -739,7 +739,7 @@ static int lua_cocos2dx_spine_SkeletonAnimation_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_spine_SkeletonAnimation(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"sp.SkeletonAnimation");
-    tolua_cclass(tolua_S,"SkeletonAnimation","sp.SkeletonAnimation","sp.Skeleton",NULL);
+    tolua_cclass(tolua_S,"SkeletonAnimation","sp.SkeletonAnimation","sp.Skeleton",nullptr);
 
     tolua_beginmodule(tolua_S,"SkeletonAnimation");
         tolua_function(tolua_S,"addAnimation",lua_cocos2dx_spine_SkeletonAnimation_addAnimation);

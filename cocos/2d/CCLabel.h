@@ -59,7 +59,7 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
@@ -78,7 +78,7 @@ typedef struct _ttfConfig
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
-    static const int DefultFontSize;
+    static const int DistanceFieldFontSize;
 
     static Label* create();
 
@@ -259,14 +259,12 @@ protected:
     */
     virtual ~Label();
 
-    virtual bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+    virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
-
-    virtual bool init();
     
     virtual void alignText();
     
@@ -279,14 +277,20 @@ protected:
 
     virtual void updateColor() override;
 
-    virtual void initProgram();
+    virtual void updateShaderProgram();
 
     void drawShadowWithoutBlur();
 
     void createSpriteWithFontDefinition();
 
+    void updateFont();
+    void reset();
+
     bool _isOpacityModifyRGB;
     bool _contentDirty;
+    bool _fontDirty;
+    std::string _fontName;
+    int         _fontSize;
     LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;
