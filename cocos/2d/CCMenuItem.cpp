@@ -451,6 +451,7 @@ void MenuItemFont::setFontSizeObj(int s)
 {
     _fontSize = s;
     dynamic_cast<Label*>(_label)->setFontSize(_fontSize);
+    this->setContentSize(dynamic_cast<Label*>(_label)->getContentSize());
 }
 
 int MenuItemFont::getFontSizeObj() const
@@ -462,6 +463,7 @@ void MenuItemFont::setFontNameObj(const std::string& name)
 {
     _fontName = name;
     dynamic_cast<Label*>(_label)->setFontName(_fontName);
+    this->setContentSize(dynamic_cast<Label*>(_label)->getContentSize());
 }
 
 const std::string& MenuItemFont::getFontNameObj() const
