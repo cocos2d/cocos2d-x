@@ -72,6 +72,7 @@ int Application::run()
 
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
+    glview->retain();
 
     while (!glview->windowShouldClose())
     {
@@ -88,8 +89,13 @@ int Application::run()
     *  when we want to close the window, we should call Director::end();
     *  then call Director::mainLoop to do release of internal resources
     */
-    director->end();
-    director->mainLoop();
+    if (glview->isOpenGLReady())
+    {
+        director->end();
+        director->mainLoop();
+        director = nullptr;
+    }
+    glview->release();
     return -1;
 }
 
