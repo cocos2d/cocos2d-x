@@ -29,14 +29,11 @@
 #include <dwrite.h>
 #endif
 #include <map>
-#include <string>
 #include <sstream>
-
-using namespace std;
 
 NS_CC_BEGIN
 
-static map<std::string, FontBufferInfo> s_fontsNames;
+static std::map<std::string, FontBufferInfo> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = nullptr;
 
 
@@ -293,6 +290,7 @@ void CCFreeTypeFont::newLine()
     m_currentLine->width = 0;
     m_currentLine->pen.x = 0;
     m_currentLine->pen.y = 0;
+	memset(&m_currentLine->bbox, 0, sizeof(m_currentLine->bbox));
 }
 
 
@@ -339,13 +337,86 @@ FT_Error CCFreeTypeFont::addWord(const std::string& word)
     return error;
 }
 
+int CCFreeTypeFont::measureText(const std::string& str, int beginIndex, int endIndex) {
+	int len = 0;
+	std::vector<TGlyph> glyphs;
+	FT_BBox				bbox;
+	FT_Vector			pen;
+	
+	memset(&bbox, 0, sizeof(bbox));
+	memset(&pen, 0, sizeof(pen));
+
+	do {
+		// check
+		if (0 == str.length() || 
+			beginIndex < 0 ||
+			beginIndex >= str.length() ||
+			endIndex < 0 ||
+			endIndex >= str.length() ||
+			endIndex <= beginIndex) {
+				break;
+		}
+
+		std::string s = str.substr(beginIndex, endIndex - beginIndex);
+		FT_Error error = initWordGlyphs(glyphs, s, pen);
+		if (!error) {
+			compute_bbox(glyphs, &bbox);
+			len = bbox.xMax - bbox.xMin;
+		}
+
+	} while(0);
+
+	return len;
+}
+
+std::vector<std::string> CCFreeTypeFont::divideStringWithMaxWidth(const std::string& str, int maxWidth) {
+	int charLength = str.length();
+	int start = 0;
+	int tempWidth = 0;
+	std::vector<std::string> strList;
+
+	for (int i = 1; i <= charLength; ++i) {
+		tempWidth = this->measureText(str, start, i);
+		if (tempWidth >= maxWidth) {
+			int lastIndexOfSpace = str.substr(0, i).find_last_of(' ');
+			if (lastIndexOfSpace != std::string::npos && lastIndexOfSpace > start) {
+				// should wrap the word
+				strList.push_back(str.substr(start, lastIndexOfSpace - start));
+				i = lastIndexOfSpace + 1; // skip space
+			} else {
+				// should not exceed the width
+				if (tempWidth > maxWidth) {
+					strList.push_back(str.substr(start, i - 1 - start));
+					--i;
+				} else {
+					strList.push_back(str.substr(start, i - start));
+				}
+			}
+
+			// remote spaces at the beginning of a new line
+			while( i < charLength && ' ' == str.at(i)) {
+				++i;
+			}
+
+			start = i;
+		}
+	}
+
+	// add the last chars
+	if (start < charLength) {
+		strList.push_back(str.substr(start, charLength - start));
+	}
+
+	return strList;
+}
+
 FT_Error CCFreeTypeFont::initGlyphs(const char* text) 
 {
     FT_Error error = 0;
     std::stringstream stringStream(text);
     std::string line;
-    vector<std::string> lines;
-    vector<std::string> words;
+    std::vector<std::string> lines;
+    std::vector<std::string> words;
 
     m_textWidth = 0;
     m_textHeight = 0;
@@ -356,22 +427,28 @@ FT_Error CCFreeTypeFont::initGlyphs(const char* text)
 
     while(std::getline(stringStream, line) && !error) 
     {
-        newLine();
+		int maxWidth = m_inWidth ? m_inWidth : m_windowWidth;
+		std::vector<std::string> strList = this->divideStringWithMaxWidth(line, maxWidth);
 
-        std::size_t prev = 0, pos;
-        while ((pos = line.find_first_of(" ", prev)) != std::string::npos)
-        {
-            if (pos > prev)
-            {
-                addWord(line.substr(prev, pos-prev));
-            }
-            prev = pos + 1;
-        }
-        if (prev < line.length())
-        {
-            addWord(line.substr(prev, std::string::npos));
-        }
-        endLine();
+		for (std::vector<std::string>::iterator it = strList.begin(); it != strList.end(); ++it) {
+			newLine();
+
+			std::vector<TGlyph> glyphs;
+			FT_BBox				bbox;
+	
+			memset(&bbox, 0, sizeof(bbox));
+			memset(&m_currentLine->pen, 0, sizeof(m_currentLine->pen));
+
+			FT_Error error = initWordGlyphs(glyphs, *it, m_currentLine->pen);
+			if (!error) {
+				compute_bbox(glyphs, &bbox);
+				m_currentLine->glyphs.insert(m_currentLine->glyphs.end(), glyphs.begin(), glyphs.end());
+				m_currentLine->bbox = bbox;
+				m_currentLine->width = bbox.xMax - bbox.xMin;
+			}
+
+			endLine();
+		}
     }
 
     return error;
@@ -384,8 +461,8 @@ void CCFreeTypeFont::initWords(const char* text)
 {
     std::stringstream stringStream(text);
     std::string line;
-    vector<std::string> lines;
-    vector<std::string> words;
+    std::vector<std::string> lines;
+    std::vector<std::string> words;
 
     while(std::getline(stringStream, line)) 
     {
