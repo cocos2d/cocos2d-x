@@ -57,8 +57,7 @@ script in **cocos2d/build/install-deps-linux.sh**
 Then
 
     $ cd /home/MyGame
-    $ cmake .
-    $ make
+    $ cocos run -p linux
     
 Run
 
