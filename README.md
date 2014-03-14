@@ -36,11 +36,15 @@ Example:
 
 ### Build and run new project for android ###
 
-    $ cocos run -p android
+    $ cocos run -p -j 4 android
 
-### Build and run new project for iOS & OSX ###
+### Build and run new project for iOS ###
 
     $ cocos run -p ios
+    
+### Build and run new project for OSX ###
+
+    $ cocos run -p mac
 
 ### Build and run new project for linux ###
 
@@ -53,8 +57,7 @@ script in **cocos2d/build/install-deps-linux.sh**
 Then
 
     $ cd /home/MyGame
-    $ cmake .
-    $ make
+    $ cocos run -p linux
     
 Run
 
@@ -103,6 +106,7 @@ Build Requirements
 * Mac OS X 10.7+, Xcode 4.6+
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
+* Python 2.7.5
 
 
 Runtime Requirements
