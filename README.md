@@ -36,11 +36,15 @@ Example:
 
 ### Build and run new project for android ###
 
-    $ cocos run -p android
+    $ cocos run -p -j4 android
 
-### Build and run new project for iOS & OSX ###
+### Build and run new project for iOS ###
 
     $ cocos run -p ios
+    
+### Build and run new project for OSX ###
+
+    $ cocos run -p mac
 
 ### Build and run new project for linux ###
 
