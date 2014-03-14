@@ -19,6 +19,7 @@ project_types = ['cpp', 'lua']
 PROJ_SUFFIX = 'Proj'
 phonePlats = ['mac','ios','android']
 
+# need use console's position.
 cocos_console_dir = 'tools/cocos2d-console/bin/'
 
 #now cocos2d-console suport different run on Platforms, e.g: only run android on win
