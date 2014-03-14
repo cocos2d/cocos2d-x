@@ -4,6 +4,16 @@
 
 import os
 import sys
+import json
+
+
+#get payload from os env
+payload_str = os.environ['payload']
+#parse to json obj
+payload = json.loads(payload_str)
+console_param = payload['console']
+# console_param = 'create'
+print 'console_param is:', console_param
 
 project_types = ['cpp', 'lua']
 PROJ_SUFFIX = 'Proj'
@@ -18,24 +28,12 @@ runSupport = {
 	'linux' : [0, 0, 1]
 }
 
-_argvs = sys.argv
-
-strArgv1 = ''
-strArgv2 = ''
-if len(_argvs) == 2:
-	strArgv1 = _argvs[1]
-if len(_argvs) == 3:
-	strArgv2 = _argvs[2]
-
 # print 'input argvs:', _argvs[1], _argvs[2]
 _will_create = False
 _will_run = False
-if strArgv1=='create' and strArgv2=='create':
+if console_param == 'create':
 	_will_create = True
-if strArgv1=='run' and strArgv2=='run':
-	_will_create = True
-	_will_run = True
-if _will_create == False and _will_run == False:
+if console_param == 'run':
 	_will_create = True
 	_will_run = True
 
@@ -58,7 +56,7 @@ def create_project():
 	idx = 0
 	for proj in project_types:
 		print 'proj: ', proj
-		cmd = 'cocos new -l '+proj+' '+proj+PROJ_SUFFIX
+		cmd = './'+cocos_console_dir+'cocos new -l '+proj+' '+proj+PROJ_SUFFIX
 		print proj,'cmd:',cmd
 		idx += 1
 		info_create = os.system(cmd)	#call cmd on win is diff
@@ -68,7 +66,7 @@ def build_run():
 	for proj in project_types:
 		idx = 0
 		for phone in phonePlats:
-			cmd = 'cocos run -p '+phone+' -s '+proj+PROJ_SUFFIX
+			cmd = './'+cocos_console_dir+'cocos run -p '+phone+' -s '+proj+PROJ_SUFFIX
 			print proj,'cmd:',cmd
 			if runSupport[curPlat][idx]:
 				info_run = os.system(cmd)
@@ -80,7 +78,7 @@ def main():
 		clean_project()
 		create_project()
 	if _will_run:
-	 	build_run()
+		build_run()
 
 # -------------- main --------------
 if __name__ == '__main__':

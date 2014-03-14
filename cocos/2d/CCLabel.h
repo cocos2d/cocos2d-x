@@ -230,6 +230,15 @@ public:
 
     virtual const Size& getContentSize() const override;
 
+    /** Listen "come to background" message
+     It only has effect on Android.
+     */
+    void listenToBackground(EventCustom *event);
+
+    /** Listen "FontAtlas purge textures" message
+     */
+    void listenToFontAtlasPurge(EventCustom *event);
+
 protected:
     void onDraw(const kmMat4& transform, bool transformUpdated);
 
