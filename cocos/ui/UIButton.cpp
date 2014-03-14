@@ -99,7 +99,8 @@ void Button::initRenderer()
     _buttonNormalRenderer = Sprite::create();
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
-    _titleRenderer = LabelTTF::create();
+    _titleRenderer = Label::create();
+    _titleRenderer->setAnchorPoint(Point::ANCHOR_MIDDLE);
 
     Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
     Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
@@ -433,10 +434,10 @@ void Button::onPressStateChangedToDisabled()
 
 void Button::updateFlippedX()
 {
-    _titleRenderer->setFlippedX(_flippedX);
+    float flip = _flippedX ? -1.0f : 1.0f;
+    _titleRenderer->setScaleX(flip);
     if (_scale9Enabled)
     {
-        float flip = _flippedX ? -1.0f : 1.0f;
         _buttonNormalRenderer->setScaleX(flip);
         _buttonClickedRenderer->setScaleX(flip);
         _buttonDisableRenderer->setScaleX(flip);
@@ -451,10 +452,10 @@ void Button::updateFlippedX()
     
 void Button::updateFlippedY()
 {
-    _titleRenderer->setFlippedY(_flippedY);
+    float flip = _flippedY ? -1.0f : 1.0f;
+    _titleRenderer->setScaleY(flip);
     if (_scale9Enabled)
     {
-        float flip = _flippedY ? -1.0f : 1.0f;
         _buttonNormalRenderer->setScaleY(flip);
         _buttonClickedRenderer->setScaleY(flip);
         _buttonDisableRenderer->setScaleY(flip);

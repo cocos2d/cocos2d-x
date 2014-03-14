@@ -45,7 +45,7 @@ class HelloCocosBuilderLayer
 
     private:
         cocos2d::Sprite * mBurstSprite;
-        cocos2d::LabelTTF * mTestTitleLabelTTF;
+        cocos2d::Label * mTestTitleLabelTTF;
     
         int mCustomPropertyInt;
         float mCustomPropertyFloat;

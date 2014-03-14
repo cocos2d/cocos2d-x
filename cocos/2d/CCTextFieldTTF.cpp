@@ -55,7 +55,7 @@ TextFieldTTF::TextFieldTTF()
 : _delegate(0)
 , _charCount(0)
 , _inputText("")
-, _placeHolder("")   // prevent LabelTTF initWithString assertion
+, _placeHolder("")   // prevent Label initWithString assertion
 , _secureTextEntry(false)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
@@ -88,7 +88,7 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeho
 TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
     TextFieldTTF *ret = new TextFieldTTF();
-    if(ret && ret->initWithString("", fontName, fontSize))
+    if(ret && ret->initWithPlaceHolder("", fontName, fontSize))
     {
         ret->autorelease();
         if (placeholder.size()>0)
@@ -108,12 +108,22 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeho
 bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize)
 {
     _placeHolder = placeholder;
-    return LabelTTF::initWithString(_placeHolder, fontName, fontSize, dimensions, alignment);
+    setDimensions(dimensions.width,dimensions.height);
+    setFontName(fontName);
+    setFontSize(fontSize);
+    setAlignment(alignment,TextVAlignment::CENTER);
+    Label::setString(_placeHolder);
+
+    return true;
 }
 bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
     _placeHolder = std::string(placeholder);
-    return LabelTTF::initWithString(_placeHolder, fontName, fontSize);
+    setFontName(fontName);
+    setFontSize(fontSize);
+    Label::setString(_placeHolder);
+
+    return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -228,7 +238,7 @@ void TextFieldTTF::deleteBackward()
     {
         _inputText = "";
         _charCount = 0;
-        LabelTTF::setString(_placeHolder);
+        Label::setString(_placeHolder);
         return;
     }
 
@@ -242,23 +252,19 @@ const std::string& TextFieldTTF::getContentText()
     return _inputText;
 }
 
-void TextFieldTTF::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TextFieldTTF::setColor(const Color3B& color)
 {
-    if (_delegate && _delegate->onDraw(this))
-    {
-        return;
-    }
-    if (_inputText.length())
-    {
-        LabelTTF::draw(renderer, transform, transformUpdated);
-        return;
-    }
+    _colorText = color;
+    Label::setColor(color);
+}
 
-    // draw placeholder
-    Color3B color = getColor();
-    setColor(_colorSpaceHolder);
-    LabelTTF::draw(renderer, transform, transformUpdated);
-    setColor(color);
+void TextFieldTTF::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+{
+    if (_delegate && _delegate->onVisit(this,renderer,parentTransform,parentTransformUpdated))
+    {
+        return;
+    }
+    Label::visit(renderer,parentTransform,parentTransformUpdated);
 }
 
 const Color3B& TextFieldTTF::getColorSpaceHolder()
@@ -305,11 +311,13 @@ void TextFieldTTF::setString(const std::string &text)
     // if there is no input text, display placeholder instead
     if (! _inputText.length())
     {
-        LabelTTF::setString(_placeHolder);
+        Label::setColor(_colorSpaceHolder);
+        Label::setString(_placeHolder);
     }
     else
     {
-        LabelTTF::setString(displayText);
+        Label::setColor(_colorText);
+        Label::setString(displayText);
     }
     _charCount = _calcCharCount(_inputText.c_str());
 }
@@ -325,7 +333,7 @@ void TextFieldTTF::setPlaceHolder(const std::string& text)
     _placeHolder = text;
     if (! _inputText.length())
     {
-        LabelTTF::setString(_placeHolder);
+        Label::setString(_placeHolder);
     }
 }
 

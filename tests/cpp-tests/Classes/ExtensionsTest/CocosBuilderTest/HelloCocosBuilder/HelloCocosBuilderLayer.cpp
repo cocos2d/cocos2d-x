@@ -87,7 +87,7 @@ Control::Handler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(Ref * pTa
 
 bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {
     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mBurstSprite", Sprite *, this->mBurstSprite);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTestTitleLabelTTF", LabelTTF *, this->mTestTitleLabelTTF);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTestTitleLabelTTF", Label *, this->mTestTitleLabelTTF);
 
     return false;
 }

@@ -65,7 +65,7 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
 {
     UICCTextField *pRet = new UICCTextField();
     
-    if(pRet && pRet->initWithString("", fontName, fontSize))
+    if(pRet && pRet->initWithPlaceHolder("", fontName, fontSize))
     {
         pRet->autorelease();
         if (placeholder)
@@ -296,7 +296,7 @@ void UICCTextField::setPasswordText(const char *text)
     {
         tempStr.append(_passwordStyleText);
     }
-    LabelTTF::setString(tempStr.c_str());
+    Label::setString(tempStr.c_str());
 }
 
 void UICCTextField::setAttachWithIME(bool attach)
@@ -672,13 +672,13 @@ void TextField::textfieldRendererScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _textFieldRenderer->setDimensions(Size::ZERO);
+        _textFieldRenderer->setDimensions(0,0);
         _textFieldRenderer->setScale(1.0f);
         _size = getContentSize();
     }
     else
     {
-        _textFieldRenderer->setDimensions(_size);
+        _textFieldRenderer->setDimensions(_size.width,_size.height);
         Size textureSize = getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
@@ -754,7 +754,7 @@ void TextField::copySpecialProperties(Widget *widget)
     
 void TextField::setTextAreaSize(const Size &size)
 {
-    _textFieldRenderer->setDimensions(size);
+    _textFieldRenderer->setDimensions(size.width,size.height);
 }
 
 void TextField::setTextHorizontalAlignment(TextHAlignment alignment)
