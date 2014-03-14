@@ -24,7 +24,7 @@ class TimelineCallbackTestLayer
         void onCallback1(Node* sender);
         void onCallback2(Node* sender);
 private:
-    cocos2d::LabelTTF* _helloLabel;
+    cocos2d::Label* _helloLabel;
 };
 
 #endif /* _TIMELINE_TESTLAYER_H_ */

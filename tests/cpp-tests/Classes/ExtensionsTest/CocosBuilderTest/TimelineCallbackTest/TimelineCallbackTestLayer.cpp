@@ -31,7 +31,7 @@ SEL_CallFuncN TimelineCallbackTestLayer::onResolveCCBCCCallFuncSelector(Ref * pT
 }
 
 bool TimelineCallbackTestLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "helloLabel", LabelTTF *, this->_helloLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "helloLabel", Label *, this->_helloLabel);
     
     return false;
 }
