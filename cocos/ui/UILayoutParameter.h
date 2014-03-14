@@ -200,14 +200,14 @@ public:
      *
      * @param name
      */
-    void setRelativeName(const char* name);
+    void setRelativeName(const std::string& name);
     
     /**
      * Gets a name in Relative Layout of LayoutParameter.
      *
      * @return name
      */
-    const char* getRelativeName() const;
+    const std::string& getRelativeName() const;
     
     virtual LayoutParameter* createCloneInstance() override;
     virtual void copyProperties(LayoutParameter* model) override;

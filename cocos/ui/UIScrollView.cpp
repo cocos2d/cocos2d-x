@@ -286,11 +286,21 @@ void ScrollView::removeChild(Node* child, bool cleanup)
 	return _innerContainer->removeChild(child, cleanup);
 }
 
+Vector<Widget*>& ScrollView::getWidgets()
+{
+    return _innerContainer->getWidgets();
+}
+
+const Vector<Widget*>& ScrollView::getWidgets() const
+{
+    return _innerContainer->getWidgets();
+}
+    
 Vector<Node*>& ScrollView::getChildren()
 {
     return _innerContainer->getChildren();
 }
-
+    
 const Vector<Node*>& ScrollView::getChildren() const
 {
     return _innerContainer->getChildren();
@@ -306,7 +316,7 @@ Node* ScrollView::getChildByTag(int tag)
     return _innerContainer->getChildByTag(tag);
 }
     
-Widget* ScrollView::getChildByName(const char *name)
+Node* ScrollView::getChildByName(const std::string& name)
 {
     return _innerContainer->getChildByName(name);
 }
@@ -323,32 +333,7 @@ void ScrollView::addNode(Node * node, int zOrder)
 
 void ScrollView::addNode(Node* node, int zOrder, int tag)
 {
-    _innerContainer->addNode(node, zOrder, tag);
-}
-
-Node* ScrollView::getNodeByTag(int tag)
-{
-    return _innerContainer->getNodeByTag(tag);
-}
-
-Vector<Node*>& ScrollView::getNodes()
-{
-    return _innerContainer->getNodes();
-}
-
-void ScrollView::removeNode(Node* node)
-{
-    _innerContainer->removeNode(node);
-}
-
-void ScrollView::removeNodeByTag(int tag)
-{
-    _innerContainer->removeNodeByTag(tag);
-}
-
-void ScrollView::removeAllNodes()
-{
-    _innerContainer->removeAllNodes();
+    _innerContainer->addChild(node, zOrder, tag);
 }
 
 void ScrollView::moveChildren(float offsetX, float offsetY)

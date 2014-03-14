@@ -151,7 +151,11 @@ void Layout::addChild(Node * child, int zOrder)
 
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
-    supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget)
+    {
+        supplyTheLayoutParameterLackToChild(widget);
+    }
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
@@ -159,7 +163,11 @@ void Layout::addChild(Node *child, int zOrder, int tag)
 void Layout::removeChild(Node *child, bool cleanup)
 {
     Widget::removeChild(child, cleanup);
-    _doLayoutDirty = true;
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget)
+    {
+        _doLayoutDirty = true;;
+    }
 }
     
 void Layout::removeAllChildren()

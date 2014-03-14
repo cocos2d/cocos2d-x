@@ -182,11 +182,10 @@ protected:
     
     virtual void removeAllChildren() override{removeAllChildrenWithCleanup(true);};
     virtual void removeAllChildrenWithCleanup(bool cleanup) override {ScrollView::removeAllChildrenWithCleanup(cleanup);};
-    virtual Vector<Node*>& getChildren() override{return ScrollView::getChildren();};
-    virtual const Vector<Node*>& getChildren() const override{return ScrollView::getChildren();};
+    virtual Vector<Widget*>& getWidgets() override{return ScrollView::getWidgets();};
+    virtual const Vector<Widget*>& getWidgets() const override{return ScrollView::getWidgets();};
     virtual ssize_t getChildrenCount() const override {return ScrollView::getChildrenCount();};
     virtual Node * getChildByTag(int tag) override {return ScrollView::getChildByTag(tag);};
-    virtual Widget* getChildByName(const char* name) override {return ScrollView::getChildByName(name);};
     virtual bool init() override;
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);

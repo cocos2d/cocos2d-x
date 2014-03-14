@@ -131,9 +131,16 @@ void Widget::addChild(Node * child, int zOrder)
 
 void Widget::addChild(Node* child, int zOrder, int tag)
 {
-    CCASSERT(dynamic_cast<Widget*>(child) != nullptr, "Widget only supports Widgets as children");
-    Node::addChild(child, zOrder, tag);
-    _widgetChildren.pushBack(child);
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget)
+    {
+        Node::addChild(child, zOrder, tag);
+        _widgetChildren.pushBack(widget);
+    }
+    else
+    {
+        addNode(child, zOrder, tag);
+    }
 }
 
 void Widget::sortAllChildren()
@@ -147,31 +154,24 @@ void Widget::sortAllChildren()
     }
 }
 
-Node* Widget::getChildByTag(int aTag)
+Vector<Widget*>& Widget::getWidgets()
 {
-    CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
+    return _widgetChildren;
+}
 
+const Vector<Widget*>& Widget::getWidgets() const
+{
+    return _widgetChildren;
+}
+    
+Node* Widget::getChildByName(const std::string& name)
+{
     for (auto& child : _widgetChildren)
     {
-        if(child && child->getTag() == aTag)
+        if(child && child->_name == name)
             return child;
     }
     return nullptr;
-}
-
-Vector<Node*>& Widget::getChildren()
-{
-    return _widgetChildren;
-}
-
-const Vector<Node*>& Widget::getChildren() const
-{
-    return _widgetChildren;
-}
-
-ssize_t Widget::getChildrenCount() const
-{
-    return _widgetChildren.size();
 }
 
 Widget* Widget::getWidgetParent()
@@ -191,24 +191,19 @@ void Widget::removeFromParentAndCleanup(bool cleanup)
 
 void Widget::removeChild(Node *child, bool cleanup)
 {
+    Widget* widgetChild = dynamic_cast<Widget*>(child);
+    if (widgetChild)
+    {
+        if (_widgetChildren.contains(widgetChild))
+        {
+            _widgetChildren.eraseObject(widgetChild);
+        }
+    }
+    else if (_nodes.contains(child))
+    {
+        _nodes.eraseObject(child);
+    }
     Node::removeChild(child, cleanup);
-    _widgetChildren.eraseObject(child);
-}
-
-void Widget::removeChildByTag(int tag, bool cleanup)
-{
-    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
-
-    Node *child = getChildByTag(tag);
-
-    if (child == nullptr)
-    {
-        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
-    }
-    else
-    {
-        removeChild(child, cleanup);
-    }
 }
 
 void Widget::removeAllChildren()
@@ -218,14 +213,9 @@ void Widget::removeAllChildren()
 
 void Widget::removeAllChildrenWithCleanup(bool cleanup)
 {
-    for (auto& child : _widgetChildren)
-    {
-        if (child)
-        {
-            Node::removeChild(child);
-        }
-    }
+    Node::removeAllChildrenWithCleanup(cleanup);
     _widgetChildren.clear();
+    _nodes.clear();
 }
 
 void Widget::setEnabled(bool enabled)
@@ -240,22 +230,6 @@ void Widget::setEnabled(bool enabled)
     }
 }
 
-Widget* Widget::getChildByName(const char *name)
-{
-    for (auto& child : _widgetChildren)
-    {
-        if (child)
-        {
-            Widget* widgetChild = static_cast<Widget*>(child);
-            if (strcmp(widgetChild->getName(), name) == 0)
-            {
-                return widgetChild;
-            }
-        }
-    }
-    return nullptr;
-}
-
 void Widget::addNode(Node* node)
 {
     addNode(node, node->getLocalZOrder(), node->getTag());
@@ -268,62 +242,9 @@ void Widget::addNode(Node * node, int zOrder)
 
 void Widget::addNode(Node* node, int zOrder, int tag)
 {
-    CCAssert(dynamic_cast<Widget*>(node) == nullptr, "Widget only supports Nodes as renderer");
     Node::addChild(node, zOrder, tag);
     _nodes.pushBack(node);
 }
-
-Node* Widget::getNodeByTag(int tag)
-{
-    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
-
-    for (auto& node : _nodes)
-    {
-        if(node && node->getTag() == tag)
-            return node;
-    }
-    return nullptr;
-}
-
-Vector<Node*>& Widget::getNodes()
-{
-    return _nodes;
-}
-
-void Widget::removeNode(Node* node)
-{
-    Node::removeChild(node);
-    _nodes.eraseObject(node);
-}
-
-void Widget::removeNodeByTag(int tag)
-{
-    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
-
-    Node *node = this->getNodeByTag(tag);
-
-    if (node == nullptr)
-    {
-        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
-    }
-    else
-    {
-        this->removeNode(node);
-    }
-}
-
-void Widget::removeAllNodes()
-{
-    for (auto& node : _nodes)
-    {
-        if (node)
-        {
-            Node::removeChild(node);
-        }
-    }
-    _nodes.clear();
-}
-
 
 void Widget::initRenderer()
 {
@@ -542,7 +463,7 @@ Node* Widget::getVirtualRenderer()
 
 void Widget::onSizeChanged()
 {
-    for (auto& child : getChildren())
+    for (auto& child : getWidgets())
     {
         if (child)
         {
@@ -933,16 +854,6 @@ const Point& Widget::getTouchEndPos()
     return _touchEndPos;
 }
 
-void Widget::setName(const char* name)
-{
-    _name = name;
-}
-
-const char* Widget::getName() const
-{
-    return _name.c_str();
-}
-
 WidgetType Widget::getWidgetType() const
 {
     return _widgetType;
@@ -982,7 +893,7 @@ Widget* Widget::createCloneInstance()
 
 void Widget::copyClonedWidgetChildren(Widget* model)
 {
-    auto& modelChildren = model->getChildren();
+    auto& modelChildren = model->getWidgets();
 
     for (auto& subWidget : modelChildren)
     {

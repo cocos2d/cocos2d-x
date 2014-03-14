@@ -280,27 +280,14 @@ public:
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
     
+    virtual Vector<Widget*>& getWidgets();
+    virtual const Vector<Widget*>& getWidgets() const;
+    
     virtual ssize_t getChildrenCount() const override;
     
     virtual Node * getChildByTag(int tag) override;
     
-    virtual Widget* getChildByName(const char* name) override;
-    
-    virtual void addNode(Node* node) override;
-    
-    virtual void addNode(Node * node, int zOrder) override;
-    
-    virtual void addNode(Node* node, int zOrder, int tag) override;
-    
-    virtual Node * getNodeByTag(int tag) override;
-    
-    virtual Vector<Node*>& getNodes() override;
-    
-    virtual void removeNode(Node* node) override;
-    
-    virtual void removeNodeByTag(int tag) override;
-    
-    virtual void removeAllNodes() override;
+    virtual Node* getChildByName(const std::string& name) override;
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
@@ -381,6 +368,9 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model) override;
     virtual void setClippingEnabled(bool able) override{Layout::setClippingEnabled(able);};
     virtual void doLayout() override;
+    virtual void addNode(Node* node) override;
+    virtual void addNode(Node * node, int zOrder) override;
+    virtual void addNode(Node* node, int zOrder, int tag) override;
 protected:
     Layout* _innerContainer;
     

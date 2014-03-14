@@ -170,11 +170,10 @@ protected:
     virtual void removeChild(Node* widget, bool cleanup = true) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
-    virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
+    virtual Vector<Widget*>& getWidgets() override{return Widget::getWidgets();};
+    virtual const Vector<Widget*>& getWidgets() const override{return Widget::getWidgets();};
     virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
     virtual Node * getChildByTag(int tag) override {return Widget::getChildByTag(tag);};
-    virtual Widget* getChildByName(const char* name) override {return Widget::getChildByName(name);};
     virtual bool init() override;
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
