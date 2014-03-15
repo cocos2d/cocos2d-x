@@ -671,6 +671,9 @@ void Widget::didNotSelectSelf()
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
+    //ignore touch event on invisible elements.
+    if(!_visible)
+        return;
     _hitted = false;
     if (isEnabled() && isTouchEnabled())
     {
