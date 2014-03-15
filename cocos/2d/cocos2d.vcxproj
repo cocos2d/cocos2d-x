@@ -84,6 +84,7 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -129,6 +130,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -182,42 +184,20 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
-    <ClCompile Include="..\math\kazmath\kazmath\aabb.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\aabb.c" />
     <ClCompile Include="..\math\kazmath\kazmath\GL\mat4stack.c" />
     <ClCompile Include="..\math\kazmath\kazmath\GL\matrix.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\mat3.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\mat4.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\mat3.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\mat4.c" />
     <ClCompile Include="..\math\kazmath\kazmath\neon_matrix_impl.c" />
-    <ClCompile Include="..\math\kazmath\kazmath\plane.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\ray2.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\ray3.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\utility.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\vec2.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\vec3.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\kazmath\vec4.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
-    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\plane.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\ray2.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\ray3.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\utility.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\vec2.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\vec3.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\vec4.c" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
@@ -557,6 +537,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="uthash.h" />
     <ClInclude Include="utlist.h" />
     <ClInclude Include="ZipUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\math\kazmath\kazmath\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

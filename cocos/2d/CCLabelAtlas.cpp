@@ -226,6 +226,24 @@ const std::string& LabelAtlas::getString(void) const
     return _string;
 }
 
+void LabelAtlas::updateColor()
+{
+    if (_textureAtlas)
+    {
+        Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+        auto quads = _textureAtlas->getQuads();
+        ssize_t length = _string.length();
+        for (int index = 0; index < length; index++)
+        {
+            quads[index].bl.colors = color4;
+            quads[index].br.colors = color4;
+            quads[index].tl.colors = color4;
+            quads[index].tr.colors = color4;
+            _textureAtlas->updateQuad(&quads[index], index);
+        }
+    }
+}
+
 //CCLabelAtlas - draw
 
 #if CC_LABELATLAS_DEBUG_DRAW    

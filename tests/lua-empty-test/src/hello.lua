@@ -17,7 +17,7 @@ local function main()
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
 
-    --support debug
+    --support debug,when used on ios7.1 64bit,these codes should be commented
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or 
        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
@@ -193,8 +193,13 @@ local function main()
     -- play background music, preload effect
 
     -- uncomment below for the BlackBerry version
-    -- local bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("res/background.ogg")
-    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.mp3")
+    local bgMusicPath = nil 
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
+        bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("res/background.caf")
+    else
+        bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.mp3")
+    end
+
     cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
     local effectPath = cc.FileUtils:getInstance():fullPathForFilename("res/effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
