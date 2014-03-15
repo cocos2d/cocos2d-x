@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ObjectFactory.h"
+#include "ui/UIWidget.h"
+#include "cocostudio/WidgetReader/WidgetReaderProtocol.h"
 
 using namespace cocos2d;
 
@@ -137,6 +139,59 @@ Component* ObjectFactory::createComponent(const std::string &name)
 
 	return (Component*)o;
 
+}
+    
+ui::Widget* ObjectFactory::createGUI(std::string name)
+{
+    Ref* object = nullptr;
+    
+    if (name == "Panel")
+    {
+        name = "Layout";
+    }
+    else if (name == "TextArea")
+    {
+        name = "Text";
+    }
+    else if (name == "TextButton")
+    {
+        name = "Button";
+    }
+    else if (name == "Label")
+    {
+        name = "Text";
+    }
+    else if (name == "LabelAtlas")
+    {
+        name = "TextAtlas";
+    }
+    else if (name == "LabelBMFont")
+    {
+        name = "TextBMFont";
+    }
+    
+    do
+    {
+        const TInfo t = _typeMap[name];
+        CC_BREAK_IF(t._fun == NULL);
+        object = t._fun();
+    } while (0);
+    
+    return static_cast<ui::Widget*>(object);
+}
+
+WidgetReaderProtocol* ObjectFactory::createWidgetReaderProtocol(std::string name)
+{
+    Ref* object = NULL;
+    
+    do
+    {
+        const TInfo t = _typeMap[name];
+        CC_BREAK_IF(t._fun == NULL);
+        object = t._fun();
+    } while (0);
+    
+    return dynamic_cast<WidgetReaderProtocol*>(object);
 }
 
 void ObjectFactory::registerType(const TInfo &t)

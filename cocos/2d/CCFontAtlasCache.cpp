@@ -30,22 +30,46 @@
 #include "CCFontFNT.h"
 #include "CCFontFreeType.h"
 #include "CCFontCharMap.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
 std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
-FontAtlas * FontAtlasCache::getFontAtlasTTF(const std::string& fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs, bool useDistanceField)
+void FontAtlasCache::purgeCachedData()
 {
-    std::string atlasName = generateFontName(fontFileName, size, glyphs, useDistanceField);
+    for (auto & atlas:_atlasMap)
+    {
+        atlas.second->purgeTexturesAtlas();
+    }
+}
+
+FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
+{  
+    bool useDistanceField = config.distanceFieldEnabled;
+    if(config.outlineSize > 0)
+    {
+        useDistanceField = false;
+    }
+    int fontSize = config.fontSize;
+    if (useDistanceField)
+    {
+        fontSize = Label::DistanceFieldFontSize / CC_CONTENT_SCALE_FACTOR();
+    }
+
+    std::string atlasName = generateFontName(config.fontFilePath, fontSize, GlyphCollection::DYNAMIC, useDistanceField);
+    atlasName.append("_outline_");
+    std::stringstream ss;
+    ss << config.outlineSize;
+    atlasName.append(ss.str());
+
     FontAtlas  *tempAtlas = _atlasMap[atlasName];
-    
+
     if ( !tempAtlas )
     {
-        FontFreeType *font = FontFreeType::create(fontFileName, size, glyphs, customGlyphs);
+        FontFreeType *font = FontFreeType::create(config.fontFilePath, fontSize * CC_CONTENT_SCALE_FACTOR(), config.glyphs, config.customGlyphs,useDistanceField,config.outlineSize);
         if (font)
         {
-            font->setDistanceFieldEnabled(useDistanceField);
             tempAtlas = font->createFontAtlas();
             if (tempAtlas)
                 _atlasMap[atlasName] = tempAtlas;

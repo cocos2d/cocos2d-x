@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCActionInterval.h"
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
-#include "CCLabelTTF.h"
+#include "CCLabel.h"
 #include "CCScriptSupport.h"
 #include <stdarg.h>
 #include <cstring>
@@ -301,12 +301,12 @@ void MenuItemLabel::setEnabled(bool enabled)
     {
         if(enabled == false)
         {
-            _colorBackup = _label->getColor();
-            _label->setColor(_disabledColor);
+            _colorBackup = this->getColor();
+            this->setColor(_disabledColor);
         }
         else
         {
-            _label->setColor(_colorBackup);
+            this->setColor(_colorBackup);
         }
     }
     MenuItem::setEnabled(enabled);
@@ -439,7 +439,7 @@ bool MenuItemFont::initWithString(const std::string& value, const ccMenuCallback
     _fontName = _globalFontName;
     _fontSize = _globalFontSize;
 
-    LabelTTF *label = LabelTTF::create(value, _fontName, (float)_fontSize);
+    Label *label = Label::create(value, _fontName, _fontSize);
     if (MenuItemLabel::initWithLabel(label, callback))
     {
         // do something ?
@@ -447,17 +447,11 @@ bool MenuItemFont::initWithString(const std::string& value, const ccMenuCallback
     return true;
 }
 
-void MenuItemFont::recreateLabel()
-{
-    LabelTTF *label = LabelTTF::create(dynamic_cast<LabelProtocol*>(_label)->getString(), 
-                                                    _fontName.c_str(), (float)_fontSize);
-    this->setLabel(label);
-}
-
 void MenuItemFont::setFontSizeObj(int s)
 {
     _fontSize = s;
-    recreateLabel();
+    dynamic_cast<Label*>(_label)->setFontSize(_fontSize);
+    this->setContentSize(dynamic_cast<Label*>(_label)->getContentSize());
 }
 
 int MenuItemFont::getFontSizeObj() const
@@ -468,7 +462,8 @@ int MenuItemFont::getFontSizeObj() const
 void MenuItemFont::setFontNameObj(const std::string& name)
 {
     _fontName = name;
-    recreateLabel();
+    dynamic_cast<Label*>(_label)->setFontName(_fontName);
+    this->setContentSize(dynamic_cast<Label*>(_label)->getContentSize());
 }
 
 const std::string& MenuItemFont::getFontNameObj() const

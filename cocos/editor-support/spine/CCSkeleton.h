@@ -67,8 +67,8 @@ public:
 	virtual ~Skeleton ();
 
 	virtual void update (float deltaTime) override;
-	virtual void draw() override;
-    void onDraw();
+	virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 	void onEnter() override;
 	void onExit() override;
 	virtual cocos2d::Rect getBoundingBox () const override;

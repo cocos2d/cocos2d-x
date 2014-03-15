@@ -161,17 +161,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL    1
 #endif
 
-/** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
- Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
- It seems it is the recommend way, but it is much slower, so, enable it at your own risk
- 
- To enable set it to a value different than 0. Disabled by default.
-
- */
-#ifndef CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
-#endif
-
 /** @def CC_TEXTURE_ATLAS_USE_VAO
  By default, TextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).
  Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.

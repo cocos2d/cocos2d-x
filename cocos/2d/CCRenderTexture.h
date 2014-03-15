@@ -154,8 +154,17 @@ public:
     };
     
     // Overrides
-    virtual void visit() override;
-    virtual void draw() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+
+    //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix
+    void setKeepMatrix(bool keepMatrix);
+    /**Used for grab part of screen to a texture. 
+    //rtBegin: the position of renderTexture on the fullRect
+    //fullRect: the total size of screen
+    //fullViewport: the total viewportSize
+    */
+    void setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
     // XXX should be procted.
@@ -170,7 +179,13 @@ public:
 
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
-
+    
+    //flags: whether generate new modelView and projection matrix or not
+    bool         _keepMatrix;
+    Rect         _rtTextureRect;
+    Rect         _fullRect;
+    Rect         _fullviewPort;
+    
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
     GLint        _oldFBO;
@@ -199,6 +214,7 @@ protected:
     CustomCommand _clearCommand;
     CustomCommand _beginCommand;
     CustomCommand _endCommand;
+    CustomCommand _saveToFileCommand;
 protected:
     //renderer caches and callbacks
     void onBegin();
@@ -206,6 +222,8 @@ protected:
 
     void onClear();
     void onClearDepth();
+
+    void onSaveToFile(const std::string& fileName);
     
     kmMat4 _oldTransMatrix, _oldProjMatrix;
     kmMat4 _transformMatrix, _projectionMatrix;

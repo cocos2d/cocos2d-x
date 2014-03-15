@@ -39,7 +39,21 @@ CCSSceneReader.cpp \
 ObjectFactory.cpp \
 TriggerBase.cpp \
 TriggerMng.cpp \
-TriggerObj.cpp
+TriggerObj.cpp \
+WidgetReader/WidgetReader.cpp \
+WidgetReader/ButtonReader/ButtonReader.cpp \
+WidgetReader/CheckBoxReader/CheckBoxReader.cpp \
+WidgetReader/ImageViewReader/ImageViewReader.cpp \
+WidgetReader/LayoutReader/LayoutReader.cpp \
+WidgetReader/ListViewReader/ListViewReader.cpp \
+WidgetReader/LoadingBarReader/LoadingBarReader.cpp \
+WidgetReader/PageViewReader/PageViewReader.cpp \
+WidgetReader/ScrollViewReader/ScrollViewReader.cpp \
+WidgetReader/SliderReader/SliderReader.cpp \
+WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
+WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
+WidgetReader/TextFieldReader/TextFieldReader.cpp \
+WidgetReader/TextReader/TextReader.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external
@@ -54,11 +68,11 @@ LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_gui_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ui_static
 
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,2d)
 $(call import-module,audio/android)
-$(call import-module,gui)
+$(call import-module,ui)
 

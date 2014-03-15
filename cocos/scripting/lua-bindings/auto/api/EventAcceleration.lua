@@ -1,0 +1,4 @@
+
+--------------------------------
+-- @module EventAcceleration
+return nil

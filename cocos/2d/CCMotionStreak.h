@@ -74,11 +74,18 @@ public:
 
     // Overrides
     virtual void setPosition(const Point& position) override;
+    virtual void setPosition(float x, float y) override;
+    virtual const Point& getPosition() const override;
+    virtual void getPosition(float* x, float* y) const override;
+    virtual void setPositionX(float x) override;
+    virtual void setPositionY(float y) override;
+    virtual float getPositionX(void) const override;
+    virtual float getPositionY(void) const override;
     /**
     * @js NA
     * @lua NA
     */
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     /**
     * @js NA
     * @lua NA
@@ -102,19 +109,9 @@ public:
     virtual bool isOpacityModifyRGB() const override;
 
 protected:
-    kmMat4 _cachedMV;
     //renderer callback
-    void onDraw();
-
-protected:
-    /**
-     * @js ctor
-     */
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
     MotionStreak();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~MotionStreak();
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
