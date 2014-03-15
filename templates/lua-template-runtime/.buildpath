@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="con" path="org.eclipse.koneki.ldt.ExecutionEnvironmentContainer/cocos2dx/3.0-rc0"/>
+</buildpath>
