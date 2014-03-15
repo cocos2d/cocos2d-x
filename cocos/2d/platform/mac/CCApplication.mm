@@ -68,16 +68,27 @@ int Application::run()
     {
         return 0;
     }
-    GLView* glview = Director::getInstance()->getOpenGLView();
+    
+    long lastTime = 0L;
+    long curTime = 0L;
+    
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    
+    // Retain glview to avoid glview being released in the while loop
+    glview->retain();
     
     while (!glview->windowShouldClose())
     {
-        long iLastTime = getCurrentMillSecond();
-        Director::getInstance()->mainLoop();
+        lastTime = getCurrentMillSecond();
+        
+        director->mainLoop();
         glview->pollEvents();
-        long iCurTime = getCurrentMillSecond();
-        if (iCurTime-iLastTime<_animationInterval){
-            usleep(static_cast<useconds_t>((_animationInterval - iCurTime+iLastTime)*1000));
+
+        curTime = getCurrentMillSecond();
+        if (curTime - lastTime < _animationInterval)
+        {
+            usleep(static_cast<useconds_t>((_animationInterval - curTime + lastTime)*1000));
         }
     }
 
@@ -86,8 +97,14 @@ int Application::run()
     *  when we want to close the window, we should call Director::end();
     *  then call Director::mainLoop to do release of internal resources
     */
-    Director::getInstance()->end();
-    Director::getInstance()->mainLoop();
+    if (glview->isOpenGLReady())
+    {
+        director->end();
+        director->mainLoop();
+    }
+    
+    glview->release();
+    
     return true;
 }
 

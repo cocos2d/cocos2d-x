@@ -59,7 +59,7 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
+    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
@@ -78,7 +78,7 @@ typedef struct _ttfConfig
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
-    static const int DefultFontSize;
+    static const int DistanceFieldFontSize;
 
     static Label* create();
 
@@ -91,7 +91,7 @@ public:
 
     CC_DEPRECATED_ATTRIBUTE static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, 
         int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::LEFT, 
-        GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
+        GlyphCollection glyphs = GlyphCollection::DYNAMIC, const char *customGlyphs = 0, bool useDistanceField = false);
 
     /** create a label with TTF configuration
      * It will generate texture of character by freetype.
@@ -230,6 +230,15 @@ public:
 
     virtual const Size& getContentSize() const override;
 
+    /** Listen "come to background" message
+     It only has effect on Android.
+     */
+    void listenToBackground(EventCustom *event);
+
+    /** Listen "FontAtlas purge textures" message
+     */
+    void listenToFontAtlasPurge(EventCustom *event);
+
 protected:
     void onDraw(const kmMat4& transform, bool transformUpdated);
 
@@ -251,21 +260,20 @@ protected:
     /**
     * @js NA
     */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment alignment = TextHAlignment::LEFT, bool useDistanceField = false,bool useA8Shader = false);
+    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT, 
+        TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
     /**
     * @js NA
     * @lua NA
     */
     virtual ~Label();
 
-    virtual bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+    virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
-
-    virtual bool init();
     
     virtual void alignText();
     
@@ -278,14 +286,20 @@ protected:
 
     virtual void updateColor() override;
 
-    virtual void initProgram();
+    virtual void updateShaderProgram();
 
     void drawShadowWithoutBlur();
 
     void createSpriteWithFontDefinition();
 
+    void updateFont();
+    void reset();
+
     bool _isOpacityModifyRGB;
     bool _contentDirty;
+    bool _fontDirty;
+    std::string _fontName;
+    int         _fontSize;
     LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;

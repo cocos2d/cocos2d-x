@@ -932,7 +932,12 @@
 				);
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios",
+					"$(SRCROOT)/../../../../external/lua/lua/prebuilt/ios",
+				);
+				"OTHER_LDFLAGS[arch=arm64]" = "-llua";
+				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../2d/platform/ios";
@@ -952,7 +957,12 @@
 				);
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios",
+					"$(SRCROOT)/../../../../external/lua/lua/prebuilt/ios",
+				);
+				"OTHER_LDFLAGS[arch=arm64]" = "-llua";
+				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../2d/platform/ios";

@@ -35,12 +35,10 @@ static int os_pushresult (lua_State *L, int i, const char *filename) {
 }
 
 
-#ifndef __native_client__
 static int os_execute (lua_State *L) {
   lua_pushinteger(L, system(luaL_optstring(L, 1, NULL)));
   return 1;
 }
-#endif
 
 
 static int os_remove (lua_State *L) {
@@ -223,9 +221,7 @@ static const luaL_Reg syslib[] = {
   {"clock",     os_clock},
   {"date",      os_date},
   {"difftime",  os_difftime},
-#ifndef __native_client__
   {"execute",   os_execute},
-#endif
   {"exit",      os_exit},
   {"getenv",    os_getenv},
   {"remove",    os_remove},

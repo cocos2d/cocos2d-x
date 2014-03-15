@@ -108,7 +108,7 @@ TestCocosNodeDemo::~TestCocosNodeDemo(void)
 
 std::string TestCocosNodeDemo::title() const
 {
-    return "No title";
+    return "Node Test";
 }
 
 std::string TestCocosNodeDemo::subtitle() const
@@ -351,6 +351,7 @@ std::string Test6::subtitle() const
 {
     return "remove/cleanup with children";
 }
+
 
 //------------------------------------------------------------------
 //

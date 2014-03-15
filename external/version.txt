@@ -1,0 +1,9 @@
+libs          version
+———————————————————
+freetype      2.5.0
+curl          7.26.0
+jpeg          9.0
+png           1.6.2
+tiff          4.0.3
+webp          0.2.1
+websockets    v1.23-chrome32-firefox24

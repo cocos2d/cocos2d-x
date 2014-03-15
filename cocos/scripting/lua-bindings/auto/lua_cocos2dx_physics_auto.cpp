@@ -25,7 +25,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getGravity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getGravity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getGravity'", nullptr);
         return 0;
     }
 #endif
@@ -69,7 +69,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getAllBodies(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getAllBodies'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getAllBodies'", nullptr);
         return 0;
     }
 #endif
@@ -113,7 +113,7 @@ int lua_cocos2dx_physics_PhysicsWorld_setGravity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setGravity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setGravity'", nullptr);
         return 0;
     }
 #endif
@@ -159,7 +159,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getSpeed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getSpeed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getSpeed'", nullptr);
         return 0;
     }
 #endif
@@ -186,7 +186,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getSpeed(lua_State* tolua_S)
 int lua_cocos2dx_physics_PhysicsWorld_removeBody(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::PhysicsWorld* cobj = NULL;
+    cocos2d::PhysicsWorld* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -199,7 +199,7 @@ int lua_cocos2dx_physics_PhysicsWorld_removeBody(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeBody'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeBody'", nullptr);
         return 0;
     }
 #endif
@@ -256,7 +256,7 @@ int lua_cocos2dx_physics_PhysicsWorld_removeJoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeJoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeJoint'", nullptr);
         return 0;
     }
 #endif
@@ -315,7 +315,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getUpdateRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getUpdateRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getUpdateRate'", nullptr);
         return 0;
     }
 #endif
@@ -359,7 +359,7 @@ int lua_cocos2dx_physics_PhysicsWorld_setSpeed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setSpeed'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setSpeed'", nullptr);
         return 0;
     }
 #endif
@@ -405,7 +405,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getShapes(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getShapes'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getShapes'", nullptr);
         return 0;
     }
 #endif
@@ -452,7 +452,7 @@ int lua_cocos2dx_physics_PhysicsWorld_removeAllJoints(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeAllJoints'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeAllJoints'", nullptr);
         return 0;
     }
 #endif
@@ -505,7 +505,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getShape(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getShape'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getShape'", nullptr);
         return 0;
     }
 #endif
@@ -552,7 +552,7 @@ int lua_cocos2dx_physics_PhysicsWorld_removeAllBodies(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeAllBodies'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_removeAllBodies'", nullptr);
         return 0;
     }
 #endif
@@ -595,7 +595,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getDebugDrawMask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getDebugDrawMask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getDebugDrawMask'", nullptr);
         return 0;
     }
 #endif
@@ -639,7 +639,7 @@ int lua_cocos2dx_physics_PhysicsWorld_setDebugDrawMask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setDebugDrawMask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setDebugDrawMask'", nullptr);
         return 0;
     }
 #endif
@@ -685,7 +685,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getBody(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getBody'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getBody'", nullptr);
         return 0;
     }
 #endif
@@ -732,7 +732,7 @@ int lua_cocos2dx_physics_PhysicsWorld_setUpdateRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setUpdateRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_setUpdateRate'", nullptr);
         return 0;
     }
 #endif
@@ -778,7 +778,7 @@ int lua_cocos2dx_physics_PhysicsWorld_addJoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_addJoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_addJoint'", nullptr);
         return 0;
     }
 #endif
@@ -813,7 +813,7 @@ static int lua_cocos2dx_physics_PhysicsWorld_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsWorld(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsWorld");
-    tolua_cclass(tolua_S,"PhysicsWorld","cc.PhysicsWorld","",NULL);
+    tolua_cclass(tolua_S,"PhysicsWorld","cc.PhysicsWorld","",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsWorld");
         tolua_function(tolua_S,"getGravity",lua_cocos2dx_physics_PhysicsWorld_getGravity);
@@ -849,7 +849,7 @@ static int lua_cocos2dx_physics_PhysicsDebugDraw_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsDebugDraw(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsDebugDraw");
-    tolua_cclass(tolua_S,"PhysicsDebugDraw","cc.PhysicsDebugDraw","",NULL);
+    tolua_cclass(tolua_S,"PhysicsDebugDraw","cc.PhysicsDebugDraw","",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsDebugDraw");
     tolua_endmodule(tolua_S);
@@ -879,7 +879,7 @@ int lua_cocos2dx_physics_PhysicsShape_getFriction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getFriction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getFriction'", nullptr);
         return 0;
     }
 #endif
@@ -923,7 +923,7 @@ int lua_cocos2dx_physics_PhysicsShape_setGroup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setGroup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setGroup'", nullptr);
         return 0;
     }
 #endif
@@ -969,7 +969,7 @@ int lua_cocos2dx_physics_PhysicsShape_setDensity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setDensity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setDensity'", nullptr);
         return 0;
     }
 #endif
@@ -1015,7 +1015,7 @@ int lua_cocos2dx_physics_PhysicsShape_getMass(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getMass'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getMass'", nullptr);
         return 0;
     }
 #endif
@@ -1059,7 +1059,7 @@ int lua_cocos2dx_physics_PhysicsShape_getMaterial(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getMaterial'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getMaterial'", nullptr);
         return 0;
     }
 #endif
@@ -1103,7 +1103,7 @@ int lua_cocos2dx_physics_PhysicsShape_getCollisionBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getCollisionBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getCollisionBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -1147,7 +1147,7 @@ int lua_cocos2dx_physics_PhysicsShape_getArea(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getArea'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getArea'", nullptr);
         return 0;
     }
 #endif
@@ -1191,7 +1191,7 @@ int lua_cocos2dx_physics_PhysicsShape_setCategoryBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setCategoryBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setCategoryBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -1237,7 +1237,7 @@ int lua_cocos2dx_physics_PhysicsShape_getGroup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getGroup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getGroup'", nullptr);
         return 0;
     }
 #endif
@@ -1281,7 +1281,7 @@ int lua_cocos2dx_physics_PhysicsShape_setMoment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setMoment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setMoment'", nullptr);
         return 0;
     }
 #endif
@@ -1327,7 +1327,7 @@ int lua_cocos2dx_physics_PhysicsShape_containsPoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_containsPoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_containsPoint'", nullptr);
         return 0;
     }
 #endif
@@ -1374,7 +1374,7 @@ int lua_cocos2dx_physics_PhysicsShape_getCategoryBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getCategoryBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getCategoryBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -1418,7 +1418,7 @@ int lua_cocos2dx_physics_PhysicsShape_getType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getType'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getType'", nullptr);
         return 0;
     }
 #endif
@@ -1462,7 +1462,7 @@ int lua_cocos2dx_physics_PhysicsShape_getContactTestBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getContactTestBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getContactTestBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -1506,7 +1506,7 @@ int lua_cocos2dx_physics_PhysicsShape_getCenter(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getCenter'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getCenter'", nullptr);
         return 0;
     }
 #endif
@@ -1550,7 +1550,7 @@ int lua_cocos2dx_physics_PhysicsShape_getDensity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getDensity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getDensity'", nullptr);
         return 0;
     }
 #endif
@@ -1594,7 +1594,7 @@ int lua_cocos2dx_physics_PhysicsShape_setMass(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setMass'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setMass'", nullptr);
         return 0;
     }
 #endif
@@ -1640,7 +1640,7 @@ int lua_cocos2dx_physics_PhysicsShape_getTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getTag'", nullptr);
         return 0;
     }
 #endif
@@ -1684,7 +1684,7 @@ int lua_cocos2dx_physics_PhysicsShape_calculateDefaultMoment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_calculateDefaultMoment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_calculateDefaultMoment'", nullptr);
         return 0;
     }
 #endif
@@ -1728,7 +1728,7 @@ int lua_cocos2dx_physics_PhysicsShape_setCollisionBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setCollisionBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setCollisionBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -1774,7 +1774,7 @@ int lua_cocos2dx_physics_PhysicsShape_getMoment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getMoment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getMoment'", nullptr);
         return 0;
     }
 #endif
@@ -1818,7 +1818,7 @@ int lua_cocos2dx_physics_PhysicsShape_getOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getOffset'", nullptr);
         return 0;
     }
 #endif
@@ -1862,7 +1862,7 @@ int lua_cocos2dx_physics_PhysicsShape_getRestitution(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getRestitution'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getRestitution'", nullptr);
         return 0;
     }
 #endif
@@ -1906,7 +1906,7 @@ int lua_cocos2dx_physics_PhysicsShape_setFriction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setFriction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setFriction'", nullptr);
         return 0;
     }
 #endif
@@ -1952,7 +1952,7 @@ int lua_cocos2dx_physics_PhysicsShape_setMaterial(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setMaterial'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setMaterial'", nullptr);
         return 0;
     }
 #endif
@@ -1998,7 +1998,7 @@ int lua_cocos2dx_physics_PhysicsShape_setTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setTag'", nullptr);
         return 0;
     }
 #endif
@@ -2044,7 +2044,7 @@ int lua_cocos2dx_physics_PhysicsShape_setContactTestBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setContactTestBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setContactTestBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -2090,7 +2090,7 @@ int lua_cocos2dx_physics_PhysicsShape_setRestitution(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setRestitution'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setRestitution'", nullptr);
         return 0;
     }
 #endif
@@ -2136,7 +2136,7 @@ int lua_cocos2dx_physics_PhysicsShape_getBody(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getBody'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_getBody'", nullptr);
         return 0;
     }
 #endif
@@ -2169,7 +2169,7 @@ static int lua_cocos2dx_physics_PhysicsShape_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShape(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShape");
-    tolua_cclass(tolua_S,"PhysicsShape","cc.PhysicsShape","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"PhysicsShape","cc.PhysicsShape","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShape");
         tolua_function(tolua_S,"getFriction",lua_cocos2dx_physics_PhysicsShape_getFriction);
@@ -2228,7 +2228,7 @@ int lua_cocos2dx_physics_PhysicsShapeCircle_getRadius(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeCircle_getRadius'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeCircle_getRadius'", nullptr);
         return 0;
     }
 #endif
@@ -2402,7 +2402,7 @@ static int lua_cocos2dx_physics_PhysicsShapeCircle_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapeCircle(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeCircle");
-    tolua_cclass(tolua_S,"PhysicsShapeCircle","cc.PhysicsShapeCircle","cc.PhysicsShape",NULL);
+    tolua_cclass(tolua_S,"PhysicsShapeCircle","cc.PhysicsShapeCircle","cc.PhysicsShape",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShapeCircle");
         tolua_function(tolua_S,"getRadius",lua_cocos2dx_physics_PhysicsShapeCircle_getRadius);
@@ -2436,7 +2436,7 @@ int lua_cocos2dx_physics_PhysicsShapeBox_getPointsCount(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeBox_getPointsCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeBox_getPointsCount'", nullptr);
         return 0;
     }
 #endif
@@ -2480,7 +2480,7 @@ int lua_cocos2dx_physics_PhysicsShapeBox_getSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeBox_getSize'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeBox_getSize'", nullptr);
         return 0;
     }
 #endif
@@ -2654,7 +2654,7 @@ static int lua_cocos2dx_physics_PhysicsShapeBox_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapeBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeBox");
-    tolua_cclass(tolua_S,"PhysicsShapeBox","cc.PhysicsShapeBox","cc.PhysicsShape",NULL);
+    tolua_cclass(tolua_S,"PhysicsShapeBox","cc.PhysicsShapeBox","cc.PhysicsShape",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShapeBox");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeBox_getPointsCount);
@@ -2689,7 +2689,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPointsCount(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapePolygon_getPointsCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapePolygon_getPointsCount'", nullptr);
         return 0;
     }
 #endif
@@ -2733,7 +2733,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapePolygon_getPoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapePolygon_getPoint'", nullptr);
         return 0;
     }
 #endif
@@ -2769,7 +2769,7 @@ static int lua_cocos2dx_physics_PhysicsShapePolygon_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapePolygon(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapePolygon");
-    tolua_cclass(tolua_S,"PhysicsShapePolygon","cc.PhysicsShapePolygon","cc.PhysicsShape",NULL);
+    tolua_cclass(tolua_S,"PhysicsShapePolygon","cc.PhysicsShapePolygon","cc.PhysicsShape",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShapePolygon");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapePolygon_getPointsCount);
@@ -2801,7 +2801,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointB'", nullptr);
         return 0;
     }
 #endif
@@ -2845,7 +2845,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointA(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointA'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointA'", nullptr);
         return 0;
     }
 #endif
@@ -2943,7 +2943,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgeSegment_finalize(lua_State* tolu
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeSegment(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeSegment");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeSegment","cc.PhysicsShapeEdgeSegment","cc.PhysicsShape",NULL);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeSegment","cc.PhysicsShapeEdgeSegment","cc.PhysicsShape",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeSegment");
         tolua_function(tolua_S,"getPointB",lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointB);
@@ -2976,7 +2976,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPointsCount(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPointsCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPointsCount'", nullptr);
         return 0;
     }
 #endif
@@ -3084,7 +3084,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgeBox_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeBox");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeBox","cc.PhysicsShapeEdgeBox","cc.PhysicsShape",NULL);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeBox","cc.PhysicsShapeEdgeBox","cc.PhysicsShape",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeBox");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPointsCount);
@@ -3116,7 +3116,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPointsCount(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPointsCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPointsCount'", nullptr);
         return 0;
     }
 #endif
@@ -3149,7 +3149,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_finalize(lua_State* tolu
 int lua_register_cocos2dx_physics_PhysicsShapeEdgePolygon(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgePolygon");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgePolygon","cc.PhysicsShapeEdgePolygon","cc.PhysicsShape",NULL);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgePolygon","cc.PhysicsShapeEdgePolygon","cc.PhysicsShape",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgePolygon");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPointsCount);
@@ -3180,7 +3180,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPointsCount(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPointsCount'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPointsCount'", nullptr);
         return 0;
     }
 #endif
@@ -3213,7 +3213,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgeChain_finalize(lua_State* tolua_
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeChain(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeChain");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeChain","cc.PhysicsShapeEdgeChain","cc.PhysicsShape",NULL);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeChain","cc.PhysicsShapeEdgeChain","cc.PhysicsShape",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeChain");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPointsCount);
@@ -3244,7 +3244,7 @@ int lua_cocos2dx_physics_PhysicsBody_isGravityEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isGravityEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isGravityEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -3288,7 +3288,7 @@ int lua_cocos2dx_physics_PhysicsBody_resetForces(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_resetForces'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_resetForces'", nullptr);
         return 0;
     }
 #endif
@@ -3331,7 +3331,7 @@ int lua_cocos2dx_physics_PhysicsBody_getVelocityLimit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocityLimit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocityLimit'", nullptr);
         return 0;
     }
 #endif
@@ -3375,7 +3375,7 @@ int lua_cocos2dx_physics_PhysicsBody_setGroup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setGroup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setGroup'", nullptr);
         return 0;
     }
 #endif
@@ -3421,7 +3421,7 @@ int lua_cocos2dx_physics_PhysicsBody_getMass(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getMass'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getMass'", nullptr);
         return 0;
     }
 #endif
@@ -3465,7 +3465,7 @@ int lua_cocos2dx_physics_PhysicsBody_getCollisionBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getCollisionBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getCollisionBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -3509,7 +3509,7 @@ int lua_cocos2dx_physics_PhysicsBody_getRotationOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getRotationOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getRotationOffset'", nullptr);
         return 0;
     }
 #endif
@@ -3553,7 +3553,7 @@ int lua_cocos2dx_physics_PhysicsBody_getRotation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getRotation'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getRotation'", nullptr);
         return 0;
     }
 #endif
@@ -3597,24 +3597,21 @@ int lua_cocos2dx_physics_PhysicsBody_getMoment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getMoment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getMoment'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        double ret = cobj->getMoment(arg0);
+        double ret = cobj->getMoment();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMoment",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMoment",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -3627,7 +3624,7 @@ int lua_cocos2dx_physics_PhysicsBody_getMoment(lua_State* tolua_S)
 int lua_cocos2dx_physics_PhysicsBody_applyImpulse(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::PhysicsBody* cobj = NULL;
+    cocos2d::PhysicsBody* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -3640,7 +3637,7 @@ int lua_cocos2dx_physics_PhysicsBody_applyImpulse(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_applyImpulse'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_applyImpulse'", nullptr);
         return 0;
     }
 #endif
@@ -3701,7 +3698,7 @@ int lua_cocos2dx_physics_PhysicsBody_setRotationOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setRotationOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setRotationOffset'", nullptr);
         return 0;
     }
 #endif
@@ -3730,7 +3727,7 @@ int lua_cocos2dx_physics_PhysicsBody_setRotationOffset(lua_State* tolua_S)
 int lua_cocos2dx_physics_PhysicsBody_applyForce(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::PhysicsBody* cobj = NULL;
+    cocos2d::PhysicsBody* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -3743,7 +3740,7 @@ int lua_cocos2dx_physics_PhysicsBody_applyForce(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_applyForce'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_applyForce'", nullptr);
         return 0;
     }
 #endif
@@ -3804,7 +3801,7 @@ int lua_cocos2dx_physics_PhysicsBody_addShape(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_addShape'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_addShape'", nullptr);
         return 0;
     }
 #endif
@@ -3865,7 +3862,7 @@ int lua_cocos2dx_physics_PhysicsBody_applyTorque(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_applyTorque'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_applyTorque'", nullptr);
         return 0;
     }
 #endif
@@ -3911,7 +3908,7 @@ int lua_cocos2dx_physics_PhysicsBody_getAngularVelocityLimit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getAngularVelocityLimit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getAngularVelocityLimit'", nullptr);
         return 0;
     }
 #endif
@@ -3955,7 +3952,7 @@ int lua_cocos2dx_physics_PhysicsBody_setAngularVelocityLimit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setAngularVelocityLimit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setAngularVelocityLimit'", nullptr);
         return 0;
     }
 #endif
@@ -4001,7 +3998,7 @@ int lua_cocos2dx_physics_PhysicsBody_getVelocity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocity'", nullptr);
         return 0;
     }
 #endif
@@ -4045,7 +4042,7 @@ int lua_cocos2dx_physics_PhysicsBody_getLinearDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getLinearDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getLinearDamping'", nullptr);
         return 0;
     }
 #endif
@@ -4089,7 +4086,7 @@ int lua_cocos2dx_physics_PhysicsBody_removeAllShapes(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_removeAllShapes'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_removeAllShapes'", nullptr);
         return 0;
     }
 #endif
@@ -4142,7 +4139,7 @@ int lua_cocos2dx_physics_PhysicsBody_setAngularDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setAngularDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setAngularDamping'", nullptr);
         return 0;
     }
 #endif
@@ -4188,7 +4185,7 @@ int lua_cocos2dx_physics_PhysicsBody_setVelocityLimit(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setVelocityLimit'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setVelocityLimit'", nullptr);
         return 0;
     }
 #endif
@@ -4234,7 +4231,7 @@ int lua_cocos2dx_physics_PhysicsBody_setResting(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setResting'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setResting'", nullptr);
         return 0;
     }
 #endif
@@ -4280,7 +4277,7 @@ int lua_cocos2dx_physics_PhysicsBody_getPositionOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getPositionOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getPositionOffset'", nullptr);
         return 0;
     }
 #endif
@@ -4324,7 +4321,7 @@ int lua_cocos2dx_physics_PhysicsBody_setCategoryBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setCategoryBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setCategoryBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -4370,7 +4367,7 @@ int lua_cocos2dx_physics_PhysicsBody_getWorld(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getWorld'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getWorld'", nullptr);
         return 0;
     }
 #endif
@@ -4414,7 +4411,7 @@ int lua_cocos2dx_physics_PhysicsBody_getAngularVelocity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getAngularVelocity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getAngularVelocity'", nullptr);
         return 0;
     }
 #endif
@@ -4458,7 +4455,7 @@ int lua_cocos2dx_physics_PhysicsBody_getPosition(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getPosition'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getPosition'", nullptr);
         return 0;
     }
 #endif
@@ -4502,7 +4499,7 @@ int lua_cocos2dx_physics_PhysicsBody_setEnable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setEnable'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setEnable'", nullptr);
         return 0;
     }
 #endif
@@ -4548,7 +4545,7 @@ int lua_cocos2dx_physics_PhysicsBody_setGravityEnable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setGravityEnable'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setGravityEnable'", nullptr);
         return 0;
     }
 #endif
@@ -4594,7 +4591,7 @@ int lua_cocos2dx_physics_PhysicsBody_getGroup(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getGroup'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getGroup'", nullptr);
         return 0;
     }
 #endif
@@ -4638,7 +4635,7 @@ int lua_cocos2dx_physics_PhysicsBody_setMoment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setMoment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setMoment'", nullptr);
         return 0;
     }
 #endif
@@ -4684,7 +4681,7 @@ int lua_cocos2dx_physics_PhysicsBody_getTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getTag'", nullptr);
         return 0;
     }
 #endif
@@ -4728,7 +4725,7 @@ int lua_cocos2dx_physics_PhysicsBody_local2World(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_local2World'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_local2World'", nullptr);
         return 0;
     }
 #endif
@@ -4775,7 +4772,7 @@ int lua_cocos2dx_physics_PhysicsBody_getCategoryBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getCategoryBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getCategoryBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -4819,7 +4816,7 @@ int lua_cocos2dx_physics_PhysicsBody_setDynamic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setDynamic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setDynamic'", nullptr);
         return 0;
     }
 #endif
@@ -4865,7 +4862,7 @@ int lua_cocos2dx_physics_PhysicsBody_getFirstShape(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getFirstShape'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getFirstShape'", nullptr);
         return 0;
     }
 #endif
@@ -4909,7 +4906,7 @@ int lua_cocos2dx_physics_PhysicsBody_getShapes(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getShapes'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getShapes'", nullptr);
         return 0;
     }
 #endif
@@ -4953,7 +4950,7 @@ int lua_cocos2dx_physics_PhysicsBody_getContactTestBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getContactTestBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getContactTestBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -4997,7 +4994,7 @@ int lua_cocos2dx_physics_PhysicsBody_setAngularVelocity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setAngularVelocity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setAngularVelocity'", nullptr);
         return 0;
     }
 #endif
@@ -5043,7 +5040,7 @@ int lua_cocos2dx_physics_PhysicsBody_world2Local(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_world2Local'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_world2Local'", nullptr);
         return 0;
     }
 #endif
@@ -5090,7 +5087,7 @@ int lua_cocos2dx_physics_PhysicsBody_isEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -5117,7 +5114,7 @@ int lua_cocos2dx_physics_PhysicsBody_isEnabled(lua_State* tolua_S)
 int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
 {
     int argc = 0;
-    cocos2d::PhysicsBody* cobj = NULL;
+    cocos2d::PhysicsBody* cobj = nullptr;
     bool ok  = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -5130,7 +5127,7 @@ int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_removeShape'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_removeShape'", nullptr);
         return 0;
     }
 #endif
@@ -5217,7 +5214,7 @@ int lua_cocos2dx_physics_PhysicsBody_setMass(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setMass'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setMass'", nullptr);
         return 0;
     }
 #endif
@@ -5263,7 +5260,7 @@ int lua_cocos2dx_physics_PhysicsBody_addMoment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_addMoment'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_addMoment'", nullptr);
         return 0;
     }
 #endif
@@ -5309,7 +5306,7 @@ int lua_cocos2dx_physics_PhysicsBody_setVelocity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setVelocity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setVelocity'", nullptr);
         return 0;
     }
 #endif
@@ -5355,7 +5352,7 @@ int lua_cocos2dx_physics_PhysicsBody_setLinearDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setLinearDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setLinearDamping'", nullptr);
         return 0;
     }
 #endif
@@ -5401,7 +5398,7 @@ int lua_cocos2dx_physics_PhysicsBody_setCollisionBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setCollisionBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setCollisionBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -5447,7 +5444,7 @@ int lua_cocos2dx_physics_PhysicsBody_setPositionOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setPositionOffset'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setPositionOffset'", nullptr);
         return 0;
     }
 #endif
@@ -5493,7 +5490,7 @@ int lua_cocos2dx_physics_PhysicsBody_setRotationEnable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setRotationEnable'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setRotationEnable'", nullptr);
         return 0;
     }
 #endif
@@ -5539,7 +5536,7 @@ int lua_cocos2dx_physics_PhysicsBody_isRotationEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isRotationEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isRotationEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -5583,7 +5580,7 @@ int lua_cocos2dx_physics_PhysicsBody_getAngularDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getAngularDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getAngularDamping'", nullptr);
         return 0;
     }
 #endif
@@ -5627,7 +5624,7 @@ int lua_cocos2dx_physics_PhysicsBody_getVelocityAtLocalPoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocityAtLocalPoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocityAtLocalPoint'", nullptr);
         return 0;
     }
 #endif
@@ -5674,7 +5671,7 @@ int lua_cocos2dx_physics_PhysicsBody_isResting(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isResting'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isResting'", nullptr);
         return 0;
     }
 #endif
@@ -5718,7 +5715,7 @@ int lua_cocos2dx_physics_PhysicsBody_addMass(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_addMass'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_addMass'", nullptr);
         return 0;
     }
 #endif
@@ -5764,7 +5761,7 @@ int lua_cocos2dx_physics_PhysicsBody_getShape(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getShape'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getShape'", nullptr);
         return 0;
     }
 #endif
@@ -5811,7 +5808,7 @@ int lua_cocos2dx_physics_PhysicsBody_setTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setTag'", nullptr);
         return 0;
     }
 #endif
@@ -5857,7 +5854,7 @@ int lua_cocos2dx_physics_PhysicsBody_getVelocityAtWorldPoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocityAtWorldPoint'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getVelocityAtWorldPoint'", nullptr);
         return 0;
     }
 #endif
@@ -5904,7 +5901,7 @@ int lua_cocos2dx_physics_PhysicsBody_setContactTestBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setContactTestBitmask'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_setContactTestBitmask'", nullptr);
         return 0;
     }
 #endif
@@ -5950,7 +5947,7 @@ int lua_cocos2dx_physics_PhysicsBody_removeFromWorld(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_removeFromWorld'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_removeFromWorld'", nullptr);
         return 0;
     }
 #endif
@@ -5993,7 +5990,7 @@ int lua_cocos2dx_physics_PhysicsBody_isDynamic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isDynamic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_isDynamic'", nullptr);
         return 0;
     }
 #endif
@@ -6037,7 +6034,7 @@ int lua_cocos2dx_physics_PhysicsBody_getNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getNode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getNode'", nullptr);
         return 0;
     }
 #endif
@@ -6389,7 +6386,7 @@ static int lua_cocos2dx_physics_PhysicsBody_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsBody(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsBody");
-    tolua_cclass(tolua_S,"PhysicsBody","cc.PhysicsBody","cc.Ref",NULL);
+    tolua_cclass(tolua_S,"PhysicsBody","cc.PhysicsBody","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsBody");
         tolua_function(tolua_S,"isGravityEnabled",lua_cocos2dx_physics_PhysicsBody_isGravityEnabled);
@@ -6485,7 +6482,7 @@ int lua_cocos2dx_physics_PhysicsContact_getContactData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getContactData'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getContactData'", nullptr);
         return 0;
     }
 #endif
@@ -6529,7 +6526,7 @@ int lua_cocos2dx_physics_PhysicsContact_getEventCode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getEventCode'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getEventCode'", nullptr);
         return 0;
     }
 #endif
@@ -6573,7 +6570,7 @@ int lua_cocos2dx_physics_PhysicsContact_getPreContactData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getPreContactData'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getPreContactData'", nullptr);
         return 0;
     }
 #endif
@@ -6617,7 +6614,7 @@ int lua_cocos2dx_physics_PhysicsContact_getShapeA(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getShapeA'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getShapeA'", nullptr);
         return 0;
     }
 #endif
@@ -6661,7 +6658,7 @@ int lua_cocos2dx_physics_PhysicsContact_getShapeB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getShapeB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContact_getShapeB'", nullptr);
         return 0;
     }
 #endif
@@ -6694,7 +6691,7 @@ static int lua_cocos2dx_physics_PhysicsContact_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsContact(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsContact");
-    tolua_cclass(tolua_S,"PhysicsContact","cc.PhysicsContact","cc.EventCustom",NULL);
+    tolua_cclass(tolua_S,"PhysicsContact","cc.PhysicsContact","cc.EventCustom",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsContact");
         tolua_function(tolua_S,"getContactData",lua_cocos2dx_physics_PhysicsContact_getContactData);
@@ -6729,7 +6726,7 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_getFriction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_getFriction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_getFriction'", nullptr);
         return 0;
     }
 #endif
@@ -6773,7 +6770,7 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_getRestitution(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_getRestitution'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_getRestitution'", nullptr);
         return 0;
     }
 #endif
@@ -6817,7 +6814,7 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_setFriction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_setFriction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_setFriction'", nullptr);
         return 0;
     }
 #endif
@@ -6863,7 +6860,7 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_ignore(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_ignore'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_ignore'", nullptr);
         return 0;
     }
 #endif
@@ -6906,7 +6903,7 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_getSurfaceVelocity(lua_State* to
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_getSurfaceVelocity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_getSurfaceVelocity'", nullptr);
         return 0;
     }
 #endif
@@ -6950,7 +6947,7 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_setSurfaceVelocity(lua_State* to
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_setSurfaceVelocity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_setSurfaceVelocity'", nullptr);
         return 0;
     }
 #endif
@@ -6996,7 +6993,7 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_setRestitution(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_setRestitution'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPreSolve_setRestitution'", nullptr);
         return 0;
     }
 #endif
@@ -7031,7 +7028,7 @@ static int lua_cocos2dx_physics_PhysicsContactPreSolve_finalize(lua_State* tolua
 int lua_register_cocos2dx_physics_PhysicsContactPreSolve(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsContactPreSolve");
-    tolua_cclass(tolua_S,"PhysicsContactPreSolve","cc.PhysicsContactPreSolve","",NULL);
+    tolua_cclass(tolua_S,"PhysicsContactPreSolve","cc.PhysicsContactPreSolve","",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsContactPreSolve");
         tolua_function(tolua_S,"getFriction",lua_cocos2dx_physics_PhysicsContactPreSolve_getFriction);
@@ -7068,7 +7065,7 @@ int lua_cocos2dx_physics_PhysicsContactPostSolve_getFriction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPostSolve_getFriction'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPostSolve_getFriction'", nullptr);
         return 0;
     }
 #endif
@@ -7112,7 +7109,7 @@ int lua_cocos2dx_physics_PhysicsContactPostSolve_getSurfaceVelocity(lua_State* t
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPostSolve_getSurfaceVelocity'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPostSolve_getSurfaceVelocity'", nullptr);
         return 0;
     }
 #endif
@@ -7156,7 +7153,7 @@ int lua_cocos2dx_physics_PhysicsContactPostSolve_getRestitution(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPostSolve_getRestitution'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsContactPostSolve_getRestitution'", nullptr);
         return 0;
     }
 #endif
@@ -7189,7 +7186,7 @@ static int lua_cocos2dx_physics_PhysicsContactPostSolve_finalize(lua_State* tolu
 int lua_register_cocos2dx_physics_PhysicsContactPostSolve(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsContactPostSolve");
-    tolua_cclass(tolua_S,"PhysicsContactPostSolve","cc.PhysicsContactPostSolve","",NULL);
+    tolua_cclass(tolua_S,"PhysicsContactPostSolve","cc.PhysicsContactPostSolve","",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsContactPostSolve");
         tolua_function(tolua_S,"getFriction",lua_cocos2dx_physics_PhysicsContactPostSolve_getFriction);
@@ -7242,7 +7239,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContact_finalize(lua_State* 
 int lua_register_cocos2dx_physics_EventListenerPhysicsContact(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContact");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContact","cc.EventListenerPhysicsContact","cc.EventListenerCustom",NULL);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContact","cc.EventListenerPhysicsContact","cc.EventListenerCustom",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContact");
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_EventListenerPhysicsContact_create);
@@ -7273,7 +7270,7 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest(lua_State
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest'", nullptr);
         return 0;
     }
 #endif
@@ -7347,7 +7344,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_finalize(l
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithBodies(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithBodies");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContact",NULL);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContact",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithBodies");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest);
@@ -7379,7 +7376,7 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest(lua_State
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest'", nullptr);
         return 0;
     }
 #endif
@@ -7453,7 +7450,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_finalize(l
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithShapes(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithShapes");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContact",NULL);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContact",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithShapes");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest);
@@ -7485,7 +7482,7 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest(lua_State*
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest'", nullptr);
         return 0;
     }
 #endif
@@ -7557,7 +7554,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_finalize(lu
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithGroup(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithGroup");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContact",NULL);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContact",nullptr);
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithGroup");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest);
@@ -7589,7 +7586,7 @@ int lua_cocos2dx_physics_PhysicsJoint_getBodyA(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getBodyA'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getBodyA'", nullptr);
         return 0;
     }
 #endif
@@ -7633,7 +7630,7 @@ int lua_cocos2dx_physics_PhysicsJoint_getBodyB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getBodyB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getBodyB'", nullptr);
         return 0;
     }
 #endif
@@ -7677,7 +7674,7 @@ int lua_cocos2dx_physics_PhysicsJoint_getMaxForce(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getMaxForce'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getMaxForce'", nullptr);
         return 0;
     }
 #endif
@@ -7721,7 +7718,7 @@ int lua_cocos2dx_physics_PhysicsJoint_setMaxForce(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setMaxForce'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setMaxForce'", nullptr);
         return 0;
     }
 #endif
@@ -7767,7 +7764,7 @@ int lua_cocos2dx_physics_PhysicsJoint_isEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_isEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_isEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -7811,7 +7808,7 @@ int lua_cocos2dx_physics_PhysicsJoint_setEnable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setEnable'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setEnable'", nullptr);
         return 0;
     }
 #endif
@@ -7857,7 +7854,7 @@ int lua_cocos2dx_physics_PhysicsJoint_setCollisionEnable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setCollisionEnable'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setCollisionEnable'", nullptr);
         return 0;
     }
 #endif
@@ -7903,7 +7900,7 @@ int lua_cocos2dx_physics_PhysicsJoint_getWorld(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getWorld'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getWorld'", nullptr);
         return 0;
     }
 #endif
@@ -7947,7 +7944,7 @@ int lua_cocos2dx_physics_PhysicsJoint_setTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_setTag'", nullptr);
         return 0;
     }
 #endif
@@ -7993,7 +7990,7 @@ int lua_cocos2dx_physics_PhysicsJoint_removeFormWorld(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_removeFormWorld'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_removeFormWorld'", nullptr);
         return 0;
     }
 #endif
@@ -8036,7 +8033,7 @@ int lua_cocos2dx_physics_PhysicsJoint_isCollisionEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_isCollisionEnabled'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_isCollisionEnabled'", nullptr);
         return 0;
     }
 #endif
@@ -8080,7 +8077,7 @@ int lua_cocos2dx_physics_PhysicsJoint_getTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getTag'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJoint_getTag'", nullptr);
         return 0;
     }
 #endif
@@ -8145,7 +8142,7 @@ static int lua_cocos2dx_physics_PhysicsJoint_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJoint(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJoint");
-    tolua_cclass(tolua_S,"PhysicsJoint","cc.PhysicsJoint","",NULL);
+    tolua_cclass(tolua_S,"PhysicsJoint","cc.PhysicsJoint","",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJoint");
         tolua_function(tolua_S,"getBodyA",lua_cocos2dx_physics_PhysicsJoint_getBodyA);
@@ -8214,7 +8211,7 @@ static int lua_cocos2dx_physics_PhysicsJointFixed_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointFixed(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointFixed");
-    tolua_cclass(tolua_S,"PhysicsJointFixed","cc.PhysicsJointFixed","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointFixed","cc.PhysicsJointFixed","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointFixed");
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointFixed_construct);
@@ -8245,7 +8242,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setAnchr2(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setAnchr2'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setAnchr2'", nullptr);
         return 0;
     }
 #endif
@@ -8291,7 +8288,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setAnchr1(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setAnchr1'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setAnchr1'", nullptr);
         return 0;
     }
 #endif
@@ -8337,7 +8334,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setMax(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setMax'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setMax'", nullptr);
         return 0;
     }
 #endif
@@ -8383,7 +8380,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_getAnchr2(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getAnchr2'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getAnchr2'", nullptr);
         return 0;
     }
 #endif
@@ -8427,7 +8424,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_getAnchr1(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getAnchr1'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getAnchr1'", nullptr);
         return 0;
     }
 #endif
@@ -8471,7 +8468,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_getMin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getMin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getMin'", nullptr);
         return 0;
     }
 #endif
@@ -8515,7 +8512,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_getMax(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getMax'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_getMax'", nullptr);
         return 0;
     }
 #endif
@@ -8559,7 +8556,7 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setMin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setMin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_setMin'", nullptr);
         return 0;
     }
 #endif
@@ -8666,7 +8663,7 @@ static int lua_cocos2dx_physics_PhysicsJointLimit_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointLimit(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointLimit");
-    tolua_cclass(tolua_S,"PhysicsJointLimit","cc.PhysicsJointLimit","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointLimit","cc.PhysicsJointLimit","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointLimit");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointLimit_setAnchr2);
@@ -8731,7 +8728,7 @@ static int lua_cocos2dx_physics_PhysicsJointPin_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointPin(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointPin");
-    tolua_cclass(tolua_S,"PhysicsJointPin","cc.PhysicsJointPin","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointPin","cc.PhysicsJointPin","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointPin");
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointPin_construct);
@@ -8762,7 +8759,7 @@ int lua_cocos2dx_physics_PhysicsJointDistance_setDistance(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointDistance_setDistance'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointDistance_setDistance'", nullptr);
         return 0;
     }
 #endif
@@ -8808,7 +8805,7 @@ int lua_cocos2dx_physics_PhysicsJointDistance_getDistance(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointDistance_getDistance'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointDistance_getDistance'", nullptr);
         return 0;
     }
 #endif
@@ -8880,7 +8877,7 @@ static int lua_cocos2dx_physics_PhysicsJointDistance_finalize(lua_State* tolua_S
 int lua_register_cocos2dx_physics_PhysicsJointDistance(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointDistance");
-    tolua_cclass(tolua_S,"PhysicsJointDistance","cc.PhysicsJointDistance","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointDistance","cc.PhysicsJointDistance","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointDistance");
         tolua_function(tolua_S,"setDistance",lua_cocos2dx_physics_PhysicsJointDistance_setDistance);
@@ -8913,7 +8910,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setAnchr2(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setAnchr2'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setAnchr2'", nullptr);
         return 0;
     }
 #endif
@@ -8959,7 +8956,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setAnchr1(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setAnchr1'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setAnchr1'", nullptr);
         return 0;
     }
 #endif
@@ -9005,7 +9002,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_getDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getDamping'", nullptr);
         return 0;
     }
 #endif
@@ -9049,7 +9046,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setStiffness(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setStiffness'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setStiffness'", nullptr);
         return 0;
     }
 #endif
@@ -9095,7 +9092,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_getRestLength(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getRestLength'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getRestLength'", nullptr);
         return 0;
     }
 #endif
@@ -9139,7 +9136,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_getAnchr2(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getAnchr2'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getAnchr2'", nullptr);
         return 0;
     }
 #endif
@@ -9183,7 +9180,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_getAnchr1(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getAnchr1'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getAnchr1'", nullptr);
         return 0;
     }
 #endif
@@ -9227,7 +9224,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_getStiffness(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getStiffness'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_getStiffness'", nullptr);
         return 0;
     }
 #endif
@@ -9271,7 +9268,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setRestLength(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setRestLength'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setRestLength'", nullptr);
         return 0;
     }
 #endif
@@ -9317,7 +9314,7 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_setDamping'", nullptr);
         return 0;
     }
 #endif
@@ -9395,7 +9392,7 @@ static int lua_cocos2dx_physics_PhysicsJointSpring_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointSpring(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointSpring");
-    tolua_cclass(tolua_S,"PhysicsJointSpring","cc.PhysicsJointSpring","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointSpring","cc.PhysicsJointSpring","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointSpring");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointSpring_setAnchr2);
@@ -9436,7 +9433,7 @@ int lua_cocos2dx_physics_PhysicsJointGroove_setAnchr2(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_setAnchr2'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_setAnchr2'", nullptr);
         return 0;
     }
 #endif
@@ -9482,7 +9479,7 @@ int lua_cocos2dx_physics_PhysicsJointGroove_setGrooveA(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_setGrooveA'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_setGrooveA'", nullptr);
         return 0;
     }
 #endif
@@ -9528,7 +9525,7 @@ int lua_cocos2dx_physics_PhysicsJointGroove_setGrooveB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_setGrooveB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_setGrooveB'", nullptr);
         return 0;
     }
 #endif
@@ -9574,7 +9571,7 @@ int lua_cocos2dx_physics_PhysicsJointGroove_getGrooveA(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_getGrooveA'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_getGrooveA'", nullptr);
         return 0;
     }
 #endif
@@ -9618,7 +9615,7 @@ int lua_cocos2dx_physics_PhysicsJointGroove_getGrooveB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_getGrooveB'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_getGrooveB'", nullptr);
         return 0;
     }
 #endif
@@ -9662,7 +9659,7 @@ int lua_cocos2dx_physics_PhysicsJointGroove_getAnchr2(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_getAnchr2'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_getAnchr2'", nullptr);
         return 0;
     }
 #endif
@@ -9736,7 +9733,7 @@ static int lua_cocos2dx_physics_PhysicsJointGroove_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointGroove(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointGroove");
-    tolua_cclass(tolua_S,"PhysicsJointGroove","cc.PhysicsJointGroove","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointGroove","cc.PhysicsJointGroove","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointGroove");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointGroove_setAnchr2);
@@ -9773,7 +9770,7 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_getDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_getDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_getDamping'", nullptr);
         return 0;
     }
 #endif
@@ -9817,7 +9814,7 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_setRestAngle(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_setRestAngle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_setRestAngle'", nullptr);
         return 0;
     }
 #endif
@@ -9863,7 +9860,7 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_getStiffness(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_getStiffness'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_getStiffness'", nullptr);
         return 0;
     }
 #endif
@@ -9907,7 +9904,7 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_setStiffness(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_setStiffness'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_setStiffness'", nullptr);
         return 0;
     }
 #endif
@@ -9953,7 +9950,7 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_setDamping(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_setDamping'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_setDamping'", nullptr);
         return 0;
     }
 #endif
@@ -9999,7 +9996,7 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_getRestAngle(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_getRestAngle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_getRestAngle'", nullptr);
         return 0;
     }
 #endif
@@ -10071,7 +10068,7 @@ static int lua_cocos2dx_physics_PhysicsJointRotarySpring_finalize(lua_State* tol
 int lua_register_cocos2dx_physics_PhysicsJointRotarySpring(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRotarySpring");
-    tolua_cclass(tolua_S,"PhysicsJointRotarySpring","cc.PhysicsJointRotarySpring","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointRotarySpring","cc.PhysicsJointRotarySpring","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointRotarySpring");
         tolua_function(tolua_S,"getDamping",lua_cocos2dx_physics_PhysicsJointRotarySpring_getDamping);
@@ -10108,7 +10105,7 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax'", nullptr);
         return 0;
     }
 #endif
@@ -10152,7 +10149,7 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMin'", nullptr);
         return 0;
     }
 #endif
@@ -10198,7 +10195,7 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMax(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMax'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMax'", nullptr);
         return 0;
     }
 #endif
@@ -10244,7 +10241,7 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMin'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMin'", nullptr);
         return 0;
     }
 #endif
@@ -10337,7 +10334,7 @@ static int lua_cocos2dx_physics_PhysicsJointRotaryLimit_finalize(lua_State* tolu
 int lua_register_cocos2dx_physics_PhysicsJointRotaryLimit(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRotaryLimit");
-    tolua_cclass(tolua_S,"PhysicsJointRotaryLimit","cc.PhysicsJointRotaryLimit","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointRotaryLimit","cc.PhysicsJointRotaryLimit","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointRotaryLimit");
         tolua_function(tolua_S,"getMax",lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax);
@@ -10372,7 +10369,7 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_getAngle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_getAngle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_getAngle'", nullptr);
         return 0;
     }
 #endif
@@ -10416,7 +10413,7 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_setAngle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_setAngle'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_setAngle'", nullptr);
         return 0;
     }
 #endif
@@ -10462,7 +10459,7 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_setPhase(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_setPhase'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_setPhase'", nullptr);
         return 0;
     }
 #endif
@@ -10508,7 +10505,7 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_getPhase(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_getPhase'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_getPhase'", nullptr);
         return 0;
     }
 #endif
@@ -10552,7 +10549,7 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_setRatchet(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_setRatchet'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_setRatchet'", nullptr);
         return 0;
     }
 #endif
@@ -10598,7 +10595,7 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_getRatchet(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_getRatchet'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_getRatchet'", nullptr);
         return 0;
     }
 #endif
@@ -10670,7 +10667,7 @@ static int lua_cocos2dx_physics_PhysicsJointRatchet_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointRatchet(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRatchet");
-    tolua_cclass(tolua_S,"PhysicsJointRatchet","cc.PhysicsJointRatchet","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointRatchet","cc.PhysicsJointRatchet","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointRatchet");
         tolua_function(tolua_S,"getAngle",lua_cocos2dx_physics_PhysicsJointRatchet_getAngle);
@@ -10707,7 +10704,7 @@ int lua_cocos2dx_physics_PhysicsJointGear_setRatio(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_setRatio'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_setRatio'", nullptr);
         return 0;
     }
 #endif
@@ -10753,7 +10750,7 @@ int lua_cocos2dx_physics_PhysicsJointGear_getPhase(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_getPhase'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_getPhase'", nullptr);
         return 0;
     }
 #endif
@@ -10797,7 +10794,7 @@ int lua_cocos2dx_physics_PhysicsJointGear_setPhase(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_setPhase'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_setPhase'", nullptr);
         return 0;
     }
 #endif
@@ -10843,7 +10840,7 @@ int lua_cocos2dx_physics_PhysicsJointGear_getRatio(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_getRatio'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_getRatio'", nullptr);
         return 0;
     }
 #endif
@@ -10915,7 +10912,7 @@ static int lua_cocos2dx_physics_PhysicsJointGear_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointGear(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointGear");
-    tolua_cclass(tolua_S,"PhysicsJointGear","cc.PhysicsJointGear","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointGear","cc.PhysicsJointGear","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointGear");
         tolua_function(tolua_S,"setRatio",lua_cocos2dx_physics_PhysicsJointGear_setRatio);
@@ -10950,7 +10947,7 @@ int lua_cocos2dx_physics_PhysicsJointMotor_setRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointMotor_setRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointMotor_setRate'", nullptr);
         return 0;
     }
 #endif
@@ -10996,7 +10993,7 @@ int lua_cocos2dx_physics_PhysicsJointMotor_getRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointMotor_getRate'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointMotor_getRate'", nullptr);
         return 0;
     }
 #endif
@@ -11066,7 +11063,7 @@ static int lua_cocos2dx_physics_PhysicsJointMotor_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointMotor(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointMotor");
-    tolua_cclass(tolua_S,"PhysicsJointMotor","cc.PhysicsJointMotor","cc.PhysicsJoint",NULL);
+    tolua_cclass(tolua_S,"PhysicsJointMotor","cc.PhysicsJointMotor","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointMotor");
         tolua_function(tolua_S,"setRate",lua_cocos2dx_physics_PhysicsJointMotor_setRate);

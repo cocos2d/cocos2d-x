@@ -40,7 +40,7 @@ NS_CC_BEGIN
 
 typedef std::function<void(Ref*)> ccMenuCallback;
 
-class LabelTTF;
+class Label;
 class LabelAtlas;
 class Sprite;
 class SpriteFrame;
@@ -142,6 +142,7 @@ private:
  - BitmapFontAtlas
  - LabelAtlas
  - LabelTTF
+ - Label
  */
 class CC_DLL MenuItemLabel : public MenuItem
 {
@@ -310,8 +311,6 @@ protected:
     CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, Ref* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string with a target/selector */
     bool initWithString(const std::string& value, const ccMenuCallback& callback);
-
-    void recreateLabel();
     
     int _fontSize;
     std::string _fontName;

@@ -154,11 +154,11 @@ public:
     
     const Point& getBackGroundColorVector();
     
-    void setBackGroundImageColor(const ccColor3B& color);
+    void setBackGroundImageColor(const Color3B& color);
     
     void setBackGroundImageOpacity(GLubyte opacity);
     
-    const ccColor3B& getBackGroundImageColor();
+    const Color3B& getBackGroundImageColor();
     
     GLubyte getBackGroundImageOpacity();
     
