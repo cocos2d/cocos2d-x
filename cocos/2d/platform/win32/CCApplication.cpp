@@ -79,12 +79,16 @@ int Application::run()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
 
+    // Retain glview to avoid glview being released in the while loop
+    glview->retain();
+
     while(!glview->windowShouldClose())
     {
         QueryPerformanceCounter(&nNow);
         if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
             nLast.QuadPart = nNow.QuadPart;
+            
             director->mainLoop();
             glview->pollEvents();
         }
@@ -101,6 +105,7 @@ int Application::run()
         director->mainLoop();
         director = nullptr;
     }
+    glview->release();
     return true;
 }
 

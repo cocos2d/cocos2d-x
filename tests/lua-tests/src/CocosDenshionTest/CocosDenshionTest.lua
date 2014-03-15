@@ -1,6 +1,13 @@
 require "AudioEngine" 
 local EFFECT_FILE = "effect1.wav"
-local MUSIC_FILE  = "background.mp3"
+
+local MUSIC_FILE = nil 
+local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
+    MUSIC_FILE = "background.caf"
+else
+    MUSIC_FILE = "background.mp3"
+end
 
 local LINE_SPACE = 40
 
