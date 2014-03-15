@@ -503,10 +503,10 @@ public:
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
-        _console->listenOnTCP(6001);
+        _console->listenOnTCP(6010);
         
         _fileserver=new FileServer();
-        _fileserver->listenOnTCP(6002);
+        _fileserver->listenOnTCP(6020);
     }
     ~ConsoleCustomCommand()
     {

@@ -89,7 +89,8 @@ local function MenuLayerMainMenu()
     end
 
     -- Label Item (cc.LabelBMFont)
-    local  label = cc.LabelBMFont:create("configuration", "fonts/bitmapFontTest3.fnt")
+    local  label = cc.Label:createWithBMFont("fonts/bitmapFontTest3.fnt", "configuration")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     local  item5 = cc.MenuItemLabel:create(label)
     item5:registerScriptTapHandler(menuCallbackConfig)
 
@@ -321,7 +322,8 @@ local function MenuLayer3()
     cc.MenuItemFont:setFontName("Marker Felt")
     cc.MenuItemFont:setFontSize(28)
 
-    local  label = cc.LabelBMFont:create("Enable AtlasItem", "fonts/bitmapFontTest3.fnt")
+    local  label = cc.Label:createWithBMFont("fonts/bitmapFontTest3.fnt", "Enable AtlasItem")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     local  item1 = cc.MenuItemLabel:create(label)
     item1:registerScriptTapHandler(menuCallback2)
 
@@ -446,7 +448,8 @@ local function MenuLayer4()
     cc.MenuItemFont:setFontName( "Marker Felt" )
     cc.MenuItemFont:setFontSize( 34 )
 
-    local label = cc.LabelBMFont:create( "go back", "fonts/bitmapFontTest3.fnt" )
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest3.fnt", "go back")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     local  back = cc.MenuItemLabel:create(label)
     back:registerScriptTapHandler(backCallback)
 
@@ -517,7 +520,8 @@ local function RemoveMenuItemWhenMove()
     local ret = cc.Layer:create()
     local s = cc.Director:getInstance():getWinSize()
 
-    local  label = cc.LabelTTF:create("click item and move, should not crash", "Arial", 20)
+    local  label = cc.Label:create("click item and move, should not crash", s_arialPath, 20)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(s.width/2, s.height - 30))
     ret:addChild(label)
 

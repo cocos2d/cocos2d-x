@@ -1,6 +1,13 @@
 require "AudioEngine" 
 local EFFECT_FILE = "effect1.wav"
-local MUSIC_FILE  = "background.mp3"
+
+local MUSIC_FILE = nil 
+local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
+    MUSIC_FILE = "background.caf"
+else
+    MUSIC_FILE = "background.mp3"
+end
 
 local LINE_SPACE = 40
 
@@ -98,7 +105,8 @@ local function CocosDenshionTest()
     m_nTestCount = table.getn(testItems)
     local i = 1
     for  i = 1, m_nTestCount do
-        local  label = cc.LabelTTF:create(testItems[i], "Arial", 24)
+        local  label = cc.Label:create(testItems[i], s_arialPath, 24)
+        label:setAnchorPoint(cc.p(0.5, 0.5))
         local  pMenuItem = cc.MenuItemLabel:create(label)
         pMenuItem:registerScriptTapHandler(menuCallback)
         m_pItmeMenu:addChild(pMenuItem, i + 10000 -1)

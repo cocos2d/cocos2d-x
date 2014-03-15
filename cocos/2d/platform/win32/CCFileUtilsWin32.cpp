@@ -110,7 +110,7 @@ bool FileUtilsWin32::isFileExist(const std::string& strFilePath) const
     }
 
     WCHAR utf16Buf[CC_MAX_PATH] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, strPath.c_str(), -1, utf16Buf, sizeof(utf16Buf));
+    MultiByteToWideChar(CP_UTF8, 0, strPath.c_str(), -1, utf16Buf, sizeof(utf16Buf)/sizeof(utf16Buf[0]));
 
     return GetFileAttributesW(utf16Buf) != -1 ? true : false;
 }
@@ -137,7 +137,7 @@ static Data getData(const std::string& filename, bool forString)
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
         WCHAR wszBuf[CC_MAX_PATH] = {0};
-        MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf));
+        MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
 
         HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, NULL);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
@@ -211,7 +211,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
         std::string fullPath = fullPathForFilename(filename);
 
         WCHAR wszBuf[CC_MAX_PATH] = {0};
-        MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf));
+        MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
 
         HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, NULL);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
