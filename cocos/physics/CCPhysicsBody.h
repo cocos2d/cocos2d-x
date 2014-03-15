@@ -235,7 +235,7 @@ public:
      */
     void setMoment(float moment);
     /** get the body moment of inertia. */
-    inline float getMoment(float moment) const { return _moment; }
+    inline float getMoment() const { return _moment; }
     /**
      * @brief add moment of inertia to body.
      * if _moment(moment of the body) == PHYSICS_INFINITY, it remains.

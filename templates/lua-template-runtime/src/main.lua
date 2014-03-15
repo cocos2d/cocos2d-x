@@ -17,8 +17,6 @@ local function main()
     -- avoid memory leak
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("src");
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("res");
 	local schedulerID = 0
     --support debug
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
@@ -29,7 +27,7 @@ local function main()
 		--require('debugger')()
         
     end
-    require "hello2"
+    require "src/hello2"
     cclog("result is " .. myadd(1, 1))
 
     ---------------
@@ -43,7 +41,7 @@ local function main()
         local frameHeight = 95
 
         -- create dog animate
-        local textureDog = cc.TextureCache:getInstance():addImage("dog.png")
+        local textureDog = cc.TextureCache:getInstance():addImage("res/dog.png")
         local rect = cc.rect(0, 0, frameWidth, frameHeight)
         local frame0 = cc.SpriteFrame:createWithTexture(textureDog, rect)
         rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
@@ -86,21 +84,21 @@ local function main()
         local layerFarm = cc.Layer:create()
 
         -- add in farm background
-        local bg = cc.Sprite:create("farm.jpg")
+        local bg = cc.Sprite:create("res/farm.jpg")
         bg:setPosition(origin.x + visibleSize.width / 2 + 80, origin.y + visibleSize.height / 2)
         layerFarm:addChild(bg)
 
         -- add land sprite
         for i = 0, 3 do
             for j = 0, 1 do
-                local spriteLand = cc.Sprite:create("land.png")
+                local spriteLand = cc.Sprite:create("res/land.png")
                 spriteLand:setPosition(200 + j * 180 - i % 2 * 90, 10 + i * 95 / 2)
                 layerFarm:addChild(spriteLand)
             end
         end
 
         -- add crop
-        local frameCrop = cc.SpriteFrame:create("crop.png", cc.rect(0, 0, 105, 95))
+        local frameCrop = cc.SpriteFrame:create("res/crop.png", cc.rect(0, 0, 105, 95))
         for i = 0, 3 do
             for j = 0, 1 do
                 local spriteCrop = cc.Sprite:createWithSpriteFrame(frameCrop);
@@ -117,7 +115,7 @@ local function main()
         local touchBeginPoint = nil
         local function onTouchBegan(touch, event)
             local location = touch:getLocation()
-            cclog("onTouchBegan: %0.2f, %0.2f", location.x, location.y)
+            --cclog("onTouchBegan: %0.2f, %0.2f", location.x, location.y)
             touchBeginPoint = {x = location.x, y = location.y}
             spriteDog.isPaused = true
             -- CCTOUCHBEGAN event must return true
@@ -126,7 +124,7 @@ local function main()
 
         local function onTouchMoved(touch, event)
             local location = touch:getLocation()
-            cclog("onTouchMoved: %0.2f, %0.2f", location.x, location.y)
+            --cclog("onTouchMoved: %0.2f, %0.2f", location.x, location.y)
             if touchBeginPoint then
                 local cx, cy = layerFarm:getPosition()
                 layerFarm:setPosition(cx + location.x - touchBeginPoint.x,
@@ -137,7 +135,7 @@ local function main()
 
         local function onTouchEnded(touch, event)
             local location = touch:getLocation()
-            cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
+            --cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
             touchBeginPoint = nil
             spriteDog.isPaused = false
         end
@@ -174,13 +172,13 @@ local function main()
 
         local function menuCallbackOpenPopup()
             -- loop test sound effect
-            local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
+            local effectPath = cc.FileUtils:getInstance():fullPathForFilename("res/effect1.wav")
             effectID = cc.SimpleAudioEngine:getInstance():playEffect(effectPath)
             menuPopup:setVisible(true)
         end
 
         -- add a popup menu
-        local menuPopupItem = cc.MenuItemImage:create("menu2.png", "menu2.png")
+        local menuPopupItem = cc.MenuItemImage:create("res/menu2.png", "res/menu2.png")
         menuPopupItem:setPosition(0, 0)
         menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
         menuPopup = cc.Menu:create(menuPopupItem)
@@ -189,7 +187,7 @@ local function main()
         layerMenu:addChild(menuPopup)
         
         -- add the left-bottom "tools" menu to invoke menuPopup
-        local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
+        local menuToolsItem = cc.MenuItemImage:create("res/menu1.png", "res/menu1.png")
         menuToolsItem:setPosition(0, 0)
         menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
         menuTools = cc.Menu:create(menuToolsItem)
@@ -205,9 +203,9 @@ local function main()
 
     -- uncomment below for the BlackBerry version
     -- local bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("background.ogg")
-    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3")
+    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.mp3")
     cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
-    local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
+    local effectPath = cc.FileUtils:getInstance():fullPathForFilename("res/effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 
     -- run
