@@ -157,7 +157,7 @@ const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
     
 void GUIReader::registerTypeAndCallBack(const std::string& classType,
                                         ObjectFactory::Instance ins,
-                                        Object *object,
+                                        Ref *object,
                                         SEL_ParseEvent callBack)
 {
     ObjectFactory* factoryCreate = ObjectFactory::getInstance();
@@ -2030,8 +2030,8 @@ void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromJsonDictionary(co
 {
     GUIReader* guiReader = GUIReader::getInstance();
     
-    std::map<std::string, Object*> object_map = GUIReader::getInstance()->getParseObjectMap();
-    Object* object = object_map[classType];
+    std::map<std::string, Ref*> object_map = GUIReader::getInstance()->getParseObjectMap();
+    Ref* object = object_map[classType];
     
     std::map<std::string, SEL_ParseEvent> selector_map = guiReader->getParseCallBackMap();
     SEL_ParseEvent selector = selector_map[classType];

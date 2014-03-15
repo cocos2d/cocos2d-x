@@ -1,4 +1,4 @@
-cocos2d-x-3.0rc March.? 2014
+cocos2d-x-3.0rc0 March.14 2014
 [All]
      [NEW]          Action: RotateBy supports 3D rotations
      [NEW]          Bindings: Using python to automatically generate script bindings
@@ -48,6 +48,7 @@ cocos2d-x-3.0rc March.? 2014
      [FIX]          Label: Color and opacity can't take effect
      [FIX]          Label: Font size passed to new Label didn't consider 'contentScaleFactor'
      [FIX]          Label: loading custom fonts from ttf file fails on windows
+     [FIX]          Label: LabelAtlas::setColor takes no effect
      [FIX]          MotionStreak: Added unimplemented position getter/setter
      [FIX]          Node: setAdditionalTransform receives a pointer and not a const reference
      [FIX]          Node: setRotation() moves opposite when node has a physics body
@@ -81,7 +82,8 @@ cocos2d-x-3.0rc March.? 2014
      [FIX]          UI: Supports RichText
      [FIX]          Vector: Object which isn't in Vector would also be released when invoking Vector::eraseObject.
      [FIX]          Websocket: Potential crash when websocket connection closes.
-     [FIX]          Websocket: No callback is invoked when websocket connection fails    
+     [FIX]          Websocket: No callback is invoked when websocket connection fails  
+     [FIX]          Xcode 5.1: Added Xcode 5.1 to build arm64 version, but can not require socket module in lua, will fix it soon
 
      [3RD]          Kazmath: Upgraded to latest version of Kazmath
 

@@ -399,7 +399,7 @@ void GLView::swapBuffers()
 bool GLView::windowShouldClose()
 {
     if(_mainWindow)
-        return glfwWindowShouldClose(_mainWindow);
+        return glfwWindowShouldClose(_mainWindow) ? true : false;
     else
         return true;
 }
