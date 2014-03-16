@@ -252,6 +252,8 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
+,_file_uploading(false)
+,_upload_file_size(0)
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
@@ -290,6 +292,7 @@ Console::Console()
 	{
 		_commands.insert ( std::pair<std::string,Command>(commands[i].name,commands[i]) );
 	}
+	_writablePath = FileUtils::getInstance()->getWritablePath();
 }
 
 Console::~Console()
@@ -853,10 +856,7 @@ ssize_t Console::readfile(int fd, std::string& file_name, int file_size)
     ssize_t n, rc;
     char c;
 
-    auto sharedFileUtils = FileUtils::getInstance();
-    
-    std::string writablePath = sharedFileUtils->getWritablePath();
-    std::string fileName = writablePath+file_name;
+    std::string fileName = _writablePath+file_name;
     
     FILE* fp = fopen(fileName.c_str(), "wb");
     if(!fp)
