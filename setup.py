@@ -50,9 +50,7 @@ Will create ~/.bash_profile when none of them exist, and add environment variabl
 
 import os
 import sys
-import fileinput
-import subprocess
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 COCOS_CONSOLE_ROOT = 'COCOS_CONSOLE_ROOT'
 NDK_ROOT = 'NDK_ROOT'
@@ -111,7 +109,7 @@ class SetEnvVar(object):
         except Exception:
             if env:
                 _winreg.CloseKey(env)
-            print 'Warning: Could not add "%s" into registry' % key
+            print('Warning: Could not add "%s" into registry' % key)
             return False
         return True
 
@@ -313,25 +311,24 @@ class SetEnvVar(object):
 
 
     def set_console_root(self):
-
-    	print ""
-        print '-> Adding COCOS2D_CONSOLE_ROOT environment variable...',
+        print("")
+        print('-> Adding COCOS2D_CONSOLE_ROOT environment variable...',)
         if not self._find_environment_variable(COCOS_CONSOLE_ROOT):
             cocos_consle_root = os.path.join(self.current_absolute_path, 'tools/cocos2d-console/bin')
             if self._isWindows():
                 self.set_windows_path(cocos_consle_root)
             if self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root):
-                print 'OK'
-                print '  -> Added: %s = %s' % (COCOS_CONSOLE_ROOT, cocos_consle_root)
+                print('OK')
+                print('  -> Added: %s = %s' % (COCOS_CONSOLE_ROOT, cocos_consle_root))
                 return True
         else:
-            print 'ALREADY ADDED'
+            print('ALREADY ADDED')
             return False
 
 
     def set_environment_variables(self, ndk_root, android_sdk_root, ant_root):
 
-        print '\nSetting up cocos2d-x...'
+        print('\nSetting up cocos2d-x...')
 
         self.file_used_for_setup = self._get_filepath_for_setup()
         
@@ -340,78 +337,78 @@ class SetEnvVar(object):
         #
         # NDK_ROOT
         #
-        print ""
-        print '-> Looking for NDK_ROOT envrironment variable...',
+        print("")
+        print('-> Looking for NDK_ROOT envrironment variable...',)
 
         ndk_root_added = False
         ndk_root_found = self._find_environment_variable(NDK_ROOT)
 
         if not ndk_root and not ndk_root_found:
-            print "NOT FOUND"
+            print("NOT FOUND")
             ndk_root = self._get_input_value()
 
         if ndk_root and not self._is_ndk_root_valid(ndk_root) and not ndk_root_found:
-            print 'Error: "%s" is not a valid path of NDK_ROOT. Ignoring it.' % ndk_root
+            print('Error: "%s" is not a valid path of NDK_ROOT. Ignoring it.' % ndk_root)
 
         if ndk_root_found:
-            print 'FOUND'
+            print('FOUND')
         else:
             if ndk_root and self._is_ndk_root_valid(ndk_root):
                 if self._set_environment_variable(NDK_ROOT, ndk_root):
                     ndk_root_added = True
-                    print 'ADDED'
-                    print '  -- Added: %s = %s' % (NDK_ROOT, ndk_root)
+                    print('ADDED')
+                    print('  -- Added: %s = %s' % (NDK_ROOT, ndk_root))
 
 
         #
         # ANDROID_SDK_ROOT
         #
-        print ""        
-        print '-> Looking for ANDROID_SDK_ROOT envrironment variable...',
+        print("")        
+        print('-> Looking for ANDROID_SDK_ROOT envrironment variable...',)
 
         android_sdk_root_added = False
         android_sdk_root_found = self._find_environment_variable(ANDROID_SDK_ROOT)
 
         if not android_sdk_root and not android_sdk_root_found:
-            print "NOT FOUND"
+            print("NOT FOUND")
             android_sdk_root = self._get_input_value()
         
         if android_sdk_root and not self._is_android_sdk_root_valid(android_sdk_root) and not android_sdk_root_found:
-            print 'Error: "%s" is not a valid path of ANDROID_SDK_ROOT. Ignoring it.' % android_sdk_root
+            print('Error: "%s" is not a valid path of ANDROID_SDK_ROOT. Ignoring it.' % android_sdk_root)
 
         if android_sdk_root_found:
-            print 'FOUND'
+            print('FOUND')
         else:
             if android_sdk_root and self._is_android_sdk_root_valid(android_sdk_root):
                 if self._set_environment_variable(ANDROID_SDK_ROOT, android_sdk_root):
                     android_sdk_root_added = True
-                    print 'ADDED'
-                    print '  -> Added: %s = %s' % (ANDROID_SDK_ROOT, android_sdk_root)
+                    print('ADDED')
+                    print('  -> Added: %s = %s' % (ANDROID_SDK_ROOT, android_sdk_root))
 
         #
         # ANT_ROOT
         #
-        print ""
-        print '-> Looking for ANT_ROOT envrironment variable...',
+        print("")
+        print('-> Looking for ANT_ROOT envrironment variable...',)
         ant_root_added = False
         ant_found = self._find_environment_variable(ANT_ROOT)
 
         if not ant_root and not ant_found:
-            print 'NOT FOUND'
+            print('NOT FOUND')
             ant_root = self._get_input_value()
 
         if ant_root and not self._is_ant_root_valid(ant_root) and not ant_found:
-            print 'Error: "%s" is not a valid path of ANT_ROOT. Ignoring it.' % ant_root
+            print('Error: "%s" is not a valid path of ANT_ROOT. Ignoring it.' % ant_root)
 
 
         if ant_found:
-            print 'FOUND'
+            print('FOUND')
         else:
             if ant_root and self._is_ant_root_valid(ant_root):
                 if self._set_environment_variable(ANT_ROOT, ant_root):
                     ant_root_added = True
-                    print 'ADDED'
-                    print '  -> Added: %s = %s' % (ANT_ROOT, ant_root)
+                    print('ADDED')
+                    print('  -> Added: %s = %s' % (ANT_ROOT, ant_root))
 
         if self._isWindows():
             target = 'registry'
@@ -419,30 +416,30 @@ class SetEnvVar(object):
             target = self.file_used_for_setup
 
         if console_added or ndk_root_added or android_sdk_root_added or ant_root_added:
-            print '\nSet up successfull:'
+            print('\nSet up successfull:')
 
             if console_added:
-                print '\tCOCOS_CONSOLE_ROOT was added into %s' % target
+                print('\tCOCOS_CONSOLE_ROOT was added into %s' % target)
             if ndk_root_added:
-                print '\tNDK_ROOT was added into %s' % target
+                print('\tNDK_ROOT was added into %s' % target)
             if android_sdk_root_added:
-                print '\tANDROID_SDK_ROOT was added into %s' % target
+                print('\tANDROID_SDK_ROOT was added into %s' % target)
             if ant_root_added:
-                print '\tANT_ROOT was added into %s' % target
+                print('\tANT_ROOT was added into %s' % target)
         else:
-            print '\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target   
+            print('\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target)   
 
         if self._isWindows():
-            print '\nPlease restart the terminal or restart computer to make added system variables take effect'
+            print('\nPlease restart the terminal or restart computer to make added system variables take effect')
         else:
-            print '\nPlease execute command: "source %s" to make added system variables take effect' % target
+            print('\nPlease execute command: "source %s" to make added system variables take effect' % target)
 
 if __name__ == '__main__':
-    parser = OptionParser()
-    parser.add_option('-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
-    parser.add_option('-a', '--androidsdkroot', dest='android_sdk_root', help='directory of android sdk root')
-    parser.add_option('-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
-    opts, args = parser.parse_args()
+    parser = ArgumentParser()
+    parser.add_argument('-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
+    parser.add_argument('-a', '--androidsdkroot', dest='android_sdk_root', help='directory of android sdk root')
+    parser.add_argument('-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
+    opts = parser.parse_args()
 
     # set environment variables
     env = SetEnvVar()
