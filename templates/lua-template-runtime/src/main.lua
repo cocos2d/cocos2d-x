@@ -41,7 +41,7 @@ local function main()
         local frameHeight = 95
 
         -- create dog animate
-        local textureDog = cc.TextureCache:getInstance():addImage("res/dog.png")
+        local textureDog =  cc.Director:getInstance():getTextureCache():addImage("res/dog.png")
         local rect = cc.rect(0, 0, frameWidth, frameHeight)
         local frame0 = cc.SpriteFrame:createWithTexture(textureDog, rect)
         rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
