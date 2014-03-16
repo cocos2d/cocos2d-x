@@ -385,6 +385,8 @@ bool FileServer::recv_file(int fd)
 		fwrite(fullfilename, sizeof(char), length,fp);
 	}
 	fclose(fp);
+    string finish("finish\n");
+    send(fd, finish.c_str(), finish.size(),0);
 	return true;
 }
     
@@ -536,6 +538,7 @@ public:
     void onRuntimeVersion(int fd, const std::string &args)
     {
         string runtimeVer=getRuntimeVersion();
+        runtimeVer += "\n";
         send(fd, runtimeVer.c_str(), runtimeVer.size(),0);
     }
     
