@@ -13,8 +13,7 @@ public:
 
 protected:
     int                    subtestNumber;
-    CCSpriteBatchNode    *batchNode;
-    CCNode*             parent;
+    CCNode                 *_parentNode;
 };
 
 class SpriteMenuLayer : public PerformBasicLayer

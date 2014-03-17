@@ -39,6 +39,14 @@ local CCObjectTypes = {
     "GUIReader",
     "RootWidget",
     "ActionObject",
+    "RichElement",
+    "RichElementText",
+    "RichElementImage",
+    "RichElementCustomNode",
+    "RichText",
+    "CCDictionary",
+    "CCArray",
+    "CCNode",
 }
 
 -- register CCObject types
@@ -135,7 +143,7 @@ extern "C" {
 #include "cocos-ext.h"
 
 using namespace cocos2d;
-using namespace cocos2d::gui;
+using namespace cocos2d::ui;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;]])
 
@@ -208,6 +216,82 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
     Mtolua_delete(self);
     return 0;
 }]],[[]])
+
+    replace([[   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCTextAlignment)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCTextAlignment");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCTextAlignment));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCTextAlignment");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }]],[[   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);]])
+
+    replace([[static int tolua_collect_CCTextAlignment (lua_State* tolua_S)
+{
+ CCTextAlignment* self = (CCTextAlignment*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[ tolua_usertype(tolua_S,"CCTextAlignment");
+]],[[]])
+
+    replace([[static int tolua_collect_CCVerticalTextAlignment (lua_State* tolua_S)
+{
+ CCVerticalTextAlignment* self = (CCVerticalTextAlignment*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[ tolua_usertype(tolua_S,"CCVerticalTextAlignment");
+]],[[]])
+
+    replace([[(tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCVerticalTextAlignment",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,2,0,&tolua_err)]])
+    replace([[CCVerticalTextAlignment alignment = *((CCVerticalTextAlignment*)  tolua_tousertype(tolua_S,2,0));]],[[CCVerticalTextAlignment alignment = ((CCVerticalTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));]])
+    replace([[   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCVerticalTextAlignment)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCVerticalTextAlignment");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCVerticalTextAlignment));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCVerticalTextAlignment");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }]],[[   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);]])
+
+    replace([[static int tolua_collect_GLubyte (lua_State* tolua_S)
+{
+ GLubyte* self = (GLubyte*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}]],[[]])
+
+    replace([[ tolua_usertype(tolua_S,"GLubyte");
+]],[[]])
+
+    replace([[(tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,2,0,&tolua_err)]])
+    replace([[GLubyte parentOpacity = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));]],[[GLubyte parentOpacity = ((GLubyte) (int)  tolua_tonumber(tolua_S,2,0));]])
+    replace([[GLubyte opacity = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));]],[[GLubyte opacity = ((GLubyte) (int)  tolua_tonumber(tolua_S,2,0));]])
+
+    replace([[   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((GLubyte)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(GLubyte));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }]],[[   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);]])
+
+    replace([[(tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"GLubyte",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,4,0,&tolua_err)]])
+    replace([[GLubyte opacity = *((GLubyte*)  tolua_tousertype(tolua_S,4,0));]],[[GLubyte opacity = ((GLubyte) (int)  tolua_tonumber(tolua_S,4,0));]])
+
 
     WRITE(result)
 end

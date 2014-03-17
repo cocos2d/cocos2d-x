@@ -9,8 +9,8 @@ NACL_ARCH ?= x86_64
 NACL_AR ?= $(NACL_ARCH)-nacl-ar
 NACL_CC ?= $(NACL_ARCH)-nacl-gcc
 NACL_CXX ?= $(NACL_ARCH)-nacl-g++
-CCFLAGS += -Wall -Werror
-CXXFLAGS += -Wall -Werror
+CCFLAGS += -Wall # -Werror
+CXXFLAGS += -Wall # -Werror
 ARFLAGS = cr
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
@@ -49,7 +49,8 @@ INCLUDES += -I$(COCOS_SRC) \
 	-I$(COCOS_SRC)/platform/nacl \
 	-I$(NACL_SDK_ROOT)/include \
 	-isystem $(NACLPORTS_INCLUDE) \
-	-isystem $(NACLPORTS_INCLUDE)/libxml2
+	-isystem $(NACLPORTS_INCLUDE)/libxml2 \
+	-isystem $(NACLPORTS_INCLUDE)/freetype2
 
 ifeq ($(DEBUG), 1)
 BIN_DIR = bin/debug

@@ -26,9 +26,12 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
     
 static const int LABELBMFONT_RENDERER_Z = (-1);
+    
+    
+IMPLEMENT_CLASS_GUI_INFO(LabelBMFont)
     
 LabelBMFont::LabelBMFont():
 _labelBMFontRenderer(NULL),
@@ -58,7 +61,7 @@ LabelBMFont* LabelBMFont::create()
 void LabelBMFont::initRenderer()
 {
     _labelBMFontRenderer = cocos2d::CCLabelBMFont::create();
-    CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
+    CCNode::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
 }
 
 void LabelBMFont::setFntFile(const char *fileName)
@@ -68,7 +71,15 @@ void LabelBMFont::setFntFile(const char *fileName)
         return;
     }
     _fntFileName = fileName;
+    
+    if (_labelBMFontRenderer)
+    {
+        CCNode::removeChild(_labelBMFontRenderer, true);
+        initRenderer();
+    }
+    
     _labelBMFontRenderer->initWithString("", fileName);
+    
     updateAnchorPoint();
     labelBMFontScaleChangedWithSize();
     _fntFileHasInit = true;
@@ -137,6 +148,21 @@ void LabelBMFont::labelBMFontScaleChangedWithSize()
         _labelBMFontRenderer->setScaleX(scaleX);
         _labelBMFontRenderer->setScaleY(scaleY);
     }
+}
+    
+void LabelBMFont::updateTextureColor()
+{
+    updateColorToRenderer(_labelBMFontRenderer);
+}
+
+void LabelBMFont::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelBMFontRenderer);
+}
+
+void LabelBMFont::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelBMFontRenderer);
 }
 
 std::string LabelBMFont::getDescription() const

@@ -45,6 +45,14 @@ void GLESDebugDraw::initShader( void )
     mColorLocation = glGetUniformLocation( mShaderProgram->getProgram(), "u_color");
 }
 
+void GLESDebugDraw::resetVertexBuffers()
+{
+#if CC_TEXTURE_ATLAS_USE_VAO
+    ccGLBindVAO(0);
+#endif
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, const b2Color& color)
 {
     mShaderProgram->use();
@@ -58,7 +66,7 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, con
     }
 
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-
+    resetVertexBuffers();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
@@ -81,7 +89,7 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount
     }
     
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
-
+    resetVertexBuffers();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
@@ -116,6 +124,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
     }
     
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+    resetVertexBuffers();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
@@ -147,6 +156,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
     }
     
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
+    resetVertexBuffers();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
@@ -176,6 +186,7 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
         p1.x * mRatio, p1.y * mRatio,
         p2.x * mRatio, p2.y * mRatio
     };
+    resetVertexBuffers();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 
     glDrawArrays(GL_LINES, 0, 2);
@@ -208,7 +219,7 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
     GLfloat                glVertices[] = {
         p.x * mRatio, p.y * mRatio
     };
-
+    resetVertexBuffers();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 
     glDrawArrays(GL_POINTS, 0, 1);
@@ -239,7 +250,7 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
         aabb->upperBound.x * mRatio, aabb->upperBound.y * mRatio,
         aabb->lowerBound.x * mRatio, aabb->upperBound.y * mRatio
     };
-
+    resetVertexBuffers();
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
     glDrawArrays(GL_LINE_LOOP, 0, 8);
 

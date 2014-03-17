@@ -1540,12 +1540,12 @@ function UITextFieldTest:initExtend()
         if eventType == ccs.TextFiledEventType.attach_with_ime then
             local textField = tolua.cast(sender,"TextField")
             local screenSize = CCDirector:sharedDirector():getWinSize()
-            textField:runAction(CCMoveTo:create(0.225,CCPoint(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
+            textField:runAction(CCMoveTo:create(0.225,CCPoint(widgetSize.width / 2.0, widgetSize.height / 2.0 + textField:getContentSize().height / 2.0)))
             self._displayValueLabel:setText("attach with IME")
         elseif eventType == ccs.TextFiledEventType.detach_with_ime then
             local textField = tolua.cast(sender,"TextField")
             local screenSize = CCDirector:sharedDirector():getWinSize()
-            textField:runAction(CCMoveTo:create(0.175, CCPoint(screenSize.width / 2.0, screenSize.height / 2.0)))
+            textField:runAction(CCMoveTo:create(0.175, CCPoint(widgetSize.width / 2.0, widgetSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME")
         elseif eventType == ccs.TextFiledEventType.insert_text then
             self._displayValueLabel:setText("insert words")
@@ -1610,13 +1610,13 @@ function UITextFieldMaxLengthTest:initExtend()
         if eventType == ccs.TextFiledEventType.attach_with_ime then
             local textField = tolua.cast(sender,"TextField")
             local screenSize = CCDirector:sharedDirector():getWinSize()
-            textField:runAction(CCMoveTo:create(0.225,CCPoint(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
+            textField:runAction(CCMoveTo:create(0.225,CCPoint(widgetSize.width / 2.0, widgetSize.height / 2.0 + textField:getContentSize().height / 2.0)))
             local info = string.format("attach with IME max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
         elseif eventType == ccs.TextFiledEventType.detach_with_ime then
             local textField = tolua.cast(sender,"TextField")
             local screenSize = CCDirector:sharedDirector():getWinSize()
-            textField:runAction(CCMoveTo:create(0.175, CCPoint(screenSize.width / 2.0, screenSize.height / 2.0)))
+            textField:runAction(CCMoveTo:create(0.175, CCPoint(widgetSize.width / 2.0, widgetSize.height / 2.0)))
             local info = string.format("detach with IME max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
         elseif eventType == ccs.TextFiledEventType.insert_text then
@@ -1687,13 +1687,11 @@ function UITextFieldPasswordTest:initExtend()
     local function textFieldEvent(sender, eventType)
         if eventType == ccs.TextFiledEventType.attach_with_ime then
             local textField = tolua.cast(sender,"TextField")
-            local screenSize = CCDirector:sharedDirector():getWinSize()
-            textField:runAction(CCMoveTo:create(0.175, CCPoint(screenSize.width / 2.0, screenSize.height / 2.0)))
+            textField:runAction(CCMoveTo:create(0.175, CCPoint(widgetSize.width / 2.0, widgetSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME password")
         elseif eventType == ccs.TextFiledEventType.detach_with_ime then
             local textField = tolua.cast(sender,"TextField")
-            local screenSize = CCDirector:sharedDirector():getWinSize()
-            textField:runAction(CCMoveTo:create(0.175, CCPoint(screenSize.width / 2.0, screenSize.height / 2.0)))
+            textField:runAction(CCMoveTo:create(0.175, CCPoint(widgetSize.width / 2.0, widgetSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME password")
         elseif eventType == ccs.TextFiledEventType.insert_text then
             self._displayValueLabel:setText("insert words password")
@@ -2572,7 +2570,9 @@ function UIListViewVerticalTest:initExtend()
                               (backgroundSize.height - lv:getSize().height) / 2))
 
     local function listViewEvent(sender, eventType)
-        if eventType == LISTVIEW_ONSELECTEDITEM then
+        if eventType == LISTVIEW_ONSELECTEDITEM_START then
+            print("select child index = ",sender:getCurSelectedIndex())
+        elseif eventType == LISTVIEW_ONSELECTEDITEM_END then
             print("select child index = ",sender:getCurSelectedIndex())
         end
     end
@@ -2735,8 +2735,10 @@ function UIListViewHorizontalTest:initExtend()
                               (backgroundSize.height - lv:getSize().height) / 2))
 
     local function listViewEvent(sender, eventType)
-        if eventType == LISTVIEW_ONSELECTEDITEM then
-            print("select child index = ", sender:getCurSelectedIndex())
+        if eventType == LISTVIEW_ONSELECTEDITEM_START then
+            print("select child index = ",sender:getCurSelectedIndex())
+        elseif eventType == LISTVIEW_ONSELECTEDITEM_END then
+            print("select child index = ",sender:getCurSelectedIndex())
         end
     end
     lv:addEventListenerListView(listViewEvent)

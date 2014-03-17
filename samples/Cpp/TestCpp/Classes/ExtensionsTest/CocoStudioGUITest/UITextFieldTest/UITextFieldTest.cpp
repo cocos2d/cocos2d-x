@@ -127,7 +127,7 @@ bool UITextFieldTest_MaxLength::init()
         // Create the textfield
         UITextField* textField = UITextField::create();
         textField->setMaxLengthEnabled(true);
-        textField->setMaxLength(3);
+        textField->setMaxLength(10);
         textField->setTouchEnabled(true);
         textField->setFontName("Marker Felt");
         textField->setFontSize(30);
@@ -150,7 +150,9 @@ void UITextFieldTest_MaxLength::textFieldEvent(CCObject *pSender, TextFiledEvent
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
             textField->runAction(CCMoveTo::create(0.225,
-                                                  ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
+                                                  ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height * 2)));
+//            textField->runAction(CCMoveTo::create(0.225,
+//                                                  ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
             m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME max length %d", textField->getMaxLength())->getCString());
         }
             break;
@@ -254,7 +256,7 @@ void UITextFieldTest_Password::textFieldEvent(CCObject *pSender, TextFiledEventT
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
             textField->runAction(CCMoveTo::create(0.175, ccp(screenSize.width / 2.0f, screenSize.height / 2.0f)));
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME password")->getCString());
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME password")->getCString());                                    
         }
             break;
             
@@ -309,10 +311,10 @@ bool UITextFieldTest_LineWrap::init()
         
         // Create the textfield
         UITextField* textField = UITextField::create();
-        UICCTextField* render = static_cast<UICCTextField*>(textField->getVirtualRenderer());
-        render->setDimensions(CCSizeMake(240, 160));
-        render->setHorizontalAlignment(kCCTextAlignmentCenter);
-        render->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
+        textField->ignoreContentAdaptWithSize(false);
+        textField->setSize(CCSizeMake(240, 160));
+        textField->setTextHorizontalAlignment(kCCTextAlignmentCenter);
+        textField->setTextVerticalAlignment(kCCVerticalTextAlignmentCenter);
         textField->setTouchEnabled(true);
         textField->setFontName("Marker Felt");
         textField->setFontSize(30);
@@ -336,9 +338,8 @@ void UITextFieldTest_LineWrap::textFieldEvent(CCObject *pSender, TextFiledEventT
             CCSize widgetSize = m_pWidget->getSize();
             textField->runAction(CCMoveTo::create(0.225,
                                                   ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + textField->getContentSize().height / 2)));
-            UICCTextField* render = static_cast<UICCTextField*>(textField->getVirtualRenderer());
-            render->setHorizontalAlignment(kCCTextAlignmentLeft);
-            render->setVerticalAlignment(kCCVerticalTextAlignmentTop);
+            textField->setTextHorizontalAlignment(kCCTextAlignmentLeft);
+            textField->setTextVerticalAlignment(kCCVerticalTextAlignmentTop);
             
             m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME")->getCString());
         }
@@ -349,9 +350,8 @@ void UITextFieldTest_LineWrap::textFieldEvent(CCObject *pSender, TextFiledEventT
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             CCSize widgetSize = m_pWidget->getSize();
             textField->runAction(CCMoveTo::create(0.175, ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
-            UICCTextField* render = static_cast<UICCTextField*>(textField->getVirtualRenderer());
-            render->setHorizontalAlignment(kCCTextAlignmentCenter);
-            render->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
+            textField->setTextHorizontalAlignment(kCCTextAlignmentCenter);
+            textField->setTextVerticalAlignment(kCCVerticalTextAlignmentCenter);
             
             m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME")->getCString());
         }

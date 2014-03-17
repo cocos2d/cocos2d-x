@@ -59,7 +59,7 @@ bool UILayoutTest::init()
         button_scale9->setScale9Enabled(true);
         button_scale9->setSize(CCSizeMake(100, button_scale9->getContentSize().height));
         button_scale9->setPosition(ccp(layout->getSize().width - button_scale9->getSize().width / 2, button_scale9->getSize().height / 2));
-        layout->addChild(button_scale9);        
+        layout->addChild(button_scale9);                
         
         return true;
     }

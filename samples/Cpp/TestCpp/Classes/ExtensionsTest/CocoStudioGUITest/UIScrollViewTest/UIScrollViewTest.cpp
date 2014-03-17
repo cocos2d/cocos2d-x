@@ -50,15 +50,17 @@ bool UIScrollViewTest_Vertical::init()
                                (backgroundSize.width - scrollView->getSize().width) / 2,
                                (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - scrollView->getSize().height) / 2));
+        scrollView->addEventListenerScrollView(this, scrollvieweventselector(UIScrollViewTest_Vertical::scrollEvent));
         m_pUiLayer->addWidget(scrollView);
         
         UIImageView* imageView = UIImageView::create();
         imageView->loadTexture("cocosgui/ccicon.png");
         
         float innerWidth = scrollView->getSize().width;
-        float innerHeight = scrollView->getSize().height + imageView->getSize().height;
+        float innerHeight = scrollView->getSize().height + imageView->getSize().height * 2;
         
-        scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));                
+        scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+        
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -82,12 +84,37 @@ bool UIScrollViewTest_Vertical::init()
         scrollView->addChild(button_scale9);
         
         imageView->setPosition(ccp(innerWidth / 2, imageView->getSize().height / 2));
-        scrollView->addChild(imageView);
-        
+        scrollView->addChild(imageView);        
         return true;
     }
     
     return false;
+}
+
+void UIScrollViewTest_Vertical::scrollEvent(cocos2d::CCObject *pSender, ScrollviewEventType type)
+{
+    switch (type)
+    {
+        case SCROLLVIEW_EVENT_SCROLLING:
+            CCLOG("Scrolling");
+            break;
+            
+        default:
+            break;
+    }
+}
+
+void UIScrollViewTest_Vertical::touchEvent(CCObject *pSender, TouchEventType type)
+{
+    switch (type)
+    {
+        case TOUCH_EVENT_ENDED:
+            CCLOG("button touch ended");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 // UIScrollViewTest_Horizontal
@@ -143,7 +170,7 @@ bool UIScrollViewTest_Horizontal::init()
         UIImageView* imageView = UIImageView::create();
         imageView->loadTexture("cocosgui/ccicon.png");
         
-        float innerWidth = scrollView->getSize().width + imageView->getSize().width;
+        float innerWidth = scrollView->getSize().width + imageView->getSize().width * 2;
         float innerHeight = scrollView->getSize().height;
         
         scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));

@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 typedef enum
 {
@@ -86,6 +86,10 @@ public:
      * @return LayoutParameterType
      */
     LayoutParameterType getLayoutType() const;
+    
+    LayoutParameter* clone();
+    virtual LayoutParameter* createCloneInstance();
+    virtual void copyProperties(LayoutParameter* model);
 protected:
     Margin _margin;
     LayoutParameterType _layoutParameterType;
@@ -130,6 +134,8 @@ public:
      * @return LinearGravity
      */
     LinearGravity getGravity() const;
+    virtual LayoutParameter* createCloneInstance();
+    virtual void copyProperties(LayoutParameter* model);
 protected:
     LinearGravity _linearGravity;
 };
@@ -202,6 +208,9 @@ public:
      * @return name
      */
     const char* getRelativeName() const;
+    
+    virtual LayoutParameter* createCloneInstance();
+    virtual void copyProperties(LayoutParameter* model);
 protected:
     RelativeAlign _relativeAlign;
     std::string _relativeWidgetName;

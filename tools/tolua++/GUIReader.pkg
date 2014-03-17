@@ -3,8 +3,11 @@ class GUIReader : public CCObject
 {
     GUIReader();
     ~GUIReader();
-
     static GUIReader* shareReader();
     static void purge();
     Widget* widgetFromJsonFile(const char* fileName);
+    int getVersionInteger(const char* str);
+    void storeFileDesignSize(const char* fileName, const CCSize &size);
+    const CCSize getFileDesignSize(const char* fileName) const;
+    const std::string& getFilePath() const;
 };
