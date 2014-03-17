@@ -204,6 +204,12 @@ void onHelpAbout()
 	DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG_ABOUT), glfwGetWin32Window(g_eglView->getWindow()), AboutDialogCallback);
 }
 
+void shutDownApp()
+{
+	HWND hWnd=glfwGetWin32Window(g_eglView->getWindow());
+	::SendMessage(hWnd,WM_CLOSE,NULL,NULL);
+}
+
 /*@brief new windows process*/
 LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -218,7 +224,7 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 			switch (wmId)
 			{
 			case ID_FILE_EXIT:
-				exit(0);
+				shutDownApp();
 				break;
 
 			case ID_VIEW_PORTRAIT:
