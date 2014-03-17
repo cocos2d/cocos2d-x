@@ -151,6 +151,20 @@ Application* Application::sharedApplication()
     return Application::getInstance();
 }
 
+const char * Application::getCurrentLanguageCode()
+{
+    static char code[3]={0};
+    char *pLanguageName = getenv("LANG");
+    if (!pLanguageName)
+        return "en";
+    strtok(pLanguageName, "_");
+    if (!pLanguageName)
+        return "en";
+    strncpy(code,pLanguageName,2);
+    code[2]='\0';
+    return code;
+}
+
 LanguageType Application::getCurrentLanguage()
 {
 	char *pLanguageName = getenv("LANG");
