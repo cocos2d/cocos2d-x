@@ -319,7 +319,7 @@ bool Console::listenOnTCP(int port)
 
     if ( (n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
         fprintf(stderr,"net_listen error for %s: %s", serv, gai_strerror(n));
-        return -1;
+        return false;
     }
 
     ressave = res;
@@ -344,7 +344,7 @@ bool Console::listenOnTCP(int port)
     if (res == NULL) {
         perror("net_listen:");
         freeaddrinfo(ressave);
-        return -1;
+        return false;
     }
 
     listen(listenfd, 50);
