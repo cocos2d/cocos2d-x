@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 /**
  *   @js NA
@@ -63,6 +63,8 @@ public:
  */
 class LabelAtlas : public Widget
 {
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -105,11 +107,14 @@ public:
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void labelAtlasScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
 protected:
-    UICCLabelAtlas* _laberAtlasRenderer;
+    UICCLabelAtlas* _labelAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
     int _itemWidth;

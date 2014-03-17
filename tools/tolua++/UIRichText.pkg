@@ -1,0 +1,55 @@
+
+typedef enum {
+    RICH_TEXT,
+    RICH_IMAGE,
+    RICH_CUSTOM
+}RichElementType;
+
+class RichElement: public CCObject
+{
+    RichElement(){};
+    virtual ~RichElement(){};
+    virtual bool init(int tag, const ccColor3B& color, GLubyte opacity);
+}
+
+
+class RichElementText : public RichElement
+{
+    RichElementText();
+    virtual ~RichElementText();
+    virtual bool init(int tag, const ccColor3B& color, GLubyte opacity, const char* text, const char* fontName, float fontSize);
+    static RichElementText* create(int tag, const ccColor3B& color, GLubyte opacity, const char* text, const char* fontName, float fontSize);
+};
+
+class RichElementImage : public RichElement
+{
+    RichElementImage();
+    virtual ~RichElementImage();
+    virtual bool init(int tag, const ccColor3B& color, GLubyte opacity, const char* filePath);
+    static RichElementImage* create(int tag, const ccColor3B& color, GLubyte opacity, const char* filePath);
+};
+
+class RichElementCustomNode : public RichElement
+{
+    RichElementCustomNode();
+    virtual ~RichElementCustomNode();
+    virtual bool init(int tag, const ccColor3B& color, GLubyte opacity, CCNode* customNode);
+    static RichElementCustomNode* create(int tag, const ccColor3B& color, GLubyte opacity, CCNode* customNode);
+};
+
+class RichText : public Widget
+{
+    RichText();
+    virtual ~RichText();
+    static RichText* create();
+    void insertElement(RichElement* element, int index);
+    void pushBackElement(RichElement* element);
+    void removeElement(int index);
+    void removeElement(RichElement* element);
+    virtual void visit();
+    void setVerticalSpace(float space);
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual const CCSize& getContentSize() const;
+    void formatText();
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+};

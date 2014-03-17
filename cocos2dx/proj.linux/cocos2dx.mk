@@ -2,8 +2,8 @@ all:
 
 CC = gcc
 CXX = g++
-CCFLAGS += -MMD -Wall -Werror -fPIC
-CXXFLAGS += -MMD -Wall -Werror -fPIC
+CCFLAGS += -MMD -Wall  -fPIC # -Werror
+CXXFLAGS += -MMD -Wall -fPIC # -Werror
 ARFLAGS = cr
 
 DEFINES += -DLINUX

@@ -17,7 +17,7 @@ extern "C" {
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace cocos2d::gui;
+using namespace cocos2d::ui;
 
 class LuaCocoStudioEventListener:public CCObject
 {
@@ -96,7 +96,15 @@ static int tolua_Cocos2dx_Widget_addTouchEventListener00(lua_State* tolua_S)
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         listener->setHandler(handler);
-        self->setUserObject(listener);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        dict->setObject(listener, "widgetTouchEvent");
+        
         self->addTouchEventListener(listener, toucheventselector(LuaCocoStudioEventListener::eventCallbackFunc));
     }
     return 0;
@@ -145,7 +153,15 @@ static int tolua_Cocos2dx_CheckBox_addEventListenerCheckBox00(lua_State* tolua_S
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         listener->setHandler(handler);
-        self->setUserObject(listener);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        dict->setObject(listener, "checkBoxEventListener");
+        
         self->addEventListenerCheckBox(listener, checkboxselectedeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
     }
     return 0;
@@ -194,7 +210,15 @@ static int tolua_Cocos2dx_Slider_addEventListenerSlider00(lua_State* tolua_S)
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         listener->setHandler(handler);
-        self->setUserObject(listener);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        dict->setObject(listener, "sliderEventListener");
+        
         self->addEventListenerSlider(listener, sliderpercentchangedselector(LuaCocoStudioEventListener::eventCallbackFunc));
     }
     return 0;
@@ -243,7 +267,15 @@ static int tolua_Cocos2dx_TextField_addEventListenerTextField00(lua_State* tolua
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         listener->setHandler(handler);
-        self->setUserObject(listener);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        dict->setObject(listener, "textfieldEventListener");
+        
         self->addEventListenerTextField(listener, textfieldeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
     }
     return 0;
@@ -292,7 +324,15 @@ static int tolua_Cocos2dx_PageView_addEventListenerPageView00(lua_State* tolua_S
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         listener->setHandler(handler);
-        self->setUserObject(listener);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        dict->setObject(listener, "pageViewEventListener");
+        
         self->addEventListenerPageView(listener, pagevieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
     }
     return 0;
@@ -310,6 +350,63 @@ static void extendPageView(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         tolua_function(tolua_S, "addEventListenerPageView", tolua_Cocos2dx_PageView_addEventListenerPageView00);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static int tolua_Cocos2dx_ScrollView_addEventListenerScrollView00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ScrollView",0,&tolua_err) ||
+        !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ScrollView* self = (ScrollView*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addEventListenerScrollView'", NULL);
+#endif
+        LuaCocoStudioEventListener* listener = LuaCocoStudioEventListener::create();
+        if (NULL == listener)
+        {
+            tolua_error(tolua_S,"LuaCocoStudioEventListener create fail\n", NULL);
+            return 0;
+        }
+        
+        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
+        
+        listener->setHandler(handler);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        dict->setObject(listener, "scrollViewEventListener");
+        
+        self->addEventListenerScrollView(listener, scrollvieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'addEventListenerScrollView'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendScrollView(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ListView");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "addEventListenerScrollView", tolua_Cocos2dx_ScrollView_addEventListenerScrollView00);
     }
     lua_pop(tolua_S, 1);
 }
@@ -341,7 +438,15 @@ static int tolua_Cocos2dx_ListView_addEventListenerListView00(lua_State* tolua_S
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         listener->setHandler(handler);
-        self->setUserObject(listener);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == dict)
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        dict->setObject(listener, "listViewEventListener");
+        
         self->addEventListenerListView(listener, listvieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
     }
     return 0;
@@ -567,7 +672,16 @@ static int tolua_Cocos2dx_CCArmatureAnimation_setMovementEventCallFunc00(lua_Sta
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         wrapper->setHandler(handler);
-        self->setUserObject(wrapper);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == self->getUserObject())
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        dict->setObject(wrapper, "moveEvent");
+        
         self->setMovementEventCallFunc(wrapper, movementEvent_selector(LuaArmatureWrapper::movementEventCallback));
     }
     return 0;
@@ -606,7 +720,16 @@ static int tolua_Cocos2dx_CCArmatureAnimation_setFrameEventCallFunc00(lua_State*
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         
         wrapper->setHandler(handler);
-        self->setUserObject(wrapper);
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(self->getUserObject());
+        if (NULL == self->getUserObject())
+        {
+            dict = CCDictionary::create();
+            self->setUserObject(dict);
+        }
+        
+        dict->setObject(wrapper, "frameEvent");
+        
         self->setFrameEventCallFunc(wrapper, frameEvent_selector(LuaArmatureWrapper::frameEventCallback));
     }
     return 0;
@@ -727,6 +850,7 @@ int register_all_cocos2dx_studio_manual(lua_State* tolua_S)
     extendSlider(tolua_S);
     extendTextFieldr(tolua_S);
     extendPageView(tolua_S);
+    extendScrollView(tolua_S);
     extendListView(tolua_S);
     extendLayoutParameter(tolua_S);
     extendCCArmatureAnimation(tolua_S);

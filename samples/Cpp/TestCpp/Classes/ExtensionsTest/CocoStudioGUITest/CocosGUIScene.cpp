@@ -1,4 +1,5 @@
 #include "CocosGUIScene.h"
+#include "CocoStudioGUITest.h"
 #include "UISceneManager.h"
 
 enum
@@ -34,6 +35,7 @@ enum
     TEST_PICKERVIEW,
      */
     TEST_WIDGETADDNODE,
+    TEST_RICHTEXT,
     TEST_MAX_COUNT,
 };
 
@@ -64,6 +66,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "gui PickerViewTest",
      */
     "gui WidgetAddNodeTest",
+    "gui RichTextTest",
 };
 
 ////////////////////////////////////////////////////////
@@ -80,6 +83,7 @@ void CocosGUITestMainLayer::onEnter()
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
+//    /*
     m_pItemMenu = CCMenu::create();
     m_pItemMenu->setPosition( s_tCurPos );
     CCMenuItemFont::setFontName("Arial");
@@ -94,6 +98,20 @@ void CocosGUITestMainLayer::onEnter()
     setTouchEnabled(true);
     addChild(m_pItemMenu);
 //     */
+}
+
+
+void CocosGUITestMainLayer::touchEvent(cocos2d::CCObject *pSender, TouchEventType type)
+{
+    switch (type)
+    {
+        case TOUCH_EVENT_ENDED:
+            CCLOG("button touch ended");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 void CocosGUITestMainLayer::menuCallback(CCObject* pSender)
@@ -260,6 +278,14 @@ void CocosGUITestMainLayer::menuCallback(CCObject* pSender)
         }
             break;
             
+        case TEST_RICHTEXT:
+        {
+            pManager->setCurrentUISceneId(kUIRichTextTest);
+            pManager->setMinUISceneId(kUIRichTextTest);
+            pManager->setMaxUISceneId(kUIRichTextTest);
+        }
+            break;
+            
         default:
             break;
     }
@@ -306,9 +332,25 @@ void CocosGUITestMainLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 
 ////////////////////////////////////////////////////////
 //
-// ExtensionsTestScene
+// CocosGUITestScene
 //
 ////////////////////////////////////////////////////////
+
+void CocosGUITestScene::onEnter()
+{
+    CCScene::onEnter();
+    
+    CCLabelTTF* label = CCLabelTTF::create("Back", "Arial", 20);
+    //#endif
+    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, this, menu_selector(CocosGUITestScene::BackCallback));
+    
+    CCMenu* pMenu =CCMenu::create(pMenuItem, NULL);
+    
+    pMenu->setPosition( CCPointZero );
+    pMenuItem->setPosition( ccp( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    
+    addChild(pMenu, 1);
+}
 
 void CocosGUITestScene::runThisTest()
 {
@@ -317,6 +359,13 @@ void CocosGUITestScene::runThisTest()
     pLayer->release();
     
     CCDirector::sharedDirector()->replaceScene(this);
+}
+
+void CocosGUITestScene::BackCallback(CCObject* pSender)
+{
+    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    pScene->runThisTest();
+    pScene->release();
 }
 
 /*

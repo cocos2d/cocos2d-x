@@ -80,6 +80,16 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 
 		const rapidjson::Value& actionFrameDic = DICTOOL->getDictionaryFromArray_json(dic, "actionframelist", i);
 		int frameInex = DICTOOL->getIntValue_json(actionFrameDic,"frameid");
+        int frameTweenType = DICTOOL->getIntValue_json(actionFrameDic,"tweenType");
+        
+        std::vector<float> frameTweenParameter;
+        int frameTweenParameterNum = DICTOOL->getArrayCount_json(actionFrameDic, "tweenParameter");
+        
+        for (int j = 0; j < frameTweenParameterNum; j++)
+        {
+            float value = DICTOOL->getFloatValueFromArray_json(actionFrameDic, "tweenParameter", j);
+            frameTweenParameter.push_back(value);
+        }
 
 		bool existPosition = DICTOOL->checkObjectExist_json(actionFrameDic,"positionx");
 		if (existPosition)
@@ -88,6 +98,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
 			ActionMoveFrame* actionFrame = new ActionMoveFrame();
 			actionFrame->autorelease();
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setPosition(CCPointMake(positionX, positionY));
 			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeMove);
@@ -101,6 +113,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			float scaleY = DICTOOL->getFloatValue_json(actionFrameDic, "scaley");
 			ActionScaleFrame* actionFrame = new ActionScaleFrame();
 			actionFrame->autorelease();
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setScaleX(scaleX);
 			actionFrame->setScaleY(scaleY);
@@ -114,6 +128,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			float rotation = DICTOOL->getFloatValue_json(actionFrameDic, "rotation");
 			ActionRotationFrame* actionFrame = new ActionRotationFrame();
 			actionFrame->autorelease();
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setRotation(rotation);
 			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeRotate);
@@ -126,6 +142,8 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			int opacity = DICTOOL->getIntValue_json(actionFrameDic, "opacity");
 			ActionFadeFrame* actionFrame = new ActionFadeFrame();
 			actionFrame->autorelease();
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setOpacity(opacity);
 			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeFade);
@@ -140,12 +158,13 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			int colorB = DICTOOL->getIntValue_json(actionFrameDic, "colorb");
 			ActionTintFrame* actionFrame = new ActionTintFrame();
 			actionFrame->autorelease();
+            actionFrame->setEasingType(frameTweenType);
+            actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setColor(ccc3(colorR,colorG,colorB));
 			CCArray* cActionArray = (CCArray*)m_FrameArray->objectAtIndex((int)kKeyframeTint);
 			cActionArray->addObject(actionFrame);
 		}
-
 	}
 	initActionNodeFromRoot(root);
 }
@@ -155,10 +174,10 @@ void ActionNode::initActionNodeFromRoot(CCObject* root)
 	CCNode* rootNode = dynamic_cast<CCNode*>(root);
 	if (rootNode != NULL)
 	{
-        cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(root);
+        cocos2d::ui::Widget* rootWidget = dynamic_cast<cocos2d::ui::Widget*>(root);
 		if (rootWidget != NULL)
 		{
-			cocos2d::gui::Widget* widget = cocos2d::gui::UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+			cocos2d::ui::Widget* widget = cocos2d::ui::UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
 			if (widget != NULL)
 			{
 				setObject(widget);
@@ -207,7 +226,7 @@ CCNode* ActionNode::getActionNode()
 	}
 	else
 	{
-		cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(m_Object);
+		cocos2d::ui::Widget* rootWidget = dynamic_cast<cocos2d::ui::Widget*>(m_Object);
 		if (rootWidget != NULL)
 		{
 			return rootWidget;

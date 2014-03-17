@@ -57,11 +57,22 @@ class ScrollView:public Layout,public UIScrollInterface
     virtual void addChild(CCNode* child, int zOrder, int tag);
     virtual void removeAllChildren();
     virtual void removeAllChildrenWithCleanup(bool cleanup);
-    virtual void removeChild(CCNode* child, bool cleaup = true);
+    virtual void removeChild(CCNode* child); 
+    virtual void removeChild(CCNode* child, bool cleaup);
+
     virtual CCArray* getChildren();
     virtual unsigned int getChildrenCount() const;
     virtual CCNode * getChildByTag(int tag);
     virtual Widget* getChildByName(const char* name);
+
+    virtual void addNode(CCNode* node);
+    virtual void addNode(CCNode * node, int zOrder);
+    virtual void addNode(CCNode* node, int zOrder, int tag);
+    virtual CCNode * getNodeByTag(int tag);
+    virtual void removeNodeByTag(int tag);
+    virtual CCArray* getNodes();
+    virtual void removeNode(CCNode* node);
+    virtual void removeAllNodes();
         
     virtual void update(float dt);
     void setBounceEnabled(bool enabled);
