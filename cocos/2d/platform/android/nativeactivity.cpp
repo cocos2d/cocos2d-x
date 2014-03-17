@@ -463,27 +463,57 @@ static int32_t handle_touch_input(AInputEvent *event) {
 */
 static int32_t handle_key_input(AInputEvent *event)
 {
-    if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
-    {
-        auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+    auto isPressed  = AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN;
+    auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+    auto key_code   = AKeyEvent_getKeyCode(event);
 
-        switch (AKeyEvent_getKeyCode(event))
+    switch (AKeyEvent_getKeyCode(event))
+    {
+    case AKEYCODE_BACK: 
         {
-        case AKEYCODE_BACK: 
-            {
-                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
-                dispatcher->dispatchEvent(&event);
-            }
-            return 1;
-        case AKEYCODE_MENU:
-            {
-                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
-                dispatcher->dispatchEvent(&event);
-            }
-            return 1;
-        default:
-            break;
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, isPressed);
+            dispatcher->dispatchEvent(&event);
         }
+        return 1;
+    case AKEYCODE_MENU:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    case AKEYCODE_DPAD_UP: 
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1; 
+    case AKEYCODE_DPAD_DOWN:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    case AKEYCODE_DPAD_LEFT:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    case AKEYCODE_DPAD_RIGHT:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    case AKEYCODE_DPAD_CENTER:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_RETURN, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    default:
+        LOGI("key:%d", key_code);
+        break;
     }
     return 0;
 }
