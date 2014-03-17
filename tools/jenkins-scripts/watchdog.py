@@ -36,8 +36,8 @@ def build_time(_job):
         build.stop()
     
 def main():
-    username = os.environ['username']
-    password = os.environ['password']
+    username = os.environ['JENKINS_ADMIN']
+    password = os.environ['JENKINS_ADMIN_PW']
     J = Jenkins('http://115.28.134.83:8000',username,password)
     #get all jenkins jobs
     for key,job in J.iteritems():
