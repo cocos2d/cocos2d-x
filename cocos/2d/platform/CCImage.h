@@ -51,6 +51,8 @@ typedef struct _MipmapInfo
 {
     unsigned char* address;
     int len;
+    bool unpack;
+    _MipmapInfo():address(NULL),len(0),unpack(false){}
 }MipmapInfo;
 
 class CC_DLL Image : public Ref
