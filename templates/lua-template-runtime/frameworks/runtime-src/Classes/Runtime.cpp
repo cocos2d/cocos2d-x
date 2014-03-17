@@ -546,7 +546,13 @@ public:
     void onShutDownApp(int fd, const std::string &args)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
-            exit(0);
+            
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+			extern void shutDownApp();
+			shutDownApp();
+#else
+			exit(0);
+#endif	
         });
     }
 private:
