@@ -481,7 +481,38 @@ static int32_t handle_key_input(AInputEvent *event)
             dispatcher->dispatchEvent(&event);
         }
         return 1;
+    case AKEYCODE_DPAD_UP: 
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1; 
+    case AKEYCODE_DPAD_DOWN:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    case AKEYCODE_DPAD_LEFT:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    case AKEYCODE_DPAD_RIGHT:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    case AKEYCODE_DPAD_CENTER:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_RETURN, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
     default:
+        LOGI("key:%d", key_code);
         break;
     }
     return 0;
