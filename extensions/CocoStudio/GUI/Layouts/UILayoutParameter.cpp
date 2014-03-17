@@ -51,6 +51,26 @@ const Margin& LayoutParameter::getMargin() const
 {
     return _margin;
 }
+    
+void LayoutParameter::setOffsetBeforeLocated(const cocos2d::CCPoint &offset)
+{
+    _offSetBeforeLocated = offset;
+}
+
+const CCPoint& LayoutParameter::getOffsetBeforeLocated() const
+{
+    return _offSetBeforeLocated;
+}
+    
+void LayoutParameter::setOffsetAfterLocated(const cocos2d::CCPoint &offset)
+{
+    _offSetAfterLocated = offset;
+}
+
+const CCPoint& LayoutParameter::getOffsetAfterLocated() const
+{
+    return _offSetAfterLocated;
+}
 
 LayoutParameterType LayoutParameter::getLayoutType() const
 {
@@ -72,6 +92,8 @@ LayoutParameter* LayoutParameter::createCloneInstance()
 void LayoutParameter::copyProperties(LayoutParameter *model)
 {
     _margin = model->_margin;
+    _offSetBeforeLocated = model->_offSetBeforeLocated;
+    _offSetAfterLocated = model->_offSetAfterLocated;
 }
 
 LinearLayoutParameter* LinearLayoutParameter::create()
