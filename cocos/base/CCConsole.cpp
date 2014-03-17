@@ -918,6 +918,11 @@ void Console::log(const char* buf)
     }
 }
 
+void Console::socketSend(int fd, std::string str)
+{
+    send(fd, str.c_str(), str.length(),0);
+}
+
 //
 // Main Loop
 //
