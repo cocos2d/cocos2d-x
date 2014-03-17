@@ -495,6 +495,7 @@ public:
     ConsoleCustomCommand():_fileserver(nullptr)
     {
         _writepath = FileUtils::getInstance()->getWritablePath();
+		_writepath=replace_all(_writepath,"\\","/");
         cocos2d::Console *_console = Director::getInstance()->getConsole();
         static struct Console::Command commands[] = {
             {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
