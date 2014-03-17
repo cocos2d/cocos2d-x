@@ -108,6 +108,9 @@ void HelloCpp::OnActivated(CoreApplicationView^ applicationView, IActivatedEvent
 void HelloCpp::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
 {
     // Leave args->Handled set to false and the app will quit when user presses the back button on the phone
+    // uncomment next lines to respond with keyBackClicked() in layers, remember to add init layer use setKeypadEnabled(true)
+    // CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG( ccKeypadMSGType::kTypeBackClicked );
+    // args->Handled = true;
 }
 
 void HelloCpp::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)

@@ -31,6 +31,16 @@
 NS_CC_BEGIN
 
 namespace ui {
+    
+class ScrollInnerContainer : public Layout
+{
+public:
+    ScrollInnerContainer();
+    virtual ~ScrollInnerContainer();
+    static ScrollInnerContainer* create();
+    virtual const CCSize& getLayoutSize();
+protected:
+};
 
 enum SCROLLVIEW_DIR
 {
@@ -375,7 +385,7 @@ protected:
     virtual void setClippingEnabled(bool able) {Layout::setClippingEnabled(able);};
     virtual void doLayout();
 protected:
-    Layout* _innerContainer;
+    ScrollInnerContainer* _innerContainer;
     
     SCROLLVIEW_DIR _direction;
 

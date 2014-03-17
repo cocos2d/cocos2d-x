@@ -30,9 +30,11 @@
 #include <string>
 #include "../../Trigger/ObjectFactory.h"
 
+#ifdef __apple__
 #pragma mark -
 #pragma mark Widget macro
 #pragma mark -
+#endif
 
 #define DECLARE_CLASS_GUI_INFO \
     public: \
@@ -49,10 +51,11 @@
 #define CREATE_CLASS_GUI_INFO(className) \
     cocos2d::extension::ObjectFactory::TInfo(#className, &className::createInstance)
 
-
+#ifdef __apple__
 #pragma mark -
 #pragma mark Reader macro
 #pragma mark -
+#endif
 
 #define DECLARE_CLASS_WIDGET_READER_INFO \
 public: \
@@ -68,13 +71,5 @@ public: \
 
 #define CREATE_CLASS_WIDGET_READER_INFO(className) \
     cocos2d::extension::ObjectFactory::TInfo(#className, &className::createInstance)
-
-
-
-
-
-
-//#define CUSTOM_GUI_PARSE_FUNCTION(className, functionName) \
-//    className::functionName \
 
 #endif /* defined(__TestCpp__GUIDefine__) */

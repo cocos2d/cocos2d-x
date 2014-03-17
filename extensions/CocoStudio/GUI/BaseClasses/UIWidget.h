@@ -540,6 +540,8 @@ public:
      */
     const CCSize& getSize() const;
     
+    virtual const CCSize& getLayoutSize() {return _size;};
+    
     /**
      * Returns size percent of widget
      *
@@ -634,6 +636,8 @@ public:
     
     void updateSizeAndPosition();
     
+    void updateSizeAndPosition(const CCSize& parentSize);
+    
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
@@ -717,6 +721,10 @@ protected:
 };
 }
 
+namespace gui = ui;
+
 NS_CC_END
+
+
 
 #endif /* defined(__Widget__) */

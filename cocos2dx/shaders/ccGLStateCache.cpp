@@ -226,7 +226,9 @@ void ccGLEnable(ccGLServerState flags)
 #endif
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - GL Vertex Attrib functions
+#endif
 
 void ccGLEnableVertexAttribs( unsigned int flags )
 {
@@ -269,7 +271,9 @@ void ccGLEnableVertexAttribs( unsigned int flags )
     }
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - GL Uniforms functions
+#endif
 
 void ccSetProjectionMatrixDirty( void )
 {
