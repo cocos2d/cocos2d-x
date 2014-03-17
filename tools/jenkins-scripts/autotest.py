@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import os
 import sys
 import subprocess
@@ -26,14 +25,14 @@ def autotest(type):
 		soc.connect((HOST_ADNROID, PORT))
 	if type == TYPE_IOS:
 		soc.connect((HOST_IOS, PORT))
-	time.sleep(1)
+	time.sleep(3)
 	print 'autotest run:'
 	soc.send('autotest run\r\n')
 
 	while True:
 		buf = soc.recv(64)
 		print buf
-	
+
 	print 'test end and close socket.'
 	soc.close()
 
@@ -66,8 +65,8 @@ def MAC_BUILD():
 		if not cleanProj():
 			print '**CLEAN FAILED**'
 		if not buildProj():
-			print '**BUILD FAILED**'
-			return False
+			cleanProj()
+			buildProj()
 		if not openProj():
 			return False
 		time.sleep(sleep_time)
@@ -119,10 +118,8 @@ def ANDROID_BUILD():
 #----------------autotest-android build and run end----------------#
 
 def main():
-	print 'will build mac project.'
 	suc_build_mac = MAC_BUILD()
-	#print 'will build android project.'
-	#suc_build_android = ANDROID_BUILD()
+	suc_build_android = ANDROID_BUILD()
 	if suc_build_mac:
 		autotest(TYPE_MAC)
 	if suc_build_android:
@@ -139,4 +136,3 @@ if __name__ == '__main__':
         sys_ret = 1
     finally:
         sys.exit(sys_ret)
-
