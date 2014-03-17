@@ -128,9 +128,10 @@ protected:
     bool _running;
     bool _endThread;
 
-    bool _file_uploading;
-    ssize_t _upload_file_size;
-    std::string _upload_file_name;
+    bool _fileUploading;
+    ssize_t _uploadFileSize;
+    std::string _uploadFileName;
+    std::string _writablePath;
 
     std::map<std::string, Command> _commands;
 
