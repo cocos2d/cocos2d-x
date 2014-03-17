@@ -418,6 +418,9 @@
     <ClCompile Include="..\base\etc1.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\pvr.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
     <ClCompile Include="..\base\s3tc.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -990,6 +993,9 @@
     </ClInclude>
     <ClInclude Include="..\base\etc1.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\pvr.h">
+      <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\base\firePngData.h">
       <Filter>base</Filter>
