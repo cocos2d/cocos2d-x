@@ -463,27 +463,26 @@ static int32_t handle_touch_input(AInputEvent *event) {
 */
 static int32_t handle_key_input(AInputEvent *event)
 {
-    if (AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_UP)
-    {
-        auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+    auto isPressed  = AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN;
+    auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+    auto key_code   = AKeyEvent_getKeyCode(event);
 
-        switch (AKeyEvent_getKeyCode(event))
+    switch (AKeyEvent_getKeyCode(event))
+    {
+    case AKEYCODE_BACK: 
         {
-        case AKEYCODE_BACK: 
-            {
-                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, false);
-                dispatcher->dispatchEvent(&event);
-            }
-            return 1;
-        case AKEYCODE_MENU:
-            {
-                cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
-                dispatcher->dispatchEvent(&event);
-            }
-            return 1;
-        default:
-            break;
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, isPressed);
+            dispatcher->dispatchEvent(&event);
         }
+        return 1;
+    case AKEYCODE_MENU:
+        {
+            cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, isPressed);
+            dispatcher->dispatchEvent(&event);
+        }
+        return 1;
+    default:
+        break;
     }
     return 0;
 }
