@@ -32,7 +32,7 @@ def autotest(type):
 	while True:
 		buf = soc.recv(64)
 		print buf
-
+	
 	print 'test end and close socket.'
 	soc.close()
 
