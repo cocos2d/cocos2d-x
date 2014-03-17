@@ -40,8 +40,9 @@ bool HelloWorld::init()
                                            "CloseSelected.png",
                                            CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
     
-	closeItem->setPosition(Point(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
+    // the anchor point of the close image is in the bottom-right corner
+    closeItem->setAnchorPoint(Point(1, 0));
+    closeItem->setPosition(Point(origin.x + visibleSize.width, origin.y));
 
     // create menu, it's an autorelease object
     auto menu = Menu::create(closeItem, NULL);
@@ -63,7 +64,7 @@ bool HelloWorld::init()
     // add the label as a child to this layer
     this->addChild(label, 1);
 
-    // add "HelloWorld" splash screen"
+    // add "HelloWorld" splash screen
     auto sprite = Sprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
