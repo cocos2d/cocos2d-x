@@ -327,13 +327,13 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 {
 	const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
 
-	_label = LabelTTF::create("", "", 0.0f);
+	_label = Label::create();
     _label->setAnchorPoint(Point(0, 0.5f));
     _label->setColor(Color3B::WHITE);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
 	
-    _labelPlaceHolder = LabelTTF::create("", "", 0.0f);
+    _labelPlaceHolder = Label::create();
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
     _labelPlaceHolder->setColor(Color3B::GRAY);
@@ -363,11 +363,9 @@ void EditBoxImplIOS::setInactiveText(const char* pText)
 
     // Clip the text width to fit to the text box
     float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
-    Rect clippingRect = _label->getTextureRect();
-    if(clippingRect.size.width > fMaxWidth)
-    {
-        clippingRect.size.width = fMaxWidth;
-        _label->setTextureRect(clippingRect);
+    Size labelSize = _label->getContentSize();
+    if(labelSize.width > fMaxWidth) {
+        _label->setDimensions(fMaxWidth,labelSize.height);
     }
 }
 
@@ -574,7 +572,7 @@ static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bI
         screenPos.x = screenPos.x / 2.0f;
         screenPos.y = screenPos.y / 2.0f;
     }
-    CCLOG("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
+    CCLOGINFO("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
 }
 

@@ -34,6 +34,20 @@ set(CS_SRC
   TriggerBase.cpp
   TriggerMng.cpp
   TriggerObj.cpp
+  WidgetReader/WidgetReader.cpp
+  WidgetReader/ButtonReader/ButtonReader.cpp
+  WidgetReader/CheckBoxReader/CheckBoxReader.cpp
+  WidgetReader/ImageViewReader/ImageViewReader.cpp
+  WidgetReader/LayoutReader/LayoutReader.cpp
+  WidgetReader/ListViewReader/ListViewReader.cpp
+  WidgetReader/LoadingBarReader/LoadingBarReader.cpp
+  WidgetReader/PageViewReader/PageViewReader.cpp
+  WidgetReader/ScrollViewReader/ScrollViewReader.cpp
+  WidgetReader/SliderReader/SliderReader.cpp
+  WidgetReader/TextAtlasReader/TextAtlasReader.cpp
+  WidgetReader/TextBMFontReader/TextBMFontReader.cpp
+  WidgetReader/TextFieldReader/TextFieldReader.cpp
+  WidgetReader/TextReader/TextReader.cpp
 )
 
 include_directories(

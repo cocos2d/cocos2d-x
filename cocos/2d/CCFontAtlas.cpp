@@ -27,23 +27,30 @@
 #include "CCFontFreeType.h"
 #include "ccUTF8.h"
 #include "CCDirector.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
+#include "CCEventType.h"
 
 NS_CC_BEGIN
 
 const int FontAtlas::CacheTextureWidth = 1024;
 const int FontAtlas::CacheTextureHeight = 1024;
+const char* FontAtlas::EVENT_PURGE_TEXTURES = "__cc_FontAtlasPurgeTextures";
 
-FontAtlas::FontAtlas(Font &theFont) : 
-_font(&theFont),
-_currentPageData(nullptr)
+FontAtlas::FontAtlas(Font &theFont) 
+: _font(&theFont)
+, _currentPageData(nullptr)
+, _fontAscender(0)
+, _toForegroundListener(nullptr)
+, _toBackgroundListener(nullptr)
 {
     _font->retain();
 
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf)
     {
-        _currentPageLineHeight = _font->getFontMaxHeight();
-        _commonLineHeight = _currentPageLineHeight * 0.8f;
+        _commonLineHeight = _font->getFontMaxHeight();
+        _fontAscender = fontTTf->getFontAscender();
         auto texture = new Texture2D;
         _currentPage = 0;
         _currentPageOrigX = 0;
@@ -60,15 +67,40 @@ _currentPageData(nullptr)
             _currentPageDataSize *= 2;
         }    
 
-        _currentPageData = new unsigned char[_currentPageDataSize];       
+        _currentPageData = new unsigned char[_currentPageDataSize];
         memset(_currentPageData, 0, _currentPageDataSize);  
         addTexture(texture,0);
         texture->release();
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+        _toBackgroundListener = EventListenerCustom::create(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(FontAtlas::listenToBackground, this));
+        eventDispatcher->addEventListenerWithFixedPriority(_toBackgroundListener, 1);
+        _toForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(FontAtlas::listenToForeground, this));
+        eventDispatcher->addEventListenerWithFixedPriority(_toForegroundListener, 1);
+#endif
     }
 }
 
 FontAtlas::~FontAtlas()
 {
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
+    if (fontTTf)
+    {
+        auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+        if (_toForegroundListener)
+        {
+            eventDispatcher->removeEventListener(_toForegroundListener);
+            _toForegroundListener = nullptr;
+        }
+        if (_toBackgroundListener)
+        {
+            eventDispatcher->removeEventListener(_toBackgroundListener);
+            _toBackgroundListener = nullptr;
+        }
+    }
+#endif
+
     _font->release();
     relaseTextures();
 
@@ -81,6 +113,82 @@ void FontAtlas::relaseTextures()
     {
         item.second->release();
     }
+    _atlasTextures.clear();
+}
+
+void FontAtlas::purgeTexturesAtlas()
+{
+    FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
+    if (fontTTf && _atlasTextures.size() > 1)
+    {
+        for( auto &item: _atlasTextures)
+        {
+            if (item.first != 0)
+            {
+                item.second->release();
+            }
+        }
+        auto temp = _atlasTextures[0];
+        _atlasTextures.clear();
+        _atlasTextures[0] = temp;
+
+        _fontLetterDefinitions.clear();
+        memset(_currentPageData,0,_currentPageDataSize);
+        _currentPage = 0;
+        _currentPageOrigX = 0;
+        _currentPageOrigY = 0;
+
+        auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+        eventDispatcher->dispatchCustomEvent(EVENT_PURGE_TEXTURES,this);
+    }
+}
+
+void FontAtlas::listenToBackground(EventCustom *event)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
+    if (fontTTf && _atlasTextures.size() > 1)
+    {
+        for( auto &item: _atlasTextures)
+        {
+            if (item.first != 0)
+            {
+                item.second->release();
+            }
+        }
+        auto temp = _atlasTextures[0];
+        _atlasTextures.clear();
+        _atlasTextures[0] = temp;
+
+        _fontLetterDefinitions.clear();
+        memset(_currentPageData,0,_currentPageDataSize);
+        _currentPage = 0;
+        _currentPageOrigX = 0;
+        _currentPageOrigY = 0;
+    }
+#endif
+}
+
+void FontAtlas::listenToForeground(EventCustom *event)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
+    if (fontTTf)
+    {
+        if (_currentPageOrigX == 0 && _currentPageOrigY == 0)
+        {
+            auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+            eventDispatcher->dispatchCustomEvent(EVENT_PURGE_TEXTURES,this);
+        }
+        else
+        {
+            auto contentSize = Size(CacheTextureWidth,CacheTextureHeight);
+            auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8;
+
+            _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+        }
+    }
+#endif
 }
 
 void FontAtlas::addLetterDefinition(const FontLetterDefinition &letterDefinition)
@@ -106,10 +214,10 @@ bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontL
 
 bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 {
-    if(_currentPageData == nullptr)
+    FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
+    if(fontTTf == nullptr)
         return false;
 
-    FontFreeType* fontTTf = (FontFreeType*)_font;
     int length = cc_wcslen(utf16String);
 
     float offsetAdjust = _letterPadding / 2;  
@@ -139,21 +247,16 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.width            = tempRect.size.width + _letterPadding;
                 tempDef.height           = tempRect.size.height + _letterPadding;
                 tempDef.offsetX          = tempRect.origin.x + offsetAdjust;
-                tempDef.offsetY          = _commonLineHeight + tempRect.origin.y - offsetAdjust;
+                tempDef.offsetY          = _fontAscender + tempRect.origin.y - offsetAdjust;
 
                 if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
                 {
-                    _currentPageOrigY += _currentPageLineHeight;
+                    _currentPageOrigY += _commonLineHeight;
                     _currentPageOrigX = 0;
-                    if(_currentPageOrigY + _currentPageLineHeight >= CacheTextureHeight)
+                    if(_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
                     {             
                         _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
                         _currentPageOrigY = 0;
-
-                        delete []_currentPageData;
-                        _currentPageData = new unsigned char[_currentPageDataSize];
-                        if(_currentPageData == nullptr)
-                            return false;
                         memset(_currentPageData, 0, _currentPageDataSize);
                         _currentPage++;
                         auto tex = new Texture2D;

@@ -364,6 +364,9 @@ struct ScriptEvent
 class CC_DLL ScriptEngineProtocol
 {
 public:
+    ScriptEngineProtocol()
+    {};
+    
     /**
      * @js NA
      * @lua NA
@@ -434,6 +437,9 @@ public:
      * @lua NA
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
+    virtual bool isCalledFromScript() { return false; };
     
     enum class ConfigType
     {

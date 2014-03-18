@@ -13,8 +13,31 @@ if [ -z "$PYTHON_BIN" ]; then
     export PYTHON_BIN=/usr/bin/python
 fi
 
+if [ "$GEN_BINDING"x = "YES"x ]; then
+    # Re-generation of the javascript bindings can perform push of the new
+    # version back to github.  We don't do this for pull requests, or if
+    # GH_USER/GH_EMAIL/GH_PASSWORD environment variables are not set correctly
+    # by the encoded variables in the .travis.yml file.  (e.g. if cloned repo's
+    # want to use travis).
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        exit 0
+    fi
+    if [ -z "${GH_EMAIL}" ]; then
+        echo "GH_EMAIL not set"
+        exit 1
+    fi
+    if [ -z "${GH_USER}" ]; then
+        echo "GH_USER not set"
+        exit 1
+    fi
+    if [ -z "${GH_PASSWORD}" ]; then
+        echo "GH_USER not set"
+        exit 1
+    fi
 
-if [ "$GEN_COCOS_FILES"x = "YES"x ]; then
+    cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-bindings.sh
+elif [ "$GEN_COCOS_FILES"x = "YES"x ]; then
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         exit 0
     fi
@@ -39,17 +62,18 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-bindings.sh
     ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT
 
     # Create a directory for temporary objects
-    # mkdir android_build_objs
+    mkdir android_build_objs
 
-    # PROJECTS=("test-cpp" "test-javascript" "test-lua")
-    # for i in ${PROJECTS[*]}; do
-    #     ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/tests/$i/proj.android/obj
-    # done
+    PROJECTS=("cpp-empty-test" "cpp-tests" "lua-empty-test/project" "lua-tests/project")
+    for i in ${PROJECTS[*]}; do
+        ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/tests/$i/proj.android/obj
+    done
 
     # Build all samples
     echo "Building all samples ..."
@@ -66,6 +90,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-bindings.sh
     ./generate-cocosfiles.sh
 
     echo "Building cocos2d-x"
@@ -79,6 +104,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes
     echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-bindings.sh
     ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT/build
@@ -88,6 +114,7 @@ elif [ "$PLATFORM"x = "emscripten"x ]; then
     EMCC_DEBUG=1 make PLATFORM=emscripten -j 8
 elif [ "$PLATFORM"x = "ios"x ]; then
     cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-bindings.sh
     ./generate-cocosfiles.sh
 
     cd $COCOS2DX_ROOT

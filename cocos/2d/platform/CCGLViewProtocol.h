@@ -58,8 +58,6 @@ enum class ResolutionPolicy
 
 NS_CC_BEGIN
 
-class EGLTouchDelegate;
-
 /**
  * @addtogroup platform
  * @{
@@ -186,6 +184,8 @@ public:
     ResolutionPolicy getResolutionPolicy() const { return _resolutionPolicy; }
 
 protected:
+    void updateDesignResolutionSize();
+    
     void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[]);
 
     // real screen size

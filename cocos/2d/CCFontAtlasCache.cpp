@@ -30,10 +30,19 @@
 #include "CCFontFNT.h"
 #include "CCFontFreeType.h"
 #include "CCFontCharMap.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
 std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
+
+void FontAtlasCache::purgeCachedData()
+{
+    for (auto & atlas:_atlasMap)
+    {
+        atlas.second->purgeTexturesAtlas();
+    }
+}
 
 FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 {  
@@ -45,7 +54,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
     int fontSize = config.fontSize;
     if (useDistanceField)
     {
-        fontSize = Label::DefultFontSize;
+        fontSize = Label::DistanceFieldFontSize / CC_CONTENT_SCALE_FACTOR();
     }
 
     std::string atlasName = generateFontName(config.fontFilePath, fontSize, GlyphCollection::DYNAMIC, useDistanceField);
@@ -58,7 +67,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 
     if ( !tempAtlas )
     {
-        FontFreeType *font = FontFreeType::create(config.fontFilePath, fontSize, config.glyphs, config.customGlyphs,useDistanceField,config.outlineSize);
+        FontFreeType *font = FontFreeType::create(config.fontFilePath, fontSize * CC_CONTENT_SCALE_FACTOR(), config.glyphs, config.customGlyphs,useDistanceField,config.outlineSize);
         if (font)
         {
             tempAtlas = font->createFontAtlas();

@@ -777,6 +777,9 @@ Developers:
         
     Wilhansen
         Fixed a bug that spine::Skeleton would not be updated after re-adding to scene.
+        
+    huangml
+        Fixed a bug that Node::removeAllChildrenWithCleanup() does not remove PhysicsBody.
     
 Retired Core Developers:
     WenSheng Yang

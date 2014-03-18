@@ -214,7 +214,7 @@ static void _log(const char *format, va_list args)
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), buf, sizeof(buf), NULL, FALSE);
+    WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), NULL, FALSE);
     printf("%s", buf);
 
 #else
@@ -252,6 +252,8 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
+,_fileUploading(false)
+,_uploadFileSize(0)
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
@@ -290,6 +292,7 @@ Console::Console()
 	{
 		_commands.insert ( std::pair<std::string,Command>(commands[i].name,commands[i]) );
 	}
+	_writablePath = FileUtils::getInstance()->getWritablePath();
 }
 
 Console::~Console()
@@ -759,9 +762,9 @@ void Console::commandUpload(int fd, const std::string& args)
     auto argv = split(args,' ');
     if(argv.size() == 2)
     {
-        _upload_file_name = argv[0];
-        _upload_file_size = std::atoi(argv[1].c_str());
-        _file_uploading = true;        
+        _uploadFileName = argv[0];
+        _uploadFileSize = std::atoi(argv[1].c_str());
+        _fileUploading = true;        
     }
     else 
     {
@@ -814,7 +817,6 @@ bool Console::parseCommand(int fd)
         const char err[] = "Unknown command. Type 'help' for options\n";
         send(fd, err, sizeof(err),0);
     }
-
     sendPrompt(fd);
 
     return true;
@@ -854,10 +856,7 @@ ssize_t Console::readfile(int fd, std::string& file_name, int file_size)
     ssize_t n, rc;
     char c;
 
-    auto sharedFileUtils = FileUtils::getInstance();
-    
-    std::string writablePath = sharedFileUtils->getWritablePath();
-    std::string fileName = writablePath+file_name;
+    std::string fileName = _writablePath+file_name;
     
     FILE* fp = fopen(fileName.c_str(), "wb");
     if(!fp)
@@ -971,7 +970,7 @@ void Console::loop()
             for(const auto &fd: _fds) {
                 if(FD_ISSET(fd,&copy_set)) 
                 {
-                    if(!_file_uploading)
+                    if(!_fileUploading)
                     {
                         if( ! parseCommand(fd) )
                         {
@@ -980,8 +979,8 @@ void Console::loop()
                     }
                     else
                     {
-                        readfile(fd, _upload_file_name, _upload_file_size);
-                        _file_uploading = false;
+                        readfile(fd, _uploadFileName, _uploadFileSize);
+                        _fileUploading = false;
 
                     }
                     if(--nready <= 0)

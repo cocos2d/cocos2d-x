@@ -1,0 +1,10 @@
+{
+    "ndk_module_path" :[
+        "../cocos2d",
+        "../cocos2d/cocos",
+        "../cocos2d/external"
+    ],
+    "copy_to_assets" :[
+        "../Resources/"
+    ]
+}

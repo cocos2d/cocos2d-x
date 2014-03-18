@@ -162,24 +162,26 @@ FontAtlas * FontFreeType::createFontAtlas()
 
 int * FontFreeType::getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const
 {
-    if (!text)
-        return 0;
+    if (!text || !_fontRef)
+        return nullptr;
     
     outNumLetters = cc_wcslen(text);
 
     if (!outNumLetters)
-        return 0;
+        return nullptr;
     
     int *sizes = new int[outNumLetters];
     if (!sizes)
-        return 0;
-    
-    for (int c = 0; c < outNumLetters; ++c)
+        return nullptr;
+    memset(sizes,0,outNumLetters * sizeof(int));
+
+    bool hasKerning = FT_HAS_KERNING( _fontRef ) != 0;
+    if (hasKerning)
     {
-        if (c < (outNumLetters-1))
-            sizes[c] = getHorizontalKerningForChars(text[c], text[c+1]);
-        else
-            sizes[c] = 0;
+        for (int c = 1; c < outNumLetters; ++c)
+        {
+            sizes[c] = getHorizontalKerningForChars(text[c-1], text[c]);
+        }
     }
     
     return sizes;
@@ -187,14 +189,6 @@ int * FontFreeType::getHorizontalKerningForTextUTF16(unsigned short *text, int &
 
 int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
 {
-    if (!_fontRef)
-        return 0;
-
-    bool hasKerning = FT_HAS_KERNING( _fontRef ) != 0;
-    
-    if (!hasKerning)
-        return 0;
-    
     // get the ID to the char we need
     int glyphIndex1 = FT_Get_Char_Index(_fontRef, firstChar);
     
@@ -218,6 +212,11 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
 int FontFreeType::getFontMaxHeight() const
 {
     return (static_cast<int>(_fontRef->size->metrics.height >> 6));
+}
+
+int FontFreeType::getFontAscender() const
+{
+    return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
 unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight, Rect &outRect,int &xAdvance)
