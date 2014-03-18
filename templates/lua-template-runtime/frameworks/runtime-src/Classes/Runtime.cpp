@@ -39,6 +39,7 @@ THE SOFTWARE.
 using namespace std;
 using namespace cocos2d;
 
+std::string g_resourcePath;
 extern string getIPAddress();
 string getRuntimeVersion()
 {
@@ -216,7 +217,6 @@ public:
         _listenfd = -1;
         _running = false;
         _endThread = false;
-		_writepath = FileUtils::getInstance()->getWritablePath();
     }
     
 	bool listenOnTCP(int port);
@@ -235,7 +235,6 @@ private:
     fd_set _read_set;
     bool _running;
     bool _endThread;
-	std::string _writepath;
 };
 
 bool FileServer::listenOnTCP(int port)
@@ -315,7 +314,7 @@ void FileServer::stop()
 	}
 }
 
-string& replace_all(string& str,const string& old_value,const string& new_value)
+string& replaceAll(string& str,const string& old_value,const string& new_value)
 {
 	while(true)
 	{
@@ -373,9 +372,8 @@ bool FileServer::recv_file(int fd)
 	}
     
     char fullfilename[1024]={0};
-	sprintf(fullfilename,"%s%s",_writepath.c_str(),buffer);
+	sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),buffer);
     string file(fullfilename);
-	file=replace_all(file,"\\","/");
 	sprintf(fullfilename, "%s", file.c_str());
 	cocos2d::log("recv fullfilename = %s",fullfilename);
     CreateDir(file.substr(0,file.find_last_of("/")).c_str());
@@ -494,8 +492,6 @@ class ConsoleCustomCommand
 public:
     ConsoleCustomCommand():_fileserver(nullptr)
     {
-        _writepath = FileUtils::getInstance()->getWritablePath();
-		_writepath=replace_all(_writepath,"\\","/");
         cocos2d::Console *_console = Director::getInstance()->getConsole();
         static struct Console::Command commands[] = {
             {"shutdownapp","exit runtime app",std::bind(&ConsoleCustomCommand::onShutDownApp, this, std::placeholders::_1, std::placeholders::_2)},
@@ -513,6 +509,7 @@ public:
     }
     ~ConsoleCustomCommand()
     {
+		Director::getInstance()->getConsole()->stop();
         _fileserver->stop();
         if (_fileserver) {
             delete _fileserver;
@@ -563,19 +560,32 @@ private:
 
 void startRuntime()
 {
+	vector<string> oldSearchPathArray;
+    oldSearchPathArray=FileUtils::getInstance()->getSearchPaths();
+    vector<string> newSearchPathArray;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	if (g_resourcePath.empty())
+	{
+		g_resourcePath = FileUtils::getInstance()->getWritablePath();
+	}
+
+#else
+	g_resourcePath = FileUtils::getInstance()->getWritablePath();
+    
+#endif
+    
+    g_resourcePath=replaceAll(g_resourcePath,"\\","/");
+    newSearchPathArray.push_back(g_resourcePath);
+    FileUtils::getInstance()->setSearchPaths(newSearchPathArray);
+	for (unsigned i = 0; i < oldSearchPathArray.size(); i++)
+	{
+		FileUtils::getInstance()->addSearchPath(oldSearchPathArray[i]);
+	}
+	static ConsoleCustomCommand s_customCommand;
 	auto engine = LuaEngine::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	luaopen_debugger(engine->getLuaStack()->getLuaState());
-	static ConsoleCustomCommand s_customCommand;
-	vector<string> searchPathArray;
-	searchPathArray=FileUtils::getInstance()->getSearchPaths();
-	vector<string> writePathArray;
-	writePathArray.push_back(FileUtils::getInstance()->getWritablePath());
-	FileUtils::getInstance()->setSearchPaths(writePathArray);
-	for (unsigned i = 0; i < searchPathArray.size(); i++)
-	{
-		FileUtils::getInstance()->addSearchPath(searchPathArray[i]);
-	}
+	
     auto scene = Scene::create();
     auto layer = new ConnectWaitLayer();
     layer->autorelease();
