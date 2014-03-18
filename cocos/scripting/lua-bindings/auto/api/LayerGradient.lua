@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LayerGradient
+
 --------------------------------
 -- @function [parent=#LayerGradient] getStartColor 
 -- @param self
@@ -89,4 +90,9 @@
 -- @param #point_table point
 -- @return LayerGradient#LayerGradient ret (retunr value: cc.LayerGradient)
 
+--------------------------------
+-- @function [parent=#LayerGradient] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
 return nil

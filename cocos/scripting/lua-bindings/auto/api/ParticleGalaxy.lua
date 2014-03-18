@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleGalaxy
+
 --------------------------------
 -- @function [parent=#ParticleGalaxy] create 
 -- @param self

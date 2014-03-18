@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsContact
+
 --------------------------------
 -- @function [parent=#PhysicsContact] getContactData 
 -- @param self

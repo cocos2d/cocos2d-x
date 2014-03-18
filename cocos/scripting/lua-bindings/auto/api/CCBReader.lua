@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module CCBReader
+
 --------------------------------
 -- @function [parent=#CCBReader] addOwnerOutletName 
 -- @param self

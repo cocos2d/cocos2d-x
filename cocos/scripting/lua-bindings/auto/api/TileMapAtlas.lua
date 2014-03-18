@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TileMapAtlas
+
 --------------------------------
 -- @function [parent=#TileMapAtlas] initWithTileFile 
 -- @param self
