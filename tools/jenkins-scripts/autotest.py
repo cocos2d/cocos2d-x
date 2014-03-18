@@ -6,7 +6,7 @@ import socket
 import time
 
 HOST_MAC = 'localhost'
-HOST_ADNROID = '10.10.30.64'
+HOST_ADNROID = '10.10.40.64'
 HOST_IOS = '10.10.30.61'
 PORT = 5678
 
@@ -105,12 +105,19 @@ def ANDROID_BUILD():
 	def buildProj():
 		infoBuild = os.system('./build/android-build.py  -p 13 cpp-tests')
 		print 'infoBuild cpp_tests: ', infoBuild
-		infoBuild = os.system('ant -buildfile '+PATH_ANDROID_SRC+' debug install')
+		infoBuild = os.system('ant -buildfile '+PATH_ANDROID_SRC+' debug')
 		print 'infoBuild: ', infoBuild
 		if infoBuild != 0:
 			print 'build **BUILD FAILED**'
 		time.sleep(sleep_time)
 		return infoBuild
+	def installProj():
+		cmd = 'adb install '+PATH_ANDROID_SRC+'bin/CppTests-debug.apk'
+		infoInstall = os.system(cmd)
+		print 'infoInstall:', infoInstall
+		if infoInstall != 0:
+			print 'install **INSTALL FAILED**'
+		return infoInstall
 	def openProj():
 		cmd = 'adb shell am start -n org.cocos2dx.cpp_tests/org.cocos2dx.cpp_tests.Cocos2dxActivity'
 		print 'cmd: ', cmd
@@ -126,6 +133,7 @@ def ANDROID_BUILD():
 		cleanProj()
 		updateProperty()
 		buildProj()
+		installProj()
 		return openProj()
 	return buildAndRun()
 #----------------autotest-android build and run end----------------#
