@@ -16,6 +16,21 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+	LPWSTR *szArgList=nullptr;
+	int argCount=0;
+
+	szArgList = CommandLineToArgvW(GetCommandLine(),&argCount);
+	if (argCount >=2 )
+	{
+		int iLen = 2*wcslen(szArgList[1]);    
+		char* chRtn = new char[iLen+1];    
+		wcstombs(chRtn,szArgList[1],iLen+1);
+		extern std::string g_resourcePath;
+		g_resourcePath = chRtn;
+		delete [] chRtn;
+	}
+	LocalFree(szArgList);
+
 #ifdef USE_WIN32_CONSOLE
     AllocConsole();
     freopen("CONIN$", "r", stdin);

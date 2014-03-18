@@ -63,6 +63,13 @@ using namespace cocos2d;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    NSArray *args = [[NSProcessInfo processInfo] arguments];
+
+    if (args!=nullptr && [args count]>=2) {
+        extern std::string g_resourcePath;
+        g_resourcePath = [[args objectAtIndex:1]UTF8String];
+    }
+
     AppDelegate app;
 	[self createSimulator:[NSString stringWithUTF8String:"HelloLua"] viewWidth:960 viewHeight:640 factor:1.0];
     Application::getInstance()->run();
