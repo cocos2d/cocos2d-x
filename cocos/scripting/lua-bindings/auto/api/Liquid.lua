@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Liquid
+
 --------------------------------
 -- @function [parent=#Liquid] getAmplitudeRate 
 -- @param self
@@ -29,6 +30,16 @@
 -- @param #unsigned int int
 -- @param #float float
 -- @return Liquid#Liquid ret (return value: cc.Liquid)
+        
+--------------------------------
+-- @function [parent=#Liquid] clone 
+-- @param self
+-- @return Liquid#Liquid ret (return value: cc.Liquid)
+        
+--------------------------------
+-- @function [parent=#Liquid] update 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Liquid] Liquid 

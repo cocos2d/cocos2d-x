@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleSun
+
 --------------------------------
 -- @function [parent=#ParticleSun] create 
 -- @param self

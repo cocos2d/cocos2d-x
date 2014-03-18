@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TableViewCell
+
 --------------------------------
 -- @function [parent=#TableViewCell] reset 
 -- @param self

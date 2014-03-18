@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionSlideInB
+
 --------------------------------
 -- @function [parent=#TransitionSlideInB] action 
 -- @param self

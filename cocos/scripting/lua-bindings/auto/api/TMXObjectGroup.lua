@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TMXObjectGroup
+
 --------------------------------
 -- @function [parent=#TMXObjectGroup] setPositionOffset 
 -- @param self

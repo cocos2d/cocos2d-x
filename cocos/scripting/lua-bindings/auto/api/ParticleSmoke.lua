@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleSmoke
+
 --------------------------------
 -- @function [parent=#ParticleSmoke] create 
 -- @param self

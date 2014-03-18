@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionMoveInT
+
 --------------------------------
 -- @function [parent=#TransitionMoveInT] create 
 -- @param self

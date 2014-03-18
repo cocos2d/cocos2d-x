@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventCustom
+
 --------------------------------
 -- @function [parent=#EventCustom] getEventName 
 -- @param self

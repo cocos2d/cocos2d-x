@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Skin
+
 --------------------------------
 -- @function [parent=#Skin] getBone 
 -- @param self
@@ -52,6 +53,22 @@
 -- @param self
 -- @param #string str
 -- @return Skin#Skin ret (return value: ccs.Skin)
+        
+--------------------------------
+-- @function [parent=#Skin] updateTransform 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Skin] getNodeToWorldTransform 
+-- @param self
+-- @return kmMat4#kmMat4 ret (return value: kmMat4)
+        
+--------------------------------
+-- @function [parent=#Skin] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Skin] Skin 
