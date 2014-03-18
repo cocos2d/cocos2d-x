@@ -105,6 +105,7 @@ static bool isFloat( std::string myString ) {
     // Check the entire string was consumed and if either failbit or badbit is set
     return iss.eof() && !iss.fail(); 
 }
+
 // helper free functions
 
 // dprintf() is not defined in Android
@@ -213,7 +214,7 @@ static void _log(const char *format, va_list args)
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), buf, sizeof(buf), NULL, FALSE);
+    WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), NULL, FALSE);
     printf("%s", buf);
 
 #else
@@ -251,6 +252,8 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
+,_fileUploading(false)
+,_uploadFileSize(0)
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
@@ -281,7 +284,7 @@ Console::Console()
         { "texture", "Flush or print the TextureCache info. Args: [flush | ] ", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
         { "director", "director commands, type -h or [director help] to list supported directives", std::bind(&Console::commandDirector, this, std::placeholders::_1, std::placeholders::_2) },
         { "touch", "simulate touch event via console, type -h or [touch help] to list supported directives", std::bind(&Console::commandTouch, this, std::placeholders::_1, std::placeholders::_2) },
-
+        { "upload", "upload file. Args: [filename filesize]", std::bind(&Console::commandUpload, this, std::placeholders::_1, std::placeholders::_2) },
     };
 
      ;
@@ -289,6 +292,7 @@ Console::Console()
 	{
 		_commands.insert ( std::pair<std::string,Command>(commands[i].name,commands[i]) );
 	}
+	_writablePath = FileUtils::getInstance()->getWritablePath();
 }
 
 Console::~Console()
@@ -753,6 +757,22 @@ void Console::commandTouch(int fd, const std::string& args)
     }
 }
 
+void Console::commandUpload(int fd, const std::string& args)
+{
+    auto argv = split(args,' ');
+    if(argv.size() == 2)
+    {
+        _uploadFileName = argv[0];
+        _uploadFileSize = std::atoi(argv[1].c_str());
+        _fileUploading = true;        
+    }
+    else 
+    {
+        const char msg[] = "upload: invalid arguments.\n";
+        send(fd, msg, sizeof(msg) - 1, 0);
+    }
+
+}
 bool Console::parseCommand(int fd)
 {
     char buf[512];
@@ -797,7 +817,6 @@ bool Console::parseCommand(int fd)
         const char err[] = "Unknown command. Type 'help' for options\n";
         send(fd, err, sizeof(err),0);
     }
-
     sendPrompt(fd);
 
     return true;
@@ -829,6 +848,45 @@ ssize_t Console::readline(int fd, char* ptr, int maxlen)
     }
 
     *ptr = 0;
+    return n;
+}
+
+ssize_t Console::readfile(int fd, std::string& file_name, int file_size)
+{
+    ssize_t n, rc;
+    char c;
+
+    std::string fileName = _writablePath+file_name;
+    
+    FILE* fp = fopen(fileName.c_str(), "wb");
+    if(!fp)
+    {
+        const char err[] = "can't create file!\n";
+        send(fd, err, sizeof(err),0);
+        return 0;
+    }
+
+    // if (fp)
+    // {
+    //     size_t ret = fwrite(szBuf, 1, strl6en(szBuf), fp);
+    //     CCASSERT(ret != 0, "fwrite function returned zero value");
+    //     fclose(fp);
+    //     if (ret != 0)
+    //         log("Writing file to writable path succeed.");
+    // }
+    
+    for( n=0; n<file_size; n++ ) {
+        if( (rc = recv(fd, &c, 1, 0)) ==1 ) {
+            fwrite(&c, 1, 1, fp);
+        } else if( rc == 0 ) {
+            return 0;
+        } else if( errno == EINTR ) {
+            continue;
+        } else {
+            return -1;
+        }
+    }
+    fclose(fp);
     return n;
 }
 
@@ -910,9 +968,20 @@ void Console::loop()
             /* data from client */
             std::vector<int> to_remove;
             for(const auto &fd: _fds) {
-                if(FD_ISSET(fd,&copy_set)) {
-                    if( ! parseCommand(fd) ) {
-                        to_remove.push_back(fd);
+                if(FD_ISSET(fd,&copy_set)) 
+                {
+                    if(!_fileUploading)
+                    {
+                        if( ! parseCommand(fd) )
+                        {
+                            to_remove.push_back(fd);
+                        }
+                    }
+                    else
+                    {
+                        readfile(fd, _uploadFileName, _uploadFileSize);
+                        _fileUploading = false;
+
                     }
                     if(--nready <= 0)
                         break;

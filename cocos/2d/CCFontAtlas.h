@@ -34,6 +34,8 @@ NS_CC_BEGIN
 //fwd
 class Font;
 class Texture2D;
+class EventCustom;
+class EventListenerCustom;
 
 struct FontLetterDefinition
 {
@@ -52,6 +54,9 @@ struct FontLetterDefinition
 class CC_DLL FontAtlas : public Ref
 {
 public:
+    static const int CacheTextureWidth;
+    static const int CacheTextureHeight;
+    static const char* EVENT_PURGE_TEXTURES;
     /**
      * @js ctor
      */
@@ -68,13 +73,28 @@ public:
     bool prepareLetterDefinitions(unsigned short  *utf16String);
 
     inline const std::unordered_map<int, Texture2D*>& getTextures() const{ return _atlasTextures;}
-    void  addTexture(Texture2D &texture, int slot);
+    void  addTexture(Texture2D *texture, int slot);
     float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
     
-    Texture2D& getTexture(int slot);
+    Texture2D* getTexture(int slot);
     const Font* getFont() const;
+
+    /** Listen "come to background" message, and clear the texture atlas.
+     It only has effect on Android.
+     */
+    void listenToBackground(EventCustom *event);
+
+    /** Listen "come to foreground" message and restore the texture atlas.
+     It only has effect on Android.
+     */
+    void listenToForeground(EventCustom *event);
     
+    /** Removes textures atlas.
+     It will purge the textures atlas and if multiple texture exist in the FontAtlas.
+     */
+    void purgeTexturesAtlas();
+
 private:
 
     void relaseTextures();
@@ -89,9 +109,12 @@ private:
     int _currentPageDataSize;
     float _currentPageOrigX;
     float _currentPageOrigY;
-    float _currentPageLineHeight;
     float _letterPadding;
     bool  _makeDistanceMap;
+
+    int _fontAscender;
+    EventListenerCustom* _toBackgroundListener;
+    EventListenerCustom* _toForegroundListener;
 };
 
 

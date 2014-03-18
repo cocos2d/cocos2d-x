@@ -1,48 +1,95 @@
-cocos2d-x-3.0rc0 Feb.?? 2014
+cocos2d-x-3.0? ?? 2014
+     [FIX]         Console: initialize some variables that are not initilized in destructor
+
+cocos2d-x-3.0rc0 March.14 2014
 [All]
      [NEW]          Action: RotateBy supports 3D rotations
      [NEW]          Bindings: Using python to automatically generate script bindings
-     [NEW]          Bindings: Added JS bindings support for Linux
+     [NEW]          ccConfig.h: removed support for CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+     [NEW]          Console: Added command: 'autotest run|main|next|back|restart'.
      [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
      [NEW]          Console: Added more commands: director resume|pause|stopanimation|startanimation.
-     [NEW]          Console: Added commands: touch tap|swipe to simulating touch events.
+     [NEW]          Console: Added command: 'touch tap|swipe' to simulating touch events.
+     [NEW]          Console: Added command: 'upload filename filesize' to upload a file to writable path.
      [NEW]          Director: Displays 'Vertices drawn' in the stats. Useful to measure performance.
+     [NEW]          GLProgram: initWithVertexShaderByteArray() -> initWithByteArrays()
+     [NEW]          GLProgram: initWithVertexShaderFilename()a -> initWithFilenames()
+     [NEW]          GLProgram: addAttribute() -> bindAttributeLocation()
+     [NEW]          Label: can custom shadow and outline size
+     [NEW]          Label: LabelTTF was re-implemented as a wrapper of Label
      [NEW]          Node: Added set/get Position3D() and set/get Rotation3D()
-                    Node: Calculates rotation X and Y correctly.
-                    Node: set/get VertexZ() -> set/get PositionZ()
-                    Node: setRotationX() -> setRotationSkewX()
-                    Node: setRotationY() -> setRotationSkewY()
-     [NEW]          Language: Added Dutch support.
-     [NEW]          Sprite: Added auto-culling support
+     [NEW]          Node: Calculates rotation X and Y correctly.
+     [NEW]          Node: set/get VertexZ() -> set/get PositionZ()
+     [NEW]          Node: setRotationX() -> setRotationSkewX()
+     [NEW]          Node: setRotationY() -> setRotationSkewY()
+     [NEW]          Node: visit() and draw() new arguments: Renderer, parentTransform, and whether or not the parentTransform has changed since the last frame
+     [NEW]          Language: Added Dutch support
+     [NEW]          Sprite: Added auto-culling support. Performance increased in about 100% when many sprites are outside the screen
+     [NEW]          Setup.sh: added script to set up environment needed for cocos2d-x
+     [NEW]          Scheduler: Added new API [ schedule(std::function, ...), schedule(member_func, ...) ], deprecated the old API [ scheduleSelector(member_func, ...) ]
      
-     [FIX]          Renderer: Expand textureID bit from 18bits to 32bits. Resolves probably crash on Linux / Android.
-     [FIX]          Potential crash by switching repeatly between HttpClientTest, WebSocketTest, SocketIOTest.
-     [FIX]          Can not use Node::setPhysicsBody to reset a physics body.
-     [FIX]          Improves physical performance.
-     [FIX]          Console crashes on Windows.
-     [FIX]          Changes namespace 'cocos2d::gui' to 'cocos2d::ui'.
-     [FIX]          State is changed to RESUME when game comes back to foreground if pause button was clicked in Interval Test
-     [FIX]          Object values (x, y, width and height) from TMXObjectGroup are incorrect.
-     [FIX]          Thread deadlock if new functions are added in callback of Scheduler:: performFunctionInCocosThread.
-     [FIX]          Refactored the codes of parsing pure xml layer format for tilemap.
-     [FIX]          Crash if invoking Director::end() on WINDOWS.
-     [FIX]          Character would not be aligned on the baseline when label using distance field.
-     [FIX]          Adds a macro to disable inserting script binding relevant codes.
-     [FIX]          Removing child from TMXLayer may cause crash.
-     [FIX]          Voice recognition input would cause crash on ios7.
-     [FIX]          Object which isn't in Vector would also be released when invoking Vector::eraseObject.
-     [FIX]          Potential crash when websocket connection closes.
-     [FIX]          No callback is invoked when websocket connection fails.
-     [FIX]          s3tc compressed textures with no mipmaps fail to be loaded.
-     [FIX]          Get rid of 'Object', rename it to 'Ref', delete non-reference stuff 'isEqual' and 'update'.
-     [FIX]          Merge cocostudio/CCActionXxx to CCAction.
-     [FIX]          Supports 'setTimeout' and 'setInterval' in JSB.
-     [FIX]          Exposes the missing data structures of Spine to JS.
-     [FIX]          Node::setRotation() moves opposite when node has a physics body.
-     [FIX]          A string which only contains CJK characters can't make a line-break when it's needed.
-     [FIX]          EGLView improvements: renamed to GLView, no longer a singleton, easier to customize
-     [FIX]          Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo.
-     [FIX]          cc.BuilderReader.load( path, null, parentSize ); was not allowed.
+     [FIX]          Action: FadeIn and FadeOut behaviours is incorrect if it doesn't start from an edge value( 0 or 255)
+     [FIX]          Array: crash when invoking initWithObjects()
+     [FIX]          Action: Merge cocostudio/CCActionXxx to CCAction
+     [FIX]          Bindings: Adds a macro to disable inserting script binding relevant codes
+     [FIX]          Bindings: Supports 'setTimeout' and 'setInterval' in JSB
+     [FIX]          Bindngs: Exposes the missing data structures of Spine to JS
+     [FIX]          Bindings: cc.BuilderReader.load( path, null, parentSize ); was not allowed
+     [FIX]          Console: crashes on Windows
+     [FIX]          ControlButton: Crash if it was removed from parent in its callback
+     [FIX]          CocoStudio: Logical error in 'TriggerObj::detect()'
+     [FIX]          Director: Crash if invoking Director::end() on WINDOWS
+     [FIX]          Director: setAnimationInterval has not effect on Mac
+     [FIX]          EditBox: position would not be updated if its parent's position changed
+     [FIX]          EditBox: Voice recognition input would cause crash on ios7
+     [FIX]          EGLView: renamed to GLView, no longer a singleton, easier to customize
+     [FIX]          EventDispatcher: removeAllEventListeners() remove event listeners used internally, make textures not reload on Android when come from background
+     [FIX]          EventDispatcher: dispatchEventToListeners() causes "out of range" exception
+     [FIX]          Image: s3tc compressed textures with no mipmaps fail to be loaded
+     [FIX]          Label: A string which only contains CJK characters can't make a line-break when it's needed
+     [FIX]          Label: Character would not be aligned on the baseline when label using distance field
+     [FIX]          Label: Color and opacity can't take effect
+     [FIX]          Label: Font size passed to new Label didn't consider 'contentScaleFactor'
+     [FIX]          Label: loading custom fonts from ttf file fails on windows
+     [FIX]          Label: LabelAtlas::setColor takes no effect
+     [FIX]          MotionStreak: Added unimplemented position getter/setter
+     [FIX]          Node: setAdditionalTransform receives a pointer and not a const reference
+     [FIX]          Node: setRotation() moves opposite when node has a physics body
+     [FIX]          Node: Can not use Node::setPhysicsBody to reset a physics body
+     [FIX]          Object: Object -> Ref, and remove unneeded functions
+     [FIX]          Other: Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo
+     [FIX]          Physics integration: Improves physical performance
+     [FIX]          Physics integration: PhysicsContact::_contactData may be double freed.
+     [FIX]          Physics integration: PhysicsShapeBox::getSize returns wrong value.
+     [FIX]          ParticleSystemQuad: setTotalParticles() can not set a value larger than initialized value
+     [FIX]          Renderer: Expand textureID bit from 18bits to 32bits. Resolves probably crash on Linux / Android
+     [FIX]          RenderTexture: save screen with RenderTexture got unexpected result
+     [FIX]          RenderTexture: saveToFile() can't write png file correctly
+     [FIX]          Spine: spine::Skeleton would not be updated after being re-added to scene
+     [FIX]          Sprite: not work as expected when CC_SPRITE_DEBUG_DRAW is 1
+     [FIX]          Scheduler: Thread deadlock if new functions are added in callback of Scheduler:: performFunctionInCocosThread
+     [FIX]          Tests: EditBoxText crashes on Win32 when being clicked many times
+     [FIX]          Tests: ChipmunkTest bounding box for debugging couldn't be shown
+     [FIX]          Tests: CocoStudioGuiTest/LabelBMFontTest crashes
+     [FIX]          Tests: Particle test/AddAndRemove test crashes
+     [FIX]          Tests: RenderTextureTest not drawn when coming from background
+     [FIX]          Tests: LabelTTFMultiline show nothing on mac
+     [FIX]          Timer::cancel always call Director::getInstance()->getScheduler() even in another Scheduler
+     [FIX]          Tests: Potential crash by switching repeatly between HttpClientTest, WebSocketTest, SocketIOTest
+     [FIX]          Tests: State is changed to RESUME when game comes back to foreground if pause button was clicked in Interval Test
+     [FIX]          TMXLayer: Removing child from TMXLayer may cause crash
+     [FIX]          TMXObjectGroup: Object values (x, y, width and height) from TMXObjectGroup are incorrect
+     [FIX]          TMXXMLParser: Refactored the codes of parsing pure xml layer format for tilemap 
+     [FIX]          TMXXMLParser: 'y' value is parsed incorrectly    
+     [FIX]          UI: Changes namespace from 'cocos2d::gui' to 'cocos2d::ui'.
+     [FIX]          UI: Supports RichText
+     [FIX]          Vector: Object which isn't in Vector would also be released when invoking Vector::eraseObject.
+     [FIX]          Websocket: Potential crash when websocket connection closes.
+     [FIX]          Websocket: No callback is invoked when websocket connection fails  
+     [FIX]          Xcode 5.1: Added Xcode 5.1 to build arm64 version, but can not require socket module in lua, will fix it soon
+
+     [3RD]          Kazmath: Upgraded to latest version of Kazmath
+
 
 cocos2d-x-3.0beta2 Jan.24 2014
 [All]
@@ -1427,14 +1474,14 @@ cocos2d-0.99.5-x-0.8.2 @ Apr.7,2011
  [airplay]
     379    Feature    integrate airplay sdk port
     442    feature    implement CocosDenshion on airplay port
-	
-	
-	
+    
+    
+    
 cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
  [all platforms]
     400    Bug        typo, rename CCamera.cpp to CCCamera
     403    Feature    rename cocos2d::UIEvent to cocos2d::CCEvent, to avoid class name conflict on ios
-    405	   Bug        CCConfiguration::checkForGLExtension(const string&) sometimes may crashes
+    405    Bug        CCConfiguration::checkForGLExtension(const string&) sometimes may crashes
     407    Bug        replace "CCGL.h" with "CCGL.h" in CCCamera.cpp, for case-sensitive systems
     408    Bug        memory leak in CCImage::_initWithPngData
     409    Feature    rename cocos2d::NSArray to cocos2d::CCArray, to avoid the conflict on ios
@@ -1483,7 +1530,7 @@ cocos2d-0.99.5-x-0.8.0 @ Mar.15,2011
     373    Feature    Disable PVRFrame window when cocos2d running
     355    Bug        CCLabelTTF doesn't support line breaks and wrapping words
     300    Feature    wizard for Visual C++ 2008 Express & VS2010 Express/Professional
-	
+    
 
 
 cocos2d-0.99.5-x-0.7.2 @ Jan.26,2011
@@ -1540,11 +1587,11 @@ cocos2d-0.99.4-x-0.7.0 @ Nov.29,2010
 * cocos2d-wophone supports accelerometer
 * add cocos2d-x wizard for cocos2d-win32 & cocos2d-wophone for VisualStudio2008
 * jump out a message box when load texture failed (win32 & wophone)
-* more details: 	http://www.cocos2d-x.org/versions/show/4
+* more details:     http://www.cocos2d-x.org/versions/show/4
 
 cocos2d-0.99.4-wophone-win32-stable-rc1
-	http://www.cocos2d-x.org/versions/show/1
-	http://www.cocos2d-x.org/versions/show/2
-	http://www.cocos2d-x.org/versions/show/3
+    http://www.cocos2d-x.org/versions/show/1
+    http://www.cocos2d-x.org/versions/show/2
+    http://www.cocos2d-x.org/versions/show/3
 
 

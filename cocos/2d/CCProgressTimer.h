@@ -111,7 +111,7 @@ public:
     inline Point getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual void setAnchorPoint(const Point& anchorPoint) override;
     virtual void setColor(const Color3B &color) override;
     virtual const Color3B& getColor() const override;
@@ -131,8 +131,7 @@ protected:
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
-
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
     
     Tex2F textureCoordFromAlphaPoint(Point alpha);
     Vertex2F vertexFromAlphaPoint(Point alpha);

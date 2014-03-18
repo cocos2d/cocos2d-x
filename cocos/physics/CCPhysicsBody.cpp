@@ -73,6 +73,9 @@ PhysicsBody::PhysicsBody()
 , _collisionBitmask(0)
 , _contactTestBitmask(UINT_MAX)
 , _group(0)
+, _positionResetTag(false)
+, _rotationResetTag(false)
+, _rotationOffset(0)
 {
 }
 
@@ -343,23 +346,29 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(Point position)
 {
-    cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position));
+    if (!_positionResetTag)
+    {
+        cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position + _positionOffset));
+    }
 }
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
+    if (!_rotationResetTag)
+    {
+        cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat((rotation + _rotationOffset) * (M_PI / 180.0f)));
+    }
 }
 
 Point PhysicsBody::getPosition() const
 {
     cpVect vec = cpBodyGetPos(_info->getBody());
-    return PhysicsHelper::cpv2point(vec);
+    return PhysicsHelper::cpv2point(vec) - _positionOffset;
 }
 
 float PhysicsBody::getRotation() const
 {
-    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / M_PI * 180.0f);
+    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) * (180.0f / M_PI)) - _rotationOffset;
 }
 
 PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/* = true*/)
@@ -743,37 +752,38 @@ bool PhysicsBody::isResting() const
     return CP_PRIVATE(_info->getBody()->node).root != ((cpBody*)0);
 }
 
-void PhysicsBody::setResting() const
+void PhysicsBody::setResting(bool rest) const
 {
-    cpBodySleep(_info->getBody());
+    if (rest && !isResting())
+    {
+        cpBodySleep(_info->getBody());
+    }else if(!rest && isResting())
+    {
+        cpBodyActivate(_info->getBody());
+    }
 }
 
 void PhysicsBody::update(float delta)
 {
     if (_node != nullptr)
     {
-        cpVect pos = cpBodyGetPos(_info->getBody());
-        cpVect prePos = _info->getPosition();
-        if (memcmp(&pos, &prePos, sizeof(cpVect)) != 0)
-        {
-            _node->setPosition(getPosition());
-            _info->setPosition(pos);
-        }
+        Node* parent = _node->getParent();
         
-        cpVect rot = cpBodyGetRot(_info->getBody());
-        cpVect preRot = _info->getRotation();
-        if (memcmp(&rot, &preRot, sizeof(cpVect)) != 0)
+        Point position = parent != nullptr ? parent->convertToNodeSpace(getPosition()) : getPosition();
+        _positionResetTag = true;
+        _rotationResetTag = true;
+        _node->setPosition(position);
+        _node->setRotation(getRotation());
+        _positionResetTag = false;
+        _rotationResetTag = false;
+        
+        // damping compute
+        if (_isDamping && _dynamic && !isResting())
         {
-            _node->setRotation(getRotation());
-            _info->setRotation(rot);
+            _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+            _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
         }
-    }
-    // damping compute
-    if (_isDamping && _dynamic && !isResting())
-    {
-        _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-        _info->getBody()->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
     }
 }
 
@@ -813,6 +823,36 @@ void PhysicsBody::setGroup(int group)
     {
         shape->setGroup(group);
     }
+}
+
+void PhysicsBody::setPositionOffset(const Point& position)
+{
+    if (!_positionOffset.equals(position))
+    {
+        Point pos = getPosition();
+        _positionOffset = position;
+        setPosition(pos);
+    }
+}
+
+Point PhysicsBody::getPositionOffset() const
+{
+    return _positionOffset;
+}
+
+void PhysicsBody::setRotationOffset(float rotation)
+{
+    if (std::abs(_rotationOffset - rotation) > 0.5f)
+    {
+        float rot = getRotation();
+        _rotationOffset = rotation;
+        setRotation(rot);
+    }
+}
+
+float PhysicsBody::getRotationOffset() const
+{
+    return _rotationOffset;
 }
 
 Point PhysicsBody::world2Local(const Point& point)

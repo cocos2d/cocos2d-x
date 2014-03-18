@@ -101,6 +101,7 @@ public:
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
 	virtual void setAnchorPoint(const Point& anchorPoint);
+    virtual void updatePosition(float dt) override;
     /**
      * @js NA
      * @lua NA
@@ -116,15 +117,14 @@ public:
     virtual void closeKeyboard();
 	
 	virtual void onEndEditing();
-    
 private:
 	void			initInactiveLabels(const Size& size);
 	void			setInactiveText(const char* pText);
 	void			adjustTextFieldPosition();
     void            placeInactiveLabels();
 	
-    LabelTTF*     _label;
-    LabelTTF*     _labelPlaceHolder;
+    Label*     _label;
+    Label*     _labelPlaceHolder;
     Size          _contentSize;
     Point         _position;
     Point         _anchorPoint;

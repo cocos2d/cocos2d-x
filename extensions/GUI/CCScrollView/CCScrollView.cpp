@@ -552,7 +552,7 @@ void ScrollView::onAfterDraw()
     }
 }
 
-void ScrollView::visit()
+void ScrollView::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
 	// quick return if not visible
 	if (!isVisible())
@@ -560,9 +560,17 @@ void ScrollView::visit()
 		return;
     }
 
-	kmGLPushMatrix();
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = this->transform(parentTransform);
+    _transformUpdated = false;
 
-	this->transform();
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     this->beforeDraw();
 
 	if (!_children.empty())
@@ -575,7 +583,7 @@ void ScrollView::visit()
 			Node *child = _children.at(i);
 			if ( child->getLocalZOrder() < 0 )
             {
-				child->visit();
+				child->visit(renderer, _modelViewTransform, dirty);
 			}
             else
             {
@@ -584,19 +592,19 @@ void ScrollView::visit()
 		}
 		
 		// this draw
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
         
 		// draw children zOrder >= 0
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			child->visit();
+			child->visit(renderer, _modelViewTransform, dirty);
 		}
         
 	}
     else
     {
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
     }
 
     this->afterDraw();

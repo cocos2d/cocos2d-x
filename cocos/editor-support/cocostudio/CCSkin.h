@@ -54,7 +54,7 @@ public:
     kmMat4 getNodeToWorldTransform() const override;
     kmMat4 getNodeToWorldTransformAR() const;
     
-    virtual void draw() override;
+    virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     
     /**
      *  @js NA

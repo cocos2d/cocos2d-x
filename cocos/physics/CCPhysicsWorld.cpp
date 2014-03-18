@@ -211,6 +211,11 @@ void PhysicsWorld::debugDraw()
                 {
                     PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
                     
+                    if (!body->isEnabled())
+                    {
+                        continue;
+                    }
+                    
                     for (auto& shape : body->getShapes())
                     {
                         _debugDraw->drawShape(*dynamic_cast<PhysicsShape*>(shape));
@@ -1015,12 +1020,11 @@ void PhysicsWorld::update(float delta)
     _updateTime += delta;
     if (++_updateRateCount >= _updateRate)
     {
+        _info->step(_updateTime * _speed);
         for (auto& body : _bodies)
         {
             body->update(_updateTime * _speed);
         }
-        
-        _info->step(_updateTime * _speed);
         _updateRateCount = 0;
         _updateTime = 0.0f;
     }

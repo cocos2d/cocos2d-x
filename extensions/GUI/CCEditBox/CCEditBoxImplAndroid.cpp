@@ -68,14 +68,16 @@ static const int CC_EDIT_BOX_PADDING = 5;
 bool EditBoxImplAndroid::initWithSize(const Size& size)
 {
     int fontSize = getFontSizeAccordingHeightJni(size.height-12);
-    _label = LabelTTF::create("", "", size.height-12);
+    _label = Label::create();
+    _label->setFontSize(size.height-12);
 	// align the text vertically center
     _label->setAnchorPoint(Point(0, 0.5f));
     _label->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 	
-    _labelPlaceHolder = LabelTTF::create("", "", size.height-12);
+    _labelPlaceHolder = Label::create();
+    _labelPlaceHolder->setFontSize(size.height-12);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
     _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
@@ -167,7 +169,7 @@ void EditBoxImplAndroid::setText(const char* pText)
                 long length = cc_utf8_strlen(_text.c_str(), -1);
                 for (long i = 0; i < length; i++)
                 {
-                    strToShow.append("\u25CF");
+                    strToShow.append("*");
                 }
             }
             else
@@ -178,13 +180,12 @@ void EditBoxImplAndroid::setText(const char* pText)
 			_label->setString(strToShow.c_str());
 
 			// Clip the text width to fit to the text box
-			float fMaxWidth = _editSize.width - CC_EDIT_BOX_PADDING * 2;
-			Rect clippingRect = _label->getTextureRect();
-			if(clippingRect.size.width > fMaxWidth) {
-				clippingRect.size.width = fMaxWidth;
-				_label->setTextureRect(clippingRect);
-			}
 
+            float fMaxWidth = _editSize.width - CC_EDIT_BOX_PADDING * 2;
+            auto labelSize = _label->getContentSize();
+            if(labelSize.width > fMaxWidth) {
+                _label->setDimensions(fMaxWidth,labelSize.height);
+            }
         }
         else
         {

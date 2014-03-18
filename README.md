@@ -8,7 +8,7 @@ cocos2d-x
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, OS X, Windows, Linux, Emscripten, Google Native Client, BlackBerry and Tizen.
+It works on iOS, Android, Windows Phone, OS X, Windows and Linux.
 
 cocos2d-x is:
 
@@ -23,48 +23,49 @@ How to start a new game
 -----------------------
 
 1. Download the code from [cocos2d download site][4]
-2. Enter `tools/project-creator`
-3. Run the `create_project.py` script
+2. Run `setup.py`
+3. Run the `cocos` script
 
 Example:
 
-    $ cd cocos2d-x/tools/project-creator
-    $ ./create_project.py -n mygame -k com.your_company.mygame -l cpp -p /home/mygame
-    $ cd /home/mygame
+    $ cd cocos2d-x
+    $ ./setup.py
+    $ source FILE_TO_SAVE_SYSTEM_VARIABLE
+    $ cocos new MyGame -p com.your_company.mygame -l cpp -d /home
+    $ cd /home/MyGame
 
-### Build new project for android ###
+### Build and run new project for android ###
 
-    $ cd proj.android
-    $ ./build_native.py
+    $ cocos run -p -j 4 android
 
-### Build new project for ios & osx ###
+### Build and run new project for iOS ###
 
-* Enter *proj.ios_mac* folder, open *mygame.xcodeproj*
-* Select ios or osx targets in scheme toolbar
+    $ cocos run -p ios
+    
+### Build and run new project for OSX ###
 
-### Build new project for linux ###
+    $ cocos run -p mac
+
+### Build and run new project for linux ###
 
 if you never run cocos2d-x on linux, you need to install all dependences by the
 script in **cocos2d/build/install-deps-linux.sh**
 
-    $ cd cocos2d/build
+    $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
-    $ ../..
 
 Then
 
-    $ mkdir build
-    $ cd build
-    $ cmake ..
-    $ make -j4
+    $ cd /home/MyGame
+    $ cocos run -p linux
     
 Run
 
-    $ bin/mygame
+    $ bin/MyGame
 
-### Build new project for win32 ###
+### Build and run new project for win32 ###
 
-* Enter *proj.win32*, open *mygame.sln* by vs2012
+    $ cocos run -p win32
 
 
 Main features
@@ -105,12 +106,14 @@ Build Requirements
 * Mac OS X 10.7+, Xcode 4.6+
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
+* Python 2.7.5
 
 
 Runtime Requirements
 --------------------
   * iOS 5.0+ for iPhone / iPad games
   * Android 2.3+ for Android games
+  * Windows Phone 8+ for Windows Phone games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
 
@@ -124,7 +127,7 @@ Select the test you want from Xcode Scheme chooser.
 
 ```
 $ cd cocos2d-x/build
-$ open samples.xcodeproj
+$ open cocos_tests.xcodeproj
 ```
 
 * For Linux
@@ -139,9 +142,9 @@ $ make
 Run Samples
 
 ```
-$ bin/hellocpp/hellocpp
+$ bin/cpp-empty-test/cpp-empty-test
 or
-$ bin/testlua/testlua
+$ bin/lua-empty-test/lua-empty-test
 ```
 
       You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
@@ -155,10 +158,11 @@ Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 
 ```
 $ cd cocos2d-x/build
-$ python ./android-build.py hellocpp
+$ python ./android-build.py cpp-empty-test -p 10
+$ adb install ../tests/cpp-empty-tst/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
-Import HelloCpp Android project using Eclipse(released with Android SDK). The path to be imported is `cocos2d-x/samples/Cpp/HelloCpp/proj.android`.
+Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 
 Contributing to the Project

@@ -469,19 +469,24 @@ void HttpClient::send(HttpRequest* request)
         
     request->retain();
     
-    s_requestQueueMutex.lock();
-    s_requestQueue->pushBack(request);
-    s_requestQueueMutex.unlock();
-    
-    // Notify thread start to work
-    s_SleepCondition.notify_one();
+    if (nullptr != s_requestQueue) {
+        s_requestQueueMutex.lock();
+        s_requestQueue->pushBack(request);
+        s_requestQueueMutex.unlock();
+        
+        // Notify thread start to work
+        s_SleepCondition.notify_one();
+    }
 }
 
 // Poll and notify main thread if responses exists in queue
 void HttpClient::dispatchResponseCallbacks()
 {
     // log("CCHttpClient::dispatchResponseCallbacks is running");
-    
+    //occurs when cocos thread fires but the network thread has already quited
+    if (nullptr == s_responseQueue) {
+        return;
+    }
     HttpResponse* response = nullptr;
     
     s_responseQueueMutex.lock();

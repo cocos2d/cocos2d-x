@@ -37,7 +37,6 @@ THE SOFTWARE.
 
 #include "CCEventKeyboard.h"
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -172,8 +171,8 @@ protected:
     void _addTouchListener();
 
     CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event);
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event);
 
     bool _touchEnabled;
     bool _accelerometerEnabled;
@@ -266,9 +265,8 @@ public:
     //
     // Overrides
     //
-    virtual void draw() override;
-    virtual void onDraw();
-    
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
     /**
@@ -290,7 +288,8 @@ public:
 protected:
     LayerColor();
     virtual ~LayerColor();
-    virtual bool init();
+    void onDraw(const kmMat4& transform, bool transformUpdated);
+    bool init();
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     bool initWithColor(const Color4B& color);
 
