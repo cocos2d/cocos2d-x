@@ -252,8 +252,8 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
-,_file_uploading(false)
-,_upload_file_size(0)
+,_fileUploading(false)
+,_uploadFileSize(0)
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
@@ -762,9 +762,9 @@ void Console::commandUpload(int fd, const std::string& args)
     auto argv = split(args,' ');
     if(argv.size() == 2)
     {
-        _upload_file_name = argv[0];
-        _upload_file_size = std::atoi(argv[1].c_str());
-        _file_uploading = true;        
+        _uploadFileName = argv[0];
+        _uploadFileSize = std::atoi(argv[1].c_str());
+        _fileUploading = true;        
     }
     else 
     {
@@ -970,7 +970,7 @@ void Console::loop()
             for(const auto &fd: _fds) {
                 if(FD_ISSET(fd,&copy_set)) 
                 {
-                    if(!_file_uploading)
+                    if(!_fileUploading)
                     {
                         if( ! parseCommand(fd) )
                         {
@@ -979,8 +979,8 @@ void Console::loop()
                     }
                     else
                     {
-                        readfile(fd, _upload_file_name, _upload_file_size);
-                        _file_uploading = false;
+                        readfile(fd, _uploadFileName, _uploadFileSize);
+                        _fileUploading = false;
 
                     }
                     if(--nready <= 0)
