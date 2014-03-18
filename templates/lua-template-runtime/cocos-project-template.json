@@ -2,27 +2,7 @@
     "do_default": {
         "exclude_from_template": [
             "frameworks/runtime-src"
-        ]
-    },
-    "do_add_native_support": {
-        "append_from_template": {
-            "from": "frameworks/runtime-src",
-            "to": "frameworks/runtime-src",
-            "exclude": [
-                "proj.android/bin",
-                "proj.android/assets",
-                "proj.android/libs",
-                "proj.ios_mac/HelloLua.xcodeproj/project.xcworkspace",
-                "proj.ios_mac/HelloLua.xcodeproj/xcuserdata",
-                "proj.win32/Debug.win32",
-                "proj.win32/Release.win32",
-                "proj.win32/HelloLua.sdf"
-            ]
-        },
-        "append_x_engine": {
-            "from": ".",
-            "to": "frameworks/cocos2d-x"
-        },
+        ],
         "append_dir": [
             {
                 "from": "cocos/scripting/lua-bindings/script",
@@ -69,7 +49,27 @@
                 "from": "external/tiff/prebuilt/win32/libtiff.dll",
                 "to": "runtime/win32/libtiff.dll"
             }
-        ],
+        ]
+    },
+    "do_add_native_support": {
+        "append_from_template": {
+            "from": "frameworks/runtime-src",
+            "to": "frameworks/runtime-src",
+            "exclude": [
+                "proj.android/bin",
+                "proj.android/assets",
+                "proj.android/libs",
+                "proj.ios_mac/HelloLua.xcodeproj/project.xcworkspace",
+                "proj.ios_mac/HelloLua.xcodeproj/xcuserdata",
+                "proj.win32/Debug.win32",
+                "proj.win32/Release.win32",
+                "proj.win32/HelloLua.sdf"
+            ]
+        },
+        "append_x_engine": {
+            "from": ".",
+            "to": "frameworks/cocos2d-x"
+        },
         "project_rename": {
             "src_project_name": "HelloLua",
             "files": [
