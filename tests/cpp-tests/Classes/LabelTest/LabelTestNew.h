@@ -484,6 +484,17 @@ private:
     TextVAlignment _vertAlign;
 };
 
+class LabelBugsTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelBugsTest);
+
+    LabelBugsTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 // we don't support linebreak mode
 
 #endif
