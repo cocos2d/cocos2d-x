@@ -33,7 +33,7 @@ def autotest(type):
 	while True:
 		buf = soc.recv(64)
 		print buf
-	
+
 	print 'test end and close socket.'
 	soc.close()
 
@@ -77,6 +77,16 @@ def MAC_BUILD():
 
 #----------------autotest-android build and run----------------#
 def ANDROID_BUILD():
+	def checkDevice():
+		cmd = 'adb devices'
+		infoDev = os.popen(cmd).readlines()
+		firstDev = infoDev[1]
+		if len(firstDev) < 5 or firstDev.find('device') < 0:
+			print 'no android device.'
+			return False
+		else:
+			print 'device info:', firstDev
+		return True
 	def cleanProj():
 		infoClean = os.system('rm -rf libs gen obj assets bin')
 		print 'infoClean: ', infoClean
@@ -109,20 +119,20 @@ def ANDROID_BUILD():
 		time.sleep(sleep_time)
 		return True
 	def buildAndRun():
+		if not checkDevice():
+			return
 		cleanProj()
 		updateProperty()
-		if buildProj() != 0:
-			cleanProj()
-			buildProj()
+		buildProj()
 		return openProj()
 	return buildAndRun()
 #----------------autotest-android build and run end----------------#
 
 def main():
-	print 'will build mac project.'
-	suc_build_mac = MAC_BUILD()
-	#print 'will build android project.'
-	#suc_build_android = ANDROID_BUILD()
+	#print 'will build mac project.'
+	#suc_build_mac = MAC_BUILD()
+	print 'will build android project.'
+	suc_build_android = ANDROID_BUILD()
 	if suc_build_mac:
 		autotest(TYPE_MAC)
 	if suc_build_android:
@@ -132,7 +142,7 @@ def main():
 # -------------- main --------------
 if __name__ == '__main__':
     sys_ret = 0
-    try:    
+    try:
         sys_ret = main()
     except:
         traceback.print_exc()
