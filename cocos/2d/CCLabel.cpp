@@ -1058,41 +1058,41 @@ int Label::getFontSize() const
 }
 
 ///// PROTOCOL STUFF
-Sprite * Label::getLetter(int lettetIndex)
+Sprite * Label::getLetter(int letterIndex)
 {
     if (_fontDirty)
     {
-        const_cast<Label*>(this)->updateFont();
+        updateFont();
     }
     if (_contentDirty)
     {
         updateContent();
     }
     
-    if (! _textSprite && lettetIndex < _limitShowCount)
+    if (! _textSprite && letterIndex < _limitShowCount)
     {
-        auto &letterDef = _lettersInfo[lettetIndex].def;
+        const auto &letter = _lettersInfo[letterIndex];
 
-        if(! letterDef.validDefinition)
+        if(! letter.def.validDefinition)
             return nullptr;
 
-        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(lettetIndex));
+        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(letterIndex));
 
         if (!sp)
         {
             Rect uvRect;
-            uvRect.size.height = letterDef.height;
-            uvRect.size.width  = letterDef.width;
-            uvRect.origin.x    = letterDef.U;
-            uvRect.origin.y    = letterDef.V;
+            uvRect.size.height = letter.def.height;
+            uvRect.size.width  = letter.def.width;
+            uvRect.origin.x    = letter.def.U;
+            uvRect.origin.y    = letter.def.V;
 
-            sp = Sprite::createWithTexture(_fontAtlas->getTexture(letterDef.textureID),uvRect);
-            sp->setBatchNode(_batchNodes[letterDef.textureID]);
-            sp->setPosition(Point(_lettersInfo[lettetIndex].position.x + uvRect.size.width / 2, 
-                _lettersInfo[lettetIndex].position.y - uvRect.size.height / 2));
+            sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
+            sp->setBatchNode(_batchNodes[letter.def.textureID]);
+            sp->setPosition(Point(letter.position.x + uvRect.size.width / 2, 
+                letter.position.y - uvRect.size.height / 2));
             sp->setOpacity(_realOpacity);
 
-            _batchNodes[letterDef.textureID]->addSpriteWithoutQuad(sp, _lettersInfo[lettetIndex].atlasIndex, lettetIndex);
+            _batchNodes[letter.def.textureID]->addSpriteWithoutQuad(sp, letter.atlasIndex, letterIndex);
         }
         return sp;
     }
