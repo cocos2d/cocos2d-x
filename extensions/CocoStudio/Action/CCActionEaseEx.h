@@ -34,7 +34,7 @@ NS_CC_EXT_BEGIN
  @brief Ease Bezier
  @ingroup Actions
  */
-class CCEaseBezierAction:public CCActionEase
+class CC_EX_DLL CCEaseBezierAction:public CCActionEase
 {
 public:
 	virtual void update(float time);

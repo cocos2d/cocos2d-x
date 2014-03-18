@@ -39,7 +39,7 @@ typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 *   @js NA
 *   @lua NA
 */
-class SceneReader
+class CC_EX_DLL SceneReader
 {
 public:
 	SceneReader(void);

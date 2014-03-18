@@ -955,6 +955,7 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\ExtensionExport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\spine\Animation.h">

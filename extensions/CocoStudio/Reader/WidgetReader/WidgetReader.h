@@ -32,7 +32,7 @@
 
 NS_CC_EXT_BEGIN
 
-class WidgetReader : public CCObject, public WidgetReaderProtocol
+class CC_EX_DLL WidgetReader : public CCObject, public WidgetReaderProtocol
 {
 public:
     DECLARE_CLASS_WIDGET_READER_INFO

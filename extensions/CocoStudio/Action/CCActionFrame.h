@@ -93,9 +93,8 @@ enum FrameEaseType
 *   @js NA
 *   @lua NA
 */
-class ActionFrame:public CCObject
+class CC_EX_DLL ActionFrame:public CCObject
 {
-
 public:
     
     /**
@@ -210,7 +209,7 @@ protected:
 *   @js NA
 *   @lua NA
 */
-class ActionMoveFrame:public ActionFrame
+class CC_EX_DLL ActionMoveFrame:public ActionFrame
 {
 public:
     
@@ -253,7 +252,7 @@ protected:
 *   @js NA
 *   @lua NA
 */
-class ActionScaleFrame:public ActionFrame
+class CC_EX_DLL ActionScaleFrame:public ActionFrame
 {
 public:
     
@@ -311,7 +310,7 @@ protected:
 *   @js NA
 *   @lua NA
 */
-class ActionRotationFrame:public ActionFrame
+class CC_EX_DLL ActionRotationFrame:public ActionFrame
 {
 public:
     
@@ -364,7 +363,7 @@ public:
 *   @js NA
 *   @lua NA
 */
-class ActionFadeFrame:public ActionFrame
+class CC_EX_DLL ActionFadeFrame:public ActionFrame
 {
 public:
     
@@ -407,7 +406,7 @@ protected:
 *   @js NA
 *   @lua NA
 */
-class ActionTintFrame:public ActionFrame
+class CC_EX_DLL ActionTintFrame:public ActionFrame
 {
 
 public:

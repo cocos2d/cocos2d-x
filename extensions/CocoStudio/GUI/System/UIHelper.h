@@ -33,7 +33,7 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */
-class UIHelper
+class CC_EX_DLL UIHelper
 {
 public:
     /**

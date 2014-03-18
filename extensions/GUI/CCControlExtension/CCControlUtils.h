@@ -65,14 +65,14 @@ typedef struct
  * @js NA
  * @lua NA
  **/
-class CCColor3bObject : public CCObject
+class CC_EX_DLL CCColor3bObject : public CCObject
 {
 public:
     ccColor3B value;
     CCColor3bObject(ccColor3B s_value):value(s_value){}
 };
 
-class CCControlUtils
+class CC_EX_DLL CCControlUtils
 {
 public:
     static CCSprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor);

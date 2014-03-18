@@ -45,7 +45,7 @@ typedef enum {
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
 
-class PageView : public Layout , public UIScrollInterface
+class CC_EX_DLL PageView : public Layout , public UIScrollInterface
 {
     
     DECLARE_CLASS_GUI_INFO

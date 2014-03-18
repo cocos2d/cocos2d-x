@@ -32,7 +32,7 @@ NS_CC_EXT_BEGIN
 /**
  *  @lua NA
  */
-class CCComRender : public cocos2d::CCComponent
+class CC_EX_DLL CCComRender : public cocos2d::CCComponent
 {
 	DECLARE_CLASS_COMPONENT_INFO
 public:
