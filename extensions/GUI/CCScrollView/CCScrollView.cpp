@@ -679,10 +679,18 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
             if (_direction == Direction::VERTICAL)
             {
                 dis = moveDistance.y;
+                float pos = _container->getPosition().y;
+                if (!(minContainerOffset().y <= pos && pos <= maxContainerOffset().y)) {
+                    dis *= 0.35;
+                }
             }
             else if (_direction == Direction::HORIZONTAL)
             {
                 dis = moveDistance.x;
+                float pos = _container->getPosition().x;
+                if (!(minContainerOffset().x <= pos && pos <= maxContainerOffset().x)) {
+                    dis *= 0.35;
+                }
             }
             else
             {
