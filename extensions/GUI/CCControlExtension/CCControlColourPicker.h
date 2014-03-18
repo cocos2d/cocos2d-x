@@ -47,7 +47,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCControlColourPicker: public CCControl
+class CC_EX_DLL CCControlColourPicker: public CCControl
 {
 public:
     CCControlColourPicker();

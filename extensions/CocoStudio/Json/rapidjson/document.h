@@ -51,7 +51,7 @@ public:
 
 	//! Copy constructor is not permitted.
 private:
-	GenericValue(const GenericValue& rhs);
+    GenericValue(const GenericValue& rhs){};
 
 public:
 

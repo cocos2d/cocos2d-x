@@ -49,7 +49,7 @@ class CCBone;
  *  @js NA
  *  @lua NA
  */
-class CCColliderFilter
+class CC_EX_DLL CCColliderFilter
 {
 public:
     ~CCColliderFilter() { }

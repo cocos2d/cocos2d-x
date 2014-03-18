@@ -33,7 +33,7 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 
-class BaseTriggerCondition : public CCObject
+class CC_EX_DLL BaseTriggerCondition : public CCObject
 {
 protected:
     BaseTriggerCondition(void);
@@ -45,7 +45,7 @@ public:
     virtual void removeAll();
 };
 
-class BaseTriggerAction : public CCObject
+class CC_EX_DLL BaseTriggerAction : public CCObject
 {
 protected:
     BaseTriggerAction(void);
@@ -58,7 +58,7 @@ public:
 };
 
 
-class TriggerObj : public CCObject
+class CC_EX_DLL TriggerObj : public CCObject
 {
 public:
     TriggerObj(void);

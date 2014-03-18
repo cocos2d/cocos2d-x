@@ -29,7 +29,7 @@
 
 NS_CC_EXT_BEGIN
 
-class LabelBMFontReader : public WidgetReader
+class CC_EX_DLL LabelBMFontReader : public WidgetReader
 {
 public:
     DECLARE_CLASS_WIDGET_READER_INFO

@@ -36,18 +36,18 @@ NS_CC_EXT_BEGIN
 
 
 //! hit test function
-bool isSpriteContainPoint(CCSprite *sprite, CCPoint point);
-bool isSpriteContainPoint(CCSprite *sprite, CCPoint point, CCPoint &outPoint);
+CC_EX_DLL bool isSpriteContainPoint(CCSprite *sprite, CCPoint point);
+CC_EX_DLL bool isSpriteContainPoint(CCSprite *sprite, CCPoint point, CCPoint &outPoint);
 
 #define CC_SPRITE_CONTAIN_POINT(sprite, point) isSpriteContainPoint((sprite), (point))
 #define CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint) isSpriteContainPoint((sprite), (point), outPoint)
 
 
 //! motion curve function
-CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3);
-CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3, CCPoint &point4);
+CC_EX_DLL CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3);
+CC_EX_DLL CCPoint bezierTo(float t, CCPoint &point1, CCPoint &point2, CCPoint &point3, CCPoint &point4);
 
-CCPoint circleTo(float t, CCPoint &center, float radius, float fromRadian, float radianDif);
+CC_EX_DLL CCPoint circleTo(float t, CCPoint &center, float radius, float fromRadian, float radianDif);
 
 
 NS_CC_EXT_END

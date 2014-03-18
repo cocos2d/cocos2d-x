@@ -10,7 +10,7 @@ NS_CC_EXT_BEGIN
  *  @js NA
  *  @lua NA
  */
-class CCData : public CCObject
+class CC_EX_DLL CCData : public CCObject
 {
 public:
     CCData(unsigned char *pBytes, const unsigned long nSize);

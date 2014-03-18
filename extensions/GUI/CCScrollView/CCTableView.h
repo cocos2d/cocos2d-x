@@ -47,7 +47,7 @@ typedef enum {
  * @js NA
  * @lua NA
  */
-class CCTableViewDelegate : public CCScrollViewDelegate
+class CC_EX_DLL CCTableViewDelegate : public CCScrollViewDelegate
 {
 public:
     /**
@@ -91,7 +91,7 @@ public:
  * Data source that governs table backend data.
  * @lua NA
  */
-class CCTableViewDataSource
+class CC_EX_DLL CCTableViewDataSource
 {
 public:
     virtual ~CCTableViewDataSource() {}
@@ -137,7 +137,7 @@ public:
  * this is a very basic, minimal implementation to bring UITableView-like component into cocos2d world.
  * @lua NA
  */
-class CCTableView : public CCScrollView, public CCScrollViewDelegate
+class CC_EX_DLL CCTableView : public CCScrollView, public CCScrollViewDelegate
 {
 public:
     /**

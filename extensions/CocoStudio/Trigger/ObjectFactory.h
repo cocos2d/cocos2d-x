@@ -45,11 +45,11 @@ namespace cocos2d
 
 NS_CC_EXT_BEGIN
 
-class ObjectFactory
+class CC_EX_DLL ObjectFactory
 {
 public:
     typedef cocos2d::CCObject* (*Instance)(void);
-    struct TInfo
+    struct CC_EX_DLL TInfo
     {
         TInfo(void);
         TInfo(const std::string& type, Instance ins = NULL);

@@ -44,7 +44,7 @@ typedef struct _DataInfo DataInfo;
 *   @js NA
 *   @lua NA
 */
-class  CCDataReaderHelper : CCObject
+class  CC_EX_DLL CCDataReaderHelper : CCObject
 {
 public:
     static CCDataReaderHelper *sharedDataReaderHelper();

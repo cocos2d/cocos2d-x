@@ -50,7 +50,7 @@ NS_CC_EXT_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
-class CCScale9Sprite : public CCNodeRGBA
+class CC_EX_DLL CCScale9Sprite : public CCNodeRGBA
 {
 public:
     CCScale9Sprite();

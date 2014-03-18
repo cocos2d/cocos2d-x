@@ -43,7 +43,7 @@ typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType)
 *   @js NA
 *   @lua NA
 */
-class Slider : public Widget
+class CC_EX_DLL Slider : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO

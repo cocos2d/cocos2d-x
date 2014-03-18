@@ -35,7 +35,7 @@ NS_CC_EXT_BEGIN
  * Abstract class for SWTableView cell node
  * @lua NA
  */
-class CCTableViewCell: public CCNode, public CCSortableObject
+class CC_EX_DLL CCTableViewCell: public CCNode, public CCSortableObject
 {
 public:
     CCTableViewCell() {}

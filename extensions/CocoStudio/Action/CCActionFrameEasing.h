@@ -57,7 +57,7 @@ enum FrameEasingType
 *   @js NA
 *   @lua NA
 */
-class ActionFrameEasing:public cocos2d::CCObject
+class CC_EX_DLL ActionFrameEasing:public cocos2d::CCObject
 {
 protected:
 	FrameEasingType m_type;

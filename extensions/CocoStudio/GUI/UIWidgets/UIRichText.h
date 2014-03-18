@@ -37,7 +37,7 @@ typedef enum {
     RICH_CUSTOM
 }RichElementType;
     
-class RichElement : public CCObject
+class CC_EX_DLL RichElement : public CCObject
 {
 public:
     RichElement(){};

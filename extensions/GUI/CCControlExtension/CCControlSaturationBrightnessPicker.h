@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CCControlSaturationBrightnessPicker : public CCControl
+class CC_EX_DLL CCControlSaturationBrightnessPicker : public CCControl
 {
     /** Contains the receiver¡¯s current saturation value. */
     CC_SYNTHESIZE_READONLY(float, m_saturation, Saturation);

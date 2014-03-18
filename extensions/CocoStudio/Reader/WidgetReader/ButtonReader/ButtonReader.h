@@ -29,7 +29,7 @@
 
 NS_CC_EXT_BEGIN
 
-class ButtonReader : public WidgetReader
+class CC_EX_DLL ButtonReader : public WidgetReader
 {
 public:
     DECLARE_CLASS_WIDGET_READER_INFO

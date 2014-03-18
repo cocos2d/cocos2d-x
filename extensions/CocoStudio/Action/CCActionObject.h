@@ -36,7 +36,7 @@ class ActionNode;
 *   @js NA
 *   @lua NA
 */
-class ActionObject:public CCObject
+class CC_EX_DLL ActionObject:public CCObject
 {
 public:
 

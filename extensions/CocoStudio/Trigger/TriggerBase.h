@@ -47,7 +47,7 @@ NS_CC_EXT_BEGIN
         cocos2d::extension::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 
-void sendEvent(unsigned int event);
+void CC_EX_DLL sendEvent(unsigned int event);
 
 NS_CC_EXT_END
 

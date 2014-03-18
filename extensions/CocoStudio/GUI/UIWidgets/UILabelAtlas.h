@@ -35,7 +35,7 @@ namespace ui {
  *   @js NA
  *   @lua NA
  */
-class UICCLabelAtlas : public CCLabelAtlas
+class CC_EX_DLL UICCLabelAtlas : public CCLabelAtlas
 {
 public:
     /**
@@ -61,7 +61,7 @@ public:
  *   @js NA
  *   @lua NA
  */
-class LabelAtlas : public Widget
+class CC_EX_DLL LabelAtlas : public Widget
 {
     DECLARE_CLASS_GUI_INFO
     

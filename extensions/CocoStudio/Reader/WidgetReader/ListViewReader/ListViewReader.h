@@ -29,7 +29,7 @@
 
 NS_CC_EXT_BEGIN
 
-class ListViewReader : public ScrollViewReader
+class CC_EX_DLL ListViewReader : public ScrollViewReader
 {    
 public:
     DECLARE_CLASS_WIDGET_READER_INFO

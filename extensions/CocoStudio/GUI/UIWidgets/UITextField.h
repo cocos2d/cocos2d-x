@@ -35,7 +35,7 @@ namespace ui {
  *  @js NA
  *  @lua NA
  */
-class UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
+class CC_EX_DLL UICCTextField: public CCTextFieldTTF, public CCTextFieldDelegate
 {
 public:
     UICCTextField();
@@ -101,7 +101,7 @@ typedef void (CCObject::*SEL_TextFieldEvent)(CCObject*, TextFiledEventType);
 *   @js NA
 *   @lua NA
 */
-class TextField : public Widget
+class CC_EX_DLL TextField : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO

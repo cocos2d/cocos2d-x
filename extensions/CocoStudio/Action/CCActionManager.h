@@ -34,7 +34,7 @@ NS_CC_EXT_BEGIN
 	*   @js NA
 	*   @lua NA
 	*/
-class ActionManager:public CCObject
+class CC_EX_DLL ActionManager:public CCObject
 {
 public:
 

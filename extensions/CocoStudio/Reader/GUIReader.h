@@ -41,7 +41,7 @@ typedef void (CCObject::*SEL_ParseEvent)(const std::string&, CCObject*, const ra
  *   @js NA
  *   @lua NA
  */
-class GUIReader : public CCObject
+class CC_EX_DLL GUIReader : public CCObject
 {
 public:
 	/**
