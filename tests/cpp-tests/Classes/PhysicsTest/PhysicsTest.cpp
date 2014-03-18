@@ -19,6 +19,7 @@ namespace
         CL(PhysicsDemoBug3988),
         CL(PhysicsContactTest),
         CL(PhysicsPositionRotationTest),
+        CL(PhysicsSetGravityEnableTest),
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -1602,6 +1603,54 @@ void PhysicsPositionRotationTest::onEnter()
 std::string PhysicsPositionRotationTest::title() const
 {
     return "Position/Rotation Test";
+}
+
+
+void PhysicsSetGravityEnableTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemo::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemo::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemo::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    // wall
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1, 1, 0.0)));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    // common box
+    auto commonBox = makeBox(Point(100, 100), Size(50, 50), 1);
+    commonBox->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(commonBox);
+    
+    auto box = makeBox(Point(200, 100), Size(50, 50), 2);
+    box->getPhysicsBody()->setMass(20);
+    box->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    box->getPhysicsBody()->setGravityEnable(false);
+    addChild(box);
+    
+    auto ball = makeBall(Point(200, 200), 50);
+    ball->setTag(2);
+    ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    ball->getPhysicsBody()->setGravityEnable(false);
+    addChild(ball);
+    ball->getPhysicsBody()->setMass(50);
+    scheduleOnce(schedule_selector(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
+}
+
+void PhysicsSetGravityEnableTest::onScheduleOnce(float delta)
+{
+    auto ball = getChildByTag(2);
+    ball->getPhysicsBody()->setMass(200);
+}
+
+std::string PhysicsSetGravityEnableTest::title() const
+{
+    return "Set Gravity Enable Test";
 }
 
 #endif // ifndef CC_USE_PHYSICS
