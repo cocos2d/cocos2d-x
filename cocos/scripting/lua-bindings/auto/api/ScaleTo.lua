@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ScaleTo
+
 --------------------------------
 -- overload function: create(float, float, float)
 --          
@@ -13,4 +14,24 @@
 -- @param #float float
 -- @return ScaleTo#ScaleTo ret (retunr value: cc.ScaleTo)
 
+--------------------------------
+-- @function [parent=#ScaleTo] startWithTarget 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#ScaleTo] clone 
+-- @param self
+-- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
+        
+--------------------------------
+-- @function [parent=#ScaleTo] reverse 
+-- @param self
+-- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
+        
+--------------------------------
+-- @function [parent=#ScaleTo] update 
+-- @param self
+-- @param #float float
+        
 return nil

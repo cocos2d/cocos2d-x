@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleFire
+
 --------------------------------
 -- @function [parent=#ParticleFire] create 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TextureCache
+
 --------------------------------
 -- @function [parent=#TextureCache] reloadTexture 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventDispatcher
+
 --------------------------------
 -- @function [parent=#EventDispatcher] pauseEventListenersForTarget 
 -- @param self

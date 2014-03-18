@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TextAtlas
+
 --------------------------------
 -- @function [parent=#TextAtlas] setProperty 
 -- @param self
@@ -29,6 +30,26 @@
 -- @function [parent=#TextAtlas] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#TextAtlas] setAnchorPoint 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#TextAtlas] getVirtualRenderer 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#TextAtlas] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#TextAtlas] getContentSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#TextAtlas] TextAtlas 

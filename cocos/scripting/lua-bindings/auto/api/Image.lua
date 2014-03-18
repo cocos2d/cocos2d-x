@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Image
+
 --------------------------------
 -- @function [parent=#Image] hasPremultipliedAlpha 
 -- @param self

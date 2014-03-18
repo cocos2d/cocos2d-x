@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsJointPin
+
 --------------------------------
 -- @function [parent=#PhysicsJointPin] construct 
 -- @param self
