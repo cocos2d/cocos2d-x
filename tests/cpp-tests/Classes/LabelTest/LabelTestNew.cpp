@@ -78,7 +78,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFOldNew),
     CL(LabelFontNameTest),
     CL(LabelAlignmentTest),
-    CL(LabelBugsTest)
+    CL(LabelIssue4428Test)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1781,7 +1781,7 @@ std::string LabelAlignmentTest::subtitle() const
     return "Select the buttons on the sides to change alignment";
 }
 
-LabelBugsTest::LabelBugsTest()
+LabelIssue4428Test::LabelIssue4428Test()
 {
     auto size = Director::getInstance()->getWinSize();
 
@@ -1801,12 +1801,12 @@ LabelBugsTest::LabelBugsTest()
     }
 }
 
-std::string LabelBugsTest::title() const
+std::string LabelIssue4428Test::title() const
 {
-    return "New Label Test";
+    return "New Label Bugs Test";
 }
 
-std::string LabelBugsTest::subtitle() const
+std::string LabelIssue4428Test::subtitle() const
 {
     return "Reorder issue #4428.The label should be flipped vertically.";
 }

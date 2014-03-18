@@ -484,12 +484,12 @@ private:
     TextVAlignment _vertAlign;
 };
 
-class LabelBugsTest : public AtlasDemoNew
+class LabelIssue4428Test : public AtlasDemoNew
 {
 public:
-    CREATE_FUNC(LabelBugsTest);
+    CREATE_FUNC(LabelIssue4428Test);
 
-    LabelBugsTest();
+    LabelIssue4428Test();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
