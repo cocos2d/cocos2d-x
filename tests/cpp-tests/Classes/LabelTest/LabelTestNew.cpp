@@ -77,7 +77,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelCrashTest),
     CL(LabelTTFOldNew),
     CL(LabelFontNameTest),
-    CL(LabelAlignmentTest)
+    CL(LabelAlignmentTest),
+    CL(LabelBugsTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1778,4 +1779,34 @@ std::string LabelAlignmentTest::title() const
 std::string LabelAlignmentTest::subtitle() const
 {
     return "Select the buttons on the sides to change alignment";
+}
+
+LabelBugsTest::LabelBugsTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto label = Label::createWithBMFont( "fonts/bitmapFontTest3.fnt", "123\n456");
+    label->setPosition(Point(size.width /2.0f, size.height / 2.0f));
+    label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    addChild(label);
+
+    int len = label->getStringLength();
+    for (int i = 0; i < len; ++i)
+    {
+        auto sprite = label->getLetter(i);
+        if (sprite != nullptr)
+        {
+            sprite->setFlippedY(true);
+        }
+    }
+}
+
+std::string LabelBugsTest::title() const
+{
+    return "New Label Test";
+}
+
+std::string LabelBugsTest::subtitle() const
+{
+    return "Reorder issue #4428.The label should be flipped vertically.";
 }
