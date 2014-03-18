@@ -1,3 +1,6 @@
+cocos2d-x-3.0? ?? 2014
+     [FIX]         Console: initialize some variables that are not initilized in destructor
+
 cocos2d-x-3.0rc0 March.14 2014
 [All]
      [NEW]          Action: RotateBy supports 3D rotations

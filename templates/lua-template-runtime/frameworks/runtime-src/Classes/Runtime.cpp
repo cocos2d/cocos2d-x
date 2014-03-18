@@ -363,7 +363,7 @@ bool CreateDir(const char *sPathName)
 bool FileServer::recv_file(int fd)
 {
 	char buffer[1024]={0};
-    char namelen[4]={0};
+    char namelen[5]={0};
 	if (recv(fd, namelen, 4,0)<=0) {
 		return  false;
 	}
