@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Twirl
+
 --------------------------------
 -- @function [parent=#Twirl] setAmplitudeRate 
 -- @param self
@@ -40,6 +41,16 @@
 -- @param #unsigned int int
 -- @param #float float
 -- @return Twirl#Twirl ret (return value: cc.Twirl)
+        
+--------------------------------
+-- @function [parent=#Twirl] clone 
+-- @param self
+-- @return Twirl#Twirl ret (return value: cc.Twirl)
+        
+--------------------------------
+-- @function [parent=#Twirl] update 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Twirl] Twirl 

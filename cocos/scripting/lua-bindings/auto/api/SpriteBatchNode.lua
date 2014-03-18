@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module SpriteBatchNode
+
 --------------------------------
 -- @function [parent=#SpriteBatchNode] appendChild 
 -- @param self
@@ -114,6 +115,48 @@
 -- @param #cc.Texture2D texture2d
 -- @param #long long
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- @function [parent=#SpriteBatchNode] addChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#SpriteBatchNode] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#SpriteBatchNode] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#SpriteBatchNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#SpriteBatchNode] sortAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#SpriteBatchNode] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#SpriteBatchNode] reorderChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
         
 --------------------------------
 -- @function [parent=#SpriteBatchNode] SpriteBatchNode 

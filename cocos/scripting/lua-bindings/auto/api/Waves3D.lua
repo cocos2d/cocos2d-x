@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Waves3D
+
 --------------------------------
 -- @function [parent=#Waves3D] getAmplitudeRate 
 -- @param self
@@ -29,5 +30,15 @@
 -- @param #unsigned int int
 -- @param #float float
 -- @return Waves3D#Waves3D ret (return value: cc.Waves3D)
+        
+--------------------------------
+-- @function [parent=#Waves3D] clone 
+-- @param self
+-- @return Waves3D#Waves3D ret (return value: cc.Waves3D)
+        
+--------------------------------
+-- @function [parent=#Waves3D] update 
+-- @param self
+-- @param #float float
         
 return nil

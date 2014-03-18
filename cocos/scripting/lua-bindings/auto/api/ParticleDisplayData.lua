@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleDisplayData
+
 --------------------------------
 -- @function [parent=#ParticleDisplayData] create 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LayerMultiplex
+
 --------------------------------
 -- @function [parent=#LayerMultiplex] switchToAndReleaseMe 
 -- @param self
@@ -15,5 +16,10 @@
 -- @function [parent=#LayerMultiplex] switchTo 
 -- @param self
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#LayerMultiplex] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 return nil

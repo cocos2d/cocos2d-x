@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItemSprite
+
 --------------------------------
 -- @function [parent=#MenuItemSprite] setEnabled 
 -- @param self

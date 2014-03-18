@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsJointFixed
+
 --------------------------------
 -- @function [parent=#PhysicsJointFixed] construct 
 -- @param self

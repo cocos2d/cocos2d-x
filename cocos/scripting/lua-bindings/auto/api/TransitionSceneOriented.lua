@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionSceneOriented
+
 --------------------------------
 -- @function [parent=#TransitionSceneOriented] create 
 -- @param self

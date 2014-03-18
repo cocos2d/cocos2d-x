@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleBatchNode
+
 --------------------------------
 -- @function [parent=#ParticleBatchNode] setTexture 
 -- @param self
@@ -56,5 +57,38 @@
 -- @param #cc.Texture2D texture2d
 -- @param #int int
 -- @return ParticleBatchNode#ParticleBatchNode ret (return value: cc.ParticleBatchNode)
+        
+--------------------------------
+-- @function [parent=#ParticleBatchNode] addChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#ParticleBatchNode] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ParticleBatchNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ParticleBatchNode] reorderChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#ParticleBatchNode] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
         
 return nil

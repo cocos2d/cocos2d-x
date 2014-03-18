@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Ripple3D
+
 --------------------------------
 -- @function [parent=#Ripple3D] setAmplitudeRate 
 -- @param self
@@ -41,5 +42,15 @@
 -- @param #unsigned int int
 -- @param #float float
 -- @return Ripple3D#Ripple3D ret (return value: cc.Ripple3D)
+        
+--------------------------------
+-- @function [parent=#Ripple3D] clone 
+-- @param self
+-- @return Ripple3D#Ripple3D ret (return value: cc.Ripple3D)
+        
+--------------------------------
+-- @function [parent=#Ripple3D] update 
+-- @param self
+-- @param #float float
         
 return nil
