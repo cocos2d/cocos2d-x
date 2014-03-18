@@ -94,7 +94,9 @@ def main():
 
     #update submodule
     git_update_submodule = "git submodule update --init --force"
-    os.system(git_update_submodule)
+    ret = os.system(git_update_submodule)
+    if(ret != 0):
+        return(1)
 
     # Generate binding glue codes
     os.system("python tools/jenkins-scripts/gen_jsb.py")
