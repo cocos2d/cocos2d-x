@@ -281,6 +281,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest">
       <UniqueIdentifier>{fcdb0f59-7655-478d-9748-cea71263b602}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\CurlTest">
+      <UniqueIdentifier>{89cae3e0-ffcf-4135-8de1-6f786c98b7dd}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\CustomTest">
       <UniqueIdentifier>{a3c3770e-e7cf-434f-bc59-44c130945363}</UniqueIdentifier>
     </Filter>
@@ -675,6 +678,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
+      <Filter>Classes\CurlTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
       <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
@@ -1317,6 +1329,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
       <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>

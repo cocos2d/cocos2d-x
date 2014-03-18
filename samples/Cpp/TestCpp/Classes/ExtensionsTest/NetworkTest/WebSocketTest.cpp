@@ -79,17 +79,17 @@ WebSocketTestLayer::WebSocketTestLayer()
     
     if (!_wsiSendText->init(*this, "ws://echo.websocket.org"))
     {
-        CC_SAFE_DELETE(_wsiSendText);
+        _wsiSendText->close();
     }
     
     if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
     {
-        CC_SAFE_DELETE(_wsiSendBinary);
+        _wsiSendBinary->close();
     }
     
     if (!_wsiError->init(*this, "ws://invalid.url.com"))
     {
-        CC_SAFE_DELETE(_wsiError);
+        _wsiError->close();
     }
 }
 

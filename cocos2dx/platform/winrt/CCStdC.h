@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+
+Copyright (c) 2010-2014 cocos2d-x.org
+Copyright (c) 2013-2014 Martell Malone < martell malone at gmail dot com >
 Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
@@ -61,27 +63,27 @@ THE SOFTWARE.
     #include "./compat/stdint.h"
 #endif
 
-#define _WINSOCKAPI_
-// Structure timeval has define in winsock.h, include windows.h for it.
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#include <WinSock2.h>
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+//#include "winrtsock.h" //this will replace windows include and timeval struct below
 #include <Windows.h>
-//#include <WinSock2.h>
-
 #undef timeval
 struct timeval
 {
-	long tv_sec;		// seconds
-	long tv_usec;    // microSeconds
+         long tv_sec;                // seconds
+         long tv_usec;    // microSeconds
 };
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#else
+#include <WinSock2.h>
+#endif
 
+#ifndef _TIME_ZONE_DEFINED
+#define _TIME_ZONE_DEFINED
 struct timezone
 {
     int tz_minuteswest;
     int tz_dsttime;
 };
+#endif
 
 int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
