@@ -402,7 +402,6 @@ static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxm
         return node;
     }
 
-    //FIXME:XXX How to deal with Boolean ??
 
     // object is Array
     if (value.getType() == Value::Type::VECTOR)
