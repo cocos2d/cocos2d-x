@@ -311,6 +311,7 @@ void PhysicsBody::setDynamic(bool dynamic)
             cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
             cpBodySetVel(_info->getBody(), cpvzero);
             cpBodySetAngVel(_info->getBody(), 0.0f);
+            resetForces();
         }
         
     }
@@ -412,7 +413,10 @@ void PhysicsBody::applyForce(const Vect& force)
 
 void PhysicsBody::applyForce(const Vect& force, const Point& offset)
 {
-    cpBodyApplyForce(_info->getBody(), PhysicsHelper::point2cpv(force), PhysicsHelper::point2cpv(offset));
+    if (_dynamic && _mass != PHYSICS_INFINITY)
+    {
+        cpBodyApplyForce(_info->getBody(), PhysicsHelper::point2cpv(force), PhysicsHelper::point2cpv(offset));
+    }
 }
 
 void PhysicsBody::resetForces()
@@ -420,7 +424,7 @@ void PhysicsBody::resetForces()
     cpBodyResetForces(_info->getBody());
     
     // if _gravityEnable is false, add a reverse of gravity force to body
-    if (_world != nullptr && !_gravityEnable)
+    if (_world != nullptr && _dynamic && !_gravityEnable && _mass != PHYSICS_INFINITY)
     {
         applyForce(-_world->getGravity() * _mass);
     }
@@ -447,7 +451,8 @@ void PhysicsBody::setMass(float mass)
     {
         return;
     }
-    
+
+    int oldMass = _mass;
     _mass = mass;
     _massDefault = false;
     
@@ -470,12 +475,14 @@ void PhysicsBody::setMass(float mass)
     // the static body's mass and moment is always infinity
     if (_dynamic)
     {
-        cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+        updateMass(oldMass, _mass);
     }
 }
 
 void PhysicsBody::addMass(float mass)
 {
+    float oldMass = _mass;
+    
     if (mass == PHYSICS_INFINITY)
     {
         _mass = PHYSICS_INFINITY;
@@ -486,7 +493,7 @@ void PhysicsBody::addMass(float mass)
     {
         return;
     }
-    else if (_mass != PHYSICS_INFINITY)
+    else
     {
         if (_massDefault)
         {
@@ -516,7 +523,7 @@ void PhysicsBody::addMass(float mass)
     // the static body's mass and moment is always infinity
     if (_dynamic)
     {
-        cpBodySetMass(_info->getBody(), PhysicsHelper::float2cpfloat(_mass));
+        updateMass(oldMass, _mass);
     }
 }
 
@@ -530,11 +537,6 @@ void PhysicsBody::addMoment(float moment)
     }
     else if (moment == -PHYSICS_INFINITY)
     {
-        if (moment == PHYSICS_INFINITY)
-        {
-            _moment = MOMENT_DEFAULT;
-            _momentDefault = true;
-        }
         return;
     }
     else
@@ -863,6 +865,21 @@ Point PhysicsBody::world2Local(const Point& point)
 Point PhysicsBody::local2World(const Point& point)
 {
     return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->getBody(), PhysicsHelper::point2cpv(point)));
+}
+
+void PhysicsBody::updateMass(float oldMass, float newMass)
+{
+    if (_dynamic && !_gravityEnable && _world != nullptr && oldMass != PHYSICS_INFINITY)
+    {
+        applyForce(_world->getGravity() * oldMass);
+    }
+    
+    cpBodySetMass(_info->getBody(), newMass);
+    
+    if (_dynamic && !_gravityEnable && _world != nullptr && newMass != PHYSICS_INFINITY)
+    {
+        applyForce(-_world->getGravity() * newMass);
+    }
 }
 
 NS_CC_END
