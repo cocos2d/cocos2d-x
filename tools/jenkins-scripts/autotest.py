@@ -120,9 +120,9 @@ def ANDROID_BUILD():
 
 def main():
 	print 'will build mac project.'
-	suc_build_mac = MAC_BUILD()
-	#print 'will build android project.'
-	#suc_build_android = ANDROID_BUILD()
+	#suc_build_mac = MAC_BUILD()
+	print 'will build android project.'
+	suc_build_android = ANDROID_BUILD()
 	if suc_build_mac:
 		autotest(TYPE_MAC)
 	if suc_build_android:
