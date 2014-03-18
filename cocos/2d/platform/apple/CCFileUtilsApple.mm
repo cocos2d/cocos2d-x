@@ -94,6 +94,31 @@ static void addObjectToNSArray(const Value& value, NSMutableArray *array)
         return;
     }
     
+    //add float  into array
+    if (value.getType() == Value::Type::FLOAT) {
+        NSNumber *number = [NSNumber numberWithFloat:value.asFloat()];
+        [array addObject:number];
+    }
+    
+    //add double into array
+    if (value.getType() == Value::Type::DOUBLE) {
+        NSNumber *number = [NSNumber numberWithDouble:value.asDouble()];
+        [array addObject:number];
+    }
+    
+    //add boolean into array
+    if (value.getType() == Value::Type::BOOLEAN) {
+        NSNumber *element = [NSNumber numberWithBool:value.asBool()];
+        [array addObject:element];
+    }
+    
+    if (value.getType() == Value::Type::INTEGER) {
+        NSNumber *element = [NSNumber numberWithInt:value.asInt()];
+        [array addObject:element];
+    }
+    
+    //todo: add date and data support
+    
     // add array into array
     if (value.getType() == Value::Type::VECTOR)
     {
@@ -144,6 +169,7 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
         dict[key] = Value([nsValue doubleValue]);
         return;
     }
+
     
     // the value is a new dictionary
     if ([nsValue isKindOfClass:[NSDictionary class]])
@@ -171,6 +197,7 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
         dict[key] = Value(valueArray);
         return;
     }
+    
 }
 
 static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict)
@@ -189,6 +216,30 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
         
         [dict setObject:dictElement forKey:NSkey];
         return;
+    }
+    
+    //add float  into dict
+    if (value.getType() == Value::Type::FLOAT) {
+        NSNumber *number = [NSNumber numberWithFloat:value.asFloat()];
+        [dict setObject:number forKey:NSkey];
+    }
+    
+    //add double into dict
+    if (value.getType() == Value::Type::DOUBLE) {
+        NSNumber *number = [NSNumber numberWithDouble:value.asDouble()];
+        [dict setObject:number forKey:NSkey];
+    }
+    
+    //add boolean into dict
+    if (value.getType() == Value::Type::BOOLEAN) {
+        NSNumber *element = [NSNumber numberWithBool:value.asBool()];
+        [dict setObject:element forKey:NSkey];
+    }
+    
+    //add integer into dict
+    if (value.getType() == Value::Type::INTEGER) {
+        NSNumber *element = [NSNumber numberWithInt:value.asInt()];
+        [dict setObject:element forKey:NSkey];
     }
     
     // the object is a String
