@@ -51,11 +51,29 @@ static void addItemToArray(id item, ValueVector& array)
     }
     
     // add number value into array(such as int, float, bool and so on)
+    // the value is a number
     if ([item isKindOfClass:[NSNumber class]])
     {
-        array.push_back(Value([item doubleValue]));
+        NSNumber* num = item;
+        const char* numType = [num objCType];
+        if(num == (void*)kCFBooleanFalse || num == (void*)kCFBooleanTrue)
+        {
+            array.push_back(Value([num boolValue]));
+        }
+        else if(strcmp(numType, @encode(float)) == 0)
+        {
+            array.push_back(Value([num floatValue]));
+        }
+        else if(strcmp(numType, @encode(double)) == 0)
+        {
+            array.push_back(Value([num doubleValue]));
+        }
+        else{
+            array.push_back(Value([num intValue]));
+        }
         return;
     }
+
     
     // add dictionary value into array
     if ([item isKindOfClass:[NSDictionary class]])
@@ -166,7 +184,23 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
     // the value is a number
     if ([nsValue isKindOfClass:[NSNumber class]])
     {
-        dict[key] = Value([nsValue doubleValue]);
+        NSNumber* num = nsValue;
+        const char* numType = [num objCType];
+        if(num == (void*)kCFBooleanFalse || num == (void*)kCFBooleanTrue)
+        {
+             dict[key] = Value([num boolValue]);
+        }
+        else if(strcmp(numType, @encode(float)) == 0)
+        {
+            dict[key] = Value([num floatValue]);
+        }
+        else if(strcmp(numType, @encode(double)) == 0)
+        {
+            dict[key] = Value([num doubleValue]);
+        }
+        else{
+            dict[key] = Value([num intValue]);
+        }
         return;
     }
 
