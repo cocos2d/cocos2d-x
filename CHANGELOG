@@ -1,5 +1,6 @@
 cocos2d-x-3.0? ?? 2014
      [FIX]         Console: initialize some variables that are not initilized in destructor
+     [FIX]         Label: Display incorrect of multi-line label if invoking 'getLetter'
 
 cocos2d-x-3.0rc0 March.14 2014
 [All]
