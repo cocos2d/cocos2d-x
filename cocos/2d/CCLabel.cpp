@@ -457,6 +457,17 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
 {
     reset();
     _fontDefinition = textDefinition;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+    setColor(_fontDefinition._fontFillColor);
+    _fontDefinition._fontFillColor = Color3B::WHITE;
+#else
+    if ( !textDefinition._shadow._shadowEnabled && !textDefinition._stroke._strokeEnabled)
+    {
+        setColor(_fontDefinition._fontFillColor);
+        _fontDefinition._fontFillColor = Color3B::WHITE;
+    }
+#endif
+   
     _fontName = textDefinition._fontName;
     _fontSize = textDefinition._fontSize;
     _contentDirty = true;
@@ -1150,33 +1161,27 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
     _reusedLetter->setOpacityModifyRGB(true);
 }
 
-void Label::setColor(const Color3B& color)
+void Label::updateDisplayedColor(const Color3B& parentColor)
 {
-    _fontDefinition._fontFillColor = color;
+    _displayedColor.r = _realColor.r * parentColor.r/255.0;
+    _displayedColor.g = _realColor.g * parentColor.g/255.0;
+    _displayedColor.b = _realColor.b * parentColor.b/255.0;
+    updateColor();
+
     if (_textSprite)
     {
-        updateContent();
+        _textSprite->updateDisplayedColor(_displayedColor);
     }
-    if (_reusedLetter)
-    {
-        _reusedLetter->setColor(color);
-    }
-    SpriteBatchNode::setColor(color);
 }
 
 void Label::updateColor()
 {
-    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-    if (_textSprite)
-    {
-        _textSprite->setColor(_displayedColor);
-        _textSprite->setOpacity(_displayedOpacity);
-    }
-
     if (nullptr == _textureAtlas)
     {
         return;
     }
+
+    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
     // special opacity for premultiplied textures
     if (_isOpacityModifyRGB)
