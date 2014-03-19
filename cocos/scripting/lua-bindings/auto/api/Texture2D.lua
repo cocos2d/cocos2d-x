@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Texture2D
+
 --------------------------------
 -- @function [parent=#Texture2D] getShaderProgram 
 -- @param self

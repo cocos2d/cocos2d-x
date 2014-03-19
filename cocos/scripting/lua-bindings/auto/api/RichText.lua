@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module RichText
+
 --------------------------------
 -- @function [parent=#RichText] insertElement 
 -- @param self

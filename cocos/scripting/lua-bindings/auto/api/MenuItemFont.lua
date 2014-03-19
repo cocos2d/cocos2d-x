@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItemFont
+
 --------------------------------
 -- @function [parent=#MenuItemFont] getFontSizeObj 
 -- @param self
