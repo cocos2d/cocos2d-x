@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ComAudio
+
 --------------------------------
 -- @function [parent=#ComAudio] stopAllEffects 
 -- @param self
@@ -152,5 +153,26 @@
 -- @function [parent=#ComAudio] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#ComAudio] setEnabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ComAudio] isEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ComAudio] serialize 
+-- @param self
+-- @param #void void
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ComAudio] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 return nil

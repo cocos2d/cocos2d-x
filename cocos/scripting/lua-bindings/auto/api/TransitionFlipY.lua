@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionFlipY
+
 --------------------------------
 -- overload function: create(float, cc.Scene)
 --          

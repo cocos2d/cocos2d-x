@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlPotentiometer
+
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 
 -- @param self
@@ -107,6 +108,36 @@
 -- @param #char char
 -- @param #char char
 -- @return ControlPotentiometer#ControlPotentiometer ret (return value: cc.ControlPotentiometer)
+        
+--------------------------------
+-- @function [parent=#ControlPotentiometer] isTouchInside 
+-- @param self
+-- @param #cc.Touch touch
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ControlPotentiometer] setEnabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ControlPotentiometer] onTouchMoved 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlPotentiometer] onTouchEnded 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlPotentiometer] onTouchBegan 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#ControlPotentiometer] ControlPotentiometer 

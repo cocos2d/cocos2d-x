@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleSystem
+
 --------------------------------
 -- @function [parent=#ParticleSystem] getStartSizeVar 
 -- @param self
@@ -509,5 +510,10 @@
 -- @param self
 -- @param #int int
 -- @return ParticleSystem#ParticleSystem ret (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- @function [parent=#ParticleSystem] update 
+-- @param self
+-- @param #float float
         
 return nil

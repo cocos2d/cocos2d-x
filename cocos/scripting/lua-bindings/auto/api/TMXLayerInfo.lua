@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TMXLayerInfo
+
 --------------------------------
 -- @function [parent=#TMXLayerInfo] setProperties 
 -- @param self

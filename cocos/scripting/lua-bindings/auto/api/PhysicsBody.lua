@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsBody
+
 --------------------------------
 -- @function [parent=#PhysicsBody] isGravityEnabled 
 -- @param self

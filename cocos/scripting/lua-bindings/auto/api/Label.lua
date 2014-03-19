@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Label
+
 --------------------------------
 -- @function [parent=#Label] enableShadow 
 -- @param self
@@ -24,11 +25,6 @@
 --------------------------------
 -- @function [parent=#Label] disableEffect 
 -- @param self
-        
---------------------------------
--- @function [parent=#Label] getWidth 
--- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 -- @function [parent=#Label] getCommonLineHeight 
@@ -153,6 +149,11 @@
 -- @param #unsigned int int
         
 --------------------------------
+-- @function [parent=#Label] getWidth 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
+        
+--------------------------------
 -- @function [parent=#Label] enableGlow 
 -- @param self
 -- @param #color3B_table color3b
@@ -167,6 +168,11 @@
 -- @function [parent=#Label] getTextAlignment 
 -- @param self
 -- @return TextHAlignment#TextHAlignment ret (return value: cc.TextHAlignment)
+        
+--------------------------------
+-- @function [parent=#Label] getBMFontFilePath 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Label] setHorizontalAlignment 
@@ -234,5 +240,76 @@
 -- @param #string str
 -- @param #cc.FontDefinition fontdefinition
 -- @return Label#Label ret (return value: cc.Label)
+        
+--------------------------------
+-- @function [parent=#Label] addChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#Label] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Label] setScaleX 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Label] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Label] setColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#Label] getScaleY 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#Label] getScaleX 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#Label] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Label] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Label] setOpacityModifyRGB 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Label] setScale 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Label] setScaleY 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Label] getContentSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 return nil

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Grid3D
+
 --------------------------------
 -- overload function: create(size_table)
 --          
@@ -13,6 +14,18 @@
 -- @param #bool bool
 -- @return Grid3D#Grid3D ret (retunr value: cc.Grid3D)
 
+--------------------------------
+-- @function [parent=#Grid3D] calculateVertexPoints 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Grid3D] blit 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Grid3D] reuse 
+-- @param self
+        
 --------------------------------
 -- @function [parent=#Grid3D] Grid3D 
 -- @param self

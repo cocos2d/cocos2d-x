@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlSwitch
+
 --------------------------------
 -- @function [parent=#ControlSwitch] setEnabled 
 -- @param self
@@ -62,6 +63,31 @@
 -- @param #cc.LabelTTF labelttf
 -- @return ControlSwitch#ControlSwitch ret (retunr value: cc.ControlSwitch)
 
+--------------------------------
+-- @function [parent=#ControlSwitch] onTouchMoved 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlSwitch] onTouchEnded 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlSwitch] onTouchCancelled 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlSwitch] onTouchBegan 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- @function [parent=#ControlSwitch] ControlSwitch 
 -- @param self
