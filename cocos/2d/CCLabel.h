@@ -203,9 +203,9 @@ public:
     virtual void setFontSize(int fontSize);
     virtual int getFontSize() const;
 
-    /** set text tinting 
-     * Used it set text tinting if create label by font name.
-     * In other cases,used by setColor.
+    /** set text tinting
+     * Used setFontFillColor for set text tinting if the label created by font name.
+     * In other cases,please used setColor.
      */
     void setFontFillColor(const Color3B &tintColor);
 
