@@ -1722,6 +1722,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
 			};
 			name = Debug;
@@ -1748,6 +1749,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
 			};
 			name = Release;
