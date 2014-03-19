@@ -337,6 +337,8 @@ void Label::reset()
     _textSprite = nullptr;
 
     CC_SAFE_RELEASE_NULL(_reusedLetter);
+
+    setColor(Color3B::WHITE);
 }
 
 void Label::updateShaderProgram()
@@ -431,6 +433,9 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     {
         this->setFontScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
     }
+
+    _fontDefinition._shadow._shadowEnabled = false;
+    _fontDefinition._stroke._strokeEnabled = false;
 
     _currentLabelType = LabelType::TTF;
 
@@ -924,7 +929,6 @@ void Label::drawShadowWithoutBlur()
     setColor(oldColor);
     _modelViewTransform = transform(_parentTransform);
     kmGLLoadMatrix(&_modelViewTransform);
-    //kmGLPopMatrix();
 }
 
 void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
@@ -1171,6 +1175,19 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
     if (_textSprite)
     {
         _textSprite->updateDisplayedColor(_displayedColor);
+    }
+}
+
+void Label::setFontFillColor(const Color3B &tintColor)
+{
+    if (_fontDefinition._shadow._shadowEnabled || _fontDefinition._stroke._strokeEnabled)
+    {
+        _fontDefinition._fontFillColor = tintColor;
+        _fontDirty = true;
+    }
+    else
+    {
+        setColor(tintColor);
     }
 }
 
