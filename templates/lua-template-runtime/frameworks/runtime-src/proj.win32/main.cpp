@@ -2,7 +2,7 @@
 #include "AppDelegate.h"
 #include "cocos2d.h"
 #include "SimulatorWindow.h"
-
+#include <shellapi.h>
 USING_NS_CC;
 
 // uncomment below line, open debug console
