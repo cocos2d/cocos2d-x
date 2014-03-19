@@ -131,6 +131,8 @@ MenuLayerMainMenu::MenuLayerMainMenu()
 
     addChild(menu);
     menu->setPosition(Point(s.width/2, s.height/2));
+    menu->setScale(0);
+    menu->runAction(ScaleTo::create(1,1));
 }
 
 bool MenuLayerMainMenu::onTouchBegan(Touch *touch, Event * event)
