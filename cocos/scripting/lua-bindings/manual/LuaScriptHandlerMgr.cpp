@@ -236,7 +236,7 @@ void ScriptHandlerMgr::removeObjectAllHandlers(void* object)
     }
 }
 
-void ScriptHandlerMgr::addConsoleHandler(void* object, int handler)
+void ScriptHandlerMgr::addCustomHandler(void* object, int handler, CustomType type)
 {
     if (nullptr == object)
         return;
@@ -245,10 +245,21 @@ void ScriptHandlerMgr::addConsoleHandler(void* object, int handler)
     VecHandlerPairs vecHandlers;
     vecHandlers.clear();
     HandlerType handlerType = HandlerType::EVENT_CONSOLE_START;
-    if (_mapObjectHandlers.end() != iter)
+    switch (type)
     {
-        vecHandlers = iter->second;
-        handlerType = static_cast<HandlerType>((int)vecHandlers.back().first + 1);
+        case CustomType::CONSOLE:
+            {
+                handlerType = HandlerType::EVENT_CONSOLE_START;
+                if (_mapObjectHandlers.end() != iter)
+                {
+                    vecHandlers = iter->second;
+                    handlerType = static_cast<HandlerType>((int)vecHandlers.back().first + 1);
+                }
+                assert(handlerType <= HandlerType::EVENT_CONSOLE_END);
+            }
+            break;
+        default:
+            break;
     }
     
     HandlerPair eventHanler = std::make_pair(handlerType, handler);
