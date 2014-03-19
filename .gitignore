@@ -79,7 +79,6 @@ build_*_vc10/
 *.mode*v*
 *.pbxuser
 *.xcbkptlist
-*.xcscheme
 *.xcworkspacedata
 *.xcuserstate
 xcschememanagement.plist
