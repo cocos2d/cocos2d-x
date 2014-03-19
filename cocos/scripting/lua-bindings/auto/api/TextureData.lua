@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TextureData
+
 --------------------------------
 -- @function [parent=#TextureData] getContourData 
 -- @param self

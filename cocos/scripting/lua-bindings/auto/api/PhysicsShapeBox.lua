@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsShapeBox
+
 --------------------------------
 -- @function [parent=#PhysicsShapeBox] getPointsCount 
 -- @param self
@@ -31,6 +32,16 @@
 -- @param #float float
 -- @param #size_table size
 -- @param #point_table point
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#PhysicsShapeBox] getOffset 
+-- @param self
+-- @return point_table#point_table ret (return value: point_table)
+        
+--------------------------------
+-- @function [parent=#PhysicsShapeBox] calculateDefaultMoment 
+-- @param self
 -- @return float#float ret (return value: float)
         
 return nil

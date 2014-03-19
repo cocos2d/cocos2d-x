@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ArmatureDisplayData
+
 --------------------------------
 -- @function [parent=#ArmatureDisplayData] create 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LabelAtlas
+
 --------------------------------
 -- @function [parent=#LabelAtlas] setString 
 -- @param self
@@ -47,4 +48,9 @@
 -- @param #int int
 -- @return LabelAtlas#LabelAtlas ret (retunr value: cc.LabelAtlas)
 
+--------------------------------
+-- @function [parent=#LabelAtlas] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
 return nil

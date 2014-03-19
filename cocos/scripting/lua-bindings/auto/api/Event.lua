@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Event
+
 --------------------------------
 -- @function [parent=#Event] isStopped 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ContourData
+
 --------------------------------
 -- @function [parent=#ContourData] init 
 -- @param self

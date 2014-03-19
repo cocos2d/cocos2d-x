@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module GLProgram
+
 --------------------------------
 -- @function [parent=#GLProgram] getFragmentShaderLog 
 -- @param self

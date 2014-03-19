@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItemToggle
+
 --------------------------------
 -- @function [parent=#MenuItemToggle] setSubItems 
 -- @param self
@@ -25,5 +26,22 @@
 -- @function [parent=#MenuItemToggle] setSelectedIndex 
 -- @param self
 -- @param #unsigned int int
+        
+--------------------------------
+-- @function [parent=#MenuItemToggle] setEnabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#MenuItemToggle] activate 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#MenuItemToggle] unselected 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#MenuItemToggle] selected 
+-- @param self
         
 return nil

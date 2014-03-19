@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItemLabel
+
 --------------------------------
 -- @function [parent=#MenuItemLabel] getDisabledColor 
 -- @param self
@@ -25,5 +26,22 @@
 -- @function [parent=#MenuItemLabel] getLabel 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#MenuItemLabel] setEnabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#MenuItemLabel] activate 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#MenuItemLabel] unselected 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#MenuItemLabel] selected 
+-- @param self
         
 return nil

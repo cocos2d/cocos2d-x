@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module RichElementCustomNode
+
 --------------------------------
 -- @function [parent=#RichElementCustomNode] init 
 -- @param self

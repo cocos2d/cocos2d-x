@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module GUIReader
+
 --------------------------------
 -- @function [parent=#GUIReader] widgetFromJsonFile 
 -- @param self
