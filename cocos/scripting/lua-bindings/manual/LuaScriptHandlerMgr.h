@@ -165,6 +165,10 @@ public:
         EVENT_CONSOLE_END   = 11000,
     };
     
+    enum class CustomType : int
+    {
+        CONSOLE,
+    };
     typedef int Handler;
     typedef std::pair<HandlerType, Handler> HandlerPair;
     typedef std::vector<HandlerPair> VecHandlerPairs;
@@ -178,7 +182,7 @@ public:
     void removeObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     void removeObjectAllHandlers(void* object);
-    void addConsoleHandler(void* object, int handler);
+    void addCustomHandler(void* object, int handler, CustomType type);
     
 private:
     void init(void);
