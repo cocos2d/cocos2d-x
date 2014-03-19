@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Node
+
 --------------------------------
 -- overload function: addChild(cc.Node, int)
 --          

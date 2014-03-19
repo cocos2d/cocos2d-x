@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MovementData
+
 --------------------------------
 -- @function [parent=#MovementData] getMovementBoneData 
 -- @param self

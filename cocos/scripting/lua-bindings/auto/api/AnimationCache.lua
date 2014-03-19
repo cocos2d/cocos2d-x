@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module AnimationCache
+
 --------------------------------
 -- @function [parent=#AnimationCache] getAnimation 
 -- @param self

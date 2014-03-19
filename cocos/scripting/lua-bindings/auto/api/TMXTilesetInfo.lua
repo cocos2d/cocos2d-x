@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TMXTilesetInfo
+
 --------------------------------
 -- @function [parent=#TMXTilesetInfo] getRectForGID 
 -- @param self

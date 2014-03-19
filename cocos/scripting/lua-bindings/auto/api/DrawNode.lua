@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module DrawNode
+
 --------------------------------
 -- @function [parent=#DrawNode] drawQuadraticBezier 
 -- @param self
@@ -57,5 +58,12 @@
 -- @function [parent=#DrawNode] create 
 -- @param self
 -- @return DrawNode#DrawNode ret (return value: cc.DrawNode)
+        
+--------------------------------
+-- @function [parent=#DrawNode] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
         
 return nil

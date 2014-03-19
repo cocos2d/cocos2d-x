@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseElastic
+
 --------------------------------
 -- @function [parent=#EaseElastic] setPeriod 
 -- @param self
@@ -10,5 +11,15 @@
 -- @function [parent=#EaseElastic] getPeriod 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#EaseElastic] clone 
+-- @param self
+-- @return EaseElastic#EaseElastic ret (return value: cc.EaseElastic)
+        
+--------------------------------
+-- @function [parent=#EaseElastic] reverse 
+-- @param self
+-- @return EaseElastic#EaseElastic ret (return value: cc.EaseElastic)
         
 return nil

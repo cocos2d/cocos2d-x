@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlSlider
+
 --------------------------------
 -- @function [parent=#ControlSlider] getSelectedThumbSprite 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleExplosion
+
 --------------------------------
 -- @function [parent=#ParticleExplosion] create 
 -- @param self

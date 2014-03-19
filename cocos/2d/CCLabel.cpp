@@ -446,7 +446,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Point& im
         reset();
         return false;
     }
-
+    _bmFontPath = bmfontFilePath;
     setFontAtlas(newAtlas);
     _currentLabelType = LabelType::BMFONT;
 
@@ -624,17 +624,7 @@ void Label::alignText()
         }
     }
 
-    int index;
-    for (int ctr = 0; ctr < _limitShowCount; ++ctr)
-    {        
-        if (_lettersInfo[ctr].def.validDefinition)
-        {
-            updateSpriteWithLetterDefinition(_lettersInfo[ctr].def,textures[_lettersInfo[ctr].def.textureID]);
-            _reusedLetter->setPosition(_lettersInfo[ctr].position);
-            index = _batchNodes[_lettersInfo[ctr].def.textureID]->getTextureAtlas()->getTotalQuads();
-            _batchNodes[_lettersInfo[ctr].def.textureID]->insertQuadFromSprite(_reusedLetter,index);
-        }     
-    }
+    updateQuads();
 
     updateColor();
 }
@@ -691,16 +681,30 @@ bool Label::setCurrentString(unsigned short *stringToSet)
     return true;
 }
 
-void Label::updateSpriteWithLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture)
+void Label::updateQuads()
 {
-    _reusedRect.size.height = theDefinition.height;
-    _reusedRect.size.width  = theDefinition.width;
-    _reusedRect.origin.x    = theDefinition.U;
-    _reusedRect.origin.y    = theDefinition.V;
+    int index;
+    for (int ctr = 0; ctr < _limitShowCount; ++ctr)
+    {
+        auto &letterDef = _lettersInfo[ctr].def;
 
-    if(_reusedLetter->getBatchNode() != _batchNodes[theDefinition.textureID])
-        _reusedLetter->setBatchNode(_batchNodes[theDefinition.textureID]);
-    _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
+        if (letterDef.validDefinition)
+        {
+            _reusedRect.size.height = letterDef.height;
+            _reusedRect.size.width  = letterDef.width;
+            _reusedRect.origin.x    = letterDef.U;
+            _reusedRect.origin.y    = letterDef.V;
+
+            if(_reusedLetter->getBatchNode() != _batchNodes[letterDef.textureID])
+                _reusedLetter->setBatchNode(_batchNodes[letterDef.textureID]);
+            _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
+
+            _reusedLetter->setPosition(_lettersInfo[ctr].position);
+            index = _batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads();
+            _lettersInfo[ctr].atlasIndex = index;
+            _batchNodes[letterDef.textureID]->insertQuadFromSprite(_reusedLetter,index);
+        }     
+    }
 }
 
 bool Label::recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex)
@@ -1054,35 +1058,41 @@ int Label::getFontSize() const
 }
 
 ///// PROTOCOL STUFF
-Sprite * Label::getLetter(int lettetIndex)
+Sprite * Label::getLetter(int letterIndex)
 {
+    if (_fontDirty)
+    {
+        updateFont();
+    }
     if (_contentDirty)
     {
         updateContent();
     }
     
-    if (! _textSprite && lettetIndex < _limitShowCount)
+    if (! _textSprite && letterIndex < _limitShowCount)
     {
-        if(! _lettersInfo[lettetIndex].def.validDefinition)
+        const auto &letter = _lettersInfo[letterIndex];
+
+        if(! letter.def.validDefinition)
             return nullptr;
 
-        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(lettetIndex));
+        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(letterIndex));
 
         if (!sp)
         {
             Rect uvRect;
-            uvRect.size.height = _lettersInfo[lettetIndex].def.height;
-            uvRect.size.width  = _lettersInfo[lettetIndex].def.width;
-            uvRect.origin.x    = _lettersInfo[lettetIndex].def.U;
-            uvRect.origin.y    = _lettersInfo[lettetIndex].def.V;
+            uvRect.size.height = letter.def.height;
+            uvRect.size.width  = letter.def.width;
+            uvRect.origin.x    = letter.def.U;
+            uvRect.origin.y    = letter.def.V;
 
-            sp = Sprite::createWithTexture(_fontAtlas->getTexture(_lettersInfo[lettetIndex].def.textureID),uvRect);
-            sp->setBatchNode(this);
-            sp->setAnchorPoint(Point::ANCHOR_MIDDLE);
-            sp->setPosition(Point(_lettersInfo[lettetIndex].position.x+uvRect.size.width/2,_lettersInfo[lettetIndex].position.y-uvRect.size.height/2));
+            sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
+            sp->setBatchNode(_batchNodes[letter.def.textureID]);
+            sp->setPosition(Point(letter.position.x + uvRect.size.width / 2, 
+                letter.position.y - uvRect.size.height / 2));
             sp->setOpacity(_realOpacity);
 
-            this->addSpriteWithoutQuad(sp, lettetIndex, lettetIndex);
+            _batchNodes[letter.def.textureID]->addSpriteWithoutQuad(sp, letter.atlasIndex, letterIndex);
         }
         return sp;
     }
@@ -1120,7 +1130,7 @@ void Label::computeStringNumLines()
 
 int Label::getStringLength() const
 {
-    return _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
+    return _currentUTF16String ? cc_wcslen(_currentUTF16String) : _originalUTF8String.length();
 }
 
 // RGBA protocol
