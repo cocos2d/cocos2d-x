@@ -32,7 +32,7 @@ https://github.com/cocos2d/cocos2d-console
 * ANDROID_SDK_ROOT: used to generate applicatoin on Android through commands
 * ANT_ROOT: used to generate applicatoin on Android through commands
 
-On Max OS X, when start a shell, it will read these files and execute commands in sequence:
+On Max OS X and bash, when start a shell, it will read these files and execute commands in sequence:
 
 ~/.bash_profile
 ~/.bash_login
@@ -46,6 +46,8 @@ Which means that
 
 Will create ~/.bash_profile when none of them exist, and add environment variables into it.
 
+On Max OS X and fish, when start a shell, it will load "~/.config/fish/config.fish" files.
+Will create ~/.config/fish/config.fish when none of them exist, and add environment variables into it.
 '''
 
 import os
@@ -71,7 +73,16 @@ class SetEnvVar(object):
     def _isLinux(self):
         return sys.platform.startswith('linux')
 
+    def _isFish(self):
+        return os.popen("echo $SHELL").read().strip().endswith('fish')
+
     def _get_filepath_for_setup(self):
+        if self._isFish():
+            return self._get_filepath_for_setup_fish()
+        else:
+            return self._get_filepath_for_setup_bash()
+
+    def _get_filepath_for_setup_bash(self):
 
         home = os.path.expanduser('~')
         if os.path.exists(os.path.join(home, '.bash_profile')):
@@ -82,6 +93,18 @@ class SetEnvVar(object):
             file_to_write = os.path.join(home, '.profile')
         else:
             file_to_write = os.path.join(home, '.bash_profile')
+            file = open(file_to_write, 'w')
+            file.close()
+
+        return file_to_write
+
+    def _get_filepath_for_setup_fish(self):
+
+        home = os.path.expanduser('~')
+        if os.path.exists(os.path.join(home, '.config/fish/config.fish')):
+            file_to_write = os.path.join(home, '.config/fish/config.fish')
+        else:
+            file_to_write = os.path.join(home, '.config/fish/config.fish')
             file = open(file_to_write, 'w')
             file.close()
 
@@ -116,12 +139,29 @@ class SetEnvVar(object):
         return True
 
     def _set_environment_variable_unix(self, key, value):
+        if self._isFish():
+            return self._set_environment_variable_unix_fish(key, value)
+        else:
+            return self._set_environment_variable_unix_bash(key, value)
+
+    def _set_environment_variable_unix_bash(self, key, value):
 
         file = open(self.file_used_for_setup, 'a')
         file.write('export %s=%s\n' % (key, value))
         file.write('export PATH=$%s:$PATH\n' % key)
         if key == ANDROID_SDK_ROOT:
             file.write('export PATH=$%s/tools:$%s/platform-tools:$PATH\n' % (key, key))
+        file.close()
+        return True
+
+    def _set_environment_variable_unix_fish(self, key, value):
+
+        file = open(self.file_used_for_setup, 'a')
+        file.write('set -x %s %s\n' % (key, value))
+        file.write('set -x PATH $PATH $%s\n' % key)
+        if key == ANDROID_SDK_ROOT:
+            file.write('set -x PATH $PATH $%s/tools\n' % (key, key))
+            file.write('set -x PATH $PATH $%s/platform-tools\n' % (key, key))
         file.close()
         return True
 
@@ -135,6 +175,12 @@ class SetEnvVar(object):
         return ret
 
     def _find_environment_variable(self, var):
+        if self._isFish():
+            return self._find_environment_variable_fish(var)
+        else:
+            return self._find_environment_variable_bash(var)
+
+    def _find_environment_variable_bash(self, var):
         try:
             os.environ[var]
             return True
@@ -163,6 +209,39 @@ class SetEnvVar(object):
                     if self._find_string_in_file(string_to_search, path):
                         self.file_used_for_setup = path
                         return True
+            else:
+                import _winreg
+                try:
+                    env = None
+                    env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
+                                'Environment',
+                                0,
+                                _winreg.KEY_READ)
+
+                    _winreg.QueryValueEx(env, var)
+                    _winreg.CloseKey(env)
+                    return True
+                except Exception:
+                    if env:
+                        _winreg.CloseKey(env)
+                    return False
+
+    def _find_environment_variable_fish(self, var):
+        try:
+            os.environ[var]
+            return True
+        except Exception:
+            if not self._isWindows():
+                string_to_search = 'set -x %s' % var
+                home = os.path.expanduser('~')
+
+                # search it in ~/.config/fish/config.fish
+                path = os.path.join(home, '.config/fish/config.fish')
+                if os.path.exists(path):
+                    if self._find_string_in_file(string_to_search, path):
+                        self.file_used_for_setup = path
+                        return True   
+                                            
             else:
                 import _winreg
                 try:
@@ -434,6 +513,8 @@ class SetEnvVar(object):
 
         if self._isWindows():
             print '\nPlease restart the terminal or restart computer to make added system variables take effect'
+        elif self._isFish():
+            print '\nPlease restart shell to make added system variables take effect'
         else:
             print '\nPlease execute command: "source %s" to make added system variables take effect' % target
 
