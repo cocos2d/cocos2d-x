@@ -560,27 +560,26 @@ private:
 
 void startRuntime()
 {
-	vector<string> oldSearchPathArray;
-    oldSearchPathArray=FileUtils::getInstance()->getSearchPaths();
-    vector<string> newSearchPathArray;
+	vector<string> searchPathArray;
+    searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 	if (g_resourcePath.empty())
 	{
-		g_resourcePath = FileUtils::getInstance()->getWritablePath();
+		extern std::string getCurAppPath();
+		string resourcePath = getCurAppPath();
+		resourcePath.append("/../../");
+		resourcePath =replaceAll(resourcePath,"\\","/");
+		g_resourcePath = resourcePath;
 	}
 
 #else
 	g_resourcePath = FileUtils::getInstance()->getWritablePath();
     
 #endif
-    
+   
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
-    newSearchPathArray.push_back(g_resourcePath);
-    FileUtils::getInstance()->setSearchPaths(newSearchPathArray);
-	for (unsigned i = 0; i < oldSearchPathArray.size(); i++)
-	{
-		FileUtils::getInstance()->addSearchPath(oldSearchPathArray[i]);
-	}
+	searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
 	static ConsoleCustomCommand s_customCommand;
 	auto engine = LuaEngine::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
