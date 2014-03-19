@@ -367,6 +367,13 @@ void TextWritePlist::onEnter()
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(Point(winSize.width/2, winSize.height/3));
+    
+//    auto loadDict = Dictionary::createWithContentsOfFile("/Users/guanghui/Library/Application Support/iPhone Simulator/7.1-64/Applications/92E7DFA5-5B92-44FE-AF61-798F5A50B091/Documents/text.plist");
+//    auto loadDictInDict = (Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
+//    auto boolValue = (Bool*)loadDictInDict->objectForKey("bool");
+//    if (boolValue->getValue()) {
+//        CCLOG("true");
+//    }
 }
 
 void TextWritePlist::onExit()
