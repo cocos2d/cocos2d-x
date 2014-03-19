@@ -721,6 +721,10 @@ protected:
 };
 }
 
+namespace gui = ui;
+
 NS_CC_END
+
+
 
 #endif /* defined(__Widget__) */
