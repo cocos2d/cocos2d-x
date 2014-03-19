@@ -41,6 +41,7 @@ NS_CC_EXT_BEGIN
 #define BOUNCE_DURATION      0.15f
 #define INSET_RATIO          0.2f
 #define MOVE_INCH            7.0f/160.0f
+#define BOUNCE_BACK_FACTOR   0.35f
 
 static float convertDistanceFromPointToInch(float pointDis)
 {
@@ -681,7 +682,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                 dis = moveDistance.y;
                 float pos = _container->getPosition().y;
                 if (!(minContainerOffset().y <= pos && pos <= maxContainerOffset().y)) {
-                    dis *= 0.35;
+                    moveDistance.y *= BOUNCE_BACK_FACTOR;
                 }
             }
             else if (_direction == Direction::HORIZONTAL)
@@ -689,12 +690,22 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                 dis = moveDistance.x;
                 float pos = _container->getPosition().x;
                 if (!(minContainerOffset().x <= pos && pos <= maxContainerOffset().x)) {
-                    dis *= 0.35;
+                    moveDistance.x *= BOUNCE_BACK_FACTOR;
                 }
             }
             else
             {
                 dis = sqrtf(moveDistance.x*moveDistance.x + moveDistance.y*moveDistance.y);
+                
+                float pos = _container->getPosition().y;
+                if (!(minContainerOffset().y <= pos && pos <= maxContainerOffset().y)) {
+                    moveDistance.y *= BOUNCE_BACK_FACTOR;
+                }
+                
+                pos = _container->getPosition().x;
+                if (!(minContainerOffset().x <= pos && pos <= maxContainerOffset().x)) {
+                    moveDistance.x *= BOUNCE_BACK_FACTOR;
+                }
             }
 
             if (!_touchMoved && fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
