@@ -407,35 +407,11 @@ static __Dictionary* visitDict(const ValueMap& dict)
             ret->setObject(sub, iter->first);
             sub->release();
         }
-        else if(iter->second.getType() == Value::Type::STRING)
+        else
         {
             auto str = new __String(iter->second.asString());
             ret->setObject(str, iter->first);
             str->release();
-        }
-        else if(iter->second.getType() == Value::Type::BOOLEAN)
-        {
-            auto boolean = new __Bool(iter->second.asBool());
-            ret->setObject(boolean, iter->first);
-            boolean->release();
-        }
-        else if(iter->second.getType() == Value::Type::FLOAT)
-        {
-            auto flt = new __Float(iter->second.asFloat());
-            ret->setObject(flt, iter->first);
-            flt->release();
-        }else if(iter->second.getType() == Value::Type::DOUBLE)
-        {
-            auto dbl = new __Double(iter->second.asDouble());
-            ret->setObject(dbl, iter->first);
-            dbl->release();
-        }else if(iter->second.getType() == Value::Type::INTEGER)
-        {
-            auto integer = new __Integer(iter->second.asInt());
-            ret->setObject(integer, iter->first);
-            integer->release();
-        }else{
-            CCASSERT(false, "the type isn't suppored.");
         }
     }
     return ret;
@@ -461,35 +437,11 @@ static __Array* visitArray(const ValueVector& array)
             ret->addObject(sub);
             sub->release();
         }
-        else if(value.getType() == Value::Type::STRING)
+        else
         {
             auto str = new __String(value.asString());
             ret->addObject(str);
             str->release();
-        }
-        else if(value.getType() == Value::Type::BOOLEAN)
-        {
-            auto boolean = new __Bool(value.asBool());
-            ret->addObject(boolean);
-            boolean->release();
-        }
-        else if(value.getType() == Value::Type::FLOAT)
-        {
-            auto flt = new __Float(value.asFloat());
-            ret->addObject(flt);
-            flt->release();
-        }else if(value.getType() == Value::Type::DOUBLE)
-        {
-            auto dbl = new __Double(value.asDouble());
-            ret->addObject(dbl);
-            dbl->release();
-        }else if(value.getType() == Value::Type::INTEGER)
-        {
-            auto integer = new __Integer(value.asInt());
-            ret->addObject(integer);
-            integer->release();
-        }else{
-            CCASSERT(false, "the type isn't suppored.");
         }
     }
     
