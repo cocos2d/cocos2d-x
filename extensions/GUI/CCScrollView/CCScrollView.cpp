@@ -722,7 +722,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
             _touchPoint = newPoint;
             _touchMoved = true;
             
-            if (frame.containsPoint(this->convertToWorldSpace(newPoint)))
+            if (_dragging)
             {
                 switch (_direction)
                 {
