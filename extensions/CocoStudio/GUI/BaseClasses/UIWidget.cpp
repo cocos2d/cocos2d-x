@@ -61,7 +61,9 @@ _nodes(NULL),
 _color(ccWHITE),
 _opacity(255),
 _flippedX(false),
-_flippedY(false)
+_flippedY(false),
+_percentSizeEqualRatio(false),
+_sizeCriterion(CRITERION_WIDTH)
 {
     
 }
@@ -432,6 +434,42 @@ void Widget::setSizePercent(const CCPoint &percent)
     _customSize = cSize;
     onSizeChanged();
 }
+    
+void Widget::setSizePercentX(float percent)
+{
+    _sizePercent.x = percent;
+    setSizePercent(_sizePercent);
+}
+    
+void Widget::setSizePercentY(float percent)
+{
+    _sizePercent.y = percent;
+    setSizePercent(_sizePercent);
+}
+    
+void Widget::setPercentSizeEqualRatio(bool equalRatio)
+{
+    _percentSizeEqualRatio = equalRatio;
+}
+    
+bool Widget::isPercentSizeEqualRatio()
+{
+    return _percentSizeEqualRatio;
+}
+    
+void Widget::setEqualRatioSizeCriterion(SizeCriterion criterion)
+{
+    _sizeCriterion = criterion;
+    if (m_bRunning)
+    {
+        updateSizeAndPosition();
+    }
+}
+    
+SizeCriterion Widget::getEqualRatioSizeCriterion()
+{
+    return _sizeCriterion;
+}
 
 void Widget::updateSizeAndPosition()
 {
@@ -477,7 +515,33 @@ void Widget::updateSizeAndPosition(const cocos2d::CCSize &parentSize)
         }
         case SIZE_PERCENT:
         {
-            CCSize cSize = CCSize(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
+            CCSize cSize;
+            if (_percentSizeEqualRatio)
+            {
+                switch (_sizeCriterion)
+                {
+                    case 0:
+                    {
+                        float xRes = parentSize.width * _sizePercent.x;
+                        float yRes = xRes * getContentSize().height / getContentSize().width;
+                        cSize = CCSize(xRes , yRes);
+                        break;
+                    }
+                    case 1:
+                    {
+                        float yRes = parentSize.height * _sizePercent.y;
+                        float xRes = yRes * getContentSize().width / getContentSize().height;
+                        cSize = CCSize(xRes , yRes);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                cSize = CCSize(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
+            }
             if (_ignoreSize)
             {
                 _size = getContentSize();
@@ -890,6 +954,18 @@ void Widget::setPositionPercent(const CCPoint &percent)
             setPosition(absPos);
         }
     }
+}
+    
+void Widget::setPositionPercentX(float percent)
+{
+    _positionPercent.x = percent;
+    setPositionPercent(_positionPercent);
+}
+    
+void Widget::setPositionPercentY(float percent)
+{
+    _positionPercent.y = percent;
+    setPositionPercent(_positionPercent);
 }
 
 void Widget::updateAnchorPoint()

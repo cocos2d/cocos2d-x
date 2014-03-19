@@ -72,6 +72,12 @@ typedef enum
     POSITION_ABSOLUTE,
     POSITION_PERCENT
 }PositionType;
+    
+typedef enum
+{
+    CRITERION_WIDTH,
+    CRITERION_HEIGHT
+}SizeCriterion;
 
 typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
@@ -362,7 +368,11 @@ public:
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
     void setPositionPercent(const CCPoint &percent);
-        
+    
+    void setPositionPercentX(float percent);
+    
+    void setPositionPercentY(float percent);
+    
     /**
      * Gets the percent (x,y) of the widget in OpenGL coordinates
      *
@@ -514,6 +524,18 @@ public:
      * @param percent that is widget's percent size
      */
     virtual void setSizePercent(const CCPoint &percent);
+    
+    virtual void setSizePercentX(float percent);
+    
+    virtual void setSizePercentY(float percent);
+    
+    void setPercentSizeEqualRatio(bool equalRatio);
+    
+    bool isPercentSizeEqualRatio();
+    
+    void setEqualRatioSizeCriterion(SizeCriterion criterion);
+    
+    SizeCriterion getEqualRatioSizeCriterion();
     
     /**
      * Changes the size type of widget.
@@ -716,6 +738,10 @@ protected:
     
     bool _flippedX;
     bool _flippedY;
+    
+    bool _percentSizeEqualRatio;
+    SizeCriterion _sizeCriterion;
+    
     
     friend class TouchGroup;
 };
