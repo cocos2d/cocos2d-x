@@ -205,7 +205,7 @@ public:
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
 
     virtual Sprite * getLetter(int lettetIndex);
 
