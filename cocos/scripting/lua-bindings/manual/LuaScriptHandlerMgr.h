@@ -160,6 +160,9 @@ public:
         EVENT_PHYSICS_CONTACT_PRESOLVE,
         EVENT_PHYSICS_CONTACT_POSTSOLVE,
         EVENT_PHYSICS_CONTACT_SEPERATE,
+        
+        EVENT_CONSOLE_START = 10000,
+        EVENT_CONSOLE_END   = 11000,
     };
     
     typedef int Handler;
@@ -175,6 +178,7 @@ public:
     void removeObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     void removeObjectAllHandlers(void* object);
+    void addConsoleHandler(void* object, int handler);
     
 private:
     void init(void);
