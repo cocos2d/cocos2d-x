@@ -27,11 +27,6 @@
 -- @param self
         
 --------------------------------
--- @function [parent=#Label] getWidth 
--- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
-        
---------------------------------
 -- @function [parent=#Label] getCommonLineHeight 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -154,6 +149,11 @@
 -- @param #unsigned int int
         
 --------------------------------
+-- @function [parent=#Label] getWidth 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
+        
+--------------------------------
 -- @function [parent=#Label] enableGlow 
 -- @param self
 -- @param #color3B_table color3b
@@ -168,6 +168,11 @@
 -- @function [parent=#Label] getTextAlignment 
 -- @param self
 -- @return TextHAlignment#TextHAlignment ret (return value: cc.TextHAlignment)
+        
+--------------------------------
+-- @function [parent=#Label] getBMFontFilePath 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Label] setHorizontalAlignment 
