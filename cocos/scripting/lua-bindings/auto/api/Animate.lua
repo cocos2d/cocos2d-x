@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Animate
+
 --------------------------------
 -- overload function: getAnimation()
 --          
@@ -20,5 +21,29 @@
 -- @param self
 -- @param #cc.Animation animation
 -- @return Animate#Animate ret (return value: cc.Animate)
+        
+--------------------------------
+-- @function [parent=#Animate] startWithTarget 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#Animate] clone 
+-- @param self
+-- @return Animate#Animate ret (return value: cc.Animate)
+        
+--------------------------------
+-- @function [parent=#Animate] stop 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Animate] reverse 
+-- @param self
+-- @return Animate#Animate ret (return value: cc.Animate)
+        
+--------------------------------
+-- @function [parent=#Animate] update 
+-- @param self
+-- @param #float float
         
 return nil

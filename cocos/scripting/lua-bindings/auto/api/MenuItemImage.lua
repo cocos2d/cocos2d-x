@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItemImage
+
 --------------------------------
 -- @function [parent=#MenuItemImage] setDisabledSpriteFrame 
 -- @param self

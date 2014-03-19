@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LabelBMFont
+
 --------------------------------
 -- @function [parent=#LabelBMFont] setLineBreakWithoutSpace 
 -- @param self
@@ -87,6 +88,22 @@
 -- @param #point_table point
 -- @return LabelBMFont#LabelBMFont ret (retunr value: cc.LabelBMFont)
 
+--------------------------------
+-- @function [parent=#LabelBMFont] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#LabelBMFont] setColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#LabelBMFont] getChildByTag 
+-- @param self
+-- @param #int int
+-- @return Node#Node ret (return value: cc.Node)
+        
 --------------------------------
 -- @function [parent=#LabelBMFont] LabelBMFont 
 -- @param self

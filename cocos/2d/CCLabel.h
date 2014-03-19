@@ -116,6 +116,7 @@ public:
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
 
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
+    const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
     virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
@@ -204,7 +205,7 @@ public:
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual void setColor(const Color3B& color) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
 
     virtual Sprite * getLetter(int lettetIndex);
 
@@ -248,6 +249,7 @@ protected:
 
         Point position;
         Size  contentSize;
+        int   atlasIndex;
     };
     enum class LabelType {
 
@@ -282,7 +284,7 @@ protected:
     bool setOriginalString(unsigned short *stringToSet);
     void computeStringNumLines();
 
-    void updateSpriteWithLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture);
+    void updateQuads();
 
     virtual void updateColor() override;
 
@@ -294,6 +296,8 @@ protected:
 
     void updateFont();
     void reset();
+
+    std::string _bmFontPath;
 
     bool _isOpacityModifyRGB;
     bool _contentDirty;

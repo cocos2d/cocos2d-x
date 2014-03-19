@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ActionManager
+
 --------------------------------
 -- @function [parent=#ActionManager] getActionByTag 
 -- @param self

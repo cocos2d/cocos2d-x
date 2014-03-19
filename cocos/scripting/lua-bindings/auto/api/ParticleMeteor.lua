@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleMeteor
+
 --------------------------------
 -- @function [parent=#ParticleMeteor] create 
 -- @param self

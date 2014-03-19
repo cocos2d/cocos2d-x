@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItem
+
 --------------------------------
 -- @function [parent=#MenuItem] setEnabled 
 -- @param self
@@ -32,5 +33,10 @@
 -- @function [parent=#MenuItem] rect 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- @function [parent=#MenuItem] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 return nil

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventTouch
+
 --------------------------------
 -- @function [parent=#EventTouch] getEventCode 
 -- @param self
