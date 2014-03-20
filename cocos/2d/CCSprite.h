@@ -428,10 +428,7 @@ public:
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
 
-protected:
-
-    Sprite(void);
-    virtual ~Sprite(void);
+CC_CONSTRUCTOR_ACCESS:
 
     /* Initializes an empty sprite with nothing init. */
     virtual bool init(void);
@@ -519,6 +516,11 @@ protected:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
+
+protected:
+
+    Sprite(void);
+    virtual ~Sprite(void);
 
     void updateColor(void);
     virtual void setTextureCoords(Rect rect);

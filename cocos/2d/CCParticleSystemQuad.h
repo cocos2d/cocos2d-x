@@ -118,6 +118,15 @@ public:
     virtual void setTotalParticles(int tp) override;
 
     virtual std::string getDescription() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    
+    // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
 
 protected:
     /**
@@ -129,22 +138,15 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSystemQuad();
-
+    
     /** initializes the indices for the vertices*/
     void initIndices();
-
+    
     /** initializes the texture with a rectangle measured Points */
     void initTexCoordsWithRect(const Rect& rect);
     
     /** Updates texture coords */
     void updateTexCoords();
-    
-    // Overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual bool initWithTotalParticles(int numberOfParticles) override;
 
     void setupVBOandVAO();
     void setupVBO();

@@ -176,6 +176,14 @@ public:
     };
 
     virtual std::string getDescription() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    
+    /** initializes a TMX Tiled Map with a TMX file */
+    bool initWithTMXFile(const std::string& tmxFile);
+    
+    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
+    bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
 
 protected:
     /**
@@ -187,12 +195,6 @@ protected:
      * @lua NA
      */
     virtual ~TMXTiledMap();
-
-    /** initializes a TMX Tiled Map with a TMX file */
-    bool initWithTMXFile(const std::string& tmxFile);
-
-    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
     
     TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
