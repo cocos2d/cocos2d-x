@@ -28,14 +28,9 @@ def main():
     result = pattern.search(comment_body)
 
     # will check console/console create
-    patternCrt = re.compile("\[console(\s+)create\]", re.I)
-    resCrt = patternCrt.search(comment_body)
-    resRun = None
-    if resCrt = None:
-        patternRun = re.compile("\[console\]", re.I)
-        resRun = patternRun.search(comment_body);
+    searchConsole = re.search('\[console.*\]', comment_body)
 
-    if result is None and resCrt is None and resRun is None:
+    if result is None and searchConsole is None:
         print 'skip build for pull request #' + str(pr_num)
         return(0)
     
@@ -87,12 +82,10 @@ def main():
     job_trigger_url = ''
     if result:
         job_trigger_url = os.environ['JOB_TRIGGER_URL']
-    if resultCrt:
+    if searchConsole:
+        consoleOper = searchConsole.group()
         job_trigger_url = os.environ['JOB_CONSOLE_TEST_URL']
-        payload_forword['console'] = 'create'
-    if resultRun:
-        job_trigger_url = os.environ['JOB_CONSOLE_TEST_URL']
-        payload_forword['console'] = 'run'
+        payload_forword['console'] = consoleOper
     print 'job_trigger_url is: ', job_trigger_url
 
     #send trigger and payload
