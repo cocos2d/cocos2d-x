@@ -161,7 +161,7 @@ int LabelTTF::getFontSize() const
     return _renderLabel->getFontSize();
 }
 
-void LabelTTF::setFontSize(int fontSize)
+void LabelTTF::setFontSize(float fontSize)
 {
     _renderLabel->setFontSize(fontSize);
     _contentDirty = true;
