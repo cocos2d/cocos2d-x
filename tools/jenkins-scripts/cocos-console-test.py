@@ -17,6 +17,8 @@ if os.environ.has_key('payload'):
 		console_cmd = payload['console']
 print 'console_param:',console_param
 
+console_param_arr = console_param.split(' ')
+
 project_types = ['cpp', 'lua']
 PROJ_SUFFIX = 'Proj'
 phonePlats = ['mac','ios','android']
@@ -30,10 +32,6 @@ runSupport = {
 	'win' : [0, 0, 1],
 	'linux' : [0, 0, 1]
 }
-
-_will_run = False
-if console_cmd=='run':
-	_will_run = True
 
 curPlat = sys.platform
 if curPlat.find('linux') >= 0:
@@ -74,7 +72,7 @@ def build_run():
 def main():
 	clean_project()
 	create_project()
-	if _will_run:
+	if console_param_arr.count('run'):
 	 	build_run()
 
 # -------------- main --------------
