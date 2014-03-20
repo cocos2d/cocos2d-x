@@ -6,6 +6,7 @@ precision lowp float; \n\
 varying vec4 v_fragmentColor; \n\
 varying vec2 v_texCoord; \n\
 uniform sampler2D CC_Texture0; \n\
+uniform vec4 v_textColor; \n\
  \n\
 void main() \n\
 {	\n\
@@ -18,7 +19,7 @@ void main() \n\
   //float width = fwidth(dist); \n\
   //assign width for constant will lead to a little bit fuzzy,it's temporary measure.\n\
   float width = 0.04; \n\
-  float alpha = smoothstep(0.5-width, 0.5+width, dist) * v_fragmentColor.a; \n\
-  gl_FragColor = vec4(v_fragmentColor.rgb,alpha); \n\
+  float alpha = smoothstep(0.5-width, 0.5+width, dist) * v_textColor.a; \n\
+  gl_FragColor = v_fragmentColor * vec4(v_textColor.rgb,alpha); \n\
 } \n\
 ";

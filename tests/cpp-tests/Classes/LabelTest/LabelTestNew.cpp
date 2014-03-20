@@ -1014,21 +1014,21 @@ LabelTTFColor::LabelTTFColor()
     // Green
     auto label1 = Label::createWithTTF(ttfConfig,"Green", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, size.height/5 * 1.5) );
-    label1->setColor( Color3B::GREEN );
+    label1->setTextColor( Color4B::GREEN );
     label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(label1);
 
     // Red
     auto label2 = Label::createWithTTF(ttfConfig,"Red", TextHAlignment::CENTER, size.width);
     label2->setPosition( Point(size.width/2, size.height/5 * 2.0) );
-    label2->setColor( Color3B::RED );
+    label2->setTextColor( Color4B::RED );
     label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(label2);
 
     // Blue
     auto label3 = Label::createWithTTF(ttfConfig,"Blue", TextHAlignment::CENTER, size.width);
     label3->setPosition( Point(size.width/2, size.height/5 * 2.5) );
-    label3->setColor( Color3B::BLUE );
+    label3->setTextColor( Color4B::BLUE );
     label3->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(label3);
 }
@@ -1120,20 +1120,20 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
     TTFConfig ttfConfig("fonts/wt021.ttf", 25, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
         "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
-    label1->setColor(Color3B(128, 255, 255));
+    label1->setTextColor(Color4B(128, 255, 255, 255));
     label1->setPosition(Point(size.width * 0.1, size.height * 0.6));
     label1->setAnchorPoint(Point(0, 0.5));
     this->addChild(label1);
     
     auto label2 = Label::createWithTTF(ttfConfig,
         "早上好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
-    label2->setColor(Color3B(255, 128, 255));
+    label2->setTextColor(Color4B(255, 128, 255, 255));
     label2->setPosition(Point(size.width * 0.1, size.height * 0.4));
     label2->setAnchorPoint(Point(0, 0.5));
     this->addChild(label2);
     auto label3 = Label::createWithTTF(ttfConfig,
         "美好的一天啊美好的一天啊美好的一天啊", TextHAlignment::LEFT, size.width * 0.75);
-    label3->setColor(Color3B(255, 255, 128));
+    label3->setTextColor(Color4B(255, 255, 128, 255));
     label3->setPosition(Point(size.width * 0.1, size.height * 0.2));
     label3->setAnchorPoint(Point(0, 0.5));
     this->addChild(label3);
@@ -1267,7 +1267,7 @@ LabelTTFDistanceField::LabelTTFDistanceField()
 
     auto label1 = Label::createWithTTF(ttfConfig,"Distance Field",TextHAlignment::CENTER,size.width);
     label1->setPosition( Point(size.width/2, size.height * 0.6f) );
-    label1->setColor( Color3B::GREEN );
+    label1->setTextColor( Color4B::GREEN );
     label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(label1);
 
@@ -1280,7 +1280,7 @@ LabelTTFDistanceField::LabelTTFDistanceField()
 
     auto label2 = Label::createWithTTF(ttfConfig,"Distance Field",TextHAlignment::CENTER,size.width);
     label2->setPosition( Point(size.width/2, size.height * 0.3f) );
-    label2->setColor( Color3B::RED );
+    label2->setTextColor( Color4B::RED );
     label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(label2);
 
@@ -1307,15 +1307,15 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
 
     auto label1 = Label::createWithTTF(ttfConfig,"Glow", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, size.height*0.7) );
-    label1->setColor( Color3B::GREEN );
+    label1->setTextColor( Color4B::GREEN );
     label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    label1->enableGlow(Color3B::YELLOW);
+    label1->enableGlow(Color4B::YELLOW);
     addChild(label1);
 
     ttfConfig.outlineSize = 1;
     auto label2 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
     label2->setPosition( Point(size.width/2, size.height*0.6) );
-    label2->setColor( Color3B::RED );
+    label2->setTextColor( Color4B::RED );
     label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label2->enableOutline(Color4B::BLUE);
     addChild(label2);
@@ -1323,7 +1323,7 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
     ttfConfig.outlineSize = 2;
     auto label3 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
     label3->setPosition( Point(size.width/2, size.height*0.48) );
-    label3->setColor( Color3B::RED );
+    label3->setTextColor( Color4B::RED );
     label3->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label3->enableOutline(Color4B::BLUE);
     addChild(label3);
@@ -1331,7 +1331,7 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
     ttfConfig.outlineSize = 3;
     auto label4 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
     label4->setPosition( Point(size.width/2, size.height*0.36) );
-    label4->setColor( Color3B::RED );
+    label4->setTextColor( Color4B::RED );
     label4->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label4->enableOutline(Color4B::BLUE);
     addChild(label4);
@@ -1358,16 +1358,16 @@ LabelShadowTest::LabelShadowTest()
 
     shadowLabelTTF = Label::createWithTTF(ttfConfig,"TTF:Shadow", TextHAlignment::CENTER, size.width);
     shadowLabelTTF->setPosition( Point(size.width/2, size.height*0.6f) );
-    shadowLabelTTF->setColor( Color3B::RED );
+    shadowLabelTTF->setTextColor( Color4B::RED );
     shadowLabelTTF->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    shadowLabelTTF->enableShadow(Color3B::BLACK);
+    shadowLabelTTF->enableShadow(Color4B::BLACK);
     addChild(shadowLabelTTF);
 
     shadowLabelBMFont = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow");
     shadowLabelBMFont->setPosition( Point(size.width/2, size.height*0.4f) );
     shadowLabelBMFont->setColor( Color3B::RED );
     shadowLabelBMFont->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    shadowLabelBMFont->enableShadow(Color3B::GREEN);
+    shadowLabelBMFont->enableShadow(Color4B::GREEN);
     addChild(shadowLabelBMFont);
 
     auto slider = ui::Slider::create();
@@ -1402,8 +1402,8 @@ void LabelShadowTest::sliderEvent(Ref *pSender, ui::SliderEventType type)
         Slider*  slider2 = (Slider*)this->getChildByTag(2);
 
         auto offset = Size(slider->getPercent()-50,50 - slider2->getPercent());
-        shadowLabelTTF->enableShadow(Color3B::BLACK,offset);
-        shadowLabelBMFont->enableShadow(Color3B::GREEN,offset);
+        shadowLabelTTF->enableShadow(Color4B::BLACK,offset);
+        shadowLabelBMFont->enableShadow(Color4B::GREEN,offset);
     }
 }
 

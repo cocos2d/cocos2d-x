@@ -91,9 +91,12 @@ public:
     static const char* SHADER_NAME_POSITION_U_COLOR;
     static const char* SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR;
 
+    static const char* SHADER_NAME_LABEL_NORMAL;
+    static const char* SHADER_NAME_LABEL_OUTLINE;
+
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
-    static const char* SHADER_NAME_LABEL_OUTLINE;
+    
     
     // uniform names
     static const char* UNIFORM_NAME_P_MATRIX;
