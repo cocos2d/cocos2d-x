@@ -596,7 +596,7 @@ void Label::alignText()
     {
         for (auto index = _batchNodes.size(); index < textures.size(); ++index)
         {
-            auto batchNode = SpriteBatchNode::createWithTexture(textures[index]);
+            auto batchNode = SpriteBatchNode::createWithTexture(textures[(int)index]);
             batchNode->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
             batchNode->setPosition(Point::ZERO);
             Node::addChild(batchNode,0,Node::INVALID_TAG);
@@ -711,7 +711,7 @@ void Label::updateQuads()
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
-            index = _batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads();
+            index = static_cast<int>(_batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads());
             _lettersInfo[ctr].atlasIndex = index;
             _batchNodes[letterDef.textureID]->insertQuadFromSprite(_reusedLetter,index);
         }     
@@ -1141,7 +1141,7 @@ void Label::computeStringNumLines()
 
 int Label::getStringLength() const
 {
-    return _currentUTF16String ? cc_wcslen(_currentUTF16String) : _originalUTF8String.length();
+    return _currentUTF16String ? cc_wcslen(_currentUTF16String) : (int)_originalUTF8String.length();
 }
 
 // RGBA protocol
