@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Helper
+
 --------------------------------
 -- @function [parent=#Helper] seekActionWidgetByActionTag 
 -- @param self

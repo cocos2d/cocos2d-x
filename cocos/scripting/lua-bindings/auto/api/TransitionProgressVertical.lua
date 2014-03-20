@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionProgressVertical
+
 --------------------------------
 -- @function [parent=#TransitionProgressVertical] create 
 -- @param self

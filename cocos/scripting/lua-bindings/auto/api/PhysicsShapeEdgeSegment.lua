@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsShapeEdgeSegment
+
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeSegment] getPointB 
 -- @param self
@@ -19,5 +20,10 @@
 -- @param #cc.PhysicsMaterial physicsmaterial
 -- @param #float float
 -- @return PhysicsShapeEdgeSegment#PhysicsShapeEdgeSegment ret (return value: cc.PhysicsShapeEdgeSegment)
+        
+--------------------------------
+-- @function [parent=#PhysicsShapeEdgeSegment] getCenter 
+-- @param self
+-- @return point_table#point_table ret (return value: point_table)
         
 return nil

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Lens3D
+
 --------------------------------
 -- @function [parent=#Lens3D] setPosition 
 -- @param self
@@ -34,5 +35,15 @@
 -- @param #point_table point
 -- @param #float float
 -- @return Lens3D#Lens3D ret (return value: cc.Lens3D)
+        
+--------------------------------
+-- @function [parent=#Lens3D] clone 
+-- @param self
+-- @return Lens3D#Lens3D ret (return value: cc.Lens3D)
+        
+--------------------------------
+-- @function [parent=#Lens3D] update 
+-- @param self
+-- @param #float float
         
 return nil

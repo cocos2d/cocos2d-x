@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module AssetsManager
+
 --------------------------------
 -- @function [parent=#AssetsManager] setStoragePath 
 -- @param self

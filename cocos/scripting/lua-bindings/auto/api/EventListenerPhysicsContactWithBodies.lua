@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventListenerPhysicsContactWithBodies
+
 --------------------------------
 -- @function [parent=#EventListenerPhysicsContactWithBodies] hitTest 
 -- @param self
@@ -13,6 +14,11 @@
 -- @param self
 -- @param #cc.PhysicsBody physicsbody
 -- @param #cc.PhysicsBody physicsbody
+-- @return EventListenerPhysicsContactWithBodies#EventListenerPhysicsContactWithBodies ret (return value: cc.EventListenerPhysicsContactWithBodies)
+        
+--------------------------------
+-- @function [parent=#EventListenerPhysicsContactWithBodies] clone 
+-- @param self
 -- @return EventListenerPhysicsContactWithBodies#EventListenerPhysicsContactWithBodies ret (return value: cc.EventListenerPhysicsContactWithBodies)
         
 return nil

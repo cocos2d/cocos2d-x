@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LayerColor
+
 --------------------------------
 -- @function [parent=#LayerColor] changeWidthAndHeight 
 -- @param self
@@ -31,4 +32,21 @@
 -- @param #float float
 -- @return LayerColor#LayerColor ret (retunr value: cc.LayerColor)
 
+--------------------------------
+-- @function [parent=#LayerColor] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#LayerColor] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#LayerColor] setContentSize 
+-- @param self
+-- @param #size_table size
+        
 return nil

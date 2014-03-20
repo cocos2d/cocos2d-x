@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ArmatureAnimation
+
 --------------------------------
 -- @function [parent=#ArmatureAnimation] getSpeedScale 
 -- @param self
