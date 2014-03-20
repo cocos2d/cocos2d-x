@@ -79,7 +79,6 @@ static void PVRDecompress(AMTC_BLOCK_STRUCT *pCompressedData,
 int PVRTDecompressPVRTC(const void * const pCompressedData,const int XDim,const int YDim, void *pDestData,const bool Do2bitMode)
 {
 	PVRDecompress((AMTC_BLOCK_STRUCT*)pCompressedData,Do2bitMode,XDim,YDim,1,(unsigned char*)pDestData);
-    unsigned char* pSwap = (unsigned char*)pDestData, swap;
     
     return XDim*YDim/2;
 }
