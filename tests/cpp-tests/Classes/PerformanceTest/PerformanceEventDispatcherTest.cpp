@@ -90,7 +90,7 @@ void EventDispatcherBasicLayer::showCurrentTest()
 void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     _type = 0;
-    srand(time(nullptr));
+    srand((unsigned)time(nullptr));
     auto s = Director::getInstance()->getWinSize();
     
     // Title

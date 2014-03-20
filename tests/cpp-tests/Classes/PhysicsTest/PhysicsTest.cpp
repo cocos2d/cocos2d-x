@@ -1530,7 +1530,7 @@ bool PhysicsContactTest::onContactBegin(PhysicsContact& contact)
     PhysicsBody* a = contact.getShapeA()->getBody();
     PhysicsBody* b = contact.getShapeB()->getBody();
     PhysicsBody* body = (a->getCategoryBitmask() == 0x04 || a->getCategoryBitmask() == 0x08) ? a : b;
-    
+    CC_UNUSED_PARAM(body);
     CC_ASSERT(body->getCategoryBitmask() == 0x04 || body->getCategoryBitmask() == 0x08);
     
     return true;
