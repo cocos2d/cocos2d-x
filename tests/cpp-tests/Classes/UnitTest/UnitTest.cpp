@@ -319,7 +319,7 @@ void TemplateVectorTest::onEnter()
 
     // get random object
     // Set the seed by time
-    srand(time(nullptr));
+    srand((unsigned)time(nullptr));
     Vector<Node*> vecForRandom = createVector();
     log("<--- begin ---->");
     for (int i = 0; i < vecForRandom.size(); ++i)
@@ -518,7 +518,7 @@ void TemplateMapTest::onEnter()
 
     // get random object
     // Set the seed by time
-    srand(time(nullptr));
+    srand((unsigned)time(nullptr));
     Map<std::string, Node*> mapForRandom = createMap();
     log("<--- begin ---->");
     for (int i = 0; i < mapForRandom.size(); ++i)

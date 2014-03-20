@@ -230,7 +230,7 @@ void TouchesPerformTest3::onEnter()
 #define TOUCH_PROFILER_NAME  "TouchProfileName"
 #define TOUCHABLE_NODE_NUM 1000
     
-    srand(time(nullptr));
+    srand((unsigned)time(nullptr));
     
     for (int i = 0; i < TOUCHABLE_NODE_NUM; ++i)
     {
