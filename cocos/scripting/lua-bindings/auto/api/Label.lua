@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Label
+-- @extend SpriteBatchNode,LabelProtocol,
 
 --------------------------------
 -- @function [parent=#Label] enableShadow 

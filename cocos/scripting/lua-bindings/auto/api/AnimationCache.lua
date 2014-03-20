@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module AnimationCache
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#AnimationCache] getAnimation 

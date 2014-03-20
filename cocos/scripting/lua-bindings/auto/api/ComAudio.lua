@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ComAudio
+-- @extend Component
 
 --------------------------------
 -- @function [parent=#ComAudio] stopAllEffects 

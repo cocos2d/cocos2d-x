@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseElastic
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseElastic] setPeriod 
