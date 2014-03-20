@@ -975,8 +975,14 @@ void Layout::doLayout()
                     Margin mg = layoutParameter->getMargin();
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
+                    Point offsetBefore = layoutParameter->getOffsetBeforeLocated();
+                    finalPosX += offsetBefore.x;
+                    finalPosY += offsetBefore.y;
+                    topBoundary = (finalPosY - child->getAnchorPoint().y * child->getSize().height) - mg.bottom;
+                    Point offsetAfter = layoutParameter->getOffsetAfterLocated();
+                    finalPosX += offsetAfter.x;
+                    finalPosY += offsetAfter.y;
                     child->setPosition(Point(finalPosX, finalPosY));
-                    topBoundary = child->getBottomInParent() - mg.bottom;
                 }
             }
             break;
@@ -1014,8 +1020,14 @@ void Layout::doLayout()
                     Margin mg = layoutParameter->getMargin();
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
+                    Point offsetBefore = layoutParameter->getOffsetBeforeLocated();
+                    finalPosX += offsetBefore.x;
+                    finalPosY += offsetBefore.y;
+                    leftBoundary = ((finalPosX - child->getAnchorPoint().x * child->getSize().width) + child->getSize().width) + mg.right;
+                    Point offsetAfter = layoutParameter->getOffsetAfterLocated();
+                    finalPosX += offsetAfter.x;
+                    finalPosY += offsetAfter.y;
                     child->setPosition(Point(finalPosX, finalPosY));
-                    leftBoundary = child->getRightInParent() + mg.right;
                 }
             }
             break;
@@ -1353,11 +1365,21 @@ void Layout::doLayout()
                             default:
                                 break;
                         }
+                        Point offsetBefore = layoutParameter->getOffsetBeforeLocated();
+                        finalPosX += offsetBefore.x;
+                        finalPosY += offsetBefore.y;
                         child->setPosition(Point(finalPosX, finalPosY));
                         layoutParameter->_put = true;
                         unlayoutChildCount--;
                     }
                 }
+            }
+            for (auto& subWidget : _widgetChildren)
+            {
+                Widget* child = static_cast<Widget*>(subWidget);
+                LayoutParameter* layoutParameter = child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE);
+                Point offsetAfter = layoutParameter->getOffsetAfterLocated();
+                child->setPosition(child->getPosition() + offsetAfter);
             }
             break;
         }
