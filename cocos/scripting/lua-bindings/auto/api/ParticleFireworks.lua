@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleFireworks
+-- @extend ParticleSystemQuad
 
 --------------------------------
 -- @function [parent=#ParticleFireworks] create 

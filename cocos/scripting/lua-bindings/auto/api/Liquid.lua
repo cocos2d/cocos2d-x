@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Liquid
+-- @extend Grid3DAction
 
 --------------------------------
 -- @function [parent=#Liquid] getAmplitudeRate 

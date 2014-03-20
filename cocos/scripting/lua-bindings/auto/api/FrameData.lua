@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FrameData
+-- @extend BaseData
 
 --------------------------------
 -- @function [parent=#FrameData] copy 

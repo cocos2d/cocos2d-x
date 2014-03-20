@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseIn
+-- @extend EaseRateAction
 
 --------------------------------
 -- @function [parent=#EaseIn] create 

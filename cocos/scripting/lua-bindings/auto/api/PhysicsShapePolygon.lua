@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsShapePolygon
+-- @extend PhysicsShape
 
 --------------------------------
 -- @function [parent=#PhysicsShapePolygon] getPointsCount 

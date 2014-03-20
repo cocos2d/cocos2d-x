@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FiniteTimeAction
+-- @extend Action
 
 --------------------------------
 -- @function [parent=#FiniteTimeAction] setDuration 

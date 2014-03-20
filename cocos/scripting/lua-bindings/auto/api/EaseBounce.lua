@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseBounce
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseBounce] clone 

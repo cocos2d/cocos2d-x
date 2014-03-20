@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ToggleVisibility
+-- @extend ActionInstant
 
 --------------------------------
 -- @function [parent=#ToggleVisibility] create 
