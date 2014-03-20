@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionSceneOriented
+-- @extend TransitionScene
 
 --------------------------------
 -- @function [parent=#TransitionSceneOriented] create 

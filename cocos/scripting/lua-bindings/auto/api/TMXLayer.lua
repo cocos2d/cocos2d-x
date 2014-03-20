@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TMXLayer
+-- @extend SpriteBatchNode
 
 --------------------------------
 -- @function [parent=#TMXLayer] getTileGIDAt 

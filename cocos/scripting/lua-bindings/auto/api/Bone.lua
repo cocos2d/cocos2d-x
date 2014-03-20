@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Bone
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#Bone] isTransformDirty 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlPotentiometer
+-- @extend Control
 
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 
