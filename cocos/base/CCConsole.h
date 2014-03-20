@@ -74,8 +74,8 @@ class CC_DLL Console
 {
 public:
     struct Command {
-        const char* name;
-        const char* help;
+        std::string name;
+        std::string help;
         std::function<void(int, const std::string&)> callback;
     };
 
@@ -98,6 +98,8 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
+    /** send socket **/
+    void sendSocket(int fd, std::string str);
  
 protected:
     void loop();
