@@ -28,6 +28,7 @@
 #include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "CCRef.h"
+#include "CCStdC.h"
 
 NS_CC_BEGIN
 
