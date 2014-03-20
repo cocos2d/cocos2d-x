@@ -140,73 +140,73 @@ files
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader”]
-    ("../CocoStudio/Reader/WidgetReader”)
+	["CocoStudio/Reader/WidgetReader"]
+    ("../CocoStudio/Reader/WidgetReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/ButtonReader”]
-    ("../CocoStudio/Reader/WidgetReader/ButtonReader”)
+	["CocoStudio/Reader/WidgetReader/ButtonReader"]
+    ("../CocoStudio/Reader/WidgetReader/ButtonReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/CheckBoxReader”]
-    ("../CocoStudio/Reader/WidgetReader/CheckBoxReader”)
+	["CocoStudio/Reader/WidgetReader/CheckBoxReader"]
+    ("../CocoStudio/Reader/WidgetReader/CheckBoxReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/ImageViewReader”]
-    ("../CocoStudio/Reader/WidgetReader/ImageViewReader”)
+	["CocoStudio/Reader/WidgetReader/ImageViewReader"]
+    ("../CocoStudio/Reader/WidgetReader/ImageViewReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/LabelAtlasReader”]
-    ("../CocoStudio/Reader/WidgetReader/LabelAtlasReader”)
+	["CocoStudio/Reader/WidgetReader/LabelAtlasReader"]
+    ("../CocoStudio/Reader/WidgetReader/LabelAtlasReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/LabelBMFontReader”]
-    ("../CocoStudio/Reader/WidgetReader/LabelBMFontReader”)
+	["CocoStudio/Reader/WidgetReader/LabelBMFontReader"]
+    ("../CocoStudio/Reader/WidgetReader/LabelBMFontReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/LabelReader”]
-    ("../CocoStudio/Reader/WidgetReader/LabelReader”)
+	["CocoStudio/Reader/WidgetReader/LabelReader"]
+    ("../CocoStudio/Reader/WidgetReader/LabelReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/LayoutReader”]
-    ("../CocoStudio/Reader/WidgetReader/LayoutReader”)
+	["CocoStudio/Reader/WidgetReader/LayoutReader"]
+    ("../CocoStudio/Reader/WidgetReader/LayoutReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/ListViewReader”]
-    ("../CocoStudio/Reader/WidgetReader/ListViewReader”)
+	["CocoStudio/Reader/WidgetReader/ListViewReader"]
+    ("../CocoStudio/Reader/WidgetReader/ListViewReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/LoadingBarReader”]
-    ("../CocoStudio/Reader/WidgetReader/LoadingBarReader”)
+	["CocoStudio/Reader/WidgetReader/LoadingBarReader"]
+    ("../CocoStudio/Reader/WidgetReader/LoadingBarReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/PageViewReader”]
-    ("../CocoStudio/Reader/WidgetReader/PageViewReader”)
+	["CocoStudio/Reader/WidgetReader/PageViewReader"]
+    ("../CocoStudio/Reader/WidgetReader/PageViewReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/ScrollViewReader”]
-    ("../CocoStudio/Reader/WidgetReader/ScrollViewReader”)
+	["CocoStudio/Reader/WidgetReader/ScrollViewReader"]
+    ("../CocoStudio/Reader/WidgetReader/ScrollViewReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/SliderReader”]
-    ("../CocoStudio/Reader/WidgetReader/SliderReader”)
+	["CocoStudio/Reader/WidgetReader/SliderReader"]
+    ("../CocoStudio/Reader/WidgetReader/SliderReader")
     "*.h"
     "*.cpp"
 
-	["CocoStudio/Reader/WidgetReader/TextFieldReader”]
-    ("../CocoStudio/Reader/WidgetReader/TextFieldReader”)
+	["CocoStudio/Reader/WidgetReader/TextFieldReader"]
+    ("../CocoStudio/Reader/WidgetReader/TextFieldReader")
     "*.h"
     "*.cpp"
 	
