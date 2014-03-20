@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsShapeCircle
+-- @extend PhysicsShape
 
 --------------------------------
 -- @function [parent=#PhysicsShapeCircle] getRadius 

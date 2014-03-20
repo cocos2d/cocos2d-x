@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleSystemQuad
+-- @extend ParticleSystem
 
 --------------------------------
 -- @function [parent=#ParticleSystemQuad] setDisplayFrame 
