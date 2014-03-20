@@ -130,7 +130,7 @@ public:
     const Size& getDimensions() const;
     void setDimensions(const Size &dim);
     
-    int getFontSize() const;
+    float getFontSize() const;
     void setFontSize(float fontSize);
     
     const std::string& getFontName() const;

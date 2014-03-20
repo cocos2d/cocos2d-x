@@ -1054,7 +1054,7 @@ const std::string& Label::getFontName() const
     return _fontName;
 }
 
-void Label::setFontSize(int fontSize)
+void Label::setFontSize(float fontSize)
 {
     if (_fontSize != fontSize)
     {
@@ -1063,7 +1063,7 @@ void Label::setFontSize(int fontSize)
     }
 }
 
-int Label::getFontSize() const
+float Label::getFontSize() const
 {
     return _fontSize;
 }
