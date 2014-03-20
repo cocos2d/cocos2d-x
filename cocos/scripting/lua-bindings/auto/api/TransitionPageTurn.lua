@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionPageTurn
+-- @extend TransitionScene
+
 --------------------------------
 -- @function [parent=#TransitionPageTurn] actionWithSize 
 -- @param self
@@ -22,6 +24,13 @@
 -- @param #cc.Scene scene
 -- @param #bool bool
 -- @return TransitionPageTurn#TransitionPageTurn ret (return value: cc.TransitionPageTurn)
+        
+--------------------------------
+-- @function [parent=#TransitionPageTurn] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#TransitionPageTurn] TransitionPageTurn 

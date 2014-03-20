@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module SpriteDisplayData
+-- @extend DisplayData
+
 --------------------------------
 -- @function [parent=#SpriteDisplayData] copy 
 -- @param self

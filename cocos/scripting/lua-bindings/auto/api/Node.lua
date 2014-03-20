@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Node
+-- @extend Ref
+
 --------------------------------
 -- overload function: addChild(cc.Node, int)
 --          

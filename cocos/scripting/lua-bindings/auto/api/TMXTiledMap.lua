@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TMXTiledMap
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#TMXTiledMap] setObjectGroups 
 -- @param self
@@ -85,5 +87,10 @@
 -- @param #string str
 -- @param #string str
 -- @return TMXTiledMap#TMXTiledMap ret (return value: cc.TMXTiledMap)
+        
+--------------------------------
+-- @function [parent=#TMXTiledMap] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 return nil

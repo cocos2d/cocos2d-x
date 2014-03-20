@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module RenderTexture
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#RenderTexture] setVirtualViewport 
 -- @param self
@@ -163,6 +165,20 @@
 -- @param #unsigned int int
 -- @return RenderTexture#RenderTexture ret (retunr value: cc.RenderTexture)
 
+--------------------------------
+-- @function [parent=#RenderTexture] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#RenderTexture] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
 --------------------------------
 -- @function [parent=#RenderTexture] RenderTexture 
 -- @param self

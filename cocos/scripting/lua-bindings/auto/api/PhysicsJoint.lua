@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsJoint
+
 --------------------------------
 -- @function [parent=#PhysicsJoint] getBodyA 
 -- @param self

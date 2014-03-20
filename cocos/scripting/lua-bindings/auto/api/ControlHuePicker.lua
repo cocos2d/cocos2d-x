@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ControlHuePicker
+-- @extend Control
+
 --------------------------------
 -- @function [parent=#ControlHuePicker] setEnabled 
 -- @param self
@@ -64,6 +66,19 @@
 -- @param #cc.Node node
 -- @param #point_table point
 -- @return ControlHuePicker#ControlHuePicker ret (return value: cc.ControlHuePicker)
+        
+--------------------------------
+-- @function [parent=#ControlHuePicker] onTouchMoved 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlHuePicker] onTouchBegan 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#ControlHuePicker] ControlHuePicker 

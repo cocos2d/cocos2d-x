@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Application
+
 --------------------------------
 -- @function [parent=#Application] getTargetPlatform 
 -- @param self

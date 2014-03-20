@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module RichElementImage
+-- @extend RichElement
+
 --------------------------------
 -- @function [parent=#RichElementImage] init 
 -- @param self

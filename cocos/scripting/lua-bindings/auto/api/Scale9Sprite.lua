@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Scale9Sprite
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#Scale9Sprite] resizableSpriteWithCapInsets 
 -- @param self
@@ -182,6 +184,41 @@
 -- @param #rect_table rect
 -- @return Scale9Sprite#Scale9Sprite ret (retunr value: cc.Scale9Sprite)
 
+--------------------------------
+-- @function [parent=#Scale9Sprite] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] setColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] setOpacityModifyRGB 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] setOpacity 
+-- @param self
+-- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
+-- @param self
+-- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] updateDisplayedColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] setContentSize 
+-- @param self
+-- @param #size_table size
+        
 --------------------------------
 -- @function [parent=#Scale9Sprite] Scale9Sprite 
 -- @param self
