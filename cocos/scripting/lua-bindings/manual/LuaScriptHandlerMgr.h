@@ -161,8 +161,8 @@ public:
         EVENT_PHYSICS_CONTACT_POSTSOLVE,
         EVENT_PHYSICS_CONTACT_SEPERATE,
         
-        EVENT_CONSOLE_BEGINNING = 10000,
-        EVENT_CONSOLE_ENDED   = 11000,
+        EVENT_CONSOLE_BEGAN = 10000,
+        EVENT_CONSOLE_ENDED = 11000,
     };
     
     enum class CustomType : int
