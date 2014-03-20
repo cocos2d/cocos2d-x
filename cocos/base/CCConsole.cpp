@@ -929,7 +929,7 @@ bool Console::parseCommand(int fd)
 //
 
 
-ssize_t Console::readline(int fd, char* ptr, int maxlen)
+ssize_t Console::readline(int fd, char* ptr, size_t maxlen)
 {
     ssize_t n, rc;
     char c;
