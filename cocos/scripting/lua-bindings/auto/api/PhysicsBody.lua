@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsBody
+
 --------------------------------
 -- @function [parent=#PhysicsBody] isGravityEnabled 
 -- @param self
@@ -43,7 +44,6 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getMoment 
 -- @param self
--- @param #float float
 -- @return float#float ret (return value: float)
         
 --------------------------------

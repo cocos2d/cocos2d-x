@@ -123,8 +123,8 @@ private:
 	void			adjustTextFieldPosition();
     void            placeInactiveLabels();
 	
-    LabelTTF*     _label;
-    LabelTTF*     _labelPlaceHolder;
+    Label*     _label;
+    Label*     _labelPlaceHolder;
     Size          _contentSize;
     Point         _position;
     Point         _anchorPoint;

@@ -31,7 +31,7 @@ function AssetManagerModule.newScene(backfunc)
     helloLabel:setPosition(cc.p(winSize.width / 2, winSize.height - 40))
     layer:addChild(helloLabel, 5)
 
-    local sprite = cc.Sprite:create("background.png")
+    local sprite = cc.Sprite:create("Images/background.png")
     sprite:setAnchorPoint(cc.p(0.5, 0.5))
     sprite:setPosition(cc.p(winSize.width / 2, winSize.height / 2))
     layer:addChild(sprite, 0)

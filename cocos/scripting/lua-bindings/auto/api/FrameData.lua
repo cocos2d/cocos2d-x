@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FrameData
+
 --------------------------------
 -- @function [parent=#FrameData] copy 
 -- @param self

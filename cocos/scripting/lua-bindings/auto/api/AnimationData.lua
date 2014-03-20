@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module AnimationData
+
 --------------------------------
 -- @function [parent=#AnimationData] getMovement 
 -- @param self

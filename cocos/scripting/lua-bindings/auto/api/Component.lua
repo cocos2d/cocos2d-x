@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Component
+
 --------------------------------
 -- @function [parent=#Component] setEnabled 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionProgressRadialCCW
+
 --------------------------------
 -- @function [parent=#TransitionProgressRadialCCW] create 
 -- @param self

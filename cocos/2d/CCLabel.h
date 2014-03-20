@@ -59,7 +59,7 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
@@ -78,7 +78,7 @@ typedef struct _ttfConfig
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
-    static const int DefultFontSize;
+    static const int DistanceFieldFontSize;
 
     static Label* create();
 
@@ -116,6 +116,7 @@ public:
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
 
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
+    const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
     virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
@@ -204,7 +205,7 @@ public:
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual void setColor(const Color3B& color) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
 
     virtual Sprite * getLetter(int lettetIndex);
 
@@ -230,6 +231,15 @@ public:
 
     virtual const Size& getContentSize() const override;
 
+    /** Listen "come to background" message
+     It only has effect on Android.
+     */
+    void listenToBackground(EventCustom *event);
+
+    /** Listen "FontAtlas purge textures" message
+     */
+    void listenToFontAtlasPurge(EventCustom *event);
+
 protected:
     void onDraw(const kmMat4& transform, bool transformUpdated);
 
@@ -239,6 +249,7 @@ protected:
 
         Point position;
         Size  contentSize;
+        int   atlasIndex;
     };
     enum class LabelType {
 
@@ -259,14 +270,12 @@ protected:
     */
     virtual ~Label();
 
-    virtual bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+    virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
-
-    virtual bool init();
     
     virtual void alignText();
     
@@ -275,18 +284,26 @@ protected:
     bool setOriginalString(unsigned short *stringToSet);
     void computeStringNumLines();
 
-    void updateSpriteWithLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture);
+    void updateQuads();
 
     virtual void updateColor() override;
 
-    virtual void initProgram();
+    virtual void updateShaderProgram();
 
     void drawShadowWithoutBlur();
 
     void createSpriteWithFontDefinition();
 
+    void updateFont();
+    void reset();
+
+    std::string _bmFontPath;
+
     bool _isOpacityModifyRGB;
     bool _contentDirty;
+    bool _fontDirty;
+    std::string _fontName;
+    int         _fontSize;
     LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;

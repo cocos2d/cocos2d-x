@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsShape
+
 --------------------------------
 -- @function [parent=#PhysicsShape] getFriction 
 -- @param self

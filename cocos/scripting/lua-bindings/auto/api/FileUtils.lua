@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FileUtils
+
 --------------------------------
 -- @function [parent=#FileUtils] fullPathForFilename 
 -- @param self

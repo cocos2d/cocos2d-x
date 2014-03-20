@@ -36,6 +36,14 @@ NS_CC_BEGIN
 
 std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
+void FontAtlasCache::purgeCachedData()
+{
+    for (auto & atlas:_atlasMap)
+    {
+        atlas.second->purgeTexturesAtlas();
+    }
+}
+
 FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 {  
     bool useDistanceField = config.distanceFieldEnabled;
@@ -46,7 +54,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
     int fontSize = config.fontSize;
     if (useDistanceField)
     {
-        fontSize = Label::DefultFontSize;
+        fontSize = Label::DistanceFieldFontSize / CC_CONTENT_SCALE_FACTOR();
     }
 
     std::string atlasName = generateFontName(config.fontFilePath, fontSize, GlyphCollection::DYNAMIC, useDistanceField);
