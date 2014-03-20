@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FadeOutTRTiles
+-- @extend TiledGrid3DAction
 
 --------------------------------
 -- @function [parent=#FadeOutTRTiles] turnOnTile 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Touch
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#Touch] getPreviousLocationInView 

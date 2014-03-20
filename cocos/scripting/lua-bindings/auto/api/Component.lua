@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Component
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#Component] setEnabled 
