@@ -82,18 +82,18 @@ const GLchar * ccPositionColorLengthTexture_vert =
 #include "ccShader_PositionColorLengthTexture_vert.h"
 
 const GLchar * ccLabelDistanceFieldNormal_frag =
-#include "ccShader_Label_frag.h"
-const GLchar * ccLabelDistanceFieldNormal_vert =
-#include "ccShader_Label_vert.h"
+#include "ccShader_Label_frag_df.h"
 
 const GLchar * ccLabelDistanceFieldGlow_frag =
-#include "ccShader_Label_frag_glow.h"
-const GLchar * ccLabelDistanceFieldGlow_vert =
-#include "ccShader_Label_vert.h"
+#include "ccShader_Label_frag_df_glow.h"
+
+const GLchar * ccLabelNormal_frag =
+#include "ccShader_Label_frag_normal.h"
 
 const GLchar * ccLabelOutline_frag =
 #include "ccShader_Label_frag_outline.h"
-const GLchar * ccLabelOutline_vert =
+
+const GLchar * ccLabel_vert =
 #include "ccShader_Label_vert.h"
 
 NS_CC_END
