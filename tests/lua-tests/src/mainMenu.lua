@@ -125,7 +125,7 @@ end
 local function testCallBack(fd, str)
     cclog("----test call back---");
     cclog("----test call back---:%d, %s", fd, str);
-    if(args == "help" or args == "-h") then
+    if(str == "help" or str == "-h") then
         msg = "usage: autotest ActionsTest\n\tavailable tests: "
         cclog("help or h, %s.", msg)
 
