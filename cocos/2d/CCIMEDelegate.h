@@ -103,7 +103,7 @@ protected:
     * @js NA
     * @lua NA
     */
-    virtual void insertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
+    virtual void insertText(const char * text, size_t len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
     /**
     @brief    Called by IMEDispatcher after the user clicks the backward key.
