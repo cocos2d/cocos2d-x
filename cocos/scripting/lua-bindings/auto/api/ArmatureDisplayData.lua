@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ArmatureDisplayData
+-- @extend DisplayData
 
 --------------------------------
 -- @function [parent=#ArmatureDisplayData] create 

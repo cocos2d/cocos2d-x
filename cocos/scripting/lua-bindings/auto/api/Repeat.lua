@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Repeat
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#Repeat] setInnerAction 

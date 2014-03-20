@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseRateAction
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseRateAction] setRate 
