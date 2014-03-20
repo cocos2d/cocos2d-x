@@ -51,8 +51,7 @@ typedef struct _MipmapInfo
 {
     unsigned char* address;
     int len;
-    bool unpack;
-    _MipmapInfo():address(NULL),len(0),unpack(false){}
+    _MipmapInfo():address(NULL),len(0){}
 }MipmapInfo;
 
 class CC_DLL Image : public Ref
@@ -169,6 +168,7 @@ protected:
     ssize_t _dataLen;
     int _width;
     int _height;
+    bool _unpack;
     Format _fileType;
     Texture2D::PixelFormat _renderFormat;
     bool _preMulti;

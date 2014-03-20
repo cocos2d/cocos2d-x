@@ -41,8 +41,9 @@
 /*****************************************************************************
  * Useful typedefs
  *****************************************************************************/
-typedef unsigned long U32;
-typedef unsigned char U8;
+
+typedef uint32_t U32;
+typedef uint8_t U8;
 
 /***********************************************************
  DECOMPRESSION ROUTINES
@@ -80,14 +81,6 @@ int PVRTDecompressPVRTC(const void * const pCompressedData,const int XDim,const 
 	PVRDecompress((AMTC_BLOCK_STRUCT*)pCompressedData,Do2bitMode,XDim,YDim,1,(unsigned char*)pDestData);
     unsigned char* pSwap = (unsigned char*)pDestData, swap;
     
-	for(int i=0;i<YDim;i++)
-		for(int j=0;j<XDim;j++)
-		{
-			swap = pSwap[0];
-			pSwap[0] = pSwap[2];
-			pSwap[2] = swap;
-			pSwap+=4;
-		}
     return XDim*YDim/2;
 }
 
