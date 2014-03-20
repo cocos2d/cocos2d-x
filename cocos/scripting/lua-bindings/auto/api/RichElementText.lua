@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module RichElementText
+-- @extend RichElement
+
 --------------------------------
 -- @function [parent=#RichElementText] init 
 -- @param self

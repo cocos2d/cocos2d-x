@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Layout
+-- @extend Widget
+
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
@@ -160,6 +162,43 @@
 -- @function [parent=#Layout] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- overload function: addChild(cc.Node, int)
+--          
+-- overload function: addChild(cc.Node)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#Layout] addChild
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+
+--------------------------------
+-- @function [parent=#Layout] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Layout] removeAllChildrenWithCleanup 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Layout] removeAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Layout] sortAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Layout] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Layout] Layout 

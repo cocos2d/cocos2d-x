@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParticleMeteor
+-- @extend ParticleSystemQuad
+
 --------------------------------
 -- @function [parent=#ParticleMeteor] create 
 -- @param self

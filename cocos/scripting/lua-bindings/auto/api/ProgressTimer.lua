@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ProgressTimer
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#ProgressTimer] isReverseDirection 
 -- @param self
@@ -70,5 +72,37 @@
 -- @param self
 -- @param #cc.Sprite sprite
 -- @return ProgressTimer#ProgressTimer ret (return value: cc.ProgressTimer)
+        
+--------------------------------
+-- @function [parent=#ProgressTimer] setAnchorPoint 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#ProgressTimer] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ProgressTimer] setColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#ProgressTimer] getColor 
+-- @param self
+-- @return color3B_table#color3B_table ret (return value: color3B_table)
+        
+--------------------------------
+-- @function [parent=#ProgressTimer] setOpacity 
+-- @param self
+-- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#ProgressTimer] getOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 return nil

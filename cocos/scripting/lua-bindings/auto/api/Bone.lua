@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Bone
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#Bone] isTransformDirty 
 -- @param self
@@ -187,6 +189,31 @@
 -- @param #string str
 -- @return Bone#Bone ret (retunr value: ccs.Bone)
 
+--------------------------------
+-- @function [parent=#Bone] updateDisplayedColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#Bone] setLocalZOrder 
+-- @param self
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#Bone] getNodeToWorldTransform 
+-- @param self
+-- @return kmMat4#kmMat4 ret (return value: kmMat4)
+        
+--------------------------------
+-- @function [parent=#Bone] update 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Bone] updateDisplayedOpacity 
+-- @param self
+-- @param #unsigned char char
+        
 --------------------------------
 -- @function [parent=#Bone] Bone 
 -- @param self

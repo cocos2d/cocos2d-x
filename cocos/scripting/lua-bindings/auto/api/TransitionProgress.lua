@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionProgress
+-- @extend TransitionScene
+
 --------------------------------
 -- @function [parent=#TransitionProgress] create 
 -- @param self

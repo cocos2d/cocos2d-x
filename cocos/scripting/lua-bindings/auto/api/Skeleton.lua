@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Skeleton
+-- @extend Node,BlendProtocol,
+
 --------------------------------
 -- @function [parent=#Skeleton] setToSetupPose 
 -- @param self
@@ -33,6 +35,19 @@
         
 --------------------------------
 -- @function [parent=#Skeleton] setBonesToSetupPose 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Skeleton] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- @function [parent=#Skeleton] onEnter 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Skeleton] onExit 
 -- @param self
         
 return nil

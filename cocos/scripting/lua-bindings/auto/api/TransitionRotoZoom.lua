@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionRotoZoom
+-- @extend TransitionScene
+
 --------------------------------
 -- @function [parent=#TransitionRotoZoom] create 
 -- @param self

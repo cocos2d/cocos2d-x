@@ -160,7 +160,7 @@ bool TextFieldTTF::canDetachWithIME()
     return (_delegate) ? (! _delegate->onTextFieldDetachWithIME(this)) : true;
 }
 
-void TextFieldTTF::insertText(const char * text, int len)
+void TextFieldTTF::insertText(const char * text, size_t len)
 {
     std::string insert(text, len);
 

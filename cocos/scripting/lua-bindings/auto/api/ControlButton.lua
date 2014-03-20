@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ControlButton
+-- @extend Control
+
 --------------------------------
 -- @function [parent=#ControlButton] isPushed 
 -- @param self
@@ -231,4 +233,49 @@
 -- @param #float float
 -- @return ControlButton#ControlButton ret (retunr value: cc.ControlButton)
 
+--------------------------------
+-- @function [parent=#ControlButton] onTouchMoved 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlButton] onTouchEnded 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlButton] setColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#ControlButton] getColor 
+-- @param self
+-- @return color3B_table#color3B_table ret (return value: color3B_table)
+        
+--------------------------------
+-- @function [parent=#ControlButton] onTouchCancelled 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ControlButton] setOpacity 
+-- @param self
+-- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#ControlButton] getOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- @function [parent=#ControlButton] onTouchBegan 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
+        
 return nil

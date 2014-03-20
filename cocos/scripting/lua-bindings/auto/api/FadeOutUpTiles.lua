@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module FadeOutUpTiles
+-- @extend FadeOutTRTiles
+
 --------------------------------
 -- @function [parent=#FadeOutUpTiles] transformTile 
 -- @param self
@@ -13,5 +15,17 @@
 -- @param #float float
 -- @param #size_table size
 -- @return FadeOutUpTiles#FadeOutUpTiles ret (return value: cc.FadeOutUpTiles)
+        
+--------------------------------
+-- @function [parent=#FadeOutUpTiles] clone 
+-- @param self
+-- @return FadeOutUpTiles#FadeOutUpTiles ret (return value: cc.FadeOutUpTiles)
+        
+--------------------------------
+-- @function [parent=#FadeOutUpTiles] testFunc 
+-- @param self
+-- @param #size_table size
+-- @param #float float
+-- @return float#float ret (return value: float)
         
 return nil

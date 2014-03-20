@@ -28,6 +28,7 @@
 #include <unordered_map>
 #include "CCPlatformMacros.h"
 #include "CCRef.h"
+#include "CCStdC.h"
 
 NS_CC_BEGIN
 
@@ -72,7 +73,7 @@ public:
     
     bool prepareLetterDefinitions(unsigned short  *utf16String);
 
-    inline const std::unordered_map<int, Texture2D*>& getTextures() const{ return _atlasTextures;}
+    inline const std::unordered_map<ssize_t, Texture2D*>& getTextures() const{ return _atlasTextures;}
     void  addTexture(Texture2D *texture, int slot);
     float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
@@ -98,7 +99,7 @@ public:
 private:
 
     void relaseTextures();
-    std::unordered_map<int, Texture2D*> _atlasTextures;
+    std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<unsigned short, FontLetterDefinition> _fontLetterDefinitions;
     float _commonLineHeight;
     Font * _font;

@@ -293,7 +293,7 @@ string FileUtilsWin32::getWritablePath() const
                 // Create directory
                 if (SUCCEEDED(SHCreateDirectoryExA(NULL, ret.c_str(), NULL)))
                 {
-                    return ret;
+                    return convertPathFormatToUnixStyle(ret);
                 }
             }
         }
