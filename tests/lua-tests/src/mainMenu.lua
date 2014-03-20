@@ -122,22 +122,6 @@ local function CreateTestScene(nIdx)
     local scene = _allTests[nIdx].create_func()
     return scene
 end
-local function testCallBack(fd, str)
-    cclog("----test call back---");
-    cclog("----test call back---:%d, %s", fd, str);
-    if(str == "help" or str == "-h") then
-        msg = "usage: autotest ActionsTest\n\tavailable tests: "
-        cclog("help or h, %s.", msg)
-
-    end
-end
-local function testCallBack2(fd, str)
-    local _console = cc.Director:getInstance():getConsole()
-    if(str == "help" or str == "-h") then
-        local msg = "usage: autotest ActionsTest\n\tavailable tests: "
-
-    end
-end
 -- create menu
 function CreateTestMenu()
     local menuLayer = cc.Layer:create()
@@ -154,14 +138,6 @@ function CreateTestMenu()
             cc.Director:getInstance():replaceScene(testScene)
         end
     end
-    
-    -- test getConsole;
-    local _console = cc.Director:getInstance():getConsole()
-    _console:listenOnTCP(5678)
-    cclog("_console: %p, will addcommand.", _console)
-    _console:sendSocket(132, "asdf")
-    _console:addCommand({["name"]='qwe', ["help"]="testcpp autotest command, use -h to list available tests"}, testCallBack)
-    _console:addCommand({["name"]='autotest', ["help"]="22 autotest command, use -h to list available tests"}, testCallBack2)
 
     -- add close menu
     local s = cc.Director:getInstance():getWinSize()
