@@ -322,12 +322,12 @@ void RichText::formarRenderers()
         
         Vector<Node*>* row = (_elementRenders[0]);
         float nextPosX = 0.0f;
-        for (int j=0; j<row->size(); j++)
+        for (ssize_t j=0; j<row->size(); j++)
         {
             Node* l = row->at(j);
             l->setAnchorPoint(Point::ZERO);
             l->setPosition(Point(nextPosX, 0.0f));
-            _elementRenderersContainer->addChild(l, 1, j);
+            _elementRenderersContainer->addChild(l, 1, (int)j);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
             newContentSizeHeight = MAX(newContentSizeHeight, iSize.height);
@@ -340,11 +340,11 @@ void RichText::formarRenderers()
         float newContentSizeHeight = 0.0f;
         float *maxHeights = new float[_elementRenders.size()];
         
-        for (int i=0; i<_elementRenders.size(); i++)
+        for (ssize_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
-            for (int j=0; j<row->size(); j++)
+            for (ssize_t j=0; j<row->size(); j++)
             {
                 Node* l = row->at(j);
                 maxHeight = MAX(l->getContentSize().height, maxHeight);
@@ -355,18 +355,18 @@ void RichText::formarRenderers()
         
         
         float nextPosY = _customSize.height;
-        for (int i=0; i<_elementRenders.size(); i++)
+        for (ssize_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float nextPosX = 0.0f;
             nextPosY -= (maxHeights[i] + _verticalSpace);
             
-            for (int j=0; j<row->size(); j++)
+            for (ssize_t j=0; j<row->size(); j++)
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Point::ZERO);
                 l->setPosition(Point(nextPosX, nextPosY));
-                _elementRenderersContainer->addChild(l, 1, i*10 + j);
+                _elementRenderersContainer->addChild(l, 1, (int)(i*10 + j));
                 nextPosX += l->getContentSize().width;
             }
         }
