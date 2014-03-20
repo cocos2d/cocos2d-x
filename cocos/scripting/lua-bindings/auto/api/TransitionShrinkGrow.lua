@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionShrinkGrow
+-- @extend TransitionScene,TransitionEaseScene,
+
 --------------------------------
 -- @function [parent=#TransitionShrinkGrow] easeActionWithAction 
 -- @param self

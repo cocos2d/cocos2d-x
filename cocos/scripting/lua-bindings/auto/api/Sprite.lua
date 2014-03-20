@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Sprite
+-- @extend Node,TextureProtocol,
+
 --------------------------------
 -- overload function: setSpriteFrame(cc.SpriteFrame)
 --          
@@ -177,5 +179,115 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteframe
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- @function [parent=#Sprite] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Sprite] addChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#Sprite] setScaleY 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Sprite] setScaleX 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Sprite] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Sprite] setPositionZ 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Sprite] setAnchorPoint 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#Sprite] setRotationSkewX 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Sprite] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Sprite] setRotationSkewY 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- overload function: setScale(float)
+--          
+-- overload function: setScale(float, float)
+--          
+-- @function [parent=#Sprite] setScale
+-- @param self
+-- @param #float float
+-- @param #float float
+
+--------------------------------
+-- @function [parent=#Sprite] reorderChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#Sprite] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Sprite] sortAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Sprite] setOpacityModifyRGB 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Sprite] setRotation 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Sprite] setSkewY 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Sprite] setVisible 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Sprite] setSkewX 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Sprite] ignoreAnchorPointForPosition 
+-- @param self
+-- @param #bool bool
         
 return nil

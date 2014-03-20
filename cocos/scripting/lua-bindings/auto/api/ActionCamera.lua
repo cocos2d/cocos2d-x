@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ActionCamera
+-- @extend ActionInterval
+
 --------------------------------
 -- overload function: setEye(float, float, float)
 --          
@@ -36,6 +38,21 @@
 -- @function [parent=#ActionCamera] getUp 
 -- @param self
 -- @return kmVec3#kmVec3 ret (return value: kmVec3)
+        
+--------------------------------
+-- @function [parent=#ActionCamera] startWithTarget 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#ActionCamera] clone 
+-- @param self
+-- @return ActionCamera#ActionCamera ret (return value: cc.ActionCamera)
+        
+--------------------------------
+-- @function [parent=#ActionCamera] reverse 
+-- @param self
+-- @return ActionCamera#ActionCamera ret (return value: cc.ActionCamera)
         
 --------------------------------
 -- @function [parent=#ActionCamera] ActionCamera 

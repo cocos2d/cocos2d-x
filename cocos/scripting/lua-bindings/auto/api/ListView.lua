@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ListView
+-- @extend ScrollView
+
 --------------------------------
 -- @function [parent=#ListView] getIndex 
 -- @param self
@@ -93,6 +95,20 @@
 -- @function [parent=#ListView] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#ListView] setDirection 
+-- @param self
+-- @param #ccui.SCROLLVIEW_DIR scrollview_dir
+        
+--------------------------------
+-- @function [parent=#ListView] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#ListView] sortAllChildren 
+-- @param self
         
 --------------------------------
 -- @function [parent=#ListView] ListView 

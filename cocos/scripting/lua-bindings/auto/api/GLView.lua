@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module GLView
+-- @extend GLViewProtocol,Ref,
+
 --------------------------------
 -- @function [parent=#GLView] createWithRect 
 -- @param self
@@ -20,5 +22,15 @@
 -- @param self
 -- @param #string str
 -- @return GLView#GLView ret (return value: cc.GLView)
+        
+--------------------------------
+-- @function [parent=#GLView] setIMEKeyboardState 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#GLView] isOpenGLReady 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 return nil

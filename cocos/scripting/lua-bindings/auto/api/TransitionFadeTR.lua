@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionFadeTR
+-- @extend TransitionScene,TransitionEaseScene,
+
 --------------------------------
 -- @function [parent=#TransitionFadeTR] easeActionWithAction 
 -- @param self
@@ -19,5 +21,12 @@
 -- @param #float float
 -- @param #cc.Scene scene
 -- @return TransitionFadeTR#TransitionFadeTR ret (return value: cc.TransitionFadeTR)
+        
+--------------------------------
+-- @function [parent=#TransitionFadeTR] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
         
 return nil

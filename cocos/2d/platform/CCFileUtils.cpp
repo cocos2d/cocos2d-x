@@ -742,7 +742,11 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
 
 void FileUtils::addSearchResolutionsOrder(const std::string &order)
 {
-    _searchResolutionsOrderArray.push_back(order);
+    std::string resOrder = order;
+    if (!resOrder.empty() && resOrder[resOrder.length()-1] != '/')
+        resOrder.append("/");
+        
+    _searchResolutionsOrderArray.push_back(resOrder);
 }
 
 const std::vector<std::string>& FileUtils::getSearchResolutionsOrder()

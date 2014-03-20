@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module RichText
+-- @extend Widget
+
 --------------------------------
 -- @function [parent=#RichText] insertElement 
 -- @param self

@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Widget
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 
 -- @param self
@@ -307,6 +309,103 @@
 -- @function [parent=#Widget] create 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
+-- overload function: addChild(cc.Node, int)
+--          
+-- overload function: addChild(cc.Node)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#Widget] addChild
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+
+--------------------------------
+-- @function [parent=#Widget] setColor 
+-- @param self
+-- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#Widget] removeFromParent 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Widget] removeAllChildrenWithCleanup 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Widget] removeAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Widget] sortAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Widget] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
+        
+--------------------------------
+-- overload function: getChildren()
+--          
+-- overload function: getChildren()
+--          
+-- @function [parent=#Widget] getChildren
+-- @param self
+-- @return array_table#array_table ret (retunr value: array_table)
+
+--------------------------------
+-- @function [parent=#Widget] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Widget] getChildByTag 
+-- @param self
+-- @param #int int
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#Widget] removeFromParentAndCleanup 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Widget] getColor 
+-- @param self
+-- @return color3B_table#color3B_table ret (return value: color3B_table)
+        
+--------------------------------
+-- @function [parent=#Widget] setOpacity 
+-- @param self
+-- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#Widget] setPosition 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#Widget] removeChildByTag 
+-- @param self
+-- @param #int int
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Widget] getOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- @function [parent=#Widget] getChildrenCount 
+-- @param self
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- @function [parent=#Widget] Widget 

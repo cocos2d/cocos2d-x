@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Waves
+-- @extend Grid3DAction
+
 --------------------------------
 -- @function [parent=#Waves] getAmplitudeRate 
 -- @param self
@@ -31,6 +33,16 @@
 -- @param #bool bool
 -- @param #bool bool
 -- @return Waves#Waves ret (return value: cc.Waves)
+        
+--------------------------------
+-- @function [parent=#Waves] clone 
+-- @param self
+-- @return Waves#Waves ret (return value: cc.Waves)
+        
+--------------------------------
+-- @function [parent=#Waves] update 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Waves] Waves 

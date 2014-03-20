@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module PhysicsJointSpring
+-- @extend PhysicsJoint
+
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] setAnchr2 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module BaseData
+
 --------------------------------
 -- @function [parent=#BaseData] getColor 
 -- @param self

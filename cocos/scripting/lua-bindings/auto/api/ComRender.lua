@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ComRender
+-- @extend Component
+
 --------------------------------
 -- @function [parent=#ComRender] setNode 
 -- @param self
@@ -26,5 +28,11 @@
 -- @function [parent=#ComRender] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#ComRender] serialize 
+-- @param self
+-- @param #void void
+-- @return bool#bool ret (return value: bool)
         
 return nil

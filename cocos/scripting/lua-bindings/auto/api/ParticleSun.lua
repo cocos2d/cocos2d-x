@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParticleSun
+-- @extend ParticleSystemQuad
+
 --------------------------------
 -- @function [parent=#ParticleSun] create 
 -- @param self

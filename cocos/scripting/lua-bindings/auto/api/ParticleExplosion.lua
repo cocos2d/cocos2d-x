@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParticleExplosion
+-- @extend ParticleSystemQuad
+
 --------------------------------
 -- @function [parent=#ParticleExplosion] create 
 -- @param self

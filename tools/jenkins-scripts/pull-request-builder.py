@@ -95,7 +95,9 @@ def main():
 
     #update submodule
     git_update_submodule = "git submodule update --init --force"
-    os.system(git_update_submodule)
+    ret = os.system(git_update_submodule)
+    if(ret != 0):
+        return(1)
 
     # Generate binding glue codes
     if(branch == 'develop'):
@@ -136,7 +138,7 @@ def main():
     if(branch == 'develop'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
         print "Start build android..."
-        ret = os.system("python build/android-build.py -n -j10 cpp")
+        ret = os.system("python build/android-build.py -n -j10 all")
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
