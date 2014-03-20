@@ -147,7 +147,7 @@ function CreateTestMenu()
             cc.Director:getInstance():replaceScene(testScene)
         end
     end
-    
+
     -- test getConsole;
     local _console = cc.Director:getInstance():getConsole();
     cclog("_console: %p, will addcommand.", _console)
