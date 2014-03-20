@@ -244,12 +244,12 @@ void ScriptHandlerMgr::addCustomHandler(void* object, int handler, CustomType ty
     auto iter = _mapObjectHandlers.find(object);
     VecHandlerPairs vecHandlers;
     vecHandlers.clear();
-    HandlerType handlerType = HandlerType::EVENT_CONSOLE_BEGINNING;
+    HandlerType handlerType = HandlerType::EVENT_CONSOLE_BEGAN;
     switch (type)
     {
         case CustomType::CONSOLE:
             {
-                handlerType = HandlerType::EVENT_CONSOLE_BEGINNING;
+                handlerType = HandlerType::EVENT_CONSOLE_BEGAN;
                 if (_mapObjectHandlers.end() != iter)
                 {
                     vecHandlers = iter->second;
