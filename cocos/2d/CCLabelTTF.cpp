@@ -204,7 +204,7 @@ void LabelTTF::disableStroke(bool updateTexture)
 
 void LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
 {
-    _renderLabel->setColor(tintColor);
+    _renderLabel->setFontFillColor(tintColor);
     this->setContentSize(_renderLabel->getContentSize());
 }
 

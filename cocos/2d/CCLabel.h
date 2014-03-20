@@ -203,6 +203,12 @@ public:
     virtual void setFontSize(float fontSize);
     virtual float getFontSize() const;
 
+    /** set text tinting
+     * Used setFontFillColor for set text tinting if the label created by font name.
+     * In other cases,please used setColor.
+     */
+    void setFontFillColor(const Color3B &tintColor);
+
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
