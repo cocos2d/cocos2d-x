@@ -7,8 +7,11 @@
 --          
 -- overload function: create(float, float)
 --          
+-- overload function: create(float, float, float, float)
+--          
 -- @function [parent=#ScaleBy] create
 -- @param self
+-- @param #float float
 -- @param #float float
 -- @param #float float
 -- @param #float float

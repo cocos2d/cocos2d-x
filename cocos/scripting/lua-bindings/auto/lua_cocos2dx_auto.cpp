@@ -14643,7 +14643,29 @@ int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 2);
+    do 
+    {
+        if (argc == 4)
+        {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0);
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1);
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2);
+            if (!ok) { break; }
+            double arg3;
+            ok &= luaval_to_number(tolua_S, 5,&arg3);
+            if (!ok) { break; }
+            cocos2d::ScaleTo* ret = cocos2d::ScaleTo::create(arg0, arg1, arg2, arg3);
+            object_to_luaval<cocos2d::ScaleTo>(tolua_S, "cc.ScaleTo",(cocos2d::ScaleTo*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 4);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -14720,7 +14742,29 @@ int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 2);
+    do 
+    {
+        if (argc == 4)
+        {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0);
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1);
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2);
+            if (!ok) { break; }
+            double arg3;
+            ok &= luaval_to_number(tolua_S, 5,&arg3);
+            if (!ok) { break; }
+            cocos2d::ScaleBy* ret = cocos2d::ScaleBy::create(arg0, arg1, arg2, arg3);
+            object_to_luaval<cocos2d::ScaleBy>(tolua_S, "cc.ScaleBy",(cocos2d::ScaleBy*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 4);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
