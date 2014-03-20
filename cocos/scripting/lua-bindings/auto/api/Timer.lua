@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Timer
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#Timer] getInterval 

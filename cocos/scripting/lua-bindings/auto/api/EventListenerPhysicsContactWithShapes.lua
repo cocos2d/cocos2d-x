@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventListenerPhysicsContactWithShapes
+-- @extend EventListenerPhysicsContact
 
 --------------------------------
 -- @function [parent=#EventListenerPhysicsContactWithShapes] hitTest 
