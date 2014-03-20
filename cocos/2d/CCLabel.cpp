@@ -596,7 +596,7 @@ void Label::alignText()
     {
         for (auto index = _batchNodes.size(); index < textures.size(); ++index)
         {
-            auto batchNode = SpriteBatchNode::createWithTexture(textures[(int)index]);
+            auto batchNode = SpriteBatchNode::createWithTexture(textures[index]);
             batchNode->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
             batchNode->setPosition(Point::ZERO);
             Node::addChild(batchNode,0,Node::INVALID_TAG);
