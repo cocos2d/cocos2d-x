@@ -200,8 +200,8 @@ public:
     virtual void setFontName(const std::string& fontName);
     virtual const std::string& getFontName() const;
 
-    virtual void setFontSize(int fontSize);
-    virtual int getFontSize() const;
+    virtual void setFontSize(float fontSize);
+    virtual float getFontSize() const;
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
@@ -303,7 +303,7 @@ protected:
     bool _contentDirty;
     bool _fontDirty;
     std::string _fontName;
-    int         _fontSize;
+    float         _fontSize;
     LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;

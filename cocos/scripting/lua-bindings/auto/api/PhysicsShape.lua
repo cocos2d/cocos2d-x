@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsShape
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#PhysicsShape] getFriction 
