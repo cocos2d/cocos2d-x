@@ -49,12 +49,10 @@ def clean_project():
 
 def create_project():
 	print 'will create_project: '
-	idx = 0
 	for proj in project_types:
 		print 'proj: ', proj
 		cmd = './'+cocos_console_dir+'cocos new -l '+proj+' '+proj+PROJ_SUFFIX
 		print proj,'cmd:',cmd
-		idx += 1
 		info_create = os.system(cmd)	#call cmd on win is diff
 		print 'create project',proj,' is:', not info_create
 def build_run():
