@@ -18,9 +18,6 @@
 #include "lua.h"
 #include "lauxlib.h"
 
-#if !defined(LUA_VERSION_NUM) || (LUA_VERSION_NUM < 501)
-#include "compat-5.1.h"
-#endif
 
 /*=========================================================================*\
 * LuaSocket includes
@@ -29,7 +26,7 @@
 #include "auxiliar.h"
 #include "except.h"
 #include "timeout.h"
-#include "luasocket_buffer.h"
+#include "buffer.h"
 #include "inet.h"
 #include "tcp.h"
 #include "udp.h"
@@ -81,13 +78,26 @@ static int global_unload(lua_State *L) {
     return 0;
 }
 
+#if LUA_VERSION_NUM > 501
+int luaL_typerror (lua_State *L, int narg, const char *tname) {
+  const char *msg = lua_pushfstring(L, "%s expected, got %s",
+                                    tname, luaL_typename(L, narg));
+  return luaL_argerror(L, narg, msg);
+}
+#endif
+
 /*-------------------------------------------------------------------------*\
 * Setup basic stuff.
 \*-------------------------------------------------------------------------*/
 static int base_open(lua_State *L) {
     if (socket_open()) {
         /* export functions (and leave namespace table on top of stack) */
+#if LUA_VERSION_NUM > 501 && !defined(LUA_COMPAT_MODULE)
+        lua_newtable(L);
+        luaL_setfuncs(L, func, 0);
+#else
         luaL_openlib(L, "socket", func, 0);
+#endif
 #ifdef LUASOCKET_DEBUG
         lua_pushstring(L, "_DEBUG");
         lua_pushboolean(L, 1);

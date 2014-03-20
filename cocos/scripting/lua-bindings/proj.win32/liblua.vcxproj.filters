@@ -13,6 +13,12 @@
     <Filter Include="luasocket">
       <UniqueIdentifier>{c36f2204-a252-47c0-b36c-b84cda218746}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tolua">
+      <UniqueIdentifier>{24fae6d6-ebb5-4da1-b0da-3f3845a9e9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luajit">
+      <UniqueIdentifier>{cc863463-a948-487a-aacd-dc233c3e5200}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
@@ -111,12 +117,6 @@
     <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket.c">
       <Filter>luasocket</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_buffer.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_io.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\luasocket\mime.c">
       <Filter>luasocket</Filter>
     </ClCompile>
@@ -126,28 +126,10 @@
     <ClCompile Include="..\..\..\..\external\lua\luasocket\select.c">
       <Filter>luasocket</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\socket_scripts.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\luasocket\tcp.c">
       <Filter>luasocket</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_event.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_is.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_push.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c">
       <Filter>luasocket</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c">
@@ -155,6 +137,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c">
       <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\buffer.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\io.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_event.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_is.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_push.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c">
+      <Filter>tolua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,25 +254,7 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\inet.h">
       <Filter>luasocket</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_buffer.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_io.h">
       <Filter>luasocket</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luasocket\mime.h">
@@ -284,19 +269,10 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\socket.h">
       <Filter>luasocket</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\socket_scripts.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luasocket\tcp.h">
       <Filter>luasocket</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h">
       <Filter>luasocket</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h">
@@ -304,6 +280,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h">
       <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\buffer.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\io.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h">
+      <Filter>tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h">
+      <Filter>tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h">
+      <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h">
+      <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h">
+      <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h">
+      <Filter>luajit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

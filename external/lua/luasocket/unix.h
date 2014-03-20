@@ -8,10 +8,14 @@
 * domain.
 \*=========================================================================*/
 #include "lua.h"
-#include "luasocket.h"
-#include "luasocket_buffer.h"
+
+#include "buffer.h"
 #include "timeout.h"
 #include "socket.h"
+
+#ifndef UNIX_API
+#define UNIX_API extern
+#endif
 
 typedef struct t_unix_ {
     t_socket sock;
@@ -21,6 +25,6 @@ typedef struct t_unix_ {
 } t_unix;
 typedef t_unix *p_unix;
 
-LUASOCKET_API int luaopen_socket_unix(lua_State *L);
+UNIX_API int luaopen_socket_unix(lua_State *L);
 
 #endif /* UNIX_H */
