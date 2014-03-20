@@ -4,11 +4,26 @@
 
 import os
 import sys
+import json
+
+
+# get payload argvs
+console_param = 'create'
+# payload = ''
+if os.environ.has_key('payload'):
+	payload_str = os.environ['payload']
+	payload = json.loads(payload_str)
+	if payload.has_key('console'):
+		console_param = payload['console']
+print 'console_param:',console_param
+
+console_param_arr = console_param.split(' ')
 
 project_types = ['cpp', 'lua']
 PROJ_SUFFIX = 'Proj'
 phonePlats = ['mac','ios','android']
 
+#need use console's position, perhaps should be set an env-param
 cocos_console_dir = 'tools/cocos2d-console/bin/'
 
 #now cocos2d-console suport different run on Platforms, e.g: only run android on win
@@ -17,19 +32,6 @@ runSupport = {
 	'win' : [0, 0, 1],
 	'linux' : [0, 0, 1]
 }
-
-_argvs = sys.argv
-print 'input argvs:', _argvs[1], _argvs[2]
-_will_create = False
-_will_run = False
-if _argvs[1]=='create' || _argvs[2]=='create':
-	_will_create = True
-if _argvs[1]=='run' || _argvs[2]=='run':
-	_will_create = True
-	_will_run = True
-if _will_create == False and _will_run == False:
-	_will_create = True
-	_will_run = True
 
 curPlat = sys.platform
 if curPlat.find('linux') >= 0:
@@ -47,12 +49,10 @@ def clean_project():
 
 def create_project():
 	print 'will create_project: '
-	idx = 0
 	for proj in project_types:
 		print 'proj: ', proj
-		cmd = 'cocos new -l '+proj+' '+proj+PROJ_SUFFIX
+		cmd = './'+cocos_console_dir+'cocos new -l '+proj+' '+proj+PROJ_SUFFIX
 		print proj,'cmd:',cmd
-		idx += 1
 		info_create = os.system(cmd)	#call cmd on win is diff
 		print 'create project',proj,' is:', not info_create
 def build_run():
@@ -60,7 +60,7 @@ def build_run():
 	for proj in project_types:
 		idx = 0
 		for phone in phonePlats:
-			cmd = 'cocos run -p '+phone+' -s '+proj+PROJ_SUFFIX
+			cmd = './'+cocos_console_dir+'cocos run -p '+phone+' -s '+proj+PROJ_SUFFIX
 			print proj,'cmd:',cmd
 			if runSupport[curPlat][idx]:
 				info_run = os.system(cmd)
@@ -68,10 +68,9 @@ def build_run():
 			idx += 1
 
 def main():
-	if _will_create:
-		clean_project()
-		create_project()
-	if _will_run:
+	clean_project()
+	create_project()
+	if console_param_arr.count('run'):
 	 	build_run()
 
 # -------------- main --------------

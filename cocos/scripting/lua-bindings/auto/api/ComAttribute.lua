@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ComAttribute
+-- @extend Component
 
 --------------------------------
 -- @function [parent=#ComAttribute] getFloat 

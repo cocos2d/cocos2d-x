@@ -91,7 +91,7 @@ bool UICCTextField::onTextFieldAttachWithIME(TextFieldTTF *pSender)
     return false;
 }
 
-bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *text, int nLen)
+bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *text, size_t nLen)
 {
     if (nLen == 1 && strcmp(text, "\n") == 0)
     {
@@ -121,7 +121,7 @@ bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
     return false;
 }
 
-void UICCTextField::insertText(const char * text, int len)
+void UICCTextField::insertText(const char * text, size_t len)
 {
     std::string input_text = text;
     

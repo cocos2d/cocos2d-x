@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParallaxNode
+-- @extend Node
 
 --------------------------------
 -- overload function: getParallaxArray()

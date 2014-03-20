@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module CheckBox
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#CheckBox] getSelectedState 

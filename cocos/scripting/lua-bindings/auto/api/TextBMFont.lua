@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TextBMFont
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#TextBMFont] setFntFile 

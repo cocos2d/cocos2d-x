@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Slider
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#Slider] setPercent 

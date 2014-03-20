@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsShapeBox
+-- @extend PhysicsShape
 
 --------------------------------
 -- @function [parent=#PhysicsShapeBox] getPointsCount 
