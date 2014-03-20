@@ -122,18 +122,20 @@ public:
 
     virtual std::string getDescription() const override;
 
-protected:
-    /**
-     * @js ctor
-     */
-    Menu() : _selectedItem(nullptr) {}
-    virtual ~Menu();
+CC_CONSTRUCTOR_ACCESS:
 
     /** initializes an empty Menu */
     bool init();
 
     /** initializes a Menu with a NSArray of MenuItem objects */
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
+
+protected:
+    /**
+     * @js ctor
+     */
+    Menu() : _selectedItem(nullptr) {}
+    virtual ~Menu();
 
     /** whether or not the menu will receive events */
     bool _enabled;

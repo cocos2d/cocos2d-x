@@ -1337,12 +1337,14 @@ public:
     
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB() const { return false; };
+    
+CC_CONSTRUCTOR_ACCESS:
+    virtual bool init();
 
 protected:
     // Nodes should be created using create();
     Node();
     virtual ~Node();
-    virtual bool init();
 
     /// lazy allocs
     void childrenAlloc(void);

@@ -115,12 +115,14 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float t) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action */
+    bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
 
 protected:
     Sequence() {}
     virtual ~Sequence(void);
-    /** initializes the action */
-    bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
 
     FiniteTimeAction *_actions[2];
     float _split;
@@ -163,12 +165,14 @@ public:
     virtual void stop(void) override;
     virtual void update(float dt) override;
     virtual bool isDone(void) const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
+    bool initWithAction(FiniteTimeAction *pAction, unsigned int times);
 
 protected:
     Repeat() {}
     virtual ~Repeat();
-    /** initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
-    bool initWithAction(FiniteTimeAction *pAction, unsigned int times);
 
     unsigned int _times;
     unsigned int _total;
@@ -214,14 +218,16 @@ public:
     virtual void startWithTarget(Node* target) override;
     virtual void step(float dt) override;
     virtual bool isDone(void) const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action */
+    bool initWithAction(ActionInterval *action);
 
 protected:
     RepeatForever()
     : _innerAction(nullptr)
     {}
     virtual ~RepeatForever();
-    /** initializes the action */
-    bool initWithAction(ActionInterval *action);
 
     /** Inner action */
     ActionInterval *_innerAction;
@@ -261,12 +267,14 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the Spawn action with the 2 actions to spawn */
+    bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
 protected:
     Spawn() {}
     virtual ~Spawn();
-    /** initializes the Spawn action with the 2 actions to spawn */
-    bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
     FiniteTimeAction *_one;
     FiniteTimeAction *_two;
@@ -296,12 +304,14 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
-protected:
-    RotateTo() {}
-    virtual ~RotateTo() {}
+CC_CONSTRUCTOR_ACCESS:
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
     bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
+    
+protected:
+    RotateTo() {}
+    virtual ~RotateTo() {}
 
     float _dstAngleX;
     float _startAngleX;
@@ -333,13 +343,15 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
-protected:
-    RotateBy();
-    virtual ~RotateBy() {}
+CC_CONSTRUCTOR_ACCESS:
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     bool initWithDuration(float duration, const Vertex3F& deltaAngle3D);
+    
+protected:
+    RotateBy();
+    virtual ~RotateBy() {}
 
     float _angleZ_X;
     float _startAngleZ_X;
@@ -373,12 +385,14 @@ public:
 	virtual MoveBy* reverse(void) const  override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action */
+    bool initWithDuration(float duration, const Point& deltaPosition);
 
 protected:
     MoveBy() {}
     virtual ~MoveBy() {}
-    /** initializes the action */
-    bool initWithDuration(float duration, const Point& deltaPosition);
 
     Point _positionDelta;
     Point _startPosition;
@@ -404,12 +418,14 @@ public:
     //
     virtual MoveTo* clone() const override;
     virtual void startWithTarget(Node *target) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action */
+    bool initWithDuration(float duration, const Point& position);
 
 protected:
     MoveTo() {}
     virtual ~MoveTo() {}
-    /** initializes the action */
-    bool initWithDuration(float duration, const Point& position);
 
     Point _endPosition;
 
@@ -433,11 +449,13 @@ public:
 	virtual SkewTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    bool initWithDuration(float t, float sx, float sy);
 
 protected:
     SkewTo();
     virtual ~SkewTo() {}
-    bool initWithDuration(float t, float sx, float sy);
 
     float _skewX;
     float _skewY;
@@ -467,11 +485,13 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual SkewBy* clone() const  override;
 	virtual SkewBy* reverse(void) const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    bool initWithDuration(float t, float sx, float sy);
 
 protected:
     SkewBy() {}
     virtual ~SkewBy() {}
-    bool initWithDuration(float t, float sx, float sy);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(SkewBy);
@@ -492,12 +512,14 @@ public:
 	virtual JumpBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action */
+    bool initWithDuration(float duration, const Point& position, float height, int jumps);
 
 protected:
     JumpBy() {}
     virtual ~JumpBy() {}
-    /** initializes the action */
-    bool initWithDuration(float duration, const Point& position, float height, int jumps);
 
     Point           _startPosition;
     Point           _delta;
@@ -562,12 +584,14 @@ public:
 	virtual BezierBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action with a duration and a bezier configuration */
+    bool initWithDuration(float t, const ccBezierConfig& c);
 
 protected:
     BezierBy() {}
     virtual ~BezierBy() {}
-    /** initializes the action with a duration and a bezier configuration */
-    bool initWithDuration(float t, const ccBezierConfig& c);
 
     ccBezierConfig _config;
     Point _startPosition;
@@ -598,11 +622,13 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual BezierTo* clone() const override;
 	virtual BezierTo* reverse(void) const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    bool initWithDuration(float t, const ccBezierConfig &c);
 
 protected:
     BezierTo() {}
     virtual ~BezierTo() {}
-    bool initWithDuration(float t, const ccBezierConfig &c);
 
     ccBezierConfig _toConfig;
 
@@ -632,16 +658,18 @@ public:
 	virtual ScaleTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-
-protected:
-    ScaleTo() {}
-    virtual ~ScaleTo() {}
+    
+CC_CONSTRUCTOR_ACCESS:
     /** initializes the action with the same scale factor for X and Y */
     bool initWithDuration(float duration, float s);
     /** initializes the action with and X factor and a Y factor */
     bool initWithDuration(float duration, float sx, float sy);
     /** initializes the action with X Y Z factor */
     bool initWithDuration(float duration, float sx, float sy, float sz);
+
+protected:
+    ScaleTo() {}
+    virtual ~ScaleTo() {}
 
     float _scaleX;
     float _scaleY;
@@ -706,11 +734,13 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
     
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action */
+    bool initWithDuration(float duration, int blinks);
+    
 protected:
     Blink() {}
     virtual ~Blink() {}
-    /** initializes the action */
-    bool initWithDuration(float duration, int blinks);
 
     int _times;
     bool _originalState;
@@ -736,12 +766,14 @@ public:
 	virtual FadeTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action with duration and opacity */
+    bool initWithDuration(float duration, GLubyte opacity);
 
 protected:
     FadeTo() {}
     virtual ~FadeTo() {}
-    /** initializes the action with duration and opacity */
-    bool initWithDuration(float duration, GLubyte opacity);
 
     GLubyte _toOpacity;
     GLubyte _fromOpacity;
@@ -820,12 +852,14 @@ public:
 	virtual TintTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action with duration and color */
+    bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
 
 protected:
     TintTo() {}
     virtual ~TintTo() {}
-    /** initializes the action with duration and color */
-    bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
 
     Color3B _to;
     Color3B _from;
@@ -850,12 +884,14 @@ public:
 	virtual TintBy* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action with duration and color */
+    bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
 protected:
     TintBy() {}
     virtual ~TintBy() {}
-    /** initializes the action with duration and color */
-    bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
     GLshort _deltaR;
     GLshort _deltaG;
@@ -913,12 +949,14 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action */
+    bool initWithAction(FiniteTimeAction *action);
 
 protected:
     ReverseTime();
     virtual ~ReverseTime(void);
-    /** initializes the action */
-    bool initWithAction(FiniteTimeAction *action);
 
     FiniteTimeAction *_other;
 
@@ -948,12 +986,14 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float t) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action with an Animation and will restore the original frame when the animation is over */
+    bool initWithAnimation(Animation *animation);
 
 protected:
     Animate();
     virtual ~Animate();
-    /** initializes the action with an Animation and will restore the original frame when the animation is over */
-    bool initWithAnimation(Animation *animation);
 
     std::vector<float>* _splitTimes;
     int             _nextFrame;
@@ -988,12 +1028,14 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** Init an action with the specified action and forced target */
+    bool initWithTarget(Node* target, FiniteTimeAction* action);
 
 protected:
     TargetedAction();
     virtual ~TargetedAction();
-    /** Init an action with the specified action and forced target */
-    bool initWithTarget(Node* target, FiniteTimeAction* action);
 
     FiniteTimeAction* _action;
     Node* _forcedTarget;

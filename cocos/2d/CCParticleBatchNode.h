@@ -120,17 +120,19 @@ public:
     */
     virtual const BlendFunc& getBlendFunc(void) const override;
     
-protected:
-    /**
-     * @js ctor
-     */
-    ParticleBatchNode();
+CC_CONSTRUCTOR_ACCESS:
     
     /** initializes the particle system with Texture2D, a capacity of particles */
     bool initWithTexture(Texture2D *tex, int capacity);
     
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     bool initWithFile(const std::string& fileImage, int capacity);
+    
+protected:
+    /**
+     * @js ctor
+     */
+    ParticleBatchNode();
 
 private:
     void updateAllAtlasIndexes();
@@ -142,7 +144,6 @@ private:
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;
 
-private:
     /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
     // quad command

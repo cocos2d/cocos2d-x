@@ -93,6 +93,10 @@ public:
     
     // Overrides
 	virtual AnimationFrame *clone() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
+    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
 
 protected:
     
@@ -105,9 +109,6 @@ protected:
      * @lua NA
      */
     virtual ~AnimationFrame();
-    
-    /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
-    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
     
     /** SpriteFrameName to be used */
     SpriteFrame* _spriteFrame;
@@ -212,11 +213,8 @@ public:
     
     // overrides
 	virtual Animation *clone() const override;
-
-protected:
-    Animation();
-    virtual ~Animation(void);
     
+CC_CONSTRUCTOR_ACCESS:
     /** Initializes a Animation */
     bool init();
     
@@ -229,6 +227,10 @@ protected:
      @since v2.0
      */
     bool initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+
+protected:
+    Animation();
+    virtual ~Animation(void);
     
     /** total Delay units of the Animation. */
     float _totalDelayUnits;

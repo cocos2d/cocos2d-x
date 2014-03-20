@@ -144,12 +144,14 @@ public:
 	virtual void update(float time) override;
 	virtual RemoveSelf* clone() const override;
 	virtual RemoveSelf* reverse() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+	/** init the action */
+	bool init(bool isNeedCleanUp);
 
 protected:
     RemoveSelf() : _isNeedCleanUp(true){}
     virtual ~RemoveSelf(){}
-	/** init the action */
-	bool init(bool isNeedCleanUp);
 
 	bool _isNeedCleanUp;
 
@@ -173,12 +175,14 @@ public:
     virtual void update(float time) override;
 	virtual FlipX* reverse() const override;
 	virtual FlipX* clone() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** init the action */
+    bool initWithFlipX(bool x);
 
 protected:
     FlipX() :_flipX(false) {}
     virtual ~FlipX() {}
-    /** init the action */
-    bool initWithFlipX(bool x);
 
     bool    _flipX;
 
@@ -202,12 +206,14 @@ public:
     virtual void update(float time) override;
 	virtual FlipY* reverse() const override;
 	virtual FlipY* clone() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** init the action */
+    bool initWithFlipY(bool y);
 
 protected:
     FlipY() :_flipY(false) {}
     virtual ~FlipY() {}
-    /** init the action */
-    bool initWithFlipY(bool y);
 
     bool    _flipY;
 
@@ -230,12 +236,14 @@ public:
     virtual void update(float time) override;
 	virtual Place* reverse() const override;
 	virtual Place* clone() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** Initializes a Place action with a position */
+    bool initWithPosition(const Point& pos);
 
 protected:
     Place(){}
     virtual ~Place(){}
-    /** Initializes a Place action with a position */
-    bool initWithPosition(const Point& pos);
 
     Point _position;
 
@@ -290,6 +298,19 @@ public:
     virtual void update(float time) override;
 	virtual CallFunc* reverse() const override;
 	virtual CallFunc* clone() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+	/** initializes the action with the callback
+     typedef void (Ref::*SEL_CallFunc)();
+     @deprecated Use the std::function API instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
+    
+	/** initializes the action with the std::function<void()>
+     * @js NA
+     * @lua NA
+	 */
+    bool initWithFunction(const std::function<void()>& func);
 
 protected:
     CallFunc()
@@ -299,18 +320,6 @@ protected:
     {
     }
     virtual ~CallFunc();
-
-	/** initializes the action with the callback
-     typedef void (Ref::*SEL_CallFunc)();
-     @deprecated Use the std::function API instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
-
-	/** initializes the action with the std::function<void()>
-     * @js NA
-     * @lua NA
-	 */
-    bool initWithFunction(const std::function<void()>& func);
 
     /** Target that will be called */
     Ref*   _selectorTarget;
@@ -352,20 +361,21 @@ public:
     //
 	virtual CallFuncN* clone() const override;
     virtual void execute() override;
-
-protected:
-    CallFuncN():_functionN(nullptr){}
-    virtual ~CallFuncN(){}
+    
+CC_CONSTRUCTOR_ACCESS:
     /** initializes the action with the std::function<void(Node*)> */
     bool initWithFunction(const std::function<void(Node*)>& func);
-
+    
     /** initializes the action with the callback
-
+     
      typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
+protected:
+    CallFuncN():_functionN(nullptr){}
+    virtual ~CallFuncN(){}
 
     /** function that will be called with the "sender" as the 1st argument */
     std::function<void(Node*)> _functionN;
