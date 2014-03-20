@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionScene
+-- @extend Scene
 
 --------------------------------
 -- @function [parent=#TransitionScene] finish 

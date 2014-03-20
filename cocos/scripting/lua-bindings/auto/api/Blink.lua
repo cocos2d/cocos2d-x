@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Blink
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#Blink] create 

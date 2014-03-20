@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Layer
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#Layer] create 

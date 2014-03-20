@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TurnOffTiles
+-- @extend TiledGrid3DAction
 
 --------------------------------
 -- @function [parent=#TurnOffTiles] turnOnTile 

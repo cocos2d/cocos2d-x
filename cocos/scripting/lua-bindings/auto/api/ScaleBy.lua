@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ScaleBy
+-- @extend ScaleTo
 
 --------------------------------
 -- overload function: create(float, float, float)

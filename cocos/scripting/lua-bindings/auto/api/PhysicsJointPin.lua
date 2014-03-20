@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsJointPin
+-- @extend PhysicsJoint
 
 --------------------------------
 -- @function [parent=#PhysicsJointPin] construct 
