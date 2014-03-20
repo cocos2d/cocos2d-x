@@ -14,7 +14,7 @@ if os.environ.has_key('payload'):
 	payload_str = os.environ['payload']
 	payload = json.loads(payload_str)
 	if payload.has_key('console'):
-		console_cmd = payload['console']
+		console_param = payload['console']
 print 'console_param:',console_param
 
 console_param_arr = console_param.split(' ')
