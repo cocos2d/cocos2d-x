@@ -12,15 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\external\lua\luasocket\auxiliar.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\buffer.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\except.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\inet.c" />
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\io.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket.c" />
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_buffer.c" />
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_io.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\mime.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\options.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\select.c" />
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\socket_scripts.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\tcp.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c" />
@@ -65,16 +64,15 @@
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\auxiliar.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\buffer.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\except.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\inet.h" />
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\io.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket.h" />
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_buffer.h" />
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_io.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\mime.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\options.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\select.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\socket.h" />
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\socket_scripts.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\tcp.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h" />
