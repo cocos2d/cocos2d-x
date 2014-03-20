@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Widget
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 

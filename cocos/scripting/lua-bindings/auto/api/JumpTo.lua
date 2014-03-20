@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module JumpTo
+-- @extend JumpBy
 
 --------------------------------
 -- @function [parent=#JumpTo] create 

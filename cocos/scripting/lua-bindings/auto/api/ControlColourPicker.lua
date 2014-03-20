@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlColourPicker
+-- @extend Control
 
 --------------------------------
 -- @function [parent=#ControlColourPicker] setEnabled 

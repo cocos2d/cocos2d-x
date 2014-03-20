@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module BezierTo
+-- @extend BezierBy
 
 --------------------------------
 -- @function [parent=#BezierTo] startWithTarget 

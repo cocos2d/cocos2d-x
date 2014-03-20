@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Skin
+-- @extend Sprite
 
 --------------------------------
 -- @function [parent=#Skin] getBone 

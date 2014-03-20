@@ -622,6 +622,9 @@ public:
     /** creates the action with and X factor and a Y factor */
     static ScaleTo* create(float duration, float sx, float sy);
 
+    /** creates the action with X Y Z factor */
+    static ScaleTo* create(float duration, float sx, float sy, float sz);
+
     //
     // Overrides
     //
@@ -637,15 +640,21 @@ protected:
     bool initWithDuration(float duration, float s);
     /** initializes the action with and X factor and a Y factor */
     bool initWithDuration(float duration, float sx, float sy);
+    /** initializes the action with X Y Z factor */
+    bool initWithDuration(float duration, float sx, float sy, float sz);
 
     float _scaleX;
     float _scaleY;
+    float _scaleZ;
     float _startScaleX;
     float _startScaleY;
+    float _startScaleZ;
     float _endScaleX;
     float _endScaleY;
+    float _endScaleZ;
     float _deltaX;
     float _deltaY;
+    float _deltaZ;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ScaleTo);
@@ -661,6 +670,9 @@ public:
 
     /** creates the action with and X factor and a Y factor */
     static ScaleBy* create(float duration, float sx, float sy);
+
+    /** creates the action with X Y Z factor */
+    static ScaleBy* create(float duration, float sx, float sy, float sz);
 
     //
     // Overrides

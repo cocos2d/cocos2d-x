@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventListenerPhysicsContactWithGroup
+-- @extend EventListenerPhysicsContact
 
 --------------------------------
 -- @function [parent=#EventListenerPhysicsContactWithGroup] hitTest 

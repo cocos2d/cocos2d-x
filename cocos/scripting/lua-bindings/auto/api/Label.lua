@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Label
+-- @extend SpriteBatchNode,LabelProtocol,
 
 --------------------------------
 -- @function [parent=#Label] enableShadow 
@@ -266,11 +267,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Label] setColor 
--- @param self
--- @param #color3B_table color3b
-        
---------------------------------
 -- @function [parent=#Label] getScaleY 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -311,5 +307,10 @@
 -- @function [parent=#Label] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#Label] updateDisplayedColor 
+-- @param self
+-- @param #color3B_table color3b
         
 return nil

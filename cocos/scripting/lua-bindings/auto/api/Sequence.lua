@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Sequence
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#Sequence] startWithTarget 
