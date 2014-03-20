@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module AnimationFrame
+
 --------------------------------
 -- @function [parent=#AnimationFrame] setSpriteFrame 
 -- @param self

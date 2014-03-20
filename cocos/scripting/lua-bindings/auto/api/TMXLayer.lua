@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TMXLayer
+
 --------------------------------
 -- @function [parent=#TMXLayer] getTileGIDAt 
 -- @param self
@@ -134,6 +135,24 @@
 -- @param #cc.TMXLayerInfo tmxlayerinfo
 -- @param #cc.TMXMapInfo map
 -- @return TMXLayer#TMXLayer ret (return value: cc.TMXLayer)
+        
+--------------------------------
+-- @function [parent=#TMXLayer] addChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#TMXLayer] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#TMXLayer] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#TMXLayer] TMXLayer 

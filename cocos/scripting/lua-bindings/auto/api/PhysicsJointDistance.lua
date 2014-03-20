@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsJointDistance
+
 --------------------------------
 -- @function [parent=#PhysicsJointDistance] setDistance 
 -- @param self

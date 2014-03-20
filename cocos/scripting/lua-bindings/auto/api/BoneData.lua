@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module BoneData
+
 --------------------------------
 -- @function [parent=#BoneData] getDisplayData 
 -- @param self

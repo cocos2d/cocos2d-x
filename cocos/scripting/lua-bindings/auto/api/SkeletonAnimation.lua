@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module SkeletonAnimation
+
 --------------------------------
 -- @function [parent=#SkeletonAnimation] addAnimation 
 -- @param self

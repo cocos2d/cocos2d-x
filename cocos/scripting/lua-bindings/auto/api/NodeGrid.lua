@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module NodeGrid
+
 --------------------------------
 -- @function [parent=#NodeGrid] setTarget 
 -- @param self
@@ -24,5 +25,12 @@
 -- @function [parent=#NodeGrid] create 
 -- @param self
 -- @return NodeGrid#NodeGrid ret (return value: cc.NodeGrid)
+        
+--------------------------------
+-- @function [parent=#NodeGrid] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
         
 return nil

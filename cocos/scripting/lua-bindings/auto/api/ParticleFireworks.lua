@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleFireworks
+
 --------------------------------
 -- @function [parent=#ParticleFireworks] create 
 -- @param self

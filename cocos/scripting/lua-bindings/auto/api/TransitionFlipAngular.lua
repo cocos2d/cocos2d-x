@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionFlipAngular
+
 --------------------------------
 -- overload function: create(float, cc.Scene)
 --          

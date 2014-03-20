@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module DisplayManager
+
 --------------------------------
 -- @function [parent=#DisplayManager] getDisplayRenderNode 
 -- @param self

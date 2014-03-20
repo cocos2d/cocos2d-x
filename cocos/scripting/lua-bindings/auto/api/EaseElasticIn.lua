@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseElasticIn
+
 --------------------------------
 -- overload function: create(cc.ActionInterval)
 --          
@@ -12,4 +13,19 @@
 -- @param #float float
 -- @return EaseElasticIn#EaseElasticIn ret (retunr value: cc.EaseElasticIn)
 
+--------------------------------
+-- @function [parent=#EaseElasticIn] clone 
+-- @param self
+-- @return EaseElasticIn#EaseElasticIn ret (return value: cc.EaseElasticIn)
+        
+--------------------------------
+-- @function [parent=#EaseElasticIn] update 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#EaseElasticIn] reverse 
+-- @param self
+-- @return EaseElastic#EaseElastic ret (return value: cc.EaseElastic)
+        
 return nil

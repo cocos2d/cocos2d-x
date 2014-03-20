@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Touch
+
 --------------------------------
 -- @function [parent=#Touch] getPreviousLocationInView 
 -- @param self

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleSpiral
+
 --------------------------------
 -- @function [parent=#ParticleSpiral] create 
 -- @param self
