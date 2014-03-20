@@ -131,7 +131,7 @@ public:
     void setDimensions(const Size &dim);
     
     int getFontSize() const;
-    void setFontSize(int fontSize);
+    void setFontSize(float fontSize);
     
     const std::string& getFontName() const;
     void setFontName(const std::string& fontName);
