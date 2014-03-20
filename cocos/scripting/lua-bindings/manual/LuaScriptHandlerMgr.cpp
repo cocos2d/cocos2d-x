@@ -236,6 +236,37 @@ void ScriptHandlerMgr::removeObjectAllHandlers(void* object)
     }
 }
 
+void ScriptHandlerMgr::addCustomHandler(void* object, int handler, CustomType type)
+{
+    if (nullptr == object)
+        return;
+    
+    auto iter = _mapObjectHandlers.find(object);
+    VecHandlerPairs vecHandlers;
+    vecHandlers.clear();
+    HandlerType handlerType = HandlerType::EVENT_CONSOLE_BEGINNING;
+    switch (type)
+    {
+        case CustomType::CONSOLE:
+            {
+                handlerType = HandlerType::EVENT_CONSOLE_BEGINNING;
+                if (_mapObjectHandlers.end() != iter)
+                {
+                    vecHandlers = iter->second;
+                    handlerType = static_cast<HandlerType>((int)vecHandlers.back().first + 1);
+                }
+                assert(handlerType <= HandlerType::EVENT_CONSOLE_ENDED);
+            }
+            break;
+        default:
+            break;
+    }
+    
+    HandlerPair eventHanler = std::make_pair(handlerType, handler);
+    vecHandlers.push_back(eventHanler);
+    _mapObjectHandlers[object] = vecHandlers;
+}
+
 NS_CC_END
 
 

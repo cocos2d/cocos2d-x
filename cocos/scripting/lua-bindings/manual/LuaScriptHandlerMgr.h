@@ -160,8 +160,15 @@ public:
         EVENT_PHYSICS_CONTACT_PRESOLVE,
         EVENT_PHYSICS_CONTACT_POSTSOLVE,
         EVENT_PHYSICS_CONTACT_SEPERATE,
+        
+        EVENT_CONSOLE_BEGINNING = 10000,
+        EVENT_CONSOLE_ENDED   = 11000,
     };
     
+    enum class CustomType : int
+    {
+        CONSOLE,
+    };
     typedef int Handler;
     typedef std::pair<HandlerType, Handler> HandlerPair;
     typedef std::vector<HandlerPair> VecHandlerPairs;
@@ -175,6 +182,7 @@ public:
     void removeObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     void removeObjectAllHandlers(void* object);
+    void addCustomHandler(void* object, int handler, CustomType type);
     
 private:
     void init(void);
