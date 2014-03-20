@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlSwitch
+-- @extend Control
 
 --------------------------------
 -- @function [parent=#ControlSwitch] setEnabled 

@@ -341,8 +341,6 @@
         "cocos/2d/platform/ios/CCPlatformDefine.h", 
         "cocos/2d/platform/ios/CCStdC.h", 
         "cocos/2d/platform/ios/OpenGL_Internal.h", 
-        "cocos/2d/platform/ios/Simulation/AccelerometerSimulation.h", 
-        "cocos/2d/platform/ios/Simulation/AccelerometerSimulation.m", 
         "cocos/2d/platform/linux/CCApplication.cpp", 
         "cocos/2d/platform/linux/CCApplication.h", 
         "cocos/2d/platform/linux/CCCommon.cpp", 

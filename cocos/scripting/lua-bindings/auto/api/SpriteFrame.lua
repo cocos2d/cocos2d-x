@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module SpriteFrame
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#SpriteFrame] clone 
