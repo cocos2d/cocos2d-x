@@ -100,7 +100,7 @@ public:
 protected:
     void loop();
     ssize_t readline(int fd, char *buf, int maxlen);
-    ssize_t readfile(int fd, std::string &file_name, int file_size);
+    ssize_t readfile(int fd, std::string &file_name, ssize_t file_size);
     bool parseCommand(int fd);
     
     void addClient();

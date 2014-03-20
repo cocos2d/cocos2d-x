@@ -642,7 +642,7 @@ void Console::commandTouch(int fd, const std::string& args)
                 float x = std::atof(argv[1].c_str());
                 float y = std::atof(argv[2].c_str());
 
-                srand (time(NULL));
+                srand ((unsigned)time(NULL));
                 _touchId = rand();
                 Scheduler *sched = Director::getInstance()->getScheduler();
                 sched->performFunctionInCocosThread( [&](){
@@ -670,7 +670,7 @@ void Console::commandTouch(int fd, const std::string& args)
                 float x2 = std::atof(argv[3].c_str());
                 float y2 = std::atof(argv[4].c_str());
 
-                srand (time(NULL));
+                srand ((unsigned)time(NULL));
                 _touchId = rand();
 
                 Scheduler *sched = Director::getInstance()->getScheduler();
@@ -851,7 +851,7 @@ ssize_t Console::readline(int fd, char* ptr, int maxlen)
     return n;
 }
 
-ssize_t Console::readfile(int fd, std::string& file_name, int file_size)
+ssize_t Console::readfile(int fd, std::string& file_name, ssize_t file_size)
 {
     ssize_t n, rc;
     char c;

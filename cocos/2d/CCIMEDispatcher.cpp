@@ -214,7 +214,7 @@ void IMEDispatcher::removeDelegate(IMEDelegate* delegate)
 // dispatch text message
 //////////////////////////////////////////////////////////////////////////
 
-void IMEDispatcher::dispatchInsertText(const char * text, int len)
+void IMEDispatcher::dispatchInsertText(const char * text, size_t len)
 {
     do 
     {

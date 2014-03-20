@@ -78,5 +78,4 @@ THE SOFTWARE.
 @end
 
 #endif // !TARGET_CPU_ARM
-
 #endif // CC_PLATFORM_IOS
