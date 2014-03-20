@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ReuseGrid
+-- @extend ActionInstant
 
 --------------------------------
 -- @function [parent=#ReuseGrid] create 

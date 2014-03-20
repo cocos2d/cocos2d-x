@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventListenerPhysicsContact
+-- @extend EventListenerCustom
 
 --------------------------------
 -- @function [parent=#EventListenerPhysicsContact] create 

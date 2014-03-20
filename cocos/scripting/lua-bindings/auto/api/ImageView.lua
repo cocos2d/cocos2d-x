@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ImageView
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#ImageView] loadTexture 
