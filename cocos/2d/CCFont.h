@@ -44,7 +44,6 @@ public:
     virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const = 0;
     virtual const char* getCurrentGlyphCollection() const;
     
-    virtual unsigned char * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const { return 0; }
     
     virtual int getFontMaxHeight() const { return 0; }
     
