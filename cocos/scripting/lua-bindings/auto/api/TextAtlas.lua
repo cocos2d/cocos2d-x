@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TextAtlas
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#TextAtlas] setProperty 

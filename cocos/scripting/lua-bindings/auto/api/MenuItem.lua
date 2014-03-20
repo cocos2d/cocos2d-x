@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItem
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#MenuItem] setEnabled 

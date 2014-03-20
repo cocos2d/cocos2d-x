@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Armature
+-- @extend Node,BlendProtocol,
 
 --------------------------------
 -- @function [parent=#Armature] getBone 

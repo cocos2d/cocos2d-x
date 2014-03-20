@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlButton
+-- @extend Control
 
 --------------------------------
 -- @function [parent=#ControlButton] isPushed 

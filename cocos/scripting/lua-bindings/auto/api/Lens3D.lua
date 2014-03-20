@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Lens3D
+-- @extend Grid3DAction
 
 --------------------------------
 -- @function [parent=#Lens3D] setPosition 

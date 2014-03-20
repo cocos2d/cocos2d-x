@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module JumpBy
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#JumpBy] create 

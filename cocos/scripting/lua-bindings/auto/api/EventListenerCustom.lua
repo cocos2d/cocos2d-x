@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventListenerCustom
+-- @extend EventListener
 
 --------------------------------
 -- @function [parent=#EventListenerCustom] clone 

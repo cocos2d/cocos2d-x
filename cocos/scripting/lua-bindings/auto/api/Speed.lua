@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Speed
+-- @extend Action
 
 --------------------------------
 -- @function [parent=#Speed] setInnerAction 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module BezierBy
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#BezierBy] startWithTarget 

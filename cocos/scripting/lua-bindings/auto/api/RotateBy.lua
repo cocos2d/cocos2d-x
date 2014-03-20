@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module RotateBy
+-- @extend ActionInterval
 
 --------------------------------
 -- overload function: create(float, float, float)
