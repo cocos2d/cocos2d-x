@@ -68,7 +68,7 @@ public:
 
     inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
     inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
-    { 
+    {
         _startingPositionInitialized = bStartingPositionInitialized; 
     }
 
@@ -107,17 +107,20 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setOpacityModifyRGB(bool value) override;
     virtual bool isOpacityModifyRGB() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    MotionStreak();
+    virtual ~MotionStreak();
+    
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
+    
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
 protected:
     //renderer callback
     void onDraw(const kmMat4 &transform, bool transformUpdated);
-    MotionStreak();
-    virtual ~MotionStreak();
-
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
     bool _fastMode;
     bool _startingPositionInitialized;
