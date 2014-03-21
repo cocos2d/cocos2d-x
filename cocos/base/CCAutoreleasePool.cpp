@@ -43,7 +43,7 @@ AutoreleasePool::AutoreleasePool(const std::string &name)
 , _isClearing(false)
 #endif
 {
-    _managedObjectArray.reserve(256);
+    _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
 }
 
@@ -125,7 +125,7 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
-    _trackedObjectPool.reserve(150);
+    _trackedObjectPool.reserve(256);
 }
 
 PoolManager::~PoolManager()
