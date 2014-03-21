@@ -1032,7 +1032,7 @@ bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints
                 lua_pop(L, 1);
             }
             
-            *numPoints = len;
+            *numPoints = (int)len;
             *points    = array;
         }
     }
