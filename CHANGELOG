@@ -1,7 +1,8 @@
 cocos2d-x-3.0? ?? 2014
+     [NEW]         Application: Adds getCurrentLanguageCode() which returns iso 639-1 language code
      [NEW]         cocos2d::extension::ScrollView: Elastic bounce back effect support
      [NEW]         Constructor: Added CC_CONSTRUCTOR_ACCESS macro to re-define constructor/initXXX methods to 'public' access.
-     
+
      [FIX]         CCBReader: Wrong logic in CCBAnimationManager::moveAnimationsFromNode
      [FIX]         Console: initialize some variables that are not initilized in destructor
      [FIX]         Console: refactor 'upload' command, encode file with base64, detach 'upload' from main loop
