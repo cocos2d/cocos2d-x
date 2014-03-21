@@ -53,8 +53,4 @@
 -- @param self
 -- @param #float float
         
---------------------------------
--- @function [parent=#Twirl] Twirl 
--- @param self
-        
 return nil
