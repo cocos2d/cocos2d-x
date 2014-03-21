@@ -1639,7 +1639,7 @@ void AddAndDeleteParticleSystems::onEnter()
 
 void AddAndDeleteParticleSystems::removeSystem(float dt)
 {
-    int nChildrenCount = _batchNode->getChildren().size();
+    ssize_t nChildrenCount = _batchNode->getChildren().size();
     if (nChildrenCount > 0) 
     {
         CCLOG("remove random system");

@@ -109,7 +109,7 @@ bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *tex
     return false;
 }
 
-bool UICCTextField::onTextFieldDeleteBackward(TextFieldTTF *pSender, const char *delText, int nLen)
+bool UICCTextField::onTextFieldDeleteBackward(TextFieldTTF *pSender, const char *delText, size_t nLen)
 {
     setDeleteBackward(true);
     return false;
