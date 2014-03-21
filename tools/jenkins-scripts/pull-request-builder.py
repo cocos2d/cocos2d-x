@@ -189,7 +189,9 @@ def main():
         exit_code = 1
     
     #clean workspace
-    os.system("cd " + os.environ['WORKSPACE']);
+    os.system("cd " + os.environ['WORKSPACE'])
+    os.system("git reset --hard")
+    os.system("git clean -xdf -f")
     os.system("git checkout develop")
     os.system("git branch -D pull" + str(pr_num))
 

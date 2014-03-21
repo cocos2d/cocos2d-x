@@ -11,6 +11,7 @@
 #include "socket.h"
 #include "options.h"
 #include "unix.h"
+#include "luasocket.h"
 #include <sys/un.h> 
 
 /*
@@ -55,6 +56,8 @@ static luaL_Reg serial_methods[] = {
 };
 
 /* our socket creation function */
+/* this is an ad-hoc module that returns a single function 
+ * as such, do not include other functions in this array. */
 static luaL_Reg func[] = {
     {"serial", global_create},
     {NULL,          NULL}
@@ -69,11 +72,14 @@ LUASOCKET_API int luaopen_socket_serial(lua_State *L) {
     auxiliar_newclass(L, "serial{client}", serial_methods);
     /* create class groups */
     auxiliar_add2group(L, "serial{client}", "serial{any}");
-    /* make sure the function ends up in the package table */
+#if LUA_VERSION_NUM > 501 && !defined(LUA_COMPAT_MODULE)
+    lua_pushcfunction(L, global_create);
+    (void) func;
+#else
+    /* set function into socket namespace */
     luaL_openlib(L, "socket", func, 0);
-    /* return the function instead of the 'socket' table */
-    lua_pushstring(L, "serial");
-    lua_gettable(L, -2);
+    lua_pushcfunction(L, global_create);
+#endif
     return 1;
 }
 

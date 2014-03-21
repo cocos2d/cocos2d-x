@@ -22,7 +22,7 @@ enum {
     IO_DONE = 0,        /* operation completed successfully */
     IO_TIMEOUT = -1,    /* operation timed out */
     IO_CLOSED = -2,     /* the connection has been closed */
-	IO_UNKNOWN = -3
+	IO_UNKNOWN = -3     
 };
 
 /* interface to error message function */
