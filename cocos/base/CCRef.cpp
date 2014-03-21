@@ -123,13 +123,4 @@ unsigned int Ref::getReferenceCount() const
     return _referenceCount;
 }
 
-void Ref::setName(std::string& name)
-{
-    _name = name;
-}
-
-std::string& Ref::getName()
-{
-    return _name;
-}
 NS_CC_END

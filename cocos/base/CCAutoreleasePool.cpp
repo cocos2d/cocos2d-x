@@ -43,7 +43,7 @@ AutoreleasePool::AutoreleasePool(const std::string &name)
 , _isClearing(false)
 #endif
 {
-    _checkedObjectArray.reserve(256);
+    _managedObjectArray.reserve(256);
     PoolManager::getInstance()->push(this);
 }
 

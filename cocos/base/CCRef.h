@@ -28,7 +28,6 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 #include "ccConfig.h"
-#include <string>
 NS_CC_BEGIN
 
 /**
