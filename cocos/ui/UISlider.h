@@ -193,9 +193,11 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    virtual bool init() override;
 
 protected:
-    virtual bool init() override;
     virtual void initRenderer() override;
     float getPercentWithBallPos(float location);
     void percentChangedEvent();

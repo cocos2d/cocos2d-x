@@ -190,6 +190,13 @@ public:
     const std::string& getCurrentTitle() const { return _currentTitle; };
     std::string getCurrentTitle() { return _currentTitle; };
     
+CC_CONSTRUCTOR_ACCESS:
+    
+    virtual bool init();
+    virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
+    virtual bool initWithBackgroundSprite(Scale9Sprite* sprite);
+    virtual bool initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize);
+    
 protected:
     /**
      * @js ctor
@@ -200,11 +207,6 @@ protected:
      * @lua NA
      */
     virtual ~ControlButton();
-
-    virtual bool init();
-    virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
-    virtual bool initWithBackgroundSprite(Scale9Sprite* sprite);
-    virtual bool initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize);
 
     bool _isPushed;
     bool _parentInited;

@@ -172,13 +172,15 @@ public:
     // Overrides
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool bOpacityModifyRGB) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    virtual bool init(void);
 
 protected:
     /**
      * @js ctor
      */
     Control();
-    virtual bool init(void);
     /**
      * @js NA
      * @lua NA

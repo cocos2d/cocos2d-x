@@ -163,6 +163,9 @@ public:
 
     virtual void onEnter() override;
 
+CC_CONSTRUCTOR_ACCESS:
+    virtual bool init() override;
+
 protected:
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
@@ -175,7 +178,6 @@ protected:
     virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
     virtual Node * getChildByTag(int tag) override {return Widget::getChildByTag(tag);};
     virtual Widget* getChildByName(const char* name) override {return Widget::getChildByName(name);};
-    virtual bool init() override;
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx);
     void updateBoundaryPages();

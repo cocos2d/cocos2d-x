@@ -158,8 +158,11 @@ public:
     void setTextAreaSize(const Size &size);
     void setTextHorizontalAlignment(TextHAlignment alignment);
     void setTextVerticalAlignment(TextVAlignment alignment);
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
+    
+protected:
     virtual void initRenderer() override;
     void attachWithIMEEvent();
     void detachWithIMEEvent();
