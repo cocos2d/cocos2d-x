@@ -203,8 +203,6 @@ private:
 class CC_DLL Shaky3D : public Grid3DAction
 {
 public:
-    Shaky3D() {}
-    virtual ~Shaky3D() {}
     /** creates the action with a range, shake Z vertices, a grid and duration */
     static Shaky3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
@@ -213,6 +211,9 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Shaky3D() {}
+    virtual ~Shaky3D() {}
+    
     /** initializes the action with a range, shake Z vertices, a grid and duration */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
@@ -228,8 +229,6 @@ private:
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
-    Liquid() {}
-    virtual ~Liquid() {}
     /** creates the action with amplitude, a grid and duration */
     static Liquid* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -244,6 +243,9 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Liquid() {}
+    virtual ~Liquid() {}
+    
     /** initializes the action with amplitude, a grid and duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -260,8 +262,6 @@ private:
 class CC_DLL Waves : public Grid3DAction
 {
 public:
-    Waves() {}
-    virtual ~Waves() {}
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     static Waves* create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
@@ -276,6 +276,9 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Waves() {}
+    virtual ~Waves() {}
+    
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
@@ -294,8 +297,6 @@ private:
 class CC_DLL Twirl : public Grid3DAction
 {
 public:
-    Twirl() {}
-    virtual ~Twirl() {}
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
     static Twirl* create(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
 
@@ -316,6 +317,9 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Twirl() {}
+    virtual ~Twirl() {}
+    
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
     bool initWithDuration(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
 
