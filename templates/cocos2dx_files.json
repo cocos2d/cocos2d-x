@@ -1674,6 +1674,7 @@
         "external/win32-specific/zlib/include/zlib.h", 
         "external/win32-specific/zlib/prebuilt/libzlib.lib", 
         "external/win32-specific/zlib/prebuilt/zlib1.dll", 
+        "licenses/LICENSE_AA-EDT.txt", 
         "licenses/LICENSE_CCBReader.txt", 
         "licenses/LICENSE_CCControlExtension.txt", 
         "licenses/LICENSE_JSON4Lua.txt", 
