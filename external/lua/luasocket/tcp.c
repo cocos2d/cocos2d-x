@@ -12,6 +12,7 @@
 #include "inet.h"
 #include "options.h"
 #include "tcp.h"
+#include "buffer.h"
 
 /*=========================================================================*\
 * Internal function prototypes
@@ -73,6 +74,7 @@ static t_opt optget[] = {
     {"reuseaddr",   opt_get_reuseaddr},
     {"tcp-nodelay", opt_get_tcp_nodelay},
     {"linger",      opt_get_linger},
+    {"error",       opt_get_error},
     {NULL,          NULL}
 };
 
@@ -107,7 +109,11 @@ int tcp_open(lua_State *L)
     auxiliar_add2group(L, "tcp{client}", "tcp{any}");
     auxiliar_add2group(L, "tcp{server}", "tcp{any}");
     /* define library functions */
+#if LUA_VERSION_NUM > 501 && !defined(LUA_COMPAT_MODULE)
+    luaL_setfuncs(L, func, 0);
+#else
     luaL_openlib(L, NULL, func, 0);
+#endif
     return 0;
 }
 
@@ -222,7 +228,6 @@ static int meth_bind(lua_State *L)
     bindhints.ai_socktype = SOCK_STREAM;
     bindhints.ai_family = tcp->family;
     bindhints.ai_flags = AI_PASSIVE;
-    address = strcmp(address, "*")? address: NULL;
     err = inet_trybind(&tcp->sock, address, port, &bindhints);
     if (err) {
         lua_pushnil(L);
@@ -248,7 +253,8 @@ static int meth_connect(lua_State *L)
     /* make sure we try to connect only to the same family */
     connecthints.ai_family = tcp->family;
     timeout_markstart(&tcp->tm);
-    err = inet_tryconnect(&tcp->sock, address, port, &tcp->tm, &connecthints);
+    err = inet_tryconnect(&tcp->sock, &tcp->family, address, port, 
+        &tcp->tm, &connecthints);
     /* have to set the class even if it failed due to non-blocking connects */
     auxiliar_setclass(L, "tcp{client}", 1);
     if (err) {
@@ -388,6 +394,7 @@ static int global_create6(lua_State *L) {
     return tcp_create(L, AF_INET6);
 }
 
+#if 0
 static const char *tryconnect6(const char *remoteaddr, const char *remoteserv,
     struct addrinfo *connecthints, p_tcp tcp) {
     struct addrinfo *iterator = NULL, *resolved = NULL;
@@ -402,8 +409,13 @@ static const char *tryconnect6(const char *remoteaddr, const char *remoteserv,
     /* iterate over all returned addresses trying to connect */
     for (iterator = resolved; iterator; iterator = iterator->ai_next) {
         p_timeout tm = timeout_markstart(&tcp->tm);
-        /* create new socket if one wasn't created by the bind stage */
-        if (tcp->sock == SOCKET_INVALID) {
+        /* create new socket if necessary. if there was no
+         * bind, we need to create one for every new family
+         * that shows up while iterating. if there was a
+         * bind, all families will be the same and we will
+         * not enter this branch. */
+        if (tcp->family != iterator->ai_family) {
+            socket_destroy(&tcp->sock);
             err = socket_strerror(socket_create(&tcp->sock,
                 iterator->ai_family, iterator->ai_socktype,
                 iterator->ai_protocol));
@@ -427,6 +439,7 @@ static const char *tryconnect6(const char *remoteaddr, const char *remoteserv,
     /* here, if err is set, we failed */
     return err;
 }
+#endif
 
 static int global_connect(lua_State *L) {
     const char *remoteaddr = luaL_checkstring(L, 1);
@@ -444,6 +457,7 @@ static int global_connect(lua_State *L) {
     timeout_init(&tcp->tm, -1, -1);
     buffer_init(&tcp->buf, &tcp->io, &tcp->tm);
     tcp->sock = SOCKET_INVALID;
+    tcp->family = PF_UNSPEC;
     /* allow user to pick local address and port */
     memset(&bindhints, 0, sizeof(bindhints));
     bindhints.ai_socktype = SOCK_STREAM;
@@ -463,7 +477,8 @@ static int global_connect(lua_State *L) {
     connecthints.ai_socktype = SOCK_STREAM;
     /* make sure we try to connect only to the same family */
     connecthints.ai_family = bindhints.ai_family;
-    err = tryconnect6(remoteaddr, remoteserv, &connecthints, tcp);
+    err = inet_tryconnect(&tcp->sock, &tcp->family, remoteaddr, remoteserv,
+         &tcp->tm, &connecthints);
     if (err) {
         socket_destroy(&tcp->sock);
         lua_pushnil(L);

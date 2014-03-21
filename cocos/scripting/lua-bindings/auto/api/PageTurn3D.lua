@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PageTurn3D
+-- @extend Grid3DAction
 
 --------------------------------
 -- @function [parent=#PageTurn3D] create 

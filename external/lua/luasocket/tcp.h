@@ -16,7 +16,7 @@
 \*=========================================================================*/
 #include "lua.h"
 
-#include "luasocket_buffer.h"
+#include "buffer.h"
 #include "timeout.h"
 #include "socket.h"
 

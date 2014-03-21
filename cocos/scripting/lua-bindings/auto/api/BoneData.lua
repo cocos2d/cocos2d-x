@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module BoneData
+-- @extend BaseData
 
 --------------------------------
 -- @function [parent=#BoneData] getDisplayData 

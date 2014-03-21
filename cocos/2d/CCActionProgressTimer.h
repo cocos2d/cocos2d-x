@@ -52,13 +52,15 @@ public:
 	virtual ProgressTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     ProgressTo() {}
     virtual ~ProgressTo() {}
+
     /** Initializes with a duration and a percent */
     bool initWithDuration(float duration, float percent);
 
+protected:
     float _to;
     float _from;
 
@@ -83,13 +85,15 @@ public:
 	virtual ProgressFromTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     ProgressFromTo() {}
     virtual ~ProgressFromTo() {}
+
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 
+protected:
     float _to;
     float _from;
 

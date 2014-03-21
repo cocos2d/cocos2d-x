@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module WavesTiles3D
+-- @extend TiledGrid3DAction
 
 --------------------------------
 -- @function [parent=#WavesTiles3D] getAmplitudeRate 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FadeTo
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#FadeTo] create 

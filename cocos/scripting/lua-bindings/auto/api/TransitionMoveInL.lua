@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionMoveInL
+-- @extend TransitionScene,TransitionEaseScene,
 
 --------------------------------
 -- @function [parent=#TransitionMoveInL] action 

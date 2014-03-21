@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleGalaxy
+-- @extend ParticleSystemQuad
 
 --------------------------------
 -- @function [parent=#ParticleGalaxy] create 

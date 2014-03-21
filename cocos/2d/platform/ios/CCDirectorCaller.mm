@@ -34,7 +34,7 @@ static id s_sharedDirectorCaller;
 @interface NSObject(CADisplayLink)
 +(id) displayLinkWithTarget: (id)arg1 selector:(SEL)arg2;
 -(void) addToRunLoop: (id)arg1 forMode: (id)arg2;
--(void) setFrameInterval: (int)interval;
+-(void) setFrameInterval: (NSInteger)interval;
 -(void) invalidate;
 @end
 

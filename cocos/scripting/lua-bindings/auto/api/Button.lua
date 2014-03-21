@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Button
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#Button] getTitleText 

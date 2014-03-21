@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TiledGrid3D
+-- @extend GridBase
 
 --------------------------------
 -- overload function: create(size_table)

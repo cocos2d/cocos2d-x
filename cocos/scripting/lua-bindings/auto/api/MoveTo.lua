@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MoveTo
+-- @extend MoveBy
 
 --------------------------------
 -- @function [parent=#MoveTo] create 

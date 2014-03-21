@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItemLabel
+-- @extend MenuItem
 
 --------------------------------
 -- @function [parent=#MenuItemLabel] getDisabledColor 

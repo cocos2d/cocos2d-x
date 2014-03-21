@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module NodeGrid
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#NodeGrid] setTarget 

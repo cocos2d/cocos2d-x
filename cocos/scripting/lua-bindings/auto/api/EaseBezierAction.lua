@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseBezierAction
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseBezierAction] setBezierParamer 

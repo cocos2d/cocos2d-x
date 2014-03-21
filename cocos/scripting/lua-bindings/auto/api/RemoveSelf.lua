@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module RemoveSelf
+-- @extend ActionInstant
 
 --------------------------------
 -- @function [parent=#RemoveSelf] create 

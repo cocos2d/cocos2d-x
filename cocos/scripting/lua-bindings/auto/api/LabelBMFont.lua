@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LabelBMFont
+-- @extend Node,LabelProtocol,BlendProtocol,
 
 --------------------------------
 -- @function [parent=#LabelBMFont] setLineBreakWithoutSpace 
