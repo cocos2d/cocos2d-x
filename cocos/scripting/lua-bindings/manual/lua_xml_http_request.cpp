@@ -58,7 +58,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
     char * cstr = new char [header.length()+1];
     
     // check for colon.
-    unsigned found_header_field = header.find_first_of(":");
+    size_t found_header_field = header.find_first_of(":");
     
     if (found_header_field != std::string::npos)
     {
@@ -92,7 +92,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
             
             ss << pch;
             val = ss.str();
-            unsigned found_http = val.find("HTTP");
+            size_t found_http = val.find("HTTP");
             
             // Check for HTTP Header to set statusText
             if (found_http != std::string::npos) {
@@ -200,9 +200,9 @@ void LuaMinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, n
         CCLOG("%s completed", response->getHttpRequest()->getTag());
     }
     
-    int statusCode = response->getResponseCode();
+    long statusCode = response->getResponseCode();
     char statusString[64] = {};
-    sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
+    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
     
     if (!response->isSucceed())
     {

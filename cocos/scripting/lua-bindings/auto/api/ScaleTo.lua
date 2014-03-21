@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ScaleTo
+-- @extend ActionInterval
 
 --------------------------------
 -- overload function: create(float, float, float)

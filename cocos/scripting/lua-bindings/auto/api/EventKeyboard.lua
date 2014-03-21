@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EventKeyboard
+-- @extend Event
 
 --------------------------------
 -- @function [parent=#EventKeyboard] EventKeyboard 

@@ -35,6 +35,7 @@
 #include <io.h>
 #include <WS2tcpip.h>
 #endif
+#include "base64.h"
 
 //------------------------------------------------------------------
 //
@@ -179,7 +180,7 @@ std::string ConsoleCustomCommand::subtitle() const
 
 ConsoleUploadFile::ConsoleUploadFile()
 {
-    srand (time(NULL));
+    srand ((unsigned)time(NULL));
     int _id = rand()%100000;
     char buf[32];
     sprintf(buf, "%d", _id);
@@ -261,51 +262,45 @@ void ConsoleUploadFile::uploadFile()
         CCLOG("ConsoleUploadFile: could not open file %s", _src_file_path.c_str());
         return;
     }
-
-    //read file size
-    fseek(fp, 0, SEEK_END);
-    int size = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-    char sb[32];
-    sprintf(sb, "%d", size);
+    
     std::string tmp = "upload";
 
     tmp += " ";
     tmp += _target_file_name;
     tmp += " ";
-    tmp += sb;
-    tmp += "\n";
     char cmd[512];
 
     strcpy(cmd, tmp.c_str());
     send(sfd,cmd,strlen(cmd),0);
-
-    // allocate memory to contain the whole file:
-    char* buffer = (char*) malloc (sizeof(char)*size);
-    if (buffer == NULL) 
+    while(true)
     {
-        CCLOG("ConsoleUploadFile: memory allocate error!");
-        return;
+        char buffer[3], *out;
+        unsigned char *in;
+        in = (unsigned char *)buffer;
+        // copy the file into the buffer:
+        size_t ret = fread(buffer, 1, 3, fp);
+        if (ret > 0)
+        {
+            base64Encode(in, (unsigned int)ret, &out);
+            send(sfd, out, 4, 0);
+            free(out);
+            if(ret < 3)
+            {
+                //eof
+                break;
+            }
+        }
+        else
+        {
+            //read error
+            break;
+        }
     }
-
-    // copy the file into the buffer:
-    int ret = fread(buffer, 1, size, fp);
-    if (ret != size)
-    {
-        CCLOG("ConsoleUploadFile: read file: %s error!",_src_file_path.c_str());
-        return;
-    }
-
-    //send to console socket
-    for(int i = 0; i < size; i++)
-    {
-        send(sfd, &buffer[i], 1, 0);
-    }
-
+    char l = '\n';
+    send(sfd, &l, 1, 0);
     // terminate
     fclose (fp);
-    free (buffer);
-    
+   
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         closesocket(sfd);
         WSACleanup();

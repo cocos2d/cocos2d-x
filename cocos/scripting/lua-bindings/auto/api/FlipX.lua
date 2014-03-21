@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FlipX
+-- @extend ActionInstant
 
 --------------------------------
 -- @function [parent=#FlipX] create 

@@ -428,7 +428,7 @@ public:
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
 
     Sprite(void);
     virtual ~Sprite(void);
@@ -519,6 +519,8 @@ protected:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
+
+protected:
 
     void updateColor(void);
     virtual void setTextureCoords(Rect rect);

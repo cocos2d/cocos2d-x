@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FadeOutBLTiles
+-- @extend FadeOutTRTiles
 
 --------------------------------
 -- @function [parent=#FadeOutBLTiles] create 

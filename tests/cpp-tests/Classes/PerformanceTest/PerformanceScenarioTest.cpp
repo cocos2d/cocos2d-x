@@ -266,12 +266,12 @@ void ScenarioTest::addNewSprites(int num)
 
 void ScenarioTest::removeSprites()
 {
-    int number = _spriteArray.size();
+    ssize_t number = _spriteArray.size();
     if (number <= 0) {
         return;
     }
 
-    int removeNum = MIN(number, _spriteStepNum);
+    ssize_t removeNum = MIN(number, _spriteStepNum);
     for (int i = 0; i < removeNum; ++i) {
         auto sprite = _spriteArray.getRandomObject();
         removeChild(sprite);
@@ -324,12 +324,12 @@ void ScenarioTest::addParticleSystem(int num)
 
 void ScenarioTest::removeParticleSystem()
 {
-    int number = _parsysArray.size();
+    ssize_t number = _parsysArray.size();
     if (number <= 0) {
         return;
     }
     
-    int removeNum = MIN(number, _parsysStepNum);
+    ssize_t removeNum = MIN(number, _parsysStepNum);
     for (int i = 0; i < removeNum; ++i) {
         auto par = _parsysArray.getRandomObject();
         removeChild(par);

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ShuffleTiles
+-- @extend TiledGrid3DAction
 
 --------------------------------
 -- @function [parent=#ShuffleTiles] placeTile 

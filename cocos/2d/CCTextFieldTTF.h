@@ -64,7 +64,7 @@ public:
     /**
     @brief    If the sender doesn't want to insert the text, return true;
     */
-    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, int nLen)
+    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, size_t nLen)
     {
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(text);
@@ -75,7 +75,7 @@ public:
     /**
     @brief    If the sender doesn't want to delete the delText, return true;
     */
-    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, int nLen)
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen)
     {
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(delText);
@@ -181,7 +181,7 @@ protected:
 
     virtual bool canAttachWithIME() override;
     virtual bool canDetachWithIME() override;
-    virtual void insertText(const char * text, int len) override;
+    virtual void insertText(const char * text, size_t len) override;
     virtual void deleteBackward() override;
     virtual const std::string& getContentText() override;
 private:

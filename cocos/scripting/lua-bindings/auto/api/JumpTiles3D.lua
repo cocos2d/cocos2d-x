@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module JumpTiles3D
+-- @extend TiledGrid3DAction
 
 --------------------------------
 -- @function [parent=#JumpTiles3D] getAmplitudeRate 

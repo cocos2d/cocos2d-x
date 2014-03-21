@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LoadingBar
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#LoadingBar] setPercent 

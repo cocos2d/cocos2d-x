@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleSmoke
+-- @extend ParticleSystemQuad
 
 --------------------------------
 -- @function [parent=#ParticleSmoke] create 

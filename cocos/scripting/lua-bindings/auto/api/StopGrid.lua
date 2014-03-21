@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module StopGrid
+-- @extend ActionInstant
 
 --------------------------------
 -- @function [parent=#StopGrid] create 

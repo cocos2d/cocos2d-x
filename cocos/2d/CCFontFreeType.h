@@ -48,12 +48,12 @@ public:
 
     bool     isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
     int      getOutlineSize() const { return _outlineSize; }
-    void     renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,int bitmapWidth,int bitmapHeight); 
+    void     renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
 
     virtual FontAtlas   * createFontAtlas() override;
     virtual int         * getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
     
-    unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight, Rect &outRect,int &xAdvance);
+    unsigned char       * getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     
     virtual int           getFontMaxHeight() const override;  
     virtual int           getFontAscender() const;

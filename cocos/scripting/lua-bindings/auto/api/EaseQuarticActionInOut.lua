@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseQuarticActionInOut
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseQuarticActionInOut] create 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlSaturationBrightnessPicker
+-- @extend Control
 
 --------------------------------
 -- @function [parent=#ControlSaturationBrightnessPicker] getShadow 

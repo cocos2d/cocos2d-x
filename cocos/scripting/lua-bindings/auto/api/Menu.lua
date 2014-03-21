@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Menu
+-- @extend Layer
 
 --------------------------------
 -- @function [parent=#Menu] setEnabled 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseBackOut
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseBackOut] create 
