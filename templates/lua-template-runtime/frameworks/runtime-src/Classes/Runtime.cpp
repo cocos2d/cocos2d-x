@@ -382,6 +382,7 @@ bool FileServer::recv_file(int fd)
     char fullfilename[1024]={0};
 	sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),buffer);
     string file(fullfilename);
+	file=replaceAll(file,"\\","/");
 	sprintf(fullfilename, "%s", file.c_str());
 	cocos2d::log("recv fullfilename = %s",fullfilename);
     CreateDir(file.substr(0,file.find_last_of("/")).c_str());
