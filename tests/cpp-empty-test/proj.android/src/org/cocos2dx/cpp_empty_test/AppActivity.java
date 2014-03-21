@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2011-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -22,40 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "IMEJni.h"
-#include "CCIMEDispatcher.h"
-#include "JniHelper.h"
+package org.cocos2dx.cpp_empty_test;
 
-#include <android/log.h>
-#include <string.h>
-#include <jni.h>
+import org.cocos2dx.lib.Cocos2dxActivity;
 
-using namespace cocos2d;
-
-extern "C" {
-    void setKeyboardStateJNI(int bOpen) {
-        if (bOpen) {
-            openKeyboardJNI();
-        } else {
-            closeKeyboardJNI();
-        }
-    }
-
-    void openKeyboardJNI() {
-        JniMethodInfo t;
-
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "openIMEKeyboard", "()V")) {
-            t.env->CallStaticVoidMethod(t.classID, t.methodID);
-            t.env->DeleteLocalRef(t.classID);
-        }
-    }
-
-    void closeKeyboardJNI() {
-        JniMethodInfo t;
-
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "closeIMEKeyboard", "()V")) {
-            t.env->CallStaticVoidMethod(t.classID, t.methodID);
-            t.env->DeleteLocalRef(t.classID);
-        }
-    }
+public class AppActivity extends Cocos2dxActivity {
 }
