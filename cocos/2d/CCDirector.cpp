@@ -1027,6 +1027,9 @@ void DisplayLinkDirector::startAnimation()
     _invalid = false;
 
     Application::getInstance()->setAnimationInterval(_animationInterval);
+    
+    // fix issue #3509, skip one fps to avoid incorrect time calculation.
+    setNextDeltaTimeZero(true);
 }
 
 void DisplayLinkDirector::mainLoop()
