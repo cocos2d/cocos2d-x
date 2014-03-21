@@ -41,16 +41,15 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           ../../../external/lua/tolua/tolua_push.c \
           ../../../external/lua/tolua/tolua_to.c \
           ../../../external/lua/luasocket/auxiliar.c \
-          ../../../external/lua/luasocket/luasocket_buffer.c \
+          ../../../external/lua/luasocket/buffer.c \
           ../../../external/lua/luasocket/except.c \
           ../../../external/lua/luasocket/inet.c \
-          ../../../external/lua/luasocket/luasocket_io.c \
+          ../../../external/lua/luasocket/io.c \
           ../../../external/lua/luasocket/luasocket.c \
           ../../../external/lua/luasocket/mime.c \
           ../../../external/lua/luasocket/options.c \
           ../../../external/lua/luasocket/select.c \
           ../../../external/lua/luasocket/serial.c \
-          ../../../external/lua/luasocket/socket_scripts.c \
           ../../../external/lua/luasocket/tcp.c \
           ../../../external/lua/luasocket/timeout.c \
           ../../../external/lua/luasocket/udp.c \

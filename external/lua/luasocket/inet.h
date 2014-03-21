@@ -19,13 +19,13 @@
 #include "timeout.h"
 
 #ifdef _WIN32
-#define INET_ATON
+#define LUASOCKET_INET_ATON
 #endif
 
 int inet_open(lua_State *L);
 
 const char *inet_trycreate(p_socket ps, int family, int type);
-const char *inet_tryconnect(p_socket ps, const char *address,
+const char *inet_tryconnect(p_socket ps, int *family, const char *address,
         const char *serv, p_timeout tm, struct addrinfo *connecthints);
 const char *inet_trybind(p_socket ps, const char *address, const char *serv,
         struct addrinfo *bindhints);
@@ -38,19 +38,13 @@ int inet_meth_getsockname(lua_State *L, p_socket ps, int family);
 int inet_optfamily(lua_State* L, int narg, const char* def);
 int inet_optsocktype(lua_State* L, int narg, const char* def);
 
-#ifdef INET_ATON
+#ifdef LUASOCKET_INET_ATON
 int inet_aton(const char *cp, struct in_addr *inp);
 #endif
 
-#ifndef _WINDOWS_
-#define my_inet_ntop(a,b,c,d) inet_ntop(a,b,c,d)
-#define my_inet_pton(a,b,c) inet_pton(a,b,c)
-#else
-int win32xp_inet_pton(int family, const char* string, PVOID dest);
-char* win32xp_inet_ntop(int family, PVOID src, char* dest, size_t length);
-#define my_inet_ntop(a,b,c,d) win32xp_inet_ntop(a,b,c,d)
-#define my_inet_pton(a,b,c) win32xp_inet_pton(a,b,c)
+#ifdef LUASOCKET_INET_PTON
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t cnt);
+int inet_pton(int af, const char *src, void *dst);
 #endif
-
 
 #endif /* INET_H */

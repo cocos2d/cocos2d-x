@@ -243,14 +243,14 @@ static void tolua_reg_script_handler_mgr_type(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S, "ScheduleHandlerDelegate");
     tolua_usertype(tolua_S, "ScriptHandlerMgr");
-}
+} 
 
 /* method: getInstance of class  ScriptHandlerMgr */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_ScriptHandlerMgr_getInstance00
 static int tolua_Cocos2d_ScriptHandlerMgr_getInstance00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
+    tolua_Error tolua_err; 
     if (!tolua_isusertable(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err) )
         goto tolua_lerror;

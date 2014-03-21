@@ -3,6 +3,7 @@
 * LuaSocket toolkit
 \*=========================================================================*/
 #include <string.h>
+#include <stdlib.h>
 
 #include "lua.h"
 #include "lauxlib.h"
@@ -68,24 +69,34 @@ static luaL_Reg udp_methods[] = {
 
 /* socket options for setoption */
 static t_opt optset[] = {
-    {"dontroute",          opt_set_dontroute},
-    {"broadcast",          opt_set_broadcast},
-    {"reuseaddr",          opt_set_reuseaddr},
-    {"reuseport",          opt_set_reuseport},
-    {"ip-multicast-if",    opt_set_ip_multicast_if},
-    {"ip-multicast-ttl",   opt_set_ip_multicast_ttl},
-    {"ip-multicast-loop",  opt_set_ip_multicast_loop},
-    {"ip-add-membership",  opt_set_ip_add_membership},
-    {"ip-drop-membership", opt_set_ip_drop_membersip},
-    {"ipv6-v6only",        opt_set_ip6_v6only},
-    {NULL,                 NULL}
+    {"dontroute",            opt_set_dontroute},
+    {"broadcast",            opt_set_broadcast},
+    {"reuseaddr",            opt_set_reuseaddr},
+    {"reuseport",            opt_set_reuseport},
+    {"ip-multicast-if",      opt_set_ip_multicast_if},
+    {"ip-multicast-ttl",     opt_set_ip_multicast_ttl},
+    {"ip-multicast-loop",    opt_set_ip_multicast_loop},
+    {"ip-add-membership",    opt_set_ip_add_membership},
+    {"ip-drop-membership",   opt_set_ip_drop_membersip},
+    {"ipv6-unicast-hops",    opt_set_ip6_unicast_hops},
+    {"ipv6-multicast-hops",  opt_set_ip6_unicast_hops},
+    {"ipv6-multicast-loop",  opt_set_ip6_multicast_loop},
+    {"ipv6-add-membership",  opt_set_ip6_add_membership},
+    {"ipv6-drop-membership", opt_set_ip6_drop_membersip},
+    {"ipv6-v6only",          opt_set_ip6_v6only},
+    {NULL,                   NULL}
 };
 
 /* socket options for getoption */
 static t_opt optget[] = {
-    {"ip-multicast-if",    opt_get_ip_multicast_if},
-    {"ip-multicast-loop",  opt_get_ip_multicast_loop},
-    {NULL,                 NULL}
+    {"ip-multicast-if",      opt_get_ip_multicast_if},
+    {"ip-multicast-loop",    opt_get_ip_multicast_loop},
+    {"error",                opt_get_error},
+    {"ipv6-unicast-hops",    opt_get_ip6_unicast_hops},
+    {"ipv6-multicast-hops",  opt_get_ip6_unicast_hops},
+    {"ipv6-multicast-loop",  opt_get_ip6_multicast_loop},
+    {"ipv6-v6only",          opt_get_ip6_v6only},
+    {NULL,                   NULL}
 };
 
 /* functions in library namespace */
@@ -109,7 +120,11 @@ int udp_open(lua_State *L)
     auxiliar_add2group(L, "udp{connected}",   "select{able}");
     auxiliar_add2group(L, "udp{unconnected}", "select{able}");
     /* define library functions */
+#if LUA_VERSION_NUM > 501 && !defined(LUA_COMPAT_MODULE)
+    luaL_setfuncs(L, func, 0);
+#else
     luaL_openlib(L, NULL, func, 0);
+#endif
     return 0;
 }
 
@@ -151,39 +166,25 @@ static int meth_sendto(lua_State *L) {
     size_t count, sent = 0;
     const char *data = luaL_checklstring(L, 2, &count);
     const char *ip = luaL_checkstring(L, 3);
-    unsigned short port = (unsigned short) luaL_checknumber(L, 4);
+    const char *port = luaL_checkstring(L, 4);
     p_timeout tm = &udp->tm;
     int err;
-    switch (udp->family) {
-	case PF_INET: {
-	    struct sockaddr_in addr;
-	    memset(&addr, 0, sizeof(addr));
-	    if (!my_inet_pton(AF_INET, ip, &addr.sin_addr))
-		luaL_argerror(L, 3, "invalid ip address");
-	    addr.sin_family = AF_INET;
-	    addr.sin_port = htons(port);
-	    timeout_markstart(tm);
-	    err = socket_sendto(&udp->sock, data, count, &sent,
-		    (SA *) &addr, sizeof(addr), tm);
-	    break;
-	}
-	case PF_INET6: {
-	    struct sockaddr_in6 addr;
-	    memset(&addr, 0, sizeof(addr));
-	    if (!my_inet_pton(AF_INET6, ip, &addr.sin6_addr))
-		luaL_argerror(L, 3, "invalid ip address");
-	    addr.sin6_family = AF_INET6;
-	    addr.sin6_port = htons(port);
-	    timeout_markstart(tm);
-	    err = socket_sendto(&udp->sock, data, count, &sent,
-		    (SA *) &addr, sizeof(addr), tm);
-	    break;
-	}
-	default:
-            lua_pushnil(L);
-            lua_pushfstring(L, "unknown family %d", udp->family);
-            return 2;
+    struct addrinfo aihint;
+    struct addrinfo *ai;
+    memset(&aihint, 0, sizeof(aihint));
+    aihint.ai_family = udp->family;
+    aihint.ai_socktype = SOCK_DGRAM;
+    aihint.ai_flags = AI_NUMERICHOST | AI_NUMERICSERV;
+    err = getaddrinfo(ip, port, &aihint, &ai);
+	if (err) {
+        lua_pushnil(L);
+        lua_pushstring(L, gai_strerror(err));
+        return 2;
     }
+    timeout_markstart(tm);
+    err = socket_sendto(&udp->sock, data, count, &sent, ai->ai_addr, 
+        (socklen_t) ai->ai_addrlen, tm);
+    freeaddrinfo(ai);
     if (err != IO_DONE) {
         lua_pushnil(L);
         lua_pushstring(L, udp_strerror(err));
@@ -220,69 +221,40 @@ static int meth_receive(lua_State *L) {
 /*-------------------------------------------------------------------------*\
 * Receives data and sender from a UDP socket
 \*-------------------------------------------------------------------------*/
-static int meth_receivefrom(lua_State *L) {
+static int meth_receivefrom(lua_State *L)
+{
     p_udp udp = (p_udp) auxiliar_checkclass(L, "udp{unconnected}", 1);
     char buffer[UDP_DATAGRAMSIZE];
     size_t got, count = (size_t) luaL_optnumber(L, 2, sizeof(buffer));
     int err;
     p_timeout tm = &udp->tm;
+    struct sockaddr_storage addr;
+    socklen_t addr_len = sizeof(addr);
+    char addrstr[INET6_ADDRSTRLEN];
+    char portstr[6];
     timeout_markstart(tm);
     count = MIN(count, sizeof(buffer));
-    switch (udp->family) {
-	case PF_INET: {
-	    struct sockaddr_in addr;
-	    socklen_t addr_len = sizeof(addr);
-	    err = socket_recvfrom(&udp->sock, buffer, count, &got,
-		    (SA *) &addr, &addr_len, tm);
-	    /* Unlike TCP, recv() of zero is not closed, but a zero-length packet. */
-	    if (err == IO_CLOSED)
-		err = IO_DONE;
-	    if (err == IO_DONE) {
-		char addrstr[INET_ADDRSTRLEN];
-		lua_pushlstring(L, buffer, got);
-		if (!my_inet_ntop(AF_INET, &addr.sin_addr,
-			addrstr, sizeof(addrstr))) {
-		    lua_pushnil(L);
-		    lua_pushstring(L, "invalid source address");
-		    return 2;
-		}
-		lua_pushstring(L, addrstr);
-		lua_pushnumber(L, ntohs(addr.sin_port));
-		return 3;
-	    }
-	    break;
-	}
-	case PF_INET6: {
-	    struct sockaddr_in6 addr;
-	    socklen_t addr_len = sizeof(addr);
-	    err = socket_recvfrom(&udp->sock, buffer, count, &got,
-		    (SA *) &addr, &addr_len, tm);
-	    /* Unlike TCP, recv() of zero is not closed, but a zero-length packet. */
-	    if (err == IO_CLOSED)
-		err = IO_DONE;
-	    if (err == IO_DONE) {
-		char addrstr[INET6_ADDRSTRLEN];
-		lua_pushlstring(L, buffer, got);
-		if (!my_inet_ntop(AF_INET6, &addr.sin6_addr,
-			addrstr, sizeof(addrstr))) {
-		    lua_pushnil(L);
-		    lua_pushstring(L, "invalid source address");
-		    return 2;
-		}
-		lua_pushstring(L, addrstr);
-		lua_pushnumber(L, ntohs(addr.sin6_port));
-		return 3;
-	    }
-	    break;
-	}
-    default:
+    err = socket_recvfrom(&udp->sock, buffer, count, &got, (SA *) &addr, 
+            &addr_len, tm);
+    /* Unlike TCP, recv() of zero is not closed, but a zero-length packet. */
+    if (err == IO_CLOSED)
+        err = IO_DONE;
+    if (err != IO_DONE) {
         lua_pushnil(L);
-        lua_pushfstring(L, "unknown family %d", udp->family);
+        lua_pushstring(L, udp_strerror(err));
         return 2;
     }
-    lua_pushnil(L);
-    lua_pushstring(L, udp_strerror(err));
-    return 2;
+    err = getnameinfo((struct sockaddr *)&addr, addr_len, addrstr, 
+        INET6_ADDRSTRLEN, portstr, 6, NI_NUMERICHOST | NI_NUMERICSERV);
+	if (err) {
+        lua_pushnil(L);
+        lua_pushstring(L, gai_strerror(err));
+        return 2;
+    }
+    lua_pushlstring(L, buffer, got);
+    lua_pushstring(L, addrstr);
+    lua_pushinteger(L, (int) strtol(portstr, (char **) NULL, 10));
+    return 3;
 }
 
 /*-------------------------------------------------------------------------*\
@@ -376,7 +348,8 @@ static int meth_setpeername(lua_State *L) {
     /* make sure we try to connect only to the same family */
     connecthints.ai_family = udp->family;
     if (connecting) {
-        err = inet_tryconnect(&udp->sock, address, port, tm, &connecthints);
+        err = inet_tryconnect(&udp->sock, &udp->family, address, 
+            port, tm, &connecthints);
         if (err) {
             lua_pushnil(L);
             lua_pushstring(L, err);
@@ -412,7 +385,7 @@ static int meth_setsockname(lua_State *L) {
     const char *address =  luaL_checkstring(L, 2);
     const char *port = luaL_checkstring(L, 3);
     const char *err;
-	struct addrinfo bindhints;
+    struct addrinfo bindhints;
     memset(&bindhints, 0, sizeof(bindhints));
     bindhints.ai_socktype = SOCK_DGRAM;
     bindhints.ai_family = udp->family;
@@ -460,9 +433,9 @@ static int udp_create(lua_State *L, int family) {
 }
 
 static int global_create(lua_State *L) {
-	return udp_create(L, AF_INET);
+    return udp_create(L, AF_INET);
 }
 
 static int global_create6(lua_State *L) {
-	return udp_create(L, AF_INET6);
+    return udp_create(L, AF_INET6);
 }
