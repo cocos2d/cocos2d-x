@@ -31194,9 +31194,9 @@ int lua_cocos2dx_Label_enableShadow(lua_State* tolua_S)
     }
     if (argc == 1) 
     {
-        cocos2d::Color3B arg0;
+        cocos2d::Color4B arg0;
 
-        ok &= luaval_to_color3b(tolua_S, 2, &arg0);
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->enableShadow(arg0);
@@ -31204,10 +31204,10 @@ int lua_cocos2dx_Label_enableShadow(lua_State* tolua_S)
     }
     if (argc == 2) 
     {
-        cocos2d::Color3B arg0;
+        cocos2d::Color4B arg0;
         cocos2d::Size arg1;
 
-        ok &= luaval_to_color3b(tolua_S, 2, &arg0);
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
 
         ok &= luaval_to_size(tolua_S, 3, &arg1);
         if(!ok)
@@ -31217,37 +31217,18 @@ int lua_cocos2dx_Label_enableShadow(lua_State* tolua_S)
     }
     if (argc == 3) 
     {
-        cocos2d::Color3B arg0;
+        cocos2d::Color4B arg0;
         cocos2d::Size arg1;
-        double arg2;
+        int arg2;
 
-        ok &= luaval_to_color3b(tolua_S, 2, &arg0);
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
 
         ok &= luaval_to_size(tolua_S, 3, &arg1);
 
-        ok &= luaval_to_number(tolua_S, 4,&arg2);
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
         if(!ok)
             return 0;
         cobj->enableShadow(arg0, arg1, arg2);
-        return 0;
-    }
-    if (argc == 4) 
-    {
-        cocos2d::Color3B arg0;
-        cocos2d::Size arg1;
-        double arg2;
-        int arg3;
-
-        ok &= luaval_to_color3b(tolua_S, 2, &arg0);
-
-        ok &= luaval_to_size(tolua_S, 3, &arg1);
-
-        ok &= luaval_to_number(tolua_S, 4,&arg2);
-
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
-        if(!ok)
-            return 0;
-        cobj->enableShadow(arg0, arg1, arg2, arg3);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "enableShadow",argc, 0);
@@ -31436,6 +31417,50 @@ int lua_cocos2dx_Label_disableEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_disableEffect'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Label_getTextColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getTextColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const cocos2d::Color4B& ret = cobj->getTextColor();
+        color4b_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTextColor",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_getTextColor'.",&tolua_err);
 #endif
 
     return 0;
@@ -32456,6 +32481,52 @@ int lua_cocos2dx_Label_getVerticalAlignment(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_setTextColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_setTextColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4B arg0;
+
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
+        if(!ok)
+            return 0;
+        cobj->setTextColor(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTextColor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_setTextColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_setHeight(lua_State* tolua_S)
 {
     int argc = 0;
@@ -32574,9 +32645,9 @@ int lua_cocos2dx_Label_enableGlow(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Color3B arg0;
+        cocos2d::Color4B arg0;
 
-        ok &= luaval_to_color3b(tolua_S, 2, &arg0);
+        ok &=luaval_to_color4b(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->enableGlow(arg0);
@@ -33216,6 +33287,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"getFontSize",lua_cocos2dx_Label_getFontSize);
         tolua_function(tolua_S,"getString",lua_cocos2dx_Label_getString);
         tolua_function(tolua_S,"disableEffect",lua_cocos2dx_Label_disableEffect);
+        tolua_function(tolua_S,"getTextColor",lua_cocos2dx_Label_getTextColor);
         tolua_function(tolua_S,"getCommonLineHeight",lua_cocos2dx_Label_getCommonLineHeight);
         tolua_function(tolua_S,"setWidth",lua_cocos2dx_Label_setWidth);
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_Label_setFontName);
@@ -33237,6 +33309,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"setVerticalAlignment",lua_cocos2dx_Label_setVerticalAlignment);
         tolua_function(tolua_S,"setFontSize",lua_cocos2dx_Label_setFontSize);
         tolua_function(tolua_S,"getVerticalAlignment",lua_cocos2dx_Label_getVerticalAlignment);
+        tolua_function(tolua_S,"setTextColor",lua_cocos2dx_Label_setTextColor);
         tolua_function(tolua_S,"setHeight",lua_cocos2dx_Label_setHeight);
         tolua_function(tolua_S,"getWidth",lua_cocos2dx_Label_getWidth);
         tolua_function(tolua_S,"enableGlow",lua_cocos2dx_Label_enableGlow);
