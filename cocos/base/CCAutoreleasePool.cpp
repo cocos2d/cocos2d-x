@@ -43,7 +43,7 @@ AutoreleasePool::AutoreleasePool(const std::string &name)
 , _isClearing(false)
 #endif
 {
-    _managedObjectArray.reserve(150);
+    _checkedObjectArray.reserve(256);
     PoolManager::getInstance()->push(this);
 }
 
@@ -124,6 +124,7 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
+    _trackedObjectPool.reserve(150);
 }
 
 PoolManager::~PoolManager()
@@ -173,6 +174,21 @@ void PoolManager::pop()
     {
         _curReleasePool = _releasePoolStack.back();
     }
+}
+
+void PoolManager::track(Ref* obj)
+{
+    _trackedObjectPool.insert(obj);
+}
+
+void PoolManager::untrack(Ref* obj)
+{
+    _trackedObjectPool.erase(obj);
+}
+
+size_t PoolManager::getTrackedPoolSize()
+{
+    return _trackedObjectPool.size();
 }
 
 NS_CC_END

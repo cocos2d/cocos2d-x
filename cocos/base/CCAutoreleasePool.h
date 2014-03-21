@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <stack>
 #include <vector>
 #include <string>
+#include <unordered_set>
 #include "CCRef.h"
 
 NS_CC_BEGIN
@@ -101,7 +102,7 @@ public:
      *
      */
     void dump();
-    
+
 private:
     /**
      * The underlying array of object managed by the pool.
@@ -113,6 +114,7 @@ private:
      * is in the pool.
      */
     std::vector<Ref*> _managedObjectArray;
+
     std::string _name;
     
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
@@ -148,6 +150,21 @@ public:
 
     bool isObjectInPools(Ref* obj) const;
 
+/**
+     * Add object into tracking pool, this pool is used to detect memory leak 
+     */
+    void track(Ref* object);
+
+/**
+    * Remove object from tracking pool
+    */
+    void untrack(Ref* object);
+
+/**
+    * return the count of objects in the tracking pool
+    */
+    size_t getTrackedPoolSize();
+
     /**
      * @js NA
      * @lua NA
@@ -165,6 +182,8 @@ private:
     
     std::deque<AutoreleasePool*> _releasePoolStack;
     AutoreleasePool *_curReleasePool;
+
+    std::unordered_set<Ref*> _trackedObjectPool;
 };
 
 // end of base_nodes group

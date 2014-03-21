@@ -38,6 +38,7 @@ Ref::Ref()
     _luaID = 0;
     _ID = ++uObjectCount;
 #endif
+    PoolManager::getInstance()->track(this);
 }
 
 Ref::~Ref()
@@ -106,6 +107,7 @@ void Ref::release()
             CCASSERT(false, "The reference shouldn't be 0 because it is still in autorelease pool.");
         }
 #endif
+        PoolManager::getInstance()->untrack(this);
         delete this;
     }
 }
@@ -121,4 +123,13 @@ unsigned int Ref::getReferenceCount() const
     return _referenceCount;
 }
 
+void Ref::setName(std::string& name)
+{
+    _name = name;
+}
+
+std::string& Ref::getName()
+{
+    return _name;
+}
 NS_CC_END
