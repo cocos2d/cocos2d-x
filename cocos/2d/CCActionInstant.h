@@ -146,13 +146,13 @@ public:
 	virtual RemoveSelf* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    RemoveSelf() : _isNeedCleanUp(true){}
+    virtual ~RemoveSelf(){}
+
 	/** init the action */
 	bool init(bool isNeedCleanUp);
 
 protected:
-    RemoveSelf() : _isNeedCleanUp(true){}
-    virtual ~RemoveSelf(){}
-
 	bool _isNeedCleanUp;
 
 private:
@@ -177,13 +177,13 @@ public:
 	virtual FlipX* clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    FlipX() :_flipX(false) {}
+    virtual ~FlipX() {}
+
     /** init the action */
     bool initWithFlipX(bool x);
 
 protected:
-    FlipX() :_flipX(false) {}
-    virtual ~FlipX() {}
-
     bool    _flipX;
 
 private:
@@ -208,13 +208,13 @@ public:
 	virtual FlipY* clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    FlipY() :_flipY(false) {}
+    virtual ~FlipY() {}
+
     /** init the action */
     bool initWithFlipY(bool y);
 
 protected:
-    FlipY() :_flipY(false) {}
-    virtual ~FlipY() {}
-
     bool    _flipY;
 
 private:
@@ -238,13 +238,13 @@ public:
 	virtual Place* clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Place(){}
+    virtual ~Place(){}
+
     /** Initializes a Place action with a position */
     bool initWithPosition(const Point& pos);
 
 protected:
-    Place(){}
-    virtual ~Place(){}
-
     Point _position;
 
 private:
@@ -300,6 +300,14 @@ public:
 	virtual CallFunc* clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    CallFunc()
+    : _selectorTarget(nullptr)
+    , _callFunc(nullptr)
+    , _function(nullptr)
+    {
+    }
+    virtual ~CallFunc();
+
 	/** initializes the action with the callback
      typedef void (Ref::*SEL_CallFunc)();
      @deprecated Use the std::function API instead.
@@ -313,14 +321,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithFunction(const std::function<void()>& func);
 
 protected:
-    CallFunc()
-    : _selectorTarget(nullptr)
-    , _callFunc(nullptr)
-    , _function(nullptr)
-    {
-    }
-    virtual ~CallFunc();
-
     /** Target that will be called */
     Ref*   _selectorTarget;
 
@@ -363,6 +363,9 @@ public:
     virtual void execute() override;
     
 CC_CONSTRUCTOR_ACCESS:
+    CallFuncN():_functionN(nullptr){}
+    virtual ~CallFuncN(){}
+
     /** initializes the action with the std::function<void(Node*)> */
     bool initWithFunction(const std::function<void(Node*)>& func);
     
@@ -374,9 +377,6 @@ CC_CONSTRUCTOR_ACCESS:
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
 protected:
-    CallFuncN():_functionN(nullptr){}
-    virtual ~CallFuncN(){}
-
     /** function that will be called with the "sender" as the 1st argument */
     std::function<void(Node*)> _functionN;
 

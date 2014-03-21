@@ -163,12 +163,12 @@ public:
     virtual std::string getDescription() const override;
 
 CC_CONSTRUCTOR_ACCESS:
-    virtual bool init() override;
-
-protected:
     Layer();
     virtual ~Layer();
 
+    virtual bool init() override;
+
+protected:
     //add the api for avoid use deprecated api
     void _addTouchListener();
 
@@ -288,13 +288,14 @@ public:
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    LayerColor();
+    virtual ~LayerColor();
+    
     bool init();
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     bool initWithColor(const Color4B& color);
 
 protected:
-    LayerColor();
-    virtual ~LayerColor();
     void onDraw(const kmMat4& transform, bool transformUpdated);
 
     virtual void updateColor() override;
@@ -455,6 +456,15 @@ public:
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js ctor
+     */
+    LayerMultiplex();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~LayerMultiplex();
     
     virtual bool init();
     /** initializes a MultiplexLayer with one or more layers using a variable argument list.
@@ -469,17 +479,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithArray(const Vector<Layer*>& arrayOfLayers);
 
 protected:
-    
-    /**
-     * @js ctor
-     */
-    LayerMultiplex();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerMultiplex();
-    
     unsigned int _enabledLayer;
     Vector<Layer*>    _layers;
 

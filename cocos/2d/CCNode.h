@@ -1339,13 +1339,13 @@ public:
     virtual bool isOpacityModifyRGB() const { return false; };
     
 CC_CONSTRUCTOR_ACCESS:
-    virtual bool init();
-
-protected:
     // Nodes should be created using create();
     Node();
     virtual ~Node();
 
+    virtual bool init();
+
+protected:
     /// lazy allocs
     void childrenAlloc(void);
     

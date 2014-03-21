@@ -430,6 +430,9 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
 
+    Sprite(void);
+    virtual ~Sprite(void);
+
     /* Initializes an empty sprite with nothing init. */
     virtual bool init(void);
 
@@ -518,9 +521,6 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
 
 protected:
-
-    Sprite(void);
-    virtual ~Sprite(void);
 
     void updateColor(void);
     virtual void setTextureCoords(Rect rect);

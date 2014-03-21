@@ -54,13 +54,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    ProgressTo() {}
+    virtual ~ProgressTo() {}
+
     /** Initializes with a duration and a percent */
     bool initWithDuration(float duration, float percent);
 
 protected:
-    ProgressTo() {}
-    virtual ~ProgressTo() {}
-
     float _to;
     float _from;
 
@@ -87,13 +87,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    ProgressFromTo() {}
+    virtual ~ProgressFromTo() {}
+
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 
 protected:
-    ProgressFromTo() {}
-    virtual ~ProgressFromTo() {}
-
     float _to;
     float _from;
 

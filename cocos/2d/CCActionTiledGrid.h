@@ -47,13 +47,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    ShakyTiles3D() {}
+    virtual ~ShakyTiles3D() {}
+
     /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
 protected:
-    ShakyTiles3D() {}
-    virtual ~ShakyTiles3D() {}
-
     int _randrange;
     bool _shakeZ;
 
@@ -73,13 +73,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    ShatteredTiles3D() {}
+    virtual ~ShatteredTiles3D() {}
+
     /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shatterZ);
 
 protected:
-    ShatteredTiles3D() {}
-    virtual ~ShatteredTiles3D() {}
-
     int _randrange;
     bool _once;
     bool _shatterZ;
@@ -108,13 +108,13 @@ public:
 	virtual ShuffleTiles* clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    ShuffleTiles() {}
+    virtual ~ShuffleTiles();
+
     /** initializes the action with a random seed, the grid size and the duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
 
 protected:
-    ShuffleTiles() {}
-    virtual ~ShuffleTiles();
-
     unsigned int _seed;
     unsigned int _tilesCount;
     unsigned int* _tilesOrder;
@@ -236,13 +236,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    TurnOffTiles() {}
+    virtual ~TurnOffTiles();
+
     /** initializes the action with a random seed, the grid size and the duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
 
 protected:
-    TurnOffTiles() {}
-    virtual ~TurnOffTiles();
-
     unsigned int    _seed;
     unsigned int    _tilesCount;
     unsigned int*   _tilesOrder;
@@ -271,13 +271,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    WavesTiles3D() {}
+    virtual ~WavesTiles3D() {}
+
     /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 protected:
-    WavesTiles3D() {}
-    virtual ~WavesTiles3D() {}
-
     unsigned int _waves;
     float _amplitude;
     float _amplitudeRate;
@@ -308,13 +308,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    JumpTiles3D() {}
+    virtual ~JumpTiles3D() {}
+
     /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
 protected:
-    JumpTiles3D() {}
-    virtual ~JumpTiles3D() {}
-
     unsigned int _jumps;
     float _amplitude;
     float _amplitudeRate;
@@ -336,13 +336,13 @@ public :
     virtual void startWithTarget(Node *target) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    SplitRows() {}
+    virtual ~SplitRows() {}
+
     /** initializes the action with the number of rows to split and the duration */
     bool initWithDuration(float duration, unsigned int rows);
 
 protected:
-    SplitRows() {}
-    virtual ~SplitRows() {}
-
     unsigned int _rows;
     Size _winSize;
 
@@ -363,13 +363,13 @@ public:
     virtual void startWithTarget(Node *target) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    SplitCols() {}
+    virtual ~SplitCols() {}
+
     /** initializes the action with the number of columns to split and the duration */
     bool initWithDuration(float duration, unsigned int cols);
 
 protected:
-    SplitCols() {}
-    virtual ~SplitCols() {}
-
     unsigned int _cols;
     Size _winSize;
 

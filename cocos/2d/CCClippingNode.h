@@ -98,6 +98,14 @@ public:
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    ClippingNode();
+    
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ClippingNode();
+
     /** Initializes a clipping node without a stencil.
      */
     virtual bool init();
@@ -108,14 +116,6 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(Node *stencil);
 
 protected:
-    ClippingNode();
-
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ClippingNode();
-
     /**draw fullscreen quad to clear stencil bits
     */
     void drawFullScreenQuadClearStencil();

@@ -97,13 +97,13 @@ public:
     virtual void cleanup() override;
     
 CC_CONSTRUCTOR_ACCESS:
+    TransitionScene();
+    virtual ~TransitionScene();
+
     /** initializes a transition with duration and incoming scene */
     bool initWithDuration(float t,Scene* scene);
     
 protected:
-    TransitionScene();
-    virtual ~TransitionScene();
-
     virtual void sceneOrder();
     void setNewScene(float dt);
 
@@ -127,14 +127,13 @@ public:
     static TransitionSceneOriented * create(float t,Scene* scene, Orientation orientation);
     
 CC_CONSTRUCTOR_ACCESS:
-    
+    TransitionSceneOriented();
+    virtual ~TransitionSceneOriented();
+
     /** initializes a transition with duration and incoming scene */
     bool initWithDuration(float t,Scene* scene,Orientation orientation);
 
 protected:
-    TransitionSceneOriented();
-    virtual ~TransitionSceneOriented();
-
     Orientation _orientation;
 
 private:
@@ -582,15 +581,14 @@ public:
     virtual void onExit() override;
     
 CC_CONSTRUCTOR_ACCESS:
-    
+    TransitionFade();
+    virtual ~TransitionFade();
+
     /** initializes the transition with a duration and with an RGB color */
     bool initWithDuration(float t, Scene*scene, const Color3B& color);
     bool initWithDuration(float t, Scene* scene);
 
 protected:
-    TransitionFade();
-    virtual ~TransitionFade();
-
     Color4B _color;
 
 private:

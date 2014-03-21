@@ -120,15 +120,6 @@ public:
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    
-    // Overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual bool initWithTotalParticles(int numberOfParticles) override;
-
-protected:
     /**
      * @js ctor
      */
@@ -139,6 +130,14 @@ protected:
      */
     virtual ~ParticleSystemQuad();
     
+    // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
+
+protected:
     /** initializes the indices for the vertices*/
     void initIndices();
     

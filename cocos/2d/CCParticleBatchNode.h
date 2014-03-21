@@ -121,6 +121,10 @@ public:
     virtual const BlendFunc& getBlendFunc(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js ctor
+     */
+    ParticleBatchNode();
     
     /** initializes the particle system with Texture2D, a capacity of particles */
     bool initWithTexture(Texture2D *tex, int capacity);
@@ -128,12 +132,6 @@ CC_CONSTRUCTOR_ACCESS:
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     bool initWithFile(const std::string& fileImage, int capacity);
     
-protected:
-    /**
-     * @js ctor
-     */
-    ParticleBatchNode();
-
 private:
     void updateAllAtlasIndexes();
     void increaseAtlasCapacityTo(ssize_t quantity);

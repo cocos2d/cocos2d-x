@@ -178,13 +178,13 @@ public:
 	virtual AccelDeccelAmplitude* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    AccelDeccelAmplitude() {}
+    virtual ~AccelDeccelAmplitude();
+    
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *pAction, float duration);
 
 protected:
-    AccelDeccelAmplitude() {}
-    virtual ~AccelDeccelAmplitude();
-
     float _rate;
     ActionInterval *_other;
 
@@ -211,12 +211,12 @@ public:
 	virtual AccelAmplitude* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    bool initWithAction(Action *action, float duration);
-
-protected:
     AccelAmplitude() {}
     virtual ~AccelAmplitude();
 
+    bool initWithAction(Action *action, float duration);
+
+protected:
     float _rate;
     ActionInterval *_other;
 
@@ -243,13 +243,13 @@ public:
 	virtual DeccelAmplitude* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    DeccelAmplitude() {}
+    virtual ~DeccelAmplitude();
+
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *action, float duration);
 
 protected:
-    DeccelAmplitude() {}
-    virtual ~DeccelAmplitude();
-
     float _rate;
     ActionInterval *_other;
 

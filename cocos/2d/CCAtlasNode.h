@@ -92,6 +92,9 @@ public:
     virtual const BlendFunc& getBlendFunc() const override;
 
 CC_CONSTRUCTOR_ACCESS:
+    AtlasNode();
+    virtual ~AtlasNode();
+
     /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
     bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
     
@@ -99,9 +102,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
 
 protected:
-    AtlasNode();
-    virtual ~AtlasNode();
-
     void calculateMaxItems();
     void updateBlendFunc();
     void updateOpacityModifyRGB();

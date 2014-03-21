@@ -188,13 +188,12 @@ public:
     virtual bool isDone() const  override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Speed();
+    virtual ~Speed(void);
     /** initializes the action */
     bool initWithAction(ActionInterval *action, float speed);
 
 protected:
-    Speed();
-    virtual ~Speed(void);
-
     float _speed;
     ActionInterval *_innerAction;
 
@@ -240,16 +239,6 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
     /**
-     * Initializes the action with a set boundary or with no boundary.
-     *
-     * @param followedNode  The node to be followed.
-     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
-     *              with no boundary.
-     */
-    bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
-
-protected:
-    /**
      * @js ctor
      */
     Follow()
@@ -267,8 +256,17 @@ protected:
      * @lua NA
      */
     virtual ~Follow();
+    
+    /**
+     * Initializes the action with a set boundary or with no boundary.
+     *
+     * @param followedNode  The node to be followed.
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
+     */
+    bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
 
-    // node to follow
+protected:// node to follow
     Node *_followedNode;
 
     // whether camera should be limited to certain area

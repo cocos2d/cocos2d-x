@@ -44,10 +44,6 @@ public:
     static ParticleFire* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(250); }
-    virtual bool initWithTotalParticles(int numberOfParticles) override;
-
-protected:
     /**
      * @js ctor
      */
@@ -57,6 +53,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleFire(){}
+
+    bool init(){ return initWithTotalParticles(250); }
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleFire);
@@ -70,10 +69,6 @@ public:
     static ParticleFireworks* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(1500); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -83,6 +78,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleFireworks(){}
+
+    bool init(){ return initWithTotalParticles(1500); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleFireworks);
@@ -97,10 +95,6 @@ public:
     static ParticleSun* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(350); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -110,6 +104,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSun(){}
+
+    bool init(){ return initWithTotalParticles(350); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSun);
@@ -124,10 +121,6 @@ public:
     static ParticleGalaxy* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(200); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -137,6 +130,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleGalaxy(){}
+
+    bool init(){ return initWithTotalParticles(200); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleGalaxy);
@@ -151,10 +147,6 @@ public:
     static ParticleFlower* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(250); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -164,6 +156,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleFlower(){}
+
+    bool init(){ return initWithTotalParticles(250); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleFlower);
@@ -177,10 +172,6 @@ public:
     static ParticleMeteor* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(150); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -190,6 +181,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleMeteor(){}
+
+    bool init(){ return initWithTotalParticles(150); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleMeteor);
@@ -203,10 +197,6 @@ public:
     static ParticleSpiral* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(500); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -216,6 +206,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSpiral(){}
+
+    bool init(){ return initWithTotalParticles(500); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSpiral);
@@ -230,10 +223,6 @@ public:
     static ParticleExplosion* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(700); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -243,6 +232,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleExplosion(){}
+
+    bool init(){ return initWithTotalParticles(700); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleExplosion);
@@ -256,10 +248,6 @@ public:
     static ParticleSmoke* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(200); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -269,6 +257,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSmoke(){}
+
+    bool init(){ return initWithTotalParticles(200); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSmoke);
@@ -282,10 +273,6 @@ public:
     static ParticleSnow* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(700); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -295,6 +282,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSnow(){}
+
+    bool init(){ return initWithTotalParticles(700); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSnow);
@@ -308,10 +298,6 @@ public:
     static ParticleRain* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    bool init(){ return initWithTotalParticles(1000); }
-    virtual bool initWithTotalParticles(int numberOfParticles);
-
-protected:
     /**
      * @js ctor
      */
@@ -321,6 +307,9 @@ protected:
      * @lua NA
      */
     virtual ~ParticleRain(){}
+
+    bool init(){ return initWithTotalParticles(1000); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleRain);

@@ -59,13 +59,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Waves3D() {}
+    virtual ~Waves3D() {}
+
     /** initializes an action with duration, grid size, waves and amplitude */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
 protected:
-    Waves3D() {}
-    virtual ~Waves3D() {}
-
     unsigned int _waves;
     float _amplitude;
     float _amplitudeRate;
@@ -86,13 +86,12 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    FlipX3D() {}
+    virtual ~FlipX3D() {}
+
     /** initializes the action with duration */
     bool initWithDuration(float duration);
     virtual bool initWithSize(const Size& gridSize, float duration);
-
-protected:
-    FlipX3D() {}
-    virtual ~FlipX3D() {}
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(FlipX3D);
@@ -138,13 +137,13 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    Lens3D() {}
+    virtual ~Lens3D() {}
+
     /** initializes the action with center position, radius, a grid size and duration */
     bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius);
 
 protected:
-    Lens3D() {}
-    virtual ~Lens3D() {}
-
     /* lens center position */
     Point _position;
     float _radius;
@@ -182,13 +181,13 @@ public:
     virtual void update(float time) override;
 
 CC_CONSTRUCTOR_ACCESS:
+    Ripple3D() {}
+    virtual ~Ripple3D() {}
+
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
     bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
 
 protected:
-    Ripple3D() {}
-    virtual ~Ripple3D() {}
-
     /* center position */
     Point _position;
     float _radius;

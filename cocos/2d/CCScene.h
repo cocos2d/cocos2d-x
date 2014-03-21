@@ -61,12 +61,12 @@ public:
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    virtual bool init() override;
-
-protected:
     Scene();
     virtual ~Scene();
     
+    virtual bool init() override;
+
+protected:
     friend class Node;
     friend class SpriteBatchNode;
     

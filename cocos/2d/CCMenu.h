@@ -123,6 +123,11 @@ public:
     virtual std::string getDescription() const override;
 
 CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js ctor
+     */
+    Menu() : _selectedItem(nullptr) {}
+    virtual ~Menu();
 
     /** initializes an empty Menu */
     bool init();
@@ -131,12 +136,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
 
 protected:
-    /**
-     * @js ctor
-     */
-    Menu() : _selectedItem(nullptr) {}
-    virtual ~Menu();
-
     /** whether or not the menu will receive events */
     bool _enabled;
 

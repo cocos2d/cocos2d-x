@@ -99,19 +99,6 @@ public:
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    
-    /** Initializes a MenuItem with a target/selector
-     * @js NA
-     * @lua NA
-     */
-    bool initWithCallback(const ccMenuCallback& callback);
-    /** Initializes a MenuItem with a target/selector
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref *rec, SEL_MenuHandler selector);
-
-protected:
     /**
      * @js ctor
      */
@@ -126,7 +113,19 @@ protected:
      * @lua NA
      */
     virtual ~MenuItem();
+    
+    /** Initializes a MenuItem with a target/selector
+     * @js NA
+     * @lua NA
+     */
+    bool initWithCallback(const ccMenuCallback& callback);
+    /** Initializes a MenuItem with a target/selector
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref *rec, SEL_MenuHandler selector);
 
+protected:
     bool            _selected;
     bool            _enabled;
 	// callback
@@ -180,14 +179,6 @@ public:
     virtual void setEnabled(bool enabled) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    
-	/** initializes a MenuItemLabel with a Label, target and selector */
-    bool initWithLabel(Node* label, const ccMenuCallback& callback);
-    
-    /** initializes a MenuItemLabel with a Label, target and selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithLabel(Node* label, Ref* target, SEL_MenuHandler selector);
-    
-protected:
     /**
      * @js ctor
      */
@@ -200,7 +191,14 @@ protected:
      * @lua NA
      */
     virtual ~MenuItemLabel();
-
+    
+	/** initializes a MenuItemLabel with a Label, target and selector */
+    bool initWithLabel(Node* label, const ccMenuCallback& callback);
+    
+    /** initializes a MenuItemLabel with a Label, target and selector */
+    CC_DEPRECATED_ATTRIBUTE bool initWithLabel(Node* label, Ref* target, SEL_MenuHandler selector);
+    
+protected:
     Color3B    _colorBackup;
     float      _originalScale;
 
@@ -228,14 +226,6 @@ public:
     static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
     
 CC_CONSTRUCTOR_ACCESS:
-    
-    /** initializes a menu item from a string and atlas with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector);
-    
-    /** initializes a menu item from a string and atlas with a target/selector */
-    bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
-
-protected:
     /**
      * @js ctor
      */
@@ -245,6 +235,12 @@ protected:
      * @lua NA
      */
     virtual ~MenuItemAtlasFont(){}
+    
+    /** initializes a menu item from a string and atlas with a target/selector */
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector);
+    
+    /** initializes a menu item from a string and atlas with a target/selector */
+    bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MenuItemAtlasFont);
@@ -304,14 +300,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE const std::string& fontNameObj() const { return getFontNameObj(); }
     
 CC_CONSTRUCTOR_ACCESS:
-    
-    /** initializes a menu item from a string with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, Ref* target, SEL_MenuHandler selector);
-    
-    /** initializes a menu item from a string with a target/selector */
-    bool initWithString(const std::string& value, const ccMenuCallback& callback);
-    
-protected:
     /**
      * @js ctor
      */
@@ -322,6 +310,13 @@ protected:
      */
     virtual ~MenuItemFont();
     
+    /** initializes a menu item from a string with a target/selector */
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, Ref* target, SEL_MenuHandler selector);
+    
+    /** initializes a menu item from a string with a target/selector */
+    bool initWithString(const std::string& value, const ccMenuCallback& callback);
+    
+protected:
     int _fontSize;
     std::string _fontName;
 
@@ -378,6 +373,11 @@ public:
     virtual void setEnabled(bool bEnabled);
     
 CC_CONSTRUCTOR_ACCESS:
+    MenuItemSprite()
+    :_normalImage(nullptr)
+    ,_selectedImage(nullptr)
+    ,_disabledImage(nullptr)
+    {}
     
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
@@ -386,12 +386,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
     
 protected:
-    MenuItemSprite()
-    :_normalImage(nullptr)
-    ,_selectedImage(nullptr)
-    ,_disabledImage(nullptr)
-    {}
-
     virtual void updateImagesVisibility();
 
     /** the image used when the item is not selected */
@@ -441,16 +435,6 @@ public:
     void setDisabledSpriteFrame(SpriteFrame* frame);
     
 CC_CONSTRUCTOR_ACCESS:
-    
-    bool init();
-    
-    /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
-    
-    /** initializes a menu item with a normal, selected  and disabled image with a callable object */
-    bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
-
-protected:
     /**
      * @js ctor
      */
@@ -460,6 +444,14 @@ protected:
      * @lua NA
      */
     virtual ~MenuItemImage(){}
+    
+    bool init();
+    
+    /** initializes a menu item with a normal, selected  and disabled image with target/selector */
+    CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
+    
+    /** initializes a menu item with a normal, selected  and disabled image with a callable object */
+    bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MenuItemImage);
@@ -527,6 +519,17 @@ public:
     virtual void setEnabled(bool var) override;
     
 CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js ctor
+     */
+    MenuItemToggle()
+    : _selectedIndex(0)
+    {}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~MenuItemToggle();
     
     /** initializes a menu item from a list of items with a target selector
      * @js NA
@@ -541,18 +544,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithItem(MenuItem *item);
 
 protected:
-    /**
-     * @js ctor
-     */
-    MenuItemToggle()
-    : _selectedIndex(0)
-    {}
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~MenuItemToggle();
-
     /** returns the selected item */
     unsigned int _selectedIndex;
     /** Array that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.

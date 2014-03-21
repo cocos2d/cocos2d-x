@@ -365,6 +365,16 @@ public:
     virtual const BlendFunc &getBlendFunc() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js ctor
+     */
+    ParticleSystem();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ParticleSystem();
+
     /** initializes a ParticleSystem*/
     bool init();
     /** initializes a ParticleSystem from a plist file.
@@ -388,16 +398,6 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles);
 
 protected:
-    /**
-     * @js ctor
-     */
-    ParticleSystem();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ParticleSystem();
-
     virtual void updateBlendFunc();
 
     /** whether or not the particles are using blend additive.
