@@ -7,7 +7,6 @@ import os
 #check & kill dead buid
 def build_time(_job,_threshold):
     #get jenkins-job-watchdog-threshold
-    threshold = int(os.environ['jenkins-job-watchdog-threshold'])
     #Get last build running
     build = _job.get_last_build()
     running = build.is_running()
@@ -41,8 +40,8 @@ def main():
     J = Jenkins('http://115.28.134.83:8000',username,password)
     #get all jenkins jobs
     for key,job in J.iteritems():
-        if(os.environ.has_key(key)):
-            threshold = int(os.environ[key])
+        if(os.environ.has_key(key+'-threshold')):
+            threshold = int(os.environ[key+'-threshold'])
             build_time(job,threshold)
         else:
             threshold = int(os.environ['jenkins-job-watchdog-threshold'])
