@@ -780,6 +780,9 @@ Developers:
         
     huangml
         Fixed a bug that Node::removeAllChildrenWithCleanup() does not remove PhysicsBody.
+        
+    newnon
+        Adds getCurrentLanguageCode() which returns iso 639-1 language code
     
 Retired Core Developers:
     WenSheng Yang
