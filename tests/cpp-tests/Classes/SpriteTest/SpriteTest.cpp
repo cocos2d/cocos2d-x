@@ -698,14 +698,14 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
         }
     }
     
-    int CC_UNUSED prev = -1;
+    ssize_t CC_UNUSED prev = -1;
     
     auto& children = asmtest->getChildren();
 
     for(const auto &obj : children) {
         auto child = static_cast<Sprite*>(obj);
 
-        int currentIndex = child->getAtlasIndex();
+        ssize_t currentIndex = child->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("children %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
@@ -714,7 +714,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     prev = -1;
     auto& descendants = asmtest->getDescendants();
     for(const auto &sprite : descendants) {
-        int currentIndex = sprite->getAtlasIndex();
+        ssize_t currentIndex = sprite->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;

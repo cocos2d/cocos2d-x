@@ -96,7 +96,7 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
         if (data.isBinary) {
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
             if (0 != handler) {
-                SendBinaryMessageToLua(handler, (const unsigned char*)data.bytes, data.len);
+                SendBinaryMessageToLua(handler, (const unsigned char*)data.bytes, (int)data.len);
             }
         }
         else{
@@ -107,7 +107,7 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
                 if (nullptr != stack)
                 {
-                    stack->pushString(data.bytes,data.len);
+                    stack->pushString(data.bytes,(int)data.len);
                     stack->executeFunctionByHandler(handler,  1);
                 }
             }
@@ -348,7 +348,7 @@ static int tolua_Cocos2d_WebSocket_sendString00(lua_State* tolua_S)
 
         if (strlen(data) != size)
         {
-            self->send((const unsigned char*)data, size);
+            self->send((const unsigned char*)data, (unsigned int)size);
         }
         else
         {
