@@ -20,11 +20,9 @@ print 'console_param:',console_param
 
 console_param_arr = console_param.split(' ')
 
-# project_types = ['cpp', 'lua']
-project_types = ['cpp']
+project_types = ['cpp', 'lua']
 PROJ_SUFFIX = 'Proj'
-# phonePlats = ['mac','ios','android']
-phonePlats = ['ios']
+phonePlats = ['mac','ios','android']
 
 #need use console's position, perhaps should be set an env-param
 cocos_console_dir = 'tools/cocos2d-console/bin/'
@@ -76,9 +74,14 @@ def getAppPID(name):
 		if idx > 0:
 			arrProIdx.append(idx)
 	return arrProIdx
-def close_proj(proj):
+def close_proj(proj, phone):
 	print 'close running project'
 	if curPlat == 'darwin':
+		if phone == 'android':
+			cmd = 'adb shell pm uninstall -n org.cocos2dx.hello'+proj
+			infoUninstall = os.system(cmd)
+			print 'infoUninstall apk:', infoUninstall, cmd
+			return infoUninstall == 0
 		print 'will close proj:',proj,', on',curPlat
 		arrPids = getAppPID(proj+PROJ_SUFFIX)
 		print 'arrPids:', arrPids
@@ -100,7 +103,7 @@ def build_run():
 				print 'run project', proj, 'is:', not info_run
 				if info_run == 0:
 					time.sleep(5)
-					close_proj(proj)
+					close_proj(proj, phone)
 					time.sleep(2)
 			idx += 1
 
@@ -109,7 +112,7 @@ def main():
 	create_project()
 	if console_param_arr.count('run'):
 	 	build_run()
-	# close_proj('cpp')
+	# close_proj('cpp', 'android')
 
 # -------------- main --------------
 if __name__ == '__main__':
