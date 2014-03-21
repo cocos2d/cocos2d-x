@@ -22,8 +22,4 @@
 -- @param self
 -- @param #float float
         
---------------------------------
--- @function [parent=#Shaky3D] Shaky3D 
--- @param self
-        
 return nil
