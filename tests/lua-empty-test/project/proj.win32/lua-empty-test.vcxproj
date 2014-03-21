@@ -104,13 +104,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\lua-empty-test-res" rd /s /q "$(OutDir)\lua-empty-test-res"
-mkdir "$(OutDir)\lua-empty-test-res\res"
-mkdir "$(OutDir)\lua-empty-test-res\src"
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)\lua-empty-test-res" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\lua-empty-test-res\src" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\lua-empty-test-res\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y</Command>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -163,13 +158,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
 </Command>
     </PreLinkEvent>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\lua-empty-test-res" rd /s /q "$(OutDir)\lua-empty-test-res"
-mkdir "$(OutDir)\lua-empty-test-res\res"
-mkdir "$(OutDir)\lua-empty-test-res\src"
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)\lua-empty-test-res" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\lua-empty-test-res\src" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\lua-empty-test-res\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

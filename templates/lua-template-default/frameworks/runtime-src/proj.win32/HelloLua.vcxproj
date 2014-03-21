@@ -104,14 +104,7 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource\src"
-mkdir "$(OutDir)\Resource\res"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\..\" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
@@ -158,14 +151,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource\src"
-mkdir "$(OutDir)\Resource\res"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\..\" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
