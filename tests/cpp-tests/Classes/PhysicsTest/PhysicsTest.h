@@ -225,6 +225,17 @@ public:
     virtual std::string title() const override;
 };
 
+class PhysicsSetGravityEnableTest : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsSetGravityEnableTest);
+    
+    void onEnter() override;
+    void onScheduleOnce(float delta);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 
 #endif
 #endif
