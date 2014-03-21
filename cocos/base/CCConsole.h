@@ -99,8 +99,8 @@ public:
  
 protected:
     void loop();
-    ssize_t readline(int fd, char *buf, int maxlen);
-    ssize_t readBytes(int fd, char* buffer, int maxlen, bool* more);
+    ssize_t readline(int fd, char *buf, size_t maxlen);
+    ssize_t readBytes(int fd, char* buffer, size_t maxlen, bool* more);
     bool parseCommand(int fd);
     
     void addClient();

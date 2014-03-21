@@ -31478,7 +31478,7 @@ int lua_cocos2dx_Label_getFontSize(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        int ret = cobj->getFontSize();
+        double ret = cobj->getFontSize();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -32533,9 +32533,9 @@ int lua_cocos2dx_Label_setFontSize(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        int arg0;
+        double arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
         cobj->setFontSize(arg0);

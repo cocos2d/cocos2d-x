@@ -49,10 +49,10 @@ public:
     // CCTextFieldDelegate
     virtual bool onTextFieldAttachWithIME(TextFieldTTF *pSender) override;
     virtual bool onTextFieldDetachWithIME(TextFieldTTF * pSender) override;
-    virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, int nLen) override;
-    virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, int nLen) override;
+    virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, size_t nLen) override;
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, size_t nLen) override;
     
-    void insertText(const char* text, int len);
+    void insertText(const char* text, size_t len);
     void deleteBackward();
     
     void openIME();

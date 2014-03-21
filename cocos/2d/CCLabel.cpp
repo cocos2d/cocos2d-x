@@ -711,7 +711,7 @@ void Label::updateQuads()
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
-            index = _batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads();
+            index = static_cast<int>(_batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads());
             _lettersInfo[ctr].atlasIndex = index;
             _batchNodes[letterDef.textureID]->insertQuadFromSprite(_reusedLetter,index);
         }     
@@ -1054,7 +1054,7 @@ const std::string& Label::getFontName() const
     return _fontName;
 }
 
-void Label::setFontSize(int fontSize)
+void Label::setFontSize(float fontSize)
 {
     if (_fontSize != fontSize)
     {
@@ -1063,7 +1063,7 @@ void Label::setFontSize(int fontSize)
     }
 }
 
-int Label::getFontSize() const
+float Label::getFontSize() const
 {
     return _fontSize;
 }
@@ -1141,7 +1141,7 @@ void Label::computeStringNumLines()
 
 int Label::getStringLength() const
 {
-    return _currentUTF16String ? cc_wcslen(_currentUTF16String) : _originalUTF8String.length();
+    return _currentUTF16String ? cc_wcslen(_currentUTF16String) : (int)_originalUTF8String.length();
 }
 
 // RGBA protocol

@@ -64,7 +64,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void dispatchInsertText(const char * text, int len);
+    void dispatchInsertText(const char * text, size_t len);
 
     /**
      @brief Dispatches the delete-backward operation.

@@ -38,6 +38,26 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1503FAB318DA8B6C00F6518C /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAA918DA8B6C00F6518C /* ftp.lua */; };
+		1503FAB418DA8B6C00F6518C /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAA918DA8B6C00F6518C /* ftp.lua */; };
+		1503FAB518DA8B6C00F6518C /* headers.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAA18DA8B6C00F6518C /* headers.lua */; };
+		1503FAB618DA8B6C00F6518C /* headers.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAA18DA8B6C00F6518C /* headers.lua */; };
+		1503FAB718DA8B6C00F6518C /* http.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAB18DA8B6C00F6518C /* http.lua */; };
+		1503FAB818DA8B6C00F6518C /* http.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAB18DA8B6C00F6518C /* http.lua */; };
+		1503FAB918DA8B6C00F6518C /* ltn12.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAC18DA8B6C00F6518C /* ltn12.lua */; };
+		1503FABA18DA8B6C00F6518C /* ltn12.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAC18DA8B6C00F6518C /* ltn12.lua */; };
+		1503FABB18DA8B6C00F6518C /* mbox.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAD18DA8B6C00F6518C /* mbox.lua */; };
+		1503FABC18DA8B6C00F6518C /* mbox.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAD18DA8B6C00F6518C /* mbox.lua */; };
+		1503FABD18DA8B6C00F6518C /* mime.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAE18DA8B6C00F6518C /* mime.lua */; };
+		1503FABE18DA8B6C00F6518C /* mime.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAE18DA8B6C00F6518C /* mime.lua */; };
+		1503FABF18DA8B6C00F6518C /* smtp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAF18DA8B6C00F6518C /* smtp.lua */; };
+		1503FAC018DA8B6C00F6518C /* smtp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAF18DA8B6C00F6518C /* smtp.lua */; };
+		1503FAC118DA8B6C00F6518C /* socket.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB018DA8B6C00F6518C /* socket.lua */; };
+		1503FAC218DA8B6C00F6518C /* socket.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB018DA8B6C00F6518C /* socket.lua */; };
+		1503FAC318DA8B6C00F6518C /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
+		1503FAC418DA8B6C00F6518C /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
+		1503FAC518DA8B6C00F6518C /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
+		1503FAC618DA8B6C00F6518C /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -1202,6 +1222,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1503FAA918DA8B6C00F6518C /* ftp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ftp.lua; path = ../external/lua/luasocket/ftp.lua; sourceTree = "<group>"; };
+		1503FAAA18DA8B6C00F6518C /* headers.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = headers.lua; path = ../external/lua/luasocket/headers.lua; sourceTree = "<group>"; };
+		1503FAAB18DA8B6C00F6518C /* http.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = http.lua; path = ../external/lua/luasocket/http.lua; sourceTree = "<group>"; };
+		1503FAAC18DA8B6C00F6518C /* ltn12.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ltn12.lua; path = ../external/lua/luasocket/ltn12.lua; sourceTree = "<group>"; };
+		1503FAAD18DA8B6C00F6518C /* mbox.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mbox.lua; path = ../external/lua/luasocket/mbox.lua; sourceTree = "<group>"; };
+		1503FAAE18DA8B6C00F6518C /* mime.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mime.lua; path = ../external/lua/luasocket/mime.lua; sourceTree = "<group>"; };
+		1503FAAF18DA8B6C00F6518C /* smtp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = smtp.lua; path = ../external/lua/luasocket/smtp.lua; sourceTree = "<group>"; };
+		1503FAB018DA8B6C00F6518C /* socket.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = socket.lua; path = ../external/lua/luasocket/socket.lua; sourceTree = "<group>"; };
+		1503FAB118DA8B6C00F6518C /* tp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tp.lua; path = ../external/lua/luasocket/tp.lua; sourceTree = "<group>"; };
+		1503FAB218DA8B6C00F6518C /* url.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = url.lua; path = ../external/lua/luasocket/url.lua; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -2033,6 +2063,16 @@
 		1ABCA36418CD9E060087CE3A /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				1503FAA918DA8B6C00F6518C /* ftp.lua */,
+				1503FAAA18DA8B6C00F6518C /* headers.lua */,
+				1503FAAB18DA8B6C00F6518C /* http.lua */,
+				1503FAAC18DA8B6C00F6518C /* ltn12.lua */,
+				1503FAAD18DA8B6C00F6518C /* mbox.lua */,
+				1503FAAE18DA8B6C00F6518C /* mime.lua */,
+				1503FAAF18DA8B6C00F6518C /* smtp.lua */,
+				1503FAB018DA8B6C00F6518C /* socket.lua */,
+				1503FAB118DA8B6C00F6518C /* tp.lua */,
+				1503FAB218DA8B6C00F6518C /* url.lua */,
 				1ABCA36618CD9E180087CE3A /* AudioEngine.lua */,
 				1ABCA36718CD9E180087CE3A /* CCBReaderLoad.lua */,
 				1ABCA36818CD9E180087CE3A /* Cocos2d.lua */,
@@ -3902,7 +3942,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_tests" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4055,20 +4095,30 @@
 				1AC35D5C18CEDE9E00F37B72 /* InfoPlist.strings in Resources */,
 				1A0EE57118CDFBBE004CD58F /* Cocos2dConstants.lua in Resources */,
 				1AC35D5D18CEDE9E00F37B72 /* MainMenu.xib in Resources */,
+				1503FABD18DA8B6C00F6518C /* mime.lua in Resources */,
 				1A0EE56F18CDFBBE004CD58F /* CCBReaderLoad.lua in Resources */,
 				1A0EE57018CDFBBE004CD58F /* Cocos2d.lua in Resources */,
 				1A0EE57B18CDFBBE004CD58F /* luaj.lua in Resources */,
 				1A0EE57918CDFBBE004CD58F /* GuiConstants.lua in Resources */,
+				1503FAC518DA8B6C00F6518C /* url.lua in Resources */,
 				1A0EE57E18CDFBBE004CD58F /* OpenglConstants.lua in Resources */,
+				1503FABF18DA8B6C00F6518C /* smtp.lua in Resources */,
+				1503FAB318DA8B6C00F6518C /* ftp.lua in Resources */,
+				1503FAB718DA8B6C00F6518C /* http.lua in Resources */,
 				1A0EE56E18CDFBBE004CD58F /* AudioEngine.lua in Resources */,
 				1A0EE57F18CDFBBE004CD58F /* StudioConstants.lua in Resources */,
+				1503FAC118DA8B6C00F6518C /* socket.lua in Resources */,
+				1503FAB918DA8B6C00F6518C /* ltn12.lua in Resources */,
 				1A0EE57718CDFBBE004CD58F /* DrawPrimitives.lua in Resources */,
 				1A0EE57A18CDFBBE004CD58F /* json.lua in Resources */,
 				1AC35D5E18CEDE9E00F37B72 /* Icon.icns in Resources */,
 				1A0EE57318CDFBBE004CD58F /* Deprecated.lua in Resources */,
+				1503FABB18DA8B6C00F6518C /* mbox.lua in Resources */,
 				1A0EE57418CDFBBE004CD58F /* DeprecatedClass.lua in Resources */,
 				1A0EE57818CDFBBE004CD58F /* extern.lua in Resources */,
+				1503FAB518DA8B6C00F6518C /* headers.lua in Resources */,
 				1A0EE57618CDFBBE004CD58F /* DeprecatedOpenglEnum.lua in Resources */,
+				1503FAC318DA8B6C00F6518C /* tp.lua in Resources */,
 				1A0EE57218CDFBBE004CD58F /* CocoStudio.lua in Resources */,
 				1A0EE57C18CDFBBE004CD58F /* luaoc.lua in Resources */,
 				1A0EE57D18CDFBBE004CD58F /* Opengl.lua in Resources */,
@@ -4111,28 +4161,38 @@
 				1A0EE55E18CDFBBD004CD58F /* Cocos2d.lua in Resources */,
 				1A0EE55D18CDFBBD004CD58F /* CCBReaderLoad.lua in Resources */,
 				1AC35D4A18CEDE9400F37B72 /* Icon-120.png in Resources */,
+				1503FAC018DA8B6C00F6518C /* smtp.lua in Resources */,
 				1AC35D4D18CEDE9400F37B72 /* Icon-57.png in Resources */,
 				1A0EE56018CDFBBD004CD58F /* CocoStudio.lua in Resources */,
 				1A0EE56318CDFBBD004CD58F /* DeprecatedEnum.lua in Resources */,
+				1503FAB818DA8B6C00F6518C /* http.lua in Resources */,
 				1AC35D4B18CEDE9400F37B72 /* Icon-144.png in Resources */,
+				1503FAC618DA8B6C00F6518C /* url.lua in Resources */,
 				1AC35D4618CEDE9400F37B72 /* Default-568h@2x.png in Resources */,
 				1AC35D4818CEDE9400F37B72 /* Default@2x.png in Resources */,
 				1A0EE56118CDFBBD004CD58F /* Deprecated.lua in Resources */,
+				1503FAC418DA8B6C00F6518C /* tp.lua in Resources */,
+				1503FABA18DA8B6C00F6518C /* ltn12.lua in Resources */,
 				1A0EE56518CDFBBD004CD58F /* DrawPrimitives.lua in Resources */,
 				1A0EE56218CDFBBD004CD58F /* DeprecatedClass.lua in Resources */,
 				1A0EE56418CDFBBD004CD58F /* DeprecatedOpenglEnum.lua in Resources */,
+				1503FABE18DA8B6C00F6518C /* mime.lua in Resources */,
 				1A0EE55F18CDFBBD004CD58F /* Cocos2dConstants.lua in Resources */,
 				1A0EE56718CDFBBD004CD58F /* GuiConstants.lua in Resources */,
 				1AC35D4E18CEDE9400F37B72 /* Icon-72.png in Resources */,
 				1AC35D4F18CEDE9400F37B72 /* Icon-76.png in Resources */,
 				1A0EE56A18CDFBBD004CD58F /* luaoc.lua in Resources */,
+				1503FAC218DA8B6C00F6518C /* socket.lua in Resources */,
 				1A0EE56918CDFBBD004CD58F /* luaj.lua in Resources */,
 				1A0EE56618CDFBBD004CD58F /* extern.lua in Resources */,
 				1A0EE56C18CDFBBD004CD58F /* OpenglConstants.lua in Resources */,
 				1A0EE56D18CDFBBD004CD58F /* StudioConstants.lua in Resources */,
+				1503FABC18DA8B6C00F6518C /* mbox.lua in Resources */,
+				1503FAB618DA8B6C00F6518C /* headers.lua in Resources */,
 				1A0EE56818CDFBBD004CD58F /* json.lua in Resources */,
 				1AC35D4918CEDE9400F37B72 /* Icon-114.png in Resources */,
 				1A0EE55C18CDFBBD004CD58F /* AudioEngine.lua in Resources */,
+				1503FAB418DA8B6C00F6518C /* ftp.lua in Resources */,
 				1AC35D2A18CEDE7200F37B72 /* res in Resources */,
 				1AC35D2C18CEDE7200F37B72 /* src in Resources */,
 				1AC35D4C18CEDE9400F37B72 /* Icon-152.png in Resources */,
@@ -5157,7 +5217,6 @@
 		1A0EE41118CDF775004CD58F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5174,7 +5233,6 @@
 		1A0EE41218CDF775004CD58F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5192,7 +5250,6 @@
 		1A0EE47C18CDF799004CD58F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5209,7 +5266,6 @@
 		1A0EE47D18CDF799004CD58F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5264,7 +5320,6 @@
 		1ABCA2F218CD93590087CE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5281,7 +5336,6 @@
 		1ABCA2F318CD93590087CE3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5338,7 +5392,6 @@
 		A07A517D1783A1CC0073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
 			};
@@ -5347,7 +5400,6 @@
 		A07A517E1783A1CC0073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
 			};
@@ -5356,7 +5408,6 @@
 		A07A52271783A1D20073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5373,7 +5424,6 @@
 		A07A52281783A1D20073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -5392,7 +5442,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -5405,6 +5454,7 @@
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -5420,7 +5470,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -5431,6 +5480,7 @@
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

@@ -16,7 +16,7 @@
 --------------------------------
 -- @function [parent=#Label] getFontSize 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Label] getString 
@@ -137,7 +137,7 @@
 --------------------------------
 -- @function [parent=#Label] setFontSize 
 -- @param self
--- @param #int int
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Label] getVerticalAlignment 

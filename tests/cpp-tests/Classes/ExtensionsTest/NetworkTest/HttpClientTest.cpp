@@ -126,7 +126,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender)
         
         // write the post data
         const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetworkTest";
-        request->setRequestData(postData, strlen(postData)); 
+        request->setRequestData(postData, strlen(postData));
         
         request->setTag("POST test1");
         HttpClient::getInstance()->send(request);
@@ -145,7 +145,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender)
         
         // write the post data
         const char* postData = "visitor=cocos2d&TestSuite=Extensions Test/NetworkTest";
-        request->setRequestData(postData, strlen(postData)); 
+        request->setRequestData(postData, strlen(postData));
         
         request->setTag("POST test2");
         HttpClient::getInstance()->send(request);
@@ -259,11 +259,11 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
         log("%s completed", response->getHttpRequest()->getTag());
     }
     
-    int statusCode = response->getResponseCode();
+    long statusCode = response->getResponseCode();
     char statusString[64] = {};
-    sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
+    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
     _labelStatusCode->setString(statusString);
-    log("response code: %d", statusCode);
+    log("response code: %ld", statusCode);
     
     if (!response->isSucceed()) 
     {

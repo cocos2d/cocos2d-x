@@ -180,7 +180,7 @@ std::string ConsoleCustomCommand::subtitle() const
 
 ConsoleUploadFile::ConsoleUploadFile()
 {
-    srand (time(NULL));
+    srand ((unsigned)time(NULL));
     int _id = rand()%100000;
     char buf[32];
     sprintf(buf, "%d", _id);
@@ -278,10 +278,10 @@ void ConsoleUploadFile::uploadFile()
         unsigned char *in;
         in = (unsigned char *)buffer;
         // copy the file into the buffer:
-        int ret = fread(buffer, 1, 3, fp);
+        size_t ret = fread(buffer, 1, 3, fp);
         if (ret > 0)
         {
-            base64Encode(in, ret, &out);
+            base64Encode(in, (unsigned int)ret, &out);
             send(sfd, out, 4, 0);
             free(out);
             if(ret < 3)
