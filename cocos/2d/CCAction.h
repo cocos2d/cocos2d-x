@@ -266,7 +266,8 @@ CC_CONSTRUCTOR_ACCESS:
      */
     bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
 
-protected:// node to follow
+protected:
+    // node to follow
     Node *_followedNode;
 
     // whether camera should be limited to certain area

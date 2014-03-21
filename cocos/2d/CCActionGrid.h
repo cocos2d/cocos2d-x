@@ -298,13 +298,13 @@ public:
 	virtual ReuseGrid* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
+    ReuseGrid() {}
+    virtual ~ReuseGrid() {}
+    
     /** initializes an action with the number of times that the current grid will be reused */
     bool initWithTimes(int times);
 
 protected:
-    ReuseGrid() {}
-    virtual ~ReuseGrid() {}
-    
     NodeGrid* _gridNodeTarget;
     
     void cacheTargetAsGridNode();
