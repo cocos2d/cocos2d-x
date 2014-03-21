@@ -174,7 +174,7 @@ public:
     virtual void setOpacityModifyRGB(bool bOpacityModifyRGB) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    virtual bool init(void);
+    virtual bool init(void) override;
 
 protected:
     /**
