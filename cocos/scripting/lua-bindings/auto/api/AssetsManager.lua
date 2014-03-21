@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module AssetsManager
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#AssetsManager] setStoragePath 

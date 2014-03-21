@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FlipX3D
+-- @extend Grid3DAction
 
 --------------------------------
 -- @function [parent=#FlipX3D] create 

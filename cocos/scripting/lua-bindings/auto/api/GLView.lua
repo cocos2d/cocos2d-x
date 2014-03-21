@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module GLView
+-- @extend GLViewProtocol,Ref,
 
 --------------------------------
 -- @function [parent=#GLView] createWithRect 

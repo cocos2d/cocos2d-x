@@ -51,6 +51,7 @@ Will create ~/.bash_profile when none of them exist, and add environment variabl
 import os
 import sys
 import fileinput
+import shutil
 import subprocess
 from optparse import OptionParser
 
@@ -62,6 +63,8 @@ ANT_ROOT = 'ANT_ROOT'
 
 class SetEnvVar(object):
     def __init__(self):
+        self.need_backup = True
+        self.backup_file = None
         self.current_absolute_path = os.path.dirname(os.path.realpath(__file__))
         self.file_used_for_setup = ''
 
@@ -81,6 +84,7 @@ class SetEnvVar(object):
         elif os.path.exists(os.path.join(home, '.profile')):
             file_to_write = os.path.join(home, '.profile')
         else:
+            self.need_backup = False
             file_to_write = os.path.join(home, '.bash_profile')
             file = open(file_to_write, 'w')
             file.close()
@@ -115,9 +119,29 @@ class SetEnvVar(object):
             return False
         return True
 
+    def _gen_backup_file(self):
+        file_name = os.path.basename(self.file_used_for_setup)
+        file_path = os.path.dirname(self.file_used_for_setup)
+        backup_file_name = file_name + ".backup"
+        path = os.path.join(file_path, backup_file_name)
+        i = 1
+        while os.path.exists(path):
+            backup_file_name = file_name + ".backup%d" % i
+            path = os.path.join(file_path, backup_file_name)
+            i += 1
+
+        return path
+
     def _set_environment_variable_unix(self, key, value):
 
+        if self.need_backup:
+            # backup the environment file
+            self.backup_file = self._gen_backup_file()
+            shutil.copy(self.file_used_for_setup, self.backup_file)
+            self.need_backup = False
+
         file = open(self.file_used_for_setup, 'a')
+        file.write('\n# Add environment variable %s for cocos2d-x\n' % key)
         file.write('export %s=%s\n' % (key, value))
         file.write('export PATH=$%s:$PATH\n' % key)
         if key == ANDROID_SDK_ROOT:
@@ -431,6 +455,10 @@ class SetEnvVar(object):
                 print '\tANT_ROOT was added into %s' % target
         else:
             print '\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target   
+
+        # tip the backup file
+        if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
+            print '\nA backup file \"%s\" is created for \"%s\".' % (self.backup_file, self.file_used_for_setup)
 
         if self._isWindows():
             print '\nPlease restart the terminal or restart computer to make added system variables take effect'

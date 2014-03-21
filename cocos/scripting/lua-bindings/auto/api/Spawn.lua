@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Spawn
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#Spawn] startWithTarget 

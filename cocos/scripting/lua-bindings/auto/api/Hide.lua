@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Hide
+-- @extend ActionInstant
 
 --------------------------------
 -- @function [parent=#Hide] create 

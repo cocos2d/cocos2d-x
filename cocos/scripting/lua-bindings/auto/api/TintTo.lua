@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TintTo
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#TintTo] create 

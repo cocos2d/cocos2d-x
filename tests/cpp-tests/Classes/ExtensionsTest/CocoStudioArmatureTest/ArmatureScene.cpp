@@ -1039,7 +1039,7 @@ void TestColliderDetector::update(float delta)
             const std::vector<Point> &vertexList = body->getCalculatedVertexList();
 
             float minx = 0, miny = 0, maxx = 0, maxy = 0;
-            int length = vertexList.size();
+            size_t length = vertexList.size();
             for (int i = 0; i<length; i++)
             {
                 Point vertex = vertexList.at(i);

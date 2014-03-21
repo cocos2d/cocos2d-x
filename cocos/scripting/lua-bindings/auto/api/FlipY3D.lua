@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FlipY3D
+-- @extend FlipX3D
 
 --------------------------------
 -- @function [parent=#FlipY3D] create 

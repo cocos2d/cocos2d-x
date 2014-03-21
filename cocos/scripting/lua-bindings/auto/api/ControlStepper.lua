@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ControlStepper
+-- @extend Control
 
 --------------------------------
 -- @function [parent=#ControlStepper] setMinusSprite 

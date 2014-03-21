@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ActionEase
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#ActionEase] getInnerAction 
