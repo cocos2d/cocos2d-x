@@ -2,7 +2,7 @@
 * Input/Output abstraction
 * LuaSocket toolkit
 \*=========================================================================*/
-#include "luasocket_io.h"
+#include "io.h"
 
 /*=========================================================================*\
 * Exported functions

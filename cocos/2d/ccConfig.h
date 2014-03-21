@@ -266,4 +266,14 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_ENABLE_SCRIPT_BINDING 1
 #endif
 
+/** @def CC_CONSTRUCTOR_ACCESS
+ Indicate the init functions access modifier. If value equals to protected, then these functions are protected. 
+ If value equals to public, these functions are public
+ 
+ protected by default.
+ */
+#ifndef CC_CONSTRUCTOR_ACCESS
+#define CC_CONSTRUCTOR_ACCESS protected
+#endif
+
 #endif // __CCCONFIG_H__
