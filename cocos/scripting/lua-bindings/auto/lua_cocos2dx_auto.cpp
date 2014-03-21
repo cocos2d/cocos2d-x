@@ -20845,40 +20845,6 @@ int lua_cocos2dx_Shaky3D_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_Shaky3D_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Shaky3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::Shaky3D();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.Shaky3D");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "Shaky3D",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Shaky3D_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
 static int lua_cocos2dx_Shaky3D_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Shaky3D)");
@@ -20989,50 +20955,6 @@ int lua_cocos2dx_Liquid_setAmplitude(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Liquid_getAmplitude(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Liquid* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Liquid",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Liquid*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_getAmplitude'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getAmplitude();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAmplitude",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Liquid_getAmplitude'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Liquid_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
@@ -21079,6 +21001,50 @@ int lua_cocos2dx_Liquid_setAmplitudeRate(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Liquid_getAmplitude(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Liquid* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Liquid",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Liquid*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Liquid_getAmplitude'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getAmplitude();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAmplitude",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Liquid_getAmplitude'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Liquid_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -21118,40 +21084,6 @@ int lua_cocos2dx_Liquid_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_Liquid_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Liquid* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::Liquid();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.Liquid");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "Liquid",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Liquid_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
 static int lua_cocos2dx_Liquid_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Liquid)");
@@ -21166,9 +21098,8 @@ int lua_register_cocos2dx_Liquid(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"Liquid");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_Liquid_getAmplitudeRate);
         tolua_function(tolua_S,"setAmplitude",lua_cocos2dx_Liquid_setAmplitude);
-        tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Liquid_getAmplitude);
         tolua_function(tolua_S,"setAmplitudeRate",lua_cocos2dx_Liquid_setAmplitudeRate);
-        tolua_function(tolua_S,"new",lua_cocos2dx_Liquid_constructor);
+        tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Liquid_getAmplitude);
         tolua_function(tolua_S,"create", lua_cocos2dx_Liquid_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Liquid).name();
@@ -21267,50 +21198,6 @@ int lua_cocos2dx_Waves_setAmplitude(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Waves_getAmplitude(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Waves* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Waves",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Waves*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_getAmplitude'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getAmplitude();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAmplitude",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Waves_getAmplitude'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Waves_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
@@ -21353,6 +21240,50 @@ int lua_cocos2dx_Waves_setAmplitudeRate(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Waves_setAmplitudeRate'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Waves_getAmplitude(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Waves* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Waves",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Waves*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Waves_getAmplitude'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getAmplitude();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAmplitude",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Waves_getAmplitude'.",&tolua_err);
 #endif
 
     return 0;
@@ -21400,40 +21331,6 @@ int lua_cocos2dx_Waves_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_Waves_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Waves* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::Waves();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.Waves");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "Waves",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Waves_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
 static int lua_cocos2dx_Waves_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Waves)");
@@ -21448,9 +21345,8 @@ int lua_register_cocos2dx_Waves(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"Waves");
         tolua_function(tolua_S,"getAmplitudeRate",lua_cocos2dx_Waves_getAmplitudeRate);
         tolua_function(tolua_S,"setAmplitude",lua_cocos2dx_Waves_setAmplitude);
-        tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Waves_getAmplitude);
         tolua_function(tolua_S,"setAmplitudeRate",lua_cocos2dx_Waves_setAmplitudeRate);
-        tolua_function(tolua_S,"new",lua_cocos2dx_Waves_constructor);
+        tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Waves_getAmplitude);
         tolua_function(tolua_S,"create", lua_cocos2dx_Waves_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Waves).name();
@@ -21770,40 +21666,6 @@ int lua_cocos2dx_Twirl_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_Twirl_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Twirl* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::Twirl();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.Twirl");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "Twirl",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Twirl_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
 static int lua_cocos2dx_Twirl_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Twirl)");
@@ -21822,7 +21684,6 @@ int lua_register_cocos2dx_Twirl(lua_State* tolua_S)
         tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Twirl_getAmplitude);
         tolua_function(tolua_S,"setPosition",lua_cocos2dx_Twirl_setPosition);
         tolua_function(tolua_S,"getPosition",lua_cocos2dx_Twirl_getPosition);
-        tolua_function(tolua_S,"new",lua_cocos2dx_Twirl_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Twirl_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Twirl).name();
