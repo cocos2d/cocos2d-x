@@ -60,7 +60,7 @@ void PrettyPrinterDemo::onEnter()
     log("%s", vistor.getResult().c_str());
     log("-------------------------------");
     
-    Set myset;
+    __Set myset;
     for (int i = 0; i < 30; ++i) {
         myset.addObject(String::createWithFormat("str: %d", i));
     }
