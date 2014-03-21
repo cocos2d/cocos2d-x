@@ -1240,6 +1240,10 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 void Label::setTextColor(const Color4B &color)
 {
     _textColor = color;
+    _textColorF.r = _textColor.r / 255.0f;
+    _textColorF.g = _textColor.g / 255.0f;
+    _textColorF.b = _textColor.b / 255.0f;
+    _textColorF.a = _textColor.a / 255.0f;
 }
 
 void Label::updateColor()
