@@ -61,6 +61,9 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCFrustum.h"
 #include "CCConsole.h"
+#include "CCRenderTexture.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
 
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
@@ -1008,6 +1011,37 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
         CC_SAFE_RELEASE(_eventDispatcher);
         _eventDispatcher = dispatcher;
     }
+}
+
+void Director::saveScreenshot(const std::string& fileName,const std::function<void(const std::string&)>& callback){
+    
+    Image::Format format;
+    if(std::string::npos != fileName.find_last_of(".")){
+        auto extension = fileName.substr(fileName.find_last_of("."),fileName.length());
+        if (!extension.compare(".png")) {
+            format = Image::Format::PNG;
+        } else if(!extension.compare(".jpg")) {
+            format = Image::Format::JPG;
+        } else{
+            CCLOG("cocos2d: the image can only be saved as JPG or PNG format");
+            return;
+        }
+    } else {
+        CCLOG("cocos2d: the image can only be saved as JPG or PNG format");
+        return ;
+    }
+
+    auto renderTexture = RenderTexture::create(getWinSize().width, getWinSize().height, Texture2D::PixelFormat::RGBA8888);
+    renderTexture->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
+    Director::getInstance()->getRunningScene()->visit();
+    renderTexture->end();
+    renderTexture->saveToFile(fileName , format);
+    auto fullPath = FileUtils::getInstance()->getWritablePath() + fileName;
+    auto scheduleCallback = [&,fullPath,callback](float dt){
+        callback(fullPath);
+    };
+    auto _schedule = Director::getInstance()->getRunningScene()->getScheduler();
+    _schedule->schedule(scheduleCallback, this, 0.0f,0,0.0f, false, "screenshot");
 }
 
 /***************************************************
