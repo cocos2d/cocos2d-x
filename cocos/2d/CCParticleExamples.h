@@ -42,8 +42,8 @@ class CC_DLL ParticleFire : public ParticleSystemQuad
 public:
     static ParticleFire* create();
     static ParticleFire* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -53,6 +53,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleFire(){}
+
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
@@ -66,8 +67,8 @@ class CC_DLL ParticleFireworks : public ParticleSystemQuad
 public:
     static ParticleFireworks* create();
     static ParticleFireworks* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -77,6 +78,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleFireworks(){}
+
     bool init(){ return initWithTotalParticles(1500); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -91,8 +93,8 @@ class CC_DLL ParticleSun : public ParticleSystemQuad
 public:
     static ParticleSun* create();
     static ParticleSun* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -102,6 +104,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSun(){}
+
     bool init(){ return initWithTotalParticles(350); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -116,8 +119,8 @@ class CC_DLL ParticleGalaxy : public ParticleSystemQuad
 public:
     static ParticleGalaxy* create();
     static ParticleGalaxy* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -127,6 +130,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleGalaxy(){}
+
     bool init(){ return initWithTotalParticles(200); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -141,8 +145,8 @@ class CC_DLL ParticleFlower : public ParticleSystemQuad
 public:
     static ParticleFlower* create();
     static ParticleFlower* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -152,6 +156,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleFlower(){}
+
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -165,8 +170,8 @@ class CC_DLL ParticleMeteor : public ParticleSystemQuad
 public:
     static ParticleMeteor * create();
     static ParticleMeteor* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -176,6 +181,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleMeteor(){}
+
     bool init(){ return initWithTotalParticles(150); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -189,8 +195,8 @@ class CC_DLL ParticleSpiral : public ParticleSystemQuad
 public:
     static ParticleSpiral* create();
     static ParticleSpiral* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -200,6 +206,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSpiral(){}
+
     bool init(){ return initWithTotalParticles(500); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -214,8 +221,8 @@ class CC_DLL ParticleExplosion : public ParticleSystemQuad
 public:
     static ParticleExplosion* create();
     static ParticleExplosion* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -225,6 +232,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleExplosion(){}
+
     bool init(){ return initWithTotalParticles(700); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -238,8 +246,8 @@ class CC_DLL ParticleSmoke : public ParticleSystemQuad
 public:
     static ParticleSmoke* create();
     static ParticleSmoke* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -249,6 +257,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSmoke(){}
+
     bool init(){ return initWithTotalParticles(200); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -262,8 +271,8 @@ class CC_DLL ParticleSnow : public ParticleSystemQuad
 public:
     static ParticleSnow* create();
     static ParticleSnow* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -273,6 +282,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleSnow(){}
+
     bool init(){ return initWithTotalParticles(700); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 
@@ -286,8 +296,8 @@ class CC_DLL ParticleRain : public ParticleSystemQuad
 public:
     static ParticleRain* create();
     static ParticleRain* createWithTotalParticles(int numberOfParticles);
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -297,6 +307,7 @@ protected:
      * @lua NA
      */
     virtual ~ParticleRain(){}
+
     bool init(){ return initWithTotalParticles(1000); }
     virtual bool initWithTotalParticles(int numberOfParticles);
 

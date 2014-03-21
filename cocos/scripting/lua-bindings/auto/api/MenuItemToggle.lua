@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MenuItemToggle
+-- @extend MenuItem
 
 --------------------------------
 -- @function [parent=#MenuItemToggle] setSubItems 

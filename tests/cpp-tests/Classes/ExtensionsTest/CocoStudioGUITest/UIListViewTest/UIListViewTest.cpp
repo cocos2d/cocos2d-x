@@ -95,7 +95,7 @@ bool UIListViewTest_Vertical::init()
         listView->setItemModel(default_item);
         
         // add default item
-        int count = _array->count();
+        ssize_t count = _array->count();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -125,7 +125,7 @@ bool UIListViewTest_Vertical::init()
         }
         // insert custom item
         Vector<Widget*>& items = listView->getItems();
-        int items_count = items.size();
+        ssize_t items_count = items.size();
         for (int i = 0; i < count / 4; ++i)
         {
             Button* custom_button = Button::create();
@@ -149,7 +149,7 @@ bool UIListViewTest_Vertical::init()
         {
             Widget* item = listView->getItem(i);
             Button* button = static_cast<Button*>(item->getChildByName("Title Button"));
-            int index = listView->getIndex(item);
+            ssize_t index = listView->getIndex(item);
             button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
         }
         
@@ -179,12 +179,14 @@ void UIListViewTest_Vertical::selectedItemEvent(Ref *pSender, ListViewEventType 
         case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_START:
         {
             ListView* listView = static_cast<ListView*>(pSender);
+            CC_UNUSED_PARAM(listView);
             CCLOG("select child start index = %ld", listView->getCurSelectedIndex());
             break;
         }
         case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_END:
         {
             ListView* listView = static_cast<ListView*>(pSender);
+            CC_UNUSED_PARAM(listView);
             CCLOG("select child end index = %ld", listView->getCurSelectedIndex());
             break;
         }
@@ -278,7 +280,7 @@ bool UIListViewTest_Horizontal::init()
         listView->setItemModel(default_item);
         
         // add default item
-        int count = _array->count();
+        ssize_t count = _array->count();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -308,7 +310,7 @@ bool UIListViewTest_Horizontal::init()
         }
         // insert custom item
         Vector<Widget*>& items = listView->getItems();
-        int items_count = items.size();
+        ssize_t items_count = items.size();
         for (int i = 0; i < count / 4; ++i)
         {
             Button* custom_button = Button::create();
@@ -332,7 +334,7 @@ bool UIListViewTest_Horizontal::init()
         {
             Widget *item = listView->getItem(i);
             Button *button = static_cast<Button*>(item->getChildByName("Title Button"));
-            int index = listView->getIndex(item);
+            ssize_t index = listView->getIndex(item);
             button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
         }
         
@@ -362,12 +364,14 @@ void UIListViewTest_Horizontal::selectedItemEvent(Ref *pSender, ListViewEventTyp
         case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_START:
         {
             ListView* listView = static_cast<ListView*>(pSender);
+            CC_UNUSED_PARAM(listView);
             CCLOG("select child start index = %ld", listView->getCurSelectedIndex());
             break;
         }
         case cocos2d::ui::LISTVIEW_ONSELECTEDITEM_END:
         {
             ListView* listView = static_cast<ListView*>(pSender);
+            CC_UNUSED_PARAM(listView);
             CCLOG("select child end index = %ld", listView->getCurSelectedIndex());
             break;
         }

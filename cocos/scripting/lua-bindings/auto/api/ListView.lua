@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ListView
+-- @extend ScrollView
 
 --------------------------------
 -- @function [parent=#ListView] getIndex 

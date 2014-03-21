@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Twirl
+-- @extend Grid3DAction
 
 --------------------------------
 -- @function [parent=#Twirl] setAmplitudeRate 
@@ -51,9 +52,5 @@
 -- @function [parent=#Twirl] update 
 -- @param self
 -- @param #float float
-        
---------------------------------
--- @function [parent=#Twirl] Twirl 
--- @param self
         
 return nil

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseBounceIn
+-- @extend EaseBounce
 
 --------------------------------
 -- @function [parent=#EaseBounceIn] create 

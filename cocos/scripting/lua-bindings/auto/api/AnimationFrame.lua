@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module AnimationFrame
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#AnimationFrame] setSpriteFrame 

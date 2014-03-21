@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EditBox
+-- @extend ControlButton,IMEDelegate,
 
 --------------------------------
 -- @function [parent=#EditBox] getText 

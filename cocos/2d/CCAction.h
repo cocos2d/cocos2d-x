@@ -186,13 +186,14 @@ public:
     virtual void stop() override;
     virtual void step(float dt) override;
     virtual bool isDone() const  override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     Speed();
     virtual ~Speed(void);
     /** initializes the action */
     bool initWithAction(ActionInterval *action, float speed);
 
+protected:
     float _speed;
     ActionInterval *_innerAction;
 
@@ -236,7 +237,7 @@ public:
     virtual bool isDone() const override;
     virtual void stop() override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -255,6 +256,7 @@ protected:
      * @lua NA
      */
     virtual ~Follow();
+    
     /**
      * Initializes the action with a set boundary or with no boundary.
      *
@@ -264,6 +266,7 @@ protected:
      */
     bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
 
+protected:
     // node to follow
     Node *_followedNode;
 

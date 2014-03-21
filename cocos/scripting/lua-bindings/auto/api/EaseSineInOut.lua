@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseSineInOut
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseSineInOut] create 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TileMapAtlas
+-- @extend AtlasNode
 
 --------------------------------
 -- @function [parent=#TileMapAtlas] initWithTileFile 

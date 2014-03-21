@@ -608,7 +608,7 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
         //is gravity enable
         if (!body->isGravityEnabled())
         {
-            body->applyForce(-_gravity);
+            body->applyForce(-_gravity * body->getMass());
         }
         
         // add body to space
@@ -931,7 +931,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
     // reset the gravity
     if (!body->isGravityEnabled())
     {
-        body->applyForce(-_gravity);
+        body->applyForce(_gravity * body->getMass());
     }
     
     // remove shaps
@@ -997,8 +997,8 @@ void PhysicsWorld::setGravity(const Vect& gravity)
             // reset gravity for body
             if (!body->isGravityEnabled())
             {
-                body->applyForce(-_gravity);
-                body->applyForce(gravity);
+                body->applyForce(_gravity * body->getMass());
+                body->applyForce(- gravity * body->getMass());
             }
         }
     }

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Grid3D
+-- @extend GridBase
 
 --------------------------------
 -- overload function: create(size_table)

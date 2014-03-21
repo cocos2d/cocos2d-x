@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TiledGrid3DAction
+-- @extend GridAction
 
 --------------------------------
 -- @function [parent=#TiledGrid3DAction] getGrid 

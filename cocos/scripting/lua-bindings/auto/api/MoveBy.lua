@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MoveBy
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#MoveBy] create 
