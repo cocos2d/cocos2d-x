@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,20 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __COCOSNATIVEACTIVITY_H__
-#define __COCOSNATIVEACTIVITY_H__
+package org.cocos2dx.cpp_tests;
 
-#include "CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+import org.cocos2dx.lib.Cocos2dxActivity;
 
-/**
- * This is the interface to the Android native activity
- */
-
-void enableAccelerometerJni(void);
-void disableAccelerometerJni(void);
-void setAccelerometerIntervalJni(float interval);
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
-#endif // __COCOSNATIVEACTIVITY_H__
+public class AppActivity extends Cocos2dxActivity {
+}

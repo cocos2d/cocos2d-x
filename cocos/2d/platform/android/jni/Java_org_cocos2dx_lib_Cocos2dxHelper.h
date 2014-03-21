@@ -36,6 +36,9 @@ extern void terminateProcessJNI();
 extern std::string getCurrentLanguageJNI();
 extern std::string getPackageNameJNI();
 extern std::string getFileDirectoryJNI();
+extern void enableAccelerometerJni();
+extern void disableAccelerometerJni();
+extern void setAccelerometerIntervalJni(float interval);
 // functions for UserDefault
 extern bool getBoolForKeyJNI(const char* pKey, bool defaultValue);
 extern int getIntegerForKeyJNI(const char* pKey, int defaultValue);

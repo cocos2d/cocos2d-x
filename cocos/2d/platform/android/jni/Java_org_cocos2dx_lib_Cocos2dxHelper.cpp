@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include <android/log.h>
 #include <string>
 #include "JniHelper.h"
+#include "CCFileUtilsAndroid.h"
+#include "android/asset_manager_jni.h"
 #include "CCString.h"
 #include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
@@ -47,6 +49,11 @@ extern "C" {
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
         g_apkPath = JniHelper::jstring2string(apkPath);
+    }
+
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext(JNIEnv*  env, jobject thiz, jobject context, jobject assetManager) {
+        JniHelper::setClassLoaderFrom(context);
+        FileUtilsAndroid::setassetmanager(AAssetManager_fromJava(env, assetManager));
     }
 }
 
@@ -154,6 +161,33 @@ std::string getCurrentLanguageJNI() {
     }
 
     return ret;
+}
+
+void enableAccelerometerJni() {
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "enableAccelerometer", "()V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void setAccelerometerIntervalJni(float interval) {
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setAccelerometerInterval", "(F)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, interval);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void disableAccelerometerJni() {
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "disableAccelerometer", "()V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
 }
 
 // functions for UserDefault
