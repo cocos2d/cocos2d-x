@@ -14,7 +14,7 @@
 + (int)  addTwoNumbers:(NSDictionary *)dict;
 + (void) callbackScriptHandler;
 
-- (void) init;
+- (id) init;
 @end
 
 #endif  //  COCOS2DX_SAMPLES_TESTLUA_PROJ_IOS_LUAOBJECTCBRIDGETEST_H

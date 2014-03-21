@@ -224,7 +224,7 @@ __String* __String::create(const std::string& str)
     return ret;
 }
 
-__String* __String::createWithData(const unsigned char* data, int nLen)
+__String* __String::createWithData(const unsigned char* data, size_t nLen)
 {
     __String* ret = NULL;
     if (data != NULL)

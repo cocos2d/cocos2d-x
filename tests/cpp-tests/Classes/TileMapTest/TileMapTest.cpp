@@ -930,7 +930,7 @@ TMXIsoZorder::TMXIsoZorder()
     map->setPosition(Point(-s.width/2,0));
     
     _tamara = Sprite::create(s_pathSister1);
-    map->addChild(_tamara, map->getChildren().size() );
+    map->addChild(_tamara, (int)map->getChildren().size() );
     _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
     _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Point( mapWidth/2,0)));
@@ -998,7 +998,7 @@ TMXOrthoZorder::TMXOrthoZorder()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     _tamara = Sprite::create(s_pathSister1);
-    map->addChild(_tamara,  map->getChildren().size());
+    map->addChild(_tamara,  (int)map->getChildren().size());
     _tamara->retain();
     _tamara->setAnchorPoint(Point(0.5f,0));
 
