@@ -169,7 +169,15 @@ public:
         addChild(label, 9999);
         label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
         
-        auto labelwait = LabelTTF::create("wait transfer files ...", "Arial", 22);
+		string strShowMsg ="";
+		if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
+		{
+			strShowMsg = "waiting for debugger to connect ...";
+		}else
+		{
+			strShowMsg = "waiting for file transfer ...";
+		}		
+        auto labelwait = LabelTTF::create(strShowMsg.c_str(), "Arial", 22);
         addChild(labelwait, 10000);
         labelwait->setPosition( Point(VisibleRect::center().x, VisibleRect::center().y) );
         
