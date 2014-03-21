@@ -28,6 +28,11 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#Label] getTextColor 
+-- @param self
+-- @return color4B_table#color4B_table ret (return value: color4B_table)
+        
+--------------------------------
 -- @function [parent=#Label] getCommonLineHeight 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -145,6 +150,11 @@
 -- @return TextVAlignment#TextVAlignment ret (return value: cc.TextVAlignment)
         
 --------------------------------
+-- @function [parent=#Label] setTextColor 
+-- @param self
+-- @param #color4B_table color4b
+        
+--------------------------------
 -- @function [parent=#Label] setHeight 
 -- @param self
 -- @param #unsigned int int
@@ -157,7 +167,7 @@
 --------------------------------
 -- @function [parent=#Label] enableGlow 
 -- @param self
--- @param #color3B_table color3b
+-- @param #color4B_table color4b
         
 --------------------------------
 -- @function [parent=#Label] getLetter 
@@ -297,6 +307,11 @@
 -- @function [parent=#Label] setScale 
 -- @param self
 -- @param #float float
+        
+--------------------------------
+-- @function [parent=#Label] updateDisplayedOpacity 
+-- @param self
+-- @param #unsigned char char
         
 --------------------------------
 -- @function [parent=#Label] setScaleY 
