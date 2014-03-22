@@ -53,9 +53,12 @@ Menu::~Menu()
     CCLOGINFO("In the destructor of Menu. %p", this);
 }
 
+
 Menu* Menu::create()
 {
-    return Menu::create(nullptr, nullptr);
+    // nullptr doesn't work for WP8. Compiler can't convert  nulltpr termination to MenuItem*
+    // must use NULL for variable arg termination
+    return Menu::create(nullptr, NULL);
 }
 
 Menu * Menu::create(MenuItem* item, ...)
@@ -104,7 +107,8 @@ Menu* Menu::createWithItems(MenuItem* item, va_list args)
 
 Menu* Menu::createWithItem(MenuItem* item)
 {
-    return Menu::create(item, nullptr);
+    // nullptr doesn't work for WP8
+    return Menu::create(item, NULL);
 }
 
 bool Menu::init()
