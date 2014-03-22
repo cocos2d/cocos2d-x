@@ -40,6 +40,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0145527218DDF9B0001D1561 /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		06C0F2EF186AD822003594D5 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06CAAABA186AD63B0012A414 /* ObjectFactory.cpp */; };
 		06C0F2F0186AD824003594D5 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06CAAABA186AD63B0012A414 /* ObjectFactory.cpp */; };
 		06CAAAC5186AD7E50012A414 /* TriggerObj.h in Headers */ = {isa = PBXBuildFile; fileRef = 06CAAAC1186AD63B0012A414 /* TriggerObj.h */; };
@@ -6187,6 +6188,7 @@
 				1A5701CB180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				1A5701E2180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
+				0145527218DDF9B0001D1561 /* CCTweenFunction.cpp in Sources */,
 				1A5701E6180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
 				1A5701EA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
 				1A5701EE180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
