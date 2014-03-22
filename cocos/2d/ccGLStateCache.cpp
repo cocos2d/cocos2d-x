@@ -217,7 +217,9 @@ void bindVAO(GLuint vaoId)
     }
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - GL Vertex Attrib functions
+#endif
 
 void enableVertexAttribs( unsigned int flags )
 {
@@ -260,8 +262,9 @@ void enableVertexAttribs( unsigned int flags )
     }
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - GL Uniforms functions
-
+#endif
 void setProjectionMatrixDirty( void )
 {
     s_currentProjectionMatrix = -1;
