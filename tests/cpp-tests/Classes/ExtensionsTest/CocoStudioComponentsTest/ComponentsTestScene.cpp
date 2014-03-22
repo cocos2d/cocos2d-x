@@ -89,7 +89,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         
         itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        auto menuBack = Menu::create(itemBack, nullptr);
+        auto menuBack = Menu::create(itemBack, NULL);
         menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         

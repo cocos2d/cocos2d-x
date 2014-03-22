@@ -134,7 +134,7 @@ void SceneEditorTestLayer::onEnter()
     nextItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(SceneEditorTestLayer::nextCallback, this) );
 
     
-    Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
+    Menu *menu = Menu::create(backItem, restartItem, nextItem, NULL);
     
     float fScale = 0.5f;
     
@@ -473,9 +473,9 @@ cocos2d::Node* TmxMapComponentTest::createGameScene()
 	ActionInterval *rotateToBack = RotateTo::create(2, 0);
 	ActionInterval *actionToBack = SkewTo::create(2, 0, 0);
 
-	tmxMap->getNode()->runAction(Sequence::create(actionTo, actionToBack, nullptr));
-	tmxMap->getNode()->runAction(Sequence::create(rotateTo, rotateToBack, nullptr));
-	tmxMap->getNode()->runAction(Sequence::create(actionScaleTo, actionScaleToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(actionTo, actionToBack, NULL));
+	tmxMap->getNode()->runAction(Sequence::create(rotateTo, rotateToBack, NULL));
+	tmxMap->getNode()->runAction(Sequence::create(actionScaleTo, actionScaleToBack, NULL));
     return node;
 }
 
@@ -523,7 +523,7 @@ cocos2d::Node* ParticleComponentTest::createGameScene()
 
 	ComRender* Particle = static_cast<ComRender*>(node->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
 	ActionInterval*  jump = JumpBy::create(5, Point(-500,0), 50, 4);
-	FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), nullptr);
+	FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), NULL);
 	Particle->getNode()->runAction(action);
     return node;
 }

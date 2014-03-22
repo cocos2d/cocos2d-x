@@ -1275,7 +1275,7 @@ LabelTTFDistanceField::LabelTTFDistanceField()
         DelayTime::create(1.0f),
         ScaleTo::create(6.0f,5.0f,5.0f),
         ScaleTo::create(6.0f,1.0f,1.0f),
-        nullptr);
+        NULL);
     label1->runAction(RepeatForever::create(action));
 
     auto label2 = Label::createWithTTF(ttfConfig,"Distance Field",TextHAlignment::CENTER,size.width);

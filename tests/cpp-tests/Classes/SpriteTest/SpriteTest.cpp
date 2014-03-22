@@ -4939,7 +4939,7 @@ SpriteCullTest1::SpriteCullTest1()
     auto down = MoveBy::create(3, Point(0,-s.height*2));
     auto back4 = down->reverse();
 
-    auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, nullptr);
+    auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, NULL);
     grossini->runAction(seq);
     this->addChild(grossini);
 }
@@ -4980,7 +4980,7 @@ SpriteCullTest2::SpriteCullTest2()
 
     grossini->setScale(0.1);
     
-    auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, nullptr);
+    auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, NULL);
     grossini->runAction(seq);
     this->addChild(grossini);
 }
