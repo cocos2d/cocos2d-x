@@ -130,7 +130,9 @@ void BaseClippingNodeTest::setup()
 }
 
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - BasicTest
+#endif
 
 std::string BasicTest::title() const
 {
@@ -209,7 +211,9 @@ Node* BasicTest::content()
 }
 
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ShapeTest
+#endif
 
 std::string ShapeTest::title() const
 {
@@ -235,8 +239,9 @@ Node* ShapeTest::content()
     return node;
 }
 
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ShapeInvertedTest
+#endif
 
 std::string ShapeInvertedTest::title() const
 {
@@ -255,7 +260,9 @@ ClippingNode* ShapeInvertedTest::clipper()
     return clipper;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - SpriteTest
+#endif
 
 std::string SpriteTest::title() const
 {
@@ -288,7 +295,9 @@ Node* SpriteTest::content()
     return node;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - SpriteNoAlphaTest
+#endif
 
 std::string SpriteNoAlphaTest::title() const
 {
@@ -307,7 +316,9 @@ ClippingNode* SpriteNoAlphaTest::clipper()
     return clipper;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - SpriteInvertedTest
+#endif
 
 std::string SpriteInvertedTest::title() const
 {
@@ -327,7 +338,9 @@ ClippingNode* SpriteInvertedTest::clipper()
     return clipper;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - NestedTest
+#endif
 
 std::string NestedTest::title() const
 {
@@ -372,7 +385,9 @@ void NestedTest::setup()
 
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - HoleDemo
+#endif
 
 HoleDemo::~HoleDemo()
 {
@@ -467,7 +482,9 @@ void HoleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
     this->pokeHoleAtPoint(point);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ScrollViewDemo
+#endif
 
 std::string ScrollViewDemo::title() const
 {
@@ -543,7 +560,9 @@ void ScrollViewDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *
     _scrolling = false;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - RawStencilBufferTests
+#endif
 
 //#if COCOS2D_DEBUG > 1
 
