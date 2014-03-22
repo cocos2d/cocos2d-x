@@ -59,7 +59,10 @@ class EventCustom;
 class EventListenerCustom;
 class TextureCache;
 class Renderer;
+
+#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 class Console;
+#endif
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -368,7 +371,9 @@ public:
     /** Returns the Console 
      @since v3.0
      */
+#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     Console* getConsole() const { return _console; }
+#endif
 
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
@@ -477,9 +482,11 @@ protected:
     /* Renderer for the Director */
     Renderer *_renderer;
 
+#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     /* Console for the director */
     Console *_console;
-    
+#endif
+
     // GLViewProtocol will recreate stats labels to fit visible rect
     friend class GLViewProtocol;
 };
