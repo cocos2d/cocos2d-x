@@ -605,7 +605,7 @@ void SocketIO::destroyInstance()
     CC_SAFE_DELETE(_inst);
 }
 
-CC_DEPRECATED_ATTRIBUTE SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri)
+SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri)
 {
 
     return SocketIO::connect(uri, delegate);
