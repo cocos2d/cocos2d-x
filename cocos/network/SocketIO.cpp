@@ -567,6 +567,8 @@ void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
 {
 	log("SIOClient::fireEvent called with event name: %s and data: %s", eventName.c_str(), data.c_str());
 
+	_delegate->fireEventToScript(this, eventName, data);
+
 	if(_eventRegistry[eventName])
     {
 		SIOEvent e = _eventRegistry[eventName];
@@ -576,7 +578,7 @@ void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
 		return;
 	}
 
-	log("SIOClient::fireEvent no event with name %s found", eventName.c_str());
+	log("SIOClient::fireEvent no native event with name %s found", eventName.c_str());
 }
 
 //begin SocketIO methods
@@ -603,7 +605,14 @@ void SocketIO::destroyInstance()
     CC_SAFE_DELETE(_inst);
 }
     
-SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri)
+CC_DEPRECATED_ATTRIBUTE SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri)
+{
+
+	return SocketIO::connect(uri, delegate);
+
+}
+
+SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& delegate)
 {
 	std::string host = uri;
 	int port = 0;

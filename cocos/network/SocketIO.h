@@ -92,6 +92,7 @@ public:
         virtual void onMessage(SIOClient* client, const std::string& data) = 0;
         virtual void onClose(SIOClient* client) = 0;
         virtual void onError(SIOClient* client, const std::string& data) = 0;
+		virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
     };
 
 	/**
@@ -100,7 +101,9 @@ public:
      *  @param  uri      The URI of the socket.io server
      *  @return An initialized SIOClient if connected successfully, otherwise NULL
      */
-	static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
+	static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate);
+
+	CC_DEPRECATED_ATTRIBUTE  static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
 	
 private:
 
