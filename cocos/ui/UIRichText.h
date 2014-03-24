@@ -108,7 +108,8 @@ public:
     virtual const Size& getContentSize() const;
     void formatText();
     virtual void ignoreContentAdaptWithSize(bool ignore);
-    
+    virtual std::string getDescription() const override;
+	
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
