@@ -221,7 +221,7 @@ void LuaStack::addLuaLoader(lua_CFunction func)
     
     // insert loader into index 2
     lua_pushcfunction(_state, func);                                   /* L: package, loaders, func */
-    for (int i = lua_objlen(_state, -2) + 1; i > 2; --i)
+    for (int i = (int)(lua_objlen(_state, -2) + 1); i > 2; --i)
     {
         lua_rawgeti(_state, -2, i - 1);                                /* L: package, loaders, func, function */
         // we call lua_rawgeti, so the loader table now is at -3
@@ -446,11 +446,11 @@ int LuaStack::executeFunction(int numArgs)
     int ret = 0;
     if (lua_isnumber(_state, -1))
     {
-        ret = lua_tointeger(_state, -1);
+        ret = (int)lua_tointeger(_state, -1);
     }
     else if (lua_isboolean(_state, -1))
     {
-        ret = lua_toboolean(_state, -1);
+        ret = (int)lua_toboolean(_state, -1);
     }
     // remove return value from stack
     lua_pop(_state, 1);                                                /* L: ... [G] */
