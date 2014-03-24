@@ -41,7 +41,7 @@ enum {
 
 class CC_DLL Component : public Ref
 {
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
