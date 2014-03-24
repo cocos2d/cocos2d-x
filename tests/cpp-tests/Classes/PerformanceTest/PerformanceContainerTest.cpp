@@ -327,7 +327,7 @@ void TemplateVectorPerfTest::generateTestFunctions()
         { "replace",     [=](){
             Vector<Node*> nodeVector = createVector();
             
-            srand(time(nullptr));
+            srand((unsigned)time(nullptr));
             ssize_t index = rand() % quantityOfNodes;
             
             CC_PROFILER_START(this->profilerName());
@@ -549,7 +549,7 @@ void ArrayPerfTest::generateTestFunctions()
         { "setObject",     [=](){
             __Array* nodeVector = createArray();
             
-            srand(time(nullptr));
+            srand((unsigned)time(nullptr));
             ssize_t index = rand() % quantityOfNodes;
             
             CC_PROFILER_START(this->profilerName());
@@ -618,7 +618,7 @@ void ArrayPerfTest::generateTestFunctions()
             
         } } ,
         { "removeAllObjects",       [=](){
-            Array* nodeVector = createArray();
+            __Array* nodeVector = createArray();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -867,7 +867,7 @@ std::string TemplateMapStringKeyPerfTest::subtitle() const
 void DictionaryStringKeyPerfTest::generateTestFunctions()
 {
     auto createDict = [this](){
-        Dictionary* ret = Dictionary::create();
+        __Dictionary* ret = __Dictionary::create();
         
         for( int i=0; i<quantityOfNodes; ++i)
         {
@@ -880,7 +880,7 @@ void DictionaryStringKeyPerfTest::generateTestFunctions()
     
     TestFunction testFunctions[] = {
         { "setObject",    [=](){
-            Dictionary* dict = Dictionary::create();
+            __Dictionary* dict = __Dictionary::create();
             
             std::string* keys = new std::string[quantityOfNodes];
             

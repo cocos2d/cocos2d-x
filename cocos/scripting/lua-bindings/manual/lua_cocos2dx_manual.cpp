@@ -2659,7 +2659,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
                 return 0;
             }
             
-            self->drawPolygon(points, size, fillColor, borderWidth, borderColor);
+            self->drawPolygon(points, (int)size, fillColor, borderWidth, borderColor);
             CC_SAFE_DELETE_ARRAY(points);
             return 0;
         }        

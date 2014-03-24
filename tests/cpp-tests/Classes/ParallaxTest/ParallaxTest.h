@@ -55,7 +55,7 @@ protected:
     float _moveTimer;
     float _addTimer;
     Vector<Sprite*> _childList;
-    int _preListSize;
+    ssize_t _preListSize;
     int _printCount;
     
     float _addChildStep;

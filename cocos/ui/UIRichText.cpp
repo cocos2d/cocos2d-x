@@ -184,7 +184,7 @@ void RichText::formatText()
         if (_ignoreSize)
         {
             addNewLine();
-            for (int i=0; i<_richElements.size(); i++)
+            for (ssize_t i=0; i<_richElements.size(); i++)
             {
                 RichElement* element = _richElements.at(i);
                 Node* elementRenderer = NULL;
@@ -219,7 +219,7 @@ void RichText::formatText()
         else
         {
             addNewLine();
-            for (int i=0; i<_richElements.size(); i++)
+            for (ssize_t i=0; i<_richElements.size(); i++)
             {
                 
                 RichElement* element = static_cast<RichElement*>(_richElements.at(i));
@@ -262,7 +262,7 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
     {
         float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
         std::string curText = text;
-        int stringLength = curText.length();
+        size_t stringLength = curText.length();
         int leftLength = stringLength * (1.0f - overstepPercent);
         std::string leftWords = curText.substr(0, leftLength);
         std::string cutWords = curText.substr(leftLength, curText.length()-1);
@@ -322,12 +322,12 @@ void RichText::formarRenderers()
         
         Vector<Node*>* row = (_elementRenders[0]);
         float nextPosX = 0.0f;
-        for (int j=0; j<row->size(); j++)
+        for (ssize_t j=0; j<row->size(); j++)
         {
             Node* l = row->at(j);
             l->setAnchorPoint(Point::ZERO);
             l->setPosition(Point(nextPosX, 0.0f));
-            _elementRenderersContainer->addChild(l, 1, j);
+            _elementRenderersContainer->addChild(l, 1, (int)j);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
             newContentSizeHeight = MAX(newContentSizeHeight, iSize.height);
@@ -340,11 +340,11 @@ void RichText::formarRenderers()
         float newContentSizeHeight = 0.0f;
         float *maxHeights = new float[_elementRenders.size()];
         
-        for (size_t i=0; i<_elementRenders.size(); i++)
+        for (ssize_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
-            for (int j=0; j<row->size(); j++)
+            for (ssize_t j=0; j<row->size(); j++)
             {
                 Node* l = row->at(j);
                 maxHeight = MAX(l->getContentSize().height, maxHeight);
@@ -355,18 +355,18 @@ void RichText::formarRenderers()
         
         
         float nextPosY = _customSize.height;
-        for (size_t i=0; i<_elementRenders.size(); i++)
+        for (ssize_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float nextPosX = 0.0f;
             nextPosY -= (maxHeights[i] + _verticalSpace);
             
-            for (int j=0; j<row->size(); j++)
+            for (ssize_t j=0; j<row->size(); j++)
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Point::ZERO);
                 l->setPosition(Point(nextPosX, nextPosY));
-                _elementRenderersContainer->addChild(l, 1, i*10 + j);
+                _elementRenderersContainer->addChild(l, 1, (int)(i*10 + j));
                 nextPosX += l->getContentSize().width;
             }
         }
@@ -375,7 +375,7 @@ void RichText::formarRenderers()
     }
     
     size_t length = _elementRenders.size();
-    for (size_t i = 0; i<length; i++)
+    for (ssize_t i = 0; i<length; i++)
 	{
         Vector<Node*>* l = _elementRenders[i];
         l->clear();

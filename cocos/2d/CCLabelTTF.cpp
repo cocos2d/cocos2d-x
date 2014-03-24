@@ -93,7 +93,7 @@ bool LabelTTF::initWithString(const std::string& string, const std::string& font
     _renderLabel->setDimensions(dimensions.width,dimensions.height);
     _renderLabel->setAlignment(hAlignment,vAlignment);
     _renderLabel->setFontName(fontName);
-    this->setContentSize(_renderLabel->getContentSize());
+    _contentDirty = true;
 
     return true;
 }
@@ -102,7 +102,7 @@ bool LabelTTF::initWithStringAndTextDefinition(const std::string& string, FontDe
 {
     _renderLabel->setFontDefinition(textDefinition);
     _renderLabel->setString(string);
-    this->setContentSize(_renderLabel->getContentSize());
+    _contentDirty = true;
     
     return true;
 }
@@ -120,7 +120,7 @@ const std::string& LabelTTF::getString() const
 
 std::string LabelTTF::getDescription() const
 {
-    return StringUtils::format("<LabelTTF | FontName = %s, FontSize = %.1f, Label = '%s'>", _renderLabel->getFontName().c_str(), _renderLabel->getFontSize(), _renderLabel->getString().c_str());
+    return StringUtils::format("<LabelTTF | FontName = %s, FontSize = %f, Label = '%s'>", _renderLabel->getFontName().c_str(), _renderLabel->getFontSize(), _renderLabel->getString().c_str());
 }
 
 TextHAlignment LabelTTF::getHorizontalAlignment() const
@@ -180,14 +180,16 @@ void LabelTTF::setFontName(const std::string& fontName)
 
 void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
 {
-    _renderLabel->enableShadow(Color3B::BLACK,shadowOffset,shadowOpacity,shadowBlur);
+    Color4B temp(Color3B::BLACK);
+    temp.a = 255 * shadowOpacity;
+    _renderLabel->enableShadow(temp,shadowOffset,shadowBlur);
     _contentDirty = true;
 }
 
 void LabelTTF::disableShadow(bool updateTexture)
 {
     _renderLabel->disableEffect();
-    this->setContentSize(_renderLabel->getContentSize());
+    _contentDirty = true;
 }
 
 void LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool updateTexture)
@@ -199,13 +201,12 @@ void LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool u
 void LabelTTF::disableStroke(bool updateTexture)
 {
     _renderLabel->disableEffect();
-    this->setContentSize(_renderLabel->getContentSize());
+    _contentDirty = true;
 }
 
 void LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
 {
-    _renderLabel->setColor(tintColor);
-    this->setContentSize(_renderLabel->getContentSize());
+    _renderLabel->setTextColor(Color4B(tintColor));
 }
 
 void LabelTTF::setTextDefinition(const FontDefinition& theDefinition)

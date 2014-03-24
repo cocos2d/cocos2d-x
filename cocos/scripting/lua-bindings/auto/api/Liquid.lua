@@ -14,14 +14,14 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Liquid] getAmplitude 
--- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
 -- @function [parent=#Liquid] setAmplitudeRate 
 -- @param self
 -- @param #float float
+        
+--------------------------------
+-- @function [parent=#Liquid] getAmplitude 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Liquid] create 
@@ -41,9 +41,5 @@
 -- @function [parent=#Liquid] update 
 -- @param self
 -- @param #float float
-        
---------------------------------
--- @function [parent=#Liquid] Liquid 
--- @param self
         
 return nil

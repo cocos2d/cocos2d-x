@@ -6,7 +6,7 @@ import socket
 import time
 
 HOST_MAC = 'localhost'
-HOST_ADNROID = '10.10.30.64'
+HOST_ADNROID = '10.10.40.64'
 HOST_IOS = '10.10.30.61'
 PORT = 5678
 
@@ -75,12 +75,24 @@ def MAC_BUILD():
 	return buildAndRun()
 #----------------autotest build and run end----------------#
 
+PATH_ANDROID_SRC = 'tests/cpp-tests/proj.android/'
+FILE_ANDROID_DELETE = ['libs','gen','assets','bin','obj']
 #----------------autotest-android build and run----------------#
 def ANDROID_BUILD():
+	def checkDevice():
+		cmd = 'adb devices'
+		infoDev = os.popen(cmd).readlines()
+		firstDev = infoDev[1]
+		if len(firstDev) < 5 or firstDev.find('device') < 0:
+			print 'no android device.'
+			return False
+		else:
+			print 'device info:', firstDev
+		return True
 	def cleanProj():
-		infoClean = os.system('rm -rf libs gen obj assets bin')
-		print 'infoClean: ', infoClean
-		infoClean = os.system('adb uninstall org.cocos2dx.testcpp');
+		for strFile in FILE_ANDROID_DELETE:
+			infoClean = os.system('rm -rf '+PATH_ANDROID_SRC+strFile)
+		infoClean = os.system('adb uninstall org.cocos2dx.cpp_tests');
 		print 'infoClean: ', infoClean
 		if infoClean != 0:
 			print 'clean **CLEAN FAILED**'
@@ -88,19 +100,26 @@ def ANDROID_BUILD():
 	def updateProperty():
 		infoUpdate = os.system('android update project -p  ./cocos/2d/platform/android/java/ -t 12')
 		print 'cocos update:', infoUpdate
-		infoUpdate = os.system('android update project -p ./tests/proj.android/ -t 12')
+		infoUpdate = os.system('android update project -p '+PATH_ANDROID_SRC+' -t 12')
 		print 'test update:', infoUpdate
 	def buildProj():
-		infoBuild = os.system('./build/android-build.py testcpp')
-		print 'infoBuild testcpp: ', infoBuild
-		infoBuild = os.system('ant -buildfile ./tests/proj.android/ debug install')
+		infoBuild = os.system('./build/android-build.py  -p 13 cpp-tests')
+		print 'infoBuild cpp_tests: ', infoBuild
+		infoBuild = os.system('ant -buildfile '+PATH_ANDROID_SRC+' debug')
 		print 'infoBuild: ', infoBuild
 		if infoBuild != 0:
 			print 'build **BUILD FAILED**'
 		time.sleep(sleep_time)
 		return infoBuild
+	def installProj():
+		cmd = 'adb install '+PATH_ANDROID_SRC+'bin/CppTests-debug.apk'
+		infoInstall = os.system(cmd)
+		print 'infoInstall:', infoInstall
+		if infoInstall != 0:
+			print 'install **INSTALL FAILED**'
+		return infoInstall
 	def openProj():
-		cmd = 'adb shell am start -n org.cocos2dx.testcpp/org.cocos2dx.testcpp.Cocos2dxActivity'
+		cmd = 'adb shell am start -n org.cocos2dx.cpp_tests/org.cocos2dx.cpp_tests.Cocos2dxActivity'
 		print 'cmd: ', cmd
 		infoOpen = os.system(cmd)
 		print 'infoOpen: ', infoOpen
@@ -109,11 +128,12 @@ def ANDROID_BUILD():
 		time.sleep(sleep_time)
 		return True
 	def buildAndRun():
+		if not checkDevice():
+			return False
 		cleanProj()
 		updateProperty()
-		if buildProj() != 0:
-			cleanProj()
-			buildProj()
+		buildProj()
+		installProj()
 		return openProj()
 	return buildAndRun()
 #----------------autotest-android build and run end----------------#
@@ -121,11 +141,12 @@ def ANDROID_BUILD():
 def main():
 	print 'will build mac project.'
 	suc_build_mac = MAC_BUILD()
-	#print 'will build android project.'
-	#suc_build_android = ANDROID_BUILD()
+	print 'will build android project.'
+	suc_build_android = ANDROID_BUILD()
 	if suc_build_mac:
 		autotest(TYPE_MAC)
 	if suc_build_android:
+		print 'will run android autotest.'
 		autotest(TYPE_ANDROID)
 
 

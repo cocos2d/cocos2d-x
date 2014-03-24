@@ -197,7 +197,7 @@ void TestSearchPath::onEnter()
         if (fp)
         {
             char szReadBuf[100] = {0};
-            int read = fread(szReadBuf, 1, strlen(szBuf), fp);
+            size_t read = fread(szReadBuf, 1, strlen(szBuf), fp);
             if (read > 0)
                 log("The content of file from writable path: %s", szReadBuf);
             fclose(fp);

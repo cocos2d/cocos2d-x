@@ -144,13 +144,13 @@ public:
      *
      * @todo support blur for shadow effect
      */
-    virtual void enableShadow(const Color3B& shadowColor = Color3B::BLACK,const Size &offset = Size(2,-2), float opacity = 0.75f, int blurRadius = 0);
+    virtual void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
 
     /** only support for TTF */
     virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
 
     /** only support for TTF */
-    virtual void enableGlow(const Color3B& glowColor);
+    virtual void enableGlow(const Color4B& glowColor);
 
     /** disable shadow/outline/glow rendering */
     virtual void disableEffect();
@@ -200,12 +200,20 @@ public:
     virtual void setFontName(const std::string& fontName);
     virtual const std::string& getFontName() const;
 
-    virtual void setFontSize(int fontSize);
-    virtual int getFontSize() const;
+    virtual void setFontSize(float fontSize);
+    virtual float getFontSize() const;
+
+    /** Sets the text color
+     *
+     */
+    void setTextColor(const Color4B &color);
+
+    const Color4B& getTextColor() const { return _textColor;}
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
     virtual Sprite * getLetter(int lettetIndex);
 
@@ -303,7 +311,7 @@ protected:
     bool _contentDirty;
     bool _fontDirty;
     std::string _fontName;
-    int         _fontSize;
+    float         _fontSize;
     LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;
@@ -343,17 +351,19 @@ protected:
     bool _useA8Shader;
 
     LabelEffect _currLabelEffect;
-    Color3B _effectColor;
+    Color4B _effectColor;
+    Color4F _effectColorF;
 
     GLuint _uniformEffectColor;
+    GLuint _uniformTextColor;
     CustomCommand _customCommand;   
 
     Size    _shadowOffset;
-    float   _shadowOpacity;
     int     _shadowBlurRadius;
     kmMat4  _parentTransform;
 
-    Color4B _outlineColor;
+    Color4B _textColor;
+    Color4F _textColorF;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

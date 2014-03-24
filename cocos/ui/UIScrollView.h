@@ -325,8 +325,11 @@ public:
     virtual std::string getDescription() const override;
     
     virtual void onEnter() override;
-protected:
+
+CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
+
+protected:
     virtual void initRenderer() override;
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);

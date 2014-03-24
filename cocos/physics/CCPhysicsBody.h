@@ -270,7 +270,7 @@ public:
      * whether the body is enabled
      * if the body it isn't enabled, it will not has simulation by world
      */
-    inline bool isEnabled() const { return _enable; }
+    inline bool isEnabled() const { return _enabled; }
     /**
      * set the enable value.
      * if the body it isn't enabled, it will not has simulation by world
@@ -278,12 +278,12 @@ public:
     void setEnable(bool enable);
     
     /** whether the body can rotation */
-    inline bool isRotationEnabled() const { return _rotationEnable; }
+    inline bool isRotationEnabled() const { return _rotationEnabled; }
     /** set the body is allow rotation or not */
     void setRotationEnable(bool enable);
     
     /** whether this physics body is affected by the physics world’s gravitational force. */
-    inline bool isGravityEnabled() const { return _gravityEnable; }
+    inline bool isGravityEnabled() const { return _gravityEnabled; }
     /** set the body is affected by the physics world's gravitational force or not. */
     void setGravityEnable(bool enable);
     
@@ -308,6 +308,7 @@ protected:
     
     void removeJoint(PhysicsJoint* joint);
     inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
+    void updateMass(float oldMass, float newMass);
     
 protected:
     PhysicsBody();
@@ -320,9 +321,9 @@ protected:
     PhysicsWorld* _world;
     PhysicsBodyInfo* _info;
     bool _dynamic;
-    bool _enable;
-    bool _rotationEnable;
-    bool _gravityEnable;
+    bool _enabled;
+    bool _rotationEnabled;
+    bool _gravityEnabled;
     bool _massDefault;
     bool _momentDefault;
     float _mass;

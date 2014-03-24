@@ -221,8 +221,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     int length = cc_wcslen(utf16String);
 
     float offsetAdjust = _letterPadding / 2;  
-    int bitmapWidth;
-    int bitmapHeight;
+    long bitmapWidth;
+    long bitmapHeight;
     Rect tempRect;
     FontLetterDefinition tempDef;
 
