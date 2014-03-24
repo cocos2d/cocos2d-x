@@ -154,7 +154,7 @@ void TransitionPageTurn::onEnter()
                 action,
                 CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }
@@ -170,7 +170,7 @@ void TransitionPageTurn::onEnter()
                 action,
                 CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }

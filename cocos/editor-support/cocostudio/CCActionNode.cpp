@@ -351,7 +351,7 @@ void ActionNode::playAction()
         _action->release();
     }
 
-    _action = Sequence::create(_actionSpawn, NULL);
+    _action = Sequence::create(_actionSpawn, nullptr);
     _action->retain();
 
     this->runAction();

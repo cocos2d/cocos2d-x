@@ -56,10 +56,23 @@ Menu::~Menu()
 
 Menu* Menu::create()
 {
-    // nullptr doesn't work for WP8. Compiler can't convert  nulltpr termination to MenuItem*
-    // must use NULL for variable arg termination
-    return Menu::create(nullptr, NULL);
+    return Menu::create(nullptr, nullptr);
 }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+Menu * Menu::variadicCreate(MenuItem* item, ...)
+{
+    va_list args;
+    va_start(args,item);
+    
+    Menu *ret = Menu::createWithItems(item, args);
+    
+    va_end(args);
+    
+    return ret;
+}
+#else
+
 
 Menu * Menu::create(MenuItem* item, ...)
 {
@@ -72,6 +85,8 @@ Menu * Menu::create(MenuItem* item, ...)
     
     return ret;
 }
+#endif
+
 
 Menu* Menu::createWithArray(const Vector<MenuItem*>& arrayOfItems)
 {
@@ -107,8 +122,7 @@ Menu* Menu::createWithItems(MenuItem* item, va_list args)
 
 Menu* Menu::createWithItem(MenuItem* item)
 {
-    // nullptr doesn't work for WP8
-    return Menu::create(item, NULL);
+    return Menu::create(item, nullptr);
 }
 
 bool Menu::init()

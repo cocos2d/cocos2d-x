@@ -69,7 +69,7 @@ bool GameOverLayer::init()
 		this->runAction( Sequence::create(
                                 DelayTime::create(3),
                                 CallFunc::create(CC_CALLBACK_0(GameOverLayer::gameOverDone, this)),
-                                NULL));
+                                nullptr));
 		
         
         auto itemBack = MenuItemFont::create("Back", [](Ref* sender){
@@ -80,7 +80,7 @@ bool GameOverLayer::init()
         
         itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        auto menuBack = Menu::create(itemBack, NULL);
+        auto menuBack = Menu::create(itemBack, nullptr);
         menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         

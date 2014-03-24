@@ -179,7 +179,7 @@ void ArmatureTestLayer::onEnter()
     restartItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(ArmatureTestLayer::restartCallback, this) );
     nextItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(ArmatureTestLayer::nextCallback, this) );
 
-    Menu *menu = Menu::create(backItem, restartItem, nextItem, NULL);
+    Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
 
     menu->setPosition(Point::ZERO);
     backItem->setPosition(Point(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
@@ -371,7 +371,7 @@ void TestPerformance::onEnter()
     MenuItemFont *increase = MenuItemFont::create(" + ", CC_CALLBACK_1(TestPerformance::onIncrease, this));
     increase->setColor(Color3B(0,200,20));
 
-    Menu *menu = Menu::create(decrease, increase, NULL);
+    Menu *menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Point(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
     addChild(menu, 10000);
@@ -540,14 +540,14 @@ void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType mo
         {
             ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
             armature->stopAllActions();
-            armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), NULL));
+            armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
         else if (movementID == "FireMax")
         {
             ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
             armature->stopAllActions();
-            armature->runAction(Sequence::create(actionToLeft,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback2, this)), NULL));
+            armature->runAction(Sequence::create(actionToLeft,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback2, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
     }
@@ -1278,7 +1278,7 @@ void TestArmatureNesting2::onEnter()
     LabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
     MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::changeMountCallback, this));
 
-    Menu* pMenu =Menu::create(pMenuItem, NULL);
+    Menu* pMenu =Menu::create(pMenuItem, nullptr);
 
     pMenu->setPosition( Point() );
     pMenuItem->setPosition( Point( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
@@ -1330,7 +1330,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 
     ActionInterval *move = CCMoveTo::create(2, point);
     armature->stopAllActions();
-    armature->runAction(Sequence::create(move, NULL));
+    armature->runAction(Sequence::create(move, nullptr));
 }
 
 void TestArmatureNesting2::changeMountCallback(Ref* pSender)

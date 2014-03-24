@@ -337,8 +337,8 @@ void GUIEditorTestScene::onEnter()
     
     auto pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(GUIEditorTestScene::BackCallback, this));
     
-    Menu* pMenu =CCMenu::create(pMenuItem, NULL);
-    
+    Menu* pMenu =CCMenu::create(pMenuItem, nullptr);
+
     pMenu->setPosition( Point::ZERO );
     pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
