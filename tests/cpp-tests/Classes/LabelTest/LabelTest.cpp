@@ -1552,6 +1552,37 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // add label to the scene
     this->addChild(fontStrokeAndShadow);
     fontStrokeAndShadow->setPosition(Point(s.width/2,s.height/4*1.1));
+    
+    auto buttonBG = MenuItemImage::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+    buttonBG->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    buttonBG->setPosition(VisibleRect::left());
+    
+    // create the label stroke and shadow
+    strokeShaodwTextDef._fontSize = 18;
+    strokeShaodwTextDef._fontName = "Marker Felt";
+    
+    strokeShaodwTextDef._stroke._strokeEnabled = true;
+    strokeShaodwTextDef._stroke._strokeColor   = Color3B::BLACK;
+    strokeShaodwTextDef._stroke._strokeSize    = 3.0f;
+    
+    strokeShaodwTextDef._shadow._shadowEnabled = false;
+    strokeShaodwTextDef._shadow._shadowOffset  = Size(1, 1);
+    strokeShaodwTextDef._shadow._shadowOpacity = 1.0;
+    strokeShaodwTextDef._shadow._shadowBlur    = 0.5f;
+    
+    strokeShaodwTextDef._fontFillColor   = Color3B::WHITE;
+    
+    // shadow + stroke label
+    fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Test", strokeShaodwTextDef);
+    
+    // add label to the scene
+    buttonBG->addChild(fontStrokeAndShadow);
+    fontStrokeAndShadow->setPosition(Point(buttonBG->getContentSize().width/2, buttonBG->getContentSize().height/2));
+    
+    auto menu = Menu::create(buttonBG, nullptr);
+    menu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    menu->setPosition(Point::ZERO);
+    addChild(menu);
 }
 
 std::string TTFFontShadowAndStroke::title() const
