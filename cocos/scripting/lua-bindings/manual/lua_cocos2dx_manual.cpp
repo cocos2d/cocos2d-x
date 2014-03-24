@@ -4696,116 +4696,6 @@ static void extendLabel(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static int lua_cocos2dx_CCConsole_log(lua_State* tolua_S)
-{
-    printf("---int lua_cocos2dx_CCConsole_log.\n");
-    cocos2d::Console* cobj = nullptr;
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    
-    if (argc == 1)
-    {
-        std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
-        
-        cobj->log(arg0.c_str());
-        return 1;
-    }
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "log",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_log'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-static int lua_cocos2dx_CCConsole_addCommand(lua_State* tolua_S)
-{
-    printf("---int lua_cocos2dx_CCConsole_addCommand.\n");
-    cocos2d::Console* cobj = nullptr;
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (ok)
-    {
-        cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
-        ValueMap arg0;
-        ok &= luaval_to_ccvaluemap(tolua_S, 2, &arg0);
-        //
-        static std::string name = std::string(arg0["name"].asString());
-        static std::string help = std::string(arg0["help"].asString());
-        
-        ok &= toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err);
-        LUA_FUNCTION handler = 0;
-        if (ok) {
-            handler = (  toluafix_ref_function(tolua_S,3,0));
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)cobj, handler, ScriptHandlerMgr::HandlerType::NODE);
-            
-            static struct Console::Command outValue = {
-                name.c_str(),
-                help.c_str(),
-                [=](int fd, const std::string& args)
-                {
-                    //调用lua的callback,也就是第三个;
-                    tolua_pushnumber(tolua_S, fd);
-                    tolua_pushstring(tolua_S, args.c_str());
-                    
-                    LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
-                }
-            };
-            //CCLOG("addcommand in auto: %s, %s.", outValue.name, outValue.help);
-            cobj->addCommand(outValue);
-        }
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "log",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_log'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-static int extendConsole(lua_State*  tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.Console");
-    tolua_cclass(tolua_S,"CCConsole","cc.Console","",NULL);
-    
-    tolua_beginmodule(tolua_S,"CCConsole");
-        tolua_function(tolua_S,"log", lua_cocos2dx_CCConsole_log);
-        tolua_function(tolua_S,"addCommand", lua_cocos2dx_CCConsole_addCommand);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::Console).name();
-    g_luaType[typeName] = "cc.Console";
-    g_typeCast["CCConsole"] = "cc.CCConsole";
-    return 0;
-}
-
 static int lua_cocos2dx_TMXTiledMap_getPropertiesForGID(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4900,7 +4790,7 @@ tolua_lerror:
     return 0;
 }
 
-static int lua_cocos2dx_CCConsole_llistenOnTCP(lua_State* tolua_S)
+static int lua_cocos2dx_CCConsole_listenOnTCP(lua_State* tolua_S)
 {
     cocos2d::Console* cobj = nullptr;
     int argc = 0;
@@ -4964,7 +4854,7 @@ static int lua_cocos2dx_CCConsole_addCommand(lua_State* tolua_S)
         LUA_FUNCTION handler = 0;
         if (ok) {
             handler = (  toluafix_ref_function(tolua_S,3,0));
-            ScriptHandlerMgr::getInstance()->addCustomHandler((void*)cobj, handler, ScriptHandlerMgr::CustomType::CONSOLE);
+            ScriptHandlerMgr::getInstance()->addCustomHandler((void*)cobj, handler);
             
             struct Console::Command outValue = {
                 name.c_str(),
@@ -4998,7 +4888,7 @@ static void extendConsole(lua_State* tolua_S)
     tolua_cclass(tolua_S,"CCConsole","cc.Console","",NULL);
     
     tolua_beginmodule(tolua_S,"CCConsole");
-        tolua_function(tolua_S,"listenOnTCP", lua_cocos2dx_CCConsole_llistenOnTCP);
+        tolua_function(tolua_S,"listenOnTCP", lua_cocos2dx_CCConsole_listenOnTCP);
         tolua_function(tolua_S,"sendSocket", lua_cocos2dx_CCConsole_sendSocket);
         tolua_function(tolua_S,"addCommand", lua_cocos2dx_CCConsole_addCommand);
     tolua_endmodule(tolua_S);
