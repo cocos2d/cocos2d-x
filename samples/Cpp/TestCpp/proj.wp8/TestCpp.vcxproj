@@ -74,7 +74,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;BUILDING_LIBCURL;HTTP_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -86,12 +86,12 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurld.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -108,7 +108,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -119,10 +119,11 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurl.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -135,7 +136,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -147,11 +148,12 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurld.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -164,7 +166,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PSAPI_VERSION=2;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -175,10 +177,11 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurl.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -589,12 +592,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
       <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libcurl\proj.wp8\libcurl.vcxproj">
-      <Project>{bf4854e9-c02b-49fe-b9dd-d6373d3bb0ef}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libwebsockets\proj.wp8\libwebsockets.vcxproj">
-      <Project>{3afa1c7f-a08e-4aa1-ae03-89c7d302c5fa}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
       <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>

@@ -19,15 +19,3 @@
 [submodule "cocos2dx/platform/third_party/winrt/angleproject"]
 	path = cocos2dx/platform/third_party/winrt/angleproject
 	url = https://github.com/stammen/angleproject
-[submodule "cocos2dx/platform/third_party/winrt/libcurl"]
-	path = cocos2dx/platform/third_party/winrt/libcurl
-	url = https://github.com/martell/libcurl-winrt.git
-[submodule "cocos2dx/platform/third_party/winrt/winrtsock"]
-	path = cocos2dx/platform/third_party/winrt/winrtsock
-	url = https://github.com/martell/winrtsock.git
-[submodule "cocos2dx/platform/third_party/winrt/libwebsockets"]
-	path = cocos2dx/platform/third_party/winrt/libwebsockets
-	url = https://github.com/martell/libwebsockets.git
-[submodule "cocos2dx/platform/third_party/winrt/openssl"]
-	path = cocos2dx/platform/third_party/winrt/openssl
-	url = https://github.com/martell/OpenSSL-WP8.git

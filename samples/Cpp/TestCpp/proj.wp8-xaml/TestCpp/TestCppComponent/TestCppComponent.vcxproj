@@ -540,9 +540,6 @@
     <ProjectReference Include="..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
       <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libwebsockets\proj.wp8\libwebsockets.vcxproj">
-      <Project>{3afa1c7f-a08e-4aa1-ae03-89c7d302c5fa}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
       <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
     </ProjectReference>
