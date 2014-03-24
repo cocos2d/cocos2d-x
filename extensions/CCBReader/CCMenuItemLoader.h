@@ -11,7 +11,7 @@ class CCBReader;
  *  @js NA
  *  @lua NA
  */
-class CCMenuItemLoader : public CCNodeLoader {
+class CC_EX_DLL CCMenuItemLoader : public CCNodeLoader {
     public:
         virtual ~CCMenuItemLoader() {};
 

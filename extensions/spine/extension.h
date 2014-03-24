@@ -94,51 +94,51 @@ namespace cocos2d { namespace extension {
  * Functions that must be implemented:
  */
 
-void _AtlasPage_createTexture (AtlasPage* self, const char* path);
-void _AtlasPage_disposeTexture (AtlasPage* self);
-char* _Util_readFile (const char* path, int* length);
+CC_EX_DLL void _AtlasPage_createTexture (AtlasPage* self, const char* path);
+CC_EX_DLL void _AtlasPage_disposeTexture (AtlasPage* self);
+CC_EX_DLL char* _Util_readFile (const char* path, int* length);
 
 /*
  * Internal API available for extension:
  */
 
-void* _malloc (size_t size);
-void* _calloc (size_t num, size_t size);
-void _free (void* ptr);
+CC_EX_DLL void* _malloc (size_t size);
+CC_EX_DLL void* _calloc (size_t num, size_t size);
+CC_EX_DLL void _free (void* ptr);
 
-void _setMalloc (void* (*_malloc) (size_t size));
-void _setFree (void (*_free) (void* ptr));
+CC_EX_DLL void _setMalloc (void* (*_malloc) (size_t size));
+CC_EX_DLL void _setFree (void (*_free) (void* ptr));
 
-char* _readFile (const char* path, int* length);
+CC_EX_DLL char* _readFile (const char* path, int* length);
 
 /**/
 
-void _AttachmentLoader_init (AttachmentLoader* self, /**/
+CC_EX_DLL void _AttachmentLoader_init (AttachmentLoader* self, /**/
 		void (*dispose) (AttachmentLoader* self), /**/
 		Attachment* (*newAttachment) (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name));
-void _AttachmentLoader_deinit (AttachmentLoader* self);
-void _AttachmentLoader_setError (AttachmentLoader* self, const char* error1, const char* error2);
-void _AttachmentLoader_setUnknownTypeError (AttachmentLoader* self, AttachmentType type);
+CC_EX_DLL void _AttachmentLoader_deinit (AttachmentLoader* self);
+CC_EX_DLL void _AttachmentLoader_setError (AttachmentLoader* self, const char* error1, const char* error2);
+CC_EX_DLL void _AttachmentLoader_setUnknownTypeError (AttachmentLoader* self, AttachmentType type);
 
 /**/
 
-void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
+CC_EX_DLL void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
 		void (*dispose) (Attachment* self));
-void _Attachment_deinit (Attachment* self);
+CC_EX_DLL void _Attachment_deinit (Attachment* self);
 
 /**/
 
-void _Timeline_init (Timeline* self, /**/
+CC_EX_DLL void _Timeline_init (Timeline* self, /**/
 		void (*dispose) (Timeline* self), /**/
 		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha));
-void _Timeline_deinit (Timeline* self);
+CC_EX_DLL void _Timeline_deinit (Timeline* self);
 
 /**/
 
-void _CurveTimeline_init (CurveTimeline* self, int frameCount, /**/
+CC_EX_DLL void _CurveTimeline_init (CurveTimeline* self, int frameCount, /**/
 		void (*dispose) (Timeline* self), /**/
 		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha));
-void _CurveTimeline_deinit (CurveTimeline* self);
+CC_EX_DLL void _CurveTimeline_deinit (CurveTimeline* self);
 
 }} // namespace cocos2d { namespace extension {
 

@@ -50,10 +50,10 @@ struct RegionAttachment {
 	float uvs[8];
 };
 
-RegionAttachment* RegionAttachment_create (const char* name);
-void RegionAttachment_setUVs (RegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate);
-void RegionAttachment_updateOffset (RegionAttachment* self);
-void RegionAttachment_computeVertices (RegionAttachment* self, float x, float y, Bone* bone, float* vertices);
+CC_EX_DLL RegionAttachment* RegionAttachment_create (const char* name);
+CC_EX_DLL void RegionAttachment_setUVs (RegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate);
+CC_EX_DLL void RegionAttachment_updateOffset (RegionAttachment* self);
+CC_EX_DLL void RegionAttachment_computeVertices (RegionAttachment* self, float x, float y, Bone* bone, float* vertices);
 
 }} // namespace cocos2d { namespace extension {
 

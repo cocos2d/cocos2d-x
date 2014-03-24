@@ -2366,19 +2366,22 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     // parents
-    CCSpriteBatchNode* batch = CCSpriteBatchNode::create("animations/grossini.png", 50);
+    CCSpriteBatchNode* batch = CCSpriteBatchNode::create("animations/QNewUI0.png", 50);
     
     addChild(batch, 0, kTagSpriteBatchNode);
     
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/QNewUI0.plist");
+
+     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
     
-    CCSprite* sprite1 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+    CCSprite* sprite1 = CCSprite::createWithSpriteFrameName("D:/编辑器/UI/Release.win32 - 副本/EditorDefaultRes/GUI/image.png");
+   
     sprite1->setPosition(ccp( s.width/3, s.height/2));
     
-    CCSprite* sprite2 = CCSprite::createWithSpriteFrameName("grossini_dance_02.png");
+    CCSprite* sprite2 = CCSprite::createWithSpriteFrameName("D:/编辑器/UI/Release.win32 - 副本/EditorDefaultRes/GUI/button.png");
     sprite2->setPosition(ccp(50,50));
     
-    CCSprite* sprite3 = CCSprite::createWithSpriteFrameName("grossini_dance_03.png");
+    CCSprite* sprite3 = CCSprite::createWithSpriteFrameName("D:/编辑器/UI/Release.win32 - 副本/EditorDefaultRes/GUI/selected01.png");
     sprite3->setPosition(ccp(-50,-50));
     
     batch->addChild(sprite1);

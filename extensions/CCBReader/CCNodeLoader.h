@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "CCBReader.h"
 #include "CCBValue.h"
+#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -46,7 +47,7 @@ class CCBReader;
  *  @js NA
  *  @lua NA
  */
-class CCNodeLoader : public CCObject {
+class CC_EX_DLL CCNodeLoader : public CCObject {
     public:
         CCNodeLoader();
         virtual ~CCNodeLoader();

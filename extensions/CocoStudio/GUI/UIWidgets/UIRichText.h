@@ -51,7 +51,7 @@ protected:
     friend class RichText;
 };
     
-class RichElementText : public RichElement
+class CC_EX_DLL RichElementText : public RichElement
 {
 public:
     RichElementText(){_type = RICH_TEXT;};
@@ -66,7 +66,7 @@ protected:
     
 };
     
-class RichElementImage : public RichElement
+class CC_EX_DLL RichElementImage : public RichElement
 {
 public:
     RichElementImage(){_type = RICH_IMAGE;};
@@ -80,7 +80,7 @@ protected:
     friend class RichText;
 };
     
-class RichElementCustomNode : public RichElement
+class CC_EX_DLL RichElementCustomNode : public RichElement
 {
 public:
     RichElementCustomNode(){_type = RICH_CUSTOM;};
@@ -92,7 +92,7 @@ protected:
     friend class RichText;
 };
     
-class RichText : public Widget
+class CC_EX_DLL RichText : public Widget
 {
 public:
     RichText();

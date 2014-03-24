@@ -40,12 +40,12 @@ typedef struct {
 	const char* const error;
 } SkeletonJson;
 
-SkeletonJson* SkeletonJson_createWithLoader (AttachmentLoader* attachmentLoader);
-SkeletonJson* SkeletonJson_create (Atlas* atlas);
-void SkeletonJson_dispose (SkeletonJson* self);
+CC_EX_DLL SkeletonJson* SkeletonJson_createWithLoader (AttachmentLoader* attachmentLoader);
+CC_EX_DLL SkeletonJson* SkeletonJson_create (Atlas* atlas);
+CC_EX_DLL void SkeletonJson_dispose (SkeletonJson* self);
 
-SkeletonData* SkeletonJson_readSkeletonData (SkeletonJson* self, const char* json);
-SkeletonData* SkeletonJson_readSkeletonDataFile (SkeletonJson* self, const char* path);
+CC_EX_DLL SkeletonData* SkeletonJson_readSkeletonData (SkeletonJson* self, const char* json);
+CC_EX_DLL SkeletonData* SkeletonJson_readSkeletonDataFile (SkeletonJson* self, const char* path);
 
 }} // namespace cocos2d { namespace extension {
 
