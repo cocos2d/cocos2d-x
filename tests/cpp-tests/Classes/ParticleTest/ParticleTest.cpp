@@ -1836,6 +1836,20 @@ std::string PremultipliedAlphaTest::subtitle() const
     return "no black halo, particles should fade out";
 }
 
+void PremultipliedAlphaTest::readdPaticle(float delta)
+{
+    static int count = 0;
+    
+    if (count++ % 2 == 0)
+    {
+        _emitter->removeFromParent();
+    }
+    else
+    {
+        this->addChild(_emitter);
+    }
+}
+
 void PremultipliedAlphaTest::onEnter()
 {
     ParticleDemo::onEnter();
@@ -1863,6 +1877,8 @@ void PremultipliedAlphaTest::onEnter()
     _emitter->setEndColorVar(Color4F(0, 0, 0, 0));
 
     this->addChild(_emitter, 10);
+    
+    schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0);
 }
 
 // PremultipliedAlphaTest2
@@ -1882,12 +1898,12 @@ void PremultipliedAlphaTest2::onEnter()
 
 std::string PremultipliedAlphaTest2::title() const
 {
-    return "premultiplied alpha 2";
+    return "premultiplied alpha and readd child test";
 }
 
 std::string PremultipliedAlphaTest2::subtitle() const
 {
-    return "Arrows should be faded";
+    return "Arrows should be faded\n animation should be normal";
 }
 
 
