@@ -11,7 +11,7 @@ class CCBReader;
  *  @js NA
  *  @lua NA
  */
-class CCLabelTTFLoader : public CCNodeLoader {
+class CC_EX_DLL CCLabelTTFLoader : public CCNodeLoader {
     public:
         virtual ~CCLabelTTFLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelTTFLoader, loader);

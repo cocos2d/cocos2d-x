@@ -34,7 +34,7 @@ namespace cocos2d { namespace extension {
 /**
 Draws a skeleton.
 */
-class CCSkeleton: public cocos2d::CCNodeRGBA, public cocos2d::CCBlendProtocol {
+class CC_EX_DLL CCSkeleton: public cocos2d::CCNodeRGBA, public cocos2d::CCBlendProtocol {
 public:
 	Skeleton* skeleton;
 	Bone* rootBone;

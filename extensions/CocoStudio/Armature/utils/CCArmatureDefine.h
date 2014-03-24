@@ -65,7 +65,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-const char *armatureVersion();
+CC_EX_DLL const char *armatureVersion();
 
 NS_CC_EXT_END
 

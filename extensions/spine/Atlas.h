@@ -26,6 +26,8 @@
 #ifndef SPINE_ATLAS_H_
 #define SPINE_ATLAS_H_
 
+#include "ExtensionMacros.h"
+
 namespace cocos2d { namespace extension {
 
 typedef enum {
@@ -59,8 +61,8 @@ struct AtlasPage {
 	AtlasPage* next;
 };
 
-AtlasPage* AtlasPage_create (const char* name);
-void AtlasPage_dispose (AtlasPage* self);
+CC_EX_DLL AtlasPage* AtlasPage_create (const char* name);
+CC_EX_DLL void AtlasPage_dispose (AtlasPage* self);
 
 /**/
 
@@ -82,8 +84,8 @@ struct AtlasRegion {
 	AtlasRegion* next;
 };
 
-AtlasRegion* AtlasRegion_create ();
-void AtlasRegion_dispose (AtlasRegion* self);
+CC_EX_DLL AtlasRegion* AtlasRegion_create ();
+CC_EX_DLL void AtlasRegion_dispose (AtlasRegion* self);
 
 /**/
 
@@ -93,13 +95,13 @@ typedef struct {
 } Atlas;
 
 /* Image files referenced in the atlas file will be prefixed with dir. */
-Atlas* Atlas_readAtlas (const char* data, int length, const char* dir);
+CC_EX_DLL Atlas* Atlas_readAtlas (const char* data, int length, const char* dir);
 /* Image files referenced in the atlas file will be prefixed with the directory containing the atlas file. */
-Atlas* Atlas_readAtlasFile (const char* path);
-void Atlas_dispose (Atlas* atlas);
+CC_EX_DLL Atlas* Atlas_readAtlasFile (const char* path);
+CC_EX_DLL void Atlas_dispose (Atlas* atlas);
 
 /* Returns 0 if the region was not found. */
-AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name);
+CC_EX_DLL AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name);
 
 }} // namespace cocos2d { namespace extension {
 

@@ -26,6 +26,8 @@
 #ifndef SPINE_BONEDATA_H_
 #define SPINE_BONEDATA_H_
 
+#include "ExtensionMacros.h"
+
 namespace cocos2d { namespace extension {
 
 typedef struct BoneData BoneData;
@@ -38,8 +40,8 @@ struct BoneData {
 	float scaleX, scaleY;
 };
 
-BoneData* BoneData_create (const char* name, BoneData* parent);
-void BoneData_dispose (BoneData* self);
+CC_EX_DLL BoneData* BoneData_create (const char* name, BoneData* parent);
+CC_EX_DLL void BoneData_dispose (BoneData* self);
 
 }} // namespace cocos2d { namespace extension {
 

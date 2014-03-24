@@ -32,20 +32,21 @@ THE SOFTWARE.
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "ExtensionMacros.h"
 
 /** Initializes the database. If path is null, it will create an in-memory DB */
-void localStorageInit( const char *fullpath);
+CC_EX_DLL void localStorageInit( const char *fullpath);
 
 /** Frees the allocated resources */
-void localStorageFree();
+CC_EX_DLL void localStorageFree();
 
 /** sets an item in the LS */
-void localStorageSetItem( const char *key, const char *value);
+CC_EX_DLL void localStorageSetItem( const char *key, const char *value);
 
 /** gets an item from the LS */
-const char* localStorageGetItem( const char *key );
+CC_EX_DLL const char* localStorageGetItem( const char *key );
 
 /** removes an item from the LS */
-void localStorageRemoveItem( const char *key );
+CC_EX_DLL void localStorageRemoveItem( const char *key );
 
 #endif // __JSB_LOCALSTORAGE_H

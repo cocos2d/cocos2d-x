@@ -36,13 +36,13 @@ typedef struct {
 	const void* const entries;
 } AnimationStateData;
 
-AnimationStateData* AnimationStateData_create (SkeletonData* skeletonData);
-void AnimationStateData_dispose (AnimationStateData* self);
+CC_EX_DLL AnimationStateData* AnimationStateData_create (SkeletonData* skeletonData);
+CC_EX_DLL void AnimationStateData_dispose (AnimationStateData* self);
 
-void AnimationStateData_setMixByName (AnimationStateData* self, const char* fromName, const char* toName, float duration);
-void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Animation* to, float duration);
+CC_EX_DLL void AnimationStateData_setMixByName (AnimationStateData* self, const char* fromName, const char* toName, float duration);
+CC_EX_DLL void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Animation* to, float duration);
 /* Returns 0 if there is no mixing between the animations. */
-float AnimationStateData_getMix (AnimationStateData* self, Animation* from, Animation* to);
+CC_EX_DLL float AnimationStateData_getMix (AnimationStateData* self, Animation* from, Animation* to);
 
 }} // namespace cocos2d { namespace extension {
 
