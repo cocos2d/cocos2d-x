@@ -147,7 +147,7 @@ bool WsThreadHelper::createThread(const WebSocket& ws)
 //    pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_DETACHED);
     
     // Creates websocket thread
-	if (0 == pthread_create(&_subThreadInstance, &attr, WsThreadEntry::entry, this))
+    if (0 == pthread_create(&_subThreadInstance, &attr, WsThreadEntry::entry, this))
     {
         return true;
     }
@@ -249,10 +249,10 @@ WebSocket::~WebSocket()
     CC_SAFE_RELEASE_NULL(_wsHelper);
     
     for (int i = 0; _wsProtocols[i].callback != NULL; ++i)
-	{
+    {
         CC_SAFE_DELETE_ARRAY(_wsProtocols[i].name);
     }
-	CC_SAFE_DELETE_ARRAY(_wsProtocols);
+    CC_SAFE_DELETE_ARRAY(_wsProtocols);
 }
 
 bool WebSocket::init(const Delegate& delegate,
@@ -289,7 +289,7 @@ bool WebSocket::init(const Delegate& delegate,
     if(pos != std::string::npos){
         host.erase(pos, host.size());
     }else if((pos = host.find("/")) != std::string::npos) {
-    	host.erase(pos, host.size());
+        host.erase(pos, host.size());
     }
     
     _host = host;
@@ -309,8 +309,8 @@ bool WebSocket::init(const Delegate& delegate,
         protocolCount = 1;
     }
     
-	_wsProtocols = new libwebsocket_protocols[protocolCount+1];
-	memset(_wsProtocols, 0, sizeof(libwebsocket_protocols)*(protocolCount+1));
+    _wsProtocols = new libwebsocket_protocols[protocolCount+1];
+    memset(_wsProtocols, 0, sizeof(libwebsocket_protocols)*(protocolCount+1));
 
     if (protocols && protocols->size() > 0)
     {
@@ -377,9 +377,9 @@ void WebSocket::close()
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(_wsHelper);
     
     if (_readyState == kStateClosing || _readyState == kStateClosed)
-	{
+    {
         return;
-	}
+    }
     CCLOG("websocket (%p) connection closed by client", this);
     _readyState = kStateClosed;
 
@@ -411,7 +411,7 @@ int WebSocket::onSubThreadLoop()
     
     // Sleep 50 ms
 #ifdef WIN32
-	Sleep(50);
+    Sleep(50);
 #else
     usleep(50000);
 #endif
@@ -421,29 +421,29 @@ int WebSocket::onSubThreadLoop()
 
 void WebSocket::onSubThreadStarted()
 {
-	struct lws_context_creation_info info;
-	memset(&info, 0, sizeof info);
+    struct lws_context_creation_info info;
+    memset(&info, 0, sizeof info);
     
-	/*
-	 * create the websocket context.  This tracks open connections and
-	 * knows how to route any traffic and which protocol version to use,
-	 * and if each connection is client or server side.
-	 *
-	 * For this client-only demo, we tell it to not listen on any port.
-	 */
+    /*
+     * create the websocket context.  This tracks open connections and
+     * knows how to route any traffic and which protocol version to use,
+     * and if each connection is client or server side.
+     *
+     * For this client-only demo, we tell it to not listen on any port.
+     */
     
-	info.port = CONTEXT_PORT_NO_LISTEN;
-	info.protocols = _wsProtocols;
+    info.port = CONTEXT_PORT_NO_LISTEN;
+    info.protocols = _wsProtocols;
 #ifndef LWS_NO_EXTENSIONS
-	info.extensions = libwebsocket_get_internal_extensions();
+    info.extensions = libwebsocket_get_internal_extensions();
 #endif
-	info.gid = -1;
-	info.uid = -1;
+    info.gid = -1;
+    info.uid = -1;
     info.user = (void*)this;
     
-	_wsContext = libwebsocket_create_context(&info);
+    _wsContext = libwebsocket_create_context(&info);
     
-	if(NULL != _wsContext){
+    if(NULL != _wsContext){
         _readyState = kStateConnecting;
         std::string name;
         for (int i = 0; _wsProtocols[i].callback != NULL; ++i) {
@@ -460,7 +460,7 @@ void WebSocket::onSubThreadStarted()
             _wsHelper->sendMessageToUIThread(msg);
         }
 
-	}
+    }
 }
 
 void WebSocket::onSubThreadEnded()
@@ -473,11 +473,11 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                      enum libwebsocket_callback_reasons reason,
                      void *user, void *in, ssize_t len)
 {
-	//CCLOG("socket callback for %d reason", reason);
+    //CCLOG("socket callback for %d reason", reason);
     CCAssert(_wsContext == NULL || ctx == _wsContext, "Invalid context.");
     CCAssert(_wsInstance == NULL || wsi == NULL || wsi == _wsInstance, "Invaild websocket instance.");
 
-	switch (reason)
+    switch (reason)
     {
         case LWS_CALLBACK_DEL_POLL_FD:
         case LWS_CALLBACK_PROTOCOL_DESTROY:
@@ -550,24 +550,24 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         int writeProtocol;
                         
                         if (data->issued == 0) {
-							if (WS_MSG_TO_SUBTRHEAD_SENDING_STRING == subThreadMsg->what)
-							{
-								writeProtocol = LWS_WRITE_TEXT;
-							}
-							else
-							{
-								writeProtocol = LWS_WRITE_BINARY;
-							}
+                            if (WS_MSG_TO_SUBTRHEAD_SENDING_STRING == subThreadMsg->what)
+                            {
+                                writeProtocol = LWS_WRITE_TEXT;
+                            }
+                            else
+                            {
+                                writeProtocol = LWS_WRITE_BINARY;
+                            }
 
-							// If we have more than 1 fragment
-							if (data->len > c_bufferSize)
-								writeProtocol |= LWS_WRITE_NO_FIN;
+                            // If we have more than 1 fragment
+                            if (data->len > c_bufferSize)
+                                writeProtocol |= LWS_WRITE_NO_FIN;
                         } else {
-                        	// we are in the middle of fragments
-                        	writeProtocol = LWS_WRITE_CONTINUATION;
-                        	// and if not in the last fragment
-                        	if (remaining != n)
-                        		writeProtocol |= LWS_WRITE_NO_FIN;
+                            // we are in the middle of fragments
+                            writeProtocol = LWS_WRITE_CONTINUATION;
+                            // and if not in the last fragment
+                            if (remaining != n)
+                                writeProtocol |= LWS_WRITE_NO_FIN;
                         }
 
                         bytesWrite = libwebsocket_write(wsi,  &buf[LWS_SEND_BUFFER_PRE_PADDING], n, (libwebsocket_write_protocol)writeProtocol);
@@ -652,36 +652,36 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                     // If no more data pending, send it to the client thread
                     if (_pendingFrameDataLen == 0)
                     {
-						WsMessage* msg = new WsMessage();
-						msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
+                        WsMessage* msg = new WsMessage();
+                        msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
 
-						char* bytes = NULL;
-						Data* data = new Data();
+                        char* bytes = NULL;
+                        Data* data = new Data();
                         
-						if (lws_frame_is_binary(wsi))
-						{
+                        if (lws_frame_is_binary(wsi))
+                        {
 
-							bytes = new char[_currentDataLen];
-							data->isBinary = true;
-						}
-						else
-						{
-							bytes = new char[_currentDataLen+1];
-							bytes[_currentDataLen] = '\0';
-							data->isBinary = false;
-						}
+                            bytes = new char[_currentDataLen];
+                            data->isBinary = true;
+                        }
+                        else
+                        {
+                            bytes = new char[_currentDataLen+1];
+                            bytes[_currentDataLen] = '\0';
+                            data->isBinary = false;
+                        }
 
-						memcpy(bytes, _currentData, _currentDataLen);
+                        memcpy(bytes, _currentData, _currentDataLen);
 
-						data->bytes = bytes;
-						data->len = _currentDataLen;
-						msg->obj = (void*)data;
+                        data->bytes = bytes;
+                        data->len = _currentDataLen;
+                        msg->obj = (void*)data;
 
-						CC_SAFE_DELETE_ARRAY(_currentData);
-						_currentData = NULL;
-						_currentDataLen = 0;
+                        CC_SAFE_DELETE_ARRAY(_currentData);
+                        _currentData = NULL;
+                        _currentDataLen = 0;
 
-						_wsHelper->sendMessageToUIThread(msg);
+                        _wsHelper->sendMessageToUIThread(msg);
                     }
                 }
             }
@@ -689,9 +689,9 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
         default:
             break;
         
-	}
+    }
     
-	return 0;
+    return 0;
 }
 
 void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
