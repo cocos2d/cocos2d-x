@@ -138,7 +138,7 @@ function CreateTestMenu()
             cc.Director:getInstance():replaceScene(testScene)
         end
     end
-    
+
     -- add close menu
     local s = cc.Director:getInstance():getWinSize()
     local CloseItem = cc.MenuItemImage:create(s_pPathClose, s_pPathClose)
