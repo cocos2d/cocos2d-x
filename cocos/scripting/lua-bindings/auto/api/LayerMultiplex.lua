@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LayerMultiplex
+-- @extend Layer
 
 --------------------------------
 -- @function [parent=#LayerMultiplex] switchToAndReleaseMe 

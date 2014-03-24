@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ActionCamera
+-- @extend ActionInterval
 
 --------------------------------
 -- overload function: setEye(float, float, float)

@@ -144,13 +144,15 @@ public:
 	virtual void update(float time) override;
 	virtual RemoveSelf* clone() const override;
 	virtual RemoveSelf* reverse() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     RemoveSelf() : _isNeedCleanUp(true){}
     virtual ~RemoveSelf(){}
+
 	/** init the action */
 	bool init(bool isNeedCleanUp);
 
+protected:
 	bool _isNeedCleanUp;
 
 private:
@@ -173,13 +175,15 @@ public:
     virtual void update(float time) override;
 	virtual FlipX* reverse() const override;
 	virtual FlipX* clone() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     FlipX() :_flipX(false) {}
     virtual ~FlipX() {}
+
     /** init the action */
     bool initWithFlipX(bool x);
 
+protected:
     bool    _flipX;
 
 private:
@@ -202,13 +206,15 @@ public:
     virtual void update(float time) override;
 	virtual FlipY* reverse() const override;
 	virtual FlipY* clone() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     FlipY() :_flipY(false) {}
     virtual ~FlipY() {}
+
     /** init the action */
     bool initWithFlipY(bool y);
 
+protected:
     bool    _flipY;
 
 private:
@@ -230,13 +236,15 @@ public:
     virtual void update(float time) override;
 	virtual Place* reverse() const override;
 	virtual Place* clone() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     Place(){}
     virtual ~Place(){}
+
     /** Initializes a Place action with a position */
     bool initWithPosition(const Point& pos);
 
+protected:
     Point _position;
 
 private:
@@ -290,8 +298,8 @@ public:
     virtual void update(float time) override;
 	virtual CallFunc* reverse() const override;
 	virtual CallFunc* clone() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     CallFunc()
     : _selectorTarget(nullptr)
     , _callFunc(nullptr)
@@ -305,13 +313,14 @@ protected:
      @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
-
+    
 	/** initializes the action with the std::function<void()>
      * @js NA
      * @lua NA
 	 */
     bool initWithFunction(const std::function<void()>& func);
 
+protected:
     /** Target that will be called */
     Ref*   _selectorTarget;
 
@@ -352,21 +361,22 @@ public:
     //
 	virtual CallFuncN* clone() const override;
     virtual void execute() override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     CallFuncN():_functionN(nullptr){}
     virtual ~CallFuncN(){}
+
     /** initializes the action with the std::function<void(Node*)> */
     bool initWithFunction(const std::function<void(Node*)>& func);
-
+    
     /** initializes the action with the callback
-
+     
      typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
-
+protected:
     /** function that will be called with the "sender" as the 1st argument */
     std::function<void(Node*)> _functionN;
 

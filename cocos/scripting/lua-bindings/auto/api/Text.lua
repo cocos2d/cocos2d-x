@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Text
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#Text] getStringLength 

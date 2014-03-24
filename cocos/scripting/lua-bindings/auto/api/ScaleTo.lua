@@ -1,14 +1,18 @@
 
 --------------------------------
 -- @module ScaleTo
+-- @extend ActionInterval
 
 --------------------------------
 -- overload function: create(float, float, float)
 --          
 -- overload function: create(float, float)
 --          
+-- overload function: create(float, float, float, float)
+--          
 -- @function [parent=#ScaleTo] create
 -- @param self
+-- @param #float float
 -- @param #float float
 -- @param #float float
 -- @param #float float

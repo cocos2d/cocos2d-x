@@ -8,14 +8,19 @@
 -- @return ApplicationProtocol::Platform#ApplicationProtocol::Platform ret (return value: cc.ApplicationProtocol::Platform)
         
 --------------------------------
--- @function [parent=#Application] setAnimationInterval 
+-- @function [parent=#Application] getCurrentLanguageCode 
 -- @param self
--- @param #double double
+-- @return char#char ret (return value: char)
         
 --------------------------------
 -- @function [parent=#Application] getCurrentLanguage 
 -- @param self
 -- @return LanguageType#LanguageType ret (return value: cc.LanguageType)
+        
+--------------------------------
+-- @function [parent=#Application] setAnimationInterval 
+-- @param self
+-- @param #double double
         
 --------------------------------
 -- @function [parent=#Application] getInstance 

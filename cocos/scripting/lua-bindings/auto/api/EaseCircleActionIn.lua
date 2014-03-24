@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module EaseCircleActionIn
+-- @extend ActionEase
 
 --------------------------------
 -- @function [parent=#EaseCircleActionIn] create 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FadeOutUpTiles
+-- @extend FadeOutTRTiles
 
 --------------------------------
 -- @function [parent=#FadeOutUpTiles] transformTile 

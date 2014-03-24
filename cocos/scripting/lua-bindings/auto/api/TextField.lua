@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TextField
+-- @extend Widget
 
 --------------------------------
 -- @function [parent=#TextField] setAttachWithIME 

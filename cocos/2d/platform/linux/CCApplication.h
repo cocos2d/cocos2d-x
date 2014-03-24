@@ -73,6 +73,13 @@ public:
 	virtual LanguageType getCurrentLanguage();
 
 	/**
+    @brief Get current language iso 639-1 code
+    @return Current language iso 639-1 code
+    */
+    virtual const char * getCurrentLanguageCode();
+
+
+	/**
      *  Sets the Resource root path.
      *  @deprecated Please use FileUtils::getInstance()->setSearchPaths() instead.
      */

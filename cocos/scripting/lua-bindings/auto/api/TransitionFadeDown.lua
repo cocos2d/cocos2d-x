@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionFadeDown
+-- @extend TransitionFadeTR
 
 --------------------------------
 -- @function [parent=#TransitionFadeDown] create 

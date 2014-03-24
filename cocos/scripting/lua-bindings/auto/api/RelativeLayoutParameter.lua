@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module RelativeLayoutParameter
+-- @extend LayoutParameter
 
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] setAlign 

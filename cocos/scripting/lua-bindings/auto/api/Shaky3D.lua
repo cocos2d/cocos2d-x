@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Shaky3D
+-- @extend Grid3DAction
 
 --------------------------------
 -- @function [parent=#Shaky3D] create 
@@ -20,9 +21,5 @@
 -- @function [parent=#Shaky3D] update 
 -- @param self
 -- @param #float float
-        
---------------------------------
--- @function [parent=#Shaky3D] Shaky3D 
--- @param self
         
 return nil

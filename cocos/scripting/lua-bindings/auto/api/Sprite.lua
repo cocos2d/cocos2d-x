@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Sprite
+-- @extend Node,TextureProtocol,
 
 --------------------------------
 -- overload function: setSpriteFrame(cc.SpriteFrame)

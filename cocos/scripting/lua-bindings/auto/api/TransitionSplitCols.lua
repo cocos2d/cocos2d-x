@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionSplitCols
+-- @extend TransitionScene,TransitionEaseScene,
 
 --------------------------------
 -- @function [parent=#TransitionSplitCols] action 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module SkeletonAnimation
+-- @extend Skeleton
 
 --------------------------------
 -- @function [parent=#SkeletonAnimation] addAnimation 
