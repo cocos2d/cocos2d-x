@@ -844,7 +844,7 @@ void PhysicsDemoJoints::onEnter()
                     
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
-                    PhysicsJointRotaryLimit* joint = PhysicsJointRotaryLimit::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, M_PI_2);
+                    PhysicsJointRotaryLimit* joint = PhysicsJointRotaryLimit::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f,(float) M_PI_2);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -860,7 +860,7 @@ void PhysicsDemoJoints::onEnter()
                     
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
-                    PhysicsJointRatchet* joint = PhysicsJointRatchet::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, M_PI_2);
+                    PhysicsJointRatchet* joint = PhysicsJointRatchet::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, (float)M_PI_2);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -892,7 +892,7 @@ void PhysicsDemoJoints::onEnter()
                     
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
-                    PhysicsJointMotor* joint = PhysicsJointMotor::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), M_PI_2);
+                    PhysicsJointMotor* joint = PhysicsJointMotor::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), (float)M_PI_2);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -1444,7 +1444,7 @@ void PhysicsContactTest::resetTest()
     label->setPosition(Point(s.width/2, s.height-170));
     
     auto wall = Node::create();
-    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1, 1, 0.0)));
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1, 0.0f)));
     wall->setPosition(VisibleRect::center());
     root->addChild(wall);
     
@@ -1462,7 +1462,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
-        auto box = makeBox(position, size, 1, PhysicsMaterial(0.1, 1, 0.0));
+        auto box = makeBox(position, size, 1, PhysicsMaterial(0.1f, 1, 0.0f));
         box->getPhysicsBody()->setVelocity(velocity);
         box->getPhysicsBody()->setCategoryBitmask(0x01);    // 0001
         box->getPhysicsBody()->setContactTestBitmask(0x04); // 0100
@@ -1480,7 +1480,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
-        auto box = makeBox(position, size, 2, PhysicsMaterial(0.1, 1, 0.0));
+        auto box = makeBox(position, size, 2, PhysicsMaterial(0.1f, 1, 0.0f));
         box->getPhysicsBody()->setVelocity(velocity);
         box->getPhysicsBody()->setCategoryBitmask(0x02);    // 0010
         box->getPhysicsBody()->setContactTestBitmask(0x08); // 1000
@@ -1498,7 +1498,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*300, (CCRANDOM_0_1() - 0.5)*300);
-        auto triangle = makeTriangle(position, size, 1, PhysicsMaterial(0.1, 1, 0.0));
+        auto triangle = makeTriangle(position, size, 1, PhysicsMaterial(0.1f, 1, 0.0f));
         triangle->getPhysicsBody()->setVelocity(velocity);
         triangle->getPhysicsBody()->setCategoryBitmask(0x04);    // 0100
         triangle->getPhysicsBody()->setContactTestBitmask(0x01); // 0001
@@ -1516,7 +1516,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*300, (CCRANDOM_0_1() - 0.5)*300);
-        auto triangle = makeTriangle(position, size, 2, PhysicsMaterial(0.1, 1, 0.0));
+        auto triangle = makeTriangle(position, size, 2, PhysicsMaterial(0.1f, 1, 0.0f));
         triangle->getPhysicsBody()->setVelocity(velocity);
         triangle->getPhysicsBody()->setCategoryBitmask(0x08);    // 1000
         triangle->getPhysicsBody()->setContactTestBitmask(0x02); // 0010
@@ -1565,7 +1565,7 @@ void PhysicsPositionRotationTest::onEnter()
     
     // anchor test
     auto anchorNode = Sprite::create("Images/YellowSquare.png");
-    anchorNode->setAnchorPoint(Point(0.1, 0.9));
+    anchorNode->setAnchorPoint(Point(0.1f, 0.9f));
     anchorNode->setPosition(100, 100);
     anchorNode->setScale(0.25);
     anchorNode->setPhysicsBody(PhysicsBody::createBox(anchorNode->getContentSize()*anchorNode->getScale()));
