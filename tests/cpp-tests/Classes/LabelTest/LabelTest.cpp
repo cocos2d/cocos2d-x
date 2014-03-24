@@ -1486,7 +1486,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     Color3B tintColorRed(  255, 0, 0   );
     Color3B tintColorYellow( 255, 255, 0 );
     Color3B tintColorBlue( 0, 0, 255   );
-    Color3B strokeColor( 0, 10, 255  );
+    Color3B strokeColor( 0, 0, 255  );
     Color3B strokeShadowColor( 255, 0, 0   );
     
     Size shadowOffset(12.0, 12.0);
