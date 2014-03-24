@@ -206,7 +206,7 @@ void TouchableSpriteTest::onEnter()
     removeAllTouchItem->setFontSizeObj(16);
     removeAllTouchItem->setPosition(VisibleRect::right() + Point(-100, 0));
     
-    auto menu = Menu::create(removeAllTouchItem, NULL);
+    auto menu = Menu::create(removeAllTouchItem, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setAnchorPoint(Point(0, 0));
     addChild(menu);
@@ -402,7 +402,7 @@ void RemoveListenerWhenDispatching::onEnter()
     }, MenuItemFont::create("Enabled"), MenuItemFont::create("Disabled"), NULL);
     
     toggleItem->setPosition(origin + Point(size.width/2, 80));
-    auto menu = Menu::create(toggleItem, NULL);
+    auto menu = Menu::create(toggleItem, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setAnchorPoint(Point(0, 0));
     addChild(menu, -1);
@@ -480,7 +480,7 @@ void CustomEventTest::onEnter()
     });
     sendItem2->setPosition(origin + Point(size.width/2, size.height/2 - 40));
     
-    auto menu = Menu::create(sendItem, sendItem2, NULL);
+    auto menu = Menu::create(sendItem, sendItem2, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setAnchorPoint(Point(0, 0));
     addChild(menu, -1);
@@ -656,7 +656,7 @@ void RemoveAndRetainNodeTest::onEnter()
                                         this->addChild(_sprite);
                                         _sprite->release();
                                      }),
-                                     NULL
+                                     nullptr
                                      ));
 }
 
@@ -703,7 +703,7 @@ void RemoveListenerAfterAddingTest::onEnter()
         });
         next->setPosition(VisibleRect::center() + Point(0, -40));
         
-        auto menu = Menu::create(next, NULL);
+        auto menu = Menu::create(next, nullptr);
         menu->setPosition(VisibleRect::leftBottom());
         menu->setAnchorPoint(Point::ZERO);
         this->addChild(menu);
@@ -739,7 +739,7 @@ void RemoveListenerAfterAddingTest::onEnter()
     
     item3->setPosition(VisibleRect::center());
     
-    auto menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, nullptr);
     menu->setPosition(VisibleRect::leftBottom());
     menu->setAnchorPoint(Point::ZERO);
 
@@ -1149,7 +1149,7 @@ PauseResumeTargetTest::PauseResumeTargetTest()
     popup->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
     popup->setPosition(VisibleRect::right());
     
-    auto menu = Menu::create(popup, NULL);
+    auto menu = Menu::create(popup, nullptr);
     menu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     menu->setPosition(Point::ZERO);
     
@@ -1214,7 +1214,7 @@ Issue4129::Issue4129()
     removeAllTouchItem->setFontSizeObj(16);
     removeAllTouchItem->setPosition(VisibleRect::right() + Point(-100, 0));
     
-    auto menu = Menu::create(removeAllTouchItem, NULL);
+    auto menu = Menu::create(removeAllTouchItem, nullptr);
     menu->setPosition(Point(0, 0));
     menu->setAnchorPoint(Point(0, 0));
     addChild(menu);

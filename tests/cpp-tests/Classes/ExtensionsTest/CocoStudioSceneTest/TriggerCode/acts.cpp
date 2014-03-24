@@ -161,7 +161,7 @@ void TMoveBy::done()
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			node->runAction( CCSequence::create(actionBy, actionByBack, NULL));
+			node->runAction( CCSequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{
@@ -304,7 +304,7 @@ void TRotateBy::done()
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			node->runAction( Sequence::create(actionBy, actionByBack, NULL));
+			node->runAction( Sequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{
@@ -445,7 +445,7 @@ void TScaleBy::done()
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			node->runAction(Sequence::create(actionBy, actionByBack, NULL));
+			node->runAction(Sequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{
@@ -591,7 +591,7 @@ void TSkewBy::done()
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			node->runAction(Sequence::create(actionBy, actionByBack, NULL));
+			node->runAction(Sequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{

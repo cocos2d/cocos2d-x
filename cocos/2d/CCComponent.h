@@ -26,15 +26,22 @@ THE SOFTWARE.
 #define __CC_FRAMEWORK_COMPONENT_H__
 
 #include "CCRef.h"
+#include "CCScriptSupport.h"
 #include <string>
 
 NS_CC_BEGIN
 
 class Node;
 
+enum {
+    kComponentOnEnter,
+    kComponentOnExit,
+    kComponentOnUpdate
+};
+
 class CC_DLL Component : public Ref
 {
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -46,15 +53,8 @@ public:
      */
     virtual ~Component(void);
     virtual bool init();
-    /**
-     * @js NA
-     * @lua NA
-     */
+
     virtual void onEnter();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void onExit();
     virtual void update(float delta);
     virtual bool serialize(void* r);
@@ -72,6 +72,10 @@ protected:
     Node *_owner;
     std::string _name;
     bool _enabled;
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    ccScriptType _scriptType;         ///< type of script binding, lua or javascript
+#endif
 };
 
 NS_CC_END
