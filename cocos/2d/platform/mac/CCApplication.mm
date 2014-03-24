@@ -134,6 +134,21 @@ Application* Application::sharedApplication()
     return Application::getInstance();
 }
 
+const char * Application::getCurrentLanguageCode()
+{
+    static char code[3]={0};
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+    NSString *currentLanguage = [languages objectAtIndex:0];
+    
+    // get the current language code.(such as English is "en", Chinese is "zh" and so on)
+    NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
+    NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
+    [languageCode getCString:code maxLength:2 encoding:NSASCIIStringEncoding];
+    code[2]='\0';
+    return code;
+}
+
 LanguageType Application::getCurrentLanguage()
 {
     // get the current language and country config

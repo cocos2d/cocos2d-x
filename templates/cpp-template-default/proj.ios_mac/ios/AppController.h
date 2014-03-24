@@ -4,8 +4,9 @@
 
 @interface AppController : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    RootViewController    *viewController;
 }
+
+@property(nonatomic, readonly) RootViewController* viewController;
 
 @end
 
