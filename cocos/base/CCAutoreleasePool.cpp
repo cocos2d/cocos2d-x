@@ -125,7 +125,7 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
-    _trackedObjectPool.reserve(256);
+    _trackedObjectPool.reserve(100000);
 }
 
 PoolManager::~PoolManager()
