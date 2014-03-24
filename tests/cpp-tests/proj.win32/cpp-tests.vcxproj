@@ -153,12 +153,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(Ou
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomGUIScene.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp">
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4267;4251;4068;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp">
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4267;4251;4244;4068;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp" />
@@ -213,9 +209,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(Ou
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
     <ClCompile Include="..\Classes\InputTest\MouseTest.cpp" />
     <ClCompile Include="..\Classes\KeyboardTest\KeyboardTest.cpp" />
-    <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp">
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4267;4251;4244;4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-    </ClCompile>
+    <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />

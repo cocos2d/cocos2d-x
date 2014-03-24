@@ -317,9 +317,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="platform\win32\CCApplication.cpp" />
     <ClCompile Include="platform\win32\CCCommon.cpp" />
     <ClCompile Include="platform\win32\CCDevice.cpp" />
-    <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp">
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4267;4996;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-    </ClCompile>
+    <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp" />
     <ClCompile Include="platform\win32\CCStdC.cpp" />
     <ClCompile Include="renderer\CCBatchCommand.cpp" />
     <ClCompile Include="renderer\CCCustomCommand.cpp" />
