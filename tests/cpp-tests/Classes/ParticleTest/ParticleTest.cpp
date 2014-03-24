@@ -1828,12 +1828,12 @@ std::string ReorderParticleSystems::subtitle() const
 
 std::string PremultipliedAlphaTest::title() const
 {
-    return "premultiplied alpha";
+    return "premultiplied alpha and readd child test";
 }
 
 std::string PremultipliedAlphaTest::subtitle() const
 {
-    return "no black halo, particles should fade out";
+    return "no black halo, particles should fade out\n animation should be normal";
 }
 
 void PremultipliedAlphaTest::readdPaticle(float delta)
@@ -1898,12 +1898,12 @@ void PremultipliedAlphaTest2::onEnter()
 
 std::string PremultipliedAlphaTest2::title() const
 {
-    return "premultiplied alpha and readd child test";
+    return "premultiplied alpha 2";
 }
 
 std::string PremultipliedAlphaTest2::subtitle() const
 {
-    return "Arrows should be faded\n animation should be normal";
+    return "Arrows should be faded";
 }
 
 
