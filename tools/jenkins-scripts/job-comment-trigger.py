@@ -91,7 +91,6 @@ def main():
     #send trigger and payload
     post_data = {'payload':""}
     post_data['payload']= json.dumps(payload_forword)
-    print 'post_data:', post_data
     requests.post(job_trigger_url, data=post_data)
 
     return(0)
