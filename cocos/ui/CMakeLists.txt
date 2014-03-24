@@ -18,6 +18,7 @@ set(GUI_SRC
   UISlider.cpp
   UITextField.cpp
   UIRichText.cpp
+  CCProtectedNode.cpp
 )
 
 add_library(ui STATIC
