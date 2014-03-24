@@ -66,6 +66,7 @@ protected:
     virtual bool init() override;
     
     friend class Node;
+    friend class ProtectedNode;
     friend class SpriteBatchNode;
     
 private:
