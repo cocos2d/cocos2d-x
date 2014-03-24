@@ -149,6 +149,8 @@ public:
     AutoreleasePool *getCurrentPool() const;
 
     bool isObjectInPools(Ref* obj) const;
+    
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
 
 /**
      * Add object into tracking pool, this pool is used to detect memory leak 
@@ -159,6 +161,7 @@ public:
     * Remove object from tracking pool
     */
     void untrack(Ref* object);
+#endif
 
 /**
     * return the count of objects in the tracking pool
@@ -182,8 +185,9 @@ private:
     
     std::deque<AutoreleasePool*> _releasePoolStack;
     AutoreleasePool *_curReleasePool;
-
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     std::unordered_set<Ref*> _trackedObjectPool;
+#endif
 };
 
 // end of base_nodes group

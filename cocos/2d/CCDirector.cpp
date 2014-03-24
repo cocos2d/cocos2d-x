@@ -120,7 +120,10 @@ bool Director::init(void)
     // FPS
     _accumDt = 0.0f;
     _frameRate = 0.0f;
-    _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = _memoryLabel = nullptr;
+    _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    _memoryLabel = nullptr;
+#endif
     _totalFrames = _frames = 0;
     _lastUpdate = new struct timeval;
 
@@ -169,8 +172,9 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_drawnVerticesLabel);
     CC_SAFE_RELEASE(_drawnBatchesLabel);
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     CC_SAFE_RELEASE(_memoryLabel);
-
+#endif
     CC_SAFE_RELEASE(_runningScene);
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
@@ -735,8 +739,9 @@ void Director::purgeDirector()
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
     CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     CC_SAFE_RELEASE_NULL(_memoryLabel);
-
+#endif
     // purge bitmap cache
     FontFNT::purgeCachedData();
 
@@ -846,7 +851,7 @@ void Director::showStats()
     ++_frames;
     _accumDt += _deltaTime;
     
-    if (_displayStats && _FPSLabel && _drawnBatchesLabel && _drawnVerticesLabel && _memoryLabel)
+    if (_displayStats && _FPSLabel && _drawnBatchesLabel && _drawnVerticesLabel)
     {
         char buffer[30];
 
@@ -873,17 +878,21 @@ void Director::showStats()
             _drawnVerticesLabel->setString(buffer);
             prevVerts = currentVerts;
         }
-        if(_frames%60 == 0)
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+        if((_memoryLabel)&&(_frames%60 == 0))
         {
             size_t size = PoolManager::getInstance()->getTrackedPoolSize();
             sprintf(buffer, "Alloc objects:%lu",size);
             _memoryLabel->setString(buffer);
         }
+#endif
         // global identity matrix is needed... come on kazmath!
         kmMat4 identity;
         kmMat4Identity(&identity);
-
+        
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
         _memoryLabel->visit(_renderer, identity, false);
+#endif
         _drawnVerticesLabel->visit(_renderer, identity, false);
         _drawnBatchesLabel->visit(_renderer, identity, false);
         _FPSLabel->visit(_renderer, identity, false);
@@ -962,17 +971,19 @@ void Director::createStatsLabel()
     _drawnVerticesLabel->setIgnoreContentScaleFactor(true);
     _drawnVerticesLabel->initWithString("00000", texture, 12, 32, '.');
     _drawnVerticesLabel->setScale(scaleFactor);
-
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     _memoryLabel = LabelAtlas::create();
     _memoryLabel->retain();
     _memoryLabel->setIgnoreContentScaleFactor(true);
     _memoryLabel->initWithString("00.0M", texture, 12, 32, '.');
     _memoryLabel->setScale(scaleFactor);
-
+#endif
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     _memoryLabel->setPosition(Point(0, height_spacing*3)+CC_DIRECTOR_STATS_POSITION);
+#endif
     _drawnVerticesLabel->setPosition(Point(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
     _drawnBatchesLabel->setPosition(Point(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(Point(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);

@@ -38,7 +38,9 @@ Ref::Ref()
     _luaID = 0;
     _ID = ++uObjectCount;
 #endif
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     PoolManager::getInstance()->track(this);
+#endif
 }
 
 Ref::~Ref()
@@ -57,6 +59,9 @@ Ref::~Ref()
             pEngine->removeScriptObjectByObject(this);
         }
     }
+#endif
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    PoolManager::getInstance()->untrack(this);
 #endif
 }
 
@@ -107,7 +112,6 @@ void Ref::release()
             CCASSERT(false, "The reference shouldn't be 0 because it is still in autorelease pool.");
         }
 #endif
-        PoolManager::getInstance()->untrack(this);
         delete this;
     }
 }

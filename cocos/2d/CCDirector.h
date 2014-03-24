@@ -434,7 +434,9 @@ protected:
     LabelAtlas *_FPSLabel;
     LabelAtlas *_drawnBatchesLabel;
     LabelAtlas *_drawnVerticesLabel;
-    LabelAtlas *_memoryLabel;    
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    LabelAtlas *_memoryLabel;
+#endif
     /** Whether or not the Director is paused */
     bool _paused;
 
