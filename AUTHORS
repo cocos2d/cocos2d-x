@@ -548,6 +548,7 @@ Developers:
     hannon235 (Chris)
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
         Implements a socket.io client extension and adds a test case.
+        Implements 'SIODelegate::fireEventToScript' method to integrate JSB event handling with the original native code.
         
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
