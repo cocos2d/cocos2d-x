@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionFlipAngular
+-- @extend TransitionSceneOriented
 
 --------------------------------
 -- overload function: create(float, cc.Scene)

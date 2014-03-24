@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LayerGradient
+-- @extend LayerColor
 
 --------------------------------
 -- @function [parent=#LayerGradient] getStartColor 

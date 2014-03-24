@@ -61,7 +61,7 @@ public:
      */
     virtual ~ControlColourPicker();
 
-    virtual bool init();
+    virtual bool init() override;
 
     virtual void setColor(const Color3B& colorValue);
     virtual void setEnabled(bool bEnabled);

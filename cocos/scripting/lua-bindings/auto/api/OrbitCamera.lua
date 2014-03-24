@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module OrbitCamera
+-- @extend ActionCamera
 
 --------------------------------
 -- @function [parent=#OrbitCamera] sphericalRadius 

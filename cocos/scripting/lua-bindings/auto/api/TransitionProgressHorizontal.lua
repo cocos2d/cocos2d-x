@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionProgressHorizontal
+-- @extend TransitionProgress
 
 --------------------------------
 -- @function [parent=#TransitionProgressHorizontal] create 

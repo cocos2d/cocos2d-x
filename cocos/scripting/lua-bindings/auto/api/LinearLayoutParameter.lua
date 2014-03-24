@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module LinearLayoutParameter
+-- @extend LayoutParameter
 
 --------------------------------
 -- @function [parent=#LinearLayoutParameter] setGravity 

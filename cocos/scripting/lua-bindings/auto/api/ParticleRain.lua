@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleRain
+-- @extend ParticleSystemQuad
 
 --------------------------------
 -- @function [parent=#ParticleRain] create 

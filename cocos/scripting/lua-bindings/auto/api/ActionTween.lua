@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ActionTween
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#ActionTween] initWithDuration 

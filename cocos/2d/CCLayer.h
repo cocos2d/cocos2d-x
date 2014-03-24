@@ -162,11 +162,13 @@ public:
     // Overrides
     virtual std::string getDescription() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Layer();
     virtual ~Layer();
-    virtual bool init();
 
+    virtual bool init() override;
+
+protected:
     //add the api for avoid use deprecated api
     void _addTouchListener();
 
@@ -284,14 +286,17 @@ public:
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
     virtual std::string getDescription() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     LayerColor();
     virtual ~LayerColor();
-    void onDraw(const kmMat4& transform, bool transformUpdated);
+    
     bool init();
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     bool initWithColor(const Color4B& color);
+
+protected:
+    void onDraw(const kmMat4& transform, bool transformUpdated);
 
     virtual void updateColor() override;
 
@@ -449,9 +454,8 @@ public:
     void switchToAndReleaseMe(int n);
 
     virtual std::string getDescription() const override;
-
-protected:
     
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -473,7 +477,8 @@ protected:
      @since v2.1
      */
     bool initWithArray(const Vector<Layer*>& arrayOfLayers);
-    
+
+protected:
     unsigned int _enabledLayer;
     Vector<Layer*>    _layers;
 

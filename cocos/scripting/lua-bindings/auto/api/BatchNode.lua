@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module BatchNode
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#BatchNode] init 

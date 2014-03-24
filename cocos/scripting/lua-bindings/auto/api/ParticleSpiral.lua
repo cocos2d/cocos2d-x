@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ParticleSpiral
+-- @extend ParticleSystemQuad
 
 --------------------------------
 -- @function [parent=#ParticleSpiral] create 

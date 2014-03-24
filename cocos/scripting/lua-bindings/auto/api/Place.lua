@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Place
+-- @extend ActionInstant
 
 --------------------------------
 -- @function [parent=#Place] create 

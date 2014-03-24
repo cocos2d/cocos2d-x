@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ProgressFromTo
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#ProgressFromTo] create 

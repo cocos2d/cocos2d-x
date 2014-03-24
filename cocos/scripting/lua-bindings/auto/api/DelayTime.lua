@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module DelayTime
+-- @extend ActionInterval
 
 --------------------------------
 -- @function [parent=#DelayTime] create 

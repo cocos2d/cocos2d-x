@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ProgressTimer
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#ProgressTimer] isReverseDirection 

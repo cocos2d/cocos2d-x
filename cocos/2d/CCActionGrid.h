@@ -176,13 +176,15 @@ public:
     virtual void update(float time) override;
 	virtual AccelDeccelAmplitude* clone() const override;
 	virtual AccelDeccelAmplitude* reverse() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     AccelDeccelAmplitude() {}
     virtual ~AccelDeccelAmplitude();
+    
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *pAction, float duration);
 
+protected:
     float _rate;
     ActionInterval *_other;
 
@@ -207,12 +209,14 @@ public:
     virtual void update(float time) override;
 	virtual AccelAmplitude* clone() const override;
 	virtual AccelAmplitude* reverse() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     AccelAmplitude() {}
     virtual ~AccelAmplitude();
+
     bool initWithAction(Action *action, float duration);
 
+protected:
     float _rate;
     ActionInterval *_other;
 
@@ -237,13 +241,15 @@ public:
     virtual void update(float time) override;
 	virtual DeccelAmplitude* clone() const override;
 	virtual DeccelAmplitude* reverse() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     DeccelAmplitude() {}
     virtual ~DeccelAmplitude();
+
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *action, float duration);
 
+protected:
     float _rate;
     ActionInterval *_other;
 
@@ -290,13 +296,15 @@ public:
     virtual void startWithTarget(Node *target) override;
 	virtual ReuseGrid* clone() const override;
 	virtual ReuseGrid* reverse() const override;
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     ReuseGrid() {}
     virtual ~ReuseGrid() {}
+    
     /** initializes an action with the number of times that the current grid will be reused */
     bool initWithTimes(int times);
-    
+
+protected:
     NodeGrid* _gridNodeTarget;
     
     void cacheTargetAsGridNode();

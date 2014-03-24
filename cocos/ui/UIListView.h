@@ -174,6 +174,10 @@ public:
     
     void requestRefreshView();
     void refreshView();
+
+CC_CONSTRUCTOR_ACCESS:
+    virtual bool init() override;
+    
 protected:
     virtual void addChild(Node* child) override{ScrollView::addChild(child);};
     virtual void addChild(Node * child, int zOrder) override{ScrollView::addChild(child, zOrder);};
@@ -187,7 +191,6 @@ protected:
     virtual ssize_t getChildrenCount() const override {return ScrollView::getChildrenCount();};
     virtual Node * getChildByTag(int tag) override {return ScrollView::getChildByTag(tag);};
     virtual Widget* getChildByName(const char* name) override {return ScrollView::getChildByName(name);};
-    virtual bool init() override;
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
     virtual void onSizeChanged() override;

@@ -63,6 +63,9 @@
 		1A0DB7321823827C0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7301823827C0025743D /* CCGL.h */; };
 		1A0DB7331823827C0025743D /* CCEAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7311823827C0025743D /* CCEAGLView.h */; };
 		1A0DB7381823828F0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7351823828F0025743D /* CCGL.h */; };
+		1A12775A18DFCC4F0005F345 /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
+		1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
+		1A12775C18DFCC590005F345 /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570063180BC5A10088DEC7 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570048180BC5A10088DEC7 /* CCAction.h */; };
@@ -1224,8 +1227,6 @@
 		2905FA8D18CF08D100240AA3 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA1318CF08D100240AA3 /* UIWidget.cpp */; };
 		2905FA8E18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		2905FA8F18CF08D100240AA3 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
-		2986667C18B1B079000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
-		2986667D18B1B079000E39CA /* CCTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 2986667918B1B079000E39CA /* CCTweenFunction.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
@@ -1414,8 +1415,6 @@
 		46A170491807CC07005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB21807B038005B8026 /* CCStdC.h */; };
 		46A1704B1807CC07005B8026 /* CCEAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB41807B038005B8026 /* CCEAGLView.mm */; };
 		46A1704C1807CC07005B8026 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB51807B038005B8026 /* OpenGL_Internal.h */; };
-		46A1704D1807CC11005B8026 /* AccelerometerSimulation.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB71807B038005B8026 /* AccelerometerSimulation.h */; };
-		46A1704E1807CC11005B8026 /* AccelerometerSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB81807B038005B8026 /* AccelerometerSimulation.m */; };
 		46A1704F1807CC1C005B8026 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AC81807B038005B8026 /* CCApplication.h */; };
 		46A170501807CC1C005B8026 /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AC91807B038005B8026 /* CCApplication.mm */; };
 		46A170511807CC1C005B8026 /* CCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACA1807B038005B8026 /* CCCommon.mm */; };
@@ -2634,8 +2633,6 @@
 		46A16AB21807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		46A16AB41807B038005B8026 /* CCEAGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEAGLView.mm; sourceTree = "<group>"; };
 		46A16AB51807B038005B8026 /* OpenGL_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
-		46A16AB71807B038005B8026 /* AccelerometerSimulation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccelerometerSimulation.h; sourceTree = "<group>"; };
-		46A16AB81807B038005B8026 /* AccelerometerSimulation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccelerometerSimulation.m; sourceTree = "<group>"; };
 		46A16AC81807B038005B8026 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16AC91807B038005B8026 /* CCApplication.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCApplication.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16ACA1807B038005B8026 /* CCCommon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCCommon.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -4530,18 +4527,8 @@
 				1A0DB7311823827C0025743D /* CCEAGLView.h */,
 				46A16AB41807B038005B8026 /* CCEAGLView.mm */,
 				46A16AB51807B038005B8026 /* OpenGL_Internal.h */,
-				46A16AB61807B038005B8026 /* Simulation */,
 			);
 			path = ios;
-			sourceTree = "<group>";
-		};
-		46A16AB61807B038005B8026 /* Simulation */ = {
-			isa = PBXGroup;
-			children = (
-				46A16AB71807B038005B8026 /* AccelerometerSimulation.h */,
-				46A16AB81807B038005B8026 /* AccelerometerSimulation.m */,
-			);
-			path = Simulation;
 			sourceTree = "<group>";
 		};
 		46A16AC71807B038005B8026 /* mac */ = {
@@ -5087,6 +5074,7 @@
 				A044DEAF18C6A58700B6CCBD /* kazmath.h in Headers */,
 				2905FA7618CF08D100240AA3 /* UIScrollView.h in Headers */,
 				1A5702C4180BCE2A0088DEC7 /* CCIMEDispatcher.h in Headers */,
+				1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */,
 				1A5702CA180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
 				A044DEB718C6A58700B6CCBD /* mat4.h in Headers */,
 				1A5702D5180BCE570088DEC7 /* CCTexture2D.h in Headers */,
@@ -5355,7 +5343,6 @@
 				46A160491807A5D4005B8026 /* CDXMacOSXSupport.h in Headers */,
 				46A160441807A5D4005B8026 /* CDAudioManager.h in Headers */,
 				46A1604E1807A5D4005B8026 /* SimpleAudioEngine_objc.h in Headers */,
-				2986667D18B1B079000E39CA /* CCTweenFunction.h in Headers */,
 				46A160431807A5D4005B8026 /* SimpleAudioEngine.h in Headers */,
 				46A1604B1807A5D4005B8026 /* CocosDenshion.h in Headers */,
 			);
@@ -5430,7 +5417,6 @@
 				46A170331807CBFE005B8026 /* CCImage.h in Headers */,
 				2905FA5518CF08D100240AA3 /* UIImageView.h in Headers */,
 				46A170481807CC07005B8026 /* CCPlatformDefine.h in Headers */,
-				46A1704D1807CC11005B8026 /* AccelerometerSimulation.h in Headers */,
 				46A1704C1807CC07005B8026 /* OpenGL_Internal.h in Headers */,
 				46A1702C1807CBFE005B8026 /* CCApplicationProtocol.h in Headers */,
 				1A570064180BC5A10088DEC7 /* CCAction.h in Headers */,
@@ -5664,6 +5650,7 @@
 				1AD71ED0180E26E600808F54 /* Skeleton.h in Headers */,
 				1AD71ED4180E26E600808F54 /* SkeletonData.h in Headers */,
 				1AD71ED8180E26E600808F54 /* SkeletonJson.h in Headers */,
+				1A12775A18DFCC4F0005F345 /* CCTweenFunction.h in Headers */,
 				1AD71EDC180E26E600808F54 /* Skin.h in Headers */,
 				1A85BA0E1845F31700260FC0 /* CCVector.h in Headers */,
 				1AD71EE0180E26E600808F54 /* Slot.h in Headers */,
@@ -6202,6 +6189,7 @@
 				1A5701CB180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				1A5701E2180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
+				1A12775C18DFCC590005F345 /* CCTweenFunction.cpp in Sources */,
 				1A5701E6180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
 				1A5701EA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
 				1A5701EE180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
@@ -6488,7 +6476,6 @@
 			files = (
 				46A1604F1807A5D4005B8026 /* SimpleAudioEngine_objc.m in Sources */,
 				46A1604A1807A5D4005B8026 /* CDXMacOSXSupport.mm in Sources */,
-				2986667C18B1B079000E39CA /* CCTweenFunction.cpp in Sources */,
 				46A1604D1807A5D4005B8026 /* SimpleAudioEngine.mm in Sources */,
 				46A1604C1807A5D4005B8026 /* CocosDenshion.m in Sources */,
 				46A160451807A5D4005B8026 /* CDAudioManager.m in Sources */,
@@ -6546,7 +6533,6 @@
 				46A170281807CBFE005B8026 /* CCFileUtilsApple.mm in Sources */,
 				46A170311807CBFE005B8026 /* CCFileUtils.cpp in Sources */,
 				46A171051807CECB005B8026 /* CCPhysicsWorld.cpp in Sources */,
-				46A1704E1807CC11005B8026 /* AccelerometerSimulation.m in Sources */,
 				46A1703E1807CC07005B8026 /* CCDevice.mm in Sources */,
 				46A171031807CECB005B8026 /* CCPhysicsShape.cpp in Sources */,
 				46A170371807CBFE005B8026 /* CCSAXParser.cpp in Sources */,
@@ -7046,7 +7032,7 @@
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -7081,6 +7067,7 @@
 					NDEBUG,
 					USE_FILE32API,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -7155,6 +7142,7 @@
 		A03F2CB61780BD04006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
 			};
@@ -7163,6 +7151,7 @@
 		A03F2CB71780BD04006731B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
 			};
@@ -7171,6 +7160,10 @@
 		A03F2D991780BDF7006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/";
@@ -7181,6 +7174,10 @@
 		A03F2D9A1780BDF7006731B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/";
@@ -7277,6 +7274,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -7314,6 +7312,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -7424,6 +7423,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/";
@@ -7438,6 +7441,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/";

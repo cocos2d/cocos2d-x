@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ActionInstant
+-- @extend FiniteTimeAction
 
 --------------------------------
 -- @function [parent=#ActionInstant] step 

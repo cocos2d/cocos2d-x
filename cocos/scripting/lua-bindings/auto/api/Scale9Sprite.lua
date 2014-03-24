@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Scale9Sprite
+-- @extend Node
 
 --------------------------------
 -- @function [parent=#Scale9Sprite] resizableSpriteWithCapInsets 

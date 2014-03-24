@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ComRender
+-- @extend Component
 
 --------------------------------
 -- @function [parent=#ComRender] setNode 
