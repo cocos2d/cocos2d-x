@@ -3,7 +3,7 @@
 #include "../testBasic.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
-
+#include "../testResource.h"
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
 
@@ -16,6 +16,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RenderTextureTargetNode),
     CL(SpriteRenderTextureBug),
     CL(RenderTexturePartTest),
+    CL(ScreenshotTest),
 };
 
 #define MAX_LAYER   (sizeof(createFunctions)/sizeof(createFunctions[0]))
@@ -88,7 +89,7 @@ std::string RenderTextureTest::subtitle() const
 }
 
 /**
-* Impelmentation of RenderTextureSave
+* Implementation of RenderTextureSave
 */
 RenderTextureSave::RenderTextureSave()
 {
@@ -140,7 +141,7 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
     sprintf(png, "image-%d.png", counter);
     char jpg[20];
     sprintf(jpg, "image-%d.jpg", counter);
-
+    
     _target->saveToFile(png, Image::Format::PNG);
     _target->saveToFile(jpg, Image::Format::JPG);
     
@@ -157,7 +158,7 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
     runAction(Sequence::create(action1, CallFunc::create(func), NULL));
 
     CCLOG("Image saved %s and %s", png, jpg);
-
+    
     counter++;
 }
 
@@ -175,7 +176,7 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
 
     // begin drawing to the render texture
     _target->begin();
-
+    
     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
     // scale/rotation/offset
     float distance = start.getDistance(end);
@@ -212,7 +213,64 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
 }
 
 /**
- * Impelmentation of RenderTextureIssue937
+ * Implementation of ScreenshotTest
+ */
+
+ScreenshotTest::ScreenshotTest(){
+    auto size = Director::getInstance()->getWinSize();
+    
+    auto _kathia = Sprite::create(s_pathSister2);
+    auto actionUp = JumpBy::create(2, Point(0,0), 80, 4);
+    _kathia->runAction( RepeatForever::create(actionUp));
+    _kathia->setPosition(size.width/2,size.height/2);
+    this->addChild(_kathia);
+    
+    // Save Image menu
+    MenuItemFont::setFontSize(16);
+    auto item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(ScreenshotTest::saveImage, this));
+    auto menu = Menu::create(item1, NULL);
+    this->addChild(menu);
+    menu->alignItemsVertically();
+    menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
+
+}
+
+ScreenshotTest::~ScreenshotTest(){
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
+}
+
+std::string ScreenshotTest::title() const {
+    return "Screenshot";
+}
+
+std::string ScreenshotTest::subtitle() const {
+    return "Press the \"save image\" to take a screenshot.";
+}
+
+void ScreenshotTest::saveImage(Ref *pSender){
+    static int counter = 0;
+    
+    char png[20];
+    sprintf(png, "image-%d.png", counter);
+    char jpg[20];
+    sprintf(jpg, "image-%d.jpg", counter);
+    
+    auto callback = [&](const std::string& fullPath){
+        auto sprite = Sprite::create(fullPath);
+        addChild(sprite);
+        sprite->setScale(0.3f);
+        sprite->setPosition(Point(40, 40));
+        sprite->setRotation(counter * 3);
+        CCLOG("Image saved %s", fullPath.c_str());
+    };
+    
+    Director::getInstance()->saveScreenshot(png, callback);
+    counter++;
+}
+
+
+/**
+ * Implementation of RenderTextureIssue937
  */
 
 RenderTextureIssue937::RenderTextureIssue937()
@@ -290,7 +348,7 @@ void RenderTextureScene::runThisTest()
 }
 
 /**
-* Impelmentation of RenderTextureZbuffer
+* Implementation of RenderTextureZbuffer
 */
 
 RenderTextureZbuffer::RenderTextureZbuffer()

@@ -1238,7 +1238,7 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
 {
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
-
+    
     _scheduler->schedule(selector, this, interval , repeat, delay, !_running);
 }
 

@@ -130,6 +130,17 @@ private:
     Sprite* _spriteDraw;
 };
 
+class ScreenshotTest : public RenderTextureTest
+{
+public:
+    CREATE_FUNC(ScreenshotTest);
+    ScreenshotTest();
+    virtual ~ScreenshotTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void saveImage(Ref *pSender);
+};
+
 class SpriteRenderTextureBug : public RenderTextureTest
 {
 public:
