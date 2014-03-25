@@ -340,6 +340,8 @@ void Label::reset()
     _textColor = Color4B::WHITE;
     _textColorF = Color4F::WHITE;
     setColor(Color3B::WHITE);
+
+    _clipEnabled = false;
 }
 
 void Label::updateShaderProgram()
