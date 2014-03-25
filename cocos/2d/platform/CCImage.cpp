@@ -1288,6 +1288,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
     }
 
     _renderFormat = it->first;
+    int bpp = it->second.bpp;
 
     //Reset num of mipmaps
     _numberOfMipmaps = 0;
@@ -1316,7 +1317,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
                 _mipmaps[_numberOfMipmaps].len = width*height*4;
                 _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
                 PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, true);
-                _renderFormat = Texture2D::PixelFormat::RGBA8888;
+                bpp = 2;
             }
             blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
             widthBlocks = width / 8;
@@ -1330,7 +1331,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
                 _mipmaps[_numberOfMipmaps].len = width*height*4;
                 _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
                 PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, false);
-                _renderFormat = Texture2D::PixelFormat::RGBA8888;
+                bpp = 4;
             }
             blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
             widthBlocks = width / 4;
@@ -1359,7 +1360,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
             heightBlocks = 2;
         }
 
-        dataSize = widthBlocks * heightBlocks * ((blockSize  * it->second.bpp) / 8);
+        dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
         int packetLength = (dataLength - dataOffset);
         packetLength = packetLength > dataSize ? dataSize : packetLength;
 
@@ -1431,6 +1432,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     }
 
     _renderFormat = it->first;
+    int bpp = it->second.bpp;
     
     // flags
 	int flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
@@ -1468,7 +1470,8 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 					_unpack = true;
 					_mipmaps[i].len = width*height*4;
 					_mipmaps[i].address = new unsigned char[width*height*4];
-						PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, true);
+					PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, true);
+                    bpp = 2;
 				}
 				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
 				widthBlocks = width / 8;
@@ -1483,6 +1486,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 					_mipmaps[i].len = width*height*4;
 					_mipmaps[i].address = new unsigned char[width*height*4];
 					PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, false);
+                    bpp = 4;
 				}
 				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
 				widthBlocks = width / 4;
@@ -1529,7 +1533,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 			heightBlocks = 2;
         }
 		
-		dataSize = widthBlocks * heightBlocks * ((blockSize  * it->second.bpp) / 8);
+		dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
 		auto packetLength = _dataLen - dataOffset;
 		packetLength = packetLength > dataSize ? dataSize : packetLength;
 		
