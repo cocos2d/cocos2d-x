@@ -51,41 +51,41 @@ struct Skeleton {
 	float x, y;
 };
 
-Skeleton* Skeleton_create (SkeletonData* data);
-void Skeleton_dispose (Skeleton* self);
+CC_EX_DLL Skeleton* Skeleton_create (SkeletonData* data);
+CC_EX_DLL void Skeleton_dispose (Skeleton* self);
 
-void Skeleton_updateWorldTransform (const Skeleton* self);
+CC_EX_DLL void Skeleton_updateWorldTransform (const Skeleton* self);
 
-void Skeleton_setToSetupPose (const Skeleton* self);
-void Skeleton_setBonesToSetupPose (const Skeleton* self);
-void Skeleton_setSlotsToSetupPose (const Skeleton* self);
+CC_EX_DLL void Skeleton_setToSetupPose (const Skeleton* self);
+CC_EX_DLL void Skeleton_setBonesToSetupPose (const Skeleton* self);
+CC_EX_DLL void Skeleton_setSlotsToSetupPose (const Skeleton* self);
 
 /* Returns 0 if the bone was not found. */
-Bone* Skeleton_findBone (const Skeleton* self, const char* boneName);
+CC_EX_DLL Bone* Skeleton_findBone (const Skeleton* self, const char* boneName);
 /* Returns -1 if the bone was not found. */
-int Skeleton_findBoneIndex (const Skeleton* self, const char* boneName);
+CC_EX_DLL int Skeleton_findBoneIndex (const Skeleton* self, const char* boneName);
 
 /* Returns 0 if the slot was not found. */
-Slot* Skeleton_findSlot (const Skeleton* self, const char* slotName);
+CC_EX_DLL Slot* Skeleton_findSlot (const Skeleton* self, const char* slotName);
 /* Returns -1 if the slot was not found. */
-int Skeleton_findSlotIndex (const Skeleton* self, const char* slotName);
+CC_EX_DLL int Skeleton_findSlotIndex (const Skeleton* self, const char* slotName);
 
 /* Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
  * attached if the corresponding attachment from the old skin was attached.
  * @param skin May be 0.*/
-void Skeleton_setSkin (Skeleton* self, Skin* skin);
+CC_EX_DLL void Skeleton_setSkin (Skeleton* self, Skin* skin);
 /* Returns 0 if the skin was not found. See Skeleton_setSkin.
  * @param skinName May be 0. */
-int Skeleton_setSkinByName (Skeleton* self, const char* skinName);
+CC_EX_DLL int Skeleton_setSkinByName (Skeleton* self, const char* skinName);
 
 /* Returns 0 if the slot or attachment was not found. */
-Attachment* Skeleton_getAttachmentForSlotName (const Skeleton* self, const char* slotName, const char* attachmentName);
+CC_EX_DLL Attachment* Skeleton_getAttachmentForSlotName (const Skeleton* self, const char* slotName, const char* attachmentName);
 /* Returns 0 if the slot or attachment was not found. */
-Attachment* Skeleton_getAttachmentForSlotIndex (const Skeleton* self, int slotIndex, const char* attachmentName);
+CC_EX_DLL Attachment* Skeleton_getAttachmentForSlotIndex (const Skeleton* self, int slotIndex, const char* attachmentName);
 /* Returns 0 if the slot or attachment was not found. */
-int Skeleton_setAttachment (Skeleton* self, const char* slotName, const char* attachmentName);
+CC_EX_DLL int Skeleton_setAttachment (Skeleton* self, const char* slotName, const char* attachmentName);
 
-void Skeleton_update (Skeleton* self, float deltaTime);
+CC_EX_DLL void Skeleton_update (Skeleton* self, float deltaTime);
 
 }} // namespace cocos2d { namespace extension {
 

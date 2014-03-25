@@ -12,7 +12,7 @@ class CCBReader;
  *  @js NA
  *  @lua NA
  */
-class CCScrollViewLoader : public CCNodeLoader {
+class CC_EX_DLL CCScrollViewLoader : public CCNodeLoader {
     public:
         virtual ~CCScrollViewLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCScrollViewLoader, loader);

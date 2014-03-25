@@ -55,7 +55,7 @@ typedef enum {
  *  @js NA
  *  @lua NA
  */
-class Layout : public Widget
+class CC_EX_DLL Layout : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO

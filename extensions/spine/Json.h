@@ -25,6 +25,8 @@
 #ifndef SPINE_JSON_H_
 #define SPINE_JSON_H_
 
+#include "ExtensionMacros.h"
+
 namespace cocos2d { namespace extension {
 
 /* Json Types: */
@@ -52,25 +54,25 @@ typedef struct Json {
 } Json;
 
 /* Supply a block of JSON, and this returns a Json object you can interrogate. Call Json_dispose when finished. */
-Json* Json_create (const char* value);
+CC_EX_DLL Json* Json_create (const char* value);
 
 /* Delete a Json entity and all subentities. */
-void Json_dispose (Json* json);
+CC_EX_DLL void Json_dispose (Json* json);
 
 /* Returns the number of items in an array (or object). */
-int Json_getSize (Json* json);
+CC_EX_DLL int Json_getSize (Json* json);
 
 /* Retrieve item number "item" from array "array". Returns NULL if unsuccessful. */
-Json* Json_getItemAt (Json* json, int item);
+CC_EX_DLL Json* Json_getItemAt (Json* json, int item);
 
 /* Get item "string" from object. Case insensitive. */
-Json* Json_getItem (Json* json, const char* string);
-const char* Json_getString (Json* json, const char* name, const char* defaultValue);
-float Json_getFloat (Json* json, const char* name, float defaultValue);
-int Json_getInt (Json* json, const char* name, int defaultValue);
+CC_EX_DLL Json* Json_getItem (Json* json, const char* string);
+CC_EX_DLL const char* Json_getString (Json* json, const char* name, const char* defaultValue);
+CC_EX_DLL float Json_getFloat (Json* json, const char* name, float defaultValue);
+CC_EX_DLL int Json_getInt (Json* json, const char* name, int defaultValue);
 
 /* For analysing failed parses. This returns a pointer to the parse error. You'll probably need to look a few chars back to make sense of it. Defined when Json_create() returns 0. 0 when Json_create() succeeds. */
-const char* Json_getError (void);
+CC_EX_DLL const char* Json_getError (void);
 
 }} // namespace cocos2d { namespace extension {
 

@@ -29,7 +29,7 @@
 
 NS_CC_EXT_BEGIN
 
-class PageViewReader : public LayoutReader
+class CC_EX_DLL PageViewReader : public LayoutReader
 {
 public:
     DECLARE_CLASS_WIDGET_READER_INFO
