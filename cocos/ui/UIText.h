@@ -159,7 +159,7 @@ protected:
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;
-    LabelTTF* _labelRenderer;
+    Label* _labelRenderer;
 };
 
 }
