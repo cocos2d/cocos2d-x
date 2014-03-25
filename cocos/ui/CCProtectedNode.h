@@ -34,38 +34,6 @@
 
 NS_CC_BEGIN
 
-
-/**
- * @addtogroup base_nodes
- * @{
- */
-
-/** @brief Node is the base element of the Scene Graph. Elements of the Scene Graph must be Node objects or subclasses of it.
- The most common Node objects are: Scene, Layer, Sprite, Menu, Label.
- 
- The main features of a Node are:
- - They can contain other Node objects (`addChild`, `getChildByTag`, `removeChild`, etc)
- - They can schedule periodic callback (`schedule`, `unschedule`, etc)
- - They can execute actions (`runAction`, `stopAction`, etc)
- 
- Subclassing a Node usually means (one/all) of:
- - overriding init to initialize resources and schedule callbacks
- - create callbacks to handle the advancement of time
- - overriding `draw` to render the node
- 
- Properties of Node:
- - position (default: x=0, y=0)
- - scale (default: x=1, y=1)
- - rotation (in degrees, clockwise) (default: 0)
- - anchor point (default: x=0, y=0)
- - contentSize (default: width=0, height=0)
- - visible (default: true)
- 
- Limitations:
- - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
- 
- */
-
 class CC_DLL ProtectedNode : public Node
 {
 public:
