@@ -89,8 +89,9 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
 		_minusSprite->setPosition( Point(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
 		this->addChild(_minusSprite);
         
-        this->setMinusLabel( LabelTTF::create("-", ControlStepperLabelFont, 40));
+        this->setMinusLabel( Label::create("-", ControlStepperLabelFont, 40));
         _minusLabel->setColor(ControlStepperLabelColorDisabled);
+        _minusLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _minusLabel->setPosition(Point(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
         _minusSprite->addChild(_minusLabel);
         
@@ -100,8 +101,9 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
                                                   minusSprite->getContentSize().height / 2) );
 		this->addChild(_plusSprite);
         
-        this->setPlusLabel( LabelTTF::create("+", ControlStepperLabelFont, 40 ));
+        this->setPlusLabel( Label::create("+", ControlStepperLabelFont, 40 ));
         _plusLabel->setColor( ControlStepperLabelColorEnabled );
+        _plusLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _plusLabel->setPosition( Point(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
         _plusSprite->addChild(_plusLabel);
         

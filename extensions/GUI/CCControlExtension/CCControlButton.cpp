@@ -27,7 +27,7 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
-#include "CCLabelTTF.h"
+#include "CCLabel.h"
 #include "CCLabelBMFont.h"
 #include "CCAction.h"
 #include "CCActionInterval.h"
@@ -65,7 +65,7 @@ ControlButton::~ControlButton()
 
 bool ControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(LabelTTF::create("", "Helvetica", 12), Scale9Sprite::create());
+    return this->initWithLabelAndBackgroundSprite(Label::create("", "Helvetica", 12), Scale9Sprite::create());
 }
 
 bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* backgroundSprite)
@@ -132,7 +132,7 @@ ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite
 
 bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    LabelTTF *label = LabelTTF::create(title, fontName, fontSize);
+    Label *label = Label::create(title, fontName, fontSize);
     return initWithLabelAndBackgroundSprite(label, Scale9Sprite::create());
 }
 
@@ -146,7 +146,7 @@ ControlButton* ControlButton::create(const std::string& title, const std::string
 
 bool ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
 {
-    LabelTTF *label = LabelTTF::create("", "Arial", 30);//
+    Label *label = Label::create("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
@@ -363,13 +363,13 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
 void ControlButton::setTitleTTFForState(const std::string& fntFile, State state)
 {
     std::string title = this->getTitleForState(state);
-    this->setTitleLabelForState(LabelTTF::create(title, fntFile, 12), state);
+    this->setTitleLabelForState(Label::create(title, fntFile, 12), state);
 }
 
 const std::string& ControlButton::getTitleTTFForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
-    LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
+    Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
         return labelTTF->getFontName();
@@ -384,7 +384,7 @@ void ControlButton::setTitleTTFSizeForState(float size, State state)
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     if(label)
     {
-        LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
+        Label* labelTTF = dynamic_cast<Label*>(label);
         if(labelTTF != 0)
         {
             return labelTTF->setFontSize(size);
@@ -395,7 +395,7 @@ void ControlButton::setTitleTTFSizeForState(float size, State state)
 float ControlButton::getTitleTTFSizeForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
-    LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
+    Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
         return labelTTF->getFontSize();
