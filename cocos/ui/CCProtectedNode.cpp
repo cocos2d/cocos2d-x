@@ -35,12 +35,7 @@
 #endif
 #include "CCScene.h"
 
-#include "CCNode.cpp"
-
 NS_CC_BEGIN
-
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
-//static int s_globalOrderOfArrival = 1;
 
 ProtectedNode::ProtectedNode() : _reorderProtectedChildDirty(false)
 {
