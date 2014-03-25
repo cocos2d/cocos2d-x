@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Control
+-- @extend Layer
+
 --------------------------------
 -- @function [parent=#Control] setEnabled 
 -- @param self
@@ -91,5 +93,15 @@
 -- @function [parent=#Control] create 
 -- @param self
 -- @return Control#Control ret (return value: cc.Control)
+        
+--------------------------------
+-- @function [parent=#Control] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Control] setOpacityModifyRGB 
+-- @param self
+-- @param #bool bool
         
 return nil

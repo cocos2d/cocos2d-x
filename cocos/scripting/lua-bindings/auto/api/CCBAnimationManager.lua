@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module CCBAnimationManager
+
 --------------------------------
 -- @function [parent=#CCBAnimationManager] moveAnimationsFromNode 
 -- @param self

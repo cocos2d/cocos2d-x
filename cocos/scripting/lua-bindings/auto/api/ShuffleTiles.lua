@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ShuffleTiles
+-- @extend TiledGrid3DAction
+
 --------------------------------
 -- @function [parent=#ShuffleTiles] placeTile 
 -- @param self
@@ -26,5 +28,20 @@
 -- @param #size_table size
 -- @param #unsigned int int
 -- @return ShuffleTiles#ShuffleTiles ret (return value: cc.ShuffleTiles)
+        
+--------------------------------
+-- @function [parent=#ShuffleTiles] startWithTarget 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#ShuffleTiles] clone 
+-- @param self
+-- @return ShuffleTiles#ShuffleTiles ret (return value: cc.ShuffleTiles)
+        
+--------------------------------
+-- @function [parent=#ShuffleTiles] update 
+-- @param self
+-- @param #float float
         
 return nil

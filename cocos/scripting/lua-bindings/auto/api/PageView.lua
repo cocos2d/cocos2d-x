@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module PageView
+-- @extend Layout,UIScrollInterface,
+
 --------------------------------
 -- @function [parent=#PageView] getCurPageIndex 
 -- @param self
@@ -63,6 +65,26 @@
 -- @function [parent=#PageView] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#PageView] getLayoutType 
+-- @param self
+-- @return LayoutType#LayoutType ret (return value: ccui.LayoutType)
+        
+--------------------------------
+-- @function [parent=#PageView] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#PageView] update 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#PageView] setLayoutType 
+-- @param self
+-- @param #ccui.LayoutType layouttype
         
 --------------------------------
 -- @function [parent=#PageView] PageView 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ArmatureDataManager
+
 --------------------------------
 -- @function [parent=#ArmatureDataManager] getAnimationDatas 
 -- @param self

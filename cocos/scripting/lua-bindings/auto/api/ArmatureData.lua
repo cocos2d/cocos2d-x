@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ArmatureData
+
 --------------------------------
 -- @function [parent=#ArmatureData] addBoneData 
 -- @param self

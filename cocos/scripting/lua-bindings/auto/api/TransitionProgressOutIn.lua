@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionProgressOutIn
+-- @extend TransitionProgress
+
 --------------------------------
 -- @function [parent=#TransitionProgressOutIn] create 
 -- @param self

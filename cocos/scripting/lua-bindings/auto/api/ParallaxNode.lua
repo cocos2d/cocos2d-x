@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParallaxNode
+-- @extend Node
+
 --------------------------------
 -- overload function: getParallaxArray()
 --          
@@ -32,5 +34,25 @@
 -- @function [parent=#ParallaxNode] create 
 -- @param self
 -- @return ParallaxNode#ParallaxNode ret (return value: cc.ParallaxNode)
+        
+--------------------------------
+-- @function [parent=#ParallaxNode] addChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#ParallaxNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ParallaxNode] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
         
 return nil

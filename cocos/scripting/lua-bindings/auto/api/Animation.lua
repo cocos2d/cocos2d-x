@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Animation
+-- @extend Ref
+
 --------------------------------
 -- @function [parent=#Animation] getLoops 
 -- @param self

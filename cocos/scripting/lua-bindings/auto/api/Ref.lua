@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Ref
+
 --------------------------------
 -- @function [parent=#Ref] release 
 -- @param self

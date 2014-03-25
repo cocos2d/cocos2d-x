@@ -11,6 +11,7 @@ import sys
 import traceback
 import platform
 import subprocess
+import codecs
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description 
@@ -99,7 +100,17 @@ def main():
         return(1)
 
     # Generate binding glue codes
-    os.system("python tools/jenkins-scripts/gen_jsb.py")
+    if(branch == 'develop'):
+      os.system("python tools/jenkins-scripts/gen_jsb.py")
+    elif(branch == 'master'):
+      os.chdir('tools/tojs')
+      if(platform.system() == 'Windows'):
+        os.environ['NDK_ROOT'] = os.environ['NDK_ROOT_R8E']
+        os.system("genbindings-win32.bat")
+        os.environ['NDK_ROOT'] = os.environ['NDK_ROOT_R9B']
+      else:
+        os.system("./genbindings.sh")
+      os.chdir('../..')
 
     #make temp dir
     print "current dir is: " + os.environ['WORKSPACE']
@@ -127,7 +138,7 @@ def main():
     if(branch == 'develop'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
         print "Start build android..."
-        ret = os.system("python build/android-build.py -n -j10 cpp")
+        ret = os.system("python build/android-build.py -n -j10 all")
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
@@ -138,8 +149,33 @@ def main():
         ret = os.system("make -j10")
         os.chdir("../")
     elif(branch == 'master'):
-      if(platform.system() == 'Darwin'):
-        ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")
+      SAMPLES_DIRS = ['Cpp/HelloCpp', 'Cpp/SimpleGame', 'Cpp/TestCpp', 'Javascript/TestJavascript', 'Lua/HelloLua', 'Lua/TestLua']
+      SAMPLES_NAMES = ['HelloCpp', 'SimpleGame', 'TestCpp', 'TestJavascript', 'HelloLua', 'TestLua']
+      if(node_name == 'android_mac'):
+        for item in SAMPLES_DIRS:
+          proj_dir = "samples/" + item + "/proj.android"
+          os.system('ln -s ../../../../android_build_objs obj')
+          os.system(proj_dir + "/build_native.sh")
+          if (ret != 0):
+            break
+      elif(node_name == 'win32_win7'):
+        ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
+      elif(node_name == 'ios_mac'):
+        for i, item in enumerate(SAMPLES_DIRS):
+          cmd = "xcodebuild -project samples/" + item + "/proj.ios/" + SAMPLES_NAMES[i] + ".xcodeproj -scheme " + SAMPLES_NAMES[i] + ' -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"'
+          cmd_clean = cmd + ' clean'
+          cmd_build = cmd + ' build'
+          ret = os.system(cmd_clean)
+          if(ret != 0):
+            break
+          ret = os.system(cmd_build)
+          if(ret != 0):
+            break
+      elif(node_name == 'linux_centos'):
+        data = codecs.open('cocos2dx/proj.linux/cocos2dx.mk', encoding='UTF-8').read()
+        data = re.sub('-lglfw','-L$(GLFW_279_LIB) -lglfw', data)
+        codecs.open('cocos2dx/proj.linux/cocos2dx.mk', 'wb', encoding='UTF-8').write(data)
+        ret = os.system('make -j10')
       else:
         ret = 0
 
@@ -153,7 +189,9 @@ def main():
         exit_code = 1
     
     #clean workspace
-    os.system("cd " + os.environ['WORKSPACE']);
+    os.system("cd " + os.environ['WORKSPACE'])
+    os.system("git reset --hard")
+    os.system("git clean -xdf -f")
     os.system("git checkout develop")
     os.system("git branch -D pull" + str(pr_num))
 

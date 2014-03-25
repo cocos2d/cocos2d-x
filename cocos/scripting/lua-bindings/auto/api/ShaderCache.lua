@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ShaderCache
+-- @extend Ref
+
 --------------------------------
 -- @function [parent=#ShaderCache] reloadDefaultShaders 
 -- @param self

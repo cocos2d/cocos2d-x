@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ClippingNode
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#ClippingNode] isInverted 
 -- @param self
@@ -41,4 +43,11 @@
 -- @param #cc.Node node
 -- @return ClippingNode#ClippingNode ret (retunr value: cc.ClippingNode)
 
+--------------------------------
+-- @function [parent=#ClippingNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
 return nil

@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TableView
+-- @extend ScrollView,ScrollViewDelegate,
+
 --------------------------------
 -- @function [parent=#TableView] updateCellAtIndex 
 -- @param self
@@ -61,6 +63,31 @@
 -- @function [parent=#TableView] dequeueCell 
 -- @param self
 -- @return TableViewCell#TableViewCell ret (return value: cc.TableViewCell)
+        
+--------------------------------
+-- @function [parent=#TableView] onTouchMoved 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#TableView] onTouchEnded 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#TableView] onTouchCancelled 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#TableView] onTouchBegan 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#TableView] TableView 

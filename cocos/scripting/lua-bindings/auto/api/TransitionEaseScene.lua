@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionEaseScene
+
 --------------------------------
 -- @function [parent=#TransitionEaseScene] easeActionWithAction 
 -- @param self

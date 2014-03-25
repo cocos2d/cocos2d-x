@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Action
+-- @extend Ref
+
 --------------------------------
 -- @function [parent=#Action] startWithTarget 
 -- @param self

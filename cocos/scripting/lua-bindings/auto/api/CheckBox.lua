@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module CheckBox
+-- @extend Widget
+
 --------------------------------
 -- @function [parent=#CheckBox] getSelectedState 
 -- @param self
@@ -60,6 +62,26 @@
 -- @function [parent=#CheckBox] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#CheckBox] setAnchorPoint 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#CheckBox] getVirtualRenderer 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#CheckBox] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#CheckBox] getContentSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#CheckBox] CheckBox 

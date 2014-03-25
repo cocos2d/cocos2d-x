@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module EventMouse
+-- @extend Event
+
 --------------------------------
 -- @function [parent=#EventMouse] getMouseButton 
 -- @param self

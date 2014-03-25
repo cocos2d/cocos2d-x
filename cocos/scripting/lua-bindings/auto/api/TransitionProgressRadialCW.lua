@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionProgressRadialCW
+-- @extend TransitionProgress
+
 --------------------------------
 -- @function [parent=#TransitionProgressRadialCW] create 
 -- @param self

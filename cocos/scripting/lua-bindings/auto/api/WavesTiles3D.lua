@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module WavesTiles3D
+-- @extend TiledGrid3DAction
+
 --------------------------------
 -- @function [parent=#WavesTiles3D] getAmplitudeRate 
 -- @param self
@@ -29,5 +31,15 @@
 -- @param #unsigned int int
 -- @param #float float
 -- @return WavesTiles3D#WavesTiles3D ret (return value: cc.WavesTiles3D)
+        
+--------------------------------
+-- @function [parent=#WavesTiles3D] clone 
+-- @param self
+-- @return WavesTiles3D#WavesTiles3D ret (return value: cc.WavesTiles3D)
+        
+--------------------------------
+-- @function [parent=#WavesTiles3D] update 
+-- @param self
+-- @param #float float
         
 return nil

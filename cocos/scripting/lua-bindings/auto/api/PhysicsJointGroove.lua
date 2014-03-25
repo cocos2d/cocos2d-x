@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module PhysicsJointGroove
+-- @extend PhysicsJoint
+
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] setAnchr2 
 -- @param self

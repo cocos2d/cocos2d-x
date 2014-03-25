@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParticleFire
+-- @extend ParticleSystemQuad
+
 --------------------------------
 -- @function [parent=#ParticleFire] create 
 -- @param self

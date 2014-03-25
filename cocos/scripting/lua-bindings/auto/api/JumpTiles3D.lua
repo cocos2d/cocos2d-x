@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module JumpTiles3D
+-- @extend TiledGrid3DAction
+
 --------------------------------
 -- @function [parent=#JumpTiles3D] getAmplitudeRate 
 -- @param self
@@ -29,5 +31,15 @@
 -- @param #unsigned int int
 -- @param #float float
 -- @return JumpTiles3D#JumpTiles3D ret (return value: cc.JumpTiles3D)
+        
+--------------------------------
+-- @function [parent=#JumpTiles3D] clone 
+-- @param self
+-- @return JumpTiles3D#JumpTiles3D ret (return value: cc.JumpTiles3D)
+        
+--------------------------------
+-- @function [parent=#JumpTiles3D] update 
+-- @param self
+-- @param #float float
         
 return nil

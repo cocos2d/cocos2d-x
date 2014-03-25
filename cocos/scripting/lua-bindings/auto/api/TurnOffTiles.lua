@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TurnOffTiles
+-- @extend TiledGrid3DAction
+
 --------------------------------
 -- @function [parent=#TurnOffTiles] turnOnTile 
 -- @param self
@@ -29,4 +31,19 @@
 -- @param #unsigned int int
 -- @return TurnOffTiles#TurnOffTiles ret (retunr value: cc.TurnOffTiles)
 
+--------------------------------
+-- @function [parent=#TurnOffTiles] startWithTarget 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#TurnOffTiles] clone 
+-- @param self
+-- @return TurnOffTiles#TurnOffTiles ret (return value: cc.TurnOffTiles)
+        
+--------------------------------
+-- @function [parent=#TurnOffTiles] update 
+-- @param self
+-- @param #float float
+        
 return nil

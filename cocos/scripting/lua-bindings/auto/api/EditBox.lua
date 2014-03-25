@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module EditBox
+-- @extend ControlButton,IMEDelegate,
+
 --------------------------------
 -- @function [parent=#EditBox] getText 
 -- @param self
@@ -103,6 +105,26 @@
 -- @param #cc.Scale9Sprite scale9sprite
 -- @param #cc.Scale9Sprite scale9sprite
 -- @return EditBox#EditBox ret (return value: cc.EditBox)
+        
+--------------------------------
+-- @function [parent=#EditBox] setAnchorPoint 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#EditBox] setPosition 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#EditBox] setVisible 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#EditBox] setContentSize 
+-- @param self
+-- @param #size_table size
         
 --------------------------------
 -- @function [parent=#EditBox] EditBox 

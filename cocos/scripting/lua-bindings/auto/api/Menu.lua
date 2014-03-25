@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Menu
+-- @extend Layer
+
 --------------------------------
 -- @function [parent=#Menu] setEnabled 
 -- @param self
@@ -28,5 +30,39 @@
 --------------------------------
 -- @function [parent=#Menu] alignItemsHorizontally 
 -- @param self
+        
+--------------------------------
+-- overload function: addChild(cc.Node, int)
+--          
+-- overload function: addChild(cc.Node)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#Menu] addChild
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+
+--------------------------------
+-- @function [parent=#Menu] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Menu] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Menu] setOpacityModifyRGB 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Menu] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
         
 return nil

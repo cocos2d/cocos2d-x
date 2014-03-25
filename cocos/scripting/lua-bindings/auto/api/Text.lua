@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Text
+-- @extend Widget
+
 --------------------------------
 -- @function [parent=#Text] getStringLength 
 -- @param self
@@ -85,6 +87,26 @@
 -- @function [parent=#Text] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#Text] setAnchorPoint 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#Text] getVirtualRenderer 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#Text] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Text] getContentSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#Text] Text 

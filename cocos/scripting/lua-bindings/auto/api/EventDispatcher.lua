@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module EventDispatcher
+-- @extend Ref
+
 --------------------------------
 -- @function [parent=#EventDispatcher] pauseEventListenersForTarget 
 -- @param self

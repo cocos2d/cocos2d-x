@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module RepeatForever
+-- @extend ActionInterval
+
 --------------------------------
 -- @function [parent=#RepeatForever] setInnerAction 
 -- @param self
@@ -16,5 +18,30 @@
 -- @param self
 -- @param #cc.ActionInterval actioninterval
 -- @return RepeatForever#RepeatForever ret (return value: cc.RepeatForever)
+        
+--------------------------------
+-- @function [parent=#RepeatForever] startWithTarget 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#RepeatForever] clone 
+-- @param self
+-- @return RepeatForever#RepeatForever ret (return value: cc.RepeatForever)
+        
+--------------------------------
+-- @function [parent=#RepeatForever] isDone 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#RepeatForever] reverse 
+-- @param self
+-- @return RepeatForever#RepeatForever ret (return value: cc.RepeatForever)
+        
+--------------------------------
+-- @function [parent=#RepeatForever] step 
+-- @param self
+-- @param #float float
         
 return nil

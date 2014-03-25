@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParticleSystemQuad
+-- @extend ParticleSystem
+
 --------------------------------
 -- @function [parent=#ParticleSystemQuad] setDisplayFrame 
 -- @param self
@@ -27,5 +29,10 @@
 -- @param self
 -- @param #int int
 -- @return ParticleSystemQuad#ParticleSystemQuad ret (return value: cc.ParticleSystemQuad)
+        
+--------------------------------
+-- @function [parent=#ParticleSystemQuad] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 return nil

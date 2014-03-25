@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module PhysicsJointRotarySpring
+-- @extend PhysicsJoint
+
 --------------------------------
 -- @function [parent=#PhysicsJointRotarySpring] getDamping 
 -- @param self

@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module PhysicsJointRotaryLimit
+-- @extend PhysicsJoint
+
 --------------------------------
 -- @function [parent=#PhysicsJointRotaryLimit] getMax 
 -- @param self

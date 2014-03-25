@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Tween
+
 --------------------------------
 -- @function [parent=#Tween] getAnimation 
 -- @param self

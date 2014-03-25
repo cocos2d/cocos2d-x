@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ComAttribute
+-- @extend Component
+
 --------------------------------
 -- @function [parent=#ComAttribute] getFloat 
 -- @param self
@@ -68,5 +70,16 @@
 -- @function [parent=#ComAttribute] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#ComAttribute] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ComAttribute] serialize 
+-- @param self
+-- @param #void void
+-- @return bool#bool ret (return value: bool)
         
 return nil

@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TableViewCell
+-- @extend Node
+
 --------------------------------
 -- @function [parent=#TableViewCell] reset 
 -- @param self

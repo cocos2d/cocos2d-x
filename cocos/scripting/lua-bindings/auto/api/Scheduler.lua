@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Scheduler
+-- @extend Ref
+
 --------------------------------
 -- @function [parent=#Scheduler] setTimeScale 
 -- @param self

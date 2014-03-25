@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComponent.h"
+#include "CCScriptSupport.h"
 
 
 NS_CC_BEGIN
@@ -31,6 +32,10 @@ Component::Component(void)
 : _owner(nullptr)
 , _enabled(true)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
+    _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
+#endif
 }
 
 Component::~Component(void)
@@ -42,16 +47,60 @@ bool Component::init()
     return true;
 }
 
+#if CC_ENABLE_SCRIPT_BINDING
+
+static bool sendComponentEventToJS(Component* node, int action)
+{
+    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    
+    if (scriptEngine->isCalledFromScript())
+    {
+        scriptEngine->setCalledFromScript(false);
+    }
+    else
+    {
+        BasicScriptData data(node,(void*)&action);
+        ScriptEvent scriptEvent(kComponentEvent,(void*)&data);
+        if (scriptEngine->sendEvent(&scriptEvent))
+            return true;
+    }
+    
+    return false;
+}
+
+#endif
+
 void Component::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendComponentEventToJS(this, kComponentOnEnter))
+            return;
+    }
+#endif
 }
 
 void Component::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendComponentEventToJS(this, kComponentOnExit))
+            return;
+    }
+#endif
 }
 
 void Component::update(float delta)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendComponentEventToJS(this, kComponentOnUpdate))
+            return;
+    }
+#endif
 }
 
 bool Component::serialize(void *ar)

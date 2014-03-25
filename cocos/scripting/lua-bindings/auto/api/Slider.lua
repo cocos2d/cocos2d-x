@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Slider
+-- @extend Widget
+
 --------------------------------
 -- @function [parent=#Slider] setPercent 
 -- @param self
@@ -93,6 +95,26 @@
 -- @function [parent=#Slider] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
+        
+--------------------------------
+-- @function [parent=#Slider] getVirtualRenderer 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#Slider] ignoreContentAdaptWithSize 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Slider] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Slider] getContentSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#Slider] Slider 

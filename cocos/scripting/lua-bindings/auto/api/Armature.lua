@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Armature
+-- @extend Node,BlendProtocol,
+
 --------------------------------
 -- @function [parent=#Armature] getBone 
 -- @param self
@@ -136,6 +138,38 @@
 -- @param #ccs.Bone bone
 -- @return Armature#Armature ret (retunr value: ccs.Armature)
 
+--------------------------------
+-- @function [parent=#Armature] setAnchorPoint 
+-- @param self
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#Armature] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Armature] getAnchorPointInPoints 
+-- @param self
+-- @return point_table#point_table ret (return value: point_table)
+        
+--------------------------------
+-- @function [parent=#Armature] update 
+-- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#Armature] getNodeToParentTransform 
+-- @param self
+-- @return kmMat4#kmMat4 ret (return value: kmMat4)
+        
+--------------------------------
+-- @function [parent=#Armature] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
 --------------------------------
 -- @function [parent=#Armature] Armature 
 -- @param self

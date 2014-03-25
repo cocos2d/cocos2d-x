@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module GridBase
+-- @extend Ref
+
 --------------------------------
 -- @function [parent=#GridBase] setGridSize 
 -- @param self

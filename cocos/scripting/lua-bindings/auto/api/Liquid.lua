@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Liquid
+-- @extend Grid3DAction
+
 --------------------------------
 -- @function [parent=#Liquid] getAmplitudeRate 
 -- @param self
@@ -12,14 +14,14 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Liquid] getAmplitude 
--- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
 -- @function [parent=#Liquid] setAmplitudeRate 
 -- @param self
 -- @param #float float
+        
+--------------------------------
+-- @function [parent=#Liquid] getAmplitude 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Liquid] create 
@@ -31,7 +33,13 @@
 -- @return Liquid#Liquid ret (return value: cc.Liquid)
         
 --------------------------------
--- @function [parent=#Liquid] Liquid 
+-- @function [parent=#Liquid] clone 
 -- @param self
+-- @return Liquid#Liquid ret (return value: cc.Liquid)
+        
+--------------------------------
+-- @function [parent=#Liquid] update 
+-- @param self
+-- @param #float float
         
 return nil

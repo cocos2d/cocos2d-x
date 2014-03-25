@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionFade
+-- @extend TransitionScene
+
 --------------------------------
 -- overload function: create(float, cc.Scene)
 --          

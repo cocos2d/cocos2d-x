@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParticleFlower
+-- @extend ParticleSystemQuad
+
 --------------------------------
 -- @function [parent=#ParticleFlower] create 
 -- @param self

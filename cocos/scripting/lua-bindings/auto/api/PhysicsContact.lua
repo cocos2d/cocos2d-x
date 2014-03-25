@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module PhysicsContact
+-- @extend EventCustom
+
 --------------------------------
 -- @function [parent=#PhysicsContact] getContactData 
 -- @param self

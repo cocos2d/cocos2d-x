@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ActionManager
+-- @extend Ref
+
 --------------------------------
 -- @function [parent=#ActionManager] getActionByTag 
 -- @param self

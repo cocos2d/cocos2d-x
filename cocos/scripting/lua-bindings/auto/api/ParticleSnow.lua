@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module ParticleSnow
+-- @extend ParticleSystemQuad
+
 --------------------------------
 -- @function [parent=#ParticleSnow] create 
 -- @param self

@@ -295,8 +295,8 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     auto baseValueIter = _baseValues.find(fromNode);
     if(baseValueIter != _baseValues.end())
     {
-        _baseValues.erase(baseValueIter);
         _baseValues[toNode] = baseValueIter->second;
+        _baseValues.erase(baseValueIter);
 //         fromNode->release();
 //         toNode->retain();
     }
@@ -304,8 +304,8 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     auto objIter = _objects.find(fromNode);
     if (objIter != _objects.end())
     {
-        _objects.erase(objIter);
         _objects[toNode] = objIter->second;
+        _objects.erase(objIter);
     }
     
     
@@ -313,9 +313,8 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     auto seqsIter = _nodeSequences.find(fromNode);
     if (seqsIter != _nodeSequences.end())
     {
-        _nodeSequences.erase(seqsIter);
         _nodeSequences[toNode] = seqsIter->second;
-
+        _nodeSequences.erase(seqsIter);
 //         fromNode->release();
 //         toNode->retain();
     }

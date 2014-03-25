@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module TransitionJumpZoom
+-- @extend TransitionScene
+
 --------------------------------
 -- @function [parent=#TransitionJumpZoom] create 
 -- @param self

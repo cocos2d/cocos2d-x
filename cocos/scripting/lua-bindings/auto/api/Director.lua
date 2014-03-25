@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Director
+
 --------------------------------
 -- @function [parent=#Director] pause 
 -- @param self
