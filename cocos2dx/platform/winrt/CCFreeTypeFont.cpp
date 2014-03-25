@@ -271,7 +271,7 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
                 pBuffer[index++] = value;
                 pBuffer[index++] = value;
                 pBuffer[index++] = value;
-                pBuffer[index++] = 0xff;
+                pBuffer[index++] = value;
            }
         }
     }  
