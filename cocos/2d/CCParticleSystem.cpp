@@ -468,8 +468,6 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
     //updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
     //for batchNode
     _transformSystemDirty = false;
-    // update after action in run!
-    this->scheduleUpdateWithPriority(1);
 
     return true;
 }
@@ -607,6 +605,14 @@ void ParticleSystem::initParticle(tParticle* particle)
         particle->modeB.angle = a;
         particle->modeB.degreesPerSecond = CC_DEGREES_TO_RADIANS(modeB.rotatePerSecond + modeB.rotatePerSecondVar * CCRANDOM_MINUS1_1());
     }    
+}
+
+void ParticleSystem::onEnter()
+{
+    Node::onEnter();
+    
+    // update after action in run!
+    this->scheduleUpdateWithPriority(1);
 }
 
 void ParticleSystem::stopSystem()

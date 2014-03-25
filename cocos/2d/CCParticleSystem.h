@@ -184,6 +184,7 @@ public:
     //! whether or not the system is full
     bool isFull();
 
+    virtual void onEnter();
     //! should be overridden by subclasses
     virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
     //! should be overridden by subclasses
