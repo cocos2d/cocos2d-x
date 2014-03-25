@@ -1,3 +1,5 @@
+set(BUILD_STATIC 1)
+
 file(GLOB chipmunk_source_files "*.c" "constraints/*.c")
 file(GLOB chipmunk_public_header "${chipmunk_SOURCE_DIR}/include/chipmunk/*.h")
 file(GLOB chipmunk_constraint_header "${chipmunk_SOURCE_DIR}/include/chipmunk/constraints/*.h")
@@ -46,3 +48,10 @@ if(BUILD_SHARED OR INSTALL_STATIC)
   install(FILES ${chipmunk_public_header} DESTINATION include/chipmunk)
   install(FILES ${chipmunk_constraint_header} DESTINATION include/chipmunk/constraints)
 endif(BUILD_SHARED OR INSTALL_STATIC)
+
+set_target_properties(chipmunk_static
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+)
+
