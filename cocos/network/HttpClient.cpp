@@ -2,19 +2,19 @@
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -61,6 +61,7 @@ static Vector<HttpRequest*>*  s_requestQueue = nullptr;
 static Vector<HttpResponse*>* s_responseQueue = nullptr;
 
 static HttpClient *s_pHttpClient = nullptr; // pointer to singleton
+static std::string s_sslCaInfo; // string path to CURL_CAINFO value
 
 static char s_errorBuffer[CURL_ERROR_SIZE] = {0};
 
@@ -73,11 +74,11 @@ static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;
-    
+
     // add data to the end of recvBuffer
     // write data maybe called more than once in a single request
     recvBuffer->insert(recvBuffer->end(), (char*)ptr, (char*)ptr+sizes);
-    
+
     return sizes;
 }
 
@@ -86,11 +87,11 @@ static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;
-    
+
     // add data to the end of recvBuffer
     // write data maybe called more than once in a single request
     recvBuffer->insert(recvBuffer->end(), (char*)ptr, (char*)ptr+sizes);
-    
+
     return sizes;
 }
 
@@ -104,50 +105,50 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 
 // Worker thread
 void HttpClient::networkThread()
-{    
+{
     HttpRequest *request = nullptr;
-    
+
     auto scheduler = Director::getInstance()->getScheduler();
-    
-    while (true) 
+
+    while (true)
     {
         if (s_need_quit)
         {
             break;
         }
-        
+
         // step 1: send http request if the requestQueue isn't empty
         request = nullptr;
-        
+
         s_requestQueueMutex.lock();
-        
+
         //Get request task from queue
-        
+
         if (!s_requestQueue->empty())
         {
             request = s_requestQueue->at(0);
             s_requestQueue->erase(0);
         }
-        
+
         s_requestQueueMutex.unlock();
-        
+
         if (nullptr == request)
         {
             // Wait for http request tasks from main thread
-            std::unique_lock<std::mutex> lk(s_SleepMutex); 
+            std::unique_lock<std::mutex> lk(s_SleepMutex);
             s_SleepCondition.wait(lk);
             continue;
         }
-        
+
         // step 2: libcurl sync access
-        
+
         // Create a HttpResponse object, the default setting is http access failed
         HttpResponse *response = new HttpResponse(request);
-        
+
         // request's refcount = 2 here, it's retained by HttpRespose constructor
         request->release();
         // ok, refcount = 1 now, only HttpResponse hold it.
-        
+
         long responseCode = -1;
         int retValue = 0;
 
@@ -156,17 +157,17 @@ void HttpClient::networkThread()
         {
             case HttpRequest::Type::GET: // HTTP GET
                 retValue = processGetTask(request,
-                                          writeData, 
-                                          response->getResponseData(), 
+                                          writeData,
+                                          response->getResponseData(),
                                           &responseCode,
                                           writeHeaderData,
                                           response->getResponseHeader());
                 break;
-            
+
             case HttpRequest::Type::POST: // HTTP POST
                 retValue = processPostTask(request,
-                                           writeData, 
-                                           response->getResponseData(), 
+                                           writeData,
+                                           response->getResponseData(),
                                            &responseCode,
                                            writeHeaderData,
                                            response->getResponseHeader());
@@ -189,16 +190,16 @@ void HttpClient::networkThread()
                                              writeHeaderData,
                                              response->getResponseHeader());
                 break;
-            
+
             default:
                 CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
-                
+
         // write data to HttpResponse
         response->setResponseCode(responseCode);
-        
-        if (retValue != 0) 
+
+        if (retValue != 0)
         {
             response->setSucceed(false);
             response->setErrorBuffer(s_errorBuffer);
@@ -208,30 +209,30 @@ void HttpClient::networkThread()
             response->setSucceed(true);
         }
 
-        
+
         // add response packet into queue
         s_responseQueueMutex.lock();
         s_responseQueue->pushBack(response);
         s_responseQueueMutex.unlock();
-        
+
         if (nullptr != s_pHttpClient) {
             scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
         }
     }
-    
+
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
     s_requestQueueMutex.lock();
     s_requestQueue->clear();
     s_requestQueueMutex.unlock();
-    
-    
+
+
     if (s_requestQueue != nullptr) {
         delete s_requestQueue;
         s_requestQueue = nullptr;
         delete s_responseQueue;
         s_responseQueue = nullptr;
     }
-    
+
 }
 
 //Configure curl's timeout property
@@ -240,7 +241,7 @@ static bool configureCURL(CURL *handle)
     if (!handle) {
         return false;
     }
-    
+
     int32_t code;
     code = curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, s_errorBuffer);
     if (code != CURLE_OK) {
@@ -254,11 +255,18 @@ static bool configureCURL(CURL *handle)
     if (code != CURLE_OK) {
         return false;
     }
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
-    
+
+    if (s_sslCaInfo.empty()) {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    } else {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L);
+        curl_easy_setopt(handle, CURLOPT_CAINFO, s_sslCaInfo.c_str());
+    }
+
     // FIXED #3224: The subthread of CCHttpClient interrupts main thread if timeout comes.
-    // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
+    // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL
     curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L);
 
     return true;
@@ -330,7 +338,7 @@ public:
                 && setOption(CURLOPT_WRITEDATA, stream)
                 && setOption(CURLOPT_HEADERFUNCTION, headerCallback)
                 && setOption(CURLOPT_HEADERDATA, headerStream);
-        
+
     }
 
     /// @param responseCode Null not allowed
@@ -344,7 +352,7 @@ public:
             return false;
         }
         // Get some mor data.
-        
+
         return true;
     }
 };
@@ -400,13 +408,23 @@ HttpClient* HttpClient::getInstance()
     if (s_pHttpClient == nullptr) {
         s_pHttpClient = new HttpClient();
     }
-    
+
     return s_pHttpClient;
 }
 
 void HttpClient::destroyInstance()
 {
     CC_SAFE_DELETE(s_pHttpClient);
+}
+
+void HttpClient::enableSSLCaInfo(std::string info)
+{
+    s_sslCaInfo = info;
+}
+
+void HttpClient::disableSSLCaInfo()
+{
+    s_sslCaInfo.clear();
 }
 
 void HttpClient::enableCookies(const char* cookieFile) {
@@ -427,11 +445,11 @@ HttpClient::HttpClient()
 HttpClient::~HttpClient()
 {
     s_need_quit = true;
-    
+
     if (s_requestQueue != nullptr) {
     	s_SleepCondition.notify_one();
     }
-    
+
     s_pHttpClient = nullptr;
 }
 
@@ -441,39 +459,39 @@ bool HttpClient::lazyInitThreadSemphore()
     if (s_requestQueue != nullptr) {
         return true;
     } else {
-        
+
         s_requestQueue = new Vector<HttpRequest*>();
         s_responseQueue = new Vector<HttpResponse*>();
-        
+
         auto t = std::thread(CC_CALLBACK_0(HttpClient::networkThread, this));
         t.detach();
-        
+
         s_need_quit = false;
     }
-    
+
     return true;
 }
 
 //Add a get task to queue
 void HttpClient::send(HttpRequest* request)
-{    
-    if (false == lazyInitThreadSemphore()) 
+{
+    if (false == lazyInitThreadSemphore())
     {
         return;
     }
-    
+
     if (!request)
     {
         return;
     }
-        
+
     request->retain();
-    
+
     if (nullptr != s_requestQueue) {
         s_requestQueueMutex.lock();
         s_requestQueue->pushBack(request);
         s_requestQueueMutex.unlock();
-        
+
         // Notify thread start to work
         s_SleepCondition.notify_one();
     }
@@ -488,7 +506,7 @@ void HttpClient::dispatchResponseCallbacks()
         return;
     }
     HttpResponse* response = nullptr;
-    
+
     s_responseQueueMutex.lock();
 
     if (!s_responseQueue->empty())
@@ -496,20 +514,20 @@ void HttpClient::dispatchResponseCallbacks()
         response = s_responseQueue->at(0);
         s_responseQueue->erase(0);
     }
-    
+
     s_responseQueueMutex.unlock();
-    
+
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
-        if (pTarget && pSelector) 
+        if (pTarget && pSelector)
         {
             (pTarget->*pSelector)(this, response);
         }
-        
+
         response->release();
     }
 }
