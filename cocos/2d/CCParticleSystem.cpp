@@ -312,8 +312,17 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 {
                     modeB.endRadius = dictionary["minRadius"].asFloat();
                 }
-                modeB.endRadiusVar = 0.0f;
-               if (_configName.length()>0)
+                
+                if (dictionary.find("minRadiusVariance") != dictionary.end())
+                {
+                    modeB.endRadiusVar = dictionary["minRadiusVariance"].asFloat();
+                }
+                else
+                {
+                    modeB.endRadiusVar = 0.0f;
+                }
+                
+                if (_configName.length()>0)
                 {
                     modeB.rotatePerSecond = dictionary["rotatePerSecond"].asInt();
                 }
