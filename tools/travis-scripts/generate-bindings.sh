@@ -24,6 +24,7 @@ COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
 COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
 PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 FETCH_REMOTE_BRANCH="develop"
+COMMIT_PATH="cocos/scripting/lua-bindings/auto"
 
 # Exit on error
 set -e
@@ -96,7 +97,7 @@ git fetch origin ${FETCH_REMOTE_BRANCH}
 
 # Don't exit on non-zero return value
 set +e
-git diff FETCH_HEAD --stat --exit-code
+git diff FETCH_HEAD --stat --exit-code ${COMMIT_PATH}
 
 DIFF_RETVAL=$?
 if [ $DIFF_RETVAL -eq 0 ]
