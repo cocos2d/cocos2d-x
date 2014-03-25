@@ -39,7 +39,7 @@ bool UILayoutTest_Editor::init()
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -47,7 +47,7 @@ bool UILayoutTest_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         
@@ -94,7 +94,7 @@ bool UILayoutTest_Color_Editor::init()
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -102,7 +102,7 @@ bool UILayoutTest_Color_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         
@@ -149,7 +149,7 @@ bool UILayoutTest_Gradient_Editor::init()
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -157,7 +157,7 @@ bool UILayoutTest_Gradient_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         
@@ -204,7 +204,7 @@ bool UILayoutTest_BackGroundImage_Editor::init()
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -212,7 +212,7 @@ bool UILayoutTest_BackGroundImage_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         
@@ -259,7 +259,7 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
                                      left_button->getSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -267,7 +267,7 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         
@@ -314,7 +314,7 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -322,7 +322,7 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         
@@ -369,7 +369,7 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -377,7 +377,7 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
 
@@ -425,7 +425,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -433,7 +433,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         
@@ -480,7 +480,7 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
                                      left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -488,7 +488,7 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                       right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         

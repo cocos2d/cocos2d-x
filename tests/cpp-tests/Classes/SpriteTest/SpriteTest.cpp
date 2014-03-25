@@ -974,7 +974,7 @@ SpriteZVertex::SpriteZVertex()
     {
         auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Point((i+1)*step, s.height/2) );
-        sprite->setVertexZ( 10 + i*40 );
+        sprite->setPositionZ( 10 + i*40 );
         sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
         
@@ -984,7 +984,7 @@ SpriteZVertex::SpriteZVertex()
     {
         auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
-        sprite->setVertexZ( 10 + (10-i)*40 );
+        sprite->setPositionZ( 10 + (10-i)*40 );
         sprite->setShaderProgram(alphaTestShader);
         node->addChild(sprite, 0);
     }
@@ -1063,7 +1063,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     {
         auto sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
-        sprite->setVertexZ(  10 + i*40 );
+        sprite->setPositionZ(  10 + i*40 );
         batch->addChild(sprite, 0);
         
     }
@@ -1071,7 +1071,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     for(int i=5;i<11;i++) {
         auto sprite = Sprite::createWithTexture(batch->getTexture(), Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Point( (i+1)*step, s.height/2) );
-        sprite->setVertexZ(  10 + (10-i)*40 );
+        sprite->setPositionZ(  10 + (10-i)*40 );
         batch->addChild(sprite, 0);
     }
     
@@ -3615,7 +3615,7 @@ AnimationCacheTest::AnimationCacheTest()
     // create an sprite without texture
     auto grossini = Sprite::create();
     auto frame = frameCache->getSpriteFrameByName("grossini_dance_01.png");
-    grossini->setDisplayFrame(frame);
+    grossini->setSpriteFrame(frame);
 
     auto winSize = Director::getInstance()->getWinSize();
     grossini->setPosition(Point(winSize.width/2, winSize.height/2));
@@ -3672,7 +3672,7 @@ AnimationCacheFile::AnimationCacheFile()
     auto grossini = Sprite::create();
 
     auto frame = frameCache->getSpriteFrameByName("grossini_dance_01.png");
-    grossini->setDisplayFrame(frame);
+    grossini->setSpriteFrame(frame);
 
     auto winSize = Director::getInstance()->getWinSize();
 
@@ -4978,7 +4978,7 @@ SpriteCullTest2::SpriteCullTest2()
     auto down = MoveBy::create(3, Point(0,-s.height*2));
     auto back4 = down->reverse();
 
-    grossini->setScale(0.1);
+    grossini->setScale(0.1f);
     
     auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, nullptr);
     grossini->runAction(seq);
