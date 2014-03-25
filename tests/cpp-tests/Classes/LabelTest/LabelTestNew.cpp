@@ -1373,11 +1373,13 @@ LabelCharMapTest::LabelCharMapTest()
 
     auto label1 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
     addChild(label1, 0, kTagSprite1);
+    label1->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     label1->setPosition( Point(10,100) );
     label1->setOpacity( 200 );
 
     auto label2 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
     addChild(label2, 0, kTagSprite2);
+    label2->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     label2->setPosition( Point(10,200) );
     label2->setOpacity( 32 );
 
@@ -1417,11 +1419,13 @@ LabelCharMapColorTest::LabelCharMapColorTest()
 {
     auto label1 = Label::createWithCharMap( "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
     addChild(label1, 0, kTagSprite1);
+    label1->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     label1->setPosition( Point(10,100) );
     label1->setOpacity( 200 );
 
     auto label2 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
     addChild(label2, 0, kTagSprite2);
+    label2->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     label2->setPosition( Point(10,200) );
     label2->setColor( Color3B::RED );
 
