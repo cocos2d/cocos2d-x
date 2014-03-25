@@ -36,7 +36,7 @@ bool UIRichTextTest::init()
         button->setTitleText("switch");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getSize().height * 2.5));
         button->addTouchEventListener(this, toucheventselector(UIRichTextTest::touchEvent));
-        button->setZOrder(10);
+        button->setLocalZOrder(10);
         _widget->addChild(button);
         
         
@@ -69,7 +69,7 @@ bool UIRichTextTest::init()
         _richText->pushBackElement(re6);
         
         _richText->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2));
-        _richText->setZOrder(10);
+        _richText->setLocalZOrder(10);
         
         
         _widget->addChild(_richText);

@@ -590,7 +590,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
     // priority < 0
     if (fixedPriorityListeners)
     {
-        CCASSERT(listeners->getGt0Index() <= fixedPriorityListeners->size(), "Out of range exception!");
+        CCASSERT(listeners->getGt0Index() <= static_cast<ssize_t>(fixedPriorityListeners->size()), "Out of range exception!");
         
         if (!fixedPriorityListeners->empty())
         {

@@ -492,7 +492,7 @@ void TMXLayer::setTileGID(uint32_t gid, const Point& pos, TMXTileFlags flags)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
-    CCASSERT(gid == 0 || gid >= _tileSet->_firstGid, "TMXLayer: invalid gid" );
+    CCASSERT(gid == 0 || (int)gid >= _tileSet->_firstGid, "TMXLayer: invalid gid" );
 
     TMXTileFlags currentFlags;
     uint32_t currentGID = getTileGIDAt(pos, &currentFlags);
