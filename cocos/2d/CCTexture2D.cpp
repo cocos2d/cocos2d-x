@@ -1199,6 +1199,9 @@ void Texture2D::generateMipmap()
     GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
+#endif
 }
 
 bool Texture2D::hasMipmaps() const
