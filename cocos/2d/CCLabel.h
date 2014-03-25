@@ -220,7 +220,7 @@ public:
     /** clip upper and lower margin for reduce height of label.
      */
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
-
+    bool getClipMarginEnabled() const { return _clipEnabled; }
     // font related stuff
     int getCommonLineHeight() const;
     
