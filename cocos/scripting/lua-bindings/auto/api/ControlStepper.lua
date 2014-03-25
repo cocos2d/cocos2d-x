@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#ControlStepper] getMinusLabel 
 -- @param self
--- @return LabelTTF#LabelTTF ret (return value: cc.LabelTTF)
+-- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
 -- @function [parent=#ControlStepper] setWraps 
@@ -42,7 +42,7 @@
 --------------------------------
 -- @function [parent=#ControlStepper] getPlusLabel 
 -- @param self
--- @return LabelTTF#LabelTTF ret (return value: cc.LabelTTF)
+-- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
 -- @function [parent=#ControlStepper] stopAutorepeat 
@@ -66,7 +66,7 @@
 --------------------------------
 -- @function [parent=#ControlStepper] setMinusLabel 
 -- @param self
--- @param #cc.LabelTTF labelttf
+-- @param #cc.Label label
         
 --------------------------------
 -- @function [parent=#ControlStepper] setValue 
@@ -107,7 +107,7 @@
 --------------------------------
 -- @function [parent=#ControlStepper] setPlusLabel 
 -- @param self
--- @param #cc.LabelTTF labelttf
+-- @param #cc.Label label
         
 --------------------------------
 -- @function [parent=#ControlStepper] create 
