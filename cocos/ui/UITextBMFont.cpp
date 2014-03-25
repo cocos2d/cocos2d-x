@@ -60,7 +60,7 @@ TextBMFont* TextBMFont::create()
 void TextBMFont::initRenderer()
 {
     _labelBMFontRenderer = cocos2d::LabelBMFont::create();
-    Node::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
+    addProtectedChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
 }
 
 void TextBMFont::setFntFile(const char *fileName)

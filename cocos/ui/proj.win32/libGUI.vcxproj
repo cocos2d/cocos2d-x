@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CCProtectedNode.h" />
     <ClInclude Include="..\CocosGUI.h" />
     <ClInclude Include="..\UIButton.h" />
     <ClInclude Include="..\UICheckBox.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="..\UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\CCProtectedNode.cpp" />
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />

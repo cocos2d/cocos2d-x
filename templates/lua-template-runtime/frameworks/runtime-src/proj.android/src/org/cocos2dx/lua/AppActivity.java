@@ -1,3 +1,29 @@
+/****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 package org.cocos2dx.lua;
 
 import java.net.InetAddress;
@@ -5,7 +31,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-import android.app.NativeActivity;
+import org.cocos2dx.lib.Cocos2dxActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -19,27 +45,12 @@ import android.widget.Toast;
 // The name of .so is specified in AndroidMenifest.xml. NativityActivity will load it automatically for you.
 // You can use "System.loadLibrary()" to load other .so files.
 
-public class Cocos2dxActivity extends NativeActivity{
+public class AppActivity extends Cocos2dxActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
-		//For supports translucency
-		
-		//1.change "attribs" in cocos\2d\platform\android\nativeactivity.cpp
-		/*const EGLint attribs[] = {
-	            EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-	            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,  
-	            //EGL_BLUE_SIZE, 5,   -->delete 
-	            //EGL_GREEN_SIZE, 6,  -->delete 
-	            //EGL_RED_SIZE, 5,    -->delete 
-	            EGL_BUFFER_SIZE, 32,  //-->new field
-	            EGL_DEPTH_SIZE, 16,
-	            EGL_STENCIL_SIZE, 8,
-	            EGL_NONE
-	    };*/
 		
 		//2.Set the format of window
 		// getWindow().setFormat(PixelFormat.TRANSLUCENT);
@@ -89,3 +100,4 @@ public class Cocos2dxActivity extends NativeActivity{
 	}
 	
 }
+
