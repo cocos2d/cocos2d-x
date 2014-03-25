@@ -32,6 +32,7 @@ NS_CC_BEGIN
 LabelTTF::LabelTTF()
 {
     _renderLabel = Label::create();
+    _renderLabel->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     this->addChild(_renderLabel);
     this->setAnchorPoint(Point::ANCHOR_MIDDLE);
 

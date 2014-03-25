@@ -279,6 +279,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _textSprite(nullptr)
 , _contentDirty(false)
 {
+    setAnchorPoint(Point::ANCHOR_MIDDLE);
     reset();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
