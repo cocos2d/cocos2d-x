@@ -781,6 +781,8 @@
         "cocos/storage/local-storage/proj.win32/libLocalStorage.vcxproj.filters", 
         "cocos/storage/local-storage/proj.win32/libLocalStorage.vcxproj.user", 
         "cocos/ui/Android.mk", 
+        "cocos/ui/CCProtectedNode.cpp", 
+        "cocos/ui/CCProtectedNode.h", 
         "cocos/ui/CMakeLists.txt", 
         "cocos/ui/CocosGUI.cpp", 
         "cocos/ui/CocosGUI.h", 

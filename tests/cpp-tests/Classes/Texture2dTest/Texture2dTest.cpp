@@ -38,6 +38,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(TexturePVRv3Premult),
 
+    CL(TextureMipMap),
     CL(TextureMemoryAlloc),
     CL(TextureAlias),
     CL(TexturePVRMipMap),

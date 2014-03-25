@@ -321,6 +321,16 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     FontLetterDefinition tempDefinition;
     Point letterPosition;
     const auto& kernings = theLabel->_horizontalKernings;
+
+    float clipTop = 0;
+    float clipBottom = 0;
+    int lineIndex = 0;
+    bool lineStart = true;
+    bool clip = false;
+    if (theLabel->_currentLabelType == Label::LabelType::TTF && theLabel->_clipEnabled)
+    {
+        clip = true;
+    }
     
     for (unsigned int i = 0; i < stringLen; i++)
     {
@@ -337,9 +347,10 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             charYOffset         = -1;
             charAdvance         = -1;
         }
-        
+
         if (c == '\n')
         {
+            lineIndex++;
             nextFontPositionX  = 0;
             nextFontPositionY -= theLabel->_commonLineHeight;
             
@@ -347,7 +358,29 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             if(nextFontPositionY < theLabel->_commonLineHeight)
                 break;
 
+            lineStart = true;
             continue;     
+        }
+        else if (clip && tempDefinition.height > 0.0f)
+        {
+            if (lineStart)
+            {
+                if (lineIndex == 0)
+                {
+                    clipTop = charYOffset;
+                }
+                lineStart = false;
+                clipBottom = tempDefinition.clipBottom;
+            }
+            else if(tempDefinition.clipBottom < clipBottom)
+            {
+                clipBottom = tempDefinition.clipBottom;
+            }
+
+            if (lineIndex == 0 && charYOffset < clipTop)
+            {
+                clipTop = charYOffset;
+            }
         }
         
         letterPosition.x = (nextFontPositionX + charXOffset + kernings[i]) / contentScaleFactor;
@@ -382,11 +415,26 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     }
     
     tmpSize.height = totalHeight;
+    
     if (theLabel->_labelHeight > 0)
     {
         tmpSize.height = theLabel->_labelHeight * contentScaleFactor;
     }
+
+    if (clip)
+    {
+        int clipTotal = (clipTop + clipBottom) / contentScaleFactor;
+        tmpSize.height -= clipTotal * contentScaleFactor;
+        clipBottom /= contentScaleFactor;
+
+        for (int i = 0; i < theLabel->_limitShowCount; i++)
+        {
+            theLabel->_lettersInfo[i].position.y -= clipBottom;
+        }
+    }
+    
     theLabel->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
+
     return true;
 }
 

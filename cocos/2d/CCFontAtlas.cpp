@@ -231,6 +231,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
 
     bool existNewLetter = false;
+    int bottomHeight = _commonLineHeight - _fontAscender;
+
     for (int i = 0; i < length; ++i)
     {
         auto outIterator = _fontLetterDefinitions.find(utf16String[i]);
@@ -248,6 +250,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.height           = tempRect.size.height + _letterPadding;
                 tempDef.offsetX          = tempRect.origin.x + offsetAdjust;
                 tempDef.offsetY          = _fontAscender + tempRect.origin.y - offsetAdjust;
+                tempDef.clipBottom     = bottomHeight - (tempDef.height + tempRect.origin.y + offsetAdjust);
 
                 if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
                 {
@@ -290,6 +293,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.offsetX          = 0;
                 tempDef.offsetY          = 0;
                 tempDef.textureID        = 0;
+                tempDef.clipBottom = 0;
                 _currentPageOrigX += 1;
             }
 
