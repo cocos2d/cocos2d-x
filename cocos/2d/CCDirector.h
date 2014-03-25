@@ -434,7 +434,7 @@ protected:
     LabelAtlas *_FPSLabel;
     LabelAtlas *_drawnBatchesLabel;
     LabelAtlas *_drawnVerticesLabel;
-    
+    LabelAtlas *_textureCacheLabel;
     /** Whether or not the Director is paused */
     bool _paused;
 

@@ -173,6 +173,13 @@ public:
     */
     std::string getCachedTextureInfo() const;
 
+ /** return total bytes of this TextureCache
+    * This will attempt to calculate the size of each texture, and the total texture memory in use
+    *
+    * @since v3.0
+    */
+    unsigned long getCachedTextureSize();
+
     //wait for texture cahe to quit befor destroy instance
     //called by director, please do not called outside
     void waitForQuit();
