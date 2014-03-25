@@ -1871,14 +1871,14 @@ void PremultipliedAlphaTest::onEnter()
     // Toggle next line to see old behavior
     //	this->emitter.opacityModifyRGB = NO;
 
-    _emitter->setStartColor(Color4F(1, 1, 1, 1));
-    _emitter->setEndColor(Color4F(1, 1, 1, 0));
-    _emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-    _emitter->setEndColorVar(Color4F(0, 0, 0, 0));
+    _emitter->setStartColor(Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+    _emitter->setEndColor(Color4F(1.0f, 1.0f, 1.0f, 0.0f));
+    _emitter->setStartColorVar(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
+    _emitter->setEndColorVar(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
 
     this->addChild(_emitter, 10);
     
-    schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0);
+    schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0f);
 }
 
 // PremultipliedAlphaTest2
