@@ -155,7 +155,7 @@ protected:
     bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
     bool saveImageToJPG(const std::string& filePath);
     
-private:
+protected:
     /**
      @brief Determine how many mipmaps can we have.
      Its same as define but it respects namespaces
@@ -175,7 +175,7 @@ private:
     std::string _filePath;
 
 
-private:
+protected:
     // noncopyable
     Image(const Image&    rImg);
     Image & operator=(const Image&);
