@@ -1,5 +1,3 @@
-set(BUILD_STATIC 1)
-
 file(GLOB chipmunk_source_files "*.c" "constraints/*.c")
 file(GLOB chipmunk_public_header "${chipmunk_SOURCE_DIR}/include/chipmunk/*.h")
 file(GLOB chipmunk_constraint_header "${chipmunk_SOURCE_DIR}/include/chipmunk/constraints/*.h")
@@ -16,7 +14,14 @@ if(BUILD_SHARED)
     set_target_properties(chipmunk PROPERTIES LINKER_LANGUAGE CXX)
   endif(MSVC)
   # set the lib's version number
-  set_target_properties(chipmunk PROPERTIES VERSION 6.1.5)
+  # But avoid on Android because symlinks to version numbered .so's don't work with Android's Java-side loadLibrary.
+  if(NOT ANDROID)
+	  set_target_properties(chipmunk PROPERTIES VERSION 6.2.1)
+  endif(NOT ANDROID)
+  if(ANDROID)
+	  # need to explicitly link to the math library because the CMake/Android toolchains may not do it automatically
+	  target_link_libraries(chipmunk m)
+  endif(ANDROID)
   install(TARGETS chipmunk RUNTIME DESTINATION lib LIBRARY DESTINATION lib)
 endif(BUILD_SHARED)
 
@@ -41,10 +46,3 @@ if(BUILD_SHARED OR INSTALL_STATIC)
   install(FILES ${chipmunk_public_header} DESTINATION include/chipmunk)
   install(FILES ${chipmunk_constraint_header} DESTINATION include/chipmunk/constraints)
 endif(BUILD_SHARED OR INSTALL_STATIC)
-
-set_target_properties(chipmunk_static
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-)
-
