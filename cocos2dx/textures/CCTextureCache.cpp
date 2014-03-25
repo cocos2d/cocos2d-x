@@ -210,6 +210,7 @@ CCTextureCache * CCTextureCache::sharedTextureCache()
     if (!g_sharedTextureCache)
     {
         g_sharedTextureCache = new CCTextureCache();
+        s_nAsyncRefCount = 0;
     }
     return g_sharedTextureCache;
 }
