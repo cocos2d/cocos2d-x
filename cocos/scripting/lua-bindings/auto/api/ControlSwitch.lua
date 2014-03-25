@@ -24,7 +24,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: initWithMaskSprite(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.LabelTTF, cc.LabelTTF)
+-- overload function: initWithMaskSprite(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.Label, cc.Label)
 --          
 -- overload function: initWithMaskSprite(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite)
 --          
@@ -34,8 +34,8 @@
 -- @param #cc.Sprite sprite
 -- @param #cc.Sprite sprite
 -- @param #cc.Sprite sprite
--- @param #cc.LabelTTF labelttf
--- @param #cc.LabelTTF labelttf
+-- @param #cc.Label label
+-- @param #cc.Label label
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
@@ -52,7 +52,7 @@
 --------------------------------
 -- overload function: create(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite)
 --          
--- overload function: create(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.LabelTTF, cc.LabelTTF)
+-- overload function: create(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.Label, cc.Label)
 --          
 -- @function [parent=#ControlSwitch] create
 -- @param self
@@ -60,8 +60,8 @@
 -- @param #cc.Sprite sprite
 -- @param #cc.Sprite sprite
 -- @param #cc.Sprite sprite
--- @param #cc.LabelTTF labelttf
--- @param #cc.LabelTTF labelttf
+-- @param #cc.Label label
+-- @param #cc.Label label
 -- @return ControlSwitch#ControlSwitch ret (retunr value: cc.ControlSwitch)
 
 --------------------------------
