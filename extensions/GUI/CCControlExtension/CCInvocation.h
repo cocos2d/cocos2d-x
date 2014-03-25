@@ -52,7 +52,7 @@ typedef void (CCObject::*SEL_CCControlHandler)(CCObject*, CCControlEvent);
  * @js NA
  * @lua NA
  */
-class CCInvocation : public CCObject
+class CC_EX_DLL CCInvocation : public CCObject
 {
     CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, m_action, Action);
     CC_SYNTHESIZE_READONLY(CCObject*, m_target, Target);

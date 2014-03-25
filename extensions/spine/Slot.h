@@ -42,16 +42,16 @@ typedef struct Slot {
 	Attachment* const attachment;
 } Slot;
 
-Slot* Slot_create (SlotData* data, struct Skeleton* skeleton, Bone* bone);
-void Slot_dispose (Slot* self);
+CC_EX_DLL Slot* Slot_create (SlotData* data, struct Skeleton* skeleton, Bone* bone);
+CC_EX_DLL void Slot_dispose (Slot* self);
 
 /* @param attachment May be 0 to clear the attachment for the slot. */
-void Slot_setAttachment (Slot* self, Attachment* attachment);
+CC_EX_DLL void Slot_setAttachment (Slot* self, Attachment* attachment);
 
-void Slot_setAttachmentTime (Slot* self, float time);
-float Slot_getAttachmentTime (const Slot* self);
+CC_EX_DLL void Slot_setAttachmentTime (Slot* self, float time);
+CC_EX_DLL float Slot_getAttachmentTime (const Slot* self);
 
-void Slot_setToSetupPose (Slot* self);
+CC_EX_DLL void Slot_setToSetupPose (Slot* self);
 
 }} // namespace cocos2d { namespace extension {
 

@@ -31,7 +31,7 @@ NS_CC_EXT_BEGIN
 /**
  *  @lua NA
  */
-class CCComAudio : public cocos2d::CCComponent
+class CC_EX_DLL CCComAudio : public cocos2d::CCComponent
 {
 	DECLARE_CLASS_COMPONENT_INFO
 protected:

@@ -39,7 +39,7 @@ NS_CC_EXT_BEGIN
  *  @js NA
  *  @lua NA
  */
-class  CCDecorativeDisplay: public CCObject
+class  CC_EX_DLL CCDecorativeDisplay : public CCObject
 {
 public:
     static CCDecorativeDisplay *create();

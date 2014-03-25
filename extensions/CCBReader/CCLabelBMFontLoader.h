@@ -11,7 +11,7 @@ class CCBReader;
  *  @js NA
  *  @lua NA
  */
-class CCLabelBMFontLoader : public CCNodeLoader {
+class CC_EX_DLL CCLabelBMFontLoader : public CCNodeLoader {
     public:
         virtual ~CCLabelBMFontLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCLabelBMFontLoader, loader);
