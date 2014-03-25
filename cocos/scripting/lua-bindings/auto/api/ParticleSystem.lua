@@ -406,9 +406,9 @@
 -- @return color4F_table#color4F_table ret (return value: color4F_table)
         
 --------------------------------
--- @function [parent=#ParticleSystem] getRotationIsDir 
+-- @function [parent=#ParticleSystem] getEndColor 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @return color4F_table#color4F_table ret (return value: color4F_table)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] setScale 
@@ -421,9 +421,9 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#ParticleSystem] getEndColor 
+-- @function [parent=#ParticleSystem] getRotationIsDir 
 -- @param self
--- @return color4F_table#color4F_table ret (return value: color4F_table)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#ParticleSystem] getLifeVar 
