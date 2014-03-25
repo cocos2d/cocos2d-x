@@ -46,7 +46,7 @@ typedef cpBB (*cpSpatialIndexBBFunc)(void *obj);
 /// Spatial index/object iterator callback function type.
 typedef void (*cpSpatialIndexIteratorFunc)(void *obj, void *data);
 /// Spatial query callback function type.
-typedef void (*cpSpatialIndexQueryFunc)(void *obj1, void *obj2, void *data);
+typedef cpCollisionID (*cpSpatialIndexQueryFunc)(void *obj1, void *obj2, cpCollisionID id, void *data);
 /// Spatial segment query callback function type.
 typedef cpFloat (*cpSpatialIndexSegmentQueryFunc)(void *obj1, void *obj2, void *data);
 
