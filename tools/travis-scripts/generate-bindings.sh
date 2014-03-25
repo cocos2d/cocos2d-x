@@ -23,6 +23,7 @@ ELAPSEDSECS=`date +%s`
 COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
 COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
 PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
+FETCH_REMOTE_BRANCH="develop"
 
 # Exit on error
 set -e
@@ -88,12 +89,14 @@ pushd "$PROJECT_ROOT"
 git status
 
 echo
-echo Comparing with HEAD ...
+echo Comparing with origin HEAD ...
 echo
+
+git fetch origin ${FETCH_REMOTE_BRANCH}
 
 # Don't exit on non-zero return value
 set +e
-git diff --stat --exit-code
+git diff FETCH_HEAD --stat --exit-code
 
 DIFF_RETVAL=$?
 if [ $DIFF_RETVAL -eq 0 ]
