@@ -79,6 +79,13 @@ static inline cpBB cpBBExpand(const cpBB bb, const cpVect v){
 	);
 }
 
+/// Returns the center of a bounding box.
+static inline cpVect
+cpBBCenter(cpBB bb)
+{
+	return cpvlerp(cpv(bb.l, bb.b), cpv(bb.r, bb.t), 0.5f);
+}
+
 /// Returns the area of the bounding box.
 static inline cpFloat cpBBArea(cpBB bb)
 {

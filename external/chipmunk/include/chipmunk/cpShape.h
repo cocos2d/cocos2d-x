@@ -33,6 +33,9 @@ typedef struct cpNearestPointQueryInfo {
 	cpVect p;
 	/// The distance to the point. The distance is negative if the point is inside the shape.
 	cpFloat d;
+	/// The gradient of the signed distance function.
+	/// The same as info.p/info.d, but accurate even for very small values of info.d.
+	cpVect g;
 } cpNearestPointQueryInfo;
 
 /// Segment query info struct.
@@ -218,6 +221,7 @@ cpSegmentShape* cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, 
 /// Allocate and initialize a segment shape.
 cpShape* cpSegmentShapeNew(cpBody *body, cpVect a, cpVect b, cpFloat radius);
 
+/// Let Chipmunk know about the geometry of adjacent segments to avoid colliding with endcaps.
 void cpSegmentShapeSetNeighbors(cpShape *shape, cpVect prev, cpVect next);
 
 CP_DeclareShapeGetter(cpSegmentShape, cpVect, A);
