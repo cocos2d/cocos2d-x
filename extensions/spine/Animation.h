@@ -26,6 +26,8 @@
 #ifndef SPINE_ANIMATION_H_
 #define SPINE_ANIMATION_H_
 
+#include "ExtensionMacros.h"
+
 namespace cocos2d { namespace extension {
 
 typedef struct Timeline Timeline;
@@ -39,11 +41,11 @@ typedef struct {
 	Timeline** timelines;
 } Animation;
 
-Animation* Animation_create (const char* name, int timelineCount);
-void Animation_dispose (Animation* self);
+CC_EX_DLL Animation* Animation_create (const char* name, int timelineCount);
+CC_EX_DLL void Animation_dispose (Animation* self);
 
-void Animation_apply (const Animation* self, struct Skeleton* skeleton, float time, int/*bool*/loop);
-void Animation_mix (const Animation* self, struct Skeleton* skeleton, float time, int/*bool*/loop, float alpha);
+CC_EX_DLL void Animation_apply (const Animation* self, struct Skeleton* skeleton, float time, int/*bool*/loop);
+CC_EX_DLL void Animation_mix (const Animation* self, struct Skeleton* skeleton, float time, int/*bool*/loop, float alpha);
 
 /**/
 
@@ -51,8 +53,8 @@ struct Timeline {
 	const void* const vtable;
 };
 
-void Timeline_dispose (Timeline* self);
-void Timeline_apply (const Timeline* self, struct Skeleton* skeleton, float time, float alpha);
+CC_EX_DLL void Timeline_dispose (Timeline* self);
+CC_EX_DLL void Timeline_apply (const Timeline* self, struct Skeleton* skeleton, float time, float alpha);
 
 /**/
 
@@ -61,14 +63,14 @@ typedef struct {
 	float* curves; /* dfx, dfy, ddfx, ddfy, dddfx, dddfy, ... */
 } CurveTimeline;
 
-void CurveTimeline_setLinear (CurveTimeline* self, int frameIndex);
-void CurveTimeline_setStepped (CurveTimeline* self, int frameIndex);
+CC_EX_DLL void CurveTimeline_setLinear (CurveTimeline* self, int frameIndex);
+CC_EX_DLL void CurveTimeline_setStepped (CurveTimeline* self, int frameIndex);
 
 /* Sets the control handle positions for an interpolation bezier curve used to transition from this keyframe to the next.
  * cx1 and cx2 are from 0 to 1, representing the percent of time between the two keyframes. cy1 and cy2 are the percent of
  * the difference between the keyframe's values. */
-void CurveTimeline_setCurve (CurveTimeline* self, int frameIndex, float cx1, float cy1, float cx2, float cy2);
-float CurveTimeline_getCurvePercent (const CurveTimeline* self, int frameIndex, float percent);
+CC_EX_DLL void CurveTimeline_setCurve (CurveTimeline* self, int frameIndex, float cx1, float cy1, float cx2, float cy2);
+CC_EX_DLL float CurveTimeline_getCurvePercent (const CurveTimeline* self, int frameIndex, float percent);
 
 /**/
 
@@ -79,25 +81,25 @@ typedef struct BaseTimeline {
 	int boneIndex;
 } RotateTimeline;
 
-RotateTimeline* RotateTimeline_create (int frameCount);
+CC_EX_DLL RotateTimeline* RotateTimeline_create (int frameCount);
 
-void RotateTimeline_setFrame (RotateTimeline* self, int frameIndex, float time, float angle);
+CC_EX_DLL void RotateTimeline_setFrame (RotateTimeline* self, int frameIndex, float time, float angle);
 
 /**/
 
 typedef struct BaseTimeline TranslateTimeline;
 
-TranslateTimeline* TranslateTimeline_create (int frameCount);
+CC_EX_DLL TranslateTimeline* TranslateTimeline_create (int frameCount);
 
-void TranslateTimeline_setFrame (TranslateTimeline* self, int frameIndex, float time, float x, float y);
+CC_EX_DLL void TranslateTimeline_setFrame (TranslateTimeline* self, int frameIndex, float time, float x, float y);
 
 /**/
 
 typedef struct BaseTimeline ScaleTimeline;
 
-ScaleTimeline* ScaleTimeline_create (int frameCount);
+CC_EX_DLL ScaleTimeline* ScaleTimeline_create (int frameCount);
 
-void ScaleTimeline_setFrame (ScaleTimeline* self, int frameIndex, float time, float x, float y);
+CC_EX_DLL void ScaleTimeline_setFrame (ScaleTimeline* self, int frameIndex, float time, float x, float y);
 
 /**/
 
@@ -108,9 +110,9 @@ typedef struct {
 	int slotIndex;
 } ColorTimeline;
 
-ColorTimeline* ColorTimeline_create (int frameCount);
+CC_EX_DLL ColorTimeline* ColorTimeline_create (int frameCount);
 
-void ColorTimeline_setFrame (ColorTimeline* self, int frameIndex, float time, float r, float g, float b, float a);
+CC_EX_DLL void ColorTimeline_setFrame (ColorTimeline* self, int frameIndex, float time, float r, float g, float b, float a);
 
 /**/
 
@@ -122,10 +124,10 @@ typedef struct {
 	const char** const attachmentNames;
 } AttachmentTimeline;
 
-AttachmentTimeline* AttachmentTimeline_create (int frameCount);
+CC_EX_DLL AttachmentTimeline* AttachmentTimeline_create (int frameCount);
 
 /* @param attachmentName May be 0. */
-void AttachmentTimeline_setFrame (AttachmentTimeline* self, int frameIndex, float time, const char* attachmentName);
+CC_EX_DLL void AttachmentTimeline_setFrame (AttachmentTimeline* self, int frameIndex, float time, const char* attachmentName);
 
 }} // namespace cocos2d { namespace extension {
 

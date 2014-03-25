@@ -44,7 +44,7 @@ typedef void (CCObject::*SEL_SelectedStateEvent)(CCObject*,CheckBoxEventType);
 *   @js NA
 *   @lua NA
 */
-class CheckBox : public Widget
+class CC_EX_DLL CheckBox : public Widget
 {
     DECLARE_CLASS_GUI_INFO
     

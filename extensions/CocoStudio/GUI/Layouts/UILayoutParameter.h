@@ -41,7 +41,7 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class LayoutParameter : public CCObject
+class CC_EX_DLL LayoutParameter : public CCObject
 {
 public:
     /**
@@ -98,7 +98,7 @@ protected:
 *   @js NA
 *   @lua NA
 */
-class LinearLayoutParameter : public LayoutParameter
+class CC_EX_DLL LinearLayoutParameter : public LayoutParameter
 {
 public:
     /**
@@ -144,7 +144,7 @@ protected:
 *   @lua NA
 */
 
-class RelativeLayoutParameter : public LayoutParameter
+class CC_EX_DLL RelativeLayoutParameter : public LayoutParameter
 {
 public:
     /**

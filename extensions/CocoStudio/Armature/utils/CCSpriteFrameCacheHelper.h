@@ -34,7 +34,7 @@ NS_CC_EXT_BEGIN
 *   @js NA
 *   @lua NA
 */
-class  CCSpriteFrameCacheHelper
+class  CC_EX_DLL CCSpriteFrameCacheHelper
 {
 public:
     static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();

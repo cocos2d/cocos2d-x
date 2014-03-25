@@ -23,7 +23,7 @@ NS_CC_EXT_BEGIN
  *  @js NA
  *  @lua NA
  */
-class CCBSelectorResolver {
+class CC_EX_DLL CCBSelectorResolver {
     public:
         virtual ~CCBSelectorResolver() {};
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char* pSelectorName) = 0;
@@ -35,7 +35,7 @@ class CCBSelectorResolver {
  *  @js NA
  *  @lua NA
  */
-class CCBScriptOwnerProtocol {
+class CC_EX_DLL CCBScriptOwnerProtocol {
 public:
     virtual ~CCBScriptOwnerProtocol() {};
     virtual CCBSelectorResolver * createNew() = 0;

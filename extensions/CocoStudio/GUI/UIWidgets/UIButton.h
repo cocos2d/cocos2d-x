@@ -35,7 +35,7 @@ namespace ui{
 *   @js NA
 *   @lua NA
 */
-class Button : public Widget
+class CC_EX_DLL Button : public Widget
 {
     DECLARE_CLASS_GUI_INFO
     

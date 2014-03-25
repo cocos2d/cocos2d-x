@@ -11,7 +11,7 @@ class CCBReader;
  *  @js NA
  *  @lua NA
  */
-class CCSpriteLoader : public CCNodeLoader {
+class CC_EX_DLL CCSpriteLoader : public CCNodeLoader {
     public:
         virtual ~CCSpriteLoader() {};
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCSpriteLoader, loader);
