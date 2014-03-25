@@ -1311,11 +1311,11 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
         case PVR2TexturePixelFormat::PVRTC2BPP_RGBA:
             if(!Configuration::getInstance()->supportsPVRTC())
             {
-                CCLOG("cocos2d: TexturePVR. PVRTC not supported on this device unpacking");
+                CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                 _unpack = true;
                 _mipmaps[_numberOfMipmaps].len = width*height*4;
                 _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
-                PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address,false);
+                PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, true);
                 _renderFormat = Texture2D::PixelFormat::RGBA8888;
             }
             blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
@@ -1325,11 +1325,11 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
         case PVR2TexturePixelFormat::PVRTC4BPP_RGBA:
             if(!Configuration::getInstance()->supportsPVRTC())
             {
-                CCLOG("cocos2d: TexturePVR. PVRTC not supported on this device unpacking");
+                CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                 _unpack = true;
                 _mipmaps[_numberOfMipmaps].len = width*height*4;
                 _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
-                PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address,false);
+                PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, false);
                 _renderFormat = Texture2D::PixelFormat::RGBA8888;
             }
             blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
@@ -1468,7 +1468,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 					_unpack = true;
 					_mipmaps[i].len = width*height*4;
 					_mipmaps[i].address = new unsigned char[width*height*4];
-						PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address,false);
+						PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, true);
 				}
 				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
 				widthBlocks = width / 8;
@@ -1482,7 +1482,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 					_unpack = true;
 					_mipmaps[i].len = width*height*4;
 					_mipmaps[i].address = new unsigned char[width*height*4];
-					PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address,false);
+					PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, false);
 				}
 				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
 				widthBlocks = width / 4;
