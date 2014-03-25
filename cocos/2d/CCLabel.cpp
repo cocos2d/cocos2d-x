@@ -725,7 +725,8 @@ void Label::updateQuads()
                 _reusedLetter->setBatchNode(_batchNodes[letterDef.textureID]);
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
-            _reusedLetter->setPosition(_lettersInfo[ctr].position);
+            _reusedLetter->setPosition(static_cast<int>(_lettersInfo[ctr].position.x),
+                                       static_cast<int>(_lettersInfo[ctr].position.y));
             index = static_cast<int>(_batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads());
             _lettersInfo[ctr].atlasIndex = index;
             _batchNodes[letterDef.textureID]->insertQuadFromSprite(_reusedLetter,index);
