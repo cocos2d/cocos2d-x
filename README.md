@@ -36,7 +36,7 @@ Example:
 
 ### Build and run new project for android ###
 
-    $ cocos run -p -j 4 android
+    $ cocos run -p android -j 4
 
 ### Build and run new project for iOS ###
 
