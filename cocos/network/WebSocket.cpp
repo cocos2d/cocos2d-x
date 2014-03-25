@@ -187,16 +187,19 @@ void WsThreadHelper::update(float dt)
     WsMessage *msg = nullptr;
 
     // Returns quickly if no message
-    std::lock_guard<std::mutex> lk(_UIWsMessageQueueMutex);
+    _UIWsMessageQueueMutex.lock();
 
     if (0 == _UIWsMessageQueue->size())
     {
+        _UIWsMessageQueueMutex.unlock();
         return;
     }
     
     // Gets message
     msg = *(_UIWsMessageQueue->begin());
     _UIWsMessageQueue->pop_front();
+
+    _UIWsMessageQueueMutex.unlock();
     
     if (_ws)
     {
