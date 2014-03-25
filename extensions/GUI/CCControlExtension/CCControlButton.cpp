@@ -51,8 +51,10 @@ ControlButton::ControlButton()
 , _zoomOnTouchDown(false)
 , _marginV(ControlButtonMarginTB)
 , _marginH(ControlButtonMarginLR)
+, _zoomNode(Node::create())
 {
-
+    _zoomNode->setAnchorPoint(Point(0.5,0.5));
+    addChild(_zoomNode);
 }
 
 ControlButton::~ControlButton()
@@ -191,10 +193,10 @@ void ControlButton::setHighlighted(bool enabled)
     
     Control::setHighlighted(enabled);
 
-    Action *action = getActionByTag(kZoomActionTag);
+    Action *action = _zoomNode->getActionByTag(kZoomActionTag);
     if (action)
     {
-        stopAction(action);        
+        _zoomNode->stopAction(action);
     }
     needsLayout();
     if( _zoomOnTouchDown )
@@ -202,7 +204,7 @@ void ControlButton::setHighlighted(bool enabled)
         float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? _scaleRatio : 1.0f;
         Action *zoomAction = ScaleTo::create(0.05f, scaleValue);
         zoomAction->setTag(kZoomActionTag);
-        runAction(zoomAction);
+        _zoomNode->runAction(zoomAction);
     }
 }
 
@@ -344,14 +346,14 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
     Node* previousLabel = _titleLabelDispatchTable.at((int)state);
     if (previousLabel)
     {
-        removeChild(previousLabel, true);
+        _zoomNode->removeChild(previousLabel, true);
         _titleLabelDispatchTable.erase((int)state);
     }
 
     _titleLabelDispatchTable.insert((int)state, titleLabel);
     titleLabel->setVisible(false);
     titleLabel->setAnchorPoint(Point(0.5f, 0.5f));
-    addChild(titleLabel, 1);
+    _zoomNode->addChild(titleLabel, 1);
 
     // If the current state if equal to the given state we update the layout
     if (getState() == state)
@@ -444,14 +446,14 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, State stat
     auto previousBackgroundSprite = _backgroundSpriteDispatchTable.at((int)state);
     if (previousBackgroundSprite)
     {
-        removeChild(previousBackgroundSprite, true);
+        _zoomNode->removeChild(previousBackgroundSprite, true);
         _backgroundSpriteDispatchTable.erase((int)state);
     }
 
     _backgroundSpriteDispatchTable.insert((int)state, sprite);
     sprite->setVisible(false);
     sprite->setAnchorPoint(Point(0.5f, 0.5f));
-    addChild(sprite);
+    _zoomNode->addChild(sprite);
 
     if (this->_preferredSize.width != 0 || this->_preferredSize.height != 0)
     {
@@ -570,7 +572,9 @@ void ControlButton::needsLayout()
     }
 
     Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);
-    setContentSize(Size(maxRect.size.width, maxRect.size.height));        
+    setContentSize(Size(maxRect.size.width, maxRect.size.height));
+    _zoomNode->setContentSize(Size(maxRect.size.width, maxRect.size.height));
+    _zoomNode->setPosition(Point(maxRect.size.width/2,maxRect.size.height/2));
     
     if (_titleLabel != nullptr)
     {

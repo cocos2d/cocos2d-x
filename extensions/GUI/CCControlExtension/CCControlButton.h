@@ -210,6 +210,7 @@ protected:
     bool _isPushed;
     bool _parentInited;
     bool _doesAdjustBackgroundImage;
+    Node *_zoomNode;
 
     /** The current title that is displayed on the button. */
     std::string _currentTitle;
