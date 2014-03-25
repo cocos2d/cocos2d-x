@@ -279,6 +279,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _textSprite(nullptr)
 , _contentDirty(false)
 {
+    setAnchorPoint(Point::ANCHOR_MIDDLE);
     reset();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -836,14 +837,16 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     _effectColorF.g = _effectColor.g / 255.0f;
     _effectColorF.b = _effectColor.b / 255.0f;
     _effectColorF.a = _effectColor.a / 255.0f;
-    _shadowOffset = offset;
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
+    _shadowOffset.width = offset.width * contentScaleFactor;
+    _shadowOffset.height = offset.height * contentScaleFactor;
     //todo:support blur for shadow
     _shadowBlurRadius = 0;
     _currLabelEffect = LabelEffect::SHADOW;
 
     _fontDefinition._shadow._shadowEnabled = true;
     _fontDefinition._shadow._shadowBlur = blurRadius;
-    _fontDefinition._shadow._shadowOffset = offset;
+    _fontDefinition._shadow._shadowOffset = _shadowOffset;
     _fontDefinition._shadow._shadowOpacity = shadowColor.a / 255.0f;
 
     _contentDirty = true;
