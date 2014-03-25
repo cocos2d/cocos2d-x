@@ -1189,6 +1189,7 @@
 		37BB5B2A17E86CEC002746B4 /* UISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISlider.h; sourceTree = "<group>"; };
 		37BB5B2D17E86CEC002746B4 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		37BB5B2E17E86CEC002746B4 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
+		37C62BEC18E14DFB00D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		37C818FC1875C19600930C57 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
 		37C818FD1875C19600930C57 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		37C818FE1875C19600930C57 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; path = armature; sourceTree = "<group>"; };
@@ -2310,6 +2311,7 @@
 				37CA1D2417D87B5700A649D0 /* CocoStudio */,
 				15C158D3168315E500D239F2 /* cocos-ext.h */,
 				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
+				37C62BEC18E14DFB00D16FC4 /* ExtensionExport.h */,
 				15C1589E168315E500D239F2 /* CCBReader */,
 				15C158D5168315E500D239F2 /* GUI */,
 				15C15903168315E500D239F2 /* network */,
