@@ -50,6 +50,43 @@ typedef enum {
     LAYOUT_CLIPPING_STENCIL,
     LAYOUT_CLIPPING_SCISSOR
 }LayoutClippingType;
+    
+    
+class LayoutExecutant : public Ref
+{
+public:
+    LayoutExecutant(){};
+    virtual ~LayoutExecutant(){};
+    static LayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container){};
+};
+    
+class LinearVerticalLayoutExecutant : public LayoutExecutant
+{
+public:
+    LinearVerticalLayoutExecutant(){};
+    virtual ~LinearVerticalLayoutExecutant(){};
+    static LinearVerticalLayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+};
+    
+class LinearHorizontalLayoutExecutant : public LayoutExecutant
+{
+public:
+    LinearHorizontalLayoutExecutant(){};
+    virtual ~LinearHorizontalLayoutExecutant(){};
+    static LinearHorizontalLayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+};
+    
+class RelativeLayoutExecutant : public LayoutExecutant
+{
+public:
+    RelativeLayoutExecutant(){};
+    virtual ~RelativeLayoutExecutant(){};
+    static RelativeLayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+};
 
 /**
  *  @js NA
@@ -299,6 +336,7 @@ protected:
     void updateBackGroundImageColor();
     void updateBackGroundImageOpacity();
     void updateBackGroundImageRGBA();
+    LayoutExecutant* createCurrentLayoutExecutant();
 protected:
     bool _clippingEnabled;
     
@@ -345,6 +383,8 @@ protected:
     
     Color3B _backGroundImageColor;
     GLubyte _backGroundImageOpacity;
+    
+    LayoutExecutant* _curLayoutExecutant;
     
     GLint _mask_layer_le;
     GroupCommand _groupCommand;
