@@ -72,7 +72,7 @@ bool Text::init()
 void Text::initRenderer()
 {
     _labelRenderer = LabelTTF::create();
-    Node::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
+    addProtectedChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
 void Text::setText(const std::string& text)

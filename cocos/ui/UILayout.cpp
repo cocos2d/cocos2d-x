@@ -127,7 +127,7 @@ Layout* Layout::create()
 
 bool Layout::init()
 {
-    if (Node::init())
+    if (ProtectedNode::init())
     {
         initRenderer();
         setBright(true);
@@ -211,7 +211,7 @@ void Layout::visit(Renderer *renderer, const kmMat4 &parentTransform, bool paren
     }
     else
     {
-        Node::visit(renderer, parentTransform, parentTransformUpdated);
+        ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
     }
 }
     
@@ -254,31 +254,49 @@ void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransf
     _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
     
-    int i = 0;
+    int i = 0;      // used by _children
+    int j = 0;      // used by _protectedChildren
     
-    if(!_children.empty())
+    sortAllChildren();
+    sortAllProtectedChildren();
+    
+    //
+    // draw children and protectedChildren zOrder < 0
+    //
+    for( ; i < _children.size(); i++ )
     {
-        sortAllChildren();
-        // draw children zOrder < 0
-        for( ; i < _children.size(); i++ )
-        {
-            auto node = _children.at(i);
-            
-            if ( node && node->getLocalZOrder() < 0 )
-                node->visit(renderer, _modelViewTransform, dirty);
-            else
-                break;
-        }
-        // self draw
-        this->draw(renderer, _modelViewTransform, dirty);
+        auto node = _children.at(i);
         
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit(renderer, _modelViewTransform, dirty);
+        if ( node && node->getZOrder() < 0 )
+            node->visit(renderer, _modelViewTransform, dirty);
+        else
+            break;
     }
-    else
+    
+    for( ; j < _protectedChildren.size(); j++ )
     {
-        this->draw(renderer, _modelViewTransform, dirty);
+        auto node = _protectedChildren.at(j);
+        
+        if ( node && node->getZOrder() < 0 )
+            node->visit(renderer, _modelViewTransform, dirty);
+        else
+            break;
     }
+    
+    //
+    // draw self
+    //
+    this->draw(renderer, _modelViewTransform, dirty);
+    
+    //
+    // draw children and protectedChildren zOrder >= 0
+    //
+    for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
+        (*it)->visit(renderer, _modelViewTransform, dirty);
+    
+    for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+        (*it)->visit(renderer, _modelViewTransform, dirty);
+
     
     _afterVisitCmdStencil.init(_globalZOrder);
     _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
@@ -368,7 +386,7 @@ void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransf
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
-    Node::visit(renderer, parentTransform, parentTransformUpdated);
+    ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
     
     _afterVisitCmdScissor.init(_globalZOrder);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
@@ -566,19 +584,10 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     {
         return;
     }
-    Node::removeChild(_backGroundImage);
+    removeProtectedChild(_backGroundImage);
     _backGroundImage = nullptr;
     _backGroundScale9Enabled = able;
-    if (_backGroundScale9Enabled)
-    {
-        _backGroundImage = extension::Scale9Sprite::create();
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-    }
-    else
-    {
-        _backGroundImage = Sprite::create();
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-    }
+    addBackGroundImage();
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
@@ -688,15 +697,13 @@ void Layout::addBackGroundImage()
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::Scale9Sprite::create();
-        _backGroundImage->setLocalZOrder(-1);
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+        addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = Sprite::create();
-        _backGroundImage->setLocalZOrder(-1);
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+        addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
@@ -707,7 +714,7 @@ void Layout::removeBackGroundImage()
     {
         return;
     }
-    Node::removeChild(_backGroundImage);
+    removeProtectedChild(_backGroundImage);
     _backGroundImage = nullptr;
     _backGroundImageFileName = "";
     _backGroundImageTextureSize = Size::ZERO;
@@ -724,26 +731,26 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
         case LAYOUT_COLOR_NONE:
             if (_colorRender)
             {
-                Node::removeChild(_colorRender);
+                removeProtectedChild(_colorRender);
                 _colorRender = nullptr;
             }
             if (_gradientRender)
             {
-                Node::removeChild(_gradientRender);
+                removeProtectedChild(_gradientRender);
                 _gradientRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (_colorRender)
             {
-                Node::removeChild(_colorRender);
+                removeProtectedChild(_colorRender);
                 _colorRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (_gradientRender)
             {
-                Node::removeChild(_gradientRender);
+                removeProtectedChild(_gradientRender);
                 _gradientRender = nullptr;
             }
             break;
@@ -760,7 +767,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
-            Node::addChild(_colorRender, BCAKGROUNDCOLORRENDERER_Z, -1);
+            addProtectedChild(_colorRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         case LAYOUT_COLOR_GRADIENT:
             _gradientRender = LayerGradient::create();
@@ -769,7 +776,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
             _gradientRender->setVector(_alongVector);
-            Node::addChild(_gradientRender, BCAKGROUNDCOLORRENDERER_Z, -1);
+            addProtectedChild(_gradientRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         default:
             break;
@@ -911,9 +918,10 @@ const Size& Layout::getBackGroundImageTextureSize() const
 void Layout::setLayoutType(LayoutType type)
 {
     _layoutType = type;
-    for (auto& child : _widgetChildren)
+    for (auto& child : _children)
     {
-        if (child)
+        Widget* widgetChild = dynamic_cast<Widget*>(child);
+        if (widgetChild)
         {
             supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
         }
@@ -946,37 +954,40 @@ void Layout::doLayout()
             Size layoutSize = getSize();
             float topBoundary = layoutSize.height;
             
-            for (auto& subWidget : _widgetChildren)
+            for (auto& subWidget : _children)
             {
-                Widget* child = static_cast<Widget*>(subWidget);
-                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
-                
-                if (layoutParameter)
+                Widget* child = dynamic_cast<Widget*>(subWidget);
+                if (child)
                 {
-                    LinearGravity childGravity = layoutParameter->getGravity();
-                    Point ap = child->getAnchorPoint();
-                    Size cs = child->getSize();
-                    float finalPosX = ap.x * cs.width;
-                    float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
-                    switch (childGravity)
+                    LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+                    
+                    if (layoutParameter)
                     {
-                        case LINEAR_GRAVITY_NONE:
-                        case LINEAR_GRAVITY_LEFT:
-                            break;
-                        case LINEAR_GRAVITY_RIGHT:
-                            finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
-                            break;
-                        case LINEAR_GRAVITY_CENTER_HORIZONTAL:
-                            finalPosX = layoutSize.width / 2.0f - cs.width * (0.5f-ap.x);
-                            break;
-                        default:
-                            break;
+                        LinearGravity childGravity = layoutParameter->getGravity();
+                        Point ap = child->getAnchorPoint();
+                        Size cs = child->getSize();
+                        float finalPosX = ap.x * cs.width;
+                        float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
+                        switch (childGravity)
+                        {
+                            case LINEAR_GRAVITY_NONE:
+                            case LINEAR_GRAVITY_LEFT:
+                                break;
+                            case LINEAR_GRAVITY_RIGHT:
+                                finalPosX = layoutSize.width - ((1.0f - ap.x) * cs.width);
+                                break;
+                            case LINEAR_GRAVITY_CENTER_HORIZONTAL:
+                                finalPosX = layoutSize.width / 2.0f - cs.width * (0.5f-ap.x);
+                                break;
+                            default:
+                                break;
+                        }
+                        Margin mg = layoutParameter->getMargin();
+                        finalPosX += mg.left;
+                        finalPosY -= mg.top;
+                        child->setPosition(Point(finalPosX, finalPosY));
+                        topBoundary = child->getBottomInParent() - mg.bottom;
                     }
-                    Margin mg = layoutParameter->getMargin();
-                    finalPosX += mg.left;
-                    finalPosY -= mg.top;
-                    child->setPosition(Point(finalPosX, finalPosY));
-                    topBoundary = child->getBottomInParent() - mg.bottom;
                 }
             }
             break;
@@ -985,54 +996,62 @@ void Layout::doLayout()
         {
             Size layoutSize = getSize();
             float leftBoundary = 0.0f;
-            for (auto& subWidget : _widgetChildren)
+            for (auto& subWidget : _children)
             {
-                Widget* child = static_cast<Widget*>(subWidget);
-                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
-                
-                if (layoutParameter)
+                Widget* child = dynamic_cast<Widget*>(subWidget);
+                if (child)
                 {
-                    LinearGravity childGravity = layoutParameter->getGravity();
-                    Point ap = child->getAnchorPoint();
-                    Size cs = child->getSize();
-                    float finalPosX = leftBoundary + (ap.x * cs.width);
-                    float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
-                    switch (childGravity)
+                    LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+                    if (layoutParameter)
                     {
-                        case LINEAR_GRAVITY_NONE:
-                        case LINEAR_GRAVITY_TOP:
-                            break;
-                        case LINEAR_GRAVITY_BOTTOM:
-                            finalPosY = ap.y * cs.height;
-                            break;
-                        case LINEAR_GRAVITY_CENTER_VERTICAL:
-                            finalPosY = layoutSize.height / 2.0f - cs.height * (0.5f - ap.y);
-                            break;
-                        default:
-                            break;
+                        LinearGravity childGravity = layoutParameter->getGravity();
+                        Point ap = child->getAnchorPoint();
+                        Size cs = child->getSize();
+                        float finalPosX = leftBoundary + (ap.x * cs.width);
+                        float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
+                        switch (childGravity)
+                        {
+                            case LINEAR_GRAVITY_NONE:
+                            case LINEAR_GRAVITY_TOP:
+                                break;
+                            case LINEAR_GRAVITY_BOTTOM:
+                                finalPosY = ap.y * cs.height;
+                                break;
+                            case LINEAR_GRAVITY_CENTER_VERTICAL:
+                                finalPosY = layoutSize.height / 2.0f - cs.height * (0.5f - ap.y);
+                                break;
+                            default:
+                                break;
+                        }
+                        Margin mg = layoutParameter->getMargin();
+                        finalPosX += mg.left;
+                        finalPosY -= mg.top;
+                        child->setPosition(Point(finalPosX, finalPosY));
+                        leftBoundary = child->getRightInParent() + mg.right;
                     }
-                    Margin mg = layoutParameter->getMargin();
-                    finalPosX += mg.left;
-                    finalPosY -= mg.top;
-                    child->setPosition(Point(finalPosX, finalPosY));
-                    leftBoundary = child->getRightInParent() + mg.right;
                 }
             }
             break;
         }
         case LAYOUT_RELATIVE:
         {
-            ssize_t unlayoutChildCount = _widgetChildren.size();
+            ssize_t unlayoutChildCount = 0;
             Size layoutSize = getSize();
-            for (auto& subWidget : _widgetChildren)
+            Vector<Widget*> widgetChildren;
+            for (auto& subWidget : _children)
             {
-                Widget* child = static_cast<Widget*>(subWidget);
-                RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-                layoutParameter->_put = false;
+                Widget* child = dynamic_cast<Widget*>(subWidget);
+                if (child)
+                {
+                    RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                    layoutParameter->_put = false;
+                    unlayoutChildCount++;
+                    widgetChildren.pushBack(child);
+                }
             }
             while (unlayoutChildCount > 0)
             {
-                for (auto& subWidget : _widgetChildren)
+                for (auto& subWidget : widgetChildren)
                 {
                     Widget* child = static_cast<Widget*>(subWidget);
                     RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
@@ -1359,6 +1378,7 @@ void Layout::doLayout()
                     }
                 }
             }
+            widgetChildren.clear();
             break;
         }
         default:

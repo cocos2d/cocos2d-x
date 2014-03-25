@@ -78,6 +78,9 @@
     <ClInclude Include="..\UIRichText.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\CCProtectedNode.h">
+      <Filter>BaseClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="..\UIRichText.cpp">
       <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCProtectedNode.cpp">
+      <Filter>BaseClasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

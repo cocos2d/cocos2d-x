@@ -1558,6 +1558,10 @@
 		50AE5EA4188749250007CFE3 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */; };
 		50AE5EA5188749250007CFE3 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AE5EA2188749250007CFE3 /* CCBatchCommand.h */; };
 		50AE5EA6188749250007CFE3 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AE5EA2188749250007CFE3 /* CCBatchCommand.h */; };
+		50E6D30E18DADB5D0051CA34 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */; };
+		50E6D30F18DADB5D0051CA34 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */; };
+		50E6D31018DAF01A0051CA34 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */; };
+		50E6D31118DAF01E0051CA34 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */; };
 		50FCEB9318C72017004AD434 /* ButtonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEB6A18C72017004AD434 /* ButtonReader.cpp */; };
 		50FCEB9418C72017004AD434 /* ButtonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEB6A18C72017004AD434 /* ButtonReader.cpp */; };
 		50FCEB9518C72017004AD434 /* ButtonReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FCEB6B18C72017004AD434 /* ButtonReader.h */; };
@@ -2667,6 +2671,8 @@
 		50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBatchCommand.cpp; sourceTree = "<group>"; };
 		50AE5EA2188749250007CFE3 /* CCBatchCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBatchCommand.h; sourceTree = "<group>"; };
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
+		50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
+		50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
 		50FCEB6A18C72017004AD434 /* ButtonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonReader.cpp; sourceTree = "<group>"; };
 		50FCEB6B18C72017004AD434 /* ButtonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonReader.h; sourceTree = "<group>"; };
 		50FCEB6D18C72017004AD434 /* CheckBoxReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBoxReader.cpp; sourceTree = "<group>"; };
@@ -3997,6 +4003,8 @@
 				2905FA1218CF08D100240AA3 /* UITextField.h */,
 				2905FA1318CF08D100240AA3 /* UIWidget.cpp */,
 				2905FA1418CF08D100240AA3 /* UIWidget.h */,
+				50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */,
+				50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */,
 			);
 			name = ui;
 			path = ../cocos/ui;
@@ -4991,6 +4999,7 @@
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
 				1A57013C180BC9460088DEC7 /* CCEvent.h in Headers */,
 				1A570140180BC9460088DEC7 /* CCEventAcceleration.h in Headers */,
+				50E6D30F18DADB5D0051CA34 /* CCProtectedNode.h in Headers */,
 				1A570144180BC9460088DEC7 /* CCEventCustom.h in Headers */,
 				1A570148180BC9460088DEC7 /* CCEventDispatcher.h in Headers */,
 				50FCEB9918C72017004AD434 /* CheckBoxReader.h in Headers */,
@@ -5610,6 +5619,7 @@
 				1AD71DE0180E26E600808F54 /* CCLayerGradientLoader.h in Headers */,
 				1AD71DE4180E26E600808F54 /* CCLayerLoader.h in Headers */,
 				1AD71DE8180E26E600808F54 /* CCMenuItemImageLoader.h in Headers */,
+				50E6D31118DAF01E0051CA34 /* CCProtectedNode.h in Headers */,
 				1AD71DEC180E26E600808F54 /* CCMenuItemLoader.h in Headers */,
 				1AD71DEE180E26E600808F54 /* CCMenuLoader.h in Headers */,
 				A044DEBC18C6A58700B6CCBD /* plane.h in Headers */,
@@ -6250,6 +6260,7 @@
 				1A570333180BCFD50088DEC7 /* CCUserDefault.mm in Sources */,
 				A044DEA718C6A58700B6CCBD /* mat4stack.c in Sources */,
 				1A570335180BCFD50088DEC7 /* CCUserDefaultAndroid.cpp in Sources */,
+				50E6D30E18DADB5D0051CA34 /* CCProtectedNode.cpp in Sources */,
 				1A57033A180BCFFA0088DEC7 /* ZipUtils.cpp in Sources */,
 				1A57034B180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
 				1A570354180BD0B00088DEC7 /* ioapi.cpp in Sources */,
@@ -6667,6 +6678,7 @@
 				1A5702EF180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
 				1A5702F3180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				2905FA5B18CF08D100240AA3 /* UILayoutDefine.cpp in Sources */,
+				50E6D31018DAF01A0051CA34 /* CCProtectedNode.cpp in Sources */,
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
 				1A5702FB180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				2905FA6B18CF08D100240AA3 /* UIPageView.cpp in Sources */,

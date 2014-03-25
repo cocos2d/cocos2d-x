@@ -148,7 +148,7 @@ void RichText::initRenderer()
 {
     _elementRenderersContainer = Node::create();
     _elementRenderersContainer->setAnchorPoint(Point(0.5f, 0.5f));
-    Node::addChild(_elementRenderersContainer, 0, -1);
+    addProtectedChild(_elementRenderersContainer, 0, -1);
 }
 
 void RichText::insertElement(RichElement *element, int index)
@@ -435,6 +435,11 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
         _formatTextDirty = true;
         Widget::ignoreContentAdaptWithSize(ignore);
     }
+}
+    
+std::string RichText::getDescription() const
+{
+    return "RichText";
 }
 
 }

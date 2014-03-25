@@ -62,7 +62,7 @@ TextAtlas* TextAtlas::create()
 void TextAtlas::initRenderer()
 {
     _labelAtlasRenderer = LabelAtlas::create();
-    Node::addChild(_labelAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
+    addProtectedChild(_labelAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
 
 void TextAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)

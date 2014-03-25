@@ -101,10 +101,10 @@ void Button::initRenderer()
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = LabelTTF::create();
 
-    Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
-    Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
-    Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
-    Node::addChild(_titleRenderer, TITLE_RENDERER_Z, -1);
+    addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
+    addProtectedChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
+    addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
 }
 
 void Button::setScale9Enabled(bool able)
@@ -115,9 +115,9 @@ void Button::setScale9Enabled(bool able)
     }
     _brightStyle = BRIGHT_NONE;
     _scale9Enabled = able;
-    Node::removeChild(_buttonNormalRenderer);
-    Node::removeChild(_buttonClickedRenderer);
-    Node::removeChild(_buttonDisableRenderer);
+    removeProtectedChild(_buttonNormalRenderer);
+    removeProtectedChild(_buttonClickedRenderer);
+    removeProtectedChild(_buttonDisableRenderer);
     _buttonNormalRenderer = nullptr;
     _buttonClickedRenderer = nullptr;
     _buttonDisableRenderer = nullptr;
@@ -137,9 +137,9 @@ void Button::setScale9Enabled(bool able)
     loadTextureNormal(_normalFileName.c_str(), _normalTexType);
     loadTexturePressed(_clickedFileName.c_str(), _pressedTexType);
     loadTextureDisabled(_disabledFileName.c_str(), _disabledTexType);
-    Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
-    Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
-    Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
+    addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
+    addProtectedChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
