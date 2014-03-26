@@ -130,8 +130,10 @@ void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr);
  matching instances in arr will be removed. */
 void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 // #pragma mark -
 // #pragma mark ccCArray for Values (c structures)
+#endif
 
 typedef struct _ccCArray {
     ssize_t num, max;

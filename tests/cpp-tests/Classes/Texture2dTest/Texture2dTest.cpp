@@ -80,7 +80,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(TextureJPEG),
     CL(TextureTIFF),
     CL(TextureTGA),
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_INRT)
     CL(TextureWEBP),
+#endif
     CL(TexturePixelFormat),
     CL(TextureBlend),
     CL(TextureAsync),

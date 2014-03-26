@@ -18,9 +18,11 @@ USING_NS_CC_EXT;
 using namespace ui;
 using namespace cocostudio;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #pragma mark -
 #pragma mark CustomParticleWidgetLayer
 #pragma mark -
+#endif
 
 void CustomParticleWidgetLayer::onEnter()
 {
@@ -38,9 +40,11 @@ void CustomParticleWidgetLayer::onEnter()
     addChild(custom, 10, -1);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #pragma mark -
 #pragma mark CustomImageScene
 #pragma mark -
+#endif
 
 void CustomParticleWidgetScene::onEnter()
 {

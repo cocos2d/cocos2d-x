@@ -190,8 +190,11 @@ bool ControlStepper::isContinuous() const
 {
     return _continuous;
 }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark -
 //#pragma mark ControlStepper Public Methods
+#endif
 
 void ControlStepper::setValueWithSendingEvent(double value, bool send)
 {

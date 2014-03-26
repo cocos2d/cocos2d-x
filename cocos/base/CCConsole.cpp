@@ -106,6 +106,8 @@ static bool isFloat( std::string myString ) {
     return iss.eof() && !iss.fail(); 
 }
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+
 // helper free functions
 
 // dprintf() is not defined in Android
@@ -176,6 +178,7 @@ static void printFileUtils(int fd)
     }
     sendPrompt(fd);
 }
+#endif
 
 
 #if defined(__MINGW32__)
@@ -210,20 +213,22 @@ static void _log(const char *format, va_list args)
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  "%s", buf);
 
-#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32
+#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
     WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), NULL, FALSE);
     printf("%s", buf);
-
 #else
     // Linux, Mac, iOS, etc
     fprintf(stdout, "cocos2d: %s", buf);
     fflush(stdout);
 #endif
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     Director::getInstance()->getConsole()->log(buf);
+#endif
+
 }
 
 // XXX: Deprecated
@@ -242,6 +247,8 @@ void log(const char * format, ...)
     _log(format, args);
     va_end(args);
 }
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 
 //
 // Console code
@@ -1080,5 +1087,8 @@ void Console::loop()
 #endif
     _running = false;
 }
+
+#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) */
+
 
 NS_CC_END
