@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TextureData
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#TextureData] getContourData 
