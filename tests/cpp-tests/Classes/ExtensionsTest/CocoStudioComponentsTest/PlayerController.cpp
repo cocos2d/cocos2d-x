@@ -22,6 +22,7 @@ bool PlayerController::init()
 
 void PlayerController::onEnter()
 {
+    ComController::onEnter();
     setTouchEnabled(true);
 }
 
