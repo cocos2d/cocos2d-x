@@ -950,8 +950,6 @@ void DemoParticleFromFile::onEnter()
 void DemoParticleFromValueMap::onEnter()
 {
     ParticleDemo::onEnter();
-    
-    std::map<std::string, ValueMap> m_plistMap;
 
     auto plistData = FileUtils::getInstance()->getValueMapFromFile("Particles/emissionPart.plist");
     auto emission_frame = SpriteFrame::create("Images/engine.jpg", Rect(0,0,25,32));
