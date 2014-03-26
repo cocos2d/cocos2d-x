@@ -138,7 +138,7 @@ void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
 void SocketIOTestLayer::onMenuSIOClientClicked(cocos2d::Ref *sender)
 {
 	//create a client by using this static method, url does not need to contain the protocol
-	_sioClient = SocketIO::connect(*this, "ws://channon.us:3000");
+	_sioClient = SocketIO::connect("ws://channon.us:3000", *this);
 	//you may set a tag for the client for reference in callbacks
 	_sioClient->setTag("Test Client");
 
@@ -151,7 +151,7 @@ void SocketIOTestLayer::onMenuSIOClientClicked(cocos2d::Ref *sender)
 void SocketIOTestLayer::onMenuSIOEndpointClicked(cocos2d::Ref *sender)
 {
 	//repeat the same connection steps for the namespace "testpoint"
-	_sioEndpoint = SocketIO::connect(*this, "ws://channon.us:3000/testpoint");
+	_sioEndpoint = SocketIO::connect("ws://channon.us:3000/testpoint", *this);
 	//a tag to differentiate in shared callbacks
 	_sioEndpoint->setTag("Test Endpoint");	
 
