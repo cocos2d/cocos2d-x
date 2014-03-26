@@ -64,7 +64,6 @@ bool CCComponentContainer::add(CCComponent *pCom)
         {
             m_pComponents = CCDictionary::create();
             m_pComponents->retain();
-            m_pOwner->scheduleUpdate();
         }
         CCComponent *pComponent = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pCom->getName()));
         

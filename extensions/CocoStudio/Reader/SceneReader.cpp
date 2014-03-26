@@ -34,6 +34,7 @@ SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
 SceneReader::SceneReader()
 :_pNode(NULL)
+,_eAttachComponent(ccAttachComponentType::kCCEmptyNode)
 {
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(CCComAttribute));
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(CCComRender));
@@ -50,16 +51,18 @@ const char* SceneReader::sceneReaderVersion()
 	return "1.2.0.0";
 }
 
-cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName)
+cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName, ccAttachComponentType eAttachComponent /*= ccAttachComponentType::kCCEmptyNode*/)
 {
 	rapidjson::Document jsonDict;
 	do {
 		CC_BREAK_IF(!readJson(pszFileName, jsonDict));
-		_pNode = createObject(jsonDict, NULL);
+        _eAttachComponent = eAttachComponent;
+		_pNode = createObject(jsonDict, NULL, eAttachComponent);
 		TriggerMng::getInstance()->parse(jsonDict);
 	} while (0);
 	return _pNode;
 }
+
 
 bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
 {
@@ -113,7 +116,7 @@ CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
 	return _retNode;
 }
 
-CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent)
+CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, ccAttachComponentType eAttachComponent/* = ccAttachComponentType::kCCEmptyNode*/)
 {
 	const char *className = DICTOOL->getStringValue_json(root, "classname");
 	if(strcmp(className, "CCNode") == 0)
@@ -123,12 +126,9 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 		{
 			gb = CCNode::create();
 		}
-		else
-		{
-			gb = CCNode::create();
-			parent->addChild(gb);
-		}
-		setPropertyFromJsonDict(root, gb);
+
+        std::vector<CCComponent*> _vecComs;
+        CCComRender *pRender = NULL;
 		int count = DICTOOL->getArrayCount_json(root, "components");
 		for (int i = 0; i < count; i++)
 		{
@@ -143,18 +143,51 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 			{
 				if (pCom->serialize((void*)(&subDict)))
 				{
-					gb->addComponent(pCom);
-				}
-				else
-				{
-					CC_SAFE_RELEASE_NULL(pCom);
-				}
-			}
+                    if (pCom->isRender())
+                    {
+                        pRender = (CCComRender*)pCom;
+                    }
+                    else
+                    {
+                        _vecComs.push_back(pCom);
+                    }
+                }
+                else
+                {
+                    CC_SAFE_RELEASE_NULL(pCom);
+                }
+            }
 			if (_pListener && _pfnSelector)
 			{
 				(_pListener->*_pfnSelector)(pCom, (void*)(&subDict));
 			}
 		}
+
+        if (parent != NULL)
+        {
+            if (pRender == NULL || eAttachComponent == ccAttachComponentType::kCCEmptyNode)
+            {
+                gb = CCNode::create();
+                if (pRender != NULL)
+                {
+                    _vecComs.push_back(pRender);
+                }
+            }
+            else
+            {
+                gb = pRender->getNode();
+                gb->retain();
+                pRender->setNode(NULL);
+                CC_SAFE_RELEASE_NULL(pRender);
+            }
+            parent->addChild(gb);
+        }
+        setPropertyFromJsonDict(root, gb);
+        for (std::vector<CCComponent*>::iterator iter = _vecComs.begin(); iter != _vecComs.end(); ++iter)
+        {
+            gb->addComponent(*iter);
+        }
+        
 		int length = DICTOOL->getArrayCount_json(root, "gameobjects");
 		for (int i = 0; i < length; ++i)
 		{
@@ -163,7 +196,7 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 			{
 				break;
 			}
-			createObject(subDict, gb);
+			createObject(subDict, gb, eAttachComponent);
 		}
 		return gb;
 	}
