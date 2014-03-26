@@ -804,6 +804,8 @@
 		1AC35DF618CEE65B00F37B72 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAB18CED84500F37B72 /* background-music-aac.wav */; };
 		1AC35DF718CEE65B00F37B72 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
 		1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
+		1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
+		1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
 		298B28F818CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
 		298B28F918CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
 		298B28FA18CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
@@ -1837,6 +1839,8 @@
 		1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1AC35DB018CEE5DA00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
+		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
 		298B28F718CFF9EC00C1920F /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosui; path = "../tests/cpp-tests/Resources/cocosui"; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -3415,6 +3419,8 @@
 		1AC35B1418CECF0C00F37B72 /* UnitTest */ = {
 			isa = PBXGroup;
 			children = (
+				1F33634D18E37E840074764D /* RefPtrTest.cpp */,
+				1F33634E18E37E840074764D /* RefPtrTest.h */,
 				1AC35B1518CECF0C00F37B72 /* UnitTest.cpp */,
 				1AC35B1618CECF0C00F37B72 /* UnitTest.h */,
 			);
@@ -4649,6 +4655,7 @@
 				1AC35BB518CECF0C00F37B72 /* UIRichTextTest.cpp in Sources */,
 				1AC35BCD18CECF0C00F37B72 /* UITextBMFontTest_Editor.cpp in Sources */,
 				1AC35C6918CECF0C00F37B72 /* VisibleRect.cpp in Sources */,
+				1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */,
 				1AC35C3F18CECF0C00F37B72 /* ReleasePoolTest.cpp in Sources */,
 				1AC35C5718CECF0C00F37B72 /* TextureCacheTest.cpp in Sources */,
 				1AC35B6D18CECF0C00F37B72 /* HelloCocosBuilderLayer.cpp in Sources */,
@@ -4748,6 +4755,7 @@
 				1AC35C1818CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
 				1AC35C0618CECF0C00F37B72 /* FontTest.cpp in Sources */,
 				1AC35C3818CECF0C00F37B72 /* PerformanceTest.cpp in Sources */,
+				1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */,
 				1AC35B2818CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
 				1AC35C4A18CECF0C00F37B72 /* ShaderTest.cpp in Sources */,
 				1AC35BFE18CECF0C00F37B72 /* Scale9SpriteTest.cpp in Sources */,
