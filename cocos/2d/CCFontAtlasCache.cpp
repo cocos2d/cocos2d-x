@@ -52,9 +52,11 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
         useDistanceField = false;
     }
     int fontSize = config.fontSize;
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
+
     if (useDistanceField)
     {
-        fontSize = Label::DistanceFieldFontSize / CC_CONTENT_SCALE_FACTOR();
+        fontSize = Label::DistanceFieldFontSize / contentScaleFactor;
     }
 
     std::string atlasName = generateFontName(config.fontFilePath, fontSize, GlyphCollection::DYNAMIC, useDistanceField);
@@ -67,7 +69,8 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 
     if ( !tempAtlas )
     {
-        FontFreeType *font = FontFreeType::create(config.fontFilePath, fontSize * CC_CONTENT_SCALE_FACTOR(), config.glyphs, config.customGlyphs,useDistanceField,config.outlineSize);
+        FontFreeType *font = FontFreeType::create(config.fontFilePath, fontSize * contentScaleFactor, config.glyphs, 
+            config.customGlyphs,useDistanceField,config.outlineSize * contentScaleFactor);
         if (font)
         {
             tempAtlas = font->createFontAtlas();

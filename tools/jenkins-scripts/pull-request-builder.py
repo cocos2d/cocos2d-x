@@ -83,7 +83,9 @@ def main():
     os.system("git clean -xdf -f")
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/merge"
-    os.system(git_fetch_pr)
+    ret = os.system(git_fetch_pr)
+    if(ret != 0):
+        return(1)
  
     #checkout
     git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"

@@ -95,11 +95,11 @@ void CheckBox::initRenderer()
     _backGroundBoxDisabledRenderer = Sprite::create();
     _frontCrossDisabledRenderer = Sprite::create();
         
-    Node::addChild(_backGroundBoxRenderer, BACKGROUNDBOX_RENDERER_Z, -1);
-    Node::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDSELECTEDBOX_RENDERER_Z, -1);
-    Node::addChild(_frontCrossRenderer, FRONTCROSS_RENDERER_Z, -1);
-    Node::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLED_RENDERER_Z, -1);
-    Node::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLED_RENDERER_Z, -1);
+    addProtectedChild(_backGroundBoxRenderer, BACKGROUNDBOX_RENDERER_Z, -1);
+    addProtectedChild(_backGroundSelectedBoxRenderer, BACKGROUNDSELECTEDBOX_RENDERER_Z, -1);
+    addProtectedChild(_frontCrossRenderer, FRONTCROSS_RENDERER_Z, -1);
+    addProtectedChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLED_RENDERER_Z, -1);
+    addProtectedChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLED_RENDERER_Z, -1);
 }
 
 void CheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)

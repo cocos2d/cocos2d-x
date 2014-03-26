@@ -148,7 +148,7 @@ void RichText::initRenderer()
 {
     _elementRenderersContainer = Node::create();
     _elementRenderersContainer->setAnchorPoint(Point(0.5f, 0.5f));
-    Node::addChild(_elementRenderersContainer, 0, -1);
+    addProtectedChild(_elementRenderersContainer, 0, -1);
 }
 
 void RichText::insertElement(RichElement *element, int index)
@@ -193,7 +193,7 @@ void RichText::formatText()
                     case RICH_TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
-                        elementRenderer = LabelTTF::create(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize);
+                        elementRenderer = Label::create(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize);
                         break;
                     }
                     case RICH_IMAGE:
@@ -255,7 +255,7 @@ void RichText::formatText()
     
 void RichText::handleTextRenderer(const char *text, const char *fontName, float fontSize, const Color3B &color, GLubyte opacity)
 {
-    LabelTTF* textRenderer = LabelTTF::create(text, fontName, fontSize);
+    Label* textRenderer = Label::create(text, fontName, fontSize);
     float textRendererWidth = textRenderer->getContentSize().width;
     _leftSpaceWidth -= textRendererWidth;
     if (_leftSpaceWidth < 0.0f)
@@ -268,7 +268,7 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
         std::string cutWords = curText.substr(leftLength, curText.length()-1);
         if (leftLength > 0)
         {
-            LabelTTF* leftRenderer = LabelTTF::create(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+            Label* leftRenderer = Label::create(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
             leftRenderer->setColor(color);
             leftRenderer->setOpacity(opacity);
             pushToContainer(leftRenderer);
@@ -340,7 +340,7 @@ void RichText::formarRenderers()
         float newContentSizeHeight = 0.0f;
         float *maxHeights = new float[_elementRenders.size()];
         
-        for (ssize_t i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
@@ -355,7 +355,7 @@ void RichText::formarRenderers()
         
         
         float nextPosY = _customSize.height;
-        for (ssize_t i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float nextPosX = 0.0f;
@@ -375,7 +375,7 @@ void RichText::formarRenderers()
     }
     
     size_t length = _elementRenders.size();
-    for (ssize_t i = 0; i<length; i++)
+    for (size_t i = 0; i<length; i++)
 	{
         Vector<Node*>* l = _elementRenders[i];
         l->clear();
@@ -435,6 +435,11 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
         _formatTextDirty = true;
         Widget::ignoreContentAdaptWithSize(ignore);
     }
+}
+    
+std::string RichText::getDescription() const
+{
+    return "RichText";
 }
 
 }

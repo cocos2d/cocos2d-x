@@ -24,6 +24,7 @@
 
 #include "CCValue.h"
 #include <sstream>
+#include <iomanip>
 
 NS_CC_BEGIN
 
@@ -571,6 +572,7 @@ std::string Value::asString() const
     }
     
     std::stringstream ret;
+	
     
     switch (_type) {
         case Type::BYTE:
@@ -580,10 +582,10 @@ std::string Value::asString() const
             ret << _baseData.intVal;
             break;
         case Type::FLOAT:
-            ret << _baseData.floatVal;
+            ret << std::fixed << std::setprecision( 7 )<< _baseData.floatVal;
             break;
         case Type::DOUBLE:
-            ret << _baseData.doubleVal;
+            ret << std::fixed << std::setprecision( 16 ) << _baseData.doubleVal;
             break;
         case Type::BOOLEAN:
             ret << (_baseData.boolVal ? "true" : "false");

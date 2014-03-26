@@ -83,6 +83,8 @@ cpAreaForSegment(cpVect a, cpVect b, cpFloat r)
 cpFloat
 cpMomentForPoly(cpFloat m, const int numVerts, const cpVect *verts, cpVect offset)
 {
+	if(numVerts == 2) return cpMomentForSegment(m, verts[0], verts[1]);
+	
 	cpFloat sum1 = 0.0f;
 	cpFloat sum2 = 0.0f;
 	for(int i=0; i<numVerts; i++){

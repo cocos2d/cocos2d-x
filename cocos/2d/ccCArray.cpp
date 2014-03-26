@@ -278,8 +278,8 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	arr->num -= back;
 }
 
-// #pragma mark -
-// #pragma mark ccCArray for Values (c structures)
+// 
+// // ccCArray for Values (c structures)
 
 /** Allocates and initializes a new C array with specified capacity */
 ccCArray* ccCArrayNew(ssize_t capacity)

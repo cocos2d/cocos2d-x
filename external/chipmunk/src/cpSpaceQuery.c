@@ -31,8 +31,8 @@ struct PointQueryContext {
 	void *data;
 };
 
-static void 
-PointQuery(struct PointQueryContext *context, cpShape *shape, void *data)
+static cpCollisionID 
+PointQuery(struct PointQueryContext *context, cpShape *shape, cpCollisionID id, void *data)
 {
 	if(
 		!(shape->group && context->group == shape->group) && (context->layers&shape->layers) &&
@@ -40,6 +40,8 @@ PointQuery(struct PointQueryContext *context, cpShape *shape, void *data)
 	){
 		context->func(shape, context->data);
 	}
+	
+	return id;
 }
 
 void
@@ -79,8 +81,8 @@ struct NearestPointQueryContext {
 	cpSpaceNearestPointQueryFunc func;
 };
 
-static void 
-NearestPointQuery(struct NearestPointQueryContext *context, cpShape *shape, void *data)
+static cpCollisionID
+NearestPointQuery(struct NearestPointQueryContext *context, cpShape *shape, cpCollisionID id, void *data)
 {
 	if(
 		!(shape->group && context->group == shape->group) && (context->layers&shape->layers)
@@ -90,6 +92,8 @@ NearestPointQuery(struct NearestPointQueryContext *context, cpShape *shape, void
 		
 		if(info.shape && info.d < context->maxDistance) context->func(shape, info.d, info.p, data);
 	}
+	
+	return id;
 }
 
 void
@@ -104,8 +108,8 @@ cpSpaceNearestPointQuery(cpSpace *space, cpVect point, cpFloat maxDistance, cpLa
 	} cpSpaceUnlock(space, cpTrue);
 }
 
-static void
-NearestPointQueryNearest(struct NearestPointQueryContext *context, cpShape *shape, cpNearestPointQueryInfo *out)
+static cpCollisionID
+NearestPointQueryNearest(struct NearestPointQueryContext *context, cpShape *shape, cpCollisionID id, cpNearestPointQueryInfo *out)
 {
 	if(
 		!(shape->group && context->group == shape->group) && (context->layers&shape->layers) && !shape->sensor
@@ -115,12 +119,14 @@ NearestPointQueryNearest(struct NearestPointQueryContext *context, cpShape *shap
 		
 		if(info.d < out->d) (*out) = info;
 	}
+	
+	return id;
 }
 
 cpShape *
 cpSpaceNearestPointQueryNearest(cpSpace *space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpNearestPointQueryInfo *out)
 {
-	cpNearestPointQueryInfo info = {NULL, cpvzero, maxDistance};
+	cpNearestPointQueryInfo info = {NULL, cpvzero, maxDistance, cpvzero};
 	if(out){
 		(*out) = info;
   } else {
@@ -228,8 +234,8 @@ struct BBQueryContext {
 	cpSpaceBBQueryFunc func;
 };
 
-static void 
-BBQuery(struct BBQueryContext *context, cpShape *shape, void *data)
+static cpCollisionID
+BBQuery(struct BBQueryContext *context, cpShape *shape, cpCollisionID id, void *data)
 {
 	if(
 		!(shape->group && context->group == shape->group) && (context->layers&shape->layers) &&
@@ -237,6 +243,8 @@ BBQuery(struct BBQueryContext *context, cpShape *shape, void *data)
 	){
 		context->func(shape, data);
 	}
+	
+	return id;
 }
 
 void
@@ -259,24 +267,24 @@ struct ShapeQueryContext {
 };
 
 // Callback from the spatial hash.
-static void
-ShapeQuery(cpShape *a, cpShape *b, struct ShapeQueryContext *context)
+static cpCollisionID
+ShapeQuery(cpShape *a, cpShape *b, cpCollisionID id, struct ShapeQueryContext *context)
 {
 	// Reject any of the simple cases
 	if(
 		(a->group && a->group == b->group) ||
 		!(a->layers & b->layers) ||
 		a == b
-	) return;
+	) return id;
 	
 	cpContact contacts[CP_MAX_CONTACTS_PER_ARBITER];
 	int numContacts = 0;
 	
 	// Shape 'a' should have the lower shape type. (required by cpCollideShapes() )
 	if(a->klass->type <= b->klass->type){
-		numContacts = cpCollideShapes(a, b, contacts);
+		numContacts = cpCollideShapes(a, b, &id, contacts);
 	} else {
-		numContacts = cpCollideShapes(b, a, contacts);
+		numContacts = cpCollideShapes(b, a, &id, contacts);
 		for(int i=0; i<numContacts; i++) contacts[i].n = cpvneg(contacts[i].n);
 	}
 	
@@ -296,6 +304,8 @@ ShapeQuery(cpShape *a, cpShape *b, struct ShapeQueryContext *context)
 			context->func(b, &set, context->data);
 		}
 	}
+	
+	return id;
 }
 
 cpBool

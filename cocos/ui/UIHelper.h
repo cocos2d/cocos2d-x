@@ -58,19 +58,6 @@ public:
      */
     static Widget* seekWidgetByName(Widget* root, const char* name);
     
-    /**
-     * Finds a widget whose name equals to param name from root widget.
-     *
-     * RelativeLayout will call this method to find the widget witch is needed.
-     *
-     * @param root      widget which will be seeked.
-     *
-     * @name             name value.
-     *
-     * @return finded result.
-     */
-    static Widget* seekWidgetByRelativeName(Widget* root, const char* name);
-    
     /*temp action*/
     static Widget* seekActionWidgetByActionTag(Widget* root, int tag);
 };

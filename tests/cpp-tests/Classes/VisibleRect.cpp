@@ -24,6 +24,8 @@
 
 #include "VisibleRect.h"
 
+USING_NS_CC;
+
 Rect VisibleRect::s_visibleRect;
 
 void VisibleRect::lazyInit()

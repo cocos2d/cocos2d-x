@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_TEXT_FIELD_H__
 #define __CC_TEXT_FIELD_H__
 
-#include "CCLabelTTF.h"
+#include "CCLabel.h"
 #include "CCIMEDelegate.h"
 
 NS_CC_BEGIN
@@ -86,7 +86,7 @@ public:
     /**
     @brief    If the sender doesn't want to draw, return true.
     */
-    virtual bool onDraw(TextFieldTTF * sender)
+    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
     {
         CC_UNUSED_PARAM(sender);
         return false;
@@ -96,7 +96,7 @@ public:
 /**
 @brief    A simple text input field with TTF font.
 */
-class CC_DLL TextFieldTTF : public LabelTTF, public IMEDelegate
+class CC_DLL TextFieldTTF : public Label, public IMEDelegate
 {
 public:
     /**
@@ -113,7 +113,7 @@ public:
 
     /** creates a TextFieldTTF from a fontname, alignment, dimension and font size */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
-    /** creates a LabelTTF from a fontname and font size */
+    /** creates a TextFieldTTF from a fontname and font size */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name, alignment, dimension and font size */
     bool initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
@@ -148,33 +148,23 @@ public:
     virtual const Color3B& getColorSpaceHolder();
     virtual void setColorSpaceHolder(const Color3B& color);
 
+    virtual void setColor(const Color3B& color) override;
+
     // input text property
-public:
     virtual void setString(const std::string& text) override;
     virtual const std::string& getString() const override;
-protected:
-    TextFieldDelegate * _delegate;
-    int _charCount;
-    
-    std::string _inputText;
 
     // place holder text property
     // place holder text displayed when there is no text in the text field.
-public:
     virtual void setPlaceHolder(const std::string& text);
     virtual const std::string& getPlaceHolder(void) const;
-protected:
-    std::string _placeHolder;
-    Color3B _colorSpaceHolder;
-public:
+
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();
-protected:
-    bool _secureTextEntry;
-protected:
 
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
 
+protected:
     //////////////////////////////////////////////////////////////////////////
     // IMEDelegate interface
     //////////////////////////////////////////////////////////////////////////
@@ -184,6 +174,18 @@ protected:
     virtual void insertText(const char * text, size_t len) override;
     virtual void deleteBackward() override;
     virtual const std::string& getContentText() override;
+
+    TextFieldDelegate * _delegate;
+    int _charCount;
+
+    std::string _inputText;
+
+    std::string _placeHolder;
+    Color3B _colorSpaceHolder;
+    Color3B _colorText;
+
+    bool _secureTextEntry;
+
 private:
     class LengthStack;
     LengthStack * _lens;
