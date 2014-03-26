@@ -315,12 +315,6 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
             shadowStrokePaddingY = ceilf(info->strokeSize);
         }
         
-        if ( info->hasShadow )
-        {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(info->shadowOffset.width));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(info->shadowOffset.height));
-        }
-        
         // add the padding (this could be 0 if no shadow and no stroke)
         dim.width  += shadowStrokePaddingX*2;
         dim.height += shadowStrokePaddingY*2;
@@ -359,25 +353,9 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         NSTextAlignment nsAlign = (2 == uHoriFlag) ? NSTextAlignmentRight
                                                   : (3 == uHoriFlag) ? NSTextAlignmentCenter
                                                   : NSTextAlignmentLeft;
-        
-        
-        // take care of shadow if needed
-        if ( info->hasShadow )
-        {
-            CGSize offset;
-            offset.height = info->shadowOffset.height;
-            offset.width  = info->shadowOffset.width;
-            CGFloat shadowColorValues[] = {0, 0, 0, info->shadowOpacity};
-            CGColorRef shadowColor = CGColorCreate (colorSpace, shadowColorValues);
-            
-            CGContextSetShadowWithColor(context, offset, info->shadowBlur, shadowColor);
-            
-            CGColorRelease (shadowColor);
-        }
+         
         
         CGColorSpaceRelease(colorSpace);
-        
-        
         
         // compute the rect used for rendering the text
         // based on wether shadows or stroke are enabled
