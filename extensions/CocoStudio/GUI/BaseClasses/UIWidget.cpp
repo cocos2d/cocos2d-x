@@ -70,11 +70,8 @@ Widget::~Widget()
 {
     _touchEventListener = NULL;
     _touchEventSelector = NULL;
-    _widgetChildren->removeAllObjects();
     CC_SAFE_RELEASE(_widgetChildren);
-    _layoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(_layoutParameterDictionary);
-    _nodes->removeAllObjects();
     CC_SAFE_RELEASE(_nodes);
 }
 

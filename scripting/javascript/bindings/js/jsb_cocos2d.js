@@ -907,3 +907,21 @@ var clearInterval = function (intervalId) {
     }
 };
 var clearTimeout = clearInterval;
+
+/**
+ *
+ * @param {Function} selector
+ * @param {cc.Node} target
+ * @param {Object|Number|String} data
+ */
+cc.doCallback = function (selector, target, data) {
+    if(!selector)
+        return ;
+    if (target && (typeof(selector) == "string")) {
+        target[selector](data);
+    } else if (target && (typeof(selector) == "function")) {
+        selector.call(target, data);
+    } else {
+        selector(data);
+    }
+};

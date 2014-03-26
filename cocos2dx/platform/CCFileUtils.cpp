@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "support/zip_support/unzip.h"
 #include <stack>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -333,6 +334,7 @@ CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filenam
  */
 static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, tinyxml2::XMLDocument *pDoc);
 static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict, tinyxml2::XMLDocument *pDoc);
+static std::string normpath(const char* path);
 
 /*
  * Use tinyxml2 to write plist files
@@ -571,6 +573,56 @@ std::string CCFileUtils::getNewFilename(const char* pszFileName)
     return pszNewFileName;
 }
 
+/*
+ * Norm the path in case it contains the "../" or "./"
+ */
+static std::string normpath(const char* path){
+    string s = path;
+    size_t pos = std::string::npos;
+    if(s.length() == 0){
+        return s;
+    }
+    if(s.find(".") == std::string::npos){
+        return s;
+    }
+    
+    // replace '/' into a space char
+    pos = s.find("/");
+    while(pos != std::string::npos){
+        s = s.replace(pos, 1, " ");
+        pos = s.find("/");
+    }
+    
+    // split string into a vector by space char
+    istringstream iss(s);
+    vector<std::string> splits;
+    do
+    {
+        std::string sub;
+        iss >> sub;
+        if(sub.length() == 0 || sub == ".") continue;
+        splits.push_back(sub);
+    } while (iss);
+
+    // try to norm path
+    vector<string>::iterator iter;
+    vector<string> output;
+    for(iter = splits.begin(); iter!=splits.end(); iter++){
+        if ((*iter) == ".." && output.size() > 0 && output.back() != ".."){
+            output.pop_back();
+        }else{
+            output.push_back((*iter));
+        }
+    }
+
+    std::string ret;
+    vector<string>::iterator iter2;
+    for(iter2 = output.begin(); iter2!=output.end(); iter2++){
+        ret += (*iter2 + "/");
+    }
+    return ret;
+}
+
 std::string CCFileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
 {
     std::string file = filename;
@@ -586,6 +638,7 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
     std::string path = searchPath;
     path += file_path;
     path += resolutionDirectory;
+    path = normpath(path.c_str());
     
     path = getFullPathForDirectoryAndFilename(path, file);
     

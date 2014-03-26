@@ -58,9 +58,9 @@ public:
      */
     struct Data
     {
-        Data():bytes(NULL), len(0), isBinary(false){}
+        Data():bytes(NULL), len(0), issued(0), isBinary(false){}
         char* bytes;
-        int len;
+        ssize_t len, issued;
         bool isBinary;
     };
     
@@ -72,6 +72,17 @@ public:
         kErrorTimeout = 0,
         kErrorConnectionFailure,
         kErrorUnknown
+    };
+    
+    /**
+     *  Websocket state
+     */
+    enum State
+    {
+        kStateConnecting = 0,
+        kStateOpen,
+        kStateClosing,
+        kStateClosed
     };
 
     /**
@@ -116,17 +127,6 @@ public:
      *  @brief Closes the connection to server.
      */
     void close();
-
-    /**
-     *  Websocket state
-     */
-    enum State
-    {
-        kStateConnecting = 0,
-        kStateOpen,
-        kStateClosing,
-        kStateClosed
-    };
     
     /**
      *  @brief Gets current state of connection.
@@ -143,13 +143,17 @@ private:
     int onSocketCallback(struct libwebsocket_context *ctx,
                          struct libwebsocket *wsi,
                          enum libwebsocket_callback_reasons reason,
-                         void *user, void *in, size_t len);
+                         void *user, void *in, ssize_t len);
     
 private:
 	State        _readyState;
     std::string  _host;
     unsigned int _port;
     std::string  _path;
+    
+    ssize_t _pendingFrameDataLen;
+    ssize_t _currentDataLen;
+    char *_currentData;
     
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
