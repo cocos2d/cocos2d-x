@@ -38,6 +38,42 @@ NS_CC_BEGIN
 
 namespace ui {
     
+class LayoutExecutant : public Ref
+{
+public:
+    LayoutExecutant(){};
+    virtual ~LayoutExecutant(){};
+    static LayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container){};
+};
+
+class LinearVerticalLayoutExecutant : public LayoutExecutant
+{
+public:
+    LinearVerticalLayoutExecutant(){};
+    virtual ~LinearVerticalLayoutExecutant(){};
+    static LinearVerticalLayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+};
+
+class LinearHorizontalLayoutExecutant : public LayoutExecutant
+{
+public:
+    LinearHorizontalLayoutExecutant(){};
+    virtual ~LinearHorizontalLayoutExecutant(){};
+    static LinearHorizontalLayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+};
+
+class RelativeLayoutExecutant : public LayoutExecutant
+{
+public:
+    RelativeLayoutExecutant(){};
+    virtual ~RelativeLayoutExecutant(){};
+    static RelativeLayoutExecutant* create();
+    virtual void doLayout(const Size& layoutSize, Vector<Node*> container);
+};
+    
 LayoutExecutant* LayoutExecutant::create()
 {
     LayoutExecutant* exe = new LayoutExecutant();
