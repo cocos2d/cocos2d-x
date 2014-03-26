@@ -10,9 +10,9 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-#pragma mark -
-#pragma mark CustomImageLayer
-#pragma mark -
+
+// CustomImageLayer
+
 
 void CustomImageLayer::onEnter()
 {
@@ -28,9 +28,9 @@ void CustomImageLayer::onEnter()
     addChild(layout);        
 }
 
-#pragma mark -
-#pragma mark CustomImageScene
-#pragma mark -
+
+// CustomImageScene
+
 
 void CustomImageScene::onEnter()
 {

@@ -219,19 +219,20 @@ queryReject(cpShape *a, cpShape *b)
 }
 
 // Callback from the spatial hash.
-void
-cpSpaceCollideShapes(cpShape *a, cpShape *b, cpSpace *space)
+cpCollisionID
+cpSpaceCollideShapes(cpShape *a, cpShape *b, cpCollisionID id, cpSpace *space)
 {
 	// Reject any of the simple cases
-	if(queryReject(a,b)) return;
+	if(queryReject(a,b)) return id;
 	
 	cpCollisionHandler *handler = cpSpaceLookupHandler(space, a->collision_type, b->collision_type);
 	
 	cpBool sensor = a->sensor || b->sensor;
-	if(sensor && handler == &cpDefaultCollisionHandler) return;
+	if(sensor && handler == &cpDefaultCollisionHandler) return id;
 	
 	// Shape 'a' should have the lower shape type. (required by cpCollideShapes() )
-	if(a->klass->type > b->klass->type){
+	// TODO remove me: a < b comparison is for debugging collisions
+	if(a->klass->type > b->klass->type || (a->klass->type == b->klass->type && a < b)){
 		cpShape *temp = a;
 		a = b;
 		b = temp;
@@ -239,8 +240,8 @@ cpSpaceCollideShapes(cpShape *a, cpShape *b, cpSpace *space)
 	
 	// Narrow-phase collision detection.
 	cpContact *contacts = cpContactBufferGetArray(space);
-	int numContacts = cpCollideShapes(a, b, contacts);
-	if(!numContacts) return; // Shapes are not colliding.
+	int numContacts = cpCollideShapes(a, b, &id, contacts);
+	if(!numContacts) return id; // Shapes are not colliding.
 	cpSpacePushContacts(space, numContacts);
 	
 	// Get an arbiter from space->arbiterSet for the two shapes.
@@ -277,6 +278,7 @@ cpSpaceCollideShapes(cpShape *a, cpShape *b, cpSpace *space)
 	
 	// Time stamp the arbiter so we know it was used recently.
 	arb->stamp = space->stamp;
+	return id;
 }
 
 // Hashset filter func to throw away old arbiters.

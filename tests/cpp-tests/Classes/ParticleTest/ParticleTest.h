@@ -289,6 +289,7 @@ class PremultipliedAlphaTest : public ParticleDemo
 {
 public:
     virtual void onEnter() override;
+    void readdPaticle(float delta);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

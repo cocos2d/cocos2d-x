@@ -43,7 +43,7 @@ NS_CC_BEGIN
 LabelBMFont * LabelBMFont::create()
 {
     LabelBMFont * pRet = new LabelBMFont();
-    if (pRet && pRet->init())
+    if (pRet)
     {
         pRet->autorelease();
         return pRet;
@@ -72,8 +72,6 @@ bool LabelBMFont::initWithString(const std::string& str, const std::string& fntF
         _fntFile = fntFile;
         _label->setMaxLineWidth(width);
         _label->setAlignment(alignment);
-        _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-        _label->setPosition(Point::ZERO);
         _label->setString(str);
         this->setContentSize(_label->getContentSize());
         return true;
@@ -85,6 +83,7 @@ bool LabelBMFont::initWithString(const std::string& str, const std::string& fntF
 LabelBMFont::LabelBMFont()
 {
     _label = Label::create();
+    _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     this->addChild(_label);
     this->setAnchorPoint(Point::ANCHOR_MIDDLE);
     _cascadeOpacityEnabled = true;

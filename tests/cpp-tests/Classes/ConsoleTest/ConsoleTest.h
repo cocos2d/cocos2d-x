@@ -40,9 +40,9 @@ public:
     virtual std::string title() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
 };
 
 
@@ -59,7 +59,10 @@ protected:
     ConsoleCustomCommand();
     virtual ~ConsoleCustomCommand();
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     cocos2d::Console *_console;
+#endif
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleCustomCommand);
 };

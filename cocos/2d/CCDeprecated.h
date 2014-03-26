@@ -963,6 +963,8 @@ CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetBlackBerry   = Applic
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetNaCl         = Application::Platform::OS_NACL;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetEmscripten   = Application::Platform::OS_EMSCRIPTEN;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetTizen        = Application::Platform::OS_TIZEN;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetWinRT        = Application::Platform::OS_WINRT;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetWP8          = Application::Platform::OS_WP8;
 CC_DEPRECATED_ATTRIBUTE typedef Application::Platform TargetPlatform;
 
 CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionExactFit      = ResolutionPolicy::EXACT_FIT;

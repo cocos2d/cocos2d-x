@@ -45,7 +45,7 @@ void FileUtilsTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-// #pragma mark - FileUtilsDemo
+//  FileUtilsDemo
 
 void FileUtilsDemo::onEnter()
 {
@@ -92,7 +92,7 @@ std::string FileUtilsDemo::subtitle() const
     return "";
 }
 
-//#pragma mark - TestResolutionDirectories
+// TestResolutionDirectories
 
 void TestResolutionDirectories::onEnter()
 {
@@ -146,7 +146,7 @@ std::string TestResolutionDirectories::subtitle() const
     return "See the console";
 }
 
-//#pragma mark - TestSearchPath
+// TestSearchPath
 
 void TestSearchPath::onEnter()
 {
@@ -225,7 +225,7 @@ std::string TestSearchPath::subtitle() const
     return "See the console";
 }
 
-//#pragma mark - TestFilenameLookup
+// TestFilenameLookup
 
 void TestFilenameLookup::onEnter()
 {
@@ -263,7 +263,7 @@ std::string TestFilenameLookup::title() const
     return "FileUtils: filename lookup";
 }
 
-//#pragma mark - TestIsFileExist
+// TestIsFileExist
 
 void TestIsFileExist::onEnter()
 {
@@ -307,7 +307,7 @@ std::string TestIsFileExist::subtitle() const
     return "";
 }
 
-//#pragma mark - TestWritePlist
+// TestWritePlist
 
 void TextWritePlist::onEnter()
 {
@@ -334,8 +334,26 @@ void TextWritePlist::onEnter()
     
     auto dictInDict = Dictionary::create();
     dictInDict->setObject(String::create("string in dictInDict value"), "string in dictInDict key");
+   
+    //add boolean to the plist
+    auto booleanObject = Bool::create(true);
+    dictInDict->setObject(booleanObject, "bool");
     
-    root->setObject(dictInDict, "dictInDict");
+    //add interger to the plist
+    auto intObject = Integer::create(1024);
+    dictInDict->setObject(intObject, "integer");
+    
+    //add float to the plist
+    auto floatObject = Float::create(1024.1024f);
+    dictInDict->setObject(floatObject, "float");
+    
+    //add double to the plist
+    auto doubleObject = Double::create(1024.123);
+    dictInDict->setObject(doubleObject, "double");
+    
+    
+    
+    root->setObject(dictInDict, "dictInDict, Hello World");
     
     // end with /
     std::string writablePath = FileUtils::getInstance()->getWritablePath();
@@ -349,6 +367,18 @@ void TextWritePlist::onEnter()
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(Point(winSize.width/2, winSize.height/3));
+    
+    auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
+    auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
+    auto boolValue = (__String*)loadDictInDict->objectForKey("bool");
+    CCLOG("%s",boolValue->getCString());
+    auto floatValue = (__String*)loadDictInDict->objectForKey("float");
+    CCLOG("%s",floatValue->getCString());
+    auto intValue = (__String*)loadDictInDict->objectForKey("integer");
+    CCLOG("%s",intValue->getCString());
+    auto doubleValue = (__String*)loadDictInDict->objectForKey("double");
+    CCLOG("%s",doubleValue->getCString());
+
 }
 
 void TextWritePlist::onExit()
