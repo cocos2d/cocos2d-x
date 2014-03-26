@@ -388,7 +388,7 @@ unsigned char * makeDistanceMap( unsigned char *img, long width, long height)
     double * data    = (double *) calloc( pixelAmount, sizeof(double) );
     double * outside = (double *) calloc( pixelAmount, sizeof(double) );
     double * inside  = (double *) calloc( pixelAmount, sizeof(double) );
-    unsigned int i,j;
+    long i,j;
 
     // Convert img into double (data) rescale image levels between 0 and 1
     long outWidth = width + 2 * FontFreeType::DistanceMapSpread;

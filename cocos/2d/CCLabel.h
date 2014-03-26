@@ -217,6 +217,10 @@ public:
 
     virtual Sprite * getLetter(int lettetIndex);
 
+    /** clip upper and lower margin for reduce height of label.
+     */
+    void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
+    bool isClipMarginEnabled() const { return _clipEnabled; }
     // font related stuff
     int getCommonLineHeight() const;
     
@@ -369,6 +373,8 @@ protected:
 
     Color4B _textColor;
     Color4F _textColorF;
+
+    bool _clipEnabled;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

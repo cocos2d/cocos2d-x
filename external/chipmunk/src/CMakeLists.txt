@@ -16,7 +16,14 @@ if(BUILD_SHARED)
     set_target_properties(chipmunk PROPERTIES LINKER_LANGUAGE CXX)
   endif(MSVC)
   # set the lib's version number
-  set_target_properties(chipmunk PROPERTIES VERSION 6.1.5)
+  # But avoid on Android because symlinks to version numbered .so's don't work with Android's Java-side loadLibrary.
+  if(NOT ANDROID)
+	  set_target_properties(chipmunk PROPERTIES VERSION 6.2.1)
+  endif(NOT ANDROID)
+  if(ANDROID)
+	  # need to explicitly link to the math library because the CMake/Android toolchains may not do it automatically
+	  target_link_libraries(chipmunk m)
+  endif(ANDROID)
   install(TARGETS chipmunk RUNTIME DESTINATION lib LIBRARY DESTINATION lib)
 endif(BUILD_SHARED)
 

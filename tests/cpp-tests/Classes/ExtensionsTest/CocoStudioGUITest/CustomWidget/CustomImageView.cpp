@@ -48,7 +48,7 @@ void CustomImageView::initRenderer()
     ImageView::initRenderer();
     
     _label = LabelTTF::create();
-    CCNodeRGBA::addChild(_label, getZOrder() + 1, -1);
+    CCNodeRGBA::addChild(_label, getLocalZOrder() + 1, -1);
 }
 
 void CustomImageView::setText(const std::string &text)
