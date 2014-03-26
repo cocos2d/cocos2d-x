@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout,UIScrollInterface,
+-- @extend Layout,UIScrollInterface
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 

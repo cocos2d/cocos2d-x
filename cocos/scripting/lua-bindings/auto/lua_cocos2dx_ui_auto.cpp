@@ -257,7 +257,7 @@ static int lua_cocos2dx_ui_LayoutParameter_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_LayoutParameter(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.LayoutParameter");
-    tolua_cclass(tolua_S,"LayoutParameter","ccui.LayoutParameter","",nullptr);
+    tolua_cclass(tolua_S,"LayoutParameter","ccui.LayoutParameter","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"LayoutParameter");
         tolua_function(tolua_S,"clone",lua_cocos2dx_ui_LayoutParameter_clone);
@@ -14681,7 +14681,7 @@ static int lua_cocos2dx_ui_RichElement_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_RichElement(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElement");
-    tolua_cclass(tolua_S,"RichElement","ccui.RichElement","",nullptr);
+    tolua_cclass(tolua_S,"RichElement","ccui.RichElement","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"RichElement");
         tolua_function(tolua_S,"init",lua_cocos2dx_ui_RichElement_init);

@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module LayerColor
--- @extend Layer,BlendProtocol,
+-- @extend Layer,BlendProtocol
 
 --------------------------------
 -- @function [parent=#LayerColor] changeWidthAndHeight 

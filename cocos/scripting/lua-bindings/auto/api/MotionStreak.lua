@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module MotionStreak
--- @extend Node,TextureProtocol,
+-- @extend Node,TextureProtocol
 
 --------------------------------
 -- @function [parent=#MotionStreak] reset 
