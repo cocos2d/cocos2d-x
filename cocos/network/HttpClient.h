@@ -107,7 +107,6 @@ private:
      */
     bool lazyInitThreadSemphore();
     void networkThread();
-
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
 
