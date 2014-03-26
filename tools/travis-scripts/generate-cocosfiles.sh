@@ -6,6 +6,8 @@ PROJECT_ROOT="$DIR"/../..
 COMMITTAG="[AUTO][ci skip]: updating cocos2dx_files.json"
 PUSH_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 OUTPUT_FILE_PATH="${PROJECT_ROOT}/templates/cocos2dx_files.json"
+FETCH_REMOTE_BRANCH="develop"
+COMMIT_PATH="templates/cocos2dx_files.json"
 
 # Exit on error
 set -e
@@ -51,12 +53,14 @@ pushd "$PROJECT_ROOT"
 git status
 
 echo
-echo Comparing with HEAD ...
+echo Comparing with origin HEAD ...
 echo
+
+git fetch origin ${FETCH_REMOTE_BRANCH}
 
 # Don't exit on non-zero return value
 set +e
-git diff --stat --exit-code
+git diff FETCH_HEAD --stat --exit-code ${COMMIT_PATH}
 
 DIFF_RETVAL=$?
 if [ $DIFF_RETVAL -eq 0 ]

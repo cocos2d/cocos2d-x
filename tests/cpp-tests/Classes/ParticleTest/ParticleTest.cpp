@@ -1861,12 +1861,26 @@ std::string ReorderParticleSystems::subtitle() const
 
 std::string PremultipliedAlphaTest::title() const
 {
-    return "premultiplied alpha";
+    return "premultiplied alpha and readd child test";
 }
 
 std::string PremultipliedAlphaTest::subtitle() const
 {
-    return "no black halo, particles should fade out";
+    return "no black halo, particles should fade out\n animation should be normal";
+}
+
+void PremultipliedAlphaTest::readdPaticle(float delta)
+{
+    static int count = 0;
+    
+    if (count++ % 2 == 0)
+    {
+        _emitter->removeFromParent();
+    }
+    else
+    {
+        this->addChild(_emitter);
+    }
 }
 
 void PremultipliedAlphaTest::onEnter()
@@ -1890,12 +1904,14 @@ void PremultipliedAlphaTest::onEnter()
     // Toggle next line to see old behavior
     //	this->emitter.opacityModifyRGB = NO;
 
-    _emitter->setStartColor(Color4F(1, 1, 1, 1));
-    _emitter->setEndColor(Color4F(1, 1, 1, 0));
-    _emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-    _emitter->setEndColorVar(Color4F(0, 0, 0, 0));
+    _emitter->setStartColor(Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+    _emitter->setEndColor(Color4F(1.0f, 1.0f, 1.0f, 0.0f));
+    _emitter->setStartColorVar(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
+    _emitter->setEndColorVar(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
 
     this->addChild(_emitter, 10);
+    
+    schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0f);
 }
 
 // PremultipliedAlphaTest2

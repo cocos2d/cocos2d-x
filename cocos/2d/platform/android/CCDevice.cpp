@@ -32,8 +32,8 @@ THE SOFTWARE.
 #include <jni.h>
 #include "ccTypes.h"
 #include "jni/DPIJni.h"
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "jni/JniHelper.h"
-#include "nativeactivity.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN

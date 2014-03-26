@@ -72,7 +72,7 @@ bool nodeComparisonLess(Node* n1, Node* n2)
 }
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
-static int s_globalOrderOfArrival = 1;
+int Node::s_globalOrderOfArrival = 1;
 
 Node::Node(void)
 : _rotationX(0.0f)
