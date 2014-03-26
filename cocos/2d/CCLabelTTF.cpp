@@ -223,12 +223,12 @@ const FontDefinition& LabelTTF::getTextDefinition() const
 
 void LabelTTF::setBlendFunc(const BlendFunc &blendFunc)
 {
-    _renderLabel->setBlendFunc(blendFunc);
+//    _renderLabel->setBlendFunc(blendFunc);
 }
 
 const BlendFunc &LabelTTF::getBlendFunc() const
 {
-    return _renderLabel->getBlendFunc();
+//    return _renderLabel->getBlendFunc();
 }
 
 void LabelTTF::setFlippedX(bool flippedX)

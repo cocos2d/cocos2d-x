@@ -32,7 +32,7 @@ void LabelTTFLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const ch
 
 void LabelTTFLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
-        ((Label *)pNode)->setBlendFunc(pBlendFunc);
+//        ((Label *)pNode)->setBlendFunc(pBlendFunc);
     } else {
         NodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pBlendFunc, ccbReader);
     }
