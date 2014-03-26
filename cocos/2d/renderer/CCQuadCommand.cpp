@@ -61,7 +61,7 @@ void QuadCommand::generateMaterialID()
 {
     //Generate Material ID
     //TODO fix shader ID generation
-    CCASSERT(_shader->getMaterialProgramID() < GLProgram::_maxMaterialIDNumber, "ShaderID is greater than 2^10");
+    CCASSERT(_shader->getMaterialProgramID() < GLProgram::_maxMaterialIDNumber, "ShaderID is greater than Id limitation");
 
     //TODO fix blend id generation
     int blendID = 0;
