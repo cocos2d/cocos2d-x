@@ -87,6 +87,8 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         _atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
 
         this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
+        
+        this->setScale(_contentScaleFactor);
 
         _useAutomaticVertexZ = false;
         _vertexZvalue = 0;
