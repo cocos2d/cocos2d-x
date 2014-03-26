@@ -32,7 +32,6 @@ CCComRender::CCComRender(void)
 : m_pRender(NULL)
 {
 	m_strName = "CCComRender";
-    m_bRender = true;
 }
 
 CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
@@ -43,7 +42,6 @@ CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
         m_pRender->retain();    
     }
     m_strName.assign(comName);
-    m_bRender = true;
 }
 
 CCComRender::~CCComRender(void)

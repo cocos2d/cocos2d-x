@@ -62,14 +62,11 @@ public:
     
     void setOwner(CCNode *pOwner);
     CCNode* getOwner() const;
-
-    bool isRender() const;
     
 protected:
     CCNode *m_pOwner;
     std::string m_strName;
     bool m_bEnabled;
-    bool m_bRender;
 };
 
 NS_CC_END
