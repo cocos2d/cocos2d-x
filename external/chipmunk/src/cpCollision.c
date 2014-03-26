@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <alloca.h>
+#include <malloc.h> 
 
 #include "chipmunk_private.h"
 
