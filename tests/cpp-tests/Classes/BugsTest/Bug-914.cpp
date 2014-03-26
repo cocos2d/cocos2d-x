@@ -49,7 +49,7 @@ bool Bug914Layer::init()
         }
 
         // create and initialize a Label
-        auto label = LabelTTF::create("Hello World", "Marker Felt", 64);
+        auto label = Label::create("Hello World", "fonts/Marker Felt.ttf", 64.0f);
         auto item1 = MenuItemFont::create("restart", CC_CALLBACK_1(Bug914Layer::restart, this));
 
         auto menu = Menu::create(item1, NULL);

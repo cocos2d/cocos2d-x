@@ -43,7 +43,7 @@ public:
 
 	cocos2d::network::SIOClient *_sioClient, *_sioEndpoint;
 
-	cocos2d::LabelTTF *_sioClientStatus;
+	cocos2d::Label *_sioClientStatus;
 };
 
 void runSocketIOTest();

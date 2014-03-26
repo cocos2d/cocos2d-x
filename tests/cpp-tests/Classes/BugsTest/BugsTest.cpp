@@ -56,7 +56,7 @@ void BugsTestMainLayer::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
     _itmeMenu = Menu::create();
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxitems; ++i)
     {
@@ -114,7 +114,7 @@ void BugsTestBaseLayer::onEnter()
 {
     Layer::onEnter();
 
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));

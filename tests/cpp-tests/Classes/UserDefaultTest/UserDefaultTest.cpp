@@ -8,7 +8,7 @@
 UserDefaultTest::UserDefaultTest()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("CCUserDefault test see log", "Arial", 28);
+    auto label = Label::create("CCUserDefault test see log", "fonts/arial.ttf", 28);
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
