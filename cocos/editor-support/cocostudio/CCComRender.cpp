@@ -34,7 +34,6 @@ ComRender::ComRender(void)
 : _render(nullptr)
 {
     _name = "CCComRender";
-    _isRenderer = true;
 }
 
 
@@ -46,7 +45,6 @@ ComRender::ComRender(cocos2d::Node *node, const char *comName)
         _render->retain();
     }
     _name.assign(comName);
-    _isRenderer = true;
 }
 
 ComRender::~ComRender(void)

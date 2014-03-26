@@ -138,11 +138,8 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
 			{
 				if (com->serialize((void*)(&subDict)))
 				{
-				    if (com->isRenderer())
-				    {
-                        render = (ComRender*)com;
-				    }
-                    else
+                    render = dynamic_cast<ComRender*>(com);
+                    if (render == nullptr)
                     {
                         vecComs.push_back(com);
                     }
