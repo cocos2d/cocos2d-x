@@ -710,6 +710,15 @@ void Button::copySpecialProperties(Widget *widget)
     }
 }
 
+void Button::setEnabled(bool enabled)
+{
+	Widget::setEnabled(enabled);
+	if (enabled)
+		onPressStateChangedToNormal();
+	else
+		onPressStateChangedToDisabled();
+}
+
 }
 
 NS_CC_END

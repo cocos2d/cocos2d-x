@@ -110,7 +110,7 @@ void Widget::onExit()
 
 void Widget::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
-    if (_enabled)
+    //if (_enabled)
     {
         ProtectedNode::visit(renderer, parentTransform, parentTransformUpdated);
     }
@@ -515,6 +515,15 @@ void Widget::didNotSelectSelf()
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
+	int upLevel = 0;
+	auto widget = this;
+	while (widget != nullptr and upLevel < 5) {
+		if (!(widget->isEnabled() && widget->isVisible()))
+			return false;
+		widget = widget->getWidgetParent();
+		upLevel++;
+	}
+
     _hitted = false;
     if (isEnabled() && isTouchEnabled())
     {
