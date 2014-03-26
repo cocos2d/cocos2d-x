@@ -43,7 +43,7 @@ static unsigned int _Hash(const char *key)
     return (hash);
 }
 
-size_t hash_code(const std::type_info& info)
+unsigned int hash_code(const std::type_info& info)
 {
     // hash name() to size_t value by pseudorandomizing transform
     return _Hash(info.name());

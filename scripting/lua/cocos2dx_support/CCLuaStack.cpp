@@ -37,8 +37,8 @@ extern "C" {
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/ios/CCLuaObjcBridge.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCLuaJavaBridge.h"
+//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//#include "platform/android/CCLuaJavaBridge.h"
 #endif
 
 #include "Cocos2dxLuaLoader.h"
@@ -100,7 +100,7 @@ bool CCLuaStack::init(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     CCLuaObjcBridge::luaopen_luaoc(m_state);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    CCLuaJavaBridge::luaopen_luaj(m_state);
+//    CCLuaJavaBridge::luaopen_luaj(m_state);
 #endif
 
     // register lua print
@@ -614,7 +614,7 @@ NS_CC_END
 
 USING_NS_CC;
 
-static map<size_t,char*> hash_type_mapping;
+static map<unsigned int, char*> hash_type_mapping;
 TOLUA_API void toluafix_add_type_mapping(size_t type,const char *clsName)
 {
 
@@ -637,7 +637,7 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State *L,
     }
 
     CCObject *ptr = static_cast<CCObject*>(vptr);
-    size_t hash= hash_code(typeid(*ptr));
+    unsigned int hash = hash_code(typeid(*ptr));
     char* type = hash_type_mapping[hash];
     if (type == NULL)
     {
