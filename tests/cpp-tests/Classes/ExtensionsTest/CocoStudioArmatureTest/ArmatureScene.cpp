@@ -1040,7 +1040,7 @@ void TestColliderDetector::update(float delta)
 
             float minx = 0, miny = 0, maxx = 0, maxy = 0;
             size_t length = vertexList.size();
-            for (int i = 0; i<length; i++)
+            for (size_t i = 0; i<length; i++)
             {
                 Point vertex = vertexList.at(i);
                 if (i == 0)

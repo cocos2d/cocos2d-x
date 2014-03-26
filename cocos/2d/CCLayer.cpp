@@ -629,7 +629,20 @@ std::string LayerColor::getDescription() const
 }
 //
 // LayerGradient
-// 
+//
+LayerGradient::LayerGradient()
+: _startColor(Color4B(0, 0, 0, 255))
+, _endColor(Color4B(0, 0, 0, 255))
+, _startOpacity(255)
+, _endOpacity(255)
+, _alongVector(Point(0, -1))
+, _compressedInterpolation(true)
+{
+    
+}
+LayerGradient::~LayerGradient() {
+    
+}
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
     LayerGradient * layer = new LayerGradient();
@@ -684,9 +697,9 @@ bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, cons
     _endColor.g  = end.g;
     _endColor.b  = end.b;
 
-    _endOpacity   = end.a;
-    _startOpacity    = start.a;
-    _alongVector   = v;
+    _endOpacity     = end.a;
+    _startOpacity   = start.a;
+    _alongVector    = v;
 
     _compressedInterpolation = true;
 
@@ -852,7 +865,7 @@ LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
 
 LayerMultiplex * LayerMultiplex::createWithLayer(Layer* layer)
 {
-    return LayerMultiplex::create(layer, nullptr);
+    return LayerMultiplex::create(layer, NULL);
 }
 
 LayerMultiplex* LayerMultiplex::create()

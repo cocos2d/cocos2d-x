@@ -64,8 +64,8 @@ bool ControlSwitchTest::init()
                 Sprite::create("extensions/switch-on.png"),
                 Sprite::create("extensions/switch-off.png"),
                 Sprite::create("extensions/switch-thumb.png"),
-                LabelTTF::create("On", "Arial-BoldMT", 16),
-                LabelTTF::create("Off", "Arial-BoldMT", 16)
+                Label::create("On", "Arial-BoldMT", 16),
+                Label::create("Off", "Arial-BoldMT", 16)
             );
         switchControl->setPosition(Point(layer_width + 10 + switchControl->getContentSize().width / 2, 0));
         layer->addChild(switchControl);

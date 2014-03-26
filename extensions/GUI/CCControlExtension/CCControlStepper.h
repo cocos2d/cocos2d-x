@@ -29,7 +29,7 @@
 #define __CCCONTROLSTEPPER_H__
 
 #include "CCControl.h"
-#include "CCLabelTTF.h"
+#include "CCLabel.h"
 
 NS_CC_EXT_BEGIN
 
@@ -111,8 +111,8 @@ protected:
     // Weak links to children
 	CC_SYNTHESIZE_RETAIN(Sprite*, _minusSprite, MinusSprite)
     CC_SYNTHESIZE_RETAIN(Sprite*, _plusSprite, PlusSprite)
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _minusLabel, MinusLabel)
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _plusLabel, PlusLabel)
+    CC_SYNTHESIZE_RETAIN(Label*, _minusLabel, MinusLabel)
+    CC_SYNTHESIZE_RETAIN(Label*, _plusLabel, PlusLabel)
 };
 
 // end of GUI group

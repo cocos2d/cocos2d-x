@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module BaseData
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#BaseData] getColor 

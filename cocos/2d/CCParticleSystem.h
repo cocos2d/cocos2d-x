@@ -125,6 +125,13 @@ emitter.startSpin = 0;
 @endcode
 
 */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef RELATIVE
+#undef RELATIVE
+#endif
+#endif
+
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
@@ -184,6 +191,7 @@ public:
     //! whether or not the system is full
     bool isFull();
 
+    virtual void onEnter();
     //! should be overridden by subclasses
     virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
     //! should be overridden by subclasses

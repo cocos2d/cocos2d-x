@@ -217,7 +217,7 @@ void bindVAO(GLuint vaoId)
     }
 }
 
-//#pragma mark - GL Vertex Attrib functions
+// GL Vertex Attrib functions
 
 void enableVertexAttribs( unsigned int flags )
 {
@@ -260,7 +260,7 @@ void enableVertexAttribs( unsigned int flags )
     }
 }
 
-//#pragma mark - GL Uniforms functions
+// GL Uniforms functions
 
 void setProjectionMatrixDirty( void )
 {

@@ -21,7 +21,7 @@ public:
     void createResetButton();
     void reset(Ref* sender);
 
-    void addNewSpriteAtPosition(Point p);
+    void addNewSpriteAtPosition(cocos2d::Point p);
     void update(float dt);
     void toggleDebugCallback(Ref* sender);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);

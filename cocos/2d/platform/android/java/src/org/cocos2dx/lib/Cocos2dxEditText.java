@@ -24,17 +24,10 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
-import android.app.Activity;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 public class Cocos2dxEditText extends EditText {
 	// ===========================================================
@@ -44,10 +37,8 @@ public class Cocos2dxEditText extends EditText {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	
-	private Cocos2dxTextInputWraper mTextWatcher = null;
-	private Context mContext = null;
-	private static Cocos2dxEditText instance = null;
+
+	private Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
 
 	// ===========================================================
 	// Constructors
@@ -55,61 +46,35 @@ public class Cocos2dxEditText extends EditText {
 
 	public Cocos2dxEditText(final Context context) {
 		super(context);
-		
-		this.mContext = context;
-		this.mTextWatcher = new Cocos2dxTextInputWraper(context, this);
-		this.setOnEditorActionListener(this.mTextWatcher);
-		
-		ViewGroup.LayoutParams layout =
-	            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-	                                       ViewGroup.LayoutParams.WRAP_CONTENT);
-		
-		Activity activity = (Activity)context;
-		activity.addContentView(this, layout);
+	}
+
+	public Cocos2dxEditText(final Context context, final AttributeSet attrs) {
+		super(context, attrs);
+	}
+
+	public Cocos2dxEditText(final Context context, final AttributeSet attrs, final int defStyle) {
+		super(context, attrs, defStyle);
 	}
 
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
 
+	public void setCocos2dxGLSurfaceView(final Cocos2dxGLSurfaceView pCocos2dxGLSurfaceView) {
+		this.mCocos2dxGLSurfaceView = pCocos2dxGLSurfaceView;
+	}
 
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-	
-	public static Cocos2dxEditText getInstance(final Context context) {
-		if (instance == null) {
-			instance = new Cocos2dxEditText(context);
-		}
-		return instance;
-	}
-	
-	public void closeIMEKeyboard() {
-		this.removeTextChangedListener(mTextWatcher);
-		final InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
-		//Cocos2dxHelper.nativeRequestFocus();
-	}
-	
-	public void openIMEKeyboard() {
-		this.requestFocus();
-		final String content = nativeGetContent();
-		this.setText(content);
-			
-		mTextWatcher.setOriginText(content);
-		this.addTextChangedListener(mTextWatcher);
-		
-		final InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(this, InputMethodManager.SHOW_FORCED);
-	}
 
 	@Override
-	public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
-		super.onKeyDown(keyCode, keyEvent);
+	public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
+		super.onKeyDown(pKeyCode, pKeyEvent);
 
 		/* Let GlSurfaceView get focus if back key is input. */
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			//Cocos2dxHelper.nativeRequestFocus();
+		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
+			this.mCocos2dxGLSurfaceView.requestFocus();
 		}
 
 		return true;
@@ -118,132 +83,7 @@ public class Cocos2dxEditText extends EditText {
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	
-	private native static String nativeGetContent();
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
-}
-
-class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListener {
-	// ===========================================================
-	// Constants
-	// ===========================================================
-
-	private static final String TAG = Cocos2dxTextInputWraper.class.getSimpleName();
-
-	// ===========================================================
-	// Fields
-	// ===========================================================
-
-	private String mText;
-	private String mOriginText;
-	private Context mContext;
-	private TextView mTextView;
-
-	// ===========================================================
-	// Constructors
-	// ===========================================================
-
-	public Cocos2dxTextInputWraper(Context context, TextView textView) {
-		this.mContext = context;
-		this.mTextView = textView;
-	}
-
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
-
-	private boolean isFullScreenEdit() {
-		final InputMethodManager imm = (InputMethodManager) this.mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-		return imm.isFullscreenMode();
-	}
-
-	public void setOriginText(final String originText) {
-		this.mOriginText = originText;
-	}
-
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
-
-	@Override
-	public void afterTextChanged(final Editable s) {
-		if (this.isFullScreenEdit()) {
-			return;
-		}
-
-		int nModified = s.length() - this.mText.length();
-		if (nModified > 0) {
-			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-			nativeInsertText(insertText);
-		} else {
-			for (; nModified < 0; ++nModified) {
-				nativeDeleteBackward();
-			}
-		}
-		this.mText = s.toString();
-	}
-
-	@Override
-	public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
-		this.mText = pCharSequence.toString();
-	}
-
-	@Override
-	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-	}
-
-	@Override
-	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if (this.mTextView  == pTextView && this.isFullScreenEdit()) {
-			// user press the action button, delete all old text and insert new text
-			for (int i = this.mOriginText.length(); i > 0; i--) {
-				Cocos2dxHelper.runOnGLThread(new Runnable() {
-
-					@Override
-					public void run() {
-						nativeDeleteBackward();
-					}
-					
-				});
-				
-			}
-			String text = pTextView.getText().toString();
-
-			/* If user input nothing, translate "\n" to engine. */
-			if (text.compareTo("") == 0) {
-				text = "\n";
-			}
-
-			if ('\n' != text.charAt(text.length() - 1)) {
-				text += '\n';
-			}
-
-			final String insertText = text;
-			Cocos2dxHelper.runOnGLThread(new Runnable() {
-
-				@Override
-				public void run() {
-					nativeInsertText(insertText);
-				}
-				
-			});
-		}
-		
-		if (pActionID == EditorInfo.IME_ACTION_DONE) {
-			//Cocos2dxHelper.nativeRequestFocus();
-		}
-		return false;
-	}
-
-	// ===========================================================
-	// Methods
-	// ===========================================================
-	
-	private native static void nativeInsertText(String text);
-	private native static void nativeDeleteBackward();
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================

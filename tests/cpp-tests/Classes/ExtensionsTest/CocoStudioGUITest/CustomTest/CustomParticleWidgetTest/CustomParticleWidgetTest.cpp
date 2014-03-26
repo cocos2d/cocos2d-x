@@ -18,9 +18,9 @@ USING_NS_CC_EXT;
 using namespace ui;
 using namespace cocostudio;
 
-#pragma mark -
-#pragma mark CustomParticleWidgetLayer
-#pragma mark -
+
+// CustomParticleWidgetLayer
+
 
 void CustomParticleWidgetLayer::onEnter()
 {
@@ -38,9 +38,9 @@ void CustomParticleWidgetLayer::onEnter()
     addChild(custom, 10, -1);
 }
 
-#pragma mark -
-#pragma mark CustomImageScene
-#pragma mark -
+
+// CustomImageScene
+
 
 void CustomParticleWidgetScene::onEnter()
 {
