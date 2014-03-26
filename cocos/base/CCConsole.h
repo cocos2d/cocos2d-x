@@ -139,7 +139,7 @@ protected:
     std::mutex _DebugStringsMutex;
     std::vector<std::string> _DebugStrings;
 
-    int _touchId;
+    intptr_t _touchId;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };

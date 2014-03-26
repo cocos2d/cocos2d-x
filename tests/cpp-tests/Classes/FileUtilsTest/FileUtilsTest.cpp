@@ -368,15 +368,15 @@ void TextWritePlist::onEnter()
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(Point(winSize.width/2, winSize.height/3));
     
-    auto loadDict = Dictionary::createWithContentsOfFile(fullPath.c_str());
-    auto loadDictInDict = (Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
-    auto boolValue = (String*)loadDictInDict->objectForKey("bool");
+    auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
+    auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
+    auto boolValue = (__String*)loadDictInDict->objectForKey("bool");
     CCLOG("%s",boolValue->getCString());
-    auto floatValue = (String*)loadDictInDict->objectForKey("float");
+    auto floatValue = (__String*)loadDictInDict->objectForKey("float");
     CCLOG("%s",floatValue->getCString());
-    auto intValue = (String*)loadDictInDict->objectForKey("integer");
+    auto intValue = (__String*)loadDictInDict->objectForKey("integer");
     CCLOG("%s",intValue->getCString());
-    auto doubleValue = (String*)loadDictInDict->objectForKey("double");
+    auto doubleValue = (__String*)loadDictInDict->objectForKey("double");
     CCLOG("%s",doubleValue->getCString());
 
 }
