@@ -61,11 +61,17 @@ public:
     static ParticleSystemQuad * create();
     /** creates a Particle Emitter with a number of particles */
     static ParticleSystemQuad * createWithTotalParticles(int numberOfParticles);
-    /** creates an initializes a ParticleSystemQuad from a plist file.
+    /** creates and initializes a ParticleSystemQuad from a plist file.
      This plist files can be created manually or with Particle Designer:
      */
     static ParticleSystemQuad * create(const std::string& filename);
-
+    /** creates and initializes a ParticleSystemQuad from a ValueMap.
+     */
+    static ParticleSystemQuad * create(ValueMap& map);
+    /** creates and initializes a ParticleSystemQuad from a ValueMap and a SpriteFrame set as a particle.
+     */
+    static ParticleSystemQuad * create(ValueMap& map, SpriteFrame *frame);
+    
     /** Sets a new SpriteFrame as particle.
     WARNING: this method is experimental. Use setTextureWithRect instead.
     @since v0.99.4
@@ -137,6 +143,9 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
+    /** initializes a ParticleSystemQuad from a ValueMap and a SpriteFrame set as a particle */
+    bool initWithDictionaryAndFrame(ValueMap &dictionary, SpriteFrame* frame);
+    
 protected:
     /** initializes the indices for the vertices*/
     void initIndices();
@@ -146,7 +155,7 @@ protected:
     
     /** Updates texture coords */
     void updateTexCoords();
-
+    
     void setupVBOandVAO();
     void setupVBO();
     bool allocMemory();
