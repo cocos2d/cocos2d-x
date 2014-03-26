@@ -21,6 +21,7 @@ bool ProjectileController::init()
 
 void ProjectileController::onEnter()
 {
+    ComController::onEnter();
     auto winSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
     _owner->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
