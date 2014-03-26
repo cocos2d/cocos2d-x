@@ -25,7 +25,11 @@ UILoadingBar.cpp \
 UISlider.cpp \
 UITextField.cpp \
 UIRichText.cpp \
-CCProtectedNode.cpp
+CCProtectedNode.cpp \
+UIHBox.cpp \
+UIVBox.cpp \
+UIRelativeBox.cpp
+
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \

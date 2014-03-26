@@ -216,7 +216,7 @@ protected:
     std::string _relativeWidgetName;
     std::string _relativeLayoutName;
     bool _put;
-    friend class Layout;
+    friend class RelativeLayoutExecutant;
 };
 
 }
