@@ -111,9 +111,7 @@ void LayerTest::backCallback(Ref* sender)
     s->release();
 } 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - Cascading support extensions
-#endif
+// Cascading support extensions
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
@@ -277,7 +275,7 @@ std::string LayerTestCascadingOpacityC::subtitle() const
 }
 
 
-//#pragma mark Example LayerTestCascadingColor
+//// Example LayerTestCascadingColor
 
 // LayerTestCascadingColorA
 void LayerTestCascadingColorA::onEnter()
