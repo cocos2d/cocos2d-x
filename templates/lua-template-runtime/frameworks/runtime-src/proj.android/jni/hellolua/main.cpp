@@ -10,7 +10,7 @@
 
 using namespace cocos2d;
 
-void cocos_android_app_init (struct android_app* app) {
+void cocos_android_app_init (JNIEnv* env, jobject thiz) {
     LOGD("cocos_android_app_init");
     AppDelegate *pAppDelegate = new AppDelegate();
 }

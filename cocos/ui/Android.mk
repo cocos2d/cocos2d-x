@@ -24,7 +24,8 @@ UITextBMFont.cpp \
 UILoadingBar.cpp \
 UISlider.cpp \
 UITextField.cpp \
-UIRichText.cpp
+UIRichText.cpp \
+CCProtectedNode.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \

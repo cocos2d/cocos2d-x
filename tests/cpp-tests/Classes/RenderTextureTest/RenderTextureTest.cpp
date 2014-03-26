@@ -372,9 +372,9 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     label3->setPosition(Point(size.width / 2, size.height * 0.75f));
     this->addChild(label3);
 
-    label->setVertexZ(50);
-    label2->setVertexZ(0);
-    label3->setVertexZ(-50);
+    label->setPositionZ(50);
+    label2->setPositionZ(0);
+    label3->setPositionZ(-50);
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/bugs/circle.plist");
     mgr = SpriteBatchNode::create("Images/bugs/circle.png", 9);
@@ -399,15 +399,15 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     mgr->addChild(sp8, 2);
     mgr->addChild(sp9, 1);
 
-    sp1->setVertexZ(400);
-    sp2->setVertexZ(300);
-    sp3->setVertexZ(200);
-    sp4->setVertexZ(100);
-    sp5->setVertexZ(0);
-    sp6->setVertexZ(-100);
-    sp7->setVertexZ(-200);
-    sp8->setVertexZ(-300);
-    sp9->setVertexZ(-400);
+    sp1->setPositionZ(400);
+    sp2->setPositionZ(300);
+    sp3->setPositionZ(200);
+    sp4->setPositionZ(100);
+    sp5->setPositionZ(0);
+    sp6->setPositionZ(-100);
+    sp7->setPositionZ(-200);
+    sp8->setPositionZ(-300);
+    sp9->setPositionZ(-400);
 
     sp9->setScale(2);
     sp9->setColor(Color3B::YELLOW);

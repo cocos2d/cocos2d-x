@@ -50,7 +50,7 @@ struct cpCollisionHandler {
 
 typedef struct cpContact cpContact;
 
-#define CP_MAX_CONTACTS_PER_ARBITER 4
+#define CP_MAX_CONTACTS_PER_ARBITER 2
 
 /// @private
 typedef enum cpArbiterState {
