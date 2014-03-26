@@ -108,13 +108,14 @@ public:
      @brief Execute a scripted global function.
      @brief The function should not take any parameters and should return an integer.
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
+     @param numArgs
      @return The integer value returned from the script function.
      */
-    virtual int executeGlobalFunction(const char* functionName);
+    virtual int executeGlobalFunction(const char* functionName, int numArgs = 0);
 
     virtual int executeNodeEvent(CCNode* pNode, int nAction);
     virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
-    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
+    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName, CCObject *obj = NULL);
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
     virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);

@@ -111,7 +111,10 @@ TOLUA_API void tolua_pushnumber (lua_State* L, lua_Number value);
 TOLUA_API void tolua_pushstring (lua_State* L, const char* value);
 TOLUA_API void tolua_pushuserdata (lua_State* L, void* value);
 TOLUA_API void tolua_pushusertype (lua_State* L, void* value, const char* type);
+TOLUA_API void tolua_pushusertype_and_addtoroot (lua_State* L, void* value, const char* type);
 TOLUA_API void tolua_pushusertype_and_takeownership(lua_State* L, void* value, const char* type);
+TOLUA_API void tolua_add_value_to_root (lua_State* L, void* value);
+TOLUA_API void tolua_remove_value_from_root (lua_State* L, void* value);
 TOLUA_API void tolua_pushfieldvalue (lua_State* L, int lo, int index, int v);
 TOLUA_API void tolua_pushfieldboolean (lua_State* L, int lo, int index, int v);
 TOLUA_API void tolua_pushfieldnumber (lua_State* L, int lo, int index, lua_Number v);
@@ -120,10 +123,6 @@ TOLUA_API void tolua_pushfielduserdata (lua_State* L, int lo, int index, void* v
 TOLUA_API void tolua_pushfieldusertype (lua_State* L, int lo, int index, void* v, const char* type);
 TOLUA_API void tolua_pushfieldusertype_and_takeownership (lua_State* L, int lo, int index, void* v, const char* type);
     
-TOLUA_API void tolua_pushusertype_and_addtoroot (lua_State* L, void* value, const char* type);
-TOLUA_API void tolua_add_value_to_root (lua_State* L, void* value);
-TOLUA_API void tolua_remove_value_from_root (lua_State* L, void* value);
-
 TOLUA_API lua_Number tolua_tonumber (lua_State* L, int narg, lua_Number def);
 TOLUA_API const char* tolua_tostring (lua_State* L, int narg, const char* def);
 TOLUA_API void* tolua_touserdata (lua_State* L, int narg, void* def);
