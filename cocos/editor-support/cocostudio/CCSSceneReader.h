@@ -38,20 +38,20 @@ public:
     enum class AttachComponentType
     {
         ///parent: Empty Node
-        ///            ComRender(Spirte, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
         ///            ComAttribute
         ///            ComAudio
         ///            ....
-        _EMPTYNODE,
+        EMPTY_NODE,
         
-        ///parent:   ComRender(Spirte, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        ///parent:   ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
         ///          ComAttribute
         ///          ComAudio
         ///          .....
-        _RENDERNODE,
+        RENDER_NODE,
         
         /// Default AttachComponentType is _EmptyNode
-        DEFAULT = _EMPTYNODE,
+        DEFAULT = EMPTY_NODE,
     };
 
     static SceneReader* getInstance();
@@ -61,7 +61,7 @@ public:
      */
     static void destroyInstance();
     static const char* sceneReaderVersion();
-    cocos2d::Node* createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent = AttachComponentType::_EMPTYNODE);
+    cocos2d::Node* createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent = AttachComponentType::EMPTY_NODE);
     void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
     cocos2d::Node* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}

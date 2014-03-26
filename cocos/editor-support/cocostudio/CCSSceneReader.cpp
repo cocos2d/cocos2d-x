@@ -37,7 +37,7 @@ SceneReader* SceneReader::s_sharedReader = nullptr;
 SceneReader::SceneReader()
 : _fnSelector(nullptr)
 , _node(nullptr)
-, _attachComponent(AttachComponentType::_EMPTYNODE)
+, _attachComponent(AttachComponentType::EMPTY_NODE)
 {
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComAttribute));
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComRender));
@@ -54,7 +54,7 @@ const char* SceneReader::sceneReaderVersion()
     return "1.0.0.0";
 }
 
-cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent /*= AttachComponentType::_EmptyNode*/)
+cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent /*= AttachComponentType::EMPTY_NODE*/)
 {
     rapidjson::Document jsonDict;
     do {
@@ -138,10 +138,14 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             {
                 if (com->serialize((void*)(&subDict)))
                 {
-                    render = dynamic_cast<ComRender*>(com);
-                    if (render == nullptr)
+                    ComRender *tRender = dynamic_cast<ComRender*>(com);
+                    if (tRender == nullptr)
                     {
                         vecComs.push_back(com);
+                    }
+                    else
+                    {
+                        render = tRender;
                     }
                 }
             }
@@ -153,7 +157,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
 
         if (parent != nullptr)
         {
-            if (render == nullptr || attachComponent == AttachComponentType::_EMPTYNODE)
+            if (render == nullptr || attachComponent == AttachComponentType::EMPTY_NODE)
             {
                 gb = Node::create();
                 if (render != nullptr)
