@@ -31,7 +31,6 @@ NS_CC_BEGIN
 Component::Component(void)
 : _owner(nullptr)
 , _enabled(true)
-, _isRenderer(false)
 {
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
@@ -151,11 +150,6 @@ bool Component::isEnabled() const
 void Component::setEnabled(bool b)
 {
     _enabled = b;
-}
-
-bool Component::isRenderer() const
-{
-     return _isRenderer;
 }
 
 NS_CC_END

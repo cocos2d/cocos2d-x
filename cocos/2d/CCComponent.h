@@ -67,14 +67,11 @@ public:
     
     void setOwner(Node *pOwner);
     Node* getOwner() const;
-    
-    bool isRenderer() const;
 
 protected:
     Node *_owner;
     std::string _name;
     bool _enabled;
-    bool _isRenderer;
     
 #if CC_ENABLE_SCRIPT_BINDING
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
