@@ -31,14 +31,14 @@ namespace ui {
 
 TouchGroup::TouchGroup():
 m_pRootWidget(NULL)
+,m_pSelectedWidgets(NULL)
 {
 }
 
 TouchGroup::~TouchGroup()
 {
-    m_pSelectedWidgets->removeAllObjects();
-    m_pSelectedWidgets->release();
-    m_pRootWidget->release();
+    CC_SAFE_RELEASE(m_pSelectedWidgets);
+    CC_SAFE_RELEASE(m_pRootWidget);
 }
 
 bool TouchGroup::init()
