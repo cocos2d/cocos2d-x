@@ -769,6 +769,15 @@ void Label::addChild(Node * child, int zOrder/* =0 */, int tag/* =0 */)
     CCASSERT(0, "addChild: is not supported on Label.");
 }
 
+void Label::sortAllChildren()
+{
+    // fix crash when sort children while label type is STRING_TEXTURE
+    // because of the only one child sprite is not add with batch mode
+    if (_currentLabelType != LabelType::STRING_TEXTURE) {
+        SpriteBatchNode::sortAllChildren();
+    }
+}
+
 void Label::setLabelEffect(LabelEffect effect,const Color3B& effectColor)
 {
     switch (effect)
