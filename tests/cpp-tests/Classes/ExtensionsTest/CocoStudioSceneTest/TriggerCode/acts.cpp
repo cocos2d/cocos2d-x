@@ -199,7 +199,7 @@ void TMoveBy::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "IsReverse")
 		{
-			_reverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = DICTOOL->getIntValue_json(subDict, "value") ? true : false;
 			continue;
 		}
 	}
@@ -337,7 +337,7 @@ void TRotateBy::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "IsReverse")
 		{
-			_reverse = (int)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = (DICTOOL->getIntValue_json(subDict, "value")) ? true : false;
 			continue;
 		}
 	}
@@ -483,7 +483,7 @@ void TScaleBy::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "IsReverse")
 		{
-			_reverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = (DICTOOL->getIntValue_json(subDict, "value")) ? true : false;
 			continue;
 		}
 	}
@@ -629,7 +629,7 @@ void TSkewBy::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "IsReverse")
 		{
-			_reverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = DICTOOL->getIntValue_json(subDict, "value") ? true : false;
 		}
 	}
 }

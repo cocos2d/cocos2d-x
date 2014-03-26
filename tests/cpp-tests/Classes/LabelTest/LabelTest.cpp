@@ -1547,7 +1547,11 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef._fontFillColor   = tintColorBlue;
     
     // shadow + stroke label
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke && Shadow Blue Text", strokeShaodwTextDef);
+#else
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke &Shadow Blue Text", strokeShaodwTextDef);
+#endif 
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);

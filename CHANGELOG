@@ -1,29 +1,33 @@
-cocos2d-x-3.0? ?? 2014
-     [NEW]         Application: Adds getCurrentLanguageCode() which returns iso 639-1 language code
-     [NEW]         cocos2d::extension::ScrollView: Elastic bounce back effect support
-     [NEW]         Constructor: Added CC_CONSTRUCTOR_ACCESS macro to re-define constructor/initXXX methods to 'public' access.
+cocos2d-x-3.0rc1 ?? 2014
+     [NEW]          Application: Adds getCurrentLanguageCode() which returns iso 639-1 language code
+     [NEW]          cocos2d::extension::ScrollView: Elastic bounce back effect support
+     [NEW]          Constructor: Added CC_CONSTRUCTOR_ACCESS macro to re-define constructor/initXXX methods to 'public' access.
+     [FIX]          Android: Reloaded texture is not shown if it has the mipmap
+     [FIX]          Android: Application may become black at first time entering on some devices
+     [FIX]          CCBReader: Wrong logic in CCBAnimationManager::moveAnimationsFromNode
+     [FIX]          CocoStudio: ActionObject memory leak in ActionManagerEx::initWithDictionary
+     [FIX]          Console: initialize some variables that are not initilized in destructor
+     [FIX]          Console: refactor 'upload' command, encode file with base64, detach 'upload' from main loop
+     [FIX]          FileUtils: addSearchResolutionsOrder doesn't check whether there is a 'slash' at the end of path
+     [FIX]          GLView: Can't receive touchEnded event when mouse up outside of window on desktop platforms
+     [FIX]          Image: Some functions and variables in Image class is private, it should be protected
+     [FIX]          Label: Display incorrect of multi-line label if invoking 'getLetter'
+     [FIX]          Label: Label's color is incorrect if it's created by font name
+     [FIX]          Label: Default Anchor point isn't in middle and shadow offset doesn't consider contentScaleFactor
+     [FIX]          LuaBinding: Adds `addCustomHandler` in the ScriptHandlerMgr
+     [FIX]          LuaBinding: Upgrading LuaSocket to the latest version
+     [FIX]          Menu: Added missed scaleZ feature in ScaleTo and ScaleBy.
+     [FIX]          Network: Implements 'SIODelegate::fireEventToScript' method to integrate JSB event handling with the original native code.
+     [FIX]          Network: WebsocketTest crashes on win32, mutex varible may be deleted while it's still locked
+     [FIX]          ParticleSystem: Particle will stop animating if it was removed and re-added to another node
+     [FIX]          Physics: PhysicsBody::setGravityEnable doesn't work correctly sometimes
+     [FIX]          Physics: PhysicsBody moves randomly when switch foreground/background
+     [FIX]          Physics: Refactors PhysicsDebugDraw
+     [FIX]          Tests: Memory leak in CocosDenshionTest
+     [FIX]          Tools: The apk generated with release mode in cocos-console can't be installed
+     [FIX]          UI: Widget::addNode is confused, need to add ProtectedNode to remove addNode API.
+     [3RD]          Chipmunk: Upgraded to v6.2.1
 
-     [FIX]         CCBReader: Wrong logic in CCBAnimationManager::moveAnimationsFromNode
-     [FIX]         CocoStudio: ActionObject memory leak in ActionManagerEx::initWithDictionary
-     [FIX]         Console: initialize some variables that are not initilized in destructor
-     [FIX]         Console: refactor 'upload' command, encode file with base64, detach 'upload' from main loop
-     [FIX]         FileUtils: addSearchResolutionsOrder doesn't check whether there is a 'slash' at the end of path
-     [FIX]         GLView: Can't receive touchEnded event when mouse up outside of window on desktop platforms
-     [FIX]         Image: Some functions and variables in Image class is private, it should be protected
-     [FIX]         Label: Display incorrect of multi-line label if invoking 'getLetter'
-     [FIX]         Label: Label's color is incorrect if it's created by font name
-     [FIX]         Label: Default Anchor point isn't in middle and shadow offset doesn't consider contentScaleFactor
-     [FIX]         LuaBinding: Adds `addCustomHandler` in the ScriptHandlerMgr
-     [FIX]         LuaBinding: Upgrading LuaSocket to the latest version
-     [FIX]         Menu: Added missed scaleZ feature in ScaleTo and ScaleBy.
-     [FIX]         Network: Implements 'SIODelegate::fireEventToScript' method to integrate JSB event handling with the original native code.
-     [FIX]         ParticleSystem: Particle will stop animating if it was removed and re-added to another node
-     [FIX]         Physics: PhysicsBody::setGravityEnable doesn't work correctly sometimes
-     [FIX]         Physics: PhysicsBody moves randomly when switch foreground/background
-     [FIX]         Physics: Refactors PhysicsDebugDraw
-     [FIX]         UI: Widget::addNode is confused, need to add ProtectedNode to remove addNode API.
-     
-     [FIX]         CppTests: Memory leak in CocosDenshionTest
 
 cocos2d-x-3.0rc0 March.14 2014
 [All]
@@ -51,7 +55,6 @@ cocos2d-x-3.0rc0 March.14 2014
      [NEW]          Sprite: Added auto-culling support. Performance increased in about 100% when many sprites are outside the screen
      [NEW]          Setup.sh: added script to set up environment needed for cocos2d-x
      [NEW]          Scheduler: Added new API [ schedule(std::function, ...), schedule(member_func, ...) ], deprecated the old API [ scheduleSelector(member_func, ...) ]
-     
      [FIX]          Action: FadeIn and FadeOut behaviours is incorrect if it doesn't start from an edge value( 0 or 255)
      [FIX]          Array: crash when invoking initWithObjects()
      [FIX]          Action: Merge cocostudio/CCActionXxx to CCAction
@@ -111,7 +114,6 @@ cocos2d-x-3.0rc0 March.14 2014
      [FIX]          Websocket: Potential crash when websocket connection closes.
      [FIX]          Websocket: No callback is invoked when websocket connection fails  
      [FIX]          Xcode 5.1: Added Xcode 5.1 to build arm64 version, but can not require socket module in lua, will fix it soon
-
      [3RD]          Kazmath: Upgraded to latest version of Kazmath
 
 
@@ -127,7 +129,6 @@ cocos2d-x-3.0beta2 Jan.24 2014
      [NEW]          Label: Integrates LabelAtlas into new Label.
      [NEW]          Node: Added `setGlobalZOrder()`. Useful to change the Node's render order. Node::setZOrder() -> Node::setLocalZOrder()
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
-     
      [FIX]          event->stopPropagation can't work for EventListenerTouchAllAtOnce.
      [FIX]          Uses unified `desktop/CCEGLView.h/cpp` for desktop platforms (windows, mac, linux).
      [FIX]          Bindings-generator supports Windows again and remove dependency of LLVM since we only need binary(libclang.so/dll).

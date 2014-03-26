@@ -50,6 +50,8 @@ struct FontLetterDefinition
     int textureID;
     bool validDefinition;
     int xAdvance;
+
+    int clipBottom;
 };
 
 class CC_DLL FontAtlas : public Ref

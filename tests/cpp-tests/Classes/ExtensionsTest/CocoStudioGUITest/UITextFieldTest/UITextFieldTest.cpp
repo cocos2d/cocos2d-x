@@ -336,7 +336,7 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType t
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
-            textField->runAction(CCMoveTo::create(0.225,
+            textField->runAction(CCMoveTo::create(0.225f,
                                                   Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + textField->getContentSize().height / 2)));
             textField->setTextHorizontalAlignment(TextHAlignment::LEFT);
             textField->setTextVerticalAlignment(TextVAlignment::TOP);
@@ -349,7 +349,7 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType t
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
-            textField->runAction(CCMoveTo::create(0.175, Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
             textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
             textField->setTextVerticalAlignment(TextVAlignment::CENTER);
             

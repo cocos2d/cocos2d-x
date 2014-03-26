@@ -362,7 +362,7 @@ query_helper(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr, void *obj, cpSpatialIn
 		if(hand->stamp == hash->stamp || obj == other){
 			continue;
 		} else if(other){
-			func(obj, other, data);
+			func(obj, other, 0, data);
 			hand->stamp = hash->stamp;
 		} else {
 			// The object for this handle has been removed
