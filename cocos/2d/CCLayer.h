@@ -391,6 +391,10 @@ public:
     const Point& getVector() const;
 
     virtual std::string getDescription() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    LayerGradient();
+    virtual ~LayerGradient();
 
 protected:
     virtual void updateColor() override;
