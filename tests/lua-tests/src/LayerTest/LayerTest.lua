@@ -32,7 +32,7 @@ local function createLayerDemoLayer(title, subtitle)
     return layer
 end
 
---#pragma mark - Cascading support extensions
+-- Cascading support extensions
 
 local function setEnableRecursiveCascading(node, enable)
     if node == nil then
@@ -164,7 +164,7 @@ local function LayerTestCascadingOpacityC()
     return ret
 end
 
---#pragma mark Example LayerTestCascadingColor
+--// Example LayerTestCascadingColor
 
 -- LayerTestCascadingColorA
 local function LayerTestCascadingColorA()
