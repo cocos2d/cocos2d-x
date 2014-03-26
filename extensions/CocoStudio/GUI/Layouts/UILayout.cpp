@@ -813,30 +813,18 @@ GLubyte Layout::getBackGroundImageOpacity()
     
 void Layout::updateBackGroundImageColor()
 {
-    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
-    if (rgba)
-    {
-        rgba->setColor(_backGroundImageColor);
-    }
+    _backGroundImage->setColor(_backGroundImageColor);
 }
     
 void Layout::updateBackGroundImageOpacity()
 {
-    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
-    if (rgba)
-    {
-        rgba->setOpacity(_backGroundImageOpacity);
-    }
+    _backGroundImage->setOpacity(_backGroundImageOpacity);
 }
     
 void Layout::updateBackGroundImageRGBA()
 {
-    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(_backGroundImage);
-    if (rgba)
-    {
-        rgba->setColor(_backGroundImageColor);
-        rgba->setOpacity(_backGroundImageOpacity);
-    }
+    _backGroundImage->setColor(_backGroundImageColor);
+    _backGroundImage->setOpacity(_backGroundImageOpacity);
 }
 
 const CCSize& Layout::getBackGroundImageTextureSize() const

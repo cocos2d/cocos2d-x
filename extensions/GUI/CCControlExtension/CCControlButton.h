@@ -91,9 +91,7 @@ protected:
     CC_PROPERTY(CCPoint, m_labelAnchorPoint, LabelAnchorPoint);
 
     /* Override setter to affect a background sprite too */
-    virtual GLubyte getOpacity(void);
     virtual void setOpacity(GLubyte var);
-	virtual const ccColor3B& getColor(void);
 	virtual void setColor(const ccColor3B&);
     
     /** Flag to know if the button is currently pushed.  */

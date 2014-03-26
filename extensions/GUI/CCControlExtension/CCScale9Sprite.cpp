@@ -60,9 +60,6 @@ CCScale9Sprite::CCScale9Sprite()
 , _bottomLeft(NULL)
 , _bottom(NULL)
 , _bottomRight(NULL)
-, _opacityModifyRGB(false)
-, _opacity(255)
-, _color(ccWHITE)
 {
 
 }
@@ -93,6 +90,9 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 
 bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets)
 {
+    setCascadeColorEnabled(true);
+    setCascadeOpacityEnabled(true);
+
     if(batchnode)
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
@@ -137,7 +137,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     }
 
     _scale9Image->removeAllChildrenWithCleanup(true);
-
+    
     m_capInsets = capInsets;
     
     // If there is no given rect
@@ -709,43 +709,6 @@ void CCScale9Sprite::updateCapInset()
     this->setCapInsets(insets);
 }
 
-void CCScale9Sprite::setOpacityModifyRGB(bool var)
-{
-    if (!_scale9Image)
-    {
-        return;
-    }
-    _opacityModifyRGB = var;
-    CCObject* child;
-    CCArray* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->setOpacityModifyRGB(_opacityModifyRGB);
-        }
-    }
-}
-
-
-bool CCScale9Sprite::isOpacityModifyRGB()
-{
-    return _opacityModifyRGB;
-}
-
-void CCScale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
-{
-    CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
-    setOpacity(parentOpacity);
-}
-
-void CCScale9Sprite::updateDisplayedColor(const cocos2d::ccColor3B &color)
-{
-    CCNodeRGBA::updateDisplayedColor(color);
-    setColor(color);
-}
-
 void CCScale9Sprite::setSpriteFrame(CCSpriteFrame * spriteFrame)
 {
     CCSpriteBatchNode * batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
@@ -810,56 +773,6 @@ void CCScale9Sprite::visit()
         this->m_positionsAreDirty = false;
     }
     CCNode::visit();
-}
-
-void CCScale9Sprite::setColor(const ccColor3B& color)
-{
-    if (!_scale9Image)
-    {
-        return;
-    }
-    _color = color;
-
-    CCObject* child;
-    CCArray* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->setColor(color);
-        }
-    }
-}
-
-const ccColor3B& CCScale9Sprite::getColor()
-{
-	return _color;
-}
-
-void CCScale9Sprite::setOpacity(GLubyte opacity)
-{
-    if (!_scale9Image)
-    {
-        return;
-    }
-    _opacity = opacity;
-
-    CCObject* child;
-    CCArray* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->setOpacity(opacity);
-        }
-    }
-}
-
-GLubyte CCScale9Sprite::getOpacity()
-{
-	return _opacity;
 }
 
 NS_CC_EXT_END

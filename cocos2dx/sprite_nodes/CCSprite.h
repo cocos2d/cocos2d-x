@@ -79,7 +79,7 @@ struct transformValues_;
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-class CC_DLL CCSprite : public CCNodeRGBA, public CCTextureProtocol
+class CC_DLL CCSprite : public CCNode, public CCTextureProtocol
 #ifdef EMSCRIPTEN
 , public CCGLBufferedNode
 #endif // EMSCRIPTEN
@@ -304,7 +304,7 @@ public:
     /// @}
     
     /// @{
-    /// @name Functions inherited from CCNodeRGBA
+    /// @name Functions inherited from CCNode
     virtual void setColor(const ccColor3B& color3);
     virtual void updateDisplayedColor(const ccColor3B& parentColor);
     virtual void setOpacity(GLubyte opacity);

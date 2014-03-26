@@ -222,7 +222,7 @@ void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& val
     quad->tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
     quad->tr.vertices.z = 0.0f;
 
-    ccColor4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    ccColor4B color = { m_displayedColor.r, m_displayedColor.g, m_displayedColor.b, m_displayedOpacity};
     quad->tr.colors = color;
     quad->tl.colors = color;
     quad->br.colors = color;

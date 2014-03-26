@@ -274,12 +274,12 @@ void CCMenuItemLabel::setEnabled(bool enabled)
     {
         if(enabled == false)
         {
-            m_tColorBackup = dynamic_cast<CCRGBAProtocol*>(m_pLabel)->getColor();
-            dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(m_tDisabledColor);
+            m_tColorBackup = m_pLabel->getColor();
+            m_pLabel->setColor(m_tDisabledColor);
         }
         else
         {
-            dynamic_cast<CCRGBAProtocol*>(m_pLabel)->setColor(m_tColorBackup);
+            m_pLabel->setColor(m_tColorBackup);
         }
     }
     CCMenuItem::setEnabled(enabled);

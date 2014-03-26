@@ -90,6 +90,14 @@ CCNode::CCNode(void)
 , m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
 , m_pComponentContainer(NULL)
+// merge CCNodeRGBA
+, m_displayedOpacity(255)
+, m_realOpacity(255)
+, m_isOpacityModifyRGB(false)
+, m_displayedColor(ccWHITE)
+, m_realColor(ccWHITE)
+, m_cascadeColorEnabled(false)
+, m_cascadeOpacityEnabled(false)
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -1324,153 +1332,125 @@ void CCNode::removeAllComponents()
     m_pComponentContainer->removeAll();
 }
 
-// CCNodeRGBA
-CCNodeRGBA::CCNodeRGBA()
-: _displayedOpacity(255)
-, _realOpacity(255)
-, _displayedColor(ccWHITE)
-, _realColor(ccWHITE)
-, _cascadeColorEnabled(false)
-, _cascadeOpacityEnabled(false)
-{}
+// merge CCNodeRGBA to CCNode
 
-CCNodeRGBA::~CCNodeRGBA() {}
-
-bool CCNodeRGBA::init()
+GLubyte CCNode::getOpacity(void)
 {
-    if (CCNode::init())
-    {
-        _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = ccWHITE;
-        _cascadeOpacityEnabled = _cascadeColorEnabled = false;
-        return true;
-    }
-    return false;
+    return m_realOpacity;
 }
 
-CCNodeRGBA * CCNodeRGBA::create(void)
+GLubyte CCNode::getDisplayedOpacity(void)
 {
-	CCNodeRGBA * pRet = new CCNodeRGBA();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-	return pRet;
+    return m_displayedOpacity;
 }
 
-GLubyte CCNodeRGBA::getOpacity(void)
+void CCNode::setOpacity(GLubyte opacity)
 {
-	return _realOpacity;
-}
+    m_displayedOpacity = m_realOpacity = opacity;
 
-GLubyte CCNodeRGBA::getDisplayedOpacity(void)
-{
-	return _displayedOpacity;
-}
-
-void CCNodeRGBA::setOpacity(GLubyte opacity)
-{
-    _displayedOpacity = _realOpacity = opacity;
-    
-	if (_cascadeOpacityEnabled)
+    if (m_cascadeOpacityEnabled)
     {
-		GLubyte parentOpacity = 255;
-        CCRGBAProtocol* pParent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
-        if (pParent && pParent->isCascadeOpacityEnabled())
+        GLubyte parentOpacity = 255;
+        if (m_pParent && m_pParent->isCascadeOpacityEnabled())
         {
-            parentOpacity = pParent->getDisplayedOpacity();
+            parentOpacity = m_pParent->getDisplayedOpacity();
         }
         this->updateDisplayedOpacity(parentOpacity);
-	}
+    }
 }
 
-void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
+void CCNode::setOpacityModifyRGB(bool var)
 {
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
-	
-    if (_cascadeOpacityEnabled)
+    m_isOpacityModifyRGB = var;
+    if (m_pChildren && m_pChildren->count() != 0)
+    {
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            dynamic_cast<CCNode*>(child)->setOpacityModifyRGB(var);
+        }
+    }
+}
+
+bool CCNode::isOpacityModifyRGB(void)
+{
+    return m_isOpacityModifyRGB;
+}
+
+void CCNode::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+    m_displayedOpacity = (GLubyte)(m_realOpacity * parentOpacity/255.0);
+
+    if (m_cascadeOpacityEnabled)
     {
         CCObject* pObj;
         CCARRAY_FOREACH(m_pChildren, pObj)
         {
-            CCRGBAProtocol* item = dynamic_cast<CCRGBAProtocol*>(pObj);
-            if (item)
-            {
-                item->updateDisplayedOpacity(_displayedOpacity);
-            }
+            dynamic_cast<CCNode*>(pObj)->updateDisplayedOpacity(m_displayedOpacity);
         }
     }
 }
 
-bool CCNodeRGBA::isCascadeOpacityEnabled(void)
+bool CCNode::isCascadeOpacityEnabled(void)
 {
-    return _cascadeOpacityEnabled;
+    return m_cascadeOpacityEnabled;
 }
 
-void CCNodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+void CCNode::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 {
-    _cascadeOpacityEnabled = cascadeOpacityEnabled;
+    m_cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
-const ccColor3B& CCNodeRGBA::getColor(void)
+const ccColor3B& CCNode::getColor(void)
 {
-	return _realColor;
+    return m_realColor;
 }
 
-const ccColor3B& CCNodeRGBA::getDisplayedColor()
+const ccColor3B& CCNode::getDisplayedColor()
 {
-	return _displayedColor;
+    return m_displayedColor;
 }
 
-void CCNodeRGBA::setColor(const ccColor3B& color)
+void CCNode::setColor(const ccColor3B& color)
 {
-	_displayedColor = _realColor = color;
-	
-	if (_cascadeColorEnabled)
+    m_displayedColor = m_realColor = color;
+
+    if (m_cascadeColorEnabled)
     {
-		ccColor3B parentColor = ccWHITE;
-        CCRGBAProtocol *parent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
-		if (parent && parent->isCascadeColorEnabled())
+        ccColor3B parentColor = ccWHITE;
+        if (m_pParent && m_pParent->isCascadeColorEnabled())
         {
-            parentColor = parent->getDisplayedColor(); 
+            parentColor = m_pParent->getDisplayedColor();
         }
-        
+
         updateDisplayedColor(parentColor);
-	}
+    }
 }
 
-void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
+void CCNode::updateDisplayedColor(const ccColor3B& parentColor)
 {
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
-    
-    if (_cascadeColorEnabled)
+    m_displayedColor.r = (GLubyte)(m_realColor.r * (float)parentColor.r/255.0f);
+    m_displayedColor.g = (GLubyte)(m_realColor.g * (float)parentColor.g/255.0f);
+    m_displayedColor.b = (GLubyte)(m_realColor.b * (float)parentColor.b/255.0f);
+
+    if (m_cascadeColorEnabled)
     {
         CCObject *obj = NULL;
         CCARRAY_FOREACH(m_pChildren, obj)
         {
-            CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
-            if (item)
-            {
-                item->updateDisplayedColor(_displayedColor);
-            }
+            dynamic_cast<CCNode*>(obj)->updateDisplayedColor(m_displayedColor);
         }
     }
 }
 
-bool CCNodeRGBA::isCascadeColorEnabled(void)
+bool CCNode::isCascadeColorEnabled(void)
 {
-    return _cascadeColorEnabled;
+    return m_cascadeColorEnabled;
 }
 
-void CCNodeRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
+void CCNode::setCascadeColorEnabled(bool cascadeColorEnabled)
 {
-    _cascadeColorEnabled = cascadeColorEnabled;
+    m_cascadeColorEnabled = cascadeColorEnabled;
 }
 
 NS_CC_END

@@ -151,7 +151,7 @@ bool CCSprite::init(void)
 // designated initializer
 bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated)
 {
-    if (CCNodeRGBA::init())
+    if (CCNode::init())
     {
         m_pobBatchNode = NULL;
         
@@ -887,14 +887,14 @@ bool CCSprite::isFlipY(void)
 
 void CCSprite::updateColor(void)
 {
-    ccColor4B color4 = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    ccColor4B color4 = { m_displayedColor.r, m_displayedColor.g, m_displayedColor.b, m_displayedOpacity};
     
     // special opacity for premultiplied textures
 	if (m_bOpacityModifyRGB)
     {
-		color4.r *= _displayedOpacity/255.0f;
-		color4.g *= _displayedOpacity/255.0f;
-		color4.b *= _displayedOpacity/255.0f;
+		color4.r *= m_displayedOpacity /255.0f;
+		color4.g *= m_displayedOpacity /255.0f;
+		color4.b *= m_displayedOpacity /255.0f;
     }
 
     m_sQuad.bl.colors = color4;
@@ -923,14 +923,14 @@ void CCSprite::updateColor(void)
 
 void CCSprite::setOpacity(GLubyte opacity)
 {
-    CCNodeRGBA::setOpacity(opacity);
+    CCNode::setOpacity(opacity);
 
     updateColor();
 }
 
 void CCSprite::setColor(const ccColor3B& color3)
 {
-    CCNodeRGBA::setColor(color3);
+    CCNode::setColor(color3);
 
     updateColor();
 }
@@ -951,14 +951,14 @@ bool CCSprite::isOpacityModifyRGB(void)
 
 void CCSprite::updateDisplayedColor(const ccColor3B& parentColor)
 {
-    CCNodeRGBA::updateDisplayedColor(parentColor);
+    CCNode::updateDisplayedColor(parentColor);
     
     updateColor();
 }
 
 void CCSprite::updateDisplayedOpacity(GLubyte opacity)
 {
-    CCNodeRGBA::updateDisplayedOpacity(opacity);
+    CCNode::updateDisplayedOpacity(opacity);
     
     updateColor();
 }

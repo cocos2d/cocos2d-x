@@ -36,8 +36,7 @@
 NS_CC_EXT_BEGIN
 
 CCControl::CCControl()
-: m_bIsOpacityModifyRGB(false)
-, m_eState(CCControlStateNormal)
+: m_eState(CCControlStateNormal)
 , m_hasVisibleParents(false)
 , m_bEnabled(false)
 , m_bSelected(false)
@@ -70,6 +69,8 @@ bool CCControl::init()
         //m_bIsTouchEnabled=true;
         // Initialise instance variables
         m_eState=CCControlStateNormal;
+        setCascadeOpacityEnabled(true);
+        setCascadeColorEnabled(true);
         setEnabled(true);
         setSelected(false);
         setHighlighted(false);
@@ -231,29 +232,6 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_CCCo
             }
     }
 }
-
-
-//CRGBA protocol
-void CCControl::setOpacityModifyRGB(bool bOpacityModifyRGB)
-{
-    m_bIsOpacityModifyRGB=bOpacityModifyRGB;
-    CCObject* child;
-    CCArray* children=getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);        
-        if (pNode)
-        {
-            pNode->setOpacityModifyRGB(bOpacityModifyRGB);
-        }
-    }
-}
-
-bool CCControl::isOpacityModifyRGB()
-{
-    return m_bIsOpacityModifyRGB;
-}
-
 
 CCPoint CCControl::getTouchLocation(CCTouch* touch)
 {

@@ -305,11 +305,8 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
             particle->resetSystem();
         }
 
-        if (CCRGBAProtocol *rgbaProtocaol = dynamic_cast<CCRGBAProtocol *>(m_pDisplayRenderNode))
-        {
-            rgbaProtocaol->setColor(m_pBone->getDisplayedColor());
-            rgbaProtocaol->setOpacity(m_pBone->getDisplayedOpacity());
-        }
+        m_pDisplayRenderNode->setColor(m_pBone->getDisplayedColor());
+        m_pDisplayRenderNode->setOpacity(m_pBone->getDisplayedOpacity());
 
         m_pDisplayRenderNode->retain();
         m_pDisplayRenderNode->setVisible(m_bVisible);

@@ -144,7 +144,7 @@ void CCAtlasNode::draw(void)
 
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
-    GLfloat colors[4] = {_displayedColor.r / 255.0f, _displayedColor.g / 255.0f, _displayedColor.b / 255.0f, _displayedOpacity / 255.0f};
+    GLfloat colors[4] = {m_displayedColor.r / 255.0f, m_displayedColor.g / 255.0f, m_displayedColor.b / 255.0f, m_displayedOpacity / 255.0f};
     getShaderProgram()->setUniformLocationWith4fv(m_nUniformColor, colors, 1);
 
     m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
@@ -158,7 +158,7 @@ const ccColor3B& CCAtlasNode::getColor()
     {
         return m_tColorUnmodified;
     }
-    return CCNodeRGBA::getColor();
+    return CCNode::getColor();
 }
 
 void CCAtlasNode::setColor(const ccColor3B& color3)
@@ -168,16 +168,16 @@ void CCAtlasNode::setColor(const ccColor3B& color3)
 
     if( m_bIsOpacityModifyRGB )
     {
-        tmp.r = tmp.r * _displayedOpacity/255;
-        tmp.g = tmp.g * _displayedOpacity/255;
-        tmp.b = tmp.b * _displayedOpacity/255;
+        tmp.r = tmp.r * m_displayedOpacity /255;
+        tmp.g = tmp.g * m_displayedOpacity /255;
+        tmp.b = tmp.b * m_displayedOpacity /255;
     }
-    CCNodeRGBA::setColor(tmp);
+    CCNode::setColor(tmp);
 }
 
 void CCAtlasNode::setOpacity(GLubyte opacity)
 {
-    CCNodeRGBA::setOpacity(opacity);
+    CCNode::setOpacity(opacity);
 
     // special opacity for premultiplied textures
     if( m_bIsOpacityModifyRGB )
