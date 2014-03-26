@@ -1432,7 +1432,9 @@ std::string ActionTargetedReverse::subtitle() const
     return "Action that runs reversely on another target. Useful for sequences";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ActionStacked
+#endif
 
 void ActionStacked::onEnter()
 {
@@ -1486,8 +1488,9 @@ std::string ActionStacked::subtitle() const
     return "Tap screen";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ActionMoveStacked
-
+#endif
 
 void ActionMoveStacked::runActionsInSprite(Sprite *sprite)
 {
@@ -1513,7 +1516,9 @@ std::string ActionMoveStacked::title() const
     return "Stacked MoveBy/To actions";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ActionMoveJumpStacked
+#endif
 
 void ActionMoveJumpStacked::runActionsInSprite(Sprite *sprite)
 {
@@ -1538,7 +1543,9 @@ std::string ActionMoveJumpStacked::title() const
     return "tacked Move + Jump actions";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ActionMoveBezierStacked
+#endif
 
 void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
 {
@@ -1692,7 +1699,9 @@ std::string ActionCatmullRomStacked::subtitle() const
 }
 
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - ActionCardinalSplineStacked
+#endif
 
 void ActionCardinalSplineStacked::onEnter()
 {

@@ -51,6 +51,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+
+
 namespace {
     typedef Texture2D::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;
     static const PixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
@@ -549,6 +551,15 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
 {
+    // cocos2d-x is currently calling this multiple times on the same Texture2D
+    // if the GL texture has already been created,it will be leaked in OpenGL
+    // For now, call deleteTexture if the texture already exists
+    if(_name)
+    {
+        GL::deleteTexture(_name);
+      _name = 0;
+    }
+
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
     CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");

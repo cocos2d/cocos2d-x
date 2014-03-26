@@ -1458,7 +1458,9 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
 };
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - NodeRGBA
+#endif
 
 /** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
  

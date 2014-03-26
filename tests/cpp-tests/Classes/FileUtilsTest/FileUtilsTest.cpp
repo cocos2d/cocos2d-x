@@ -45,7 +45,9 @@ void FileUtilsTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 // #pragma mark - FileUtilsDemo
+#endif
 
 void FileUtilsDemo::onEnter()
 {
@@ -92,7 +94,9 @@ std::string FileUtilsDemo::subtitle() const
     return "";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestResolutionDirectories
+#endif
 
 void TestResolutionDirectories::onEnter()
 {
@@ -146,7 +150,9 @@ std::string TestResolutionDirectories::subtitle() const
     return "See the console";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestSearchPath
+#endif
 
 void TestSearchPath::onEnter()
 {
@@ -225,7 +231,9 @@ std::string TestSearchPath::subtitle() const
     return "See the console";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestFilenameLookup
+#endif
 
 void TestFilenameLookup::onEnter()
 {
@@ -263,7 +271,9 @@ std::string TestFilenameLookup::title() const
     return "FileUtils: filename lookup";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestIsFileExist
+#endif
 
 void TestIsFileExist::onEnter()
 {
@@ -307,7 +317,9 @@ std::string TestIsFileExist::subtitle() const
     return "";
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 //#pragma mark - TestWritePlist
+#endif
 
 void TextWritePlist::onEnter()
 {
