@@ -344,8 +344,12 @@ public:
     virtual std::string getDescription() const;
     
     virtual void onEnter();
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     virtual bool init();
+    void jumpToDestination(const CCPoint& des);
+    
+protected:
     virtual void initRenderer();
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
@@ -354,7 +358,6 @@ protected:
     bool checkNeedBounce();
     void startAutoScrollChildrenWithOriginalSpeed(const CCPoint& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const CCPoint& des, float time, bool attenuated);
-    void jumpToDestination(const CCPoint& des);
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();
