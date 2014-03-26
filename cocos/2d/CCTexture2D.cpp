@@ -1083,9 +1083,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     }
     
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-    bool requestUnsupported = textDefinition._shadow._shadowEnabled || textDefinition._stroke._strokeEnabled;
-
-    CCASSERT(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
+    CCASSERT(textDefinition._stroke._strokeEnabled == false, "Currently stroke only supported on iOS and Android!");
 #endif
 
     PixelFormat      pixelFormat = g_defaultAlphaPixelFormat;
@@ -1099,6 +1097,9 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     textDef._fontSize *= contentScaleFactor;
     textDef._dimensions.width *= contentScaleFactor;
     textDef._dimensions.height *= contentScaleFactor;
+    textDef._stroke._strokeSize *= contentScaleFactor;
+    textDef._shadow._shadowEnabled = false;
+    
     Data outData = Device::getTextureDataForText(text,textDef,align,imageWidth,imageHeight);
     if(outData.isNull())
         return false;
