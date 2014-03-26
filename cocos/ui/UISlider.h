@@ -189,6 +189,8 @@ public:
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
+    //override the widget's hitTest function to perfom its own
+    virtual bool hitTest(const Point &pt) override;
     /**
      * Returns the "class name" of widget.
      */
