@@ -31,6 +31,7 @@ NS_CC_BEGIN
 CCComponent::CCComponent(void)
 : m_pOwner(NULL)
 , m_bEnabled(true)
+, m_bRender(false)
 {
 }
 
@@ -102,6 +103,11 @@ bool CCComponent::isEnabled() const
 void CCComponent::setEnabled(bool b)
 {
     m_bEnabled = b;
+}
+
+bool CCComponent::isRender() const
+{
+    return m_bRender;
 }
 
 NS_CC_END
