@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module TransitionFadeTR
--- @extend TransitionScene,TransitionEaseScene,
+-- @extend TransitionScene,TransitionEaseScene
 
 --------------------------------
 -- @function [parent=#TransitionFadeTR] easeActionWithAction 

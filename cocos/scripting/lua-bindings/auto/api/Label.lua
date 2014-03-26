@@ -1,8 +1,13 @@
 
 --------------------------------
 -- @module Label
--- @extend SpriteBatchNode,LabelProtocol,
+-- @extend SpriteBatchNode,LabelProtocol
 
+--------------------------------
+-- @function [parent=#Label] isClipMarginEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- @function [parent=#Label] enableShadow 
 -- @param self
@@ -56,6 +61,11 @@
 -- @function [parent=#Label] getHorizontalAlignment 
 -- @param self
 -- @return TextHAlignment#TextHAlignment ret (return value: cc.TextHAlignment)
+        
+--------------------------------
+-- @function [parent=#Label] setClipMarginEnabled 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Label] setString 

@@ -37,6 +37,7 @@ SceneReader* SceneReader::s_sharedReader = nullptr;
 SceneReader::SceneReader()
 : _fnSelector(nullptr)
 , _node(nullptr)
+, _attachComponent(AttachComponentType::EMPTY_NODE)
 {
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComAttribute));
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComRender));
@@ -53,12 +54,12 @@ const char* SceneReader::sceneReaderVersion()
     return "1.0.0.0";
 }
 
-cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName)
+cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent /*= AttachComponentType::EMPTY_NODE*/)
 {
     rapidjson::Document jsonDict;
     do {
           CC_BREAK_IF(!readJson(fileName, jsonDict));
-          _node = createObject(jsonDict, nullptr);
+          _node = createObject(jsonDict, nullptr, attachComponent);
           TriggerMng::getInstance()->parse(jsonDict);
     } while (0);
     
@@ -110,7 +111,7 @@ Node* SceneReader::nodeByTag(Node *parent, int tag)
 }
 
 
-Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* parent)
+Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* parent, AttachComponentType attachComponent)
 {
     const char *className = DICTOOL->getStringValue_json(dict, "classname");
     if(strcmp(className, "CCNode") == 0)
@@ -120,14 +121,9 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
         {
             gb = Node::create();
         }
-        else
-        {
-            gb = Node::create();
-            parent->addChild(gb);
-        }
-        
-        setPropertyFromJsonDict(dict, gb);
 
+        std::vector<Component*> vecComs;
+        ComRender *render = nullptr;
         int count = DICTOOL->getArrayCount_json(dict, "components");
         for (int i = 0; i < count; i++)
         {
@@ -138,21 +134,50 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             }
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
             Component *com = ObjectFactory::getInstance()->createComponent(comName);
-			if (com != NULL)
-			{
-				if (com->serialize((void*)(&subDict)))
-				{
-					gb->addComponent(com);
-				}
-                else
+            if (com != nullptr)
+            {
+                if (com->serialize((void*)(&subDict)))
                 {
-                    com = nullptr;
+                    ComRender *tRender = dynamic_cast<ComRender*>(com);
+                    if (tRender == nullptr)
+                    {
+                        vecComs.push_back(com);
+                    }
+                    else
+                    {
+                        render = tRender;
+                    }
                 }
-			}
+            }
             if(_fnSelector != nullptr)
             {
                 _fnSelector(com, (void*)(&subDict));
             }
+        }
+
+        if (parent != nullptr)
+        {
+            if (render == nullptr || attachComponent == AttachComponentType::EMPTY_NODE)
+            {
+                gb = Node::create();
+                if (render != nullptr)
+                {
+                    vecComs.push_back(render);
+                }
+            }
+            else
+            {
+                gb = render->getNode();
+                gb->retain();
+                render->setNode(nullptr);
+            }
+            parent->addChild(gb);
+        }
+
+        setPropertyFromJsonDict(dict, gb);
+        for (std::vector<Component*>::iterator iter = vecComs.begin(); iter != vecComs.end(); ++iter)
+        {
+              gb->addComponent(*iter);
         }
 
         int length = DICTOOL->getArrayCount_json(dict, "gameobjects");
@@ -163,7 +188,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             {
                 break;
             }
-            createObject(subDict, gb);
+            createObject(subDict, gb, attachComponent);
         }
         
         return gb;

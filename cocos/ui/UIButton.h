@@ -195,7 +195,7 @@ protected:
     Node* _buttonNormalRenderer;
     Node* _buttonClickedRenderer;
     Node* _buttonDisableRenderer;
-    LabelTTF* _titleRenderer;
+    Label* _titleRenderer;
     std::string _normalFileName;
     std::string _clickedFileName;
     std::string _disabledFileName;

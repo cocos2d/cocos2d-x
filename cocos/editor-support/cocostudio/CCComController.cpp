@@ -43,6 +43,10 @@ bool ComController::init()
 
 void ComController::onEnter()
 {
+    if (_owner != nullptr)
+    {
+        _owner->scheduleUpdate();
+    }
 }
 
 void ComController::onExit()

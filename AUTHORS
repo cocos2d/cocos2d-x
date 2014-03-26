@@ -787,6 +787,12 @@ Developers:
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
+        
+    aeonmine
+        Fixed ActionObject memory leak in ActionManagerEx::initWithDictionary
+        
+    LoungeKatt
+        Corrected a mistake of building android project in README.md
     
 Retired Core Developers:
     WenSheng Yang

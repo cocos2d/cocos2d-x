@@ -12,7 +12,7 @@
 #include "testResource.h"
 #include "tests.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
 #include <sys/socket.h>
 #else
@@ -42,12 +42,20 @@ Controller g_aTestNames[] = {
 	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
 	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
 	{ "Configuration", []() { return new ConfigurationTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Console", []() { return new ConsoleTestScene(); } },
+#endif
+#endif
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "Curl", []() { return new CurlTestScene(); } },
+#endif
+#endif
 #endif
 #endif
 #endif
@@ -180,6 +188,11 @@ void TestController::menuCallback(Ref * sender)
 
 void TestController::closeCallback(Ref * sender)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+    return;
+#endif
+
     Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
@@ -241,6 +254,7 @@ void TestController::onMouseScroll(Event *event)
     s_tCurPos   = nextPos;
 }
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 void TestController::addConsoleAutoTest()
 {
     auto console = Director::getInstance()->getConsole();
@@ -435,4 +449,5 @@ void TestController::addConsoleAutoTest()
     };
     console->addCommand(autotest);
 }
+#endif
 

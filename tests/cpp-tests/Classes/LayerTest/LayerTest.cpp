@@ -111,7 +111,7 @@ void LayerTest::backCallback(Ref* sender)
     s->release();
 } 
 
-//#pragma mark - Cascading support extensions
+// Cascading support extensions
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
@@ -275,7 +275,7 @@ std::string LayerTestCascadingOpacityC::subtitle() const
 }
 
 
-//#pragma mark Example LayerTestCascadingColor
+//// Example LayerTestCascadingColor
 
 // LayerTestCascadingColorA
 void LayerTestCascadingColorA::onEnter()

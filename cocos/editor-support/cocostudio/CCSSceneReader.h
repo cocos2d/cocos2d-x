@@ -30,9 +30,30 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+
 class SceneReader
 {
 public:
+
+    enum class AttachComponentType
+    {
+        ///parent: Empty Node
+        ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        ///            ComAttribute
+        ///            ComAudio
+        ///            ....
+        EMPTY_NODE,
+        
+        ///parent:   ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        ///          ComAttribute
+        ///          ComAudio
+        ///          .....
+        RENDER_NODE,
+        
+        /// Default AttachComponentType is _EmptyNode
+        DEFAULT = EMPTY_NODE,
+    };
+
     static SceneReader* getInstance();
     /**
      *  @js purge
@@ -40,22 +61,23 @@ public:
      */
     static void destroyInstance();
     static const char* sceneReaderVersion();
-    cocos2d::Node* createNodeWithSceneFile(const std::string &fileName);
-	void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
-	cocos2d::Node* getNodeByTag(int nTag);
-    
+    cocos2d::Node* createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent = AttachComponentType::EMPTY_NODE);
+    void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
+    cocos2d::Node* getNodeByTag(int nTag);
+    inline AttachComponentType getAttachComponentType(){return _attachComponent;}
 private:
     SceneReader(void);
     virtual ~SceneReader(void);
     
-    cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent);
+    cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
     bool readJson(const std::string &fileName, rapidjson::Document& doc);
-	cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
+    cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
 private:
     static SceneReader* s_sharedReader;
     std::function<void(cocos2d::Ref* obj, void* doc)> _fnSelector;
-	cocos2d::Node*      _node;
+    cocos2d::Node*      _node;
+    AttachComponentType _attachComponent;
 };
 
 

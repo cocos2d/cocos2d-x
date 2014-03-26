@@ -72,7 +72,10 @@ typedef struct Thread {
 	Pair *next;
 } Thread;
 
-struct Pair { Thread a, b; };
+struct Pair {
+	Thread a, b;
+	cpCollisionID id;
+};
 
 //MARK: Misc Functions
 
@@ -205,7 +208,7 @@ PairInsert(Node *a, Node *b, cpBBTree *tree)
 {
 	Pair *nextA = a->PAIRS, *nextB = b->PAIRS;
 	Pair *pair = PairFromPool(tree);
-	Pair temp = {{NULL, a, nextA},{NULL, b, nextB}};
+	Pair temp = {{NULL, a, nextA},{NULL, b, nextB}, 0};
 	
 	a->PAIRS = b->PAIRS = pair;
 	*pair = temp;
@@ -351,7 +354,7 @@ SubtreeQuery(Node *subtree, void *obj, cpBB bb, cpSpatialIndexQueryFunc func, vo
 {
 	if(cpBBIntersects(subtree->bb, bb)){
 		if(NodeIsLeaf(subtree)){
-			func(obj, subtree->obj, data);
+			func(obj, subtree->obj, 0, data);
 		} else {
 			SubtreeQuery(subtree->A, obj, bb, func, data);
 			SubtreeQuery(subtree->B, obj, bb, func, data);
@@ -428,7 +431,7 @@ MarkLeafQuery(Node *subtree, Node *leaf, cpBool left, MarkContext *context)
 				PairInsert(leaf, subtree, context->tree);
 			} else {
 				if(subtree->STAMP < leaf->STAMP) PairInsert(subtree, leaf, context->tree);
-				context->func(leaf->obj, subtree->obj, context->data);
+				context->func(leaf->obj, subtree->obj, 0, context->data);
 			}
 		} else {
 			MarkLeafQuery(subtree->A, leaf, left, context);
@@ -456,7 +459,7 @@ MarkLeaf(Node *leaf, MarkContext *context)
 		Pair *pair = leaf->PAIRS;
 		while(pair){
 			if(leaf == pair->b.leaf){
-				context->func(pair->a.leaf->obj, leaf->obj, context->data);
+				pair->id = context->func(pair->a.leaf->obj, leaf->obj, pair->id, context->data);
 				pair = pair->b.next;
 			} else {
 				pair = pair->a.next;
@@ -472,7 +475,7 @@ MarkSubtree(Node *subtree, MarkContext *context)
 		MarkLeaf(subtree, context);
 	} else {
 		MarkSubtree(subtree->A, context);
-		MarkSubtree(subtree->B, context);
+		MarkSubtree(subtree->B, context); // TODO Force TCO here?
 	}
 }
 
@@ -508,12 +511,12 @@ LeafUpdate(Node *leaf, cpBBTree *tree)
 		leaf->STAMP = GetMasterTree(tree)->stamp;
 		
 		return cpTrue;
+	} else {
+		return cpFalse;
 	}
-	
-	return cpFalse;
 }
 
-static void VoidQueryFunc(void *obj1, void *obj2, void *data){}
+static cpCollisionID VoidQueryFunc(void *obj1, void *obj2, cpCollisionID id, void *data){return id;}
 
 static void
 LeafAddPairs(Node *leaf, cpBBTree *tree)
@@ -864,17 +867,17 @@ NodeRender(Node *node, int depth)
 //	glColor3f(1.0f - v, v, 0.0f);
 	glLineWidth(cpfmax(5.0f - depth, 1.0f));
 	glBegin(GL_LINES); {
-		glVertex2F(bb.l, bb.b);
-		glVertex2F(bb.l, bb.t);
+		glVertex2f(bb.l, bb.b);
+		glVertex2f(bb.l, bb.t);
 		
-		glVertex2F(bb.l, bb.t);
-		glVertex2F(bb.r, bb.t);
+		glVertex2f(bb.l, bb.t);
+		glVertex2f(bb.r, bb.t);
 		
-		glVertex2F(bb.r, bb.t);
-		glVertex2F(bb.r, bb.b);
+		glVertex2f(bb.r, bb.t);
+		glVertex2f(bb.r, bb.b);
 		
-		glVertex2F(bb.r, bb.b);
-		glVertex2F(bb.l, bb.b);
+		glVertex2f(bb.r, bb.b);
+		glVertex2f(bb.l, bb.b);
 	}; glEnd();
 }
 
