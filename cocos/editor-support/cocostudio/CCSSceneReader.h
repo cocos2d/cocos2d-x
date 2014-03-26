@@ -42,16 +42,16 @@ public:
         ///            ComAttribute
         ///            ComAudio
         ///            ....
-        _EmptyNode,
+        _EMPTYNODE,
         
         ///parent:   ComRender(Spirte, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
         ///          ComAttribute
         ///          ComAudio
         ///          .....
-        _RenderNode,
+        _RENDERNODE,
         
         /// Default AttachComponentType is _EmptyNode
-        DEFAULT = _EmptyNode,
+        DEFAULT = _EMPTYNODE,
     };
 
     static SceneReader* getInstance();
@@ -61,7 +61,7 @@ public:
      */
     static void destroyInstance();
     static const char* sceneReaderVersion();
-    cocos2d::Node* createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent = AttachComponentType::_EmptyNode);
+    cocos2d::Node* createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent = AttachComponentType::_EMPTYNODE);
     void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
     cocos2d::Node* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}
