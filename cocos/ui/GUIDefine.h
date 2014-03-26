@@ -30,12 +30,9 @@
 #include <string>
 #include "cocostudio/ObjectFactory.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#pragma mark -
-#pragma mark Widget macro
-#pragma mark -
-#endif
-
+//
+//// Widget macro
+//
 
 #define DECLARE_CLASS_GUI_INFO \
     public: \
@@ -53,12 +50,9 @@
     cocostudio::ObjectFactory::TInfo(#className, &className::createInstance) \
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#pragma mark -
-#pragma mark Reader macro
-#pragma mark -
-#endif
-
+//
+//// Reader macro
+//
 
 #define DECLARE_CLASS_WIDGET_READER_INFO \
     public: \
