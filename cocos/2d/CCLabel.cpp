@@ -334,12 +334,14 @@ void Label::reset()
 
     Node::removeAllChildrenWithCleanup(true);
     _textSprite = nullptr;
+    _shadowNode = nullptr;
 
     CC_SAFE_RELEASE_NULL(_reusedLetter);
 
     _textColor = Color4B::WHITE;
     _textColorF = Color4F::WHITE;
     setColor(Color3B::WHITE);
+    _shadowEnabled = false;
 }
 
 void Label::updateShaderProgram()
@@ -347,7 +349,6 @@ void Label::updateShaderProgram()
     switch (_currLabelEffect)
     {
     case cocos2d::LabelEffect::NORMAL:
-    case cocos2d::LabelEffect::SHADOW:
         if (_useDistanceField)
             setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
@@ -478,6 +479,13 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
     _fontDefinition = textDefinition;
     _fontName = textDefinition._fontName;
     _fontSize = textDefinition._fontSize;
+
+    _shadowEnabled = textDefinition._shadow._shadowEnabled;
+    if (_shadowEnabled)
+    {
+        enableShadow(Color4B::BLACK,_fontDefinition._shadow._shadowOffset,_fontDefinition._shadow._shadowBlur);
+    }
+    
     _textColor = Color4B(_fontDefinition._fontFillColor);
     _textColorF.r = _textColor.r / 255.0f;
     _textColorF.g = _textColor.g / 255.0f;
@@ -832,24 +840,31 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
 
 void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const Size &offset /* = Size(2 ,-2)*/, int blurRadius /* = 0 */)
 {
+    _shadowEnabled = true;
+    _fontDefinition._shadow._shadowEnabled = false;
+
     _effectColor = shadowColor;
     _effectColorF.r = _effectColor.r / 255.0f;
     _effectColorF.g = _effectColor.g / 255.0f;
     _effectColorF.b = _effectColor.b / 255.0f;
     _effectColorF.a = _effectColor.a / 255.0f;
+
+    _shadowColor.r = _effectColor.r;
+    _shadowColor.g = _effectColor.g;
+    _shadowColor.b = _effectColor.b;
+
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     _shadowOffset.width = offset.width * contentScaleFactor;
     _shadowOffset.height = offset.height * contentScaleFactor;
     //todo:support blur for shadow
     _shadowBlurRadius = 0;
-    _currLabelEffect = LabelEffect::SHADOW;
 
-    _fontDefinition._shadow._shadowEnabled = true;
-    _fontDefinition._shadow._shadowBlur = blurRadius;
-    _fontDefinition._shadow._shadowOffset = _shadowOffset;
-    _fontDefinition._shadow._shadowOpacity = shadowColor.a / 255.0f;
-
-    _contentDirty = true;
+    if (_textSprite && _shadowNode)
+    {
+        _shadowNode->setColor(_shadowColor);
+        _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);
+        _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
+    }
 }
 
 void Label::disableEffect()
@@ -862,6 +877,12 @@ void Label::disableEffect()
     _currLabelEffect = LabelEffect::NORMAL;
     updateShaderProgram();
     _contentDirty = true;
+    _shadowEnabled = false;
+    if (_shadowNode)
+    {
+        Node::removeChild(_shadowNode,true);
+        _shadowNode = nullptr;
+    }
 }
 
 void Label::setFontScale(float fontScale)
@@ -884,24 +905,25 @@ void Label::onDraw(const kmMat4& transform, bool transformUpdated)
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
     bool trans = false;
 
-    if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
-    {
-         _shaderProgram->setUniformLocationWith4f(_uniformEffectColor, 
-             _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
-    }
-    else if(_currLabelEffect == LabelEffect::SHADOW && _shadowBlurRadius <= 0)
-    {
-        trans = true;
-        drawShadowWithoutBlur();
-    }
-
-    _shaderProgram->setUniformsForBuiltins(transform);
-
     if (_currentLabelType == LabelType::TTF)
     {
         _shaderProgram->setUniformLocationWith4f(_uniformTextColor, 
             _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
     }
+
+    if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+    {
+         _shaderProgram->setUniformLocationWith4f(_uniformEffectColor, 
+             _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
+    }
+    else if(_shadowEnabled && _shadowBlurRadius <= 0)
+    {
+        trans = true;
+        kmGLPushMatrix();
+        drawShadowWithoutBlur();
+    }
+
+    _shaderProgram->setUniformsForBuiltins(transform);
    
     for(const auto &child: _children)
     {
@@ -930,19 +952,10 @@ void Label::drawShadowWithoutBlur()
     
     Color3B oldColor = _realColor;
     GLubyte oldOPacity = _displayedOpacity;
-    if (_currentLabelType == LabelType::TTF)
-    {
-        _shaderProgram->setUniformLocationWith4f(_uniformTextColor, 
-            _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
-    }
-    else
-    {
-        _displayedOpacity = _effectColorF.a * _displayedOpacity;
-        setColor(Color3B(_effectColor));
-    }
+    _displayedOpacity = _effectColorF.a * _displayedOpacity;
+    setColor(_shadowColor);
 
     _modelViewTransform = transform(_parentTransform);
-    kmGLPushMatrix();
     kmGLLoadMatrix(&_modelViewTransform);
 
     _shaderProgram->setUniformsForBuiltins(_modelViewTransform);
@@ -959,11 +972,9 @@ void Label::drawShadowWithoutBlur()
     _position.y -= _shadowOffset.height;
     _transformDirty = _inverseDirty = true;
     
-    if (_currentLabelType != LabelType::TTF)
-    {
-        _displayedOpacity = oldOPacity;
-        setColor(oldColor);
-    }
+    _displayedOpacity = oldOPacity;
+    setColor(oldColor);
+
     _modelViewTransform = transform(_parentTransform);
     kmGLLoadMatrix(&_modelViewTransform);
 }
@@ -1008,6 +1019,11 @@ void Label::updateContent()
     {
         Node::removeChild(_textSprite,true);
         _textSprite = nullptr;
+        if (_shadowNode)
+        {
+            Node::removeChild(_shadowNode,true);
+            _shadowNode = nullptr;
+        }
     }
     if (_fontAtlas)
     {
@@ -1038,6 +1054,40 @@ void Label::updateFont()
     _fontDirty = false;
 }
 
+void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
+{
+    if (_fontDefinition._fontFillColor != _textColor)
+    {
+        Node::removeChild(_textSprite,true);
+        _textSprite = nullptr;
+        if (_shadowNode)
+        {
+            Node::removeChild(_shadowNode,true);
+            _shadowNode = nullptr;
+        }
+        
+        _fontDefinition._fontFillColor.r = _textColor.r;
+        _fontDefinition._fontFillColor.g = _textColor.g;
+        _fontDefinition._fontFillColor.b = _textColor.b;
+        createSpriteWithFontDefinition();
+    }
+    
+    if (_shadowEnabled && _shadowNode == nullptr)
+    {
+        _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
+        _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        _shadowNode->setColor(_shadowColor);
+        _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);
+        _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
+        Node::addChild(_shadowNode,0,Node::INVALID_TAG);  
+    }
+    if (_shadowNode)
+    {
+        _shadowNode->visit(renderer, _modelViewTransform, parentTransformUpdated);
+    }
+    _textSprite->visit(renderer, _modelViewTransform, parentTransformUpdated);
+}
+
 void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     if (! _visible || _originalUTF8String.empty())
@@ -1053,7 +1103,7 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
         updateContent();
     }
 
-    if (! _textSprite && _currLabelEffect == LabelEffect::SHADOW && _shadowBlurRadius <= 0)
+    if (! _textSprite && _shadowEnabled && _shadowBlurRadius <= 0)
     {
         _parentTransform = parentTransform;
         draw(renderer, _modelViewTransform, true);
@@ -1074,15 +1124,7 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
 
         if (_textSprite)
         {
-            if (_fontDefinition._fontFillColor != _textColor)
-            {
-                Node::removeChild(_textSprite,true);
-                _fontDefinition._fontFillColor.r = _textColor.r;
-                _fontDefinition._fontFillColor.g = _textColor.g;
-                _fontDefinition._fontFillColor.b = _textColor.b;
-                createSpriteWithFontDefinition();
-            }
-            _textSprite->visit(renderer, _modelViewTransform, dirty);
+            drawTextSprite(renderer,dirty);
         }
         else
         {
@@ -1226,6 +1268,10 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
     if (_textSprite)
     {
         _textSprite->updateDisplayedColor(_displayedColor);
+        if (_shadowNode)
+        {
+            _shadowNode->updateDisplayedColor(_displayedColor);
+        }
     }
 }
 
@@ -1237,6 +1283,10 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
     if (_textSprite)
     {
         _textSprite->updateDisplayedOpacity(_displayedOpacity);
+        if (_shadowNode)
+        {
+            _shadowNode->updateDisplayedOpacity(_displayedOpacity);
+        }
     }
 }
 
