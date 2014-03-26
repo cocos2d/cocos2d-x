@@ -37,7 +37,7 @@ SceneReader* SceneReader::s_sharedReader = nullptr;
 SceneReader::SceneReader()
 : _fnSelector(nullptr)
 , _node(nullptr)
-, _attachComponent(AttachComponentType::_EmptyNode)
+, _attachComponent(AttachComponentType::_EMPTYNODE)
 {
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComAttribute));
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComRender));
@@ -134,10 +134,10 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             }
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
             Component *com = ObjectFactory::getInstance()->createComponent(comName);
-			if (com != nullptr)
-			{
-				if (com->serialize((void*)(&subDict)))
-				{
+            if (com != nullptr)
+            {
+                if (com->serialize((void*)(&subDict)))
+                {
                     render = dynamic_cast<ComRender*>(com);
                     if (render == nullptr)
                     {
@@ -153,7 +153,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
 
         if (parent != nullptr)
         {
-            if (render == nullptr || attachComponent == AttachComponentType::_EmptyNode)
+            if (render == nullptr || attachComponent == AttachComponentType::_EMPTYNODE)
             {
                 gb = Node::create();
                 if (render != nullptr)
