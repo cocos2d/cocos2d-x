@@ -278,10 +278,8 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	arr->num -= back;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark ccCArray for Values (c structures)
-#endif
+// 
+// // ccCArray for Values (c structures)
 
 /** Allocates and initializes a new C array with specified capacity */
 ccCArray* ccCArrayNew(ssize_t capacity)

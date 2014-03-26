@@ -41,10 +41,8 @@ bool CC_DLL cc_assert_script_compatible(const char *msg)
 
 NS_CC_BEGIN
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark ScriptHandlerEntry
-#endif
+// 
+// // ScriptHandlerEntry
 
 ScriptHandlerEntry* ScriptHandlerEntry::create(int handler)
 {
@@ -63,10 +61,8 @@ ScriptHandlerEntry::~ScriptHandlerEntry(void)
     }
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark SchedulerScriptHandlerEntry
-#endif
+// 
+// // SchedulerScriptHandlerEntry
 
 SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int handler, float interval, bool paused)
 {
@@ -91,10 +87,9 @@ SchedulerScriptHandlerEntry::~SchedulerScriptHandlerEntry(void)
     LUALOG("[LUA] DEL script schedule %d, entryID: %d", _handler, _entryId);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark TouchScriptHandlerEntry
-#endif
+
+// 
+// // TouchScriptHandlerEntry
 
 TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int handler,
                                                              bool isMultiTouches,
@@ -120,10 +115,8 @@ bool TouchScriptHandlerEntry::init(bool isMultiTouches, int priority, bool swall
     return true;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark ScriptEngineManager
-#endif
+// 
+// // ScriptEngineManager
 
 static ScriptEngineManager* s_pSharedScriptEngineManager = nullptr;
 

@@ -66,7 +66,7 @@ static Layer* restartAction()
     return layer;
 } 
 
-//#pragma mark Demo examples start here
+//// Demo examples start here
 
 //@implementation BaseClippingNodeTest
 
@@ -130,9 +130,7 @@ void BaseClippingNodeTest::setup()
 }
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - BasicTest
-#endif
+// BasicTest
 
 std::string BasicTest::title() const
 {
@@ -211,9 +209,7 @@ Node* BasicTest::content()
 }
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - ShapeTest
-#endif
+// ShapeTest
 
 std::string ShapeTest::title() const
 {
@@ -239,9 +235,8 @@ Node* ShapeTest::content()
     return node;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - ShapeInvertedTest
-#endif
+
+// ShapeInvertedTest
 
 std::string ShapeInvertedTest::title() const
 {
@@ -260,9 +255,7 @@ ClippingNode* ShapeInvertedTest::clipper()
     return clipper;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - SpriteTest
-#endif
+// SpriteTest
 
 std::string SpriteTest::title() const
 {
@@ -295,9 +288,7 @@ Node* SpriteTest::content()
     return node;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - SpriteNoAlphaTest
-#endif
+// SpriteNoAlphaTest
 
 std::string SpriteNoAlphaTest::title() const
 {
@@ -316,9 +307,7 @@ ClippingNode* SpriteNoAlphaTest::clipper()
     return clipper;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - SpriteInvertedTest
-#endif
+// SpriteInvertedTest
 
 std::string SpriteInvertedTest::title() const
 {
@@ -338,9 +327,7 @@ ClippingNode* SpriteInvertedTest::clipper()
     return clipper;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - NestedTest
-#endif
+// NestedTest
 
 std::string NestedTest::title() const
 {
@@ -385,9 +372,7 @@ void NestedTest::setup()
 
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - HoleDemo
-#endif
+// HoleDemo
 
 HoleDemo::~HoleDemo()
 {
@@ -482,9 +467,7 @@ void HoleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
     this->pokeHoleAtPoint(point);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - ScrollViewDemo
-#endif
+// ScrollViewDemo
 
 std::string ScrollViewDemo::title() const
 {
@@ -560,9 +543,7 @@ void ScrollViewDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *
     _scrolling = false;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//#pragma mark - RawStencilBufferTests
-#endif
+// RawStencilBufferTests
 
 //#if COCOS2D_DEBUG > 1
 
