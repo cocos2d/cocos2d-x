@@ -2345,4 +2345,4 @@ void ActionRemoveSelf::onEnter()
 std::string ActionRemoveSelf::subtitle() const
 {
 	return "Sequence: Move + Rotate + Scale + RemoveSelf";
-i
+}
