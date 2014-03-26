@@ -641,13 +641,15 @@ public:
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
-protected:
-    //call back function called when size changed.
-    virtual void onSizeChanged();
     
+CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init();
     
+protected:
+    //call back function called when size changed.
+    virtual void onSizeChanged();
+
     //initializes renderer of widget.
     virtual void initRenderer(){};
     
