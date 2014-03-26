@@ -130,6 +130,14 @@ bool EventDispatcher::EventListenerVector::empty() const
 
 void EventDispatcher::EventListenerVector::push_back(EventListener* listener)
 {
+    CCASSERT(_sceneGraphListeners == nullptr ||
+             std::count(_sceneGraphListeners->begin(), _sceneGraphListeners->end(), listener) == 0,
+             "Listener should not be added twice!");
+        
+    CCASSERT(_fixedListeners == nullptr ||
+             std::count(_fixedListeners->begin(), _fixedListeners->end(), listener) == 0,
+             "Listener should not be added twice!");
+
     if (listener->getFixedPriority() == 0)
     {
         if (_sceneGraphListeners == nullptr)
@@ -314,6 +322,11 @@ void EventDispatcher::resumeEventListenersForTarget(Node* target, bool recursive
 
 void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive/* = false */)
 {
+    // Ensure the node is removed from these immediately also.
+    // Don't want any dangling pointers or the possibility of dealing with deleted objects..
+    _nodePriorityMap.erase(target);
+    _dirtyNodes.erase(target);
+
     auto listenerIter = _nodeListenersMap.find(target);
     if (listenerIter != _nodeListenersMap.end())
     {
@@ -440,6 +453,79 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     addEventListener(listener);
 }
 
+#if COCOS2D_DEBUG > 0
+
+void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
+{
+    // Check the listeners map
+    for (const auto & keyValuePair : _listenerMap)
+    {
+        const EventListenerVector * eventListenerVector = keyValuePair.second;
+        
+        if (eventListenerVector)
+        {
+            if (eventListenerVector->getFixedPriorityListeners())
+            {
+                for (EventListener * listener : *eventListenerVector->getFixedPriorityListeners())
+                {
+                    CCASSERT(!listener ||
+                             listener->getSceneGraphPriority() != node,
+                             "Node should have no event listeners registered for it upon destruction!");
+                }
+            }
+            
+            if (eventListenerVector->getSceneGraphPriorityListeners())
+            {
+                for (EventListener * listener : *eventListenerVector->getSceneGraphPriorityListeners())
+                {
+                    CCASSERT(!listener ||
+                             listener->getSceneGraphPriority() != node,
+                             "Node should have no event listeners registered for it upon destruction!");
+                }
+            }
+        }
+    }
+    
+    // Check the node listeners map
+    for (const auto & keyValuePair : _nodeListenersMap)
+    {
+        CCASSERT(keyValuePair.first != node, "Node should have no event listeners registered for it upon destruction!");
+        
+        if (keyValuePair.second)
+        {
+            for (EventListener * listener : *keyValuePair.second)
+            {
+                CCASSERT(listener->getSceneGraphPriority() != node,
+                         "Node should have no event listeners registered for it upon destruction!");
+            }
+        }
+    }
+    
+    // Check the node priority map
+    for (const auto & keyValuePair : _nodePriorityMap)
+    {
+        CCASSERT(keyValuePair.first != node,
+                 "Node should have no event listeners registered for it upon destruction!");
+    }
+    
+    // Check the to be added list
+    for (EventListener * listener : _toAddedListeners)
+    {
+        CCASSERT(listener->getSceneGraphPriority() != node,
+                 "Node should have no event listeners registered for it upon destruction!");
+    }
+    
+    // Check the dirty nodes set
+    for (Node * dirtyNode : _dirtyNodes)
+    {
+        CCASSERT(dirtyNode != node,
+                 "Node should have no event listeners registered for it upon destruction!");
+    }
+}
+
+#endif  // #if COCOS2D_DEBUG > 0
+
+
 void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)
 {
     CCASSERT(listener, "Invalid parameters.");
@@ -492,7 +578,14 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                     listeners->erase(iter);
                     CC_SAFE_RELEASE(l);
                 }
-                
+                else
+                {
+                	// Fix to prevent events propagating to nodes or listeners that are destroyed:
+                    // Since we can't remove the listener while we're iterating the listeners list,
+                    // null out the pointer. We'll erase the actual pointer storage later.
+                    *iter = nullptr;
+                }
+
                 isFound = true;
                 break;
             }
@@ -519,6 +612,16 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRIORITY);
             }
         }
+        
+        CCASSERT(_inDispatch != 0 ||
+                 !sceneGraphPriorityListeners ||
+                 std::count(sceneGraphPriorityListeners->begin(), sceneGraphPriorityListeners->end(), listener) == 0,
+                 "Listener should be in no lists after this is done if we're not currently in dispatch mode.");
+            
+        CCASSERT(_inDispatch != 0 ||
+                 !fixedPriorityListeners ||
+                 std::count(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener) == 0,
+                 "Listener should be in no lists after this is done if we're not currently in dispatch mode.");			 
 
         if (iter->second->empty())
         {
@@ -613,6 +716,11 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
             // priority == 0, scene graph priority
             for (auto& l : *sceneGraphPriorityListeners)
             {
+                if (!l)
+                {
+                    continue;   // Event listener slot which was temporarily nulled because we removed the listener while dispatching events.
+                }
+
                 if (!l->isPaused() && l->isRegistered() && onEvent(l))
                 {
                     shouldStopPropagation = true;
@@ -900,7 +1008,13 @@ void EventDispatcher::updateListeners(Event* event)
             for (auto iter = sceneGraphPriorityListeners->begin(); iter != sceneGraphPriorityListeners->end();)
             {
                 auto l = *iter;
-                if (!l->isRegistered())
+
+                if (!l)
+                {
+                    // Event listener slot which was temporarily nulled because we removed the listener while dispatching events.
+                    iter = sceneGraphPriorityListeners->erase(iter);
+                }
+                else if (!l->isRegistered())
                 {
                     iter = sceneGraphPriorityListeners->erase(iter);
                     l->release();
@@ -917,7 +1031,13 @@ void EventDispatcher::updateListeners(Event* event)
             for (auto iter = fixedPriorityListeners->begin(); iter != fixedPriorityListeners->end();)
             {
                 auto l = *iter;
-                if (!l->isRegistered())
+
+                if (!l)
+                {
+                    // Event listener slot which was temporarily nulled because we removed the listener while dispatching events.
+                    iter = fixedPriorityListeners->erase(iter);
+                }
+                else if (!l->isRegistered())
                 {
                     iter = fixedPriorityListeners->erase(iter);
                     l->release();
@@ -1123,6 +1243,14 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
             for (auto iter = listenerVector->begin(); iter != listenerVector->end();)
             {
                 auto l = *iter;
+
+	            if (!l)
+	            {
+	                // Listener slot which was erased by nulling out the slot.
+	                // This happens when we try to remove a listener while dispatching events.
+	                continue;
+	            }
+				
                 l->setRegistered(false);
                 if (l->getSceneGraphPriority() != nullptr)
                 {
