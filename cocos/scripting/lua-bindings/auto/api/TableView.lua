@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module TableView
--- @extend ScrollView,ScrollViewDelegate,
+-- @extend ScrollView,ScrollViewDelegate
 
 --------------------------------
 -- @function [parent=#TableView] updateCellAtIndex 
