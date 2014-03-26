@@ -98,6 +98,18 @@ public:
      */
     void purgeTexturesAtlas();
 
+    /** sets font texture parameters:
+    - GL_TEXTURE_MIN_FILTER = GL_LINEAR
+    - GL_TEXTURE_MAG_FILTER = GL_LINEAR
+    */
+    void setAntiAliasTexParameters();
+
+    /** sets font texture parameters:
+    - GL_TEXTURE_MIN_FILTER = GL_NEAREST
+    - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+    */
+    void setAliasTexParameters();
+
 private:
 
     void relaseTextures();
@@ -118,6 +130,8 @@ private:
     int _fontAscender;
     EventListenerCustom* _toBackgroundListener;
     EventListenerCustom* _toForegroundListener;
+
+    bool _antialiasEnabled;
 };
 
 
