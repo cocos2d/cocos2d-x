@@ -34,7 +34,7 @@ SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
 SceneReader::SceneReader()
 :_pNode(NULL)
-,_eAttachComponent(ccAttachComponentType::kCCEmptyNode)
+,_eAttachComponent(ccAttachComponentType::EMPTY_NODE)
 {
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(CCComAttribute));
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(CCComRender));
@@ -116,7 +116,7 @@ CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
 	return _retNode;
 }
 
-CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, ccAttachComponentType eAttachComponent/* = ccAttachComponentType::kCCEmptyNode*/)
+CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, ccAttachComponentType eAttachComponent/* = ccAttachComponentType::EMPTY_NODE*/)
 {
 	const char *className = DICTOOL->getStringValue_json(root, "classname");
 	if(strcmp(className, "CCNode") == 0)
@@ -143,9 +143,10 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 			{
 				if (pCom->serialize((void*)(&subDict)))
 				{
-                    if (pCom->isRender())
+                    CCComRender *pTRender = dynamic_cast<CCComRender*>(pCom);
+                    if (pTRender != NULL)
                     {
-                        pRender = (CCComRender*)pCom;
+                        pRender = pTRender;
                     }
                     else
                     {
@@ -165,7 +166,7 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 
         if (parent != NULL)
         {
-            if (pRender == NULL || eAttachComponent == ccAttachComponentType::kCCEmptyNode)
+            if (pRender == NULL || eAttachComponent == ccAttachComponentType::EMPTY_NODE)
             {
                 gb = CCNode::create();
                 if (pRender != NULL)

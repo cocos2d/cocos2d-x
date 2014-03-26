@@ -37,20 +37,20 @@ typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 
 typedef enum {
     ///parent: Empty CCNode
-    ///            CCComRender( CCSpirte, CCArmature, CCTMXTiledMap, CCParticleSystemQuad, GUIComponent)
+    ///            CCComRender( CCSprite, CCArmature, CCTMXTiledMap, CCParticleSystemQuad, GUIComponent)
     ///            CCComAttribute
     ///            CCComAudio
     ///    ....
-    kCCEmptyNode,
+    EMPTY_NODE,
 
-    ///parent: CCComRender(CCSpirte, CCArmature, CCTMXTiledMap, CCParticleSystemQuad, GUIComponent)
+    ///parent: CCComRender(CCSprite, CCArmature, CCTMXTiledMap, CCParticleSystemQuad, GUIComponent)
     ///          CCComAttribute
     ///          CCComAudio
     ///          .....
-    kCCRenderNode,
+    RENDER_NODE,
 
     /// Default CCCreateNodeType
-    kCCAttachComponentTypeDefault = kCCEmptyNode,
+    DEFAULT = EMPTY_NODE,
 }ccAttachComponentType;
 
 /**
@@ -67,12 +67,12 @@ public:
 	static SceneReader* sharedSceneReader();
 	static void purge();
 	static const char* sceneReaderVersion();
-	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, ccAttachComponentType eAttachComponent = ccAttachComponentType::kCCEmptyNode);
+	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, ccAttachComponentType eAttachComponent = ccAttachComponentType::EMPTY_NODE);
 	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 	cocos2d::CCNode* getNodeByTag(int nTag);
     inline ccAttachComponentType getAttachComponentType(){return _eAttachComponent;}
 private:
-    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, ccAttachComponentType eAttachComponent = ccAttachComponentType::kCCEmptyNode);
+    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, ccAttachComponentType eAttachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
 	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
