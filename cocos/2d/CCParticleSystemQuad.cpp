@@ -148,7 +148,7 @@ ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map)
 ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map, SpriteFrame *frame)
 {
     ParticleSystemQuad *ret = new ParticleSystemQuad();
-    if (ret && ret->initWithDictionaryAndFrame(map, frame))
+    if (ret && ret->initWithValueMap(map, frame))
     {
         ret->autorelease();
         return ret;
@@ -157,7 +157,7 @@ ParticleSystemQuad * ParticleSystemQuad::create( ValueMap& map, SpriteFrame *fra
     return ret;
 }
 
-bool ParticleSystemQuad::initWithDictionaryAndFrame(ValueMap &dictionary, SpriteFrame* frame)
+bool ParticleSystemQuad::initWithValueMap(ValueMap &dictionary, SpriteFrame* frame)
 {
     std::string dirname = "";
     bool ret = false;

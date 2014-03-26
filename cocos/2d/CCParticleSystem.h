@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCValue.h"
 #include "CCString.h"
+#include "CCSpriteFrame.h"
 
 NS_CC_BEGIN
 
@@ -378,6 +379,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes a ParticleSystem*/
     bool init();
+    
     /** initializes a ParticleSystem from a plist file.
      This plist files can be created manually or with Particle Designer:
      http://particledesigner.71squared.com/

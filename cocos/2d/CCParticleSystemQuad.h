@@ -142,9 +142,10 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua NA
      */
     virtual bool initWithTotalParticles(int numberOfParticles) override;
-
+    
     /** initializes a ParticleSystemQuad from a ValueMap and a SpriteFrame set as a particle */
-    bool initWithDictionaryAndFrame(ValueMap &dictionary, SpriteFrame* frame);
+    bool initWithValueMap(ValueMap &dictionary, SpriteFrame* frame);
+    
     
 protected:
     /** initializes the indices for the vertices*/
