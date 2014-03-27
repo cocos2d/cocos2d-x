@@ -566,6 +566,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (_inDispatch == 0)
                 {
                     listeners->erase(iter);
+                    CC_SAFE_RELEASE(l);
                 }
                 else
                 {
@@ -576,7 +577,6 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 }
 
                 isFound = true;
-                CC_SAFE_RELEASE(l);
                 break;
             }
         }
