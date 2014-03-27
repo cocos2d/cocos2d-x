@@ -58,7 +58,7 @@ void CustomGUITestMainLayer::onEnter()
     
     _itemMenu = Menu::create();
     _itemMenu->setPosition( _curPos );
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
@@ -118,7 +118,7 @@ void CustomGUITestScene::onEnter()
 {
     CCScene::onEnter();
     
-    LabelTTF* label = LabelTTF::create("Back", "Arial", 20);
+    auto label = Label::create("Back", "fonts/arial.ttf", 20);
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CustomGUITestScene::BackCallback, this));
     

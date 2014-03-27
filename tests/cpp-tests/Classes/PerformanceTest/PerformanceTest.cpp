@@ -53,7 +53,7 @@ void PerformanceMainLayer::onEnter()
 
     _itemMenu = Menu::create();
     _itemMenu->setPosition(_CurrentPos);
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_testMax; ++i)
     {
@@ -149,7 +149,7 @@ void PerformBasicLayer::onEnter()
 {
     Layer::onEnter();
 
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));

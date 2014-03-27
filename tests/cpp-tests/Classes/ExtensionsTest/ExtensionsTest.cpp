@@ -112,7 +112,7 @@ void ExtensionsMainLayer::onEnter()
     
     _itemMenu = Menu::create();
     _itemMenu->setPosition( Point::ZERO );
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {

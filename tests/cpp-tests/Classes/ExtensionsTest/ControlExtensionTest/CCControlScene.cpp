@@ -60,7 +60,7 @@ bool ControlScene::init()
         addChild(ribbon);
         
         // Add the title
-        setSceneTitleLabel(LabelTTF::create("Title", "Arial", 12));
+        setSceneTitleLabel(Label::create("Title", "fonts/arial.ttf", 12));
         _sceneTitleLabel->setPosition(Point (VisibleRect::center().x, VisibleRect::top().y - _sceneTitleLabel->getContentSize().height / 2 - 5));
         addChild(_sceneTitleLabel, 1);
         

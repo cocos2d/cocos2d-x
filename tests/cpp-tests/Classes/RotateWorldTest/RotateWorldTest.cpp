@@ -19,7 +19,7 @@ void TestLayer::onEnter()
     //auto array = [UIFont familyNames];
     //for( String *s in array )
     //    NSLog( s );
-    auto label = LabelTTF::create("cocos2d", "Tahoma", 64);
+    auto label = Label::create("cocos2d", "Tahoma", 64);
 
     label->setPosition( Point(x/2,y/2) );
     

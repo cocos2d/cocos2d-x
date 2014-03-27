@@ -12,8 +12,8 @@ TextureCacheTest::TextureCacheTest()
 {
     auto size = Director::getInstance()->getWinSize();
 
-    _labelLoading = LabelTTF::create("loading...", "Arial", 15);
-    _labelPercent = LabelTTF::create("%0", "Arial", 15);
+    _labelLoading = Label::create("loading...", "fonts/arial.ttf", 15);
+    _labelPercent = Label::create("%0", "fonts/arial.ttf", 15);
 
     _labelLoading->setPosition(Point(size.width / 2, size.height / 2 - 20));
     _labelPercent->setPosition(Point(size.width / 2, size.height / 2 + 20));

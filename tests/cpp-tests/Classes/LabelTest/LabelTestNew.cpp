@@ -1575,13 +1575,13 @@ LabelFontNameTest::LabelFontNameTest()
     addChild(label1);
 
     FontDefinition fontDef;
-    fontDef._fontName = "Marker Felt";
+    fontDef._fontName = "fonts/Marker Felt.ttf";
     fontDef._fontSize = 32;
     auto label2 = Label::createWithFontDefinition("Create with FontDefinition",fontDef);
     label2->setPosition( Point(size.width/2, size.height * 0.6) );
     addChild(label2);
 
-    auto label3 = Label::create("Marker Felt","Marker Felt",32);
+    auto label3 = Label::create("fonts/Marker Felt.ttf","fonts/Marker Felt.ttf",32);
     label3->setPosition( Point(size.width/2, size.height * 0.5) );
     addChild(label3);
 }
