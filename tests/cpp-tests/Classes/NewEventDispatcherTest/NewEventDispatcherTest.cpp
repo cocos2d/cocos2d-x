@@ -27,7 +27,7 @@ std::function<Layer*()> createFunctions[] =
     CL(PauseResumeTargetTest),
     CL(Issue4129),
     CL(Issue4160),
-    CL(EventsToDestroyedNodeTest)
+    CL(DanglingNodePointersTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -1276,16 +1276,16 @@ std::string Issue4160::subtitle() const
     return "Touch the red block twice \n should not crash and the red one couldn't be touched";
 }
 
-// EventsToDestroyedNodeTest
-class EventsToDestroyedNodeTestSprite : public Sprite
+// DanglingNodePointersTest
+class DanglingNodePointersTestSprite : public Sprite
 {
 public:
     
-    typedef std::function<void (EventsToDestroyedNodeTestSprite * sprite)> TappedCallback;
+    typedef std::function<void (DanglingNodePointersTestSprite * sprite)> TappedCallback;
     
-    static EventsToDestroyedNodeTestSprite * create(const TappedCallback & tappedCallback)
+    static DanglingNodePointersTestSprite * create(const TappedCallback & tappedCallback)
     {
-        auto ret = new EventsToDestroyedNodeTestSprite(tappedCallback);
+        auto ret = new DanglingNodePointersTestSprite(tappedCallback);
         
         if (ret && ret->init())
         {
@@ -1299,7 +1299,7 @@ public:
 
 protected:
     
-    EventsToDestroyedNodeTestSprite(const TappedCallback & tappedCallback)
+    DanglingNodePointersTestSprite(const TappedCallback & tappedCallback)
     :
         _eventListener(nullptr),
         _tappedCallback(tappedCallback)
@@ -1344,54 +1344,62 @@ private:
     TappedCallback                  _tappedCallback;
 };
 
-EventsToDestroyedNodeTest::EventsToDestroyedNodeTest()
+DanglingNodePointersTest::DanglingNodePointersTest()
 {
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
+    
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto callback2 = [](EventsToDestroyedNodeTestSprite * sprite2)
+    auto callback2 = [](DanglingNodePointersTestSprite * sprite2)
     {
         CCASSERT(false, "This should never be called because the sprite gets removed from it's parent and destroyed!");
         exit(1);
     };
     
-    auto callback1 = [callback2, origin, size](EventsToDestroyedNodeTestSprite * sprite1)
+    auto callback1 = [callback2, origin, size](DanglingNodePointersTestSprite * sprite1)
     {
-        EventsToDestroyedNodeTestSprite * sprite2 = dynamic_cast<EventsToDestroyedNodeTestSprite*>(sprite1->getChildren().at(0));
+        DanglingNodePointersTestSprite * sprite2 = dynamic_cast<DanglingNodePointersTestSprite*>(sprite1->getChildren().at(0));
         CCASSERT(sprite2, "The first child of sprite 1 should be sprite 2!");
         CCASSERT(sprite2->getReferenceCount() == 1, "There should only be 1 reference to sprite 1, from it's parent node. Hence removing it will destroy it!");
         sprite1->removeAllChildren();   // This call should cause sprite 2 to be destroyed
         
         // Recreate sprite 1 again
-        sprite2 = EventsToDestroyedNodeTestSprite::create(callback2);
+        sprite2 = DanglingNodePointersTestSprite::create(callback2);
         sprite2->setTexture("Images/MagentaSquare.png");
         sprite2->setPosition(origin+Point(size.width/2, size.height/2));
         sprite1->addChild(sprite2, -20);
     };
     
-    auto sprite1 = EventsToDestroyedNodeTestSprite::create(callback1);    // Sprite 1 will receive touch before sprite 2
+    auto sprite1 = DanglingNodePointersTestSprite::create(callback1);    // Sprite 1 will receive touch before sprite 2
     sprite1->setTexture("Images/CyanSquare.png");
     sprite1->setPosition(origin+Point(size.width/2, size.height/2));
     addChild(sprite1, -10);
     
-    auto sprite2 = EventsToDestroyedNodeTestSprite::create(callback2);   // Sprite 2 will be removed when sprite 1 is touched, should never receive an event.
+    auto sprite2 = DanglingNodePointersTestSprite::create(callback2);   // Sprite 2 will be removed when sprite 1 is touched, should never receive an event.
     sprite2->setTexture("Images/MagentaSquare.png");
     sprite2->setPosition(origin+Point(size.width/2, size.height/2));
     sprite1->addChild(sprite2, -20);
+    
+#endif
 }
 
-EventsToDestroyedNodeTest::~EventsToDestroyedNodeTest()
+DanglingNodePointersTest::~DanglingNodePointersTest()
 {
     
 }
 
-std::string EventsToDestroyedNodeTest::title() const
+std::string DanglingNodePointersTest::title() const
 {
-    return "EventsToDestroyedNodeTest";
+    return "DanglingNodePointersTest";
 }
 
-std::string EventsToDestroyedNodeTest::subtitle() const
+std::string DanglingNodePointersTest::subtitle() const
 {
-    return  "1: Goto the next test and return to this test.\n"
-            "2: Tap the square - should not crash!";
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
+    return  "Tap the square - should not crash!";
+#else
+    return  "For test to work, must be compiled with:\n"
+            "CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1\n&& COCOS2D_DEBUG > 0";
+#endif
 }

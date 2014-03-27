@@ -206,12 +206,12 @@ public:
 private:
 };
 
-class EventsToDestroyedNodeTest : public EventDispatcherTestDemo
+class DanglingNodePointersTest : public EventDispatcherTestDemo
 {
 public:
-    CREATE_FUNC(EventsToDestroyedNodeTest);
-    EventsToDestroyedNodeTest();
-    virtual ~EventsToDestroyedNodeTest();
+    CREATE_FUNC(DanglingNodePointersTest);
+    DanglingNodePointersTest();
+    virtual ~DanglingNodePointersTest();
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
