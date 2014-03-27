@@ -35,24 +35,6 @@ NS_CC_EXT_BEGIN
 typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 #define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
 
-typedef enum {
-    ///parent: Empty CCNode
-    ///            CCComRender( CCSprite, CCArmature, CCTMXTiledMap, CCParticleSystemQuad, GUIComponent)
-    ///            CCComAttribute
-    ///            CCComAudio
-    ///    ....
-    EMPTY_NODE,
-
-    ///parent: CCComRender(CCSprite, CCArmature, CCTMXTiledMap, CCParticleSystemQuad, GUIComponent)
-    ///          CCComAttribute
-    ///          CCComAudio
-    ///          .....
-    RENDER_NODE,
-
-    /// Default CCCreateNodeType
-    DEFAULT = EMPTY_NODE,
-} ccAttachComponentType;
-
 /**
 *   @js NA
 *   @lua NA
@@ -60,19 +42,39 @@ typedef enum {
 class CC_EX_DLL SceneReader
 {
 public:
-	SceneReader(void);
-	virtual ~SceneReader(void);
+    enum class AttachComponentType
+    {
+        ///parent: Empty Node
+        ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        ///            ComAttribute
+        ///            ComAudio
+        ///            ....
+        EMPTY_NODE,
 
-public:
+        ///parent:   ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        ///          ComAttribute
+        ///          ComAudio
+        ///          .....
+        RENDER_NODE,
+
+        /// Default AttachComponentType is _EmptyNode
+        DEFAULT = EMPTY_NODE,
+    };
+
 	static SceneReader* sharedSceneReader();
 	static void purge();
 	static const char* sceneReaderVersion();
-	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, cocos2d::extension::ccAttachComponentType eAttachComponent = cocos2d::extension::ccAttachComponentType::EMPTY_NODE);
+	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = AttachComponentType::EMPTY_NODE);
 	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 	cocos2d::CCNode* getNodeByTag(int nTag);
-    inline cocos2d::extension::ccAttachComponentType getAttachComponentType(){return _eAttachComponent;}
+    inline AttachComponentType getAttachComponentType(){return _eAttachComponent;}
+
 private:
-    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, cocos2d::extension::ccAttachComponentType eAttachComponent);
+    SceneReader(void);
+    virtual ~SceneReader(void);
+
+private:
+    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, AttachComponentType eAttachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
 	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
@@ -81,7 +83,7 @@ private:
 	static CCObject*       _pListener;
 	static SEL_CallFuncOD  _pfnSelector;
 	cocos2d::CCNode *_pNode;
-	ccAttachComponentType _eAttachComponent;
+	AttachComponentType _eAttachComponent;
 };
 
 

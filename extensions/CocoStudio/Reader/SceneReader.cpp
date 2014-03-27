@@ -34,7 +34,7 @@ SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
 SceneReader::SceneReader()
 :_pNode(NULL)
-,_eAttachComponent(ccAttachComponentType::EMPTY_NODE)
+,_eAttachComponent(AttachComponentType::EMPTY_NODE)
 {
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(CCComAttribute));
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(CCComRender));
@@ -51,7 +51,7 @@ const char* SceneReader::sceneReaderVersion()
 	return "1.2.0.0";
 }
 
-cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName, ccAttachComponentType eAttachComponent /*= ccAttachComponentType::kCCEmptyNode*/)
+cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName, AttachComponentType eAttachComponent /*= AttachComponentType::EMPTY_NODE*/)
 {
 	rapidjson::Document jsonDict;
 	do {
@@ -116,7 +116,7 @@ CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
 	return _retNode;
 }
 
-CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, ccAttachComponentType eAttachComponent/* = ccAttachComponentType::EMPTY_NODE*/)
+CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, AttachComponentType eAttachComponent /*= AttachComponentType::EMPTY_NODE*/)
 {
 	const char *className = DICTOOL->getStringValue_json(root, "classname");
 	if(strcmp(className, "CCNode") == 0)
@@ -166,7 +166,7 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 
         if (parent != NULL)
         {
-            if (pRender == NULL || eAttachComponent == ccAttachComponentType::EMPTY_NODE)
+            if (pRender == NULL || eAttachComponent == AttachComponentType::EMPTY_NODE)
             {
                 gb = CCNode::create();
                 if (pRender != NULL)
