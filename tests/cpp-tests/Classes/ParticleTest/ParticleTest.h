@@ -310,6 +310,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class ParticleVisibleTest : public ParticleDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void callback(float delta);
+};
+
 class ParticleAutoBatching : public ParticleDemo
 {
 public:
