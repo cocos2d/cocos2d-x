@@ -130,6 +130,7 @@ bool EventDispatcher::EventListenerVector::empty() const
 
 void EventDispatcher::EventListenerVector::push_back(EventListener* listener)
 {
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
     CCASSERT(_sceneGraphListeners == nullptr ||
              std::count(_sceneGraphListeners->begin(), _sceneGraphListeners->end(), listener) == 0,
              "Listener should not be added twice!");
@@ -137,6 +138,7 @@ void EventDispatcher::EventListenerVector::push_back(EventListener* listener)
     CCASSERT(_fixedListeners == nullptr ||
              std::count(_fixedListeners->begin(), _fixedListeners->end(), listener) == 0,
              "Listener should not be added twice!");
+#endif
 
     if (listener->getFixedPriority() == 0)
     {
@@ -597,6 +599,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             }
         }
         
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
         CCASSERT(_inDispatch != 0 ||
                  !sceneGraphPriorityListeners ||
                  std::count(sceneGraphPriorityListeners->begin(), sceneGraphPriorityListeners->end(), listener) == 0,
@@ -605,7 +608,8 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         CCASSERT(_inDispatch != 0 ||
                  !fixedPriorityListeners ||
                  std::count(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener) == 0,
-                 "Listener should be in no lists after this is done if we're not currently in dispatch mode.");			 
+                 "Listener should be in no lists after this is done if we're not currently in dispatch mode.");
+#endif
 
         if (iter->second->empty())
         {
