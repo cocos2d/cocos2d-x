@@ -417,7 +417,7 @@ void HttpClient::destroyInstance()
     CC_SAFE_DELETE(s_pHttpClient);
 }
 
-void HttpClient::enableSSLCaInfo(std::string info)
+void HttpClient::enableSSLCaInfo(const std::string& info)
 {
     s_sslCaInfo = info;
 }

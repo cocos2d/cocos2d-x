@@ -54,7 +54,7 @@ public:
     static void destroyInstance();
 
     /** Enable ssl support **/
-    static void enableSSLCaInfo(std::string info);
+    static void enableSSLCaInfo(const std::string& info);
 
     /** Disable ssl support **/
     static void disableSSLCaInfo();
