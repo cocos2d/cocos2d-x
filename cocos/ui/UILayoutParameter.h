@@ -47,7 +47,7 @@ public:
     /**
      * Default constructor
      */
-    LayoutParameter() : _margin(Margin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
+    LayoutParameter() : _margin(Margin()), _offSetBeforeLocated(Point::ZERO), _offSetAfterLocated(Point::ZERO) {_layoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
@@ -79,6 +79,34 @@ public:
     const Margin& getMargin() const;
     
     /**
+     * Sets Offset parameter for LayoutParameter.
+     *
+     * @param offset
+     */
+    void setOffsetBeforeLocated(const Point& offset);
+    
+    /**
+     * Gets Offset parameter of LayoutParameter.
+     *
+     * @return const Offset&
+     */
+    const Point& getOffsetBeforeLocated() const;
+    
+    /**
+     * Sets Offset parameter for LayoutParameter.
+     *
+     * @param offset
+     */
+    void setOffsetAfterLocated(const Point& offset);
+    
+    /**
+     * Gets Offset parameter of LayoutParameter.
+     *
+     * @return const Offset&
+     */
+    const Point& getOffsetAfterLocated() const;
+    
+    /**
      * Gets LayoutParameterType of LayoutParameter.
      *
      * @see LayoutParameterType
@@ -92,6 +120,8 @@ public:
     virtual void copyProperties(LayoutParameter* model);
 protected:
     Margin _margin;
+    Point _offSetBeforeLocated;
+    Point _offSetAfterLocated;
     LayoutParameterType _layoutParameterType;
 };
 /**
