@@ -26,7 +26,8 @@ std::function<Layer*()> createFunctions[] =
     CL(StopPropagationTest),
     CL(PauseResumeTargetTest),
     CL(Issue4129),
-    CL(Issue4160)
+    CL(Issue4160),
+    CL(EventsToDestroyedNodeTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -1273,4 +1274,137 @@ std::string Issue4160::title() const
 std::string Issue4160::subtitle() const
 {
     return "Touch the red block twice \n should not crash and the red one couldn't be touched";
+}
+
+// EventsToDestroyedNodeTest
+class EventsToDestroyedNodeTestSprite : public Sprite
+{
+public:
+    
+    typedef std::function<void (EventsToDestroyedNodeTestSprite * sprite)> TappedCallback;
+    
+    static EventsToDestroyedNodeTestSprite * create(const TappedCallback & tappedCallback)
+    {
+        auto ret = new EventsToDestroyedNodeTestSprite(tappedCallback);
+        
+        if (ret && ret->init())
+        {
+            ret->autorelease();
+            return ret;
+        }
+
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+
+protected:
+    
+    EventsToDestroyedNodeTestSprite(const TappedCallback & tappedCallback)
+    :
+        _eventListener(nullptr),
+        _tappedCallback(tappedCallback)
+    {
+        
+    }
+    
+public:
+    
+    void onEnter() override
+    {
+        Sprite::onEnter();
+        
+        _eventListener = EventListenerTouchOneByOne::create();
+        _eventListener->setSwallowTouches(false);
+        
+        _eventListener->onTouchBegan = [this](Touch* touch, Event* event) -> bool
+        {
+            _tappedCallback(this);
+            return false;           // Don't claim the touch so it can propagate
+        };
+        
+        _eventListener->onTouchEnded = [](Touch* touch, Event* event)
+        {
+            // Do nothing
+        };
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_eventListener, this);
+    }
+    
+    void onExit() override
+    {
+        _eventDispatcher->removeEventListenersForTarget(this);
+        _eventListener = nullptr;
+        Sprite::onExit();
+    }
+    
+private:
+    
+    EventListenerTouchOneByOne *    _eventListener;
+    int                             _fixedPriority;
+    TappedCallback                  _tappedCallback;
+};
+
+EventsToDestroyedNodeTest::EventsToDestroyedNodeTest()
+{
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto callback2 = [](EventsToDestroyedNodeTestSprite * sprite2)
+    {
+        CCASSERT(false, "This should never be called because the sprite gets removed from it's parent and destroyed!");
+        exit(1);
+    };
+    
+    auto callback1 = [callback2, origin, size](EventsToDestroyedNodeTestSprite * sprite1)
+    {
+        EventsToDestroyedNodeTestSprite * sprite2 = dynamic_cast<EventsToDestroyedNodeTestSprite*>(sprite1->getChildren().at(0));
+        CCASSERT(sprite2, "The first child of sprite 1 should be sprite 2!");
+        CCASSERT(sprite2->getReferenceCount() == 1, "There should only be 1 reference to sprite 1, from it's parent node. Hence removing it will destroy it!");
+        sprite1->removeAllChildren();   // This call should cause sprite 2 to be destroyed
+        
+        // Recreate sprite 1 again
+        sprite2 = EventsToDestroyedNodeTestSprite::create(callback2);
+        sprite2->setTexture("Images/MagentaSquare.png");
+        sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+        sprite1->addChild(sprite2, -20);
+    };
+    
+    auto sprite1 = EventsToDestroyedNodeTestSprite::create(callback1);    // Sprite 1 will receive touch before sprite 2
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite1, -10);
+    
+    auto sprite2 = EventsToDestroyedNodeTestSprite::create(callback2);   // Sprite 2 will be removed when sprite 1 is touched, should never receive an event.
+    sprite2->setTexture("Images/MagentaSquare.png");
+    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite1->addChild(sprite2, -20);
+}
+
+EventsToDestroyedNodeTest::~EventsToDestroyedNodeTest()
+{
+    EventDispatcherTestDemo::onEnter();
+    
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto sprite1 = TouchableSprite::create(20);
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite1, 10);
+    
+    auto sprite2 = TouchableSprite::create(10);
+    sprite2->setTexture("Images/MagentaSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite2, 20);
+}
+
+std::string EventsToDestroyedNodeTest::title() const
+{
+    return "EventsToDestroyedNodeTest";
+}
+
+std::string EventsToDestroyedNodeTest::subtitle() const
+{
+    return  "1: Goto the next test and return to this test.\n"
+            "2: Tap the square - should not crash!";
 }
