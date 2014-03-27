@@ -453,7 +453,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     addEventListener(listener);
 }
 
-#if COCOS2D_DEBUG > 0
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
 
 void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
 {
@@ -513,7 +513,7 @@ void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
     }
 }
 
-#endif  // #if COCOS2D_DEBUG > 0
+#endif  // #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
 
 
 void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)

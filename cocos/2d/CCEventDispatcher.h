@@ -140,7 +140,7 @@ public:
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
 
-#if COCOS2D_DEBUG > 0
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
     
     /**
      * To help track down event listener issues in debug builds.
