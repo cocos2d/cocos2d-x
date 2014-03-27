@@ -96,6 +96,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 - (BOOL)playAtTime:(NSTimeInterval) time;  /* play a sound some time in the future. time should be greater than deviceCurrentTime. */
 - (void)pause;			/* pauses playback, but remains ready to play. */
 - (void)stop;			/* stops playback. no longer ready to play. */
+- (BOOL) resume;
 
 /* properties */
 
