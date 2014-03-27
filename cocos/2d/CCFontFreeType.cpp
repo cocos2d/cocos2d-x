@@ -39,6 +39,9 @@ FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
 
+static std::unordered_map<std::string, Data> CacheFontData;
+static std::unordered_map<std::string, int> CacheFontDataRef;
+
 FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 {
     FontFreeType *tempFont =  new FontFreeType(distanceFieldEnabled,outline);
@@ -106,15 +109,32 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
 
-    _ttfData = FileUtils::getInstance()->getDataFromFile(fontName);
+    auto fielDataIterator = CacheFontData.find(fontName);
+    if (fielDataIterator != CacheFontData.end())
+    {
+        auto temp = CacheFontDataRef.find(fontName);
+        if (temp != CacheFontDataRef.end())
+        {
+            (*temp).second += 1;
+        }
+        else
+        {
+            CacheFontDataRef[fontName] = 1;
+        }
+    }
+    else
+    {
+        CacheFontDataRef[fontName] = 1;
+        CacheFontData[fontName] = FileUtils::getInstance()->getDataFromFile(fontName);
+        if (CacheFontData[fontName].isNull())
+        {
+            return false;
+        }
+    }
+
+    if (FT_New_Memory_Face(getFTLibrary(), CacheFontData[fontName].getBytes(), CacheFontData[fontName].getSize(), 0, &face ))
+        return false;
     
-    if (_ttfData.isNull())
-        return false;
-
-    // create the face from the data
-    if (FT_New_Memory_Face(getFTLibrary(), _ttfData.getBytes(), _ttfData.getSize(), 0, &face ))
-        return false;
-
     //we want to use unicode
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
         return false;
@@ -144,6 +164,13 @@ FontFreeType::~FontFreeType()
     if (_fontRef)
     {
         FT_Done_Face(_fontRef);
+    }
+
+    CacheFontDataRef[_fontName] -= 1;
+    if (CacheFontDataRef[_fontName] == 0)
+    {
+        CacheFontDataRef.erase(_fontName);
+        CacheFontData.erase(_fontName);
     }
 }
 
