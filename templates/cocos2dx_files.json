@@ -3193,6 +3193,7 @@
         "cocos/scripting/lua-bindings/auto/api/ProgressFromTo.lua", 
         "cocos/scripting/lua-bindings/auto/api/ProgressTimer.lua", 
         "cocos/scripting/lua-bindings/auto/api/ProgressTo.lua", 
+        "cocos/scripting/lua-bindings/auto/api/ProtectedNode.lua", 
         "cocos/scripting/lua-bindings/auto/api/Ref.lua", 
         "cocos/scripting/lua-bindings/auto/api/RelativeLayoutParameter.lua", 
         "cocos/scripting/lua-bindings/auto/api/RemoveSelf.lua", 
