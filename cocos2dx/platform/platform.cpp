@@ -28,6 +28,27 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+// from 2dx
+static unsigned int _Hash(const char *key)
+{
+    unsigned int len = strlen(key);
+    const char *end=key+len;
+    unsigned int hash;
+    
+    for (hash = 0; key < end; key++)
+    {
+        hash *= 16777619;
+        hash ^= (unsigned int) (unsigned char) toupper(*key);
+    }
+    return (hash);
+}
+
+unsigned int hash_code(const std::type_info& info)
+{
+    // hash name() to size_t value by pseudorandomizing transform
+    return _Hash(info.name());
+}
+
 int CCTime::gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp)
 {
     CC_UNUSED_PARAM(tzp);

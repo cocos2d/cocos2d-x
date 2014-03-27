@@ -27,6 +27,7 @@ TOLUA_API int toluafix_isfunction(lua_State* L, int lo, const char* type, int de
 TOLUA_API int toluafix_totable(lua_State* L, int lo, int def);
 TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, tolua_Error* err);
 TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label);
+TOLUA_API void toluafix_add_type_mapping(size_t type,const char* clsName);
     
 #ifdef __cplusplus
 } // extern "C"

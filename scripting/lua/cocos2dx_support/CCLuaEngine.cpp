@@ -89,9 +89,9 @@ int CCLuaEngine::executeScriptFile(const char* filename)
     return ret;
 }
 
-int CCLuaEngine::executeGlobalFunction(const char* functionName)
+int CCLuaEngine::executeGlobalFunction(const char* functionName, int numArgs /* = 0 */)
 {
-    int ret = m_stack->executeGlobalFunction(functionName);
+    int ret = m_stack->executeGlobalFunction(functionName, numArgs);
     m_stack->clean();
     return ret;
 }
@@ -143,13 +143,19 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     return ret;
 }
 
-int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
+int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName, CCObject *obj /* = NULL */)
 {
     int nHandler = pNotificationCenter->getObserverHandlerByName(pszName);
     if (!nHandler) return 0;
     
     m_stack->pushString(pszName);
-    int ret = m_stack->executeFunctionByHandler(nHandler, 1);
+    
+    if (obj)
+        m_stack->pushCCObject(obj, "CCObject");
+    else
+        m_stack->pushNil();
+    
+    int ret = m_stack->executeFunctionByHandler(nHandler, 2);
     m_stack->clean();
     return ret;
 }
@@ -207,9 +213,12 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch 
     }
     
     const CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
+    const CCPoint prev = CCDirector::sharedDirector()->convertToGL(pTouch->getPreviousLocationInView());
     m_stack->pushFloat(pt.x);
     m_stack->pushFloat(pt.y);
-    int ret = m_stack->executeFunctionByHandler(nHandler, 3);
+    m_stack->pushFloat(prev.x);
+    m_stack->pushFloat(prev.y);
+    int ret = m_stack->executeFunctionByHandler(nHandler, 5);
     m_stack->clean();
     return ret;
 }
@@ -246,19 +255,31 @@ int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet 
     CCDirector* pDirector = CCDirector::sharedDirector();
     lua_State *L = m_stack->getLuaState();
     lua_newtable(L);
+    lua_newtable(L);
     int i = 1;
     for (CCSetIterator it = pTouches->begin(); it != pTouches->end(); ++it)
     {
         CCTouch* pTouch = (CCTouch*)*it;
-        CCPoint pt = pDirector->convertToGL(pTouch->getLocationInView());
+        const CCPoint pt = pDirector->convertToGL(pTouch->getLocationInView());
         lua_pushnumber(L, pt.x);
-        lua_rawseti(L, -2, i++);
+        lua_rawseti(L, -3, i);
         lua_pushnumber(L, pt.y);
-        lua_rawseti(L, -2, i++);
+        lua_rawseti(L, -3, i + 1);
         lua_pushinteger(L, pTouch->getID());
-        lua_rawseti(L, -2, i++);
+        lua_rawseti(L, -3, i + 2);
+
+        const CCPoint prev = pDirector->convertToGL(pTouch->getPreviousLocationInView());
+        lua_pushnumber(L, prev.x);
+        lua_rawseti(L, -2, i);
+        lua_pushnumber(L, prev.y);
+        lua_rawseti(L, -2, i + 1);
+        lua_pushinteger(L, pTouch->getID());
+        lua_rawseti(L, -2, i + 2);
+
+        i += 3;
     }
-    int ret = m_stack->executeFunctionByHandler(nHandler, 2);
+
+    int ret = m_stack->executeFunctionByHandler(nHandler, 3);
     m_stack->clean();
     return ret;
 }
