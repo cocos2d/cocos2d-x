@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCRef.h"
 #include "CCGL.h"
 #include "kazmath/kazmath.h"
+#include <set>
 
 NS_CC_BEGIN
 
@@ -126,7 +127,18 @@ public:
      * @js initWithString
      * @lua initWithString
      */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    /** Initializes the CCGLProgram with precompiled shader program */
+    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+#endif
+
+    /** Initializes the GLProgram with a vertex and fragment with bytes array 
+     * @js initWithString
+     * @lua initWithString
+     */
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+
     /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
      * @js init
      * @lua init
@@ -245,7 +257,7 @@ public:
     void reset();
     
     inline const GLuint getProgram() const { return _program; }
-
+    inline const GLuint getMaterialProgramID() const { return _materialProgramID; }
     // DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
     { return initWithByteArrays(vShaderByteArray, fShaderByteArray); }
@@ -261,11 +273,17 @@ private:
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
 private:
+    //ID used for renderer material, _materialProgramID maybe different from _program
+    GLuint            _materialProgramID;
     GLuint            _program;
     GLuint            _vertShader;
     GLuint            _fragShader;
     GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
+	bool              _hasShaderCompiler;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    std::string       _shaderId;
+#endif
 
     struct flag_struct {
         unsigned int usesTime:1;
@@ -277,6 +295,21 @@ private:
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }
     } _flags;
+private:
+    class MaterialProgramIDAllocator
+    {
+    public:
+        MaterialProgramIDAllocator();
+        ~MaterialProgramIDAllocator();
+        GLuint allocID();
+        void freeID(GLuint id);
+    private:
+        std::set<GLuint> _freeIDs;
+    };
+    
+    static MaterialProgramIDAllocator _idAllocator;
+public:
+    static const GLuint _maxMaterialIDNumber;
 };
 
 // end of shaders group

@@ -9,7 +9,7 @@ bool QuestionContainerSprite::init()
     if (Sprite::init())
     {
         //Add label
-        auto label = LabelTTF::create("Answer 1", "Arial", 12);
+        auto label = Label::create("Answer 1", "fonts/arial.ttf", 12);
         label->setTag(100);
 
         //Add the background

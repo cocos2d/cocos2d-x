@@ -56,8 +56,8 @@ public:
     void touchCancelAction(Ref *sender, Control::EventType controlEvent);
     void touchBitmaskAction(Ref *sender, Control::EventType controlEvent);
 protected:
-    CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayValueLabel, DisplayValueLabel)
-    CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayBitmaskLabel, DisplayBitmaskLabel)
+    CC_SYNTHESIZE_RETAIN(Label *, _displayValueLabel, DisplayValueLabel)
+    CC_SYNTHESIZE_RETAIN(Label *, _displayBitmaskLabel, DisplayBitmaskLabel)
     CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Event)
 };
 

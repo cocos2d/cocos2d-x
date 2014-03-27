@@ -1,4 +1,6 @@
 require "Cocos2d"
+require "Cocos2dConstants"
+
 -- cclog
 cclog = function(...)
     print(string.format(...))
@@ -39,7 +41,7 @@ local function main()
         local frameHeight = 95
 
         -- create dog animate
-        local textureDog = cc.TextureCache:getInstance():addImage("res/dog.png")
+        local textureDog = cc.Director:getInstance():getTextureCache():addImage("res/dog.png")
         local rect = cc.rect(0, 0, frameWidth, frameHeight)
         local frame0 = cc.SpriteFrame:createWithTexture(textureDog, rect)
         rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
@@ -195,7 +197,7 @@ local function main()
     -- uncomment below for the BlackBerry version
     local bgMusicPath = nil 
     if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) then
-        bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("res/background.caf")
+        bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.caf")
     else
         bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.mp3")
     end

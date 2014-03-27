@@ -185,7 +185,9 @@ void FontAtlas::listenToForeground(EventCustom *event)
             auto contentSize = Size(CacheTextureWidth,CacheTextureHeight);
             auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8;
 
-            _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+            // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
+            // see CCTexture2D::initWithData for the temporary fix
+           _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
         }
     }
 #endif
@@ -257,8 +259,10 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                     _currentPageOrigY += _commonLineHeight;
                     _currentPageOrigX = 0;
                     if(_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
-                    {             
-                        _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+                    {     
+                        // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
+                        // see CCTexture2D::initWithData for the temporary fix
+                       _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
                         _currentPageOrigY = 0;
                         memset(_currentPageData, 0, _currentPageDataSize);
                         _currentPage++;
@@ -303,6 +307,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
     if(existNewLetter)
     {
+        // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
+        // see CCTexture2D::initWithData for the temporary fix
         _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
     }
     return true;

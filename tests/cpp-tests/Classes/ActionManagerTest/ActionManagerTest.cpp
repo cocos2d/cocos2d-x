@@ -198,7 +198,7 @@ void PauseTest::onEnter()
     ActionManagerTest::onEnter();
     
 
-    auto l = LabelTTF::create("After 5 seconds grossini should move", "Thonburi", 16);
+    auto l = Label::create("After 5 seconds grossini should move", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-75) );
     
@@ -240,7 +240,7 @@ void StopActionTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    auto l = LabelTTF::create("Should not crash", "Thonburi", 16);
+    auto l = Label::create("Should not crash", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
@@ -281,7 +281,7 @@ void ResumeTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    auto l = LabelTTF::create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+    auto l = Label::create("Grossini only rotate/scale in 3 seconds", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75));
 

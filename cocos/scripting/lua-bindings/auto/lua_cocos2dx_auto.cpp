@@ -1659,6 +1659,50 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_GLProgram_getMaterialProgramID(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::GLProgram* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.GLProgram",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::GLProgram*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getMaterialProgramID'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const unsigned int ret = cobj->getMaterialProgramID();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMaterialProgramID",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLProgram_getMaterialProgramID'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_GLProgram_setUniformLocationWith3i(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2460,6 +2504,7 @@ int lua_register_cocos2dx_GLProgram(lua_State* tolua_S)
         tolua_function(tolua_S,"use",lua_cocos2dx_GLProgram_use);
         tolua_function(tolua_S,"getVertexShaderLog",lua_cocos2dx_GLProgram_getVertexShaderLog);
         tolua_function(tolua_S,"setUniformsForBuiltins",lua_cocos2dx_GLProgram_setUniformsForBuiltins);
+        tolua_function(tolua_S,"getMaterialProgramID",lua_cocos2dx_GLProgram_getMaterialProgramID);
         tolua_function(tolua_S,"setUniformLocationWith3i",lua_cocos2dx_GLProgram_setUniformLocationWith3i);
         tolua_function(tolua_S,"setUniformLocationWith3iv",lua_cocos2dx_GLProgram_setUniformLocationWith3iv);
         tolua_function(tolua_S,"updateUniforms",lua_cocos2dx_GLProgram_updateUniforms);
@@ -34911,81 +34956,6 @@ int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_LayerGradient_initWithColor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::LayerGradient* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.LayerGradient",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::LayerGradient*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_initWithColor'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            cocos2d::Color4B arg0;
-            ok &=luaval_to_color4b(tolua_S, 2, &arg0);
-
-            if (!ok) { break; }
-            cocos2d::Color4B arg1;
-            ok &=luaval_to_color4b(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithColor(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 0) {
-            bool ret = cobj->init();
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            cocos2d::Color4B arg0;
-            ok &=luaval_to_color4b(tolua_S, 2, &arg0);
-
-            if (!ok) { break; }
-            cocos2d::Color4B arg1;
-            ok &=luaval_to_color4b(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            cocos2d::Point arg2;
-            ok &= luaval_to_point(tolua_S, 4, &arg2);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithColor(arg0, arg1, arg2);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "initWithColor",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_LayerGradient_initWithColor'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_LayerGradient_setEndColor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -35253,7 +35223,6 @@ int lua_register_cocos2dx_LayerGradient(lua_State* tolua_S)
         tolua_function(tolua_S,"setCompressedInterpolation",lua_cocos2dx_LayerGradient_setCompressedInterpolation);
         tolua_function(tolua_S,"setEndOpacity",lua_cocos2dx_LayerGradient_setEndOpacity);
         tolua_function(tolua_S,"getVector",lua_cocos2dx_LayerGradient_getVector);
-        tolua_function(tolua_S,"init",lua_cocos2dx_LayerGradient_initWithColor);
         tolua_function(tolua_S,"setEndColor",lua_cocos2dx_LayerGradient_setEndColor);
         tolua_function(tolua_S,"getEndColor",lua_cocos2dx_LayerGradient_getEndColor);
         tolua_function(tolua_S,"getEndOpacity",lua_cocos2dx_LayerGradient_getEndOpacity);

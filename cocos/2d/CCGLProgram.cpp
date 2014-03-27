@@ -37,6 +37,10 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#include "CCPrecompiledShaders.h"
+#endif
+
 NS_CC_BEGIN
 
 typedef struct _hashUniformEntry
@@ -80,6 +84,38 @@ const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
 const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
 
+#define CC_GLPROGRAM_MAX_MATERIAL_ID_NUMBER 1024
+
+GLProgram::MaterialProgramIDAllocator::MaterialProgramIDAllocator()
+{
+    for(GLuint id = 1; id < CC_GLPROGRAM_MAX_MATERIAL_ID_NUMBER; ++id)
+    {
+        _freeIDs.insert(id);
+    }
+}
+
+GLProgram::MaterialProgramIDAllocator::~MaterialProgramIDAllocator()
+{
+    //do nothing
+}
+
+GLuint GLProgram::MaterialProgramIDAllocator::allocID()
+{
+    CCASSERT(_freeIDs.size()!=0, "There are no allocated ID");
+    GLuint id = *(_freeIDs.begin());
+    _freeIDs.erase(id);
+    return id;
+}
+
+void GLProgram::MaterialProgramIDAllocator::freeID(GLuint id)
+{
+    CCASSERT(_freeIDs.find(id) == _freeIDs.end() && id != 0, "free id is 0 or a duplicated id");
+    _freeIDs.insert(id);
+}
+
+GLProgram::MaterialProgramIDAllocator GLProgram::_idAllocator;
+const GLuint GLProgram::_maxMaterialIDNumber = CC_GLPROGRAM_MAX_MATERIAL_ID_NUMBER;
+
 GLProgram::GLProgram()
 : _program(0)
 , _vertShader(0)
@@ -88,10 +124,13 @@ GLProgram::GLProgram()
 , _flags()
 {
     memset(_uniforms, 0, sizeof(_uniforms));
+    _materialProgramID = _idAllocator.allocID();
 }
 
 GLProgram::~GLProgram()
 {
+    _idAllocator.freeID(_materialProgramID);
+    _materialProgramID = 0;
     CCLOGINFO("%s %d deallocing GLProgram: %p", __FUNCTION__, __LINE__, this);
 
     // there is no need to delete the shaders. They should have been already deleted.
@@ -116,6 +155,18 @@ GLProgram::~GLProgram()
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    GLboolean hasCompiler = false;
+    glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
+    _hasShaderCompiler = (hasCompiler == GL_TRUE);
+
+    if(!_hasShaderCompiler)
+    {
+        return initWithPrecompiledProgramByteArray(vShaderByteArray,fShaderByteArray);
+    }
+#endif
+
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
@@ -126,7 +177,8 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
         if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
-        }
+ 			return false;
+       }
     }
 
     // Create and compile fragment shader
@@ -135,6 +187,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
         if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray))
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
+			return false;
         }
     }
 
@@ -152,8 +205,33 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     
     CHECK_GL_ERROR_DEBUG();
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    _shaderId = CCPrecompiledShaders::getInstance()->addShaders(vShaderByteArray, fShaderByteArray);
+#endif
+
     return true;
 }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
+{
+    bool haveProgram = false;
+
+    _program = glCreateProgram();
+    CHECK_GL_ERROR_DEBUG();
+
+    _vertShader = _fragShader = 0;
+
+    haveProgram = CCPrecompiledShaders::getInstance()->loadProgram(_program, vShaderByteArray, fShaderByteArray);
+
+    CHECK_GL_ERROR_DEBUG();
+    _hashForUniforms = NULL;
+
+    CHECK_GL_ERROR_DEBUG();  
+
+    return haveProgram;
+}
+#endif
 
 bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std::string &fShaderFilename)
 {
@@ -275,6 +353,15 @@ bool GLProgram::link()
 {
     CCASSERT(_program != 0, "Cannot link invalid program");
     
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    if(!_hasShaderCompiler)
+    {
+        // precompiled shader program is already linked
+        return true;
+    }
+#endif
+
     GLint status = GL_TRUE;
     
     glLinkProgram(_program);
@@ -291,7 +378,7 @@ bool GLProgram::link()
     
     _vertShader = _fragShader = 0;
 	
-#if COCOS2D_DEBUG
+#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	
     if (status == GL_FALSE)
@@ -301,7 +388,14 @@ bool GLProgram::link()
         _program = 0;
     }
 #endif
-	
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    if (status == GL_TRUE)
+    {
+        CCPrecompiledShaders::getInstance()->addProgram(_program, _shaderId);
+    }
+#endif
+
     return (status == GL_TRUE);
 }
 

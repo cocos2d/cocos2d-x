@@ -54,6 +54,11 @@
 -- @param #kmMat4 kmmat4
 
 --------------------------------
+-- @function [parent=#GLProgram] getMaterialProgramID 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
+        
+--------------------------------
 -- @function [parent=#GLProgram] setUniformLocationWith3i 
 -- @param self
 -- @param #int int

@@ -19,6 +19,9 @@ set(GUI_SRC
   UITextField.cpp
   UIRichText.cpp
   CCProtectedNode.cpp
+  UIHBox.cpp
+  UIVBox.cpp
+  UIRelativeBox.cpp
 )
 
 add_library(ui STATIC

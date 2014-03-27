@@ -1562,6 +1562,18 @@
 		50E6D30F18DADB5D0051CA34 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */; };
 		50E6D31018DAF01A0051CA34 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */; };
 		50E6D31118DAF01E0051CA34 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */; };
+		50E6D33418E174130051CA34 /* UIHBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D32E18E174130051CA34 /* UIHBox.cpp */; };
+		50E6D33518E174130051CA34 /* UIHBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D32E18E174130051CA34 /* UIHBox.cpp */; };
+		50E6D33618E174130051CA34 /* UIHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D32F18E174130051CA34 /* UIHBox.h */; };
+		50E6D33718E174130051CA34 /* UIHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D32F18E174130051CA34 /* UIHBox.h */; };
+		50E6D33818E174130051CA34 /* UIRelativeBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D33018E174130051CA34 /* UIRelativeBox.cpp */; };
+		50E6D33918E174130051CA34 /* UIRelativeBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D33018E174130051CA34 /* UIRelativeBox.cpp */; };
+		50E6D33A18E174130051CA34 /* UIRelativeBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D33118E174130051CA34 /* UIRelativeBox.h */; };
+		50E6D33B18E174130051CA34 /* UIRelativeBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D33118E174130051CA34 /* UIRelativeBox.h */; };
+		50E6D33C18E174130051CA34 /* UIVBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D33218E174130051CA34 /* UIVBox.cpp */; };
+		50E6D33D18E174130051CA34 /* UIVBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D33218E174130051CA34 /* UIVBox.cpp */; };
+		50E6D33E18E174130051CA34 /* UIVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D33318E174130051CA34 /* UIVBox.h */; };
+		50E6D33F18E174130051CA34 /* UIVBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D33318E174130051CA34 /* UIVBox.h */; };
 		50FCEB9318C72017004AD434 /* ButtonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEB6A18C72017004AD434 /* ButtonReader.cpp */; };
 		50FCEB9418C72017004AD434 /* ButtonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEB6A18C72017004AD434 /* ButtonReader.cpp */; };
 		50FCEB9518C72017004AD434 /* ButtonReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FCEB6B18C72017004AD434 /* ButtonReader.h */; };
@@ -2673,6 +2685,12 @@
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
 		50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
 		50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
+		50E6D32E18E174130051CA34 /* UIHBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHBox.cpp; sourceTree = "<group>"; };
+		50E6D32F18E174130051CA34 /* UIHBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHBox.h; sourceTree = "<group>"; };
+		50E6D33018E174130051CA34 /* UIRelativeBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRelativeBox.cpp; sourceTree = "<group>"; };
+		50E6D33118E174130051CA34 /* UIRelativeBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRelativeBox.h; sourceTree = "<group>"; };
+		50E6D33218E174130051CA34 /* UIVBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVBox.cpp; sourceTree = "<group>"; };
+		50E6D33318E174130051CA34 /* UIVBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVBox.h; sourceTree = "<group>"; };
 		50FCEB6A18C72017004AD434 /* ButtonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonReader.cpp; sourceTree = "<group>"; };
 		50FCEB6B18C72017004AD434 /* ButtonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonReader.h; sourceTree = "<group>"; };
 		50FCEB6D18C72017004AD434 /* CheckBoxReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBoxReader.cpp; sourceTree = "<group>"; };
@@ -4005,6 +4023,12 @@
 				2905FA1418CF08D100240AA3 /* UIWidget.h */,
 				50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */,
 				50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */,
+				50E6D32E18E174130051CA34 /* UIHBox.cpp */,
+				50E6D32F18E174130051CA34 /* UIHBox.h */,
+				50E6D33018E174130051CA34 /* UIRelativeBox.cpp */,
+				50E6D33118E174130051CA34 /* UIRelativeBox.h */,
+				50E6D33218E174130051CA34 /* UIVBox.cpp */,
+				50E6D33318E174130051CA34 /* UIVBox.h */,
 			);
 			name = ui;
 			path = ../cocos/ui;
@@ -4913,6 +4937,7 @@
 				2AC795DF18628723005EC8E1 /* SkeletonBounds.h in Headers */,
 				2AC795E018628723005EC8E1 /* Event.h in Headers */,
 				2AC795E118628723005EC8E1 /* EventData.h in Headers */,
+				50E6D33618E174130051CA34 /* UIHBox.h in Headers */,
 				A044DECB18C6A58700B6CCBD /* utility.h in Headers */,
 				2AC795E218628723005EC8E1 /* BoundingBoxAttachment.h in Headers */,
 				06CAAAC9186AD7EE0012A414 /* TriggerMng.h in Headers */,
@@ -4997,6 +5022,7 @@
 				1A570114180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				1A57011D180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
+				50E6D33A18E174130051CA34 /* UIRelativeBox.h in Headers */,
 				1A57013C180BC9460088DEC7 /* CCEvent.h in Headers */,
 				1A570140180BC9460088DEC7 /* CCEventAcceleration.h in Headers */,
 				50E6D30F18DADB5D0051CA34 /* CCProtectedNode.h in Headers */,
@@ -5005,6 +5031,7 @@
 				50FCEB9918C72017004AD434 /* CheckBoxReader.h in Headers */,
 				1A57014C180BC9460088DEC7 /* CCEventKeyboard.h in Headers */,
 				1A570150180BC9460088DEC7 /* CCEventListener.h in Headers */,
+				50E6D33E18E174130051CA34 /* UIVBox.h in Headers */,
 				1A570154180BC9460088DEC7 /* CCEventListenerAcceleration.h in Headers */,
 				1A570158180BC9460088DEC7 /* CCEventListenerCustom.h in Headers */,
 				1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */,
@@ -5468,6 +5495,7 @@
 				2905FA4318CF08D100240AA3 /* CocosGUI.h in Headers */,
 				1A5700EA180BC6060088DEC7 /* CCGeometry.h in Headers */,
 				1A5700EC180BC6060088DEC7 /* CCInteger.h in Headers */,
+				50E6D33718E174130051CA34 /* UIHBox.h in Headers */,
 				1A5700F0180BC6060088DEC7 /* CCNS.h in Headers */,
 				1A5700F4180BC6060088DEC7 /* CCRef.h in Headers */,
 				A044DEC018C6A58700B6CCBD /* quaternion.h in Headers */,
@@ -5481,6 +5509,7 @@
 				1A570104180BC6060088DEC7 /* etc1.h in Headers */,
 				1A570108180BC6060088DEC7 /* s3tc.h in Headers */,
 				1A570111180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
+				50E6D33F18E174130051CA34 /* UIVBox.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				06CAAAC5186AD7E50012A414 /* TriggerObj.h in Headers */,
 				2905FA5D18CF08D100240AA3 /* UILayoutDefine.h in Headers */,
@@ -5614,6 +5643,7 @@
 				1AD71DCC180E26E600808F54 /* CCControlButtonLoader.h in Headers */,
 				1AD71DD0180E26E600808F54 /* CCControlLoader.h in Headers */,
 				1AD71DD4180E26E600808F54 /* CCLabelBMFontLoader.h in Headers */,
+				50E6D33B18E174130051CA34 /* UIRelativeBox.h in Headers */,
 				1AD71DD8180E26E600808F54 /* CCLabelTTFLoader.h in Headers */,
 				1AD71DDC180E26E600808F54 /* CCLayerColorLoader.h in Headers */,
 				1AD71DE0180E26E600808F54 /* CCLayerGradientLoader.h in Headers */,
@@ -6270,6 +6300,7 @@
 				1A570546180BD9C40088DEC7 /* CCTouch.cpp in Sources */,
 				1AD71DA9180E26E600808F54 /* CCBAnimationManager.cpp in Sources */,
 				1AD71DAD180E26E600808F54 /* CCBFileLoader.cpp in Sources */,
+				50E6D33418E174130051CA34 /* UIHBox.cpp in Sources */,
 				2905FA8418CF08D100240AA3 /* UITextBMFont.cpp in Sources */,
 				1AD71DB1180E26E600808F54 /* CCBKeyframe.cpp in Sources */,
 				1AD71DB7180E26E600808F54 /* CCBReader.cpp in Sources */,
@@ -6312,7 +6343,9 @@
 				2905FA4018CF08D100240AA3 /* CocosGUI.cpp in Sources */,
 				1AD71EC1180E26E600808F54 /* extension.cpp in Sources */,
 				1AD71EC5180E26E600808F54 /* Json.cpp in Sources */,
+				50E6D33C18E174130051CA34 /* UIVBox.cpp in Sources */,
 				1AD71EC9180E26E600808F54 /* RegionAttachment.cpp in Sources */,
+				50E6D33818E174130051CA34 /* UIRelativeBox.cpp in Sources */,
 				1AD71ECD180E26E600808F54 /* Skeleton.cpp in Sources */,
 				1AD71ED1180E26E600808F54 /* SkeletonData.cpp in Sources */,
 				1AD71ED5180E26E600808F54 /* SkeletonJson.cpp in Sources */,
@@ -6548,6 +6581,7 @@
 				46A171031807CECB005B8026 /* CCPhysicsShape.cpp in Sources */,
 				46A170371807CBFE005B8026 /* CCSAXParser.cpp in Sources */,
 				46A1702B1807CBFE005B8026 /* CCThread.mm in Sources */,
+				50E6D33918E174130051CA34 /* UIRelativeBox.cpp in Sources */,
 				ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
 				46A170401807CC07005B8026 /* CCDirectorCaller.mm in Sources */,
 				06CAAACC186AD7F50012A414 /* TriggerMng.cpp in Sources */,
@@ -6652,6 +6686,7 @@
 				1A570235180BCC4D0088DEC7 /* CCScriptSupport.cpp in Sources */,
 				2905FA5718CF08D100240AA3 /* UILayout.cpp in Sources */,
 				2905FA7D18CF08D100240AA3 /* UIText.cpp in Sources */,
+				50E6D33D18E174130051CA34 /* UIVBox.cpp in Sources */,
 				1A57026C180BCC6F0088DEC7 /* CCShaderCache.cpp in Sources */,
 				1A570272180BCC6F0088DEC7 /* ccShaders.cpp in Sources */,
 				1A57027F180BCC900088DEC7 /* CCSprite.cpp in Sources */,
@@ -6774,6 +6809,7 @@
 				1A9DCA4A180E6DE3007A3AD4 /* ccTypes.cpp in Sources */,
 				50FCEBA018C72017004AD434 /* LayoutReader.cpp in Sources */,
 				A044DEC618C6A58700B6CCBD /* ray3.c in Sources */,
+				50E6D33518E174130051CA34 /* UIHBox.cpp in Sources */,
 				59A79D521821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
 				50FCEBB018C72017004AD434 /* ScrollViewReader.cpp in Sources */,
 				50FCEBAC18C72017004AD434 /* PageViewReader.cpp in Sources */,

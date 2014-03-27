@@ -13,7 +13,7 @@ public:
     void onKeyReleased(EventKeyboard::KeyCode keycode, Event* event);
 
 private:
-    LabelTTF*            _label;
+    Label*            _label;
 };
 
 class KeypadTestScene : public TestScene

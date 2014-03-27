@@ -111,7 +111,7 @@ void LayerTest::backCallback(Ref* sender)
     s->release();
 } 
 
-//#pragma mark - Cascading support extensions
+// Cascading support extensions
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
@@ -275,7 +275,7 @@ std::string LayerTestCascadingOpacityC::subtitle() const
 }
 
 
-//#pragma mark Example LayerTestCascadingColor
+//// Example LayerTestCascadingColor
 
 // LayerTestCascadingColorA
 void LayerTestCascadingColorA::onEnter()
@@ -588,8 +588,8 @@ LayerGradientTest::LayerGradientTest()
     listener->onTouchesMoved = CC_CALLBACK_2(LayerGradientTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    auto label1 = LabelTTF::create("Compressed Interpolation: Enabled", "Marker Felt", 26);
-    auto label2 = LabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
+    auto label1 = Label::create("Compressed Interpolation: Enabled", "fonts/Marker Felt.ttf", 26);
+    auto label2 = Label::create("Compressed Interpolation: Disabled", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
     auto item2 = MenuItemLabel::create(label2);
     auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradientTest::toggleItem, this), item1, item2, NULL);
@@ -637,9 +637,7 @@ std::string LayerGradientTest::subtitle() const
 //------------------------------------------------------------------
 LayerGradientTest2::LayerGradientTest2()
 {
-    auto layer = new LayerGradient;
-    layer->initWithColor(Color4B(255,0,0,255), Color4B(255,255,0,255));
-    layer->autorelease();
+    auto layer = LayerGradient::create(Color4B(255,0,0,255), Color4B(255,255,0,255));
     addChild(layer);
 }
 

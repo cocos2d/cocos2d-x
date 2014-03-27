@@ -48,6 +48,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
         mute = NO;
         enabled_ = YES;
         paused = NO;
+        stopped = NO;
     }
     return self;
 }
@@ -96,6 +97,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
     if (enabled_) {
         self->systemPaused = NO;
         self->paused = NO;
+        self->stopped = NO;
         [audioSourcePlayer play];
     } else {
         CDLOGINFO(@"Denshion::CDLongAudioSource long audio source didn't play because it is disabled");
@@ -104,6 +106,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
 -(void) stop {
     self->paused = NO;
+    self->stopped = YES;
     [audioSourcePlayer stop];
 }    
 
@@ -118,9 +121,11 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 }
 
 -(void) resume {
-    self->paused = NO;
-    [audioSourcePlayer play];
-}    
+    if (!stopped) {
+        self->paused = NO;
+        [audioSourcePlayer play];
+    }
+}
 
 -(BOOL) isPlaying {
     if (state != kLAS_Init) {

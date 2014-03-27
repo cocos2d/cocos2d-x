@@ -24,7 +24,7 @@ bool UISliderTest::init()
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move the slider thumb");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
@@ -33,7 +33,7 @@ bool UISliderTest::init()
         // Add the alert
         Text* alert = Text::create();
         alert->setText("Slider");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
@@ -99,7 +99,7 @@ bool UISliderTest_Scale9::init()
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move the slider thumb");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
@@ -108,7 +108,7 @@ bool UISliderTest_Scale9::init()
         // Add the alert
         Text *alert = Text::create();
         alert->setText("Slider scale9 render");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
