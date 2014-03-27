@@ -33,7 +33,7 @@ public:
     bool init();
     /** Callback for the change value. */
     void valueChanged(Ref* sender, Control::EventType controlEvent);
-    LabelTTF *_displayValueLabel;
+    Label *_displayValueLabel;
     CONTROL_SCENE_CREATE_FUNC(ControlSwitchTest)
 };
 

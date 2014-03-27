@@ -55,7 +55,7 @@ bool ControlPotentiometerTest::init()
         
         layer_width += background->getContentSize().width;
         
-        this->setDisplayValueLabel(LabelTTF::create("", "HelveticaNeue-Bold", 30));
+        this->setDisplayValueLabel(Label::create("", "HelveticaNeue-Bold", 30));
 
         _displayValueLabel->setPosition(background->getPosition());
         layer->addChild(_displayValueLabel);

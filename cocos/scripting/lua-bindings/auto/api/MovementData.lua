@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module MovementData
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#MovementData] getMovementBoneData 

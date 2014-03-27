@@ -379,7 +379,7 @@ void RemoveListenerWhenDispatching::onEnter()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
     
-    auto statusLabel = LabelTTF::create("The sprite could be touched!", "", 20);
+    auto statusLabel = Label::create("The sprite could be touched!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
     std::shared_ptr<bool> enable(new bool(true));
@@ -428,7 +428,7 @@ void CustomEventTest::onEnter()
     
     MenuItemFont::setFontSize(20);
     
-    auto statusLabel = LabelTTF::create("No custom event 1 received!", "", 20);
+    auto statusLabel = Label::create("No custom event 1 received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
@@ -454,7 +454,7 @@ void CustomEventTest::onEnter()
     });
     sendItem->setPosition(origin + Point(size.width/2, size.height/2));
     
-    auto statusLabel2 = LabelTTF::create("No custom event 2 received!", "", 20);
+    auto statusLabel2 = Label::create("No custom event 2 received!", "", 20);
     statusLabel2->setPosition(origin + Point(size.width/2, size.height-120));
     addChild(statusLabel2);
     
@@ -511,7 +511,7 @@ void LabelKeyboardEventTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto statusLabel = LabelTTF::create("No keyboard event received!", "", 20);
+    auto statusLabel = Label::create("No keyboard event received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height/2));
     addChild(statusLabel);
         
@@ -519,14 +519,14 @@ void LabelKeyboardEventTest::onEnter()
     listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event){
         char buf[100] = {0};
         sprintf(buf, "Key %d was pressed!", (int)keyCode);
-        auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
+        auto label = static_cast<Label*>(event->getCurrentTarget());
         label->setString(buf);
     };
     
     listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode, Event* event){
         char buf[100] = {0};
         sprintf(buf, "Key %d was released!", (int)keyCode);
-        auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
+        auto label = static_cast<Label*>(event->getCurrentTarget());
         label->setString(buf);
     };
     
@@ -783,19 +783,23 @@ void DirectorEventTest::onEnter()
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
 
     _label1 = Label::createWithTTF(ttfConfig, "Update: 0");
+    _label1->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label1->setPosition(30,s.height/2 + 60);
     this->addChild(_label1);
 
     _label2 = Label::createWithTTF(ttfConfig, "Visit: 0");
+    _label2->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label2->setPosition(30,s.height/2 + 20);
     this->addChild(_label2);
 
     _label3 = Label::createWithTTF(ttfConfig, "Draw: 0");
+    _label3->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label3->setPosition(30,30);
     _label3->setPosition(30,s.height/2 - 20);
     this->addChild(_label3);
 
     _label4 = Label::createWithTTF(ttfConfig, "Projection: 0");
+    _label4->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label4->setPosition(30,30);
     _label4->setPosition(30,s.height/2 - 60);
     this->addChild(_label4);
@@ -1176,7 +1180,7 @@ Issue4129::Issue4129()
 {
     _customlistener = _eventDispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
         
-        auto label = LabelTTF::create("Yeah, this issue was fixed.", "", 20);
+        auto label = Label::create("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Point(0, 0.5f));
         label->setPosition(Point(VisibleRect::left()));
         this->addChild(label);

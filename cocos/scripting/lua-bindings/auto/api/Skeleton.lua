@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module Skeleton
--- @extend Node,BlendProtocol,
+-- @extend Node,BlendProtocol
 
 --------------------------------
 -- @function [parent=#Skeleton] setToSetupPose 

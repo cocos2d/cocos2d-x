@@ -119,7 +119,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
 -(void) resume {
     self->paused = NO;
-    [audioSourcePlayer play];
+    [audioSourcePlayer resume];
 }    
 
 -(BOOL) isPlaying {

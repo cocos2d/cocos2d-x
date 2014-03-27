@@ -44,7 +44,7 @@ bool UITextFieldTest_Editor::init()
         textField_password->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Editor::textFieldEvent));
         
         _displayValueLabel = Text::create();
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
         _displayValueLabel->setText("No event");
         _displayValueLabel->setPosition(Point(_layout->getSize().width / 2,

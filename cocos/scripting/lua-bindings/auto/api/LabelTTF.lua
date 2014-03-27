@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module LabelTTF
--- @extend Node,LabelProtocol,BlendProtocol,
+-- @extend Node,LabelProtocol,BlendProtocol
 
 --------------------------------
 -- @function [parent=#LabelTTF] enableShadow 

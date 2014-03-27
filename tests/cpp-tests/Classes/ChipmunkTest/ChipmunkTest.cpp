@@ -31,7 +31,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
     // title
-    auto label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);
+    auto label = Label::create("Multi touch the screen", "fonts/Marker Felt.ttf", 36.0f);
     label->setPosition(cocos2d::Point( VisibleRect::center().x, VisibleRect::top().y - 30));
     this->addChild(label, -1);
 
@@ -64,8 +64,8 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     scheduleUpdate();
 #else
-    auto label = LabelTTF::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
-                                            "Arial",
+    auto label = Label::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
+                                            "fonts/arial.ttf",
                                             18);
     auto size = Director::getInstance()->getWinSize();
     label->setPosition(Point(size.width/2, size.height/2));

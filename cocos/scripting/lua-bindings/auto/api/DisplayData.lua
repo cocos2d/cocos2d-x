@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module DisplayData
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#DisplayData] copy 
