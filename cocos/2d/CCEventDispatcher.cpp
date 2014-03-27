@@ -561,6 +561,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (l->getSceneGraphPriority() != nullptr)
                 {
                     dissociateNodeAndEventListener(l->getSceneGraphPriority(), l);
+                    l->setSceneGraphPriority(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
