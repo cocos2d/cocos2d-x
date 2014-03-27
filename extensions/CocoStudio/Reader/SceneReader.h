@@ -69,7 +69,7 @@ public:
 	cocos2d::CCNode* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _eAttachComponent;}
 
-private:
+public:
     SceneReader(void);
     virtual ~SceneReader(void);
 
