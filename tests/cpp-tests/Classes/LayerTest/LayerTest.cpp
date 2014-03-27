@@ -637,9 +637,7 @@ std::string LayerGradientTest::subtitle() const
 //------------------------------------------------------------------
 LayerGradientTest2::LayerGradientTest2()
 {
-    auto layer = new LayerGradient;
-    layer->initWithColor(Color4B(255,0,0,255), Color4B(255,255,0,255));
-    layer->autorelease();
+    auto layer = LayerGradient::create(Color4B(255,0,0,255), Color4B(255,255,0,255));
     addChild(layer);
 }
 
