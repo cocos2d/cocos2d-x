@@ -84,6 +84,38 @@ const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
 const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
 
+#define CC_GLPROGRAM_MAX_MATERIAL_ID_NUMBER 1024
+
+GLProgram::MaterialProgramIDAllocator::MaterialProgramIDAllocator()
+{
+    for(GLuint id = 1; id < CC_GLPROGRAM_MAX_MATERIAL_ID_NUMBER; ++id)
+    {
+        _freeIDs.insert(id);
+    }
+}
+
+GLProgram::MaterialProgramIDAllocator::~MaterialProgramIDAllocator()
+{
+    //do nothing
+}
+
+GLuint GLProgram::MaterialProgramIDAllocator::allocID()
+{
+    CCASSERT(_freeIDs.size()!=0, "There are no allocated ID");
+    GLuint id = *(_freeIDs.begin());
+    _freeIDs.erase(id);
+    return id;
+}
+
+void GLProgram::MaterialProgramIDAllocator::freeID(GLuint id)
+{
+    CCASSERT(_freeIDs.find(id) == _freeIDs.end() && id != 0, "free id is 0 or a duplicated id");
+    _freeIDs.insert(id);
+}
+
+GLProgram::MaterialProgramIDAllocator GLProgram::_idAllocator;
+const GLuint GLProgram::_maxMaterialIDNumber = CC_GLPROGRAM_MAX_MATERIAL_ID_NUMBER;
+
 GLProgram::GLProgram()
 : _program(0)
 , _vertShader(0)
@@ -92,10 +124,13 @@ GLProgram::GLProgram()
 , _flags()
 {
     memset(_uniforms, 0, sizeof(_uniforms));
+    _materialProgramID = _idAllocator.allocID();
 }
 
 GLProgram::~GLProgram()
 {
+    _idAllocator.freeID(_materialProgramID);
+    _materialProgramID = 0;
     CCLOGINFO("%s %d deallocing GLProgram: %p", __FUNCTION__, __LINE__, this);
 
     // there is no need to delete the shaders. They should have been already deleted.
