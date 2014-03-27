@@ -85,9 +85,8 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
     {
         CCAssert(node != NULL, "Label must not be nil.");
         CCLabelProtocol* label = dynamic_cast<CCLabelProtocol*>(node);
-        CCRGBAProtocol* rgbaLabel = dynamic_cast<CCRGBAProtocol*>(node);
         CCAssert(backgroundSprite != NULL, "Background sprite must not be nil.");
-        CCAssert(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL, "");
+        CCAssert(label != NULL || backgroundSprite != NULL, "");
         
         m_bParentInited = true;
 
@@ -127,7 +126,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         CCString* tempString = CCString::create(label->getString());
         //tempString->autorelease();
         setTitleForState(tempString, CCControlStateNormal);
-        setTitleColorForState(rgbaLabel->getColor(), CCControlStateNormal);
+        setTitleColorForState(node->getColor(), CCControlStateNormal);
         setTitleLabelForState(node, CCControlStateNormal);
         setBackgroundSpriteForState(backgroundSprite, CCControlStateNormal);
         
@@ -548,13 +547,9 @@ void CCControlButton::needsLayout()
         label->setString(m_currentTitle->getCString());
     }
 
-    CCRGBAProtocol* rgbaLabel = dynamic_cast<CCRGBAProtocol*>(m_titleLabel);
-    if (rgbaLabel)
+    if (m_titleLabel)
     {
-        rgbaLabel->setColor(m_currentTitleColor);
-    }
-    if (m_titleLabel != NULL)
-    {
+        m_titleLabel->setColor(m_currentTitleColor);
         m_titleLabel->setPosition(ccp (getContentSize().width / 2, getContentSize().height / 2));
     }
     
@@ -724,11 +719,6 @@ void CCControlButton::setOpacity(GLubyte opacity)
     }
 }
 
-GLubyte CCControlButton::getOpacity()
-{
-    return _realOpacity;
-}
-
 void CCControlButton::setColor(const ccColor3B & color)
 {
 	CCControl::setColor(color);
@@ -740,12 +730,6 @@ void CCControlButton::setColor(const ccColor3B & color)
         sprite->setColor(color);
     }
 }
-
-const ccColor3B& CCControlButton::getColor()
-{
-	return _realColor;
-}
-
 void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     m_isPushed = false;

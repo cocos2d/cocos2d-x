@@ -1439,7 +1439,7 @@ void CCJumpTo::startWithTarget(CCNode *pTarget)
 
 // Bezier cubic formula:
 //    ((1 - t) + t)3 = 1 
-// Expands to¡­ 
+// Expands toÂ°â‰  
 //   (1 - t)3 + 3t(1-t)2 + 3t2(1 - t) + t3 = 1 
 static inline float bezierat( float a, float b, float c, float d, float t )
 {
@@ -1863,13 +1863,8 @@ CCObject* CCFadeIn::copyWithZone(CCZone *pZone)
 
 void CCFadeIn::update(float time)
 {
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
-    if (pRGBAProtocol)
-    {
-        pRGBAProtocol->setOpacity((GLubyte)(255 * time));
+    m_pTarget->setOpacity((GLubyte)(255 * time));
     }
-    /*m_pTarget->setOpacity((GLubyte)(255 * time));*/
-}
 
 CCActionInterval* CCFadeIn::reverse(void)
 {
@@ -1914,13 +1909,8 @@ CCObject* CCFadeOut::copyWithZone(CCZone *pZone)
 
 void CCFadeOut::update(float time)
 {
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
-    if (pRGBAProtocol)
-    {
-        pRGBAProtocol->setOpacity(GLubyte(255 * (1 - time)));
+    m_pTarget->setOpacity(GLubyte(255 * (1 - time)));
     }
-    /*m_pTarget->setOpacity(GLubyte(255 * (1 - time)));*/    
-}
 
 CCActionInterval* CCFadeOut::reverse(void)
 {
@@ -1977,24 +1967,13 @@ CCObject* CCFadeTo::copyWithZone(CCZone *pZone)
 void CCFadeTo::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pTarget);
-    if (pRGBAProtocol)
-    {
-        m_fromOpacity = pRGBAProtocol->getOpacity();
+    m_fromOpacity = pTarget->getOpacity();
     }
-    /*m_fromOpacity = pTarget->getOpacity();*/
-}
 
 void CCFadeTo::update(float time)
 {
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
-    if (pRGBAProtocol)
-    {
-        pRGBAProtocol->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
+    m_pTarget->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
     }
-    /*m_pTarget->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));*/
-}
 
 //
 // TintTo
@@ -2045,24 +2024,15 @@ CCObject* CCTintTo::copyWithZone(CCZone *pZone)
 void CCTintTo::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
-    if (pRGBAProtocol)
-    {
-        m_from = pRGBAProtocol->getColor();
+    m_from = m_pTarget->getColor();
     }
-    /*m_from = pTarget->getColor();*/
-}
 
 void CCTintTo::update(float time)
 {
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
-    if (pRGBAProtocol)
-    {
-        pRGBAProtocol->setColor(ccc3(GLubyte(m_from.r + (m_to.r - m_from.r) * time), 
+    m_pTarget->setColor(ccc3((GLubyte)(m_from.r + (m_to.r - m_from.r) * time),
             (GLbyte)(m_from.g + (m_to.g - m_from.g) * time),
             (GLbyte)(m_from.b + (m_to.b - m_from.b) * time)));
     }    
-}
 
 //
 // TintBy
@@ -2118,26 +2088,18 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
 
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pTarget);
-    if (pRGBAProtocol)
-    {
-        ccColor3B color = pRGBAProtocol->getColor();
+    ccColor3B color = pTarget->getColor();
         m_fromR = color.r;
         m_fromG = color.g;
         m_fromB = color.b;
     }    
-}
 
 void CCTintBy::update(float time)
 {
-    CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
-    if (pRGBAProtocol)
-    {
-        pRGBAProtocol->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
+    m_pTarget->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
             (GLubyte)(m_fromG + m_deltaG * time),
             (GLubyte)(m_fromB + m_deltaB * time)));
     }    
-}
 
 CCActionInterval* CCTintBy::reverse(void)
 {

@@ -1097,30 +1097,18 @@ void Widget::setFlipY(bool flipY)
     
 void Widget::updateColorToRenderer(CCNode* renderer)
 {
-    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
-    if (rgbap)
-    {
-        rgbap->setColor(_color);
-    }
+    renderer->setColor(_color);
 }
     
 void Widget::updateOpacityToRenderer(CCNode* renderer)
 {
-    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
-    if (rgbap)
-    {
-        rgbap->setOpacity(_opacity);
-    }
+    renderer->setOpacity(_opacity);
 }
     
 void Widget::updateRGBAToRenderer(CCNode* renderer)
 {
-    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
-    if (rgbap)
-    {
-        rgbap->setColor(_color);
-        rgbap->setOpacity(_opacity);
-    }
+    renderer->setColor(_color);
+    renderer->setOpacity(_opacity);
 }
     
 }

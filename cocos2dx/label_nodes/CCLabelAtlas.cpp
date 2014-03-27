@@ -171,7 +171,7 @@ void CCLabelAtlas::updateAtlasValues()
         quads[i].tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
         quads[i].tr.vertices.y = (float)(m_uItemHeight);
         quads[i].tr.vertices.z = 0.0f;
-        ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+        ccColor4B c = { m_displayedColor.r, m_displayedColor.g, m_displayedColor.b, m_displayedOpacity};
         quads[i].tl.colors = c;
         quads[i].tr.colors = c;
         quads[i].bl.colors = c;

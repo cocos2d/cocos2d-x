@@ -160,12 +160,8 @@ void LayerTest::backCallback(CCObject* pSender)
 
 static void setEnableRecursiveCascading(CCNode* node, bool enable)
 {
-    CCRGBAProtocol* rgba = dynamic_cast<CCRGBAProtocol*>(node);
-    if (rgba)
-    {
-        rgba->setCascadeColorEnabled(enable);
-        rgba->setCascadeOpacityEnabled(enable);
-    }
+    node->setCascadeColorEnabled(enable);
+    node->setCascadeOpacityEnabled(enable);
     
     CCObject* obj;
     CCArray* children = node->getChildren();
@@ -182,7 +178,7 @@ void LayerTestCascadingOpacityA::onEnter()
     LayerTest::onEnter();
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLayerRGBA* layer1 = CCLayerRGBA::create();
+    CCLayer* layer1 = CCLayer::create();
     
     CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
     CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");
@@ -336,7 +332,7 @@ void LayerTestCascadingColorA::onEnter()
     LayerTest::onEnter();
     
     CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLayerRGBA* layer1 = CCLayerRGBA::create();
+    CCLayer* layer1 = CCLayer::create();
     
     CCSprite *sister1 = CCSprite::create("Images/grossinis_sister1.png");
     CCSprite *sister2 = CCSprite::create("Images/grossinis_sister2.png");

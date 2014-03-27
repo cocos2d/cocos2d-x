@@ -189,7 +189,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
+class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol
 {
 public:
     /**
@@ -241,21 +241,6 @@ public:
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
     
-    // CCRGBAProtocol 
-    virtual bool isOpacityModifyRGB();
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB); virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual const ccColor3B& getColor(void);
-    virtual const ccColor3B& getDisplayedColor();
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-
     void setFntFile(const char* fntFile);
     const char* getFntFile();
 	CCBMFontConfiguration* getConfiguration() const;
@@ -293,17 +278,6 @@ protected:
     
     // reused char
     CCSprite *m_pReusedChar;
-    
-    // texture RGBA
-    GLubyte m_cDisplayedOpacity;
-    GLubyte m_cRealOpacity;
-    ccColor3B m_tDisplayedColor;
-    ccColor3B m_tRealColor;
-    bool m_bCascadeColorEnabled;
-    bool m_bCascadeOpacityEnabled;
-    /** conforms to CCRGBAProtocol protocol */
-    bool        m_bIsOpacityModifyRGB;
-
 };
 
 /** Free function that parses a FNT file a place it on the cache

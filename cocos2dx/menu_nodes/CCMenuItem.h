@@ -50,7 +50,7 @@ class CCSpriteFrame;
  *
  *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
  */
-class CC_DLL CCMenuItem : public CCNodeRGBA
+class CC_DLL CCMenuItem : public CCNode
 {
 protected:
     /** whether or not the item is selected

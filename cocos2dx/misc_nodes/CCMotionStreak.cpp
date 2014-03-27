@@ -280,8 +280,8 @@ void CCMotionStreak::update(float delta)
 
         // Color assignment
         const unsigned int offset = m_uNuPoints*8;
-        *((ccColor3B*)(m_pColorPointer + offset)) = _displayedColor;
-        *((ccColor3B*)(m_pColorPointer + offset+4)) = _displayedColor;
+        *((ccColor3B*)(m_pColorPointer + offset)) = m_displayedColor;
+        *((ccColor3B*)(m_pColorPointer + offset+4)) = m_displayedColor;
 
         // Opacity
         m_pColorPointer[offset+3] = 255;

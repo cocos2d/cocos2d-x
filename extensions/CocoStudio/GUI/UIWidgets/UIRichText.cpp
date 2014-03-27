@@ -212,9 +212,8 @@ void RichText::formatText()
                     default:
                         break;
                 }
-                CCRGBAProtocol* colorRenderer = dynamic_cast<CCRGBAProtocol*>(elementRenderer);
-                colorRenderer->setColor(element->_color);
-                colorRenderer->setOpacity(element->_opacity);
+                elementRenderer->setColor(element->_color);
+                elementRenderer->setOpacity(element->_opacity);
                 pushToContainer(elementRenderer);
             }
         }
