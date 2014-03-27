@@ -68,7 +68,12 @@ FontAtlas::FontAtlas(Font &theFont)
         }    
 
         _currentPageData = new unsigned char[_currentPageDataSize];
-        memset(_currentPageData, 0, _currentPageDataSize);  
+        memset(_currentPageData, 0, _currentPageDataSize);
+
+        auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
+        texture->initWithData(_currentPageData, _currentPageDataSize, 
+            pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
+
         addTexture(texture,0);
         texture->release();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -182,12 +187,10 @@ void FontAtlas::listenToForeground(EventCustom *event)
         }
         else
         {
-            auto contentSize = Size(CacheTextureWidth,CacheTextureHeight);
             auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8;
 
-            // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
-            // see CCTexture2D::initWithData for the temporary fix
-           _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+           _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, 
+               pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
         }
     }
 #endif
@@ -228,12 +231,13 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     Rect tempRect;
     FontLetterDefinition tempDef;
 
-    auto contentSize = Size(CacheTextureWidth,CacheTextureHeight);
     auto scaleFactor = CC_CONTENT_SCALE_FACTOR();
     auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
 
     bool existNewLetter = false;
     int bottomHeight = _commonLineHeight - _fontAscender;
+    float startX = _currentPageOrigX;
+    float startY = _currentPageOrigY;
 
     for (int i = 0; i < length; ++i)
     {
@@ -260,13 +264,18 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                     _currentPageOrigX = 0;
                     if(_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
                     {     
-                        // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
-                        // see CCTexture2D::initWithData for the temporary fix
-                       _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+                        auto data = _currentPageData + CacheTextureWidth * (int)startY;
+                        _atlasTextures[_currentPage]->updateWithData(data, 0, startY, 
+                            CacheTextureWidth, CacheTextureHeight - startY);
+                        startX = 0.0f;
+                        startY = 0.0f;
+
                         _currentPageOrigY = 0;
                         memset(_currentPageData, 0, _currentPageDataSize);
                         _currentPage++;
                         auto tex = new Texture2D;
+                        tex->initWithData(_currentPageData, _currentPageDataSize, 
+                            pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
                         addTexture(tex,_currentPage);
                         tex->release();
                     }  
@@ -307,9 +316,9 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
     if(existNewLetter)
     {
-        // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
-        // see CCTexture2D::initWithData for the temporary fix
-        _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+        auto data = _currentPageData + CacheTextureWidth * (int)startY;
+        _atlasTextures[_currentPage]->updateWithData(data, 0, startY, 
+            CacheTextureWidth, _currentPageOrigY - startY + _commonLineHeight);
     }
     return true;
 }

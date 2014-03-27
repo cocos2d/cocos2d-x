@@ -682,6 +682,18 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     return true;
 }
 
+bool Texture2D::updateWithData(const void *data,int offsetX,int offsetY,int width,int height)
+{
+    if (_name)
+    {
+        GL::bindTexture2D(_name);
+        const PixelFormatInfo& info = _pixelFormatInfoTables.at(_pixelFormat);
+        glTexSubImage2D(GL_TEXTURE_2D,0,offsetX,offsetY,width,height,info.format, info.type,data);
+
+        return true;
+    }
+    return false;
+}
 
 std::string Texture2D::getDescription() const
 {
