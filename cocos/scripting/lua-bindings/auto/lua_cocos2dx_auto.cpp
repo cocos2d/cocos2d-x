@@ -32081,6 +32081,50 @@ int lua_cocos2dx_Label_setBMFontFilePath(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_getFontAtlas(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontAtlas'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::FontAtlas* ret = cobj->getFontAtlas();
+        object_to_luaval<cocos2d::FontAtlas>(tolua_S, "cc.FontAtlas",(cocos2d::FontAtlas*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getFontAtlas",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_getFontAtlas'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_getFontDefinition(lua_State* tolua_S)
 {
     int argc = 0;
@@ -33539,6 +33583,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"setString",lua_cocos2dx_Label_setString);
         tolua_function(tolua_S,"getHeight",lua_cocos2dx_Label_getHeight);
         tolua_function(tolua_S,"setBMFontFilePath",lua_cocos2dx_Label_setBMFontFilePath);
+        tolua_function(tolua_S,"getFontAtlas",lua_cocos2dx_Label_getFontAtlas);
         tolua_function(tolua_S,"getFontDefinition",lua_cocos2dx_Label_getFontDefinition);
         tolua_function(tolua_S,"getFontName",lua_cocos2dx_Label_getFontName);
         tolua_function(tolua_S,"updateContent",lua_cocos2dx_Label_updateContent);
