@@ -35,6 +35,24 @@ NS_CC_EXT_BEGIN
 typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 #define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
 
+typedef enum {
+    ///parent: Empty Node
+    ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+    ///            ComAttribute
+    ///            ComAudio
+    ///            ....
+    ATTACH_EMPTY_NODE,
+
+    ///parent:   ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+    ///          ComAttribute
+    ///          ComAudio
+    ///          .....
+    ATTACH_RENDER_NODE,
+
+    /// Default AttachComponentType is _EmptyNode
+    DEFAULT = ATTACH_EMPTY_NODE,
+} AttachComponentType;
+
 /**
 *   @js NA
 *   @lua NA
@@ -42,29 +60,10 @@ typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 class CC_EX_DLL SceneReader
 {
 public:
-    enum class AttachComponentType
-    {
-        ///parent: Empty Node
-        ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
-        ///            ComAttribute
-        ///            ComAudio
-        ///            ....
-        EMPTY_NODE,
-
-        ///parent:   ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
-        ///          ComAttribute
-        ///          ComAudio
-        ///          .....
-        RENDER_NODE,
-
-        /// Default AttachComponentType is _EmptyNode
-        DEFAULT = EMPTY_NODE,
-    };
-
 	static SceneReader* sharedSceneReader();
 	static void purge();
 	static const char* sceneReaderVersion();
-	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = AttachComponentType::EMPTY_NODE);
+	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = ATTACH_EMPTY_NODE);
 	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 	cocos2d::CCNode* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _eAttachComponent;}
