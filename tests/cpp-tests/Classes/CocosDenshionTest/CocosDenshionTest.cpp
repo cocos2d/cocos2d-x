@@ -14,6 +14,8 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #define MUSIC_FILE        "music.mid"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    #define MUSIC_FILE        "background.wav"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX )
     #define MUSIC_FILE        "background.ogg"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

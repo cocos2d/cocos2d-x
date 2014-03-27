@@ -185,8 +185,8 @@ void ZwoptexGenericTest::flipSprites(float dt)
     char str2[32] = {0};
     sprintf(str1, "grossini_dance_%02d.png", spriteFrameIndex);
     sprintf(str2, "grossini_dance_generic_%02d.png", spriteFrameIndex);
-    sprite1->setDisplayFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str1));
-    sprite2->setDisplayFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str2));
+    sprite1->setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str1));
+    sprite2->setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str2));
 }
 
 ZwoptexGenericTest::~ZwoptexGenericTest()

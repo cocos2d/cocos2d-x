@@ -185,7 +185,9 @@ void FontAtlas::listenToForeground(EventCustom *event)
             auto contentSize = Size(CacheTextureWidth,CacheTextureHeight);
             auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8;
 
-            _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+            // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
+            // see CCTexture2D::initWithData for the temporary fix
+           _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
         }
     }
 #endif
@@ -231,6 +233,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
 
     bool existNewLetter = false;
+    int bottomHeight = _commonLineHeight - _fontAscender;
+
     for (int i = 0; i < length; ++i)
     {
         auto outIterator = _fontLetterDefinitions.find(utf16String[i]);
@@ -248,14 +252,17 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.height           = tempRect.size.height + _letterPadding;
                 tempDef.offsetX          = tempRect.origin.x + offsetAdjust;
                 tempDef.offsetY          = _fontAscender + tempRect.origin.y - offsetAdjust;
+                tempDef.clipBottom     = bottomHeight - (tempDef.height + tempRect.origin.y + offsetAdjust);
 
                 if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
                 {
                     _currentPageOrigY += _commonLineHeight;
                     _currentPageOrigX = 0;
                     if(_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
-                    {             
-                        _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
+                    {     
+                        // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
+                        // see CCTexture2D::initWithData for the temporary fix
+                       _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
                         _currentPageOrigY = 0;
                         memset(_currentPageData, 0, _currentPageDataSize);
                         _currentPage++;
@@ -290,6 +297,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.offsetX          = 0;
                 tempDef.offsetY          = 0;
                 tempDef.textureID        = 0;
+                tempDef.clipBottom = 0;
                 _currentPageOrigX += 1;
             }
 
@@ -299,6 +307,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
     if(existNewLetter)
     {
+        // this is a memory leak as the texture previously in _atlasTextures[_currentPage] is not deleted from OpenGL
+        // see CCTexture2D::initWithData for the temporary fix
         _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, pixelFormat, CacheTextureWidth, CacheTextureHeight, contentSize );
     }
     return true;

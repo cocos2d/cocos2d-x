@@ -68,6 +68,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     friend class Node;
+    friend class ProtectedNode;
     friend class SpriteBatchNode;
     
 private:
