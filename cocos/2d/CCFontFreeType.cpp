@@ -39,8 +39,8 @@ FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
 
-static std::unordered_map<std::string, Data> CacheFontData;
-static std::unordered_map<std::string, int> CacheFontDataRef;
+static std::unordered_map<std::string, Data> s_cacheFontData;
+static std::unordered_map<std::string, int> s_cacheFontDataRef;
 
 FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 {
@@ -109,30 +109,30 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
 
-    auto fielDataIterator = CacheFontData.find(fontName);
-    if (fielDataIterator != CacheFontData.end())
+    auto fielDataIterator = s_cacheFontData.find(fontName);
+    if (fielDataIterator != s_cacheFontData.end())
     {
-        auto temp = CacheFontDataRef.find(fontName);
-        if (temp != CacheFontDataRef.end())
+        auto temp = s_cacheFontDataRef.find(fontName);
+        if (temp != s_cacheFontDataRef.end())
         {
             (*temp).second += 1;
         }
         else
         {
-            CacheFontDataRef[fontName] = 1;
+            s_cacheFontDataRef[fontName] = 1;
         }
     }
     else
     {
-        CacheFontDataRef[fontName] = 1;
-        CacheFontData[fontName] = FileUtils::getInstance()->getDataFromFile(fontName);
-        if (CacheFontData[fontName].isNull())
+        s_cacheFontDataRef[fontName] = 1;
+        s_cacheFontData[fontName] = FileUtils::getInstance()->getDataFromFile(fontName);
+        if (s_cacheFontData[fontName].isNull())
         {
             return false;
         }
     }
 
-    if (FT_New_Memory_Face(getFTLibrary(), CacheFontData[fontName].getBytes(), CacheFontData[fontName].getSize(), 0, &face ))
+    if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].getBytes(), s_cacheFontData[fontName].getSize(), 0, &face ))
         return false;
     
     //we want to use unicode
@@ -166,11 +166,11 @@ FontFreeType::~FontFreeType()
         FT_Done_Face(_fontRef);
     }
 
-    CacheFontDataRef[_fontName] -= 1;
-    if (CacheFontDataRef[_fontName] == 0)
+    s_cacheFontDataRef[_fontName] -= 1;
+    if (s_cacheFontDataRef[_fontName] == 0)
     {
-        CacheFontDataRef.erase(_fontName);
-        CacheFontData.erase(_fontName);
+        s_cacheFontDataRef.erase(_fontName);
+        s_cacheFontData.erase(_fontName);
     }
 }
 
