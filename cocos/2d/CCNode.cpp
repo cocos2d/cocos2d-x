@@ -178,9 +178,9 @@ Node::~Node()
 
 #endif
 
-	#if COCOS2D_DEBUG > 0
-		_eventDispatcher->debugCheckNodeHasNoEventListenersOnDestruction(this);
-	#endif
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
+    _eventDispatcher->debugCheckNodeHasNoEventListenersOnDestruction(this);
+#endif
 
     CC_SAFE_RELEASE(_eventDispatcher);
 }
