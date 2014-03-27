@@ -436,6 +436,8 @@ protected:
     GLProgram* _shaderProgram;
 
     static const PixelFormatInfoMap _pixelFormatInfoTables;
+
+    bool _antialiasEnabled;
 };
 
 
