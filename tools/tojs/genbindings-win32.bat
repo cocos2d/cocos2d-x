@@ -67,6 +67,7 @@ goto QUIT
 echo ---------------------------------
 echo Generating bindings fails.
 echo ---------------------------------
+exit 1
 
 :QUIT
 
