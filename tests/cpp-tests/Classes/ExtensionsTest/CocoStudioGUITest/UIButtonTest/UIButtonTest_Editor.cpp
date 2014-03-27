@@ -44,7 +44,7 @@ bool UIButtonTest_Editor::init()
         scale9_button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
         
         _displayValueLabel = Text::create();
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
         _displayValueLabel->setText("No event");
         _displayValueLabel->setPosition(Point(_layout->getSize().width / 2,

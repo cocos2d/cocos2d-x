@@ -271,17 +271,17 @@ void TestIsFileExist::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto sharedFileUtils = FileUtils::getInstance();
     
-    LabelTTF* pTTF = NULL;
+    Label* pTTF = nullptr;
     bool isExist = false;
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.png");
     
-    pTTF = LabelTTF::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
+    pTTF = Label::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
     pTTF->setPosition(Point(s.width/2, s.height/3));
     this->addChild(pTTF);
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
-    pTTF = LabelTTF::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
+    pTTF = Label::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
     pTTF->setPosition(Point(s.width/2, s.height/3*2));
     this->addChild(pTTF);
 }
@@ -363,7 +363,7 @@ void TextWritePlist::onEnter()
     else
         log("write plist file failed");
     
-    auto label = LabelTTF::create(fullPath.c_str(), "Thonburi", 6);
+    auto label = Label::create(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(Point(winSize.width/2, winSize.height/3));
