@@ -377,6 +377,16 @@ void Slider::setPercent(int percent)
         spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
     }
 }
+    
+bool Slider::hitTest(const cocos2d::Point &pt)
+{
+    Point nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
+    Rect ballRect = this->_slidBallNormalRenderer->getTextureRect();
+    if (ballRect.containsPoint(nsp)) {
+        return true;
+    }
+    return false;
+}
 
 bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
