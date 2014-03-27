@@ -392,7 +392,15 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     }
 
     _fontAtlas = atlas;
-    SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), 30);
+    if (_textureAtlas)
+    {
+        _textureAtlas->setTexture(_fontAtlas->getTexture(0));
+    }
+    else
+    {
+        SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), 30);
+    }
+    
     if (_reusedLetter == nullptr)
     {
         _reusedLetter = Sprite::createWithTexture(_fontAtlas->getTexture(0));
@@ -828,7 +836,6 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
                 auto config = _fontConfig;
                 config.outlineSize = outlineSize;
                 setTTFConfig(config);
-                updateShaderProgram();
             }
         }
         _fontDefinition._stroke._strokeEnabled = true;
@@ -1372,6 +1379,22 @@ void Label::listenToFontAtlasPurge(EventCustom *event)
     if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
     {
         alignText();
+    }
+}
+
+void Label::setAliasTexParameters()
+{
+    if (_fontAtlas)
+    {
+        _fontAtlas->setAliasTexParameters();
+    }
+}
+
+void Label::setAntiAliasTexParameters()
+{
+    if (_fontAtlas)
+    {
+        _fontAtlas->setAntiAliasTexParameters();
     }
 }
 

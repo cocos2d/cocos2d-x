@@ -243,6 +243,18 @@ public:
 
     virtual const Size& getContentSize() const override;
 
+    /** sets font texture parameters:
+    - GL_TEXTURE_MIN_FILTER = GL_LINEAR
+    - GL_TEXTURE_MAG_FILTER = GL_LINEAR
+    */
+    void setAntiAliasTexParameters();
+
+    /** sets font texture parameters:
+    - GL_TEXTURE_MIN_FILTER = GL_NEAREST
+    - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+    */
+    void setAliasTexParameters();
+
     /** Listen "come to background" message
      It only has effect on Android.
      */
