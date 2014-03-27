@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCRef.h"
 #include "CCGL.h"
 #include "kazmath/kazmath.h"
+#include <set>
 
 NS_CC_BEGIN
 
@@ -256,7 +257,7 @@ public:
     void reset();
     
     inline const GLuint getProgram() const { return _program; }
-
+    inline const GLuint getMaterialProgramID() const { return _materialProgramID; }
     // DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
     { return initWithByteArrays(vShaderByteArray, fShaderByteArray); }
@@ -272,6 +273,8 @@ private:
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
 private:
+    //ID used for renderer material, _materialProgramID maybe different from _program
+    GLuint            _materialProgramID;
     GLuint            _program;
     GLuint            _vertShader;
     GLuint            _fragShader;
@@ -292,6 +295,21 @@ private:
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }
     } _flags;
+private:
+    class MaterialProgramIDAllocator
+    {
+    public:
+        MaterialProgramIDAllocator();
+        ~MaterialProgramIDAllocator();
+        GLuint allocID();
+        void freeID(GLuint id);
+    private:
+        std::set<GLuint> _freeIDs;
+    };
+    
+    static MaterialProgramIDAllocator _idAllocator;
+public:
+    static const GLuint _maxMaterialIDNumber;
 };
 
 // end of shaders group
