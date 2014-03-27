@@ -242,6 +242,7 @@ public:
 
     virtual const Size& getContentSize() const override;
 
+    FontAtlas* getFontAtlas() { return _fontAtlas; }
     /** Listen "come to background" message
      It only has effect on Android.
      */

@@ -100,6 +100,7 @@ typedef enum {
     BOOL            backgroundMusic;
     // whether background music is paused
     BOOL            paused;
+    BOOL            stopped;
 @public    
     BOOL            systemPaused;//Used for auto resign handling
     NSTimeInterval    systemPauseLocation;//Used for auto resign handling

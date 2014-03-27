@@ -91,7 +91,7 @@ private:
 
     bool initTextButton(const char *text)
     {
-        _child = LabelTTF::create(text, "Arial", 16);
+        _child = Label::create(text, "fonts/arial.ttf", 16);
         addChild(_child);
         return true;
     }
@@ -172,7 +172,7 @@ public:
 
         sprintf(buffer, "%.2f", minValue);
         if (!_lblMinValue) {
-            _lblMinValue = LabelTTF::create(buffer, "Arial", 8);
+            _lblMinValue = Label::create(buffer, "fonts/arial.ttf", 8);
             addChild(_lblMinValue);
             if (_direction == Vertical)
                 _lblMinValue->setPosition(Point(12.0, -50.0));
@@ -184,7 +184,7 @@ public:
 
         sprintf(buffer, "%.2f", maxValue);
         if (!_lblMaxValue) {
-            _lblMaxValue = LabelTTF::create(buffer, "Arial", 8);
+            _lblMaxValue = Label::create(buffer, "fonts/arial.ttf", 8);
             addChild(_lblMaxValue);
             if (_direction == Vertical)
                 _lblMaxValue->setPosition(Point(12.0, 50.0));
@@ -216,8 +216,8 @@ private:
 
     Direction _direction;
     extension::ControlSlider *_slider;
-    LabelTTF *_lblMinValue;
-    LabelTTF *_lblMaxValue;
+    Label *_lblMinValue;
+    Label *_lblMaxValue;
 };
 
 CocosDenshionTest::CocosDenshionTest()
@@ -256,7 +256,7 @@ void CocosDenshionTest::onExit()
 
 void CocosDenshionTest::addButtons()
 {
-    auto lblMusic = LabelTTF::create("Control Music", "Arial", 24);
+    auto lblMusic = Label::create("Control Music", "fonts/arial.ttf", 24);
     addChildAt(lblMusic, 0.25f, 0.9f);
 
     Button *btnPlay = Button::createWithText("play");
@@ -298,7 +298,7 @@ void CocosDenshionTest::addButtons()
     });
     addChildAt(btnIsPlayingMusic, 0.4f, 0.65f);
 
-    auto lblSound = LabelTTF::create("Control Effects", "Arial", 24);
+    auto lblSound = Label::create("Control Effects", "fonts/arial.ttf", 24);
     addChildAt(lblSound, 0.75f, 0.9f);
 
     Button *btnPlayEffect = Button::createWithText("play");
@@ -364,31 +364,31 @@ void CocosDenshionTest::addButtons()
 
 void CocosDenshionTest::addSliders()
 {
-    auto lblPitch = LabelTTF::create("Pitch", "Arial", 14);
+    auto lblPitch = Label::create("Pitch", "fonts/arial.ttf", 14);
     addChildAt(lblPitch, 0.67f, 0.4f);
     _sliderPitch = AudioSlider::create(AudioSlider::Horizontal);
     _sliderPitch->setValue(0.5, 2, 1);
     addChildAt(_sliderPitch, 0.85f, 0.4f);
 
-    auto lblPan = LabelTTF::create("Pan", "Arial", 14);
+    auto lblPan = Label::create("Pan", "fonts/arial.ttf", 14);
     addChildAt(lblPan, 0.67f, 0.3f);
     _sliderPan = AudioSlider::create(AudioSlider::Horizontal);
     _sliderPan->setValue(-1, 1, 0);
     addChildAt(_sliderPan, 0.85f, 0.3f);
 
-    auto lblGain = LabelTTF::create("Gain", "Arial", 14);
+    auto lblGain = Label::create("Gain", "fonts/arial.ttf", 14);
     addChildAt(lblGain, 0.67f, 0.2f);
     _sliderGain = AudioSlider::create(AudioSlider::Horizontal);
     _sliderGain->setValue(0, 1, 1);
     addChildAt(_sliderGain, 0.85f, 0.2f);
 
-    auto lblEffectsVolume = LabelTTF::create("Effects Volume", "Arial", 14);
+    auto lblEffectsVolume = Label::create("Effects Volume", "fonts/arial.ttf", 14);
     addChildAt(lblEffectsVolume, 0.62f, 0.5f);
     _sliderEffectsVolume = AudioSlider::create(AudioSlider::Horizontal);
     _sliderEffectsVolume->setValue(0, 1, 1);
     addChildAt(_sliderEffectsVolume, 0.85f, 0.5f);
 
-    auto lblMusicVolume = LabelTTF::create("Music Volume", "Arial", 14);
+    auto lblMusicVolume = Label::create("Music Volume", "fonts/arial.ttf", 14);
     addChildAt(lblMusicVolume, 0.12f, 0.5f);
     _sliderMusicVolume = AudioSlider::create(AudioSlider::Horizontal);
     _sliderMusicVolume->setValue(0, 1, 1);
