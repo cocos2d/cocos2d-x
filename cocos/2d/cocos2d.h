@@ -195,6 +195,22 @@ THE SOFTWARE.
     #include "platform/linux/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	#include "platform/winrt/CCApplication.h"
+	#include "platform/winrt/CCGLView.h"
+	#include "platform/winrt/CCGL.h"
+	#include "platform/winrt/CCStdC.h"
+	#include "platform/winrt/CCPrecompiledShaders.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	#include "platform/winrt/CCApplication.h"
+	#include "platform/wp8/CCGLView.h"
+	#include "platform/winrt/CCGL.h"
+	#include "platform/winrt/CCStdC.h"
+	#include "platform/winrt/CCPrecompiledShaders.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+
 // script_support
 #include "CCScriptSupport.h"
 

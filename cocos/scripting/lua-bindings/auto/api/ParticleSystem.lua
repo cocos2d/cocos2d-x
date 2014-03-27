@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ParticleSystem
--- @extend Node,TextureProtocol,
+-- @extend Node,TextureProtocol
 
 --------------------------------
 -- @function [parent=#ParticleSystem] getStartSizeVar 

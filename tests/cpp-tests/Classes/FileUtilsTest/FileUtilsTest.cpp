@@ -45,7 +45,7 @@ void FileUtilsTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-// #pragma mark - FileUtilsDemo
+//  FileUtilsDemo
 
 void FileUtilsDemo::onEnter()
 {
@@ -92,7 +92,7 @@ std::string FileUtilsDemo::subtitle() const
     return "";
 }
 
-//#pragma mark - TestResolutionDirectories
+// TestResolutionDirectories
 
 void TestResolutionDirectories::onEnter()
 {
@@ -146,7 +146,7 @@ std::string TestResolutionDirectories::subtitle() const
     return "See the console";
 }
 
-//#pragma mark - TestSearchPath
+// TestSearchPath
 
 void TestSearchPath::onEnter()
 {
@@ -225,7 +225,7 @@ std::string TestSearchPath::subtitle() const
     return "See the console";
 }
 
-//#pragma mark - TestFilenameLookup
+// TestFilenameLookup
 
 void TestFilenameLookup::onEnter()
 {
@@ -263,7 +263,7 @@ std::string TestFilenameLookup::title() const
     return "FileUtils: filename lookup";
 }
 
-//#pragma mark - TestIsFileExist
+// TestIsFileExist
 
 void TestIsFileExist::onEnter()
 {
@@ -271,17 +271,17 @@ void TestIsFileExist::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto sharedFileUtils = FileUtils::getInstance();
     
-    LabelTTF* pTTF = NULL;
+    Label* pTTF = nullptr;
     bool isExist = false;
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.png");
     
-    pTTF = LabelTTF::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
+    pTTF = Label::create(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
     pTTF->setPosition(Point(s.width/2, s.height/3));
     this->addChild(pTTF);
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
-    pTTF = LabelTTF::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
+    pTTF = Label::create(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
     pTTF->setPosition(Point(s.width/2, s.height/3*2));
     this->addChild(pTTF);
 }
@@ -307,7 +307,7 @@ std::string TestIsFileExist::subtitle() const
     return "";
 }
 
-//#pragma mark - TestWritePlist
+// TestWritePlist
 
 void TextWritePlist::onEnter()
 {
@@ -363,20 +363,20 @@ void TextWritePlist::onEnter()
     else
         log("write plist file failed");
     
-    auto label = LabelTTF::create(fullPath.c_str(), "Thonburi", 6);
+    auto label = Label::create(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(Point(winSize.width/2, winSize.height/3));
     
-    auto loadDict = Dictionary::createWithContentsOfFile(fullPath.c_str());
-    auto loadDictInDict = (Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
-    auto boolValue = (String*)loadDictInDict->objectForKey("bool");
+    auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
+    auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
+    auto boolValue = (__String*)loadDictInDict->objectForKey("bool");
     CCLOG("%s",boolValue->getCString());
-    auto floatValue = (String*)loadDictInDict->objectForKey("float");
+    auto floatValue = (__String*)loadDictInDict->objectForKey("float");
     CCLOG("%s",floatValue->getCString());
-    auto intValue = (String*)loadDictInDict->objectForKey("integer");
+    auto intValue = (__String*)loadDictInDict->objectForKey("integer");
     CCLOG("%s",intValue->getCString());
-    auto doubleValue = (String*)loadDictInDict->objectForKey("double");
+    auto doubleValue = (__String*)loadDictInDict->objectForKey("double");
     CCLOG("%s",doubleValue->getCString());
 
 }

@@ -15438,7 +15438,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_finalize(lua_State* tolua_
 int lua_register_cocos2dx_extension_CCBAnimationManager(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CCBAnimationManager");
-    tolua_cclass(tolua_S,"CCBAnimationManager","cc.CCBAnimationManager","",nullptr);
+    tolua_cclass(tolua_S,"CCBAnimationManager","cc.CCBAnimationManager","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"CCBAnimationManager");
         tolua_function(tolua_S,"moveAnimationsFromNode",lua_cocos2dx_extension_CCBAnimationManager_moveAnimationsFromNode);
@@ -16466,7 +16466,7 @@ static int lua_cocos2dx_extension_CCBReader_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_CCBReader(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CCBReader");
-    tolua_cclass(tolua_S,"CCBReader","cc.CCBReader","",nullptr);
+    tolua_cclass(tolua_S,"CCBReader","cc.CCBReader","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"CCBReader");
         tolua_function(tolua_S,"addOwnerOutletName",lua_cocos2dx_extension_CCBReader_addOwnerOutletName);

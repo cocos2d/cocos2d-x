@@ -238,7 +238,7 @@ void ScrollView::setContentOffsetInDuration(Point offset, float dt)
     
     scroll = MoveTo::create(dt, offset);
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
-    _container->runAction(Sequence::create(scroll, expire, NULL));
+    _container->runAction(Sequence::create(scroll, expire, nullptr));
     this->schedule(schedule_selector(ScrollView::performedAnimatedScroll));
 }
 

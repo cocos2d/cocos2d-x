@@ -129,7 +129,7 @@ ControlStepper* ControlStepper::create(Sprite *minusSprite, Sprite *plusSprite)
     return pRet;
 }
 
-//#pragma mark Properties
+//// Properties
 
 void ControlStepper::setWraps(bool wraps)
 {
@@ -190,8 +190,8 @@ bool ControlStepper::isContinuous() const
 {
     return _continuous;
 }
-//#pragma mark -
-//#pragma mark ControlStepper Public Methods
+//
+//// ControlStepper Public Methods
 
 void ControlStepper::setValueWithSendingEvent(double value, bool send)
 {
@@ -246,7 +246,7 @@ void ControlStepper::update(float dt)
     }
 }
 
-//#pragma mark ControlStepper Private Methods
+//// ControlStepper Private Methods
 
 void ControlStepper::updateLayoutUsingTouchLocation(Point location)
 {

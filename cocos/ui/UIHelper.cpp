@@ -81,28 +81,6 @@ Widget* Helper::seekWidgetByName(Widget* root, const char *name)
     return nullptr;
 }
 
-Widget* Helper::seekWidgetByRelativeName(Widget *root, const char *name)
-{
-    if (!root)
-    {
-        return nullptr;
-    }
-    const auto& arrayRootChildren = root->getChildren();
-    for (auto& subWidget : arrayRootChildren)
-    {
-        Widget* child = dynamic_cast<Widget*>(subWidget);
-        if (child)
-        {
-            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-            if (layoutParameter && strcmp(layoutParameter->getRelativeName(), name) == 0)
-            {
-                return child;
-            }
-        }
-    }
-    return nullptr;
-}
-
 /*temp action*/
 Widget* Helper::seekActionWidgetByActionTag(Widget* root, int tag)
 {
