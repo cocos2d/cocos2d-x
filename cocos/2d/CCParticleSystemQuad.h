@@ -67,10 +67,10 @@ public:
     static ParticleSystemQuad * create(const std::string& filename);
     /** creates and initializes a ParticleSystemQuad from a ValueMap.
      */
-    static ParticleSystemQuad * create(ValueMap& map);
+    static ParticleSystemQuad * create(ValueMap& valueMap);
     /** creates and initializes a ParticleSystemQuad from a ValueMap and a SpriteFrame set as a particle.
      */
-    static ParticleSystemQuad * create(ValueMap& map, SpriteFrame *frame);
+    static ParticleSystemQuad * create(ValueMap& valueMap, SpriteFrame *frame);
     
     /** Sets a new SpriteFrame as particle.
     WARNING: this method is experimental. Use setTextureWithRect instead.
@@ -144,7 +144,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles) override;
     
     /** initializes a ParticleSystemQuad from a ValueMap and a SpriteFrame set as a particle */
-    bool initWithValueMap(ValueMap &dictionary, SpriteFrame* frame);
+    bool initWithValueMap(ValueMap &valueMap, SpriteFrame* frame);
     
     
 protected:
