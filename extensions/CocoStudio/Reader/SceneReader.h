@@ -51,7 +51,7 @@ typedef enum {
 
     /// Default CCCreateNodeType
     DEFAULT = EMPTY_NODE,
-}ccAttachComponentType;
+} ccAttachComponentType;
 
 /**
 *   @js NA
@@ -67,12 +67,12 @@ public:
 	static SceneReader* sharedSceneReader();
 	static void purge();
 	static const char* sceneReaderVersion();
-	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, ccAttachComponentType eAttachComponent = ccAttachComponentType::EMPTY_NODE);
+	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, cocos2d::extension::ccAttachComponentType eAttachComponent = cocos2d::extension::ccAttachComponentType::EMPTY_NODE);
 	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 	cocos2d::CCNode* getNodeByTag(int nTag);
-    inline ccAttachComponentType getAttachComponentType(){return _eAttachComponent;}
+    inline cocos2d::extension::ccAttachComponentType getAttachComponentType(){return _eAttachComponent;}
 private:
-    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, ccAttachComponentType eAttachComponent);
+    cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent, cocos2d::extension::ccAttachComponentType eAttachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
 	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
