@@ -354,18 +354,18 @@ bool WebSocket::init(const Delegate& delegate,
 
 	
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     ret = _wsHelper->createThread(*this);
-#else
-	_wsHelper->_ws = this;
-	create_task([this] {
-		onSubThreadStarted();
-		while (!_wsHelper->_needQuit)
-			if (onSubThreadLoop())
-				break;
-		onSubThreadEnded();
-	});	
-#endif
+//#else
+//	_wsHelper->_ws = this;
+//	create_task([this] {
+//		onSubThreadStarted();
+//		while (!_wsHelper->_needQuit)
+//			if (onSubThreadLoop())
+//				break;
+//		onSubThreadEnded();
+//	});	
+//#endif
     
     return ret;
 }

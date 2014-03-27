@@ -182,7 +182,7 @@ static void sendRequest(CCHttpRequest * request)
     
 }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 
 // Worker thread
 static void* networkThread(void *data)
@@ -242,7 +242,7 @@ static void* networkThread(void *data)
 	return 0;
 
 }
-#endif
+//#endif
 
 
 //Configure curl's timeout property
@@ -478,17 +478,17 @@ void CCHttpClient::send(CCHttpRequest* request)
     
     request->retain();
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 	pthread_mutex_lock(&s_requestQueueMutex);
 	s_requestQueue->addObject(request);
 	pthread_mutex_unlock(&s_requestQueueMutex);
 	// Notify thread start to work
 	pthread_cond_signal(&s_SleepCondition);
-#else
-	create_task([this,request] {
-		sendRequest(request);	
-	});
-#endif
+//#else
+//	create_task([this,request] {
+//		sendRequest(request);	
+//	});
+//#endif
 }
 
 // Poll and notify main thread if responses exists in queue
