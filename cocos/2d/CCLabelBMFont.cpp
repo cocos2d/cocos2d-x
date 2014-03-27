@@ -161,12 +161,12 @@ std::string LabelBMFont::getDescription() const
 
 void LabelBMFont::setBlendFunc(const BlendFunc &blendFunc)
 {
-    _label->setBlendFunc(blendFunc);
+//    _label->setBlendFunc(blendFunc);
 }
 
 const BlendFunc &LabelBMFont::getBlendFunc() const
 {
-    return _label->getBlendFunc();
+//    return _label->getBlendFunc();
 }
 
 Node* LabelBMFont::getChildByTag(int tag)

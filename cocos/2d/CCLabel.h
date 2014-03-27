@@ -59,7 +59,7 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
         const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
@@ -75,7 +75,7 @@ typedef struct _ttfConfig
     }
 }TTFConfig;
 
-class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
+class CC_DLL Label : public Node, public LabelProtocol
 {
 public:
     static const int DistanceFieldFontSize;
@@ -91,7 +91,7 @@ public:
 
     CC_DEPRECATED_ATTRIBUTE static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, 
         int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::LEFT, 
-        GlyphCollection glyphs = GlyphCollection::DYNAMIC, const char *customGlyphs = 0, bool useDistanceField = false);
+        GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
 
     /** create a label with TTF configuration
      * It will generate texture of character by freetype.
@@ -230,7 +230,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE int getStringLenght() const { return getStringLength(); }
     
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+//    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     virtual void setScale(float scale) override;
     virtual void setScaleX(float scaleX) override;
@@ -238,7 +238,6 @@ public:
     virtual float getScaleX() const override;
     virtual float getScaleY() const override;
 
-    virtual void addChild(Node * child, int zOrder=0, int tag=0) override;
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
@@ -254,7 +253,11 @@ public:
     void listenToFontAtlasPurge(EventCustom *event);
 
 protected:
-    void onDraw(const kmMat4& transform, bool transformUpdated);
+//    void onDraw(const kmMat4& transform, bool transformUpdated);
+    virtual void addChild(Node * child, int zOrder=0, int tag=0) override
+    {
+        Node::addChild(child, zOrder, tag);
+    }; // change visibility so it cannot called from outside.
 
     struct LetterInfo
     {
@@ -321,7 +324,7 @@ protected:
     float         _fontSize;
     LabelType _currentLabelType;
 
-    std::vector<SpriteBatchNode*> _batchNodes;
+//    std::vector<SpriteBatchNode*> _batchNodes;
     FontAtlas *                   _fontAtlas;
     std::vector<LetterInfo>       _lettersInfo;
 
