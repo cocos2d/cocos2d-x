@@ -464,16 +464,6 @@ void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
         
         if (eventListenerVector)
         {
-            if (eventListenerVector->getFixedPriorityListeners())
-            {
-                for (EventListener * listener : *eventListenerVector->getFixedPriorityListeners())
-                {
-                    CCASSERT(!listener ||
-                             listener->getSceneGraphPriority() != node,
-                             "Node should have no event listeners registered for it upon destruction!");
-                }
-            }
-            
             if (eventListenerVector->getSceneGraphPriorityListeners())
             {
                 for (EventListener * listener : *eventListenerVector->getSceneGraphPriorityListeners())
