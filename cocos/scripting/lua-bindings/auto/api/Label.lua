@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module Label
--- @extend SpriteBatchNode,LabelProtocol,
+-- @extend SpriteBatchNode,LabelProtocol
 
 --------------------------------
 -- @function [parent=#Label] isClipMarginEnabled 

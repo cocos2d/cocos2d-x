@@ -51,7 +51,7 @@ bool ControlSwitchTest::init()
         
         layer_width += background->getContentSize().width;
         
-        _displayValueLabel  = LabelTTF::create("#color" ,"Marker Felt" ,30);
+        _displayValueLabel  = Label::create("#color" ,"fonts/Marker Felt.ttf" ,30);
         _displayValueLabel->retain();
 
         _displayValueLabel->setPosition(background->getPosition());

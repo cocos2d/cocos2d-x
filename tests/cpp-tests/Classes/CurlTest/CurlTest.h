@@ -13,7 +13,7 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
 
 private:
-    cocos2d::LabelTTF*         _label;
+    cocos2d::Label*         _label;
 };
 
 class CurlTestScene : public TestScene

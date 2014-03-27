@@ -27,7 +27,7 @@ WebSocketTestLayer::WebSocketTestLayer()
     const int MARGIN = 40;
     const int SPACE = 35;
     
-    auto label = LabelTTF::create("WebSocket Test", "Arial", 28);
+    auto label = Label::create("WebSocket Test", "fonts/arial.ttf", 28);
     label->setPosition(Point(winSize.width / 2, winSize.height - MARGIN));
     addChild(label, 0);
     
@@ -36,32 +36,32 @@ WebSocketTestLayer::WebSocketTestLayer()
     addChild(menuRequest);
     
     // Send Text
-    auto labelSendText = LabelTTF::create("Send Text", "Arial", 22);
+    auto labelSendText = Label::create("Send Text", "fonts/arial.ttf", 22);
     auto itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendTextClicked, this));
     itemSendText->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
     // Send Binary
-    auto labelSendBinary = LabelTTF::create("Send Binary", "Arial", 22);
+    auto labelSendBinary = Label::create("Send Binary", "fonts/arial.ttf", 22);
     auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendBinaryClicked, this));
     itemSendBinary->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
 
     // Send Text Status Label
-    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendTextStatus = Label::create("Send Text WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendTextStatus->setAnchorPoint(Point(0, 0));
     _sendTextStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
-    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendBinaryStatus = Label::create("Send Binary WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendBinaryStatus->setAnchorPoint(Point(0, 0));
     _sendBinaryStatus->setPosition(Point(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
-    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _errorStatus = Label::create("Error WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _errorStatus->setAnchorPoint(Point(0, 0));
     _errorStatus->setPosition(Point(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);

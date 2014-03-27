@@ -37,14 +37,17 @@ void BaseTest::onEnter()
 	// add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
-    auto label = LabelTTF::create(pTitle, "Arial", 32);
+    TTFConfig ttfConfig("fonts/arial.ttf", 32);
+    auto label = Label::createWithTTF(ttfConfig,pTitle);
     addChild(label, 9999);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        auto l = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
+        ttfConfig.fontFilePath = "fonts/Thonburi.ttf";
+        ttfConfig.fontSize = 16;
+        auto l = Label::createWithTTF(ttfConfig,strSubtitle.c_str());
         addChild(l, 9999);
         l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }

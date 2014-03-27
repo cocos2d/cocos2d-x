@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module LabelAtlas
--- @extend AtlasNode,LabelProtocol,
+-- @extend AtlasNode,LabelProtocol
 
 --------------------------------
 -- @function [parent=#LabelAtlas] setString 

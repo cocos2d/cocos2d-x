@@ -126,6 +126,13 @@ emitter.startSpin = 0;
 @endcode
 
 */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef RELATIVE
+#undef RELATIVE
+#endif
+#endif
+
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:

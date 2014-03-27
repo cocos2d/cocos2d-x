@@ -1458,7 +1458,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
 };
 
-//#pragma mark - NodeRGBA
+// NodeRGBA
 
 /** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
  

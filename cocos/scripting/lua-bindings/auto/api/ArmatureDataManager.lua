@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ArmatureDataManager
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#ArmatureDataManager] getAnimationDatas 

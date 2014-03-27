@@ -157,7 +157,7 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 		final LinearLayout layout = new LinearLayout(this.getContext());
 		layout.setOrientation(LinearLayout.VERTICAL);
 
-		final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+		final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
 		this.mTextViewTitle = new TextView(this.getContext());
 		final LinearLayout.LayoutParams textviewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -166,7 +166,7 @@ public class Cocos2dxEditBoxDialog extends Dialog {
 		layout.addView(this.mTextViewTitle, textviewParams);
 
 		this.mInputEditText = new EditText(this.getContext());
-		final LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		final LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		editTextParams.leftMargin = editTextParams.rightMargin = this.convertDipsToPixels(10);
 
 		layout.addView(this.mInputEditText, editTextParams);

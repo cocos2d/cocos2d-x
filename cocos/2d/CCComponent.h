@@ -67,7 +67,7 @@ public:
     
     void setOwner(Node *pOwner);
     Node* getOwner() const;
-    
+
 protected:
     Node *_owner;
     std::string _name;

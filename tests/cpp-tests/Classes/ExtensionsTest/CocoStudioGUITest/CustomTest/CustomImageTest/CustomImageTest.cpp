@@ -10,9 +10,9 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-#pragma mark -
-#pragma mark CustomImageLayer
-#pragma mark -
+
+// CustomImageLayer
+
 
 void CustomImageLayer::onEnter()
 {
@@ -28,15 +28,15 @@ void CustomImageLayer::onEnter()
     addChild(layout);        
 }
 
-#pragma mark -
-#pragma mark CustomImageScene
-#pragma mark -
+
+// CustomImageScene
+
 
 void CustomImageScene::onEnter()
 {
     CCScene::onEnter();
     
-    LabelTTF* label = LabelTTF::create("Back", "Arial", 20);
+    auto label = Label::create("Back", "fonts/arial.ttf", 20);
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CustomImageScene::BackCallback, this));
     

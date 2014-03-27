@@ -797,7 +797,7 @@ LabelsEmpty::LabelsEmpty()
     label1->setPosition(Point(s.width/2, s.height-100));
 
     // LabelTTF
-    auto label2 = LabelTTF::create("", "Arial", 24);
+    auto label2 = LabelTTF::create("", "fonts/arial.ttf", 24);
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition(Point(s.width/2, s.height/2));
 
@@ -993,7 +993,7 @@ void  LabelTTFTest::updateAlignment()
 
     CC_SAFE_RELEASE(_plabel);
 
-    _plabel = LabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
+    _plabel = LabelTTF::create(this->getCurrentAlignment(), "fonts/Marker Felt.ttf", 32,
                                   blockSize, _horizAlign, _vertAlign);
     _plabel->retain();
 
@@ -1108,7 +1108,7 @@ std::string LabelTTFMultiline::subtitle() const
 LabelTTFChinese::LabelTTFChinese()
 {
     auto size = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("中国", "Marker Felt", 30);
+    auto label = LabelTTF::create("中国", "fonts/Marker Felt.ttf", 30);
     label->setPosition(Point(size.width / 2, size.height /2));
     this->addChild(label);
 }
@@ -1343,7 +1343,7 @@ LabelTTFA8Test::LabelTTFA8Test()
     addChild(layer, -10);
 
     // LabelBMFont
-    auto label1 = LabelTTF::create("Testing A8 Format", "Marker Felt", 48);
+    auto label1 = LabelTTF::create("Testing A8 Format", "fonts/Marker Felt.ttf", 48);
     addChild(label1);
     label1->setColor(Color3B::RED);
     label1->setPosition(Point(s.width/2, s.height/2));
@@ -1459,7 +1459,7 @@ TTFFontInit::TTFFontInit()
 
     auto font = LabelTTF::create();
 
-    font->setFontName("Marker Felt");
+    font->setFontName("fonts/Marker Felt.ttf");
     font->setFontSize(48);
     font->setString("It is working!");
     this->addChild(font);
@@ -1486,14 +1486,14 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     Color3B tintColorRed(  255, 0, 0   );
     Color3B tintColorYellow( 255, 255, 0 );
     Color3B tintColorBlue( 0, 0, 255   );
-    Color3B strokeColor( 0, 10, 255  );
+    Color3B strokeColor( 0, 0, 255  );
     Color3B strokeShadowColor( 255, 0, 0   );
     
     Size shadowOffset(12.0, 12.0);
     
     FontDefinition shadowTextDef;
     shadowTextDef._fontSize = 20;
-    shadowTextDef._fontName = std::string("Marker Felt");
+    shadowTextDef._fontName = std::string("fonts/Marker Felt.ttf");
     
     shadowTextDef._shadow._shadowEnabled = true;
     shadowTextDef._shadow._shadowOffset  = shadowOffset;
@@ -1512,7 +1512,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // create the stroke only label
     FontDefinition strokeTextDef;
     strokeTextDef._fontSize = 20;
-    strokeTextDef._fontName = std::string("Marker Felt");
+    strokeTextDef._fontName = std::string("fonts/Marker Felt.ttf");
     
     strokeTextDef._stroke._strokeEnabled = true;
     strokeTextDef._stroke._strokeColor   = strokeColor;
@@ -1532,7 +1532,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // create the label stroke and shadow
     FontDefinition strokeShaodwTextDef;
     strokeShaodwTextDef._fontSize = 20;
-    strokeShaodwTextDef._fontName = std::string("Marker Felt");
+    strokeShaodwTextDef._fontName = std::string("fonts/Marker Felt.ttf");
     
     strokeShaodwTextDef._stroke._strokeEnabled = true;
     strokeShaodwTextDef._stroke._strokeColor   = strokeShadowColor;
@@ -1547,11 +1547,46 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef._fontFillColor   = tintColorBlue;
     
     // shadow + stroke label
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke && Shadow Blue Text", strokeShaodwTextDef);
+#else
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke &Shadow Blue Text", strokeShaodwTextDef);
+#endif 
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);
     fontStrokeAndShadow->setPosition(Point(s.width/2,s.height/4*1.1));
+    
+    auto buttonBG = MenuItemImage::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+    buttonBG->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    buttonBG->setPosition(VisibleRect::left());
+    
+    // create the label stroke and shadow
+    strokeShaodwTextDef._fontSize = 18;
+    strokeShaodwTextDef._fontName = "Marker Felt";
+    
+    strokeShaodwTextDef._stroke._strokeEnabled = true;
+    strokeShaodwTextDef._stroke._strokeColor   = Color3B::BLACK;
+    strokeShaodwTextDef._stroke._strokeSize    = 3.0f;
+    
+    strokeShaodwTextDef._shadow._shadowEnabled = false;
+    strokeShaodwTextDef._shadow._shadowOffset  = Size(1, 1);
+    strokeShaodwTextDef._shadow._shadowOpacity = 1.0;
+    strokeShaodwTextDef._shadow._shadowBlur    = 0.5f;
+    
+    strokeShaodwTextDef._fontFillColor   = Color3B::WHITE;
+    
+    // shadow + stroke label
+    fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Test", strokeShaodwTextDef);
+    
+    // add label to the scene
+    buttonBG->addChild(fontStrokeAndShadow);
+    fontStrokeAndShadow->setPosition(Point(buttonBG->getContentSize().width/2, buttonBG->getContentSize().height/2));
+    
+    auto menu = Menu::create(buttonBG, nullptr);
+    menu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    menu->setPosition(Point::ZERO);
+    addChild(menu);
 }
 
 std::string TTFFontShadowAndStroke::title() const

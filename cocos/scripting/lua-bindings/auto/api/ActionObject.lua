@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ActionObject
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#ActionObject] setCurrentTime 
