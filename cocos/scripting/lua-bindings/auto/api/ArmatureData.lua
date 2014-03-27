@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ArmatureData
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#ArmatureData] addBoneData 

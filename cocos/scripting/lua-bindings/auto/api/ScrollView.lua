@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout,UIScrollInterface,
+-- @extend Layout,UIScrollInterface
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 
@@ -188,57 +188,21 @@
 -- @param #int int
 
 --------------------------------
+-- @function [parent=#ScrollView] getChildByName 
+-- @param self
+-- @param #char char
+-- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
 -- @function [parent=#ScrollView] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#ScrollView] removeAllChildren 
+-- @function [parent=#ScrollView] update 
 -- @param self
+-- @param #float float
         
---------------------------------
--- overload function: getChildren()
---          
--- overload function: getChildren()
---          
--- @function [parent=#ScrollView] getChildren
--- @param self
--- @return array_table#array_table ret (retunr value: array_table)
-
---------------------------------
--- @function [parent=#ScrollView] getNodes 
--- @param self
--- @return array_table#array_table ret (return value: array_table)
-        
---------------------------------
--- @function [parent=#ScrollView] getChildByTag 
--- @param self
--- @param #int int
--- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
--- @function [parent=#ScrollView] removeNode 
--- @param self
--- @param #cc.Node node
-        
---------------------------------
--- @function [parent=#ScrollView] removeNodeByTag 
--- @param self
--- @param #int int
-        
---------------------------------
--- overload function: addNode(cc.Node, int)
---          
--- overload function: addNode(cc.Node)
---          
--- overload function: addNode(cc.Node, int, int)
---          
--- @function [parent=#ScrollView] addNode
--- @param self
--- @param #cc.Node node
--- @param #int int
--- @param #int int
-
 --------------------------------
 -- @function [parent=#ScrollView] getLayoutType 
 -- @param self
@@ -250,24 +214,7 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] update 
--- @param self
--- @param #float float
-        
---------------------------------
--- @function [parent=#ScrollView] getNodeByTag 
--- @param self
--- @param #int int
--- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
--- @function [parent=#ScrollView] getChildByName 
--- @param self
--- @param #char char
--- @return Widget#Widget ret (return value: ccui.Widget)
-        
---------------------------------
--- @function [parent=#ScrollView] removeAllNodes 
+-- @function [parent=#ScrollView] removeAllChildren 
 -- @param self
         
 --------------------------------
@@ -275,6 +222,21 @@
 -- @param self
 -- @param #cc.Node node
 -- @param #bool bool
+        
+--------------------------------
+-- overload function: getChildren()
+--          
+-- overload function: getChildren()
+--          
+-- @function [parent=#ScrollView] getChildren
+-- @param self
+-- @return array_table#array_table ret (retunr value: array_table)
+
+--------------------------------
+-- @function [parent=#ScrollView] getChildByTag 
+-- @param self
+-- @param #int int
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- @function [parent=#ScrollView] getChildrenCount 

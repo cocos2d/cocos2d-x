@@ -99,12 +99,13 @@ void Button::initRenderer()
     _buttonNormalRenderer = Sprite::create();
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
-    _titleRenderer = LabelTTF::create();
+    _titleRenderer = Label::create();
+    _titleRenderer->setAnchorPoint(Point::ANCHOR_MIDDLE);
 
-    Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
-    Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
-    Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
-    Node::addChild(_titleRenderer, TITLE_RENDERER_Z, -1);
+    addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
+    addProtectedChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
+    addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
 }
 
 void Button::setScale9Enabled(bool able)
@@ -115,9 +116,9 @@ void Button::setScale9Enabled(bool able)
     }
     _brightStyle = BRIGHT_NONE;
     _scale9Enabled = able;
-    Node::removeChild(_buttonNormalRenderer);
-    Node::removeChild(_buttonClickedRenderer);
-    Node::removeChild(_buttonDisableRenderer);
+    removeProtectedChild(_buttonNormalRenderer);
+    removeProtectedChild(_buttonClickedRenderer);
+    removeProtectedChild(_buttonDisableRenderer);
     _buttonNormalRenderer = nullptr;
     _buttonClickedRenderer = nullptr;
     _buttonDisableRenderer = nullptr;
@@ -137,9 +138,9 @@ void Button::setScale9Enabled(bool able)
     loadTextureNormal(_normalFileName.c_str(), _normalTexType);
     loadTexturePressed(_clickedFileName.c_str(), _pressedTexType);
     loadTextureDisabled(_disabledFileName.c_str(), _disabledTexType);
-    Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
-    Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
-    Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
+    addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
+    addProtectedChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -433,10 +434,10 @@ void Button::onPressStateChangedToDisabled()
 
 void Button::updateFlippedX()
 {
-    _titleRenderer->setFlippedX(_flippedX);
+    float flip = _flippedX ? -1.0f : 1.0f;
+    _titleRenderer->setScaleX(flip);
     if (_scale9Enabled)
     {
-        float flip = _flippedX ? -1.0f : 1.0f;
         _buttonNormalRenderer->setScaleX(flip);
         _buttonClickedRenderer->setScaleX(flip);
         _buttonDisableRenderer->setScaleX(flip);
@@ -451,10 +452,10 @@ void Button::updateFlippedX()
     
 void Button::updateFlippedY()
 {
-    _titleRenderer->setFlippedY(_flippedY);
+    float flip = _flippedY ? -1.0f : 1.0f;
+    _titleRenderer->setScaleY(flip);
     if (_scale9Enabled)
     {
-        float flip = _flippedY ? -1.0f : 1.0f;
         _buttonNormalRenderer->setScaleY(flip);
         _buttonClickedRenderer->setScaleY(flip);
         _buttonDisableRenderer->setScaleY(flip);

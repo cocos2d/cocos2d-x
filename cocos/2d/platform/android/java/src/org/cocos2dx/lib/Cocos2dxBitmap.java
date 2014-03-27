@@ -39,7 +39,6 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.util.FloatMath;
 import android.util.Log;
 
 public class Cocos2dxBitmap {
@@ -119,7 +118,7 @@ public class Cocos2dxBitmap {
 		 */
 		if(0 != width)
 		{
-			final int firstWordWidth = (int) FloatMath.ceil(paint.measureText(string, 0,1));
+			final int firstWordWidth = (int) Math.ceil(paint.measureText(string, 0,1));
 			if ( firstWordWidth > width)
 			{
 				Log.w("createTextBitmapShadowStroke warning:","the input width is less than the width of the pString's first word\n");
@@ -140,25 +139,6 @@ public class Cocos2dxBitmap {
 		float renderTextDeltaX = 0.0f;
 		float renderTextDeltaY = 0.0f;
 		
-		if ( shadow ) {
-
-			int shadowColor = ((int)(255 * shadowOpacity) & 0xff) << 24;
-			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
-	
-			bitmapPaddingX = Math.abs(shadowDX);
-			bitmapPaddingY = Math.abs(shadowDY);
-					
-			if ( shadowDX < 0.0 )
-			{
-				renderTextDeltaX = bitmapPaddingX;
-			}
-			
-			if ( shadowDY < 0.0 )
-			{
-				renderTextDeltaY = 	bitmapPaddingY;
-			}
-		}
-
 		if (0 == textProperty.mMaxWidth || 0 == bitmapTotalHeight)
 		{
 			Log.w("createTextBitmapShadowStroke warning:","textProperty MaxWidth is 0 or bitMapTotalHeight is 0\n");
@@ -173,40 +153,43 @@ public class Cocos2dxBitmap {
 
 		/* Draw string. */
 		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
-		
-		int x = 0;
-		int y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
-		
-		final String[] lines = textProperty.mLines;
-		
-		for (final String line : lines) {
-			
-			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
-			y += textProperty.mHeightPerLine;
-			
-		}
 		 
 		// draw again with stroke on if needed 
-		if ( stroke ) {
-			
+		if ( stroke )
+		{
 			final Paint paintStroke = Cocos2dxBitmap.newPaint(fontName, fontSize, horizontalAlignment);
 			paintStroke.setStyle(Paint.Style.STROKE);
-			paintStroke.setStrokeWidth(strokeSize * 0.5f);
+			paintStroke.setStrokeWidth(strokeSize);
 			paintStroke.setARGB(255, (int) (strokeR * 255), (int) (strokeG * 255), (int) (strokeB * 255));
 			
-			x = 0;
-			y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
+			int x = 0;
+			int y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
 			final String[] lines2 = textProperty.mLines;
 			
 			for (final String line : lines2) {
 				
 				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
 				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
+				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
 				y += textProperty.mHeightPerLine;
 				
 			}
 			
+		}
+		else
+		{
+			int x = 0;
+			int y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);
+			
+			final String[] lines = textProperty.mLines;
+			
+			for (final String line : lines) {
+				
+				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
+				y += textProperty.mHeightPerLine;
+				
+			}
 		}
 		
 		Cocos2dxBitmap.initNativeObject(bitmap);
@@ -269,7 +252,7 @@ public class Cocos2dxBitmap {
 			/* Compute the max width. */
 			int temp = 0;
 			for (final String line : lines) {
-				temp = (int) FloatMath.ceil(paint.measureText(line, 0,
+				temp = (int) Math.ceil(paint.measureText(line, 0,
 						line.length()));
 				if (temp > maxContentWidth) {
 					maxContentWidth = temp;
@@ -343,7 +326,7 @@ public class Cocos2dxBitmap {
 				 * The width of line is exceed maxWidth, should divide it into
 				 * two or more lines.
 				 */
-				final int lineWidth = (int) FloatMath.ceil(paint
+				final int lineWidth = (int) Math.ceil(paint
 						.measureText(line));
 				if (lineWidth > maxWidth) {
 					strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidth(
@@ -391,7 +374,7 @@ public class Cocos2dxBitmap {
 
 		/* Break a String into String[] by the width & should wrap the word. */
 		for (int i = 1; i <= charLength; ++i) {
-			tempWidth = (int) FloatMath.ceil(paint.measureText(string, start,
+			tempWidth = (int) Math.ceil(paint.measureText(string, start,
 					i));
 			if (tempWidth >= maxWidth) {
 				final int lastIndexOfSpace = string.substring(0, i)

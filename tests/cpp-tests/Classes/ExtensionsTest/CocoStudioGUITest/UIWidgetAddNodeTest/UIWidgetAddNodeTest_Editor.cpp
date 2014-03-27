@@ -37,11 +37,11 @@ bool UIWidgetAddNodeTest_Editor::init()
         // Create the ui widget
         Widget* widget = Widget::create();
         widget->setPosition(Point(rootSize.width / 2.0f, rootSize.height / 2.0f));
-        widget->setZOrder(_layout->getZOrder() + 1);
+        widget->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(widget);
         
         Sprite* sprite = Sprite::create("cocosui/ccicon.png");
-        widget->addNode(sprite);
+        widget->addChild(sprite);
         
         return true;
     }

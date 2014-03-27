@@ -78,6 +78,18 @@
     <ClInclude Include="..\UIRichText.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\CCProtectedNode.h">
+      <Filter>BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIHBox.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIRelativeBox.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIVBox.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -136,6 +148,18 @@
     </ClCompile>
     <ClCompile Include="..\UIRichText.cpp">
       <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCProtectedNode.cpp">
+      <Filter>BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIHBox.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIRelativeBox.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIVBox.cpp">
+      <Filter>Layouts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

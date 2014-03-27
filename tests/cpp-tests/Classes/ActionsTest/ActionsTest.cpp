@@ -1432,7 +1432,7 @@ std::string ActionTargetedReverse::subtitle() const
     return "Action that runs reversely on another target. Useful for sequences";
 }
 
-//#pragma mark - ActionStacked
+// ActionStacked
 
 void ActionStacked::onEnter()
 {
@@ -1486,7 +1486,7 @@ std::string ActionStacked::subtitle() const
     return "Tap screen";
 }
 
-//#pragma mark - ActionMoveStacked
+// ActionMoveStacked
 
 
 void ActionMoveStacked::runActionsInSprite(Sprite *sprite)
@@ -1513,7 +1513,7 @@ std::string ActionMoveStacked::title() const
     return "Stacked MoveBy/To actions";
 }
 
-//#pragma mark - ActionMoveJumpStacked
+// ActionMoveJumpStacked
 
 void ActionMoveJumpStacked::runActionsInSprite(Sprite *sprite)
 {
@@ -1538,7 +1538,7 @@ std::string ActionMoveJumpStacked::title() const
     return "tacked Move + Jump actions";
 }
 
-//#pragma mark - ActionMoveBezierStacked
+// ActionMoveBezierStacked
 
 void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
 {
@@ -1570,7 +1570,7 @@ std::string ActionMoveBezierStacked::title() const
 }
 
 
-//#pragma mark - ActionCatmullRomStacked
+// ActionCatmullRomStacked
 
 void ActionCatmullRomStacked::onEnter()
 {
@@ -1692,7 +1692,7 @@ std::string ActionCatmullRomStacked::subtitle() const
 }
 
 
-//#pragma mark - ActionCardinalSplineStacked
+// ActionCardinalSplineStacked
 
 void ActionCardinalSplineStacked::onEnter()
 {
