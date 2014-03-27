@@ -639,7 +639,6 @@ LayerGradientTest2::LayerGradientTest2()
 {
     auto layer = LayerGradient::create();
     layer->initWithColor(Color4B(255,0,0,255), Color4B(255,255,0,255));
-    layer->autorelease();
     addChild(layer);
 }
 
