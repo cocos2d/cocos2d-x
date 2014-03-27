@@ -43,6 +43,7 @@ FontAtlas::FontAtlas(Font &theFont)
 , _fontAscender(0)
 , _toForegroundListener(nullptr)
 , _toBackgroundListener(nullptr)
+, _antialiasEnabled(true)
 {
     _font->retain();
 
@@ -189,8 +190,8 @@ void FontAtlas::listenToForeground(EventCustom *event)
         {
             auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8;
 
-           _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, 
-               pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
+            _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, 
+                pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
         }
     }
 #endif
@@ -204,7 +205,7 @@ void FontAtlas::addLetterDefinition(const FontLetterDefinition &letterDefinition
 bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition)
 {
     auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
-    
+
     if (outIterator != _fontLetterDefinitions.end())
     {
         outDefinition = (*outIterator).second;
@@ -274,6 +275,14 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                         memset(_currentPageData, 0, _currentPageDataSize);
                         _currentPage++;
                         auto tex = new Texture2D;
+                        if (_antialiasEnabled)
+                        {
+                            tex->setAntiAliasTexParameters();
+                        } 
+                        else
+                        {
+                            tex->setAliasTexParameters();
+                        }
                         tex->initWithData(_currentPageData, _currentPageDataSize, 
                             pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
                         addTexture(tex,_currentPage);
@@ -347,6 +356,30 @@ void  FontAtlas::setCommonLineHeight(float newHeight)
 const Font * FontAtlas::getFont() const
 {
     return _font;
+}
+
+void FontAtlas::setAliasTexParameters()
+{
+    if (_antialiasEnabled)
+    {
+        _antialiasEnabled = false;
+        for (const auto & tex : _atlasTextures)
+        {
+            tex.second->setAliasTexParameters();
+        }
+    }
+}
+
+void FontAtlas::setAntiAliasTexParameters()
+{
+    if (! _antialiasEnabled)
+    {
+        _antialiasEnabled = true;
+        for (const auto & tex : _atlasTextures)
+        {
+            tex.second->setAntiAliasTexParameters();
+        }
+    }
 }
 
 NS_CC_END
