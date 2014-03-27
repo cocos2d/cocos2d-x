@@ -392,7 +392,16 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     }
 
     _fontAtlas = atlas;
-    SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), 30);
+
+    if (_textureAtlas)
+    {
+        _textureAtlas->setTexture(_fontAtlas->getTexture(0));
+    }
+    else
+    {
+        SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), 30);
+    }
+
     if (_reusedLetter == nullptr)
     {
         _reusedLetter = Sprite::createWithTexture(_fontAtlas->getTexture(0));
