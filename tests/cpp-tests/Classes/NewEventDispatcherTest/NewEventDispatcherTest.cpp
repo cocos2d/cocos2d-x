@@ -1382,20 +1382,7 @@ EventsToDestroyedNodeTest::EventsToDestroyedNodeTest()
 
 EventsToDestroyedNodeTest::~EventsToDestroyedNodeTest()
 {
-    EventDispatcherTestDemo::onEnter();
     
-    Point origin = Director::getInstance()->getVisibleOrigin();
-    Size size = Director::getInstance()->getVisibleSize();
-    
-    auto sprite1 = TouchableSprite::create(20);
-    sprite1->setTexture("Images/CyanSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
-    addChild(sprite1, 10);
-    
-    auto sprite2 = TouchableSprite::create(10);
-    sprite2->setTexture("Images/MagentaSquare.png");
-    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
-    addChild(sprite2, 20);
 }
 
 std::string EventsToDestroyedNodeTest::title() const
