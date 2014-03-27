@@ -627,12 +627,13 @@ std::string LayerColor::getDescription() const
 {
     return StringUtils::format("<LayerColor | Tag = %d>", _tag);
 }
+
 //
 // LayerGradient
 //
 LayerGradient::LayerGradient()
-: _startColor(Color4B(0, 0, 0, 255))
-, _endColor(Color4B(0, 0, 0, 255))
+: _startColor(Color4B::BLACK)
+, _endColor(Color4B::BLACK)
 , _startOpacity(255)
 , _endOpacity(255)
 , _alongVector(Point(0, -1))
@@ -640,9 +641,11 @@ LayerGradient::LayerGradient()
 {
     
 }
-LayerGradient::~LayerGradient() {
-    
+
+LayerGradient::~LayerGradient()
+{
 }
+
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
     LayerGradient * layer = new LayerGradient();
