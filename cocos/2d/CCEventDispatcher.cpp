@@ -568,14 +568,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                     listeners->erase(iter);
                     CC_SAFE_RELEASE(l);
                 }
-                else
-                {
-                	// Fix to prevent events propagating to nodes or listeners that are destroyed:
-                    // Since we can't remove the listener while we're iterating the listeners list,
-                    // null out the pointer. We'll erase the actual pointer storage later.
-                    *iter = nullptr;
-                }
-
+                
                 isFound = true;
                 break;
             }
@@ -706,11 +699,6 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
             // priority == 0, scene graph priority
             for (auto& l : *sceneGraphPriorityListeners)
             {
-                if (!l)
-                {
-                    continue;   // Event listener slot which was temporarily nulled because we removed the listener while dispatching events.
-                }
-
                 if (!l->isPaused() && l->isRegistered() && onEvent(l))
                 {
                     shouldStopPropagation = true;
@@ -998,13 +986,7 @@ void EventDispatcher::updateListeners(Event* event)
             for (auto iter = sceneGraphPriorityListeners->begin(); iter != sceneGraphPriorityListeners->end();)
             {
                 auto l = *iter;
-
-                if (!l)
-                {
-                    // Event listener slot which was temporarily nulled because we removed the listener while dispatching events.
-                    iter = sceneGraphPriorityListeners->erase(iter);
-                }
-                else if (!l->isRegistered())
+                if (!l->isRegistered())
                 {
                     iter = sceneGraphPriorityListeners->erase(iter);
                     l->release();
@@ -1021,13 +1003,7 @@ void EventDispatcher::updateListeners(Event* event)
             for (auto iter = fixedPriorityListeners->begin(); iter != fixedPriorityListeners->end();)
             {
                 auto l = *iter;
-
-                if (!l)
-                {
-                    // Event listener slot which was temporarily nulled because we removed the listener while dispatching events.
-                    iter = fixedPriorityListeners->erase(iter);
-                }
-                else if (!l->isRegistered())
+                if (!l->isRegistered())
                 {
                     iter = fixedPriorityListeners->erase(iter);
                     l->release();
@@ -1233,14 +1209,6 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
             for (auto iter = listenerVector->begin(); iter != listenerVector->end();)
             {
                 auto l = *iter;
-
-	            if (!l)
-	            {
-	                // Listener slot which was erased by nulling out the slot.
-	                // This happens when we try to remove a listener while dispatching events.
-	                continue;
-	            }
-				
                 l->setRegistered(false);
                 if (l->getSceneGraphPriority() != nullptr)
                 {
