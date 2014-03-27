@@ -343,19 +343,6 @@ public:
 
     /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Point& v);
-
-    virtual bool init();
-    /** Initializes the Layer with a gradient between start and end. 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& start, const Color4B& end);
-
-    /** Initializes the Layer with a gradient between start and end in the direction of v. 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: true
@@ -395,6 +382,19 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     LayerGradient();
     virtual ~LayerGradient();
+    
+    virtual bool init();
+    /** Initializes the Layer with a gradient between start and end.
+     * @js init
+     * @lua init
+     */
+    bool initWithColor(const Color4B& start, const Color4B& end);
+    
+    /** Initializes the Layer with a gradient between start and end in the direction of v.
+     * @js init
+     * @lua init
+     */
+    bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
 
 protected:
     virtual void updateColor() override;
