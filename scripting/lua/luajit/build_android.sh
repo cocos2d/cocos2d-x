@@ -2,18 +2,26 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 host_os=`uname -s | tr "[:upper:]" "[:lower:]"`
 
-SRCDIR=$DIR/LuaJit-2.0.1
+SRCDIR=$DIR/LuaJit-2.0.3
 cd "$SRCDIR"
 
 NDK=$NDK_ROOT
 NDKABI=8
 NDKVER=$NDK/toolchains/arm-linux-androideabi-4.6
-NDKP=$NDKVER/prebuilt/${host_os}-x86/bin/arm-linux-androideabi-
+
+NDKHOSTARCH=x86
+if [ -d "$NDKVER/prebuilt/${host_os}-x86_64" ]; then
+    NDKHOSTARCH=x86_64
+fi;
+
+NDKP=$NDKVER/prebuilt/${host_os}-$NDKHOSTARCH/bin/arm-linux-androideabi-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
 
 # Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)
 DESTDIR=$DIR/android/armeabi
-rm "$DESTDIR"/*.a
+if [ -f "$DESTDIR"/*.a ]; then
+    rm "$DESTDIR"/*.a
+fi;
 make clean
 make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF"
 
@@ -36,7 +44,7 @@ fi;
 NDKABI=14
 DESTDIR=$DIR/android/x86
 NDKVER=$NDK/toolchains/x86-4.6
-NDKP=$NDKVER/prebuilt/${host_os}-x86/bin/i686-linux-android-
+NDKP=$NDKVER/prebuilt/${host_os}-$NDKHOSTARCH/bin/i686-linux-android-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-x86"
 rm "$DESTDIR"/*.a
 make clean
