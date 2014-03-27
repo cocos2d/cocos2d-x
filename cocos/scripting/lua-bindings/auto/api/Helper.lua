@@ -3,13 +3,6 @@
 -- @module Helper
 
 --------------------------------
--- @function [parent=#Helper] seekActionWidgetByActionTag 
--- @param self
--- @param #ccui.Widget widget
--- @param #int int
--- @return Widget#Widget ret (return value: ccui.Widget)
-        
---------------------------------
 -- @function [parent=#Helper] seekWidgetByTag 
 -- @param self
 -- @param #ccui.Widget widget
@@ -17,10 +10,10 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- @function [parent=#Helper] seekWidgetByRelativeName 
+-- @function [parent=#Helper] seekActionWidgetByActionTag 
 -- @param self
 -- @param #ccui.Widget widget
--- @param #char char
+-- @param #int int
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------

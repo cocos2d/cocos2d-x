@@ -793,6 +793,9 @@ Developers:
         
     LoungeKatt
         Corrected a mistake of building android project in README.md
+        
+    flashjay
+        Remove deprecated code in lua tests & template
     
 Retired Core Developers:
     WenSheng Yang
