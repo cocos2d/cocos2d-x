@@ -240,6 +240,17 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_LABELATLAS_DEBUG_DRAW 0
 #endif
 
+/** @def CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
+ If enabled (in conjunction with assertion macros) will verify on Node destruction that the node being destroyed has no event
+ listeners still associated with it in the event dispatcher. This can be used to track down problems where the event dispatch 
+ system has dangling pointers to destroyed nodes.
+ 
+ Note: event listener verification will always be disabled in builds where assertions are disabled regardless of this setting.
+ */
+#ifndef CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
+#define CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS 0
+#endif
+
 /** @def CC_ENABLE_PROFILERS
  If enabled, will activate various profilers within cocos2d. This statistical data will be output to the console
  once per second showing average time (in milliseconds) required to execute the specific routine(s).
