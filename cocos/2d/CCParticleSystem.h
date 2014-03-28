@@ -191,7 +191,6 @@ public:
     //! whether or not the system is full
     bool isFull();
 
-    virtual void onEnter();
     //! should be overridden by subclasses
     virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
     //! should be overridden by subclasses
@@ -355,6 +354,8 @@ public:
     inline void setPositionType(PositionType type) { _positionType = type; };
     
     // Overrides
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual void update(float dt) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;

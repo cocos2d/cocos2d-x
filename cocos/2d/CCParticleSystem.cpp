@@ -624,6 +624,12 @@ void ParticleSystem::onEnter()
     this->scheduleUpdateWithPriority(1);
 }
 
+void ParticleSystem::onExit()
+{
+    this->unscheduleUpdate();
+    Node::onExit();
+}
+
 void ParticleSystem::stopSystem()
 {
     _isActive = false;
