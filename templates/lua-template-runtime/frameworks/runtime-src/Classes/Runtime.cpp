@@ -376,10 +376,6 @@ bool CreateDir(const char *sPathName)
 void updateResFileInfo(string filename,string filetime)
 {
     
-    if(!g_filecfgjson.IsObject())
-    {
-       g_filecfgjson.SetObject();
-    }
     if (g_filecfgjson.HasMember(filename.c_str())) {
         g_filecfgjson.RemoveMember(filename.c_str());
     }
@@ -414,8 +410,12 @@ void readResFile()
 	{
 		rapidjson::FileStream inputStream(pFile);
 		g_filecfgjson.ParseStream<0>(inputStream);
+		fclose(pFile);
 	}
-	fclose(pFile);
+	if(!g_filecfgjson.IsObject())
+	{
+		g_filecfgjson.SetObject();
+	}
 }
 
 bool FileServer::recv_file(int fd)
