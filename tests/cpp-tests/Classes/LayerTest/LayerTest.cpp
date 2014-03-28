@@ -134,7 +134,7 @@ void LayerTestCascadingOpacityA::onEnter()
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
-    auto label = LabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "Test");
     
     layer1->addChild(sister1);
     layer1->addChild(sister2);
@@ -186,7 +186,7 @@ void LayerTestCascadingOpacityB::onEnter()
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
-    auto label = LabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "Test");
     
     layer1->addChild(sister1);
     layer1->addChild(sister2);
@@ -239,7 +239,7 @@ void LayerTestCascadingOpacityC::onEnter()
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
-    auto label = LabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "Test");
     
     layer1->addChild(sister1);
     layer1->addChild(sister2);
@@ -287,7 +287,7 @@ void LayerTestCascadingColorA::onEnter()
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
-    auto label = LabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "Test");
     
     layer1->addChild(sister1);
     layer1->addChild(sister2);
@@ -340,7 +340,7 @@ void LayerTestCascadingColorB::onEnter()
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
-    auto label = LabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "Test");
     
     layer1->addChild(sister1);
     layer1->addChild(sister2);
@@ -392,7 +392,7 @@ void LayerTestCascadingColorC::onEnter()
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
-    auto label = LabelBMFont::create("Test", "fonts/bitmapFontTest.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "Test");
     
     layer1->addChild(sister1);
     layer1->addChild(sister2);
@@ -588,8 +588,8 @@ LayerGradientTest::LayerGradientTest()
     listener->onTouchesMoved = CC_CALLBACK_2(LayerGradientTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    auto label1 = LabelTTF::create("Compressed Interpolation: Enabled", "Marker Felt", 26);
-    auto label2 = LabelTTF::create("Compressed Interpolation: Disabled", "Marker Felt", 26);
+    auto label1 = Label::create("Compressed Interpolation: Enabled", "fonts/Marker Felt.ttf", 26);
+    auto label2 = Label::create("Compressed Interpolation: Disabled", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
     auto item2 = MenuItemLabel::create(label2);
     auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradientTest::toggleItem, this), item1, item2, NULL);

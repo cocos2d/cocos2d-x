@@ -432,6 +432,7 @@ Texture2D::Texture2D()
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
 , _shaderProgram(nullptr)
+, _antialiasEnabled(true)
 {
 }
 
@@ -621,15 +622,28 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     if (mipmapsNum == 1)
     {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiasEnabled ? GL_LINEAR : GL_NEAREST);
     }else
     {
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiasEnabled ? GL_LINEAR_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
     }
     
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _antialiasEnabled ? GL_LINEAR : GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if (_antialiasEnabled)
+    {
+        TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
+        VolatileTextureMgr::setTexParameters(this, texParams);
+    } 
+    else
+    {
+        TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
+        VolatileTextureMgr::setTexParameters(this, texParams);
+    }
+#endif
 
     CHECK_GL_ERROR_DEBUG(); // clean possible GL error
     
@@ -682,6 +696,18 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     return true;
 }
 
+bool Texture2D::updateWithData(const void *data,int offsetX,int offsetY,int width,int height)
+{
+    if (_name)
+    {
+        GL::bindTexture2D(_name);
+        const PixelFormatInfo& info = _pixelFormatInfoTables.at(_pixelFormat);
+        glTexSubImage2D(GL_TEXTURE_2D,0,offsetX,offsetY,width,height,info.format, info.type,data);
+
+        return true;
+    }
+    return false;
+}
 
 std::string Texture2D::getDescription() const
 {
@@ -1240,6 +1266,18 @@ void Texture2D::setTexParameters(const TexParams &texParams)
 
 void Texture2D::setAliasTexParameters()
 {
+    if (! _antialiasEnabled)
+    {
+        return;
+    }
+
+    _antialiasEnabled = false;
+
+    if (_name == 0)
+    {
+        return;
+    }
+
     GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )
@@ -1260,6 +1298,18 @@ void Texture2D::setAliasTexParameters()
 
 void Texture2D::setAntiAliasTexParameters()
 {
+    if ( _antialiasEnabled )
+    {
+        return;
+    }
+
+    _antialiasEnabled = true;
+
+    if (_name == 0)
+    {
+        return;
+    }
+
     GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )

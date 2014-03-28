@@ -60,7 +60,7 @@ bool GameOverLayer::init()
 	if ( LayerColor::initWithColor( Color4B(255,255,255,255) ) )
 	{
 		auto winSize = Director::getInstance()->getWinSize();
-		this->_label = LabelTTF::create("","Artial", 32);
+		this->_label = Label::create("","fonts/arial.ttf", 32);
 		_label->retain();
 		_label->setColor( Color3B(0, 0, 0) );
 		_label->setPosition( Point(winSize.width/2, winSize.height/2) );

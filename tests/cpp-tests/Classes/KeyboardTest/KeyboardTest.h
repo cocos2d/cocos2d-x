@@ -14,7 +14,7 @@ public:
     void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
 private:
-    LabelTTF*            _label;
+    Label*            _label;
 };
 
 class KeyboardTestScene : public TestScene

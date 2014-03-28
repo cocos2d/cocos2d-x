@@ -24,7 +24,7 @@ public:
     virtual void editBoxTextChanged(cocos2d::extension::EditBox* editBox, const std::string& text);
     virtual void editBoxReturn(cocos2d::extension::EditBox* editBox);
 private:
-    cocos2d::LabelTTF* _TTFShowEditReturn;
+    cocos2d::Label* _TTFShowEditReturn;
     cocos2d::extension::EditBox* _editName;
     cocos2d::extension::EditBox* _editPassword;
     cocos2d::extension::EditBox* _editEmail;

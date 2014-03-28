@@ -61,9 +61,7 @@ void QuadCommand::generateMaterialID()
 {
     //Generate Material ID
     //TODO fix shader ID generation
-    CCASSERT(_shader->getProgram() < pow(2,10), "ShaderID is greater than 2^10");
-    //TODO fix texture ID generation
-    CCASSERT(_textureID < pow(2,18), "TextureID is greater than 2^18");
+    CCASSERT(_shader->getMaterialProgramID() < GLProgram::_maxMaterialIDNumber, "ShaderID is greater than Id limitation");
 
     //TODO fix blend id generation
     int blendID = 0;
@@ -96,7 +94,7 @@ void QuadCommand::generateMaterialID()
     // | Shader ID (10 bits) | Blend ID (4 bits) | empty (18bits) |  Texture ID (32 bits) |
     // +---------------------+-------------------+----------------------------------------+
 
-    _materialID = (uint64_t)_shader->getProgram() << 54
+    _materialID = (uint64_t)_shader->getMaterialProgramID() << 54
             | (uint64_t)blendID << 50
             | (uint64_t)_textureID << 0;
 }

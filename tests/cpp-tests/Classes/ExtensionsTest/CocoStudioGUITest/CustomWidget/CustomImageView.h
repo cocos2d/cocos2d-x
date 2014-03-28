@@ -22,7 +22,7 @@ protected:
     virtual void initRenderer() override;
     
 protected:
-    cocos2d::LabelTTF* _label;
+    cocos2d::Label* _label;
 };
 
 #endif /* defined(__TestCpp__CustomImageView__) */

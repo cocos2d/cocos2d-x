@@ -43,15 +43,15 @@ Box2DTestLayer::Box2DTestLayer()
 
     addNewSpriteAtPosition(VisibleRect::center());
 
-    auto label = LabelTTF::create("Tap screen", "Marker Felt", 32);
+    auto label = Label::create("Tap screen", "fonts/Marker Felt.ttf", 32.0f);
     addChild(label, 0);
     label->setColor(Color3B(0,0,255));
     label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();
 #else
-    auto label = LabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
-                                            "Arial",
+    auto label = Label::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
+                                            "fonts/arial.ttf",
                                             18);
     auto size = Director::getInstance()->getWinSize();
     label->setPosition(Point(size.width/2, size.height/2));

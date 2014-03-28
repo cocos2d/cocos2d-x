@@ -86,8 +86,8 @@ void PhysicsTestScene::toggleDebug()
 #if CC_USE_PHYSICS == 0
 void PhysicsDemoDisabled::onEnter()
 {
-    auto label = LabelTTF::create("Should define CC_USE_PHYSICS\n to run this test case",
-                                  "Arial",
+    auto label = Label::create("Should define CC_USE_PHYSICS\n to run this test case",
+                                  "fonts/arial.ttf",
                                   18);
     auto size = Director::getInstance()->getWinSize();
     label->setPosition(Point(size.width/2, size.height/2));
@@ -1310,7 +1310,7 @@ void PhysicsContactTest::onEnter()
     menu1->setPosition(Point(s.width/2, s.height-50));
     addChild(menu1, 1);
     
-    auto label = LabelTTF::create("yellow box", "Arial", 32);
+    auto label = Label::create("yellow box", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-50));
     
@@ -1326,7 +1326,7 @@ void PhysicsContactTest::onEnter()
     menu2->setPosition(Point(s.width/2, s.height-90));
     addChild(menu2, 1);
     
-    label = LabelTTF::create("blue box", "Arial", 32);
+    label = Label::create("blue box", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-90));
     
@@ -1342,7 +1342,7 @@ void PhysicsContactTest::onEnter()
     menu3->setPosition(Point(s.width/2, s.height-130));
     addChild(menu3, 1);
     
-    label = LabelTTF::create("yellow triangle", "Arial", 32);
+    label = Label::create("yellow triangle", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-130));
     
@@ -1358,7 +1358,7 @@ void PhysicsContactTest::onEnter()
     menu4->setPosition(Point(s.width/2, s.height-170));
     addChild(menu4, 1);
     
-    label = LabelTTF::create("blue triangle", "Arial", 32);
+    label = Label::create("blue triangle", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-170));
 	
@@ -1425,22 +1425,22 @@ void PhysicsContactTest::resetTest()
     char buffer[10];
     
     sprintf(buffer, "%d", _yellowBoxNum);
-    auto label = LabelTTF::create(buffer, "Arial", 32);
+    auto label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
     
     sprintf(buffer, "%d", _blueBoxNum);
-    label = LabelTTF::create(buffer, "Arial", 32);
+    label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-90));
     
     sprintf(buffer, "%d", _yellowTriangleNum);
-    label = LabelTTF::create(buffer, "Arial", 32);
+    label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-130));
     
     sprintf(buffer, "%d", _blueTriangleNum);
-    label = LabelTTF::create(buffer, "Arial", 32);
+    label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-170));
     

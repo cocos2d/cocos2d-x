@@ -286,7 +286,7 @@ void CocosGUITestMainLayer::onEnter()
     
     _itemMenu = Menu::create();
     _itemMenu->setPosition( s_tCurPos );
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
@@ -348,7 +348,7 @@ void CocosGUITestScene::onEnter()
 {
     Scene::onEnter();
     
-    LabelTTF* label = CCLabelTTF::create("Back", "Arial", 20);
+    auto label = Label::create("Back", "fonts/arial.ttf", 20);
     //#endif
     auto pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocosGUITestScene::BackCallback, this));
     
@@ -405,7 +405,7 @@ void CocosGUITestScene::runThisTest()
     
     _itemMenu = Menu::create();
     _itemMenu->setPosition(Point::ZERO);
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < sizeof(gui_scene_names) / sizeof(gui_scene_names[0]); ++i)
     {

@@ -25,7 +25,7 @@ private:
 void ReleasePoolTestScene::runThisTest()
 {
     // title
-    auto label = LabelTTF::create("AutoreasePool Test", "Arial", 32);
+    auto label = Label::create("AutoreasePool Test", "fonts/arial.ttf", 32);
     addChild(label, 9999);
     label->setPosition(Point(VisibleRect::center().x, VisibleRect::top().y - 30));
     

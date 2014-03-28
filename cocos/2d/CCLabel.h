@@ -243,6 +243,9 @@ public:
 
     virtual const Size& getContentSize() const override;
 
+    virtual Rect getBoundingBox() const;
+
+    FontAtlas* getFontAtlas() { return _fontAtlas; }
     /** Listen "come to background" message
      It only has effect on Android.
      */

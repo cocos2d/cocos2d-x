@@ -103,16 +103,18 @@ def main():
 
     # Generate binding glue codes
     if(branch == 'develop'):
-      os.system("python tools/jenkins-scripts/gen_jsb.py")
+      ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
     elif(branch == 'master'):
       os.chdir('tools/tojs')
       if(platform.system() == 'Windows'):
         os.environ['NDK_ROOT'] = os.environ['NDK_ROOT_R8E']
-        os.system("genbindings-win32.bat")
+        ret = os.system("genbindings-win32.bat")
         os.environ['NDK_ROOT'] = os.environ['NDK_ROOT_R9B']
       else:
-        os.system("./genbindings.sh")
+        ret = os.system("./genbindings.sh")
       os.chdir('../..')
+    if(ret != 0):
+        return(1)
 
     #make temp dir
     print "current dir is: " + os.environ['WORKSPACE']

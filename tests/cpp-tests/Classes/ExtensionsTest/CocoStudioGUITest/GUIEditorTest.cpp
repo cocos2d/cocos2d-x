@@ -271,7 +271,7 @@ void GUIEditorMainLayer::onEnter()
     
     _itemMenu = Menu::create();
     _itemMenu->setPosition( s_tCurPos );
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
@@ -333,7 +333,7 @@ void GUIEditorTestScene::onEnter()
 {
     Scene::onEnter();
     
-    LabelTTF* label = LabelTTF::create("Back", "Arial", 20);
+    auto label = Label::create("Back", "fonts/arial.ttf", 20);
     
     auto pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(GUIEditorTestScene::BackCallback, this));
     
