@@ -11,6 +11,7 @@ cocos2d-x-3.0rc1 ?? 2014
      [FIX]          CocoStudio: ActionObject memory leak in ActionManagerEx::initWithDictionary
      [FIX]          Console: initialize some variables that are not initilized in destructor
      [FIX]          Console: refactor 'upload' command, encode file with base64, detach 'upload' from main loop
+     [FIX]          EventDispatcher: Potential crashes in EventDispatcher while using SceneGraphPriroity listeners
      [FIX]          FileUtils: addSearchResolutionsOrder doesn't check whether there is a 'slash' at the end of path
      [FIX]          FileUtils: Boolean value could not be written to specified plist file
      [FIX]          GLView: Can't receive touchEnded event when mouse up outside of window on desktop platforms
