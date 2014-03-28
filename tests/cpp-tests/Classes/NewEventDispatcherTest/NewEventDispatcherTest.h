@@ -206,4 +206,15 @@ public:
 private:
 };
 
+class DanglingNodePointersTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(DanglingNodePointersTest);
+    DanglingNodePointersTest();
+    virtual ~DanglingNodePointersTest();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif /* defined(__samples__NewEventDispatcherTest__) */

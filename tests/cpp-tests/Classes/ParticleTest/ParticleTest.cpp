@@ -1009,13 +1009,14 @@ Layer* createParticleLayer(int nIndex)
         case 43: return new PremultipliedAlphaTest2();
         case 44: return new Issue3990();
         case 45: return new ParticleAutoBatching();
+        case 46: return new ParticleVisibleTest();
         default:
             break;
     }
 
     return NULL;
 }
-#define MAX_LAYER    46
+#define MAX_LAYER    47
 
 
 Layer* nextParticleAction()
@@ -1938,6 +1939,37 @@ std::string Issue3990::subtitle() const
     return "Show '998' or '999' at bottom right side";
 }
 
+
+// ParticleVisibleTest
+void ParticleVisibleTest::onEnter()
+{
+    ParticleDemo::onEnter();
+    
+    _emitter = ParticleFireworks::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+    
+    _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
+    
+    schedule(schedule_selector(ParticleVisibleTest::callback), 1);
+    
+    setEmitterPosition();
+}
+
+std::string ParticleVisibleTest::title() const
+{
+    return "Issue4573";
+}
+
+std::string ParticleVisibleTest::subtitle() const
+{
+    return "Visible enable/disable";
+}
+
+void ParticleVisibleTest::callback(float delta)
+{
+    _emitter->setVisible(!_emitter->isVisible());
+}
 
 //
 // ParticleAutoBatching

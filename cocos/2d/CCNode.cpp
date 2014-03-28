@@ -154,15 +154,15 @@ Node::~Node()
     }
 #endif
 
-    CC_SAFE_RELEASE(_actionManager);
-    CC_SAFE_RELEASE(_scheduler);
+    CC_SAFE_RELEASE_NULL(_actionManager);
+    CC_SAFE_RELEASE_NULL(_scheduler);
     
     _eventDispatcher->removeEventListenersForTarget(this);
-    CC_SAFE_RELEASE(_eventDispatcher);
+
     
     // attributes
-    CC_SAFE_RELEASE(_shaderProgram);
-    CC_SAFE_RELEASE(_userObject);
+    CC_SAFE_RELEASE_NULL(_shaderProgram);
+    CC_SAFE_RELEASE_NULL(_userObject);
 
     for (auto& child : _children)
     {
@@ -175,7 +175,14 @@ Node::~Node()
     
 #if CC_USE_PHYSICS
     setPhysicsBody(nullptr);
+
 #endif
+
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
+    _eventDispatcher->debugCheckNodeHasNoEventListenersOnDestruction(this);
+#endif
+
+    CC_SAFE_RELEASE(_eventDispatcher);
 }
 
 bool Node::init()

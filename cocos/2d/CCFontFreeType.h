@@ -26,9 +26,6 @@
 #ifndef _FontFreetype_h_
 #define _FontFreetype_h_
 
-
-
-
 #include "CCFont.h"
 #include "CCData.h"
 
@@ -91,7 +88,6 @@ private:
     FT_Face           _fontRef;
     FT_Stroker        _stroker;
     std::string       _fontName;
-    Data              _ttfData;
     bool              _distanceFieldEnabled;
     int               _outlineSize;
 };
