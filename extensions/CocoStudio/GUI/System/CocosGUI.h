@@ -48,7 +48,7 @@
 
 //NS_CC_EXT_BEGIN
 
-const char* CocosGUIVersion();
+CC_EX_DLL const char* CocosGUIVersion();
 
 //NS_CC_EXT_END
 

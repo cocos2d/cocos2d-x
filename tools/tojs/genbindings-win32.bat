@@ -4,8 +4,8 @@
 :: You should modify PYTHON_ROOT and NDK_ROOT to work under your environment.
 :: Android ndk version must be at least ndk-r8d.
 
-set PYTHON_ROOT=C:/Python27
-set NDK_ROOT=D:/android_soft/android-ndk-r9
+set PYTHON_ROOT=%PYTHON_ROOT%
+set NDK_ROOT=%NDK_ROOT%
 
 set PATH=%PATH%;%cd%/win32;%PYTHON_ROOT%
 set COCOS2DX_ROOT=%cd%/../..
@@ -15,7 +15,7 @@ set TO_JS_ROOT=%COCOS2DX_ROOT%/tools/tojs
 set "CXX_GENERATOR_ROOT=%CXX_GENERATOR_ROOT:\=/%"
 set OUTPUT_DIR=%COCOS2DX_ROOT%/scripting/javascript/bindings/generated
 set "OUTPUT_DIR=%OUTPUT_DIR:/=\%"
-set CLANG_ROOT=%NDK_ROOT%/toolchains/llvm-3.3/prebuilt/windows-x86_64
+set CLANG_ROOT=%NDK_ROOT%/toolchains/llvm-3.1/prebuilt/windows-x86_64
 
 :: write userconf.ini
 
@@ -67,8 +67,9 @@ goto QUIT
 echo ---------------------------------
 echo Generating bindings fails.
 echo ---------------------------------
+exit 1
 
 :QUIT
 
-pause
+::pause
 

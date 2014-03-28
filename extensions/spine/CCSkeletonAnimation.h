@@ -35,7 +35,7 @@ namespace cocos2d { namespace extension {
 /**
 Draws an animated skeleton, providing a simple API for applying one or more animations and queuing animations to be played later.
 */
-class CCSkeletonAnimation: public CCSkeleton {
+class CC_EX_DLL CCSkeletonAnimation: public CCSkeleton {
 public:
 	std::vector<AnimationState*> states;
 

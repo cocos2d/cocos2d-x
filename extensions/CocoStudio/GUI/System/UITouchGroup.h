@@ -37,7 +37,7 @@ namespace ui {
 /**
  *  @lua NA
  */
-class TouchGroup : public CCLayer
+class CC_EX_DLL TouchGroup : public CCLayer
 {
     
 public:

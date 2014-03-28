@@ -20,6 +20,7 @@ bool ProjectileController::init()
 
 void ProjectileController::onEnter()
 {
+    CCComController::onEnter();
     CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     m_pOwner->setPosition( ccp(origin.x+20, origin.y+winSize.height/2) );

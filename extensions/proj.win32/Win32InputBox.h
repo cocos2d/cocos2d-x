@@ -2,6 +2,7 @@
 #define __03022006__WIN32INPUTBOX__
 
 #include "cocos2d.h"
+#include "ExtensionMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 /*
@@ -72,7 +73,7 @@ private:
   HWND hDlg;
 };
 
-class CWin32InputBox
+class CC_EX_DLL CWin32InputBox
 {
 private:
   WIN32INPUTBOX_PARAM *_param;
