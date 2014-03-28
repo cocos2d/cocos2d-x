@@ -115,6 +115,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 -(void) rewind {
     self->paused = NO;
     [audioSourcePlayer setCurrentTime:0];
+    [audioSourcePlayer play];
 }
 
 -(void) resume {
