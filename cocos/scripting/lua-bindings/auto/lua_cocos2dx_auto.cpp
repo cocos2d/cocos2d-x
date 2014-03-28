@@ -32169,50 +32169,6 @@ int lua_cocos2dx_Label_getFontDefinition(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Label_getBoundingBox(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Label* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getBoundingBox'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cocos2d::Rect ret = cobj->getBoundingBox();
-        rect_to_luaval(tolua_S, ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getBoundingBox",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_getBoundingBox'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Label_getFontName(lua_State* tolua_S)
 {
     int argc = 0;
@@ -33629,7 +33585,6 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"setBMFontFilePath",lua_cocos2dx_Label_setBMFontFilePath);
         tolua_function(tolua_S,"getFontAtlas",lua_cocos2dx_Label_getFontAtlas);
         tolua_function(tolua_S,"getFontDefinition",lua_cocos2dx_Label_getFontDefinition);
-        tolua_function(tolua_S,"getBoundingBox",lua_cocos2dx_Label_getBoundingBox);
         tolua_function(tolua_S,"getFontName",lua_cocos2dx_Label_getFontName);
         tolua_function(tolua_S,"updateContent",lua_cocos2dx_Label_updateContent);
         tolua_function(tolua_S,"getStringLength",lua_cocos2dx_Label_getStringLength);
@@ -50123,7 +50078,7 @@ int lua_cocos2dx_ParticleSystem_getEndColorVar(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -50143,7 +50098,7 @@ int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndColor'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotationIsDir'", nullptr);
         return 0;
     }
 #endif
@@ -50153,16 +50108,16 @@ int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Color4F& ret = cobj->getEndColor();
-        color4f_to_luaval(tolua_S, ret);
+        bool ret = cobj->getRotationIsDir();
+        tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getEndColor",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getRotationIsDir",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ParticleSystem_getEndColor'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ParticleSystem_getRotationIsDir'.",&tolua_err);
 #endif
 
     return 0;
@@ -50257,7 +50212,7 @@ int lua_cocos2dx_ParticleSystem_getEmissionRate(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -50277,7 +50232,7 @@ int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getRotationIsDir'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ParticleSystem_getEndColor'", nullptr);
         return 0;
     }
 #endif
@@ -50287,16 +50242,16 @@ int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        bool ret = cobj->getRotationIsDir();
-        tolua_pushboolean(tolua_S,(bool)ret);
+        const cocos2d::Color4F& ret = cobj->getEndColor();
+        color4f_to_luaval(tolua_S, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getRotationIsDir",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getEndColor",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ParticleSystem_getRotationIsDir'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ParticleSystem_getEndColor'.",&tolua_err);
 #endif
 
     return 0;
@@ -51132,10 +51087,10 @@ int lua_register_cocos2dx_ParticleSystem(lua_State* tolua_S)
         tolua_function(tolua_S,"postStep",lua_cocos2dx_ParticleSystem_postStep);
         tolua_function(tolua_S,"setEmissionRate",lua_cocos2dx_ParticleSystem_setEmissionRate);
         tolua_function(tolua_S,"getEndColorVar",lua_cocos2dx_ParticleSystem_getEndColorVar);
-        tolua_function(tolua_S,"getEndColor",lua_cocos2dx_ParticleSystem_getEndColor);
+        tolua_function(tolua_S,"getRotationIsDir",lua_cocos2dx_ParticleSystem_getRotationIsDir);
         tolua_function(tolua_S,"setScale",lua_cocos2dx_ParticleSystem_setScale);
         tolua_function(tolua_S,"getEmissionRate",lua_cocos2dx_ParticleSystem_getEmissionRate);
-        tolua_function(tolua_S,"getRotationIsDir",lua_cocos2dx_ParticleSystem_getRotationIsDir);
+        tolua_function(tolua_S,"getEndColor",lua_cocos2dx_ParticleSystem_getEndColor);
         tolua_function(tolua_S,"getLifeVar",lua_cocos2dx_ParticleSystem_getLifeVar);
         tolua_function(tolua_S,"setStartSizeVar",lua_cocos2dx_ParticleSystem_setStartSizeVar);
         tolua_function(tolua_S,"setOpacityModifyRGB",lua_cocos2dx_ParticleSystem_setOpacityModifyRGB);
