@@ -58,12 +58,8 @@ bool MenuLayer::initWithEntryID(int entryId)
     addChild(view, 0, kTagBox2DNode);
     view->setScale(15);
     view->setAnchorPoint( Point(0,0) );
-    view->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//    auto label = LabelBMFont::create(view->title().c_str(),  "fonts/arial16.fnt");
-//#else    
-    auto label = LabelTTF::create(view->title().c_str(), "Arial", 28);
-//#endif
+    view->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );  
+    auto label = Label::create(view->title().c_str(), "fonts/arial.ttf", 28);
     addChild(label, 1);
     label->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
 

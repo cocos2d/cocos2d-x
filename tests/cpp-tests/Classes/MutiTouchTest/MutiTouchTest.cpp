@@ -62,7 +62,7 @@ bool MutiTouchTestLayer::init()
         listener->onTouchesEnded = CC_CALLBACK_2(MutiTouchTestLayer::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
-        auto title = LabelTTF::create("Please touch the screen!", "", 24);
+        auto title = Label::create("Please touch the screen!", "", 24);
         title->setPosition(VisibleRect::top()+Point(0, -40));
         addChild(title);
         

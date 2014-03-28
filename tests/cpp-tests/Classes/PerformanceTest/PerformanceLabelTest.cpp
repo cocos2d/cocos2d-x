@@ -102,7 +102,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     menu->setPosition(Point(s.width/2, s.height-65));
     addChild(menu, 1);
 
-    auto infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
+    auto infoLabel = Label::create("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
@@ -118,7 +118,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     
     auto menuAutoTest = Menu::create();
     menuAutoTest->setPosition( Point::ZERO );
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     
     MenuItemFont* autoTestItem = NULL;
@@ -136,7 +136,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     menuAutoTest->addChild(autoTestItem);
     addChild( menuAutoTest, 3, kTagAutoTestMenu );
     
-    _title = LabelTTF::create(title().c_str(), "Arial", 32);
+    _title = Label::create(title().c_str(), "fonts/arial.ttf", 32);
     addChild(_title, 1);
     _title->setPosition(Point(s.width/2, s.height-50));
 
@@ -173,7 +173,7 @@ void LabelMainScene::updateNodes()
 {
     if( _quantityNodes != _lastRenderedCount )
     {
-        auto infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
         char str[16] = {0};
         sprintf(str, "%u nodes", _quantityNodes);
         infoLabel->setString(str);
@@ -194,7 +194,7 @@ void LabelMainScene::onIncrease(Ref* sender)
     case kCaseLabelTTFUpdate:
         for( int i=0;i< kNodesIncrease;i++)
         {
-            auto label = LabelTTF::create("LabelTTF", "Marker Felt", 30);
+            auto label = Label::create("LabelTTF", "Marker Felt", 30);
             label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
@@ -323,7 +323,7 @@ void LabelMainScene::updateText(float dt)
     {
     case kCaseLabelTTFUpdate:
         for(const auto &child : children) {
-            LabelTTF* label = (LabelTTF*)child;
+            Label* label = (Label*)child;
             label->setString(text);
         }
         break;

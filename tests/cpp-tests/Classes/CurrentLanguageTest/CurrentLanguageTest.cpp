@@ -2,11 +2,11 @@
 
 CurrentLanguageTest::CurrentLanguageTest()
 {
-    auto label = LabelTTF::create("Current language Test", "Arial", 28);
+    auto label = Label::create("Current language Test", "fonts/arial.ttf", 28);
     addChild(label, 0);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
-    auto labelLanguage = LabelTTF::create("", "Arial", 20);
+    auto labelLanguage = Label::create("", "fonts/arial.ttf", 20);
     labelLanguage->setPosition(VisibleRect::center());
 
     LanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
