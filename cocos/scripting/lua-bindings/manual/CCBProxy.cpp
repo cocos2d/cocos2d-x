@@ -57,12 +57,8 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
         return NULL;
     }
     
-    if (NULL != dynamic_cast<LabelTTF*>(pNode)) {
-        return "cc.LabelTTF";
-    }
-
-    if (NULL != dynamic_cast<LabelBMFont*>(pNode)) {
-        return "cc.LabelBMFont";
+    if (NULL != dynamic_cast<Label*>(pNode)) {
+        return "cc.Label";
     }
 
     if (NULL != dynamic_cast<Sprite*>(pNode)) {
