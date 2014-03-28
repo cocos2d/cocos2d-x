@@ -158,12 +158,6 @@ Node::~Node()
     // It may invoke `node->stopAllAction();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
     CC_SAFE_RELEASE_NULL(_userObject);
     
-    CC_SAFE_RELEASE_NULL(_actionManager);
-    CC_SAFE_RELEASE_NULL(_scheduler);
-    
-    _eventDispatcher->removeEventListenersForTarget(this);
-
-    
     // attributes
     CC_SAFE_RELEASE_NULL(_shaderProgram);
 
@@ -180,7 +174,12 @@ Node::~Node()
     setPhysicsBody(nullptr);
 
 #endif
-
+    
+    CC_SAFE_RELEASE_NULL(_actionManager);
+    CC_SAFE_RELEASE_NULL(_scheduler);
+    
+    _eventDispatcher->removeEventListenersForTarget(this);
+    
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
     _eventDispatcher->debugCheckNodeHasNoEventListenersOnDestruction(this);
 #endif
