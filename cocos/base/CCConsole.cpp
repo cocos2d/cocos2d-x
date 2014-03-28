@@ -586,6 +586,7 @@ void Console::commandDirector(int fd, const std::string& args)
     {
         const char help[] = "available director directives:\n"
                             "\tpause, pause all scheduled timers, the draw rate will be 4 FPS to reduce CPU consumption\n"
+                            "\tend, exit this app.\n"
                             "\tresume, resume all scheduled timers\n"
                             "\tstop, Stops the animation. Nothing will be drawn.\n"
                             "\tstart, Restart the animation again, Call this function only if [director stop] was called earlier\n";
