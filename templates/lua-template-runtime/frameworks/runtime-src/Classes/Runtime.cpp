@@ -375,7 +375,22 @@ bool CreateDir(const char *sPathName)
 
 void updateResFileInfo(string filename,string filetime)
 {
-	g_filecfgjson[filename.c_str()] = filetime.c_str();
+    
+    if(!g_filecfgjson.IsObject())
+    {
+       g_filecfgjson.SetObject();
+    }
+    if (g_filecfgjson.HasMember(filename.c_str())) {
+        g_filecfgjson.RemoveMember(filename.c_str());
+    }
+    rapidjson::Value filetimeValue(rapidjson::kStringType);
+    filetimeValue.SetString(filetime.c_str(),g_filecfgjson.GetAllocator());
+    
+    rapidjson::Value filenameValue(rapidjson::kStringType);
+    filenameValue.SetString(filename.c_str(),g_filecfgjson.GetAllocator());
+    g_filecfgjson.AddMember(filenameValue.GetString(),filetimeValue,g_filecfgjson.GetAllocator());
+    
+	//g_filecfgjson[filename.c_str()] = filetime.c_str();
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
 	g_filecfgjson.Accept(writer);
@@ -708,6 +723,7 @@ void startRuntime()
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	luaopen_debugger(engine->getLuaStack()->getLuaState());
 	
+    readResFile();
     auto scene = Scene::create();
     auto layer = new ConnectWaitLayer();
     layer->autorelease();
