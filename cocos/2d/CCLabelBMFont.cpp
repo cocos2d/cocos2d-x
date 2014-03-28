@@ -47,7 +47,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-    LabelBMFont * LabelBMFont::create()
+LabelBMFont * LabelBMFont::create()
 {
     LabelBMFont * pRet = new LabelBMFont();
     if (pRet)
