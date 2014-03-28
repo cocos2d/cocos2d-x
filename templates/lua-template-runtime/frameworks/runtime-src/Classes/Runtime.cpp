@@ -410,8 +410,11 @@ void readResFile()
 	filecfg.append("/");
 	filecfg.append("fileinfo_debug.json");
 	FILE * pFile = fopen (filecfg.c_str() , "r");
-	rapidjson::FileStream inputStream(pFile);
-	g_filecfgjson.ParseStream<0>(inputStream);
+	if(pFile)
+	{
+		rapidjson::FileStream inputStream(pFile);
+		g_filecfgjson.ParseStream<0>(inputStream);
+	}
 	fclose(pFile);
 }
 
