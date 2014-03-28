@@ -54,6 +54,7 @@ Developers:
         Add ccDrawSolidCircle
         Add Rect::unionWithRect
         Fix a memory leak in Set::removeAllObjects.
+        Fixed potential crashes in event dispatch while using SceneGraphPriroity listeners and added helper function to check it
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture

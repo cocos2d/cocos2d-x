@@ -79,7 +79,7 @@ void TouchesMainScene::onEnter()
 
     scheduleUpdate();
 
-    _plabel = LabelBMFont::create("00.0", "fonts/arial16.fnt");
+    _plabel = Label::createWithBMFont("fonts/arial16.fnt","00.0");
     _plabel->setPosition(Point(s.width/2, s.height/2));
     addChild(_plabel);
 
