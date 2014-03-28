@@ -55,7 +55,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~ActionCamera(){}
+    virtual ~ActionCamera(){};
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
@@ -109,23 +109,12 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    OrbitCamera()
-    : _radius(0.0)
-    , _deltaRadius(0.0)
-    , _angleZ(0.0)
-    , _deltaAngleZ(0.0)
-    , _angleX(0.0)
-    , _deltaAngleX(0.0)
-    , _radZ(0.0)
-    , _radDeltaZ(0.0)
-    , _radX(0.0)
-    , _radDeltaX(0.0)
-    {}
+    OrbitCamera();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~OrbitCamera(){}
+    virtual ~OrbitCamera();
     
     /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
