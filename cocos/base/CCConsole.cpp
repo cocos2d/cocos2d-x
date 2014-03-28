@@ -616,6 +616,10 @@ void Console::commandDirector(int fd, const std::string& args)
     {
         director->startAnimation();
     }
+    else if(args == "end")
+    {
+        director->end();
+    }
 
 }
 
