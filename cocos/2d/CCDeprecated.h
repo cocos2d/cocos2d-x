@@ -676,9 +676,9 @@ CC_DEPRECATED_ATTRIBUTE typedef GridBase CCGridBase;
 CC_DEPRECATED_ATTRIBUTE typedef Grid3D CCGrid3D;
 CC_DEPRECATED_ATTRIBUTE typedef TiledGrid3D CCTiledGrid3D;
 CC_DEPRECATED_ATTRIBUTE typedef Sprite CCSprite;
-CC_DEPRECATED_ATTRIBUTE typedef LabelTTF CCLabelTTF;
+#define CCLabelTTF LabelTTF
 CC_DEPRECATED_ATTRIBUTE typedef SpriteBatchNode CCSpriteBatchNode;
-CC_DEPRECATED_ATTRIBUTE typedef LabelBMFont CCLabelBMFont;
+#define CCLabelBMFont LabelBMFont
 CC_DEPRECATED_ATTRIBUTE typedef Layer CCLayer;
 //CC_DEPRECATED_ATTRIBUTE typedef KeypadDelegate CCKeypadDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef Layer CCLayerRGBA;
