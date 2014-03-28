@@ -1495,7 +1495,7 @@ LabelTTFOldNew::LabelTTFOldNew()
     auto s = Director::getInstance()->getWinSize();
     float delta = s.height/4;
 
-    auto label1 = LabelTTF::create("Cocos2d-x Label Test", "arial", 24);
+    auto label1 = Label::create("Cocos2d-x Label Test", "arial", 24);
     addChild(label1, 0, kTagBitmapAtlas1);
     label1->setPosition(Point(s.width/2, delta * 2));
     label1->setColor(Color3B::RED);
@@ -1511,7 +1511,7 @@ void LabelTTFOldNew::onDraw(const kmMat4 &transform, bool transformUpdated)
     kmGLPushMatrix();
     kmGLLoadMatrix(&transform);
 
-    auto label1 = (LabelTTF*)getChildByTag(kTagBitmapAtlas1);
+    auto label1 = (Label*)getChildByTag(kTagBitmapAtlas1);
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
     

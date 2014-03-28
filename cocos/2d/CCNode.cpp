@@ -154,15 +154,12 @@ Node::~Node()
     }
 #endif
 
-    CC_SAFE_RELEASE_NULL(_actionManager);
-    CC_SAFE_RELEASE_NULL(_scheduler);
-    
-    _eventDispatcher->removeEventListenersForTarget(this);
-
+    // User object has to be released before others, since userObject may have a weak reference of this node
+    // It may invoke `node->stopAllAction();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
+    CC_SAFE_RELEASE_NULL(_userObject);
     
     // attributes
     CC_SAFE_RELEASE_NULL(_shaderProgram);
-    CC_SAFE_RELEASE_NULL(_userObject);
 
     for (auto& child : _children)
     {
@@ -177,7 +174,12 @@ Node::~Node()
     setPhysicsBody(nullptr);
 
 #endif
-
+    
+    CC_SAFE_RELEASE_NULL(_actionManager);
+    CC_SAFE_RELEASE_NULL(_scheduler);
+    
+    _eventDispatcher->removeEventListenersForTarget(this);
+    
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
     _eventDispatcher->debugCheckNodeHasNoEventListenersOnDestruction(this);
 #endif

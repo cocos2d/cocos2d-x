@@ -28,7 +28,6 @@
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
 #include "CCLabel.h"
-#include "CCLabelBMFont.h"
 #include "CCAction.h"
 #include "CCActionInterval.h"
 
