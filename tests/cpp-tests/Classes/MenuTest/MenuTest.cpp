@@ -84,7 +84,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     item4->setFontName("fonts/Marker Felt.ttf");
     
     // Label Item (LabelBMFont)
-    auto label = LabelBMFont::create("configuration", "fonts/bitmapFontTest3.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", "configuration");
     auto item5 = MenuItemLabel::create(label, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackConfig, this));
 
     // Testing issue #500
@@ -323,7 +323,7 @@ MenuLayer3::MenuLayer3()
     MenuItemFont::setFontName("fonts/Marker Felt.ttf");
     MenuItemFont::setFontSize(28);
 
-    auto label = LabelBMFont::create("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", "Enable AtlasItem");
     auto item1 = MenuItemLabel::create(label, [&](Ref *sender) {
 		//CCLOG("Label clicked. Toogling AtlasSprite");
 		_disabledItem->setEnabled( ! _disabledItem->isEnabled() );
@@ -435,7 +435,7 @@ MenuLayer4::MenuLayer4()
     MenuItemFont::setFontName( "fonts/Marker Felt.ttf" );
     MenuItemFont::setFontSize( 34 );
     
-    auto label = LabelBMFont::create( "go back", "fonts/bitmapFontTest3.fnt" );
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt",  "go back");
     auto back = MenuItemLabel::create(label, CC_CALLBACK_1(MenuLayer4::backCallback, this) );
     
     auto menu = Menu::create(

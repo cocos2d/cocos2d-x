@@ -204,7 +204,7 @@ void LabelMainScene::onIncrease(Ref* sender)
     case kCaseLabelBMFontUpdate:
         for( int i=0;i< kNodesIncrease;i++)
         {
-            auto label = LabelBMFont::create("LabelBMFont", "fonts/bitmapFontTest3.fnt");
+            auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt","LabelBMFont");
             label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
@@ -227,7 +227,7 @@ void LabelMainScene::onIncrease(Ref* sender)
     case kCaseLabelBMFontBigLabels:
         for( int i=0;i< kNodesIncrease;i++)
         {
-            auto label = LabelBMFont::create(LongSentencesExample, "fonts/bitmapFontTest3.fnt");
+            auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", LongSentencesExample);
             label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
@@ -329,7 +329,7 @@ void LabelMainScene::updateText(float dt)
         break;
     case kCaseLabelBMFontUpdate:
         for(const auto &child : children) {
-            LabelBMFont* label = (LabelBMFont*)child;
+            auto label = (Label*)child;
             label->setString(text);
         }
         break;

@@ -134,7 +134,7 @@ public:
     virtual float getTitleTTFSizeForState(State state);
 
     /**
-     * Sets the font of the label, changes the label to a LabelBMFont if neccessary.
+     * Sets the font of the label, changes the label to a BMFont if neccessary.
      * @param fntFile The name of the font to change to
      * @param state The state that uses the specified fntFile. The values are described
      * in "CCControlState".
