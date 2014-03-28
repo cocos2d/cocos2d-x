@@ -103,6 +103,14 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
             break;
     }
     
+    
+    /* debug gui */
+    int bgimgcr = DICTOOL->getIntValue_json(options, "colorR");
+    int bgimgcg = DICTOOL->getIntValue_json(options, "colorG");
+    int bgimgcb = DICTOOL->getIntValue_json(options, "colorB");
+    panel->setBackGroundImageColor(ccc3(bgimgcr, bgimgcg, bgimgcb));
+    /**/
+    
     if (backGroundScale9Enable)
     {
         float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
