@@ -1,6 +1,7 @@
 #include "lua_cocos2dx_auto.hpp"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
+#include "CCProtectedNode.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 
@@ -1659,6 +1660,50 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_GLProgram_getMaterialProgramID(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::GLProgram* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.GLProgram",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::GLProgram*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLProgram_getMaterialProgramID'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const unsigned int ret = cobj->getMaterialProgramID();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMaterialProgramID",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLProgram_getMaterialProgramID'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_GLProgram_setUniformLocationWith3i(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2460,6 +2505,7 @@ int lua_register_cocos2dx_GLProgram(lua_State* tolua_S)
         tolua_function(tolua_S,"use",lua_cocos2dx_GLProgram_use);
         tolua_function(tolua_S,"getVertexShaderLog",lua_cocos2dx_GLProgram_getVertexShaderLog);
         tolua_function(tolua_S,"setUniformsForBuiltins",lua_cocos2dx_GLProgram_setUniformsForBuiltins);
+        tolua_function(tolua_S,"getMaterialProgramID",lua_cocos2dx_GLProgram_getMaterialProgramID);
         tolua_function(tolua_S,"setUniformLocationWith3i",lua_cocos2dx_GLProgram_setUniformLocationWith3i);
         tolua_function(tolua_S,"setUniformLocationWith3iv",lua_cocos2dx_GLProgram_setUniformLocationWith3iv);
         tolua_function(tolua_S,"updateUniforms",lua_cocos2dx_GLProgram_updateUniforms);
@@ -3634,6 +3680,65 @@ int lua_cocos2dx_Texture2D_getMaxS(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Texture2D_updateWithData(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Texture2D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Texture2D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Texture2D_updateWithData'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 5) 
+    {
+        const void* arg0;
+        int arg1;
+        int arg2;
+        int arg3;
+        int arg4;
+
+        #pragma warning NO CONVERSION TO NATIVE FOR void*;
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
+
+        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
+
+        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4);
+        if(!ok)
+            return 0;
+        bool ret = cobj->updateWithData(arg0, arg1, arg2, arg3, arg4);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "updateWithData",argc, 5);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Texture2D_updateWithData'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Texture2D_hasPremultipliedAlpha(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4751,6 +4856,7 @@ int lua_register_cocos2dx_Texture2D(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithImage",lua_cocos2dx_Texture2D_initWithImage);
         tolua_function(tolua_S,"setShaderProgram",lua_cocos2dx_Texture2D_setShaderProgram);
         tolua_function(tolua_S,"getMaxS",lua_cocos2dx_Texture2D_getMaxS);
+        tolua_function(tolua_S,"updateWithData",lua_cocos2dx_Texture2D_updateWithData);
         tolua_function(tolua_S,"hasPremultipliedAlpha",lua_cocos2dx_Texture2D_hasPremultipliedAlpha);
         tolua_function(tolua_S,"initWithMipmaps",lua_cocos2dx_Texture2D_initWithMipmaps);
         tolua_function(tolua_S,"getPixelsHigh",lua_cocos2dx_Texture2D_getPixelsHigh);
@@ -26135,6 +26241,50 @@ int lua_cocos2dx_Director_startAnimation(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Director_getOpenGLView(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getOpenGLView'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::GLView* ret = cobj->getOpenGLView();
+        object_to_luaval<cocos2d::GLView>(tolua_S, "cc.GLView",(cocos2d::GLView*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOpenGLView",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getOpenGLView'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
 {
     int argc = 0;
@@ -27493,6 +27643,7 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"init",lua_cocos2dx_Director_init);
         tolua_function(tolua_S,"setScheduler",lua_cocos2dx_Director_setScheduler);
         tolua_function(tolua_S,"startAnimation",lua_cocos2dx_Director_startAnimation);
+        tolua_function(tolua_S,"getOpenGLView",lua_cocos2dx_Director_getOpenGLView);
         tolua_function(tolua_S,"getRunningScene",lua_cocos2dx_Director_getRunningScene);
         tolua_function(tolua_S,"setViewport",lua_cocos2dx_Director_setViewport);
         tolua_function(tolua_S,"stopAnimation",lua_cocos2dx_Director_stopAnimation);
@@ -31930,6 +32081,50 @@ int lua_cocos2dx_Label_setBMFontFilePath(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_getFontAtlas(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getFontAtlas'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::FontAtlas* ret = cobj->getFontAtlas();
+        object_to_luaval<cocos2d::FontAtlas>(tolua_S, "cc.FontAtlas",(cocos2d::FontAtlas*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getFontAtlas",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_getFontAtlas'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_getFontDefinition(lua_State* tolua_S)
 {
     int argc = 0;
@@ -33388,6 +33583,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"setString",lua_cocos2dx_Label_setString);
         tolua_function(tolua_S,"getHeight",lua_cocos2dx_Label_getHeight);
         tolua_function(tolua_S,"setBMFontFilePath",lua_cocos2dx_Label_setBMFontFilePath);
+        tolua_function(tolua_S,"getFontAtlas",lua_cocos2dx_Label_getFontAtlas);
         tolua_function(tolua_S,"getFontDefinition",lua_cocos2dx_Label_getFontDefinition);
         tolua_function(tolua_S,"getFontName",lua_cocos2dx_Label_getFontName);
         tolua_function(tolua_S,"updateContent",lua_cocos2dx_Label_updateContent);
@@ -34911,81 +35107,6 @@ int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_LayerGradient_initWithColor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::LayerGradient* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.LayerGradient",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::LayerGradient*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_LayerGradient_initWithColor'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            cocos2d::Color4B arg0;
-            ok &=luaval_to_color4b(tolua_S, 2, &arg0);
-
-            if (!ok) { break; }
-            cocos2d::Color4B arg1;
-            ok &=luaval_to_color4b(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithColor(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 0) {
-            bool ret = cobj->init();
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            cocos2d::Color4B arg0;
-            ok &=luaval_to_color4b(tolua_S, 2, &arg0);
-
-            if (!ok) { break; }
-            cocos2d::Color4B arg1;
-            ok &=luaval_to_color4b(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            cocos2d::Point arg2;
-            ok &= luaval_to_point(tolua_S, 4, &arg2);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithColor(arg0, arg1, arg2);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "initWithColor",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_LayerGradient_initWithColor'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_LayerGradient_setEndColor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -35253,7 +35374,6 @@ int lua_register_cocos2dx_LayerGradient(lua_State* tolua_S)
         tolua_function(tolua_S,"setCompressedInterpolation",lua_cocos2dx_LayerGradient_setCompressedInterpolation);
         tolua_function(tolua_S,"setEndOpacity",lua_cocos2dx_LayerGradient_setEndOpacity);
         tolua_function(tolua_S,"getVector",lua_cocos2dx_LayerGradient_getVector);
-        tolua_function(tolua_S,"init",lua_cocos2dx_LayerGradient_initWithColor);
         tolua_function(tolua_S,"setEndColor",lua_cocos2dx_LayerGradient_setEndColor);
         tolua_function(tolua_S,"getEndColor",lua_cocos2dx_LayerGradient_getEndColor);
         tolua_function(tolua_S,"getEndOpacity",lua_cocos2dx_LayerGradient_getEndOpacity);
@@ -64534,6 +64654,531 @@ int lua_register_cocos2dx_SimpleAudioEngine(lua_State* tolua_S)
     g_typeCast["SimpleAudioEngine"] = "cc.SimpleAudioEngine";
     return 1;
 }
+
+int lua_cocos2dx_ProtectedNode_addProtectedChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_addProtectedChild'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+
+            if (!ok) { break; }
+            int arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+
+            if (!ok) { break; }
+            cobj->addProtectedChild(arg0, arg1);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+
+            if (!ok) { break; }
+            cobj->addProtectedChild(arg0);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 3) {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+
+            if (!ok) { break; }
+            int arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+
+            if (!ok) { break; }
+            int arg2;
+            ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
+
+            if (!ok) { break; }
+            cobj->addProtectedChild(arg0, arg1, arg2);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addProtectedChild",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_addProtectedChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_disableCascadeColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_disableCascadeColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->disableCascadeColor();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "disableCascadeColor",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_disableCascadeColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_removeProtectedChildByTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_removeProtectedChildByTag'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        if(!ok)
+            return 0;
+        cobj->removeProtectedChildByTag(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        int arg0;
+        bool arg1;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->removeProtectedChildByTag(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeProtectedChildByTag",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_removeProtectedChildByTag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_reorderProtectedChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_reorderProtectedChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Node* arg0;
+        int arg1;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+            return 0;
+        cobj->reorderProtectedChild(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "reorderProtectedChild",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_reorderProtectedChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->removeAllProtectedChildrenWithCleanup(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeAllProtectedChildrenWithCleanup",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_sortAllProtectedChildren(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_sortAllProtectedChildren'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->sortAllProtectedChildren();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sortAllProtectedChildren",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_sortAllProtectedChildren'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_getProtectedChildByTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_getProtectedChildByTag'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::Node* ret = cobj->getProtectedChildByTag(arg0);
+        object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getProtectedChildByTag",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_getProtectedChildByTag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_removeProtectedChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_removeProtectedChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Node* arg0;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        if(!ok)
+            return 0;
+        cobj->removeProtectedChild(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        cocos2d::Node* arg0;
+        bool arg1;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->removeProtectedChild(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeProtectedChild",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_removeProtectedChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_removeAllProtectedChildren(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_removeAllProtectedChildren'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->removeAllProtectedChildren();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeAllProtectedChildren",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_removeAllProtectedChildren'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ProtectedNode_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::ProtectedNode* ret = cocos2d::ProtectedNode::create();
+        object_to_luaval<cocos2d::ProtectedNode>(tolua_S, "cc.ProtectedNode",(cocos2d::ProtectedNode*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_create'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_ProtectedNode_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (ProtectedNode)");
+    return 0;
+}
+
+int lua_register_cocos2dx_ProtectedNode(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.ProtectedNode");
+    tolua_cclass(tolua_S,"ProtectedNode","cc.ProtectedNode","cc.Node",nullptr);
+
+    tolua_beginmodule(tolua_S,"ProtectedNode");
+        tolua_function(tolua_S,"addProtectedChild",lua_cocos2dx_ProtectedNode_addProtectedChild);
+        tolua_function(tolua_S,"disableCascadeColor",lua_cocos2dx_ProtectedNode_disableCascadeColor);
+        tolua_function(tolua_S,"removeProtectedChildByTag",lua_cocos2dx_ProtectedNode_removeProtectedChildByTag);
+        tolua_function(tolua_S,"reorderProtectedChild",lua_cocos2dx_ProtectedNode_reorderProtectedChild);
+        tolua_function(tolua_S,"removeAllProtectedChildrenWithCleanup",lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup);
+        tolua_function(tolua_S,"sortAllProtectedChildren",lua_cocos2dx_ProtectedNode_sortAllProtectedChildren);
+        tolua_function(tolua_S,"getProtectedChildByTag",lua_cocos2dx_ProtectedNode_getProtectedChildByTag);
+        tolua_function(tolua_S,"removeProtectedChild",lua_cocos2dx_ProtectedNode_removeProtectedChild);
+        tolua_function(tolua_S,"removeAllProtectedChildren",lua_cocos2dx_ProtectedNode_removeAllProtectedChildren);
+        tolua_function(tolua_S,"create", lua_cocos2dx_ProtectedNode_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::ProtectedNode).name();
+    g_luaType[typeName] = "cc.ProtectedNode";
+    g_typeCast["ProtectedNode"] = "cc.ProtectedNode";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -64760,6 +65405,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_MenuItemToggle(tolua_S);
 	lua_register_cocos2dx_RemoveSelf(tolua_S);
 	lua_register_cocos2dx_SplitCols(tolua_S);
+	lua_register_cocos2dx_ProtectedNode(tolua_S);
 	lua_register_cocos2dx_MotionStreak(tolua_S);
 	lua_register_cocos2dx_RotateBy(tolua_S);
 	lua_register_cocos2dx_FileUtils(tolua_S);

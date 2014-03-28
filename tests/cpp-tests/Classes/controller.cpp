@@ -130,14 +130,11 @@ TestController::TestController()
     closeItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
+    TTFConfig ttfConfig("fonts/arial.ttf", 24);
     _itemMenu = Menu::create();
     for (int i = 0; i < g_testCount; ++i)
     {
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//         auto label = LabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
-// #else
-        auto label = LabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
-// #endif        
+        auto label = Label::createWithTTF(ttfConfig, g_aTestNames[i].test_name);       
         auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(menuItem, i + 10000);

@@ -73,7 +73,7 @@ void TouchesMainScene::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     // add title
-    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
+    auto label = Label::create(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 
@@ -223,7 +223,7 @@ void TouchesPerformTest3::onEnter()
     auto s = Director::getInstance()->getWinSize();
     
     // add title
-    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
+    auto label = Label::create(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
     
@@ -248,7 +248,7 @@ void TouchesPerformTest3::onEnter()
         layer->release();
     }
     
-    auto emitEventlabel = LabelTTF::create("Emit Touch Event", "", 24);
+    auto emitEventlabel = Label::create("Emit Touch Event", "", 24);
     auto menuItem = MenuItemLabel::create(emitEventlabel, [this](Ref* sender){
         
         CC_PROFILER_PURGE_ALL();

@@ -58,7 +58,7 @@ private:
     void  finishAutoTest();
     
     Layer*         _labelContainer;
-    LabelTTF*      _title;
+    Label*      _title;
 
     int            _lastRenderedCount;
     int            _quantityNodes;
