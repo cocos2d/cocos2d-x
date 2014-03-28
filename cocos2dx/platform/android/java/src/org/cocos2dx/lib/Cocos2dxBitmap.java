@@ -153,39 +153,40 @@ public class Cocos2dxBitmap {
 		/* Draw string. */
 		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
 		
-		int x = 0;
-		int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
-		
-		final String[] lines = textProperty.mLines;
-		
-		for (final String line : lines) {
-			
-			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
-			y += textProperty.mHeightPerLine;
-			
-		}
-		 
 		// draw again with stroke on if needed 
 		if ( stroke ) {
 			
 			final Paint paintStroke = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
 			paintStroke.setStyle(Paint.Style.STROKE);
-			paintStroke.setStrokeWidth(strokeSize * 0.5f);
-			paintStroke.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
+			paintStroke.setStrokeWidth(strokeSize*2.0f);
+			paintStroke.setARGB(255, (int) (strokeR * 255), (int) (strokeG * 255), (int) (strokeB * 255));
 			
-			x = 0;
-			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
+			int x = 0;
+			int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
 			final String[] lines2 = textProperty.mLines;
 			
 			for (final String line : lines2) {
 				
 				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
 				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
+				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
 				y += textProperty.mHeightPerLine;
 				
 			}
+		}
+		else
+		{
+			int x = 0;
+			int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
+			final String[] lines = textProperty.mLines;
 			
+			for (final String line : lines) {
+				
+				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
+				y += textProperty.mHeightPerLine;
+				
+			}
 		}
 		
 		Cocos2dxBitmap.initNativeObject(bitmap);
