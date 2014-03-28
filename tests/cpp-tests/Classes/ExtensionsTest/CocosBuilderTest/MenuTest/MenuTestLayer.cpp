@@ -5,7 +5,7 @@ USING_NS_CC_EXT;
 using namespace cocosbuilder;
 
 MenuTestLayer::MenuTestLayer()
-: mMenuItemStatusLabelBMFont(NULL)
+: mMenuItemStatusLabelBMFont(nullptr)
 {}
 
 MenuTestLayer::~MenuTestLayer()
@@ -18,15 +18,15 @@ SEL_MenuHandler MenuTestLayer::onResolveCCBCCMenuItemSelector(Ref * pTarget, con
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onMenuItemBClicked", MenuTestLayer::onMenuItemBClicked);
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onMenuItemCClicked", MenuTestLayer::onMenuItemCClicked);
 
-    return NULL;
+    return nullptr;
 }
 
 Control::Handler MenuTestLayer::onResolveCCBCCControlSelector(Ref * pTarget, const char * pSelectorName) {
-    return NULL;
+    return nullptr;
 }
 
 bool MenuTestLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mMenuItemStatusLabelBMFont", LabelBMFont *, this->mMenuItemStatusLabelBMFont);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mMenuItemStatusLabelBMFont", Label *, this->mMenuItemStatusLabelBMFont);
 
     return false;
 }

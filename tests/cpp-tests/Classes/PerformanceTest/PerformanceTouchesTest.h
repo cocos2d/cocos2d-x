@@ -18,7 +18,7 @@ public:
     virtual void update(float dt) override;
 
 protected:
-    LabelBMFont * _plabel;
+    Label * _plabel;
     int numberOfTouchesB;
     int numberOfTouchesM;
     int numberOfTouchesE;

@@ -23,7 +23,7 @@ public:
     void onControlButtonClicked(cocos2d::Ref * sender, cocos2d::extension::Control::EventType pControlEvent);
 
 private:
-    cocos2d::LabelBMFont * mControlEventLabel;
+    cocos2d::Label * mControlEventLabel;
 };
 
 #endif
