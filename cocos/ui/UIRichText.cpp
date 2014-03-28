@@ -29,6 +29,23 @@ NS_CC_BEGIN
 
 namespace ui {
     
+static int _calcCharCount(const char * pszText)
+{
+    int n = 0;
+    char ch = 0;
+    while ((ch = *pszText))
+    {
+        CC_BREAK_IF(! ch);
+        
+        if (0x80 != (0xC0 & ch))
+        {
+            ++n;
+        }
+        ++pszText;
+    }
+    return n;
+}
+    
 bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
 {
     _tag = tag;
@@ -262,7 +279,7 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
     {
         float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
         std::string curText = text;
-        size_t stringLength = curText.length();
+        size_t stringLength = _calcCharCount(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
         std::string leftWords = curText.substr(0, leftLength);
         std::string cutWords = curText.substr(leftLength, curText.length()-1);

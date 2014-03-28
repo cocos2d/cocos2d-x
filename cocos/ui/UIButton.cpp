@@ -394,6 +394,11 @@ void Button::onPressStateChangedToNormal()
     {
         _buttonNormalRenderer->stopAllActions();
         _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+        if (_scale9Enabled)
+        {
+            updateFlippedX();
+            updateFlippedY();
+        }
     }
 }
 
