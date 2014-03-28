@@ -112,7 +112,7 @@ public:
     bool isInverted() const;
     void setInverted(bool bInverted);
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     CCClippingNode();
 };
 
