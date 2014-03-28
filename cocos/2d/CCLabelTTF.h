@@ -143,6 +143,8 @@ public:
     virtual void setFlippedX(bool flippedX);
     virtual void setFlippedY(bool flippedY);
 
+    virtual Rect getBoundingBox() const override;
+
     /**
      * @js NA
      * @lua NA
