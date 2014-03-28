@@ -90,14 +90,14 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         
         // Set the default anchor point
         ignoreAnchorPointForPosition(false);
-        setAnchorPoint(Point(0.5f, 0.5f));
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         // Set the nodes
         setTitleLabel(node);
         setBackgroundSprite(backgroundSprite);
 
         // Set the default color and opacity
-        setColor(Color3B(255.0f, 255.0f, 255.0f));
+        setColor(Color3B::WHITE);
         setOpacity(255.0f);
         setOpacityModifyRGB(true);
         
@@ -108,7 +108,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         setTitleLabelForState(node, Control::State::NORMAL);
         setBackgroundSpriteForState(backgroundSprite, Control::State::NORMAL);
         
-        setLabelAnchorPoint(Point(0.5f, 0.5f));
+        setLabelAnchorPoint(Point::ANCHOR_MIDDLE);
 
         // Layout update
         needsLayout();
@@ -409,16 +409,16 @@ float ControlButton::getTitleTTFSizeForState(State state)
 void ControlButton::setTitleBMFontForState(const std::string& fntFile, State state)
 {
     std::string title = this->getTitleForState(state);
-    this->setTitleLabelForState(LabelBMFont::create(title, fntFile), state);
+    this->setTitleLabelForState(Label::createWithBMFont(fntFile, title), state);
 }
 
 const std::string& ControlButton::getTitleBMFontForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
-    LabelBMFont* labelBMFont = dynamic_cast<LabelBMFont*>(label);
+    auto labelBMFont = dynamic_cast<Label*>(label);
     if(labelBMFont != 0)
     {
-        return labelBMFont->getFntFile();
+        return labelBMFont->getBMFontFilePath();
     }
 
     static std::string ret("");
