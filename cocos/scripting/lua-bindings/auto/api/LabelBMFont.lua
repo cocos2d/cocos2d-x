@@ -90,6 +90,11 @@
 -- @return LabelBMFont#LabelBMFont ret (retunr value: cc.LabelBMFont)
 
 --------------------------------
+-- @function [parent=#LabelBMFont] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 -- @function [parent=#LabelBMFont] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -104,6 +109,11 @@
 -- @param self
 -- @param #int int
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#LabelBMFont] getContentSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#LabelBMFont] LabelBMFont 

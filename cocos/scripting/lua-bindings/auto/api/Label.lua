@@ -95,11 +95,6 @@
 -- @return FontDefinition#FontDefinition ret (return value: cc.FontDefinition)
         
 --------------------------------
--- @function [parent=#Label] getBoundingBox 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
-        
---------------------------------
 -- @function [parent=#Label] getFontName 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -342,6 +337,11 @@
 -- @function [parent=#Label] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#Label] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- @function [parent=#Label] updateDisplayedColor 
