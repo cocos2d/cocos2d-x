@@ -511,8 +511,8 @@ local function runCCControlTest()
                 cc.Sprite:create("extensions/switch-on.png"),
                 cc.Sprite:create("extensions/switch-off.png"),
                 cc.Sprite:create("extensions/switch-thumb.png"),
-                cc.LabelTTF:create("On", "Arial-BoldMT", 16),
-                cc.LabelTTF:create("Off", "Arial-BoldMT", 16)
+                cc.Label:create("On", "Arial-BoldMT", 16),
+                cc.Label:create("Off", "Arial-BoldMT", 16)
             )
         pSwitchControl:setPosition(cc.p (dLayer_width + 10 + pSwitchControl:getContentSize().width / 2, 0))
         pNode:addChild(pSwitchControl)
