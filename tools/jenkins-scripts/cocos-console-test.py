@@ -1,16 +1,20 @@
 #!/usr/bin/python
-#create new project by cocos-console
-#build new project and run
+# create new project by cocos-console
+# compile, deploy project and run
+# perpose: for autotest cocos2d-console command.
+# now support: mac- mac/ios/android
+# will add: window-android,linux-android
 
 import os
+import subprocess
 import sys
 import json
 import time
 import socket
 
-# get payload argvs
+# default console_param.
 console_param = '[console run]'
-# payload = ''
+# get param from commit.
 if os.environ.has_key('payload'):
 	payload_str = os.environ['payload']
 	payload = json.loads(payload_str)
@@ -21,12 +25,14 @@ print 'console_param:',console_param
 
 console_param_arr = console_param.split(' ')
 
+# enum command type
 class ENUM_PARAM:
 	new = 0
 	compile = 1
 	deploy = 2
 	run = 3
 
+# partition different level
 LEVEL_COCOS = {
 	ENUM_PARAM.new : 1,
 	ENUM_PARAM.compile : 2,
@@ -34,6 +40,7 @@ LEVEL_COCOS = {
 	ENUM_PARAM.run : 8
 }
 
+# level's cocos command
 COCOS_CMD = {
 	ENUM_PARAM.new:'new',
 	ENUM_PARAM.compile:'compile',
@@ -41,6 +48,7 @@ COCOS_CMD = {
 	ENUM_PARAM.run:'run'
 }
 
+# set cocos_param for run different command
 cocos_param = 0
 for level in LEVEL_COCOS:
 	if console_param_arr.count(COCOS_CMD[level]):
@@ -48,20 +56,25 @@ for level in LEVEL_COCOS:
 if cocos_param < LEVEL_COCOS[ENUM_PARAM.new]:
 	cocos_param = LEVEL_COCOS[ENUM_PARAM.new]
 print 'cocos_param:', cocos_param
+
+# project types
 project_types = ['cpp', 'lua']
+# project suffix
 PROJ_SUFFIX = 'Proj'
+# different phone platform
 phonePlats = ['mac','ios','android']
 
-#need use console's position, perhaps should be set an env-param
+# need use console's position, perhaps should be set an env-param
 cocos_console_dir = 'tools/cocos2d-console/bin/'
 
-#now cocos2d-console suport different run on Platforms, e.g: only run android on win
+# now cocos2d-console suport different run on Platforms, e.g: only run android on win
 runSupport = {
-	'darwin' : {'mac':1,'ios':1,'android':0},
-	'win' : {'mac':0,'ios':0,'android':0},
-	'linux' : {'mac':0,'ios':0,'android':0}
+	'darwin' : {'mac':1,'ios':1,'android':1},
+	'win' : {'mac':0,'ios':0,'android':1},
+	'linux' : {'mac':0,'ios':0,'android':1}
 }
 
+# get current running system
 curPlat = sys.platform
 if curPlat.find('linux') >= 0:
 	curPlat = 'linux'
@@ -71,11 +84,13 @@ else:
 	curPlat = 'win'
 print 'current platform is:', curPlat
 
+# delete project.(will use different system command to delete.just mac now.)
 def clean_project():
 	for proj in project_types:
 		cmd = 'rm -rf '+proj+PROJ_SUFFIX
 		os.system(cmd)
 
+# file path.(for add console listen command.)
 FILE_PATH = '/Classes/AppDelegate.cpp'
 FILE_DIR = {
 	'cpp':'',
@@ -84,6 +99,7 @@ FILE_DIR = {
 PARSE_WORD = 'director->setDisplayStats(true);'
 CONSOLE_COMMAND = 'director->getConsole()->listenOnTCP(5678);'
 
+# add console listenOnTCP to AppDelegate.cpp.
 def addConsoleListenOnTCP(name):
 	filePath = name+PROJ_SUFFIX+FILE_DIR[name]+FILE_PATH
 	print 'filePath:',filePath
@@ -106,6 +122,19 @@ def addConsoleListenOnTCP(name):
 	else:
 		print 'file is not exist.'
 
+# get current android devices count.
+def getAndroidDevices():
+	cmd = 'adb devices'
+	info_devices = os.popen(cmd).read()
+	arrDevices = info_devices.split('\n')
+	del arrDevices[0]
+	count = 0
+	for device in arrDevices:
+		if len(device) > 0:
+			count += 1
+	return count
+
+# close running app or exe by using console command.
 IP_PHONE = {
 	'mac':'localhost',
 	'ios':'localhost'
@@ -127,8 +156,9 @@ def close_proj(proj, phone):
 			print 'socket is not connect.'
 	time.sleep(2)
 
+# excute cocos command
 def cocos_project(level):
-	print 'will cocos_project: ', level
+	print 'will excute cocos_command: ', COCOS_CMD[level]
 	for proj in project_types:
 		print 'proj: ', proj
 		if level == ENUM_PARAM.new:
@@ -150,12 +180,16 @@ def cocos_project(level):
 						print 'info '+COCOS_CMD[level]+':', not info_cmd
 				else :
 					if runSupport[curPlat][phone]:
+						if phone == 'android' and getAndroidDevices() == 0:
+							print 'no android device, please checkout the device is running ok.'
+							continue
 						info_cmd = os.system(cmd)
 						print 'info '+COCOS_CMD[level]+':', not info_cmd
 						if level == ENUM_PARAM.run:
-							time.sleep(10)
+							time.sleep(20)
 							close_proj(proj, phone)
 
+# build and run according to params of provided.(lv_ignore: e.g:ignore new)
 def build_run(lv_ignore):
 	print 'will build and run'
 	for level in LEVEL_COCOS:
@@ -165,16 +199,32 @@ def build_run(lv_ignore):
 				clean_project()
 			cocos_project(level)
 
+# android simulator name.
+ANDROID_SIMULATOR_NAME = 'console-test'
+# start android simulator if no android devices connected.
+def start_android_simulator():
+	if getAndroidDevices() > 0:
+		print 'already connected android device.'
+		return
+	if cocos_param >= LEVEL_COCOS[ENUM_PARAM.deploy]:
+		cmd_start = [ 'emulator -avd '+ANDROID_SIMULATOR_NAME ]
+		print 'cmd_start:', cmd_start
+		info_start = subprocess.Popen(cmd_start, stdin=subprocess.PIPE, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		print 'start an android simulator:', not info_start
+
 def main():
+	print 'in main:'
+	start_android_simulator()
+	print 'will build_run:'
 	build_run(-1)
 
 # -------------- main --------------
 if __name__ == '__main__':
     sys_ret = 0
-    try:    
-        sys_ret = main()
+    try:
+    	sys_ret = main()
     except:
-        traceback.print_exc()
-        sys_ret = 1
+		traceback.print_exc()
+		sys_ret = 1
     finally:
-        sys.exit(sys_ret)
+		sys.exit(sys_ret)
