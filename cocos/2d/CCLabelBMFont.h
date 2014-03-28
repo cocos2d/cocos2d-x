@@ -116,6 +116,9 @@ public:
 
     virtual void setColor(const Color3B& color) override;
 
+    virtual const Size& getContentSize() const override;
+    virtual Rect getBoundingBox() const override;
+
     virtual std::string getDescription() const override;
 
 #if CC_LABELBMFONT_DEBUG_DRAW

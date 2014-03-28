@@ -191,6 +191,17 @@ void LabelBMFont::setColor(const Color3B& color)
     _label->setColor(color);
 }
 
+const Size& LabelBMFont::getContentSize() const
+{
+    const_cast<LabelBMFont*>(this)->setContentSize(_label->getContentSize());
+    return _contentSize;
+}
+
+Rect LabelBMFont::getBoundingBox() const
+{
+    return _label->getBoundingBox();
+}
+
 //LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW
 void LabelBMFont::draw()
