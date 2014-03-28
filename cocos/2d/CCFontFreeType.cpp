@@ -39,8 +39,13 @@ FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
 
-static std::unordered_map<std::string, Data> s_cacheFontData;
-static std::unordered_map<std::string, int> s_cacheFontDataRef;
+typedef struct _DataRef
+{
+    Data data;
+    unsigned int referenceCount;
+}DataRef;
+
+static std::unordered_map<std::string, DataRef> s_cacheFontData;
 
 FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 {
@@ -108,31 +113,26 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
+    // save font name locally
+    _fontName = fontName;
 
-    auto fielDataIterator = s_cacheFontData.find(fontName);
-    if (fielDataIterator != s_cacheFontData.end())
+    auto it = s_cacheFontData.find(fontName);
+    if (it != s_cacheFontData.end())
     {
-        auto temp = s_cacheFontDataRef.find(fontName);
-        if (temp != s_cacheFontDataRef.end())
-        {
-            (*temp).second += 1;
-        }
-        else
-        {
-            s_cacheFontDataRef[fontName] = 1;
-        }
+        (*it).second.referenceCount += 1;
     }
     else
     {
-        s_cacheFontDataRef[fontName] = 1;
-        s_cacheFontData[fontName] = FileUtils::getInstance()->getDataFromFile(fontName);
-        if (s_cacheFontData[fontName].isNull())
+        s_cacheFontData[fontName].referenceCount = 1;
+        s_cacheFontData[fontName].data = FileUtils::getInstance()->getDataFromFile(fontName);    
+
+        if (s_cacheFontData[fontName].data.isNull())
         {
             return false;
         }
     }
 
-    if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].getBytes(), s_cacheFontData[fontName].getSize(), 0, &face ))
+    if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
         return false;
     
     //we want to use unicode
@@ -147,9 +147,6 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     
     // store the face globally
     _fontRef = face;
-    
-    // save font name locally
-    _fontName = fontName;
     
     // done and good
     return true;
@@ -166,10 +163,9 @@ FontFreeType::~FontFreeType()
         FT_Done_Face(_fontRef);
     }
 
-    s_cacheFontDataRef[_fontName] -= 1;
-    if (s_cacheFontDataRef[_fontName] == 0)
+    s_cacheFontData[_fontName].referenceCount -= 1;
+    if (s_cacheFontData[_fontName].referenceCount == 0)
     {
-        s_cacheFontDataRef.erase(_fontName);
         s_cacheFontData.erase(_fontName);
     }
 }
