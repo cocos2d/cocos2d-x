@@ -47,7 +47,7 @@ std::string g_resourcePath;
 rapidjson::Document g_filecfgjson; 
 
 extern string getIPAddress();
-string getRuntimeVersion()
+const char* getRuntimeVersion()
 {
     return "0.0.1";
 }
@@ -63,14 +63,14 @@ void startScript(string strDebugArg)
     engine->executeScriptFile("src/main.lua");
 }
 
-void reloadScript(const string& modulefile)
+bool reloadScript(const string& modulefile)
 {
 	string strfile = modulefile;
 	if (strfile.empty())
 	{
 		strfile = "src/main.lua";
 	}
-    LuaEngine::getInstance()->reload(strfile.c_str());
+    return (LuaEngine::getInstance()->reload(strfile.c_str())==0);
 }
 
 
@@ -570,55 +570,88 @@ public:
 			dArgParse.Parse<0>(args.c_str());
 			if (dArgParse.HasMember("cmd"))
 			{
-				if (strcmp(dArgParse["cmd"].GetString(),"start-logic")==0)
+                string strcmd = dArgParse["cmd"].GetString();
+                
+                rapidjson::Document dReplyParse;
+				dReplyParse.SetObject();
+				dReplyParse.AddMember("cmd",strcmd.c_str(),dReplyParse.GetAllocator());
+				//dReplyParse.AddMember("cmd",dArgParse["cmd"]);
+                if (dArgParse.HasMember("seq")) {
+					dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
+                }
+                
+				if(strcmp(strcmd.c_str(),"start-logic")==0)
 				{
 					char szDebugArg[1024]={0};
-					if (dArgParse.HasMember("debugcfg"))
-					{
-						sprintf(szDebugArg, "require('debugger')(%s,'%s')",dArgParse["debugcfg"].GetString(),_writepath.c_str());
-					}
+					sprintf(szDebugArg, "require('debugger')(%s,'%s')",dArgParse["debugcfg"].GetString(),g_resourcePath.c_str());
 					startScript(szDebugArg);
+					dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"reload")==0)
+				}else if(strcmp(strcmd.c_str(),"reload")==0)
 				{
 					if (dArgParse.HasMember("modulefiles"))
 					{
+                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
 						const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
 						for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
 						{
-							reloadScript(objectfiles[i].GetString());
+							if (!reloadScript(objectfiles[i].GetString())) {
+								bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
+                            }
 						}
+						dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
 					}
-				}else if(strcmp(dArgParse["cmd"].GetString(),"getversion")==0)
+					dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+				}else if(strcmp(strcmd.c_str(),"getversion")==0)
 				{
-					dArgParse["version"] = getRuntimeVersion().c_str();
-
-				}else if(strcmp(dArgParse["cmd"].GetString(),"getfileinfo")==0)
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+					bodyvalue.AddMember("version",getRuntimeVersion(),dReplyParse.GetAllocator());
+					dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+				}else if(strcmp(strcmd.c_str(),"getfileinfo")==0)
 				{
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
 					for (auto it=g_filecfgjson.MemberonBegin();it!=g_filecfgjson.MemberonEnd();++it)
 					{
-						dArgParse[it->name.GetString()]=it->value;
+						bodyvalue.AddMember(it->name.GetString(),it->value,dReplyParse.GetAllocator());
 					}
-
-				}else if(strcmp(dArgParse["cmd"].GetString(),"getIP")==0)
+					dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                    
+				}else if(strcmp(strcmd.c_str(),"getIP")==0)
 				{
-					dArgParse["IP"] = getIPAddress().c_str();
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+					rapidjson::Value IPValue(rapidjson::kStringType);
+					IPValue.SetString(getIPAddress().c_str(),dReplyParse.GetAllocator());
+					bodyvalue.AddMember("IP",IPValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"remove")==0)
+				}else if(strcmp(strcmd.c_str(),"remove")==0)
 				{
 					if (dArgParse.HasMember("files"))
 					{
+                        rapidjson::Value bodyvalue(rapidjson::kObjectType);
 						const rapidjson::Value& objectfiles = dArgParse["files"];
 						for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
 						{
 							string filename(g_resourcePath);
 							filename.append("/");
 							filename.append(objectfiles[i].GetString());
-							remove(filename.c_str());
+                            if (FileUtils::getInstance()->isFileExist(filename)) {
+                                if(remove(filename.c_str())!=0)
+									bodyvalue.AddMember(objectfiles[i].GetString(),2,dReplyParse.GetAllocator());
+                            }else
+                            {
+								bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
+                            }
+							
 						}
+						dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
 					}
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
-				}else if(strcmp(dArgParse["cmd"].GetString(),"shutdownapp")==0)
+				}else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
 				{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 					extern void shutDownApp();
@@ -628,16 +661,20 @@ public:
 #endif	
 				}
 				
-				char replymsg[1024]={0};
-				sprintf(replymsg,"%d:%s",strlen(dArgParse.GetString()),dArgParse.GetString());
-				send(fd,replymsg,strlen(replymsg),0);
+                rapidjson::StringBuffer buffer;
+                rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+                dReplyParse.Accept(writer);
+                const char* str = buffer.GetString();
+                char msgSize[64]={0x1,0};
+				sprintf(msgSize+1,"%d:",strlen(str));
+                string replymsg(msgSize);
+                replymsg.append(str);
+				send(fd,replymsg.c_str(),replymsg.size(),0);
 			}
 		});
 	}
 private:
     FileServer* _fileserver;
-	string _writepath;
-    
 };
 
 void startRuntime()
@@ -649,7 +686,11 @@ void startRuntime()
 	{
 		extern std::string getCurAppPath();
 		string resourcePath = getCurAppPath();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 		resourcePath.append("/../../");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        resourcePath.append("/../../../");
+#endif
 		resourcePath =replaceAll(resourcePath,"\\","/");
 		g_resourcePath = resourcePath;
 	}
