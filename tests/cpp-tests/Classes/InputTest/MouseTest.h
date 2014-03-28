@@ -16,8 +16,8 @@ public:
     void onMouseScroll(Event* event);
 
 private:
-    LabelTTF*   _labelAction;
-    LabelTTF*   _labelPosition;
+    Label*   _labelAction;
+    Label*   _labelPosition;
     EventListenerMouse* _mouseListener;
 };
 

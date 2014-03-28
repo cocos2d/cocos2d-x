@@ -33,7 +33,7 @@ public:
     ControlPotentiometerTest();
     virtual ~ControlPotentiometerTest();
     bool init();
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _displayValueLabel, DisplayValueLabel)
+    CC_SYNTHESIZE_RETAIN(Label*, _displayValueLabel, DisplayValueLabel)
 
     void valueChanged(Ref *sender, Control::EventType controlEvent);
 

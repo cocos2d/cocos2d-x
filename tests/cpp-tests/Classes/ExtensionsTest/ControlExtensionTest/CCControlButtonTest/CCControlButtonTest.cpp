@@ -94,7 +94,7 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
     auto backgroundButton = Scale9Sprite::create("extensions/button.png");
     auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
     
-    auto titleButton = LabelTTF::create(title, "Marker Felt", 30);
+    auto titleButton = Label::create(title, "fonts/Marker Felt.ttf", 30);
 
     titleButton->setColor(Color3B(159, 168, 176));
     
@@ -125,12 +125,12 @@ bool ControlButtonTest_Event::init()
         auto screenSize = Director::getInstance()->getWinSize();
 
         // Add a label in which the button events will be displayed
-        setDisplayValueLabel(LabelTTF::create("No Event", "Marker Felt", 32));
+        setDisplayValueLabel(Label::create("No Event", "fonts/Marker Felt.ttf", 32));
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
         _displayValueLabel->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(_displayValueLabel, 1);
 
-        setDisplayBitmaskLabel(LabelTTF::create("No bitmask event", "Marker Felt", 24));
+        setDisplayBitmaskLabel(Label::create("No bitmask event", "fonts/Marker Felt.ttf", 24));
         _displayBitmaskLabel->setAnchorPoint(Point(0.5f, -1));
         Point bitmaskLabelPos = _displayValueLabel->getPosition() - Point(0, _displayBitmaskLabel->getBoundingBox().size.height);
         _displayBitmaskLabel->setPosition(bitmaskLabelPos);
@@ -140,7 +140,7 @@ bool ControlButtonTest_Event::init()
         auto backgroundButton = Scale9Sprite::create("extensions/button.png");
         auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
         
-        auto titleButton = LabelTTF::create("Touch Me!", "Marker Felt", 30);
+        auto titleButton = Label::create("Touch Me!", "fonts/Marker Felt.ttf", 30);
 
         titleButton->setColor(Color3B(159, 168, 176));
         
@@ -278,7 +278,7 @@ ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *ti
     auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
     backgroundHighlightedButton->setPreferredSize(Size(45, 45));  // Set the prefered size
     
-    auto titleButton = LabelTTF::create(title, "Marker Felt", 30);
+    auto titleButton = Label::create(title, "fonts/Marker Felt.ttf", 30);
 
     titleButton->setColor(Color3B(159, 168, 176));
     

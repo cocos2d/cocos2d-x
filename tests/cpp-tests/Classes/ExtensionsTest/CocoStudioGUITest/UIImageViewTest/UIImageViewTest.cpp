@@ -13,7 +13,7 @@ bool UIImageViewTest::init()
         
         Text* alert = Text::create();
         alert->setText("ImageView");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
@@ -74,7 +74,7 @@ bool UIImageViewTest_Scale9::init()
         
         Text* alert = Text::create();
         alert->setText("ImageView scale9 render");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(26);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.125f));

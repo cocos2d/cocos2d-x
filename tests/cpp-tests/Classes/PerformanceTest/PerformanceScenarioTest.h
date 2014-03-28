@@ -58,9 +58,9 @@ private:
     MenuItemToggle* _itemToggle;
     Vector<Sprite*> _spriteArray;
     Vector<ParticleSystemQuad*> _parsysArray;
-    LabelTTF* _spriteLabel;
-    LabelTTF* _particleLabel;
-    LabelTTF* _parsysLabel;
+    Label* _spriteLabel;
+    Label* _particleLabel;
+    Label* _parsysLabel;
     int _particleNumber;
 };
 

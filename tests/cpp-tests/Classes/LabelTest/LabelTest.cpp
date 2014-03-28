@@ -797,7 +797,7 @@ LabelsEmpty::LabelsEmpty()
     label1->setPosition(Point(s.width/2, s.height-100));
 
     // LabelTTF
-    auto label2 = LabelTTF::create("", "Arial", 24);
+    auto label2 = LabelTTF::create("", "fonts/arial.ttf", 24);
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition(Point(s.width/2, s.height/2));
 
@@ -993,7 +993,7 @@ void  LabelTTFTest::updateAlignment()
 
     CC_SAFE_RELEASE(_plabel);
 
-    _plabel = LabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
+    _plabel = LabelTTF::create(this->getCurrentAlignment(), "fonts/Marker Felt.ttf", 32,
                                   blockSize, _horizAlign, _vertAlign);
     _plabel->retain();
 
@@ -1108,7 +1108,7 @@ std::string LabelTTFMultiline::subtitle() const
 LabelTTFChinese::LabelTTFChinese()
 {
     auto size = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("中国", "Marker Felt", 30);
+    auto label = LabelTTF::create("中国", "fonts/Marker Felt.ttf", 30);
     label->setPosition(Point(size.width / 2, size.height /2));
     this->addChild(label);
 }
@@ -1343,7 +1343,7 @@ LabelTTFA8Test::LabelTTFA8Test()
     addChild(layer, -10);
 
     // LabelBMFont
-    auto label1 = LabelTTF::create("Testing A8 Format", "Marker Felt", 48);
+    auto label1 = LabelTTF::create("Testing A8 Format", "fonts/Marker Felt.ttf", 48);
     addChild(label1);
     label1->setColor(Color3B::RED);
     label1->setPosition(Point(s.width/2, s.height/2));
@@ -1459,7 +1459,7 @@ TTFFontInit::TTFFontInit()
 
     auto font = LabelTTF::create();
 
-    font->setFontName("Marker Felt");
+    font->setFontName("fonts/Marker Felt.ttf");
     font->setFontSize(48);
     font->setString("It is working!");
     this->addChild(font);
@@ -1493,7 +1493,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     
     FontDefinition shadowTextDef;
     shadowTextDef._fontSize = 20;
-    shadowTextDef._fontName = std::string("Marker Felt");
+    shadowTextDef._fontName = std::string("fonts/Marker Felt.ttf");
     
     shadowTextDef._shadow._shadowEnabled = true;
     shadowTextDef._shadow._shadowOffset  = shadowOffset;
@@ -1512,7 +1512,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // create the stroke only label
     FontDefinition strokeTextDef;
     strokeTextDef._fontSize = 20;
-    strokeTextDef._fontName = std::string("Marker Felt");
+    strokeTextDef._fontName = std::string("fonts/Marker Felt.ttf");
     
     strokeTextDef._stroke._strokeEnabled = true;
     strokeTextDef._stroke._strokeColor   = strokeColor;
@@ -1532,7 +1532,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     // create the label stroke and shadow
     FontDefinition strokeShaodwTextDef;
     strokeShaodwTextDef._fontSize = 20;
-    strokeShaodwTextDef._fontName = std::string("Marker Felt");
+    strokeShaodwTextDef._fontName = std::string("fonts/Marker Felt.ttf");
     
     strokeShaodwTextDef._stroke._strokeEnabled = true;
     strokeShaodwTextDef._stroke._strokeColor   = strokeShadowColor;

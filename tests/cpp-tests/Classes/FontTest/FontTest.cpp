@@ -97,12 +97,12 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagColor2, true);
     removeChildByTag(kTagColor3, true);
 
-    auto top = LabelTTF::create(pFont, pFont, 24);
-    auto left = LabelTTF::create("alignment left", pFont, fontSize,
+    auto top = Label::create(pFont, pFont, 24);
+    auto left = Label::create("alignment left", pFont, fontSize,
                                           blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
-    auto center = LabelTTF::create("alignment center", pFont, fontSize,
+    auto center = Label::create("alignment center", pFont, fontSize,
                                             blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
-    auto right = LabelTTF::create("alignment right", pFont, fontSize,
+    auto right = Label::create("alignment right", pFont, fontSize,
                                            blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
 
     auto leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);

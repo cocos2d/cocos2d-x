@@ -85,9 +85,19 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @function [parent=#Label] getFontAtlas 
+-- @param self
+-- @return FontAtlas#FontAtlas ret (return value: cc.FontAtlas)
+        
+--------------------------------
 -- @function [parent=#Label] getFontDefinition 
 -- @param self
 -- @return FontDefinition#FontDefinition ret (return value: cc.FontDefinition)
+        
+--------------------------------
+-- @function [parent=#Label] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- @function [parent=#Label] getFontName 

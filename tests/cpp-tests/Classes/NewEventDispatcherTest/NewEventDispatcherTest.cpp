@@ -26,7 +26,8 @@ std::function<Layer*()> createFunctions[] =
     CL(StopPropagationTest),
     CL(PauseResumeTargetTest),
     CL(Issue4129),
-    CL(Issue4160)
+    CL(Issue4160),
+    CL(DanglingNodePointersTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -379,7 +380,7 @@ void RemoveListenerWhenDispatching::onEnter()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
     
-    auto statusLabel = LabelTTF::create("The sprite could be touched!", "", 20);
+    auto statusLabel = Label::create("The sprite could be touched!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
     std::shared_ptr<bool> enable(new bool(true));
@@ -428,7 +429,7 @@ void CustomEventTest::onEnter()
     
     MenuItemFont::setFontSize(20);
     
-    auto statusLabel = LabelTTF::create("No custom event 1 received!", "", 20);
+    auto statusLabel = Label::create("No custom event 1 received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
@@ -454,7 +455,7 @@ void CustomEventTest::onEnter()
     });
     sendItem->setPosition(origin + Point(size.width/2, size.height/2));
     
-    auto statusLabel2 = LabelTTF::create("No custom event 2 received!", "", 20);
+    auto statusLabel2 = Label::create("No custom event 2 received!", "", 20);
     statusLabel2->setPosition(origin + Point(size.width/2, size.height-120));
     addChild(statusLabel2);
     
@@ -511,7 +512,7 @@ void LabelKeyboardEventTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto statusLabel = LabelTTF::create("No keyboard event received!", "", 20);
+    auto statusLabel = Label::create("No keyboard event received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height/2));
     addChild(statusLabel);
         
@@ -519,14 +520,14 @@ void LabelKeyboardEventTest::onEnter()
     listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event){
         char buf[100] = {0};
         sprintf(buf, "Key %d was pressed!", (int)keyCode);
-        auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
+        auto label = static_cast<Label*>(event->getCurrentTarget());
         label->setString(buf);
     };
     
     listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode, Event* event){
         char buf[100] = {0};
         sprintf(buf, "Key %d was released!", (int)keyCode);
-        auto label = static_cast<LabelTTF*>(event->getCurrentTarget());
+        auto label = static_cast<Label*>(event->getCurrentTarget());
         label->setString(buf);
     };
     
@@ -783,19 +784,23 @@ void DirectorEventTest::onEnter()
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
 
     _label1 = Label::createWithTTF(ttfConfig, "Update: 0");
+    _label1->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label1->setPosition(30,s.height/2 + 60);
     this->addChild(_label1);
 
     _label2 = Label::createWithTTF(ttfConfig, "Visit: 0");
+    _label2->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label2->setPosition(30,s.height/2 + 20);
     this->addChild(_label2);
 
     _label3 = Label::createWithTTF(ttfConfig, "Draw: 0");
+    _label3->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label3->setPosition(30,30);
     _label3->setPosition(30,s.height/2 - 20);
     this->addChild(_label3);
 
     _label4 = Label::createWithTTF(ttfConfig, "Projection: 0");
+    _label4->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label4->setPosition(30,30);
     _label4->setPosition(30,s.height/2 - 60);
     this->addChild(_label4);
@@ -1176,7 +1181,7 @@ Issue4129::Issue4129()
 {
     _customlistener = _eventDispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
         
-        auto label = LabelTTF::create("Yeah, this issue was fixed.", "", 20);
+        auto label = Label::create("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Point(0, 0.5f));
         label->setPosition(Point(VisibleRect::left()));
         this->addChild(label);
@@ -1273,4 +1278,132 @@ std::string Issue4160::title() const
 std::string Issue4160::subtitle() const
 {
     return "Touch the red block twice \n should not crash and the red one couldn't be touched";
+}
+
+// DanglingNodePointersTest
+class DanglingNodePointersTestSprite : public Sprite
+{
+public:
+    
+    typedef std::function<void (DanglingNodePointersTestSprite * sprite)> TappedCallback;
+    
+    static DanglingNodePointersTestSprite * create(const TappedCallback & tappedCallback)
+    {
+        auto ret = new DanglingNodePointersTestSprite(tappedCallback);
+        
+        if (ret && ret->init())
+        {
+            ret->autorelease();
+            return ret;
+        }
+
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+
+protected:
+    
+    DanglingNodePointersTestSprite(const TappedCallback & tappedCallback)
+    :
+        _eventListener(nullptr),
+        _tappedCallback(tappedCallback)
+    {
+        
+    }
+    
+public:
+    
+    void onEnter() override
+    {
+        Sprite::onEnter();
+        
+        _eventListener = EventListenerTouchOneByOne::create();
+        _eventListener->setSwallowTouches(false);
+        
+        _eventListener->onTouchBegan = [this](Touch* touch, Event* event) -> bool
+        {
+            _tappedCallback(this);
+            return false;           // Don't claim the touch so it can propagate
+        };
+        
+        _eventListener->onTouchEnded = [](Touch* touch, Event* event)
+        {
+            // Do nothing
+        };
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_eventListener, this);
+    }
+    
+    void onExit() override
+    {
+        _eventDispatcher->removeEventListenersForTarget(this);
+        _eventListener = nullptr;
+        Sprite::onExit();
+    }
+    
+private:
+    
+    EventListenerTouchOneByOne *    _eventListener;
+    int                             _fixedPriority;
+    TappedCallback                  _tappedCallback;
+};
+
+DanglingNodePointersTest::DanglingNodePointersTest()
+{
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
+    
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto callback2 = [](DanglingNodePointersTestSprite * sprite2)
+    {
+        CCASSERT(false, "This should never be called because the sprite gets removed from it's parent and destroyed!");
+        exit(1);
+    };
+    
+    auto callback1 = [callback2, origin, size](DanglingNodePointersTestSprite * sprite1)
+    {
+        DanglingNodePointersTestSprite * sprite2 = dynamic_cast<DanglingNodePointersTestSprite*>(sprite1->getChildren().at(0));
+        CCASSERT(sprite2, "The first child of sprite 1 should be sprite 2!");
+        CCASSERT(sprite2->getReferenceCount() == 1, "There should only be 1 reference to sprite 1, from it's parent node. Hence removing it will destroy it!");
+        sprite1->removeAllChildren();   // This call should cause sprite 2 to be destroyed
+        
+        // Recreate sprite 1 again
+        sprite2 = DanglingNodePointersTestSprite::create(callback2);
+        sprite2->setTexture("Images/MagentaSquare.png");
+        sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+        sprite1->addChild(sprite2, -20);
+    };
+    
+    auto sprite1 = DanglingNodePointersTestSprite::create(callback1);    // Sprite 1 will receive touch before sprite 2
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite1, -10);
+    
+    auto sprite2 = DanglingNodePointersTestSprite::create(callback2);   // Sprite 2 will be removed when sprite 1 is touched, should never receive an event.
+    sprite2->setTexture("Images/MagentaSquare.png");
+    sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+    sprite1->addChild(sprite2, -20);
+    
+#endif
+}
+
+DanglingNodePointersTest::~DanglingNodePointersTest()
+{
+    
+}
+
+std::string DanglingNodePointersTest::title() const
+{
+    return "DanglingNodePointersTest";
+}
+
+std::string DanglingNodePointersTest::subtitle() const
+{
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
+    return  "Tap the square - should not crash!";
+#else
+    return  "For test to work, must be compiled with:\n"
+            "CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1\n&& COCOS2D_DEBUG > 0";
+#endif
 }
