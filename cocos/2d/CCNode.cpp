@@ -154,6 +154,10 @@ Node::~Node()
     }
 #endif
 
+    // User object has to be released before others, since userObject may have a weak reference of this node
+    // It may invoke `node->stopAllAction();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
+    CC_SAFE_RELEASE_NULL(_userObject);
+    
     CC_SAFE_RELEASE_NULL(_actionManager);
     CC_SAFE_RELEASE_NULL(_scheduler);
     
@@ -162,7 +166,6 @@ Node::~Node()
     
     // attributes
     CC_SAFE_RELEASE_NULL(_shaderProgram);
-    CC_SAFE_RELEASE_NULL(_userObject);
 
     for (auto& child : _children)
     {
