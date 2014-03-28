@@ -1364,6 +1364,13 @@ const Size& Label::getContentSize() const
     return Node::getContentSize();
 }
 
+Rect Label::getBoundingBox() const
+{
+    const_cast<Label*>(this)->getContentSize();
+
+    return Node::getBoundingBox();
+}
+
 void Label::listenToBackground(EventCustom *event)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
