@@ -71,14 +71,16 @@ class CC_DLL ActionTween : public ActionInterval
 public:
     /** creates an initializes the action with the property name (key), and the from and to parameters. */
     static ActionTween* create(float duration, const std::string& key, float from, float to);
-    /** initializes the action with the property name (key), and the from and to parameters. */
-    bool initWithDuration(float duration, const std::string& key, float from, float to);
 
     // Overrides
     void startWithTarget(Node *target) override;
     void update(float dt) override;
     ActionTween* reverse() const override;
 	ActionTween *clone() const override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    /** initializes the action with the property name (key), and the from and to parameters. */
+    bool initWithDuration(float duration, const std::string& key, float from, float to);
 
 protected:
     std::string        _key;
