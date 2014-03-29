@@ -548,6 +548,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _fileName("")
 , _text("")
 , _uiImage(nullptr)
+, _hasMipmaps(false)
 {
     _texParams.minFilter = GL_LINEAR;
     _texParams.magFilter = GL_LINEAR;
