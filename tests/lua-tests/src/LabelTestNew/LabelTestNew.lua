@@ -303,7 +303,7 @@ function LabelTTFColor:create()
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
     ttfConfig.fontFilePath="fonts/arial.ttf"
-    ttfConfig.fontSize=35
+    ttfConfig.fontSize=18
 
     local label1 = cc.Label:createWithTTF(ttfConfig,"Green", cc.VERTICAL_TEXT_ALIGNMENT_CENTER, s.width)
     label1:setColor( cc.c3b(0, 255, 0 ))
@@ -443,7 +443,7 @@ function LabelFNTandTTFEmpty.create()
     -- cc.LabelTTF
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize     = 48
+    ttfConfig.fontSize     = 24
     local label2 = cc.Label:createWithTTF(ttfConfig, "", cc.TEXT_ALIGNMENT_CENTER, s.width)
     layer:addChild(label2, 0, kTagBitmapAtlas2)
     label2:setAnchorPoint(cc.p(0.5, 0.5))
@@ -532,7 +532,7 @@ function LabelTTFUnicodeChinese.create()
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
     ttfConfig.fontFilePath="fonts/wt021.ttf"
-    ttfConfig.fontSize=55
+    ttfConfig.fontSize=28
     ttfConfig.glyphs=cc.GLYPHCOLLECTION_CUSTOM
     ttfConfig.customGlyphs="美好的一天啊"
 
@@ -809,7 +809,7 @@ function LabelTTFAlignmentNew.create()
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
     ttfConfig.fontFilePath="fonts/tahoma.ttf"
-    ttfConfig.fontSize=32
+    ttfConfig.fontSize=16
     local ttf0 = cc.Label:createWithTTF(ttfConfig, "Alignment 0\nnew line", cc.TEXT_ALIGNMENT_LEFT)
     ttf0:setPosition(cc.p(s.width/2,(s.height/6)*2 - 30))
     ttf0:setAnchorPoint(cc.p(0.5,0.5))
@@ -845,7 +845,7 @@ function LabelTTFUnicodeNew.create()
 
     local ttfConfig = {}
     ttfConfig.fontFilePath="fonts/arial.ttf"
-    ttfConfig.fontSize=45
+    ttfConfig.fontSize=23
     ttfConfig.glyphs=cc.GLYPHCOLLECTION_ASCII
     
     local label1 =  cc.Label:createWithTTF(ttfConfig,"Buen día, ¿cómo te llamas?", cc.TEXT_ALIGNMENT_CENTER, s.width)
@@ -927,7 +927,7 @@ function LabelTTFLongLineWrapping.create()
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize = 28
+    ttfConfig.fontSize = 14
     local label1 = cc.Label:createWithTTF(ttfConfig, LongSentencesExample, cc.TEXT_ALIGNMENT_LEFT, s.width)
     label1:setAnchorPoint(cc.p(0.5,1.0))
     label1:setPosition(cc.p(s.width/2, s.height/2))
@@ -957,7 +957,7 @@ function LabelTTFDynamicAlignment.create()
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize = 45
+    ttfConfig.fontSize = 23
     LabelTTFDynamicAlignment._label = cc.Label:createWithTTF(ttfConfig, LongSentencesExample, cc.TEXT_ALIGNMENT_CENTER, s.width)
     LabelTTFDynamicAlignment._label:setPosition( cc.p(s.width/2, s.height/2) )
     LabelTTFDynamicAlignment._label:setAnchorPoint(cc.p(0.5, 0.5))
@@ -1023,7 +1023,7 @@ function LabelTTFCJKWrappingTest.create()
     local size = cc.Director:getInstance():getVisibleSize()
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/wt021.ttf"
-    ttfConfig.fontSize = 50
+    ttfConfig.fontSize = 25
     ttfConfig.glyphs = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
     ttfConfig.distanceFieldEnabled = true
@@ -1090,7 +1090,7 @@ function LabelTTFFontsTestNew.create()
     }
     local ttfConfig = {}
     ttfConfig.fontFilePath = ttfPaths[0]
-    ttfConfig.fontSize = 40
+    ttfConfig.fontSize = 20
     for i=1, table.getn(ttfPaths) do
         ttfConfig.fontFilePath = ttfPaths[i]
         local label = cc.Label:createWithTTF( ttfConfig, ttfPaths[i], cc.TEXT_ALIGNMENT_CENTER, 0)
@@ -1141,7 +1141,7 @@ function LabelTTFDistanceField.create()
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize = 80
+    ttfConfig.fontSize = 40
     ttfConfig.glyphs   = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
     ttfConfig.distanceFieldEnabled = true
@@ -1182,7 +1182,7 @@ function LabelOutlineAndGlowTest.create()
 
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize = 80
+    ttfConfig.fontSize = 40
     ttfConfig.glyphs   = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
     ttfConfig.distanceFieldEnabled = true
@@ -1283,7 +1283,7 @@ function LabelCrashTest.create()
 
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize     = 80
+    ttfConfig.fontSize     = 40
     ttfConfig.glyphs       = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
     ttfConfig.distanceFieldEnabled = true
