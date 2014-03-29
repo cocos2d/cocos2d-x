@@ -11,18 +11,6 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#OrbitCamera] initWithDuration 
--- @param self
--- @param #float float
--- @param #float float
--- @param #float float
--- @param #float float
--- @param #float float
--- @param #float float
--- @param #float float
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- @function [parent=#OrbitCamera] create 
 -- @param self
 -- @param #float float
@@ -48,9 +36,5 @@
 -- @function [parent=#OrbitCamera] update 
 -- @param self
 -- @param #float float
-        
---------------------------------
--- @function [parent=#OrbitCamera] OrbitCamera 
--- @param self
         
 return nil
