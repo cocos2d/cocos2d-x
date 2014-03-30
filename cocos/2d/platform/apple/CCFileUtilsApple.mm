@@ -324,10 +324,23 @@ FileUtils* FileUtils::getInstance()
 
 std::string FileUtilsApple::getWritablePath() const
 {
-    // save to document folder
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    std::string strRet = [documentsDirectory UTF8String];
+    // Save to Application Support folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *appSupportDirectory = [paths objectAtIndex:0];
+    
+    //Application Support dir doesn't exist by default on iOS, so we create it.
+    if (![[NSFileManager defaultManager] fileExistsAtPath:appSupportDirectory]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:appSupportDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    //Create a subdir using the bundleId, and store our files there. This is not necessary but follows Cocoa best practices.
+    NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *bundleDirectory = [appSupportDirectory stringByAppendingPathComponent:bundleID];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:bundleDirectory]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:bundleDirectory withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    std::string strRet = [bundleDirectory UTF8String];
     strRet.append("/");
     return strRet;
 }
