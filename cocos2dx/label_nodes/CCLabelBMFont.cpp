@@ -588,6 +588,7 @@ void CCLabelBMFont::createFontChars()
     unsigned int stringLen = m_sString ? cc_wcslen(m_sString) : 0;
     if (stringLen == 0)
     {
+        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
         return;
     }
 

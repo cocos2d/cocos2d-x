@@ -29,9 +29,9 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
-class UIScrollInterface
+class CC_EX_DLL UIScrollInterface
 {
 public:
     virtual ~UIScrollInterface() {}

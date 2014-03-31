@@ -114,6 +114,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageSpanish;
     }
+    else if (0 == languageCode.CompareTo(L"nld"))
+    {
+        ret = kLanguageDutch;
+    }
     else if (0 == languageCode.CompareTo(L"rus"))
     {
         ret = kLanguageRussian;

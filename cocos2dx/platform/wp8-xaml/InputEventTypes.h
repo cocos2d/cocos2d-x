@@ -33,7 +33,8 @@ namespace PhoneDirect3DXamlAppComponent
 public enum class Cocos2dEvent
 {
     ShowKeyboard,
-    HideKeyboard
+    HideKeyboard,
+    TerminateApp
 };
 
 

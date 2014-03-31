@@ -45,7 +45,7 @@ class AssetsManagerDelegateProtocol;
  *  @js NA
  *  @lua NA
  */
-class AssetsManager
+class CC_EX_DLL AssetsManager
 {
 public:
     enum ErrorCode
@@ -197,7 +197,7 @@ private:
     AssetsManagerDelegateProtocol *_delegate; // weak reference
 };
 
-class AssetsManagerDelegateProtocol
+class CC_EX_DLL AssetsManagerDelegateProtocol
 {
 public:
     /* @brief Call back function for error

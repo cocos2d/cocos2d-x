@@ -36,6 +36,11 @@ namespace PhoneDirect3DXamlAppComponent
 
 public delegate void Cocos2dEventDelegate(Cocos2dEvent event);    
 
+public delegate void Cocos2dMessageBoxDelegate(Platform::String^  title, Platform::String^ text);   
+
+public delegate void Cocos2dEditBoxDelegate(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
+
+
 
 enum PointerEventType
 {
@@ -75,6 +80,13 @@ public:
 private:
     Cocos2dKeyEvent m_type;
     Platform::Agile<Platform::String> m_text;
+};
+
+class BackButtonEvent : public InputEvent
+{
+public:
+    BackButtonEvent();
+    virtual void execute(Cocos2dRenderer ^ renderer);
 };
 
 

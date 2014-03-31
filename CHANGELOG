@@ -1,18 +1,35 @@
-cocos2d-x-2.2.3 @?.? ????
+cocos2d-x-2.2.4 ??
+     [FIXED]    Audio: Limit max sound number to 3 to fix crash on sumsung i9100
+
+cocos2d-x-2.2.3 @Mar.14 2014
+[All]
+     [NEW]    Adds Dutch Language support.
+     [FIX]    CocoStudio: SceneTest crash after switching to another scene.
+     [FIX]    CocoStudio: Logic error in 'TriggerObj::detect'.
+     [FIX]    CCControlSwitch behaves wrongly when there are two instances of CCControlSwitch exist in the same scene
+     [FIX]    Reload a picture though it is cached in TextureCache 
+
 [Android]
-     [FIX]    Screen will be flickering when switching to a new activity.
+     [FIX]    Screen would be flickering when switching to a new activity.
+     [FIX]    Initialize CCDirectory::m_fSecondsPerFrame to avoid crash
 
 [WP8 | WinRT]
-     [FIX]    Using the correct resolution policy in CCEGLView::UpdateWindowSize.
+     [FIX]    Added Lua bindings support for Wp8 and WinRT.
+     [FIX]    Added CCEditBox support for wp8.
+     [FIX]    Used the correct resolution policy in CCEGLView::UpdateWindowSize.
+     [FIX]    Added lost XAML project template
+     [FIX]    Added documents for the usage of WP8 & WinRT port 
 
 [JSBindings]
-     [NEW]    Adds 'setTimeout' and 'setInterval' for JSB.
+     [NEW]    Added 'setTimeout' and 'setInterval' for JSB.
 
 [Emscripten]
-     [NEW]    Adds emscripten support for Windows Host.
+     [NEW]    Added emscripten support for Windows Host.
 
 [LuaBindings]
+     [NEW]    Added more test cases for CocoStuidoTest/SceneTest.
      [FIX]    CCComponent class wasn't exposed to LUA.
+     [FIX]    The setFrameEventCallFunc and setMovementEventCallFunc of CCArmature called at the same time in lua script would lead to crash
 
 cocos2d-x-2.2.2 @Jan.07 2014
 [Windows8 & WinPhone8]

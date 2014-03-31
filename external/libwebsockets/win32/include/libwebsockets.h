@@ -27,7 +27,7 @@ extern "C" {
 #include <cstddef>
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) || defined(WP8)
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

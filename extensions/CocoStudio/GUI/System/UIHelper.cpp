@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-namespace gui {
+namespace ui {
 
 Widget* UIHelper::seekWidgetByTag(Widget* root, int tag)
 {

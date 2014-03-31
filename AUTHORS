@@ -56,9 +56,10 @@ Developers:
         Fix for spaces at the beginning of wrapped lines on Android
 
     martell
-        use tinyxml2 to replace libxml2
+        used tinyxml2 to replace libxml2
         Added Mingw-crt Support without breaking VS SDK
-        Adds emscripten support for Windows Host
+        Added emscripten support for Windows Host
+        Added Dutch Language support.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android

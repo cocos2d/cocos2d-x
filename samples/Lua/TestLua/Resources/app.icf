@@ -20,3 +20,7 @@ MemSize = 100000000
 # Sample only compatible with 480x320 display resolution
 WinWidth=480
 WinHeight=320
+
+[GL]
+AllowNegativeUniformLocation=1
+

@@ -40,6 +40,9 @@ EditBoxTest::EditBoxTest()
     m_pEditName->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     m_pEditName->setFontName("Paint Boy");
+// while using no-US chracters like Chinese, uncomment next two lines and download arialuni.ttf to Resources\fonts.
+//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+//	m_pEditName->setFontName("fonts/arialuni.ttf");
 #else
 	m_pEditName->setFontName("fonts/Paint Boy.ttf");
 #endif
@@ -57,6 +60,9 @@ EditBoxTest::EditBoxTest()
     m_pEditPassword->setPosition(ccp(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	m_pEditPassword->setFont("American Typewriter", 30);
+// while using no-US chracters like Chinese, uncomment next two lines and download arialuni.ttf to Resources\fonts.
+//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+//	m_pEditName->setFontName("fonts/arialuni.ttf");
 #else
 	m_pEditPassword->setFont("fonts/American Typewriter.ttf", 30);
 #endif

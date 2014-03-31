@@ -133,6 +133,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case LANG_SPANISH:
             ret = kLanguageSpanish;
             break;
+        case LANG_DUTCH:
+            ret = kLanguageDutch;
+            break;
         case LANG_RUSSIAN:
             ret = kLanguageRussian;
             break;

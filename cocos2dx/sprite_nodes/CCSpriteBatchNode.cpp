@@ -762,9 +762,8 @@ CCSpriteBatchNode * CCSpriteBatchNode::addSpriteWithoutQuad(CCSprite*child, unsi
     {
         CCSprite* pChild = (CCSprite*) pObject;
         if (pChild && (pChild->getAtlasIndex() >= z))
-        {
-            ++i;
-        }
+            break;
+        ++i;
     }
     
     m_pobDescendants->insertObject(child, i);

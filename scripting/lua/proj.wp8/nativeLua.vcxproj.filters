@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="cocos2dx_support">
+      <UniqueIdentifier>{cd720917-6841-4d6f-9004-0517f512ee48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luajit">
+      <UniqueIdentifier>{61b8ec61-057a-4b42-8618-0e4a223fc656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luajit\include">
+      <UniqueIdentifier>{1684836c-1858-4a39-a1ae-c7843e25fb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tolua">
+      <UniqueIdentifier>{ab962966-972a-4ed6-9de5-2b56aa58df16}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\cocos2dx_support\CCBProxy.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCLuaBridge.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCLuaEngine.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCLuaStack.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_cocostudio_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\Lua_extensions_CCB.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\LuaCocoStudio.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\cocos2dx_support\CCBProxy.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCLuaBridge.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCLuaEngine.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCLuaStack.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCLuaValue.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_cocostudio_manual.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_manual.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\Lua_extensions_CCB.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\LuaCocoStudio.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luajit\include\lauxlib.h">
+      <Filter>luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luajit\include\lua.h">
+      <Filter>luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luajit\include\luaconf.h">
+      <Filter>luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luajit\include\lualib.h">
+      <Filter>luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tolua\tolua_event.h">
+      <Filter>tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tolua\tolua++.h">
+      <Filter>tolua</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

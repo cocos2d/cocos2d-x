@@ -1127,7 +1127,10 @@ LabelTTFChinese::LabelTTFChinese()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // Marker Felt is missing Chinese characters
     CCLabelTTF *pLable = CCLabelTTF::create("中国", "PMingLiU", 30);
-#else
+	// while using no-US chracters like Chinese, uncomment next two lines and download arialuni.ttf to Resources\fonts.
+	//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	// CCLabelTTF *pLable = CCLabelTTF::create("中国", "arialuni.ttf", 30);
+#else	
     CCLabelTTF *pLable = CCLabelTTF::create("中国", "Marker Felt", 30);
 #endif
 

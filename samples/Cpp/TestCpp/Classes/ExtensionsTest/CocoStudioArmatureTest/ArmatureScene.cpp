@@ -1041,7 +1041,7 @@ void TestColliderDetector::update(float delta)
             ColliderBody *body = static_cast<ColliderBody*>(object);
             CCArray *vertexList = body->getCalculatedVertexList();
 
-            float minx, miny, maxx, maxy = 0;
+            float minx = 0, miny = 0, maxx = 0, maxy = 0;
             int length = vertexList->count();
             for (int i = 0; i<length; i++)
             {

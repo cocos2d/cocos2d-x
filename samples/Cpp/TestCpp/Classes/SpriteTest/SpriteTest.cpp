@@ -2371,8 +2371,11 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     addChild(batch, 0, kTagSpriteBatchNode);
     
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
+
+     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
     
     CCSprite* sprite1 = CCSprite::createWithSpriteFrameName("grossini_dance_01.png");
+   
     sprite1->setPosition(ccp( s.width/3, s.height/2));
     
     CCSprite* sprite2 = CCSprite::createWithSpriteFrameName("grossini_dance_02.png");

@@ -87,6 +87,8 @@ CCEGLView::CCEGLView()
     , m_eglContext(nullptr)
     , m_eglSurface(nullptr)
     , m_isXamlWindow(false)
+    , m_delegate(nullptr)
+    , m_messageBoxDelegate(nullptr)
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8");
@@ -394,6 +396,28 @@ void CCEGLView::ValidateDevice()
 
 }
 
+bool CCEGLView::ShowMessageBox(Platform::String^ title, Platform::String^ message)
+{
+    if(m_messageBoxDelegate)
+    {
+        m_messageBoxDelegate->Invoke(title, message);
+        return true;
+    }
+    return false;
+}
+
+bool CCEGLView::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
+{
+    if(m_editBoxDelegate)
+    {
+        m_editBoxDelegate->Invoke(strPlaceHolder, strText, maxLength, inputMode, inputFlag, receiveHandler);
+        return true;
+    }
+    return false;
+}
+
+
+
 // called by orientation change from WP8 XAML
 void CCEGLView::UpdateOrientation(DisplayOrientations orientation)
 {
@@ -448,6 +472,10 @@ void CCEGLView::UpdateWindowSize()
     {
         m_obScreenSize = CCSizeMake(width, height);
         CCSize designSize = getDesignResolutionSize();
+        if(m_eResolutionPolicy == kResolutionUnKnown)
+        {
+            m_eResolutionPolicy = kResolutionShowAll;
+        }
         CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, m_eResolutionPolicy);
         CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
    }
@@ -483,25 +511,30 @@ CCPoint CCEGLView::TransformToOrientation(Point p)
 {
     CCPoint returnValue;
 
-	float x = getScaledDPIValue(p.X);
-	float y = getScaledDPIValue(p.Y);
-
+    float x = p.X;
+    float y = p.Y;  
+ 
+    if(!m_isXamlWindow)
+    {
+        x = getScaledDPIValue(p.X);
+        y = getScaledDPIValue(p.Y);  
+    }
 
     switch (m_orientation)
     {
-    case DisplayOrientations::Portrait:
-    default:
-        returnValue = CCPoint(x, y);
-        break;
-    case DisplayOrientations::Landscape:
-        returnValue = CCPoint(y, m_width - x);
-        break;
-    case DisplayOrientations::PortraitFlipped:
-        returnValue = CCPoint(m_width - x, m_height - y);
-        break;
-    case DisplayOrientations::LandscapeFlipped:
-        returnValue = CCPoint(m_height - y, x);
-        break;
+        case DisplayOrientations::Portrait:
+        default:
+            returnValue = CCPoint(x, y);
+            break;
+        case DisplayOrientations::Landscape:
+            returnValue = CCPoint(y, m_width - x);
+            break;
+        case DisplayOrientations::PortraitFlipped:
+            returnValue = CCPoint(m_width - x, m_height - y);
+            break;
+        case DisplayOrientations::LandscapeFlipped:
+            returnValue = CCPoint(m_height - y, x);
+            break;
     }
 
 	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
@@ -515,30 +548,12 @@ CCPoint CCEGLView::TransformToOrientation(Point p)
     return returnValue;
 }
 
-#if 1
-
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 
 	return TransformToOrientation(args->CurrentPoint->Position);
 
 }
 
-#else
-CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
-	auto p = args->CurrentPoint;
-	float x = getScaledDPIValue(p->Position.X);
-	float y = getScaledDPIValue(p->Position.Y);
-    CCPoint pt(x, y);
-
-	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
-
-	if(zoomFactor > 0.0f) {
-		pt.x /= zoomFactor;
-		pt.y /= zoomFactor;
-	}
-	return pt;
-}
-#endif
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {

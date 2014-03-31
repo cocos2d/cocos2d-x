@@ -84,7 +84,7 @@ enum CCTweenType
 *   @js NA
 *   @lua NA
 */
-class  CCTweenFunction
+class  CC_EX_DLL CCTweenFunction
 {
 public:
 

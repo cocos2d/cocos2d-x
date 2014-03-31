@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "ModalLayer.h"
+#include "CCEGLView.h"
 #endif
 
 #if defined(VLD_DEBUG_MEMORY)
@@ -77,10 +78,14 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     // Show the message dialog
     msg->ShowAsync();
 #else
-	ModalLayer *messageBox = ModalLayer::create();
-	messageBox->setMessage(pszMsg);
-	CCDirector::sharedDirector()->getRunningScene()->addChild(messageBox);
 
+    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+    if(!pEGLView->ShowMessageBox(title, message))
+    {
+	    ModalLayer *messageBox = ModalLayer::create();
+	    messageBox->setMessage(pszMsg);
+	    CCDirector::sharedDirector()->getRunningScene()->addChild(messageBox);
+    }
 #endif
 
 }

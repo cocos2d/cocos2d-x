@@ -39,7 +39,7 @@ using namespace PhoneDirect3DXamlAppComponent;
 
 USING_NS_CC;
 
-Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr)
+Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
 {
     mApp = new AppDelegate();
 }
@@ -55,6 +55,8 @@ void Cocos2dRenderer::CreateGLResources()
         pEGLView->setViewName("Cocos2d-x");
         CCApplication::sharedApplication()->run();
         pEGLView->SetXamlEventDelegate(m_delegate);
+        pEGLView->SetXamlMessageBoxDelegate(m_messageBoxDelegate);
+        pEGLView->SetXamlEditBoxDelegate(m_editBoxDelegate);
    }
     else
     {
@@ -93,9 +95,14 @@ IAsyncAction^ Cocos2dRenderer::OnSuspending()
 
 
 // user pressed the Back Key on the phone
-bool Cocos2dRenderer::OnBackKeyPress()
+void Cocos2dRenderer::OnBackKeyPress()
 {
-    return false;
+    // handle the backkey in your app here.
+    // call Cocos2dEvent::TerminateApp if it is time to exit your app.
+    // ie. the user is on your first page and wishes to exit your app.
+    // uncomment next line and comment TerminateApp to respond with keyBackClicked() in layers, remember to add init layer use setKeypadEnabled(true)
+    // CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG( ccKeypadMSGType::kTypeBackClicked );
+    m_delegate->Invoke(Cocos2dEvent::TerminateApp);
 }
 
 void Cocos2dRenderer::OnUpdateDevice()
@@ -144,6 +151,7 @@ void Cocos2dRenderer::OnKeyPressed(Platform::String^ text)
     CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
 }
 
+
 void Cocos2dRenderer::OnCocos2dKeyEvent(Cocos2dKeyEvent event)
 {
     switch(event)
@@ -173,6 +181,27 @@ void Cocos2dRenderer::SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2
         eglView->SetXamlEventDelegate(delegate);
     }
 }
+
+void Cocos2dRenderer::SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate)
+{
+    m_messageBoxDelegate = delegate;
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    if(eglView)
+    {
+        eglView->SetXamlMessageBoxDelegate(delegate);
+    }
+}
+
+void Cocos2dRenderer::SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ delegate)
+{
+    m_editBoxDelegate = delegate;
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    if(eglView)
+    {
+        eglView->SetXamlEditBoxDelegate(delegate);
+    }
+}
+
 
 
 

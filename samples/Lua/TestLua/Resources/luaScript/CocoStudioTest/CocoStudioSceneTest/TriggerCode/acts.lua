@@ -29,7 +29,7 @@ function TMoveBy:done()
         return
     end
 
-    if false == self._reverse then
+    if true == self._reverse then
         local actionByBack = actionBy:reverse()
         local arr = CCArray:create()
         arr:addObject(actionBy)
@@ -63,6 +63,8 @@ function TMoveBy:serialize(value)
 end
 
 function TMoveBy:removeAll()
+    local node = SceneReader:sharedSceneReader():getNodeByTag(self._tag)
+    node:getActionManager():removeAllActions()
     print("TMoveBy::removeAll")
 end
 
@@ -121,5 +123,52 @@ function TScaleTo:removeAll()
     print("TScaleTo::removeAll")
 end
 
+local TriggerState = class("TriggerState")
+TriggerState._id  = -1
+TriggerState._state = 0
+
+function TriggerState:ctor()
+    self._id    = -1
+    self._state = 0
+end
+
+function TriggerState:init()
+    return true
+end
+
+function TriggerState:done()
+    local obj = TriggerMng.getInstance():getTriggerObj(self._id)
+    if nil ~= obj then
+        if self._state == 0 then
+            obj:setEnable(false)
+        elseif self._state == 1 then
+            obj:setEnable(true)
+        elseif self._state == 2 then
+            TriggerMng.getInstance():removeTriggerObj(self._id)
+        end
+    end
+end
+
+function TriggerState:serialize(value)
+    local dataItems = value["dataitems"]
+    if nil ~= dataItems then
+        local count = table.getn(dataItems)
+        for i = 1, count do
+            local subDict =  dataItems[i]
+            local key = subDict["key"]
+            if key == "ID" then
+                self._id = subDict["value"]
+            elseif key == "State" then
+                self._state = subDict["value"]
+            end
+        end
+    end
+end
+
+function TriggerState:removeAll()
+    print("TriggerState::removeAll")
+end
+
 registerTriggerClass("TScaleTo",TScaleTo.new)
 registerTriggerClass("TMoveBy",TMoveBy.new)
+registerTriggerClass("TriggerState",TriggerState.new)

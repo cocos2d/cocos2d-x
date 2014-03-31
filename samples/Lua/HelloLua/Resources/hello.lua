@@ -185,10 +185,16 @@ local function main()
     end
 
     -- play background music, preload effect
+	local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
+	local bgMusicPath = nil
+	if (kTargetBlackBerry == targetPlatform) then
+		bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.ogg")
+	elseif (kTargetWinRT == targetPlatform) then
+		bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.wav")
+	else
+		bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
+	end
 
-    -- uncomment below for the BlackBerry version
-    -- local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.ogg")
-    local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
     SimpleAudioEngine:sharedEngine():playBackgroundMusic(bgMusicPath, true)
     local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
     SimpleAudioEngine:sharedEngine():preloadEffect(effectPath)

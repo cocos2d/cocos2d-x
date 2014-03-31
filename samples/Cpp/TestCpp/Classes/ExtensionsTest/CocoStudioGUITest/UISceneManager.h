@@ -115,6 +115,7 @@ enum
     /*=*/
     /*===*/
     kUIWidgetAddNodeTest,
+    kUIRichTextTest,
     /*=*/
     kUITestMax
 };

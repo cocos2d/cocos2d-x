@@ -226,6 +226,9 @@
 		15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23A168318C3006C7997 /* CocosDenshion.m */; };
 		15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */; };
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
+		1A1A289A18D1FE01009627D6 /* CustomParticleWidgetTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A289818D1FE01009627D6 /* CustomParticleWidgetTest.cpp */; };
+		1A1A289F18D1FE6B009627D6 /* CustomParticleWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A289B18D1FE6B009627D6 /* CustomParticleWidget.cpp */; };
+		1A1A28A018D1FE6B009627D6 /* CustomParticleWidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1A289D18D1FE6B009627D6 /* CustomParticleWidgetReader.cpp */; };
 		1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136015FD90240013D092 /* CustomTableViewCell.cpp */; };
 		1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A20136215FD90240013D092 /* TableViewTestScene.cpp */; };
 		1A40DFC91727AE7E006D4861 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A40DFA21727AE7E006D4861 /* Animation.cpp */; };
@@ -255,6 +258,62 @@
 		1A8F3B22175DC6D800049216 /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B1F175DC6D800049216 /* CCSkeletonAnimation.cpp */; };
 		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
 		1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */; };
+		2961DFCA18C9B4E80017F5DB /* ButtonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFA118C9B4E80017F5DB /* ButtonReader.cpp */; };
+		2961DFCB18C9B4E80017F5DB /* CheckBoxReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFA418C9B4E80017F5DB /* CheckBoxReader.cpp */; };
+		2961DFCC18C9B4E80017F5DB /* ImageViewReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFA718C9B4E80017F5DB /* ImageViewReader.cpp */; };
+		2961DFCD18C9B4E80017F5DB /* LabelAtlasReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFAA18C9B4E80017F5DB /* LabelAtlasReader.cpp */; };
+		2961DFCE18C9B4E80017F5DB /* LabelBMFontReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFAD18C9B4E80017F5DB /* LabelBMFontReader.cpp */; };
+		2961DFCF18C9B4E80017F5DB /* LabelReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFB018C9B4E80017F5DB /* LabelReader.cpp */; };
+		2961DFD018C9B4E80017F5DB /* LayoutReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFB318C9B4E80017F5DB /* LayoutReader.cpp */; };
+		2961DFD118C9B4E80017F5DB /* ListViewReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFB618C9B4E80017F5DB /* ListViewReader.cpp */; };
+		2961DFD218C9B4E80017F5DB /* LoadingBarReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFB918C9B4E80017F5DB /* LoadingBarReader.cpp */; };
+		2961DFD318C9B4E80017F5DB /* PageViewReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFBC18C9B4E80017F5DB /* PageViewReader.cpp */; };
+		2961DFD418C9B4E80017F5DB /* ScrollViewReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFBF18C9B4E80017F5DB /* ScrollViewReader.cpp */; };
+		2961DFD518C9B4E80017F5DB /* SliderReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFC218C9B4E80017F5DB /* SliderReader.cpp */; };
+		2961DFD618C9B4E80017F5DB /* TextFieldReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFC518C9B4E80017F5DB /* TextFieldReader.cpp */; };
+		2961DFD718C9B4E80017F5DB /* WidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFC718C9B4E80017F5DB /* WidgetReader.cpp */; };
+		2961DFDA18C9B50B0017F5DB /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFD818C9B50B0017F5DB /* UIRichText.cpp */; };
+		2961E04018C9B6B30017F5DB /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFDC18C9B6B30017F5DB /* CocosGUIScene.cpp */; };
+		2961E04118C9B6B30017F5DB /* CocoStudioGUITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFDE18C9B6B30017F5DB /* CocoStudioGUITest.cpp */; };
+		2961E04218C9B6B30017F5DB /* CustomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFE018C9B6B30017F5DB /* CustomGUIScene.cpp */; };
+		2961E04318C9B6B30017F5DB /* CustomImageTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFE418C9B6B30017F5DB /* CustomImageTest.cpp */; };
+		2961E04418C9B6B30017F5DB /* CustomImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFE718C9B6B30017F5DB /* CustomImageView.cpp */; };
+		2961E04518C9B6B30017F5DB /* CustomImageViewReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFE918C9B6B30017F5DB /* CustomImageViewReader.cpp */; };
+		2961E04618C9B6B30017F5DB /* CustomReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFEB18C9B6B30017F5DB /* CustomReader.cpp */; };
+		2961E04718C9B6B30017F5DB /* GUIEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFED18C9B6B30017F5DB /* GUIEditorTest.cpp */; };
+		2961E04818C9B6B30017F5DB /* UIButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFF018C9B6B30017F5DB /* UIButtonTest.cpp */; };
+		2961E04918C9B6B30017F5DB /* UIButtonTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFF218C9B6B30017F5DB /* UIButtonTest_Editor.cpp */; };
+		2961E04A18C9B6B30017F5DB /* UICheckBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFF518C9B6B30017F5DB /* UICheckBoxTest.cpp */; };
+		2961E04B18C9B6B30017F5DB /* UICheckBoxTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFF718C9B6B30017F5DB /* UICheckBoxTest_Editor.cpp */; };
+		2961E04C18C9B6B30017F5DB /* UIImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFFA18C9B6B30017F5DB /* UIImageViewTest.cpp */; };
+		2961E04D18C9B6B30017F5DB /* UIImageViewTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFFC18C9B6B30017F5DB /* UIImageViewTest_Editor.cpp */; };
+		2961E04E18C9B6B30017F5DB /* UILabelAtlasTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DFFF18C9B6B30017F5DB /* UILabelAtlasTest.cpp */; };
+		2961E04F18C9B6B30017F5DB /* UILabelAtlasTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E00118C9B6B30017F5DB /* UILabelAtlasTest_Editor.cpp */; };
+		2961E05018C9B6B30017F5DB /* UILabelBMFontTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E00418C9B6B30017F5DB /* UILabelBMFontTest.cpp */; };
+		2961E05118C9B6B30017F5DB /* UILabelBMFontTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E00618C9B6B30017F5DB /* UILabelBMFontTest_Editor.cpp */; };
+		2961E05218C9B6B30017F5DB /* UILabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E00918C9B6B30017F5DB /* UILabelTest.cpp */; };
+		2961E05318C9B6B30017F5DB /* UILabelTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E00B18C9B6B30017F5DB /* UILabelTest_Editor.cpp */; };
+		2961E05418C9B6B30017F5DB /* UILayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E00E18C9B6B30017F5DB /* UILayoutTest.cpp */; };
+		2961E05518C9B6B30017F5DB /* UILayoutTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E01018C9B6B30017F5DB /* UILayoutTest_Editor.cpp */; };
+		2961E05618C9B6B30017F5DB /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E01318C9B6B30017F5DB /* UIListViewTest.cpp */; };
+		2961E05718C9B6B30017F5DB /* UIListViewTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E01518C9B6B30017F5DB /* UIListViewTest_Editor.cpp */; };
+		2961E05818C9B6B30017F5DB /* UILoadingBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E01818C9B6B30017F5DB /* UILoadingBarTest.cpp */; };
+		2961E05918C9B6B30017F5DB /* UILoadingBarTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E01A18C9B6B30017F5DB /* UILoadingBarTest_Editor.cpp */; };
+		2961E05A18C9B6B30017F5DB /* UIPageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E01D18C9B6B30017F5DB /* UIPageViewTest.cpp */; };
+		2961E05B18C9B6B30017F5DB /* UIPageViewTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E01F18C9B6B30017F5DB /* UIPageViewTest_Editor.cpp */; };
+		2961E05C18C9B6B30017F5DB /* UIRichTextTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E02218C9B6B30017F5DB /* UIRichTextTest.cpp */; };
+		2961E05D18C9B6B30017F5DB /* UIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E02418C9B6B30017F5DB /* UIScene.cpp */; };
+		2961E05E18C9B6B30017F5DB /* UIScene_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E02618C9B6B30017F5DB /* UIScene_Editor.cpp */; };
+		2961E05F18C9B6B30017F5DB /* UISceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E02818C9B6B30017F5DB /* UISceneManager.cpp */; };
+		2961E06018C9B6B30017F5DB /* UISceneManager_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E02A18C9B6B30017F5DB /* UISceneManager_Editor.cpp */; };
+		2961E06118C9B6B30017F5DB /* UIScrollViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E02D18C9B6B30017F5DB /* UIScrollViewTest.cpp */; };
+		2961E06218C9B6B30017F5DB /* UIScrollViewTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E02F18C9B6B30017F5DB /* UIScrollViewTest_Editor.cpp */; };
+		2961E06318C9B6B30017F5DB /* UISliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E03218C9B6B30017F5DB /* UISliderTest.cpp */; };
+		2961E06418C9B6B30017F5DB /* UISliderTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E03418C9B6B30017F5DB /* UISliderTest_Editor.cpp */; };
+		2961E06518C9B6B30017F5DB /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E03718C9B6B30017F5DB /* UITextFieldTest.cpp */; };
+		2961E06618C9B6B30017F5DB /* UITextFieldTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E03918C9B6B30017F5DB /* UITextFieldTest_Editor.cpp */; };
+		2961E06718C9B6B30017F5DB /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E03C18C9B6B30017F5DB /* UIWidgetAddNodeTest.cpp */; };
+		2961E06818C9B6B30017F5DB /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961E03E18C9B6B30017F5DB /* UIWidgetAddNodeTest_Editor.cpp */; };
 		379369A9186869D300E974DD /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3793699D186869D300E974DD /* CCActionEaseEx.cpp */; };
 		379369AA186869D300E974DD /* CCActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3793699F186869D300E974DD /* CCActionFrame.cpp */; };
 		379369AB186869D300E974DD /* CCActionFrameEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379369A1186869D300E974DD /* CCActionFrameEasing.cpp */; };
@@ -356,23 +415,6 @@
 		41BC70E715BF81A5006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70E015BF81A5006A0A6C /* Icon.icns */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
 		467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */; };
-		5071F8E7186D8E6600570754 /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8A8186D8E6600570754 /* CocosGUIScene.cpp */; };
-		5071F8E8186D8E6600570754 /* UIButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8AB186D8E6600570754 /* UIButtonTest.cpp */; };
-		5071F8E9186D8E6600570754 /* UICheckBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8AE186D8E6600570754 /* UICheckBoxTest.cpp */; };
-		5071F8EB186D8E6600570754 /* UIImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8B4186D8E6600570754 /* UIImageViewTest.cpp */; };
-		5071F8EC186D8E6600570754 /* UILabelAtlasTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8B7186D8E6600570754 /* UILabelAtlasTest.cpp */; };
-		5071F8ED186D8E6600570754 /* UILabelBMFontTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8BA186D8E6600570754 /* UILabelBMFontTest.cpp */; };
-		5071F8EE186D8E6600570754 /* UILabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8BD186D8E6600570754 /* UILabelTest.cpp */; };
-		5071F8EF186D8E6600570754 /* UILayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8C0186D8E6600570754 /* UILayoutTest.cpp */; };
-		5071F8F0186D8E6600570754 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8C3186D8E6600570754 /* UIListViewTest.cpp */; };
-		5071F8F1186D8E6600570754 /* UILoadingBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8C6186D8E6600570754 /* UILoadingBarTest.cpp */; };
-		5071F8F2186D8E6600570754 /* UIPageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8C9186D8E6600570754 /* UIPageViewTest.cpp */; };
-		5071F8F6186D8E6600570754 /* UIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8D4186D8E6600570754 /* UIScene.cpp */; };
-		5071F8F7186D8E6600570754 /* UISceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8D6186D8E6600570754 /* UISceneManager.cpp */; };
-		5071F8F8186D8E6600570754 /* UIScrollViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8D9186D8E6600570754 /* UIScrollViewTest.cpp */; };
-		5071F8F9186D8E6600570754 /* UISliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8DC186D8E6600570754 /* UISliderTest.cpp */; };
-		5071F8FB186D8E6600570754 /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8E2186D8E6600570754 /* UITextFieldTest.cpp */; };
-		5071F8FC186D8E6600570754 /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8E5186D8E6600570754 /* UIWidgetAddNodeTest.cpp */; };
 		5071F8FF186D8E8F00570754 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5071F8FD186D8E8F00570754 /* UITouchGroup.cpp */; };
 		50E2650A18279CE70008EB60 /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2650618279CE70008EB60 /* UILayout.cpp */; };
 		50E2650B18279CE70008EB60 /* UILayoutParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2650818279CE70008EB60 /* UILayoutParameter.cpp */; };
@@ -898,6 +940,12 @@
 		15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		15D8B23C168318C3006C7997 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		1A1A289818D1FE01009627D6 /* CustomParticleWidgetTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidgetTest.cpp; sourceTree = "<group>"; };
+		1A1A289918D1FE01009627D6 /* CustomParticleWidgetTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidgetTest.h; sourceTree = "<group>"; };
+		1A1A289B18D1FE6B009627D6 /* CustomParticleWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidget.cpp; sourceTree = "<group>"; };
+		1A1A289C18D1FE6B009627D6 /* CustomParticleWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidget.h; sourceTree = "<group>"; };
+		1A1A289D18D1FE6B009627D6 /* CustomParticleWidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomParticleWidgetReader.cpp; sourceTree = "<group>"; };
+		1A1A289E18D1FE6B009627D6 /* CustomParticleWidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomParticleWidgetReader.h; sourceTree = "<group>"; };
 		1A20136015FD90240013D092 /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
 		1A20136115FD90240013D092 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1A20136215FD90240013D092 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
@@ -958,6 +1006,119 @@
 		1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
 		1ABA2872174DAF67007A6C10 /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2961DFA118C9B4E80017F5DB /* ButtonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonReader.cpp; sourceTree = "<group>"; };
+		2961DFA218C9B4E80017F5DB /* ButtonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonReader.h; sourceTree = "<group>"; };
+		2961DFA418C9B4E80017F5DB /* CheckBoxReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBoxReader.cpp; sourceTree = "<group>"; };
+		2961DFA518C9B4E80017F5DB /* CheckBoxReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBoxReader.h; sourceTree = "<group>"; };
+		2961DFA718C9B4E80017F5DB /* ImageViewReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewReader.cpp; sourceTree = "<group>"; };
+		2961DFA818C9B4E80017F5DB /* ImageViewReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewReader.h; sourceTree = "<group>"; };
+		2961DFAA18C9B4E80017F5DB /* LabelAtlasReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelAtlasReader.cpp; sourceTree = "<group>"; };
+		2961DFAB18C9B4E80017F5DB /* LabelAtlasReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelAtlasReader.h; sourceTree = "<group>"; };
+		2961DFAD18C9B4E80017F5DB /* LabelBMFontReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelBMFontReader.cpp; sourceTree = "<group>"; };
+		2961DFAE18C9B4E80017F5DB /* LabelBMFontReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelBMFontReader.h; sourceTree = "<group>"; };
+		2961DFB018C9B4E80017F5DB /* LabelReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelReader.cpp; sourceTree = "<group>"; };
+		2961DFB118C9B4E80017F5DB /* LabelReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelReader.h; sourceTree = "<group>"; };
+		2961DFB318C9B4E80017F5DB /* LayoutReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutReader.cpp; sourceTree = "<group>"; };
+		2961DFB418C9B4E80017F5DB /* LayoutReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutReader.h; sourceTree = "<group>"; };
+		2961DFB618C9B4E80017F5DB /* ListViewReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListViewReader.cpp; sourceTree = "<group>"; };
+		2961DFB718C9B4E80017F5DB /* ListViewReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewReader.h; sourceTree = "<group>"; };
+		2961DFB918C9B4E80017F5DB /* LoadingBarReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingBarReader.cpp; sourceTree = "<group>"; };
+		2961DFBA18C9B4E80017F5DB /* LoadingBarReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingBarReader.h; sourceTree = "<group>"; };
+		2961DFBC18C9B4E80017F5DB /* PageViewReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PageViewReader.cpp; sourceTree = "<group>"; };
+		2961DFBD18C9B4E80017F5DB /* PageViewReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewReader.h; sourceTree = "<group>"; };
+		2961DFBF18C9B4E80017F5DB /* ScrollViewReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollViewReader.cpp; sourceTree = "<group>"; };
+		2961DFC018C9B4E80017F5DB /* ScrollViewReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewReader.h; sourceTree = "<group>"; };
+		2961DFC218C9B4E80017F5DB /* SliderReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SliderReader.cpp; sourceTree = "<group>"; };
+		2961DFC318C9B4E80017F5DB /* SliderReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderReader.h; sourceTree = "<group>"; };
+		2961DFC518C9B4E80017F5DB /* TextFieldReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextFieldReader.cpp; sourceTree = "<group>"; };
+		2961DFC618C9B4E80017F5DB /* TextFieldReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldReader.h; sourceTree = "<group>"; };
+		2961DFC718C9B4E80017F5DB /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
+		2961DFC818C9B4E80017F5DB /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
+		2961DFC918C9B4E80017F5DB /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
+		2961DFD818C9B50B0017F5DB /* UIRichText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichText.cpp; sourceTree = "<group>"; };
+		2961DFD918C9B50B0017F5DB /* UIRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichText.h; sourceTree = "<group>"; };
+		2961DFDC18C9B6B30017F5DB /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
+		2961DFDD18C9B6B30017F5DB /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
+		2961DFDE18C9B6B30017F5DB /* CocoStudioGUITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoStudioGUITest.cpp; sourceTree = "<group>"; };
+		2961DFDF18C9B6B30017F5DB /* CocoStudioGUITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoStudioGUITest.h; sourceTree = "<group>"; };
+		2961DFE018C9B6B30017F5DB /* CustomGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomGUIScene.cpp; sourceTree = "<group>"; };
+		2961DFE118C9B6B30017F5DB /* CustomGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGUIScene.h; sourceTree = "<group>"; };
+		2961DFE418C9B6B30017F5DB /* CustomImageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomImageTest.cpp; sourceTree = "<group>"; };
+		2961DFE518C9B6B30017F5DB /* CustomImageTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomImageTest.h; sourceTree = "<group>"; };
+		2961DFE718C9B6B30017F5DB /* CustomImageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomImageView.cpp; sourceTree = "<group>"; };
+		2961DFE818C9B6B30017F5DB /* CustomImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomImageView.h; sourceTree = "<group>"; };
+		2961DFE918C9B6B30017F5DB /* CustomImageViewReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomImageViewReader.cpp; sourceTree = "<group>"; };
+		2961DFEA18C9B6B30017F5DB /* CustomImageViewReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomImageViewReader.h; sourceTree = "<group>"; };
+		2961DFEB18C9B6B30017F5DB /* CustomReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomReader.cpp; sourceTree = "<group>"; };
+		2961DFEC18C9B6B30017F5DB /* CustomReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomReader.h; sourceTree = "<group>"; };
+		2961DFED18C9B6B30017F5DB /* GUIEditorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIEditorTest.cpp; sourceTree = "<group>"; };
+		2961DFEE18C9B6B30017F5DB /* GUIEditorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIEditorTest.h; sourceTree = "<group>"; };
+		2961DFF018C9B6B30017F5DB /* UIButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButtonTest.cpp; sourceTree = "<group>"; };
+		2961DFF118C9B6B30017F5DB /* UIButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtonTest.h; sourceTree = "<group>"; };
+		2961DFF218C9B6B30017F5DB /* UIButtonTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButtonTest_Editor.cpp; sourceTree = "<group>"; };
+		2961DFF318C9B6B30017F5DB /* UIButtonTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtonTest_Editor.h; sourceTree = "<group>"; };
+		2961DFF518C9B6B30017F5DB /* UICheckBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBoxTest.cpp; sourceTree = "<group>"; };
+		2961DFF618C9B6B30017F5DB /* UICheckBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckBoxTest.h; sourceTree = "<group>"; };
+		2961DFF718C9B6B30017F5DB /* UICheckBoxTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBoxTest_Editor.cpp; sourceTree = "<group>"; };
+		2961DFF818C9B6B30017F5DB /* UICheckBoxTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckBoxTest_Editor.h; sourceTree = "<group>"; };
+		2961DFFA18C9B6B30017F5DB /* UIImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageViewTest.cpp; sourceTree = "<group>"; };
+		2961DFFB18C9B6B30017F5DB /* UIImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewTest.h; sourceTree = "<group>"; };
+		2961DFFC18C9B6B30017F5DB /* UIImageViewTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageViewTest_Editor.cpp; sourceTree = "<group>"; };
+		2961DFFD18C9B6B30017F5DB /* UIImageViewTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewTest_Editor.h; sourceTree = "<group>"; };
+		2961DFFF18C9B6B30017F5DB /* UILabelAtlasTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlasTest.cpp; sourceTree = "<group>"; };
+		2961E00018C9B6B30017F5DB /* UILabelAtlasTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelAtlasTest.h; sourceTree = "<group>"; };
+		2961E00118C9B6B30017F5DB /* UILabelAtlasTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlasTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E00218C9B6B30017F5DB /* UILabelAtlasTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelAtlasTest_Editor.h; sourceTree = "<group>"; };
+		2961E00418C9B6B30017F5DB /* UILabelBMFontTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelBMFontTest.cpp; sourceTree = "<group>"; };
+		2961E00518C9B6B30017F5DB /* UILabelBMFontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFontTest.h; sourceTree = "<group>"; };
+		2961E00618C9B6B30017F5DB /* UILabelBMFontTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelBMFontTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E00718C9B6B30017F5DB /* UILabelBMFontTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFontTest_Editor.h; sourceTree = "<group>"; };
+		2961E00918C9B6B30017F5DB /* UILabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelTest.cpp; sourceTree = "<group>"; };
+		2961E00A18C9B6B30017F5DB /* UILabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelTest.h; sourceTree = "<group>"; };
+		2961E00B18C9B6B30017F5DB /* UILabelTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E00C18C9B6B30017F5DB /* UILabelTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelTest_Editor.h; sourceTree = "<group>"; };
+		2961E00E18C9B6B30017F5DB /* UILayoutTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutTest.cpp; sourceTree = "<group>"; };
+		2961E00F18C9B6B30017F5DB /* UILayoutTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutTest.h; sourceTree = "<group>"; };
+		2961E01018C9B6B30017F5DB /* UILayoutTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E01118C9B6B30017F5DB /* UILayoutTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutTest_Editor.h; sourceTree = "<group>"; };
+		2961E01318C9B6B30017F5DB /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
+		2961E01418C9B6B30017F5DB /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
+		2961E01518C9B6B30017F5DB /* UIListViewTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E01618C9B6B30017F5DB /* UIListViewTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest_Editor.h; sourceTree = "<group>"; };
+		2961E01818C9B6B30017F5DB /* UILoadingBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBarTest.cpp; sourceTree = "<group>"; };
+		2961E01918C9B6B30017F5DB /* UILoadingBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBarTest.h; sourceTree = "<group>"; };
+		2961E01A18C9B6B30017F5DB /* UILoadingBarTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBarTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E01B18C9B6B30017F5DB /* UILoadingBarTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBarTest_Editor.h; sourceTree = "<group>"; };
+		2961E01D18C9B6B30017F5DB /* UIPageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageViewTest.cpp; sourceTree = "<group>"; };
+		2961E01E18C9B6B30017F5DB /* UIPageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageViewTest.h; sourceTree = "<group>"; };
+		2961E01F18C9B6B30017F5DB /* UIPageViewTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageViewTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E02018C9B6B30017F5DB /* UIPageViewTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageViewTest_Editor.h; sourceTree = "<group>"; };
+		2961E02218C9B6B30017F5DB /* UIRichTextTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichTextTest.cpp; sourceTree = "<group>"; };
+		2961E02318C9B6B30017F5DB /* UIRichTextTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichTextTest.h; sourceTree = "<group>"; };
+		2961E02418C9B6B30017F5DB /* UIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScene.cpp; sourceTree = "<group>"; };
+		2961E02518C9B6B30017F5DB /* UIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScene.h; sourceTree = "<group>"; };
+		2961E02618C9B6B30017F5DB /* UIScene_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScene_Editor.cpp; sourceTree = "<group>"; };
+		2961E02718C9B6B30017F5DB /* UIScene_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScene_Editor.h; sourceTree = "<group>"; };
+		2961E02818C9B6B30017F5DB /* UISceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISceneManager.cpp; sourceTree = "<group>"; };
+		2961E02918C9B6B30017F5DB /* UISceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISceneManager.h; sourceTree = "<group>"; };
+		2961E02A18C9B6B30017F5DB /* UISceneManager_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISceneManager_Editor.cpp; sourceTree = "<group>"; };
+		2961E02B18C9B6B30017F5DB /* UISceneManager_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISceneManager_Editor.h; sourceTree = "<group>"; };
+		2961E02D18C9B6B30017F5DB /* UIScrollViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollViewTest.cpp; sourceTree = "<group>"; };
+		2961E02E18C9B6B30017F5DB /* UIScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollViewTest.h; sourceTree = "<group>"; };
+		2961E02F18C9B6B30017F5DB /* UIScrollViewTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollViewTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E03018C9B6B30017F5DB /* UIScrollViewTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollViewTest_Editor.h; sourceTree = "<group>"; };
+		2961E03218C9B6B30017F5DB /* UISliderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISliderTest.cpp; sourceTree = "<group>"; };
+		2961E03318C9B6B30017F5DB /* UISliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderTest.h; sourceTree = "<group>"; };
+		2961E03418C9B6B30017F5DB /* UISliderTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISliderTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E03518C9B6B30017F5DB /* UISliderTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderTest_Editor.h; sourceTree = "<group>"; };
+		2961E03718C9B6B30017F5DB /* UITextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextFieldTest.cpp; sourceTree = "<group>"; };
+		2961E03818C9B6B30017F5DB /* UITextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTest.h; sourceTree = "<group>"; };
+		2961E03918C9B6B30017F5DB /* UITextFieldTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextFieldTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E03A18C9B6B30017F5DB /* UITextFieldTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTest_Editor.h; sourceTree = "<group>"; };
+		2961E03C18C9B6B30017F5DB /* UIWidgetAddNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest.cpp; sourceTree = "<group>"; };
+		2961E03D18C9B6B30017F5DB /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
+		2961E03E18C9B6B30017F5DB /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
+		2961E03F18C9B6B30017F5DB /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
 		373B911118788EBD00198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		375BD41918683E6E0024609E /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		375BD41A18683E6E0024609E /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
@@ -1028,6 +1189,7 @@
 		37BB5B2A17E86CEC002746B4 /* UISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISlider.h; sourceTree = "<group>"; };
 		37BB5B2D17E86CEC002746B4 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		37BB5B2E17E86CEC002746B4 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
+		37C62BEC18E14DFB00D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		37C818FC1875C19600930C57 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
 		37C818FD1875C19600930C57 /* app.icf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = app.icf; sourceTree = "<group>"; };
 		37C818FE1875C19600930C57 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; path = armature; sourceTree = "<group>"; };
@@ -1139,40 +1301,6 @@
 		41BC70E315BF81A5006A0A6C /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		4673730F1739F4270034BF94 /* TextureAtlasEncryptionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlasEncryptionTest.cpp; sourceTree = "<group>"; };
 		467373101739F4270034BF94 /* TextureAtlasEncryptionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasEncryptionTest.h; sourceTree = "<group>"; };
-		5071F8A8186D8E6600570754 /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
-		5071F8A9186D8E6600570754 /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
-		5071F8AB186D8E6600570754 /* UIButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButtonTest.cpp; sourceTree = "<group>"; };
-		5071F8AC186D8E6600570754 /* UIButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtonTest.h; sourceTree = "<group>"; };
-		5071F8AE186D8E6600570754 /* UICheckBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBoxTest.cpp; sourceTree = "<group>"; };
-		5071F8AF186D8E6600570754 /* UICheckBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckBoxTest.h; sourceTree = "<group>"; };
-		5071F8B4186D8E6600570754 /* UIImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageViewTest.cpp; sourceTree = "<group>"; };
-		5071F8B5186D8E6600570754 /* UIImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewTest.h; sourceTree = "<group>"; };
-		5071F8B7186D8E6600570754 /* UILabelAtlasTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlasTest.cpp; sourceTree = "<group>"; };
-		5071F8B8186D8E6600570754 /* UILabelAtlasTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelAtlasTest.h; sourceTree = "<group>"; };
-		5071F8BA186D8E6600570754 /* UILabelBMFontTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelBMFontTest.cpp; sourceTree = "<group>"; };
-		5071F8BB186D8E6600570754 /* UILabelBMFontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFontTest.h; sourceTree = "<group>"; };
-		5071F8BD186D8E6600570754 /* UILabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelTest.cpp; sourceTree = "<group>"; };
-		5071F8BE186D8E6600570754 /* UILabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelTest.h; sourceTree = "<group>"; };
-		5071F8C0186D8E6600570754 /* UILayoutTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutTest.cpp; sourceTree = "<group>"; };
-		5071F8C1186D8E6600570754 /* UILayoutTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutTest.h; sourceTree = "<group>"; };
-		5071F8C3186D8E6600570754 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
-		5071F8C4186D8E6600570754 /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
-		5071F8C6186D8E6600570754 /* UILoadingBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBarTest.cpp; sourceTree = "<group>"; };
-		5071F8C7186D8E6600570754 /* UILoadingBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBarTest.h; sourceTree = "<group>"; };
-		5071F8C9186D8E6600570754 /* UIPageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageViewTest.cpp; sourceTree = "<group>"; };
-		5071F8CA186D8E6600570754 /* UIPageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageViewTest.h; sourceTree = "<group>"; };
-		5071F8D4186D8E6600570754 /* UIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScene.cpp; sourceTree = "<group>"; };
-		5071F8D5186D8E6600570754 /* UIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScene.h; sourceTree = "<group>"; };
-		5071F8D6186D8E6600570754 /* UISceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISceneManager.cpp; sourceTree = "<group>"; };
-		5071F8D7186D8E6600570754 /* UISceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISceneManager.h; sourceTree = "<group>"; };
-		5071F8D9186D8E6600570754 /* UIScrollViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollViewTest.cpp; sourceTree = "<group>"; };
-		5071F8DA186D8E6600570754 /* UIScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollViewTest.h; sourceTree = "<group>"; };
-		5071F8DC186D8E6600570754 /* UISliderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISliderTest.cpp; sourceTree = "<group>"; };
-		5071F8DD186D8E6600570754 /* UISliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderTest.h; sourceTree = "<group>"; };
-		5071F8E2186D8E6600570754 /* UITextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextFieldTest.cpp; sourceTree = "<group>"; };
-		5071F8E3186D8E6600570754 /* UITextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTest.h; sourceTree = "<group>"; };
-		5071F8E5186D8E6600570754 /* UIWidgetAddNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest.cpp; sourceTree = "<group>"; };
-		5071F8E6186D8E6600570754 /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		5071F8FD186D8E8F00570754 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		5071F8FE186D8E8F00570754 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		50E2650618279CE70008EB60 /* UILayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayout.cpp; sourceTree = "<group>"; };
@@ -1521,7 +1649,7 @@
 		15AA9CBB15B7EC460033D6C2 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
-				5071F8A7186D8E6600570754 /* CocoStudioGUITest */,
+				2961DFDB18C9B6B30017F5DB /* CocoStudioGUITest */,
 				37CA269417D87BB500A649D0 /* CocoStudioArmatureTest */,
 				37CA269717D87BB500A649D0 /* CocoStudioComponentsTest */,
 				37CA26EA17D87BB500A649D0 /* CocoStudioSceneTest */,
@@ -2183,6 +2311,7 @@
 				37CA1D2417D87B5700A649D0 /* CocoStudio */,
 				15C158D3168315E500D239F2 /* cocos-ext.h */,
 				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
+				37C62BEC18E14DFB00D16FC4 /* ExtensionExport.h */,
 				15C1589E168315E500D239F2 /* CCBReader */,
 				15C158D5168315E500D239F2 /* GUI */,
 				15C15903168315E500D239F2 /* network */,
@@ -2460,6 +2589,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1A1A289718D1FE01009627D6 /* CustomParticleWidgetTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A1A289818D1FE01009627D6 /* CustomParticleWidgetTest.cpp */,
+				1A1A289918D1FE01009627D6 /* CustomParticleWidgetTest.h */,
+			);
+			path = CustomParticleWidgetTest;
+			sourceTree = "<group>";
+		};
 		1A20135F15FD90240013D092 /* TableViewTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2571,6 +2709,385 @@
 			);
 			name = ConfigurationTest;
 			path = ../Classes/ConfigurationTest;
+			sourceTree = "<group>";
+		};
+		2961DF9F18C9B4E80017F5DB /* WidgetReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFA018C9B4E80017F5DB /* ButtonReader */,
+				2961DFA318C9B4E80017F5DB /* CheckBoxReader */,
+				2961DFA618C9B4E80017F5DB /* ImageViewReader */,
+				2961DFA918C9B4E80017F5DB /* LabelAtlasReader */,
+				2961DFAC18C9B4E80017F5DB /* LabelBMFontReader */,
+				2961DFAF18C9B4E80017F5DB /* LabelReader */,
+				2961DFB218C9B4E80017F5DB /* LayoutReader */,
+				2961DFB518C9B4E80017F5DB /* ListViewReader */,
+				2961DFB818C9B4E80017F5DB /* LoadingBarReader */,
+				2961DFBB18C9B4E80017F5DB /* PageViewReader */,
+				2961DFBE18C9B4E80017F5DB /* ScrollViewReader */,
+				2961DFC118C9B4E80017F5DB /* SliderReader */,
+				2961DFC418C9B4E80017F5DB /* TextFieldReader */,
+				2961DFC718C9B4E80017F5DB /* WidgetReader.cpp */,
+				2961DFC818C9B4E80017F5DB /* WidgetReader.h */,
+				2961DFC918C9B4E80017F5DB /* WidgetReaderProtocol.h */,
+			);
+			path = WidgetReader;
+			sourceTree = "<group>";
+		};
+		2961DFA018C9B4E80017F5DB /* ButtonReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFA118C9B4E80017F5DB /* ButtonReader.cpp */,
+				2961DFA218C9B4E80017F5DB /* ButtonReader.h */,
+			);
+			path = ButtonReader;
+			sourceTree = "<group>";
+		};
+		2961DFA318C9B4E80017F5DB /* CheckBoxReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFA418C9B4E80017F5DB /* CheckBoxReader.cpp */,
+				2961DFA518C9B4E80017F5DB /* CheckBoxReader.h */,
+			);
+			path = CheckBoxReader;
+			sourceTree = "<group>";
+		};
+		2961DFA618C9B4E80017F5DB /* ImageViewReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFA718C9B4E80017F5DB /* ImageViewReader.cpp */,
+				2961DFA818C9B4E80017F5DB /* ImageViewReader.h */,
+			);
+			path = ImageViewReader;
+			sourceTree = "<group>";
+		};
+		2961DFA918C9B4E80017F5DB /* LabelAtlasReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFAA18C9B4E80017F5DB /* LabelAtlasReader.cpp */,
+				2961DFAB18C9B4E80017F5DB /* LabelAtlasReader.h */,
+			);
+			path = LabelAtlasReader;
+			sourceTree = "<group>";
+		};
+		2961DFAC18C9B4E80017F5DB /* LabelBMFontReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFAD18C9B4E80017F5DB /* LabelBMFontReader.cpp */,
+				2961DFAE18C9B4E80017F5DB /* LabelBMFontReader.h */,
+			);
+			path = LabelBMFontReader;
+			sourceTree = "<group>";
+		};
+		2961DFAF18C9B4E80017F5DB /* LabelReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFB018C9B4E80017F5DB /* LabelReader.cpp */,
+				2961DFB118C9B4E80017F5DB /* LabelReader.h */,
+			);
+			path = LabelReader;
+			sourceTree = "<group>";
+		};
+		2961DFB218C9B4E80017F5DB /* LayoutReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFB318C9B4E80017F5DB /* LayoutReader.cpp */,
+				2961DFB418C9B4E80017F5DB /* LayoutReader.h */,
+			);
+			path = LayoutReader;
+			sourceTree = "<group>";
+		};
+		2961DFB518C9B4E80017F5DB /* ListViewReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFB618C9B4E80017F5DB /* ListViewReader.cpp */,
+				2961DFB718C9B4E80017F5DB /* ListViewReader.h */,
+			);
+			path = ListViewReader;
+			sourceTree = "<group>";
+		};
+		2961DFB818C9B4E80017F5DB /* LoadingBarReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFB918C9B4E80017F5DB /* LoadingBarReader.cpp */,
+				2961DFBA18C9B4E80017F5DB /* LoadingBarReader.h */,
+			);
+			path = LoadingBarReader;
+			sourceTree = "<group>";
+		};
+		2961DFBB18C9B4E80017F5DB /* PageViewReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFBC18C9B4E80017F5DB /* PageViewReader.cpp */,
+				2961DFBD18C9B4E80017F5DB /* PageViewReader.h */,
+			);
+			path = PageViewReader;
+			sourceTree = "<group>";
+		};
+		2961DFBE18C9B4E80017F5DB /* ScrollViewReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFBF18C9B4E80017F5DB /* ScrollViewReader.cpp */,
+				2961DFC018C9B4E80017F5DB /* ScrollViewReader.h */,
+			);
+			path = ScrollViewReader;
+			sourceTree = "<group>";
+		};
+		2961DFC118C9B4E80017F5DB /* SliderReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFC218C9B4E80017F5DB /* SliderReader.cpp */,
+				2961DFC318C9B4E80017F5DB /* SliderReader.h */,
+			);
+			path = SliderReader;
+			sourceTree = "<group>";
+		};
+		2961DFC418C9B4E80017F5DB /* TextFieldReader */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFC518C9B4E80017F5DB /* TextFieldReader.cpp */,
+				2961DFC618C9B4E80017F5DB /* TextFieldReader.h */,
+			);
+			path = TextFieldReader;
+			sourceTree = "<group>";
+		};
+		2961DFDB18C9B6B30017F5DB /* CocoStudioGUITest */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFDC18C9B6B30017F5DB /* CocosGUIScene.cpp */,
+				2961DFDD18C9B6B30017F5DB /* CocosGUIScene.h */,
+				2961DFDE18C9B6B30017F5DB /* CocoStudioGUITest.cpp */,
+				2961DFDF18C9B6B30017F5DB /* CocoStudioGUITest.h */,
+				2961DFE018C9B6B30017F5DB /* CustomGUIScene.cpp */,
+				2961DFE118C9B6B30017F5DB /* CustomGUIScene.h */,
+				2961DFE218C9B6B30017F5DB /* CustomTest */,
+				2961DFE618C9B6B30017F5DB /* CustomWidget */,
+				2961DFED18C9B6B30017F5DB /* GUIEditorTest.cpp */,
+				2961DFEE18C9B6B30017F5DB /* GUIEditorTest.h */,
+				2961DFEF18C9B6B30017F5DB /* UIButtonTest */,
+				2961DFF418C9B6B30017F5DB /* UICheckBoxTest */,
+				2961DFF918C9B6B30017F5DB /* UIImageViewTest */,
+				2961DFFE18C9B6B30017F5DB /* UILabelAtlasTest */,
+				2961E00318C9B6B30017F5DB /* UILabelBMFontTest */,
+				2961E00818C9B6B30017F5DB /* UILabelTest */,
+				2961E00D18C9B6B30017F5DB /* UILayoutTest */,
+				2961E01218C9B6B30017F5DB /* UIListViewTest */,
+				2961E01718C9B6B30017F5DB /* UILoadingBarTest */,
+				2961E01C18C9B6B30017F5DB /* UIPageViewTest */,
+				2961E02118C9B6B30017F5DB /* UIRichTextTest */,
+				2961E02418C9B6B30017F5DB /* UIScene.cpp */,
+				2961E02518C9B6B30017F5DB /* UIScene.h */,
+				2961E02618C9B6B30017F5DB /* UIScene_Editor.cpp */,
+				2961E02718C9B6B30017F5DB /* UIScene_Editor.h */,
+				2961E02818C9B6B30017F5DB /* UISceneManager.cpp */,
+				2961E02918C9B6B30017F5DB /* UISceneManager.h */,
+				2961E02A18C9B6B30017F5DB /* UISceneManager_Editor.cpp */,
+				2961E02B18C9B6B30017F5DB /* UISceneManager_Editor.h */,
+				2961E02C18C9B6B30017F5DB /* UIScrollViewTest */,
+				2961E03118C9B6B30017F5DB /* UISliderTest */,
+				2961E03618C9B6B30017F5DB /* UITextFieldTest */,
+				2961E03B18C9B6B30017F5DB /* UIWidgetAddNodeTest */,
+			);
+			name = CocoStudioGUITest;
+			path = ../../Classes/ExtensionsTest/CocoStudioGUITest;
+			sourceTree = "<group>";
+		};
+		2961DFE218C9B6B30017F5DB /* CustomTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFE318C9B6B30017F5DB /* CustomImageTest */,
+				1A1A289718D1FE01009627D6 /* CustomParticleWidgetTest */,
+			);
+			path = CustomTest;
+			sourceTree = "<group>";
+		};
+		2961DFE318C9B6B30017F5DB /* CustomImageTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFE418C9B6B30017F5DB /* CustomImageTest.cpp */,
+				2961DFE518C9B6B30017F5DB /* CustomImageTest.h */,
+			);
+			path = CustomImageTest;
+			sourceTree = "<group>";
+		};
+		2961DFE618C9B6B30017F5DB /* CustomWidget */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFE718C9B6B30017F5DB /* CustomImageView.cpp */,
+				2961DFE818C9B6B30017F5DB /* CustomImageView.h */,
+				2961DFE918C9B6B30017F5DB /* CustomImageViewReader.cpp */,
+				2961DFEA18C9B6B30017F5DB /* CustomImageViewReader.h */,
+				1A1A289B18D1FE6B009627D6 /* CustomParticleWidget.cpp */,
+				1A1A289C18D1FE6B009627D6 /* CustomParticleWidget.h */,
+				1A1A289D18D1FE6B009627D6 /* CustomParticleWidgetReader.cpp */,
+				1A1A289E18D1FE6B009627D6 /* CustomParticleWidgetReader.h */,
+				2961DFEB18C9B6B30017F5DB /* CustomReader.cpp */,
+				2961DFEC18C9B6B30017F5DB /* CustomReader.h */,
+			);
+			path = CustomWidget;
+			sourceTree = "<group>";
+		};
+		2961DFEF18C9B6B30017F5DB /* UIButtonTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFF018C9B6B30017F5DB /* UIButtonTest.cpp */,
+				2961DFF118C9B6B30017F5DB /* UIButtonTest.h */,
+				2961DFF218C9B6B30017F5DB /* UIButtonTest_Editor.cpp */,
+				2961DFF318C9B6B30017F5DB /* UIButtonTest_Editor.h */,
+			);
+			path = UIButtonTest;
+			sourceTree = "<group>";
+		};
+		2961DFF418C9B6B30017F5DB /* UICheckBoxTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFF518C9B6B30017F5DB /* UICheckBoxTest.cpp */,
+				2961DFF618C9B6B30017F5DB /* UICheckBoxTest.h */,
+				2961DFF718C9B6B30017F5DB /* UICheckBoxTest_Editor.cpp */,
+				2961DFF818C9B6B30017F5DB /* UICheckBoxTest_Editor.h */,
+			);
+			path = UICheckBoxTest;
+			sourceTree = "<group>";
+		};
+		2961DFF918C9B6B30017F5DB /* UIImageViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFFA18C9B6B30017F5DB /* UIImageViewTest.cpp */,
+				2961DFFB18C9B6B30017F5DB /* UIImageViewTest.h */,
+				2961DFFC18C9B6B30017F5DB /* UIImageViewTest_Editor.cpp */,
+				2961DFFD18C9B6B30017F5DB /* UIImageViewTest_Editor.h */,
+			);
+			path = UIImageViewTest;
+			sourceTree = "<group>";
+		};
+		2961DFFE18C9B6B30017F5DB /* UILabelAtlasTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961DFFF18C9B6B30017F5DB /* UILabelAtlasTest.cpp */,
+				2961E00018C9B6B30017F5DB /* UILabelAtlasTest.h */,
+				2961E00118C9B6B30017F5DB /* UILabelAtlasTest_Editor.cpp */,
+				2961E00218C9B6B30017F5DB /* UILabelAtlasTest_Editor.h */,
+			);
+			path = UILabelAtlasTest;
+			sourceTree = "<group>";
+		};
+		2961E00318C9B6B30017F5DB /* UILabelBMFontTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E00418C9B6B30017F5DB /* UILabelBMFontTest.cpp */,
+				2961E00518C9B6B30017F5DB /* UILabelBMFontTest.h */,
+				2961E00618C9B6B30017F5DB /* UILabelBMFontTest_Editor.cpp */,
+				2961E00718C9B6B30017F5DB /* UILabelBMFontTest_Editor.h */,
+			);
+			path = UILabelBMFontTest;
+			sourceTree = "<group>";
+		};
+		2961E00818C9B6B30017F5DB /* UILabelTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E00918C9B6B30017F5DB /* UILabelTest.cpp */,
+				2961E00A18C9B6B30017F5DB /* UILabelTest.h */,
+				2961E00B18C9B6B30017F5DB /* UILabelTest_Editor.cpp */,
+				2961E00C18C9B6B30017F5DB /* UILabelTest_Editor.h */,
+			);
+			path = UILabelTest;
+			sourceTree = "<group>";
+		};
+		2961E00D18C9B6B30017F5DB /* UILayoutTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E00E18C9B6B30017F5DB /* UILayoutTest.cpp */,
+				2961E00F18C9B6B30017F5DB /* UILayoutTest.h */,
+				2961E01018C9B6B30017F5DB /* UILayoutTest_Editor.cpp */,
+				2961E01118C9B6B30017F5DB /* UILayoutTest_Editor.h */,
+			);
+			path = UILayoutTest;
+			sourceTree = "<group>";
+		};
+		2961E01218C9B6B30017F5DB /* UIListViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E01318C9B6B30017F5DB /* UIListViewTest.cpp */,
+				2961E01418C9B6B30017F5DB /* UIListViewTest.h */,
+				2961E01518C9B6B30017F5DB /* UIListViewTest_Editor.cpp */,
+				2961E01618C9B6B30017F5DB /* UIListViewTest_Editor.h */,
+			);
+			path = UIListViewTest;
+			sourceTree = "<group>";
+		};
+		2961E01718C9B6B30017F5DB /* UILoadingBarTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E01818C9B6B30017F5DB /* UILoadingBarTest.cpp */,
+				2961E01918C9B6B30017F5DB /* UILoadingBarTest.h */,
+				2961E01A18C9B6B30017F5DB /* UILoadingBarTest_Editor.cpp */,
+				2961E01B18C9B6B30017F5DB /* UILoadingBarTest_Editor.h */,
+			);
+			path = UILoadingBarTest;
+			sourceTree = "<group>";
+		};
+		2961E01C18C9B6B30017F5DB /* UIPageViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E01D18C9B6B30017F5DB /* UIPageViewTest.cpp */,
+				2961E01E18C9B6B30017F5DB /* UIPageViewTest.h */,
+				2961E01F18C9B6B30017F5DB /* UIPageViewTest_Editor.cpp */,
+				2961E02018C9B6B30017F5DB /* UIPageViewTest_Editor.h */,
+			);
+			path = UIPageViewTest;
+			sourceTree = "<group>";
+		};
+		2961E02118C9B6B30017F5DB /* UIRichTextTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E02218C9B6B30017F5DB /* UIRichTextTest.cpp */,
+				2961E02318C9B6B30017F5DB /* UIRichTextTest.h */,
+			);
+			path = UIRichTextTest;
+			sourceTree = "<group>";
+		};
+		2961E02C18C9B6B30017F5DB /* UIScrollViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E02D18C9B6B30017F5DB /* UIScrollViewTest.cpp */,
+				2961E02E18C9B6B30017F5DB /* UIScrollViewTest.h */,
+				2961E02F18C9B6B30017F5DB /* UIScrollViewTest_Editor.cpp */,
+				2961E03018C9B6B30017F5DB /* UIScrollViewTest_Editor.h */,
+			);
+			path = UIScrollViewTest;
+			sourceTree = "<group>";
+		};
+		2961E03118C9B6B30017F5DB /* UISliderTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E03218C9B6B30017F5DB /* UISliderTest.cpp */,
+				2961E03318C9B6B30017F5DB /* UISliderTest.h */,
+				2961E03418C9B6B30017F5DB /* UISliderTest_Editor.cpp */,
+				2961E03518C9B6B30017F5DB /* UISliderTest_Editor.h */,
+			);
+			path = UISliderTest;
+			sourceTree = "<group>";
+		};
+		2961E03618C9B6B30017F5DB /* UITextFieldTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E03718C9B6B30017F5DB /* UITextFieldTest.cpp */,
+				2961E03818C9B6B30017F5DB /* UITextFieldTest.h */,
+				2961E03918C9B6B30017F5DB /* UITextFieldTest_Editor.cpp */,
+				2961E03A18C9B6B30017F5DB /* UITextFieldTest_Editor.h */,
+			);
+			path = UITextFieldTest;
+			sourceTree = "<group>";
+		};
+		2961E03B18C9B6B30017F5DB /* UIWidgetAddNodeTest */ = {
+			isa = PBXGroup;
+			children = (
+				2961E03C18C9B6B30017F5DB /* UIWidgetAddNodeTest.cpp */,
+				2961E03D18C9B6B30017F5DB /* UIWidgetAddNodeTest.h */,
+				2961E03E18C9B6B30017F5DB /* UIWidgetAddNodeTest_Editor.cpp */,
+				2961E03F18C9B6B30017F5DB /* UIWidgetAddNodeTest_Editor.h */,
+			);
+			path = UIWidgetAddNodeTest;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -2728,6 +3245,8 @@
 		37BB5B0E17E86CEC002746B4 /* UIWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				2961DFD818C9B50B0017F5DB /* UIRichText.cpp */,
+				2961DFD918C9B50B0017F5DB /* UIRichText.h */,
 				37BB5B0F17E86CEC002746B4 /* Compatible */,
 				37BB5B1117E86CEC002746B4 /* ScrollWidget */,
 				37BB5B1B17E86CEC002746B4 /* UIButton.cpp */,
@@ -2913,6 +3432,7 @@
 		37CA1DBC17D87B5700A649D0 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				2961DF9F18C9B4E80017F5DB /* WidgetReader */,
 				50E9E94A182A358200F6FDF1 /* SceneReader.cpp */,
 				50E9E94B182A358200F6FDF1 /* SceneReader.h */,
 				50E2650C18279CF30008EB60 /* GUIReader.cpp */,
@@ -2994,160 +3514,6 @@
 			);
 			name = TexturePackerEncryptionTest;
 			path = ../Classes/TexturePackerEncryptionTest;
-			sourceTree = "<group>";
-		};
-		5071F8A7186D8E6600570754 /* CocoStudioGUITest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8A8186D8E6600570754 /* CocosGUIScene.cpp */,
-				5071F8A9186D8E6600570754 /* CocosGUIScene.h */,
-				5071F8AA186D8E6600570754 /* UIButtonTest */,
-				5071F8AD186D8E6600570754 /* UICheckBoxTest */,
-				5071F8B3186D8E6600570754 /* UIImageViewTest */,
-				5071F8B6186D8E6600570754 /* UILabelAtlasTest */,
-				5071F8B9186D8E6600570754 /* UILabelBMFontTest */,
-				5071F8BC186D8E6600570754 /* UILabelTest */,
-				5071F8BF186D8E6600570754 /* UILayoutTest */,
-				5071F8C2186D8E6600570754 /* UIListViewTest */,
-				5071F8C5186D8E6600570754 /* UILoadingBarTest */,
-				5071F8C8186D8E6600570754 /* UIPageViewTest */,
-				5071F8D4186D8E6600570754 /* UIScene.cpp */,
-				5071F8D5186D8E6600570754 /* UIScene.h */,
-				5071F8D6186D8E6600570754 /* UISceneManager.cpp */,
-				5071F8D7186D8E6600570754 /* UISceneManager.h */,
-				5071F8D8186D8E6600570754 /* UIScrollViewTest */,
-				5071F8DB186D8E6600570754 /* UISliderTest */,
-				5071F8E1186D8E6600570754 /* UITextFieldTest */,
-				5071F8E4186D8E6600570754 /* UIWidgetAddNodeTest */,
-			);
-			name = CocoStudioGUITest;
-			path = ../../Classes/ExtensionsTest/CocoStudioGUITest;
-			sourceTree = "<group>";
-		};
-		5071F8AA186D8E6600570754 /* UIButtonTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8AB186D8E6600570754 /* UIButtonTest.cpp */,
-				5071F8AC186D8E6600570754 /* UIButtonTest.h */,
-			);
-			path = UIButtonTest;
-			sourceTree = "<group>";
-		};
-		5071F8AD186D8E6600570754 /* UICheckBoxTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8AE186D8E6600570754 /* UICheckBoxTest.cpp */,
-				5071F8AF186D8E6600570754 /* UICheckBoxTest.h */,
-			);
-			path = UICheckBoxTest;
-			sourceTree = "<group>";
-		};
-		5071F8B3186D8E6600570754 /* UIImageViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8B4186D8E6600570754 /* UIImageViewTest.cpp */,
-				5071F8B5186D8E6600570754 /* UIImageViewTest.h */,
-			);
-			path = UIImageViewTest;
-			sourceTree = "<group>";
-		};
-		5071F8B6186D8E6600570754 /* UILabelAtlasTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8B7186D8E6600570754 /* UILabelAtlasTest.cpp */,
-				5071F8B8186D8E6600570754 /* UILabelAtlasTest.h */,
-			);
-			path = UILabelAtlasTest;
-			sourceTree = "<group>";
-		};
-		5071F8B9186D8E6600570754 /* UILabelBMFontTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8BA186D8E6600570754 /* UILabelBMFontTest.cpp */,
-				5071F8BB186D8E6600570754 /* UILabelBMFontTest.h */,
-			);
-			path = UILabelBMFontTest;
-			sourceTree = "<group>";
-		};
-		5071F8BC186D8E6600570754 /* UILabelTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8BD186D8E6600570754 /* UILabelTest.cpp */,
-				5071F8BE186D8E6600570754 /* UILabelTest.h */,
-			);
-			path = UILabelTest;
-			sourceTree = "<group>";
-		};
-		5071F8BF186D8E6600570754 /* UILayoutTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8C0186D8E6600570754 /* UILayoutTest.cpp */,
-				5071F8C1186D8E6600570754 /* UILayoutTest.h */,
-			);
-			path = UILayoutTest;
-			sourceTree = "<group>";
-		};
-		5071F8C2186D8E6600570754 /* UIListViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8C3186D8E6600570754 /* UIListViewTest.cpp */,
-				5071F8C4186D8E6600570754 /* UIListViewTest.h */,
-			);
-			path = UIListViewTest;
-			sourceTree = "<group>";
-		};
-		5071F8C5186D8E6600570754 /* UILoadingBarTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8C6186D8E6600570754 /* UILoadingBarTest.cpp */,
-				5071F8C7186D8E6600570754 /* UILoadingBarTest.h */,
-			);
-			path = UILoadingBarTest;
-			sourceTree = "<group>";
-		};
-		5071F8C8186D8E6600570754 /* UIPageViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8C9186D8E6600570754 /* UIPageViewTest.cpp */,
-				5071F8CA186D8E6600570754 /* UIPageViewTest.h */,
-			);
-			path = UIPageViewTest;
-			sourceTree = "<group>";
-		};
-		5071F8D8186D8E6600570754 /* UIScrollViewTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8D9186D8E6600570754 /* UIScrollViewTest.cpp */,
-				5071F8DA186D8E6600570754 /* UIScrollViewTest.h */,
-			);
-			path = UIScrollViewTest;
-			sourceTree = "<group>";
-		};
-		5071F8DB186D8E6600570754 /* UISliderTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8DC186D8E6600570754 /* UISliderTest.cpp */,
-				5071F8DD186D8E6600570754 /* UISliderTest.h */,
-			);
-			path = UISliderTest;
-			sourceTree = "<group>";
-		};
-		5071F8E1186D8E6600570754 /* UITextFieldTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8E2186D8E6600570754 /* UITextFieldTest.cpp */,
-				5071F8E3186D8E6600570754 /* UITextFieldTest.h */,
-			);
-			path = UITextFieldTest;
-			sourceTree = "<group>";
-		};
-		5071F8E4186D8E6600570754 /* UIWidgetAddNodeTest */ = {
-			isa = PBXGroup;
-			children = (
-				5071F8E5186D8E6600570754 /* UIWidgetAddNodeTest.cpp */,
-				5071F8E6186D8E6600570754 /* UIWidgetAddNodeTest.h */,
-			);
-			path = UIWidgetAddNodeTest;
 			sourceTree = "<group>";
 		};
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
@@ -3348,27 +3714,37 @@
 				15AA9D5115B7EC460033D6C2 /* AccelerometerTest.cpp in Sources */,
 				15AA9D5215B7EC460033D6C2 /* ActionManagerTest.cpp in Sources */,
 				15AA9D5315B7EC460033D6C2 /* ActionsEaseTest.cpp in Sources */,
-				5071F8FC186D8E6600570754 /* UIWidgetAddNodeTest.cpp in Sources */,
 				379369AC186869D300E974DD /* CCActionManager.cpp in Sources */,
 				15AA9D5415B7EC460033D6C2 /* ActionsProgressTest.cpp in Sources */,
+				2961DFD018C9B4E80017F5DB /* LayoutReader.cpp in Sources */,
+				2961E06818C9B6B30017F5DB /* UIWidgetAddNodeTest_Editor.cpp in Sources */,
 				15AA9D5515B7EC460033D6C2 /* ActionsTest.cpp in Sources */,
 				15AA9D5615B7EC460033D6C2 /* Box2dTest.cpp in Sources */,
+				2961E04718C9B6B30017F5DB /* GUIEditorTest.cpp in Sources */,
 				15AA9D5715B7EC460033D6C2 /* Box2dView.cpp in Sources */,
+				2961DFD618C9B4E80017F5DB /* TextFieldReader.cpp in Sources */,
 				15AA9D5815B7EC460033D6C2 /* GLES-Render.cpp in Sources */,
 				15AA9D5915B7EC460033D6C2 /* Test.cpp in Sources */,
 				15AA9D5A15B7EC460033D6C2 /* TestEntries.cpp in Sources */,
 				15AA9D5B15B7EC460033D6C2 /* Bug-1159.cpp in Sources */,
 				15AA9D5C15B7EC460033D6C2 /* Bug-1174.cpp in Sources */,
+				2961E04618C9B6B30017F5DB /* CustomReader.cpp in Sources */,
+				2961DFCF18C9B4E80017F5DB /* LabelReader.cpp in Sources */,
+				2961E05818C9B6B30017F5DB /* UILoadingBarTest.cpp in Sources */,
 				15AA9D5D15B7EC460033D6C2 /* Bug-350.cpp in Sources */,
+				1A1A289A18D1FE01009627D6 /* CustomParticleWidgetTest.cpp in Sources */,
 				15AA9D5E15B7EC460033D6C2 /* Bug-422.cpp in Sources */,
 				15AA9D5F15B7EC460033D6C2 /* Bug-458.cpp in Sources */,
+				2961DFD318C9B4E80017F5DB /* PageViewReader.cpp in Sources */,
+				2961E05618C9B6B30017F5DB /* UIListViewTest.cpp in Sources */,
+				2961E06118C9B6B30017F5DB /* UIScrollViewTest.cpp in Sources */,
 				15AA9D6015B7EC460033D6C2 /* QuestionContainerSprite.cpp in Sources */,
 				15AA9D6115B7EC460033D6C2 /* Bug-624.cpp in Sources */,
 				15AA9D6215B7EC460033D6C2 /* Bug-886.cpp in Sources */,
-				5071F8E8186D8E6600570754 /* UIButtonTest.cpp in Sources */,
 				15AA9D6315B7EC460033D6C2 /* Bug-899.cpp in Sources */,
 				15AA9D6415B7EC460033D6C2 /* Bug-914.cpp in Sources */,
 				15AA9D6515B7EC460033D6C2 /* BugsTest.cpp in Sources */,
+				2961E06718C9B6B30017F5DB /* UIWidgetAddNodeTest.cpp in Sources */,
 				15AA9D6715B7EC460033D6C2 /* ClickAndMoveTest.cpp in Sources */,
 				15AA9D6815B7EC460033D6C2 /* CocosDenshionTest.cpp in Sources */,
 				15AA9D6915B7EC460033D6C2 /* controller.cpp in Sources */,
@@ -3379,19 +3755,22 @@
 				15AA9D6E15B7EC460033D6C2 /* EffectsTest.cpp in Sources */,
 				379369AB186869D300E974DD /* CCActionFrameEasing.cpp in Sources */,
 				15AA9D6F15B7EC460033D6C2 /* ButtonTestLayer.cpp in Sources */,
-				5071F8E7186D8E6600570754 /* CocosGUIScene.cpp in Sources */,
 				15AA9D7015B7EC460033D6C2 /* CocosBuilderTest.cpp in Sources */,
 				15AA9D7115B7EC460033D6C2 /* HelloCocosBuilderLayer.cpp in Sources */,
 				15AA9D7215B7EC460033D6C2 /* MenuTestLayer.cpp in Sources */,
 				15AA9D7315B7EC460033D6C2 /* TestHeaderLayer.cpp in Sources */,
-				5071F8E9186D8E6600570754 /* UICheckBoxTest.cpp in Sources */,
+				2961E05C18C9B6B30017F5DB /* UIRichTextTest.cpp in Sources */,
 				15AA9D7A15B7EC460033D6C2 /* ExtensionsTest.cpp in Sources */,
+				2961E05A18C9B6B30017F5DB /* UIPageViewTest.cpp in Sources */,
 				15AA9D7B15B7EC460033D6C2 /* NotificationCenterTest.cpp in Sources */,
+				2961E04A18C9B6B30017F5DB /* UICheckBoxTest.cpp in Sources */,
+				2961E04118C9B6B30017F5DB /* CocoStudioGUITest.cpp in Sources */,
 				15AA9D7C15B7EC460033D6C2 /* FontTest.cpp in Sources */,
 				15AA9D7D15B7EC460033D6C2 /* IntervalTest.cpp in Sources */,
 				15AA9D7E15B7EC460033D6C2 /* KeypadTest.cpp in Sources */,
 				15AA9D7F15B7EC460033D6C2 /* LabelTest.cpp in Sources */,
 				15AA9D8015B7EC460033D6C2 /* LayerTest.cpp in Sources */,
+				2961E05F18C9B6B30017F5DB /* UISceneManager.cpp in Sources */,
 				15AA9D8115B7EC460033D6C2 /* MenuTest.cpp in Sources */,
 				15AA9D8215B7EC460033D6C2 /* MotionStreakTest.cpp in Sources */,
 				15AA9D8315B7EC460033D6C2 /* MutiTouchTest.cpp in Sources */,
@@ -3402,18 +3781,24 @@
 				379369AE186869D300E974DD /* CCActionObject.cpp in Sources */,
 				15AA9D8815B7EC460033D6C2 /* PerformanceParticleTest.cpp in Sources */,
 				15AA9D8915B7EC460033D6C2 /* PerformanceSpriteTest.cpp in Sources */,
+				2961E05D18C9B6B30017F5DB /* UIScene.cpp in Sources */,
 				15AA9D8A15B7EC460033D6C2 /* PerformanceTest.cpp in Sources */,
+				2961E06518C9B6B30017F5DB /* UITextFieldTest.cpp in Sources */,
 				15AA9D8B15B7EC460033D6C2 /* PerformanceTextureTest.cpp in Sources */,
 				15AA9D8C15B7EC460033D6C2 /* PerformanceTouchesTest.cpp in Sources */,
+				2961E04418C9B6B30017F5DB /* CustomImageView.cpp in Sources */,
 				15AA9D8D15B7EC460033D6C2 /* RenderTextureTest.cpp in Sources */,
 				15AA9D8E15B7EC460033D6C2 /* RotateWorldTest.cpp in Sources */,
 				15AA9D8F15B7EC460033D6C2 /* SceneTest.cpp in Sources */,
+				2961E06618C9B6B30017F5DB /* UITextFieldTest_Editor.cpp in Sources */,
+				2961E04918C9B6B30017F5DB /* UIButtonTest_Editor.cpp in Sources */,
 				15AA9D9015B7EC460033D6C2 /* SchedulerTest.cpp in Sources */,
 				15AA9D9115B7EC460033D6C2 /* ShaderTest.cpp in Sources */,
 				15AA9D9215B7EC460033D6C2 /* SpriteTest.cpp in Sources */,
 				15AA9D9315B7EC460033D6C2 /* testBasic.cpp in Sources */,
 				15AA9D9415B7EC460033D6C2 /* TextInputTest.cpp in Sources */,
 				15AA9D9515B7EC460033D6C2 /* Texture2dTest.cpp in Sources */,
+				2961E04318C9B6B30017F5DB /* CustomImageTest.cpp in Sources */,
 				15AA9D9615B7EC460033D6C2 /* TextureCacheTest.cpp in Sources */,
 				15AA9D9715B7EC460033D6C2 /* TileMapTest.cpp in Sources */,
 				15AA9D9815B7EC460033D6C2 /* Ball.cpp in Sources */,
@@ -3423,6 +3808,7 @@
 				15AA9D9C15B7EC460033D6C2 /* UserDefaultTest.cpp in Sources */,
 				15AA9D9D15B7EC460033D6C2 /* ZwoptexTest.cpp in Sources */,
 				379369AD186869D300E974DD /* CCActionNode.cpp in Sources */,
+				2961E06218C9B6B30017F5DB /* UIScrollViewTest_Editor.cpp in Sources */,
 				15AA9F3C15B7EF960033D6C2 /* AppDelegate.cpp in Sources */,
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
@@ -3430,12 +3816,14 @@
 				1A20136415FD90240013D092 /* CustomTableViewCell.cpp in Sources */,
 				1A20136515FD90240013D092 /* TableViewTestScene.cpp in Sources */,
 				154AE0BA1609CBBE0098D8D8 /* AnimationsTestLayer.cpp in Sources */,
+				2961E05318C9B6B30017F5DB /* UILabelTest_Editor.cpp in Sources */,
 				15CFD0DE1612A3EE00BF2188 /* CCControlButtonTest.cpp in Sources */,
 				15CFD0DF1612A3EE00BF2188 /* CCControlColourPickerTest.cpp in Sources */,
 				15CFD0E01612A3EE00BF2188 /* CCControlPotentiometerTest.cpp in Sources */,
 				15CFD0E11612A3EE00BF2188 /* CCControlScene.cpp in Sources */,
 				15CFD0E21612A3EE00BF2188 /* CCControlSceneManager.cpp in Sources */,
 				15CFD0E31612A3EE00BF2188 /* CCControlSliderTest.cpp in Sources */,
+				2961DFD118C9B4E80017F5DB /* ListViewReader.cpp in Sources */,
 				15CFD0E41612A3EE00BF2188 /* CCControlStepperTest.cpp in Sources */,
 				15CFD0E51612A3EE00BF2188 /* CCControlSwitchTest.cpp in Sources */,
 				15A048D0163784C700F7CC0A /* VisibleRect.cpp in Sources */,
@@ -3447,21 +3835,26 @@
 				15C157461683159E00D239F2 /* b2CollidePolygon.cpp in Sources */,
 				15C157471683159E00D239F2 /* b2Collision.cpp in Sources */,
 				15C157481683159E00D239F2 /* b2Distance.cpp in Sources */,
-				5071F8F6186D8E6600570754 /* UIScene.cpp in Sources */,
 				15C157491683159E00D239F2 /* b2DynamicTree.cpp in Sources */,
 				15C1574A1683159E00D239F2 /* b2TimeOfImpact.cpp in Sources */,
+				2961E05218C9B6B30017F5DB /* UILabelTest.cpp in Sources */,
 				15C1574B1683159E00D239F2 /* b2ChainShape.cpp in Sources */,
 				15C1574C1683159E00D239F2 /* b2CircleShape.cpp in Sources */,
 				15C1574D1683159E00D239F2 /* b2EdgeShape.cpp in Sources */,
 				15C1574E1683159E00D239F2 /* b2PolygonShape.cpp in Sources */,
+				2961E05118C9B6B30017F5DB /* UILabelBMFontTest_Editor.cpp in Sources */,
+				2961E06418C9B6B30017F5DB /* UISliderTest_Editor.cpp in Sources */,
 				15C1574F1683159E00D239F2 /* b2BlockAllocator.cpp in Sources */,
 				15C157501683159E00D239F2 /* b2Draw.cpp in Sources */,
+				2961DFDA18C9B50B0017F5DB /* UIRichText.cpp in Sources */,
 				15C157511683159E00D239F2 /* b2Math.cpp in Sources */,
 				15C157521683159E00D239F2 /* b2Settings.cpp in Sources */,
+				2961DFCE18C9B4E80017F5DB /* LabelBMFontReader.cpp in Sources */,
+				2961E04518C9B6B30017F5DB /* CustomImageViewReader.cpp in Sources */,
 				15C157531683159E00D239F2 /* b2StackAllocator.cpp in Sources */,
 				15C157541683159E00D239F2 /* b2Timer.cpp in Sources */,
-				5071F8F0186D8E6600570754 /* UIListViewTest.cpp in Sources */,
 				15C157551683159E00D239F2 /* b2Body.cpp in Sources */,
+				2961E04218C9B6B30017F5DB /* CustomGUIScene.cpp in Sources */,
 				37936A0A18686C4F00E974DD /* acts.cpp in Sources */,
 				15C157561683159E00D239F2 /* b2ContactManager.cpp in Sources */,
 				15C157571683159E00D239F2 /* b2Fixture.cpp in Sources */,
@@ -3474,12 +3867,14 @@
 				15C1575D1683159E00D239F2 /* b2CircleContact.cpp in Sources */,
 				15C1575E1683159E00D239F2 /* b2Contact.cpp in Sources */,
 				15C1575F1683159E00D239F2 /* b2ContactSolver.cpp in Sources */,
+				2961E05E18C9B6B30017F5DB /* UIScene_Editor.cpp in Sources */,
 				15C157601683159E00D239F2 /* b2EdgeAndCircleContact.cpp in Sources */,
 				15C157611683159E00D239F2 /* b2EdgeAndPolygonContact.cpp in Sources */,
 				15C157621683159E00D239F2 /* b2PolygonAndCircleContact.cpp in Sources */,
 				15C157631683159E00D239F2 /* b2PolygonContact.cpp in Sources */,
 				15C157641683159E00D239F2 /* b2DistanceJoint.cpp in Sources */,
 				15C157651683159E00D239F2 /* b2FrictionJoint.cpp in Sources */,
+				2961E04D18C9B6B30017F5DB /* UIImageViewTest_Editor.cpp in Sources */,
 				15C157661683159E00D239F2 /* b2GearJoint.cpp in Sources */,
 				15C157671683159E00D239F2 /* b2Joint.cpp in Sources */,
 				15C157681683159E00D239F2 /* b2MouseJoint.cpp in Sources */,
@@ -3494,12 +3889,14 @@
 				15C157D9168315B300D239F2 /* chipmunk.c in Sources */,
 				15C157DB168315B300D239F2 /* cpConstraint.c in Sources */,
 				15C157DC168315B300D239F2 /* cpDampedRotarySpring.c in Sources */,
+				2961DFCD18C9B4E80017F5DB /* LabelAtlasReader.cpp in Sources */,
 				15C157DD168315B300D239F2 /* cpDampedSpring.c in Sources */,
 				15C157DE168315B300D239F2 /* cpGearJoint.c in Sources */,
 				15C157DF168315B300D239F2 /* cpGrooveJoint.c in Sources */,
+				2961DFCB18C9B4E80017F5DB /* CheckBoxReader.cpp in Sources */,
 				15C157E0168315B300D239F2 /* cpPinJoint.c in Sources */,
+				2961E05018C9B6B30017F5DB /* UILabelBMFontTest.cpp in Sources */,
 				15C157E1168315B300D239F2 /* cpPivotJoint.c in Sources */,
-				5071F8EC186D8E6600570754 /* UILabelAtlasTest.cpp in Sources */,
 				379369B818686AF800E974DD /* ObjectFactory.cpp in Sources */,
 				15C157E2168315B300D239F2 /* cpRatchetJoint.c in Sources */,
 				15C157E3168315B300D239F2 /* cpRotaryLimitJoint.c in Sources */,
@@ -3520,20 +3917,17 @@
 				15C157F2168315B300D239F2 /* cpSpaceQuery.c in Sources */,
 				15C157F3168315B300D239F2 /* cpSpaceStep.c in Sources */,
 				15C157F4168315B300D239F2 /* cpSpatialIndex.c in Sources */,
-				5071F8F1186D8E6600570754 /* UILoadingBarTest.cpp in Sources */,
 				15C157F5168315B300D239F2 /* cpSweep1D.c in Sources */,
 				15C157F6168315B300D239F2 /* cpVect.c in Sources */,
 				15C1591A168315E500D239F2 /* CCBAnimationManager.cpp in Sources */,
 				15C1591B168315E500D239F2 /* CCBFileLoader.cpp in Sources */,
-				5071F8F9186D8E6600570754 /* UISliderTest.cpp in Sources */,
 				15C1591C168315E500D239F2 /* CCBKeyframe.cpp in Sources */,
 				15C1591D168315E500D239F2 /* CCBReader.cpp in Sources */,
 				15C1591E168315E500D239F2 /* CCBSequence.cpp in Sources */,
-				5071F8EF186D8E6600570754 /* UILayoutTest.cpp in Sources */,
+				2961DFD518C9B4E80017F5DB /* SliderReader.cpp in Sources */,
 				379369A9186869D300E974DD /* CCActionEaseEx.cpp in Sources */,
 				15C1591F168315E500D239F2 /* CCBSequenceProperty.cpp in Sources */,
 				15C15920168315E500D239F2 /* CCBValue.cpp in Sources */,
-				5071F8F8186D8E6600570754 /* UIScrollViewTest.cpp in Sources */,
 				15C15921168315E500D239F2 /* CCControlButtonLoader.cpp in Sources */,
 				15C15922168315E500D239F2 /* CCControlLoader.cpp in Sources */,
 				15C15923168315E500D239F2 /* CCData.cpp in Sources */,
@@ -3542,9 +3936,11 @@
 				15C15926168315E500D239F2 /* CCLayerColorLoader.cpp in Sources */,
 				15C15927168315E500D239F2 /* CCLayerGradientLoader.cpp in Sources */,
 				15C15928168315E500D239F2 /* CCLayerLoader.cpp in Sources */,
+				2961E04F18C9B6B30017F5DB /* UILabelAtlasTest_Editor.cpp in Sources */,
 				15C15929168315E500D239F2 /* CCMenuItemImageLoader.cpp in Sources */,
 				15C1592A168315E500D239F2 /* CCMenuItemLoader.cpp in Sources */,
 				15C1592B168315E500D239F2 /* CCNode+CCBRelativePositioning.cpp in Sources */,
+				2961E04C18C9B6B30017F5DB /* UIImageViewTest.cpp in Sources */,
 				15C1592C168315E500D239F2 /* CCNodeLoader.cpp in Sources */,
 				15C1592D168315E500D239F2 /* CCNodeLoaderLibrary.cpp in Sources */,
 				15C1592E168315E500D239F2 /* CCParticleSystemQuadLoader.cpp in Sources */,
@@ -3553,11 +3949,11 @@
 				15C15931168315E500D239F2 /* CCSpriteLoader.cpp in Sources */,
 				15C15932168315E500D239F2 /* CCControl.cpp in Sources */,
 				15C15933168315E500D239F2 /* CCControlButton.cpp in Sources */,
-				5071F8ED186D8E6600570754 /* UILabelBMFontTest.cpp in Sources */,
 				15C15934168315E500D239F2 /* CCControlColourPicker.cpp in Sources */,
 				15C15935168315E500D239F2 /* CCControlHuePicker.cpp in Sources */,
 				15C15936168315E500D239F2 /* CCControlPotentiometer.cpp in Sources */,
 				15C15937168315E500D239F2 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
+				1A1A289F18D1FE6B009627D6 /* CustomParticleWidget.cpp in Sources */,
 				15C15938168315E500D239F2 /* CCControlSlider.cpp in Sources */,
 				15C15939168315E500D239F2 /* CCControlStepper.cpp in Sources */,
 				15C1593A168315E500D239F2 /* CCControlSwitch.cpp in Sources */,
@@ -3567,17 +3963,21 @@
 				15C15942168315E500D239F2 /* CCScrollView.cpp in Sources */,
 				15C15943168315E500D239F2 /* CCSorting.cpp in Sources */,
 				15C15944168315E500D239F2 /* CCTableView.cpp in Sources */,
+				2961E04818C9B6B30017F5DB /* UIButtonTest.cpp in Sources */,
 				15C15945168315E500D239F2 /* CCTableViewCell.cpp in Sources */,
 				15C15946168315E500D239F2 /* HttpClient.cpp in Sources */,
 				15C15947168315E500D239F2 /* CCPhysicsDebugNode.cpp in Sources */,
+				2961E06018C9B6B30017F5DB /* UISceneManager_Editor.cpp in Sources */,
 				15C15948168315E500D239F2 /* CCPhysicsSprite.cpp in Sources */,
 				15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */,
+				2961E05718C9B6B30017F5DB /* UIListViewTest_Editor.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
-				5071F8EE186D8E6600570754 /* UILabelTest.cpp in Sources */,
+				2961E04E18C9B6B30017F5DB /* UILabelAtlasTest.cpp in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
+				2961E04B18C9B6B30017F5DB /* UICheckBoxTest_Editor.cpp in Sources */,
 				8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */,
 				8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */,
 				8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */,
@@ -3585,10 +3985,11 @@
 				1A75E96016F85FDB00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */,
 				1A40DFC91727AE7E006D4861 /* Animation.cpp in Sources */,
 				1A40DFCA1727AE7E006D4861 /* AnimationState.cpp in Sources */,
+				2961E05918C9B6B30017F5DB /* UILoadingBarTest_Editor.cpp in Sources */,
 				1A40DFCB1727AE7E006D4861 /* AnimationStateData.cpp in Sources */,
-				5071F8FB186D8E6600570754 /* UITextFieldTest.cpp in Sources */,
 				1A40DFCC1727AE7E006D4861 /* Atlas.cpp in Sources */,
 				5071F8FF186D8E8F00570754 /* UITouchGroup.cpp in Sources */,
+				2961E04018C9B6B30017F5DB /* CocosGUIScene.cpp in Sources */,
 				1A40DFCD1727AE7E006D4861 /* AtlasAttachmentLoader.cpp in Sources */,
 				379369BA18686AF800E974DD /* TriggerMng.cpp in Sources */,
 				1A40DFCE1727AE7E006D4861 /* Attachment.cpp in Sources */,
@@ -3600,6 +4001,7 @@
 				1A40DFD41727AE7E006D4861 /* RegionAttachment.cpp in Sources */,
 				1A40DFD51727AE7E006D4861 /* Skeleton.cpp in Sources */,
 				1A40DFD61727AE7E006D4861 /* SkeletonData.cpp in Sources */,
+				2961DFD718C9B4E80017F5DB /* WidgetReader.cpp in Sources */,
 				1A40DFD71727AE7E006D4861 /* SkeletonJson.cpp in Sources */,
 				1A40DFD81727AE7E006D4861 /* Skin.cpp in Sources */,
 				1A40DFD91727AE7E006D4861 /* Slot.cpp in Sources */,
@@ -3609,9 +4011,11 @@
 				467373111739F4270034BF94 /* TextureAtlasEncryptionTest.cpp in Sources */,
 				1A60BF64173CD9E80054773B /* DataVisitorTest.cpp in Sources */,
 				1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */,
+				2961E05B18C9B6B30017F5DB /* UIPageViewTest_Editor.cpp in Sources */,
 				1A8F3B21175DC6D800049216 /* CCSkeleton.cpp in Sources */,
 				1A8F3B22175DC6D800049216 /* CCSkeletonAnimation.cpp in Sources */,
 				37CA1DBF17D87B5700A649D0 /* CCArmatureAnimation.cpp in Sources */,
+				2961DFD418C9B4E80017F5DB /* ScrollViewReader.cpp in Sources */,
 				37CA1DC017D87B5700A649D0 /* CCProcessBase.cpp in Sources */,
 				37CA1DC117D87B5700A649D0 /* CCTween.cpp in Sources */,
 				37CA1DC217D87B5700A649D0 /* CCArmature.cpp in Sources */,
@@ -3630,30 +4034,35 @@
 				37CA1DCD17D87B5700A649D0 /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				37CA1DCE17D87B5700A649D0 /* CCTransformHelp.cpp in Sources */,
 				37CA1DCF17D87B5700A649D0 /* CCTweenFunction.cpp in Sources */,
+				1A1A28A018D1FE6B009627D6 /* CustomParticleWidgetReader.cpp in Sources */,
 				37CA1DD017D87B5700A649D0 /* CCUtilMath.cpp in Sources */,
 				37CA1DD117D87B5700A649D0 /* CCComAttribute.cpp in Sources */,
+				2961DFD218C9B4E80017F5DB /* LoadingBarReader.cpp in Sources */,
 				37CA1DD217D87B5700A649D0 /* CCComAudio.cpp in Sources */,
 				37CA1DD317D87B5700A649D0 /* CCComController.cpp in Sources */,
 				37CA1DD417D87B5700A649D0 /* CCComRender.cpp in Sources */,
+				2961E05418C9B6B30017F5DB /* UILayoutTest.cpp in Sources */,
+				2961E05518C9B6B30017F5DB /* UILayoutTest_Editor.cpp in Sources */,
 				37CA1DD517D87B5700A649D0 /* CCInputDelegate.cpp in Sources */,
 				37CA1DF617D87B5700A649D0 /* DictionaryHelper.cpp in Sources */,
 				37CA26ED17D87BB500A649D0 /* ArmatureScene.cpp in Sources */,
 				37CA26EE17D87BB500A649D0 /* ComponentsTestScene.cpp in Sources */,
 				37CA26EF17D87BB500A649D0 /* EnemyController.cpp in Sources */,
+				2961E06318C9B6B30017F5DB /* UISliderTest.cpp in Sources */,
 				37CA26F017D87BB500A649D0 /* GameOverScene.cpp in Sources */,
 				37CA26F117D87BB500A649D0 /* PlayerController.cpp in Sources */,
 				37CA26F217D87BB500A649D0 /* ProjectileController.cpp in Sources */,
 				37CA26F317D87BB500A649D0 /* SceneController.cpp in Sources */,
 				37936A0B18686C4F00E974DD /* cons.cpp in Sources */,
+				2961DFCC18C9B4E80017F5DB /* ImageViewReader.cpp in Sources */,
 				37CA270E17D87BB500A649D0 /* SceneEditorTest.cpp in Sources */,
 				A01B535317DE8C0700A3D114 /* PerformanceAllocTest.cpp in Sources */,
 				1A729AC817E1C9B200F37B6A /* CCArmatureDefine.cpp in Sources */,
-				5071F8EB186D8E6600570754 /* UIImageViewTest.cpp in Sources */,
+				2961DFCA18C9B4E80017F5DB /* ButtonReader.cpp in Sources */,
 				37BB5B3017E86CEC002746B4 /* UIWidget.cpp in Sources */,
 				37BB5B3417E86CEC002746B4 /* UILayoutDefine.cpp in Sources */,
 				37BB5B3517E86CEC002746B4 /* CocosGUI.cpp in Sources */,
 				37BB5B3617E86CEC002746B4 /* UIHelper.cpp in Sources */,
-				5071F8F2186D8E6600570754 /* UIPageViewTest.cpp in Sources */,
 				37BB5B3A17E86CEC002746B4 /* UIListView.cpp in Sources */,
 				37BB5B3B17E86CEC002746B4 /* UIPageView.cpp in Sources */,
 				37BB5B3C17E86CEC002746B4 /* UIScrollView.cpp in Sources */,
@@ -3665,7 +4074,6 @@
 				37BB5B4217E86CEC002746B4 /* UILabelBMFont.cpp in Sources */,
 				37BB5B4317E86CEC002746B4 /* UILoadingBar.cpp in Sources */,
 				37BB5B4417E86CEC002746B4 /* UISlider.cpp in Sources */,
-				5071F8F7186D8E6600570754 /* UISceneManager.cpp in Sources */,
 				37BB5B4617E86CEC002746B4 /* UITextField.cpp in Sources */,
 				50E2650A18279CE70008EB60 /* UILayout.cpp in Sources */,
 				50E2650B18279CE70008EB60 /* UILayoutParameter.cpp in Sources */,
