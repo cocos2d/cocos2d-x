@@ -49,6 +49,7 @@ ListView::~ListView()
     _listViewEventListener = nullptr;
     _listViewEventSelector = nullptr;
     _items.clear();
+    CC_SAFE_RELEASE(_model);
 }
 
 ListView* ListView::create()
