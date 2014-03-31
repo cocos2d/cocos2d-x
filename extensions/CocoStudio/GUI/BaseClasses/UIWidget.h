@@ -79,7 +79,7 @@ typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL Widget : public CCNode
+class CC_EX_DLL Widget : public CCNodeRGBA
 {
 public:    
     /**
