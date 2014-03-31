@@ -50,7 +50,8 @@ bool UILabelTest_LineWrap::init()
         
         // Create the line wrap
         UILabel* label = UILabel::create();
-        label->setTextAreaSize(CCSizeMake(280, 150));
+        label->ignoreContentAdaptWithSize(false);
+        label->setSize(CCSizeMake(280, 150));
         label->setTextHorizontalAlignment(kCCTextAlignmentCenter);
         label->setText("Label can line wrap");
         label->setFontName("AmericanTypewriter");
