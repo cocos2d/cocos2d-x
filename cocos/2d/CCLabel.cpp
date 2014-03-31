@@ -37,6 +37,7 @@
 #include "CCEventDispatcher.h"
 #include "CCEventType.h"
 #include "CCEventCustom.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -344,6 +345,7 @@ void Label::reset()
 
     _shadowEnabled = false;
     _clipEnabled = false;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
 
 void Label::updateShaderProgram()
@@ -1051,7 +1053,7 @@ void Label::updateContent()
 
 void Label::updateFont()
 {
-    if (_fontName.find('.') != _fontName.npos)
+    if (FileUtils::getInstance()->isFileExist(_fontName))
     {
         _fontConfig.fontFilePath = _fontName;
         _fontConfig.fontSize = _fontSize;
