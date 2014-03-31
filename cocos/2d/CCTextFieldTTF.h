@@ -145,10 +145,13 @@ public:
     inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
 
     inline int getCharCount() const { return _charCount; };
-    virtual const Color3B& getColorSpaceHolder();
-    virtual void setColorSpaceHolder(const Color3B& color);
+    
+    virtual const Color4B& getColorSpaceHolder();
 
-    virtual void setColor(const Color3B& color) override;
+    virtual void setColorSpaceHolder(const Color3B& color);
+    virtual void setColorSpaceHolder(const Color4B& color);
+
+    virtual void setTextColor(const Color4B& textColor) override;
 
     // input text property
     virtual void setString(const std::string& text) override;
@@ -181,8 +184,8 @@ protected:
     std::string _inputText;
 
     std::string _placeHolder;
-    Color3B _colorSpaceHolder;
-    Color3B _colorText;
+    Color4B _colorSpaceHolder;
+    Color4B _colorText;
 
     bool _secureTextEntry;
 
