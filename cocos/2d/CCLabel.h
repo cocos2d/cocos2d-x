@@ -206,7 +206,7 @@ public:
     /** Sets the text color
      *
      */
-    void setTextColor(const Color4B &color);
+    virtual void setTextColor(const Color4B &color);
 
     const Color4B& getTextColor() const { return _textColor;}
 
@@ -372,7 +372,7 @@ protected:
     int     _shadowBlurRadius;
     kmMat4  _parentTransform;
     Color3B _shadowColor;
-    Node*   _shadowNode;
+    Sprite*   _shadowNode;
 
     Color4B _textColor;
     Color4F _textColorF;
