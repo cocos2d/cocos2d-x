@@ -418,6 +418,7 @@ bool FileServer::recv_file(int fd)
 		return  false;
 	}
 	char *headSeg = new char[atoi(headlen)+1];
+	memset(headSeg,0,atoi(headlen)+1);
 	if (!headSeg)
 	{
 		return false;
