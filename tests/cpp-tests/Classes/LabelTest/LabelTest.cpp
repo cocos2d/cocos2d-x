@@ -3,6 +3,13 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 enum {
     kTagTileMap = 1,
     kTagSpriteManager = 1,
@@ -969,7 +976,7 @@ LabelTTFTest::LabelTTFTest()
     menu->setPosition(Point(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
 
-    _plabel = NULL;
+    _label = nullptr;
     _horizAlign = TextHAlignment::LEFT;
     _vertAlign = TextVAlignment::TOP;
 
@@ -978,7 +985,7 @@ LabelTTFTest::LabelTTFTest()
 
 LabelTTFTest::~LabelTTFTest()
 {
-    CC_SAFE_RELEASE(_plabel);
+    CC_SAFE_RELEASE(_label);
 }
 
 void  LabelTTFTest::updateAlignment()
@@ -986,21 +993,21 @@ void  LabelTTFTest::updateAlignment()
     auto blockSize = Size(200, 160);
     auto s = Director::getInstance()->getWinSize();
 
-    if (_plabel)
+    if (_label)
     {
-        _plabel->removeFromParentAndCleanup(true);
+        _label->removeFromParentAndCleanup(true);
     }
 
-    CC_SAFE_RELEASE(_plabel);
+    CC_SAFE_RELEASE(_label);
 
-    _plabel = LabelTTF::create(this->getCurrentAlignment(), "fonts/Marker Felt.ttf", 32,
+    _label = LabelTTF::create(this->getCurrentAlignment(), "fonts/Marker Felt.ttf", 32,
                                   blockSize, _horizAlign, _vertAlign);
-    _plabel->retain();
+    _label->retain();
 
-    _plabel->setAnchorPoint(Point(0,0));
-    _plabel->setPosition(Point((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 ));
+    _label->setAnchorPoint(Point(0,0));
+    _label->setPosition(Point((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 ));
 
-    this->addChild(_plabel);
+    this->addChild(_label);
 }
 
 void LabelTTFTest::setAlignmentLeft(Ref* sender)
@@ -1163,13 +1170,13 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     auto size = Director::getInstance()->getWinSize();
 
     // create and initialize a Label
-    this->_labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, TextHAlignment::CENTER);
-    this->_labelShouldRetain->retain();
+    _labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, TextHAlignment::CENTER);
+    _labelShouldRetain->retain();
 
-    this->_arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
-    this->_arrowsBarShouldRetain->retain();
-    this->_arrowsShouldRetain = Sprite::create("Images/arrows.png");
-    this->_arrowsShouldRetain->retain();
+    _arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
+    _arrowsBarShouldRetain->retain();
+    _arrowsShouldRetain = Sprite::create("Images/arrows.png");
+    _arrowsShouldRetain->retain();
 
     MenuItemFont::setFontSize(20);
     auto longSentences = MenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
@@ -1199,24 +1206,24 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     right->setTag(RightAlign);
 
     // position the label on the center of the screen
-    this->_labelShouldRetain->setPosition(Point(size.width/2, size.height/2));
+    _labelShouldRetain->setPosition(Point(size.width/2, size.height/2));
 
-    this->_arrowsBarShouldRetain->setVisible(false);
+    _arrowsBarShouldRetain->setVisible(false);
 
     float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
-    this->_arrowsBarShouldRetain->setScaleX(arrowsWidth / this->_arrowsBarShouldRetain->getContentSize().width);
-    this->_arrowsBarShouldRetain->setPosition(Point(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_labelShouldRetain->getPosition().y));
+    _arrowsBarShouldRetain->setScaleX(arrowsWidth / this->_arrowsBarShouldRetain->getContentSize().width);
+    _arrowsBarShouldRetain->setPosition(Point(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_labelShouldRetain->getPosition().y));
 
     this->snapArrowsToEdge();
 
     stringMenu->setPosition(Point(size.width/2, size.height - menuItemPaddingCenter));
     alignmentMenu->setPosition(Point(size.width/2, menuItemPaddingCenter+15));
 
-    this->addChild(this->_labelShouldRetain);
-    this->addChild(this->_arrowsBarShouldRetain);
-    this->addChild(this->_arrowsShouldRetain);
-    this->addChild(stringMenu);
-    this->addChild(alignmentMenu);
+    addChild(_labelShouldRetain);
+    addChild(_arrowsBarShouldRetain);
+    addChild(_arrowsShouldRetain);
+    addChild(stringMenu);
+    addChild(alignmentMenu);
 }
 
 BitmapFontMultiLineAlignment::~BitmapFontMultiLineAlignment()
@@ -1246,13 +1253,13 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
     switch(item->getTag())
     {
     case LongSentences:
-        this->_labelShouldRetain->setString(LongSentencesExample);
+        static_cast<LabelBMFont*>(_labelShouldRetain)->setString(LongSentencesExample);
         break;
     case LineBreaks:
-        this->_labelShouldRetain->setString(LineBreaksExample);
+        static_cast<LabelBMFont*>(_labelShouldRetain)->setString(LineBreaksExample);
         break;
     case Mixed:
-        this->_labelShouldRetain->setString(MixedExample);
+        static_cast<LabelBMFont*>(_labelShouldRetain)->setString(MixedExample);
         break;
 
     default:
@@ -1272,13 +1279,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
     switch(item->getTag())
     {
     case LeftAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::LEFT);
+        static_cast<LabelBMFont*>(_labelShouldRetain)->setAlignment(TextHAlignment::LEFT);
         break;
     case CenterAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::CENTER);
+        static_cast<LabelBMFont*>(_labelShouldRetain)->setAlignment(TextHAlignment::CENTER);
         break;
     case RightAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::RIGHT);
+        static_cast<LabelBMFont*>(_labelShouldRetain)->setAlignment(TextHAlignment::RIGHT);
         break;
 
     default:
@@ -1325,7 +1332,7 @@ void BitmapFontMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& tou
 
     float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
 
-    this->_labelShouldRetain->setWidth(labelWidth);
+    static_cast<LabelBMFont*>(_labelShouldRetain)->setWidth(labelWidth);
 }
 
 void BitmapFontMultiLineAlignment::snapArrowsToEdge()
@@ -1736,3 +1743,9 @@ std::string LabelBMFontBinaryFormat::subtitle() const
 {
     return "This label uses font file in AngelCode binary format";
 }
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
