@@ -167,14 +167,15 @@ void UICCTextField::insertText(const char * text, size_t len)
             }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
             int input_count = _calcCharCount(text);
-            if (input_count > _maxLength)
+            int total = text_count + input_count;
+            if (total > _maxLength)
             {
                 int ascii = 0;
                 int unicode = 0;
                 int end = 0;
                 int count = 0;
                 
-                for (int i = 0; i < input_count * 3; ++i)
+                for (int i = 0; i < total * 3; ++i)
                 {
                     char value = text[i];
                     
@@ -291,12 +292,24 @@ void UICCTextField::setPasswordStyleText(const char* styleText)
 
 void UICCTextField::setPasswordText(const char *text)
 {
-    std::string tempStr;
-    for (size_t i = 0; i < strlen(text); ++i)
+    std::string tempStr = "";
+    int text_count = _calcCharCount(text);
+    int max = text_count;
+    
+    if (_maxLengthEnabled)
+    {
+        if (text_count > _maxLength)
+        {
+            max = _maxLength;
+        }
+    }
+    
+    for (int i = 0; i < max; ++i)
     {
         tempStr.append(_passwordStyleText);
     }
-    Label::setString(tempStr.c_str());
+    
+    Label::setString(tempStr);
 }
 
 void UICCTextField::setAttachWithIME(bool attach)
@@ -433,21 +446,59 @@ Size TextField::getTouchSize()
 void TextField::setText(const std::string& text)
 {
     std::string strText(text);
+    
     if (isMaxLengthEnabled())
     {
-        strText = strText.substr(0, getMaxLength());
+        int max = _textFieldRenderer->getMaxLength();
+        int text_count = _calcCharCount(text.c_str());
+        int total = text_count + _calcCharCount(getStringValue().c_str());
+        if (total > max)
+        {
+            int ascii = 0;
+            int unicode = 0;
+            int end = 0;
+            int count = 0;
+            
+            for (int i = 0; i < total * 3; ++i)
+            {
+                char value = text[i];
+                
+                if (value >= 0 && value <= 127) // ascii
+                {
+                    ascii++;
+                    count++;
+                }
+                else
+                {
+                    unicode++;
+                    if (unicode % 3 == 0)
+                    {
+                        count++;
+                    }
+                }
+                
+                if (count == max)
+                {
+                    break;
+                }
+            }
+            end = ascii + unicode;
+            strText = strText.substr(0, end);
+        }
     }
+    
     const char* content = strText.c_str();
     if (isPasswordEnabled())
     {
         _textFieldRenderer->setPasswordText(content);
         _textFieldRenderer->setString("");
-        _textFieldRenderer->insertText(content, static_cast<int>(strlen(content)));
+        _textFieldRenderer->insertText(content, strlen(content));
     }
     else
     {
         _textFieldRenderer->setString(content);
     }
+    
     textfieldRendererScaleChangedWithSize();
 }
 
