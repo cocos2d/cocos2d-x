@@ -262,18 +262,17 @@ def send_mail(to_list,sub,title,content):
 	mail_postfix = OBJ_EMAIL_INFO[ EMAIL_KEYS[3] ]
 	mail_host = OBJ_EMAIL_INFO[ EMAIL_KEYS[0] ]
 	mail_pass = OBJ_EMAIL_INFO[ EMAIL_KEYS[2] ]
-	me = "hello"+"<"+mail_user+"@"+mail_postfix+">"   #hello
-    # msg = MIMEText(content,_subtype='html',_charset='gb2312')    #create
-    msg = MIMEText(content,_subtype='plain',_charset='gb2312')    #create
-    msg['Subject'] = sub    #set
-    msg['From'] = me
-    msg['To'] = " ".join(to_list)
-    msg['Content'] = 'asdgf'
+	me = "hello"+"<"+mail_user+"@"+mail_postfix+">"
+	msg = MIMEText(content,_subtype='plain',_charset='gb2312')
+	msg['Subject'] = sub
+	msg['From'] = me
+	msg['To'] = " ".join(to_list)
+	msg['Content'] = 'asdgf'
     try:  
         s = smtplib.SMTP()  
-        s.connect(mail_host)  #conncet smtp
-        s.login(mail_user,mail_pass)  #login
-        s.sendmail(me, to_list, str(msg))  #send
+        s.connect(mail_host)
+        s.login(mail_user,mail_pass)
+        s.sendmail(me, to_list, str(msg))
         print 'info:', me, to_list, str(msg)
         s.close()
         appendToResult( 'send email true:' + str(msg) )
