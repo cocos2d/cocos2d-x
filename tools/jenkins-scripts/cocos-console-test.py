@@ -268,8 +268,8 @@ def send_mail(to_list,sub,title,content):
 	msg['From'] = me
 	msg['To'] = " ".join(to_list)
 	msg['Content'] = 'asdgf'
-    try:  
-        s = smtplib.SMTP()  
+	try:
+		s = smtplib.SMTP()  
         s.connect(mail_host)
         s.login(mail_user,mail_pass)
         s.sendmail(me, to_list, str(msg))
