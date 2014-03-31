@@ -590,6 +590,9 @@
     <ClCompile Include="..\math\kazmath\kazmath\vec4.c">
       <Filter>kazmath</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\external\xxhash\xxhash.c">
+      <Filter>renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1193,6 +1196,9 @@
     </ClInclude>
     <ClInclude Include="..\math\kazmath\kazmath\vec4.h">
       <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\xxhash\xxhash.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
