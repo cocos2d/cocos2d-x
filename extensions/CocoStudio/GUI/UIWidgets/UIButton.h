@@ -170,6 +170,8 @@ public:
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
+    void setTitlePosByPercent(const cocos2d::CCPoint&);
+    void setTitlePosByPercent(float x, float y);
 
 protected:
     virtual bool init();
@@ -216,6 +218,7 @@ protected:
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;
     bool _disabledTextureLoaded;
+    CCPoint _titlePosPecent;
 };
 
 }

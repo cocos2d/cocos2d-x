@@ -63,7 +63,8 @@ _pressedTextureScaleXInSize(1.0f),
 _pressedTextureScaleYInSize(1.0f),
 _normalTextureLoaded(false),
 _pressedTextureLoaded(false),
-_disabledTextureLoaded(false)
+_disabledTextureLoaded(false),
+_titlePosPecent(0.5, 0.5)
 {
     
 }
@@ -675,6 +676,18 @@ const char* Button::getTitleFontName() const
     return _titleRenderer->getFontName();
 }
     
+void Button::setTitlePosByPercent(const cocos2d::CCPoint & percent)
+{
+    _titlePosPecent = percent;
+    _titleRenderer->setPosition(ccp(_size.width * (_titlePosPecent.x - m_obAnchorPoint.x), _size.height * (_titlePosPecent.y - m_obAnchorPoint.y)));
+}
+    
+void Button::setTitlePosByPercent(float x, float y)
+{
+    _titlePosPecent = ccp(x, y);
+    _titleRenderer->setPosition(ccp(_size.width * (_titlePosPecent.x - m_obAnchorPoint.x), _size.height * (_titlePosPecent.y - m_obAnchorPoint.y)));
+}
+
 void Button::updateTextureColor()
 {
     updateColorToRenderer(_buttonNormalRenderer);
