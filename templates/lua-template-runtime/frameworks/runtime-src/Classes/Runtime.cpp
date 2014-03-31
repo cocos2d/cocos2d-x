@@ -373,20 +373,8 @@ bool CreateDir(const char *sPathName)
 	return   true;  
 }
 
-void updateResFileInfo(string filename,string filetime)
+bool updateResFileInfo()
 {
-    
-    if (g_filecfgjson.HasMember(filename.c_str())) {
-        g_filecfgjson.RemoveMember(filename.c_str());
-    }
-    rapidjson::Value filetimeValue(rapidjson::kStringType);
-    filetimeValue.SetString(filetime.c_str(),g_filecfgjson.GetAllocator());
-    
-    rapidjson::Value filenameValue(rapidjson::kStringType);
-    filenameValue.SetString(filename.c_str(),g_filecfgjson.GetAllocator());
-    g_filecfgjson.AddMember(filenameValue.GetString(),filetimeValue,g_filecfgjson.GetAllocator());
-    
-	//g_filecfgjson[filename.c_str()] = filetime.c_str();
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
 	g_filecfgjson.Accept(writer);
@@ -396,11 +384,16 @@ void updateResFileInfo(string filename,string filetime)
 	filecfg.append("/");
 	filecfg.append("fileinfo_debug.json");
 	FILE * pFile = fopen (filecfg.c_str() , "w");
+	if (!pFile)
+		return false;
+	
 	fwrite(str,sizeof(char),strlen(str),pFile);
 	fclose(pFile);
+
+	return true;
 }
 
-void readResFile()
+void readResFileFinfo()
 {
 	string filecfg = g_resourcePath;
 	filecfg.append("/");
@@ -420,38 +413,62 @@ void readResFile()
 
 bool FileServer::recv_file(int fd)
 {
-	char filename[1024]={0};
     char headlen[5]={0};
 	if (recv(fd, headlen, 4,0)<=0) {
 		return  false;
 	}
-	if (recv(fd, filename, atoi(headlen),0)<=0) {
+	char *headSeg = new char[atoi(headlen)+1];
+	if (!headSeg)
+	{
+		return false;
+	}
+	
+	if (recv(fd, headSeg, atoi(headlen),0)<=0) {
 		return  false;
 	}
-    
-	char filetimeinfo[1024]={0};
-	if (recv(fd, headlen, 4,0)<=0) {
-		return  false;
+    rapidjson::Document headjson; 
+	headjson.Parse<0>(headSeg);
+	if (headjson.HasMember("filename"))
+	{
+		string filename = headjson["filename"].GetString();
+		char fullfilename[1024]={0};
+		sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename);
+		string file(fullfilename);
+		file=replaceAll(file,"\\","/");
+		sprintf(fullfilename, "%s", file.c_str());
+		cocos2d::log("recv fullfilename = %s",fullfilename);
+		CreateDir(file.substr(0,file.find_last_of("/")).c_str());
+		FILE *fp =fopen(fullfilename, "wb");
+		int length =0;
+		while ((length=recv(fd, fullfilename, sizeof(fullfilename),0)) > 0) {
+			fwrite(fullfilename, sizeof(char), length,fp);
+		}
+		fclose(fp);
+
+		if (headjson.HasMember("lastmodifytime"))
+		{
+			string filemodifytime = headjson["lastmodifytime"].GetString();
+			if (g_filecfgjson.HasMember(filename.c_str()))
+			{
+				g_filecfgjson.RemoveMember(filename.c_str());
+			}
+			rapidjson::Value filetimeValue(rapidjson::kStringType);
+			filetimeValue.SetString(filemodifytime.c_str(),g_filecfgjson.GetAllocator());
+			rapidjson::Value filenameValue(rapidjson::kStringType);
+			filenameValue.SetString(filename.c_str(),g_filecfgjson.GetAllocator());
+			g_filecfgjson.AddMember(filenameValue.GetString(),filetimeValue,g_filecfgjson.GetAllocator());
+			updateResFileInfo();
+		}
 	}
-	if (recv(fd, filetimeinfo, atoi(headlen),0)<=0) {
-		return  false;
+
+	if (headSeg)
+	{
+		delete [] headSeg;
+		headSeg =nullptr;
 	}
-    char fullfilename[1024]={0};
-	sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename);
-    string file(fullfilename);
-	file=replaceAll(file,"\\","/");
-	sprintf(fullfilename, "%s", file.c_str());
-	cocos2d::log("recv fullfilename = %s",fullfilename);
-    CreateDir(file.substr(0,file.find_last_of("/")).c_str());
-	FILE *fp =fopen(fullfilename, "wb");
-	int length =0;
-	while ((length=recv(fd, fullfilename, sizeof(fullfilename),0)) > 0) {
-		fwrite(fullfilename, sizeof(char), length,fp);
-	}
-	fclose(fp);
+	
     string finish("finish\n");
     send(fd, finish.c_str(), finish.size(),0);
-	updateResFileInfo(filename,filetimeinfo);
 	return true;
 }
     
@@ -631,7 +648,7 @@ public:
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
 					for (auto it=g_filecfgjson.MemberonBegin();it!=g_filecfgjson.MemberonEnd();++it)
 					{
-						bodyvalue.AddMember(it->name.GetString(),it->value,dReplyParse.GetAllocator());
+						bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
 					}
 					dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
@@ -645,6 +662,16 @@ public:
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
+				}else if(strcmp(strcmd.c_str(),"updatefileinfo")==0)
+				{
+					if(updateResFileInfo())
+					{
+						dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+					}else
+					{
+						dReplyParse.AddMember("code",1,dReplyParse.GetAllocator());
+					}
+					
 				}else if(strcmp(strcmd.c_str(),"remove")==0)
 				{
 					if (dArgParse.HasMember("files"))
@@ -657,8 +684,16 @@ public:
 							filename.append("/");
 							filename.append(objectfiles[i].GetString());
                             if (FileUtils::getInstance()->isFileExist(filename)) {
-                                if(remove(filename.c_str())!=0)
+                                if(remove(filename.c_str())==0)
+								{
+									if (g_filecfgjson.HasMember(objectfiles[i].GetString())) {
+										g_filecfgjson.RemoveMember(objectfiles[i].GetString());
+									}
+								}	
+								else
+								{
 									bodyvalue.AddMember(objectfiles[i].GetString(),2,dReplyParse.GetAllocator());
+								}
                             }else
                             {
 								bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
@@ -666,6 +701,7 @@ public:
 							
 						}
 						dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+						updateResFileInfo();
 					}
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
 
@@ -726,7 +762,7 @@ void startRuntime()
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	luaopen_debugger(engine->getLuaStack()->getLuaState());
 	
-    readResFile();
+    readResFileFinfo();
     auto scene = Scene::create();
     auto layer = new ConnectWaitLayer();
     layer->autorelease();
