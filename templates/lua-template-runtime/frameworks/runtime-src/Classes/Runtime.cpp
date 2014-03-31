@@ -418,12 +418,12 @@ bool FileServer::recv_file(int fd)
 		return  false;
 	}
 	char *headSeg = new char[atoi(headlen)+1];
-	memset(headSeg,0,atoi(headlen)+1);
 	if (!headSeg)
 	{
 		return false;
 	}
-	
+	memset(headSeg,0,atoi(headlen)+1);
+
 	if (recv(fd, headSeg, atoi(headlen),0)<=0) {
 		return  false;
 	}
@@ -433,7 +433,7 @@ bool FileServer::recv_file(int fd)
 	{
 		string filename = headjson["filename"].GetString();
 		char fullfilename[1024]={0};
-		sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename);
+		sprintf(fullfilename,"%s%s",g_resourcePath.c_str(),filename.c_str());
 		string file(fullfilename);
 		file=replaceAll(file,"\\","/");
 		sprintf(fullfilename, "%s", file.c_str());
