@@ -279,6 +279,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _currNumLines(-1)
 , _textSprite(nullptr)
 , _contentDirty(false)
+, _shadowDirty(false)
 {
     setAnchorPoint(Point::ANCHOR_MIDDLE);
     reset();
@@ -852,6 +853,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
 {
     _shadowEnabled = true;
     _fontDefinition._shadow._shadowEnabled = false;
+    _shadowDirty = true;
 
     _effectColor = shadowColor;
     _effectColorF.r = _effectColor.r / 255.0f;
@@ -928,13 +930,11 @@ void Label::onDraw(const kmMat4& transform, bool transformUpdated)
     }
     else if(_shadowEnabled && _shadowBlurRadius <= 0)
     {
-        trans = true;
-        kmGLPushMatrix();
         drawShadowWithoutBlur();
     }
 
     _shaderProgram->setUniformsForBuiltins(transform);
-   
+
     for(const auto &child: _children)
     {
         if(child->getTag() >= 0)
@@ -946,29 +946,17 @@ void Label::onDraw(const kmMat4& transform, bool transformUpdated)
         batchNode->getTextureAtlas()->drawQuads();
     }
 
-    if (trans)
-    {
-        kmGLPopMatrix();
-    }    
-
     CC_PROFILER_STOP("Label - draw");
 }
 
 void Label::drawShadowWithoutBlur()
 {
-    _position.x += _shadowOffset.width;
-    _position.y += _shadowOffset.height;
-    _transformDirty = _inverseDirty = true;
-    
     Color3B oldColor = _realColor;
     GLubyte oldOPacity = _displayedOpacity;
     _displayedOpacity = _effectColorF.a * _displayedOpacity;
     setColor(_shadowColor);
 
-    _modelViewTransform = transform(_parentTransform);
-    kmGLLoadMatrix(&_modelViewTransform);
-
-    _shaderProgram->setUniformsForBuiltins(_modelViewTransform);
+    _shaderProgram->setUniformsForBuiltins(_shadowTransform);
     for(const auto &child: _children)
     {
         child->updateTransform();
@@ -978,15 +966,8 @@ void Label::drawShadowWithoutBlur()
         batchNode->getTextureAtlas()->drawQuads();
     }
     
-    _position.x -= _shadowOffset.width;
-    _position.y -= _shadowOffset.height;
-    _transformDirty = _inverseDirty = true;
-    
     _displayedOpacity = oldOPacity;
     setColor(oldColor);
-
-    _modelViewTransform = transform(_parentTransform);
-    kmGLLoadMatrix(&_modelViewTransform);
 }
 
 void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
@@ -1121,36 +1102,45 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
         updateContent();
     }
 
-    if (! _textSprite && _shadowEnabled && _shadowBlurRadius <= 0)
+    bool dirty = parentTransformUpdated || _transformUpdated;
+
+    if (_shadowEnabled && _shadowBlurRadius <= 0 && (_shadowDirty || dirty))
     {
-        _parentTransform = parentTransform;
-        draw(renderer, _modelViewTransform, true);
+        _position.x += _shadowOffset.width;
+        _position.y += _shadowOffset.height;
+        _transformDirty = _inverseDirty = true;
+
+        _shadowTransform = transform(parentTransform);
+
+        _position.x -= _shadowOffset.width;
+        _position.y -= _shadowOffset.height;
+        _transformDirty = _inverseDirty = true;
+
+        _shadowDirty = false;
+    }
+
+    if(dirty)
+    {
+        _modelViewTransform = transform(parentTransform);
+    }
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
+    if (_textSprite)
+    {
+        drawTextSprite(renderer,dirty);
     }
     else
     {
-        bool dirty = parentTransformUpdated || _transformUpdated;
-        
-        if(dirty)
-            _modelViewTransform = transform(parentTransform);
-        _transformUpdated = false;
-
-        // IMPORTANT:
-        // To ease the migration to v3.0, we still support the kmGL stack,
-        // but it is deprecated and your code should not rely on it
-        kmGLPushMatrix();
-        kmGLLoadMatrix(&_modelViewTransform);
-
-        if (_textSprite)
-        {
-            drawTextSprite(renderer,dirty);
-        }
-        else
-        {
-            draw(renderer, _modelViewTransform, dirty);
-        }
-
-        kmGLPopMatrix();
+        draw(renderer, _modelViewTransform, dirty);
     }
+
+    kmGLPopMatrix();
     
     setOrderOfArrival(0);
 }
