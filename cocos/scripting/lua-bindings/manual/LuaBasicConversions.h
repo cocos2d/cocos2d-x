@@ -253,7 +253,6 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
                 int* luaID = (obj) ? &obj->_luaID : NULL;
                 toluafix_pushusertype_ccobject(L, ID, luaID, (void*)obj,iter->second.c_str());
                 lua_rawset(L, -3);
-                obj->retain();
                 ++indexTable;
             }
         }
