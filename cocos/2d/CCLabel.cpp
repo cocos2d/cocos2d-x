@@ -1084,7 +1084,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     if (_shadowEnabled && _shadowNode == nullptr)
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
-        ((Sprite*)_shadowNode)->setBlendFunc(_blendFunc);
+        _shadowNode->setBlendFunc(_blendFunc);
         _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setColor(_shadowColor);
         _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);

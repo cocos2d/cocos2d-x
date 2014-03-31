@@ -372,7 +372,7 @@ protected:
     int     _shadowBlurRadius;
     kmMat4  _parentTransform;
     Color3B _shadowColor;
-    Node*   _shadowNode;
+    Sprite*   _shadowNode;
 
     Color4B _textColor;
     Color4F _textColorF;
