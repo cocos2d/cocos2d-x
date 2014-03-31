@@ -141,6 +141,7 @@ renderer/CCRenderMaterial.cpp \
 ../base/CCString.cpp \
 ../base/CCValue.cpp \
 ../base/etc1.cpp \
+../base/pvr.cpp \
 ../base/s3tc.cpp \
 ../math/kazmath/kazmath/aabb.c \
 ../math/kazmath/kazmath/mat3.c \

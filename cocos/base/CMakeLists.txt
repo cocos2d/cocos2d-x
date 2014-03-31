@@ -12,6 +12,7 @@ set(COCOS_BASE_SRC
   CCData.cpp
   CCValue.cpp
   etc1.cpp
+  pvr.cpp
   s3tc.cpp
   atitc.cpp
   CCConsole.cpp
