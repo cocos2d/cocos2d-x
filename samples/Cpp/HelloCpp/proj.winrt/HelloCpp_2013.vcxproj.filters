@@ -64,6 +64,9 @@
     <Image Include="Assets\WideLogo.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="..\Resources\ipadhd\HelloWorld.png" />
+    <Image Include="..\Resources\ipadhd\CloseNormal.png" />
+    <Image Include="..\Resources\ipadhd\CloseSelected.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package_2013.appxmanifest" />
