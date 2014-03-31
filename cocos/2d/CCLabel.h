@@ -206,7 +206,7 @@ public:
     /** Sets the text color
      *
      */
-    void setTextColor(const Color4B &color);
+    virtual void setTextColor(const Color4B &color);
 
     const Color4B& getTextColor() const { return _textColor;}
 

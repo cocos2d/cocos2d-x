@@ -57,8 +57,10 @@ TextFieldTTF::TextFieldTTF()
 , _inputText("")
 , _placeHolder("")   // prevent Label initWithString assertion
 , _secureTextEntry(false)
+, _colorText(Color4B::WHITE)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
+    _colorSpaceHolder.a = 255;
 }
 
 TextFieldTTF::~TextFieldTTF()
@@ -112,6 +114,7 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const Siz
     setFontName(fontName);
     setFontSize(fontSize);
     setAlignment(alignment,TextVAlignment::CENTER);
+    Label::setTextColor(_colorSpaceHolder);
     Label::setString(_placeHolder);
 
     return true;
@@ -121,6 +124,7 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std
     _placeHolder = std::string(placeholder);
     setFontName(fontName);
     setFontSize(fontSize);
+    Label::setTextColor(_colorSpaceHolder);
     Label::setString(_placeHolder);
 
     return true;
@@ -238,6 +242,7 @@ void TextFieldTTF::deleteBackward()
     {
         _inputText = "";
         _charCount = 0;
+        Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
         return;
     }
@@ -252,10 +257,10 @@ const std::string& TextFieldTTF::getContentText()
     return _inputText;
 }
 
-void TextFieldTTF::setColor(const Color3B& color)
+void TextFieldTTF::setTextColor(const Color4B &color)
 {
     _colorText = color;
-    Label::setColor(color);
+    Label::setTextColor(_colorText);
 }
 
 void TextFieldTTF::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
@@ -267,12 +272,20 @@ void TextFieldTTF::visit(Renderer *renderer, const kmMat4 &parentTransform, bool
     Label::visit(renderer,parentTransform,parentTransformUpdated);
 }
 
-const Color3B& TextFieldTTF::getColorSpaceHolder()
+const Color4B& TextFieldTTF::getColorSpaceHolder()
 {
     return _colorSpaceHolder;
 }
 
 void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
+{
+    _colorSpaceHolder.r = color.r;
+    _colorSpaceHolder.g = color.g;
+    _colorSpaceHolder.b = color.b;
+    _colorSpaceHolder.a = 255;
+}
+
+void TextFieldTTF::setColorSpaceHolder(const Color4B& color)
 {
     _colorSpaceHolder = color;
 }
@@ -311,12 +324,12 @@ void TextFieldTTF::setString(const std::string &text)
     // if there is no input text, display placeholder instead
     if (! _inputText.length())
     {
-        Label::setColor(_colorSpaceHolder);
+        Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
     }
     else
     {
-        Label::setColor(_colorText);
+        Label::setTextColor(_colorText);
         Label::setString(displayText);
     }
     _charCount = _calcCharCount(_inputText.c_str());
@@ -333,6 +346,7 @@ void TextFieldTTF::setPlaceHolder(const std::string& text)
     _placeHolder = text;
     if (! _inputText.length())
     {
+        Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
     }
 }
@@ -348,7 +362,7 @@ void TextFieldTTF::setSecureTextEntry(bool value)
     if (_secureTextEntry != value)
     {
         _secureTextEntry = value;
-        setString(getString());
+        setString(_inputText);
     }
 }
 
