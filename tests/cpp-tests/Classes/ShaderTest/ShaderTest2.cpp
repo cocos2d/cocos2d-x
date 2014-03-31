@@ -278,11 +278,16 @@ protected:
     virtual void buildCustomUniforms();
     virtual void setCustomUniforms();
 protected:
-    Point blur_;
-    GLfloat    sub_[4];
+    int       _blurRadius;
+    Point     _pixelSize;
     
-    GLuint    blurLocation;
-    GLuint    subLocation;
+    int       _samplingRadius;
+    float     _scale;
+    float     _cons;
+    float     _weightSum;
+    
+    GLuint    pixelSizeLocation;
+    GLuint    coefficientLocation;
 };
 
 BlurSprite::BlurSprite()
@@ -293,28 +298,56 @@ BlurSprite::BlurSprite()
 void BlurSprite::buildCustomUniforms()
 {
     auto s = getTexture()->getContentSizeInPixels();
-    
-    blur_ = Point(1/s.width, 1/s.height);
-    sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
+    _blurRadius = 0;
+    _pixelSize = Point(1/s.width, 1/s.height);
+    _samplingRadius = 0;
 
+    setBlurSize(3.0f);
     auto program = getShaderProgram();
-    subLocation = program->getUniformLocation("substract");
-    blurLocation = program->getUniformLocation("blurSize");
+    pixelSizeLocation = program->getUniformLocation("onePixelSize");
+    coefficientLocation = program->getUniformLocation("gaussianCoefficient");
 }
 
 void BlurSprite::setCustomUniforms()
 {
     auto program = getShaderProgram();
-    program->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
-    program->setUniformLocationWith4fv(subLocation, sub_, 1);
+    program->setUniformLocationWith2f(pixelSizeLocation, _pixelSize.x, _pixelSize.y);
+    program->setUniformLocationWith4f(coefficientLocation, _samplingRadius, _scale,_cons,_weightSum);
 }
 
 void BlurSprite::setBlurSize(float f)
 {
-    auto s = getTexture()->getContentSizeInPixels();
+    if(_blurRadius == (int)f)
+        return;
+    _blurRadius = (int)f;
     
-    blur_ = Point(1/s.width, 1/s.height);
-    blur_ = blur_ * f;
+    _samplingRadius = _blurRadius;
+    if (_samplingRadius > 10)
+    {
+        _samplingRadius = 10;
+    }
+    if (_blurRadius > 0)
+    {
+        float sigma = _blurRadius / 2.0f;
+        _scale = -0.5f / (sigma * sigma);
+        _cons = -1.0f * _scale / 3.141592f;
+        _weightSum = -_cons;
+        
+        float weight;
+        int squareX;
+        for(int dx = 0; dx <= _samplingRadius; ++dx)
+        {
+            squareX = dx * dx;
+            weight = _cons * exp(squareX * _scale);
+            _weightSum += 2.0 * weight;
+            for (int dy = 1; dy <= _samplingRadius; ++dy)
+            {
+                weight = _cons * exp((squareX + dy * dy) * _scale);
+                _weightSum += 4.0 * weight;
+            }
+        }
+    }
+    log("_blurRadius:%d",_blurRadius);
 }
 
 class NoiseSprite : public ShaderSprite, public ShaderSpriteCreator<NoiseSprite>

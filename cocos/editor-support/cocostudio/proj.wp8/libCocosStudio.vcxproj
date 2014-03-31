@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{51E5736E-E1A3-4C94-ABB7-E92ECEF9C12E}</ProjectGuid>
+    <RootNamespace>libCocosStudio</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
+    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
+    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
+    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
+    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="Windows">
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+    <Reference Include="platform.winmd">
+      <IsWinMDFile>true</IsWinMDFile>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CCActionFrame.cpp" />
+    <ClCompile Include="..\CCActionFrameEasing.cpp" />
+    <ClCompile Include="..\CCActionManagerEx.cpp" />
+    <ClCompile Include="..\CCActionNode.cpp" />
+    <ClCompile Include="..\CCActionObject.cpp" />
+    <ClCompile Include="..\CCArmature.cpp" />
+    <ClCompile Include="..\CCArmatureAnimation.cpp" />
+    <ClCompile Include="..\CCArmatureDataManager.cpp" />
+    <ClCompile Include="..\CCArmatureDefine.cpp" />
+    <ClCompile Include="..\CCBatchNode.cpp" />
+    <ClCompile Include="..\CCBone.cpp" />
+    <ClCompile Include="..\CCColliderDetector.cpp" />
+    <ClCompile Include="..\CCComAttribute.cpp" />
+    <ClCompile Include="..\CCComAudio.cpp" />
+    <ClCompile Include="..\CCComController.cpp" />
+    <ClCompile Include="..\CCComRender.cpp" />
+    <ClCompile Include="..\CCDataReaderHelper.cpp" />
+    <ClCompile Include="..\CCDatas.cpp" />
+    <ClCompile Include="..\CCDecorativeDisplay.cpp" />
+    <ClCompile Include="..\CCDisplayFactory.cpp" />
+    <ClCompile Include="..\CCDisplayManager.cpp" />
+    <ClCompile Include="..\CCInputDelegate.cpp" />
+    <ClCompile Include="..\CCProcessBase.cpp" />
+    <ClCompile Include="..\CCSGUIReader.cpp" />
+    <ClCompile Include="..\CCSkin.cpp" />
+    <ClCompile Include="..\CCSpriteFrameCacheHelper.cpp" />
+    <ClCompile Include="..\CCSSceneReader.cpp" />
+    <ClCompile Include="..\CCTransformHelp.cpp" />
+    <ClCompile Include="..\CCTween.cpp" />
+    <ClCompile Include="..\CCUtilMath.cpp" />
+    <ClCompile Include="..\DictionaryHelper.cpp" />
+    <ClCompile Include="..\ObjectFactory.cpp" />
+    <ClCompile Include="..\TriggerBase.cpp" />
+    <ClCompile Include="..\TriggerMng.cpp" />
+    <ClCompile Include="..\TriggerObj.cpp" />
+    <ClCompile Include="..\WidgetReader\ButtonReader\ButtonReader.cpp" />
+    <ClCompile Include="..\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
+    <ClCompile Include="..\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="..\WidgetReader\ListViewReader\ListViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
+    <ClCompile Include="..\WidgetReader\PageViewReader\PageViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\ScrollViewReader\ScrollViewReader.cpp" />
+    <ClCompile Include="..\WidgetReader\SliderReader\SliderReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
+    <ClCompile Include="..\WidgetReader\TextReader\TextReader.cpp" />
+    <ClCompile Include="..\WidgetReader\WidgetReader.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\external\json\document.h" />
+    <ClInclude Include="..\..\..\..\external\json\filestream.h" />
+    <ClInclude Include="..\..\..\..\external\json\internal\pow10.h" />
+    <ClInclude Include="..\..\..\..\external\json\internal\stack.h" />
+    <ClInclude Include="..\..\..\..\external\json\internal\strfunc.h" />
+    <ClInclude Include="..\..\..\..\external\json\prettywriter.h" />
+    <ClInclude Include="..\..\..\..\external\json\rapidjson.h" />
+    <ClInclude Include="..\..\..\..\external\json\reader.h" />
+    <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
+    <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\CCActionFrame.h" />
+    <ClInclude Include="..\CCActionFrameEasing.h" />
+    <ClInclude Include="..\CCActionManagerEx.h" />
+    <ClInclude Include="..\CCActionNode.h" />
+    <ClInclude Include="..\CCActionObject.h" />
+    <ClInclude Include="..\CCArmature.h" />
+    <ClInclude Include="..\CCArmatureAnimation.h" />
+    <ClInclude Include="..\CCArmatureDataManager.h" />
+    <ClInclude Include="..\CCArmatureDefine.h" />
+    <ClInclude Include="..\CCBatchNode.h" />
+    <ClInclude Include="..\CCBone.h" />
+    <ClInclude Include="..\CCColliderDetector.h" />
+    <ClInclude Include="..\CCComAttribute.h" />
+    <ClInclude Include="..\CCComAudio.h" />
+    <ClInclude Include="..\CCComBase.h" />
+    <ClInclude Include="..\CCComController.h" />
+    <ClInclude Include="..\CCComRender.h" />
+    <ClInclude Include="..\CCDataReaderHelper.h" />
+    <ClInclude Include="..\CCDatas.h" />
+    <ClInclude Include="..\CCDecorativeDisplay.h" />
+    <ClInclude Include="..\CCDisplayFactory.h" />
+    <ClInclude Include="..\CCDisplayManager.h" />
+    <ClInclude Include="..\CCInputDelegate.h" />
+    <ClInclude Include="..\CCProcessBase.h" />
+    <ClInclude Include="..\CCSGUIReader.h" />
+    <ClInclude Include="..\CCSkin.h" />
+    <ClInclude Include="..\CCSpriteFrameCacheHelper.h" />
+    <ClInclude Include="..\CCSSceneReader.h" />
+    <ClInclude Include="..\CCTransformHelp.h" />
+    <ClInclude Include="..\CCTween.h" />
+    <ClInclude Include="..\CCUtilMath.h" />
+    <ClInclude Include="..\DictionaryHelper.h" />
+    <ClInclude Include="..\ObjectFactory.h" />
+    <ClInclude Include="..\TriggerBase.h" />
+    <ClInclude Include="..\TriggerMng.h" />
+    <ClInclude Include="..\TriggerObj.h" />
+    <ClInclude Include="..\WidgetReader\ButtonReader\ButtonReader.h" />
+    <ClInclude Include="..\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
+    <ClInclude Include="..\WidgetReader\ImageViewReader\ImageViewReader.h" />
+    <ClInclude Include="..\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="..\WidgetReader\ListViewReader\ListViewReader.h" />
+    <ClInclude Include="..\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
+    <ClInclude Include="..\WidgetReader\PageViewReader\PageViewReader.h" />
+    <ClInclude Include="..\WidgetReader\ScrollViewReader\ScrollViewReader.h" />
+    <ClInclude Include="..\WidgetReader\SliderReader\SliderReader.h" />
+    <ClInclude Include="..\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
+    <ClInclude Include="..\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
+    <ClInclude Include="..\WidgetReader\TextFieldReader\TextFieldReader.h" />
+    <ClInclude Include="..\WidgetReader\TextReader\TextReader.h" />
+    <ClInclude Include="..\WidgetReader\WidgetReader.h" />
+    <ClInclude Include="..\WidgetReader\WidgetReaderProtocol.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+</Project>
