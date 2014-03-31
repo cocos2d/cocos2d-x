@@ -67,7 +67,7 @@ simple macro that swaps 2 variables
 }
 
 /**@def CC_FLOAT_EQUALITY
- *
+ * compare two float's quality
  */
 #define CC_FLOAT_EQUALITY(x,y) \
 (fabs((x) - (y)) <= std::numeric_limits<float>::epsilon())
