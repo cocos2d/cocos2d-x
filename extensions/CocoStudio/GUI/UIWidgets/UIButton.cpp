@@ -391,12 +391,14 @@ void Button::onPressStateChangedToNormal()
     }
     else
     {
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
         if (_scale9Enabled)
         {
-            updateFlippedX();
-            updateFlippedY();
+            updateTextureRGBA();
+        }
+        else
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
         }
     }
 }
@@ -422,8 +424,15 @@ void Button::onPressStateChangedToPressed()
         _buttonNormalRenderer->setVisible(true);
         _buttonClickedRenderer->setVisible(true);
         _buttonDisableRenderer->setVisible(false);
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize + 0.1f, _normalTextureScaleYInSize + 0.1f);
+        if (_scale9Enabled)
+        {
+            dynamic_cast<CCRGBAProtocol*>(_buttonNormalRenderer)->setColor(ccGRAY);
+        }
+        else
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize + 0.1f, _normalTextureScaleYInSize + 0.1f);
+        }
     }
 }
 
