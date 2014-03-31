@@ -255,6 +255,7 @@ public:
      */
     void listenToFontAtlasPurge(EventCustom *event);
 
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
 protected:
     void onDraw(const kmMat4& transform, bool transformUpdated);
 
@@ -378,6 +379,7 @@ protected:
     Color4F _textColorF;
 
     bool _clipEnabled;
+    bool _blendFuncDirty;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
