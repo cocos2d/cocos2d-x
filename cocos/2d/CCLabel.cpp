@@ -77,7 +77,7 @@ Label* Label::create(const std::string& text, const std::string& fontName, float
     {
         do 
         {
-            if (fontName.find('.') != fontName.npos)
+            if (FileUtils::getInstance()->isFileExist(fontName))
             {
                 TTFConfig ttfConfig(fontName.c_str(),fontSize,GlyphCollection::DYNAMIC);
                 if (ret->setTTFConfig(ttfConfig))
