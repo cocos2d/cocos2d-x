@@ -307,6 +307,11 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- @function [parent=#Label] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendfunc
+        
+--------------------------------
 -- @function [parent=#Label] visit 
 -- @param self
 -- @param #cc.Renderer renderer
