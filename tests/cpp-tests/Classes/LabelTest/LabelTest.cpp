@@ -359,19 +359,19 @@ LabelTTFAlignment::LabelTTFAlignment()
                                           Size(256, 32), TextHAlignment::LEFT);
     
     ttf0->setPosition(Point(s.width/2,(s.height/6)*2));
-    ttf0->setAnchorPoint(Point(0.5f,0.5f));
+    ttf0->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(ttf0);
     
     auto ttf1 = LabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
                                       Size(245, 32), TextHAlignment::CENTER);
     ttf1->setPosition(Point(s.width/2,(s.height/6)*3));
-    ttf1->setAnchorPoint(Point(0.5f,0.5f));
+    ttf1->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(ttf1);
 
     auto ttf2 = LabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
                                           Size(245, 32), TextHAlignment::RIGHT);
     ttf2->setPosition(Point(s.width/2,(s.height/6)*4));
-    ttf2->setAnchorPoint(Point(0.5f,0.5f));
+    ttf2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(ttf2);
 }
 
@@ -405,11 +405,11 @@ Atlas3::Atlas3()
     auto label1 = LabelBMFont::create("Test",  "fonts/bitmapFontTest2.fnt");
     
     // testing anchors
-    label1->setAnchorPoint( Point(0,0) );
+    label1->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
     addChild(label1, 0, kTagBitmapAtlas1);
     auto fade = FadeOut::create(1.0f);
     auto fade_in = fade->reverse();
-    auto seq = Sequence::create(fade, fade_in, NULL);
+    auto seq = Sequence::create(fade, fade_in, nullptr);
     auto repeat = RepeatForever::create(seq);
     label1->runAction(repeat);
     
@@ -420,7 +420,7 @@ Atlas3::Atlas3()
     // Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
     auto label2 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
-    label2->setAnchorPoint( Point(0.5f, 0.5f) );
+    label2->setAnchorPoint( Point::ANCHOR_MIDDLE );
     label2->setColor( Color3B::RED );
     addChild(label2, 0, kTagBitmapAtlas2);
     auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
@@ -431,7 +431,7 @@ Atlas3::Atlas3()
     
     auto label3 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
-    label3->setAnchorPoint( Point(1,1) );
+    label3->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
     addChild(label3, 0, kTagBitmapAtlas3);
        
     label1->setPosition( VisibleRect::leftBottom() );
@@ -491,7 +491,7 @@ Atlas4::Atlas4()
     auto s = Director::getInstance()->getWinSize();
     
     label->setPosition( Point(s.width/2, s.height/2) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
     
     
     auto BChar = (Sprite*) label->getChildByTag(0);
@@ -593,7 +593,7 @@ Atlas5::Atlas5()
     auto s = Director::getInstance()->getWinSize();
     
     label->setPosition( Point(s.width/2, s.height/2) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
 }
 
 std::string Atlas5::title() const
@@ -625,17 +625,17 @@ Atlas6::Atlas6()
     label = LabelBMFont::create("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/2+50) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) ) ;
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE ) ;
     
     label = LabelBMFont::create("fafefifofu", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/2) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
 
     label = LabelBMFont::create("aeiou", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/2-50) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) ); 
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE ); 
 }
 
 std::string Atlas6::title() const
@@ -663,23 +663,23 @@ AtlasBitmapColor::AtlasBitmapColor()
 {
     auto s = Director::getInstance()->getWinSize();
     
-    LabelBMFont* label = NULL;
+    LabelBMFont* label = nullptr;
     label = LabelBMFont::create("Blue", "fonts/bitmapFontTest5.fnt");
     label->setColor( Color3B::BLUE );
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/4) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
 
     label = LabelBMFont::create("Red", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, 2*s.height/4) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
     label->setColor( Color3B::RED );
 
     label = LabelBMFont::create("G", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, 3*s.height/4) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
     label->setColor( Color3B::GREEN );
     label->setString("Green");
 }
@@ -720,7 +720,7 @@ AtlasFastBitmap::AtlasFastBitmap()
 
             auto p = Point( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
             label->setPosition( p );
-            label->setAnchorPoint(Point(0.5f, 0.5f));
+            label->setAnchorPoint(Point::ANCHOR_MIDDLE);
         }
 }
 
@@ -751,7 +751,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
 
     // Left
     auto label1 = LabelBMFont::create(" Multi line\nLeft", "fonts/bitmapFontTest3.fnt");
-    label1->setAnchorPoint(Point(0,0));
+    label1->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     addChild(label1, 0, kTagBitmapAtlas1);
 
     s = label1->getContentSize();
@@ -760,7 +760,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
 
     // Center
     auto label2 = LabelBMFont::create("Multi line\nCenter", "fonts/bitmapFontTest3.fnt");
-    label2->setAnchorPoint(Point(0.5f, 0.5f));
+    label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(label2, 0, kTagBitmapAtlas2);
 
     s= label2->getContentSize();
@@ -768,7 +768,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
 
     // right
     auto label3 = LabelBMFont::create("Multi line\nRight\nThree lines Three", "fonts/bitmapFontTest3.fnt");
-    label3->setAnchorPoint(Point(1, 1));
+    label3->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
     addChild(label3, 0, kTagBitmapAtlas3);
 
     s = label3->getContentSize();
@@ -888,7 +888,7 @@ LabelAtlasHD::LabelAtlasHD()
 
     // LabelBMFont
     auto label1 = LabelAtlas::create("TESTING RETINA DISPLAY", "fonts/larabie-16.plist");
-    label1->setAnchorPoint(Point(0.5f, 0.5f));
+    label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
 
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/2));
@@ -952,7 +952,7 @@ LabelTTFTest::LabelTTFTest()
     auto s = Director::getInstance()->getWinSize();
 
     auto colorLayer = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
-    colorLayer->setAnchorPoint(Point(0,0));
+    colorLayer->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     colorLayer->setPosition(Point((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2));
 
     this->addChild(colorLayer);
@@ -1004,7 +1004,7 @@ void  LabelTTFTest::updateAlignment()
                                   blockSize, _horizAlign, _vertAlign);
     _label->retain();
 
-    _label->setAnchorPoint(Point(0,0));
+    _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     _label->setPosition(Point((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 ));
 
     this->addChild(_label);
@@ -1332,7 +1332,7 @@ void BitmapFontMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& tou
 
     float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
 
-    static_cast<LabelBMFont*>(_labelShouldRetain)->setWidth(labelWidth);
+    _labelShouldRetain->setWidth(labelWidth);
 }
 
 void BitmapFontMultiLineAlignment::snapArrowsToEdge()
