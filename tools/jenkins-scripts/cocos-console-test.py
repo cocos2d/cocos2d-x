@@ -253,6 +253,10 @@ EMAIL_KEYS={
 	5:'NEED_SEND_EMAIL'
 }
 OBJ_EMAIL_INFO = {}
+for key in EMAIL_KEYS:
+	if os.environ.has_key(EMAIL_KEYS[key]):
+		OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = os.environ[EMAIL_KEYS[key]]
+print 'will send email.', OBJ_EMAIL_INFO
 def send_mail(to_list,sub,title,content):  #to_list: reciv; sub: title; content: content
 	mail_user = OBJ_EMAIL_INFO[ EMAIL_KEYS[1] ]
 	mail_postfix = OBJ_EMAIL_INFO[ EMAIL_KEYS[3] ]
@@ -282,11 +286,6 @@ def send_mail(to_list,sub,title,content):  #to_list: reciv; sub: title; content:
 def sendEmail(msg):
 	# get userinfo
 	print 'will get env info.'
-	global OBJ_EMAIL_INFO
-	for key in EMAIL_KEYS:
-		if os.environ.has_key(EMAIL_KEYS[key]):
-			OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = os.environ[EMAIL_KEYS[key]]
-	print 'will send email.', OBJ_EMAIL_INFO
 	send_mail(OBJ_EMAIL_INFO[EMAIL_KEYS[4]], "cocos-console-test result", 'for error.', msg)
 
 def main():
