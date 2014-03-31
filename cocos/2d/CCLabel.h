@@ -368,10 +368,11 @@ protected:
     GLuint _uniformTextColor;
     CustomCommand _customCommand;   
 
+    bool    _shadowDirty;
     bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
-    kmMat4  _parentTransform;
+    kmMat4  _shadowTransform;
     Color3B _shadowColor;
     Sprite*   _shadowNode;
 
