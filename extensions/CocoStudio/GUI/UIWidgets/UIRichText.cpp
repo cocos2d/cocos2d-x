@@ -446,6 +446,11 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
         Widget::ignoreContentAdaptWithSize(ignore);
     }
 }
+    
+std::string RichText::getDescription() const
+{
+    return "RichText";
+}
 
 }
 
