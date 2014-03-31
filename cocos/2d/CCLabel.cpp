@@ -37,6 +37,7 @@
 #include "CCEventDispatcher.h"
 #include "CCEventType.h"
 #include "CCEventCustom.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -76,7 +77,7 @@ Label* Label::create(const std::string& text, const std::string& fontName, float
     {
         do 
         {
-            if (fontName.find('.') != fontName.npos)
+            if (FileUtils::getInstance()->isFileExist(fontName))
             {
                 TTFConfig ttfConfig(fontName.c_str(),fontSize,GlyphCollection::DYNAMIC);
                 if (ret->setTTFConfig(ttfConfig))
@@ -344,6 +345,7 @@ void Label::reset()
 
     _shadowEnabled = false;
     _clipEnabled = false;
+    _blendFuncDirty = false;
 }
 
 void Label::updateShaderProgram()
@@ -737,9 +739,6 @@ void Label::updateQuads()
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
             _reusedRect.origin.y    = letterDef.V;
-
-            if(_reusedLetter->getBatchNode() != _batchNodes[letterDef.textureID])
-                _reusedLetter->setBatchNode(_batchNodes[letterDef.textureID]);
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
@@ -1015,6 +1014,10 @@ void Label::createSpriteWithFontDefinition()
     _textSprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
+    if (_blendFuncDirty)
+    {
+        _textSprite->setBlendFunc(_blendFunc);
+    }
 
     Node::addChild(_textSprite,0,Node::INVALID_TAG);
 
@@ -1053,7 +1056,7 @@ void Label::updateContent()
 
 void Label::updateFont()
 {
-    if (_fontName.find('.') != _fontName.npos)
+    if (FileUtils::getInstance()->isFileExist(_fontName))
     {
         _fontConfig.fontFilePath = _fontName;
         _fontConfig.fontSize = _fontSize;
@@ -1086,6 +1089,10 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     if (_shadowEnabled && _shadowNode == nullptr)
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
+        if (_shadowNode)
+        {
+            _shadowNode->setBlendFunc(_blendFunc);
+        }
         _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setColor(_shadowColor);
         _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);
@@ -1391,4 +1398,17 @@ void Label::listenToFontAtlasPurge(EventCustom *event)
     }
 }
 
+void Label::setBlendFunc(const BlendFunc &blendFunc)
+{
+    _blendFunc = blendFunc;
+    _blendFuncDirty = true;
+    if (_textSprite)
+    {
+        _textSprite->setBlendFunc(blendFunc);
+        if (_shadowNode)
+        {
+            _shadowNode->setBlendFunc(blendFunc);
+        }
+    }
+}
 NS_CC_END

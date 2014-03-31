@@ -206,7 +206,7 @@ public:
     /** Sets the text color
      *
      */
-    void setTextColor(const Color4B &color);
+    virtual void setTextColor(const Color4B &color);
 
     const Color4B& getTextColor() const { return _textColor;}
 
@@ -255,6 +255,7 @@ public:
      */
     void listenToFontAtlasPurge(EventCustom *event);
 
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
 protected:
     void onDraw(const kmMat4& transform, bool transformUpdated);
 
@@ -372,12 +373,13 @@ protected:
     int     _shadowBlurRadius;
     kmMat4  _parentTransform;
     Color3B _shadowColor;
-    Node*   _shadowNode;
+    Sprite*   _shadowNode;
 
     Color4B _textColor;
     Color4F _textColorF;
 
     bool _clipEnabled;
+    bool _blendFuncDirty;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

@@ -1922,6 +1922,14 @@ local function PerformanceMainLayer()
         item:registerScriptTapHandler(menuCallback)
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i)
+        if i == MAX_COUNT then
+            local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+            if (cc.PLATFORM_OS_IPHONE ~= targetPlatform) and (cc.PLATFORM_OS_IPAD ~= targetPlatform) and 
+               (cc.PLATFORM_OS_ANDROID ~= targetPlatform) and (cc.PLATFORM_OS_WINDOWS ~= targetPlatform) and
+               (cc.PLATFORM_OS_MAC ~= targetPlatform) then
+               item:setEnabled(false)
+            end
+        end
     end
 
     layer:addChild(menu)

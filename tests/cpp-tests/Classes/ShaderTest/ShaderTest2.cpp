@@ -302,7 +302,7 @@ void BlurSprite::buildCustomUniforms()
     _pixelSize = Point(1/s.width, 1/s.height);
     _samplingRadius = 0;
 
-    setBlurSize(10.0f);
+    setBlurSize(3.0f);
     auto program = getShaderProgram();
     pixelSizeLocation = program->getUniformLocation("onePixelSize");
     coefficientLocation = program->getUniformLocation("gaussianCoefficient");
