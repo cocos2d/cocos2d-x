@@ -65,6 +65,26 @@
 		15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		15C90B3718E66BE000D69802 /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAA918DA8B6C00F6518C /* ftp.lua */; };
+		15C90B3A18E66BE200D69802 /* ftp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAA918DA8B6C00F6518C /* ftp.lua */; };
+		15C90B3B18E66BEB00D69802 /* headers.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAA18DA8B6C00F6518C /* headers.lua */; };
+		15C90B3C18E66BEC00D69802 /* headers.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAA18DA8B6C00F6518C /* headers.lua */; };
+		15C90B3D18E66BF100D69802 /* http.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAB18DA8B6C00F6518C /* http.lua */; };
+		15C90B3E18E66BF200D69802 /* http.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAB18DA8B6C00F6518C /* http.lua */; };
+		15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAC18DA8B6C00F6518C /* ltn12.lua */; };
+		15C90B4018E66C0D00D69802 /* ltn12.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAC18DA8B6C00F6518C /* ltn12.lua */; };
+		15C90B4118E66C1100D69802 /* mbox.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAD18DA8B6C00F6518C /* mbox.lua */; };
+		15C90B4218E66C1200D69802 /* mbox.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAD18DA8B6C00F6518C /* mbox.lua */; };
+		15C90B4318E66C1700D69802 /* mime.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAE18DA8B6C00F6518C /* mime.lua */; };
+		15C90B4418E66C1800D69802 /* mime.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAE18DA8B6C00F6518C /* mime.lua */; };
+		15C90B4518E66C1E00D69802 /* smtp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAF18DA8B6C00F6518C /* smtp.lua */; };
+		15C90B4618E66C1F00D69802 /* smtp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAAF18DA8B6C00F6518C /* smtp.lua */; };
+		15C90B4718E66C2400D69802 /* socket.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB018DA8B6C00F6518C /* socket.lua */; };
+		15C90B4818E66C2500D69802 /* socket.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB018DA8B6C00F6518C /* socket.lua */; };
+		15C90B4918E66C2A00D69802 /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
+		15C90B4A18E66C2B00D69802 /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
+		15C90B4B18E66C2F00D69802 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
+		15C90B4C18E66C3100D69802 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
 		1A0EE2A118CDF6DA004CD58F /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
 		1A0EE2A218CDF6DA004CD58F /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
 		1A0EE2A418CDF6DA004CD58F /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
@@ -3943,6 +3963,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					1ABCA2CC18CD93580087CE3A = {
+						DevelopmentTeam = NQ596S94Q5;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_tests" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4211,6 +4236,7 @@
 				1AC35DBB18CEE65100F37B72 /* components in Resources */,
 				1AC35DE218CEE65900F37B72 /* effect2.ogg in Resources */,
 				1ABCA39A18CD9E180087CE3A /* StudioConstants.lua in Resources */,
+				15C90B4318E66C1700D69802 /* mime.lua in Resources */,
 				1AC35DB118CEE5DA00F37B72 /* InfoPlist.strings in Resources */,
 				1AC35DDD18CEE65900F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1ABCA39218CD9E180087CE3A /* luaj.lua in Resources */,
@@ -4225,14 +4251,19 @@
 				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
 				1ABCA38818CD9E180087CE3A /* DeprecatedOpenglEnum.lua in Resources */,
 				1AC35DE118CEE65900F37B72 /* background.ogg in Resources */,
+				15C90B4B18E66C2F00D69802 /* url.lua in Resources */,
 				1AC35DE718CEE65900F37B72 /* commonly_used_words.txt in Resources */,
 				1ABCA37A18CD9E180087CE3A /* CCBReaderLoad.lua in Resources */,
 				1AC35DDF18CEE65900F37B72 /* music.mid in Resources */,
 				1AC35D7518CEE58500F37B72 /* src in Resources */,
 				1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */,
 				C08689C218D370C90093E810 /* background.caf in Resources */,
+				15C90B4918E66C2A00D69802 /* tp.lua in Resources */,
 				1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */,
 				1ABCA38E18CD9E180087CE3A /* GuiConstants.lua in Resources */,
+				15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */,
+				15C90B4718E66C2400D69802 /* socket.lua in Resources */,
+				15C90B3A18E66BE200D69802 /* ftp.lua in Resources */,
 				1ABCA37E18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
 				1AC35DE518CEE65900F37B72 /* Hello.png in Resources */,
 				1ABCA38618CD9E180087CE3A /* DeprecatedEnum.lua in Resources */,
@@ -4240,9 +4271,11 @@
 				1AC35DE418CEE65900F37B72 /* fps_images.png in Resources */,
 				1AC35DC418CEE65100F37B72 /* Particles in Resources */,
 				1AC35DB918CEE65100F37B72 /* ccb in Resources */,
+				15C90B4118E66C1100D69802 /* mbox.lua in Resources */,
 				1ABCA38A18CD9E180087CE3A /* DrawPrimitives.lua in Resources */,
 				1AC35DB318CEE5DA00F37B72 /* Icon.icns in Resources */,
 				1AC35DE318CEE65900F37B72 /* fileLookup.plist in Resources */,
+				15C90B3D18E66BF100D69802 /* http.lua in Resources */,
 				1AC35DC518CEE65100F37B72 /* scenetest in Resources */,
 				1AC35DE618CEE65900F37B72 /* effect1.raw in Resources */,
 				1ABCA39818CD9E180087CE3A /* OpenglConstants.lua in Resources */,
@@ -4253,11 +4286,13 @@
 				1ABCA39018CD9E180087CE3A /* json.lua in Resources */,
 				1AC35DE818CEE65900F37B72 /* background-music-aac.wav in Resources */,
 				1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */,
+				15C90B3B18E66BEB00D69802 /* headers.lua in Resources */,
 				1ABCA38218CD9E180087CE3A /* Deprecated.lua in Resources */,
 				1ABCA38C18CD9E180087CE3A /* extern.lua in Resources */,
 				1AC35DC918CEE65100F37B72 /* zwoptex in Resources */,
 				1AC35DBD18CEE65100F37B72 /* extensions in Resources */,
 				1AC35DC718CEE65100F37B72 /* spine in Resources */,
+				15C90B4518E66C1E00D69802 /* smtp.lua in Resources */,
 				1AC35DB718CEE65100F37B72 /* animations in Resources */,
 				1ABCA38418CD9E180087CE3A /* DeprecatedClass.lua in Resources */,
 				1ABCA39618CD9E180087CE3A /* Opengl.lua in Resources */,
@@ -4268,7 +4303,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15C90B4418E66C1800D69802 /* mime.lua in Resources */,
 				1AC35DD518CEE65200F37B72 /* ipadhd in Resources */,
+				15C90B4C18E66C3100D69802 /* url.lua in Resources */,
 				1AC35DD618CEE65200F37B72 /* Misc in Resources */,
 				1ABCA37B18CD9E180087CE3A /* CCBReaderLoad.lua in Resources */,
 				1AC35DF718CEE65B00F37B72 /* effect1.wav in Resources */,
@@ -4280,6 +4317,7 @@
 				1AC35DD218CEE65200F37B72 /* hd in Resources */,
 				1AC35DD718CEE65200F37B72 /* Particles in Resources */,
 				1AC35D9D18CEE5D100F37B72 /* Icon-120.png in Resources */,
+				15C90B3E18E66BF200D69802 /* http.lua in Resources */,
 				1AC35DA018CEE5D100F37B72 /* Icon-57.png in Resources */,
 				1ABCA37F18CD9E180087CE3A /* Cocos2dConstants.lua in Resources */,
 				1AC35DF118CEE65B00F37B72 /* fileLookup.plist in Resources */,
@@ -4289,16 +4327,20 @@
 				1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */,
 				1AC35DCB18CEE65200F37B72 /* armature in Resources */,
+				15C90B4218E66C1200D69802 /* mbox.lua in Resources */,
 				1AC35D9B18CEE5D100F37B72 /* Default@2x.png in Resources */,
+				15C90B3718E66BE000D69802 /* ftp.lua in Resources */,
 				1AC35DF218CEE65B00F37B72 /* fps_images.png in Resources */,
 				1ABCA38318CD9E180087CE3A /* Deprecated.lua in Resources */,
 				1AC35DD818CEE65200F37B72 /* scenetest in Resources */,
 				1AC35DCE18CEE65200F37B72 /* components in Resources */,
 				1AC35D7618CEE58500F37B72 /* src in Resources */,
+				15C90B4A18E66C2B00D69802 /* tp.lua in Resources */,
 				1AC35DF618CEE65B00F37B72 /* background-music-aac.wav in Resources */,
 				1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */,
 				1ABCA38918CD9E180087CE3A /* DeprecatedOpenglEnum.lua in Resources */,
 				1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
+				15C90B4618E66C1F00D69802 /* smtp.lua in Resources */,
 				298B28FB18CFF9EC00C1920F /* cocosui in Resources */,
 				1AC35DD418CEE65200F37B72 /* ipad in Resources */,
 				1AC35DED18CEE65B00F37B72 /* music.mid in Resources */,
@@ -4312,8 +4354,11 @@
 				1AC35DF518CEE65B00F37B72 /* commonly_used_words.txt in Resources */,
 				1AC35DCA18CEE65200F37B72 /* animations in Resources */,
 				1AC35DA118CEE5D100F37B72 /* Icon-72.png in Resources */,
+				15C90B4018E66C0D00D69802 /* ltn12.lua in Resources */,
 				1AC35DA218CEE5D100F37B72 /* Icon-76.png in Resources */,
+				15C90B4818E66C2500D69802 /* socket.lua in Resources */,
 				1ABCA38718CD9E180087CE3A /* DeprecatedEnum.lua in Resources */,
+				15C90B3C18E66BEC00D69802 /* headers.lua in Resources */,
 				1AC35DF418CEE65B00F37B72 /* effect1.raw in Resources */,
 				1AC35DD918CEE65200F37B72 /* Shaders in Resources */,
 				1AC35DCF18CEE65200F37B72 /* configs in Resources */,
@@ -5321,12 +5366,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -5337,12 +5384,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/2d/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";

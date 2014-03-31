@@ -170,18 +170,18 @@ def copy_resources(target, app_android_root):
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
         copy_files(resources_dir, assets_dir)
 
+        resources_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
+        for root, dirs, files in os.walk(resources_dir):
+            for f in files:
+                if os.path.splitext(f)[1] == '.lua':
+                    fall = os.path.join(root,f)
+                    os.system('cp ' + fall+ ' ' + assets_dir)
+
         # lua-tests shared resources with cpp-tests
         if target == "lua-tests":
             resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
             copy_files(resources_dir, assets_res_dir)
 
-        if target == "lua-empty-test":
-            resources_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
-            for root, dirs, files in os.walk(resources_dir):
-                for f in files:
-                    if os.path.splitext(f)[1] == '.lua':
-                        fall = os.path.join(root,f)
-                        os.system('cp ' + fall+ ' ' + assets_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
 
