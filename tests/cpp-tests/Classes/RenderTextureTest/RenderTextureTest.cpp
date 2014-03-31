@@ -257,6 +257,7 @@ void ScreenshotTest::saveImage(Ref *pSender){
     
     auto callback = [&](const std::string& fullPath){
         auto sprite = Sprite::create(fullPath);
+        CCASSERT(sprite!=nullptr, "Failed to create sprite.");
         addChild(sprite);
         sprite->setScale(0.3f);
         sprite->setPosition(Point(40, 40));

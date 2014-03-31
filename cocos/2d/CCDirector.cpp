@@ -1064,14 +1064,14 @@ void Director::saveScreenshot(const std::string& fileName,const std::function<vo
 
     auto renderTexture = RenderTexture::create(getWinSize().width, getWinSize().height, Texture2D::PixelFormat::RGBA8888);
     renderTexture->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
-    Director::getInstance()->getRunningScene()->visit();
+    getRunningScene()->visit();
     renderTexture->end();
     renderTexture->saveToFile(fileName , format);
     auto fullPath = FileUtils::getInstance()->getWritablePath() + fileName;
     auto scheduleCallback = [&,fullPath,callback](float dt){
         callback(fullPath);
     };
-    auto _schedule = Director::getInstance()->getRunningScene()->getScheduler();
+    auto _schedule = getRunningScene()->getScheduler();
     _schedule->schedule(scheduleCallback, this, 0.0f,0,0.0f, false, "screenshot");
 }
 
