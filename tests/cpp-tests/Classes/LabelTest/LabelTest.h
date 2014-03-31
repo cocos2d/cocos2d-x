@@ -235,8 +235,8 @@ private:
     void  updateAlignment();
     const char* getCurrentAlignment();
 private:
-    LabelTTF* _plabel;
     TextHAlignment _horizAlign;
+    Node* _label;
     TextVAlignment _vertAlign;
 };
 
@@ -285,7 +285,7 @@ public:
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 
 public:
-    LabelBMFont *_labelShouldRetain;
+    Node *_labelShouldRetain;
     Sprite *_arrowsBarShouldRetain;
     Sprite *_arrowsShouldRetain;
     MenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
@@ -383,7 +383,7 @@ public:
 protected:
     void onDraw(const kmMat4 &transform, bool transformUpdated);
 private:
-    LabelBMFont *label1;
+    Node *label1;
     CustomCommand _customCommand;
 };
 
