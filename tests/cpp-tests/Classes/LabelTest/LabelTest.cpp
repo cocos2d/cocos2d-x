@@ -1253,13 +1253,13 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
     switch(item->getTag())
     {
     case LongSentences:
-        static_cast<LabelBMFont*>(_labelShouldRetain)->setString(LongSentencesExample);
+        _labelShouldRetain->setString(LongSentencesExample);
         break;
     case LineBreaks:
-        static_cast<LabelBMFont*>(_labelShouldRetain)->setString(LineBreaksExample);
+        _labelShouldRetain->setString(LineBreaksExample);
         break;
     case Mixed:
-        static_cast<LabelBMFont*>(_labelShouldRetain)->setString(MixedExample);
+        _labelShouldRetain->setString(MixedExample);
         break;
 
     default:
@@ -1279,13 +1279,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
     switch(item->getTag())
     {
     case LeftAlign:
-        static_cast<LabelBMFont*>(_labelShouldRetain)->setAlignment(TextHAlignment::LEFT);
+        _labelShouldRetain->setAlignment(TextHAlignment::LEFT);
         break;
     case CenterAlign:
-        static_cast<LabelBMFont*>(_labelShouldRetain)->setAlignment(TextHAlignment::CENTER);
+        _labelShouldRetain->setAlignment(TextHAlignment::CENTER);
         break;
     case RightAlign:
-        static_cast<LabelBMFont*>(_labelShouldRetain)->setAlignment(TextHAlignment::RIGHT);
+        _labelShouldRetain->setAlignment(TextHAlignment::RIGHT);
         break;
 
     default:
