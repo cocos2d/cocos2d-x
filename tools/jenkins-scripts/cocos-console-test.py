@@ -257,12 +257,12 @@ for key in EMAIL_KEYS:
 	if os.environ.has_key(EMAIL_KEYS[key]):
 		OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = os.environ[EMAIL_KEYS[key]]
 print 'will send email.', OBJ_EMAIL_INFO
-def send_mail(to_list,sub,title,content):  #to_list: reciv; sub: title; content: content
+def send_mail(to_list,sub,title,content):
 	mail_user = OBJ_EMAIL_INFO[ EMAIL_KEYS[1] ]
 	mail_postfix = OBJ_EMAIL_INFO[ EMAIL_KEYS[3] ]
 	mail_host = OBJ_EMAIL_INFO[ EMAIL_KEYS[0] ]
 	mail_pass = OBJ_EMAIL_INFO[ EMAIL_KEYS[2] ]
-    me = "<"+mail_user+"@"+mail_postfix+">"   #hello
+	me = "hello"+"<"+mail_user+"@"+mail_postfix+">"   #hello
     # msg = MIMEText(content,_subtype='html',_charset='gb2312')    #create
     msg = MIMEText(content,_subtype='plain',_charset='gb2312')    #create
     msg['Subject'] = sub    #set
