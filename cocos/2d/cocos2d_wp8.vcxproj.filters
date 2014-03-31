@@ -100,6 +100,9 @@
     <Filter Include="platform\winrt">
       <UniqueIdentifier>{14e6de7a-f7ef-4249-9141-abf17033d9c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xxhash">
+      <UniqueIdentifier>{3bebfe86-bdb7-4b96-8439-be8c8c1538bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -604,6 +607,9 @@
     </ClCompile>
     <ClCompile Include="platform\winrt\pch.cpp">
       <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\xxhash\xxhash.c">
+      <Filter>xxhash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1229,6 +1235,9 @@
     </ClInclude>
     <ClInclude Include="platform\winrt\pch.h">
       <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\xxhash\xxhash.h">
+      <Filter>xxhash</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

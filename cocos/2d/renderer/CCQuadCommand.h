@@ -53,7 +53,7 @@ public:
     inline bool isTranslucent() const { return true; }
 
     void generateMaterialID();
-    inline uint64_t getMaterialID() const { return _materialID; }
+    inline uint32_t getMaterialID() const { return _materialID; }
 
     inline GLuint getTextureID() const { return _textureID; }
 
@@ -68,10 +68,14 @@ public:
     inline const kmMat4& getModelView() const { return _mv; }
     
 protected:
-    uint64_t _materialID;
+    void convertIntToByteArray(int value, char* output);
+    
+    uint32_t _materialID;
 
     //Maternal
     GLuint _textureID;
+    
+    bool _dirty;
 
     GLProgram* _shader;
 
