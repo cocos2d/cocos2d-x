@@ -51,7 +51,9 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(CameraTest1),
-    CL(CameraTest2),
+    //Camera has been removed from CCNode
+    //todo add new feature to support it
+    // CL(CameraTest2),
     CL(CameraCenterTest),
     CL(Test2),
     CL(Test4),
@@ -581,12 +583,13 @@ std::string NodeToWorld3D::subtitle() const
 void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
+    _preProjection = Director::getInstance()->getProjection();
     Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(_preProjection);
     TestCocosNodeDemo::onExit();
 }
 
@@ -652,13 +655,13 @@ std::string CameraOrbitTest::subtitle() const
 void CameraZoomTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
-    
+    _preProjection = Director::getInstance()->getProjection();
     Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraZoomTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(_preProjection);
     TestCocosNodeDemo::onExit();
 }
 
@@ -717,6 +720,19 @@ std::string CameraZoomTest::subtitle() const
 // CameraCenterTest
 //
 //------------------------------------------------------------------
+void CameraCenterTest::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+    _preProjection = Director::getInstance()->getProjection();
+    Director::getInstance()->setProjection(Director::Projection::_3D);
+}
+
+void CameraCenterTest::onExit()
+{
+    TestCocosNodeDemo::onEnter();
+    Director::getInstance()->setProjection(_preProjection);
+}
+
 CameraCenterTest::CameraCenterTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -1029,13 +1045,14 @@ void MySprite::onDraw(const kmMat4 &transform, bool transformUpdated)
 void CameraTest1::onEnter()
 {
     TestCocosNodeDemo::onEnter();
+    _preProjection = Director::getInstance()->getProjection();
     Director::getInstance()->setProjection(Director::Projection::_3D);
     Director::getInstance()->setDepthTest(true);
 }
 
 void CameraTest1::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(_preProjection);
     TestCocosNodeDemo::onExit();
 }
 
@@ -1075,13 +1092,14 @@ std::string CameraTest1::subtitle() const
 void CameraTest2::onEnter()
 {
     TestCocosNodeDemo::onEnter();
+    _preProjection = Director::getInstance()->getProjection();
     Director::getInstance()->setProjection(Director::Projection::_3D);
     Director::getInstance()->setDepthTest(true);
 }
 
 void CameraTest2::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(_preProjection);
     TestCocosNodeDemo::onExit();
 }
 
