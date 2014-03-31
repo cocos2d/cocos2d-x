@@ -50,7 +50,8 @@ bool UITextTest_LineWrap::init()
         
         // Create the line wrap
         Text* text = Text::create();
-        text->setTextAreaSize(Size(280, 150));
+        text->ignoreContentAdaptWithSize(false);
+        text->setSize(Size(280, 150));
         text->setTextHorizontalAlignment(TextHAlignment::CENTER);
         text->setText("Text can line wrap");
         text->setFontName("AmericanTypewriter");
