@@ -737,9 +737,6 @@ void Label::updateQuads()
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
             _reusedRect.origin.y    = letterDef.V;
-
-            if(_reusedLetter->getBatchNode() != _batchNodes[letterDef.textureID])
-                _reusedLetter->setBatchNode(_batchNodes[letterDef.textureID]);
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
@@ -1015,6 +1012,7 @@ void Label::createSpriteWithFontDefinition()
     _textSprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
+    _textSprite->setBlendFunc(_blendFunc);
 
     Node::addChild(_textSprite,0,Node::INVALID_TAG);
 
@@ -1086,6 +1084,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     if (_shadowEnabled && _shadowNode == nullptr)
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
+        _shadowNode->setBlendFunc(_blendFunc);
         _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setColor(_shadowColor);
         _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);

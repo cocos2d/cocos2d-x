@@ -849,6 +849,24 @@ LayerMultiplex::~LayerMultiplex()
     }
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+LayerMultiplex * LayerMultiplex::createVariadic(Layer * layer, ...)
+{
+    va_list args;
+    va_start(args,layer);
+
+    LayerMultiplex * multiplexLayer = new LayerMultiplex();
+    if(multiplexLayer && multiplexLayer->initWithLayers(layer, args))
+    {
+        multiplexLayer->autorelease();
+        va_end(args);
+        return multiplexLayer;
+    }
+    va_end(args);
+    CC_SAFE_DELETE(multiplexLayer);
+    return nullptr;
+}
+#else
 LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
 {
     va_list args;
@@ -865,6 +883,7 @@ LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
     CC_SAFE_DELETE(multiplexLayer);
     return nullptr;
 }
+#endif
 
 LayerMultiplex * LayerMultiplex::createWithLayer(Layer* layer)
 {
