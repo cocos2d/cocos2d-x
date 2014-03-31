@@ -39,11 +39,7 @@ EditBoxTest::EditBoxTest()
     // top
     _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
     _editName->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     _editName->setFontName("Paint Boy");
-#else
-	_editName->setFontName("fonts/Paint Boy.ttf");
-#endif
     _editName->setFontSize(25);
     _editName->setFontColor(Color3B::RED);
     _editName->setPlaceHolder("Name:");
