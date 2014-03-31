@@ -53,7 +53,7 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "CCComponent.h"
 #include "CCComponentContainer.h"
-
+#include <numeric>
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -199,7 +199,8 @@ float Node::getSkewX() const
 
 void Node::setSkewX(float skewX)
 {
-    if (_skewX == skewX)
+    
+    if (CC_FLOAT_EQUALITY(_skewX,skewX))
         return;
     
     _skewX = skewX;
@@ -213,7 +214,7 @@ float Node::getSkewY() const
 
 void Node::setSkewY(float skewY)
 {
-    if (_skewY == skewY)
+    if (CC_FLOAT_EQUALITY(_skewY,skewY))
         return;
     
     _skewY = skewY;
@@ -230,7 +231,7 @@ void Node::_setLocalZOrder(int z)
 
 void Node::setLocalZOrder(int z)
 {
-    if (_localZOrder == z)
+    if (CC_FLOAT_EQUALITY(_localZOrder , z))
         return;
     
     _localZOrder = z;
@@ -244,7 +245,7 @@ void Node::setLocalZOrder(int z)
 
 void Node::setGlobalZOrder(float globalZOrder)
 {
-    if (_globalZOrder != globalZOrder)
+    if (!CC_FLOAT_EQUALITY(_globalZOrder, globalZOrder))
     {
         _globalZOrder = globalZOrder;
         _eventDispatcher->setDirtyForNode(this);
@@ -254,14 +255,14 @@ void Node::setGlobalZOrder(float globalZOrder)
 /// rotation getter
 float Node::getRotation() const
 {
-    CCASSERT(_rotationZ_X == _rotationZ_Y, "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+    CCASSERT(CC_FLOAT_EQUALITY(_rotationZ_X , _rotationZ_Y), "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
     return _rotationZ_X;
 }
 
 /// rotation setter
 void Node::setRotation(float rotation)
 {
-    if (_rotationZ_X == rotation)
+    if (CC_FLOAT_EQUALITY(_rotationZ_X , rotation))
         return;
     
     _rotationZ_X = _rotationZ_Y = rotation;
@@ -282,9 +283,9 @@ float Node::getRotationSkewX() const
 
 void Node::setRotation3D(const Vertex3F& rotation)
 {
-    if (_rotationX == rotation.x &&
-        _rotationY == rotation.y &&
-        _rotationZ_X == rotation.z)
+    if (CC_FLOAT_EQUALITY(_rotationX , rotation.x) &&
+        CC_FLOAT_EQUALITY(_rotationY , rotation.y) &&
+        CC_FLOAT_EQUALITY(_rotationZ_X , rotation.z))
         return;
     
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -306,14 +307,14 @@ void Node::setRotation3D(const Vertex3F& rotation)
 Vertex3F Node::getRotation3D() const
 {
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
-    CCASSERT(_rotationZ_X == _rotationZ_Y, "_rotationZ_X != _rotationZ_Y");
+    CCASSERT(CC_FLOAT_EQUALITY(_rotationZ_X , _rotationZ_Y), "_rotationZ_X != _rotationZ_Y");
 
     return Vertex3F(_rotationX,_rotationY,_rotationZ_X);
 }
 
 void Node::setRotationSkewX(float rotationX)
 {
-    if (_rotationZ_X == rotationX)
+    if (CC_FLOAT_EQUALITY(_rotationZ_X , rotationX))
         return;
     
     _rotationZ_X = rotationX;
@@ -327,7 +328,7 @@ float Node::getRotationSkewY() const
 
 void Node::setRotationSkewY(float rotationY)
 {
-    if (_rotationZ_Y == rotationY)
+    if (CC_FLOAT_EQUALITY(_rotationZ_Y , rotationY))
         return;
     
     _rotationZ_Y = rotationY;
@@ -337,14 +338,14 @@ void Node::setRotationSkewY(float rotationY)
 /// scale getter
 float Node::getScale(void) const
 {
-    CCASSERT( _scaleX == _scaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+    CCASSERT( CC_FLOAT_EQUALITY(_scaleX , _scaleY), "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
     return _scaleX;
 }
 
 /// scale setter
 void Node::setScale(float scale)
 {
-    if (_scaleX == scale)
+    if (CC_FLOAT_EQUALITY(_scaleX , scale))
         return;
 
     _scaleX = _scaleY = _scaleZ = scale;
@@ -360,7 +361,7 @@ float Node::getScaleX() const
 /// scale setter
 void Node::setScale(float scaleX,float scaleY)
 {
-    if (_scaleX == scaleX && _scaleY == scaleY)
+    if (CC_FLOAT_EQUALITY(_scaleX , scaleX) && CC_FLOAT_EQUALITY(_scaleY , scaleY))
         return;
     
     _scaleX = scaleX;
@@ -371,7 +372,7 @@ void Node::setScale(float scaleX,float scaleY)
 /// scaleX setter
 void Node::setScaleX(float scaleX)
 {
-    if (_scaleX == scaleX)
+    if (CC_FLOAT_EQUALITY(_scaleX , scaleX))
         return;
     
     _scaleX = scaleX;
@@ -387,7 +388,7 @@ float Node::getScaleY() const
 /// scaleY setter
 void Node::setScaleZ(float scaleZ)
 {
-    if (_scaleZ == scaleZ)
+    if (CC_FLOAT_EQUALITY(_scaleZ , scaleZ))
         return;
     
     _scaleZ = scaleZ;
@@ -403,7 +404,7 @@ float Node::getScaleZ() const
 /// scaleY setter
 void Node::setScaleY(float scaleY)
 {
-    if (_scaleY == scaleY)
+    if (CC_FLOAT_EQUALITY(_scaleY , scaleY))
         return;
     
     _scaleY = scaleY;
@@ -489,7 +490,7 @@ float Node::getPositionZ() const
 
 void Node::setPositionZ(float positionZ)
 {
-    if (_positionZ == positionZ)
+    if (CC_FLOAT_EQUALITY(_positionZ , positionZ))
         return;
     
     _transformUpdated = _transformDirty = _inverseDirty = true;
