@@ -292,7 +292,7 @@ def main():
 	print 'in main:'
 	start_android_simulator()
 	print 'will build_run:'
-	build_run(2)
+	build_run(-1)
 	if OBJ_EMAIL_INFO[ EMAIL_KEYS[5] ]:
 		sendEmail(console_result)
 	print 'console_result:', console_result
