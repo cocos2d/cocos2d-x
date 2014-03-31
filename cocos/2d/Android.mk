@@ -169,7 +169,8 @@ renderer/CCRenderMaterial.cpp \
 ../../external/tinyxml2/tinyxml2.cpp \
 ../../external/unzip/ioapi.cpp \
 ../../external/unzip/unzip.cpp \
-../../external/edtaa3func/edtaa3func.cpp
+../../external/edtaa3func/edtaa3func.cpp \
+../../external/xxhash/xxhash.c
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
@@ -180,7 +181,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../base \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
-                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
+                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../../external/xxhash
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/renderer \
@@ -191,7 +193,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
                     $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
-                    $(LOCAL_PATH)/../../external/edtaa3func
+                    $(LOCAL_PATH)/../../external/edtaa3func \
+                    $(LOCAL_PATH)/../../external/xxhash
 
 
 LOCAL_LDLIBS := -lGLESv2 \
