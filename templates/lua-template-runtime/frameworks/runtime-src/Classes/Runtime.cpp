@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "lua_debugger.h"
 #include "CCLuaEngine.h"
 #include "cocos2d.h"
+#include "CCFontFNT.h"
 #include "json/document.h"
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
@@ -70,6 +71,19 @@ bool reloadScript(const string& modulefile)
 	{
 		strfile = "src/main.lua";
 	}
+
+	auto director = Director::getInstance();
+	FontFNT::purgeCachedData();
+	if (director->getOpenGLView())
+	{
+		SpriteFrameCache::getInstance()->removeSpriteFrames();
+		director->getTextureCache()->removeAllTextures();
+	}
+	FileUtils::getInstance()->purgeCachedEntries();
+
+	director->getScheduler()->unscheduleAll();
+	director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+
     return (LuaEngine::getInstance()->reload(strfile.c_str())==0);
 }
 
