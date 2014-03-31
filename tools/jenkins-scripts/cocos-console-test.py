@@ -272,13 +272,13 @@ def send_mail(to_list,sub,title,content):
 		s = smtplib.SMTP()
 		s.connect(mail_host)
 		s.login(mail_user,mail_pass)
-        s.sendmail(me, to_list, str(msg))
-        print 'info:', me, to_list, str(msg)
-        s.close()
-        appendToResult( 'send email true:' + str(msg) )
-        return True
-    except Exception, e:
-        appendToResult( 'send email false:' + str(e) )
+		s.sendmail(me, to_list, str(msg))
+		print 'info:', me, to_list, str(msg)
+		s.close()
+		appendToResult( 'send email true:' + str(msg) )
+		return True
+	except Exception, e:
+		appendToResult( 'send email false:' + str(e) )
         print str(e)
         return False
 
