@@ -786,6 +786,11 @@ void Label::addChild(Node * child, int zOrder/* =0 */, int tag/* =0 */)
     CCASSERT(0, "addChild: is not supported on Label.");
 }
 
+void Label::sortAllChildren()
+{
+    // Label ignore sort children
+}
+
 void Label::setLabelEffect(LabelEffect effect,const Color3B& effectColor)
 {
     switch (effect)

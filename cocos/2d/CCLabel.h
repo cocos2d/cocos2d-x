@@ -239,6 +239,8 @@ public:
     virtual float getScaleY() const override;
 
     virtual void addChild(Node * child, int zOrder=0, int tag=0) override;
+    virtual void sortAllChildren() override;
+
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
