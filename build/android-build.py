@@ -158,12 +158,16 @@ def copy_resources(target, app_android_root):
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../res")
-        resources_cocosbuilder_res_dir = os.path.join(resources_dir, "cocosbuilderRes")
         assets_res_dir = os.path.join(assets_dir, "res");
         os.mkdir(assets_res_dir)
-        assets_cocosbuilder_res_dir = os.path.join(assets_res_dir, "cocosbuilderRes")
-        os.mkdir(assets_cocosbuilder_res_dir)
-        copy_files(resources_cocosbuilder_res_dir, assets_cocosbuilder_res_dir)
+        if target == "lua-tests":
+            assets_cocosbuilder_res_dir = os.path.join(assets_res_dir, "cocosbuilderRes")
+            os.mkdir(assets_cocosbuilder_res_dir)
+            resources_dir = os.path.join(app_android_root, "../../res/cocosbuilderRes")
+            copy_files(resources_dir, assets_cocosbuilder_res_dir)
+        else:
+            copy_files(resources_dir, assets_res_dir)
+        
 
         resources_dir = os.path.join(app_android_root, "../../src")
         assets_src_dir = os.path.join(assets_dir, "src");
