@@ -871,15 +871,10 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     _fontDefinition._shadow._shadowEnabled = false;
     _shadowDirty = true;
 
-    _effectColor = shadowColor;
-    _effectColorF.r = _effectColor.r / 255.0f;
-    _effectColorF.g = _effectColor.g / 255.0f;
-    _effectColorF.b = _effectColor.b / 255.0f;
-    _effectColorF.a = _effectColor.a / 255.0f;
-
-    _shadowColor.r = _effectColor.r;
-    _shadowColor.g = _effectColor.g;
-    _shadowColor.b = _effectColor.b;
+    _shadowColor.r = shadowColor.r;
+    _shadowColor.g = shadowColor.g;
+    _shadowColor.b = shadowColor.b;
+    _shadowOpacity = shadowColor.a / 255.0f;
 
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     _shadowOffset.width = offset.width * contentScaleFactor;
@@ -890,7 +885,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     if (_textSprite && _shadowNode)
     {
         _shadowNode->setColor(_shadowColor);
-        _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);
+        _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
     }
 }
@@ -970,7 +965,7 @@ void Label::drawShadowWithoutBlur()
 {
     Color3B oldColor = _realColor;
     GLubyte oldOPacity = _displayedOpacity;
-    _displayedOpacity = _effectColorF.a * _displayedOpacity;
+    _displayedOpacity = _shadowOpacity * _displayedOpacity;
     setColor(_shadowColor);
 
     _shaderProgram->setUniformsForBuiltins(_shadowTransform);
@@ -1093,7 +1088,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
         }
         _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setColor(_shadowColor);
-        _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);
+        _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
         Node::addChild(_shadowNode,0,Node::INVALID_TAG);  
     }
