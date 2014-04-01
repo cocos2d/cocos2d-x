@@ -798,6 +798,9 @@ Developers:
         
     flashjay
         Remove deprecated code in lua tests & template
+        
+    zukkun
+        Fixed incorrect function invocation in PhysicsBody::setAngularVelocityLimit
     
 Retired Core Developers:
     WenSheng Yang
