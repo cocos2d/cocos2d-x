@@ -25,6 +25,7 @@
 
 #include "renderer/CCQuadCommand.h"
 #include "ccGLStateCache.h"
+#include "xxhash.h"
 
 NS_CC_BEGIN
 
@@ -32,10 +33,11 @@ QuadCommand::QuadCommand()
 :_textureID(0)
 ,_blendType(BlendFunc::DISABLE)
 ,_quadsCount(0)
+,_dirty(false)
+,_shader(nullptr)
+,_quads(nullptr)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
-    _shader = nullptr;
-    _quads = nullptr;
 }
 
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
@@ -49,6 +51,8 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, B
     _quads = quad;
 
     _mv = mv;
+    
+    _dirty = true;
 
     generateMaterialID();
 }
@@ -59,44 +63,51 @@ QuadCommand::~QuadCommand()
 
 void QuadCommand::generateMaterialID()
 {
-    //Generate Material ID
-    //TODO fix shader ID generation
-    CCASSERT(_shader->getMaterialProgramID() < GLProgram::_maxMaterialIDNumber, "ShaderID is greater than Id limitation");
+    if (_dirty)
+    {
+        //Generate Material ID
+        
+        //TODO fix blend id generation
+        int blendID = 0;
+        if(_blendType == BlendFunc::DISABLE)
+        {
+            blendID = 0;
+        }
+        else if(_blendType == BlendFunc::ALPHA_PREMULTIPLIED)
+        {
+            blendID = 1;
+        }
+        else if(_blendType == BlendFunc::ALPHA_NON_PREMULTIPLIED)
+        {
+            blendID = 2;
+        }
+        else if(_blendType == BlendFunc::ADDITIVE)
+        {
+            blendID = 3;
+        }
+        else
+        {
+            blendID = 4;
+        }
+        
+        // convert program id, texture id and blend id into byte array
+        char byteArray[12];
+        convertIntToByteArray(_shader->getProgram(), byteArray);
+        convertIntToByteArray(blendID, byteArray + 4);
+        convertIntToByteArray(_textureID, byteArray + 8);
+        
+        _materialID = XXH32(byteArray, 12, 0);
+        
+        _dirty = false;
+    }
+}
 
-    //TODO fix blend id generation
-    int blendID = 0;
-    if(_blendType == BlendFunc::DISABLE)
-    {
-        blendID = 0;
-    }
-    else if(_blendType == BlendFunc::ALPHA_PREMULTIPLIED)
-    {
-        blendID = 1;
-    }
-    else if(_blendType == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        blendID = 2;
-    }
-    else if(_blendType == BlendFunc::ADDITIVE)
-    {
-        blendID = 3;
-    }
-    else
-    {
-        blendID = 4;
-    }
-
-    //TODO Material ID should be part of the ID
-    //
-    // Temporal hack (later, these 32-bits should be packed in 24-bits
-    //
-    // +---------------------+-------------------+----------------------------------------+
-    // | Shader ID (10 bits) | Blend ID (4 bits) | empty (18bits) |  Texture ID (32 bits) |
-    // +---------------------+-------------------+----------------------------------------+
-
-    _materialID = (uint64_t)_shader->getMaterialProgramID() << 54
-            | (uint64_t)blendID << 50
-            | (uint64_t)_textureID << 0;
+void QuadCommand::convertIntToByteArray(int value, char* output)
+{
+    *output++ = value & 0x000000ff;
+    *output++ = (value & 0x0000ff00) >> 8;
+    *output++ = (value & 0x00ff0000) >> 16;
+    *output   = (value & 0xff000000) >> 24;
 }
 
 void QuadCommand::useMaterial() const
