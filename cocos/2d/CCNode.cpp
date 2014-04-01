@@ -231,7 +231,7 @@ void Node::_setLocalZOrder(int z)
 
 void Node::setLocalZOrder(int z)
 {
-    if (CC_FLOAT_EQUALITY(_localZOrder , z))
+    if (_localZOrder == z)
         return;
     
     _localZOrder = z;
