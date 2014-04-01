@@ -926,7 +926,6 @@ void Label::onDraw(const kmMat4& transform, bool transformUpdated)
 
     _shaderProgram->use();
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-    bool trans = false;
 
     if (_currentLabelType == LabelType::TTF)
     {
