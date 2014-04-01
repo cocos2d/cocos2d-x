@@ -143,7 +143,7 @@ namespace cocos2d {
             return false;
         }
 
-        JniHelper::classloader = _c;
+        JniHelper::classloader = cocos2d::JniHelper::getEnv()->NewGlobalRef(_c);
         JniHelper::loadclassMethod_methodID = _m.methodID;
 
         return true;
