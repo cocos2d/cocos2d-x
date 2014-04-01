@@ -66,6 +66,12 @@ simple macro that swaps 2 variables
     x = y; y = temp;        \
 }
 
+/**@def CC_FLOAT_EQUALITY
+ * compare two float's quality
+ */
+#define CC_FLOAT_EQUALITY(x,y) \
+(fabs((x) - (y)) <= std::numeric_limits<float>::epsilon())
+
 
 /** @def CCRANDOM_MINUS1_1
  returns a random float between -1 and 1
