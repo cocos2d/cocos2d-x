@@ -1365,6 +1365,8 @@ protected:
     virtual void updateCascadeColor();
     virtual void disableCascadeColor();
     virtual void updateColor() {}
+    
+    bool isInsideBounds() const;
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis
@@ -1452,8 +1454,11 @@ protected:
     bool		_cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 
+    bool _insideBounds;                     /// whether or not the node was inside bounds the previous frame
+
     static int s_globalOrderOfArrival;
     
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
 };
