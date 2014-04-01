@@ -101,7 +101,7 @@
       <UniqueIdentifier>{14e6de7a-f7ef-4249-9141-abf17033d9c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="xxhash">
-      <UniqueIdentifier>{3bebfe86-bdb7-4b96-8439-be8c8c1538bc}</UniqueIdentifier>
+      <UniqueIdentifier>{a36c6808-a8d6-43f4-bfb0-e08ee2747a21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
