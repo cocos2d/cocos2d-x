@@ -45,6 +45,9 @@ public:
 protected:
     TestCocosNodeDemo();
     virtual ~TestCocosNodeDemo();
+    
+protected:
+    Director::Projection _preProjection;
 };
 
 class Test2 : public TestCocosNodeDemo
@@ -178,6 +181,9 @@ public:
     CREATE_FUNC(CameraCenterTest);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+    virtual void onEnter();
+    virtual void onExit();
 
 protected:
     CameraCenterTest();
