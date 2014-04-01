@@ -251,9 +251,10 @@ print 'will get env info.'
 for key in EMAIL_KEYS:
 	if os.environ.has_key(EMAIL_KEYS[key]):
 		OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = os.environ[EMAIL_KEYS[key]]
+		if key == 4:
+			# string to list by ' ', for separate users.
+			OBJ_EMAIL_INFO[EMAIL_KEYS[4]] = OBJ_EMAIL_INFO[EMAIL_KEYS[4]].split(' ')
 
-# string to list by ' ', for separate users.
-OBJ_EMAIL_INFO[EMAIL_KEYS[4]] = OBJ_EMAIL_INFO[EMAIL_KEYS[4]].split(' ')
 print 'will send email.', OBJ_EMAIL_INFO
 def send_mail(to_list,sub,title,content):
 	mail_user = OBJ_EMAIL_INFO[ EMAIL_KEYS[1] ]
