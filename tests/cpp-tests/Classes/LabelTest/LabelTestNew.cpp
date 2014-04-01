@@ -1308,14 +1308,21 @@ LabelShadowTest::LabelShadowTest()
 
     TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,true);
 
-    shadowLabelTTF = Label::createWithTTF(ttfConfig,"TTF:Shadow", TextHAlignment::CENTER, size.width);
-    shadowLabelTTF->setPosition( Point(size.width/2, size.height*0.6f) );
+    shadowLabelTTF = Label::createWithTTF(ttfConfig,"TTF:Shadow");
+    shadowLabelTTF->setPosition( Point(size.width/2, size.height*0.65f) );
     shadowLabelTTF->setTextColor( Color4B::RED );
     shadowLabelTTF->enableShadow(Color4B::BLACK);
     addChild(shadowLabelTTF);
 
+    shadowLabelOutline = Label::createWithTTF(ttfConfig,"TTF:Shadow");
+    shadowLabelOutline->setPosition( Point(size.width/2, size.height*0.5f) );
+    shadowLabelOutline->setTextColor( Color4B::RED );
+    shadowLabelOutline->enableOutline(Color4B::YELLOW,1);
+    shadowLabelOutline->enableShadow(Color4B::BLACK);
+    addChild(shadowLabelOutline);
+
     shadowLabelBMFont = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow");
-    shadowLabelBMFont->setPosition( Point(size.width/2, size.height*0.4f) );
+    shadowLabelBMFont->setPosition( Point(size.width/2, size.height*0.35f) );
     shadowLabelBMFont->setColor( Color3B::RED );
     shadowLabelBMFont->enableShadow(Color4B::GREEN);
     addChild(shadowLabelBMFont);
@@ -1354,6 +1361,7 @@ void LabelShadowTest::sliderEvent(Ref *pSender, ui::SliderEventType type)
         auto offset = Size(slider->getPercent()-50,50 - slider2->getPercent());
         shadowLabelTTF->enableShadow(Color4B::BLACK,offset);
         shadowLabelBMFont->enableShadow(Color4B::GREEN,offset);
+        shadowLabelOutline->enableShadow(Color4B::BLACK,offset);
     }
 }
 
