@@ -199,14 +199,14 @@ typedef struct
     
 } tImageInfo;
 
-static bool s_isIOS7 = false;
+static bool s_isIOS7OrHigher = false;
 
 static inline void lazyCheckIOS7()
 {
     static bool isInited = false;
     if (!isInited)
     {
-        s_isIOS7 = [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
+        s_isIOS7OrHigher = [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
         isInited = true;
     }
 }
@@ -394,7 +394,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         {
             CGContextSetTextDrawingMode(context, kCGTextStroke);
             
-            if(s_isIOS7)
+            if(s_isIOS7OrHigher)
             {
                 NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
                 paragraphStyle.alignment = nsAlign;
