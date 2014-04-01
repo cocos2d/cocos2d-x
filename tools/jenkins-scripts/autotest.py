@@ -35,7 +35,7 @@ def autotest(type):
 		soc.connect((HOST_MAC, PORT))
 	if type == TYPE_ANDROID:
 		HOST_ANDROID = getADBDeviceIP()
-		soc.connect((HOST_ADNROID, PORT))
+		soc.connect((HOST_ANDROID, PORT))
 	if type == TYPE_IOS:
 		soc.connect((HOST_IOS, PORT))
 	time.sleep(1)
