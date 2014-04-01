@@ -163,9 +163,9 @@ def close_proj(proj, phone):
 			strClose = strClose + ' success.'
 		except Exception, e:
 			print 'socket is not connect.'
-			strClose = strClose + ' failed.'
+			strClose = strClose + ' failed.' + ' socket is not connect.'
 	else:
-		strClose = strClose + ' failed.'
+		strClose = strClose + ' failed.' + ' no ' +phone+ ' type.'
 	time.sleep(2)
 	return strClose
 
