@@ -108,20 +108,31 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     Label *ret = new Label(nullptr,alignment);
 
     if (!ret)
+    {
         return nullptr;
+    }
 
-    if (ret->setTTFConfig(ttfConfig))
+    do 
     {
-        ret->setMaxLineWidth(lineSize);
-        ret->setString(text);
-        ret->autorelease();
-        return ret;
-    }
-    else
-    {
-        delete ret;
-        return nullptr;
-    }
+        if( FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && ret->setTTFConfig(ttfConfig))
+        {
+            break;
+        }
+
+        FontDefinition fontDef;
+        fontDef._fontName = ttfConfig.fontFilePath;
+        fontDef._fontSize = ttfConfig.fontSize;
+        fontDef._dimensions = Size::ZERO;
+        fontDef._alignment = alignment;
+        fontDef._vertAlignment = TextVAlignment::TOP;
+        ret->setFontDefinition(fontDef);
+    } while (0);
+
+    ret->setMaxLineWidth(lineSize);
+    ret->setString(text);
+    ret->autorelease();
+
+    return ret;
 }
 
 Label* Label::createWithTTF(const std::string& text, const std::string& fontFilePath, int fontSize, int lineSize /* = 0 */, TextHAlignment alignment /* = TextHAlignment::CENTER */, GlyphCollection glyphs /* = GlyphCollection::NEHE */, const char *customGlyphs /* = 0 */, bool useDistanceField /* = false */)
@@ -933,7 +944,8 @@ void Label::onDraw(const kmMat4& transform, bool transformUpdated)
          _shaderProgram->setUniformLocationWith4f(_uniformEffectColor, 
              _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
     }
-    else if(_shadowEnabled && _shadowBlurRadius <= 0)
+
+    if(_shadowEnabled && _shadowBlurRadius <= 0)
     {
         drawShadowWithoutBlur();
     }
@@ -1406,4 +1418,5 @@ void Label::setBlendFunc(const BlendFunc &blendFunc)
         }
     }
 }
+
 NS_CC_END
