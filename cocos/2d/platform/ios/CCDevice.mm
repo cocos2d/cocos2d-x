@@ -199,6 +199,18 @@ typedef struct
     
 } tImageInfo;
 
+static bool s_isIOS7OrHigher = false;
+
+static inline void lazyCheckIOS7()
+{
+    static bool isInited = false;
+    if (!isInited)
+    {
+        s_isIOS7OrHigher = [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
+        isInited = true;
+    }
+}
+
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
@@ -208,7 +220,6 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     : 0x7fffffff;
     textRect.height = constrainSize->height > 0 ? constrainSize->height
     : 0x7fffffff;
-    
     
     for (NSString *s in listItems)
     {
@@ -222,6 +233,9 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
         dim.height += tmp.height;
     }
     
+    dim.width = ceilf(dim.width);
+    dim.height = ceilf(dim.height);
+    
     return dim;
 }
 
@@ -230,8 +244,12 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
+
 static bool _initWithString(const char * text, cocos2d::Device::TextAlign align, const char * fontName, int size, tImageInfo* info)
 {
+    // lazy check whether it is iOS7 device
+    lazyCheckIOS7();
+    
     bool bRet = false;
     do
     {
@@ -376,7 +394,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         {
             CGContextSetTextDrawingMode(context, kCGTextStroke);
             
-            if([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending)
+            if(s_isIOS7OrHigher)
             {
                 NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
                 paragraphStyle.alignment = nsAlign;
@@ -412,7 +430,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         
         // actually draw the text in the context
         [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
-
+        
         CGContextEndTransparencyLayer(context);
         
         // pop the context
