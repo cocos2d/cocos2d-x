@@ -986,7 +986,7 @@ void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpda
     // Don't do calculate the culling if the transform was not updated
     _insideBounds = transformUpdated ? isInsideBounds() : _insideBounds;
     
-//    if(_insideBounds)
+    if(_insideBounds)
     {
         _customCommand.init(_globalZOrder);
         _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
