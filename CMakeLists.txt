@@ -232,7 +232,7 @@ add_subdirectory(external/unzip)
 # tinyxml2 library
 add_subdirectory(external/tinyxml2)
 
-# xxhas library
+# xxhash library
 add_subdirectory(external/xxhash)
 
 # audio
