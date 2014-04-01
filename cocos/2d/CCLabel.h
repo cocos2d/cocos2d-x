@@ -239,6 +239,8 @@ public:
     virtual float getScaleY() const override;
 
     virtual void addChild(Node * child, int zOrder=0, int tag=0) override;
+    virtual void sortAllChildren() override;
+
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
@@ -368,10 +370,11 @@ protected:
     GLuint _uniformTextColor;
     CustomCommand _customCommand;   
 
+    bool    _shadowDirty;
     bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
-    kmMat4  _parentTransform;
+    kmMat4  _shadowTransform;
     Color3B _shadowColor;
     Sprite*   _shadowNode;
 

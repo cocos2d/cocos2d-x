@@ -617,6 +617,7 @@ Developers:
         Added setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
         Fixed a bug that object which isn't in Vector would also be released when invoking Vector::eraseObject.
         Fixed a bug that Timer::cancel always call Director::getInstance()->getScheduler() even in another Scheduler.
+        Fix crash if label's type is STRING_TEXTURE and label->sortAllChildren is called
         
     metadao
         make create_project.py more pythonic and fix some typoes

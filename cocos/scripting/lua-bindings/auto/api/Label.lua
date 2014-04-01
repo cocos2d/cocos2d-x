@@ -307,6 +307,11 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- @function [parent=#Label] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendfunc
+        
+--------------------------------
 -- @function [parent=#Label] visit 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -322,6 +327,10 @@
 -- @function [parent=#Label] setScale 
 -- @param self
 -- @param #float float
+        
+--------------------------------
+-- @function [parent=#Label] sortAllChildren 
+-- @param self
         
 --------------------------------
 -- @function [parent=#Label] updateDisplayedOpacity 
