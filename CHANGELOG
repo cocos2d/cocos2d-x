@@ -16,6 +16,7 @@ cocos2d-x-3.0rc1 ?? 2014
      [FIX]          FileUtils: Boolean value could not be written to specified plist file
      [FIX]          GLView: Can't receive touchEnded event when mouse up outside of window on desktop platforms
      [FIX]          Image: Some functions and variables in Image class is private, it should be protected
+     [FIX]          Label: Crash if label's type is STRING_TEXTURE and label->sortAllChildren is called
      [FIX]          Label: Display incorrect of multi-line label if invoking 'getLetter'
      [FIX]          Label: Default Anchor point isn't in middle and shadow offset doesn't consider contentScaleFactor
      [FIX]          Label: Label's color is incorrect if it's created by font name
