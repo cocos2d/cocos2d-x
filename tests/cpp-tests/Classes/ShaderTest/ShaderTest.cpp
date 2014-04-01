@@ -770,7 +770,7 @@ colors[8] = vec4(1,0.5,0.5,1);			\n\
 colors[9] = vec4(0.5,0.5,1,1);			\n\
 \n\
 int y = int( mod(gl_FragCoord.y / 3.0, 10.0 ) );						\n\
-gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
+gl_FragColor = colors[y] * texture2D(CC_Texture0, v_texCoord);			\n\
 }																			\n\
 \n";
 
