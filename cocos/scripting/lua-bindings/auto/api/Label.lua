@@ -329,6 +329,10 @@
 -- @param #float float
         
 --------------------------------
+-- @function [parent=#Label] sortAllChildren 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#Label] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char char
