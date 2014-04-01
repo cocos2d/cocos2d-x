@@ -15,7 +15,6 @@ import smtplib
 from email.mime.text import MIMEText
 
 # default console_param.
-# console_param = '[console run]'
 console_param = '[console run]'
 # get param from commit.
 if os.environ.has_key('payload'):
@@ -238,12 +237,6 @@ def start_android_simulator():
 		print 'start an android simulator:', not info_start
 
 # send email
-# mailto_list= {'test2014_323@126.com'}
-# mail_host="smtp.126.com"  #set server
-# mail_user="test2014_323"    #user
-# mail_pass="t123456"   #pwd
-# mail_postfix="126.com"  #profix
-
 EMAIL_KEYS={
 	0:'EMAIL_HOST',
 	1:'EMAIL_USER',
@@ -252,40 +245,43 @@ EMAIL_KEYS={
 	4:'EMAIL_LIST',
 	5:'NEED_SEND_EMAIL'
 }
+
 OBJ_EMAIL_INFO = {}
+print 'will get env info.'
 for key in EMAIL_KEYS:
 	if os.environ.has_key(EMAIL_KEYS[key]):
 		OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = os.environ[EMAIL_KEYS[key]]
+
+# string to list by ' ', for separate users.
+OBJ_EMAIL_INFO[EMAIL_KEYS[4]] = OBJ_EMAIL_INFO[EMAIL_KEYS[4]].split(' ')
 print 'will send email.', OBJ_EMAIL_INFO
-def send_mail(to_list,sub,title,content):  #to_list: reciv; sub: title; content: content
+def send_mail(to_list,sub,title,content):
 	mail_user = OBJ_EMAIL_INFO[ EMAIL_KEYS[1] ]
 	mail_postfix = OBJ_EMAIL_INFO[ EMAIL_KEYS[3] ]
 	mail_host = OBJ_EMAIL_INFO[ EMAIL_KEYS[0] ]
 	mail_pass = OBJ_EMAIL_INFO[ EMAIL_KEYS[2] ]
-    me = "Hello"+"<"+mail_user+"@"+mail_postfix+">"   #hello
-    # msg = MIMEText(content,_subtype='html',_charset='gb2312')    #create
-    msg = MIMEText(content,_subtype='plain',_charset='gb2312')    #create
-    msg['Subject'] = sub    #set
-    msg['From'] = me  
-    msg['To'] = " ".join(to_list)
-    msg['Content'] = 'asdgf'
-    try:  
-        s = smtplib.SMTP()  
-        s.connect(mail_host)  #conncet smtp
-        s.login(mail_user,mail_pass)  #login
-        s.sendmail(me, to_list, str(msg))  #send
-        print 'info:', me, to_list, str(msg)
-        s.close()
-        appendToResult( 'send email true:' + str(msg) )
-        return True  
-    except Exception, e:
-        appendToResult( 'send email false:' + str(e) )
+	me = mail_user+"<"+mail_user+"@"+mail_postfix+">"
+	msg = MIMEText(content,_subtype='plain',_charset='gb2312')
+	msg['Subject'] = sub
+	msg['From'] = me
+	msg['To'] = " ".join(to_list)
+	print 'to users:', msg['To']
+	msg['Content'] = 'test'
+	try:
+		s = smtplib.SMTP()
+		s.connect(mail_host)
+		s.login(mail_user,mail_pass)
+		s.sendmail(me, to_list, str(msg))
+		print 'info:', me, to_list, str(msg)
+		s.close()
+		appendToResult( 'send email true:' + str(msg) )
+		return True
+	except Exception, e:
+		appendToResult( 'send email false:' + str(e) )
         print str(e)
         return False
 
 def sendEmail(msg):
-	# get userinfo
-	print 'will get env info.'
 	send_mail(OBJ_EMAIL_INFO[EMAIL_KEYS[4]], "cocos-console-test result", 'for error.', msg)
 
 def main():
