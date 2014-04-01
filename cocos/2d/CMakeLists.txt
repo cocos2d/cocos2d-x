@@ -218,6 +218,7 @@ target_link_libraries(cocos2d
   tinyxml2
   kazmath
   unzip
+  xxhash
   ${COCOS_LINK}
 )
 
