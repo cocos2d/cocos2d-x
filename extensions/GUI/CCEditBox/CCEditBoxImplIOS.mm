@@ -169,7 +169,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     CCLOG("textFieldShouldEndEditing...");
     editState_ = NO;
-    getEditBoxImplIOS()->setText(getEditBoxImplIOS()->getText());
+    getEditBoxImplIOS()->refreshInactiveText();
     
     cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
@@ -479,12 +479,13 @@ bool CCEditBoxImplIOS::isEditing()
     return [m_systemControl isEditState] ? true : false;
 }
 
-void CCEditBoxImplIOS::setText(const char* pText)
+void CCEditBoxImplIOS::refreshInactiveText()
 {
-    m_systemControl.textField.text = [NSString stringWithUTF8String:pText];
-	if(m_systemControl.textField.hidden == YES) {
-		setInactiveText(pText);
-		if(strlen(pText) == 0)
+    const char* text = getText();
+    if(m_systemControl.textField.hidden == YES)
+    {
+		setInactiveText(text);
+		if(strlen(text) == 0)
 		{
 			m_pLabel->setVisible(false);
 			m_pLabelPlaceHolder->setVisible(true);
@@ -497,9 +498,26 @@ void CCEditBoxImplIOS::setText(const char* pText)
 	}
 }
 
+void CCEditBoxImplIOS::setText(const char* text)
+{
+    NSString* nsText =[NSString stringWithUTF8String:text];
+    if ([nsText compare:m_systemControl.textField.text] != NSOrderedSame)
+    {
+        m_systemControl.textField.text = nsText;
+    }
+    
+    refreshInactiveText();
+}
+
+NSString* removeSiriString(NSString* str)
+{
+    NSString* siriString = @"\xef\xbf\xbc";
+    return [str stringByReplacingOccurrencesOfString:siriString withString:@""];
+}
+
 const char*  CCEditBoxImplIOS::getText(void)
 {
-    return [m_systemControl.textField.text UTF8String];
+    return [removeSiriString(m_systemControl.textField.text) UTF8String];
 }
 
 void CCEditBoxImplIOS::setPlaceHolder(const char* pText)
