@@ -158,37 +158,36 @@ def copy_resources(target, app_android_root):
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../res")
-        assets_res_dir = os.path.join(assets_dir, "res");
+        assets_res_dir = os.path.join(assets_dir, "res")
         os.mkdir(assets_res_dir)
-        if target == "lua-tests":
-            assets_cocosbuilder_res_dir = os.path.join(assets_res_dir, "cocosbuilderRes")
-            os.mkdir(assets_cocosbuilder_res_dir)
-            resources_dir = os.path.join(app_android_root, "../../res/cocosbuilderRes")
-            copy_files(resources_dir, assets_cocosbuilder_res_dir)
-        else:
+
+        if target != "lua-tests":
             copy_files(resources_dir, assets_res_dir)
-        
 
-        resources_dir = os.path.join(app_android_root, "../../src")
-        assets_src_dir = os.path.join(assets_dir, "src");
+        src_dir = os.path.join(app_android_root, "../../src")
+        assets_src_dir = os.path.join(assets_dir, "src")
         os.mkdir(assets_src_dir)
-        copy_files(resources_dir, assets_src_dir)
+        copy_files(src_dir, assets_src_dir)
 
-        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
-        copy_files(resources_dir, assets_dir)
+        common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
+        copy_files(common_script_dir, assets_dir)
 
-        resources_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
-        for root, dirs, files in os.walk(resources_dir):
+        luasocket_script_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
+        for root, dirs, files in os.walk(luasocket_script_dir):
             for f in files:
                 if os.path.splitext(f)[1] == '.lua':
-                    fall = os.path.join(root,f)
+                    fall = os.path.join(root, f)
                     shutil.copy(fall, assets_dir)
 
         # lua-tests shared resources with cpp-tests
         if target == "lua-tests":
+            resources_cocosbuilder_res_dir = os.path.join(resources_dir, "cocosbuilderRes")
+            assets_cocosbuilder_res_dir = os.path.join(assets_res_dir, "cocosbuilderRes")
+            os.mkdir(assets_cocosbuilder_res_dir)
+            copy_files(resources_cocosbuilder_res_dir, assets_cocosbuilder_res_dir)
+
             resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
             copy_files(resources_dir, assets_res_dir)
-
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
 
