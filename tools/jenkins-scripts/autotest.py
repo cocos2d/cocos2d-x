@@ -31,8 +31,9 @@ def autotest(type):
 	soc.send('autotest run\r\n')
 
 	while True:
-		buf = soc.recv(64)
-		print buf
+		data = soc.recv(1024)
+		print data
+		if not data: break
 	
 	print 'test end and close socket.'
 	soc.close()
