@@ -167,9 +167,9 @@ void Button::setScale9Enabled(bool able)
         _buttonDisableRenderer = Sprite::create();
     }
 
-    loadTextureNormal(_normalFileName.c_str(), _normalTexType);
-    loadTexturePressed(_clickedFileName.c_str(), _pressedTexType);
-    loadTextureDisabled(_disabledFileName.c_str(), _disabledTexType);
+    loadTextureNormal(_normalFileName, _normalTexType);
+    loadTexturePressed(_clickedFileName, _pressedTexType);
+    loadTextureDisabled(_disabledFileName, _disabledTexType);
     addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
     addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
     addProtectedChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
@@ -227,10 +227,10 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
         switch (_normalTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                normalRendererScale9->initWithFile(normal.c_str());
+                normalRendererScale9->initWithFile(normal);
                 break;
             case UI_TEX_TYPE_PLIST:
-                normalRendererScale9->initWithSpriteFrameName(normal.c_str());
+                normalRendererScale9->initWithSpriteFrameName(normal);
                 break;
             default:
                 break;
@@ -275,10 +275,10 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
         switch (_pressedTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                clickedRendererScale9->initWithFile(selected.c_str());
+                clickedRendererScale9->initWithFile(selected);
                 break;
             case UI_TEX_TYPE_PLIST:
-                clickedRendererScale9->initWithSpriteFrameName(selected.c_str());
+                clickedRendererScale9->initWithSpriteFrameName(selected);
                 break;
             default:
                 break;
@@ -323,10 +323,10 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
         switch (_disabledTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                disabledScale9->initWithFile(disabled.c_str());
+                disabledScale9->initWithFile(disabled);
                 break;
             case UI_TEX_TYPE_PLIST:
-                disabledScale9->initWithSpriteFrameName(disabled.c_str());
+                disabledScale9->initWithSpriteFrameName(disabled);
                 break;
             default:
                 break;
@@ -745,9 +745,9 @@ void Button::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
-        loadTextureNormal(button->_normalFileName.c_str(), button->_normalTexType);
-        loadTexturePressed(button->_clickedFileName.c_str(), button->_pressedTexType);
-        loadTextureDisabled(button->_disabledFileName.c_str(), button->_disabledTexType);
+        loadTextureNormal(button->_normalFileName, button->_normalTexType);
+        loadTexturePressed(button->_clickedFileName, button->_pressedTexType);
+        loadTextureDisabled(button->_disabledFileName, button->_disabledTexType);
         setCapInsetsNormalRenderer(button->_capInsetsNormal);
         setCapInsetsPressedRenderer(button->_capInsetsPressed);
         setCapInsetsDisabledRenderer(button->_capInsetsDisabled);
