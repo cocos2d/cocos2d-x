@@ -20,9 +20,9 @@ bool UITextBMFontTest::init()
         _uiLayer->addChild(alert);
         
         // Create the TextBMFont
-        TextBMFont* textBMFont = TextBMFont::create();
-        textBMFont->setFntFile("cocosui/bitmapFontTest2.fnt");
-        textBMFont->setText("BMFont");
+        TextBMFont* textBMFont = TextBMFont::create("BMFont", "cocosui/bitmapFontTest2.fnt");
+//        textBMFont->setFntFile("cocosui/bitmapFontTest2.fnt");
+//        textBMFont->setText("BMFont");
         textBMFont->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2.0f + textBMFont->getSize().height / 8.0f));
         _uiLayer->addChild(textBMFont);
         
