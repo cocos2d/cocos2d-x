@@ -152,15 +152,15 @@ struct Color4F
 /** A vertex composed of 2 floats: x, y
  @since v3.0
  */
-struct Vertex2F
-{
-    Vertex2F(float _x, float _y) :x(_x), y(_y) {}
+// struct Vertex2F
+// {
+//     Vertex2F(float _x, float _y) :x(_x), y(_y) {}
     
-    Vertex2F(): x(0.f), y(0.f) {}
+//     Vertex2F(): x(0.f), y(0.f) {}
     
-    GLfloat x;
-    GLfloat y;
-};
+//     GLfloat x;
+//     GLfloat y;
+// };
 
 
 /** A vertex composed of 2 floats: x, y
@@ -197,7 +197,7 @@ struct Tex2F {
 //! Point Sprite component
 struct PointSprite
 {
-    Vertex2F   pos;        // 8 bytes
+    Vector2   pos;        // 8 bytes
     Color4B    color;      // 4 bytes
     GLfloat    size;       // 4 bytes
 };
@@ -205,10 +205,10 @@ struct PointSprite
 //!    A 2D Quad. 4 * 2 floats
 struct Quad2
 {
-    Vertex2F        tl;
-    Vertex2F        tr;
-    Vertex2F        bl;
-    Vertex2F        br;
+    Vector2        tl;
+    Vector2        tr;
+    Vector2        bl;
+    Vector2        br;
 };
 
 
@@ -224,7 +224,7 @@ struct Quad3 {
 struct V2F_C4B_T2F
 {
     //! vertices (2F)
-    Vertex2F       vertices;
+    Vector2       vertices;
     //! colors (4B)
     Color4B        colors;
     //! tex coords (2F)
@@ -235,7 +235,7 @@ struct V2F_C4B_T2F
 struct V2F_C4F_T2F
 {
     //! vertices (2F)
-    Vertex2F       vertices;
+    Vector2       vertices;
     //! colors (4F)
     Color4F        colors;
     //! tex coords (2F)

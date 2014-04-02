@@ -173,9 +173,9 @@ Tex2F ProgressTimer::textureCoordFromAlphaPoint(Point alpha)
     return Tex2F(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
-Vertex2F ProgressTimer::vertexFromAlphaPoint(Point alpha)
+Vector2 ProgressTimer::vertexFromAlphaPoint(Point alpha)
 {
-    Vertex2F ret(0.0f, 0.0f);
+    Vector2 ret(0.0f, 0.0f);
     if (!_sprite) {
         return ret;
     }
@@ -519,7 +519,7 @@ void ProgressTimer::onDraw(const kmMat4 &transform, bool transformUpdated)
     int offset = 0;
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 
-    offset += sizeof(Vertex2F);
+    offset += sizeof(Vector2);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(Color4B);

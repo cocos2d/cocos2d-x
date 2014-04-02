@@ -143,7 +143,7 @@ protected:
     float* _pointState;
 
     // Opengl
-    Vertex2F* _vertices;
+    Vector2* _vertices;
     GLubyte* _colorPointer;
     Tex2F* _texCoords;
     

@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-void ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsigned int offset, unsigned int nuPoints)
+void ccVertexLineToPolygon(Point *points, float stroke, Vector2 *vertices, unsigned int offset, unsigned int nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -69,8 +69,8 @@ void ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsi
         }
         perpVector = perpVector * stroke;
 
-        vertices[idx] = Vertex2F(p1.x+perpVector.x, p1.y+perpVector.y);
-        vertices[idx+1] = Vertex2F(p1.x-perpVector.x, p1.y-perpVector.y);
+        vertices[idx] = Vector2(p1.x+perpVector.x, p1.y+perpVector.y);
+        vertices[idx+1] = Vector2(p1.x-perpVector.x, p1.y-perpVector.y);
 
     }
 
@@ -81,10 +81,10 @@ void ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsi
         idx = i*2;
         const unsigned int idx1 = idx+2;
 
-        Vertex2F p1 = vertices[idx];
-        Vertex2F p2 = vertices[idx+1];
-        Vertex2F p3 = vertices[idx1];
-        Vertex2F p4 = vertices[idx1+1];
+        Vector2 p1 = vertices[idx];
+        Vector2 p2 = vertices[idx+1];
+        Vector2 p3 = vertices[idx1];
+        Vector2 p4 = vertices[idx1+1];
 
         float s;
         //BOOL fixVertex = !ccpLineIntersect(Point(p1.x, p1.y), Point(p4.x, p4.y), Point(p2.x, p2.y), Point(p3.x, p3.y), &s, &t);

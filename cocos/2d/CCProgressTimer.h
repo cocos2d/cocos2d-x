@@ -136,7 +136,7 @@ protected:
     void onDraw(const kmMat4 &transform, bool transformUpdated);
     
     Tex2F textureCoordFromAlphaPoint(Point alpha);
-    Vertex2F vertexFromAlphaPoint(Point alpha);
+    Vector2 vertexFromAlphaPoint(Point alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
