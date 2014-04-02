@@ -1743,6 +1743,32 @@
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		A0E6B28018613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
 		A0E6B28118613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
+		B2AF2F9518EBAEAE00C5807C /* MathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8218EBAEAE00C5807C /* MathUtil.cpp */; };
+		B2AF2F9618EBAEAE00C5807C /* MathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8218EBAEAE00C5807C /* MathUtil.cpp */; };
+		B2AF2F9718EBAEAE00C5807C /* MathUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8318EBAEAE00C5807C /* MathUtil.h */; };
+		B2AF2F9818EBAEAE00C5807C /* MathUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8318EBAEAE00C5807C /* MathUtil.h */; };
+		B2AF2F9918EBAEAE00C5807C /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8618EBAEAE00C5807C /* Matrix.cpp */; };
+		B2AF2F9A18EBAEAE00C5807C /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8618EBAEAE00C5807C /* Matrix.cpp */; };
+		B2AF2F9B18EBAEAE00C5807C /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8718EBAEAE00C5807C /* Matrix.h */; };
+		B2AF2F9C18EBAEAE00C5807C /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8718EBAEAE00C5807C /* Matrix.h */; };
+		B2AF2F9D18EBAEAE00C5807C /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8918EBAEAE00C5807C /* Quaternion.cpp */; };
+		B2AF2F9E18EBAEAE00C5807C /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8918EBAEAE00C5807C /* Quaternion.cpp */; };
+		B2AF2F9F18EBAEAE00C5807C /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8A18EBAEAE00C5807C /* Quaternion.h */; };
+		B2AF2FA018EBAEAE00C5807C /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8A18EBAEAE00C5807C /* Quaternion.h */; };
+		B2AF2FA118EBAEAE00C5807C /* Vector2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8C18EBAEAE00C5807C /* Vector2.cpp */; };
+		B2AF2FA218EBAEAE00C5807C /* Vector2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8C18EBAEAE00C5807C /* Vector2.cpp */; };
+		B2AF2FA318EBAEAE00C5807C /* Vector2.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8D18EBAEAE00C5807C /* Vector2.h */; };
+		B2AF2FA418EBAEAE00C5807C /* Vector2.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F8D18EBAEAE00C5807C /* Vector2.h */; };
+		B2AF2FA518EBAEAE00C5807C /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8F18EBAEAE00C5807C /* Vector3.cpp */; };
+		B2AF2FA618EBAEAE00C5807C /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F8F18EBAEAE00C5807C /* Vector3.cpp */; };
+		B2AF2FA718EBAEAE00C5807C /* Vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F9018EBAEAE00C5807C /* Vector3.h */; };
+		B2AF2FA818EBAEAE00C5807C /* Vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F9018EBAEAE00C5807C /* Vector3.h */; };
+		B2AF2FA918EBAEAE00C5807C /* Vector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F9218EBAEAE00C5807C /* Vector4.cpp */; };
+		B2AF2FAA18EBAEAE00C5807C /* Vector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2AF2F9218EBAEAE00C5807C /* Vector4.cpp */; };
+		B2AF2FAB18EBAEAE00C5807C /* Vector4.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F9318EBAEAE00C5807C /* Vector4.h */; };
+		B2AF2FAC18EBAEAE00C5807C /* Vector4.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2F9318EBAEAE00C5807C /* Vector4.h */; };
+		B2AF2FB118EBBDA100C5807C /* CCMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2FB018EBBDA100C5807C /* CCMath.h */; };
+		B2AF2FB218EBBDA100C5807C /* CCMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B2AF2FB018EBBDA100C5807C /* CCMath.h */; };
 		B37510711823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */; };
 		B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */; };
 		B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */; };
@@ -2824,6 +2850,26 @@
 		A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderCommandPool.h; sourceTree = "<group>"; };
+		B2AF2F8218EBAEAE00C5807C /* MathUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtil.cpp; sourceTree = "<group>"; };
+		B2AF2F8318EBAEAE00C5807C /* MathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtil.h; sourceTree = "<group>"; };
+		B2AF2F8418EBAEAE00C5807C /* MathUtil.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtil.inl; sourceTree = "<group>"; };
+		B2AF2F8518EBAEAE00C5807C /* MathUtilNeon.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtilNeon.inl; sourceTree = "<group>"; };
+		B2AF2F8618EBAEAE00C5807C /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		B2AF2F8718EBAEAE00C5807C /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		B2AF2F8818EBAEAE00C5807C /* Matrix.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Matrix.inl; sourceTree = "<group>"; };
+		B2AF2F8918EBAEAE00C5807C /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quaternion.cpp; sourceTree = "<group>"; };
+		B2AF2F8A18EBAEAE00C5807C /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
+		B2AF2F8B18EBAEAE00C5807C /* Quaternion.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Quaternion.inl; sourceTree = "<group>"; };
+		B2AF2F8C18EBAEAE00C5807C /* Vector2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2.cpp; sourceTree = "<group>"; };
+		B2AF2F8D18EBAEAE00C5807C /* Vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2.h; sourceTree = "<group>"; };
+		B2AF2F8E18EBAEAE00C5807C /* Vector2.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector2.inl; sourceTree = "<group>"; };
+		B2AF2F8F18EBAEAE00C5807C /* Vector3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector3.cpp; sourceTree = "<group>"; };
+		B2AF2F9018EBAEAE00C5807C /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
+		B2AF2F9118EBAEAE00C5807C /* Vector3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector3.inl; sourceTree = "<group>"; };
+		B2AF2F9218EBAEAE00C5807C /* Vector4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector4.cpp; sourceTree = "<group>"; };
+		B2AF2F9318EBAEAE00C5807C /* Vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector4.h; sourceTree = "<group>"; };
+		B2AF2F9418EBAEAE00C5807C /* Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector4.inl; sourceTree = "<group>"; };
+		B2AF2FB018EBBDA100C5807C /* CCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMath.h; sourceTree = "<group>"; };
 		B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
 		B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
 		B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
@@ -4624,6 +4670,26 @@
 		46A170851807CE87005B8026 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				B2AF2FB018EBBDA100C5807C /* CCMath.h */,
+				B2AF2F8218EBAEAE00C5807C /* MathUtil.cpp */,
+				B2AF2F8318EBAEAE00C5807C /* MathUtil.h */,
+				B2AF2F8418EBAEAE00C5807C /* MathUtil.inl */,
+				B2AF2F8518EBAEAE00C5807C /* MathUtilNeon.inl */,
+				B2AF2F8618EBAEAE00C5807C /* Matrix.cpp */,
+				B2AF2F8718EBAEAE00C5807C /* Matrix.h */,
+				B2AF2F8818EBAEAE00C5807C /* Matrix.inl */,
+				B2AF2F8918EBAEAE00C5807C /* Quaternion.cpp */,
+				B2AF2F8A18EBAEAE00C5807C /* Quaternion.h */,
+				B2AF2F8B18EBAEAE00C5807C /* Quaternion.inl */,
+				B2AF2F8C18EBAEAE00C5807C /* Vector2.cpp */,
+				B2AF2F8D18EBAEAE00C5807C /* Vector2.h */,
+				B2AF2F8E18EBAEAE00C5807C /* Vector2.inl */,
+				B2AF2F8F18EBAEAE00C5807C /* Vector3.cpp */,
+				B2AF2F9018EBAEAE00C5807C /* Vector3.h */,
+				B2AF2F9118EBAEAE00C5807C /* Vector3.inl */,
+				B2AF2F9218EBAEAE00C5807C /* Vector4.cpp */,
+				B2AF2F9318EBAEAE00C5807C /* Vector4.h */,
+				B2AF2F9418EBAEAE00C5807C /* Vector4.inl */,
 				A044DE8518C6A58700B6CCBD /* kazmath */,
 			);
 			name = math;
@@ -4968,6 +5034,7 @@
 				50AE5EA5188749250007CFE3 /* CCBatchCommand.h in Headers */,
 				46A170241807CBFC005B8026 /* CCSAXParser.h in Headers */,
 				46A1701A1807CBFC005B8026 /* CCDevice.h in Headers */,
+				B2AF2F9F18EBAEAE00C5807C /* Quaternion.h in Headers */,
 				46A170161807CBFC005B8026 /* CCLock.h in Headers */,
 				46A1701C1807CBFC005B8026 /* CCGLViewProtocol.h in Headers */,
 				46A1701E1807CBFC005B8026 /* CCFileUtils.h in Headers */,
@@ -5012,6 +5079,7 @@
 				1A57009A180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
 				1A5700A0180BC5D20088DEC7 /* CCNode.h in Headers */,
 				46C02E0918E91123004B7456 /* xxhash.h in Headers */,
+				B2AF2FA318EBAEAE00C5807C /* Vector2.h in Headers */,
 				59A79D531821E26E00F19697 /* CCEventListenerMouse.h in Headers */,
 				1A5700C7180BC6060088DEC7 /* atitc.h in Headers */,
 				1A5700CB180BC6060088DEC7 /* CCAffineTransform.h in Headers */,
@@ -5032,6 +5100,7 @@
 				1A5700F7180BC6060088DEC7 /* CCPlatformMacros.h in Headers */,
 				1A5700FB180BC6060088DEC7 /* CCSet.h in Headers */,
 				A04583F3189053B500E32FE8 /* CCGLView.h in Headers */,
+				B2AF2FA718EBAEAE00C5807C /* Vector3.h in Headers */,
 				1A5700FF180BC6060088DEC7 /* CCString.h in Headers */,
 				1A570103180BC6060088DEC7 /* etc1.h in Headers */,
 				1A570107180BC6060088DEC7 /* s3tc.h in Headers */,
@@ -5084,6 +5153,7 @@
 				1A570227180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022B180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
 				1A57022F180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
+				B2AF2F9718EBAEAE00C5807C /* MathUtil.h in Headers */,
 				1A570236180BCC4D0088DEC7 /* CCScriptSupport.h in Headers */,
 				1A57024D180BCC6F0088DEC7 /* ccShader_Position_uColor_frag.h in Headers */,
 				1A57024F180BCC6F0088DEC7 /* ccShader_Position_uColor_vert.h in Headers */,
@@ -5145,6 +5215,7 @@
 				1A570312180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				50FCEBC918C72017004AD434 /* WidgetReader.h in Headers */,
 				B37510751823AC9F00B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
+				B2AF2FAB18EBAEAE00C5807C /* Vector4.h in Headers */,
 				A044DEB318C6A58700B6CCBD /* mat3.h in Headers */,
 				1A57031B180BCF430088DEC7 /* ccCArray.h in Headers */,
 				1A57031D180BCF430088DEC7 /* uthash.h in Headers */,
@@ -5185,6 +5256,7 @@
 				1AD71DF1180E26E600808F54 /* CCNode+CCBRelativePositioning.h in Headers */,
 				2905FA5C18CF08D100240AA3 /* UILayoutDefine.h in Headers */,
 				2905FA7218CF08D100240AA3 /* UIScrollInterface.h in Headers */,
+				B2AF2F9B18EBAEAE00C5807C /* Matrix.h in Headers */,
 				1AD71DF5180E26E600808F54 /* CCNodeLoader.h in Headers */,
 				1AD71DF9180E26E600808F54 /* CCNodeLoaderLibrary.h in Headers */,
 				2905FA8A18CF08D100240AA3 /* UITextField.h in Headers */,
@@ -5267,6 +5339,7 @@
 				1A8C59B9180E930E00EF57C3 /* CCColliderDetector.h in Headers */,
 				1A8C59BD180E930E00EF57C3 /* CCComAttribute.h in Headers */,
 				1A8C59C1180E930E00EF57C3 /* CCComAudio.h in Headers */,
+				B2AF2FB118EBBDA100C5807C /* CCMath.h in Headers */,
 				1A8C59C5180E930E00EF57C3 /* CCComController.h in Headers */,
 				1A8C59C9180E930E00EF57C3 /* CCComRender.h in Headers */,
 				1A8C59CD180E930E00EF57C3 /* CCDataReaderHelper.h in Headers */,
@@ -5448,6 +5521,7 @@
 				46A170FF1807CECB005B8026 /* CCPhysicsContact.h in Headers */,
 				593BDCF9184D0A6E00C21E48 /* CCGroupCommand.h in Headers */,
 				46A171041807CECB005B8026 /* CCPhysicsShape.h in Headers */,
+				B2AF2F9818EBAEAE00C5807C /* MathUtil.h in Headers */,
 				50FCEBAE18C72017004AD434 /* PageViewReader.h in Headers */,
 				46A1703F1807CC07005B8026 /* CCDirectorCaller.h in Headers */,
 				46A170381807CBFE005B8026 /* CCSAXParser.h in Headers */,
@@ -5513,6 +5587,7 @@
 				2905FA4318CF08D100240AA3 /* CocosGUI.h in Headers */,
 				1A5700EA180BC6060088DEC7 /* CCGeometry.h in Headers */,
 				1A5700EC180BC6060088DEC7 /* CCInteger.h in Headers */,
+				B2AF2FA018EBAEAE00C5807C /* Quaternion.h in Headers */,
 				50E6D33718E174130051CA34 /* UIHBox.h in Headers */,
 				1A5700F0180BC6060088DEC7 /* CCNS.h in Headers */,
 				1A5700F4180BC6060088DEC7 /* CCRef.h in Headers */,
@@ -5635,6 +5710,7 @@
 				1A57031C180BCF430088DEC7 /* ccCArray.h in Headers */,
 				2905FA6518CF08D100240AA3 /* UIListView.h in Headers */,
 				50FCEBAA18C72017004AD434 /* LoadingBarReader.h in Headers */,
+				B2AF2FA818EBAEAE00C5807C /* Vector3.h in Headers */,
 				1A57031E180BCF430088DEC7 /* uthash.h in Headers */,
 				1A570320180BCF430088DEC7 /* utlist.h in Headers */,
 				50FCEBC618C72017004AD434 /* TextReader.h in Headers */,
@@ -5676,6 +5752,7 @@
 				1AD71DF6180E26E600808F54 /* CCNodeLoader.h in Headers */,
 				A044DEC818C6A58700B6CCBD /* ray3.h in Headers */,
 				1AD71DFA180E26E600808F54 /* CCNodeLoaderLibrary.h in Headers */,
+				B2AF2FAC18EBAEAE00C5807C /* Vector4.h in Headers */,
 				1AD71DFC180E26E600808F54 /* CCNodeLoaderListener.h in Headers */,
 				1AD71E00180E26E600808F54 /* CCParticleSystemQuadLoader.h in Headers */,
 				1AD71E04180E26E600808F54 /* CCScale9SpriteLoader.h in Headers */,
@@ -5702,6 +5779,7 @@
 				A044DECC18C6A58700B6CCBD /* utility.h in Headers */,
 				50FCEBB218C72017004AD434 /* ScrollViewReader.h in Headers */,
 				1AD71EC0180E26E600808F54 /* CCSkeletonAnimation.h in Headers */,
+				B2AF2FB218EBBDA100C5807C /* CCMath.h in Headers */,
 				1AD71EC4180E26E600808F54 /* extension.h in Headers */,
 				1AD71EC8180E26E600808F54 /* Json.h in Headers */,
 				1AD71ECC180E26E600808F54 /* RegionAttachment.h in Headers */,
@@ -5715,6 +5793,7 @@
 				1AD71EE0180E26E600808F54 /* Slot.h in Headers */,
 				1AD71EE4180E26E600808F54 /* SlotData.h in Headers */,
 				1AD71EE8180E26E600808F54 /* spine-cocos2dx.h in Headers */,
+				B2AF2F9C18EBAEAE00C5807C /* Matrix.h in Headers */,
 				1AD71EEA180E26E600808F54 /* spine.h in Headers */,
 				1AAF536D180E3374000584C8 /* HttpClient.h in Headers */,
 				A0E6B28118613EA5009C5D17 /* CCRenderCommandPool.h in Headers */,
@@ -5749,6 +5828,7 @@
 				1A8C59A2180E930E00EF57C3 /* CCArmature.h in Headers */,
 				1A8C59A6180E930E00EF57C3 /* CCArmatureAnimation.h in Headers */,
 				2905FA8718CF08D100240AA3 /* UITextBMFont.h in Headers */,
+				B2AF2FA418EBAEAE00C5807C /* Vector2.h in Headers */,
 				1A8C59AA180E930E00EF57C3 /* CCArmatureDataManager.h in Headers */,
 				1A8C59AE180E930E00EF57C3 /* CCArmatureDefine.h in Headers */,
 				1A8C59B2180E930E00EF57C3 /* CCBatchNode.h in Headers */,
@@ -6157,6 +6237,7 @@
 				46A1701D1807CBFC005B8026 /* CCFileUtils.cpp in Sources */,
 				46A170EF1807CECA005B8026 /* CCPhysicsWorld.cpp in Sources */,
 				46A170231807CBFC005B8026 /* CCSAXParser.cpp in Sources */,
+				B2AF2FA918EBAEAE00C5807C /* Vector4.cpp in Sources */,
 				46A170ED1807CECA005B8026 /* CCPhysicsShape.cpp in Sources */,
 				A044DED518C6A58700B6CCBD /* vec4.c in Sources */,
 				A044DEBD18C6A58700B6CCBD /* quaternion.c in Sources */,
@@ -6183,6 +6264,7 @@
 				1A570075180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				B375107A1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				1A570079180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
+				B2AF2FA118EBAEAE00C5807C /* Vector2.cpp in Sources */,
 				1A57007D180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
 				1A570081180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
 				1A570085180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
@@ -6190,6 +6272,7 @@
 				1A57008D180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
 				1A570091180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				A044DEAB18C6A58700B6CCBD /* matrix.c in Sources */,
+				B2AF2F9918EBAEAE00C5807C /* Matrix.cpp in Sources */,
 				2905FA5A18CF08D100240AA3 /* UILayoutDefine.cpp in Sources */,
 				A044DEC518C6A58700B6CCBD /* ray3.c in Sources */,
 				1A570098180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
@@ -6323,6 +6406,7 @@
 				2905FA8418CF08D100240AA3 /* UITextBMFont.cpp in Sources */,
 				1AD71DB1180E26E600808F54 /* CCBKeyframe.cpp in Sources */,
 				1AD71DB7180E26E600808F54 /* CCBReader.cpp in Sources */,
+				B2AF2FA518EBAEAE00C5807C /* Vector3.cpp in Sources */,
 				1AD71DBD180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC1180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
 				A044DEA318C6A58700B6CCBD /* aabb.c in Sources */,
@@ -6362,6 +6446,7 @@
 				2905FA4018CF08D100240AA3 /* CocosGUI.cpp in Sources */,
 				1AD71EC1180E26E600808F54 /* extension.cpp in Sources */,
 				1AD71EC5180E26E600808F54 /* Json.cpp in Sources */,
+				B2AF2F9518EBAEAE00C5807C /* MathUtil.cpp in Sources */,
 				50E6D33C18E174130051CA34 /* UIVBox.cpp in Sources */,
 				1AD71EC9180E26E600808F54 /* RegionAttachment.cpp in Sources */,
 				50E6D33818E174130051CA34 /* UIRelativeBox.cpp in Sources */,
@@ -6394,6 +6479,7 @@
 				1A8C598B180E930E00EF57C3 /* CCActionFrame.cpp in Sources */,
 				1A8C598F180E930E00EF57C3 /* CCActionFrameEasing.cpp in Sources */,
 				1A8C5993180E930E00EF57C3 /* CCActionManagerEx.cpp in Sources */,
+				B2AF2F9D18EBAEAE00C5807C /* Quaternion.cpp in Sources */,
 				1A8C5997180E930E00EF57C3 /* CCActionNode.cpp in Sources */,
 				50FCEBC318C72017004AD434 /* TextReader.cpp in Sources */,
 				1A8C599B180E930E00EF57C3 /* CCActionObject.cpp in Sources */,
@@ -6643,6 +6729,7 @@
 				1A5700D2180BC6060088DEC7 /* CCAutoreleasePool.cpp in Sources */,
 				1A5700D8180BC6060088DEC7 /* CCData.cpp in Sources */,
 				1A5700DC180BC6060088DEC7 /* CCDataVisitor.cpp in Sources */,
+				B2AF2FA618EBAEAE00C5807C /* Vector3.cpp in Sources */,
 				A044DEA818C6A58700B6CCBD /* mat4stack.c in Sources */,
 				1A5700E0180BC6060088DEC7 /* CCDictionary.cpp in Sources */,
 				1A5700E8180BC6060088DEC7 /* CCGeometry.cpp in Sources */,
@@ -6765,6 +6852,8 @@
 				1AD71DCE180E26E600808F54 /* CCControlLoader.cpp in Sources */,
 				1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */,
 				1AD71DD2180E26E600808F54 /* CCLabelBMFontLoader.cpp in Sources */,
+				B2AF2F9618EBAEAE00C5807C /* MathUtil.cpp in Sources */,
+				B2AF2F9A18EBAEAE00C5807C /* Matrix.cpp in Sources */,
 				1AD71DD6180E26E600808F54 /* CCLabelTTFLoader.cpp in Sources */,
 				1AD71DDA180E26E600808F54 /* CCLayerColorLoader.cpp in Sources */,
 				50FCEBC018C72017004AD434 /* TextFieldReader.cpp in Sources */,
@@ -6814,6 +6903,7 @@
 				3E26D40618ACB5D100834404 /* CCImage.cpp in Sources */,
 				1AAF5373180E3374000584C8 /* SocketIO.cpp in Sources */,
 				A044DEA418C6A58700B6CCBD /* aabb.c in Sources */,
+				B2AF2FAA18EBAEAE00C5807C /* Vector4.cpp in Sources */,
 				1AAF5377180E3374000584C8 /* WebSocket.cpp in Sources */,
 				1AAF5850180E40B9000584C8 /* LocalStorage.cpp in Sources */,
 				1AAF5854180E40B9000584C8 /* LocalStorageAndroid.cpp in Sources */,
@@ -6852,6 +6942,7 @@
 				1A8C59B8180E930E00EF57C3 /* CCColliderDetector.cpp in Sources */,
 				1A8C59BC180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
 				1A8C59C0180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
+				B2AF2F9E18EBAEAE00C5807C /* Quaternion.cpp in Sources */,
 				1A8C59C4180E930E00EF57C3 /* CCComController.cpp in Sources */,
 				1A8C59C8180E930E00EF57C3 /* CCComRender.cpp in Sources */,
 				1A8C59CC180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,
@@ -6868,6 +6959,7 @@
 				1A8C59EC180E930E00EF57C3 /* CCSkin.cpp in Sources */,
 				2905FA4718CF08D100240AA3 /* UIButton.cpp in Sources */,
 				1A8C59F0180E930E00EF57C3 /* CCSpriteFrameCacheHelper.cpp in Sources */,
+				B2AF2FA218EBAEAE00C5807C /* Vector2.cpp in Sources */,
 				1A8C59F4180E930E00EF57C3 /* CCSSceneReader.cpp in Sources */,
 				1A8C59F8180E930E00EF57C3 /* CCTransformHelp.cpp in Sources */,
 				1A8C59FC180E930E00EF57C3 /* CCTween.cpp in Sources */,
@@ -7117,7 +7209,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/ui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/ui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
 			};
 			name = Debug;
 		};
@@ -7151,7 +7243,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/ui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/ui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
