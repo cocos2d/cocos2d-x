@@ -38,11 +38,8 @@ bool UITextFieldTest::init()
         _uiLayer->addChild(alert);
         
         // Create the textfield
-        TextField* textField = TextField::create();
-        textField->setTouchEnabled(true);
-        textField->setFontName("fonts/Marker Felt.ttf");
-        textField->setFontSize(30);
-        textField->setPlaceHolder("input words here");
+        TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
+
         textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
         _uiLayer->addChild(textField);
