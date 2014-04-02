@@ -40,6 +40,7 @@
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
 #include "kazmath/kazmath.h"
+#include "CCMath.h"
 
 NS_CC_BEGIN
 
@@ -71,6 +72,8 @@ enum {
     kNodeOnExitTransitionDidStart,
     kNodeOnCleanup
 };
+
+USING_NS_CC_MATH;
 
 bool nodeComparisonLess(Node* n1, Node* n2);
 
@@ -331,11 +334,11 @@ public:
     /**
      * Sets the position (X, Y, and Z) in its parent's coordinate system
      */
-    virtual void setPosition3D(const Vertex3F& position);
+    virtual void setPosition3D(const Vector3& position);
     /**
      * returns the position (X,Y,Z) in its parent's coordinate system
      */
-    virtual Vertex3F getPosition3D() const;
+    virtual Vector3 getPosition3D() const;
 
     /**
      * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
@@ -499,11 +502,11 @@ public:
      * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
      */
-    virtual void setRotation3D(const Vertex3F& rotation);
+    virtual void setRotation3D(const Vector3& rotation);
     /**
      * returns the rotation (X,Y,Z) in degrees.
      */
-    virtual Vertex3F getRotation3D() const;
+    virtual Vector3 getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.

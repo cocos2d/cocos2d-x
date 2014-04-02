@@ -330,7 +330,7 @@ void Grid3D::blit(void)
     unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
     // position
-    setGLBufferData(_vertices, numOfPoints * sizeof(Vertex3F), 0);
+    setGLBufferData(_vertices, numOfPoints * sizeof(Vector3), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     // texCoords
@@ -365,8 +365,8 @@ void Grid3D::calculateVertexPoints(void)
 
     unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
-    _vertices = malloc(numOfPoints * sizeof(Vertex3F));
-    _originalVertices = malloc(numOfPoints * sizeof(Vertex3F));
+    _vertices = malloc(numOfPoints * sizeof(Vector3));
+    _originalVertices = malloc(numOfPoints * sizeof(Vector3));
     _texCoordinates = malloc(numOfPoints * sizeof(Vertex2F));
     _indices = (GLushort*)malloc(_gridSize.width * _gridSize.height * sizeof(GLushort) * 6);
 
@@ -395,12 +395,12 @@ void Grid3D::calculateVertexPoints(void)
             memcpy(&idxArray[6*idx], tempidx, 6*sizeof(GLushort));
 
             int l1[4] = {a*3, b*3, c*3, d*3};
-            Vertex3F e(x1, y1, 0);
-            Vertex3F f(x2, y1, 0);
-            Vertex3F g(x2, y2, 0);
-            Vertex3F h(x1, y2, 0);
+            Vector3 e(x1, y1, 0);
+            Vector3 f(x2, y1, 0);
+            Vector3 g(x2, y2, 0);
+            Vector3 h(x1, y2, 0);
 
-            Vertex3F l2[4] = {e, f, g, h};
+            Vector3 l2[4] = {e, f, g, h};
 
             int tex1[4] = {a*2, b*2, c*2, d*2};
             Point Tex2F[4] = {Point(x1, y1), Point(x2, y1), Point(x2, y2), Point(x1, y2)};
@@ -424,34 +424,34 @@ void Grid3D::calculateVertexPoints(void)
         }
     }
 
-    memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vertex3F));
+    memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vector3));
 }
 
-Vertex3F Grid3D::getVertex(const Point& pos) const
+Vector3 Grid3D::getVertex(const Point& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_vertices;
 
-    Vertex3F vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
+    Vector3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
 
     return vert;
 }
 
-Vertex3F Grid3D::getOriginalVertex(const Point& pos) const
+Vector3 Grid3D::getOriginalVertex(const Point& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_originalVertices;
 
-    Vertex3F vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
+    Vector3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
 
     return vert;
 }
 
-void Grid3D::setVertex(const Point& pos, const Vertex3F& vertex)
+void Grid3D::setVertex(const Point& pos, const Vector3& vertex)
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int index = (pos.x * (_gridSize.height + 1) + pos.y) * 3;
@@ -465,7 +465,7 @@ void Grid3D::reuse(void)
 {
     if (_reuseGrid > 0)
     {
-        memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vertex3F));
+        memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vector3));
         --_reuseGrid;
     }
 }
@@ -545,7 +545,7 @@ void TiledGrid3D::blit(void)
     int numQuads = _gridSize.width * _gridSize.height;
 
     // position
-    setGLBufferData(_vertices, (numQuads*4*sizeof(Vertex3F)), 0);
+    setGLBufferData(_vertices, (numQuads*4*sizeof(Vector3)), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     // texCoords
@@ -580,8 +580,8 @@ void TiledGrid3D::calculateVertexPoints(void)
     CC_SAFE_FREE(_texCoordinates);
     CC_SAFE_FREE(_indices);
 
-    _vertices = malloc(numQuads*4*sizeof(Vertex3F));
-    _originalVertices = malloc(numQuads*4*sizeof(Vertex3F));
+    _vertices = malloc(numQuads*4*sizeof(Vector3));
+    _originalVertices = malloc(numQuads*4*sizeof(Vector3));
     _texCoordinates = malloc(numQuads*4*sizeof(Vertex2F));
     _indices = (GLushort*)malloc(numQuads*6*sizeof(GLushort));
 

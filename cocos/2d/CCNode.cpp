@@ -280,7 +280,7 @@ float Node::getRotationSkewX() const
     return _rotationZ_X;
 }
 
-void Node::setRotation3D(const Vertex3F& rotation)
+void Node::setRotation3D(const Vector3& rotation)
 {
     if (_rotationX == rotation.x &&
         _rotationY == rotation.y &&
@@ -303,12 +303,12 @@ void Node::setRotation3D(const Vertex3F& rotation)
 #endif
 }
 
-Vertex3F Node::getRotation3D() const
+Vector3 Node::getRotation3D() const
 {
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     CCASSERT(_rotationZ_X == _rotationZ_Y, "_rotationZ_X != _rotationZ_Y");
 
-    return Vertex3F(_rotationX,_rotationY,_rotationZ_X);
+    return Vector3(_rotationX,_rotationY,_rotationZ_X);
 }
 
 void Node::setRotationSkewX(float rotationX)
@@ -447,15 +447,15 @@ void Node::setPosition(float x, float y)
     setPosition(Point(x, y));
 }
 
-void Node::setPosition3D(const Vertex3F& position)
+void Node::setPosition3D(const Vector3& position)
 {
     _positionZ = position.z;
     setPosition(Point(position.x, position.y));
 }
 
-Vertex3F Node::getPosition3D() const
+Vector3 Node::getPosition3D() const
 {
-    Vertex3F ret;
+    Vector3 ret;
     ret.x = _position.x;
     ret.y = _position.y;
     ret.z = _positionZ;

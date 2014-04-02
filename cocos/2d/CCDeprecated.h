@@ -460,9 +460,9 @@ CC_DEPRECATED_ATTRIBUTE static inline Vertex2F vertex2(const float x, const floa
     return c;
 }
 
-CC_DEPRECATED_ATTRIBUTE static inline Vertex3F vertex3(const float x, const float y, const float z)
+CC_DEPRECATED_ATTRIBUTE static inline Vector3 vertex3(const float x, const float y, const float z)
 {
-    Vertex3F c(x, y, z);
+    Vector3 c(x, y, z);
     return c;
 }
 
@@ -776,7 +776,8 @@ CC_DEPRECATED_ATTRIBUTE typedef Color3B ccColor3B;
 CC_DEPRECATED_ATTRIBUTE typedef Color4F ccColor4F;
 CC_DEPRECATED_ATTRIBUTE typedef Color4B ccColor4B;
 CC_DEPRECATED_ATTRIBUTE typedef Vertex2F ccVertex2F;
-CC_DEPRECATED_ATTRIBUTE typedef Vertex3F ccVertex3F;
+CC_DEPRECATED_ATTRIBUTE typedef Vector3 ccVertex3F;
+CC_DEPRECATED_ATTRIBUTE typedef Vector3 Vertex3F;
 CC_DEPRECATED_ATTRIBUTE typedef Tex2F ccTex2F;
 CC_DEPRECATED_ATTRIBUTE typedef PointSprite ccPointSprite;
 CC_DEPRECATED_ATTRIBUTE typedef Quad2 ccQuad2;

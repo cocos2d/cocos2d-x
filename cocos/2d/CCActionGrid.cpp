@@ -103,19 +103,19 @@ GridBase* Grid3DAction::getGrid()
     return Grid3D::create(_gridSize);
 }
 
-Vertex3F Grid3DAction::getVertex(const Point& position) const
+Vector3 Grid3DAction::getVertex(const Point& position) const
 {
     Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     return g->getVertex(position);
 }
 
-Vertex3F Grid3DAction::getOriginalVertex(const Point& position) const
+Vector3 Grid3DAction::getOriginalVertex(const Point& position) const
 {
     Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     return g->getOriginalVertex(position);
 }
 
-void Grid3DAction::setVertex(const Point& position, const Vertex3F& vertex)
+void Grid3DAction::setVertex(const Point& position, const Vector3& vertex)
 {
     Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     g->setVertex(position, vertex);

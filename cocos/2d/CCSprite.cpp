@@ -404,10 +404,10 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
         float y2 = y1 + _rect.size.height;
 
         // Don't update Z.
-        _quad.bl.vertices = Vertex3F(x1, y1, 0);
-        _quad.br.vertices = Vertex3F(x2, y1, 0);
-        _quad.tl.vertices = Vertex3F(x1, y2, 0);
-        _quad.tr.vertices = Vertex3F(x2, y2, 0);
+        _quad.bl.vertices = Vector3(x1, y1, 0);
+        _quad.br.vertices = Vector3(x2, y1, 0);
+        _quad.tl.vertices = Vector3(x1, y2, 0);
+        _quad.tr.vertices = Vector3(x2, y2, 0);
     }
 }
 
@@ -510,7 +510,7 @@ void Sprite::updateTransform(void)
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !_visible || ( _parent && _parent != _batchNode && static_cast<Sprite*>(_parent)->_shouldBeHidden) )
         {
-            _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
+            _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vector3(0,0,0);
             _shouldBeHidden = true;
         }
         else
@@ -559,10 +559,10 @@ void Sprite::updateTransform(void)
             float dx = x1 * cr - y2 * sr2 + x;
             float dy = x1 * sr + y2 * cr2 + y;
 
-            _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
-            _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
-            _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
-            _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
+            _quad.bl.vertices = Vector3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
+            _quad.br.vertices = Vector3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
+            _quad.tl.vertices = Vector3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
+            _quad.tr.vertices = Vector3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -1028,10 +1028,10 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
         float y1 = _offsetPosition.y;
         float x2 = x1 + _rect.size.width;
         float y2 = y1 + _rect.size.height;
-        _quad.bl.vertices = Vertex3F( x1, y1, 0 );
-        _quad.br.vertices = Vertex3F( x2, y1, 0 );
-        _quad.tl.vertices = Vertex3F( x1, y2, 0 );
-        _quad.tr.vertices = Vertex3F( x2, y2, 0 );
+        _quad.bl.vertices = Vector3( x1, y1, 0 );
+        _quad.br.vertices = Vector3( x2, y1, 0 );
+        _quad.tl.vertices = Vector3( x1, y2, 0 );
+        _quad.tr.vertices = Vector3( x2, y2, 0 );
 
     } else {
 
