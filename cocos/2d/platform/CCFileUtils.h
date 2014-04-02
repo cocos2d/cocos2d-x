@@ -290,7 +290,7 @@ public:
      *  @param strFilePath The path of the file, it could be a relative or absolute path.
      *  @return true if the file exists, otherwise it will return false.
      */
-    virtual bool isFileExist(const std::string& filename, std::string* outFullpath = nullptr) const;
+    virtual bool isFileExist(const std::string& filename) const;
     
     /**
      *  Checks whether the path is an absolute path.

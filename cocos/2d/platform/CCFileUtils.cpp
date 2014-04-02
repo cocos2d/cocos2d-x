@@ -680,14 +680,32 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
     {
         return filename;
     }
+
+    // Already Cached ?
+    auto cacheIter = _fullPathCache.find(filename);
+    if( cacheIter != _fullPathCache.end() )
+    {
+        return cacheIter->second;
+    }
+    
+    // Get the new file name.
+    const std::string newFilename( getNewFilename(filename) );
     
 	std::string fullpath;
     
-    if (isFileExist(filename, &fullpath))
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
     {
-        // Using the filename passed in as key.
-        _fullPathCache.insert(std::make_pair(filename, fullpath));
-        return fullpath;
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        {
+            fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
+            
+            if (fullpath.length() > 0)
+            {
+                // Using the filename passed in as key.
+                _fullPathCache.insert(std::make_pair(filename, fullpath));
+                return fullpath;
+            }
+        }
     }
     
     CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
@@ -837,26 +855,18 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
     return ret;
 }
 
-bool FileUtils::isFileExist(const std::string& filename, std::string* outFullpath/* = nullptr*/) const
+bool FileUtils::isFileExist(const std::string& filename) const
 {
     // If filename is absolute path, we don't need to consider 'search paths' and 'resolution orders'.
     if (isAbsolutePath(filename))
     {
-        if (isFileExistInternal(filename))
-        {
-            if (outFullpath != nullptr)
-                *outFullpath = filename;
-            return true;
-        }
-        return false;
+        return isFileExistInternal(filename);
     }
     
     // Already Cached ?
     auto cacheIter = _fullPathCache.find(filename);
     if( cacheIter != _fullPathCache.end() )
     {
-        if (outFullpath != nullptr)
-            *outFullpath = cacheIter->second;
         return true;
     }
     
@@ -865,15 +875,16 @@ bool FileUtils::isFileExist(const std::string& filename, std::string* outFullpat
     
 	std::string fullpath;
     
-    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt) {
-        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt) {
-            
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    {
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        {
             fullpath = const_cast<FileUtils*>(this)->getPathForFilename(newFilename, *resolutionIt, *searchIt);
             
             if (!fullpath.empty())
             {
-                if (outFullpath != nullptr)
-                    *outFullpath = fullpath;
+                // Using the filename passed in as key.
+                const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(filename, fullpath));
                 return true;
             }
         }
