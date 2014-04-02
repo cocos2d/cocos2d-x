@@ -1,5 +1,5 @@
-#include "Base.h"
 #include "MathUtil.h"
+#include "ccMacros.h"
 
 namespace gameplay
 {

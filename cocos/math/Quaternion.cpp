@@ -1,5 +1,5 @@
-#include "Base.h"
 #include "Quaternion.h"
+#include "ccMacros.h"
 
 namespace gameplay
 {
