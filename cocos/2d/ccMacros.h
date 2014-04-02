@@ -52,6 +52,9 @@ THE SOFTWARE.
 #else
     #define CCASSERT(cond, msg)
 #endif
+
+#define GP_ASSERT(cond) CCASSERT(cond, "")
+
 // XXX: Backward compatible
 #define CCAssert CCASSERT
 #endif  // CCASSERT
