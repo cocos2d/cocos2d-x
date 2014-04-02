@@ -75,6 +75,49 @@ CheckBox* CheckBox::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
+    
+CheckBox* CheckBox::create(const std::string& backGround,
+                           const std::string& backGroundSeleted,
+                           const std::string& cross,
+                           const std::string& backGroundDisabled,
+                           const std::string& frontCrossDisabled,
+                           TextureResType texType)
+{
+    CheckBox *pWidget = new CheckBox;
+    if (pWidget && pWidget->init(backGround,
+                                 backGroundSeleted,
+                                 cross,
+                                 backGroundDisabled,
+                                 frontCrossDisabled,
+                                 texType))
+    {
+        pWidget->autorelease();
+        return pWidget;
+    }
+    CC_SAFE_DELETE(pWidget);
+    return nullptr;
+}
+    
+bool CheckBox::init(const std::string& backGround,
+                    const std::string& backGroundSeleted,
+                    const std::string& cross,
+                    const std::string& backGroundDisabled,
+                    const std::string& frontCrossDisabled,
+                    TextureResType texType)
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        
+        setSelectedState(false);
+        setTouchEnabled(true);
+        loadTextures(backGround, backGroundSeleted, cross, backGroundDisabled, frontCrossDisabled,texType);
+    } while (0);
+    return bRet;
+}
 
 bool CheckBox::init()
 {
@@ -102,7 +145,12 @@ void CheckBox::initRenderer()
     addProtectedChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLED_RENDERER_Z, -1);
 }
 
-void CheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)
+void CheckBox::loadTextures(const std::string& backGround,
+                            const std::string& backGroundSelected,
+                            const std::string& cross,
+                            const std::string& backGroundDisabled,
+                            const std::string& frontCrossDisabled,
+                            TextureResType texType)
 {
     loadTextureBackGround(backGround,texType);
     loadTextureBackGroundSelected(backGroundSelected,texType);
@@ -111,9 +159,9 @@ void CheckBox::loadTextures(const char *backGround, const char *backGroundSelect
     loadTextureFrontCrossDisabled(frontCrossDisabled,texType);
 }
 
-void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texType)
+void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResType texType)
 {
-    if (!backGround || strcmp(backGround, "") == 0)
+    if (backGround.empty())
     {
         return;
     }
@@ -137,9 +185,9 @@ void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texTy
     updateRGBAToRenderer(_backGroundBoxRenderer);
 }
 
-void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,TextureResType texType)
+void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType)
 {
-    if (!backGroundSelected || strcmp(backGroundSelected, "") == 0)
+    if (backGroundSelected.empty())
     {
         return;
     }
@@ -163,9 +211,9 @@ void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Text
     updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
 }
 
-void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
+void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType texType)
 {
-    if (!cross || strcmp(cross, "") == 0)
+    if (cross.empty())
     {
         return;
     }
@@ -189,9 +237,9 @@ void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
     updateRGBAToRenderer(_frontCrossRenderer);
 }
 
-void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,TextureResType texType)
+void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType)
 {
-    if (!backGroundDisabled || strcmp(backGroundDisabled, "") == 0)
+    if (backGroundDisabled.empty())
     {
         return;
     }
@@ -215,9 +263,9 @@ void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Text
     updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
 }
 
-void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,TextureResType texType)
+void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType)
 {
-    if (!frontCrossDisabled || strcmp(frontCrossDisabled, "") == 0)
+    if (frontCrossDisabled.empty())
     {
         return;
     }
