@@ -80,9 +80,9 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextures(const char* normal,
-                      const char* selected,
-                      const char* disabled = "",
+    void loadTextures(const std::string& normal,
+                      const std::string& selected,
+                      const std::string& disabled = "",
                       TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
@@ -92,7 +92,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureNormal(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureNormal(const std::string& normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Load selected state texture for button.
@@ -101,7 +101,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTexturePressed(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexturePressed(const std::string& selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Load dark state texture for button.
@@ -110,7 +110,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureDisabled(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureDisabled(const std::string& disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.

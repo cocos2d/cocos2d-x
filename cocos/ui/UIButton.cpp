@@ -111,7 +111,7 @@ bool Button::init(const std::string &normalImage,
         }
         
         setTouchEnabled(true);
-        this->loadTextures(normalImage.c_str(), selectedImage.c_str(), disableImage.c_str(),texType);
+        this->loadTextures(normalImage, selectedImage, disableImage,texType);
     } while (0);
     return bRet;
 }
@@ -203,16 +203,19 @@ void Button::ignoreContentAdaptWithSize(bool ignore)
     }
 }
 
-void Button::loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType)
+void Button::loadTextures(const std::string& normal,
+                          const std::string& selected,
+                          const std::string& disabled,
+                          TextureResType texType)
 {
     loadTextureNormal(normal,texType);
     loadTexturePressed(selected,texType);
     loadTextureDisabled(disabled,texType);
 }
 
-void Button::loadTextureNormal(const char* normal,TextureResType texType)
+void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 {
-    if (!normal || strcmp(normal, "") == 0)
+    if (normal.empty())
     {
         return;
     }
@@ -224,10 +227,10 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
         switch (_normalTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                normalRendererScale9->initWithFile(normal);
+                normalRendererScale9->initWithFile(normal.c_str());
                 break;
             case UI_TEX_TYPE_PLIST:
-                normalRendererScale9->initWithSpriteFrameName(normal);
+                normalRendererScale9->initWithSpriteFrameName(normal.c_str());
                 break;
             default:
                 break;
@@ -258,9 +261,9 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
     _normalTextureLoaded = true;
 }
 
-void Button::loadTexturePressed(const char* selected,TextureResType texType)
+void Button::loadTexturePressed(const std::string& selected,TextureResType texType)
 {
-    if (!selected || strcmp(selected, "") == 0)
+    if (selected.empty())
     {
         return;
     }
@@ -272,10 +275,10 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
         switch (_pressedTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                clickedRendererScale9->initWithFile(selected);
+                clickedRendererScale9->initWithFile(selected.c_str());
                 break;
             case UI_TEX_TYPE_PLIST:
-                clickedRendererScale9->initWithSpriteFrameName(selected);
+                clickedRendererScale9->initWithSpriteFrameName(selected.c_str());
                 break;
             default:
                 break;
@@ -306,9 +309,9 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
     _pressedTextureLoaded = true;
 }
 
-void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
+void Button::loadTextureDisabled(const std::string& disabled,TextureResType texType)
 {
-    if (!disabled || strcmp(disabled, "") == 0)
+    if (disabled.empty())
     {
         return;
     }
@@ -320,10 +323,10 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
         switch (_disabledTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                disabledScale9->initWithFile(disabled);
+                disabledScale9->initWithFile(disabled.c_str());
                 break;
             case UI_TEX_TYPE_PLIST:
-                disabledScale9->initWithSpriteFrameName(disabled);
+                disabledScale9->initWithSpriteFrameName(disabled.c_str());
                 break;
             default:
                 break;
