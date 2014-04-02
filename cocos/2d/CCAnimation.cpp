@@ -93,10 +93,10 @@ Animation* Animation::create(void)
     return animation;
 } 
 
-Animation* Animation::createWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/)
+Animation* Animation::createWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/, unsigned int loops/* = 1*/)
 {
     Animation *animation = new Animation();
-    animation->initWithSpriteFrames(frames, delay);
+    animation->initWithSpriteFrames(frames, delay, loops);
     animation->autorelease();
 
     return animation;
