@@ -513,9 +513,9 @@ void ActionRotateBy3D::onEnter()
 
     centerSprites(3);
 
-    auto actionBy1 = RotateBy::create(4, Vertex3F(360, 0, 0));
-    auto actionBy2 = RotateBy::create(4, Vertex3F(0, 360, 0));
-    auto actionBy3 = RotateBy::create(4 ,Vertex3F(0, 0, 360));
+    auto actionBy1 = RotateBy::create(4, Vector3(360, 0, 0));
+    auto actionBy2 = RotateBy::create(4, Vector3(0, 360, 0));
+    auto actionBy3 = RotateBy::create(4 ,Vector3(0, 0, 360));
 
     _tamara->runAction( Sequence::create(actionBy1, actionBy1->reverse(), nullptr));
     _grossini->runAction( Sequence::create(actionBy2, actionBy2->reverse(), nullptr));
