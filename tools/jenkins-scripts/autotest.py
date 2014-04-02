@@ -6,7 +6,7 @@ import socket
 import time
 
 HOST_MAC = 'localhost'
-HOST_ADNROID = '10.10.40.64'
+HOST_ANDROID = ''
 HOST_IOS = '10.10.30.61'
 PORT = 5678
 
@@ -18,12 +18,24 @@ TYPE_ANDROID = 1
 TYPE_IOS = 2
 
 sleep_time = 1.5
+
+#
+def getADBDeviceIP():
+	output = os.popen("adb shell netcfg")
+	configs = output.read().split('\r\n')
+	for l in configs:
+		items = l.split()
+		if(items[1] == 'UP'):
+			if(items[2] != '127.0.0.1'):
+				return items[2]
+
 def autotest(type):
 	soc = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
 	if type == TYPE_MAC:
 		soc.connect((HOST_MAC, PORT))
 	if type == TYPE_ANDROID:
-		soc.connect((HOST_ADNROID, PORT))
+		HOST_ANDROID = getADBDeviceIP()
+		soc.connect((HOST_ANDROID, PORT))
 	if type == TYPE_IOS:
 		soc.connect((HOST_IOS, PORT))
 	time.sleep(1)
