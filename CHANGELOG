@@ -1,4 +1,5 @@
 cocos2d-x-3.0final ?.? 2014
+     [FIX]          cocos2d::extension::Control: ControlButton can't swallow touch event
      [FIX]          Physics: Skips one frame when delta time is equal to zero
 
 cocos2d-x-3.0rc1 April.2 2014
