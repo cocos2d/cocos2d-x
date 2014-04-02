@@ -20,8 +20,8 @@ bool UIImageViewTest::init()
         _uiLayer->addChild(alert);        
         
         // Create the imageview
-        ImageView* imageView = ImageView::create();
-        imageView->loadTexture("cocosui/ccicon.png");
+        ImageView* imageView = ImageView::create("cocosui/ccicon.png");
+//        imageView->loadTexture("cocosui/ccicon.png");
         imageView->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
         
 //        imageView->setOpacity(64);

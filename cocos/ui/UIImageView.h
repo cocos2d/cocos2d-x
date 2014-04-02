@@ -55,6 +55,16 @@ public:
      * Allocates and initializes.
      */
     static ImageView* create();
+    
+    /**
+     * create a  imageview object
+     *
+     * @param fileName   file name of texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    static ImageView* create(const std::string& imageFileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
 
     /**
      * Load texture for imageview.
@@ -63,7 +73,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexture(const std::string& fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Updates the texture rect of the ImageView in points.
@@ -102,6 +112,12 @@ public:
 
     virtual const Size& getContentSize() const override;
     virtual Node* getVirtualRenderer() override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    //initializes state of widget.
+    virtual bool init() override;
+    virtual bool init(const std::string& imageFileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
