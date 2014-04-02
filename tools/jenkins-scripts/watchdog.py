@@ -40,12 +40,12 @@ def main():
     J = Jenkins('http://115.28.134.83:8000',username,password)
     #get all jenkins jobs
     for key,job in J.iteritems():
+        threshold = 0
         if(os.environ.has_key(key+'-threshold')):
             threshold = int(os.environ[key+'-threshold'])
-            build_time(job,threshold)
         else:
             threshold = int(os.environ['jenkins-job-watchdog-threshold'])
-            build_time(job,threshold)
+        build_time(job,threshold)
     return(0)
     
 
