@@ -183,10 +183,7 @@ bool ControlSwitchSprite::initWithMaskSprite(
         setThumbSprite(thumbSprite);
         setOnLabel(onLabel);
         setOffLabel(offLabel);
-        //setOnSprite(nullptr);
-        //setOffSprite(nullptr);
-        //setOnLabel(nullptr);
-        //setOffLabel(nullptr);
+
         ClippingNode* clipper = ClippingNode::create();
         _clipperStencil = Sprite::createWithTexture(maskSprite->getTexture());
         _clipperStencil->retain();
@@ -204,27 +201,6 @@ bool ControlSwitchSprite::initWithMaskSprite(
 
         // Set up the mask with the Mask shader
         setMaskTexture(maskSprite->getTexture());
-        GLProgram* program = new GLProgram();
-        program->initWithByteArrays(ccPositionTextureColor_vert, ccExSwitchMask_frag);
-        setShaderProgram(program);
-        program->release();
-
-        CHECK_GL_ERROR_DEBUG();
-
-        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
-        CHECK_GL_ERROR_DEBUG();
-
-        program->link();
-        CHECK_GL_ERROR_DEBUG();
-
-        program->updateUniforms();
-        CHECK_GL_ERROR_DEBUG();                
-
-        _textureLocation = program->getUniformLocation("u_texture");
-        _maskLocation = program->getUniformLocation("u_mask");
-        CHECK_GL_ERROR_DEBUG();
 
         setContentSize(_maskTexture->getContentSize());
 
@@ -236,7 +212,7 @@ bool ControlSwitchSprite::initWithMaskSprite(
 
 void ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
 {
-    CCLOG("key = %s, value = %f", key.c_str(), value);
+    CCLOGINFO("key = %s, value = %f", key.c_str(), value);
     setSliderXPosition(value);
 }
 
@@ -382,7 +358,7 @@ void ControlSwitch::setOn(bool isOn)
 
 void ControlSwitch::setOn(bool isOn, bool animated)
 {
-    _on     = isOn;
+    _on = isOn;
     
     if (animated) {
         _switchSprite->runAction
