@@ -55,19 +55,35 @@ public:
      * Allocates and initializes.
      */
     static Button* create();
+    
+    /**
+     * create a button with custom textures
+     * @normalImage normal state texture name
+     * @selectedImage  selected state texture name
+     * @disableImage disable state texture name
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    static Button* create(const std::string& normalImage,
+                          const std::string& selectedImage = "",
+                          const std::string& disableImage = "",
+                          TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
 
     /**
      * Load textures for button.
      *
-     * @param normal    normal state texture.
+     * @param normal    normal state texture name.
      *
-     * @param selected    selected state texture.
+     * @param selected    selected state texture name.
      *
-     * @param disabled    dark state texture.
+     * @param disabled    disable state texture name.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextures(const char* normal,
+                      const char* selected,
+                      const char* disabled = "",
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Load normal state texture for button.
@@ -174,6 +190,11 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
+    virtual bool init(const std::string& normalImage,
+                      const std::string& selectedImage = "",
+                      const std::string& disableImage = "",
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
+
 
 protected:
     virtual void initRenderer() override;
