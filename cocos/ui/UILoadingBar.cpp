@@ -63,6 +63,19 @@ LoadingBar* LoadingBar::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
+    
+LoadingBar* LoadingBar::create(const std::string &textureName, int percentage)
+{
+    LoadingBar* widget = new LoadingBar;
+    if (widget && widget->init()) {
+        widget->autorelease();
+        widget->loadTexture(textureName);
+        widget->setPercent(percentage);
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
 
 void LoadingBar::initRenderer()
 {
@@ -105,9 +118,9 @@ int LoadingBar::getDirection()
     return _barType;
 }
 
-void LoadingBar::loadTexture(const char* texture,TextureResType texType)
+    void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
 {
-    if (!texture || strcmp(texture, "") == 0)
+    if (texture.empty())
     {
         return;
     }
@@ -119,7 +132,7 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
-                barRendererScale9->initWithFile(texture);
+                barRendererScale9->initWithFile(texture.c_str());
                 barRendererScale9->setCapInsets(_capInsets);
             }
             else
@@ -131,7 +144,7 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
-                barRendererScale9->initWithSpriteFrameName(texture);
+                barRendererScale9->initWithSpriteFrameName(texture.c_str());
                 barRendererScale9->setCapInsets(_capInsets);
             }
             else
