@@ -2,8 +2,7 @@
 #include "MathUtil.h"
 #include "ccMacros.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 Vector3::Vector3()
     : x(0.0f), y(0.0f), z(0.0f)
@@ -318,4 +317,4 @@ void Vector3::smooth(const Vector3& target, float elapsedTime, float responseTim
     }
 }
 
-}
+NS_CC_MATH_END

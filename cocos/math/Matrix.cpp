@@ -3,8 +3,7 @@
 #include "MathUtil.h"
 #include "ccMacros.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 static const float MATRIX_IDENTITY[16] =
 {
@@ -956,4 +955,4 @@ void Matrix::transpose(Matrix* dst) const
     MathUtil::transposeMatrix(m, dst->m);
 }
 
-}
+NS_CC_MATH_END

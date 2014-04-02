@@ -2,8 +2,7 @@
 #include "MathUtil.h"
 #include "ccMacros.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 Vector4::Vector4()
     : x(0.0f), y(0.0f), z(0.0f), w(0.0f)
@@ -329,4 +328,4 @@ void Vector4::subtract(const Vector4& v1, const Vector4& v2, Vector4* dst)
     dst->w = v1.w - v2.w;
 }
 
-}
+NS_CC_MATH_END

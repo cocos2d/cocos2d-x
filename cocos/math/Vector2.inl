@@ -1,7 +1,6 @@
 #include "Vector2.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 inline const Vector2 Vector2::operator+(const Vector2& v) const
 {
@@ -80,4 +79,4 @@ inline const Vector2 operator*(float x, const Vector2& v)
     return result;
 }
 
-}
+NS_CC_MATH_END

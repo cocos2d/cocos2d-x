@@ -1,8 +1,7 @@
 #include "Matrix.h"
 #include "Vector4.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 inline const Vector4 Vector4::operator+(const Vector4& v) const
 {
@@ -92,4 +91,4 @@ inline const Vector4 operator*(float x, const Vector4& v)
     return result;
 }
 
-}
+NS_CC_MATH_END

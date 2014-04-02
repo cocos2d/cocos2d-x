@@ -1,8 +1,7 @@
 #include "MathUtil.h"
 #include "ccMacros.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 void MathUtil::smooth(float* x, float target, float elapsedTime, float responseTime)
 {
@@ -25,4 +24,4 @@ void MathUtil::smooth(float* x, float target, float elapsedTime, float riseTime,
     }
 }
 
-}
+NS_CC_MATH_END

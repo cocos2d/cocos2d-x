@@ -1,8 +1,9 @@
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
 
-namespace gameplay
-{
+#include "CCMathBase.h"
+
+NS_CC_MATH_BEGIN
 
 class Matrix;
 
@@ -440,7 +441,7 @@ public:
  */
 inline const Vector2 operator*(float x, const Vector2& v);
 
-}
+NS_CC_MATH_END
 
 #include "Vector2.inl"
 

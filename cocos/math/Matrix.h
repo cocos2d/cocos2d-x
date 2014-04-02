@@ -4,8 +4,7 @@
 #include "Vector3.h"
 #include "Vector4.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 //class Plane;
 
@@ -962,7 +961,7 @@ inline Vector4& operator*=(Vector4& v, const Matrix& m);
  */
 inline const Vector4 operator*(const Matrix& m, const Vector4& v);
 
-}
+NS_CC_MATH_END
 
 #include "Matrix.inl"
 

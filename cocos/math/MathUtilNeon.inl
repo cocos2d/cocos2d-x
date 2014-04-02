@@ -1,5 +1,4 @@
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 inline void MathUtil::addMatrix(const float* m, float scalar, float* dst)
 {
@@ -226,4 +225,4 @@ inline void MathUtil::crossVector3(const float* v1, const float* v2, float* dst)
     );
 }
 
-}
+NS_CC_MATH_END

@@ -1,8 +1,9 @@
 #ifndef VECTOR3_H_
 #define VECTOR3_H_
 
-namespace gameplay
-{
+#include "CCMathBase.h"
+
+NS_CC_MATH_BEGIN
 
 class Matrix;
 class Quaternion;
@@ -470,7 +471,7 @@ public:
  */
 inline const Vector3 operator*(float x, const Vector3& v);
 
-}
+NS_CC_MATH_END
 
 #include "Vector3.inl"
 
