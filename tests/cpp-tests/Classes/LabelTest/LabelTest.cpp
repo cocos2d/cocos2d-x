@@ -180,23 +180,23 @@ Atlas1::Atlas1()
     V3F_C4B_T2F_Quad quads[] = 
     {
         {
-            {Vertex3F(0,0,0),Color4B(0,0,255,255),Tex2F(0.0f,1.0f),},                // bottom left
-            {Vertex3F(s.width,0,0),Color4B(0,0,255,0),Tex2F(1.0f,1.0f),},            // bottom right
-            {Vertex3F(0,s.height,0),Color4B(0,0,255,0),Tex2F(0.0f,0.0f),},            // top left
-            {Vertex3F(s.width,s.height,0),Color4B(0,0,255,255),Tex2F(1.0f,0.0f),},    // top right
+            {Vector3(0,0,0),Color4B(0,0,255,255),Tex2F(0.0f,1.0f),},                // bottom left
+            {Vector3(s.width,0,0),Color4B(0,0,255,0),Tex2F(1.0f,1.0f),},            // bottom right
+            {Vector3(0,s.height,0),Color4B(0,0,255,0),Tex2F(0.0f,0.0f),},            // top left
+            {Vector3(s.width,s.height,0),Color4B(0,0,255,255),Tex2F(1.0f,0.0f),},    // top right
         },        
         {
-            {Vertex3F(40,40,0),Color4B(255,255,255,255),Tex2F(0.0f,0.2f),},            // bottom left
-            {Vertex3F(120,80,0),Color4B(255,0,0,255),Tex2F(0.5f,0.2f),},            // bottom right
-            {Vertex3F(40,160,0),Color4B(255,255,255,255),Tex2F(0.0f,0.0f),},        // top left
-            {Vertex3F(160,160,0),Color4B(0,255,0,255),Tex2F(0.5f,0.0f),},            // top right
+            {Vector3(40,40,0),Color4B(255,255,255,255),Tex2F(0.0f,0.2f),},            // bottom left
+            {Vector3(120,80,0),Color4B(255,0,0,255),Tex2F(0.5f,0.2f),},            // bottom right
+            {Vector3(40,160,0),Color4B(255,255,255,255),Tex2F(0.0f,0.0f),},        // top left
+            {Vector3(160,160,0),Color4B(0,255,0,255),Tex2F(0.5f,0.0f),},            // top right
         },
 
         {
-            {Vertex3F(s.width/2,40,0),Color4B(255,0,0,255),Tex2F(0.0f,1.0f),},        // bottom left
-            {Vertex3F(s.width,40,0),Color4B(0,255,0,255),Tex2F(1.0f,1.0f),},        // bottom right
-            {Vertex3F(s.width/2-50,200,0),Color4B(0,0,255,255),Tex2F(0.0f,0.0f),},        // top left
-            {Vertex3F(s.width,100,0),Color4B(255,255,0,255),Tex2F(1.0f,0.0f),},        // top right
+            {Vector3(s.width/2,40,0),Color4B(255,0,0,255),Tex2F(0.0f,1.0f),},        // bottom left
+            {Vector3(s.width,40,0),Color4B(0,255,0,255),Tex2F(1.0f,1.0f),},        // bottom right
+            {Vector3(s.width/2-50,200,0),Color4B(0,0,255,255),Tex2F(0.0f,0.0f),},        // top left
+            {Vector3(s.width,100,0),Color4B(255,255,0,255),Tex2F(1.0f,0.0f),},        // top right
         },
         
     };
