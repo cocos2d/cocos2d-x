@@ -118,10 +118,10 @@ bool Animation::init()
     return true;
 }
 
-bool Animation::initWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/)
+bool Animation::initWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay, unsigned int loops)
 {
-    _loops = 1;
     _delayPerUnit = delay;
+    _loops = loops;
 
     for (auto& spriteFrame : frames)
     {
