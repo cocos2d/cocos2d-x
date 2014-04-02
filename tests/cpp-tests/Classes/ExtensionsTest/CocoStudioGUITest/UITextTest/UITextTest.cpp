@@ -11,19 +11,19 @@ bool UITextTest::init()
     {
         Size widgetSize = _widget->getSize();
         
-        Text* alert = Text::create();
-        alert->setText("Text");
-        alert->setFontName("fonts/Marker Felt.ttf");
-        alert->setFontSize(30);
+        Text* alert = Text::create("Text","fonts/Marker Felt.ttf", 30);
+//        alert->setText("Text");
+//        alert->setFontName("fonts/Marker Felt.ttf");
+//        alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);        
         
         // Create the text
-        Text* text = Text::create();
-        text->setText("Text");
-        text->setFontName("AmericanTypewriter");
-        text->setFontSize(30);
+        Text* text = Text::create("Text", "AmericanTypewriter", 30);
+//        text->setText("Text");
+//        text->setFontName("AmericanTypewriter");
+//        text->setFontSize(30);
         text->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getSize().height / 4.0f));
         _uiLayer->addChild(text);
         

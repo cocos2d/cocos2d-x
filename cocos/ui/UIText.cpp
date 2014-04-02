@@ -68,6 +68,32 @@ bool Text::init()
     }
     return false;
 }
+    
+Text* Text::create(const std::string &textContent, const std::string &fontName, int fontSize)
+{
+    Text *text = new Text;
+    if (text && text->init(textContent, fontName, fontSize)) {
+        text->autorelease();
+        return text;
+    }
+    CC_SAFE_DELETE(text);
+    return text;
+}
+    
+bool Text::init(const std::string &textContent, const std::string &fontName, int fontSize)
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        this->setText(textContent);
+        this->setFontName(fontName);
+        this->setFontSize(fontSize);
+    } while (0);
+    return bRet;
+}
 
 void Text::initRenderer()
 {
