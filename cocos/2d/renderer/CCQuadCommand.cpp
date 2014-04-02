@@ -29,11 +29,16 @@
 
 NS_CC_BEGIN
 
+
+static  void convertIntToByteArray(int value, int* output)
+{
+    *output = value;
+}
+
 QuadCommand::QuadCommand()
 :_textureID(0)
 ,_blendType(BlendFunc::DISABLE)
 ,_quadsCount(0)
-,_dirty(false)
 ,_shader(nullptr)
 ,_quads(nullptr)
 {
@@ -43,6 +48,7 @@ QuadCommand::QuadCommand()
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
 {
     _globalOrder = globalOrder;
+
     _textureID = textureID;
     _blendType = blendType;
     _shader = shader;
@@ -51,10 +57,14 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, B
     _quads = quad;
 
     _mv = mv;
-    
-    _dirty = true;
 
-    generateMaterialID();
+    if( _textureID != _lastTextureID || _blendType.src != _lastBlendType.src || _blendType.dst != _lastBlendType.dst || _shader != _lastShader) {
+        generateMaterialID();
+
+        _lastShader = _shader;
+        _lastBlendType = _blendType;
+        _lastTextureID = _textureID;
+    }
 }
 
 QuadCommand::~QuadCommand()
@@ -63,51 +73,36 @@ QuadCommand::~QuadCommand()
 
 void QuadCommand::generateMaterialID()
 {
-    if (_dirty)
+    //TODO fix blend id generation
+    int blendID = 0;
+    if(_blendType == BlendFunc::DISABLE)
     {
-        //Generate Material ID
-        
-        //TODO fix blend id generation
-        int blendID = 0;
-        if(_blendType == BlendFunc::DISABLE)
-        {
-            blendID = 0;
-        }
-        else if(_blendType == BlendFunc::ALPHA_PREMULTIPLIED)
-        {
-            blendID = 1;
-        }
-        else if(_blendType == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-        {
-            blendID = 2;
-        }
-        else if(_blendType == BlendFunc::ADDITIVE)
-        {
-            blendID = 3;
-        }
-        else
-        {
-            blendID = 4;
-        }
-        
-        // convert program id, texture id and blend id into byte array
-        char byteArray[12];
-        convertIntToByteArray(_shader->getProgram(), byteArray);
-        convertIntToByteArray(blendID, byteArray + 4);
-        convertIntToByteArray(_textureID, byteArray + 8);
-        
-        _materialID = XXH32(byteArray, 12, 0);
-        
-        _dirty = false;
+        blendID = 0;
     }
-}
-
-void QuadCommand::convertIntToByteArray(int value, char* output)
-{
-    *output++ = value & 0x000000ff;
-    *output++ = (value & 0x0000ff00) >> 8;
-    *output++ = (value & 0x00ff0000) >> 16;
-    *output   = (value & 0xff000000) >> 24;
+    else if(_blendType == BlendFunc::ALPHA_PREMULTIPLIED)
+    {
+        blendID = 1;
+    }
+    else if(_blendType == BlendFunc::ALPHA_NON_PREMULTIPLIED)
+    {
+        blendID = 2;
+    }
+    else if(_blendType == BlendFunc::ADDITIVE)
+    {
+        blendID = 3;
+    }
+    else
+    {
+        blendID = 4;
+    }
+    
+    // convert program id, texture id and blend id into byte array
+    int intArray[3];
+    convertIntToByteArray(_shader->getProgram(), intArray);
+    convertIntToByteArray(blendID, intArray+1);
+    convertIntToByteArray(_textureID, intArray+2);
+    
+    _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
 }
 
 void QuadCommand::useMaterial() const
