@@ -461,6 +461,26 @@ void Director::popMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
+void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        kmMat4Identity(&_modelViewMatrixStack.top());
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        kmMat4Identity(&_projectionMatrixStack.top());
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        kmMat4Identity(&_textureMatrixStack.top());
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
 void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
