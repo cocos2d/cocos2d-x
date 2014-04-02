@@ -13576,6 +13576,20 @@ int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
         object_to_luaval<cocos2d::Animation>(tolua_S, "cc.Animation",(cocos2d::Animation*)ret);
         return 1;
     }
+    if (argc == 3)
+    {
+        cocos2d::Vector<cocos2d::SpriteFrame *> arg0;
+        double arg1;
+        unsigned int arg2;
+        ok &= luaval_to_ccvector(tolua_S, 2, &arg0);
+        ok &= luaval_to_number(tolua_S, 3,&arg1);
+        ok &= luaval_to_uint32(tolua_S, 4,&arg2);
+        if(!ok)
+            return 0;
+        cocos2d::Animation* ret = cocos2d::Animation::createWithSpriteFrames(arg0, arg1, arg2);
+        object_to_luaval<cocos2d::Animation>(tolua_S, "cc.Animation",(cocos2d::Animation*)ret);
+        return 1;
+    }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "createWithSpriteFrames",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
