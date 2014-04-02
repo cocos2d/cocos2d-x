@@ -30,6 +30,7 @@ extern "C" {
 }
 #include "tolua_fix.h"
 #include "cocos2d.h"
+#include <type_traits>
 
 using namespace cocos2d;
 
@@ -320,13 +321,11 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
 {
     if(nullptr != ret)
     {
-      
-        cocos2d::Ref* dynObject = dynamic_cast<cocos2d::Ref *>(ret);
-
-        if (nullptr != dynObject)
+        if (std::is_base_of<cocos2d::Ref, T>::value)
         {
-            int ID = (int)(dynObject->_ID) ;
-            int* luaID = &(dynObject->_luaID);
+            auto refObject = (cocos2d::Ref *)ret;
+            int ID = (int)(refObject->_ID) ;
+            int* luaID = &(refObject->_luaID);
             toluafix_pushusertype_ccobject(L,ID, luaID, (void*)ret,type);
         }
         else
