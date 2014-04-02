@@ -132,28 +132,28 @@ public:
      * @js NA
      * @lua NA
      */
-    Vertex3F getVertex(const Point& pos) const;
+    Vector3 getVertex(const Point& pos) const;
     /** @deprecated Use getVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& pos) const { return getVertex(pos); }
+    CC_DEPRECATED_ATTRIBUTE Vector3 vertex(const Point& pos) const { return getVertex(pos); }
     /** returns the original (non-transformed) vertex at a given position
      * @js NA
      * @lua NA
      */
-    Vertex3F getOriginalVertex(const Point& pos) const;
+    Vector3 getOriginalVertex(const Point& pos) const;
     /** @deprecated Use getOriginalVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& pos) const { return getOriginalVertex(pos); }
+    CC_DEPRECATED_ATTRIBUTE Vector3 originalVertex(const Point& pos) const { return getOriginalVertex(pos); }
 
     /** sets a new vertex at a given position 
      * @js NA
      * @lua NA
      */
-    void setVertex(const Point& pos, const Vertex3F& vertex);
+    void setVertex(const Point& pos, const Vector3& vertex);
 
     // Overrides
     virtual void blit() override;

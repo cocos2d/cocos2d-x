@@ -304,7 +304,7 @@ protected:
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
     CustomCommand _customCommand;
-    Vertex3F _noMVPVertices[4];
+    Vector3 _noMVPVertices[4];
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 

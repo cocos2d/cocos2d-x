@@ -31,8 +31,11 @@ THE SOFTWARE.
 #include <string>
 #include "CCGeometry.h"
 #include "CCGL.h"
+#include "CCMath.h"
 
 NS_CC_BEGIN
+
+USING_NS_CC_MATH;
 
 struct Color4B;
 struct Color4F;
@@ -163,20 +166,20 @@ struct Vertex2F
 /** A vertex composed of 2 floats: x, y
  @since v3.0
  */
-struct Vertex3F
-{
-    Vertex3F(float _x, float _y, float _z)
-        : x(_x)
-        , y(_y)
-        , z(_z)
-    {}
+// struct Vertex3F
+// {
+//     Vertex3F(float _x, float _y, float _z)
+//         : x(_x)
+//         , y(_y)
+//         , z(_z)
+//     {}
     
-    Vertex3F(): x(0.f), y(0.f), z(0.f) {}
+//     Vertex3F(): x(0.f), y(0.f), z(0.f) {}
     
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
-};
+//     GLfloat x;
+//     GLfloat y;
+//     GLfloat z;
+// };
         
 /** A texcoord composed of 2 floats: u, y
  @since v3.0
@@ -211,10 +214,10 @@ struct Quad2
 
 //!    A 3D Quad. 4 * 3 floats
 struct Quad3 {
-    Vertex3F        bl;
-    Vertex3F        br;
-    Vertex3F        tl;
-    Vertex3F        tr;
+    Vector3        bl;
+    Vector3        br;
+    Vector3        tl;
+    Vector3        tr;
 };
 
 //! a Point with a vertex point, a tex coord point and a color 4B
@@ -243,7 +246,7 @@ struct V2F_C4F_T2F
 struct V3F_C4B_T2F
 {
     //! vertices (3F)
-    Vertex3F     vertices;            // 12 bytes
+    Vector3     vertices;            // 12 bytes
 
     //! colors (4B)
     Color4B      colors;              // 4 bytes

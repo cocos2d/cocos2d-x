@@ -592,7 +592,7 @@ void LayerColor::draw(Renderer *renderer, const kmMat4 &transform, bool transfor
         kmVec3 pos;
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         kmVec3TransformCoord(&pos, &pos, &_modelViewTransform);
-        _noMVPVertices[i] = Vertex3F(pos.x,pos.y,pos.z);
+        _noMVPVertices[i] = Vector3(pos.x,pos.y,pos.z);
     }
 }
 
@@ -606,7 +606,7 @@ void LayerColor::onDraw(const kmMat4& transform, bool transformUpdated)
     // Attributes
     //
 #ifdef EMSCRIPTEN
-    setGLBufferData(_noMVPVertices, 4 * sizeof(Vertex3F), 0);
+    setGLBufferData(_noMVPVertices, 4 * sizeof(Vector3), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
