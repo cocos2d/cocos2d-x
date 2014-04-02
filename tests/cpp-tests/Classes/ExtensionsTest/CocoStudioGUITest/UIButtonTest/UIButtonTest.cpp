@@ -40,10 +40,10 @@ bool UIButtonTest::init()
         _uiLayer->addChild(alert);        
         
         // Create the button
-        Button* button = Button::create();
+        Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
-        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
-        button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));        
+//        button->loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "");
+        button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         _uiLayer->addChild(button);        
 
