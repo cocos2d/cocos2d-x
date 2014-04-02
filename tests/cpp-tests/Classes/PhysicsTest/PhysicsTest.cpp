@@ -86,8 +86,8 @@ void PhysicsTestScene::toggleDebug()
 #if CC_USE_PHYSICS == 0
 void PhysicsDemoDisabled::onEnter()
 {
-    auto label = LabelTTF::create("Should define CC_USE_PHYSICS\n to run this test case",
-                                  "Arial",
+    auto label = Label::create("Should define CC_USE_PHYSICS\n to run this test case",
+                                  "fonts/arial.ttf",
                                   18);
     auto size = Director::getInstance()->getWinSize();
     label->setPosition(Point(size.width/2, size.height/2));
@@ -845,7 +845,7 @@ void PhysicsDemoJoints::onEnter()
                     
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
-                    PhysicsJointRotaryLimit* joint = PhysicsJointRotaryLimit::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, M_PI_2);
+                    PhysicsJointRotaryLimit* joint = PhysicsJointRotaryLimit::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f,(float) M_PI_2);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -861,7 +861,7 @@ void PhysicsDemoJoints::onEnter()
                     
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
-                    PhysicsJointRatchet* joint = PhysicsJointRatchet::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, M_PI_2);
+                    PhysicsJointRatchet* joint = PhysicsJointRatchet::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, (float)M_PI_2);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -893,7 +893,7 @@ void PhysicsDemoJoints::onEnter()
                     
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
                     _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
-                    PhysicsJointMotor* joint = PhysicsJointMotor::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), M_PI_2);
+                    PhysicsJointMotor* joint = PhysicsJointMotor::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), (float)M_PI_2);
                     _scene->getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -1310,7 +1310,7 @@ void PhysicsContactTest::onEnter()
     menu1->setPosition(Point(s.width/2, s.height-50));
     addChild(menu1, 1);
     
-    auto label = LabelTTF::create("yellow box", "Arial", 32);
+    auto label = Label::create("yellow box", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-50));
     
@@ -1326,7 +1326,7 @@ void PhysicsContactTest::onEnter()
     menu2->setPosition(Point(s.width/2, s.height-90));
     addChild(menu2, 1);
     
-    label = LabelTTF::create("blue box", "Arial", 32);
+    label = Label::create("blue box", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-90));
     
@@ -1342,7 +1342,7 @@ void PhysicsContactTest::onEnter()
     menu3->setPosition(Point(s.width/2, s.height-130));
     addChild(menu3, 1);
     
-    label = LabelTTF::create("yellow triangle", "Arial", 32);
+    label = Label::create("yellow triangle", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-130));
     
@@ -1358,7 +1358,7 @@ void PhysicsContactTest::onEnter()
     menu4->setPosition(Point(s.width/2, s.height-170));
     addChild(menu4, 1);
     
-    label = LabelTTF::create("blue triangle", "Arial", 32);
+    label = Label::create("blue triangle", "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2 - 150, s.height-170));
 	
@@ -1425,27 +1425,27 @@ void PhysicsContactTest::resetTest()
     char buffer[10];
     
     sprintf(buffer, "%d", _yellowBoxNum);
-    auto label = LabelTTF::create(buffer, "Arial", 32);
+    auto label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
     
     sprintf(buffer, "%d", _blueBoxNum);
-    label = LabelTTF::create(buffer, "Arial", 32);
+    label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-90));
     
     sprintf(buffer, "%d", _yellowTriangleNum);
-    label = LabelTTF::create(buffer, "Arial", 32);
+    label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-130));
     
     sprintf(buffer, "%d", _blueTriangleNum);
-    label = LabelTTF::create(buffer, "Arial", 32);
+    label = Label::create(buffer, "fonts/arial.ttf", 32);
     root->addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-170));
     
     auto wall = Node::create();
-    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1, 1, 0.0)));
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1, 0.0f)));
     wall->setPosition(VisibleRect::center());
     root->addChild(wall);
     
@@ -1463,7 +1463,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
-        auto box = makeBox(position, size, 1, PhysicsMaterial(0.1, 1, 0.0));
+        auto box = makeBox(position, size, 1, PhysicsMaterial(0.1f, 1, 0.0f));
         box->getPhysicsBody()->setVelocity(velocity);
         box->getPhysicsBody()->setCategoryBitmask(0x01);    // 0001
         box->getPhysicsBody()->setContactTestBitmask(0x04); // 0100
@@ -1481,7 +1481,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
-        auto box = makeBox(position, size, 2, PhysicsMaterial(0.1, 1, 0.0));
+        auto box = makeBox(position, size, 2, PhysicsMaterial(0.1f, 1, 0.0f));
         box->getPhysicsBody()->setVelocity(velocity);
         box->getPhysicsBody()->setCategoryBitmask(0x02);    // 0010
         box->getPhysicsBody()->setContactTestBitmask(0x08); // 1000
@@ -1499,7 +1499,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*300, (CCRANDOM_0_1() - 0.5)*300);
-        auto triangle = makeTriangle(position, size, 1, PhysicsMaterial(0.1, 1, 0.0));
+        auto triangle = makeTriangle(position, size, 1, PhysicsMaterial(0.1f, 1, 0.0f));
         triangle->getPhysicsBody()->setVelocity(velocity);
         triangle->getPhysicsBody()->setCategoryBitmask(0x04);    // 0100
         triangle->getPhysicsBody()->setContactTestBitmask(0x01); // 0001
@@ -1517,7 +1517,7 @@ void PhysicsContactTest::resetTest()
         position.y = position.y * CCRANDOM_0_1();
         position = VisibleRect::leftBottom() + position + Point(size.width/2, size.height/2);
         Vect velocity((CCRANDOM_0_1() - 0.5)*300, (CCRANDOM_0_1() - 0.5)*300);
-        auto triangle = makeTriangle(position, size, 2, PhysicsMaterial(0.1, 1, 0.0));
+        auto triangle = makeTriangle(position, size, 2, PhysicsMaterial(0.1f, 1, 0.0f));
         triangle->getPhysicsBody()->setVelocity(velocity);
         triangle->getPhysicsBody()->setCategoryBitmask(0x08);    // 1000
         triangle->getPhysicsBody()->setContactTestBitmask(0x02); // 0010
@@ -1566,7 +1566,7 @@ void PhysicsPositionRotationTest::onEnter()
     
     // anchor test
     auto anchorNode = Sprite::create("Images/YellowSquare.png");
-    anchorNode->setAnchorPoint(Point(0.1, 0.9));
+    anchorNode->setAnchorPoint(Point(0.1f, 0.9f));
     anchorNode->setPosition(100, 100);
     anchorNode->setScale(0.25);
     anchorNode->setPhysicsBody(PhysicsBody::createBox(anchorNode->getContentSize()*anchorNode->getScale()));

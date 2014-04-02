@@ -94,8 +94,8 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
 -(void) play {
     if (enabled_) {
-        self->systemPaused = NO;
-        self->paused = NO;
+        systemPaused = NO;
+        paused = NO;
         [audioSourcePlayer play];
     } else {
         CDLOGINFO(@"Denshion::CDLongAudioSource long audio source didn't play because it is disabled");
@@ -103,23 +103,24 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 }    
 
 -(void) stop {
-    self->paused = NO;
+    paused = NO;
     [audioSourcePlayer stop];
 }    
 
 -(void) pause {
-    self->paused = YES;
+    paused = YES;
     [audioSourcePlayer pause];
 }    
 
 -(void) rewind {
-    self->paused = NO;
+    paused = NO;
     [audioSourcePlayer setCurrentTime:0];
+    [audioSourcePlayer play];
 }
 
 -(void) resume {
-    self->paused = NO;
-    [audioSourcePlayer play];
+    paused = NO;
+    [audioSourcePlayer resume];
 }    
 
 -(BOOL) isPlaying {
@@ -618,7 +619,7 @@ static BOOL configured = FALSE;
 }    
 
 - (void) applicationWillResignActive {
-    self->_resigned = YES;
+    _resigned = YES;
     
     //Set the audio sesssion to one that allows sharing so that other audio won't be clobbered on resume
     [self audioSessionSetCategory:AVAudioSessionCategoryAmbient];
@@ -663,7 +664,7 @@ static BOOL configured = FALSE;
 
 - (void) applicationDidBecomeActive {
     
-    if (self->_resigned) {
+    if (_resigned) {
         _resigned = NO;
         //Reset the mode incase something changed with audio while we were inactive
         [self setMode:_mode];

@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="BaseClasses">
+      <UniqueIdentifier>{e31ab7d3-b8b2-467f-9e08-fd5fe168b491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layouts">
+      <UniqueIdentifier>{f9d13563-9e5e-4b35-b0e7-d41f587efa42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{ed8a2ae0-5690-4d0d-829b-7c07164c0597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UIWidgets">
+      <UniqueIdentifier>{5f6e9e52-fbe7-4073-ac71-98632f9e6781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UIWidgets\ScrollWidget">
+      <UniqueIdentifier>{b59b178a-b7e0-4826-ba07-44c46cd29a10}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ui\UILayout.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UILayoutDefine.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UILayoutParameter.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\CocosGUI.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIHelper.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIListView.h">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIPageView.h">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIScrollInterface.h">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIScrollView.h">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIButton.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIImageView.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UILoadingBar.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIRichText.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UISlider.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIText.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UITextAtlas.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UITextBMFont.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UITextField.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIWidget.h">
+      <Filter>BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\CCProtectedNode.h">
+      <Filter>BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIVBox.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ui\UILayout.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UILayoutDefine.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UILayoutParameter.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\CocosGUI.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIHelper.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIListView.cpp">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIPageView.cpp">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIScrollView.cpp">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIButton.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UICheckBox.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIImageView.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UILoadingBar.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIRichText.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UISlider.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIText.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UITextAtlas.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UITextBMFont.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UITextField.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIWidget.cpp">
+      <Filter>BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\CCProtectedNode.cpp">
+      <Filter>BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIVBox.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

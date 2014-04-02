@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module ContourData
+-- @extend Ref
 
 --------------------------------
 -- @function [parent=#ContourData] init 

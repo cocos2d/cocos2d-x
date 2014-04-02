@@ -27,8 +27,7 @@
 
 #include "CCControlButton.h"
 #include "CCScale9Sprite.h"
-#include "CCLabelTTF.h"
-#include "CCLabelBMFont.h"
+#include "CCLabel.h"
 #include "CCAction.h"
 #include "CCActionInterval.h"
 
@@ -65,7 +64,7 @@ ControlButton::~ControlButton()
 
 bool ControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(LabelTTF::create("", "Helvetica", 12), Scale9Sprite::create());
+    return this->initWithLabelAndBackgroundSprite(Label::create("", "Helvetica", 12), Scale9Sprite::create());
 }
 
 bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* backgroundSprite)
@@ -90,14 +89,14 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         
         // Set the default anchor point
         ignoreAnchorPointForPosition(false);
-        setAnchorPoint(Point(0.5f, 0.5f));
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         // Set the nodes
         setTitleLabel(node);
         setBackgroundSprite(backgroundSprite);
 
         // Set the default color and opacity
-        setColor(Color3B(255.0f, 255.0f, 255.0f));
+        setColor(Color3B::WHITE);
         setOpacity(255.0f);
         setOpacityModifyRGB(true);
         
@@ -108,7 +107,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         setTitleLabelForState(node, Control::State::NORMAL);
         setBackgroundSpriteForState(backgroundSprite, Control::State::NORMAL);
         
-        setLabelAnchorPoint(Point(0.5f, 0.5f));
+        setLabelAnchorPoint(Point::ANCHOR_MIDDLE);
 
         // Layout update
         needsLayout();
@@ -132,7 +131,7 @@ ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite
 
 bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    LabelTTF *label = LabelTTF::create(title, fontName, fontSize);
+    Label *label = Label::create(title, fontName, fontSize);
     return initWithLabelAndBackgroundSprite(label, Scale9Sprite::create());
 }
 
@@ -146,7 +145,7 @@ ControlButton* ControlButton::create(const std::string& title, const std::string
 
 bool ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
 {
-    LabelTTF *label = LabelTTF::create("", "Arial", 30);//
+    Label *label = Label::create("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
@@ -363,13 +362,13 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
 void ControlButton::setTitleTTFForState(const std::string& fntFile, State state)
 {
     std::string title = this->getTitleForState(state);
-    this->setTitleLabelForState(LabelTTF::create(title, fntFile, 12), state);
+    this->setTitleLabelForState(Label::create(title, fntFile, 12), state);
 }
 
 const std::string& ControlButton::getTitleTTFForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
-    LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
+    Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
         return labelTTF->getFontName();
@@ -384,7 +383,7 @@ void ControlButton::setTitleTTFSizeForState(float size, State state)
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     if(label)
     {
-        LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
+        Label* labelTTF = dynamic_cast<Label*>(label);
         if(labelTTF != 0)
         {
             return labelTTF->setFontSize(size);
@@ -395,7 +394,7 @@ void ControlButton::setTitleTTFSizeForState(float size, State state)
 float ControlButton::getTitleTTFSizeForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
-    LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
+    Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
         return labelTTF->getFontSize();
@@ -409,16 +408,16 @@ float ControlButton::getTitleTTFSizeForState(State state)
 void ControlButton::setTitleBMFontForState(const std::string& fntFile, State state)
 {
     std::string title = this->getTitleForState(state);
-    this->setTitleLabelForState(LabelBMFont::create(title, fntFile), state);
+    this->setTitleLabelForState(Label::createWithBMFont(fntFile, title), state);
 }
 
 const std::string& ControlButton::getTitleBMFontForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
-    LabelBMFont* labelBMFont = dynamic_cast<LabelBMFont*>(label);
+    auto labelBMFont = dynamic_cast<Label*>(label);
     if(labelBMFont != 0)
     {
-        return labelBMFont->getFntFile();
+        return labelBMFont->getBMFontFilePath();
     }
 
     static std::string ret("");

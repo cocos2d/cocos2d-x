@@ -38,12 +38,19 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 using namespace std;
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 NS_CC_BEGIN
 
 LabelBMFont * LabelBMFont::create()
 {
     LabelBMFont * pRet = new LabelBMFont();
-    if (pRet && pRet->init())
+    if (pRet)
     {
         pRet->autorelease();
         return pRet;
@@ -72,8 +79,6 @@ bool LabelBMFont::initWithString(const std::string& str, const std::string& fntF
         _fntFile = fntFile;
         _label->setMaxLineWidth(width);
         _label->setAlignment(alignment);
-        _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-        _label->setPosition(Point::ZERO);
         _label->setString(str);
         this->setContentSize(_label->getContentSize());
         return true;
@@ -85,6 +90,7 @@ bool LabelBMFont::initWithString(const std::string& str, const std::string& fntF
 LabelBMFont::LabelBMFont()
 {
     _label = Label::create();
+    _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     this->addChild(_label);
     this->setAnchorPoint(Point::ANCHOR_MIDDLE);
     _cascadeOpacityEnabled = true;
@@ -175,6 +181,27 @@ Node* LabelBMFont::getChildByTag(int tag)
     return _label->getLetter(tag);
 }
 
+Sprite* LabelBMFont::getLetter(int ID)
+{
+    return _label->getLetter(ID);
+}
+
+void LabelBMFont::setColor(const Color3B& color)
+{
+    _label->setColor(color);
+}
+
+const Size& LabelBMFont::getContentSize() const
+{
+    const_cast<LabelBMFont*>(this)->setContentSize(_label->getContentSize());
+    return _contentSize;
+}
+
+Rect LabelBMFont::getBoundingBox() const
+{
+    return _label->getBoundingBox();
+}
+
 //LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW
 void LabelBMFont::draw()
@@ -188,5 +215,11 @@ void LabelBMFont::draw()
 }
 
 #endif // CC_LABELBMFONT_DEBUG_DRAW
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
 
 NS_CC_END

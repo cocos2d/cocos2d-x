@@ -112,6 +112,12 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- @function [parent=#Slider] hitTest 
+-- @param self
+-- @param #point_table point
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Slider] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)

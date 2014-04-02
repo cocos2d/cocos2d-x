@@ -63,6 +63,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
 	for (int i=0; i<actionCount; i++) {
 		ActionObject* action = new ActionObject();
+		action->autorelease();
 		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
 		action->initWithDictionary(actionDic,root);
 		actionList.pushBack(action);

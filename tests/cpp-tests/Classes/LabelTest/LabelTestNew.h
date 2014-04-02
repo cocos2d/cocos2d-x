@@ -374,6 +374,7 @@ public:
 
     void sliderEvent(Ref *pSender, ui::SliderEventType type);
 private:
+    Label* shadowLabelOutline;
     Label* shadowLabelTTF;
     Label* shadowLabelBMFont;
 };

@@ -38,7 +38,7 @@ void ScenarioMenuLayer::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     // Title
-    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
+    auto label = Label::create(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 
@@ -46,7 +46,7 @@ void ScenarioMenuLayer::onEnter()
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        auto l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
+        auto l = Label::create(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1);
         l->setPosition(Point(s.width/2, s.height-80));
     }
@@ -154,19 +154,19 @@ void ScenarioTest::performTests()
 
     
     // add tip labels
-    _spriteLabel = LabelTTF::create("Sprites : 0", "Arial", 15);
+    _spriteLabel = Label::create("Sprites : 0", "fonts/arial.ttf", 15);
     _spriteLabel->setAnchorPoint(Point(0.0f, 0.5f));
     addChild(_spriteLabel, 10);
     _spriteLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 70));
     
     char str[32] = { 0 };
     sprintf(str, "Particles : %d", _particleNumber);
-    _particleLabel = LabelTTF::create(str, "Arial", 15);
+    _particleLabel = Label::create(str, "fonts/arial.ttf", 15);
     _particleLabel->setAnchorPoint(Point(0.0f, 0.5f));
     addChild(_particleLabel, 10);
     _particleLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 45));
     
-    _parsysLabel = LabelTTF::create("Particle System : 0", "Arial", 15);
+    _parsysLabel = Label::create("Particle System : 0", "fonts/arial.ttf", 15);
     _parsysLabel->setAnchorPoint(Point(0.0f, 0.5f));
     addChild(_parsysLabel, 10);
     _parsysLabel->setPosition(Point(origin.x, origin.y + s.height/2 + 20));

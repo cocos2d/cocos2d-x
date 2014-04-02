@@ -40,7 +40,7 @@ public:
     /** Callback for the change value. */
     void valueChanged(Ref *sender, Control::EventType controlEvent);
 protected:
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _displayValueLabel, DisplayValueLabel)
+    CC_SYNTHESIZE_RETAIN(Label*, _displayValueLabel, DisplayValueLabel)
     CONTROL_SCENE_CREATE_FUNC(ControlStepperTest)
 };
 

@@ -66,7 +66,7 @@ static Layer* restartAction()
     return layer;
 } 
 
-//#pragma mark Demo examples start here
+//// Demo examples start here
 
 //@implementation BaseClippingNodeTest
 
@@ -130,7 +130,7 @@ void BaseClippingNodeTest::setup()
 }
 
 
-//#pragma mark - BasicTest
+// BasicTest
 
 std::string BasicTest::title() const
 {
@@ -209,7 +209,7 @@ Node* BasicTest::content()
 }
 
 
-//#pragma mark - ShapeTest
+// ShapeTest
 
 std::string ShapeTest::title() const
 {
@@ -236,7 +236,7 @@ Node* ShapeTest::content()
 }
 
 
-//#pragma mark - ShapeInvertedTest
+// ShapeInvertedTest
 
 std::string ShapeInvertedTest::title() const
 {
@@ -255,7 +255,7 @@ ClippingNode* ShapeInvertedTest::clipper()
     return clipper;
 }
 
-//#pragma mark - SpriteTest
+// SpriteTest
 
 std::string SpriteTest::title() const
 {
@@ -288,7 +288,7 @@ Node* SpriteTest::content()
     return node;
 }
 
-//#pragma mark - SpriteNoAlphaTest
+// SpriteNoAlphaTest
 
 std::string SpriteNoAlphaTest::title() const
 {
@@ -307,7 +307,7 @@ ClippingNode* SpriteNoAlphaTest::clipper()
     return clipper;
 }
 
-//#pragma mark - SpriteInvertedTest
+// SpriteInvertedTest
 
 std::string SpriteInvertedTest::title() const
 {
@@ -327,7 +327,7 @@ ClippingNode* SpriteInvertedTest::clipper()
     return clipper;
 }
 
-//#pragma mark - NestedTest
+// NestedTest
 
 std::string NestedTest::title() const
 {
@@ -372,7 +372,7 @@ void NestedTest::setup()
 
 }
 
-//#pragma mark - HoleDemo
+// HoleDemo
 
 HoleDemo::~HoleDemo()
 {
@@ -467,7 +467,7 @@ void HoleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
     this->pokeHoleAtPoint(point);
 }
 
-//#pragma mark - ScrollViewDemo
+// ScrollViewDemo
 
 std::string ScrollViewDemo::title() const
 {
@@ -543,7 +543,7 @@ void ScrollViewDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *
     _scrolling = false;
 }
 
-//#pragma mark - RawStencilBufferTests
+// RawStencilBufferTests
 
 //#if COCOS2D_DEBUG > 1
 
@@ -827,7 +827,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToZeroLabel = LabelTTF::create(String::createWithFormat("00=%02x", bits[0])->getCString(), "Arial", 20);
+    auto clearToZeroLabel = Label::create(String::createWithFormat("00=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
     clearToZeroLabel->setPosition( Point((winPoint.x / 3) * 1, winPoint.y - 10) );
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
@@ -835,7 +835,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToMaskLabel = LabelTTF::create(String::createWithFormat("0a=%02x", bits[0])->getCString(), "Arial", 20);
+    auto clearToMaskLabel = Label::create(String::createWithFormat("0a=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
     clearToMaskLabel->setPosition( Point((winPoint.x / 3) * 2, winPoint.y - 10) );
     this->addChild(clearToMaskLabel);
 #endif

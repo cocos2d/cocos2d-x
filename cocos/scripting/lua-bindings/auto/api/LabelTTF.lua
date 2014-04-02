@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module LabelTTF
--- @extend Node,LabelProtocol,BlendProtocol,
+-- @extend Node,LabelProtocol,BlendProtocol
 
 --------------------------------
 -- @function [parent=#LabelTTF] enableShadow 
@@ -163,11 +163,9 @@
 -- @return LabelTTF#LabelTTF ret (return value: cc.LabelTTF)
         
 --------------------------------
--- @function [parent=#LabelTTF] visit 
+-- @function [parent=#LabelTTF] getBoundingBox 
 -- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- @function [parent=#LabelTTF] getDescription 
@@ -178,6 +176,13 @@
 -- @function [parent=#LabelTTF] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#LabelTTF] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#LabelTTF] LabelTTF 

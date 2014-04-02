@@ -13,7 +13,7 @@ bool UITextTest::init()
         
         Text* alert = Text::create();
         alert->setText("Text");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
@@ -42,7 +42,7 @@ bool UITextTest_LineWrap::init()
         
         Text* alert = Text::create();
         alert->setText("Text line wrap");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
@@ -50,7 +50,8 @@ bool UITextTest_LineWrap::init()
         
         // Create the line wrap
         Text* text = Text::create();
-        text->setTextAreaSize(Size(280, 150));
+        text->ignoreContentAdaptWithSize(false);
+        text->setSize(Size(280, 150));
         text->setTextHorizontalAlignment(TextHAlignment::CENTER);
         text->setText("Text can line wrap");
         text->setFontName("AmericanTypewriter");
@@ -74,7 +75,7 @@ bool UILabelTest_Effect::init()
         
         Text* alert = Text::create();
         alert->setText("Label Effect");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.05f));
@@ -89,7 +90,7 @@ bool UILabelTest_Effect::init()
         
         FontDefinition shadowTextDef;
         shadowTextDef._fontSize = 20;
-        shadowTextDef._fontName = std::string("Marker Felt");
+        shadowTextDef._fontName = std::string("fonts/Marker Felt.ttf");
         
         shadowTextDef._shadow._shadowEnabled = true;
         shadowTextDef._shadow._shadowOffset  = shadowOffset;
@@ -112,7 +113,7 @@ bool UILabelTest_Effect::init()
         
         FontDefinition strokeTextDef;
         strokeTextDef._fontSize = 20;
-        strokeTextDef._fontName = std::string("Marker Felt");
+        strokeTextDef._fontName = std::string("fonts/Marker Felt.ttf");
         
         strokeTextDef._stroke._strokeEnabled = true;
         strokeTextDef._stroke._strokeColor   = strokeColor;
@@ -135,7 +136,7 @@ bool UILabelTest_Effect::init()
         
         FontDefinition strokeShaodwTextDef;
         strokeShaodwTextDef._fontSize = 20;
-        strokeShaodwTextDef._fontName = std::string("Marker Felt");
+        strokeShaodwTextDef._fontName = std::string("fonts/Marker Felt.ttf");
         
         strokeShaodwTextDef._stroke._strokeEnabled = true;
         strokeShaodwTextDef._stroke._strokeColor   = strokeShadowColor;
@@ -172,7 +173,7 @@ bool UITextTest_TTF::init()
         
         Text* alert = Text::create();
         alert->setText("Text set TTF font");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));

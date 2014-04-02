@@ -206,7 +206,7 @@ public:
     /** Sets the text color
      *
      */
-    void setTextColor(const Color4B &color);
+    virtual void setTextColor(const Color4B &color);
 
     const Color4B& getTextColor() const { return _textColor;}
 
@@ -217,6 +217,10 @@ public:
 
     virtual Sprite * getLetter(int lettetIndex);
 
+    /** clip upper and lower margin for reduce height of label.
+     */
+    void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
+    bool isClipMarginEnabled() const { return _clipEnabled; }
     // font related stuff
     int getCommonLineHeight() const;
     
@@ -235,10 +239,15 @@ public:
     virtual float getScaleY() const override;
 
     virtual void addChild(Node * child, int zOrder=0, int tag=0) override;
+    virtual void sortAllChildren() override;
+
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
 
+    virtual Rect getBoundingBox() const override;
+
+    FontAtlas* getFontAtlas() { return _fontAtlas; }
     /** Listen "come to background" message
      It only has effect on Android.
      */
@@ -248,6 +257,7 @@ public:
      */
     void listenToFontAtlasPurge(EventCustom *event);
 
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
 protected:
     void onDraw(const kmMat4& transform, bool transformUpdated);
 
@@ -299,6 +309,8 @@ protected:
     virtual void updateShaderProgram();
 
     void drawShadowWithoutBlur();
+
+    void drawTextSprite(Renderer *renderer, bool parentTransformUpdated);
 
     void createSpriteWithFontDefinition();
 
@@ -358,12 +370,20 @@ protected:
     GLuint _uniformTextColor;
     CustomCommand _customCommand;   
 
+    bool    _shadowDirty;
+    bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
-    kmMat4  _parentTransform;
+    kmMat4  _shadowTransform;
+    Color3B _shadowColor;
+    float   _shadowOpacity;
+    Sprite*   _shadowNode;
 
     Color4B _textColor;
     Color4F _textColorF;
+
+    bool _clipEnabled;
+    bool _blendFuncDirty;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

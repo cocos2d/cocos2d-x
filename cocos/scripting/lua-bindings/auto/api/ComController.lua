@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ComController
--- @extend Component,InputDelegate,
+-- @extend Component,InputDelegate
 
 --------------------------------
 -- @function [parent=#ComController] create 

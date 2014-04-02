@@ -32,6 +32,7 @@ class Test;
 class Box2DView : public Layer
 {
     EventListenerTouchOneByOne* _touchListener;
+    EventListenerKeyboard* _keyboardListener;
     TestEntry*    m_entry;
     Test*        m_test;
     int            m_entryID;
@@ -47,6 +48,9 @@ public:
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
+    
+    void onKeyPressed(EventKeyboard::KeyCode code, Event* event);
+    void onKeyReleased(EventKeyboard::KeyCode code, Event* event);
     //virtual void accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);

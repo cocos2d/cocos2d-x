@@ -79,6 +79,7 @@ include_directories(
   ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
   ${COCOS2D_ROOT}/external/freetype2/include/linux
   ${COCOS2D_ROOT}/external/linux-specific/fmod/include/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/xxhash
 )
 
 link_directories(
@@ -108,6 +109,9 @@ add_subdirectory(${COCOS2D_ROOT}/external/tinyxml2)
 
 # audio
 add_subdirectory(${COCOS2D_ROOT}/cocos/audio)
+
+# xxhash library
+add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 
 # cocos base library
 add_subdirectory(${COCOS2D_ROOT}/cocos/base)
