@@ -201,7 +201,7 @@ void PhysicsWorld::debugDraw()
         _debugDraw = new PhysicsDebugDraw(*this);
     }
     
-    if (_debugDraw && !_bodies.empty())
+    if (_debugDraw)
     {
         if (_debugDraw->begin())
         {
