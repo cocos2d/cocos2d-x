@@ -633,7 +633,7 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
     return buffer;
 }
 
-std::string FileUtils::getNewFilename(const std::string &filename)
+std::string FileUtils::getNewFilename(const std::string &filename) const
 {
     std::string newFileName;
     
@@ -680,31 +680,14 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
     {
         return filename;
     }
-
-    // Already Cached ?
-    auto cacheIter = _fullPathCache.find(filename);
-    if( cacheIter != _fullPathCache.end() )
-    {
-        return cacheIter->second;
-    }
-    
-    // Get the new file name.
-    const std::string newFilename( getNewFilename(filename) );
     
 	std::string fullpath;
     
-    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt) {
-        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt) {
-            
-            fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
-            
-            if (fullpath.length() > 0)
-            {
-                // Using the filename passed in as key.
-                _fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
-                return fullpath;
-            }
-        }
+    if (isFileExist(filename, &fullpath))
+    {
+        // Using the filename passed in as key.
+        _fullPathCache.insert(std::make_pair(filename, fullpath));
+        return fullpath;
     }
     
     CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
@@ -848,10 +831,54 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
     ret += filename;
     
     // if the file doesn't exist, return an empty string
-    if (!isFileExist(ret)) {
+    if (!isFileExistInternal(ret)) {
         ret = "";
     }
     return ret;
+}
+
+bool FileUtils::isFileExist(const std::string& filename, std::string* outFullpath/* = nullptr*/) const
+{
+    // If filename is absolute path, we don't need to consider 'search paths' and 'resolution orders'.
+    if (isAbsolutePath(filename))
+    {
+        if (isFileExistInternal(filename))
+        {
+            if (outFullpath != nullptr)
+                *outFullpath = filename;
+            return true;
+        }
+        return false;
+    }
+    
+    // Already Cached ?
+    auto cacheIter = _fullPathCache.find(filename);
+    if( cacheIter != _fullPathCache.end() )
+    {
+        if (outFullpath != nullptr)
+            *outFullpath = cacheIter->second;
+        return true;
+    }
+    
+    // Get the new file name.
+    const std::string newFilename( getNewFilename(filename) );
+    
+	std::string fullpath;
+    
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt) {
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt) {
+            
+            fullpath = const_cast<FileUtils*>(this)->getPathForFilename(newFilename, *resolutionIt, *searchIt);
+            
+            if (!fullpath.empty())
+            {
+                if (outFullpath != nullptr)
+                    *outFullpath = fullpath;
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 bool FileUtils::isAbsolutePath(const std::string& path) const

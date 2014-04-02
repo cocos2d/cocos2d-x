@@ -47,13 +47,14 @@ public:
     /* override funtions */
     bool init();
     virtual std::string getWritablePath() const;
-    virtual bool isFileExist(const std::string& strFilePath) const;
     virtual bool isAbsolutePath(const std::string& strPath) const;
     virtual std::string  getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) override;
 	virtual std::string getStringFromFile(const std::string& filename) override;
 	static std::string getAppPath();
 
+private:
+    virtual bool isFileExistInternal(const std::string& strFilePath) const;
 };
 
 // end of platform group
