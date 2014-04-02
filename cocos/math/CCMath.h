@@ -1,5 +1,5 @@
-#ifndef __MATH_H__
-#define __MATH_H__
+#ifndef __CC_MATH_H__
+#define __CC_MATH_H__
 
 #include "Vector2.h"
 #include "Vector3.h"
