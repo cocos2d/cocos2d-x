@@ -279,25 +279,23 @@ void Director::drawScene()
         setNextScene();
     }
 
-    kmGLPushMatrix();
+    pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    // global identity matrix is needed... come on kazmath!
-    Matrix identity = Matrix::identity();
-    
-    kmMat4 identity2;
-    kmMat4Fill(&identity2, identity.m);
+    // global identity matrix is needed... come on kazmath!    
+    kmMat4 identity;
+    kmMat4Identity(&identity);
 
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, identity2, false);
+        _runningScene->visit(_renderer, identity, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, identity2, false);
+        _notificationNode->visit(_renderer, identity, false);
     }
 
     if (_displayStats)
@@ -308,7 +306,7 @@ void Director::drawScene()
     _renderer->render();
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
-    kmGLPopMatrix();
+    popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _totalFrames++;
 
@@ -445,14 +443,22 @@ void Director::popMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
+        kmGLMatrixMode(KM_GL_MODELVIEW);
+        kmGLPopMatrix();
         _modelViewMatrixStack.pop();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
+        kmGLMatrixMode(KM_GL_PROJECTION);
+        kmGLPopMatrix();
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         _projectionMatrixStack.pop();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
+        kmGLMatrixMode(KM_GL_TEXTURE);
+        kmGLPopMatrix();
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         _textureMatrixStack.pop();
     }
     else
@@ -465,14 +471,22 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
+        kmGLMatrixMode(KM_GL_MODELVIEW);
+        kmGLLoadIdentity();
         kmMat4Identity(&_modelViewMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
+        kmGLMatrixMode(KM_GL_PROJECTION);
+        kmGLLoadIdentity();
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Identity(&_projectionMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
+        kmGLMatrixMode(KM_GL_TEXTURE);
+        kmGLLoadIdentity();
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Identity(&_textureMatrixStack.top());
     }
     else
@@ -485,14 +499,22 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
+        kmGLMatrixMode(KM_GL_MODELVIEW);
+        kmGLLoadMatrix(&mat);
         _modelViewMatrixStack.top() = mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
+        kmGLMatrixMode(KM_GL_PROJECTION);
+        kmGLLoadMatrix(&mat);
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         _projectionMatrixStack.top() = mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
+        kmGLMatrixMode(KM_GL_TEXTURE);
+        kmGLLoadMatrix(&mat);
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         _textureMatrixStack.top() = mat;
     }
     else
@@ -505,14 +527,22 @@ void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
+        kmGLMatrixMode(KM_GL_MODELVIEW);
+        kmGLMultMatrix(&mat);
         kmMat4Multiply(&_modelViewMatrixStack.top(), &_modelViewMatrixStack.top(), &mat);
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
+        kmGLMatrixMode(KM_GL_PROJECTION);
+        kmGLMultMatrix(&mat);
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Multiply(&_projectionMatrixStack.top(), &_projectionMatrixStack.top(), &mat);
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
+        kmGLMatrixMode(KM_GL_TEXTURE);
+        kmGLMultMatrix(&mat);
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Multiply(&_textureMatrixStack.top(), &_textureMatrixStack.top(), &mat);
     }
     else
@@ -525,14 +555,22 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
+        kmGLMatrixMode(KM_GL_MODELVIEW);
+        kmGLPushMatrix();
         _modelViewMatrixStack.push(_modelViewMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
+        kmGLMatrixMode(KM_GL_PROJECTION);
+        kmGLPushMatrix();
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         _projectionMatrixStack.push(_projectionMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
+        kmGLMatrixMode(KM_GL_TEXTURE);
+        kmGLPushMatrix();
+        kmGLMatrixMode(KM_GL_MODELVIEW);
         _textureMatrixStack.push(_textureMatrixStack.top());
     }
     else
@@ -545,19 +583,31 @@ kmMat4 Director::getMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
+        kmMat4 result;
+        kmGLGetMatrix(KM_GL_MODELVIEW, &result);
+        return result;
         return _modelViewMatrixStack.top();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
+        kmMat4 result;
+        kmGLGetMatrix(KM_GL_PROJECTION, &result);
+        return result;
         return _projectionMatrixStack.top();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
+        kmMat4 result;
+        kmGLGetMatrix(KM_GL_TEXTURE, &result);
+        return result;
         return _textureMatrixStack.top();
     }
     else
     {
         CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
+        kmMat4 result;
+        kmGLGetMatrix(KM_GL_MODELVIEW, &result);
+        return result;
         return _modelViewMatrixStack.top();
     }
 }
@@ -571,19 +621,17 @@ void Director::setProjection(Projection projection)
     switch (projection)
     {
         case Projection::_2D:
-            kmGLMatrixMode(KM_GL_PROJECTION);
-            kmGLLoadIdentity();
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             if(getOpenGLView() != nullptr)
             {
-                kmGLMultMatrix( getOpenGLView()->getOrientationMatrix());
+                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
             }
 #endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);
-            kmGLMultMatrix(&orthoMatrix);
-            kmGLMatrixMode(KM_GL_MODELVIEW);
-            kmGLLoadIdentity();
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,orthoMatrix);
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
 
         case Projection::_3D:
@@ -592,32 +640,30 @@ void Director::setProjection(Projection projection)
 
             kmMat4 matrixPerspective, matrixLookup;
 
-            kmGLMatrixMode(KM_GL_PROJECTION);
-            kmGLLoadIdentity();
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
             
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
             GLView* view = getOpenGLView();
             if(getOpenGLView() != nullptr)
             {
-                kmGLMultMatrix(getOpenGLView()->getOrientationMatrix());
+                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
             }
 #endif
             // issue #1334
             kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
 //            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
-            kmGLMultMatrix(&matrixPerspective);
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
 
             kmVec3 eye, center, up;
             kmVec3Fill(&eye, size.width/2, size.height/2, zeye);
             kmVec3Fill(&center, size.width/2, size.height/2, 0.0f);
             kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-            kmGLMultMatrix(&matrixLookup);
-
-            kmGLMatrixMode(KM_GL_MODELVIEW);
-            kmGLLoadIdentity();
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
+            
+            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
         }
 
@@ -691,8 +737,11 @@ void Director::setDepthTest(bool on)
 
 static void GLToClipTransform(kmMat4 *transformOut)
 {
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
 	kmMat4 projection;
-	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+    projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
@@ -700,7 +749,7 @@ static void GLToClipTransform(kmMat4 *transformOut)
 #endif
 
 	kmMat4 modelview;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
+    modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
