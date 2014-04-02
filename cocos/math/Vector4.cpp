@@ -1,4 +1,5 @@
 #include "Vector4.h"
+#include "MathUtil.h"
 #include "ccMacros.h"
 
 namespace gameplay

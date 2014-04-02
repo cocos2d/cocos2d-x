@@ -1,5 +1,4 @@
 #include "Matrix.h"
-#include "Plane.h"
 #include "Quaternion.h"
 #include "MathUtil.h"
 #include "ccMacros.h"
@@ -120,7 +119,7 @@ void Matrix::createPerspective(float fieldOfView, float aspectRatio,
     float theta = MATH_DEG_TO_RAD(fieldOfView) * 0.5f;
     if (fabs(fmod(theta, MATH_PIOVER2)) < MATH_EPSILON)
     {
-        GP_ERROR("Invalid field of view value (%d) causes attempted calculation tan(%d), which is undefined.", fieldOfView, theta);
+        CCLOGERROR("Invalid field of view value (%d) causes attempted calculation tan(%d), which is undefined.", fieldOfView, theta);
         return;
     }
     float divisor = tan(theta);
@@ -208,24 +207,24 @@ void Matrix::createBillboardHelper(const Vector3& objectPosition, const Vector3&
     }
 }
     
-void Matrix::createReflection(const Plane& plane, Matrix* dst)
-{
-    Vector3 normal(plane.getNormal());
-    float k = -2.0f * plane.getDistance();
+// void Matrix::createReflection(const Plane& plane, Matrix* dst)
+// {
+//     Vector3 normal(plane.getNormal());
+//     float k = -2.0f * plane.getDistance();
 
-    dst->setIdentity();
+//     dst->setIdentity();
 
-    dst->m[0] -= 2.0f * normal.x * normal.x;
-    dst->m[5] -= 2.0f * normal.y * normal.y;
-    dst->m[10] -= 2.0f * normal.z * normal.z;
-    dst->m[1] = dst->m[4] = -2.0f * normal.x * normal.y;
-    dst->m[2] = dst->m[8] = -2.0f * normal.x * normal.z;
-    dst->m[6] = dst->m[9] = -2.0f * normal.y * normal.z;
+//     dst->m[0] -= 2.0f * normal.x * normal.x;
+//     dst->m[5] -= 2.0f * normal.y * normal.y;
+//     dst->m[10] -= 2.0f * normal.z * normal.z;
+//     dst->m[1] = dst->m[4] = -2.0f * normal.x * normal.y;
+//     dst->m[2] = dst->m[8] = -2.0f * normal.x * normal.z;
+//     dst->m[6] = dst->m[9] = -2.0f * normal.y * normal.z;
     
-    dst->m[3] = k * normal.x;
-    dst->m[7] = k * normal.y;
-    dst->m[11] = k * normal.z;
-}
+//     dst->m[3] = k * normal.x;
+//     dst->m[7] = k * normal.y;
+//     dst->m[11] = k * normal.z;
+// }
 
 void Matrix::createScale(const Vector3& scale, Matrix* dst)
 {

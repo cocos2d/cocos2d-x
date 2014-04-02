@@ -1,5 +1,6 @@
 #include "Vector2.h"
 #include "ccMacros.h"
+#include "MathUtil.h"
 
 namespace gameplay
 {
