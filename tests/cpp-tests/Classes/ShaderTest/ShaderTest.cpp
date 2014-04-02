@@ -111,8 +111,8 @@ enum
 };
 
 ShaderNode::ShaderNode()
-:_center(Vertex2F(0.0f, 0.0f))
-,_resolution(Vertex2F(0.0f, 0.0f))
+:_center(Vector2(0.0f, 0.0f))
+,_resolution(Vector2(0.0f, 0.0f))
 ,_time(0.0f)
 ,_uniformCenter(0)
 ,_uniformResolution(0)
@@ -147,7 +147,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
     loadShaderVertex(vert, frag);
 
     _time = 0;
-    _resolution = Vertex2F(SIZE_X, SIZE_Y);
+    _resolution = Vector2(SIZE_X, SIZE_Y);
 
     scheduleUpdate();
 
@@ -188,7 +188,7 @@ void ShaderNode::setPosition(const Point &newPosition)
 {
     Node::setPosition(newPosition);
     auto position = getPosition();
-    _center = Vertex2F(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    _center = Vector2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
 }
 
 void ShaderNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)

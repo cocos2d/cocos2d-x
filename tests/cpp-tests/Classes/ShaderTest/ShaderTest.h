@@ -128,8 +128,8 @@ public:
 protected:
     void onDraw(const kmMat4 &transform, bool transformUpdated);
 
-    Vertex2F _center;
-    Vertex2F _resolution;
+    Vector2 _center;
+    Vector2 _resolution;
     float      _time;
     GLuint     _uniformCenter, _uniformResolution, _uniformTime;
     std::string _vertFileName;
