@@ -301,7 +301,7 @@ protected:
     virtual void updateColor() override;
 
     BlendFunc _blendFunc;
-    Vertex2F _squareVertices[4];
+    Vector2 _squareVertices[4];
     Color4F  _squareColors[4];
     CustomCommand _customCommand;
     Vector3 _noMVPVertices[4];

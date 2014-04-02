@@ -454,9 +454,9 @@ CC_DEPRECATED_ATTRIBUTE static inline bool ccc4FEqual(Color4F a, Color4F b)
     return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 
-CC_DEPRECATED_ATTRIBUTE static inline Vertex2F vertex2(const float x, const float y)
+CC_DEPRECATED_ATTRIBUTE static inline Vector2 vertex2(const float x, const float y)
 {
-    Vertex2F c(x, y);
+    Vector2 c(x, y);
     return c;
 }
 
@@ -775,7 +775,8 @@ CC_DEPRECATED_ATTRIBUTE typedef Rect CCRect;
 CC_DEPRECATED_ATTRIBUTE typedef Color3B ccColor3B;
 CC_DEPRECATED_ATTRIBUTE typedef Color4F ccColor4F;
 CC_DEPRECATED_ATTRIBUTE typedef Color4B ccColor4B;
-CC_DEPRECATED_ATTRIBUTE typedef Vertex2F ccVertex2F;
+CC_DEPRECATED_ATTRIBUTE typedef Vector2 ccVertex2F;
+CC_DEPRECATED_ATTRIBUTE typedef Vector2 Vertex2F;
 CC_DEPRECATED_ATTRIBUTE typedef Vector3 ccVertex3F;
 CC_DEPRECATED_ATTRIBUTE typedef Vector3 Vertex3F;
 CC_DEPRECATED_ATTRIBUTE typedef Tex2F ccTex2F;

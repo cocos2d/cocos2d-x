@@ -120,7 +120,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
     _pointVertexes = (Point*)malloc(sizeof(Point) * _maxPoints);
 
-    _vertices = (Vertex2F*)malloc(sizeof(Vertex2F) * _maxPoints * 2);
+    _vertices = (Vector2*)malloc(sizeof(Vector2) * _maxPoints * 2);
     _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _maxPoints * 2);
     _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
@@ -385,7 +385,7 @@ void MotionStreak::onDraw(const kmMat4 &transform, bool transformUpdated)
 
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade
-    setGLBufferData(_vertices, (sizeof(Vertex2F) * _maxPoints * 2), 0);
+    setGLBufferData(_vertices, (sizeof(Vector2) * _maxPoints * 2), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_texCoords, (sizeof(Tex2F) * _maxPoints * 2), 1);

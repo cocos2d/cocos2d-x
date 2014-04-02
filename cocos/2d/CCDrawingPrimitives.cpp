@@ -127,7 +127,7 @@ void drawPoint( const Point& point )
 {
     lazy_init();
 
-    Vertex2F p;
+    Vector2 p;
     p.x = point.x;
     p.y = point.y;
 
@@ -161,10 +161,10 @@ void drawPoints( const Point *points, unsigned int numberOfPoints )
     s_shader->setUniformLocationWith1f(s_pointSizeLocation, s_pointSize);
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    Vertex2F* newPoints = new Vertex2F[numberOfPoints];
+    Vector2* newPoints = new Vector2[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(Vertex2F) )
+    if( sizeof(Point) == sizeof(Vector2) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) points, numberOfPoints * sizeof(Point));
@@ -183,7 +183,7 @@ void drawPoints( const Point *points, unsigned int numberOfPoints )
 #ifdef EMSCRIPTEN
         // Suspect Emscripten won't be emitting 64-bit code for a while yet,
         // but want to make sure this continues to work even if they do.
-        setGLBufferData(newPoints, numberOfPoints * sizeof(Vertex2F));
+        setGLBufferData(newPoints, numberOfPoints * sizeof(Vector2));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
@@ -202,9 +202,9 @@ void drawLine( const Point& origin, const Point& destination )
 {
     lazy_init();
 
-    Vertex2F vertices[2] = {
-        Vertex2F(origin.x, origin.y),
-        Vertex2F(destination.x, destination.y)
+    Vector2 vertices[2] = {
+        Vector2(origin.x, origin.y),
+        Vector2(destination.x, destination.y)
     };
 
     s_shader->use();
@@ -254,7 +254,7 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(Vertex2F) )
+    if( sizeof(Point) == sizeof(Vector2) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
@@ -272,13 +272,13 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
     {
         // Mac on 64-bit
         // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-        Vertex2F* newPoli = new Vertex2F[numberOfPoints];
+        Vector2* newPoli = new Vector2[numberOfPoints];
         for( unsigned int i=0; i<numberOfPoints;i++) {
             newPoli[i].x = poli[i].x;
             newPoli[i].y = poli[i].y;
         }
 #ifdef EMSCRIPTEN
-        setGLBufferData(newPoli, numberOfPoints * sizeof(Vertex2F));
+        setGLBufferData(newPoli, numberOfPoints * sizeof(Vector2));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
@@ -306,10 +306,10 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    Vertex2F* newPoli = new Vertex2F[numberOfPoints];
+    Vector2* newPoli = new Vector2[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(Vertex2F) )
+    if( sizeof(Point) == sizeof(Vector2) )
     {
 #ifdef EMSCRIPTEN
         setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
@@ -323,10 +323,10 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
         // Mac on 64-bit
         for( unsigned int i=0; i<numberOfPoints;i++)
         {
-            newPoli[i] = Vertex2F( poli[i].x, poli[i].y );
+            newPoli[i] = Vector2( poli[i].x, poli[i].y );
         }
 #ifdef EMSCRIPTEN
-        setGLBufferData(newPoli, numberOfPoints * sizeof(Vertex2F));
+        setGLBufferData(newPoli, numberOfPoints * sizeof(Vector2));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
@@ -438,7 +438,7 @@ void drawQuadBezier(const Point& origin, const Point& control, const Point& dest
 {
     lazy_init();
 
-    Vertex2F* vertices = new Vertex2F[segments + 1];
+    Vector2* vertices = new Vector2[segments + 1];
 
     float t = 0.0f;
     for(unsigned int i = 0; i < segments; i++)
@@ -457,7 +457,7 @@ void drawQuadBezier(const Point& origin, const Point& control, const Point& dest
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(Vector2));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -477,7 +477,7 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
 {
     lazy_init();
 
-    Vertex2F* vertices = new Vertex2F[segments + 1];
+    Vector2* vertices = new Vector2[segments + 1];
 
     ssize_t p;
     float lt;
@@ -514,7 +514,7 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(Vector2));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -529,7 +529,7 @@ void drawCubicBezier(const Point& origin, const Point& control1, const Point& co
 {
     lazy_init();
 
-    Vertex2F* vertices = new Vertex2F[segments + 1];
+    Vector2* vertices = new Vector2[segments + 1];
 
     float t = 0;
     for(unsigned int i = 0; i < segments; i++)
@@ -548,7 +548,7 @@ void drawCubicBezier(const Point& origin, const Point& control1, const Point& co
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
-    setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
+    setGLBufferData(vertices, (segments + 1) * sizeof(Vector2));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
