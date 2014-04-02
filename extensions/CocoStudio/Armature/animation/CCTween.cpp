@@ -196,7 +196,6 @@ void CCTween::updateHandler()
         case SINGLE_FRAME:
         {
             m_fCurrentPercent = 1;
-            m_bIsComplete = true;
             m_bIsPlaying = false;
         }
         break;
