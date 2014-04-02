@@ -65,6 +65,7 @@ THE SOFTWARE.
 
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
+#include "CCMath.h"
 
 /**
  Position of the FPS
@@ -156,6 +157,7 @@ bool Director::init(void)
 
     //init TextureCache
     initTextureCache();
+    initMatrixStack();
 
     _renderer = new Renderer;
 
@@ -280,20 +282,22 @@ void Director::drawScene()
     kmGLPushMatrix();
 
     // global identity matrix is needed... come on kazmath!
-    kmMat4 identity;
-    kmMat4Identity(&identity);
+    Matrix identity = Matrix::identity();
+    
+    kmMat4 identity2;
+    kmMat4Fill(&identity2, identity.m);
 
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, identity, false);
+        _runningScene->visit(_renderer, identity2, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, identity, false);
+        _notificationNode->visit(_renderer, identity2, false);
     }
 
     if (_displayStats)
@@ -425,6 +429,117 @@ void Director::setViewport()
 void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 {
     _nextDeltaTimeZero = bNextDeltaTimeZero;
+}
+   
+void Director::initMatrixStack()
+{
+    kmMat4 identity;
+    kmMat4Identity(&identity);
+    
+    _modelViewMatrixStack.push(identity);
+    _projectionMatrixStack.push(identity);
+    _textureMatrixStack.push(identity);
+}
+
+void Director::popMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.pop();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.pop();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.pop();
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.top() = mat;
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.top() = mat;
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.top() = mat;
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        kmMat4Multiply(&_modelViewMatrixStack.top(), &_modelViewMatrixStack.top(), &mat);
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        kmMat4Multiply(&_projectionMatrixStack.top(), &_projectionMatrixStack.top(), &mat);
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        kmMat4Multiply(&_textureMatrixStack.top(), &_textureMatrixStack.top(), &mat);
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void Director::pushMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.push(_modelViewMatrixStack.top());
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.push(_projectionMatrixStack.top());
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.push(_textureMatrixStack.top());
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+kmMat4 Director::getMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        return _modelViewMatrixStack.top();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        return _projectionMatrixStack.top();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        return _textureMatrixStack.top();
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
+        return _modelViewMatrixStack.top();
+    }
 }
 
 void Director::setProjection(Projection projection)

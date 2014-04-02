@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "CCLabelAtlas.h"
 #include "kazmath/mat4.h"
-
+#include <stack>
 
 NS_CC_BEGIN
 
@@ -86,6 +86,25 @@ and when to execute the Scenes.
 */
 class CC_DLL Director : public Ref
 {
+public:
+    enum class MATRIX_STACK_TYPE
+    {
+        MATRIX_STACK_MODELVIEW,
+        MATRIX_STACK_PROJECTION,
+        MATRIX_STACK_TEXTURE
+    };
+private:
+    std::stack<kmMat4> _modelViewMatrixStack;
+    std::stack<kmMat4> _projectionMatrixStack;
+    std::stack<kmMat4> _textureMatrixStack;
+protected:
+    void initMatrixStack();
+public:
+    void pushMatrix(MATRIX_STACK_TYPE type);
+    void popMatrix(MATRIX_STACK_TYPE type);
+    void loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat);
+    kmMat4 getMatrix(MATRIX_STACK_TYPE type);
 public:
     static const char *EVENT_PROJECTION_CHANGED;
     static const char* EVENT_AFTER_UPDATE;
