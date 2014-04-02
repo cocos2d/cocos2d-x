@@ -5,8 +5,7 @@
 #include "Matrix.h"
 //#include "Plane.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 class Matrix;
 
@@ -382,7 +381,7 @@ private:
     static void slerpForSquad(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst);
 };
 
-}
+NS_CC_MATH_END
 
 #include "Quaternion.inl"
 

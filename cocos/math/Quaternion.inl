@@ -1,7 +1,6 @@
 #include "Quaternion.h"
 
-namespace gameplay
-{
+NS_CC_MATH_BEGIN
 
 inline const Quaternion Quaternion::operator*(const Quaternion& q) const
 {
@@ -16,4 +15,4 @@ inline Quaternion& Quaternion::operator*=(const Quaternion& q)
     return *this;
 }
 
-}
+NS_CC_MATH_END
