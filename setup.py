@@ -62,6 +62,16 @@ ANT_ROOT = 'ANT_ROOT'
 
 
 class SetEnvVar(object):
+
+    RESULT_UPDATE_FAILED = -2
+    RESULT_ADD_FAILED = -1
+    RESULT_DO_NOTHING = 0
+    RESULT_UPDATED = 1
+    RESULT_ADDED = 2
+
+    UNIX_CHECK_FILES = [ '.bash_profile', '.bash_login', '.profile' ]
+    RE_FORMAT = r'^export[ \t]+%s=(.+)'
+
     def __init__(self):
         self.need_backup = True
         self.backup_file = None
@@ -91,16 +101,9 @@ class SetEnvVar(object):
 
         return file_to_write
 
-    def _find_string_in_file(self, string, file_path):
-        with open(file_path) as f:
-            for line in f:
-                if line.startswith(string):
-                    return True
-        return False
-
     # modify registry table to add an environment variable on windows
     def _set_environment_variable_win32(self, key, value):
-
+        ret = False
         import _winreg
         try:
             env = None
@@ -111,13 +114,13 @@ class SetEnvVar(object):
             _winreg.SetValueEx(env, key, 0, _winreg.REG_SZ, value)
             _winreg.FlushKey(env)
             _winreg.CloseKey(env)
-
+            ret = True
         except Exception:
             if env:
                 _winreg.CloseKey(env)
-            print 'Warning: Could not add "%s" into registry' % key
-            return False
-        return True
+            ret = False
+
+        return ret
 
     def _gen_backup_file(self):
         file_name = os.path.basename(self.file_used_for_setup)
@@ -151,42 +154,49 @@ class SetEnvVar(object):
 
     def _set_environment_variable(self, key, value):
 
+        print "  -> Add %s environment variable..." % key
         ret = False
         if self._isWindows():
             ret = self._set_environment_variable_win32(key, value)
         else:
             ret = self._set_environment_variable_unix(key, value)
+
+        if ret:
+            print "    ->Added %s=%s\n" % (key, value)
+        else:
+            print "    ->Add failed\n"
+
+        return ret
+
+    def _search_unix_variable(self, var_name, file_name):
+        if not os.path.isfile(file_name):
+            return None
+
+        import re
+        str_re = SetEnvVar.RE_FORMAT % var_name
+        patten = re.compile(str_re)
+        ret = None
+        for line in open(file_name):
+            str1 = line.lstrip(' \t')
+            match = patten.match(str1)
+            if match is not None:
+                ret = match.group(1)
+
         return ret
 
     def _find_environment_variable(self, var):
+        print "  ->Find environment variable %s..." % var
+        ret = None
         try:
-            os.environ[var]
-            return True
+            ret = os.environ[var]
         except Exception:
             if not self._isWindows():
-                string_to_search = 'export %s' % var
                 home = os.path.expanduser('~')
-
-                # search it in ~/.bash_profile
-                path = os.path.join(home, '.bash_profile')
-                if os.path.exists(path):
-                    if self._find_string_in_file(string_to_search, path):
-                        self.file_used_for_setup = path
-                        return True
-
-                # search it in ~/.bash_login
-                path = os.path.join(home, '.bash_login')
-                if os.path.exists(path):
-                    if self._find_string_in_file(string_to_search, path):
-                        self.file_used_for_setup = path
-                        return True
-
-                # search it in ~/.profile
-                path = os.path.join(home, '.profile')
-                if os.path.exists(path):
-                    if self._find_string_in_file(string_to_search, path):
-                        self.file_used_for_setup = path
-                        return True
+                for name in SetEnvVar.UNIX_CHECK_FILES:
+                    path = os.path.join(home, name)
+                    ret = self._search_unix_variable(var, path)
+                    if ret is not None:
+                        break
             else:
                 import _winreg
                 try:
@@ -196,17 +206,24 @@ class SetEnvVar(object):
                                 0,
                                 _winreg.KEY_READ)
 
-                    _winreg.QueryValueEx(env, var)
+                    ret = _winreg.QueryValueEx(env, var)
                     _winreg.CloseKey(env)
-                    return True
                 except Exception:
                     if env:
                         _winreg.CloseKey(env)
-                    return False
+                    ret = None
 
-    def _get_input_value(self):
+        if ret is None:
+            print "    ->%s not found\n" % var
+        else:
+            print "    ->%s is found : %s\n" % (var, ret)
 
-        return raw_input('\tPlease enter its path (or press Enter to skip): ')
+        return ret
+
+    def _get_input_value(self, var_name):
+        ret = raw_input('  ->Please enter the path of %s (or press Enter to skip):' % var_name)
+        ret.rstrip(" \t")
+        return ret
 
 #         # python on linux doesn't include Tkinter model, so let user input in terminal
 #         if self._isLinux():
@@ -270,6 +287,22 @@ class SetEnvVar(object):
 #         win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 #         win.wm_attributes('-topmost', 1)
 
+    def _check_valid(self, var_name, value):
+        ret = False
+        if var_name == NDK_ROOT:
+            ret = self._is_ndk_root_valid(value)
+        elif var_name == ANDROID_SDK_ROOT:
+            ret = self._is_android_sdk_root_valid(value)
+        elif var_name == ANT_ROOT:
+            ret = self._is_ant_root_valid(value)
+        else:
+            ret = False
+
+        if not ret:
+            print '    ->Error: "%s" is not a valid path of %s. Ignoring it.' % (value, var_name)
+
+        return ret
+
     def _is_ndk_root_valid(self, ndk_root):
         if not ndk_root:
             return False
@@ -285,9 +318,9 @@ class SetEnvVar(object):
             return False
 
         if self._isWindows():
-            android_path = os.path.join(android_sdk_root, 'tools/android.bat')
+            android_path = os.path.join(android_sdk_root, 'tools', 'android.bat')
         else:
-            android_path = os.path.join(android_sdk_root, 'tools/android')
+            android_path = os.path.join(android_sdk_root, 'tools', 'android')
         if os.path.isfile(android_path):
             return True
         else:
@@ -306,7 +339,7 @@ class SetEnvVar(object):
         else:
             return False
 
-    def set_windows_path(self, cocos_consle_root):
+    def remove_dir_from_win_path(self, remove_dir):
         import _winreg
         try:
             env = None
@@ -316,42 +349,187 @@ class SetEnvVar(object):
                                 0,
                                 _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
             path = _winreg.QueryValueEx(env, 'Path')[0]
-            path = path + ';' + cocos_consle_root
-            path.replace('/', '\\')
-            _winreg.SetValueEx(env, 'Path', 0, _winreg.REG_SZ, path)
-            _winreg.FlushKey(env)
-            _winreg.CloseKey(env)
 
-        except Exception:
-            if not path:
-                path = cocos_consle_root.replace('/', '\\')
+            path_lower = path.lower()
+            remove_dir = remove_dir.replace('/', '\\')
+            remove_dir_lower = remove_dir.lower()
+            start_pos = path_lower.find(remove_dir_lower)
+            if (start_pos >= 0):
+                length = len(remove_dir_lower)
+                need_remove = path[start_pos:(start_pos + length)]
+                path = path.replace(need_remove, '')
+                path = path.replace(';;', ';')
                 _winreg.SetValueEx(env, 'Path', 0, _winreg.REG_SZ, path)
                 _winreg.FlushKey(env)
+            _winreg.CloseKey(env)
+
+            print '  ->Remove directory \"%s\" from PATH!\n' % remove_dir
+        except Exception:
+            print '  ->Remove directory \"%s\" from PATH failed!\n' % remove_dir
+
+    def set_windows_path(self, add_dir):
+        ret = False
+        import _winreg
+        try:
+            env = None
+            path = None
+            env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
+                                'Environment',
+                                0,
+                                _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
+            path = _winreg.QueryValueEx(env, 'Path')[0]
+
+            # add variable if can't find it in PATH
+            path_lower = path.lower()
+            add_dir_lower = add_dir.lower()
+            if (path_lower.find(add_dir_lower) == -1):
+                path = add_dir + ';' + path
+                _winreg.SetValueEx(env, 'Path', 0, _winreg.REG_SZ, path)
+                _winreg.FlushKey(env)
+
+            _winreg.CloseKey(env)
+            ret = True
+        except Exception:
+            if not path:
+                path = add_dir
+                _winreg.SetValueEx(env, 'Path', 0, _winreg.REG_SZ, path)
+                _winreg.FlushKey(env)
+                ret = True
             else:
                 _winreg.SetValueEx(env, 'Path', 0, _winreg.REG_SZ, path)
                 _winreg.FlushKey(env)
+                ret = False
+
             if env:
                 _winreg.CloseKey(env)
-            return False
-        return True
+
+        if ret:
+            print "  ->Add directory \"%s\" into PATH succeed!\n" % add_dir
+        else:
+            print "  ->Add directory \"%s\" into PATH failed!\n" % add_dir
 
 
     def set_console_root(self):
-
-    	print ""
-        print '-> Adding COCOS2D_CONSOLE_ROOT environment variable...',
-        if not self._find_environment_variable(COCOS_CONSOLE_ROOT):
-            cocos_consle_root = os.path.join(self.current_absolute_path, 'tools/cocos2d-console/bin')
+        print "->Check environment variable %s" % COCOS_CONSOLE_ROOT
+        cocos_consle_root = os.path.join(self.current_absolute_path, 'tools', 'cocos2d-console', 'bin')
+        old_dir = self._find_environment_variable(COCOS_CONSOLE_ROOT)
+        if old_dir is None:
+            # add environment variable
             if self._isWindows():
                 self.set_windows_path(cocos_consle_root)
-            if self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root):
-                print 'OK'
-                print '  -> Added: %s = %s' % (COCOS_CONSOLE_ROOT, cocos_consle_root)
-                return True
-        else:
-            print 'ALREADY ADDED'
-            return False
 
+            self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root)
+        else:
+            # update the environment variable
+            if self._isWindows(): 
+                self.remove_dir_from_win_path(old_dir)
+                self.set_windows_path(cocos_consle_root)
+
+            self._force_update_env(COCOS_CONSOLE_ROOT, cocos_consle_root)
+
+    def _force_update_unix_env(self, var_name, value):
+        import re
+        home = os.path.expanduser('~')
+        str_re = SetEnvVar.RE_FORMAT % var_name
+        patten = re.compile(str_re)
+        replace_str = 'export %s=%s\n' % (var_name, value)
+
+        print "  ->Update variable %s in files %s" % (var_name, str(SetEnvVar.UNIX_CHECK_FILES))
+        variable_updated = False
+        for file_name in SetEnvVar.UNIX_CHECK_FILES:
+            path = os.path.join(home, file_name)
+            if os.path.isfile(path):
+                lines = []
+                # read files 
+                need_over_write = False
+                file_obj = open(path, 'r')
+                for line in file_obj:
+                    str_temp = line.lstrip(' \t')
+                    match = patten.match(str_temp)
+                    if match is not None:
+                        variable_updated = True
+                        need_over_write = True
+                        lines.append(replace_str)
+                    else:
+                        lines.append(line)
+                file_obj.close()
+
+                # rewrite file
+                if need_over_write:
+                    file_obj = open(path, 'w')
+                    file_obj.writelines(lines)
+                    file_obj.close()
+                    print "    ->File %s updated!" % path
+
+        # nothing updated, should add variable
+        if not variable_updated:
+            print "\n  ->No files updated, add variable %s instead!" % var_name
+            ret = self._set_environment_variable(var_name, value)
+        else:
+            ret = True
+
+        return ret
+
+
+    def _force_update_env(self, var_name, value):
+        ret = False
+        if self._isWindows():
+            print "  ->Force update environment variable %s" % var_name
+            ret = self._set_environment_variable_win32(var_name, value)
+            if not ret:
+                print "    ->Failed!"
+            else:
+                print "    ->Succeed : %s=%s" % (var_name, value)
+        else:
+            ret = self._force_update_unix_env(var_name, value)
+        return ret
+
+    def set_variable(self, var_name, value):
+        print "->Check environment variable %s" % var_name
+        find_value = self._find_environment_variable(var_name)
+        var_found = (find_value is not None)
+        action_none = 0
+        action_add = 1
+        action_update = 2
+
+        need_action = action_none
+        if var_found:
+            if value and self._check_valid(var_name, value):
+                # should update
+                need_action = action_update
+            else:
+                # do nothing
+                need_action = action_none
+        else:
+            if not value:
+                value = self._get_input_value(var_name)
+
+            if value and self._check_valid(var_name, value):
+                # should add variable
+                need_action = action_add
+            else:
+                # do nothing
+                need_action = action_none
+
+        if need_action == action_none:
+            # do nothing
+            return SetEnvVar.RESULT_DO_NOTHING
+        elif need_action == action_add:
+            # add variable
+            if self._set_environment_variable(var_name, value):
+                return SetEnvVar.RESULT_ADDED
+            else:
+                return SetEnvVar.RESULT_ADD_FAILED
+        elif need_action == action_update:
+            # update variable
+            if self._force_update_env(var_name, value):
+                # update succeed
+                return SetEnvVar.RESULT_UPDATED
+            else:
+                # update failed
+                return SetEnvVar.RESULT_UPDATE_FAILED
+        else:
+            return SetEnvVar.RESULT_DO_NOTHING
 
     def set_environment_variables(self, ndk_root, android_sdk_root, ant_root):
 
@@ -359,111 +537,20 @@ class SetEnvVar(object):
 
         self.file_used_for_setup = self._get_filepath_for_setup()
         
-        console_added = self.set_console_root()
-
-        #
-        # NDK_ROOT
-        #
-        print ""
-        print '-> Looking for NDK_ROOT envrironment variable...',
-
-        ndk_root_added = False
-        ndk_root_found = self._find_environment_variable(NDK_ROOT)
-
-        if not ndk_root and not ndk_root_found:
-            print "NOT FOUND"
-            ndk_root = self._get_input_value()
-
-        if ndk_root and not self._is_ndk_root_valid(ndk_root) and not ndk_root_found:
-            print 'Error: "%s" is not a valid path of NDK_ROOT. Ignoring it.' % ndk_root
-
-        if ndk_root_found:
-            print 'FOUND'
-        else:
-            if ndk_root and self._is_ndk_root_valid(ndk_root):
-                if self._set_environment_variable(NDK_ROOT, ndk_root):
-                    ndk_root_added = True
-                    print 'ADDED'
-                    print '  -- Added: %s = %s' % (NDK_ROOT, ndk_root)
-
-
-        #
-        # ANDROID_SDK_ROOT
-        #
-        print ""        
-        print '-> Looking for ANDROID_SDK_ROOT envrironment variable...',
-
-        android_sdk_root_added = False
-        android_sdk_root_found = self._find_environment_variable(ANDROID_SDK_ROOT)
-
-        if not android_sdk_root and not android_sdk_root_found:
-            print "NOT FOUND"
-            android_sdk_root = self._get_input_value()
-        
-        if android_sdk_root and not self._is_android_sdk_root_valid(android_sdk_root) and not android_sdk_root_found:
-            print 'Error: "%s" is not a valid path of ANDROID_SDK_ROOT. Ignoring it.' % android_sdk_root
-
-        if android_sdk_root_found:
-            print 'FOUND'
-        else:
-            if android_sdk_root and self._is_android_sdk_root_valid(android_sdk_root):
-                if self._set_environment_variable(ANDROID_SDK_ROOT, android_sdk_root):
-                    android_sdk_root_added = True
-                    print 'ADDED'
-                    print '  -> Added: %s = %s' % (ANDROID_SDK_ROOT, android_sdk_root)
-
-        #
-        # ANT_ROOT
-        #
-        print ""
-        print '-> Looking for ANT_ROOT envrironment variable...',
-        ant_root_added = False
-        ant_found = self._find_environment_variable(ANT_ROOT)
-
-        if not ant_root and not ant_found:
-            print 'NOT FOUND'
-            ant_root = self._get_input_value()
-
-        if ant_root and not self._is_ant_root_valid(ant_root) and not ant_found:
-            print 'Error: "%s" is not a valid path of ANT_ROOT. Ignoring it.' % ant_root
-
-
-        if ant_found:
-            print 'FOUND'
-        else:
-            if ant_root and self._is_ant_root_valid(ant_root):
-                if self._set_environment_variable(ANT_ROOT, ant_root):
-                    ant_root_added = True
-                    print 'ADDED'
-                    print '  -> Added: %s = %s' % (ANT_ROOT, ant_root)
-
-        if self._isWindows():
-            target = 'registry'
-        else:
-            target = self.file_used_for_setup
-
-        if console_added or ndk_root_added or android_sdk_root_added or ant_root_added:
-            print '\nSet up successfull:'
-
-            if console_added:
-                print '\tCOCOS_CONSOLE_ROOT was added into %s' % target
-            if ndk_root_added:
-                print '\tNDK_ROOT was added into %s' % target
-            if android_sdk_root_added:
-                print '\tANDROID_SDK_ROOT was added into %s' % target
-            if ant_root_added:
-                print '\tANT_ROOT was added into %s' % target
-        else:
-            print '\nCOCOS_CONSOLE_ROOT was already added. Edit "%s" for manual changes' % target   
+        self.set_console_root()
+        ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
+        sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
+        ant_ret = self.set_variable(ANT_ROOT, ant_root)
 
         # tip the backup file
         if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
             print '\nA backup file \"%s\" is created for \"%s\".' % (self.backup_file, self.file_used_for_setup)
 
         if self._isWindows():
-            print '\nPlease restart the terminal or restart computer to make added system variables take effect'
+            print '\nPlease restart the terminal or restart computer to make added system variables take effect\n'
         else:
-            print '\nPlease execute command: "source %s" to make added system variables take effect' % target
+            print '\nPlease execute command: "source %s" to make added system variables take effect\n' % self.file_used_for_setup
+
 
 if __name__ == '__main__':
     parser = OptionParser()
