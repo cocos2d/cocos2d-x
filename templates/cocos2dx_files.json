@@ -254,7 +254,6 @@
         "cocos/2d/ccGLStateCache.cpp", 
         "cocos/2d/ccGLStateCache.h", 
         "cocos/2d/ccMacros.h", 
-        "cocos/2d/ccShaderEx_SwitchMask_frag.h", 
         "cocos/2d/ccShader_Label_frag_df.h", 
         "cocos/2d/ccShader_Label_frag_df_glow.h", 
         "cocos/2d/ccShader_Label_frag_normal.h", 
