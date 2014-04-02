@@ -148,7 +148,7 @@ public:
      The frames will be added with one "delay unit".
      @since v0.99.5
      */
-    static Animation* createWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f);
+    static Animation* createWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
 
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @since v2.0
