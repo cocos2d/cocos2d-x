@@ -535,6 +535,22 @@ std::string TextureCache::getCachedTextureInfo() const
     return buffer;
 }
 
+unsigned long TextureCache::getCachedTextureSize()
+{
+    unsigned long totalBytes = 0;
+
+    for( auto it = _textures.begin(); it != _textures.end(); ++it ) 
+    {
+        Texture2D* tex = it->second;
+        unsigned int bpp = tex->getBitsPerPixelForFormat();
+        // Each texture takes up width * height * bytesPerPixel bytes.
+        auto bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
+        totalBytes += bytes;
+    }
+    return totalBytes;
+
+}
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 
 std::list<VolatileTexture*> VolatileTextureMgr::_textures;
