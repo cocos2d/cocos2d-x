@@ -1009,13 +1009,14 @@ Layer* createParticleLayer(int nIndex)
         case 43: return new PremultipliedAlphaTest2();
         case 44: return new Issue3990();
         case 45: return new ParticleAutoBatching();
+        case 46: return new ParticleVisibleTest();
         default:
             break;
     }
 
     return NULL;
 }
-#define MAX_LAYER    46
+#define MAX_LAYER    47
 
 
 Layer* nextParticleAction()
@@ -1828,12 +1829,26 @@ std::string ReorderParticleSystems::subtitle() const
 
 std::string PremultipliedAlphaTest::title() const
 {
-    return "premultiplied alpha";
+    return "premultiplied alpha and readd child test";
 }
 
 std::string PremultipliedAlphaTest::subtitle() const
 {
-    return "no black halo, particles should fade out";
+    return "no black halo, particles should fade out\n animation should be normal";
+}
+
+void PremultipliedAlphaTest::readdPaticle(float delta)
+{
+    static int count = 0;
+    
+    if (count++ % 2 == 0)
+    {
+        _emitter->removeFromParent();
+    }
+    else
+    {
+        this->addChild(_emitter);
+    }
 }
 
 void PremultipliedAlphaTest::onEnter()
@@ -1857,12 +1872,14 @@ void PremultipliedAlphaTest::onEnter()
     // Toggle next line to see old behavior
     //	this->emitter.opacityModifyRGB = NO;
 
-    _emitter->setStartColor(Color4F(1, 1, 1, 1));
-    _emitter->setEndColor(Color4F(1, 1, 1, 0));
-    _emitter->setStartColorVar(Color4F(0, 0, 0, 0));
-    _emitter->setEndColorVar(Color4F(0, 0, 0, 0));
+    _emitter->setStartColor(Color4F(1.0f, 1.0f, 1.0f, 1.0f));
+    _emitter->setEndColor(Color4F(1.0f, 1.0f, 1.0f, 0.0f));
+    _emitter->setStartColorVar(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
+    _emitter->setEndColorVar(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
 
     this->addChild(_emitter, 10);
+    
+    schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0f);
 }
 
 // PremultipliedAlphaTest2
@@ -1922,6 +1939,37 @@ std::string Issue3990::subtitle() const
     return "Show '998' or '999' at bottom right side";
 }
 
+
+// ParticleVisibleTest
+void ParticleVisibleTest::onEnter()
+{
+    ParticleDemo::onEnter();
+    
+    _emitter = ParticleFireworks::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+    
+    _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
+    
+    schedule(schedule_selector(ParticleVisibleTest::callback), 1);
+    
+    setEmitterPosition();
+}
+
+std::string ParticleVisibleTest::title() const
+{
+    return "Issue4573";
+}
+
+std::string ParticleVisibleTest::subtitle() const
+{
+    return "Visible enable/disable";
+}
+
+void ParticleVisibleTest::callback(float delta)
+{
+    _emitter->setVisible(!_emitter->isVisible());
+}
 
 //
 // ParticleAutoBatching

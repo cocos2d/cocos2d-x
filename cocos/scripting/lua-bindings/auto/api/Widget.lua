@@ -1,17 +1,12 @@
 
 --------------------------------
 -- @module Widget
--- @extend Node
+-- @extend ProtectedNode
 
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 
 -- @param self
 -- @param #point_table point
-        
---------------------------------
--- @function [parent=#Widget] isFlippedX 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Widget] getCustomSize 
@@ -29,10 +24,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] getNodeByTag 
+-- @function [parent=#Widget] getLeftInParent 
 -- @param self
--- @param #int int
--- @return Node#Node ret (return value: cc.Node)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Widget] getTouchEndPos 
@@ -43,11 +37,6 @@
 -- @function [parent=#Widget] setPositionPercent 
 -- @param self
 -- @param #point_table point
-        
---------------------------------
--- @function [parent=#Widget] getNodes 
--- @param self
--- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#Widget] getLayoutSize 
@@ -70,15 +59,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: updateSizeAndPosition(size_table)
---          
--- overload function: updateSizeAndPosition()
---          
--- @function [parent=#Widget] updateSizeAndPosition
--- @param self
--- @param #size_table size
-
---------------------------------
 -- @function [parent=#Widget] getBottomInParent 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -100,9 +80,9 @@
 -- @return PositionType#PositionType ret (return value: ccui.PositionType)
         
 --------------------------------
--- @function [parent=#Widget] setName 
+-- @function [parent=#Widget] getWidgetType 
 -- @param self
--- @param #char char
+-- @return WidgetType#WidgetType ret (return value: ccui.WidgetType)
         
 --------------------------------
 -- @function [parent=#Widget] getChildByName 
@@ -116,9 +96,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Widget] removeNodeByTag 
+-- @function [parent=#Widget] isFocused 
 -- @param self
--- @param #int int
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Widget] isTouchEnabled 
@@ -175,18 +155,10 @@
 -- @param #ccui.BrightStyle brightstyle
         
 --------------------------------
--- overload function: addNode(cc.Node, int)
---          
--- overload function: addNode(cc.Node)
---          
--- overload function: addNode(cc.Node, int, int)
---          
--- @function [parent=#Widget] addNode
+-- @function [parent=#Widget] setName 
 -- @param self
--- @param #cc.Node node
--- @param #int int
--- @param #int int
-
+-- @param #char char
+        
 --------------------------------
 -- @function [parent=#Widget] setLayoutParameter 
 -- @param self
@@ -203,19 +175,9 @@
 -- @return point_table#point_table ret (return value: point_table)
         
 --------------------------------
--- @function [parent=#Widget] getLeftInParent 
--- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
 -- @function [parent=#Widget] setActionTag 
 -- @param self
 -- @param #int int
-        
---------------------------------
--- @function [parent=#Widget] ignoreContentAdaptWithSize 
--- @param self
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] isBright 
@@ -234,10 +196,14 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Widget] getWidgetType 
+-- overload function: updateSizeAndPosition(size_table)
+--          
+-- overload function: updateSizeAndPosition()
+--          
+-- @function [parent=#Widget] updateSizeAndPosition
 -- @param self
--- @return WidgetType#WidgetType ret (return value: ccui.WidgetType)
-        
+-- @param #size_table size
+
 --------------------------------
 -- @function [parent=#Widget] getSize 
 -- @param self
@@ -254,13 +220,9 @@
 -- @return SizeType#SizeType ret (return value: ccui.SizeType)
         
 --------------------------------
--- @function [parent=#Widget] removeNode 
+-- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
--- @param #cc.Node node
-        
---------------------------------
--- @function [parent=#Widget] removeAllNodes 
--- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] getPositionPercent 
@@ -274,7 +236,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Widget] isFocused 
+-- @function [parent=#Widget] isFlippedX 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
@@ -311,70 +273,9 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
--- @function [parent=#Widget] addChild
--- @param self
--- @param #cc.Node node
--- @param #int int
--- @param #int int
-
---------------------------------
 -- @function [parent=#Widget] setColor 
 -- @param self
 -- @param #color3B_table color3b
-        
---------------------------------
--- @function [parent=#Widget] removeFromParent 
--- @param self
-        
---------------------------------
--- @function [parent=#Widget] removeAllChildrenWithCleanup 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#Widget] removeAllChildren 
--- @param self
-        
---------------------------------
--- @function [parent=#Widget] sortAllChildren 
--- @param self
-        
---------------------------------
--- @function [parent=#Widget] removeChild 
--- @param self
--- @param #cc.Node node
--- @param #bool bool
-        
---------------------------------
--- overload function: getChildren()
---          
--- overload function: getChildren()
---          
--- @function [parent=#Widget] getChildren
--- @param self
--- @return array_table#array_table ret (retunr value: array_table)
-
---------------------------------
--- @function [parent=#Widget] getDescription 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- @function [parent=#Widget] getChildByTag 
--- @param self
--- @param #int int
--- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
--- @function [parent=#Widget] removeFromParentAndCleanup 
--- @param self
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] getColor 
@@ -387,25 +288,19 @@
 -- @param #unsigned char char
         
 --------------------------------
--- @function [parent=#Widget] setPosition 
--- @param self
--- @param #point_table point
-        
---------------------------------
--- @function [parent=#Widget] removeChildByTag 
--- @param self
--- @param #int int
--- @param #bool bool
-        
---------------------------------
 -- @function [parent=#Widget] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
--- @function [parent=#Widget] getChildrenCount 
+-- @function [parent=#Widget] setPosition 
 -- @param self
--- @return long#long ret (return value: long)
+-- @param #point_table point
+        
+--------------------------------
+-- @function [parent=#Widget] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Widget] Widget 

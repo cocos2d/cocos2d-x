@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="action">
+      <UniqueIdentifier>{d793b86c-0905-4c9b-b6bc-161e351c9eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature">
+      <UniqueIdentifier>{855f2366-3429-4f77-a080-a41a39c99270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components">
+      <UniqueIdentifier>{1a8c6b14-fb28-4485-8417-9b6838fbc4ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{42f1ce3f-46ab-4a16-a96e-9eb076c873f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader">
+      <UniqueIdentifier>{f8271f80-1663-4425-91c8-7365ec3af017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\animation">
+      <UniqueIdentifier>{48f28446-ffe4-4aa1-a34c-8968c3367ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\datas">
+      <UniqueIdentifier>{ad9b4fd1-dc17-4704-9c60-7709eb916f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\display">
+      <UniqueIdentifier>{55c682b3-7a48-4fab-ad5a-eb979f3c305e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\physics">
+      <UniqueIdentifier>{c6464479-e0ab-4afc-96fc-1ffc73e40232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="armature\utils">
+      <UniqueIdentifier>{023e3440-1259-4981-ba54-24390d1df447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\rapidjson">
+      <UniqueIdentifier>{f1f20817-9232-4967-a4dd-77550e84e39b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\rapidjson\internal">
+      <UniqueIdentifier>{5149f922-cf29-4a4b-b604-f15c6e8856b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="trigger">
+      <UniqueIdentifier>{59eee6d9-bbfd-4193-be1d-6c18fc38f896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader">
+      <UniqueIdentifier>{e30e7bb0-8b73-431a-8461-2c388dfc68cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\ButtonReader">
+      <UniqueIdentifier>{96dd2db1-898a-4598-8001-72601e5665c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\CheckBoxReader">
+      <UniqueIdentifier>{04e763fc-669f-4440-b3da-2714bb653c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\ImageViewReader">
+      <UniqueIdentifier>{053ab44f-ac1f-43ed-8d18-3642f3f57df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\LayoutReader">
+      <UniqueIdentifier>{f1888260-467c-446c-a866-882d67815bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\ListViewReader">
+      <UniqueIdentifier>{193f7228-6f8c-40ae-916d-811ebb25fa5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\LoadingBarReader">
+      <UniqueIdentifier>{2413c186-a78b-484d-899d-0c000ca685d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\PageViewReader">
+      <UniqueIdentifier>{d6e0aa43-c62f-4b05-87b0-6b2a6bd00de4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\ScrollViewReader">
+      <UniqueIdentifier>{15bcf867-facd-4e74-a1fe-375b5126d97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\SliderReader">
+      <UniqueIdentifier>{1d49f0ff-ed53-4181-ace7-6cd2e77cfc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\TextAtlasReader">
+      <UniqueIdentifier>{a795a46f-a9d7-44c0-9818-edb59b2f0794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\TextBMFontReader">
+      <UniqueIdentifier>{38d21f2e-d189-47e8-b244-6a07dcc0a692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\TextFieldReader">
+      <UniqueIdentifier>{315e19a3-2ad5-4ffa-93cd-e5ce9812ab76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reader\WidgetReader\TextReader">
+      <UniqueIdentifier>{695e45cf-2af5-4bdb-84a2-f0e9f3d77f11}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CCComAttribute.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCComAudio.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCComController.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCComRender.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCInputDelegate.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DictionaryHelper.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSSceneReader.cpp">
+      <Filter>reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSGUIReader.cpp">
+      <Filter>reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCTween.cpp">
+      <Filter>armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCProcessBase.cpp">
+      <Filter>armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmatureAnimation.cpp">
+      <Filter>armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDatas.cpp">
+      <Filter>armature\datas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBatchNode.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDecorativeDisplay.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDisplayFactory.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDisplayManager.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSkin.cpp">
+      <Filter>armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmatureDataManager.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmatureDefine.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDataReaderHelper.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCSpriteFrameCacheHelper.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCTransformHelp.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCUtilMath.cpp">
+      <Filter>armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCColliderDetector.cpp">
+      <Filter>armature\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCArmature.cpp">
+      <Filter>armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCBone.cpp">
+      <Filter>armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionFrame.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionFrameEasing.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionManagerEx.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionNode.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionObject.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ObjectFactory.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerBase.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerMng.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerObj.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\WidgetReader.cpp">
+      <Filter>reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\ButtonReader\ButtonReader.cpp">
+      <Filter>reader\WidgetReader\ButtonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\CheckBoxReader\CheckBoxReader.cpp">
+      <Filter>reader\WidgetReader\CheckBoxReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\ImageViewReader\ImageViewReader.cpp">
+      <Filter>reader\WidgetReader\ImageViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\LayoutReader\LayoutReader.cpp">
+      <Filter>reader\WidgetReader\LayoutReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\ListViewReader\ListViewReader.cpp">
+      <Filter>reader\WidgetReader\ListViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\LoadingBarReader\LoadingBarReader.cpp">
+      <Filter>reader\WidgetReader\LoadingBarReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\TextReader\TextReader.cpp">
+      <Filter>reader\WidgetReader\TextReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\TextFieldReader\TextFieldReader.cpp">
+      <Filter>reader\WidgetReader\TextFieldReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\TextBMFontReader\TextBMFontReader.cpp">
+      <Filter>reader\WidgetReader\TextBMFontReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\TextAtlasReader\TextAtlasReader.cpp">
+      <Filter>reader\WidgetReader\TextAtlasReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\SliderReader\SliderReader.cpp">
+      <Filter>reader\WidgetReader\SliderReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\ScrollViewReader\ScrollViewReader.cpp">
+      <Filter>reader\WidgetReader\ScrollViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\WidgetReader\PageViewReader\PageViewReader.cpp">
+      <Filter>reader\WidgetReader\PageViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CCComAttribute.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComAudio.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComController.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComRender.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCInputDelegate.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DictionaryHelper.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSSceneReader.h">
+      <Filter>reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSGUIReader.h">
+      <Filter>reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCTween.h">
+      <Filter>armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCProcessBase.h">
+      <Filter>armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmatureAnimation.h">
+      <Filter>armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDatas.h">
+      <Filter>armature\datas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBatchNode.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDecorativeDisplay.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDisplayFactory.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDisplayManager.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSkin.h">
+      <Filter>armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmatureDataManager.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmatureDefine.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCDataReaderHelper.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCSpriteFrameCacheHelper.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCTransformHelp.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCUtilMath.h">
+      <Filter>armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCColliderDetector.h">
+      <Filter>armature\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCArmature.h">
+      <Filter>armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCBone.h">
+      <Filter>armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\document.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\filestream.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\prettywriter.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\rapidjson.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\reader.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\stringbuffer.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\writer.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\internal\pow10.h">
+      <Filter>json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\internal\stack.h">
+      <Filter>json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\internal\strfunc.h">
+      <Filter>json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrame.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrameEasing.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionManagerEx.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionNode.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionObject.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ObjectFactory.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerBase.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerMng.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerObj.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComBase.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\WidgetReader.h">
+      <Filter>reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\WidgetReaderProtocol.h">
+      <Filter>reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\ButtonReader\ButtonReader.h">
+      <Filter>reader\WidgetReader\ButtonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\CheckBoxReader\CheckBoxReader.h">
+      <Filter>reader\WidgetReader\CheckBoxReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\ImageViewReader\ImageViewReader.h">
+      <Filter>reader\WidgetReader\ImageViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\LayoutReader\LayoutReader.h">
+      <Filter>reader\WidgetReader\LayoutReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\ListViewReader\ListViewReader.h">
+      <Filter>reader\WidgetReader\ListViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\LoadingBarReader\LoadingBarReader.h">
+      <Filter>reader\WidgetReader\LoadingBarReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\TextReader\TextReader.h">
+      <Filter>reader\WidgetReader\TextReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\TextFieldReader\TextFieldReader.h">
+      <Filter>reader\WidgetReader\TextFieldReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\TextBMFontReader\TextBMFontReader.h">
+      <Filter>reader\WidgetReader\TextBMFontReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\TextAtlasReader\TextAtlasReader.h">
+      <Filter>reader\WidgetReader\TextAtlasReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\SliderReader\SliderReader.h">
+      <Filter>reader\WidgetReader\SliderReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\ScrollViewReader\ScrollViewReader.h">
+      <Filter>reader\WidgetReader\ScrollViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\WidgetReader\PageViewReader\PageViewReader.h">
+      <Filter>reader\WidgetReader\PageViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+</Project>

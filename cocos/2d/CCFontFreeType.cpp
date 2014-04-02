@@ -39,6 +39,14 @@ FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
 
+typedef struct _DataRef
+{
+    Data data;
+    unsigned int referenceCount;
+}DataRef;
+
+static std::unordered_map<std::string, DataRef> s_cacheFontData;
+
 FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 {
     FontFreeType *tempFont =  new FontFreeType(distanceFieldEnabled,outline);
@@ -105,16 +113,28 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
+    // save font name locally
+    _fontName = fontName;
 
-    _ttfData = FileUtils::getInstance()->getDataFromFile(fontName);
+    auto it = s_cacheFontData.find(fontName);
+    if (it != s_cacheFontData.end())
+    {
+        (*it).second.referenceCount += 1;
+    }
+    else
+    {
+        s_cacheFontData[fontName].referenceCount = 1;
+        s_cacheFontData[fontName].data = FileUtils::getInstance()->getDataFromFile(fontName);    
+
+        if (s_cacheFontData[fontName].data.isNull())
+        {
+            return false;
+        }
+    }
+
+    if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
+        return false;
     
-    if (_ttfData.isNull())
-        return false;
-
-    // create the face from the data
-    if (FT_New_Memory_Face(getFTLibrary(), _ttfData.getBytes(), _ttfData.getSize(), 0, &face ))
-        return false;
-
     //we want to use unicode
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
         return false;
@@ -127,9 +147,6 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     
     // store the face globally
     _fontRef = face;
-    
-    // save font name locally
-    _fontName = fontName;
     
     // done and good
     return true;
@@ -144,6 +161,12 @@ FontFreeType::~FontFreeType()
     if (_fontRef)
     {
         FT_Done_Face(_fontRef);
+    }
+
+    s_cacheFontData[_fontName].referenceCount -= 1;
+    if (s_cacheFontData[_fontName].referenceCount == 0)
+    {
+        s_cacheFontData.erase(_fontName);
     }
 }
 
@@ -388,7 +411,7 @@ unsigned char * makeDistanceMap( unsigned char *img, long width, long height)
     double * data    = (double *) calloc( pixelAmount, sizeof(double) );
     double * outside = (double *) calloc( pixelAmount, sizeof(double) );
     double * inside  = (double *) calloc( pixelAmount, sizeof(double) );
-    unsigned int i,j;
+    long i,j;
 
     // Convert img into double (data) rescale image levels between 0 and 1
     long outWidth = width + 2 * FontFreeType::DistanceMapSpread;

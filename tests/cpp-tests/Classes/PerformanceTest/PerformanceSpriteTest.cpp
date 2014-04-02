@@ -391,7 +391,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     menu->setPosition(Point(s.width/2, s.height-65));
     addChild(menu, 1);
 
-    auto infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
+    auto infoLabel = Label::create("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
@@ -407,7 +407,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     
     auto menuAutoTest = Menu::create();
     menuAutoTest->setPosition( Point::ZERO );
-    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     
     MenuItemFont* autoTestItem = NULL;
@@ -450,7 +450,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(subMenu, 2);
 
     // add title label
-    auto label = LabelTTF::create(title(), "Arial", 32);
+    auto label = Label::create(title(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 
@@ -459,7 +459,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        auto l = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
+        auto l = Label::create(strSubtitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 9999);
         l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
@@ -505,7 +505,7 @@ void SpriteMainScene::updateNodes()
 {
     if( quantityNodes != lastRenderedCount )
     {
-        auto infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
         char str[16] = {0};
         sprintf(str, "%u nodes", quantityNodes);
         infoLabel->setString(str);

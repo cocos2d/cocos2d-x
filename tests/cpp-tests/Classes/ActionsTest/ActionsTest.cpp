@@ -398,7 +398,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setPosition(Point(s.width/2, s.height - 100 - box->getContentSize().height/2));
     this->addChild(box);
 
-    auto label = LabelTTF::create("Standard cocos2d Skew", "Marker Felt", 16);
+    auto label = Label::create("Standard cocos2d Skew", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point(s.width/2, s.height - 100 + label->getContentSize().height));
     this->addChild(label);
 
@@ -414,7 +414,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setPosition(Point(s.width/2, s.height - 250 - box->getContentSize().height/2));
     this->addChild(box);
 
-    label = LabelTTF::create("Rotational Skew", "Marker Felt", 16);
+    label = Label::create("Rotational Skew", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point(s.width/2, s.height - 250 + label->getContentSize().height/2));
     this->addChild(label);
     auto actionTo2 = RotateBy::create(2, 360, 0);
@@ -811,7 +811,7 @@ void ActionSequence2::onEnter()
 void ActionSequence2::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("callback 1 called", "Marker Felt", 16);
+    auto label = Label::create("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point( s.width/4*1,s.height/2));
 
     addChild(label);
@@ -820,7 +820,7 @@ void ActionSequence2::callback1()
 void ActionSequence2::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("callback 2 called", "Marker Felt", 16);
+    auto label = Label::create("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point( s.width/4*2,s.height/2));
 
     addChild(label);
@@ -829,7 +829,7 @@ void ActionSequence2::callback2(Node* sender)
 void ActionSequence2::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("callback 3 called", "Marker Felt", 16);
+    auto label = Label::create("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point( s.width/4*3,s.height/2));
 
     addChild(label);
@@ -962,7 +962,7 @@ void ActionCallFunction::onEnter()
                              // lambda
                              [&](){
                                  auto s = Director::getInstance()->getWinSize();
-                                 auto label = LabelTTF::create("called:lambda callback", "Marker Felt", 16);
+                                 auto label = Label::create("called:lambda callback", "fonts/Marker Felt.ttf", 16.0f);
                                  label->setPosition(Point( s.width/4*1,s.height/2-40));
                                  this->addChild(label);
                              }  ),
@@ -989,7 +989,7 @@ void ActionCallFunction::onEnter()
 void ActionCallFunction::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("callback 1 called", "Marker Felt", 16);
+    auto label = Label::create("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point( s.width/4*1,s.height/2));
 
     addChild(label);
@@ -998,7 +998,7 @@ void ActionCallFunction::callback1()
 void ActionCallFunction::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("callback 2 called", "Marker Felt", 16);
+    auto label = Label::create("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point( s.width/4*2,s.height/2));
 
     addChild(label);
@@ -1009,7 +1009,7 @@ void ActionCallFunction::callback2(Node* sender)
 void ActionCallFunction::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = LabelTTF::create("callback 3 called", "Marker Felt", 16);
+    auto label = Label::create("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
     label->setPosition(Point( s.width/4*3,s.height/2));
     addChild(label);
 
@@ -1432,7 +1432,7 @@ std::string ActionTargetedReverse::subtitle() const
     return "Action that runs reversely on another target. Useful for sequences";
 }
 
-//#pragma mark - ActionStacked
+// ActionStacked
 
 void ActionStacked::onEnter()
 {
@@ -1486,7 +1486,7 @@ std::string ActionStacked::subtitle() const
     return "Tap screen";
 }
 
-//#pragma mark - ActionMoveStacked
+// ActionMoveStacked
 
 
 void ActionMoveStacked::runActionsInSprite(Sprite *sprite)
@@ -1513,7 +1513,7 @@ std::string ActionMoveStacked::title() const
     return "Stacked MoveBy/To actions";
 }
 
-//#pragma mark - ActionMoveJumpStacked
+// ActionMoveJumpStacked
 
 void ActionMoveJumpStacked::runActionsInSprite(Sprite *sprite)
 {
@@ -1538,7 +1538,7 @@ std::string ActionMoveJumpStacked::title() const
     return "tacked Move + Jump actions";
 }
 
-//#pragma mark - ActionMoveBezierStacked
+// ActionMoveBezierStacked
 
 void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
 {
@@ -1570,7 +1570,7 @@ std::string ActionMoveBezierStacked::title() const
 }
 
 
-//#pragma mark - ActionCatmullRomStacked
+// ActionCatmullRomStacked
 
 void ActionCatmullRomStacked::onEnter()
 {
@@ -1692,7 +1692,7 @@ std::string ActionCatmullRomStacked::subtitle() const
 }
 
 
-//#pragma mark - ActionCardinalSplineStacked
+// ActionCardinalSplineStacked
 
 void ActionCardinalSplineStacked::onEnter()
 {

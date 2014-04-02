@@ -58,12 +58,8 @@ bool MenuLayer::initWithEntryID(int entryId)
     addChild(view, 0, kTagBox2DNode);
     view->setScale(15);
     view->setAnchorPoint( Point(0,0) );
-    view->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//    auto label = LabelBMFont::create(view->title().c_str(),  "fonts/arial16.fnt");
-//#else    
-    auto label = LabelTTF::create(view->title().c_str(), "Arial", 28);
-//#endif
+    view->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );  
+    auto label = Label::create(view->title().c_str(), "fonts/arial.ttf", 28);
     addChild(label, 1);
     label->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
 
@@ -192,6 +188,12 @@ bool Box2DView::initWithEntryID(int entryId)
     _eventDispatcher->addEventListenerWithFixedPriority(listener, -10);
     _touchListener = listener;
     
+    auto keyboardListener = EventListenerKeyboard::create();
+    keyboardListener->onKeyPressed = CC_CALLBACK_2(Box2DView::onKeyPressed, this);
+    keyboardListener->onKeyReleased = CC_CALLBACK_2(Box2DView::onKeyReleased, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(keyboardListener, -11);
+    _keyboardListener = keyboardListener;
+    
     return true;
 }
 
@@ -226,6 +228,7 @@ Box2DView::~Box2DView()
 {
     // Removes Touch Event Listener
     _eventDispatcher->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_keyboardListener);
     delete m_test;
 }
 //
@@ -243,7 +246,7 @@ bool Box2DView::onTouchBegan(Touch* touch, Event* event)
     auto nodePosition = convertToNodeSpace( touchLocation );
     log("Box2DView::onTouchBegan, pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
 
-    return m_test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));    
+    return m_test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));
 }
 
 void Box2DView::onTouchMoved(Touch* touch, Event* event)
@@ -264,6 +267,18 @@ void Box2DView::onTouchEnded(Touch* touch, Event* event)
     log("Box2DView::onTouchEnded, pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
     
     m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
+}
+
+void Box2DView::onKeyPressed(EventKeyboard::KeyCode code, Event* event)
+{
+    log("Box2dView:onKeyPressed, keycode: %d", code);
+    m_test->Keyboard(static_cast<unsigned char>(code));
+}
+
+void Box2DView::onKeyReleased(EventKeyboard::KeyCode code, Event* event)
+{
+    log("onKeyReleased, keycode: %d", code);
+    m_test->KeyboardUp(static_cast<unsigned char>(code));
 }
 
 // void Box2DView::accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration)

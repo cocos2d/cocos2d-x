@@ -68,7 +68,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL LabelBMFont : public Node, public LabelProtocol, public BlendProtocol
+class CC_DLL CC_DEPRECATED_ATTRIBUTE LabelBMFont : public Node, public LabelProtocol, public BlendProtocol
 {
 public:
     /**
@@ -111,10 +111,13 @@ public:
 
     virtual const BlendFunc &getBlendFunc() const override;
 
-    virtual Sprite * getLetter(int ID) { return _label->getLetter(ID);}
+    virtual Sprite * getLetter(int ID);
     virtual Node * getChildByTag(int tag) override;
 
-    virtual void setColor(const Color3B& color) override { _label->setColor(color);}
+    virtual void setColor(const Color3B& color) override;
+
+    virtual const Size& getContentSize() const override;
+    virtual Rect getBoundingBox() const override;
 
     virtual std::string getDescription() const override;
 

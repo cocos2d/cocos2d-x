@@ -178,9 +178,9 @@ void MenuItemLabel::setLabel(Node* var)
 {
     if (var)
     {
+        var->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        setContentSize(var->getContentSize()); 
         addChild(var);
-        var->setAnchorPoint(Point(0, 0));
-        setContentSize(var->getContentSize());
     }
     
     if (_label)

@@ -61,7 +61,6 @@ bool ComponentContainer::add(Component *com)
         if (_components == nullptr)
         {
             _components = new Map<std::string, Component*>();
-            _owner->scheduleUpdate();
         }
         Component *component = _components->at(com->getName());
         

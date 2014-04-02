@@ -130,8 +130,8 @@ void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr);
  matching instances in arr will be removed. */
 void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr);
 
-// #pragma mark -
-// #pragma mark ccCArray for Values (c structures)
+// 
+// // ccCArray for Values (c structures)
 
 typedef struct _ccCArray {
     ssize_t num, max;

@@ -53,6 +53,11 @@
 -- @return RichText#RichText ret (return value: ccui.RichText)
         
 --------------------------------
+-- @function [parent=#RichText] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- @function [parent=#RichText] RichText 
 -- @param self
         

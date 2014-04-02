@@ -130,6 +130,16 @@ bool EventDispatcher::EventListenerVector::empty() const
 
 void EventDispatcher::EventListenerVector::push_back(EventListener* listener)
 {
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
+    CCASSERT(_sceneGraphListeners == nullptr ||
+             std::count(_sceneGraphListeners->begin(), _sceneGraphListeners->end(), listener) == 0,
+             "Listener should not be added twice!");
+        
+    CCASSERT(_fixedListeners == nullptr ||
+             std::count(_fixedListeners->begin(), _fixedListeners->end(), listener) == 0,
+             "Listener should not be added twice!");
+#endif
+
     if (listener->getFixedPriority() == 0)
     {
         if (_sceneGraphListeners == nullptr)
@@ -314,6 +324,11 @@ void EventDispatcher::resumeEventListenersForTarget(Node* target, bool recursive
 
 void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive/* = false */)
 {
+    // Ensure the node is removed from these immediately also.
+    // Don't want any dangling pointers or the possibility of dealing with deleted objects..
+    _nodePriorityMap.erase(target);
+    _dirtyNodes.erase(target);
+
     auto listenerIter = _nodeListenersMap.find(target);
     if (listenerIter != _nodeListenersMap.end())
     {
@@ -440,6 +455,69 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     addEventListener(listener);
 }
 
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
+
+void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
+{
+    // Check the listeners map
+    for (const auto & keyValuePair : _listenerMap)
+    {
+        const EventListenerVector * eventListenerVector = keyValuePair.second;
+        
+        if (eventListenerVector)
+        {
+            if (eventListenerVector->getSceneGraphPriorityListeners())
+            {
+                for (EventListener * listener : *eventListenerVector->getSceneGraphPriorityListeners())
+                {
+                    CCASSERT(!listener ||
+                             listener->getSceneGraphPriority() != node,
+                             "Node should have no event listeners registered for it upon destruction!");
+                }
+            }
+        }
+    }
+    
+    // Check the node listeners map
+    for (const auto & keyValuePair : _nodeListenersMap)
+    {
+        CCASSERT(keyValuePair.first != node, "Node should have no event listeners registered for it upon destruction!");
+        
+        if (keyValuePair.second)
+        {
+            for (EventListener * listener : *keyValuePair.second)
+            {
+                CCASSERT(listener->getSceneGraphPriority() != node,
+                         "Node should have no event listeners registered for it upon destruction!");
+            }
+        }
+    }
+    
+    // Check the node priority map
+    for (const auto & keyValuePair : _nodePriorityMap)
+    {
+        CCASSERT(keyValuePair.first != node,
+                 "Node should have no event listeners registered for it upon destruction!");
+    }
+    
+    // Check the to be added list
+    for (EventListener * listener : _toAddedListeners)
+    {
+        CCASSERT(listener->getSceneGraphPriority() != node,
+                 "Node should have no event listeners registered for it upon destruction!");
+    }
+    
+    // Check the dirty nodes set
+    for (Node * dirtyNode : _dirtyNodes)
+    {
+        CCASSERT(dirtyNode != node,
+                 "Node should have no event listeners registered for it upon destruction!");
+    }
+}
+
+#endif  // #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
+
+
 void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)
 {
     CCASSERT(listener, "Invalid parameters.");
@@ -485,6 +563,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (l->getSceneGraphPriority() != nullptr)
                 {
                     dissociateNodeAndEventListener(l->getSceneGraphPriority(), l);
+                    l->setSceneGraphPriority(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
@@ -519,6 +598,18 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRIORITY);
             }
         }
+        
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
+        CCASSERT(_inDispatch != 0 ||
+                 !sceneGraphPriorityListeners ||
+                 std::count(sceneGraphPriorityListeners->begin(), sceneGraphPriorityListeners->end(), listener) == 0,
+                 "Listener should be in no lists after this is done if we're not currently in dispatch mode.");
+            
+        CCASSERT(_inDispatch != 0 ||
+                 !fixedPriorityListeners ||
+                 std::count(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener) == 0,
+                 "Listener should be in no lists after this is done if we're not currently in dispatch mode.");
+#endif
 
         if (iter->second->empty())
         {
@@ -590,7 +681,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
     // priority < 0
     if (fixedPriorityListeners)
     {
-        CCASSERT(listeners->getGt0Index() <= fixedPriorityListeners->size(), "Out of range exception!");
+        CCASSERT(listeners->getGt0Index() <= static_cast<ssize_t>(fixedPriorityListeners->size()), "Out of range exception!");
         
         if (!fixedPriorityListeners->empty())
         {
@@ -1127,6 +1218,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
                 if (l->getSceneGraphPriority() != nullptr)
                 {
                     dissociateNodeAndEventListener(l->getSceneGraphPriority(), l);
+                    l->setSceneGraphPriority(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)

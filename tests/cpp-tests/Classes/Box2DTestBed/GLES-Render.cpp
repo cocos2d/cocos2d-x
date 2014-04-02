@@ -242,9 +242,9 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     };
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
-    glDrawArrays(GL_LINE_LOOP, 0, 8);
+    glDrawArrays(GL_LINE_LOOP, 0, 4);
 
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,8);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 
     CHECK_GL_ERROR_DEBUG();
 }

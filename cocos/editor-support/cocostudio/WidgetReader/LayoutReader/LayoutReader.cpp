@@ -116,6 +116,11 @@ namespace cocostudio
         }
         panel->setLayoutType((LayoutType)DICTOOL->getIntValue_json(options, "layoutType"));
         
+        int bgimgcr = DICTOOL->getIntValue_json(options, "colorR");
+        int bgimgcg = DICTOOL->getIntValue_json(options, "colorG");
+        int bgimgcb = DICTOOL->getIntValue_json(options, "colorB");
+        panel->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
+        
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
     }
