@@ -183,20 +183,21 @@ void ClippingNode::onExit()
 
 void ClippingNode::drawFullScreenQuadClearStencil()
 {
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPushMatrix();
-    kmGLLoadIdentity();
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPushMatrix();
-    kmGLLoadIdentity();
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
     
     DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
     
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPopMatrix();
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
 }
 
 void ClippingNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
@@ -210,10 +211,12 @@ void ClippingNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmGL stack,
+    // To ease the migration to v3.0, we still support the kmMat4 stack,
     // but it is deprecated and your code should not rely on it
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&_modelViewTransform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     //Add group command
         
@@ -281,7 +284,7 @@ void ClippingNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool
 
     renderer->popGroup();
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 Node* ClippingNode::getStencil() const
