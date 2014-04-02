@@ -56,7 +56,7 @@ using namespace Windows::UI::ViewManagement;
 NS_CC_BEGIN
 
 static CCEGLView* s_pEglView = NULL;
-
+static bool firstMeasure = true;
 //////////////////////////////////////////////////////////////////////////
 // impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
@@ -94,8 +94,7 @@ void WinRTWindow::Initialize(CoreWindow^ window, SwapChainBackgroundPanel^ panel
         ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerReleased);
     m_window->PointerMoved +=
         ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerMoved);
-    m_window->PointerWheelChanged +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerWheelChanged);
+    //m_window->PointerWheelChanged += ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerWheelChanged);
 
 	m_dummy = ref new Button();
 	m_dummy->Opacity = 0.0;
@@ -125,14 +124,12 @@ WinRTWindow::WinRTWindow(CoreWindow^ window) :
 	m_lastPointValid(false),
 	m_textInputEnabled(false)
 {
-	window->SizeChanged += 
-	ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &WinRTWindow::OnWindowSizeChanged);
+	window->SizeChanged += ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &WinRTWindow::OnWindowSizeChanged);
 
 	DisplayProperties::LogicalDpiChanged +=
 		ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnLogicalDpiChanged);
 
-	DisplayProperties::OrientationChanged +=
-        ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnOrientationChanged);
+	DisplayProperties::OrientationChanged += ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnOrientationChanged);
 
 	DisplayProperties::DisplayContentsInvalidated +=
 		ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnDisplayContentsInvalidated);
@@ -265,10 +262,10 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
     int id = 0;
     CCPoint p(0.0f,0.0f);
-    CCEGLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &p.x, &p.y);
-    p.y += direction;
-    CCEGLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
-    CCEGLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &p.x, &p.y);
+    //CCEGLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &p.x, &p.y);
+    //p.y += direction;
+    //CCEGLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
+    //CCEGLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &p.x, &p.y);
 }
 
 
@@ -319,8 +316,8 @@ void WinRTWindow::OnLogicalDpiChanged(Object^ sender)
 
 void WinRTWindow::OnOrientationChanged(Object^ sender)
 {
-	ResizeWindow();
-	CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+	//ResizeWindow();
+	//CCEGLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
 void WinRTWindow::OnDisplayContentsInvalidated(Object^ sender)
@@ -417,7 +414,7 @@ float CCEGLView::getFrameZoomFactor()
 void CCEGLView::setFrameSize(float width, float height)
 {
 	// not implemented in WinRT. Window is always full screen
-    // CCEGLViewProtocol::setFrameSize(width, height);
+     //CCEGLViewProtocol::setFrameSize(width, height);
 }
 
 void CCEGLView::centerWindow()
@@ -496,7 +493,53 @@ void CCEGLView::UpdateForWindowSizeChange()
 {
     float width = ConvertDipsToPixels(m_window->Bounds.Width);
     float height = ConvertDipsToPixels(m_window->Bounds.Height);
+	if (firstMeasure)
+	{
+		if (width / height < 1)
+		{
+			width = ConvertDipsToPixels(m_window->Bounds.Height);
+			height = ConvertDipsToPixels(m_window->Bounds.Width);
+			firstMeasure = false;
+		}
+	}
+	/*Windows::Devices::Sensors::SimpleOrientationSensor^ sensor = Windows::Devices::Sensors::SimpleOrientationSensor::GetDefault();
+	if (sensor != nullptr)
+	{
+		
+		auto orientation = sensor->GetCurrentOrientation();
+		switch (orientation)
+		{
+		case Windows::Devices::Sensors::SimpleOrientation::NotRotated:
+			CCLOG("Not rotated");
+			break;
+		case Windows::Devices::Sensors::SimpleOrientation::Rotated90DegreesCounterclockwise:
+			width = ConvertDipsToPixels(m_window->Bounds.Height);
+			height = ConvertDipsToPixels(m_window->Bounds.Width);
+			break;
 
+		case Windows::Devices::Sensors::SimpleOrientation::Rotated270DegreesCounterclockwise:
+			width = ConvertDipsToPixels(m_window->Bounds.Height);
+			height = ConvertDipsToPixels(m_window->Bounds.Width);
+			break;
+		case Windows::Devices::Sensors::SimpleOrientation::Rotated180DegreesCounterclockwise:
+			width = ConvertDipsToPixels(m_window->Bounds.Height);
+			height = ConvertDipsToPixels(m_window->Bounds.Width);
+			break;
+		case Windows::Devices::Sensors::SimpleOrientation::Faceup:
+			if (width / height < 0.6)
+			{
+				width = ConvertDipsToPixels(m_window->Bounds.Height);
+				height = ConvertDipsToPixels(m_window->Bounds.Width);
+			}
+			break;
+		case Windows::Devices::Sensors::SimpleOrientation::Facedown:
+			CCLOG("Facedown");
+			break;
+		}
+	}*/
+
+	CCLOG("Screen width = %f", width);
+	
 	if(!m_initialized)
     {
         m_initialized = true;
