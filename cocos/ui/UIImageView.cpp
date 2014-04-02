@@ -53,6 +53,17 @@ ImageView::~ImageView()
 {
     
 }
+    
+ImageView* ImageView::create(const std::string &imageFileName, TextureResType texType)
+{
+    ImageView *widget = new ImageView;
+    if (widget && widget->init(imageFileName, texType)) {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
 
 ImageView* ImageView::create()
 {
@@ -65,6 +76,33 @@ ImageView* ImageView::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
+    
+bool ImageView::init()
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        _imageTexType = UI_TEX_TYPE_LOCAL;
+    } while (0);
+    return bRet;
+}
+    
+bool ImageView::init(const std::string &imageFileName, TextureResType texType)
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        
+        this->loadTexture(imageFileName, texType);
+    } while (0);
+    return bRet;
+}
 
 void ImageView::initRenderer()
 {
@@ -72,9 +110,9 @@ void ImageView::initRenderer()
     addProtectedChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
 
-void ImageView::loadTexture(const char *fileName, TextureResType texType)
+void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
 {
-    if (!fileName || strcmp(fileName, "") == 0)
+    if (fileName.empty())
     {
         return;
     }
@@ -86,7 +124,7 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
-                imageRendererScale9->initWithFile(fileName);
+                imageRendererScale9->initWithFile(fileName.c_str());
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
@@ -99,7 +137,7 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
-                imageRendererScale9->initWithSpriteFrameName(fileName);
+                imageRendererScale9->initWithSpriteFrameName(fileName.c_str());
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
