@@ -39,13 +39,17 @@ bool UICheckBoxTest::init()
         _uiLayer->addChild(alert);        
         
         // Create the checkbox
-        CheckBox* checkBox = CheckBox::create();
+        CheckBox* checkBox = CheckBox::create("cocosui/check_box_normal.png",
+                                              "cocosui/check_box_normal_press.png",
+                                              "cocosui/check_box_active.png",
+                                              "cocosui/check_box_normal_disable.png",
+                                              "cocosui/check_box_active_disable.png");
         checkBox->setTouchEnabled(true);
-        checkBox->loadTextures("cocosui/check_box_normal.png",
-                               "cocosui/check_box_normal_press.png",
-                               "cocosui/check_box_active.png",
-                               "cocosui/check_box_normal_disable.png",
-                               "cocosui/check_box_active_disable.png");
+//        checkBox->loadTextures("cocosui/check_box_normal.png",
+//                               "cocosui/check_box_normal_press.png",
+//                               "cocosui/check_box_active.png",
+//                               "cocosui/check_box_normal_disable.png",
+//                               "cocosui/check_box_active_disable.png");
         checkBox->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         
         checkBox->addEventListenerCheckBox(this, checkboxselectedeventselector(UICheckBoxTest::selectedEvent));
