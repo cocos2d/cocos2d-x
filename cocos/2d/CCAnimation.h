@@ -224,7 +224,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** Initializes a Animation with frames and a delay between frames
      @since v0.99.5
      */
-    bool initWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f);
+    bool initWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
     
     /** Initializes a Animation with AnimationFrame
      @since v2.0
