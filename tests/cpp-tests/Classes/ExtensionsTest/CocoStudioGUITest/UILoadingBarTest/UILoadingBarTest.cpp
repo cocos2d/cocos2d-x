@@ -34,10 +34,10 @@ bool UILoadingBarTest_Left::init()
         _uiLayer->addChild(alert);
         
         // Create the loading bar
-        LoadingBar* loadingBar = LoadingBar::create();
+        LoadingBar* loadingBar = LoadingBar::create("cocosui/sliderProgress.png");
         loadingBar->setTag(0);
-        loadingBar->loadTexture("cocosui/sliderProgress.png");
-        loadingBar->setPercent(0);
+//        loadingBar->loadTexture("cocosui/sliderProgress.png");
+//        loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
         _uiLayer->addChild(loadingBar);
