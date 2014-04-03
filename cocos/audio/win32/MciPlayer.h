@@ -3,6 +3,9 @@
 
 #include "CCStdC.h"
 #include <mmsystem.h>
+#include <string>
+using namespace std;
+
 
 namespace CocosDenshion {
 
@@ -57,13 +60,14 @@ public:
 private:
     friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
-    void _SendGenericCommand(int nCommand);
+    void _SendGenericCommand(int nCommand, DWORD_PTR param1 = 0, DWORD_PTR parma2 = 0);
 
     HWND        _wnd;
     MCIDEVICEID _dev;
     UINT        _soundID;
     UINT        _times;
     bool        _playing;
+    std::string strExt;
 };
 
 } // end of namespace CocosDenshion
