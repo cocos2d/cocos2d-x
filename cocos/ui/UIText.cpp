@@ -313,7 +313,7 @@ void Text::copySpecialProperties(Widget *widget)
     Text* label = dynamic_cast<Text*>(widget);
     if (label)
     {
-        setFontName(label->_fontName.c_str());
+        setFontName(label->_fontName);
         setFontSize(label->_labelRenderer->getFontSize());
         setText(label->getStringValue());
         setTouchScaleChangeEnabled(label->_touchScaleChangeEnabled);
