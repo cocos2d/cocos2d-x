@@ -396,17 +396,20 @@ void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, boo
     if(dirty)
         _modelViewTransform = transform(parentTransform);
     _transformUpdated = false;
+    
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmGL stack,
+    // To ease the migration to v3.0, we still support the kmMat4 stack,
     // but it is deprecated and your code should not rely on it
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&_modelViewTransform);
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     _sprite->visit(renderer, _modelViewTransform, dirty);
     draw(renderer, _modelViewTransform, dirty);
     
-	kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _orderOfArrival = 0;
 }
@@ -522,12 +525,10 @@ void RenderTexture::onBegin()
     Director *director = Director::getInstance();
     Size size = director->getWinSizeInPixels();
     kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLLoadMatrix(&_projectionMatrix);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _projectionMatrix);
     
     kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLLoadMatrix(&_transformMatrix);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _transformMatrix);
     
     if(!_keepMatrix)
     {
@@ -541,7 +542,7 @@ void RenderTexture::onBegin()
         kmMat4 orthoMatrix;
         kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
             (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-        kmGLMultMatrix(&orthoMatrix);
+        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
     }
     //calculate viewport
     {
@@ -583,11 +584,8 @@ void RenderTexture::onEnd()
     // restore viewport
     director->setViewport();
     //
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLLoadMatrix(&_oldProjMatrix);
-    
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLLoadMatrix(&_oldTransMatrix);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _oldTransMatrix);
 
 }
 
@@ -676,12 +674,13 @@ void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool trans
 
 void RenderTexture::begin()
 {
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPushMatrix();
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     kmGLGetMatrix(KM_GL_PROJECTION, &_projectionMatrix);
     
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPushMatrix();
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
     
     if(!_keepMatrix)
@@ -699,7 +698,7 @@ void RenderTexture::begin()
         kmMat4 orthoMatrix;
         kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
                                      (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-        kmGLMultMatrix(&orthoMatrix);
+        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
     }
 
     _groupCommand.init(_globalZOrder);
@@ -719,15 +718,15 @@ void RenderTexture::end()
     _endCommand.init(_globalZOrder);
     _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
-    Renderer *renderer = Director::getInstance()->getRenderer();
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
+    Renderer *renderer = director->getRenderer();
     renderer->addCommand(&_endCommand);
     renderer->popGroup();
     
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPopMatrix();
-    
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
 }
 
