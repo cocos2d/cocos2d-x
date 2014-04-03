@@ -579,38 +579,42 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-//kmMat4 Director::getMatrix(MATRIX_STACK_TYPE type)
-//{
-//    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
-//    {
-//        kmMat4 result;
-//        kmGLGetMatrix(KM_GL_MODELVIEW, &result);
-//        return result;
-//        return _modelViewMatrixStack.top();
-//    }
-//    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
-//    {
-//        kmMat4 result;
-//        kmGLGetMatrix(KM_GL_PROJECTION, &result);
-//        return result;
-//        return _projectionMatrixStack.top();
-//    }
-//    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
-//    {
-//        kmMat4 result;
-//        kmGLGetMatrix(KM_GL_TEXTURE, &result);
-//        return result;
-//        return _textureMatrixStack.top();
-//    }
-//    else
-//    {
-//        CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
-//        kmMat4 result;
-//        kmGLGetMatrix(KM_GL_MODELVIEW, &result);
-//        return result;
-//        return _modelViewMatrixStack.top();
-//    }
-//}
+kmMat4 Director::getMatrix(MATRIX_STACK_TYPE type)
+{
+    kmMat4 result;
+    kmMat4 result2;
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        kmGLGetMatrix(KM_GL_MODELVIEW, &result2);
+        result = _modelViewMatrixStack.top();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        kmGLGetMatrix(KM_GL_PROJECTION, &result2);
+        result = _projectionMatrixStack.top();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        kmGLGetMatrix(KM_GL_TEXTURE, &result2);
+        result = _textureMatrixStack.top();
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
+        kmGLGetMatrix(KM_GL_MODELVIEW, &result2);
+        result =  _modelViewMatrixStack.top();
+    }
+    float diffResult(0);
+    for (int index = 0; index <16; ++index)
+    {
+        diffResult += abs(result2.mat[index] - result.mat[index]);
+    }
+    if(diffResult > 1e-30)
+    {
+        CCASSERT(false, "Error in director matrix stack");
+    }
+    return result;
+}
 
 void Director::setProjection(Projection projection)
 {
@@ -741,8 +745,7 @@ static void GLToClipTransform(kmMat4 *transformOut)
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
 	kmMat4 projection;
-    //projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+    projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
@@ -750,8 +753,7 @@ static void GLToClipTransform(kmMat4 *transformOut)
 #endif
 
 	kmMat4 modelview;
-    //modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
+    modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 
