@@ -124,7 +124,7 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
-                imageRendererScale9->initWithFile(fileName.c_str());
+                imageRendererScale9->initWithFile(fileName);
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
@@ -137,7 +137,7 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
-                imageRendererScale9->initWithSpriteFrameName(fileName.c_str());
+                imageRendererScale9->initWithSpriteFrameName(fileName);
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
@@ -214,7 +214,7 @@ void ImageView::setScale9Enabled(bool able)
     {
         _imageRenderer = Sprite::create();
     }
-    loadTexture(_textureFile.c_str(),_imageTexType);
+    loadTexture(_textureFile,_imageTexType);
     addProtectedChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
@@ -344,7 +344,7 @@ void ImageView::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = imageView->_prevIgnoreSize;
         setScale9Enabled(imageView->_scale9Enabled);
-        loadTexture(imageView->_textureFile.c_str(), imageView->_imageTexType);
+        loadTexture(imageView->_textureFile, imageView->_imageTexType);
         setCapInsets(imageView->_capInsets);
     }
 }
