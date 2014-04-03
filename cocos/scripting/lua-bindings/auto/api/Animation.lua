@@ -91,6 +91,7 @@
 -- @param self
 -- @param #array_table array
 -- @param #float float
+-- @param #unsigned int int
 -- @return Animation#Animation ret (return value: cc.Animation)
         
 return nil

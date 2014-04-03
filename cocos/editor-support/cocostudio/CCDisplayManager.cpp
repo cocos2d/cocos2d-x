@@ -294,6 +294,7 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
         if (Armature *armature = dynamic_cast<Armature *>(_displayRenderNode))
         {
             _bone->setChildArmature(armature);
+            armature->setParentBone(_bone);
         }
         else if (ParticleSystemQuad *particle = dynamic_cast<ParticleSystemQuad *>(_displayRenderNode))
         {

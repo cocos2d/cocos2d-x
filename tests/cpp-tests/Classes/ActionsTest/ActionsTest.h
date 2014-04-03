@@ -281,6 +281,7 @@ public:
     CREATE_FUNC(ActionOrbit);
 
     virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string subtitle() const override;
 };
 
