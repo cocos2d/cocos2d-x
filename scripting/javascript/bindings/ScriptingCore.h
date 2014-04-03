@@ -46,7 +46,6 @@ public:
 	~ScriptingCore();
 
 	static ScriptingCore *getInstance() {
-		static ScriptingCore* pInstance = NULL;
         if (pInstance == NULL) {
             pInstance = new ScriptingCore();
         }
@@ -205,6 +204,7 @@ public:
     JSObject* getGlobalObject() { return global_; }
     
  private:
+    static ScriptingCore* pInstance;
     void string_report(jsval val);
 };
 

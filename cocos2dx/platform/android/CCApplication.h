@@ -31,6 +31,8 @@ public:
     */
     static CCApplication* sharedApplication();
 
+    static void purgeApplication();
+
     /**
     @brief Get current language config
     @return Current language config

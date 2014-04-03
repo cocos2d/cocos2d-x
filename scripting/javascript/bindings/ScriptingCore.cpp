@@ -339,6 +339,8 @@ static JSClass global_class = {
     JSCLASS_NO_OPTIONAL_MEMBERS
 };
 
+ScriptingCore* ScriptingCore::pInstance = NULL;
+
 ScriptingCore::ScriptingCore()
 : rt_(NULL)
 , cx_(NULL)
@@ -444,6 +446,7 @@ void ScriptingCore::createGlobalContext() {
         this->cx_ = NULL;
         this->rt_ = NULL;
     }
+    
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
     this->rt_ = JS_NewRuntime(8L * 1024L * 1024L, JS_USE_HELPER_THREADS);
@@ -556,6 +559,7 @@ void ScriptingCore::reset()
 ScriptingCore::~ScriptingCore()
 {
     cleanup();
+    pInstance = NULL;
 }
 
 void ScriptingCore::cleanup()
