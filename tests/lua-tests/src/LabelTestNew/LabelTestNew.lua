@@ -1338,7 +1338,7 @@ function LabelShadowTest.create()
     layer:addChild(bg)
 
     local ttfConfig = {}
-    ttfConfig.fontFilePath = "fonts/arial.ttf.ttf"
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
     ttfConfig.fontSize     = 40
     ttfConfig.glyphs       = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
@@ -1666,6 +1666,83 @@ function LabelIssue4428Test.create()
     return layer
 end
 
+--------------------------------------------------------
+----- LabelTTFOldNew
+--------------------------------------------------------
+
+local LabelTTFOldNew = { }
+function LabelTTFOldNew.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New / Old TTF")
+    Helper.subtitleLabel:setString("Comparison between old(red) and new(white) TTF label")
+
+    local s = cc.Director:getInstance():getWinSize()
+    local delta = s.height/4
+
+    local label1 = cc.Label:create("Cocos2d-x Label Test", "arial", 24)
+    layer:addChild(label1, 0, kTagBitmapAtlas1)
+    label1:setPosition(cc.p(s.width/2, delta * 2))
+    label1:setColor(cc.c3b(255, 0, 0))
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
+    ttfConfig.fontSize     = 24
+    local label2 = cc.Label:createWithTTF(ttfConfig, "Cocos2d-x Label Test")
+    layer:addChild(label2, 0, kTagBitmapAtlas2)
+    label2:setPosition(cc.p(s.width/2, delta * 2))
+
+    local function onDraw(transform, transformUpdated)
+        kmGLPushMatrix()
+        kmGLLoadMatrix(transform)
+
+        local label1 = layer:getChildByTag(kTagBitmapAtlas1)
+        local labelSize = label1:getContentSize()
+        local origin    = cc.Director:getInstance():getWinSize()
+    
+        origin.width = origin.width   / 2 - (labelSize.width / 2)
+        origin.height = origin.height / 2 - (labelSize.height / 2)
+
+        local vertices = 
+        {
+            cc.p(origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
+            cc.p(origin.width, labelSize.height + origin.height),
+        }
+    
+        cc.DrawPrimitives.drawColor4B(255, 0, 0, 255)
+        cc.DrawPrimitives.drawPoly(vertices, 4, true)
+
+        local label2 = layer:getChildByTag(kTagBitmapAtlas2)
+        labelSize = label2:getContentSize()
+        origin    = cc.Director:getInstance():getWinSize()
+
+        origin.width = origin.width   / 2 - (labelSize.width / 2)
+        origin.height = origin.height / 2 - (labelSize.height / 2)
+
+        local vertices2 =
+        {
+            cc.p(origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
+            cc.p(origin.width, labelSize.height + origin.height),
+        }
+        cc.DrawPrimitives.drawColor4B(255, 255, 255, 255)
+        cc.DrawPrimitives.drawPoly(vertices2, 4, true)
+    
+        kmGLPopMatrix()
+    end
+
+    local glNode  = gl.glNodeCreate()
+    glNode:setContentSize(cc.size(s.width, s.height))
+    glNode:setAnchorPoint(cc.p(0.5, 0.5))
+    glNode:setPosition( s.width / 2, s.height / 2)
+    glNode:registerScriptDrawHandler(onDraw)
+    layer:addChild(glNode,-10)
+
+    return layer
+end
 
 
 ------------
@@ -1705,6 +1782,7 @@ function LabelTestNew()
         LabelCharMapTest.create,
         LabelCharMapColorTest.create,
         LabelCrashTest.create,
+        LabelTTFOldNew.create,
         LabelFontNameTest.create,
         LabelAlignmentTest.create,
         LabelIssue4428Test.create,

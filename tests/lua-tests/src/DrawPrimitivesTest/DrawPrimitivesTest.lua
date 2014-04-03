@@ -87,7 +87,11 @@ local function drawPrimitivesMainLayer()
         glNode:setContentSize(cc.size(size.width, size.height))
         glNode:setAnchorPoint(cc.p(0.5, 0.5))
 
-        local function primitivesDraw()
+        local function primitivesDraw(transform, transformUpdated)
+
+            kmGLPushMatrix()
+            kmGLLoadMatrix(transform)
+
             cc.DrawPrimitives.drawLine(VisibleRect:leftBottom(), VisibleRect:rightTop() )
 
             gl.lineWidth( 5.0 )
@@ -152,6 +156,8 @@ local function drawPrimitivesMainLayer()
             gl.lineWidth(1)
             cc.DrawPrimitives.drawColor4B(255,255,255,255)
             cc.DrawPrimitives.setPointSize(1)
+
+            kmGLPopMatrix()
         end
 
         glNode:registerScriptDrawHandler(primitivesDraw)
