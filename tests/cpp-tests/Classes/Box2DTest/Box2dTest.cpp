@@ -148,26 +148,31 @@ void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool tran
 
 #if CC_ENABLE_BOX2D_INTEGRATION
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-
-    kmGLPushMatrix();
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV);
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
     renderer->addCommand(&_customCommand);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 #endif
 }
 
 #if CC_ENABLE_BOX2D_INTEGRATION
 void Box2DTestLayer::onDraw()
 {
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
     kmMat4 oldMV;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMV);
-    kmGLLoadMatrix(&_modelViewMV);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV);
     world->DrawDebugData();
-    kmGLLoadMatrix(&oldMV);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMV);
 }
 #endif
 

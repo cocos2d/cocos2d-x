@@ -541,14 +541,16 @@ void Atlas4::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpd
 
 void Atlas4::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto s = Director::getInstance()->getWinSize();
     DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
     DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void Atlas4::step(float dt)
@@ -1667,8 +1669,10 @@ void LabelBMFontBounds::draw(Renderer *renderer, const kmMat4 &transform, bool t
 
 void LabelBMFontBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto labelSize = label1->getContentSize();
     auto origin = Director::getInstance()->getWinSize();
@@ -1685,7 +1689,7 @@ void LabelBMFontBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 // LabelBMFontCrashTest

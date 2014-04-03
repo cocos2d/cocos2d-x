@@ -123,8 +123,10 @@ void DrawPrimitivesTest::draw(Renderer *renderer, const kmMat4 &transform, bool 
 
 void DrawPrimitivesTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
     //draw
     CHECK_GL_ERROR_DEBUG();
@@ -235,7 +237,7 @@ void DrawPrimitivesTest::onDraw(const kmMat4 &transform, bool transformUpdated)
     CHECK_GL_ERROR_DEBUG();
     
     //end draw
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 string DrawPrimitivesTest::title() const

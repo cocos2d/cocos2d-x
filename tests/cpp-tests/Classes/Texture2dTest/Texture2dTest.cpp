@@ -1806,15 +1806,17 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const kmMat4 &transform, bool 
 
 void TextureDrawAtPoint::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto s = Director::getInstance()->getWinSize();
     
     _tex1->drawAtPoint(Point(s.width/2-50, s.height/2 - 50));
     _Tex2F->drawAtPoint(Point(s.width/2+50, s.height/2 - 50));
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 // TextureDrawInRect
@@ -1846,8 +1848,10 @@ void TextureDrawInRect::draw(Renderer *renderer, const kmMat4 &transform, bool t
 
 void TextureDrawInRect::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
     auto s = Director::getInstance()->getWinSize();
     
@@ -1857,7 +1861,7 @@ void TextureDrawInRect::onDraw(const kmMat4 &transform, bool transformUpdated)
     _tex1->drawInRect(rect1);
     _Tex2F->drawInRect(rect2);
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 std::string TextureDrawInRect::title() const

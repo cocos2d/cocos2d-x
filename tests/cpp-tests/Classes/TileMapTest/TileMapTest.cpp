@@ -764,8 +764,10 @@ void TMXOrthoObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool
 
 void TMXOrthoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
     auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
     auto pos = map->getPosition();
@@ -792,7 +794,7 @@ void TMXOrthoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
         glLineWidth(1);
     }
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 std::string TMXOrthoObjectsTest::title() const
@@ -837,8 +839,10 @@ void TMXIsoObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool t
 
 void TMXIsoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto map = (TMXTiledMap*) getChildByTag(kTagTileMap);
     auto pos = map->getPosition();
@@ -863,7 +867,7 @@ void TMXIsoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
         glLineWidth(1);
     }
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 std::string TMXIsoObjectsTest::title() const
@@ -1520,8 +1524,10 @@ void TMXGIDObjectsTest::draw(Renderer *renderer, const kmMat4 &transform, bool t
 
 void TMXGIDObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
     auto pos = map->getPosition();
@@ -1547,7 +1553,7 @@ void TMXGIDObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
         glLineWidth(1);
     }
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 std::string TMXGIDObjectsTest::title() const
