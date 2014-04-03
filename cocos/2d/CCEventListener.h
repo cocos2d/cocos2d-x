@@ -74,34 +74,80 @@ public:
     
     /** Clones the listener, its subclasses have to override this method. */
     virtual EventListener* clone() = 0;
-    
+
+    /** Enables or disables the listener
+     *  @note Only listeners with `enabled` state will be able to receive events.
+     *        When an listener was initialized, it's enabled by default.
+     *        For a `scene graph priority` listener, to receive an event, excepting it was `enabled`,
+     *        it also shouldn't be in `pause` state.
+     */
+    inline void setEnabled(bool enabled) { _isEnabled = enabled; };
+
+    /** Check whether the listener is enabled */
+    inline bool isEnabled() { return _isEnabled; };
+
 protected:
+
+    /** Sets pause state for the listener
+     *  The paused state is only used for scene graph priority listeners.
+     *  `EventDispatcher::resumeAllEventListenersForTarget(node)` will set the paused state to `true`,
+     *  while `EventDispatcher::pauseAllEventListenersForTarget(node)` will set it to `false`.
+     *  @note Fixed priority listeners will never get paused. If a fixed priority doesn't want to receive events,
+     *        call `setEnabled(false)` instead.
+     */
     inline void setPaused(bool paused) { _paused = paused; };
+
+    /** Check whether the listener is paused */
     inline bool isPaused() const { return _paused; };
-    
+
+    /** Marks the listener was registered by EventDispatcher */
     inline void setRegistered(bool registered) { _isRegistered = registered; };
+
+    /** Checks whether the listener was registered by EventDispatcher */
     inline bool isRegistered() const { return _isRegistered; };
-    
+
+    /** Gets the type of this listener
+     *  @note It's different from `EventType`, e.g. TouchEvent has two kinds of event listeners - EventListenerOneByOne, EventListenerAllAtOnce
+     */
     inline Type getType() const { return _type; };
+
+    /** Gets the listener ID of this listener
+     *  When event is being dispatched, listener ID is used as key for searching listeners according to event type.
+     */
     inline const ListenerID& getListenerID() const { return _listenerID; };
-    
+
+    /** Sets the fixed priority for this listener
+     *  @note This method is only used for `fixed priority listeners`, it needs to access a non-zero value.
+     *  0 is reserved for scene graph priority listeners
+     */
     inline void setFixedPriority(int fixedPriority) { _fixedPriority = fixedPriority; };
+
+    /** Gets the fixed priority of this listener
+     *  @return 0 if it's a scene graph priority listener, non-zero for fixed priority listener
+     */
     inline int getFixedPriority() const { return _fixedPriority; };
-    
+
+    /** Sets scene graph priority for this listener */
     inline void setSceneGraphPriority(Node* node) { _node = node; };
+
+    /** Gets scene graph priority of this listener
+     *  @return nullptr if it's a fixed priority listener, non-nullptr for scene graph priority listener
+     */
     inline Node* getSceneGraphPriority() const { return _node; };
-    
+
+    ///////////////
+    // Properties
+    //////////////
     std::function<void(Event*)> _onEvent;   /// Event callback function
     
     Type _type;                             /// Event listener type
-    ListenerID _listenerID;                         /// Event listener ID
+    ListenerID _listenerID;                 /// Event listener ID
     bool _isRegistered;                     /// Whether the listener has been added to dispatcher.
     
-    // The priority of event listener
     int   _fixedPriority;   // The higher the number, the higher the priority, 0 is for scene graph base priority.
     Node* _node;            // scene graph based priority
     bool _paused;           // Whether the listener is paused
-    
+    bool _isEnabled;        // Whether the listener is enabled
     friend class EventDispatcher;
 };
 
