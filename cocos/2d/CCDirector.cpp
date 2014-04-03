@@ -443,22 +443,14 @@ void Director::popMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLPopMatrix();
         _modelViewMatrixStack.pop();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLPopMatrix();
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         _projectionMatrixStack.pop();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmGLMatrixMode(KM_GL_TEXTURE);
-        kmGLPopMatrix();
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         _textureMatrixStack.pop();
     }
     else
@@ -471,22 +463,14 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLLoadIdentity();
         kmMat4Identity(&_modelViewMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLLoadIdentity();
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Identity(&_projectionMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmGLMatrixMode(KM_GL_TEXTURE);
-        kmGLLoadIdentity();
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Identity(&_textureMatrixStack.top());
     }
     else
@@ -499,22 +483,14 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLLoadMatrix(&mat);
         _modelViewMatrixStack.top() = mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLLoadMatrix(&mat);
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         _projectionMatrixStack.top() = mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmGLMatrixMode(KM_GL_TEXTURE);
-        kmGLLoadMatrix(&mat);
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         _textureMatrixStack.top() = mat;
     }
     else
@@ -527,22 +503,14 @@ void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLMultMatrix(&mat);
         kmMat4Multiply(&_modelViewMatrixStack.top(), &_modelViewMatrixStack.top(), &mat);
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLMultMatrix(&mat);
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Multiply(&_projectionMatrixStack.top(), &_projectionMatrixStack.top(), &mat);
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmGLMatrixMode(KM_GL_TEXTURE);
-        kmGLMultMatrix(&mat);
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         kmMat4Multiply(&_textureMatrixStack.top(), &_textureMatrixStack.top(), &mat);
     }
     else
@@ -555,22 +523,14 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLPushMatrix();
         _modelViewMatrixStack.push(_modelViewMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLPushMatrix();
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         _projectionMatrixStack.push(_projectionMatrixStack.top());
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmGLMatrixMode(KM_GL_TEXTURE);
-        kmGLPushMatrix();
-        kmGLMatrixMode(KM_GL_MODELVIEW);
         _textureMatrixStack.push(_textureMatrixStack.top());
     }
     else
@@ -582,37 +542,32 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
 kmMat4 Director::getMatrix(MATRIX_STACK_TYPE type)
 {
     kmMat4 result;
-    kmMat4 result2;
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmGLGetMatrix(KM_GL_MODELVIEW, &result2);
         result = _modelViewMatrixStack.top();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmGLGetMatrix(KM_GL_PROJECTION, &result2);
         result = _projectionMatrixStack.top();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmGLGetMatrix(KM_GL_TEXTURE, &result2);
         result = _textureMatrixStack.top();
     }
     else
     {
         CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
-        kmGLGetMatrix(KM_GL_MODELVIEW, &result2);
         result =  _modelViewMatrixStack.top();
     }
-    float diffResult(0);
-    for (int index = 0; index <16; ++index)
-    {
-        diffResult += abs(result2.mat[index] - result.mat[index]);
-    }
-    if(diffResult > 1e-30)
-    {
-        CCASSERT(false, "Error in director matrix stack");
-    }
+//    float diffResult(0);
+//    for (int index = 0; index <16; ++index)
+//    {
+//        diffResult += abs(result2.mat[index] - result.mat[index]);
+//    }
+//    if(diffResult > 1e-30)
+//    {
+//        CCASSERT(false, "Error in director matrix stack");
+//    }
     return result;
 }
 
