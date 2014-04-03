@@ -249,7 +249,7 @@ void Bone::applyParentTransform(Bone *parent)
 
 void CCBone::setBlendFunc(const BlendFunc& blendFunc)
 {
-    if (_blendFunc.src != blendFunc.src && _blendFunc.dst != blendFunc.dst)
+    if (_blendFunc.src != blendFunc.src || _blendFunc.dst != blendFunc.dst)
     {
         _blendFunc = blendFunc;
         _blendDirty = true;
