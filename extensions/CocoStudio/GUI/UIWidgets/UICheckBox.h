@@ -65,6 +65,27 @@ public:
     static CheckBox* create();
     
     /**
+     * create a CheckBox
+     *
+     * @param backGround    backGround texture.
+     *
+     * @param backGroundSelected    backGround selected state texture.
+     *
+     * @param cross    cross texture.
+     *
+     * @param frontCrossDisabled    cross dark state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    static CheckBox* create(const char* backGround,
+                            const char* backGroundSelected,
+                            const char* cross,
+                            const char* backGroundDisabled,
+                            const char* frontCrossDisabled,
+                            TextureResType texType = UI_TEX_TYPE_LOCAL);
+                            
+    
+    /**
      * Load textures for checkbox.
      *
      * @param backGround    backGround texture.
@@ -77,7 +98,12 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextures(const char* backGround,
+                      const char* backGroundSelected,
+                      const char* cross,
+                      const char* backGroundDisabled,
+                      const char* frontCrossDisabled,
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load backGround texture for checkbox.
@@ -160,6 +186,12 @@ public:
 
 protected:
     virtual bool init();
+    virtual bool init(const char* backGround,
+                      const char* backGroundSelected,
+                      const char* cross,
+                      const char* backGroundDisabled,
+                      const char* frontCrossDisabled,
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
     virtual void initRenderer();
     virtual void onPressStateChangedToNormal();
     virtual void onPressStateChangedToPressed();
