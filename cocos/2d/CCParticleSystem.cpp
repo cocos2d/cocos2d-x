@@ -780,7 +780,8 @@ void ParticleSystem::update(float dt)
                 if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
                 {
                     Point diff = currentPosition - p->startPos;
-                    newPos = p->pos - diff;
+                    Point worldPos = this->convertToWorldSpace(p->pos);
+                    newPos = this->convertToNodeSpace(worldPos - diff);
                 } 
                 else
                 {

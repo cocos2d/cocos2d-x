@@ -114,6 +114,12 @@ void DemoFlower::onEnter()
     ParticleDemo::onEnter();
 
     _emitter = ParticleFlower::create();
+    _emitter->setEmissionRate(50);
+    _emitter->setRotation(-30);
+    _emitter->setAngleVar(0);
+    _emitter->setAngle(60);
+    _emitter->setRadialAccel(0);
+    _emitter->setTangentialAccel(0);
     _emitter->retain();
     _background->addChild(_emitter, 10);
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
@@ -123,7 +129,7 @@ void DemoFlower::onEnter()
 
 std::string DemoFlower::subtitle() const
 {
-    return "ParticleFlower";
+    return "ParticleFlower\nmove the particle to see the effects.";
 }
 
 //------------------------------------------------------------------
