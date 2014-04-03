@@ -67,6 +67,7 @@ extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue);
 extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMaterial* outValue);
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue);
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue );
+extern bool luaval_to_kmMat4(lua_State* L, int lo, kmMat4* outValue );
 extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue);
 extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue);
 extern bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints);
