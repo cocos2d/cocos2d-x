@@ -88,7 +88,7 @@ void TextBMFont::setFntFile(const std::string& fileName)
     updateAnchorPoint();
     labelBMFontScaleChangedWithSize();
     _fntFileHasInit = true;
-    setText(_stringValue.c_str());
+    setText(_stringValue);
 }
 
 void TextBMFont::setText(const std::string& value)
@@ -181,8 +181,8 @@ void TextBMFont::copySpecialProperties(Widget *widget)
     TextBMFont* labelBMFont = dynamic_cast<TextBMFont*>(widget);
     if (labelBMFont)
     {
-        setFntFile(labelBMFont->_fntFileName.c_str());
-        setText(labelBMFont->_stringValue.c_str());
+        setFntFile(labelBMFont->_fntFileName);
+        setText(labelBMFont->_stringValue);
     }
 }
 
