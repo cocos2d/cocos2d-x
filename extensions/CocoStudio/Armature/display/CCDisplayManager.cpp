@@ -299,6 +299,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
         if (CCArmature *armature = dynamic_cast<CCArmature *>(m_pDisplayRenderNode))
         {
             m_pBone->setChildArmature(armature);
+            armature->setParentBone(m_pBone);
         }
         else if (CCParticleSystemQuad *particle = dynamic_cast<CCParticleSystemQuad *>(m_pDisplayRenderNode))
         {
