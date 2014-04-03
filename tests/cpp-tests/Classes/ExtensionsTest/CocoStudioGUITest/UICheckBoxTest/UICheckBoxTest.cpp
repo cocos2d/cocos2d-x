@@ -21,19 +21,13 @@ bool UICheckBoxTest::init()
         Size widgetSize = _widget->getSize();;
         
         // Add a label in which the checkbox events will be displayed
-        _displayValueLabel = Text::create();
-        _displayValueLabel->setText("No Event");
-        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
-        _displayValueLabel->setFontSize(32);
+        _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create();
-        alert->setText("CheckBox");
-        alert->setFontName("fonts/Marker Felt.ttf");
-        alert->setFontSize(30);
+        Text* alert = Text::create("CheckBox","fonts/Marker Felt.ttf",30 );
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);        
@@ -44,12 +38,6 @@ bool UICheckBoxTest::init()
                                               "cocosui/check_box_active.png",
                                               "cocosui/check_box_normal_disable.png",
                                               "cocosui/check_box_active_disable.png");
-        checkBox->setTouchEnabled(true);
-//        checkBox->loadTextures("cocosui/check_box_normal.png",
-//                               "cocosui/check_box_normal_press.png",
-//                               "cocosui/check_box_active.png",
-//                               "cocosui/check_box_normal_disable.png",
-//                               "cocosui/check_box_active_disable.png");
         checkBox->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         
         checkBox->addEventListenerCheckBox(this, checkboxselectedeventselector(UICheckBoxTest::selectedEvent));
