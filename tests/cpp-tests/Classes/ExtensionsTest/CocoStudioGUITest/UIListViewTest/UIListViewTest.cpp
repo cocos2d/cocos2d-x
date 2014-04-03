@@ -24,21 +24,17 @@ bool UIListViewTest_Vertical::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = Text::create();
-        _displayValueLabel->setText("Move by vertical direction");
-        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
-        _displayValueLabel->setFontSize(32);
+        _displayValueLabel = Text::create("Move by vertical direction", "fonts/Marker Felt.ttf", 32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
         
         
-        Text* alert = Text::create();
-        alert->setText("ListView vertical");
-        alert->setFontName("fonts/Marker Felt.ttf");
-        alert->setFontSize(30);
+        Text* alert = Text::create("ListView vertical", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Point(widgetSize.width / 2.0f,
+                                 widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -75,15 +71,14 @@ bool UIListViewTest_Vertical::init()
         
         
         // create model
-        Button* default_button = Button::create();
+        Button* default_button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
         default_button->setName("Title Button");
-        default_button->setTouchEnabled(true);
-        default_button->loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "");
         
         Layout* default_item = Layout::create();
         default_item->setTouchEnabled(true);
         default_item->setSize(default_button->getSize());
-        default_button->setPosition(Point(default_item->getSize().width / 2.0f, default_item->getSize().height / 2.0f));
+        default_button->setPosition(Point(default_item->getSize().width / 2.0f,
+                                          default_item->getSize().height / 2.0f));
         default_item->addChild(default_button);
         
         // set model
@@ -104,10 +99,8 @@ bool UIListViewTest_Vertical::init()
         // add custom item
         for (int i = 0; i < count / 4; ++i)
         {
-            Button* custom_button = Button::create();
+            Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -123,10 +116,8 @@ bool UIListViewTest_Vertical::init()
         ssize_t items_count = items.size();
         for (int i = 0; i < count / 4; ++i)
         {
-            Button* custom_button = Button::create();
+            Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -209,19 +200,16 @@ bool UIListViewTest_Horizontal::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = Text::create();
-        _displayValueLabel->setText("Move by horizontal direction");
-        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
-        _displayValueLabel->setFontSize(32);
+        _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f
+                                              + _displayValueLabel->getContentSize().height * 1.5f));
+        
         _uiLayer->addChild(_displayValueLabel);
         
         
-        Text* alert = Text::create();
-        alert->setText("ListView horizontal");
-        alert->setFontName("fonts/Marker Felt.ttf");
-        alert->setFontSize(30);
+        Text* alert = Text::create("ListView horizontal", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
         _uiLayer->addChild(alert);
@@ -260,10 +248,8 @@ bool UIListViewTest_Horizontal::init()
         
         
         // create model
-        Button* default_button = Button::create();
+        Button* default_button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
         default_button->setName("Title Button");
-        default_button->setTouchEnabled(true);
-        default_button->loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "");
         
         Layout *default_item = Layout::create();
         default_item->setTouchEnabled(true);
@@ -289,10 +275,8 @@ bool UIListViewTest_Horizontal::init()
         // add custom item
         for (int i = 0; i < count / 4; ++i)
         {
-            Button* custom_button = Button::create();
+            Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -308,10 +292,8 @@ bool UIListViewTest_Horizontal::init()
         ssize_t items_count = items.size();
         for (int i = 0; i < count / 4; ++i)
         {
-            Button* custom_button = Button::create();
+            Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
