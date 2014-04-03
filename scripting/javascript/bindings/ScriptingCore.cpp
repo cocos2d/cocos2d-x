@@ -559,6 +559,7 @@ void ScriptingCore::reset()
 ScriptingCore::~ScriptingCore()
 {
     cleanup();
+    registrationList.clear();
     pInstance = NULL;
 }
 

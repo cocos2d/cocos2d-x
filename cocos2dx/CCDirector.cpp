@@ -750,7 +750,6 @@ void CCDirector::purgeDirector()
     release();
 
     CCApplication::purgeApplication();
-    CCScriptEngineManager::purgeSharedManager();
 }
 
 void CCDirector::setNextScene(void)
