@@ -607,9 +607,11 @@ void Sprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpd
 #if CC_SPRITE_DEBUG_DRAW
 void Sprite::drawDebugData()
 {
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     kmMat4 oldModelView;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldModelView);
-    kmGLLoadMatrix(&_modelViewTransform);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     // draw bounding box
     Point vertices[4] = {
         Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
@@ -619,7 +621,7 @@ void Sprite::drawDebugData()
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
     
-    kmGLLoadMatrix(&oldModelView);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldModelView);
 }
 #endif //CC_SPRITE_DEBUG_DRAW
 
