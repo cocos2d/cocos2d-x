@@ -132,7 +132,7 @@ int LoadingBar::getDirection()
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
-                barRendererScale9->initWithFile(texture.c_str());
+                barRendererScale9->initWithFile(texture);
                 barRendererScale9->setCapInsets(_capInsets);
             }
             else
@@ -144,7 +144,7 @@ int LoadingBar::getDirection()
             if (_scale9Enabled)
             {
                 extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
-                barRendererScale9->initWithSpriteFrameName(texture.c_str());
+                barRendererScale9->initWithSpriteFrameName(texture);
                 barRendererScale9->setCapInsets(_capInsets);
             }
             else
@@ -195,7 +195,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
     {
         _barRenderer = Sprite::create();
     }
-    loadTexture(_textureFile.c_str(),_renderBarTexType);
+    loadTexture(_textureFile,_renderBarTexType);
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
@@ -371,7 +371,7 @@ void LoadingBar::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = loadingBar->_prevIgnoreSize;
         setScale9Enabled(loadingBar->_scale9Enabled);
-        loadTexture(loadingBar->_textureFile.c_str(), loadingBar->_renderBarTexType);
+        loadTexture(loadingBar->_textureFile, loadingBar->_renderBarTexType);
         setCapInsets(loadingBar->_capInsets);
         setPercent(loadingBar->_percent);
         setDirection(loadingBar->_barType);
