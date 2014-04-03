@@ -57,7 +57,7 @@ public:
     static ImageView* create();
     
     /**
-     * create a  imageview object
+     * create a  imageview 
      *
      * @param fileName   file name of texture.
      *

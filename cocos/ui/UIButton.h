@@ -60,7 +60,7 @@ public:
      * create a button with custom textures
      * @normalImage normal state texture name
      * @selectedImage  selected state texture name
-     * @disableImage disable state texture name
+     * @disableImage disabled state texture name
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     static Button* create(const std::string& normalImage,
@@ -76,7 +76,7 @@ public:
      *
      * @param selected    selected state texture name.
      *
-     * @param disabled    disable state texture name.
+     * @param disabled    disabled state texture name.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
