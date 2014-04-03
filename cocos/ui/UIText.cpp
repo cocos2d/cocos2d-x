@@ -77,7 +77,7 @@ Text* Text::create(const std::string &textContent, const std::string &fontName, 
         return text;
     }
     CC_SAFE_DELETE(text);
-    return text;
+    return nullptr;
 }
     
 bool Text::init(const std::string &textContent, const std::string &fontName, int fontSize)
