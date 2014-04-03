@@ -142,18 +142,14 @@ local function OpenGLTestMainLayer()
             return
         end
         accum = accum + fTime
-        local children = labelBMFont:getChildren()
-        if nil == children then
-            return
-        end
+        local letterCount = labelBMFont:getStringLength()
         local i = 0
-        local len = table.getn(children)
-        for i= 0 ,len - 1 do
-            local child = children[i + 1]
-            local oldPosX,oldPosY = child:getPosition()
-            child:setPosition(oldPosX,math.sin(accum * 2 + i / 2.0) * 20)
+        for i= 0 ,letterCount - 1 do
+            local sprite = labelBMFont:getLetter(i)
+            local oldPosX,oldPosY = sprite:getPosition()
+            sprite:setPosition(oldPosX, math.sin(accum * 2 + i / 2.0) * 20)
             local scaleY = math.sin(accum * 2 + i / 2.0 + 0.707)
-            child:setScaleY(scaleY)
+            sprite:setScaleY(scaleY)
         end
     end
 
@@ -195,7 +191,7 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(256,256))
+        glNode:setContentSize(cc.size(256, 256))
         glNode:setAnchorPoint(cc.p(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
@@ -213,10 +209,10 @@ local function OpenGLTestMainLayer()
             time = time + fTime
         end
 
-        local function majoriDraw()
+        local function majoriDraw(transform, transformUpdated)
             if nil ~= shader then
                 shader:use()
-                shader:setUniformsForBuiltins()
+                shader:setUniformsForBuiltins(transform)
                 --Uniforms
                 shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationF32( uniformResolution, 256, 256)
@@ -235,6 +231,7 @@ local function OpenGLTestMainLayer()
         glNode:registerScriptDrawHandler(majoriDraw)
         time = 0
         majorLayer:addChild(glNode,-10)
+        print("pos is ", size.width/2, size.height/2)
         glNode:setPosition( size.width/2, size.height/2)
         return majorLayer
     end
@@ -275,10 +272,10 @@ local function OpenGLTestMainLayer()
             time = time + fTime
         end
 
-        local function mandelbrotDraw()
+        local function mandelbrotDraw(transform, transformUpdated)
             if nil ~= shader then
                 shader:use()
-                shader:setUniformsForBuiltins()
+                shader:setUniformsForBuiltins(transform)
                 --Uniforms
                 shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationF32( uniformResolution, 256, 256)
@@ -337,10 +334,10 @@ local function OpenGLTestMainLayer()
             time = time + fTime
         end
 
-        local function heartDraw()
+        local function heartDraw(transform, transformUpdated)
             if nil ~= shader then
                 shader:use()
-                shader:setUniformsForBuiltins()
+                shader:setUniformsForBuiltins(transform)
                 --Uniforms
                 shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationF32( uniformResolution, 256, 256)
@@ -399,10 +396,10 @@ local function OpenGLTestMainLayer()
             time = time + fTime
         end
 
-        local function plasmaDraw()
+        local function plasmaDraw(transform, transformUpdated)
             if nil ~= shader then
                 shader:use()
-                shader:setUniformsForBuiltins()
+                shader:setUniformsForBuiltins(transform)
                 --Uniforms
                 shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationF32( uniformResolution, 256, 256)
@@ -461,10 +458,10 @@ local function OpenGLTestMainLayer()
             time = time + fTime
         end
 
-        local function flowerDraw()
+        local function flowerDraw(transform, transformUpdated)
             if nil ~= shader then
                 shader:use()
-                shader:setUniformsForBuiltins()
+                shader:setUniformsForBuiltins(transform)
                 --Uniforms
                 shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationF32( uniformResolution, 256, 256)
@@ -523,10 +520,10 @@ local function OpenGLTestMainLayer()
             time = time + fTime
         end
 
-        local function juliaDraw()
+        local function juliaDraw(transform, transformUpdated)
             if nil ~= shader then
                 shader:use()
-                shader:setUniformsForBuiltins()
+                shader:setUniformsForBuiltins(transform)
                 --Uniforms
                 shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
                 shader:setUniformLocationF32( uniformResolution, 256, 256)
@@ -643,10 +640,10 @@ local function OpenGLTestMainLayer()
             gl.bindBuffer(gl.ARRAY_BUFFER,0)
         end
 
-        local function TexImage2DDraw()
+        local function TexImage2DDraw(transform, transformUpdated)
             if nil ~= shader then
                 shader:use()
-                shader:setUniformsForBuiltins()
+                shader:setUniformsForBuiltins(transform)
 
                 gl.bindTexture(gl.TEXTURE_2D, texture.texture_id)
                 gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_TEX_COORDS or cc.VERTEX_ATTRIB_FLAG_POSITION)
@@ -1026,9 +1023,9 @@ local function OpenGLTestMainLayer()
             gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
 
-        local function GLNodeCCAPIDraw()
+        local function GLNodeCCAPIDraw(transform, transformUpdated)
             shader:use()
-            shader:setUniformsForBuiltins()
+            shader:setUniformsForBuiltins(transform)
             gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_COLOR or cc.VERTEX_ATTRIB_FLAG_POSITION)
 
             --

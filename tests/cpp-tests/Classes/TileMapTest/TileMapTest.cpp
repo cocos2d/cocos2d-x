@@ -305,7 +305,7 @@ void TMXOrthoTest::onEnter()
 
 void TMXOrthoTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     TileDemo::onExit();
 }
 
@@ -1104,7 +1104,7 @@ void TMXIsoVertexZ::onEnter()
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::getInstance()->setProjection:Director::Projection::_3D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     TileDemo::onExit();
 }
 
@@ -1173,7 +1173,7 @@ void TMXOrthoVertexZ::onEnter()
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::getInstance()->setProjection:Director::Projection::_3D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     TileDemo::onExit();
 }
 

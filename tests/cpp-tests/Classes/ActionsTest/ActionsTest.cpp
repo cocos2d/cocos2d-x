@@ -1314,6 +1314,13 @@ void ActionOrbit::onEnter()
     _grossini->runAction( rfe->clone() );
 }
 
+void ActionOrbit::onExit()
+{
+    ActionsDemo::onExit();
+    
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+}
+
 std::string ActionOrbit::subtitle() const
 {
     return "OrbitCamera action";

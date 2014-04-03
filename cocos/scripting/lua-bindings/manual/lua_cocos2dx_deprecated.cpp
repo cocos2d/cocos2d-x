@@ -1506,6 +1506,46 @@ tolua_lerror:
 #endif
 }
 
+static int tolua_cocos2d_kmGLLoadMatrix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_istable(tolua_S, 1, 0, &tolua_err)||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        kmMat4 mat4;
+        size_t len = lua_objlen(tolua_S, 1);
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(tolua_S,i + 1);
+            lua_gettable(tolua_S,1);
+#ifndef TOLUA_RELEASE
+            if (!tolua_isnumber(tolua_S, -1, 0, &tolua_err))
+            {
+                lua_pop(tolua_S, 1);
+                goto tolua_lerror;
+            }
+            else
+#endif
+            {
+                mat4.mat[i] = tolua_tonumber(tolua_S, -1, 0);
+                lua_pop(tolua_S, 1);
+            }
+        }
+        kmGLLoadMatrix(&mat4);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'kmGLLoadMatrix'.",&tolua_err);
+    return 0;
+#endif
+}
+
 
 static int tolua_Cocos2d_CCString_intValue00(lua_State* tolua_S)
 {
@@ -1934,6 +1974,7 @@ int register_all_cocos2dx_deprecated(lua_State* tolua_S)
     tolua_function(tolua_S,"kmGLPushMatrix",tolua_cocos2d_kmGLPushMatrix00);
     tolua_function(tolua_S,"kmGLTranslatef",tolua_cocos2d_kmGLTranslatef00);
     tolua_function(tolua_S,"kmGLPopMatrix",tolua_cocos2d_kmGLPopMatrix00);
+    tolua_function(tolua_S,"kmGLLoadMatrix",tolua_cocos2d_kmGLLoadMatrix00);
     tolua_endmodule(tolua_S);
     
     return 0;

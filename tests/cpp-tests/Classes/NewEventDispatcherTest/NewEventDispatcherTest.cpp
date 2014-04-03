@@ -843,6 +843,8 @@ void DirectorEventTest::onExit()
 {
     EventDispatcherTestDemo::onExit();
 
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_event1);
     dispatcher->removeEventListener(_event2);
