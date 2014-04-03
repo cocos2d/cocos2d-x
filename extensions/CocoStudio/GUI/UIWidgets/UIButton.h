@@ -55,18 +55,38 @@ public:
      */
     static Button* create();
     
+    
     /**
      * Load textures for button.
      *
-     * @param normal    normal state texture.
+     * @param normal    normal state texture name.
      *
-     * @param selected    selected state texture.
+     * @param selected    selected state texture name.
      *
-     * @param disabled    dark state texture.
+     * @param disabled    dark state texture name.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    static Button* create(const char* normalImage,
+                          const char* selectedImage = "",
+                          const char* disabledImage = "",
+                          TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load textures for button.
+     *
+     * @param normal    normal state texture name.
+     *
+     * @param selected    selected state texture name.
+     *
+     * @param disabled    dark state texture name.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadTextures(const char* normal,
+                      const char* selected = "",
+                      const char* disabled = "",
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load normal state texture for button.
@@ -173,6 +193,10 @@ public:
 
 protected:
     virtual bool init();
+    virtual bool init(const char* normalImage,
+                      const char* selectedImage = "",
+                      const char* disableImage = "",
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
     virtual void initRenderer();
     virtual void onPressStateChangedToNormal();
     virtual void onPressStateChangedToPressed();

@@ -39,9 +39,7 @@ bool UIButtonTest::init()
         m_pUiLayer->addWidget(alert);
         
         // Create the button
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        UIButton* button = UIButton::create("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         m_pUiLayer->addWidget(button);
