@@ -186,15 +186,13 @@ void GridBase::set2DProjection()
     Size    size = director->getWinSizeInPixels();
 
     glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLLoadIdentity();
+    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     kmMat4 orthoMatrix;
     kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1, 1);
-    kmGLMultMatrix( &orthoMatrix );
+    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
 
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLLoadIdentity();
+    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     GL::setProjectionMatrixDirty();
 }
