@@ -1635,7 +1635,7 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
     do{
         if (argc == 1) {
             kmMat4 arg0;
-            #pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+            ok &= luaval_to_kmMat4(tolua_S, 2, &arg0);
 
             if (!ok) { break; }
             cobj->setUniformsForBuiltins(arg0);
@@ -8029,7 +8029,7 @@ int lua_cocos2dx_Node_setNodeToParentTransform(lua_State* tolua_S)
     {
         kmMat4 arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+        ok &= luaval_to_kmMat4(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
         cobj->setNodeToParentTransform(arg0);
@@ -8393,7 +8393,7 @@ int lua_cocos2dx_Node_visit(lua_State* tolua_S)
 
             if (!ok) { break; }
             kmMat4 arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+            ok &= luaval_to_kmMat4(tolua_S, 3, &arg1);
 
             if (!ok) { break; }
             bool arg2;
@@ -10553,7 +10553,7 @@ int lua_cocos2dx_Node_draw(lua_State* tolua_S)
 
             if (!ok) { break; }
             kmMat4 arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+            ok &= luaval_to_kmMat4(tolua_S, 3, &arg1);
 
             if (!ok) { break; }
             bool arg2;
@@ -24358,7 +24358,7 @@ int lua_cocos2dx_DrawNode_onDraw(lua_State* tolua_S)
         kmMat4 arg0;
         bool arg1;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+        ok &= luaval_to_kmMat4(tolua_S, 2, &arg0);
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1);
         if(!ok)
