@@ -1146,8 +1146,10 @@ void CCLabelBMFont::updateLabel()
                         if (index < 0) continue;
 
                         CCSprite* characterSprite = (CCSprite*)getChildByTag(index);
-                        if(characterSprite)
-                        characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+                        if (characterSprite)
+                        {
+                            characterSprite->setPosition(ccpAdd(characterSprite->getPosition(), ccp(shift, 0.0f)));
+                        }
                     }
                 }
 
