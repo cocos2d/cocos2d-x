@@ -65,8 +65,7 @@ namespace GL {
 
 void invalidateStateCache( void )
 {
-    kmGLFreeAll();
-    
+    Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
     s_vertexAttribPosition = false;
     s_vertexAttribColor = false;
