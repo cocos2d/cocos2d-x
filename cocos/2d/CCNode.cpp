@@ -933,8 +933,7 @@ void Node::draw(Renderer* renderer, const kmMat4 &transform, bool transformUpdat
 void Node::visit()
 {
     auto renderer = Director::getInstance()->getRenderer();
-    kmMat4 parentTransform;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &parentTransform);
+    kmMat4 parentTransform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     visit(renderer, parentTransform, true);
 }
 

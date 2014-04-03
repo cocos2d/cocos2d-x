@@ -610,7 +610,7 @@ void Sprite::drawDebugData()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     kmMat4 oldModelView;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldModelView);
+    oldModelView = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     // draw bounding box
     Point vertices[4] = {

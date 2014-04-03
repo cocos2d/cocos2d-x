@@ -152,7 +152,7 @@ void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool tran
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV);
+    _modelViewMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
@@ -169,7 +169,7 @@ void Box2DTestLayer::onDraw()
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
     kmMat4 oldMV;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMV);
+    oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV);
     world->DrawDebugData();
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMV);
