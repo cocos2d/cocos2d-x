@@ -83,7 +83,7 @@ public:
      */
     inline void setEnabled(bool enabled) { _isEnabled = enabled; };
 
-    /** Check whether the listener is enabled */
+    /** Checks whether the listener is enabled */
     inline bool isEnabled() { return _isEnabled; };
 
 protected:
@@ -97,7 +97,7 @@ protected:
      */
     inline void setPaused(bool paused) { _paused = paused; };
 
-    /** Check whether the listener is paused */
+    /** Checks whether the listener is paused */
     inline bool isPaused() const { return _paused; };
 
     /** Marks the listener was registered by EventDispatcher */
