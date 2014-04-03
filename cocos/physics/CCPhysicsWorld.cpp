@@ -200,6 +200,12 @@ void PhysicsWorld::debugDraw()
     {
         _debugDraw = new PhysicsDebugDraw(*this);
     }
+
+	if (_bodies.empty())
+	{
+		CC_SAFE_DELETE(_debugDraw);
+		return ;
+	}
     
     if (_debugDraw)
     {
