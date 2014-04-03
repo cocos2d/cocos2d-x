@@ -142,18 +142,14 @@ local function OpenGLTestMainLayer()
             return
         end
         accum = accum + fTime
-        local children = labelBMFont:getChildren()
-        if nil == children then
-            return
-        end
+        local letterCount = labelBMFont:getStringLength()
         local i = 0
-        local len = table.getn(children)
-        for i= 0 ,len - 1 do
-            local child = children[i + 1]
-            local oldPosX,oldPosY = child:getPosition()
-            child:setPosition(oldPosX,math.sin(accum * 2 + i / 2.0) * 20)
+        for i= 0 ,letterCount - 1 do
+            local sprite = labelBMFont:getLetter(i)
+            local oldPosX,oldPosY = sprite:getPosition()
+            sprite:setPosition(oldPosX, math.sin(accum * 2 + i / 2.0) * 20)
             local scaleY = math.sin(accum * 2 + i / 2.0 + 0.707)
-            child:setScaleY(scaleY)
+            sprite:setScaleY(scaleY)
         end
     end
 

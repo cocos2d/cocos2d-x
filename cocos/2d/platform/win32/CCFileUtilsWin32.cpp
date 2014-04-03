@@ -96,7 +96,7 @@ bool FileUtilsWin32::init()
     return FileUtils::init();
 }
 
-bool FileUtilsWin32::isFileExist(const std::string& strFilePath) const
+bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())
     {
