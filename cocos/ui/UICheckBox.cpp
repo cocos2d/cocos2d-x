@@ -574,11 +574,11 @@ void CheckBox::copySpecialProperties(Widget *widget)
     CheckBox* checkBox = dynamic_cast<CheckBox*>(widget);
     if (checkBox)
     {
-        loadTextureBackGround(checkBox->_backGroundFileName.c_str(), checkBox->_backGroundTexType);
-        loadTextureBackGroundSelected(checkBox->_backGroundSelectedFileName.c_str(), checkBox->_backGroundSelectedTexType);
-        loadTextureFrontCross(checkBox->_frontCrossFileName.c_str(), checkBox->_frontCrossTexType);
-        loadTextureBackGroundDisabled(checkBox->_backGroundDisabledFileName.c_str(), checkBox->_backGroundDisabledTexType);
-        loadTextureFrontCrossDisabled(checkBox->_frontCrossDisabledFileName.c_str(), checkBox->_frontCrossDisabledTexType);
+        loadTextureBackGround(checkBox->_backGroundFileName, checkBox->_backGroundTexType);
+        loadTextureBackGroundSelected(checkBox->_backGroundSelectedFileName, checkBox->_backGroundSelectedTexType);
+        loadTextureFrontCross(checkBox->_frontCrossFileName, checkBox->_frontCrossTexType);
+        loadTextureBackGroundDisabled(checkBox->_backGroundDisabledFileName, checkBox->_backGroundDisabledTexType);
+        loadTextureFrontCrossDisabled(checkBox->_frontCrossDisabledFileName, checkBox->_frontCrossDisabledTexType);
         setSelectedState(checkBox->_isSelected);
     }
 }
