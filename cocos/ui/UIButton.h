@@ -185,8 +185,8 @@ public:
     const Color3B& getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
-    void setTitleFontName(const char* fontName);
-    const char* getTitleFontName() const;
+    void setTitleFontName(const std::string& fontName);
+    const std::string& getTitleFontName() const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
