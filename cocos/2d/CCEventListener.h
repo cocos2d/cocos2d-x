@@ -94,7 +94,7 @@ protected:
      *  while `EventDispatcher::pauseAllEventListenersForTarget(node)` will set it to `false`.
      *  @note 1) Fixed priority listeners will never get paused. If a fixed priority doesn't want to receive events,
      *           call `setEnabled(false)` instead.
-     *        2) In `Node`'s onEnter and onExit, listeners associated with that node will automatically update their `paused state`.
+     *        2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
      */
     inline void setPaused(bool paused) { _paused = paused; };
 
