@@ -1352,8 +1352,10 @@ void ActionFollow::draw(Renderer *renderer, const kmMat4 &transform, bool transf
 
 void ActionFollow::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto winSize = Director::getInstance()->getWinSize();
     
@@ -1363,7 +1365,7 @@ void ActionFollow::onDraw(const kmMat4 &transform, bool transformUpdated)
     Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
     DrawPrimitives::drawPoly(vertices, 4, true);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 std::string ActionFollow::subtitle() const
@@ -1659,10 +1661,19 @@ void ActionCatmullRomStacked::draw(Renderer *renderer, const kmMat4 &transform, 
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
-    kmGLPushMatrix();
-    kmGLTranslatef(50, 50, 0);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    kmMat4 translation;
+    
+    //Create a rotation matrix using the axis and the angle
+    kmMat4Translation(&translation,50,50,0);
+    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
+    
+    
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     
     _customCommand.init(_globalZOrder);
@@ -1672,13 +1683,16 @@ void ActionCatmullRomStacked::draw(Renderer *renderer, const kmMat4 &transform, 
 
 void ActionCatmullRomStacked::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewMV1);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCatmullRom(_array1,50);
-    kmGLLoadMatrix(&_modelViewMV2);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
     DrawPrimitives::drawCatmullRom(_array2,50);
-    kmGLLoadMatrix(&oldMat);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCatmullRomStacked::title() const
@@ -1768,17 +1782,29 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const kmMat4 &transfo
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
-    kmGLPushMatrix();
-    kmGLTranslatef(50, 50, 0);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    kmMat4 translation;
+    
+    //Create a rotation matrix using the axis and the angle
+    kmMat4Translation(&translation,50,50,0);
+    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
+
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     auto s = Director::getInstance()->getWinSize();
     
-    kmGLPushMatrix();
-    kmGLTranslatef(s.width/2, 50, 0);
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    //Create a rotation matrix using the axis and the angle
+    kmMat4Translation(&translation,s.width/2,50,0);
+    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
+
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this, transform, transformUpdated);
@@ -1787,13 +1813,16 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const kmMat4 &transfo
 
 void ActionCardinalSplineStacked::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewMV1);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCardinalSpline(_array, 0, 100);
-    kmGLLoadMatrix(&_modelViewMV2);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
     DrawPrimitives::drawCardinalSpline(_array, 1, 100);
-    kmGLLoadMatrix(&oldMat);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCardinalSplineStacked::title() const
@@ -2135,11 +2164,18 @@ void ActionCatmullRom::draw(Renderer *renderer, const kmMat4 &transform, bool tr
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
-    kmGLPushMatrix();
-    kmGLTranslatef(50, 50, 0);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    kmMat4 translation;
+    
+    //Create a rotation matrix using the axis and the angle
+    kmMat4Translation(&translation,50,50,0);
+    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
 
     _customCommand.init(_globalZOrder);
@@ -2150,13 +2186,16 @@ void ActionCatmullRom::draw(Renderer *renderer, const kmMat4 &transform, bool tr
 
 void ActionCatmullRom::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewMV1);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCatmullRom(_array1, 50);
-    kmGLLoadMatrix(&_modelViewMV2);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
     DrawPrimitives::drawCatmullRom(_array2,50);
-    kmGLLoadMatrix(&oldMat);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 
@@ -2230,17 +2269,27 @@ void ActionCardinalSpline::draw(Renderer *renderer, const kmMat4 &transform, boo
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
     // move to 50,50 since the "by" path will start at 50,50
-    kmGLPushMatrix();
-    kmGLTranslatef(50, 50, 0);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    kmMat4 translation;
+    
+    //Create a rotation matrix using the axis and the angle
+    kmMat4Translation(&translation,50,50,0);
+    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     auto s = Director::getInstance()->getWinSize();
     
-    kmGLPushMatrix();
-    kmGLTranslatef(s.width/2, 50, 0);
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    //Create a rotation matrix using the axis and the angle
+    kmMat4Translation(&translation,s.width/2,50,0);
+    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this, transform, transformUpdated);
@@ -2249,13 +2298,16 @@ void ActionCardinalSpline::draw(Renderer *renderer, const kmMat4 &transform, boo
 
 void ActionCardinalSpline::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+
     kmMat4 oldMat;
     kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
-    kmGLLoadMatrix(&_modelViewMV1);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
     DrawPrimitives::drawCardinalSpline(_array, 0, 100);
-    kmGLLoadMatrix(&_modelViewMV2);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
     DrawPrimitives::drawCardinalSpline(_array, 1, 100);
-    kmGLLoadMatrix(&oldMat);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCardinalSpline::title() const

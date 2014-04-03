@@ -213,15 +213,17 @@ void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transform
 
 void Box2DView::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
     m_test->Step(&settings);
     m_test->m_world->DrawDebugData();
     CHECK_GL_ERROR_DEBUG();
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 Box2DView::~Box2DView()

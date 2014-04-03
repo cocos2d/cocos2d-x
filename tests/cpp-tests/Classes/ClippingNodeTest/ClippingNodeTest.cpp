@@ -630,20 +630,23 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
         renderer->addCommand(&(*iter));
         ++iter;
         
-        kmGLPushMatrix();
+        Director* director = Director::getInstance();
+        CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        
         _modelViewTransform = this->transform(transform);
         _sprites.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
-        kmGLPopMatrix();
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         
         iter->init(_globalZOrder);
         iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
         renderer->addCommand(&(*iter));
         ++iter;
         
-        kmGLPushMatrix();
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         _modelViewTransform = this->transform(transform);
         _sprites.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
-        kmGLPopMatrix();
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     }
     
     iter->init(_globalZOrder);

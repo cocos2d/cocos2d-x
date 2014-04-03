@@ -318,14 +318,16 @@ void LabelFNTSpriteActions::draw(Renderer *renderer, const kmMat4 &transform, bo
 
 void LabelFNTSpriteActions::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
     auto s = Director::getInstance()->getWinSize();
     DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
     DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void LabelFNTSpriteActions::step(float dt)
@@ -911,8 +913,10 @@ void LabelFNTBounds::draw(Renderer *renderer, const kmMat4 &transform, bool tran
 
 void LabelFNTBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
@@ -929,7 +933,7 @@ void LabelFNTBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
@@ -1516,8 +1520,10 @@ LabelTTFOldNew::LabelTTFOldNew()
 
 void LabelTTFOldNew::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto label1 = (Label*)getChildByTag(kTagBitmapAtlas1);
     auto labelSize = label1->getContentSize();
@@ -1553,7 +1559,7 @@ void LabelTTFOldNew::onDraw(const kmMat4 &transform, bool transformUpdated)
     DrawPrimitives::setDrawColor4B(Color4B::WHITE.r,Color4B::WHITE.g,Color4B::WHITE.b,Color4B::WHITE.a);
     DrawPrimitives::drawPoly(vertices2, 4, true);
     
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void LabelTTFOldNew::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
