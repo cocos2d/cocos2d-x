@@ -277,7 +277,6 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
 , _texture(nullptr)
-, _insideBounds(true)
 {
 }
 
@@ -622,35 +621,6 @@ void Sprite::drawDebugData()
     kmGLLoadMatrix(&oldModelView);
 }
 #endif //CC_SPRITE_DEBUG_DRAW
-
-// Culling function from cocos2d-iphone CCSprite.m file
-bool Sprite::isInsideBounds() const
-{
-    // half size of the screen
-    Size screen_half = Director::getInstance()->getWinSize();
-    screen_half.width /= 2;
-    screen_half.height /= 2;
-
-    float hcsx = _contentSize.width / 2;
-    float hcsy = _contentSize.height / 2;
-
-    // convert to world coordinates
-    float x = hcsx * _modelViewTransform.mat[0] + hcsy * _modelViewTransform.mat[4] + _modelViewTransform.mat[12];
-    float y = hcsx * _modelViewTransform.mat[1] + hcsy * _modelViewTransform.mat[5] + _modelViewTransform.mat[13];
-
-    // center of screen is (0,0)
-    x -= screen_half.width;
-    y -= screen_half.height;
-
-    // convert content size to world coordinates
-    float wchw = hcsx * std::max(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
-    float wchh = hcsy * std::max(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
-
-    // compare if it in the positive quadrant of the screen
-    float tmpx = (fabsf(x)-wchw);
-    float tmpy = (fabsf(y)-wchh);
-    return (tmpx < screen_half.width && tmpy < screen_half.height);
-}
 
 // Node overrides
 void Sprite::addChild(Node *child, int zOrder, int tag)
