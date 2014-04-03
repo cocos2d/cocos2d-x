@@ -748,6 +748,8 @@ void CCDirector::purgeDirector()
 
     // delete CCDirector
     release();
+
+    CCApplication::purgeApplication();
 }
 
 void CCDirector::setNextScene(void)

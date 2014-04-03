@@ -41,7 +41,7 @@ public class Cocos2dxMusic {
 	// Fields
 	// ===========================================================
 
-	private final Context mContext;
+	private Context mContext;
 	private MediaPlayer mBackgroundMediaPlayer;
 	private float mLeftVolume;
 	private float mRightVolume;

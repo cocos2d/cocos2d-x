@@ -29,11 +29,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
-import android.os.Build.*;
 
 public class Cocos2dxAccelerometer implements SensorEventListener {
 	// ===========================================================
@@ -46,9 +44,9 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 	// Fields
 	// ===========================================================
 
-	private final Context mContext;
-	private final SensorManager mSensorManager;
-	private final Sensor mAccelerometer;
+	private Context mContext;
+	private SensorManager mSensorManager;
+	private Sensor mAccelerometer;
 	private final int mNaturalOrientation;
 
 	// ===========================================================
@@ -63,6 +61,13 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 
 		final Display display = ((WindowManager) this.mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		this.mNaturalOrientation = display.getOrientation();
+	}
+	
+	public void purge() {
+		disable();
+		mAccelerometer = null;
+		mSensorManager = null;
+		mContext = null;
 	}
 
 	// ===========================================================
