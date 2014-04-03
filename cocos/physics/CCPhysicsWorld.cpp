@@ -196,17 +196,16 @@ void PhysicsWorldCallback::queryPointFunc(cpShape *shape, cpFloat distance, cpVe
 
 void PhysicsWorld::debugDraw()
 {
-    if (_debugDraw == nullptr)
-    {
-        _debugDraw = new PhysicsDebugDraw(*this);
-    }
-
     if (_bodies.empty())
     {
         CC_SAFE_DELETE(_debugDraw);
         return ;
     }
-    
+    else if (_debugDraw == nullptr)
+    {
+        _debugDraw = new PhysicsDebugDraw(*this);
+    }
+
     if (_debugDraw)
     {
         if (_debugDraw->begin())
