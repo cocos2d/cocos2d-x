@@ -84,7 +84,7 @@ public:
     inline void setEnabled(bool enabled) { _isEnabled = enabled; };
 
     /** Checks whether the listener is enabled */
-    inline bool isEnabled() { return _isEnabled; };
+    inline bool isEnabled() const { return _isEnabled; };
 
 protected:
 
