@@ -53,9 +53,10 @@ def main():
 
     #set commit status to pending
     target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
+
+    check_queue_build(action, pr_num, statuses_url)
     
     if(action == 'closed'):
-        check_queue_build(action, pr_num, statuses_url)
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
   
@@ -79,7 +80,6 @@ def main():
     except:
         traceback.print_exc()
 
-    check_queue_build(action, pr_num, statuses_url)
     job_trigger_url = os.environ['JOB_TRIGGER_URL']
     #send trigger and payload
     post_data = {'payload':""}
