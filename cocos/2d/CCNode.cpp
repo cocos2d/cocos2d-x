@@ -983,9 +983,6 @@ void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentT
     {
         this->draw(renderer, _modelViewTransform, dirty);
     }
-
-    // reset for next frame
-    _orderOfArrival = 0;
  
     kmGLPopMatrix();
 }
