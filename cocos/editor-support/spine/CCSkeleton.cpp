@@ -193,8 +193,10 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
 	}
 
     if(debugBones || debugSlots) {
-        kmGLPushMatrix();
-        kmGLLoadMatrix(&transform);
+        Director* director = Director::getInstance();
+        CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
         if (debugSlots) {
             // Slots.
@@ -234,7 +236,7 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
             }
         }
         
-        kmGLPopMatrix();
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     }
 }
 

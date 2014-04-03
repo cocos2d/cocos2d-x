@@ -115,10 +115,12 @@ void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool pa
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmGL stack,
+    // To ease the migration to v3.0, we still support the kmMat4 stack,
     // but it is deprecated and your code should not rely on it
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&_modelViewTransform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     sortAllChildren();
     draw(renderer, _modelViewTransform, dirty);
@@ -126,7 +128,7 @@ void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool pa
     // reset for next frame
     _orderOfArrival = 0;
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void BatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)

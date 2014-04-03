@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "renderer/CCGroupCommand.h"
 #include "CCShaderCache.h"
 #include "CCDrawingPrimitives.h"
+#include "CCDirector.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -458,10 +459,13 @@ void Armature::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform,
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmGL stack,
+    // To ease the migration to v3.0, we still support the kmMat4 stack,
     // but it is deprecated and your code should not rely on it
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&_modelViewTransform);
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+
 
     sortAllChildren();
     draw(renderer, _modelViewTransform, dirty);
@@ -469,7 +473,7 @@ void Armature::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform,
     // reset for next frame
     _orderOfArrival = 0;
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 Rect Armature::getBoundingBox() const
