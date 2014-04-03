@@ -434,9 +434,29 @@ void Director::initMatrixStack()
     kmMat4 identity;
     kmMat4Identity(&identity);
     
+    while (!_modelViewMatrixStack.empty())
+    {
+        _modelViewMatrixStack.pop();
+    }
+    
+    while (!_projectionMatrixStack.empty())
+    {
+        _projectionMatrixStack.pop();
+    }
+    
+    while (!_textureMatrixStack.empty())
+    {
+        _textureMatrixStack.pop();
+    }
+    
     _modelViewMatrixStack.push(identity);
     _projectionMatrixStack.push(identity);
     _textureMatrixStack.push(identity);
+}
+
+void Director::resetMatrixStack()
+{
+    initMatrixStack();
 }
 
 void Director::popMatrix(MATRIX_STACK_TYPE type)
