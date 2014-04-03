@@ -58,8 +58,7 @@ bool UIPageViewTest::init()
             imageView->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
             layout->addChild(imageView);
             
-            __String *textContent = __String::createWithFormat("page %d", (i + 1));
-            Text* label = Text::create(textContent->getCString(), "fonts/Marker Felt.ttf", 30);
+            Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
             label->setColor(Color3B(192, 192, 192));
             label->setPosition(Point(layout->getSize().width / 2.0f, layout->getSize().height / 2.0f));
             layout->addChild(label);
