@@ -49,8 +49,8 @@ typedef enum
 
 typedef enum
 {
-    UI_TEX_TYPE_LOCAL,
-    UI_TEX_TYPE_PLIST
+    UI_TEX_TYPE_LOCAL = 0,
+    UI_TEX_TYPE_PLIST = 1
 }TextureResType;
 
 typedef enum

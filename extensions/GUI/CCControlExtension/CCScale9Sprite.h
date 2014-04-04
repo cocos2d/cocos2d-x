@@ -75,7 +75,7 @@ public:
      *
      * @see initWithFile(const char *file, const Rect& rect, const Rect& capInsets)
      */
-    static Scale9Sprite* create(const char* file, const Rect& rect,  const Rect& capInsets);
+    static Scale9Sprite* create(const std::string& file, const Rect& rect,  const Rect& capInsets);
 
     /**
      * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -83,7 +83,7 @@ public:
      *
      * @see initWithFile(const Rect& capInsets, const char *file)
      */
-    static Scale9Sprite* create(const Rect& capInsets, const char* file);
+    static Scale9Sprite* create(const Rect& capInsets, const std::string& file);
 
     /**
      * Creates a 9-slice sprite with a texture file and a delimitation zone. The
@@ -91,7 +91,7 @@ public:
      *
      * @see initWithFile(const char *file, const Rect& rect)
      */
-    static Scale9Sprite* create(const char* file, const Rect& rect);
+    static Scale9Sprite* create(const std::string& file, const Rect& rect);
 
     /**
      * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -99,7 +99,7 @@ public:
      *
      * @see initWithFile(const char *file)
      */
-    static Scale9Sprite* create(const char* file);
+    static Scale9Sprite* create(const std::string& file);
 
     /**
      * Creates a 9-slice sprite with an sprite frame.
@@ -129,7 +129,7 @@ public:
      *
      * @see initWithSpriteFrameName(const char *spriteFrameName)
      */
-    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName);
+    static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
     /**
      * Creates a 9-slice sprite with an sprite frame name and the centre of its
@@ -140,7 +140,7 @@ public:
      *
      * @see initWithSpriteFrameName(const char *spriteFrameName, const Rect& capInsets)
      */
-    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, const Rect& capInsets);
+    static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
 
     /**
      * Initializes a 9-slice sprite with a texture file, a delimitation zone and
@@ -155,7 +155,7 @@ public:
      * texture's full rect.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithFile(const char* file, const Rect& rect,  const Rect& capInsets);
+    virtual bool initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets);
     
     /**
      * Initializes a 9-slice sprite with a texture file and a delimitation zone. The
@@ -169,7 +169,7 @@ public:
      * is the whole image. If the shape is the whole texture, set this to the 
      * texture's full rect.
      */
-    virtual bool initWithFile(const char* file, const Rect& rect);
+    virtual bool initWithFile(const std::string& file, const Rect& rect);
     
     /**
      * Initializes a 9-slice sprite with a texture file and with the specified cap
@@ -181,7 +181,7 @@ public:
      * @param file The name of the texture file.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithFile(const Rect& capInsets, const char* file);
+    virtual bool initWithFile(const Rect& capInsets, const std::string& file);
     
     /**
      * Initializes a 9-slice sprite with a texture file. The whole texture will be
@@ -192,7 +192,7 @@ public:
      *
      * @param file The name of the texture file.
      */
-    virtual bool initWithFile(const char* file);
+    virtual bool initWithFile(const std::string& file);
     
     /**
      * Initializes a 9-slice sprite with an sprite frame and with the specified 
@@ -226,7 +226,7 @@ public:
      * @param spriteFrameName The sprite frame name.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithSpriteFrameName(const char*spriteFrameName, const Rect& capInsets);
+    virtual bool initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
 
     /**
      * Initializes a 9-slice sprite with an sprite frame name.
@@ -236,7 +236,7 @@ public:
      *
      * @param spriteFrameName The sprite frame name.
      */
-    virtual bool initWithSpriteFrameName(const char*spriteFrameName);
+    virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
 
     virtual bool init();
     virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);

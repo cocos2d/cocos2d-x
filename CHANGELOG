@@ -1,10 +1,14 @@
 cocos2d-x-3.0final ?.? 2014
+     [NEW]          Event: Adds `EventListener::setEnabled/isEnabled` to support enable/disable event listeners
+
      [FIX]          Animation: Added 'loops' parameter to Animation::createWithSpriteFrames
      [FIX]          Audio: can not resume after pausing on windows
-     [FIX]          cocos2d::extension::Control: ControlButton can't swallow touch event
+     [FIX]          Control: ControlButton can't swallow touch event
      [FIX]          FileUtils: 'isFileExist' doesn't consider SearchPaths and ResolutionOrders
+     [FIX]          JNI: doesn't cache classloader which may cause crash on Android devices with 4.2 or upper version
      [FIX]          Physics: Skips one frame when delta time is equal to zero
      [FIX]          Physics: PhysicsShapeEdgeChain::init() always return false
+     [FIX]          Setup: Force updating environment variables in setup.py
 
 cocos2d-x-3.0rc1 April.2 2014
      [NEW]          Application: Adds getCurrentLanguageCode() which returns iso 639-1 language code
