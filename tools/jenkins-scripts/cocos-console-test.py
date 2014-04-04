@@ -11,6 +11,8 @@ import sys
 import json
 import time
 import socket
+import smtplib
+from email.mime.text import MIMEText
 
 # default console_param.
 console_param = '[console run]'
@@ -69,7 +71,7 @@ cocos_console_dir = 'tools/cocos2d-console/bin/'
 
 # now cocos2d-console suport different run on Platforms, e.g: only run android on win
 runSupport = {
-	'darwin' : {'mac':1,'ios':1,'android':1},
+	'darwin' : {'mac':1,'ios':1,'android':0},
 	'win' : {'mac':0,'ios':0,'android':1},
 	'linux' : {'mac':0,'ios':0,'android':1}
 }
@@ -86,6 +88,7 @@ print 'current platform is:', curPlat
 
 # delete project.(will use different system command to delete.just mac now.)
 def clean_project():
+	print 'delete older project.'
 	for proj in project_types:
 		cmd = 'rm -rf '+proj+PROJ_SUFFIX
 		os.system(cmd)
@@ -122,6 +125,9 @@ def addConsoleListenOnTCP(name):
 	else:
 		print 'file is not exist.'
 
+# console result, for record result
+console_result = 'the result of cocos-console-test is:\n\r'
+
 # get current android devices count.
 def getAndroidDevices():
 	cmd = 'adb devices'
@@ -144,6 +150,7 @@ PORT = 5678
 def close_proj(proj, phone):
 	print 'close running project'
 	# connect socket
+	strClose = 'close ' + proj + ' on ' + phone
 	if IP_PHONE.has_key(phone):
 		soc = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
 		print proj, phone, IP_PHONE[phone]
@@ -152,13 +159,25 @@ def close_proj(proj, phone):
 			cmd = 'director end\r\n'
 			print 'cmd close:', cmd
 			soc.send(cmd)
+			time.sleep(2) 
+			strClose = strClose + ' success.'
 		except Exception, e:
 			print 'socket is not connect.'
+			strClose = strClose + ' failed.' + ' socket is not connect.'
+	else:
+		strClose = strClose + ' failed.' + ' no ' +phone+ ' type.'
 	time.sleep(2)
+	return strClose
+
+# appendToResult
+def appendToResult(content):
+	global console_result
+	console_result = console_result + content
 
 # excute cocos command
 def cocos_project(level):
-	print 'will excute cocos_command: ', COCOS_CMD[level]
+	print 'will excute cocos_command: ', COCOS_CMD[level], level
+	appendToResult('will excute ' + COCOS_CMD[level] + ' command:'+"\n\r\t")
 	for proj in project_types:
 		print 'proj: ', proj
 		if level == ENUM_PARAM.new:
@@ -169,11 +188,13 @@ def cocos_project(level):
 				time.sleep(12)
 				addConsoleListenOnTCP(proj)
 			print 'create project',proj,' is:', not info_create
+			appendToResult('	'+cmd +': ' + str(not info_create) + ".\n\r\t")
 		else:
 			for phone in phonePlats:
 				print 'platform is: ', phone
 				cmd = './'+cocos_console_dir+'cocos '+COCOS_CMD[level]+' -s '+proj+PROJ_SUFFIX+' -p '+phone
 				print 'cmd:',cmd
+				info_cmd = ''
 				if level == ENUM_PARAM.compile:
 					if runSupport[curPlat][phone]:
 						info_cmd = os.system(cmd)
@@ -187,11 +208,13 @@ def cocos_project(level):
 						print 'info '+COCOS_CMD[level]+':', not info_cmd
 						if level == ENUM_PARAM.run:
 							time.sleep(20)
-							close_proj(proj, phone)
+							strClose = close_proj(proj, phone)
+							appendToResult('	'+strClose+"\n\r\t")
+				appendToResult('	'+cmd +': ' + str(not info_cmd) + ".\n\r\t")
 
 # build and run according to params of provided.(lv_ignore: e.g:ignore new)
 def build_run(lv_ignore):
-	print 'will build and run'
+	print 'will build and run, in function build_run'
 	for level in LEVEL_COCOS:
 		print 'level:', level, cocos_param, LEVEL_COCOS[level]
 		if cocos_param >= LEVEL_COCOS[level] and level > lv_ignore:
@@ -203,6 +226,7 @@ def build_run(lv_ignore):
 ANDROID_SIMULATOR_NAME = 'console-test'
 # start android simulator if no android devices connected.
 def start_android_simulator():
+	print 'in function start_android_simulator.'
 	if getAndroidDevices() > 0:
 		print 'already connected android device.'
 		return
@@ -212,11 +236,65 @@ def start_android_simulator():
 		info_start = subprocess.Popen(cmd_start, stdin=subprocess.PIPE, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		print 'start an android simulator:', not info_start
 
+# send email
+EMAIL_KEYS={
+	0:'EMAIL_HOST',
+	1:'EMAIL_USER',
+	2:'EMAIL_PWD',
+	3:'EMAIL_POSTFIX',
+	4:'EMAIL_LIST',
+	5:'NEED_SEND_EMAIL'
+}
+
+OBJ_EMAIL_INFO = {}
+print 'will get env info.'
+for key in EMAIL_KEYS:
+	if os.environ.has_key(EMAIL_KEYS[key]):
+		OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = os.environ[EMAIL_KEYS[key]]
+		if key == 4:
+			# string to list by ' ', for separate users.
+			OBJ_EMAIL_INFO[EMAIL_KEYS[4]] = OBJ_EMAIL_INFO[EMAIL_KEYS[4]].split(' ')
+
+print 'will send email.', OBJ_EMAIL_INFO
+def send_mail(to_list,sub,title,content):
+	mail_user = OBJ_EMAIL_INFO[ EMAIL_KEYS[1] ]
+	mail_postfix = OBJ_EMAIL_INFO[ EMAIL_KEYS[3] ]
+	mail_host = OBJ_EMAIL_INFO[ EMAIL_KEYS[0] ]
+	mail_pass = OBJ_EMAIL_INFO[ EMAIL_KEYS[2] ]
+	me = mail_user+"<"+mail_user+"@"+mail_postfix+">"
+	msg = MIMEText(content,_subtype='plain',_charset='gb2312')
+	msg['Subject'] = sub
+	msg['From'] = me
+	msg['To'] = " ".join(to_list)
+	print 'to users:', msg['To']
+	msg['Content'] = 'test'
+	try:
+		s = smtplib.SMTP()
+		s.connect(mail_host)
+		s.login(mail_user,mail_pass)
+		s.sendmail(me, to_list, str(msg))
+		print 'info:', me, to_list, str(msg)
+		s.close()
+		appendToResult( 'send email true:' + str(msg) )
+		return True
+	except Exception, e:
+		appendToResult( 'send email false:' + str(e) )
+        print str(e)
+        return False
+
+def sendEmail(msg):
+	send_mail(OBJ_EMAIL_INFO[EMAIL_KEYS[4]], "cocos-console-test result", 'for error.', msg)
+
 def main():
 	print 'in main:'
-	start_android_simulator()
+	# start_android_simulator()
 	print 'will build_run:'
 	build_run(-1)
+	print 'end build run.'
+	print 'will send email:'
+	if OBJ_EMAIL_INFO[ EMAIL_KEYS[5] ]:
+		sendEmail(console_result)
+	print 'console_result:', console_result
 
 # -------------- main --------------
 if __name__ == '__main__':
