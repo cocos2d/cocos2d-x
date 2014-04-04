@@ -117,7 +117,7 @@ void DemoFlower::onEnter()
     _emitter->setEmissionRate(50);
     _emitter->setRotation(-30);
     _emitter->setAngleVar(0);
-    //_emitter->setAngle(60);
+    _emitter->setAngle(60);
     _emitter->setRadialAccel(0);
     _emitter->setTangentialAccel(0);
     _emitter->retain();
