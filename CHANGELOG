@@ -3,8 +3,9 @@ cocos2d-x-3.0final ?.? 2014
 
      [FIX]          Animation: Added 'loops' parameter to Animation::createWithSpriteFrames
      [FIX]          Audio: can not resume after pausing on windows
-     [FIX]          cocos2d::extension::Control: ControlButton can't swallow touch event
+     [FIX]          Control: ControlButton can't swallow touch event
      [FIX]          FileUtils: 'isFileExist' doesn't consider SearchPaths and ResolutionOrders
+     [FIX]          JNI: doesn't cache classloader which may cause crash on Android devices with 4.2 or upper version
      [FIX]          Physics: Skips one frame when delta time is equal to zero
      [FIX]          Physics: PhysicsShapeEdgeChain::init() always return false
      [FIX]          Setup: Force updating environment variables in setup.py
