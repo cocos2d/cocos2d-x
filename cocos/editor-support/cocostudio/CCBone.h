@@ -31,8 +31,11 @@ THE SOFTWARE.
 #include "cocostudio/CCDecorativeDisplay.h"
 #include "cocostudio/CCDisplayManager.h"
 #include "CCNode.h"
+#include "CCMath.h"
 
 namespace cocostudio {
+
+USING_NS_CC_MATH;
 
 class Armature;
 
@@ -154,7 +157,7 @@ public:
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
     virtual kmMat4 getNodeToArmatureTransform() const;
-    virtual kmMat4 getNodeToWorldTransform() const override;
+    virtual Matrix getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
     DisplayType getDisplayRenderNodeType();

@@ -31,11 +31,14 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureAnimation.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
+#include "CCMath.h"
 
 class b2Body;
 struct cpBody;
 
 namespace cocostudio {
+
+USING_NS_CC_MATH;
 
 CC_DEPRECATED_ATTRIBUTE typedef ProcessBase CCProcessBase;
 CC_DEPRECATED_ATTRIBUTE typedef BaseData CCBaseData;
@@ -163,7 +166,7 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override; 
 
-    virtual const kmMat4& getNodeToParentTransform() const override;
+    virtual const Matrix& getNodeToParentTransform() const override;
     /**
      *  @js NA
      *  @lua NA

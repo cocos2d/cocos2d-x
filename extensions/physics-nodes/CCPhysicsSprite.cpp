@@ -329,7 +329,7 @@ void PhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-const kmMat4& PhysicsSprite::getNodeToParentTransform() const
+const Matrix& PhysicsSprite::getNodeToParentTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.

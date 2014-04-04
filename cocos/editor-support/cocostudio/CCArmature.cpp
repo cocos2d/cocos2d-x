@@ -316,7 +316,7 @@ const cocos2d::Map<std::string, Bone*>& Armature::getBoneDic() const
     return _boneDic;
 }
 
-const kmMat4& Armature::getNodeToParentTransform() const
+const Matrix& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
         _armatureTransformDirty = true;
