@@ -95,7 +95,6 @@ enum class MATRIX_STACK_TYPE
 };
 
 kmMat4 matrixToKmMat4(const Matrix& mat);
-Matrix kmMat4ToMatrix(const kmMat4& mat);
 
 class CC_DLL Director : public Ref
 {
