@@ -221,7 +221,7 @@ kmMat4 Skin::getNodeToWorldTransformAR() const
 
 void Skin::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    kmMat4 mv = matrixToKmMat4(Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
+    kmMat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     //TODO implement z order
     _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
