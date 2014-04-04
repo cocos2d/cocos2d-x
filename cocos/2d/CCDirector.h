@@ -38,8 +38,11 @@ THE SOFTWARE.
 #include "CCLabelAtlas.h"
 #include "kazmath/mat4.h"
 #include <stack>
+#include "CCMath.h"
 
 NS_CC_BEGIN
+
+USING_NS_CC_MATH;
 
 /**
  * @addtogroup base_nodes
@@ -91,12 +94,15 @@ enum class MATRIX_STACK_TYPE
     MATRIX_STACK_TEXTURE
 };
 
+kmMat4 matrixToKmMat4(const Matrix& mat);
+Matrix kmMat4ToMatrix(const kmMat4& mat);
+
 class CC_DLL Director : public Ref
 {
 private:
-    std::stack<kmMat4> _modelViewMatrixStack;
-    std::stack<kmMat4> _projectionMatrixStack;
-    std::stack<kmMat4> _textureMatrixStack;
+    std::stack<Matrix> _modelViewMatrixStack;
+    std::stack<Matrix> _projectionMatrixStack;
+    std::stack<Matrix> _textureMatrixStack;
 protected:
     void initMatrixStack();
 public:

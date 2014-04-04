@@ -92,6 +92,20 @@ const char *Director::EVENT_AFTER_DRAW = "director_after_draw";
 const char *Director::EVENT_AFTER_VISIT = "director_after_visit";
 const char *Director::EVENT_AFTER_UPDATE = "director_after_update";
 
+kmMat4 matrixToKmMat4(const Matrix& mat)
+{
+    kmMat4 result;
+    kmMat4Fill(&result, mat.m);
+    return result;
+}
+
+Matrix kmMat4ToMatrix(const kmMat4& mat)
+{
+    Matrix result;
+    result.set(mat.mat);
+    return result;
+}
+
 Director* Director::getInstance()
 {
     if (!s_SharedDirector)
@@ -437,9 +451,6 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
    
 void Director::initMatrixStack()
 {
-    kmMat4 identity;
-    kmMat4Identity(&identity);
-    
     while (!_modelViewMatrixStack.empty())
     {
         _modelViewMatrixStack.pop();
@@ -455,9 +466,9 @@ void Director::initMatrixStack()
         _textureMatrixStack.pop();
     }
     
-    _modelViewMatrixStack.push(identity);
-    _projectionMatrixStack.push(identity);
-    _textureMatrixStack.push(identity);
+    _modelViewMatrixStack.push(Matrix::identity());
+    _projectionMatrixStack.push(Matrix::identity());
+    _textureMatrixStack.push(Matrix::identity());
 }
 
 void Director::resetMatrixStack()
@@ -489,15 +500,15 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmMat4Identity(&_modelViewMatrixStack.top());
+        _modelViewMatrixStack.top() = Matrix::identity();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmMat4Identity(&_projectionMatrixStack.top());
+        _projectionMatrixStack.top() = Matrix::identity();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmMat4Identity(&_textureMatrixStack.top());
+        _textureMatrixStack.top() = Matrix::identity();
     }
     else
     {
@@ -507,17 +518,18 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 
 void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 {
+    Matrix gameplayMat(mat.mat);
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        _modelViewMatrixStack.top() = mat;
+        _modelViewMatrixStack.top() = gameplayMat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStack.top() = mat;
+        _projectionMatrixStack.top() = gameplayMat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        _textureMatrixStack.top() = mat;
+        _textureMatrixStack.top() = gameplayMat;
     }
     else
     {
@@ -527,17 +539,18 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 
 void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
 {
+    Matrix gameplayMat(mat.mat);
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        kmMat4Multiply(&_modelViewMatrixStack.top(), &_modelViewMatrixStack.top(), &mat);
+        _modelViewMatrixStack.top() *= gameplayMat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        kmMat4Multiply(&_projectionMatrixStack.top(), &_projectionMatrixStack.top(), &mat);
+        _projectionMatrixStack.top() *= gameplayMat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        kmMat4Multiply(&_textureMatrixStack.top(), &_textureMatrixStack.top(), &mat);
+        _textureMatrixStack.top() *= gameplayMat;
     }
     else
     {
@@ -567,7 +580,7 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
 
 kmMat4 Director::getMatrix(MATRIX_STACK_TYPE type)
 {
-    kmMat4 result;
+    Matrix result;
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
         result = _modelViewMatrixStack.top();
@@ -594,7 +607,7 @@ kmMat4 Director::getMatrix(MATRIX_STACK_TYPE type)
 //    {
 //        CCASSERT(false, "Error in director matrix stack");
 //    }
-    return result;
+    return matrixToKmMat4(result);
 }
 
 void Director::setProjection(Projection projection)
