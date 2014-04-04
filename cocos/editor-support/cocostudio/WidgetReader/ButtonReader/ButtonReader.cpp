@@ -55,14 +55,21 @@ namespace cocostudio
             {
                 std::string tp_n = jsonPath;
                 const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-                const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():nullptr;
+                std::string normalFileName_tp = "";
+                if (nullptr != normalFileName) {
+                    normalFileName_tp = tp_n.append(normalFileName);
+                }
                 button->loadTextureNormal(normalFileName_tp);
                 break;
             }
             case 1:
             {
+                std::string normalString;
                 const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-                button->loadTextureNormal(normalFileName,UI_TEX_TYPE_PLIST);
+                if (nullptr != normalFileName) {
+                    normalString = std::string(normalFileName);
+                }
+                button->loadTextureNormal(normalString,UI_TEX_TYPE_PLIST);
                 break;
             }
             default:
@@ -76,14 +83,21 @@ namespace cocostudio
             {
                 std::string tp_p = jsonPath;
                 const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-                const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():nullptr;
+                std::string pressedFileName_tp ;
+                if (nullptr != pressedFileName) {
+                    pressedFileName_tp = tp_p.append(pressedFileName);
+                }
                 button->loadTexturePressed(pressedFileName_tp);
                 break;
             }
             case 1:
             {
                 const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-                button->loadTexturePressed(pressedFileName,UI_TEX_TYPE_PLIST);
+                std::string pressedString;
+                if (nullptr != pressedFileName) {
+                    pressedString = std::string(pressedFileName);
+                }
+                button->loadTexturePressed(pressedString,UI_TEX_TYPE_PLIST);
                 break;
             }
             default:
@@ -97,14 +111,21 @@ namespace cocostudio
             {
                 std::string tp_d = jsonPath;
                 const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-                const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
+                std::string disabledFileName_tp = "";
+                if ( nullptr != disabledFileName) {
+                    disabledFileName_tp = tp_d.append(disabledFileName);
+                }
                 button->loadTextureDisabled(disabledFileName_tp);
                 break;
             }
             case 1:
             {
+                std::string disabledString;
                 const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-                button->loadTextureDisabled(disabledFileName,UI_TEX_TYPE_PLIST);
+                if (nullptr != disabledFileName) {
+                    disabledString = std::string(disabledFileName);
+                }
+                button->loadTextureDisabled(disabledString,UI_TEX_TYPE_PLIST);
                 break;
             }
             default:
