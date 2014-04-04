@@ -467,6 +467,9 @@ Developers:
 
     lewellyn
         Updated BlackBerry project template.
+        
+    kienvn
+        Fixed CCLabelBMFont crashes when there are invalid characters which aren't in fnt file
 
 Retired Core Developers:
     WenSheng Yang
