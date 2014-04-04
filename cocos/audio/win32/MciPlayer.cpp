@@ -16,6 +16,7 @@ MciPlayer::MciPlayer()
 , _soundID(0)
 , _times(0)
 , _playing(false)
+, strExt("")
 {
     if (! s_hInstance)
     {
@@ -77,6 +78,10 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
 //         pBuf = new WCHAR[nLen + 1];
 //         BREAK_IF(! pBuf);
 //         MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, pBuf, nLen + 1);
+        
+        std::string strFile(pFileName);
+        int nPos = strFile.rfind(".") + 1;
+        strExt = strFile.substr(nPos, strFile.length() - nPos);
 
         Close();
 
@@ -131,7 +136,20 @@ void MciPlayer::Pause()
 
 void MciPlayer::Resume()
 {
-    _SendGenericCommand(MCI_RESUME);
+    if (strExt == "mid" || strExt == "MID")
+    {
+        // midi not supprt MCI_RESUME, should get the position and use MCI_FROM
+        MCI_STATUS_PARMS mciStatusParms;
+        MCI_PLAY_PARMS   mciPlayParms;  
+        mciStatusParms.dwItem = MCI_STATUS_POSITION;   
+        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM,(DWORD)(LPVOID)&mciStatusParms); // MCI_STATUS   
+        mciPlayParms.dwFrom = mciStatusParms.dwReturn;  // get position  
+        _SendGenericCommand(MCI_PLAY, MCI_FROM, (DWORD)(LPVOID)&mciPlayParms); // MCI_FROM
+    } 
+    else
+    {
+        _SendGenericCommand(MCI_RESUME);
+    }   
 }
 
 void MciPlayer::Stop()
@@ -166,15 +184,15 @@ UINT MciPlayer::GetSoundID()
 //////////////////////////////////////////////////////////////////////////
 // private member
 //////////////////////////////////////////////////////////////////////////
-
-void MciPlayer::_SendGenericCommand(int nCommand)
+void MciPlayer::_SendGenericCommand( int nCommand, DWORD_PTR param1 /*= 0*/, DWORD_PTR parma2 /*= 0*/ )
 {
     if (! _dev)
     {
         return;
     }
-    mciSendCommand(_dev, nCommand, 0, 0);
+    mciSendCommand(_dev, nCommand, param1, parma2);
 }
+
 
 //////////////////////////////////////////////////////////////////////////
 // static function

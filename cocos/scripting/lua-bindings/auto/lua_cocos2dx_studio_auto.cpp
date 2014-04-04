@@ -815,7 +815,7 @@ static int lua_cocos2dx_studio_ActionObject_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_ActionObject(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.ActionObject");
-    tolua_cclass(tolua_S,"ActionObject","ccs.ActionObject","",nullptr);
+    tolua_cclass(tolua_S,"ActionObject","ccs.ActionObject","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionObject");
         tolua_function(tolua_S,"setCurrentTime",lua_cocos2dx_studio_ActionObject_setCurrentTime);
@@ -1073,7 +1073,7 @@ static int lua_cocos2dx_studio_ActionManagerEx_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_ActionManagerEx(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.ActionManagerEx");
-    tolua_cclass(tolua_S,"ActionManagerEx","ccs.ActionManagerEx","",nullptr);
+    tolua_cclass(tolua_S,"ActionManagerEx","ccs.ActionManagerEx","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ActionManagerEx");
         tolua_function(tolua_S,"playActionByName",lua_cocos2dx_studio_ActionManagerEx_playActionByName);
@@ -1252,7 +1252,7 @@ static int lua_cocos2dx_studio_BaseData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_BaseData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.BaseData");
-    tolua_cclass(tolua_S,"BaseData","ccs.BaseData","",nullptr);
+    tolua_cclass(tolua_S,"BaseData","ccs.BaseData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"BaseData");
         tolua_function(tolua_S,"getColor",lua_cocos2dx_studio_BaseData_getColor);
@@ -1419,7 +1419,7 @@ static int lua_cocos2dx_studio_DisplayData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_DisplayData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.DisplayData");
-    tolua_cclass(tolua_S,"DisplayData","ccs.DisplayData","",nullptr);
+    tolua_cclass(tolua_S,"DisplayData","ccs.DisplayData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"DisplayData");
         tolua_function(tolua_S,"copy",lua_cocos2dx_studio_DisplayData_copy);
@@ -2173,7 +2173,7 @@ static int lua_cocos2dx_studio_ArmatureData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_ArmatureData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.ArmatureData");
-    tolua_cclass(tolua_S,"ArmatureData","ccs.ArmatureData","",nullptr);
+    tolua_cclass(tolua_S,"ArmatureData","ccs.ArmatureData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ArmatureData");
         tolua_function(tolua_S,"addBoneData",lua_cocos2dx_studio_ArmatureData_addBoneData);
@@ -2532,7 +2532,7 @@ static int lua_cocos2dx_studio_MovementBoneData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_MovementBoneData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.MovementBoneData");
-    tolua_cclass(tolua_S,"MovementBoneData","ccs.MovementBoneData","",nullptr);
+    tolua_cclass(tolua_S,"MovementBoneData","ccs.MovementBoneData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"MovementBoneData");
         tolua_function(tolua_S,"init",lua_cocos2dx_studio_MovementBoneData_init);
@@ -2714,7 +2714,7 @@ static int lua_cocos2dx_studio_MovementData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_MovementData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.MovementData");
-    tolua_cclass(tolua_S,"MovementData","ccs.MovementData","",nullptr);
+    tolua_cclass(tolua_S,"MovementData","ccs.MovementData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"MovementData");
         tolua_function(tolua_S,"getMovementBoneData",lua_cocos2dx_studio_MovementData_getMovementBoneData);
@@ -2939,7 +2939,7 @@ static int lua_cocos2dx_studio_AnimationData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_AnimationData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.AnimationData");
-    tolua_cclass(tolua_S,"AnimationData","ccs.AnimationData","",nullptr);
+    tolua_cclass(tolua_S,"AnimationData","ccs.AnimationData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"AnimationData");
         tolua_function(tolua_S,"getMovement",lua_cocos2dx_studio_AnimationData_getMovement);
@@ -3118,7 +3118,7 @@ static int lua_cocos2dx_studio_ContourData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_ContourData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.ContourData");
-    tolua_cclass(tolua_S,"ContourData","ccs.ContourData","",nullptr);
+    tolua_cclass(tolua_S,"ContourData","ccs.ContourData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ContourData");
         tolua_function(tolua_S,"init",lua_cocos2dx_studio_ContourData_init);
@@ -3343,7 +3343,7 @@ static int lua_cocos2dx_studio_TextureData_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_TextureData(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.TextureData");
-    tolua_cclass(tolua_S,"TextureData","ccs.TextureData","",nullptr);
+    tolua_cclass(tolua_S,"TextureData","ccs.TextureData","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"TextureData");
         tolua_function(tolua_S,"getContourData",lua_cocos2dx_studio_TextureData_getContourData);
@@ -3696,8 +3696,10 @@ int lua_cocos2dx_studio_Tween_constructor(lua_State* tolua_S)
         if(!ok)
             return 0;
         cobj = new cocostudio::Tween();
-        tolua_pushusertype(tolua_S,(void*)cobj,"ccs.Tween");
-        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccs.Tween");
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "Tween",argc, 0);
@@ -3719,7 +3721,7 @@ static int lua_cocos2dx_studio_Tween_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_Tween(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.Tween");
-    tolua_cclass(tolua_S,"Tween","ccs.Tween","",nullptr);
+    tolua_cclass(tolua_S,"Tween","ccs.Tween","ccs.ProcessBase",nullptr);
 
     tolua_beginmodule(tolua_S,"Tween");
         tolua_function(tolua_S,"getAnimation",lua_cocos2dx_studio_Tween_getAnimation);
@@ -4656,7 +4658,7 @@ static int lua_cocos2dx_studio_DisplayManager_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_DisplayManager(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.DisplayManager");
-    tolua_cclass(tolua_S,"DisplayManager","ccs.DisplayManager","",nullptr);
+    tolua_cclass(tolua_S,"DisplayManager","ccs.DisplayManager","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"DisplayManager");
         tolua_function(tolua_S,"getDisplayRenderNode",lua_cocos2dx_studio_DisplayManager_getDisplayRenderNode);
@@ -7357,8 +7359,10 @@ int lua_cocos2dx_studio_ArmatureAnimation_constructor(lua_State* tolua_S)
         if(!ok)
             return 0;
         cobj = new cocostudio::ArmatureAnimation();
-        tolua_pushusertype(tolua_S,(void*)cobj,"ccs.ArmatureAnimation");
-        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccs.ArmatureAnimation");
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ArmatureAnimation",argc, 0);
@@ -7380,7 +7384,7 @@ static int lua_cocos2dx_studio_ArmatureAnimation_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_ArmatureAnimation(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.ArmatureAnimation");
-    tolua_cclass(tolua_S,"ArmatureAnimation","ccs.ArmatureAnimation","",nullptr);
+    tolua_cclass(tolua_S,"ArmatureAnimation","ccs.ArmatureAnimation","ccs.ProcessBase",nullptr);
 
     tolua_beginmodule(tolua_S,"ArmatureAnimation");
         tolua_function(tolua_S,"getSpeedScale",lua_cocos2dx_studio_ArmatureAnimation_getSpeedScale);
@@ -8345,7 +8349,7 @@ static int lua_cocos2dx_studio_ArmatureDataManager_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_ArmatureDataManager(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.ArmatureDataManager");
-    tolua_cclass(tolua_S,"ArmatureDataManager","ccs.ArmatureDataManager","",nullptr);
+    tolua_cclass(tolua_S,"ArmatureDataManager","ccs.ArmatureDataManager","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ArmatureDataManager");
         tolua_function(tolua_S,"getAnimationDatas",lua_cocos2dx_studio_ArmatureDataManager_getAnimationDatas);
@@ -12403,7 +12407,7 @@ static int lua_cocos2dx_studio_GUIReader_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_studio_GUIReader(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccs.GUIReader");
-    tolua_cclass(tolua_S,"GUIReader","ccs.GUIReader","",nullptr);
+    tolua_cclass(tolua_S,"GUIReader","ccs.GUIReader","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"GUIReader");
         tolua_function(tolua_S,"widgetFromJsonFile",lua_cocos2dx_studio_GUIReader_widgetFromJsonFile);
@@ -12505,12 +12509,70 @@ int lua_cocos2dx_studio_SceneReader_createNodeWithSceneFile(lua_State* tolua_S)
         object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
         return 1;
     }
+    if (argc == 2) 
+    {
+        std::string arg0;
+        cocostudio::SceneReader::AttachComponentType arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+            return 0;
+        cocos2d::Node* ret = cobj->createNodeWithSceneFile(arg0, arg1);
+        object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
+        return 1;
+    }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "createNodeWithSceneFile",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SceneReader_createNodeWithSceneFile'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_SceneReader_getAttachComponentType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::SceneReader* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.SceneReader",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::SceneReader*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_SceneReader_getAttachComponentType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        int ret = (int)cobj->getAttachComponentType();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getAttachComponentType",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SceneReader_getAttachComponentType'.",&tolua_err);
 #endif
 
     return 0;
@@ -12668,6 +12730,7 @@ int lua_register_cocos2dx_studio_SceneReader(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"SceneReader");
         tolua_function(tolua_S,"setTarget",lua_cocos2dx_studio_SceneReader_setTarget);
         tolua_function(tolua_S,"createNodeWithSceneFile",lua_cocos2dx_studio_SceneReader_createNodeWithSceneFile);
+        tolua_function(tolua_S,"getAttachComponentType",lua_cocos2dx_studio_SceneReader_getAttachComponentType);
         tolua_function(tolua_S,"getNodeByTag",lua_cocos2dx_studio_SceneReader_getNodeByTag);
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_studio_SceneReader_destroyInstance);
         tolua_function(tolua_S,"sceneReaderVersion", lua_cocos2dx_studio_SceneReader_sceneReaderVersion);

@@ -2,12 +2,7 @@
 
 #include "UIListViewTest.h"
 
-const char* font_UIListViewTest =
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-"Marker Felt";
-#else
-"cocosui/Marker Felt.ttf";
-#endif
+const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
 
 // UIListViewTest_Vertical
 
@@ -31,7 +26,7 @@ bool UIListViewTest_Vertical::init()
         
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move by vertical direction");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
@@ -40,7 +35,7 @@ bool UIListViewTest_Vertical::init()
         
         Text* alert = Text::create();
         alert->setText("ListView vertical");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
@@ -216,7 +211,7 @@ bool UIListViewTest_Horizontal::init()
         
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("Move by horizontal direction");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
@@ -225,7 +220,7 @@ bool UIListViewTest_Horizontal::init()
         
         Text* alert = Text::create();
         alert->setText("ListView horizontal");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));

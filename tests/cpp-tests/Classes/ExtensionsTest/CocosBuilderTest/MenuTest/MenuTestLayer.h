@@ -25,7 +25,7 @@ class MenuTestLayer
         void onMenuItemCClicked(cocos2d::Ref * sender);
 
     private:
-        cocos2d::LabelBMFont * mMenuItemStatusLabelBMFont;
+        cocos2d::Label * mMenuItemStatusLabelBMFont;
 };
 
 #endif

@@ -125,6 +125,13 @@ emitter.startSpin = 0;
 @endcode
 
 */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef RELATIVE
+#undef RELATIVE
+#endif
+#endif
+
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
@@ -347,6 +354,8 @@ public:
     inline void setPositionType(PositionType type) { _positionType = type; };
     
     // Overrides
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual void update(float dt) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;

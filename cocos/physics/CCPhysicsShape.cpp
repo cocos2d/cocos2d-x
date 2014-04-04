@@ -769,7 +769,7 @@ bool PhysicsShapeEdgeChain::init(const Point* points, int count, const PhysicsMa
             _info->add(shape);
         }
         CC_SAFE_DELETE_ARRAY(vec);
-        CC_BREAK_IF(i < count);
+        CC_BREAK_IF(i < count - 1);
         
         _mass = PHYSICS_INFINITY;
         _moment = PHYSICS_INFINITY;

@@ -97,8 +97,8 @@ void Slider::initRenderer()
     _barRenderer = Sprite::create();
     _progressBarRenderer = Sprite::create();
     _progressBarRenderer->setAnchorPoint(Point(0.0f, 0.5f));
-    Node::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
-    Node::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
+    addProtectedChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
+    addProtectedChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     _slidBallNormalRenderer = Sprite::create();
     _slidBallPressedRenderer = Sprite::create();
     _slidBallPressedRenderer->setVisible(false);
@@ -108,7 +108,7 @@ void Slider::initRenderer()
     _slidBallRenderer->addChild(_slidBallNormalRenderer);
     _slidBallRenderer->addChild(_slidBallPressedRenderer);
     _slidBallRenderer->addChild(_slidBallDisabledRenderer);
-    Node::addChild(_slidBallRenderer, SLIDBALL_RENDERER_Z, -1);
+    addProtectedChild(_slidBallRenderer, SLIDBALL_RENDERER_Z, -1);
 }
 
 void Slider::loadBarTexture(const char* fileName, TextureResType texType)
@@ -196,8 +196,8 @@ void Slider::setScale9Enabled(bool able)
     }
     
     _scale9Enabled = able;
-    Node::removeChild(_barRenderer);
-    Node::removeChild(_progressBarRenderer);
+    removeProtectedChild(_barRenderer);
+    removeProtectedChild(_progressBarRenderer);
     _barRenderer = nullptr;
     _progressBarRenderer = nullptr;
     if (_scale9Enabled)
@@ -212,8 +212,8 @@ void Slider::setScale9Enabled(bool able)
     }
     loadBarTexture(_textureFile.c_str(), _barTexType);
     loadProgressBarTexture(_progressBarTextureFile.c_str(), _progressBarTexType);
-    Node::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
-    Node::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
+    addProtectedChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
+    addProtectedChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -376,6 +376,16 @@ void Slider::setPercent(int percent)
         rect.size.width = _progressBarTextureSize.width * res;
         spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
     }
+}
+    
+bool Slider::hitTest(const cocos2d::Point &pt)
+{
+    Point nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
+    Rect ballRect = this->_slidBallNormalRenderer->getTextureRect();
+    if (ballRect.containsPoint(nsp)) {
+        return true;
+    }
+    return false;
 }
 
 bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)

@@ -22,7 +22,7 @@ bool UITextFieldTest::init()
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
@@ -31,7 +31,7 @@ bool UITextFieldTest::init()
         // Add the alert
         Text* alert = Text::create();
         alert->setText("TextField");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
@@ -40,7 +40,7 @@ bool UITextFieldTest::init()
         // Create the textfield
         TextField* textField = TextField::create();
         textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
+        textField->setFontName("fonts/Marker Felt.ttf");
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
@@ -111,7 +111,7 @@ bool UITextFieldTest_MaxLength::init()
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
         _displayValueLabel->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
@@ -120,7 +120,7 @@ bool UITextFieldTest_MaxLength::init()
         // Add the alert
         Text *alert = Text::create();
         alert->setText("TextField max length");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.075f));
@@ -131,7 +131,7 @@ bool UITextFieldTest_MaxLength::init()
         textField->setMaxLengthEnabled(true);
         textField->setMaxLength(3);
         textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
+        textField->setFontName("fonts/Marker Felt.ttf");
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -205,7 +205,7 @@ bool UITextFieldTest_Password::init()
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(32);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1.0f));
         _displayValueLabel->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5f));
@@ -214,7 +214,7 @@ bool UITextFieldTest_Password::init()
         // Add the alert
         Text *alert = Text::create();
         alert->setText("TextField password");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.075f));
@@ -225,7 +225,7 @@ bool UITextFieldTest_Password::init()
         textField->setPasswordEnabled(true);
         textField->setPasswordStyleText("*");
         textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
+        textField->setFontName("fonts/Marker Felt.ttf");
         textField->setFontSize(30);
         textField->setPlaceHolder("input password here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -294,7 +294,7 @@ bool UITextFieldTest_LineWrap::init()
         // Add a label in which the textfield events will be displayed
         _displayValueLabel = Text::create();
         _displayValueLabel->setText("No Event");
-        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
         _displayValueLabel->setFontSize(30);
         _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
         _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getSize().height * 1.5));
@@ -303,7 +303,7 @@ bool UITextFieldTest_LineWrap::init()
         // Add the alert
         Text *alert = Text::create();
         alert->setText("TextField line wrap");
-        alert->setFontName("Marker Felt");
+        alert->setFontName("fonts/Marker Felt.ttf");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
@@ -316,7 +316,7 @@ bool UITextFieldTest_LineWrap::init()
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);
         textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
+        textField->setFontName("fonts/Marker Felt.ttf");
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
@@ -336,7 +336,7 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType t
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
-            textField->runAction(CCMoveTo::create(0.225,
+            textField->runAction(CCMoveTo::create(0.225f,
                                                   Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + textField->getContentSize().height / 2)));
             textField->setTextHorizontalAlignment(TextHAlignment::LEFT);
             textField->setTextVerticalAlignment(TextVAlignment::TOP);
@@ -349,7 +349,7 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextFiledEventType t
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getSize();
-            textField->runAction(CCMoveTo::create(0.175, Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
             textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
             textField->setTextVerticalAlignment(TextVAlignment::CENTER);
             

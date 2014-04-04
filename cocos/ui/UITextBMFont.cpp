@@ -59,8 +59,8 @@ TextBMFont* TextBMFont::create()
 
 void TextBMFont::initRenderer()
 {
-    _labelBMFontRenderer = cocos2d::LabelBMFont::create();
-    Node::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
+    _labelBMFontRenderer = cocos2d::Label::create();
+    addProtectedChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
 }
 
 void TextBMFont::setFntFile(const char *fileName)
@@ -70,7 +70,7 @@ void TextBMFont::setFntFile(const char *fileName)
         return;
     }
     _fntFileName = fileName;
-    _labelBMFontRenderer->initWithString("", fileName);
+    _labelBMFontRenderer->setBMFontFilePath(fileName);
     updateAnchorPoint();
     labelBMFontScaleChangedWithSize();
     _fntFileHasInit = true;

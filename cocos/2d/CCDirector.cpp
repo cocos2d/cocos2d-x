@@ -45,6 +45,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "CCFontFNT.h"
+#include "CCFontAtlasCache.h"
 #include "CCActionManager.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
@@ -157,8 +158,10 @@ bool Director::init(void)
     initTextureCache();
 
     _renderer = new Renderer;
-    _console = new Console;
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+    _console = new Console;
+#endif
     return true;
 }
 
@@ -182,7 +185,10 @@ Director::~Director(void)
     delete _eventProjectionChanged;
 
     delete _renderer;
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     delete _console;
+#endif
 
     // clean auto release pool
     PoolManager::destroyInstance();
@@ -249,6 +255,12 @@ void Director::drawScene()
 {
     // calculate "global" dt
     calculateDeltaTime();
+    
+    // skip one flame when _deltaTime equal to zero.
+    if(_deltaTime < FLT_EPSILON)
+    {
+        return;
+    }
 
     if (_openGLView)
     {
@@ -416,9 +428,9 @@ void Director::setViewport()
     }
 }
 
-void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
+void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 {
-    _nextDeltaTimeZero = bNextDeltaTimeZero;
+    _nextDeltaTimeZero = nextDeltaTimeZero;
 }
 
 void Director::setProjection(Projection projection)
@@ -432,6 +444,12 @@ void Director::setProjection(Projection projection)
         case Projection::_2D:
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+            if(getOpenGLView() != nullptr)
+            {
+                kmGLMultMatrix( getOpenGLView()->getOrientationMatrix());
+            }
+#endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);
             kmGLMultMatrix(&orthoMatrix);
@@ -447,7 +465,15 @@ void Director::setProjection(Projection projection)
 
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
-
+            
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
+            GLView* view = getOpenGLView();
+            if(getOpenGLView() != nullptr)
+            {
+                kmGLMultMatrix(getOpenGLView()->getOrientationMatrix());
+            }
+#endif
             // issue #1334
             kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
 //            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
@@ -485,10 +511,16 @@ void Director::setProjection(Projection projection)
 void Director::purgeCachedData(void)
 {
     FontFNT::purgeCachedData();
+    FontAtlasCache::purgeCachedData();
+
     if (s_SharedDirector->getOpenGLView())
     {
         SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
         _textureCache->removeUnusedTextures();
+
+        // Note: some tests such as ActionsTest are leaking refcounted textures
+        // There should be no test textures left in the cache
+        log("%s\n", _textureCache->getCachedTextureInfo().c_str());
     }
     FileUtils::getInstance()->purgeCachedEntries();
 }
@@ -532,6 +564,11 @@ static void GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
+	kmMat4Multiply(&projection, Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix(), &projection);
+#endif
 
 	kmMat4 modelview;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);

@@ -28,7 +28,7 @@
 #include "CCControlSwitch.h"
 #include "CCSprite.h"
 #include "CCActionTween.h"
-#include "CCLabelTTF.h"
+#include "CCLabel.h"
 #include "CCClippingNode.h"
 #include "ccShaders.h"
 #include "CCRenderTexture.h"
@@ -45,8 +45,8 @@ public:
                             Sprite *onSprite,
                             Sprite *offSprite,
                             Sprite *thumbSprite,
-                            LabelTTF* onLabel,
-                            LabelTTF* offLabel);
+                            Label* onLabel,
+                            Label* offLabel);
 
     /**
      * @js NA
@@ -91,8 +91,8 @@ public:
     CC_SYNTHESIZE_RETAIN(Sprite*, _onSprite, OnSprite)
     CC_SYNTHESIZE_RETAIN(Sprite*, _offSprite, OffSprite)
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _onLabel, OnLabel)
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _offLabel, OffLabel)
+    CC_SYNTHESIZE_RETAIN(Label*, _onLabel, OnLabel)
+    CC_SYNTHESIZE_RETAIN(Label*, _offLabel, OffLabel)
     
     Sprite* _clipperStencil;
 
@@ -116,8 +116,8 @@ protected:
                             Sprite *onSprite,
                             Sprite *offSprite,
                             Sprite *thumbSprite,
-                            LabelTTF* onLabel, 
-                            LabelTTF* offLabel);
+                            Label* onLabel, 
+                            Label* offLabel);
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ControlSwitchSprite);
 };
@@ -126,8 +126,8 @@ ControlSwitchSprite* ControlSwitchSprite::create(Sprite *maskSprite,
                                             Sprite *onSprite,
                                             Sprite *offSprite,
                                             Sprite *thumbSprite,
-                                            LabelTTF* onLabel,
-                                            LabelTTF* offLabel)
+                                            Label* onLabel,
+                                            Label* offLabel)
 {
     auto ret = new ControlSwitchSprite();
     ret->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
@@ -168,8 +168,8 @@ bool ControlSwitchSprite::initWithMaskSprite(
     Sprite *onSprite, 
     Sprite *offSprite,
     Sprite *thumbSprite,
-    LabelTTF* onLabel, 
-    LabelTTF* offLabel)
+    Label* onLabel, 
+    Label* offLabel)
 {
     if (Sprite::initWithTexture(maskSprite->getTexture()))
     {
@@ -183,10 +183,7 @@ bool ControlSwitchSprite::initWithMaskSprite(
         setThumbSprite(thumbSprite);
         setOnLabel(onLabel);
         setOffLabel(offLabel);
-        //setOnSprite(nullptr);
-        //setOffSprite(nullptr);
-        //setOnLabel(nullptr);
-        //setOffLabel(nullptr);
+
         ClippingNode* clipper = ClippingNode::create();
         _clipperStencil = Sprite::createWithTexture(maskSprite->getTexture());
         _clipperStencil->retain();
@@ -204,27 +201,6 @@ bool ControlSwitchSprite::initWithMaskSprite(
 
         // Set up the mask with the Mask shader
         setMaskTexture(maskSprite->getTexture());
-        GLProgram* program = new GLProgram();
-        program->initWithByteArrays(ccPositionTextureColor_vert, ccExSwitchMask_frag);
-        setShaderProgram(program);
-        program->release();
-
-        CHECK_GL_ERROR_DEBUG();
-
-        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-        program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
-        CHECK_GL_ERROR_DEBUG();
-
-        program->link();
-        CHECK_GL_ERROR_DEBUG();
-
-        program->updateUniforms();
-        CHECK_GL_ERROR_DEBUG();                
-
-        _textureLocation = program->getUniformLocation("u_texture");
-        _maskLocation = program->getUniformLocation("u_mask");
-        CHECK_GL_ERROR_DEBUG();
 
         setContentSize(_maskTexture->getContentSize());
 
@@ -236,7 +212,7 @@ bool ControlSwitchSprite::initWithMaskSprite(
 
 void ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
 {
-    CCLOG("key = %s, value = %f", key.c_str(), value);
+    CCLOGINFO("key = %s, value = %f", key.c_str(), value);
     setSliderXPosition(value);
 }
 
@@ -254,11 +230,13 @@ void ControlSwitchSprite::needsLayout()
 
     if (_onLabel)
     {
+        _onLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _onLabel->setPosition(Point(_onSprite->getPosition().x - _thumbSprite->getContentSize().width / 6,
             _onSprite->getContentSize().height / 2));
     }
     if (_offLabel)
     {
+        _offLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _offLabel->setPosition(Point(_offSprite->getPosition().x + _thumbSprite->getContentSize().width / 6,
             _offSprite->getContentSize().height / 2));
     }
@@ -330,7 +308,7 @@ ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Spri
     return pRet;
 }
 
-bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, LabelTTF* onLabel, LabelTTF* offLabel)
+bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
 {
     if (Control::init())
     {
@@ -359,7 +337,7 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
     return false;
 }
 
-ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, LabelTTF* onLabel, LabelTTF* offLabel)
+ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
 {
     ControlSwitch* pRet = new ControlSwitch();
     if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel))
@@ -380,7 +358,7 @@ void ControlSwitch::setOn(bool isOn)
 
 void ControlSwitch::setOn(bool isOn, bool animated)
 {
-    _on     = isOn;
+    _on = isOn;
     
     if (animated) {
         _switchSprite->runAction

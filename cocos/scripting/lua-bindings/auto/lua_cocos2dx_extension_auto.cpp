@@ -8073,8 +8073,8 @@ int lua_cocos2dx_extension_ControlStepper_getMinusLabel(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::LabelTTF* ret = cobj->getMinusLabel();
-        object_to_luaval<cocos2d::LabelTTF>(tolua_S, "cc.LabelTTF",(cocos2d::LabelTTF*)ret);
+        cocos2d::Label* ret = cobj->getMinusLabel();
+        object_to_luaval<cocos2d::Label>(tolua_S, "cc.Label",(cocos2d::Label*)ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getMinusLabel",argc, 0);
@@ -8346,8 +8346,8 @@ int lua_cocos2dx_extension_ControlStepper_getPlusLabel(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::LabelTTF* ret = cobj->getPlusLabel();
-        object_to_luaval<cocos2d::LabelTTF>(tolua_S, "cc.LabelTTF",(cocos2d::LabelTTF*)ret);
+        cocos2d::Label* ret = cobj->getPlusLabel();
+        object_to_luaval<cocos2d::Label>(tolua_S, "cc.Label",(cocos2d::Label*)ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPlusLabel",argc, 0);
@@ -8567,9 +8567,9 @@ int lua_cocos2dx_extension_ControlStepper_setMinusLabel(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::LabelTTF* arg0;
+        cocos2d::Label* arg0;
 
-        ok &= luaval_to_object<cocos2d::LabelTTF>(tolua_S, 2, "cc.LabelTTF",&arg0);
+        ok &= luaval_to_object<cocos2d::Label>(tolua_S, 2, "cc.Label",&arg0);
         if(!ok)
             return 0;
         cobj->setMinusLabel(arg0);
@@ -8934,9 +8934,9 @@ int lua_cocos2dx_extension_ControlStepper_setPlusLabel(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::LabelTTF* arg0;
+        cocos2d::Label* arg0;
 
-        ok &= luaval_to_object<cocos2d::LabelTTF>(tolua_S, 2, "cc.LabelTTF",&arg0);
+        ok &= luaval_to_object<cocos2d::Label>(tolua_S, 2, "cc.Label",&arg0);
         if(!ok)
             return 0;
         cobj->setPlusLabel(arg0);
@@ -9249,12 +9249,12 @@ int lua_cocos2dx_extension_ControlSwitch_initWithMaskSprite(lua_State* tolua_S)
             ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 5, "cc.Sprite",&arg3);
 
             if (!ok) { break; }
-            cocos2d::LabelTTF* arg4;
-            ok &= luaval_to_object<cocos2d::LabelTTF>(tolua_S, 6, "cc.LabelTTF",&arg4);
+            cocos2d::Label* arg4;
+            ok &= luaval_to_object<cocos2d::Label>(tolua_S, 6, "cc.Label",&arg4);
 
             if (!ok) { break; }
-            cocos2d::LabelTTF* arg5;
-            ok &= luaval_to_object<cocos2d::LabelTTF>(tolua_S, 7, "cc.LabelTTF",&arg5);
+            cocos2d::Label* arg5;
+            ok &= luaval_to_object<cocos2d::Label>(tolua_S, 7, "cc.Label",&arg5);
 
             if (!ok) { break; }
             bool ret = cobj->initWithMaskSprite(arg0, arg1, arg2, arg3, arg4, arg5);
@@ -9440,11 +9440,11 @@ int lua_cocos2dx_extension_ControlSwitch_create(lua_State* tolua_S)
             cocos2d::Sprite* arg3;
             ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 5, "cc.Sprite",&arg3);
             if (!ok) { break; }
-            cocos2d::LabelTTF* arg4;
-            ok &= luaval_to_object<cocos2d::LabelTTF>(tolua_S, 6, "cc.LabelTTF",&arg4);
+            cocos2d::Label* arg4;
+            ok &= luaval_to_object<cocos2d::Label>(tolua_S, 6, "cc.Label",&arg4);
             if (!ok) { break; }
-            cocos2d::LabelTTF* arg5;
-            ok &= luaval_to_object<cocos2d::LabelTTF>(tolua_S, 7, "cc.LabelTTF",&arg5);
+            cocos2d::Label* arg5;
+            ok &= luaval_to_object<cocos2d::Label>(tolua_S, 7, "cc.Label",&arg5);
             if (!ok) { break; }
             cocos2d::extension::ControlSwitch* ret = cocos2d::extension::ControlSwitch::create(arg0, arg1, arg2, arg3, arg4, arg5);
             object_to_luaval<cocos2d::extension::ControlSwitch>(tolua_S, "cc.ControlSwitch",(cocos2d::extension::ControlSwitch*)ret);
@@ -15438,7 +15438,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_finalize(lua_State* tolua_
 int lua_register_cocos2dx_extension_CCBAnimationManager(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CCBAnimationManager");
-    tolua_cclass(tolua_S,"CCBAnimationManager","cc.CCBAnimationManager","",nullptr);
+    tolua_cclass(tolua_S,"CCBAnimationManager","cc.CCBAnimationManager","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"CCBAnimationManager");
         tolua_function(tolua_S,"moveAnimationsFromNode",lua_cocos2dx_extension_CCBAnimationManager_moveAnimationsFromNode);
@@ -16466,7 +16466,7 @@ static int lua_cocos2dx_extension_CCBReader_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_CCBReader(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CCBReader");
-    tolua_cclass(tolua_S,"CCBReader","cc.CCBReader","",nullptr);
+    tolua_cclass(tolua_S,"CCBReader","cc.CCBReader","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"CCBReader");
         tolua_function(tolua_S,"addOwnerOutletName",lua_cocos2dx_extension_CCBReader_addOwnerOutletName);

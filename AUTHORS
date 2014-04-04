@@ -54,6 +54,7 @@ Developers:
         Add ccDrawSolidCircle
         Add Rect::unionWithRect
         Fix a memory leak in Set::removeAllObjects.
+        Fixed potential crashes in event dispatch while using SceneGraphPriroity listeners and added helper function to check it
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -616,6 +617,7 @@ Developers:
         Added setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv mothed into GLProgram class
         Fixed a bug that object which isn't in Vector would also be released when invoking Vector::eraseObject.
         Fixed a bug that Timer::cancel always call Director::getInstance()->getScheduler() even in another Scheduler.
+        Fix crash if label's type is STRING_TEXTURE and label->sortAllChildren is called
         
     metadao
         make create_project.py more pythonic and fix some typoes
@@ -787,6 +789,18 @@ Developers:
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
+        
+    aeonmine
+        Fixed ActionObject memory leak in ActionManagerEx::initWithDictionary
+        
+    LoungeKatt
+        Corrected a mistake of building android project in README.md
+        
+    flashjay
+        Remove deprecated code in lua tests & template
+        
+    zukkun
+        Fixed incorrect function invocation in PhysicsBody::setAngularVelocityLimit
     
 Retired Core Developers:
     WenSheng Yang

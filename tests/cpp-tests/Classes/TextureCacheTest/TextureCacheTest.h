@@ -13,8 +13,8 @@ public:
     void loadingCallBack(cocos2d::Texture2D *texture);
 
 private:
-    cocos2d::LabelTTF *_labelLoading;
-    cocos2d::LabelTTF *_labelPercent;
+    cocos2d::Label *_labelLoading;
+    cocos2d::Label *_labelPercent;
     int _numberOfSprites;
     int _numberOfLoadedSprites;
 };

@@ -24,7 +24,7 @@ Control::Handler ButtonTestLayer::onResolveCCBCCControlSelector(Ref * pTarget, c
 }
 
 bool ButtonTestLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", LabelBMFont *, this->mControlEventLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", Label *, this->mControlEventLabel);
 
     return false;
 }

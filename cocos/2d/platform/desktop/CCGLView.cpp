@@ -523,7 +523,7 @@ void GLView::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int
             _captured = true;
             if (this->getViewPortRect().equals(Rect::ZERO) || this->getViewPortRect().containsPoint(Point(_mouseX,_mouseY)))
             {
-                int id = 0;
+                intptr_t id = 0;
                 this->handleTouchesBegin(1, &id, &_mouseX, &_mouseY);
             }
         }
@@ -532,7 +532,7 @@ void GLView::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int
             if (_captured)
             {
                 _captured = false;
-                int id = 0;
+                intptr_t id = 0;
                 this->handleTouchesEnd(1, &id, &_mouseX, &_mouseY);
             }
         }
@@ -575,7 +575,7 @@ void GLView::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
 
     if (_captured)
     {
-        int id = 0;
+        intptr_t id = 0;
         this->handleTouchesMove(1, &id, &_mouseX, &_mouseY);
     }
 

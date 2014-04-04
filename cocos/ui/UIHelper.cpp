@@ -42,11 +42,14 @@ Widget* Helper::seekWidgetByTag(Widget* root, int tag)
     ssize_t length = arrayRootChildren.size();
     for (ssize_t i=0;i<length;i++)
     {
-        Widget* child = static_cast<Widget*>(arrayRootChildren.at(i));
-        Widget* res = seekWidgetByTag(child,tag);
-        if (res != nullptr)
+        Widget* child = dynamic_cast<Widget*>(arrayRootChildren.at(i));
+        if (child)
         {
-            return res;
+            Widget* res = seekWidgetByTag(child,tag);
+            if (res != nullptr)
+            {
+                return res;
+            }
         }
     }
     return nullptr;
@@ -65,30 +68,14 @@ Widget* Helper::seekWidgetByName(Widget* root, const char *name)
     const auto& arrayRootChildren = root->getChildren();
     for (auto& subWidget : arrayRootChildren)
     {
-        Widget* child = static_cast<Widget*>(subWidget);
-        Widget* res = seekWidgetByName(child,name);
-        if (res != nullptr)
+        Widget* child = dynamic_cast<Widget*>(subWidget);
+        if (child)
         {
-            return res;
-        }
-    }
-    return nullptr;
-}
-
-Widget* Helper::seekWidgetByRelativeName(Widget *root, const char *name)
-{
-    if (!root)
-    {
-        return nullptr;
-    }
-    const auto& arrayRootChildren = root->getChildren();
-    for (auto& subWidget : arrayRootChildren)
-    {
-        Widget* child = static_cast<Widget*>(subWidget);
-        RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-        if (layoutParameter && strcmp(layoutParameter->getRelativeName(), name) == 0)
-        {
-            return child;
+            Widget* res = seekWidgetByName(child,name);
+            if (res != nullptr)
+            {
+                return res;
+            }
         }
     }
     return nullptr;
@@ -108,12 +95,15 @@ Widget* Helper::seekActionWidgetByActionTag(Widget* root, int tag)
     const auto& arrayRootChildren = root->getChildren();
     for (auto& subWidget : arrayRootChildren)
 	{
-		Widget* child = static_cast<Widget*>(subWidget);
-		Widget* res = seekActionWidgetByActionTag(child,tag);
-		if (res != nullptr)
-		{
-			return res;
-		}
+		Widget* child = dynamic_cast<Widget*>(subWidget);
+        if (child)
+        {
+            Widget* res = seekActionWidgetByActionTag(child,tag);
+            if (res != nullptr)
+            {
+                return res;
+            }
+        }
 	}
 	return nullptr;
 }

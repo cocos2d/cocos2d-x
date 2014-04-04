@@ -31,7 +31,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-//#pragma mark - Profiling Categories
+// Profiling Categories
 /* set to false the categories that you don't want to profile */
 bool kProfilerCategorySprite = false;
 bool kProfilerCategoryBatchSprite = false;

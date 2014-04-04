@@ -388,7 +388,7 @@ void SpriteProgressBarTintAndFade::onEnter()
     left->runAction(RepeatForever::create(to->clone()));
     left->runAction(RepeatForever::create(tint->clone()));
 
-    left->addChild(LabelTTF::create("Tint", "Marker Felt", 20.0f));
+    left->addChild(Label::create("Tint", "fonts/Marker Felt.ttf", 20.0f));
 
     auto middle = ProgressTimer::create(Sprite::create(s_pathSister2));
     middle->setType(ProgressTimer::Type::BAR);
@@ -401,7 +401,7 @@ void SpriteProgressBarTintAndFade::onEnter()
     middle->runAction(RepeatForever::create(to->clone()));
     middle->runAction(RepeatForever::create(fade->clone()));
 
-    middle->addChild(LabelTTF::create("Fade", "Marker Felt", 20.0f));
+    middle->addChild(Label::create("Fade", "fonts/Marker Felt.ttf", 20.0f));
 
     auto right = ProgressTimer::create(Sprite::create(s_pathSister2));
     right->setType(ProgressTimer::Type::BAR);
@@ -415,7 +415,7 @@ void SpriteProgressBarTintAndFade::onEnter()
 	right->runAction(RepeatForever::create(tint->clone()));
     right->runAction(RepeatForever::create(fade->clone()));
 
-    right->addChild(LabelTTF::create("Tint and Fade", "Marker Felt", 20.0f));
+    right->addChild(Label::create("Tint and Fade", "fonts/Marker Felt.ttf", 20.0f));
 }
 
 std::string SpriteProgressBarTintAndFade::subtitle() const
