@@ -99,13 +99,6 @@ kmMat4 matrixToKmMat4(const Matrix& mat)
     return result;
 }
 
-Matrix kmMat4ToMatrix(const kmMat4& mat)
-{
-    Matrix result;
-    result.set(mat.mat);
-    return result;
-}
-
 Director* Director::getInstance()
 {
     if (!s_SharedDirector)
@@ -626,7 +619,7 @@ void Director::setProjection(Projection projection)
 #endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, kmMat4ToMatrix(orthoMatrix));
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
 
@@ -650,14 +643,14 @@ void Director::setProjection(Projection projection)
             kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
 //            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, kmMat4ToMatrix(matrixPerspective));
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
 
             kmVec3 eye, center, up;
             kmVec3Fill(&eye, size.width/2, size.height/2, zeye);
             kmVec3Fill(&center, size.width/2, size.height/2, 0.0f);
             kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, kmMat4ToMatrix(matrixLookup));
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
             
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
