@@ -46,19 +46,22 @@ namespace cocostudio
         {
             case 0:
             {
-                std::string tp_i = jsonPath;
                 const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                const char* imageFileName_tp = nullptr;
-                if (imageFileName && (strcmp(imageFileName, "") != 0))
+                std::string imageFileName_tp;
+                if (nullptr != imageFileName)
                 {
-                    imageFileName_tp = tp_i.append(imageFileName).c_str();
-                    imageView->loadTexture(imageFileName_tp);
+                    imageFileName_tp = jsonPath + imageFileName;
                 }
+                imageView->loadTexture(imageFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileNamePath = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                std::string imageFileName;
+                if (nullptr != imageFileNamePath) {
+                    imageFileName = std::string(imageFileNamePath);
+                }
                 imageView->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
                 break;
             }

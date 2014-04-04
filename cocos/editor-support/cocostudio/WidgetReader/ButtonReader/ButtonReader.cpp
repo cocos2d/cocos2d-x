@@ -41,93 +41,30 @@ namespace cocostudio
         WidgetReader::setPropsFromJsonDictionary(widget, options);
         
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
-        
         Button* button = static_cast<Button*>(widget);
         bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
         button->setScale9Enabled(scale9Enable);
         
+        
         const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, "normalData");
         int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");
-        switch (normalType)
-        {
-            case 0:
-            {
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-                std::string normalFileName_tp = "";
-                if (nullptr != normalFileName) {
-                    normalFileName_tp = jsonPath + normalFileName;
-                }
-                button->loadTextureNormal(normalFileName_tp);
-                break;
-            }
-            case 1:
-            {
-                std::string normalString;
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-                if (nullptr != normalFileName) {
-                    normalString = std::string(normalFileName);
-                }
-                button->loadTextureNormal(normalString,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        std::string normalTexturePath = this->getResourcePath(normalDic, "path", (TextureResType)normalType);
+        button->loadTextureNormal(normalTexturePath, (TextureResType)normalType);
+        
+        
         const rapidjson::Value& pressedDic = DICTOOL->getSubDictionary_json(options, "pressedData");
         int pressedType = DICTOOL->getIntValue_json(pressedDic, "resourceType");
-        switch (pressedType)
-        {
-            case 0:
-            {
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-                std::string pressedFileName_tp ;
-                if (nullptr != pressedFileName) {
-                    pressedFileName_tp = jsonPath + pressedFileName;
-                }
-                button->loadTexturePressed(pressedFileName_tp);
-                break;
-            }
-            case 1:
-            {
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-                std::string pressedString;
-                if (nullptr != pressedFileName) {
-                    pressedString = std::string(pressedFileName);
-                }
-                button->loadTexturePressed(pressedString,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        
+        std::string pressedTexturePath = this->getResourcePath(pressedDic, "path", (TextureResType)pressedType);
+        button->loadTexturePressed(pressedTexturePath, (TextureResType)pressedType);
+        
+        
         const rapidjson::Value& disabledDic = DICTOOL->getSubDictionary_json(options, "disabledData");
         int disabledType = DICTOOL->getIntValue_json(disabledDic, "resourceType");
-        switch (disabledType)
-        {
-            case 0:
-            {
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-                std::string disabledFileName_tp = "";
-                if ( nullptr != disabledFileName) {
-                    disabledFileName_tp = jsonPath + disabledFileName;
-                }
-                button->loadTextureDisabled(disabledFileName_tp);
-                break;
-            }
-            case 1:
-            {
-                std::string disabledString;
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-                if (nullptr != disabledFileName) {
-                    disabledString = std::string(disabledFileName);
-                }
-                button->loadTextureDisabled(disabledString,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        
+        std::string disabledTexturePath = this->getResourcePath(disabledDic, "path", (TextureResType)disabledType);
+        button->loadTextureDisabled(disabledTexturePath, (TextureResType)disabledType);
+       
         if (scale9Enable)
         {
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
