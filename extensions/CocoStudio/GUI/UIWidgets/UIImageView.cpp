@@ -66,6 +66,42 @@ ImageView* ImageView::create()
     return NULL;
 }
 
+ImageView* ImageView::create(const char *imageFileName, TextureResType texType)
+{
+    ImageView *widget = new ImageView;
+    if (widget && widget->init(imageFileName, texType)) {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return NULL;
+}
+
+bool ImageView::init()
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+    } while (0);
+    return bRet;
+}
+    
+bool ImageView::init(const char *imageFileName, TextureResType texType)
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        this->loadTexture(imageFileName, texType);
+    } while (0);
+    return bRet;
+}
+
 void ImageView::initRenderer()
 {
     _imageRenderer = CCSprite::create();
