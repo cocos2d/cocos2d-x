@@ -516,20 +516,19 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
+void Director::loadMatrix(MATRIX_STACK_TYPE type, const Matrix& mat)
 {
-    Matrix gameplayMat(mat.mat);
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        _modelViewMatrixStack.top() = gameplayMat;
+        _modelViewMatrixStack.top() = mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStack.top() = gameplayMat;
+        _projectionMatrixStack.top() = mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        _textureMatrixStack.top() = gameplayMat;
+        _textureMatrixStack.top() = mat;
     }
     else
     {
@@ -537,20 +536,19 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
     }
 }
 
-void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat)
+void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Matrix& mat)
 {
-    Matrix gameplayMat(mat.mat);
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        _modelViewMatrixStack.top() *= gameplayMat;
+        _modelViewMatrixStack.top() *= mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStack.top() *= gameplayMat;
+        _projectionMatrixStack.top() *= mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        _textureMatrixStack.top() *= gameplayMat;
+        _textureMatrixStack.top() *= mat;
     }
     else
     {
@@ -628,7 +626,7 @@ void Director::setProjection(Projection projection)
 #endif
             kmMat4 orthoMatrix;
             kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,orthoMatrix);
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, kmMat4ToMatrix(orthoMatrix));
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
 
@@ -652,14 +650,14 @@ void Director::setProjection(Projection projection)
             kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
 //            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, kmMat4ToMatrix(matrixPerspective));
 
             kmVec3 eye, center, up;
             kmVec3Fill(&eye, size.width/2, size.height/2, zeye);
             kmVec3Fill(&center, size.width/2, size.height/2, 0.0f);
             kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
+            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, kmMat4ToMatrix(matrixLookup));
             
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;

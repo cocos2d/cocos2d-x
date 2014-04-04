@@ -109,8 +109,8 @@ public:
     void pushMatrix(MATRIX_STACK_TYPE type);
     void popMatrix(MATRIX_STACK_TYPE type);
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
-    void loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat);
-    void multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat);
+    void loadMatrix(MATRIX_STACK_TYPE type, const Matrix& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const Matrix& mat);
     Matrix getMatrix(MATRIX_STACK_TYPE type);
     void resetMatrixStack();
 public:
