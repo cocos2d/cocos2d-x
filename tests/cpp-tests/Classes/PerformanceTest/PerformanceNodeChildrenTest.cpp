@@ -947,6 +947,10 @@ void VisitSceneGraph::update(float dt)
     CC_PROFILER_START( this->profilerName() );
     this->visit();
     CC_PROFILER_STOP( this->profilerName() );
+
+    // Call `Renderer::clean` to prevent crash if current scene is destroyed.
+    // The render commands associated with current scene should be cleaned.
+    Director::getInstance()->getRenderer()->clean();
 }
 
 std::string VisitSceneGraph::title() const

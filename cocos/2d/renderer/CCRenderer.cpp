@@ -359,6 +359,12 @@ void Renderer::render()
         }
     }
 
+    clean();
+}
+
+void Renderer::clean()
+{
+    // Clear render group
     for (size_t j = 0 ; j < _renderGroups.size(); j++)
     {
         //commands are owned by nodes
@@ -368,12 +374,18 @@ void Renderer::render()
         // }
         _renderGroups[j].clear();
     }
-    
-    //Clear the stack incase gl view hasn't been initialized yet
+
+    // Clear batch quad commands
+    _batchedQuadCommands.clear();
+    _numQuads = 0;
+
+    // Clear the stack incase gl view hasn't been initialized yet
     while(!_renderStack.empty())
     {
         _renderStack.pop();
     }
+
+    // Reset render stack
     RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
     _renderStack.push(element);
     _lastMaterialID = 0;
