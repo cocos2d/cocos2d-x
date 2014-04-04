@@ -39,6 +39,7 @@ public:
     static GLView* create(const std::string& viewName);
     static GLView* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
     static GLView* createWithFullScreen(const std::string& viewName);
+    static GLView* createWithFullScreen(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
 
     /*
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
@@ -82,6 +83,7 @@ protected:
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
+    bool initWithFullScreen(const std::string& viewName, Size rect, float frameZoomFactor);
 
     bool initGlew();
 

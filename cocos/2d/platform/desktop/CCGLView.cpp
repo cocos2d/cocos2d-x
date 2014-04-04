@@ -317,6 +317,18 @@ GLView* GLView::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
+GLView* GLView::createWithFullScreen(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    auto ret = new GLView();
+    if(ret && ret->initWithFullScreen(viewName, size, frameZoomFactor)) {
+        ret->autorelease();
+        return ret;
+    }
+    
+    return nullptr;
+}
+
+
 bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     setViewName(viewName);
@@ -372,6 +384,15 @@ bool GLView::initWithFullScreen(const std::string& viewName)
 
     const GLFWvidmode* videoMode = glfwGetVideoMode(_primaryMonitor);
     return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f);
+}
+
+bool GLView::initWithFullScreen(const std::string &viewName, cocos2d::Size size, float frameZoomFactor)
+{
+    _primaryMonitor = glfwGetPrimaryMonitor();
+    if (nullptr == _primaryMonitor)
+        return false;
+    
+    return initWithRect(viewName, Rect(0, 0, size.width, size.height), 1.0f);
 }
 
 bool GLView::isOpenGLReady()
