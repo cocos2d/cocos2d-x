@@ -4,6 +4,8 @@
 #include "Vector3.h"
 #include "Vector4.h"
 
+#include "kazmath/kazmath/kazmath.h"
+
 NS_CC_MATH_BEGIN
 
 //class Plane;
@@ -42,7 +44,18 @@ NS_CC_MATH_BEGIN
 class Matrix
 {
 public:
-
+    //temp add conversion
+    operator kmMat4() const
+    {
+        kmMat4 result;
+        kmMat4Fill(&result, m);
+        return result;
+    }
+    
+    Matrix(const kmMat4& mat)
+    {
+        set(mat.mat);
+    }
     /**
      * Stores the columns of this 4x4 matrix.
      * */
