@@ -186,7 +186,7 @@ namespace cocostudio
                 imageFileName_tp = jsonPath + imageFileName;
             }
             else if(texType == UI_TEX_TYPE_PLIST){
-                imageFileName_tp = std::string(imageFileName);
+                imageFileName_tp = imageFileName;
             }
             else{
                 CCASSERT(0, "invalid TextureResType!!!");
