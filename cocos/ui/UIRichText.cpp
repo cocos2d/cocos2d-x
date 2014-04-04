@@ -29,6 +29,23 @@ NS_CC_BEGIN
 
 namespace ui {
     
+static int _calcCharCount(const char * pszText)
+{
+    int n = 0;
+    char ch = 0;
+    while ((ch = *pszText))
+    {
+        CC_BREAK_IF(! ch);
+        
+        if (0x80 != (0xC0 & ch))
+        {
+            ++n;
+        }
+        ++pszText;
+    }
+    return n;
+}
+    
 bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
 {
     _tag = tag;
@@ -148,7 +165,7 @@ void RichText::initRenderer()
 {
     _elementRenderersContainer = Node::create();
     _elementRenderersContainer->setAnchorPoint(Point(0.5f, 0.5f));
-    Node::addChild(_elementRenderersContainer, 0, -1);
+    addProtectedChild(_elementRenderersContainer, 0, -1);
 }
 
 void RichText::insertElement(RichElement *element, int index)
@@ -193,7 +210,7 @@ void RichText::formatText()
                     case RICH_TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
-                        elementRenderer = LabelTTF::create(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize);
+                        elementRenderer = Label::create(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize);
                         break;
                     }
                     case RICH_IMAGE:
@@ -255,20 +272,20 @@ void RichText::formatText()
     
 void RichText::handleTextRenderer(const char *text, const char *fontName, float fontSize, const Color3B &color, GLubyte opacity)
 {
-    LabelTTF* textRenderer = LabelTTF::create(text, fontName, fontSize);
+    Label* textRenderer = Label::create(text, fontName, fontSize);
     float textRendererWidth = textRenderer->getContentSize().width;
     _leftSpaceWidth -= textRendererWidth;
     if (_leftSpaceWidth < 0.0f)
     {
         float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
         std::string curText = text;
-        size_t stringLength = curText.length();
+        size_t stringLength = _calcCharCount(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
         std::string leftWords = curText.substr(0, leftLength);
         std::string cutWords = curText.substr(leftLength, curText.length()-1);
         if (leftLength > 0)
         {
-            LabelTTF* leftRenderer = LabelTTF::create(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+            Label* leftRenderer = Label::create(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
             leftRenderer->setColor(color);
             leftRenderer->setOpacity(opacity);
             pushToContainer(leftRenderer);
@@ -340,7 +357,7 @@ void RichText::formarRenderers()
         float newContentSizeHeight = 0.0f;
         float *maxHeights = new float[_elementRenders.size()];
         
-        for (ssize_t i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
@@ -355,7 +372,7 @@ void RichText::formarRenderers()
         
         
         float nextPosY = _customSize.height;
-        for (ssize_t i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0; i<_elementRenders.size(); i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float nextPosX = 0.0f;
@@ -375,7 +392,7 @@ void RichText::formarRenderers()
     }
     
     size_t length = _elementRenders.size();
-    for (ssize_t i = 0; i<length; i++)
+    for (size_t i = 0; i<length; i++)
 	{
         Vector<Node*>* l = _elementRenders[i];
         l->clear();
@@ -435,6 +452,11 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
         _formatTextDirty = true;
         Widget::ignoreContentAdaptWithSize(ignore);
     }
+}
+    
+std::string RichText::getDescription() const
+{
+    return "RichText";
 }
 
 }

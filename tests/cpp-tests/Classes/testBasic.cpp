@@ -37,11 +37,9 @@ void TestScene::onEnter()
     Scene::onEnter();
 
     //add the menu item for back to main menu
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//    auto label = LabelBMFont::create("MainMenu",  "fonts/arial16.fnt");
-//#else
-    auto label = LabelTTF::create("MainMenu", "Arial", 20);
-//#endif
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label = Label::createWithTTF(ttfConfig,"MainMenu");
+
     auto menuItem = MenuItemLabel::create(label, testScene_callback );
     auto menu = Menu::create(menuItem, NULL);
 

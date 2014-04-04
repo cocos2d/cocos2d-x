@@ -69,7 +69,7 @@ void CocoStudioGUIMainLayer::onEnter()
     
     _itemMenu = CCMenu::create();
     _itemMenu->setPosition(Point::ZERO);
-    CCMenuItemFont::setFontName("Arial");
+    CCMenuItemFont::setFontName("fonts/arial.ttf");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
@@ -133,7 +133,7 @@ void CocoStudioGUITestScene::onEnter()
 {
     CCScene::onEnter();
     
-    LabelTTF* label = LabelTTF::create("Back", "Arial", 20);
+    auto label = Label::create("Back", "fonts/arial.ttf", 20);
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocoStudioGUITestScene::BackCallback, this));
     

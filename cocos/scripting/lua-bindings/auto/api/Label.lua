@@ -1,8 +1,13 @@
 
 --------------------------------
 -- @module Label
--- @extend SpriteBatchNode,LabelProtocol,
+-- @extend SpriteBatchNode,LabelProtocol
 
+--------------------------------
+-- @function [parent=#Label] isClipMarginEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- @function [parent=#Label] enableShadow 
 -- @param self
@@ -58,6 +63,11 @@
 -- @return TextHAlignment#TextHAlignment ret (return value: cc.TextHAlignment)
         
 --------------------------------
+-- @function [parent=#Label] setClipMarginEnabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Label] setString 
 -- @param self
 -- @param #string str
@@ -73,6 +83,11 @@
 -- @param #string str
 -- @param #point_table point
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Label] getFontAtlas 
+-- @param self
+-- @return FontAtlas#FontAtlas ret (return value: cc.FontAtlas)
         
 --------------------------------
 -- @function [parent=#Label] getFontDefinition 
@@ -253,6 +268,13 @@
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
+-- @function [parent=#Label] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Label] addChild 
 -- @param self
 -- @param #cc.Node node
@@ -260,11 +282,9 @@
 -- @param #int int
         
 --------------------------------
--- @function [parent=#Label] draw 
+-- @function [parent=#Label] setScaleY 
 -- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Label] setScaleX 
@@ -282,6 +302,18 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- @function [parent=#Label] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendfunc
+        
+--------------------------------
+-- @function [parent=#Label] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Label] getScaleX 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -290,13 +322,6 @@
 -- @function [parent=#Label] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
-        
---------------------------------
--- @function [parent=#Label] visit 
--- @param self
--- @param #cc.Renderer renderer
--- @param #kmMat4 kmmat4
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Label] setOpacityModifyRGB 
@@ -309,19 +334,23 @@
 -- @param #float float
         
 --------------------------------
+-- @function [parent=#Label] sortAllChildren 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#Label] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char char
         
 --------------------------------
--- @function [parent=#Label] setScaleY 
--- @param self
--- @param #float float
-        
---------------------------------
 -- @function [parent=#Label] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#Label] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- @function [parent=#Label] updateDisplayedColor 

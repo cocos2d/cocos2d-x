@@ -113,6 +113,11 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#Director] getOpenGLView 
+-- @param self
+-- @return GLView#GLView ret (return value: cc.GLView)
+        
+--------------------------------
 -- @function [parent=#Director] getRunningScene 
 -- @param self
 -- @return Scene#Scene ret (return value: cc.Scene)

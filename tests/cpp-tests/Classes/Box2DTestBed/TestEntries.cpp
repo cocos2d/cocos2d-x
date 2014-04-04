@@ -76,7 +76,7 @@ TestEntry g_testEntries[] =
 	{"Convex Hull", ConvexHull::Create},
 	{"Apply Force", ApplyForce::Create},
 	{"Continuous Test", ContinuousTest::Create},
-	{"Time of Impact", TimeOfImpact::Create},
+	// {"Time of Impact", TimeOfImpact::Create},
 	{"Motor Joint", MotorJoint::Create},
 	{"One-Sided Platform", OneSidedPlatform::Create},
 	{"Mobile", Mobile::Create},

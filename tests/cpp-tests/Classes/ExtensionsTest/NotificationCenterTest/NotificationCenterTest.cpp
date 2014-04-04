@@ -88,8 +88,8 @@ NotificationCenterTest::NotificationCenterTest()
     pBackMenu->setPosition( Point::ZERO );
     addChild(pBackMenu);
 
-    auto label1 = LabelTTF::create("switch off", "Marker Felt", 26);
-    auto label2 = LabelTTF::create("switch on", "Marker Felt", 26);
+    auto label1 = Label::create("switch off", "fonts/Marker Felt.ttf", 26);
+    auto label2 = Label::create("switch on", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
     auto item2 = MenuItemLabel::create(label2);
     auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::toggleSwitch, this), item1, item2, NULL);
@@ -110,8 +110,8 @@ NotificationCenterTest::NotificationCenterTest()
         light->setPosition(Point(100, s.height/4*i));
         addChild(light);
 
-        auto label1 = LabelTTF::create("not connected", "Marker Felt", 26);
-        auto label2 = LabelTTF::create("connected", "Marker Felt", 26);
+        auto label1 = Label::create("not connected", "fonts/Marker Felt.ttf", 26);
+        auto label2 = Label::create("connected", "fonts/Marker Felt.ttf", 26);
         auto item1 = MenuItemLabel::create(label1);
         auto item2 = MenuItemLabel::create(label2);
         auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::connectToSwitch, this), item1, item2, NULL);

@@ -3,6 +3,13 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 enum {
     kTagTileMap = 1,
     kTagSpriteManager = 1,
@@ -352,19 +359,19 @@ LabelTTFAlignment::LabelTTFAlignment()
                                           Size(256, 32), TextHAlignment::LEFT);
     
     ttf0->setPosition(Point(s.width/2,(s.height/6)*2));
-    ttf0->setAnchorPoint(Point(0.5f,0.5f));
+    ttf0->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(ttf0);
     
     auto ttf1 = LabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
                                       Size(245, 32), TextHAlignment::CENTER);
     ttf1->setPosition(Point(s.width/2,(s.height/6)*3));
-    ttf1->setAnchorPoint(Point(0.5f,0.5f));
+    ttf1->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(ttf1);
 
     auto ttf2 = LabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
                                           Size(245, 32), TextHAlignment::RIGHT);
     ttf2->setPosition(Point(s.width/2,(s.height/6)*4));
-    ttf2->setAnchorPoint(Point(0.5f,0.5f));
+    ttf2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(ttf2);
 }
 
@@ -398,11 +405,11 @@ Atlas3::Atlas3()
     auto label1 = LabelBMFont::create("Test",  "fonts/bitmapFontTest2.fnt");
     
     // testing anchors
-    label1->setAnchorPoint( Point(0,0) );
+    label1->setAnchorPoint( Point::ANCHOR_BOTTOM_LEFT );
     addChild(label1, 0, kTagBitmapAtlas1);
     auto fade = FadeOut::create(1.0f);
     auto fade_in = fade->reverse();
-    auto seq = Sequence::create(fade, fade_in, NULL);
+    auto seq = Sequence::create(fade, fade_in, nullptr);
     auto repeat = RepeatForever::create(seq);
     label1->runAction(repeat);
     
@@ -413,7 +420,7 @@ Atlas3::Atlas3()
     // Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
     auto label2 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
-    label2->setAnchorPoint( Point(0.5f, 0.5f) );
+    label2->setAnchorPoint( Point::ANCHOR_MIDDLE );
     label2->setColor( Color3B::RED );
     addChild(label2, 0, kTagBitmapAtlas2);
     auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
@@ -424,7 +431,7 @@ Atlas3::Atlas3()
     
     auto label3 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
-    label3->setAnchorPoint( Point(1,1) );
+    label3->setAnchorPoint( Point::ANCHOR_TOP_RIGHT );
     addChild(label3, 0, kTagBitmapAtlas3);
        
     label1->setPosition( VisibleRect::leftBottom() );
@@ -484,7 +491,7 @@ Atlas4::Atlas4()
     auto s = Director::getInstance()->getWinSize();
     
     label->setPosition( Point(s.width/2, s.height/2) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
     
     
     auto BChar = (Sprite*) label->getChildByTag(0);
@@ -586,7 +593,7 @@ Atlas5::Atlas5()
     auto s = Director::getInstance()->getWinSize();
     
     label->setPosition( Point(s.width/2, s.height/2) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
 }
 
 std::string Atlas5::title() const
@@ -618,17 +625,17 @@ Atlas6::Atlas6()
     label = LabelBMFont::create("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/2+50) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) ) ;
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE ) ;
     
     label = LabelBMFont::create("fafefifofu", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/2) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
 
     label = LabelBMFont::create("aeiou", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/2-50) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) ); 
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE ); 
 }
 
 std::string Atlas6::title() const
@@ -656,23 +663,23 @@ AtlasBitmapColor::AtlasBitmapColor()
 {
     auto s = Director::getInstance()->getWinSize();
     
-    LabelBMFont* label = NULL;
+    LabelBMFont* label = nullptr;
     label = LabelBMFont::create("Blue", "fonts/bitmapFontTest5.fnt");
     label->setColor( Color3B::BLUE );
     addChild(label);
     label->setPosition( Point(s.width/2, s.height/4) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
 
     label = LabelBMFont::create("Red", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, 2*s.height/4) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
     label->setColor( Color3B::RED );
 
     label = LabelBMFont::create("G", "fonts/bitmapFontTest5.fnt");
     addChild(label);
     label->setPosition( Point(s.width/2, 3*s.height/4) );
-    label->setAnchorPoint( Point(0.5f, 0.5f) );
+    label->setAnchorPoint( Point::ANCHOR_MIDDLE );
     label->setColor( Color3B::GREEN );
     label->setString("Green");
 }
@@ -713,7 +720,7 @@ AtlasFastBitmap::AtlasFastBitmap()
 
             auto p = Point( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
             label->setPosition( p );
-            label->setAnchorPoint(Point(0.5f, 0.5f));
+            label->setAnchorPoint(Point::ANCHOR_MIDDLE);
         }
 }
 
@@ -744,7 +751,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
 
     // Left
     auto label1 = LabelBMFont::create(" Multi line\nLeft", "fonts/bitmapFontTest3.fnt");
-    label1->setAnchorPoint(Point(0,0));
+    label1->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     addChild(label1, 0, kTagBitmapAtlas1);
 
     s = label1->getContentSize();
@@ -753,7 +760,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
 
     // Center
     auto label2 = LabelBMFont::create("Multi line\nCenter", "fonts/bitmapFontTest3.fnt");
-    label2->setAnchorPoint(Point(0.5f, 0.5f));
+    label2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     addChild(label2, 0, kTagBitmapAtlas2);
 
     s= label2->getContentSize();
@@ -761,7 +768,7 @@ BitmapFontMultiLine::BitmapFontMultiLine()
 
     // right
     auto label3 = LabelBMFont::create("Multi line\nRight\nThree lines Three", "fonts/bitmapFontTest3.fnt");
-    label3->setAnchorPoint(Point(1, 1));
+    label3->setAnchorPoint(Point::ANCHOR_TOP_RIGHT);
     addChild(label3, 0, kTagBitmapAtlas3);
 
     s = label3->getContentSize();
@@ -881,7 +888,7 @@ LabelAtlasHD::LabelAtlasHD()
 
     // LabelBMFont
     auto label1 = LabelAtlas::create("TESTING RETINA DISPLAY", "fonts/larabie-16.plist");
-    label1->setAnchorPoint(Point(0.5f, 0.5f));
+    label1->setAnchorPoint(Point::ANCHOR_MIDDLE);
 
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/2));
@@ -945,7 +952,7 @@ LabelTTFTest::LabelTTFTest()
     auto s = Director::getInstance()->getWinSize();
 
     auto colorLayer = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
-    colorLayer->setAnchorPoint(Point(0,0));
+    colorLayer->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
     colorLayer->setPosition(Point((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2));
 
     this->addChild(colorLayer);
@@ -969,7 +976,7 @@ LabelTTFTest::LabelTTFTest()
     menu->setPosition(Point(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
 
-    _plabel = NULL;
+    _label = nullptr;
     _horizAlign = TextHAlignment::LEFT;
     _vertAlign = TextVAlignment::TOP;
 
@@ -978,7 +985,7 @@ LabelTTFTest::LabelTTFTest()
 
 LabelTTFTest::~LabelTTFTest()
 {
-    CC_SAFE_RELEASE(_plabel);
+    CC_SAFE_RELEASE(_label);
 }
 
 void  LabelTTFTest::updateAlignment()
@@ -986,21 +993,21 @@ void  LabelTTFTest::updateAlignment()
     auto blockSize = Size(200, 160);
     auto s = Director::getInstance()->getWinSize();
 
-    if (_plabel)
+    if (_label)
     {
-        _plabel->removeFromParentAndCleanup(true);
+        _label->removeFromParentAndCleanup(true);
     }
 
-    CC_SAFE_RELEASE(_plabel);
+    CC_SAFE_RELEASE(_label);
 
-    _plabel = LabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
+    _label = LabelTTF::create(this->getCurrentAlignment(), "Marker Felt", 32,
                                   blockSize, _horizAlign, _vertAlign);
-    _plabel->retain();
+    _label->retain();
 
-    _plabel->setAnchorPoint(Point(0,0));
-    _plabel->setPosition(Point((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 ));
+    _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _label->setPosition(Point((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 ));
 
-    this->addChild(_plabel);
+    this->addChild(_label);
 }
 
 void LabelTTFTest::setAlignmentLeft(Ref* sender)
@@ -1163,13 +1170,13 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     auto size = Director::getInstance()->getWinSize();
 
     // create and initialize a Label
-    this->_labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, TextHAlignment::CENTER);
-    this->_labelShouldRetain->retain();
+    _labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, TextHAlignment::CENTER);
+    _labelShouldRetain->retain();
 
-    this->_arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
-    this->_arrowsBarShouldRetain->retain();
-    this->_arrowsShouldRetain = Sprite::create("Images/arrows.png");
-    this->_arrowsShouldRetain->retain();
+    _arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
+    _arrowsBarShouldRetain->retain();
+    _arrowsShouldRetain = Sprite::create("Images/arrows.png");
+    _arrowsShouldRetain->retain();
 
     MenuItemFont::setFontSize(20);
     auto longSentences = MenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(BitmapFontMultiLineAlignment::stringChanged, this));
@@ -1199,24 +1206,24 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     right->setTag(RightAlign);
 
     // position the label on the center of the screen
-    this->_labelShouldRetain->setPosition(Point(size.width/2, size.height/2));
+    _labelShouldRetain->setPosition(Point(size.width/2, size.height/2));
 
-    this->_arrowsBarShouldRetain->setVisible(false);
+    _arrowsBarShouldRetain->setVisible(false);
 
     float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
-    this->_arrowsBarShouldRetain->setScaleX(arrowsWidth / this->_arrowsBarShouldRetain->getContentSize().width);
-    this->_arrowsBarShouldRetain->setPosition(Point(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_labelShouldRetain->getPosition().y));
+    _arrowsBarShouldRetain->setScaleX(arrowsWidth / this->_arrowsBarShouldRetain->getContentSize().width);
+    _arrowsBarShouldRetain->setPosition(Point(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_labelShouldRetain->getPosition().y));
 
     this->snapArrowsToEdge();
 
     stringMenu->setPosition(Point(size.width/2, size.height - menuItemPaddingCenter));
     alignmentMenu->setPosition(Point(size.width/2, menuItemPaddingCenter+15));
 
-    this->addChild(this->_labelShouldRetain);
-    this->addChild(this->_arrowsBarShouldRetain);
-    this->addChild(this->_arrowsShouldRetain);
-    this->addChild(stringMenu);
-    this->addChild(alignmentMenu);
+    addChild(_labelShouldRetain);
+    addChild(_arrowsBarShouldRetain);
+    addChild(_arrowsShouldRetain);
+    addChild(stringMenu);
+    addChild(alignmentMenu);
 }
 
 BitmapFontMultiLineAlignment::~BitmapFontMultiLineAlignment()
@@ -1246,13 +1253,13 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
     switch(item->getTag())
     {
     case LongSentences:
-        this->_labelShouldRetain->setString(LongSentencesExample);
+        _labelShouldRetain->setString(LongSentencesExample);
         break;
     case LineBreaks:
-        this->_labelShouldRetain->setString(LineBreaksExample);
+        _labelShouldRetain->setString(LineBreaksExample);
         break;
     case Mixed:
-        this->_labelShouldRetain->setString(MixedExample);
+        _labelShouldRetain->setString(MixedExample);
         break;
 
     default:
@@ -1272,13 +1279,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
     switch(item->getTag())
     {
     case LeftAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::LEFT);
+        _labelShouldRetain->setAlignment(TextHAlignment::LEFT);
         break;
     case CenterAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::CENTER);
+        _labelShouldRetain->setAlignment(TextHAlignment::CENTER);
         break;
     case RightAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::RIGHT);
+        _labelShouldRetain->setAlignment(TextHAlignment::RIGHT);
         break;
 
     default:
@@ -1325,7 +1332,7 @@ void BitmapFontMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& tou
 
     float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
 
-    this->_labelShouldRetain->setWidth(labelWidth);
+    _labelShouldRetain->setWidth(labelWidth);
 }
 
 void BitmapFontMultiLineAlignment::snapArrowsToEdge()
@@ -1486,7 +1493,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     Color3B tintColorRed(  255, 0, 0   );
     Color3B tintColorYellow( 255, 255, 0 );
     Color3B tintColorBlue( 0, 0, 255   );
-    Color3B strokeColor( 0, 10, 255  );
+    Color3B strokeColor( 0, 0, 255  );
     Color3B strokeShadowColor( 255, 0, 0   );
     
     Size shadowOffset(12.0, 12.0);
@@ -1547,11 +1554,46 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef._fontFillColor   = tintColorBlue;
     
     // shadow + stroke label
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke && Shadow Blue Text", strokeShaodwTextDef);
+#else
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke &Shadow Blue Text", strokeShaodwTextDef);
+#endif 
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);
     fontStrokeAndShadow->setPosition(Point(s.width/2,s.height/4*1.1));
+    
+    auto buttonBG = MenuItemImage::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+    buttonBG->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    buttonBG->setPosition(VisibleRect::left());
+    
+    // create the label stroke and shadow
+    strokeShaodwTextDef._fontSize = 18;
+    strokeShaodwTextDef._fontName = "Marker Felt";
+    
+    strokeShaodwTextDef._stroke._strokeEnabled = true;
+    strokeShaodwTextDef._stroke._strokeColor   = Color3B::BLACK;
+    strokeShaodwTextDef._stroke._strokeSize    = 3.0f;
+    
+    strokeShaodwTextDef._shadow._shadowEnabled = false;
+    strokeShaodwTextDef._shadow._shadowOffset  = Size(1, 1);
+    strokeShaodwTextDef._shadow._shadowOpacity = 1.0;
+    strokeShaodwTextDef._shadow._shadowBlur    = 0.5f;
+    
+    strokeShaodwTextDef._fontFillColor   = Color3B::WHITE;
+    
+    // shadow + stroke label
+    fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Test", strokeShaodwTextDef);
+    
+    // add label to the scene
+    buttonBG->addChild(fontStrokeAndShadow);
+    fontStrokeAndShadow->setPosition(Point(buttonBG->getContentSize().width/2, buttonBG->getContentSize().height/2));
+    
+    auto menu = Menu::create(buttonBG, nullptr);
+    menu->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    menu->setPosition(Point::ZERO);
+    addChild(menu);
 }
 
 std::string TTFFontShadowAndStroke::title() const
@@ -1701,3 +1743,9 @@ std::string LabelBMFontBinaryFormat::subtitle() const
 {
     return "This label uses font file in AngelCode binary format";
 }
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif

@@ -14,7 +14,7 @@ HttpClientTest::HttpClientTest()
     const int MARGIN = 40;
     const int SPACE = 35;
     
-    auto label = LabelTTF::create("Http Request Test", "Arial", 28);
+    auto label = Label::create("Http Request Test", "fonts/arial.ttf", 28);
     label->setPosition(Point(winSize.width / 2, winSize.height - MARGIN));
     addChild(label, 0);
     
@@ -23,37 +23,37 @@ HttpClientTest::HttpClientTest()
     addChild(menuRequest);
     
     // Get 
-    auto labelGet = LabelTTF::create("Test Get", "Arial", 22);
+    auto labelGet = Label::create("Test Get", "fonts/arial.ttf", 22);
     auto itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this));
     itemGet->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemGet);
     
     // Post
-    auto labelPost = LabelTTF::create("Test Post", "Arial", 22);
+    auto labelPost = Label::create("Test Post", "fonts/arial.ttf", 22);
     auto itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this));
     itemPost->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemPost);
     
     // Post Binary
-    auto labelPostBinary = LabelTTF::create("Test Post Binary", "Arial", 22);
+    auto labelPostBinary = Label::create("Test Post Binary", "fonts/arial.ttf", 22);
     auto itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this));
     itemPostBinary->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 3 * SPACE));
     menuRequest->addChild(itemPostBinary);
 
     // Put
-    auto labelPut = LabelTTF::create("Test Put", "Arial", 22);
+    auto labelPut = Label::create("Test Put", "fonts/arial.ttf", 22);
     auto itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this));
     itemPut->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 4 * SPACE));
     menuRequest->addChild(itemPut);
 
     // Delete
-    auto labelDelete = LabelTTF::create("Test Delete", "Arial", 22);
+    auto labelDelete = Label::create("Test Delete", "fonts/arial.ttf", 22);
     auto itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this));
     itemDelete->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 5 * SPACE));
     menuRequest->addChild(itemDelete);
     
     // Response Code Label
-    _labelStatusCode = LabelTTF::create("HTTP Status Code", "Marker Felt", 20);
+    _labelStatusCode = Label::create("HTTP Status Code", "fonts/arial.ttf", 22);
     _labelStatusCode->setPosition(Point(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE));
     addChild(_labelStatusCode);
     

@@ -13,7 +13,10 @@ Thumbs.db
 /templates
 /tests
 /plugin/samples
-/tools
+/tools/cocos2d-console
+/tools/jenkins-scripts
+/tools/make-package
+/tools/travis-scripts
 
 .gitattributes
 .gitignore

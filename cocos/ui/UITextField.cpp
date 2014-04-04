@@ -65,7 +65,7 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
 {
     UICCTextField *pRet = new UICCTextField();
     
-    if(pRet && pRet->initWithString("", fontName, fontSize))
+    if(pRet && pRet->initWithPlaceHolder("", fontName, fontSize))
     {
         pRet->autorelease();
         if (placeholder)
@@ -167,14 +167,15 @@ void UICCTextField::insertText(const char * text, size_t len)
             }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
             int input_count = _calcCharCount(text);
-            if (input_count > _maxLength)
+            int total = text_count + input_count;
+            if (total > _maxLength)
             {
                 int ascii = 0;
                 int unicode = 0;
                 int end = 0;
                 int count = 0;
                 
-                for (int i = 0; i < input_count * 3; ++i)
+                for (int i = 0; i < total * 3; ++i)
                 {
                     char value = text[i];
                     
@@ -291,12 +292,24 @@ void UICCTextField::setPasswordStyleText(const char* styleText)
 
 void UICCTextField::setPasswordText(const char *text)
 {
-    std::string tempStr;
-    for (size_t i = 0; i < strlen(text); ++i)
+    std::string tempStr = "";
+    int text_count = _calcCharCount(text);
+    int max = text_count;
+    
+    if (_maxLengthEnabled)
+    {
+        if (text_count > _maxLength)
+        {
+            max = _maxLength;
+        }
+    }
+    
+    for (int i = 0; i < max; ++i)
     {
         tempStr.append(_passwordStyleText);
     }
-    LabelTTF::setString(tempStr.c_str());
+    
+    Label::setString(tempStr);
 }
 
 void UICCTextField::setAttachWithIME(bool attach)
@@ -392,7 +405,7 @@ void TextField::onEnter()
 void TextField::initRenderer()
 {
     _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
-    Node::addChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
+    addProtectedChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
 }
 
 void TextField::setTouchSize(const Size &size)
@@ -433,21 +446,59 @@ Size TextField::getTouchSize()
 void TextField::setText(const std::string& text)
 {
     std::string strText(text);
+    
     if (isMaxLengthEnabled())
     {
-        strText = strText.substr(0, getMaxLength());
+        int max = _textFieldRenderer->getMaxLength();
+        int text_count = _calcCharCount(text.c_str());
+        int total = text_count + _calcCharCount(getStringValue().c_str());
+        if (total > max)
+        {
+            int ascii = 0;
+            int unicode = 0;
+            int end = 0;
+            int count = 0;
+            
+            for (int i = 0; i < total * 3; ++i)
+            {
+                char value = text[i];
+                
+                if (value >= 0 && value <= 127) // ascii
+                {
+                    ascii++;
+                    count++;
+                }
+                else
+                {
+                    unicode++;
+                    if (unicode % 3 == 0)
+                    {
+                        count++;
+                    }
+                }
+                
+                if (count == max)
+                {
+                    break;
+                }
+            }
+            end = ascii + unicode;
+            strText = strText.substr(0, end);
+        }
     }
+    
     const char* content = strText.c_str();
     if (isPasswordEnabled())
     {
         _textFieldRenderer->setPasswordText(content);
         _textFieldRenderer->setString("");
-        _textFieldRenderer->insertText(content, static_cast<int>(strlen(content)));
+        _textFieldRenderer->insertText(content, strlen(content));
     }
     else
     {
         _textFieldRenderer->setString(content);
     }
+    
     textfieldRendererScaleChangedWithSize();
 }
 
@@ -672,13 +723,13 @@ void TextField::textfieldRendererScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _textFieldRenderer->setDimensions(Size::ZERO);
+        _textFieldRenderer->setDimensions(0,0);
         _textFieldRenderer->setScale(1.0f);
         _size = getContentSize();
     }
     else
     {
-        _textFieldRenderer->setDimensions(_size);
+        _textFieldRenderer->setDimensions(_size.width,_size.height);
         Size textureSize = getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
@@ -754,7 +805,7 @@ void TextField::copySpecialProperties(Widget *widget)
     
 void TextField::setTextAreaSize(const Size &size)
 {
-    _textFieldRenderer->setDimensions(size);
+    _textFieldRenderer->setDimensions(size.width,size.height);
 }
 
 void TextField::setTextHorizontalAlignment(TextHAlignment alignment)

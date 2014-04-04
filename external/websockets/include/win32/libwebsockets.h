@@ -19,8 +19,8 @@
  *  MA  02110-1301  USA
  */
 
-#ifndef __LIBWEBSOCKET_H__
-#define __LIBWEBSOCKET_H__
+#ifndef LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
+#define LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
 
 #ifdef __cplusplus
 extern "C" {
@@ -138,6 +138,7 @@ enum libwebsocket_callback_reasons {
 	LWS_CALLBACK_CLIENT_FILTER_PRE_ESTABLISH,
 	LWS_CALLBACK_CLIENT_ESTABLISHED,
 	LWS_CALLBACK_CLOSED,
+	LWS_CALLBACK_CLOSED_HTTP,
 	LWS_CALLBACK_RECEIVE,
 	LWS_CALLBACK_CLIENT_RECEIVE,
 	LWS_CALLBACK_CLIENT_RECEIVE_PONG,
@@ -419,6 +420,8 @@ struct libwebsocket_extension;
  *
  *	LWS_CALLBACK_CLOSED: when the websocket session ends
  *
+ *	LWS_CALLBACK_CLOSED_HTTP: when a HTTP (non-websocket) session ends
+ *
  *	LWS_CALLBACK_RECEIVE: data has appeared for this server endpoint from a
  *				remote client, it can be found at *in and is
  *				len bytes long
@@ -477,11 +480,14 @@ struct libwebsocket_extension;
  *	LWS_CALLBACK_FILTER_PROTOCOL_CONNECTION: called when the handshake has
  *		been received and parsed from the client, but the response is
  *		not sent yet.  Return non-zero to disallow the connection.
- *		@user is a pointer to an array of struct lws_tokens, you can
- *		use the header enums lws_token_indexes from libwebsockets.h
- *		to check for and read the supported header presence and
- *		content before deciding to allow the handshake to proceed or
- *		to kill the connection.
+ *		@user is a pointer to the connection user space allocation,
+ *		@in is the requested protocol name
+ *		In your handler you can use the public APIs
+ *		lws_hdr_total_length() / lws_hdr_copy() to access all of the
+ *		headers using the header enums lws_token_indexes from
+ *		libwebsockets.h to check for and read the supported header
+ *		presence and content before deciding to allow the handshake
+ *		to proceed or to kill the connection.
  *
  *	LWS_CALLBACK_OPENSSL_LOAD_EXTRA_CLIENT_VERIFY_CERTS: if configured for
  *		including OpenSSL support, this callback allows your user code
@@ -703,6 +709,14 @@ typedef int (extension_callback_function)(struct libwebsocket_context *context,
  *		libwebsockets_remaining_packet_payload().  Notice that you
  *		just talk about frame size here, the LWS_SEND_BUFFER_PRE_PADDING
  *		and post-padding are automatically also allocated on top.
+ * @no_buffer_all_partial_tx:  Leave at zero if you want the library to take
+ *		care of all partial tx for you.  It's useful if you only have
+ *		small tx packets and the chance of any truncated send is small
+ *		enough any additional malloc / buffering overhead is less
+ *		painful than writing the code to deal with partial sends.  For
+ *		protocols where you stream big blocks, set to nonzero and use
+ *		the return value from libwebsocket_write() to manage how much
+ *		got send yourself.
  * @owning_server:	the server init call fills in this opaque pointer when
  *		registering this protocol with the server.
  * @protocol_index: which protocol we are starting from zero
@@ -717,6 +731,7 @@ struct libwebsocket_protocols {
 	callback_function *callback;
 	size_t per_session_data_size;
 	size_t rx_buffer_size;
+	int no_buffer_all_partial_tx;
 
 	/*
 	 * below are filled in on server init and can be left uninitialized,
@@ -815,6 +830,9 @@ lwsl_emit_syslog(int level, const char *line);
 
 LWS_VISIBLE LWS_EXTERN struct libwebsocket_context *
 libwebsocket_create_context(struct lws_context_creation_info *info);
+	
+LWS_VISIBLE LWS_EXTERN int
+libwebsocket_set_proxy(struct libwebsocket_context *context, const char *proxy);
 
 LWS_VISIBLE LWS_EXTERN void
 libwebsocket_context_destroy(struct libwebsocket_context *context);
@@ -828,6 +846,23 @@ libwebsocket_service_fd(struct libwebsocket_context *context,
 
 LWS_VISIBLE LWS_EXTERN void *
 libwebsocket_context_user(struct libwebsocket_context *context);
+
+enum pending_timeout {
+	NO_PENDING_TIMEOUT = 0,
+	PENDING_TIMEOUT_AWAITING_PROXY_RESPONSE,
+	PENDING_TIMEOUT_AWAITING_CONNECT_RESPONSE,
+	PENDING_TIMEOUT_ESTABLISH_WITH_SERVER,
+	PENDING_TIMEOUT_AWAITING_SERVER_RESPONSE,
+	PENDING_TIMEOUT_AWAITING_PING,
+	PENDING_TIMEOUT_CLOSE_ACK,
+	PENDING_TIMEOUT_AWAITING_EXTENSION_CONNECT_RESPONSE,
+	PENDING_TIMEOUT_SENT_CLIENT_HANDSHAKE,
+	PENDING_TIMEOUT_SSL_ACCEPT,
+};
+
+LWS_EXTERN void
+libwebsocket_set_timeout(struct libwebsocket *wsi,
+					 enum pending_timeout reason, int secs);
 
 /*
  * IMPORTANT NOTICE!

@@ -38,6 +38,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(TexturePVRv3Premult),
 
+    CL(TextureMipMap),
     CL(TextureMemoryAlloc),
     CL(TextureAlias),
     CL(TexturePVRMipMap),
@@ -79,7 +80,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(TextureJPEG),
     CL(TextureTIFF),
     CL(TextureTGA),
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_INRT)
     CL(TextureWEBP),
+#endif
     CL(TexturePixelFormat),
     CL(TextureBlend),
     CL(TextureAsync),
@@ -1517,7 +1520,7 @@ void TextureAsync::onEnter()
 
     auto size = Director::getInstance()->getWinSize();
 
-    auto label = LabelTTF::create("Loading...", "Marker Felt", 32);
+    auto label = Label::create("Loading...", "fonts/Marker Felt.ttf", 32);
     label->setPosition(Point( size.width/2, size.height/2));
     addChild(label, 10);
 

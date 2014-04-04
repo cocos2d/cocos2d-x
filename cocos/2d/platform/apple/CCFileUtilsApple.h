@@ -45,13 +45,14 @@ class CC_DLL FileUtilsApple : public FileUtils
 public:
     /* override funtions */
     virtual std::string getWritablePath() const override;
-    virtual bool isFileExist(const std::string& filePath) const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) override;
     
     virtual ValueMap getValueMapFromFile(const std::string& filename) override;
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath) override;
     
     virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
+private:
+    virtual bool isFileExistInternal(const std::string& filePath) const override;
 };
 
 // end of platform group

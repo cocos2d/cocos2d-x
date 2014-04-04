@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module TransitionTurnOffTiles
--- @extend TransitionScene,TransitionEaseScene,
+-- @extend TransitionScene,TransitionEaseScene
 
 --------------------------------
 -- @function [parent=#TransitionTurnOffTiles] easeActionWithAction 

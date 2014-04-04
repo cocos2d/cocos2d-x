@@ -32,8 +32,19 @@
 #include <string>
 #include <ft2build.h>
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#define generic GenericFromFreeTypeLibrary
+#define internal InternalFromFreeTypeLibrary
+#endif
+
 #include FT_FREETYPE_H
 #include FT_STROKER_H
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#undef generic
+#undef internal
+#endif
+
 
 NS_CC_BEGIN
 
@@ -77,7 +88,6 @@ private:
     FT_Face           _fontRef;
     FT_Stroker        _stroker;
     std::string       _fontName;
-    Data              _ttfData;
     bool              _distanceFieldEnabled;
     int               _outlineSize;
 };

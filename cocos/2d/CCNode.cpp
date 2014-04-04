@@ -72,7 +72,7 @@ bool nodeComparisonLess(Node* n1, Node* n2)
 }
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
-static int s_globalOrderOfArrival = 1;
+int Node::s_globalOrderOfArrival = 1;
 
 Node::Node(void)
 : _rotationX(0.0f)
@@ -154,15 +154,12 @@ Node::~Node()
     }
 #endif
 
-    CC_SAFE_RELEASE(_actionManager);
-    CC_SAFE_RELEASE(_scheduler);
-    
-    _eventDispatcher->removeEventListenersForTarget(this);
-    CC_SAFE_RELEASE(_eventDispatcher);
+    // User object has to be released before others, since userObject may have a weak reference of this node
+    // It may invoke `node->stopAllAction();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
+    CC_SAFE_RELEASE_NULL(_userObject);
     
     // attributes
-    CC_SAFE_RELEASE(_shaderProgram);
-    CC_SAFE_RELEASE(_userObject);
+    CC_SAFE_RELEASE_NULL(_shaderProgram);
 
     for (auto& child : _children)
     {
@@ -175,7 +172,19 @@ Node::~Node()
     
 #if CC_USE_PHYSICS
     setPhysicsBody(nullptr);
+
 #endif
+    
+    CC_SAFE_RELEASE_NULL(_actionManager);
+    CC_SAFE_RELEASE_NULL(_scheduler);
+    
+    _eventDispatcher->removeEventListenersForTarget(this);
+    
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
+    _eventDispatcher->debugCheckNodeHasNoEventListenersOnDestruction(this);
+#endif
+
+    CC_SAFE_RELEASE(_eventDispatcher);
 }
 
 bool Node::init()

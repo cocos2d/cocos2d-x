@@ -31,8 +31,8 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
     // title
-    auto label = LabelTTF::create("Multi touch the screen", "Marker Felt", 36);
-    label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y - 30));
+    auto label = Label::create("Multi touch the screen", "fonts/Marker Felt.ttf", 36.0f);
+    label->setPosition(cocos2d::Point( VisibleRect::center().x, VisibleRect::top().y - 30));
     this->addChild(label, -1);
 
     // reset button
@@ -52,7 +52,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 #endif
     addChild(parent, 0, kTagParentNode);
 
-    addNewSpriteAtPosition(Point(200,200));
+    addNewSpriteAtPosition(cocos2d::Point(200,200));
 
     // menu for debug layer
     MenuItemFont::setFontSize(18);
@@ -60,12 +60,12 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
-    menu->setPosition(Point(VisibleRect::right().x-100, VisibleRect::top().y-60));
+    menu->setPosition(cocos2d::Point(VisibleRect::right().x-100, VisibleRect::top().y-60));
 
     scheduleUpdate();
 #else
-    auto label = LabelTTF::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
-                                            "Arial",
+    auto label = Label::create("Should define CC_ENABLE_CHIPMUNK_INTEGRATION=1\n to run this test case",
+                                            "fonts/arial.ttf",
                                             18);
     auto size = Director::getInstance()->getWinSize();
     label->setPosition(Point(size.width/2, size.height/2));
@@ -160,7 +160,7 @@ void ChipmunkTestLayer::createResetButton()
 
     auto menu = Menu::create(reset, NULL);
 
-    menu->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(cocos2d::Point(VisibleRect::center().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
 }
 
@@ -174,7 +174,7 @@ void ChipmunkTestLayer::reset(Ref* sender)
     s->release();
 }
 
-void ChipmunkTestLayer::addNewSpriteAtPosition(Point pos)
+void ChipmunkTestLayer::addNewSpriteAtPosition(cocos2d::Point pos)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION    
     int posx, posy;
@@ -205,7 +205,7 @@ void ChipmunkTestLayer::addNewSpriteAtPosition(Point pos)
     shape->e = 0.5f; shape->u = 0.5f;
     cpSpaceAddShape(_space, shape);
 
-    auto sprite = PhysicsSprite::createWithTexture(_spriteTexture, Rect(posx, posy, 85, 121));
+    auto sprite = PhysicsSprite::createWithTexture(_spriteTexture, cocos2d::Rect(posx, posy, 85, 121));
     parent->addChild(sprite);
 
     sprite->setCPBody(body);
@@ -242,7 +242,7 @@ void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
     prevX = accelX;
     prevY = accelY;
 
-    auto v = Point( accelX, accelY);
+    auto v = cocos2d::Point( accelX, accelY);
     v = v * 200;
     _space->gravity = cpv(v.x, v.y);
 }

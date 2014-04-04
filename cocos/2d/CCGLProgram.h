@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCRef.h"
 #include "CCGL.h"
 #include "kazmath/kazmath.h"
+#include <set>
 
 NS_CC_BEGIN
 
@@ -126,7 +127,18 @@ public:
      * @js initWithString
      * @lua initWithString
      */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    /** Initializes the CCGLProgram with precompiled shader program */
+    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+#endif
+
+    /** Initializes the GLProgram with a vertex and fragment with bytes array 
+     * @js initWithString
+     * @lua initWithString
+     */
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+
     /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
      * @js init
      * @lua init
@@ -266,6 +278,10 @@ private:
     GLuint            _fragShader;
     GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
+	bool              _hasShaderCompiler;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    std::string       _shaderId;
+#endif
 
     struct flag_struct {
         unsigned int usesTime:1;
@@ -277,6 +293,8 @@ private:
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }
     } _flags;
+public:
+    static const GLuint _maxMaterialIDNumber;
 };
 
 // end of shaders group

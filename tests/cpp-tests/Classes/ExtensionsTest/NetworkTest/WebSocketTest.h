@@ -37,9 +37,9 @@ private:
     cocos2d::network::WebSocket* _wsiSendBinary;
     cocos2d::network::WebSocket* _wsiError;
     
-    cocos2d::LabelTTF* _sendTextStatus;
-    cocos2d::LabelTTF* _sendBinaryStatus;
-    cocos2d::LabelTTF* _errorStatus;
+    cocos2d::Label* _sendTextStatus;
+    cocos2d::Label* _sendBinaryStatus;
+    cocos2d::Label* _errorStatus;
     
     int _sendTextTimes;
     int _sendBinaryTimes;

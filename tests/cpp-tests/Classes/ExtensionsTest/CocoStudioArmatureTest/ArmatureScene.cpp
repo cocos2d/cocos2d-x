@@ -160,16 +160,16 @@ void ArmatureTestLayer::onEnter()
     // add title and subtitle
     std::string str = title();
     const char *pTitle = str.c_str();
-    LabelTTF *label = LabelTTF::create(pTitle, "Arial", 18);
-    label->setColor(Color3B(0, 0, 0));
+    auto label = Label::create(pTitle, "fonts/arial.ttf", 18);
+    label->setColor(Color3B::BLACK);
     addChild(label, 1, 10000);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        LabelTTF *l = LabelTTF::create(strSubtitle.c_str(), "Arial", 18);
-        l->setColor(Color3B(0, 0, 0));
+        auto l = Label::create(strSubtitle.c_str(), "fonts/arial.ttf", 18);
+        l->setColor(Color3B::BLACK);
         addChild(l, 1, 10001);
         l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
@@ -243,7 +243,7 @@ void TestAsynchronousLoading::onEnter()
 
     char pszPercent[255];
     sprintf(pszPercent, "%s %f", subtitle().c_str(), 0.0f);
-    LabelTTF *label = (LabelTTF *)getChildByTag(10001);
+    auto label = (Label *)getChildByTag(10001);
     label->setString(pszPercent);
 
 
@@ -277,7 +277,7 @@ void TestAsynchronousLoading::restartCallback(Ref* pSender)
 }
 void TestAsynchronousLoading::dataLoaded(float percent)
 {
-    LabelTTF *label = (LabelTTF *)getChildByTag(10001);
+    auto label = (Label *)getChildByTag(10001);
     if (label)
     {
         char pszPercent[255];
@@ -436,7 +436,7 @@ void TestPerformance::refreshTitle()
 {
     char pszCount[255];
     sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
-    LabelTTF *label = (LabelTTF *)getChildByTag(10001);
+    auto label = (Label *)getChildByTag(10001);
     label->setString(pszCount);
 }
 
@@ -703,7 +703,7 @@ void TestUseMutiplePicture::onEnter()
     // 		armature->getBone("weapon")->addDisplay(&displayData, i);
     // 	}
 
-    LabelTTF *l = LabelTTF::create("This is a weapon!", "Arial", 18);
+    auto l = Label::create("This is a weapon!", "fonts/arial.ttf", 18);
     l->setAnchorPoint(Point(0.2f, 0.5f));
     armature->getBone("weapon")->addDisplay(l, 7);
 }
@@ -1040,7 +1040,7 @@ void TestColliderDetector::update(float delta)
 
             float minx = 0, miny = 0, maxx = 0, maxy = 0;
             size_t length = vertexList.size();
-            for (int i = 0; i<length; i++)
+            for (size_t i = 0; i<length; i++)
             {
                 Point vertex = vertexList.at(i);
                 if (i == 0)
@@ -1275,7 +1275,7 @@ void TestArmatureNesting2::onEnter()
 
     touchedMenu = false;
 
-    LabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
+    auto label = Label::create("Change Mount", "fonts/arial.ttf", 20);
     MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::changeMountCallback, this));
 
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
@@ -1441,7 +1441,7 @@ void TestEasing::onTouchesEnded(const std::vector<Touch*>& touches, Event* event
 void TestEasing::updateSubTitle()
 {
     std::string str = subtitle() + armature->getAnimation()->getCurrentMovementID();
-    LabelTTF *label = (LabelTTF *)getChildByTag(10001);
+    auto label = (Label *)getChildByTag(10001);
     label->setString(str.c_str());
 }
 
