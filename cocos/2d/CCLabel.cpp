@@ -45,7 +45,7 @@ const int Label::DistanceFieldFontSize = 50;
 
 Label* Label::create()
 {
-    Label *ret = new Label();
+    auto ret = new Label();
 
     if (!ret)
         return nullptr;
@@ -103,43 +103,54 @@ Label* Label::create(const std::string& text, const std::string& fontName, float
     return ret;
 }
 
-Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment /* = TextHAlignment::CENTER */, int lineSize /* = 0 */)
+Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment /* = TextHAlignment::CENTER */, int maxLineWidth /* = 0 */)
 {
-    Label *ret = new Label(nullptr,alignment);
+    auto ret = new Label(nullptr,alignment);
 
     if (!ret)
+    {
         return nullptr;
+    }
 
-    if (ret->setTTFConfig(ttfConfig))
+    do 
     {
-        ret->setMaxLineWidth(lineSize);
-        ret->setString(text);
-        ret->autorelease();
-        return ret;
-    }
-    else
-    {
-        delete ret;
-        return nullptr;
-    }
+        if( FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && ret->setTTFConfig(ttfConfig))
+        {
+            break;
+        }
+
+        FontDefinition fontDef;
+        fontDef._fontName = ttfConfig.fontFilePath;
+        fontDef._fontSize = ttfConfig.fontSize;
+        fontDef._dimensions = Size::ZERO;
+        fontDef._alignment = alignment;
+        fontDef._vertAlignment = TextVAlignment::TOP;
+        ret->setFontDefinition(fontDef);
+    } while (0);
+
+    ret->setMaxLineWidth(maxLineWidth);
+    ret->setString(text);
+    ret->autorelease();
+
+    return ret;
 }
 
-Label* Label::createWithTTF(const std::string& text, const std::string& fontFilePath, int fontSize, int lineSize /* = 0 */, TextHAlignment alignment /* = TextHAlignment::CENTER */, GlyphCollection glyphs /* = GlyphCollection::NEHE */, const char *customGlyphs /* = 0 */, bool useDistanceField /* = false */)
+Label* Label::createWithTTF(const std::string& text, const std::string& fontFilePath, int fontSize, int maxLineWidth /* = 0 */, TextHAlignment alignment /* = TextHAlignment::CENTER */, GlyphCollection glyphs /* = GlyphCollection::NEHE */, const char *customGlyphs /* = 0 */, bool useDistanceField /* = false */)
 {
     TTFConfig ttfConfig(fontFilePath.c_str(),fontSize,glyphs,customGlyphs,useDistanceField);
-    return createWithTTF(ttfConfig,text,alignment,lineSize);
+    return createWithTTF(ttfConfig,text,alignment,maxLineWidth);
 }
 
-Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int lineWidth /* = 0 */, const Point& imageOffset /* = Point::ZERO */)
+Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Point& imageOffset /* = Point::ZERO */)
 {
-    Label *ret = new Label(nullptr,alignment);
+    auto ret = new Label(nullptr,alignment);
 
     if (!ret)
         return nullptr;
 
     if (ret->setBMFontFilePath(bmfontFilePath,imageOffset))
     {
-        ret->setMaxLineWidth(lineWidth);
+        ret->setMaxLineWidth(maxLineWidth);
         ret->setString(text);
         ret->autorelease();
         return ret;
@@ -153,7 +164,7 @@ Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::str
 
 Label* Label::createWithCharMap(const std::string& plistFile)
 {
-    Label *ret = new Label();
+    auto ret = new Label();
 
     if (!ret)
         return nullptr;
@@ -172,7 +183,7 @@ Label* Label::createWithCharMap(const std::string& plistFile)
 
 Label* Label::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
-    Label *ret = new Label();
+    auto ret = new Label();
 
     if (!ret)
         return nullptr;
@@ -191,7 +202,7 @@ Label* Label::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeigh
 
 Label* Label::createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    Label *ret = new Label();
+    auto ret = new Label();
 
     if (!ret)
         return nullptr;
@@ -210,7 +221,7 @@ Label* Label::createWithCharMap(const std::string& charMapFile, int itemWidth, i
 
 bool Label::setCharMap(const std::string& plistFile)
 {
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(plistFile);
+    auto newAtlas = FontAtlasCache::getFontAtlasCharMap(plistFile);
 
     if (!newAtlas)
     {
@@ -226,7 +237,7 @@ bool Label::setCharMap(const std::string& plistFile)
 
 bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(texture,itemWidth,itemHeight,startCharMap);
+    auto newAtlas = FontAtlasCache::getFontAtlasCharMap(texture,itemWidth,itemHeight,startCharMap);
 
     if (!newAtlas)
     {
@@ -242,7 +253,7 @@ bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int st
 
 bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
+    auto newAtlas = FontAtlasCache::getFontAtlasCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
 
     if (!newAtlas)
     {
@@ -860,15 +871,10 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     _fontDefinition._shadow._shadowEnabled = false;
     _shadowDirty = true;
 
-    _effectColor = shadowColor;
-    _effectColorF.r = _effectColor.r / 255.0f;
-    _effectColorF.g = _effectColor.g / 255.0f;
-    _effectColorF.b = _effectColor.b / 255.0f;
-    _effectColorF.a = _effectColor.a / 255.0f;
-
-    _shadowColor.r = _effectColor.r;
-    _shadowColor.g = _effectColor.g;
-    _shadowColor.b = _effectColor.b;
+    _shadowColor.r = shadowColor.r;
+    _shadowColor.g = shadowColor.g;
+    _shadowColor.b = shadowColor.b;
+    _shadowOpacity = shadowColor.a / 255.0f;
 
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     _shadowOffset.width = offset.width * contentScaleFactor;
@@ -879,7 +885,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     if (_textSprite && _shadowNode)
     {
         _shadowNode->setColor(_shadowColor);
-        _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);
+        _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
     }
 }
@@ -920,7 +926,6 @@ void Label::onDraw(const kmMat4& transform, bool transformUpdated)
 
     _shaderProgram->use();
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-    bool trans = false;
 
     if (_currentLabelType == LabelType::TTF)
     {
@@ -933,7 +938,8 @@ void Label::onDraw(const kmMat4& transform, bool transformUpdated)
          _shaderProgram->setUniformLocationWith4f(_uniformEffectColor, 
              _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
     }
-    else if(_shadowEnabled && _shadowBlurRadius <= 0)
+
+    if(_shadowEnabled && _shadowBlurRadius <= 0)
     {
         drawShadowWithoutBlur();
     }
@@ -958,7 +964,7 @@ void Label::drawShadowWithoutBlur()
 {
     Color3B oldColor = _realColor;
     GLubyte oldOPacity = _displayedOpacity;
-    _displayedOpacity = _effectColorF.a * _displayedOpacity;
+    _displayedOpacity = _shadowOpacity * _displayedOpacity;
     setColor(_shadowColor);
 
     _shaderProgram->setUniformsForBuiltins(_shadowTransform);
@@ -1075,13 +1081,13 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     if (_shadowEnabled && _shadowNode == nullptr)
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
-        if (_shadowNode)
+        if (_shadowNode && _blendFuncDirty)
         {
             _shadowNode->setBlendFunc(_blendFunc);
         }
         _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setColor(_shadowColor);
-        _shadowNode->setOpacity(_effectColorF.a * _displayedOpacity);
+        _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
         Node::addChild(_shadowNode,0,Node::INVALID_TAG);  
     }
@@ -1406,4 +1412,5 @@ void Label::setBlendFunc(const BlendFunc &blendFunc)
         }
     }
 }
+
 NS_CC_END

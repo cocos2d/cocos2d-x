@@ -255,6 +255,12 @@ void Director::drawScene()
 {
     // calculate "global" dt
     calculateDeltaTime();
+    
+    // skip one flame when _deltaTime equal to zero.
+    if(_deltaTime < FLT_EPSILON)
+    {
+        return;
+    }
 
     if (_openGLView)
     {
@@ -422,9 +428,9 @@ void Director::setViewport()
     }
 }
 
-void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
+void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 {
-    _nextDeltaTimeZero = bNextDeltaTimeZero;
+    _nextDeltaTimeZero = nextDeltaTimeZero;
 }
 
 void Director::setProjection(Projection projection)

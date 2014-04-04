@@ -302,6 +302,8 @@ public:
 
     void removeListenerOnTouchEnded(bool toRemove) { _removeListenerOnTouchEnded = toRemove; };
     
+    inline EventListener* getListener() { return _listener; };
+    
 private:
     EventListener* _listener;
     int _fixedPriority;
@@ -843,6 +845,8 @@ void DirectorEventTest::onExit()
 {
     EventDispatcherTestDemo::onExit();
 
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_event1);
     dispatcher->removeEventListener(_event2);
@@ -1125,21 +1129,23 @@ PauseResumeTargetTest::PauseResumeTargetTest()
     sprite2->setPosition(origin+Point(size.width/2, size.height/2));
     addChild(sprite2, -20);
     
-    auto sprite3 = TouchableSprite::create();
+    auto sprite3 = TouchableSprite::create(100); // Sprite3 uses fixed priority listener
     sprite3->setTexture("Images/YellowSquare.png");
     sprite3->setPosition(Point(0, 0));
     sprite2->addChild(sprite3, -1);
     
-    auto popup = MenuItemFont::create("Popup", [this](Ref* sender){
+    auto popup = MenuItemFont::create("Popup", [=](Ref* sender){
         
+        sprite3->getListener()->setEnabled(false);
         _eventDispatcher->pauseEventListenersForTarget(this, true);
         
         auto colorLayer = LayerColor::create(Color4B(0, 0, 255, 100));
         this->addChild(colorLayer, 99999);
         
-        auto closeItem = MenuItemFont::create("close", [this, colorLayer](Ref* sender){
+        auto closeItem = MenuItemFont::create("close", [=](Ref* sender){
             colorLayer->removeFromParent();
             _eventDispatcher->resumeEventListenersForTarget(this, true);
+            sprite3->getListener()->setEnabled(true);
         });
         
         closeItem->setPosition(VisibleRect::center());
@@ -1172,7 +1178,7 @@ std::string PauseResumeTargetTest::title() const
 
 std::string PauseResumeTargetTest::subtitle() const
 {
-    return "";
+    return "Yellow block uses fixed priority";
 }
 
 // Issue4129

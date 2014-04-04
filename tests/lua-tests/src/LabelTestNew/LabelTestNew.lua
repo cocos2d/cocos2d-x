@@ -306,7 +306,7 @@ function LabelTTFColor:create()
     ttfConfig.fontSize=18
 
     local label1 = cc.Label:createWithTTF(ttfConfig,"Green", cc.VERTICAL_TEXT_ALIGNMENT_CENTER, s.width)
-    label1:setColor( cc.c3b(0, 255, 0 ))
+    label1:setTextColor( cc.c4b(0, 255, 0, 255))
     layer:addChild(label1)
     label1:setPosition( cc.p(s.width/2, s.height/5 * 1.5) )
     label1:setAnchorPoint( cc.p(0.5, 0.5) )
@@ -315,13 +315,13 @@ function LabelTTFColor:create()
     layer:addChild(label2)
     label2:setPosition( cc.p(s.width/2, s.height/5 * 2.0) )
     label2:setAnchorPoint( cc.p(0.5, 0.5) )
-    label2:setColor( cc.c3b(255, 0, 0) )
+    label2:setTextColor( cc.c4b(255, 0, 0, 255) )
 
     local label3 = cc.Label:createWithTTF(ttfConfig, "Blue", cc.VERTICAL_TEXT_ALIGNMENT_CENTER, s.width)
     layer:addChild(label3)
     label3:setPosition( cc.p(s.width/2, s.height/5 * 2.5) )
     label3:setAnchorPoint( cc.p(0.5, 0.5) )
-    label3:setColor( cc.c3b(0, 0, 255 ))
+    label3:setTextColor( cc.c4b(0, 0, 255, 255))
 
     Helper.titleLabel:setString("New Label + .TTF")
     Helper.subtitleLabel:setString("Uses the new Label with TTF. Testing Color")
@@ -1026,7 +1026,7 @@ function LabelTTFCJKWrappingTest.create()
     ttfConfig.fontSize = 25
     ttfConfig.glyphs = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
-    ttfConfig.distanceFieldEnabled = true
+    ttfConfig.distanceFieldEnabled = false
     
     local drawNode = cc.DrawNode:create()
     drawNode:setAnchorPoint(cc.p(0, 0))
@@ -1041,7 +1041,7 @@ function LabelTTFCJKWrappingTest.create()
     local label1 = cc.Label:createWithTTF(
         ttfConfig, "你好，Cocos2d-x v3的New Label。",
         cc.TEXT_ALIGNMENT_LEFT, size.width * 0.75)
-    label1:setColor(cc.c3b(128, 255, 255))
+    label1:setTextColor(cc.c4b(128, 255, 255, 255))
     label1:setPosition(cc.p(size.width * 0.1, size.height * 0.6))
     label1:setAnchorPoint(cc.p(0, 0.5))
     layer:addChild(label1)
@@ -1049,7 +1049,7 @@ function LabelTTFCJKWrappingTest.create()
     local label2 = cc.Label:createWithTTF(
         ttfConfig, "早上好，Cocos2d-x v3的New Label。",
         cc.TEXT_ALIGNMENT_LEFT, size.width * 0.75)
-    label2:setColor(cc.c3b(255, 128, 255))
+    label2:setTextColor(cc.c4b(255, 128, 255, 255))
     label2:setPosition(cc.p(size.width * 0.1, size.height * 0.4))
     label2:setAnchorPoint(cc.p(0, 0.5))
     layer:addChild(label2)
@@ -1057,7 +1057,7 @@ function LabelTTFCJKWrappingTest.create()
     local label3 = cc.Label:createWithTTF(
         ttfConfig, "美好的一天啊美好的一天啊美好的一天啊",
         cc.TEXT_ALIGNMENT_LEFT, size.width * 0.75)
-    label3:setColor(cc.c3b(255, 255, 128))
+    label3:setColor(cc.c4b(255, 255, 128, 255))
     label3:setPosition(cc.p(size.width * 0.1, size.height * 0.2))
     label3:setAnchorPoint(cc.p(0, 0.5))
     layer:addChild(label3)
@@ -1149,7 +1149,7 @@ function LabelTTFDistanceField.create()
     local label1 = cc.Label:createWithTTF(ttfConfig,"Distance Field",cc.TEXT_ALIGNMENT_CENTER,s.width)
     label1:setAnchorPoint(cc.p(0.5,0.5))
     label1:setPosition(cc.p(s.width/2, s.height/2))
-    label1:setColor( cc.c3b(0, 255, 0) )
+    label1:setTextColor( cc.c4b(0, 255, 0, 255) )
     local action = cc.Sequence:create(cc.DelayTime:create(1.0),
         cc.ScaleTo:create(6.0,5.0,5.0),
         cc.ScaleTo:create(6.0,1.0,1.0))
@@ -1158,7 +1158,7 @@ function LabelTTFDistanceField.create()
 
     local label2 = cc.Label:createWithTTF(ttfConfig,"Distance Field",cc.TEXT_ALIGNMENT_CENTER,s.width)
     label2:setPosition( cc.p(s.width/2, s.height/5) )
-    label2:setColor( cc.c3b(255, 0, 0))
+    label2:setTextColor( cc.c4b(255, 0, 0, 255))
     label2:setAnchorPoint(cc.p(0.5, 0.5))
     layer:addChild(label2)
 
@@ -1191,14 +1191,14 @@ function LabelOutlineAndGlowTest.create()
     local label1 = cc.Label:createWithTTF(ttfConfig,"Glow",cc.TEXT_ALIGNMENT_CENTER,s.width)
     label1:setAnchorPoint(cc.p(0.5,0.5))
     label1:setPosition(cc.p(s.width/2, s.height * 0.7))
-    label1:setColor( cc.c3b(0, 255, 0) )
-    label1:enableGlow(cc.c3b(255, 255, 0))
+    label1:setTextColor( cc.c4b(0, 255, 0, 255) )
+    label1:enableGlow(cc.c4b(255, 255, 0, 255))
     layer:addChild(label1)
 
     ttfConfig.outlineSize = 1
     local label2 = cc.Label:createWithTTF(ttfConfig,"Outline",cc.TEXT_ALIGNMENT_CENTER,s.width)
     label2:setPosition( cc.p(s.width/2, s.height * 0.6))
-    label2:setColor( cc.c3b(255, 0, 0))
+    label2:setTextColor( cc.c4b(255, 0, 0, 255))
     label2:setAnchorPoint(cc.p(0.5, 0.5))
     label2:enableOutline(cc.c4b(0,0,255,255))
     layer:addChild(label2)
@@ -1206,7 +1206,7 @@ function LabelOutlineAndGlowTest.create()
     ttfConfig.outlineSize = 2
     local label3 = cc.Label:createWithTTF(ttfConfig,"Outline",cc.TEXT_ALIGNMENT_CENTER,s.width)
     label3:setPosition( cc.p(s.width/2, s.height * 0.48))
-    label3:setColor( cc.c3b(255, 0, 0))
+    label3:setTextColor( cc.c4b(255, 0, 0, 255))
     label3:setAnchorPoint(cc.p(0.5, 0.5))
     label3:enableOutline(cc.c4b(0,0,255,255))
     layer:addChild(label3)
@@ -1296,6 +1296,455 @@ function LabelCrashTest.create()
     return layer
 end
 
+
+
+
+--------------------------------------------------------
+----- LabelTTFLargeText
+--------------------------------------------------------
+local LabelTTFLargeText = {}
+function LabelTTFLargeText.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New Label + .TTF")
+    Helper.subtitleLabel:setString("Uses the new Label with TTF. Testing large text")
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/wt021.ttf"
+    ttfConfig.fontSize     = 18
+    ttfConfig.glyphs       = cc.GLYPHCOLLECTION_DYNAMIC
+    local s = cc.Director:getInstance():getWinSize()
+    local text = cc.FileUtils:getInstance():getStringFromFile("commonly_used_words.txt")
+    local label = cc.Label:createWithTTF(ttfConfig, text, cc.TEXT_ALIGNMENT_CENTER, s.width)
+    label:setPosition( cc.p(s.width/2, s.height/2) )
+    layer:addChild(label)
+
+    return layer
+end
+
+--------------------------------------------------------
+----- LabelShadowTest
+--------------------------------------------------------
+local LabelShadowTest = {}
+function LabelShadowTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New Label + .TTF")
+    Helper.subtitleLabel:setString("Testing shadow of label")
+
+    local size = cc.Director:getInstance():getWinSize()
+
+    local bg = cc.LayerColor:create(cc.c4b(200,191,231,255))
+    layer:addChild(bg)
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
+    ttfConfig.fontSize     = 40
+    ttfConfig.glyphs       = cc.GLYPHCOLLECTION_DYNAMIC
+    ttfConfig.customGlyphs = nil
+    ttfConfig.distanceFieldEnabled = true
+
+    local shadowLabelTTF = cc.Label:createWithTTF(ttfConfig, "TTF:Shadow")
+    shadowLabelTTF:setPosition(cc.p(size.width/2, size.height*0.65))
+    shadowLabelTTF:setTextColor(cc.c4b(255, 0, 0, 255))
+    shadowLabelTTF:enableShadow(cc.c4b(0, 0, 0, 255))
+    layer:addChild(shadowLabelTTF)
+
+    local shadowLabelOutline = cc.Label:createWithTTF(ttfConfig,"TTF:Shadow")
+    shadowLabelOutline:setPosition(cc.p(size.width/2, size.height*0.5))
+    shadowLabelOutline:setTextColor(cc.c4b(255, 0, 0, 255))
+    shadowLabelOutline:enableOutline(cc.c4b(255, 255, 0, 255), 1)
+    shadowLabelOutline:enableShadow(cc.c4b(0, 0, 0, 255))
+    layer:addChild(shadowLabelOutline)
+
+    local shadowLabelBMFont = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow")
+    shadowLabelBMFont:setPosition( cc.p(size.width/2, size.height*0.35) )
+    shadowLabelBMFont:setColor(cc.c3b(255, 0, 0))
+    shadowLabelBMFont:enableShadow(cc.c4b(0, 255, 0, 255))
+    layer:addChild(shadowLabelBMFont)
+
+    local function sliderEvent(sender, eventType)
+        if eventType == ccui.SliderEventType.percentChanged then
+            local  slider = layer:getChildByTag(1)
+            local  slider2 = layer:getChildByTag(2)
+            local offset = cc.size(slider:getPercent() - 50,50 - slider2:getPercent())
+            shadowLabelTTF:enableShadow(cc.c4b(0, 0, 0, 255),offset)
+            shadowLabelBMFont:enableShadow(cc.c4b(0, 255, 0, 255),offset)
+            shadowLabelOutline:enableShadow(cc.c4b(0, 0, 0, 255),offset)
+        end
+    end
+
+    local slider = ccui.Slider:create()
+    slider:setTag(1)
+    slider:setTouchEnabled(true)
+    slider:loadBarTexture("cocosui/sliderTrack.png")
+    slider:loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "")
+    slider:loadProgressBarTexture("cocosui/sliderProgress.png")
+    slider:setPosition(cc.p(size.width / 2.0, size.height * 0.15 + slider:getSize().height * 2.0))
+    slider:setPercent(52)
+    slider:addEventListenerSlider(sliderEvent)
+    layer:addChild(slider)
+
+    local slider2 = ccui.Slider:create()
+    slider2:setTag(2)
+    slider2:setTouchEnabled(true)
+    slider2:loadBarTexture("cocosui/sliderTrack.png")
+    slider2:loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "")
+    slider2:loadProgressBarTexture("cocosui/sliderProgress.png")
+    slider2:setPosition(cc.p(size.width * 0.15, size.height / 2.0))
+    slider2:setRotation(90)
+    slider2:setPercent(52)
+    slider2:addEventListenerSlider(sliderEvent)
+    layer:addChild(slider2)
+
+    return layer
+end
+
+--------------------------------------------------------
+----- LabelCharMapColorTest
+--------------------------------------------------------
+
+local LabelCharMapColorTest = {}
+function LabelCharMapColorTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New Label + CharMap")
+    Helper.subtitleLabel:setString("Opacity + Color should work at the same time")
+
+    local label1 = cc.Label:createWithCharMap( "fonts/tuffy_bold_italic-charmap.png", 48, 64, 32)--32 means Space key
+    layer:addChild(label1, 0, kTagSprite1)
+    label1:setAnchorPoint(cc.p(0.0, 0.0))
+    label1:setPosition( cc.p(10,100) )
+    label1:setOpacity( 200 )
+
+    local label2 = cc.Label:createWithCharMap("fonts/tuffy_bold_italic-charmap.png", 48, 64, 32)--32 means Space key
+    layer:addChild(label2, 0, kTagSprite2)
+    label2:setAnchorPoint(cc.p(0.0, 0.0))
+    label2:setPosition( cc.p(10, 200) )
+    label2:setColor( cc.c3b(255, 0, 0) )
+
+    local fade = cc.FadeOut:create(1.0)
+    local fade_in = fade:reverse()
+    local function actionFinishCallback(sender)
+        print("Action finished")
+    end
+    local cb = cc.CallFunc:create(actionFinishCallback)
+    local seq = cc.Sequence:create(fade, fade_in, cb)
+    local repeatForever = cc.RepeatForever:create( seq )
+    label2:runAction( repeatForever )
+
+    local scheduleTime = 0
+    local function step(dt)
+        scheduleTime = scheduleTime + dt
+        local strInfo = string.format("%2.2f Test", scheduleTime)
+        local label1 = layer:getChildByTag(kTagSprite1)
+        label1:setString(strInfo)
+
+        local label2 = layer:getChildByTag(kTagSprite2)
+        strInfo = string.format("%d", scheduleTime)
+        label2:setString(strInfo)
+    end
+
+    local function onNodeEvent(event)
+        if tag == "exit" then
+            layer:unscheduleUpdate()
+        end 
+    end
+
+
+    layer:registerScriptHandler(onNodeEvent)
+    layer:scheduleUpdateWithPriorityLua(step, 0)
+
+    return layer
+end
+
+
+
+--------------------------------------------------------
+----- LabelFontNameTest
+--------------------------------------------------------
+
+local LabelFontNameTest = {}
+function LabelFontNameTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New Label Test")
+    Helper.subtitleLabel:setString("create label by font name,compatible with old labelTTF")
+
+    local  size = cc.Director:getInstance():getWinSize()
+
+    local label1 = cc.Label:create()
+    label1:setString("Default Font")
+    label1:setPosition( cc.p(size.width/2, size.height * 0.7) )
+    layer:addChild(label1)
+
+    local fontDef = {}
+    fontDef.fontName = "fonts/Marker Felt.ttf"
+    fontDef.fontSize = 32
+    local label2 = cc.Label:createWithFontDefinition("Create with FontDefinition",fontDef)
+    label2:setPosition( cc.p(size.width/2, size.height * 0.6) )
+    layer:addChild(label2)
+
+    local label3 = cc.Label:create("fonts/Marker Felt.ttf","fonts/Marker Felt.ttf",32)
+    label3:setPosition( cc.p(size.width/2, size.height * 0.5) )
+    layer:addChild(label3)
+
+    return layer
+end
+
+
+--------------------------------------------------------
+----- LabelAlignmentTest
+--------------------------------------------------------
+
+local LabelAlignmentTest = 
+{
+    _layer       = nil,
+    _label      = nil,
+    _horizAlign = cc.TEXT_ALIGNMENT_LEFT,
+    _vertAlign  = cc.VERTICAL_TEXT_ALIGNMENT_TOP,
+}
+function LabelAlignmentTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Testing New Label")
+    Helper.subtitleLabel:setString("Select the buttons on the sides to change alignment")
+
+    local blockSize = cc.size(200, 160)
+    local s = cc.Director:getInstance():getWinSize()
+
+    local pos = cc.p((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2)
+    local colorLayer = cc.LayerColor:create(cc.c4b(100, 100, 100, 255), blockSize.width, blockSize.height)
+    colorLayer:setAnchorPoint(cc.p(0.0, 0.0))
+    colorLayer:setPosition(pos)
+
+    layer:addChild(colorLayer)
+
+    cc.MenuItemFont:setFontSize(30)
+    local item1 = cc.MenuItemFont:create("Left")
+    item1:registerScriptTapHandler(LabelAlignmentTest.setAlignmentLeft)
+    local item2 = cc.MenuItemFont:create("Center")
+    item2:registerScriptTapHandler(LabelAlignmentTest.setAlignmentCenter)
+    local item3 = cc.MenuItemFont:create("Right")
+    item3:registerScriptTapHandler(LabelAlignmentTest.setAlignmentRight)
+
+    local menu = cc.Menu:create()
+    menu:addChild(item1)
+    menu:addChild(item2)
+    menu:addChild(item3)
+    menu:alignItemsVerticallyWithPadding(4)
+    menu:setPosition(cc.p(50, s.height / 2 - 20))
+    layer:addChild(menu)
+
+    menu = cc.Menu:create()
+
+    item1 = cc.MenuItemFont:create("Top")
+    item1:registerScriptTapHandler(LabelAlignmentTest.setAlignmentTop)
+    item2 = cc.MenuItemFont:create("Middle")
+    item2:registerScriptTapHandler(LabelAlignmentTest.setAlignmentMiddle)
+    item3 = cc.MenuItemFont:create("Bottom")
+    item3:registerScriptTapHandler(LabelAlignmentTest.setAlignmentBottom)
+
+    menu:addChild(item1)
+    menu:addChild(item2)
+    menu:addChild(item3)
+
+    menu:alignItemsVerticallyWithPadding(4)
+    menu:setPosition(cc.p(s.width - 50, s.height / 2 - 20))
+    layer:addChild(menu)
+
+    LabelAlignmentTest._layer      = layer
+    LabelAlignmentTest._label      = nil
+    LabelAlignmentTest._horizAlign = cc.TEXT_ALIGNMENT_LEFT
+    LabelAlignmentTest._vertAlign  = cc.VERTICAL_TEXT_ALIGNMENT_TOP
+
+
+    local ttfConfig  = {}
+    ttfConfig.fontFilePath="fonts/arial.ttf"
+    ttfConfig.fontSize = 32
+    local label = cc.Label:create()
+    label:setDimensions(200,160)
+    label:setAlignment(LabelAlignmentTest._horizAlign,LabelAlignmentTest._vertAlign)
+    label:setTTFConfig(ttfConfig)
+    label:setString(LabelAlignmentTest.getCurrentAlignment())
+    label:setAnchorPoint(cc.p(0.0, 0.0))
+    label:setPosition(pos)
+    layer:addChild(label)
+    LabelAlignmentTest._label  = label
+
+    return layer
+end
+
+function LabelAlignmentTest.updateAlignment()
+    if nil ~= LabelAlignmentTest._label then
+        LabelAlignmentTest._label:setHorizontalAlignment(LabelAlignmentTest._horizAlign)
+        LabelAlignmentTest._label:setVerticalAlignment(LabelAlignmentTest._vertAlign)
+        LabelAlignmentTest._label:setString(LabelAlignmentTest.getCurrentAlignment())
+    end 
+end
+
+function LabelAlignmentTest.setAlignmentLeft(sender)
+    LabelAlignmentTest._horizAlign = cc.TEXT_ALIGNMENT_LEFT
+    LabelAlignmentTest.updateAlignment()
+end
+
+function LabelAlignmentTest.setAlignmentCenter(sender)
+    LabelAlignmentTest._horizAlign = cc.TEXT_ALIGNMENT_CENTER
+    LabelAlignmentTest.updateAlignment()
+end
+
+function LabelAlignmentTest.setAlignmentRight(sender)
+    LabelAlignmentTest._horizAlign = cc.TEXT_ALIGNMENT_RIGHT
+    LabelAlignmentTest.updateAlignment()
+end
+
+function LabelAlignmentTest.setAlignmentTop(sender)
+    LabelAlignmentTest._vertAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP
+    LabelAlignmentTest.updateAlignment()
+end
+
+function LabelAlignmentTest.setAlignmentMiddle(sender)
+    LabelAlignmentTest._vertAlign = cc.VERTICAL_TEXT_ALIGNMENT_CENTER
+    LabelAlignmentTest.updateAlignment()
+end
+
+function LabelAlignmentTest.setAlignmentBottom(sender)
+    LabelAlignmentTest._vertAlign = cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM
+    LabelAlignmentTest.updateAlignment()
+end
+
+function LabelAlignmentTest.getCurrentAlignment()
+    local vertical = nil
+    local horizontal = nil
+    if LabelAlignmentTest._vertAlign == cc.VERTICAL_TEXT_ALIGNMENT_TOP then
+        vertical = "Top"
+    elseif LabelAlignmentTest._vertAlign ==  cc.VERTICAL_TEXT_ALIGNMENT_CENTER then
+        vertical = "Middle"
+    elseif LabelAlignmentTest._vertAlign ==  cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM then
+        vertical = "Bottom"
+    end
+
+    if LabelAlignmentTest._horizAlign == cc.TEXT_ALIGNMENT_LEFT then
+        horizontal = "Left"
+    elseif LabelAlignmentTest._horizAlign == cc.TEXT_ALIGNMENT_CENTER then
+        horizontal = "Center"
+    elseif LabelAlignmentTest._horizAlign == cc.TEXT_ALIGNMENT_RIGHT then
+        horizontal = "Right"
+    end
+
+    return string.format("Alignment %s %s", vertical, horizontal)
+end
+
+
+--------------------------------------------------------
+----- LabelIssue4428Test
+--------------------------------------------------------
+
+local LabelIssue4428Test = { }
+function LabelIssue4428Test.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New Label Bugs Test")
+    Helper.subtitleLabel:setString("Reorder issue #4428.The label should be flipped vertically.")
+
+
+    local size = cc.Director:getInstance():getWinSize()
+
+    local label = cc.Label:createWithBMFont( "fonts/bitmapFontTest3.fnt", "123\n456")
+    label:setPosition(cc.p(size.width /2.0, size.height / 2.0))
+    label:setAnchorPoint(cc.p(0.5, 0.5))
+    layer:addChild(label)
+
+    local len = label:getStringLength()
+    for i = 0, len -1 do
+        local sprite = label:getLetter(i)
+        if nil ~= sprite then
+            sprite:setFlippedY(true)
+        end
+    end
+
+    return layer
+end
+
+--------------------------------------------------------
+----- LabelTTFOldNew
+--------------------------------------------------------
+
+local LabelTTFOldNew = { }
+function LabelTTFOldNew.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("New / Old TTF")
+    Helper.subtitleLabel:setString("Comparison between old(red) and new(white) TTF label")
+
+    local s = cc.Director:getInstance():getWinSize()
+    local delta = s.height/4
+
+    local label1 = cc.Label:create("Cocos2d-x Label Test", "arial", 24)
+    layer:addChild(label1, 0, kTagBitmapAtlas1)
+    label1:setPosition(cc.p(s.width/2, delta * 2))
+    label1:setColor(cc.c3b(255, 0, 0))
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
+    ttfConfig.fontSize     = 24
+    local label2 = cc.Label:createWithTTF(ttfConfig, "Cocos2d-x Label Test")
+    layer:addChild(label2, 0, kTagBitmapAtlas2)
+    label2:setPosition(cc.p(s.width/2, delta * 2))
+
+    local function onDraw(transform, transformUpdated)
+        kmGLPushMatrix()
+        kmGLLoadMatrix(transform)
+
+        local label1 = layer:getChildByTag(kTagBitmapAtlas1)
+        local labelSize = label1:getContentSize()
+        local origin    = cc.Director:getInstance():getWinSize()
+    
+        origin.width = origin.width   / 2 - (labelSize.width / 2)
+        origin.height = origin.height / 2 - (labelSize.height / 2)
+
+        local vertices = 
+        {
+            cc.p(origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
+            cc.p(origin.width, labelSize.height + origin.height),
+        }
+    
+        cc.DrawPrimitives.drawColor4B(255, 0, 0, 255)
+        cc.DrawPrimitives.drawPoly(vertices, 4, true)
+
+        local label2 = layer:getChildByTag(kTagBitmapAtlas2)
+        labelSize = label2:getContentSize()
+        origin    = cc.Director:getInstance():getWinSize()
+
+        origin.width = origin.width   / 2 - (labelSize.width / 2)
+        origin.height = origin.height / 2 - (labelSize.height / 2)
+
+        local vertices2 =
+        {
+            cc.p(origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, origin.height),
+            cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
+            cc.p(origin.width, labelSize.height + origin.height),
+        }
+        cc.DrawPrimitives.drawColor4B(255, 255, 255, 255)
+        cc.DrawPrimitives.drawPoly(vertices2, 4, true)
+    
+        kmGLPopMatrix()
+    end
+
+    local glNode  = gl.glNodeCreate()
+    glNode:setContentSize(cc.size(s.width, s.height))
+    glNode:setAnchorPoint(cc.p(0.5, 0.5))
+    glNode:setPosition( s.width / 2, s.height / 2)
+    glNode:registerScriptDrawHandler(onDraw)
+    layer:addChild(glNode,-10)
+
+    return layer
+end
+
+
 ------------
 function LabelTestNew()
     cclog("LabelTestNew")
@@ -1308,6 +1757,8 @@ function LabelTestNew()
         LabelFNTPadding.create,
         LabelFNTOffset.create,
         LabelFNTColor.create,
+        LabelTTFLongLineWrapping.create,
+        LabelTTFLargeText.create,
         LabelTTFColor.create,
         LabelFNTHundredLabels.create,
         LabelFNTMultiLine.create,
@@ -1321,15 +1772,20 @@ function LabelTestNew()
         LabelTTFUnicodeNew.create,
         LabelTTFAlignmentNew.create,
         LabelFNTBounds.create,
-        LabelTTFLongLineWrapping.create,
         LabelTTFDynamicAlignment.create,
         LabelTTFCJKWrappingTest.create,
         LabelTTFFontsTestNew.create,
         LabelBMFontTestNew.create,
         LabelTTFDistanceField.create,
         LabelOutlineAndGlowTest.create,
+        LabelShadowTest.create,
         LabelCharMapTest.create,
+        LabelCharMapColorTest.create,
         LabelCrashTest.create,
+        LabelTTFOldNew.create,
+        LabelFontNameTest.create,
+        LabelAlignmentTest.create,
+        LabelIssue4428Test.create,
     }
     scene:addChild(LabelFNTColorAndOpacity.create())
     scene:addChild(CreateBackMenuItem())

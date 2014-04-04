@@ -927,7 +927,7 @@ void SpriteZVertex::onEnter()
 
 void SpriteZVertex::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     SpriteTestDemo::onExit();
 }
 
@@ -1017,7 +1017,7 @@ void SpriteBatchNodeZVertex::onEnter()
 
 void SpriteBatchNodeZVertex::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     SpriteTestDemo::onExit();
 }
 
