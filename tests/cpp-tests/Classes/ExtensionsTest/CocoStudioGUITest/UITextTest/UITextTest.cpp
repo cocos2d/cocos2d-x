@@ -11,19 +11,13 @@ bool UITextTest::init()
     {
         Size widgetSize = _widget->getSize();
         
-        Text* alert = Text::create();
-        alert->setText("Text");
-        alert->setFontName("fonts/Marker Felt.ttf");
-        alert->setFontSize(30);
+        Text* alert = Text::create("Text","fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);        
         
         // Create the text
-        Text* text = Text::create();
-        text->setText("Text");
-        text->setFontName("AmericanTypewriter");
-        text->setFontSize(30);
+        Text* text = Text::create("Text", "AmericanTypewriter", 30);
         text->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getSize().height / 4.0f));
         _uiLayer->addChild(text);
         
@@ -40,22 +34,16 @@ bool UITextTest_LineWrap::init()
     {
         Size widgetSize = _widget->getSize();
         
-        Text* alert = Text::create();
-        alert->setText("Text line wrap");
-        alert->setFontName("fonts/Marker Felt.ttf");
-        alert->setFontSize(30);
+        Text* alert = Text::create("Text line wrap","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);
         
         // Create the line wrap
-        Text* text = Text::create();
+        Text* text = Text::create("Text can line wrap","AmericanTypewriter",32);
         text->ignoreContentAdaptWithSize(false);
         text->setSize(Size(280, 150));
         text->setTextHorizontalAlignment(TextHAlignment::CENTER);
-        text->setText("Text can line wrap");
-        text->setFontName("AmericanTypewriter");
-        text->setFontSize(32);
         text->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - text->getSize().height / 8.0f));
         _uiLayer->addChild(text);
         
@@ -171,19 +159,13 @@ bool UITextTest_TTF::init()
     {
         Size widgetSize = _widget->getSize();
         
-        Text* alert = Text::create();
-        alert->setText("Text set TTF font");
-        alert->setFontName("fonts/Marker Felt.ttf");
-        alert->setFontSize(30);
+        Text* alert = Text::create("Text set TTF font","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
         _uiLayer->addChild(alert);
         
         // Create the text, and set font with .ttf
-        Text* text = Text::create();
-        text->setText("Text");
-        text->setFontName("fonts/A Damn Mess.ttf");
-        text->setFontSize(30);
+        Text* text = Text::create("Text","fonts/A Damn Mess.ttf",30);
         text->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getSize().height / 4.0f));
         _uiLayer->addChild(text);
         
