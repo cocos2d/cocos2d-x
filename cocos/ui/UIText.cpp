@@ -82,17 +82,17 @@ Text* Text::create(const std::string &textContent, const std::string &fontName, 
     
 bool Text::init(const std::string &textContent, const std::string &fontName, int fontSize)
 {
-    bool bRet = true;
+    bool ret = true;
     do {
         if (!Widget::init()) {
-            bRet = false;
+            ret = false;
             break;
         }
         this->setText(textContent);
         this->setFontName(fontName);
         this->setFontSize(fontSize);
     } while (0);
-    return bRet;
+    return ret;
 }
 
 void Text::initRenderer()

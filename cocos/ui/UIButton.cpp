@@ -103,17 +103,17 @@ bool Button::init(const std::string &normalImage,
                   const std::string& disableImage,
                   TextureResType texType)
 {
-    bool bRet = true;
+    bool ret = true;
     do {
         if (!Widget::init()) {
-            bRet = false;
+            ret = false;
             break;
         }
         
         setTouchEnabled(true);
         this->loadTextures(normalImage, selectedImage, disableImage,texType);
     } while (0);
-    return bRet;
+    return ret;
 }
 
 bool Button::init()
