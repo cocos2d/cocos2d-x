@@ -23,10 +23,19 @@
 -- @param #string str
         
 --------------------------------
--- @function [parent=#TextAtlas] create 
+-- overload function: create(string, string, int, int, string)
+--          
+-- overload function: create()
+--          
+-- @function [parent=#TextAtlas] create
 -- @param self
--- @return TextAtlas#TextAtlas ret (return value: ccui.TextAtlas)
-        
+-- @param #string str
+-- @param #string str
+-- @param #int int
+-- @param #int int
+-- @param #string str
+-- @return TextAtlas#TextAtlas ret (retunr value: ccui.TextAtlas)
+
 --------------------------------
 -- @function [parent=#TextAtlas] createInstance 
 -- @param self
