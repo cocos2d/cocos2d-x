@@ -99,7 +99,7 @@ public:
     /** log something in the console */
     void log(const char *buf);
     /** send socket **/
-    void sendSocket(int fd, std::string str);
+    void sendSocket(int fd, const std::string str);
  
 protected:
     void loop();
