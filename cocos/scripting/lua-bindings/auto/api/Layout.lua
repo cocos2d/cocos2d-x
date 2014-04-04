@@ -55,7 +55,7 @@
 --------------------------------
 -- @function [parent=#Layout] setBackGroundImage 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
