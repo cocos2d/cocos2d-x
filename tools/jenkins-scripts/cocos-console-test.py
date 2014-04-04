@@ -71,7 +71,7 @@ cocos_console_dir = 'tools/cocos2d-console/bin/'
 
 # now cocos2d-console suport different run on Platforms, e.g: only run android on win
 runSupport = {
-	'darwin' : {'mac':1,'ios':1,'android':1},
+	'darwin' : {'mac':1,'ios':1,'android':0},
 	'win' : {'mac':0,'ios':0,'android':1},
 	'linux' : {'mac':0,'ios':0,'android':1}
 }
@@ -287,9 +287,11 @@ def sendEmail(msg):
 
 def main():
 	print 'in main:'
-	start_android_simulator()
+	# start_android_simulator()
 	print 'will build_run:'
 	build_run(-1)
+	print 'end build run.'
+	print 'will send email:'
 	if OBJ_EMAIL_INFO[ EMAIL_KEYS[5] ]:
 		sendEmail(console_result)
 	print 'console_result:', console_result
