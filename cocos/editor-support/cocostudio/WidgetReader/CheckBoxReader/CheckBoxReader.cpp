@@ -46,16 +46,22 @@ namespace cocostudio
         {
             case 0:
             {
-                std::string tp_b = jsonPath;
                 const char* backGroundFileName = DICTOOL->getStringValue_json(backGroundDic, "path");
-                const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():nullptr;
+                std::string backGroundFileName_tp;
+                if (nullptr != backGroundFileName) {
+                    backGroundFileName_tp = jsonPath + backGroundFileName;
+                }
                 checkBox->loadTextureBackGround(backGroundFileName_tp);
                 break;
             }
             case 1:
             {
+                std::string backGroundFileNameStr;
                 const char* backGroundFileName = DICTOOL->getStringValue_json(backGroundDic, "path");
-                checkBox->loadTextureBackGround(backGroundFileName,UI_TEX_TYPE_PLIST);
+                if (nullptr != backGroundFileName) {
+                    backGroundFileNameStr = std::string(backGroundFileName);
+                }
+                checkBox->loadTextureBackGround(backGroundFileNameStr,UI_TEX_TYPE_PLIST);
                 break;
             }
             default:
@@ -68,16 +74,22 @@ namespace cocostudio
         {
             case 0:
             {
-                std::string tp_bs = jsonPath;
                 const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(backGroundSelectedDic, "path");
-                const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():nullptr;
+                std::string backGroundSelectedFileName_tp;
+                if (nullptr != backGroundSelectedFileName) {
+                    backGroundSelectedFileName_tp = jsonPath + backGroundSelectedFileName;
+                }
                 checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName_tp);
                 break;
             }
             case 1:
             {
                 const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(backGroundSelectedDic, "path");
-                checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName,UI_TEX_TYPE_PLIST);
+                std::string backGroundSelectedFileNameString;
+                if (nullptr != backGroundSelectedFileName) {
+                    backGroundSelectedFileNameString = std::string(backGroundSelectedFileName);
+                }
+                checkBox->loadTextureBackGroundSelected(backGroundSelectedFileNameString,UI_TEX_TYPE_PLIST);
                 break;
             }
             default:
@@ -90,15 +102,21 @@ namespace cocostudio
         {
             case 0:
             {
-                std::string tp_c = jsonPath;
                 const char* frontCrossFileName = DICTOOL->getStringValue_json(frontCrossDic, "path");
-                const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():nullptr;
+                std::string frontCrossFileName_tp;
+                if (nullptr != frontCrossFileName) {
+                    frontCrossFileName_tp = jsonPath + frontCrossFileName;
+                }
                 checkBox->loadTextureFrontCross(frontCrossFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* frontCrossFileName = DICTOOL->getStringValue_json(frontCrossDic, "path");
+                const char* frontCrossFileNamePath = DICTOOL->getStringValue_json(frontCrossDic, "path");
+                std::string frontCrossFileName;
+                if (nullptr != frontCrossFileNamePath) {
+                    frontCrossFileName = std::string(frontCrossFileNamePath);
+                }
                 checkBox->loadTextureFrontCross(frontCrossFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -112,15 +130,21 @@ namespace cocostudio
         {
             case 0:
             {
-                std::string tp_bd = jsonPath;
                 const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(backGroundDisabledDic, "path");
-                const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():nullptr;
+                std::string backGroundDisabledFileName_tp;
+                if (nullptr != backGroundDisabledFileName) {
+                    backGroundDisabledFileName_tp = jsonPath + backGroundDisabledFileName;
+                }
                 checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(backGroundDisabledDic, "path");
+                const char* backGroundDisabledFileNamePath = DICTOOL->getStringValue_json(backGroundDisabledDic, "path");
+                std::string backGroundDisabledFileName;
+                if (nullptr != backGroundDisabledFileNamePath) {
+                    backGroundDisabledFileName = std::string(backGroundDisabledFileNamePath);
+                }
                 checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
@@ -134,15 +158,21 @@ namespace cocostudio
         {
             case 0:
             {
-                std::string tp_cd = jsonPath;
                 const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "path");
-                const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():nullptr;
+                std::string frontCrossDisabledFileName_tp;
+                if (nullptr != frontCrossDisabledFileName) {
+                    frontCrossDisabledFileName_tp = jsonPath + frontCrossDisabledFileName;
+                }
                 checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName_tp);
                 break;
             }
             case 1:
             {
-                const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "path");
+                const char* frontCrossDisabledFileNamePath = DICTOOL->getStringValue_json(options, "path");
+                std::string frontCrossDisabledFileName;
+                if (nullptr != frontCrossDisabledFileNamePath) {
+                    frontCrossDisabledFileName = std::string(frontCrossDisabledFileNamePath);
+                }
                 checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName,UI_TEX_TYPE_PLIST);
                 break;
             }
