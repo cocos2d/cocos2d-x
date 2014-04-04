@@ -58,6 +58,19 @@ LabelBMFont* LabelBMFont::create()
     return NULL;
 }
 
+LabelBMFont* LabelBMFont::create(const char *text, const char *fntFileName)
+{
+    LabelBMFont *widget = new LabelBMFont;
+    if (widget && widget->init()) {
+        widget->setFntFile(fntFileName);
+        widget->setText(text);
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return NULL;
+}
+    
 void LabelBMFont::initRenderer()
 {
     _labelBMFontRenderer = cocos2d::CCLabelBMFont::create();
