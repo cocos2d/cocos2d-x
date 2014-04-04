@@ -524,10 +524,10 @@ void RenderTexture::onBegin()
     //
     Director *director = Director::getInstance();
     Size size = director->getWinSizeInPixels();
-    _oldProjMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    _oldProjMatrix = matrixToKmMat4(director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION));
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _projectionMatrix);
     
-    _oldTransMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _oldTransMatrix = matrixToKmMat4(director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _transformMatrix);
     
     if(!_keepMatrix)
@@ -678,10 +678,10 @@ void RenderTexture::begin()
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    _projectionMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    _projectionMatrix = matrixToKmMat4(director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION));
     
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    _transformMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _transformMatrix = matrixToKmMat4(director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
     
     if(!_keepMatrix)
     {

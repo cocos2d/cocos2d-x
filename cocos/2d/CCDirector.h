@@ -111,7 +111,7 @@ public:
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
     void loadMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat);
     void multiplyMatrix(MATRIX_STACK_TYPE type, const kmMat4& mat);
-    kmMat4 getMatrix(MATRIX_STACK_TYPE type);
+    Matrix getMatrix(MATRIX_STACK_TYPE type);
     void resetMatrixStack();
 public:
     static const char *EVENT_PROJECTION_CHANGED;
