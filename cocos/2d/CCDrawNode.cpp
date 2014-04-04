@@ -205,8 +205,20 @@ bool DrawNode::init()
     return true;
 }
 
-void DrawNode::render()
+void DrawNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
+}
+
+void DrawNode::onDraw(const kmMat4 &transform, bool transformUpdated)
+{
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
+
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
     if (_dirty)
     {
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -220,38 +232,23 @@ void DrawNode::render()
     else
     {
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    
+
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         // vertex
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-    
+
         // color
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
-    
+
         // texcood
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
 
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
+
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
     CHECK_GL_ERROR_DEBUG();
-}
-
-void DrawNode::draw()
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-}
-
-void DrawNode::onDraw()
-{
-    CC_NODE_DRAW_SETUP();
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-    
-    render();
 }
 
 void DrawNode::drawDot(const Point &pos, float radius, const Color4F &color)

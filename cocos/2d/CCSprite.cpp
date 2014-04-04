@@ -277,6 +277,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
 , _texture(nullptr)
+, _insideBounds(true)
 {
 }
 
@@ -336,6 +337,7 @@ void Sprite::setTexture(Texture2D *texture)
         {
             Image* image = new Image();
             bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
+            CC_UNUSED_PARAM(isOK);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
             texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
@@ -586,16 +588,19 @@ void Sprite::updateTransform(void)
 
 // draw
 
-void Sprite::draw(void)
+void Sprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    if(isInsideBounds())
+    // Don't do calculate the culling if the transform was not updated
+    _insideBounds = transformUpdated ? isInsideBounds() : _insideBounds;
+
+    if(_insideBounds)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, transform);
+        renderer->addCommand(&_quadCommand);
 #if CC_SPRITE_DEBUG_DRAW
         _customDebugDrawCommand.init(_globalZOrder);
         _customDebugDrawCommand.func = CC_CALLBACK_0(Sprite::drawDebugData, this);
-        Director::getInstance()->getRenderer()->addCommand(&_customDebugDrawCommand);
+        renderer->addCommand(&_customDebugDrawCommand);
 #endif //CC_SPRITE_DEBUG_DRAW
     }
 }

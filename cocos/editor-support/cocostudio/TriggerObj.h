@@ -29,18 +29,21 @@ THE SOFTWARE.
 #include "CocoStudio.h"
 #include <vector>
 
-namespace cocostudio {
+namespace cocos2d {
+class EventListenerCustom;
+}
 
+namespace cocostudio {
 
 class BaseTriggerCondition : public cocos2d::Ref
 {
 protected:
     BaseTriggerCondition(void);
 public:
-	virtual ~BaseTriggerCondition(void);
+    virtual ~BaseTriggerCondition(void);
     virtual bool init();
     virtual bool detect();
-	virtual void serialize(const rapidjson::Value &val);
+    virtual void serialize(const rapidjson::Value &val);
     virtual void removeAll();
 };
 
@@ -49,10 +52,10 @@ class BaseTriggerAction : public cocos2d::Ref
 protected:
     BaseTriggerAction(void);
 public:
-	virtual ~BaseTriggerAction(void);
+    virtual ~BaseTriggerAction(void);
     virtual bool init();
     virtual void done();
-	virtual void serialize(const rapidjson::Value &val);
+    virtual void serialize(const rapidjson::Value &val);
     virtual void removeAll();
 };
 
@@ -69,16 +72,15 @@ public:
     virtual void done();
     virtual void removeAll();
     virtual void serialize(const rapidjson::Value &val);
-	unsigned int getId();
-	void setEnabled(bool enabled);
-	std::vector<int>& getEvents();
+    unsigned int getId();
+    void setEnabled(bool enabled);
   
 private:
     cocos2d::Vector<BaseTriggerCondition*> _cons;
     cocos2d::Vector<BaseTriggerAction*> _acts;
-	unsigned int _id;
-	bool _enabled;
-	std::vector<int> _vInt;
+    unsigned int _id;
+    bool _enabled;
+    cocos2d::Vector<cocos2d::EventListenerCustom*> _listeners;
 };
 
 }

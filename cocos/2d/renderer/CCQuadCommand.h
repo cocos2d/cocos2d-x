@@ -34,6 +34,7 @@ NS_CC_BEGIN
 
 #define CC_NO_TEXTURE 0
 
+/** Command used to render one or more Quads */
 class QuadCommand : public RenderCommand
 {
 public:
@@ -41,7 +42,9 @@ public:
     QuadCommand();
     ~QuadCommand();
 
-    void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
+     * quantity of quads, and the Model View transform to be used for the quads */
+    void init(float globalOrder, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const kmMat4& mv);
 
     void useMaterial() const;
@@ -50,7 +53,7 @@ public:
     inline bool isTranslucent() const { return true; }
 
     void generateMaterialID();
-    inline uint64_t getMaterialID() const { return _materialID; }
+    inline uint32_t getMaterialID() const { return _materialID; }
 
     inline GLuint getTextureID() const { return _textureID; }
 
@@ -64,16 +67,17 @@ public:
 
     inline const kmMat4& getModelView() const { return _mv; }
     
-protected:
-    uint64_t _materialID;
+protected:    
+    uint32_t _materialID;
 
-    //Maternal
     GLuint _textureID;
+    GLuint _lastTextureID;
 
     GLProgram* _shader;
-//    GLuint _shaderID;
+    GLProgram* _lastShader;
 
     BlendFunc _blendType;
+    BlendFunc _lastBlendType;
 
     V3F_C4B_T2F_Quad* _quads;
     ssize_t _quadsCount;

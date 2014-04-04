@@ -35,7 +35,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL GLView : public Ref, public GLViewProtocol
+class CC_DLL GLView : public GLViewProtocol, public Ref
 {
 public:
 

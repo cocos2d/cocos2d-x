@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="1060" defaultVersion="1090" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AppController">
+            <connections>
+                <outlet property="delegate" destination="536" id="537"/>
+                <outlet property="menu" destination="29" id="650"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <menu title="AMainMenu" systemMenu="main" id="29">
+            <items>
+                <menuItem title="Cocos-player" id="GS6-Lb-ftA">
+                    <menu key="submenu" title="Cocos-player" systemMenu="apple" id="YN2-V8-ty0">
+                        <items>
+                            <menuItem title="About Cocos-player" id="HhF-Es-coQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="orderFrontStandardAboutPanel:" target="-1" id="tSA-7z-LPk"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="OzD-Nm-tPt">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Services" id="TOj-vg-cDm">
+                                <menu key="submenu" title="Services" systemMenu="services" id="e98-We-UX5"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="muN-Hw-eeZ">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Hide Cocos-player" keyEquivalent="h" id="sH6-na-PTL">
+                                <connections>
+                                    <action selector="hide:" target="-3" id="SGN-0p-7lH"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" keyEquivalent="h" id="XG8-CE-veT">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-3" id="iJd-Ba-eXG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="IqD-3v-zQT">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-3" id="DR8-By-ymv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="GU5-eI-OTq">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Quit Cocos-player" keyEquivalent="q" id="7Z7-ot-jqY">
+                                <connections>
+                                    <action selector="terminate:" target="-3" id="DyL-yF-GYq"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="File" id="83">
+                    <menu key="submenu" title="File" id="81">
+                        <items>
+                            <menuItem title="ChangeProject" id="UUd-nT-0Tr">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onChangeProject:" target="-1" id="KV1-nK-nLn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Close" keyEquivalent="w" id="611">
+                                <connections>
+                                    <action selector="onFileClose:" target="-1" id="661"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="View" id="295" userLabel="Menu Item - View">
+                    <menu key="submenu" title="View" id="296" userLabel="Menu - View">
+                        <items>
+                            <menuItem isSeparatorItem="YES" id="579"/>
+                            <menuItem title="Portait" state="on" id="592">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onScreenPortait:" target="-1" id="667"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Landscape" id="593">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onScreenLandscape:" target="-1" id="647"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="594"/>
+                            <menuItem title="Actual (100%)" state="on" tag="100" keyEquivalent="0" id="595">
+                                <connections>
+                                    <action selector="onScreenZoomOut:" target="-1" id="yUj-fN-Rh7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom Out (75%)" tag="75" keyEquivalent="6" id="pqR-xy-5ip">
+                                <connections>
+                                    <action selector="onScreenZoomOut:" target="-1" id="yps-LZ-egB"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom Out (50%)" tag="50" keyEquivalent="5" id="596">
+                                <connections>
+                                    <action selector="onScreenZoomOut:" target="-1" id="654"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom Out (25%)" tag="25" keyEquivalent="4" id="QB8-6D-hAr">
+                                <connections>
+                                    <action selector="onScreenZoomOut:" target="-1" id="DSu-if-D2T"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Control" id="Heh-SD-KHE">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Control" id="ysx-9J-ekz">
+                        <items>
+                            <menuItem title="Reload" id="hfu-OP-8X3">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="onReloadScript:" target="-1" id="ar6-Pq-fmZ"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" id="490">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Help" systemMenu="help" id="491"/>
+                </menuItem>
+            </items>
+        </menu>
+        <customObject id="420" customClass="NSFontManager"/>
+        <customObject id="536" customClass="AppController">
+            <connections>
+                <outlet property="menu" destination="29" id="550"/>
+            </connections>
+        </customObject>
+    </objects>
+</document>

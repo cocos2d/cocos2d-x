@@ -155,7 +155,7 @@ public:
     */
     virtual const BlendFunc& getBlendFunc() const override;
 
-    virtual void visit() override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
@@ -164,7 +164,7 @@ public:
     virtual void removeChild(Node *child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void sortAllChildren() override;
-    virtual void draw(void) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual std::string getDescription() const override;
 
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
@@ -172,16 +172,16 @@ public:
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
     void insertQuadFromSprite(Sprite *sprite, ssize_t index);
+    /* This is the opposite of "addQuadFromSprite.
+    It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
+    */
+    SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
 protected:
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void updateQuadFromSprite(Sprite *sprite, ssize_t index);
-    /* This is the opposite of "addQuadFromSprite.
-    It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
-    */
-    SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
+    void updateQuadFromSprite(Sprite *sprite, ssize_t index);   
 
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);
     void swap(ssize_t oldIndex, ssize_t newIndex);

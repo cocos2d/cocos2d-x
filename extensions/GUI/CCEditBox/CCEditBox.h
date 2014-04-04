@@ -379,7 +379,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void) override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     /**
      * @js NA
      * @lua NA
@@ -418,6 +418,7 @@ public:
     void touchDownAction(Ref *sender, Control::EventType controlEvent);
     
 protected:
+    void updatePosition(float dt);
     EditBoxImpl*      _editBoxImpl;
     EditBoxDelegate*  _delegate;
     

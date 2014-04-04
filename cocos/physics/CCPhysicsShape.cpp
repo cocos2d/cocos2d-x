@@ -504,8 +504,8 @@ void PhysicsShapeBox::getPoints(Point* points) const
 Size PhysicsShapeBox::getSize() const
 {
     cpShape* shape = _info->getShapes().front();
-    return PhysicsHelper::cpv2size(cpv(cpvdist(cpPolyShapeGetVert(shape, 0), cpPolyShapeGetVert(shape, 1)),
-                                       cpvdist(cpPolyShapeGetVert(shape, 1), cpPolyShapeGetVert(shape, 2))));
+    return PhysicsHelper::cpv2size(cpv(cpvdist(cpPolyShapeGetVert(shape, 1), cpPolyShapeGetVert(shape, 2)),
+                                       cpvdist(cpPolyShapeGetVert(shape, 0), cpPolyShapeGetVert(shape, 1))));
 }
 
 // PhysicsShapePolygon
@@ -769,7 +769,7 @@ bool PhysicsShapeEdgeChain::init(const Point* points, int count, const PhysicsMa
             _info->add(shape);
         }
         CC_SAFE_DELETE_ARRAY(vec);
-        CC_BREAK_IF(i < count);
+        CC_BREAK_IF(i < count - 1);
         
         _mass = PHYSICS_INFINITY;
         _moment = PHYSICS_INFINITY;

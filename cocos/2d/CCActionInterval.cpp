@@ -159,6 +159,19 @@ Sequence* Sequence::createWithTwoActions(FiniteTimeAction *actionOne, FiniteTime
     return sequence;
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+Sequence* Sequence::variadicCreate(FiniteTimeAction *action1, ...)
+{
+    va_list params;
+    va_start(params, action1);
+
+    Sequence *ret = Sequence::createWithVariableList(action1, params);
+
+    va_end(params);
+    
+    return ret;
+}
+#else
 Sequence* Sequence::create(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -170,6 +183,7 @@ Sequence* Sequence::create(FiniteTimeAction *action1, ...)
     
     return ret;
 }
+#endif
 
 Sequence* Sequence::createWithVariableList(FiniteTimeAction *action1, va_list args)
 {
@@ -532,6 +546,19 @@ RepeatForever *RepeatForever::reverse() const
 // Spawn
 //
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+Spawn* Spawn::variadicCreate(FiniteTimeAction *action1, ...)
+{
+    va_list params;
+    va_start(params, action1);
+
+    Spawn *ret = Spawn::createWithVariableList(action1, params);
+
+    va_end(params);
+    
+    return ret;
+}
+#else
 Spawn* Spawn::create(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -543,6 +570,7 @@ Spawn* Spawn::create(FiniteTimeAction *action1, ...)
     
     return ret;
 }
+#endif
 
 Spawn* Spawn::createWithVariableList(FiniteTimeAction *action1, va_list args)
 {
@@ -1491,12 +1519,22 @@ ScaleTo* ScaleTo::create(float duration, float sx, float sy)
     return scaleTo;
 }
 
+ScaleTo* ScaleTo::create(float duration, float sx, float sy, float sz)
+{
+    ScaleTo *scaleTo = new ScaleTo();
+    scaleTo->initWithDuration(duration, sx, sy, sz);
+    scaleTo->autorelease();
+
+    return scaleTo;
+}
+
 bool ScaleTo::initWithDuration(float duration, float s)
 {
     if (ActionInterval::initWithDuration(duration))
     {
         _endScaleX = s;
         _endScaleY = s;
+        _endScaleZ = s;
 
         return true;
     }
@@ -1510,6 +1548,21 @@ bool ScaleTo::initWithDuration(float duration, float sx, float sy)
     {
         _endScaleX = sx;
         _endScaleY = sy;
+        _endScaleZ = 1.f;
+
+        return true;
+    }
+
+    return false;
+}
+
+bool ScaleTo::initWithDuration(float duration, float sx, float sy, float sz)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _endScaleX = sx;
+        _endScaleY = sy;
+        _endScaleZ = sz;
 
         return true;
     }
@@ -1521,7 +1574,7 @@ ScaleTo* ScaleTo::clone(void) const
 {
 	// no copy constructor
 	auto a = new ScaleTo();
-	a->initWithDuration(_duration, _endScaleX, _endScaleY);
+	a->initWithDuration(_duration, _endScaleX, _endScaleY, _endScaleZ);
 	a->autorelease();
 	return a;
 }
@@ -1538,8 +1591,10 @@ void ScaleTo::startWithTarget(Node *target)
     ActionInterval::startWithTarget(target);
     _startScaleX = target->getScaleX();
     _startScaleY = target->getScaleY();
+    _startScaleZ = target->getScaleZ();
     _deltaX = _endScaleX - _startScaleX;
     _deltaY = _endScaleY - _startScaleY;
+    _deltaZ = _endScaleZ - _startScaleZ;
 }
 
 void ScaleTo::update(float time)
@@ -1548,6 +1603,7 @@ void ScaleTo::update(float time)
     {
         _target->setScaleX(_startScaleX + _deltaX * time);
         _target->setScaleY(_startScaleY + _deltaY * time);
+        _target->setScaleZ(_startScaleZ + _deltaZ * time);
     }
 }
 
@@ -1567,7 +1623,16 @@ ScaleBy* ScaleBy::create(float duration, float s)
 ScaleBy* ScaleBy::create(float duration, float sx, float sy)
 {
     ScaleBy *scaleBy = new ScaleBy();
-    scaleBy->initWithDuration(duration, sx, sy);
+    scaleBy->initWithDuration(duration, sx, sy, 1.f);
+    scaleBy->autorelease();
+
+    return scaleBy;
+}
+
+ScaleBy* ScaleBy::create(float duration, float sx, float sy, float sz)
+{
+    ScaleBy *scaleBy = new ScaleBy();
+    scaleBy->initWithDuration(duration, sx, sy, sz);
     scaleBy->autorelease();
 
     return scaleBy;
@@ -1577,7 +1642,7 @@ ScaleBy* ScaleBy::clone(void) const
 {
 	// no copy constructor
 	auto a = new ScaleBy();
-    a->initWithDuration(_duration, _endScaleX, _endScaleY);
+    a->initWithDuration(_duration, _endScaleX, _endScaleY, _endScaleZ);
 	a->autorelease();
 	return a;
 }
@@ -1587,11 +1652,12 @@ void ScaleBy::startWithTarget(Node *target)
     ScaleTo::startWithTarget(target);
     _deltaX = _startScaleX * _endScaleX - _startScaleX;
     _deltaY = _startScaleY * _endScaleY - _startScaleY;
+    _deltaZ = _startScaleZ * _endScaleZ - _startScaleZ;
 }
 
 ScaleBy* ScaleBy::reverse() const
 {
-    return ScaleBy::create(_duration, 1 / _endScaleX, 1 / _endScaleY);
+    return ScaleBy::create(_duration, 1 / _endScaleX, 1 / _endScaleY, 1/ _endScaleZ);
 }
 
 //

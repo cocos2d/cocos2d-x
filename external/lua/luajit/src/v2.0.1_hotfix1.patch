@@ -1,0 +1,103 @@
+Add missing GC steps for io.* functions.
+MIPS: Fix cache flush/sync for JIT-compiled code jump area.
+ARM: Fix cache flush/sync for exit stubs of JIT-compiled code.
+Fix MSVC intrinsics for older versions.
+Fix memory access check for fast string interning.
+
+--- a/src/lib_io.c
++++ b/src/lib_io.c
+@@ -17,6 +17,7 @@
+ #include "lualib.h"
+ 
+ #include "lj_obj.h"
++#include "lj_gc.h"
+ #include "lj_err.h"
+ #include "lj_str.h"
+ #include "lj_state.h"
+@@ -152,6 +153,7 @@ static int io_file_readline(lua_State *L, FILE *fp, MSize chop)
+     if (n >= m - 64) m += m;
+   }
+   setstrV(L, L->top++, lj_str_new(L, buf, (size_t)n));
++  lj_gc_check(L);
+   return (int)ok;
+ }
+ 
+@@ -163,6 +165,7 @@ static void io_file_readall(lua_State *L, FILE *fp)
+     n += (MSize)fread(buf+n, 1, m-n, fp);
+     if (n != m) {
+       setstrV(L, L->top++, lj_str_new(L, buf, (size_t)n));
++      lj_gc_check(L);
+       return;
+     }
+   }
+@@ -174,6 +177,7 @@ static int io_file_readlen(lua_State *L, FILE *fp, MSize m)
+     char *buf = lj_str_needbuf(L, &G(L)->tmpbuf, m);
+     MSize n = (MSize)fread(buf, 1, m, fp);
+     setstrV(L, L->top++, lj_str_new(L, buf, (size_t)n));
++    lj_gc_check(L);
+     return (n > 0 || m == 0);
+   } else {
+     int c = getc(fp);
+--- a/src/lj_asm_arm.h
++++ b/src/lj_asm_arm.h
+@@ -91,6 +91,7 @@ static MCode *asm_exitstub_gen(ASMState *as, ExitNo group)
+   *mxp++ = group*EXITSTUBS_PER_GROUP;
+   for (i = 0; i < EXITSTUBS_PER_GROUP; i++)
+     *mxp++ = ARMI_B|((-6-i)&0x00ffffffu);
++  lj_mcode_sync(as->mcbot, mxp);
+   lj_mcode_commitbot(as->J, mxp);
+   as->mcbot = mxp;
+   as->mclim = as->mcbot + MCLIM_REDZONE;
+--- a/src/lj_asm_mips.h
++++ b/src/lj_asm_mips.h
+@@ -71,6 +71,7 @@ static void asm_sparejump_setup(ASMState *as)
+     memset(mxp+2, 0, MIPS_SPAREJUMP*8);
+     mxp += MIPS_SPAREJUMP*2;
+     lua_assert(mxp < as->mctop);
++    lj_mcode_sync(as->mcbot, mxp);
+     lj_mcode_commitbot(as->J, mxp);
+     as->mcbot = mxp;
+     as->mclim = as->mcbot + MCLIM_REDZONE;
+--- a/src/lj_def.h
++++ b/src/lj_def.h
+@@ -243,17 +243,17 @@ static LJ_AINLINE uint32_t lj_getu32(const void *p)
+ #endif
+ 
+ #ifdef _M_PPC
+-#pragma intrinsic(_CountLeadingZeros)
+ unsigned int _CountLeadingZeros(long);
++#pragma intrinsic(_CountLeadingZeros)
+ static LJ_AINLINE uint32_t lj_fls(uint32_t x)
+ {
+   return _CountLeadingZeros(x) ^ 31;
+ }
+ #else
+-#pragma intrinsic(_BitScanForward)
+-#pragma intrinsic(_BitScanReverse)
+ unsigned char _BitScanForward(uint32_t *, unsigned long);
+ unsigned char _BitScanReverse(uint32_t *, unsigned long);
++#pragma intrinsic(_BitScanForward)
++#pragma intrinsic(_BitScanReverse)
+ 
+ static LJ_AINLINE uint32_t lj_ffs(uint32_t x)
+ {
+--- a/src/lj_str.c
++++ b/src/lj_str.c
+@@ -48,7 +48,7 @@ static LJ_AINLINE int str_fastcmp(const char *a, const char *b, MSize len)
+ {
+   MSize i = 0;
+   lua_assert(len > 0);
+-  lua_assert((((uintptr_t)a + len) & (LJ_PAGESIZE-1)) <= LJ_PAGESIZE-4);
++  lua_assert((((uintptr_t)a+len-1) & (LJ_PAGESIZE-1)) <= LJ_PAGESIZE-4);
+   do {  /* Note: innocuous access up to end of string + 3. */
+     uint32_t v = lj_getu32(a+i) ^ *(const uint32_t *)(b+i);
+     if (v) {
+@@ -121,7 +121,7 @@ GCstr *lj_str_new(lua_State *L, const char *str, size_t lenx)
+   h ^= b; h -= lj_rol(b, 16);
+   /* Check if the string has already been interned. */
+   o = gcref(g->strhash[h & g->strmask]);
+-  if (LJ_LIKELY((((uintptr_t)str + len) & (LJ_PAGESIZE-1)) <= LJ_PAGESIZE-4)) {
++  if (LJ_LIKELY((((uintptr_t)str+len-1) & (LJ_PAGESIZE-1)) <= LJ_PAGESIZE-4)) {
+     while (o != NULL) {
+       GCstr *sx = gco2str(o);
+       if (sx->len == len && str_fastcmp(str, strdata(sx), len) == 0) {

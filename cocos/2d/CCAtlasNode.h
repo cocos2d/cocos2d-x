@@ -69,7 +69,7 @@ public:
 
     
     // Overrides
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual bool isOpacityModifyRGB() const override;
@@ -91,17 +91,17 @@ public:
     */
     virtual const BlendFunc& getBlendFunc() const override;
 
-
-protected:
+CC_CONSTRUCTOR_ACCESS:
     AtlasNode();
     virtual ~AtlasNode();
 
     /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
     bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
-
+    
     /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
     bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
 
+protected:
     void calculateMaxItems();
     void updateBlendFunc();
     void updateOpacityModifyRGB();

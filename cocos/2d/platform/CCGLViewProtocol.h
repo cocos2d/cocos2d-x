@@ -58,8 +58,6 @@ enum class ResolutionPolicy
 
 NS_CC_BEGIN
 
-class EGLTouchDelegate;
-
 /**
  * @addtogroup platform
  * @{
@@ -162,10 +160,10 @@ public:
     const std::string& getViewName() const;
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
-    virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
-    virtual void handleTouchesMove(int num, int ids[], float xs[], float ys[]);
-    virtual void handleTouchesEnd(int num, int ids[], float xs[], float ys[]);
-    virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[]);
+    virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[]);
+    virtual void handleTouchesEnd(int num, intptr_t ids[], float xs[], float ys[]);
+    virtual void handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]);
 
     /**
      * Get the opengl view port rectangle.
@@ -186,7 +184,9 @@ public:
     ResolutionPolicy getResolutionPolicy() const { return _resolutionPolicy; }
 
 protected:
-    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[]);
+    void updateDesignResolutionSize();
+    
+    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, intptr_t ids[], float xs[], float ys[]);
 
     // real screen size
     Size _screenSize;

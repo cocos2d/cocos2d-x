@@ -122,7 +122,7 @@ WsThreadHelper::WsThreadHelper()
     _UIWsMessageQueue = new std::list<WsMessage*>();
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
     
-    Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::getInstance()->getScheduler()->scheduleUpdate(this, 0, false);
 }
 
 WsThreadHelper::~WsThreadHelper()
@@ -187,16 +187,19 @@ void WsThreadHelper::update(float dt)
     WsMessage *msg = nullptr;
 
     // Returns quickly if no message
-    std::lock_guard<std::mutex> lk(_UIWsMessageQueueMutex);
+    _UIWsMessageQueueMutex.lock();
 
     if (0 == _UIWsMessageQueue->size())
     {
+        _UIWsMessageQueueMutex.unlock();
         return;
     }
     
     // Gets message
     msg = *(_UIWsMessageQueue->begin());
     _UIWsMessageQueue->pop_front();
+
+    _UIWsMessageQueueMutex.unlock();
     
     if (_ws)
     {

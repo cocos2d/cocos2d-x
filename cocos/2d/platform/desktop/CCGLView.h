@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL GLView : public Ref, public GLViewProtocol
+class CC_DLL GLView : public GLViewProtocol, public Ref
 {
 public:
     static GLView* create(const std::string& viewName);
@@ -45,7 +45,7 @@ public:
      */
 
     //void resize(int width, int height);
- 
+
     float getFrameZoomFactor();
     //void centerWindow();
 
@@ -64,6 +64,18 @@ public:
     virtual void setFrameSize(float width, float height) override;
     virtual void setIMEKeyboardState(bool bOpen) override;
 
+    /*
+     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+     */
+    void setFrameZoomFactor(float zoomFactor);
+
+    /** Retina support is disabled by default
+     *  @note This method is only available on Mac.
+     */
+    void enableRetina(bool enabled);
+    /** Check whether retina display is enabled. */
+    bool isRetinaEnabled() { return _isRetinaEnabled; };
+
 protected:
     GLView();
     virtual ~GLView();
@@ -71,22 +83,36 @@ protected:
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
 
-    /*
-     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
-     */
-    void setFrameZoomFactor(float zoomFactor);
     bool initGlew();
-    inline bool isRetina() { return _isRetina; };
+
+    void updateFrameSize();
+
+    // GLFW callbacks
+    void onGLFWError(int errorID, const char* errorDesc);
+    void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
+    void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
+    void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    void onGLFWCharCallback(GLFWwindow* window, unsigned int character);
+    void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
+    void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
+    void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height);
 
     bool _captured;
     bool _supportTouch;
-    bool _isRetina;
+    bool _isInRetinaMonitor;
+    bool _isRetinaEnabled;
+    int  _retinaFactor;  // Should be 1 or 2
 
     float _frameZoomFactor;
 
     GLFWwindow* _mainWindow;
     GLFWmonitor* _primaryMonitor;
-    friend class GLViewEventHandler;
+
+    float _mouseX;
+    float _mouseY;
+
+    friend class GLFWEventHandler;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GLView);
@@ -94,4 +120,4 @@ private:
 
 NS_CC_END   // end of namespace   cocos2d
 
-#endif	// end of __CC_EGLVIEW_DESKTOP_H__
+#endif  // end of __CC_EGLVIEW_DESKTOP_H__

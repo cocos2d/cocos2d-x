@@ -91,21 +91,6 @@
     <Filter Include="physics\chipmunk">
       <UniqueIdentifier>{aeadfa95-9c89-4212-98ae-89ad57db596a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kazmath\include">
-      <UniqueIdentifier>{05e27e68-7574-4a8b-af68-553dd3bafdfa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\src">
-      <UniqueIdentifier>{b797075f-7437-46d5-b4ee-2aa2c108e98f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\src\GL">
-      <UniqueIdentifier>{c755509d-1610-4e6c-b01b-e01d4d0de46e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\include\kazmath">
-      <UniqueIdentifier>{e1b64497-c099-4f06-8d61-9d4c6b7a215a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kazmath\include\kazmath\GL">
-      <UniqueIdentifier>{7c71abeb-8b4b-4be8-a23c-e32fedc65fc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="base">
       <UniqueIdentifier>{aec8225f-81a7-4213-b97b-7004d5535398}</UniqueIdentifier>
     </Filter>
@@ -114,6 +99,12 @@
     </Filter>
     <Filter Include="platform\desktop">
       <UniqueIdentifier>{32373f63-2c2d-4eab-bc4a-21745ba0b3fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\GL">
+      <UniqueIdentifier>{465965df-dc31-471a-887f-e430125b8ba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xxhash">
+      <UniqueIdentifier>{b4e2b1e5-2d79-44a3-af45-728d47b7bdb2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -179,45 +170,6 @@
     </ClCompile>
     <ClCompile Include="CCTouch.cpp">
       <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\GL\mat4stack.c">
-      <Filter>kazmath\src\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\GL\matrix.c">
-      <Filter>kazmath\src\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\aabb.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\mat3.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\mat4.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\neon_matrix_impl.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\plane.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\quaternion.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\ray2.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\utility.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\vec2.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\vec3.c">
-      <Filter>kazmath\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\kazmath\src\vec4.c">
-      <Filter>kazmath\src</Filter>
     </ClCompile>
     <ClCompile Include="CCLayer.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
@@ -598,6 +550,52 @@
     <ClCompile Include="platform\CCImage.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="CCTweenFunction.cpp" />
+    <ClCompile Include="..\math\kazmath\kazmath\GL\mat4stack.c">
+      <Filter>kazmath\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\GL\matrix.c">
+      <Filter>kazmath\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\aabb.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\mat3.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\mat4.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\neon_matrix_impl.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\plane.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\ray2.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\ray3.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\utility.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec2.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec3.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec4.c">
+      <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\xxhash\xxhash.c">
+      <Filter>xxhash</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -683,48 +681,6 @@
     </ClInclude>
     <ClInclude Include="cocos2d.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\aabb.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\kazmath.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\mat3.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\mat4.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\neon_matrix_impl.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\plane.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\quaternion.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\ray2.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\utility.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\vec2.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\vec3.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\vec4.h">
-      <Filter>kazmath\include\kazmath</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\GL\mat4stack.h">
-      <Filter>kazmath\include\kazmath\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\kazmath\include\kazmath\GL\matrix.h">
-      <Filter>kazmath\include\kazmath\GL</Filter>
     </ClInclude>
     <ClInclude Include="CCLayer.h">
       <Filter>layers_scenes_transitions_nodes</Filter>
@@ -1198,5 +1154,59 @@
     <ClInclude Include="platform\desktop\CCGLView.h">
       <Filter>platform\desktop</Filter>
     </ClInclude>
+    <ClInclude Include="CCTweenFunction.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\GL\mat4stack.h">
+      <Filter>kazmath\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\GL\matrix.h">
+      <Filter>kazmath\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\aabb.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\kazmath.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\mat3.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\mat4.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\neon_matrix_impl.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\plane.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\quaternion.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\ray2.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\ray3.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\utility.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\vec2.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\vec3.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\vec4.h">
+      <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\xxhash\xxhash.h">
+      <Filter>xxhash</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\math\kazmath\kazmath\CMakeLists.txt">
+      <Filter>kazmath</Filter>
+    </Text>
   </ItemGroup>
 </Project>

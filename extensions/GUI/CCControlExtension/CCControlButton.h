@@ -134,7 +134,7 @@ public:
     virtual float getTitleTTFSizeForState(State state);
 
     /**
-     * Sets the font of the label, changes the label to a LabelBMFont if neccessary.
+     * Sets the font of the label, changes the label to a BMFont if neccessary.
      * @param fntFile The name of the font to change to
      * @param state The state that uses the specified fntFile. The values are described
      * in "CCControlState".
@@ -190,7 +190,7 @@ public:
     const std::string& getCurrentTitle() const { return _currentTitle; };
     std::string getCurrentTitle() { return _currentTitle; };
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -200,12 +200,13 @@ protected:
      * @lua NA
      */
     virtual ~ControlButton();
-
-    virtual bool init();
+    
+    virtual bool init() override;
     virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
     virtual bool initWithBackgroundSprite(Scale9Sprite* sprite);
     virtual bool initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize);
-
+    
+protected:
     bool _isPushed;
     bool _parentInited;
     bool _doesAdjustBackgroundImage;

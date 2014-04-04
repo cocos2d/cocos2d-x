@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_TEXT_FIELD_H__
 #define __CC_TEXT_FIELD_H__
 
-#include "CCLabelTTF.h"
+#include "CCLabel.h"
 #include "CCIMEDelegate.h"
 
 NS_CC_BEGIN
@@ -64,7 +64,7 @@ public:
     /**
     @brief    If the sender doesn't want to insert the text, return true;
     */
-    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, int nLen)
+    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, size_t nLen)
     {
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(text);
@@ -75,7 +75,7 @@ public:
     /**
     @brief    If the sender doesn't want to delete the delText, return true;
     */
-    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, int nLen)
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen)
     {
         CC_UNUSED_PARAM(sender);
         CC_UNUSED_PARAM(delText);
@@ -86,7 +86,7 @@ public:
     /**
     @brief    If the sender doesn't want to draw, return true.
     */
-    virtual bool onDraw(TextFieldTTF * sender)
+    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
     {
         CC_UNUSED_PARAM(sender);
         return false;
@@ -96,7 +96,7 @@ public:
 /**
 @brief    A simple text input field with TTF font.
 */
-class CC_DLL TextFieldTTF : public LabelTTF, public IMEDelegate
+class CC_DLL TextFieldTTF : public Label, public IMEDelegate
 {
 public:
     /**
@@ -113,7 +113,7 @@ public:
 
     /** creates a TextFieldTTF from a fontname, alignment, dimension and font size */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
-    /** creates a LabelTTF from a fontname and font size */
+    /** creates a TextFieldTTF from a fontname and font size */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name, alignment, dimension and font size */
     bool initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
@@ -145,45 +145,50 @@ public:
     inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
 
     inline int getCharCount() const { return _charCount; };
-    virtual const Color3B& getColorSpaceHolder();
+    
+    virtual const Color4B& getColorSpaceHolder();
+
     virtual void setColorSpaceHolder(const Color3B& color);
+    virtual void setColorSpaceHolder(const Color4B& color);
+
+    virtual void setTextColor(const Color4B& textColor) override;
 
     // input text property
-public:
     virtual void setString(const std::string& text) override;
     virtual const std::string& getString() const override;
-protected:
-    TextFieldDelegate * _delegate;
-    int _charCount;
-    
-    std::string _inputText;
 
     // place holder text property
     // place holder text displayed when there is no text in the text field.
-public:
     virtual void setPlaceHolder(const std::string& text);
     virtual const std::string& getPlaceHolder(void) const;
-protected:
-    std::string _placeHolder;
-    Color3B _colorSpaceHolder;
-public:
+
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();
-protected:
-    bool _secureTextEntry;
-protected:
 
-    virtual void draw();
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
 
+protected:
     //////////////////////////////////////////////////////////////////////////
     // IMEDelegate interface
     //////////////////////////////////////////////////////////////////////////
 
     virtual bool canAttachWithIME() override;
     virtual bool canDetachWithIME() override;
-    virtual void insertText(const char * text, int len) override;
+    virtual void insertText(const char * text, size_t len) override;
     virtual void deleteBackward() override;
     virtual const std::string& getContentText() override;
+
+    TextFieldDelegate * _delegate;
+    int _charCount;
+
+    std::string _inputText;
+
+    std::string _placeHolder;
+    Color4B _colorSpaceHolder;
+    Color4B _colorText;
+
+    bool _secureTextEntry;
+
 private:
     class LengthStack;
     LengthStack * _lens;

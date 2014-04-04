@@ -73,7 +73,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -84,6 +84,7 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -120,7 +121,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -129,6 +130,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -166,6 +168,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
     <ClCompile Include="..\..\external\unzip\unzip.cpp" />
+    <ClCompile Include="..\..\external\xxhash\xxhash.c" />
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\CCAffineTransform.cpp" />
     <ClCompile Include="..\base\CCArray.cpp" />
@@ -182,19 +185,20 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
-    <ClCompile Include="..\math\kazmath\src\aabb.c" />
-    <ClCompile Include="..\math\kazmath\src\GL\mat4stack.c" />
-    <ClCompile Include="..\math\kazmath\src\GL\matrix.c" />
-    <ClCompile Include="..\math\kazmath\src\mat3.c" />
-    <ClCompile Include="..\math\kazmath\src\mat4.c" />
-    <ClCompile Include="..\math\kazmath\src\neon_matrix_impl.c" />
-    <ClCompile Include="..\math\kazmath\src\plane.c" />
-    <ClCompile Include="..\math\kazmath\src\quaternion.c" />
-    <ClCompile Include="..\math\kazmath\src\ray2.c" />
-    <ClCompile Include="..\math\kazmath\src\utility.c" />
-    <ClCompile Include="..\math\kazmath\src\vec2.c" />
-    <ClCompile Include="..\math\kazmath\src\vec3.c" />
-    <ClCompile Include="..\math\kazmath\src\vec4.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\aabb.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\GL\mat4stack.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\GL\matrix.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\mat3.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\mat4.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\neon_matrix_impl.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\plane.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\ray2.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\ray3.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\utility.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\vec2.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\vec3.c" />
+    <ClCompile Include="..\math\kazmath\kazmath\vec4.c" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
@@ -334,6 +338,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
+    <ClInclude Include="..\..\external\xxhash\xxhash.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\CCAffineTransform.h" />
     <ClInclude Include="..\base\CCArray.h" />
@@ -358,20 +363,21 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\s3tc.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\aabb.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\GL\mat4stack.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\GL\matrix.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\kazmath.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\mat3.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\mat4.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\neon_matrix_impl.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\plane.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\quaternion.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\ray2.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\utility.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\vec2.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\vec3.h" />
-    <ClInclude Include="..\math\kazmath\include\kazmath\vec4.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\aabb.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\GL\mat4stack.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\GL\matrix.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\kazmath.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\mat3.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\mat4.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\neon_matrix_impl.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\plane.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\quaternion.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\ray2.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\ray3.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\utility.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\vec2.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\vec3.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\vec4.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
@@ -533,6 +539,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="uthash.h" />
     <ClInclude Include="utlist.h" />
     <ClInclude Include="ZipUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\math\kazmath\kazmath\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

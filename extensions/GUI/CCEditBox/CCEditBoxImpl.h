@@ -69,6 +69,11 @@ public:
     virtual void setVisible(bool visible) = 0;
     virtual void setContentSize(const Size& size) = 0;
 	virtual void setAnchorPoint(const Point& anchorPoint) = 0;
+    
+    /**
+     * check the editbox's position, update it when needed
+     */
+    virtual void updatePosition(float dt){};
     /**
      * @js NA
      * @lua NA

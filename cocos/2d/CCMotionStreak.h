@@ -68,17 +68,24 @@ public:
 
     inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
     inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
-    { 
+    {
         _startingPositionInitialized = bStartingPositionInitialized; 
     }
 
     // Overrides
     virtual void setPosition(const Point& position) override;
+    virtual void setPosition(float x, float y) override;
+    virtual const Point& getPosition() const override;
+    virtual void getPosition(float* x, float* y) const override;
+    virtual void setPositionX(float x) override;
+    virtual void setPositionY(float y) override;
+    virtual float getPositionX(void) const override;
+    virtual float getPositionY(void) const override;
     /**
     * @js NA
     * @lua NA
     */
-    virtual void draw() override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     /**
     * @js NA
     * @lua NA
@@ -100,27 +107,20 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setOpacityModifyRGB(bool value) override;
     virtual bool isOpacityModifyRGB() const override;
-
-protected:
-    kmMat4 _cachedMV;
-    //renderer callback
-    void onDraw();
-
-protected:
-    /**
-     * @js ctor
-     */
+    
+CC_CONSTRUCTOR_ACCESS:
     MotionStreak();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~MotionStreak();
-
+    
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
     bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
+    
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
     bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
+
+protected:
+    //renderer callback
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 
     bool _fastMode;
     bool _startingPositionInitialized;

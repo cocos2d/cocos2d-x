@@ -122,12 +122,29 @@ void ActionCamera::updateTransform()
     // But that operation needs to be done after all the 'updates'.
     // So the Director should emit an 'director_after_update' event.
     // And this object should listen to it
-    _target->setAdditionalTransform(mv);
+    _target->setAdditionalTransform(&mv);
 }
 
 //
 // OrbitCamera
 //
+
+OrbitCamera::OrbitCamera()
+: _radius(0.0)
+, _deltaRadius(0.0)
+, _angleZ(0.0)
+, _deltaAngleZ(0.0)
+, _angleX(0.0)
+, _deltaAngleX(0.0)
+, _radZ(0.0)
+, _radDeltaZ(0.0)
+, _radX(0.0)
+, _radDeltaX(0.0)
+{
+}
+OrbitCamera::~OrbitCamera()
+{
+}
 
 OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {

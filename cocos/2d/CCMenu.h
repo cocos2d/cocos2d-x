@@ -60,9 +60,27 @@ public:
     
     /** creates an empty Menu */
     static Menu* create();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+    typedef MenuItem* M;
+    static Menu* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
+    static Menu* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
+    static Menu* create(M m1, M m2, M m3, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, NULL); }
+    static Menu* create(M m1, M m2, M m3, M m4, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, NULL); }
+    static Menu* create(M m1, M m2, M m3, M m4, M m5, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, NULL); }
+    static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, NULL); }
+    static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, NULL); }
+    static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, NULL); }
+    static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
+    static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
 
+    // On WP8 for lists longer than 10 items, use createWithArray or variadicCreate with NULL as the last argument
+    static Menu* variadicCreate(MenuItem* item, ...);
+#else
     /** creates a Menu with MenuItem objects */
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
+#endif
 
     /** creates a Menu with a Array of MenuItem objects */
     static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
@@ -122,7 +140,7 @@ public:
 
     virtual std::string getDescription() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
@@ -134,6 +152,10 @@ protected:
 
     /** initializes a Menu with a NSArray of MenuItem objects */
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
+
+protected:
+
+
 
     /** whether or not the menu will receive events */
     bool _enabled;

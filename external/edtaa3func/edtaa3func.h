@@ -1,33 +1,28 @@
 /*
- * Copyright 2009 Stefan Gustavson (stefan.gustavson@gmail.com)
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *  1. Redistributions of source code must retain the above copyright notice,
- *     this list of conditions and the following disclaimer.
- *
- *  2. Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY STEFAN GUSTAVSON ''AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL STEFAN GUSTAVSON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * The views and conclusions contained in the software and documentation are
- * those of the authors and should not be interpreted as representing official
- * policies, either expressed or implied, of Stefan Gustavson.
- *
- *
+Copyright (C) 2009 Stefan Gustavson (stefan.gustavson@gmail.com)
+
+This software is distributed under the permissive "MIT License":
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ */
+ 
+ /*
  * edtaa3()
  *
  * Sweep-and-update Euclidean distance transform of an
@@ -43,18 +38,24 @@
  * By Stefan Gustavson (stefan.gustavson@gmail.com).
  *
  * Originally written in 1994, based on a verbal
- * description of the SSED8 algorithm published in the
- * PhD dissertation of Ingemar Ragnemalm. This is his
- * algorithm, I only implemented it in C.
+ * description of Per-Erik Danielsson's SSED8 algorithm
+ * as presented in the PhD dissertation of Ingemar
+ * Ragnemalm. This is Per-Erik Danielsson's scanline
+ * scheme from 1979 - I only implemented it in C.
  *
  * Updated in 2004 to treat border pixels correctly,
  * and cleaned up the code to improve readability.
  *
- * Updated in 2009 to handle anti-aliased edges.
+ * Updated in 2009 to handle anti-aliased edges,
+ * as published in the article "Anti-aliased Euclidean
+ * distance transform" by Stefan Gustavson and Robin Strand,
+ * Pattern Recognition Letters 32 (2011) 252¨C257.
  *
- * Updated in 2011 to avoid a corner case infinite loop.
+ * Updated in 2011 to avoid a corner case causing an
+ * infinite loop for some input data.
  *
- */
+*/
+
 #ifndef __EDTAA3FUNC_H__
 #define __EDTAA3FUNC_H__
 

@@ -42,7 +42,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class Timer;
+class TimerScriptHandler;
 class Layer;
 class MenuItem;
 class CallFunc;
@@ -108,7 +108,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Timer* getTimer(void) {
+    TimerScriptHandler* getTimer(void) {
         return _timer;
     }
     /**
@@ -143,7 +143,7 @@ private:
     }
     bool init(float interval, bool paused);
     
-    cocos2d::Timer*   _timer;
+    TimerScriptHandler*   _timer;
     bool                _paused;
     bool                _markedForDeletion;
 };
@@ -212,6 +212,7 @@ enum ScriptEventType
     kAccelerometerEvent,
     kControlEvent,
     kCommonEvent,
+    kComponentEvent
 };
 
 struct BasicScriptData
@@ -258,16 +259,18 @@ struct TouchesScriptData
     EventTouch::EventCode actionType;
     void* nativeObject;
     const std::vector<Touch*>& touches;
+    Event* event;
     
     // Constructor
     /**
      * @js NA
      * @lua NA
      */
-    TouchesScriptData(EventTouch::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches)
+    TouchesScriptData(EventTouch::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches, Event* evt)
     : actionType(inActionType),
       nativeObject(inNativeObject),
-      touches(inTouches)
+      touches(inTouches),
+      event(evt)
     {
     }
 };
@@ -277,16 +280,18 @@ struct TouchScriptData
     EventTouch::EventCode actionType;
     void* nativeObject;
     Touch* touch;
+    Event* event;
     
     // Constructor
     /**
      * @js NA
      * @lua NA
      */
-    TouchScriptData(EventTouch::EventCode inActionType, void* inNativeObject, Touch* inTouch)
+    TouchScriptData(EventTouch::EventCode inActionType, void* inNativeObject, Touch* inTouch, Event* evt)
     : actionType(inActionType),
       nativeObject(inNativeObject),
-      touch(inTouch)
+      touch(inTouch),
+      event(evt)
     {
     }
 };
@@ -360,6 +365,9 @@ struct ScriptEvent
 class CC_DLL ScriptEngineProtocol
 {
 public:
+    ScriptEngineProtocol()
+    {};
+    
     /**
      * @js NA
      * @lua NA
@@ -430,6 +438,9 @@ public:
      * @lua NA
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
+    virtual bool isCalledFromScript() { return false; };
     
     enum class ConfigType
     {

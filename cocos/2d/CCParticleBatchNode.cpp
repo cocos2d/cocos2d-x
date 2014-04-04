@@ -120,7 +120,7 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 
 // override visit.
 // Don't call visit on it's children
-void ParticleBatchNode::visit()
+void ParticleBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     // CAREFUL:
     // This visit is almost identical to Node#visit
@@ -134,11 +134,18 @@ void ParticleBatchNode::visit()
         return;
     }
 
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = transform(parentTransform);
+    _transformUpdated = false;
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
     kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
 
-    transform();
-
-    draw();
+    draw(renderer, _modelViewTransform, dirty);
 
     kmGLPopMatrix();
 }
@@ -344,7 +351,6 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
     CCASSERT(_children.contains(aChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
-    Node::removeChild(child, cleanup);
 
     // remove child helper
     _textureAtlas->removeQuadsAtIndex(child->getAtlasIndex(), child->getTotalParticles());
@@ -354,6 +360,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
 
     // particle could be reused for self rendering
     child->setBatchNode(nullptr);
+    Node::removeChild(child, cleanup);
 
     updateAllAtlasIndexes();
 }
@@ -373,7 +380,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(void)
+void ParticleBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 
@@ -388,7 +395,7 @@ void ParticleBatchNode::draw(void)
                        _blendFunc,
                        _textureAtlas,
                        _modelViewTransform);
-    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
+    renderer->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

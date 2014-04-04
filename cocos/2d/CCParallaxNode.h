@@ -67,7 +67,7 @@ public:
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual void visit(void) override;
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset

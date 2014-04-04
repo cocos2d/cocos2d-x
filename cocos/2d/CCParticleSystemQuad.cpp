@@ -72,7 +72,7 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
             setupVBO();
         }
 
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
         
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
@@ -358,103 +358,15 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
-//void ParticleSystemQuad::draw()
-//{
-//    CCASSERT(!_batchNode,"draw should not be called when added to a particleBatchNode");
-//
-//    CC_NODE_DRAW_SETUP();
-//
-//    GL::bindTexture2D( _texture->getName() );
-//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//    CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
-//
-//    if (Configuration::getInstance()->supportsShareableVAO())
-//    {
-//        //
-//        // Using VBO and VAO
-//        //
-//        GL::bindVAO(_VAOname);
-//
-//#if CC_REBIND_INDICES_BUFFER
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-//#endif
-//
-//        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
-//
-//#if CC_REBIND_INDICES_BUFFER
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//#endif
-//    }
-//    else
-//    {
-//        //
-//        // Using VBO without VAO
-//        //
-//
-//        #define kQuadSize sizeof(_quads[0].bl)
-//
-//        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-//
-//        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-//        // vertices
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
-//        // colors
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
-//        // tex coords
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-//
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-//
-//        glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
-//
-//        glBindBuffer(GL_ARRAY_BUFFER, 0);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//    }
-//
-//    CC_INCREMENT_GL_DRAWS(1);
-//    CHECK_GL_ERROR_DEBUG();
-//}
-
-void ParticleSystemQuad::draw()
+void ParticleSystemQuad::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
+    CCASSERT( _particleIdx == 0 || _particleIdx == _particleCount, "Abnormal error in particle quad");
     //quad command
     if(_particleIdx > 0)
     {
-//        //transform vertices
-//        std::vector<V3F_C4B_T2F_Quad> drawQuads(_particleIdx);
-//        memcpy(&drawQuads[0], _quads, sizeof(V3F_C4B_T2F_Quad) * _particleIdx);
-//        AffineTransform worldTM = getNodeToWorldTransform();
-//        for(int index = 0; index <_particleIdx; ++index)
-//        {
-//            V3F_C4B_T2F_Quad* quad = _quads + index;
-//            
-//            Point pt(0,0);
-//            pt = PointApplyAffineTransform( Point(quad->bl.vertices.x, quad->bl.vertices.y), worldTM);
-//            drawQuads[index].bl.vertices.x = pt.x;
-//            drawQuads[index].bl.vertices.y = pt.y;
-//            
-//            pt = PointApplyAffineTransform( Point(quad->br.vertices.x, quad->br.vertices.y), worldTM);
-//            drawQuads[index].br.vertices.x = pt.x;
-//            drawQuads[index].br.vertices.y = pt.y;
-//            
-//            pt = PointApplyAffineTransform( Point(quad->tl.vertices.x, quad->tl.vertices.y), worldTM);
-//            drawQuads[index].tl.vertices.x = pt.x;
-//            drawQuads[index].tl.vertices.y = pt.y;
-//            
-//            pt = PointApplyAffineTransform( Point(quad->tr.vertices.x, quad->tr.vertices.y), worldTM);
-//            drawQuads[index].tr.vertices.x = pt.x;
-//            drawQuads[index].tr.vertices.y = pt.y;
-//            
-//        }
-
-        auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-        _quadCommand.init(_globalZOrder, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+        _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, _quads, _particleIdx, transform);
+        renderer->addCommand(&_quadCommand);
     }
-
 }
 
 void ParticleSystemQuad::setTotalParticles(int tp)

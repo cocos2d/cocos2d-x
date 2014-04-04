@@ -126,8 +126,8 @@ void Skin::setSkinData(const BaseData &var)
 
     setScaleX(_skinData.scaleX);
     setScaleY(_skinData.scaleY);
-    setRotationX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
-    setRotationY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
+    setRotationSkewX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
+    setRotationSkewY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
     setPosition(Point(_skinData.x, _skinData.y));
 
     _skinTransform = getNodeToParentTransform();
@@ -219,14 +219,14 @@ kmMat4 Skin::getNodeToWorldTransformAR() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
-void Skin::draw()
+void Skin::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
     //TODO implement z order
     _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    renderer->addCommand(&_quadCommand);
 }
 
 void Skin::setBone(Bone *bone)

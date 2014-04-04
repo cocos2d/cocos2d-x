@@ -11,19 +11,27 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libchipmunk", "..\external\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "..\extensions\proj.win32\libExtensions.vcxproj", "{21B2C324-891F-48EA-AD1A-5AE13DE12E28}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCpp", "..\tests\proj.win32\TestCpp.vcxproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-tests", "..\tests\cpp-tests\proj.win32\cpp-tests.vcxproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCocosBuilder", "..\cocos\editor-support\cocosbuilder\proj.win32\libCocosBuilder.vcxproj", "{811C0DAB-7B96-4BD3-A154-B7572B58E4AB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libCocosStudio", "..\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj", "{B57CF53F-2E49-4031-9822-047CC0E6BDE2}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libGUI", "..\cocos\gui\proj.win32\libGUI.vcxproj", "{7E06E92C-537A-442B-9E4A-4761C84F8A1A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libNetwork", "..\cocos\network\proj.win32\libNetwork.vcxproj", "{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos\editor-support\spine\proj.win32\libSpine.vcxproj", "{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libLocalStorage", "..\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj", "{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "..\cocos\scripting\lua-bindings\proj.win32\liblua.vcxproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-tests", "..\tests\lua-tests\project\proj.win32\lua-tests.win32.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libGUI", "..\cocos\ui\proj.win32\libGUI.vcxproj", "{7E06E92C-537A-442B-9E4A-4761C84F8A1A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-empty-test", "..\tests\cpp-empty-test\proj.win32\cpp-empty-test.vcxproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-empty-test", "..\tests\lua-empty-test\project\proj.win32\lua-empty-test.vcxproj", "{13E55395-94A2-4CD9-BFC2-1A051F80C17D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,10 +71,6 @@ Global
 		{B57CF53F-2E49-4031-9822-047CC0E6BDE2}.Debug|Win32.Build.0 = Debug|Win32
 		{B57CF53F-2E49-4031-9822-047CC0E6BDE2}.Release|Win32.ActiveCfg = Release|Win32
 		{B57CF53F-2E49-4031-9822-047CC0E6BDE2}.Release|Win32.Build.0 = Release|Win32
-		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Debug|Win32.Build.0 = Debug|Win32
-		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Release|Win32.ActiveCfg = Release|Win32
-		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Release|Win32.Build.0 = Release|Win32
 		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Debug|Win32.Build.0 = Debug|Win32
 		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Release|Win32.ActiveCfg = Release|Win32
@@ -79,6 +83,26 @@ Global
 		{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}.Debug|Win32.Build.0 = Debug|Win32
 		{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}.Release|Win32.ActiveCfg = Release|Win32
 		{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}.Release|Win32.Build.0 = Release|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.Build.0 = Debug|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.ActiveCfg = Release|Win32
+		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.Build.0 = Release|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.Build.0 = Debug|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.ActiveCfg = Release|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.Build.0 = Release|Win32
+		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Debug|Win32.Build.0 = Debug|Win32
+		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Release|Win32.ActiveCfg = Release|Win32
+		{7E06E92C-537A-442B-9E4A-4761C84F8A1A}.Release|Win32.Build.0 = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.Build.0 = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.ActiveCfg = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.Build.0 = Release|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Debug|Win32.Build.0 = Debug|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Release|Win32.ActiveCfg = Release|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

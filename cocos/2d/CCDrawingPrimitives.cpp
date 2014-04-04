@@ -102,10 +102,10 @@ static void lazy_init( void )
         s_shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
         s_shader->retain();
         
-        s_colorLocation = glGetUniformLocation( s_shader->getProgram(), "u_color");
-    CHECK_GL_ERROR_DEBUG();
-        s_pointSizeLocation = glGetUniformLocation( s_shader->getProgram(), "u_pointSize");
-    CHECK_GL_ERROR_DEBUG();
+        s_colorLocation = s_shader->getUniformLocation("u_color");
+        CHECK_GL_ERROR_DEBUG();
+        s_pointSizeLocation = s_shader->getUniformLocation("u_pointSize");
+        CHECK_GL_ERROR_DEBUG();
 
         s_initialized = true;
     }

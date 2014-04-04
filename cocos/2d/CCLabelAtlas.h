@@ -94,7 +94,8 @@ protected:
     {
         _string.clear();
     }
-    
+    virtual void updateColor() override;
+
     // string to render
     std::string _string;
     // the first char in the charmap

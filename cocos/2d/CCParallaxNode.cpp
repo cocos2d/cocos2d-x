@@ -145,7 +145,7 @@ The positions are updated at visit because:
 - using a timer is not guaranteed that it will called after all the positions were updated
 - overriding "draw" will only precise if the children have a z > 0
 */
-void ParallaxNode::visit()
+void ParallaxNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
     //    Point pos = position_;
     //    Point    pos = [self convertToWorldSpace:Point::ZERO];
@@ -161,7 +161,7 @@ void ParallaxNode::visit()
         }
         _lastPosition = pos;
     }
-    Node::visit();
+    Node::visit(renderer, parentTransform, parentTransformUpdated);
 }
 
 NS_CC_END

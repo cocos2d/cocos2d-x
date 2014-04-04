@@ -79,12 +79,12 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 pNode = ccbNode->getCCBFileNode();
                 
                 // Skip properties that doesn't have a value to override
-                Array *extraPropsNames = (Array*)pNode->getUserObject();
+                __Array *extraPropsNames = (__Array*)pNode->getUserObject();
                 Ref* pObj = NULL;
                 bool bFound = false;
                 CCARRAY_FOREACH(extraPropsNames, pObj)
                 {
-                    String* pStr = static_cast<String*>(pObj);
+                    __String* pStr = static_cast<__String*>(pObj);
                     if (0 == pStr->compare(propertyName.c_str()))
                     {
                         bFound = true;
@@ -96,7 +96,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         }
         else if (isExtraProp && pNode == ccbReader->getAnimationManager()->getRootNode())
         {
-            Array *extraPropsNames = static_cast<Array*>(pNode->getUserObject());
+            __Array *extraPropsNames = static_cast<__Array*>(pNode->getUserObject());
             if (! extraPropsNames)
             {
                 extraPropsNames = Array::create();
@@ -1055,9 +1055,9 @@ void NodeLoader::onHandlePropTypeDegrees(Node * pNode, Node * pParent, const cha
     if(strcmp(pPropertyName, PROPERTY_ROTATION) == 0) {
         pNode->setRotation(pDegrees);
     } else if(strcmp(pPropertyName, PROPERTY_ROTATIONX) == 0) {
-        pNode->setRotationX(pDegrees);
+        pNode->setRotationSkewX(pDegrees);
     } else if(strcmp(pPropertyName, PROPERTY_ROTATIONY) == 0) {
-        pNode->setRotationY(pDegrees);
+        pNode->setRotationSkewY(pDegrees);
     }
     else {
         ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);

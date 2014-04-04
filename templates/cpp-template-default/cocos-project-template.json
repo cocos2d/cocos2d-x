@@ -1,0 +1,43 @@
+{
+      "do_default":{
+         "append_x_engine":{
+            "from":".",
+            "to":"cocos2d"
+         },
+         "project_rename":{
+            "src_project_name":"HelloCpp",
+            "files":[
+               "proj.win32/PROJECT_NAME.vcxproj",
+               "proj.win32/PROJECT_NAME.vcxproj.filters",
+               "proj.win32/PROJECT_NAME.vcxproj.user",
+               "proj.win32/PROJECT_NAME.sln",
+               "proj.ios_mac/PROJECT_NAME.xcodeproj"
+            ]
+         },
+         "project_replace_project_name":{
+            "src_project_name":"HelloCpp",
+            "files":[
+               "proj.win32/PROJECT_NAME.vcxproj",
+               "proj.win32/PROJECT_NAME.vcxproj.filters",
+               "proj.win32/PROJECT_NAME.vcxproj.user",
+               "proj.win32/PROJECT_NAME.sln",
+               "proj.win32/main.cpp",
+               "proj.android/.project",
+               "proj.android/AndroidManifest.xml",
+               "proj.android/build.xml",
+               "proj.android/res/values/strings.xml",
+               "proj.ios_mac/ios/main.m",
+               "proj.ios_mac/ios/Prefix.pch",
+               "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
+               "CMakeLists.txt"
+            ]
+         },
+         "project_replace_package_name":{
+            "src_package_name":"org.cocos2dx.hellocpp",
+            "files":[
+               "proj.android/AndroidManifest.xml"
+            ]
+         }
+      }
+}
+

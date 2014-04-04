@@ -78,6 +78,8 @@ public:
     inline PhysicsShape* getShapeB() const { return _shapeB; }
     /** get contact data */
     inline const PhysicsContactData* getContactData() const { return _contactData; }
+    /** get previous contact data */
+    inline const PhysicsContactData* getPreContactData() const { return _preContactData; }
     /** get data. */
     inline void* getData() const { return _data; }
     /**
@@ -112,12 +114,12 @@ private:
     EventCode _eventCode;
     PhysicsContactInfo* _info;
     bool _notificationEnable;
-    bool _begin;
     bool _result;
     
     void* _data;
     void* _contactInfo;
     PhysicsContactData* _contactData;
+    PhysicsContactData* _preContactData;
     
     friend class EventListenerPhysicsContact;
     friend class PhysicsWorldCallback;
@@ -146,14 +148,10 @@ public:
     void ignore();
     
 private:
-    PhysicsContactPreSolve(PhysicsContactData* data, void* contactInfo);
+    PhysicsContactPreSolve(void* contactInfo);
     ~PhysicsContactPreSolve();
     
 private:
-    float _elasticity;
-    float _friction;
-    Point _surfaceVelocity;
-    PhysicsContactData* _preContactData;
     void* _contactInfo;
     
     friend class EventListenerPhysicsContact;

@@ -128,9 +128,9 @@ namespace tweenfunc {
     float circEaseOut(float time);
     float circEaseInOut(float time);
     
-    float elasticEaseIn(float time, float *easingParam);
-    float elasticEaseOut(float time, float *easingParam);
-    float elasticEaseInOut(float time, float *easingParam);
+    float elasticEaseIn(float time, float period);
+    float elasticEaseOut(float time, float period);
+    float elasticEaseInOut(float time, float period);
     
     float backEaseIn(float time);
     float backEaseOut(float time);

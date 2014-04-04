@@ -295,8 +295,8 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     auto baseValueIter = _baseValues.find(fromNode);
     if(baseValueIter != _baseValues.end())
     {
-        _baseValues.erase(baseValueIter);
         _baseValues[toNode] = baseValueIter->second;
+        _baseValues.erase(baseValueIter);
 //         fromNode->release();
 //         toNode->retain();
     }
@@ -304,8 +304,8 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     auto objIter = _objects.find(fromNode);
     if (objIter != _objects.end())
     {
-        _objects.erase(objIter);
         _objects[toNode] = objIter->second;
+        _objects.erase(objIter);
     }
     
     
@@ -313,9 +313,8 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     auto seqsIter = _nodeSequences.find(fromNode);
     if (seqsIter != _nodeSequences.end())
     {
-        _nodeSequences.erase(seqsIter);
         _nodeSequences[toNode] = seqsIter->second;
-
+        _nodeSequences.erase(seqsIter);
 //         fromNode->release();
 //         toNode->retain();
     }
@@ -488,11 +487,11 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
             } else if(propName == "rotationX")
             {
                 float rotate = value.asFloat();
-                pNode->setRotationX(rotate);
+                pNode->setRotationSkewX(rotate);
             }else if(propName == "rotationY")
             {
                 float rotate = value.asFloat();
-                pNode->setRotationY(rotate);
+                pNode->setRotationSkewY(rotate);
             }
             else if (propName == "opacity")
             {
@@ -1169,7 +1168,7 @@ void CCBRotateXTo::startWithTarget(Node *pNode)
     _target = pNode;
     _elapsed = 0.0f;
     _firstTick = true;
-    _startAngle = _target->getRotationX();
+    _startAngle = _target->getRotationSkewX();
     _diffAngle = _dstAngle - _startAngle;
 }
 
@@ -1190,8 +1189,7 @@ CCBRotateXTo* CCBRotateXTo::reverse() const
 
 void CCBRotateXTo::update(float time)
 {
-    _target->setRotationX(_startAngle + (_diffAngle * time))
-    ;
+    _target->setRotationSkewX(_startAngle + (_diffAngle * time));
 }
 
 
@@ -1257,14 +1255,13 @@ void CCBRotateYTo::startWithTarget(Node *pNode)
     _target = pNode;
     _elapsed = 0.0f;
     _firstTick = true;
-    _startAngle = _target->getRotationY();
+    _startAngle = _target->getRotationSkewY();
     _diffAngle = _dstAngle - _startAngle;
 }
 
 void CCBRotateYTo::update(float time)
 {
-    _target->setRotationY(_startAngle + (_diffAngle * time))
-    ;
+    _target->setRotationSkewY(_startAngle + (_diffAngle * time));
 }
 
 

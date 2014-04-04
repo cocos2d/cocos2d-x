@@ -170,6 +170,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         displayData = ParticleDisplayData::create();
 
         display->removeFromParent();
+        display->cleanup();
         
         Armature *armature = _bone->getArmature();
         if (armature)
@@ -293,6 +294,7 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
         if (Armature *armature = dynamic_cast<Armature *>(_displayRenderNode))
         {
             _bone->setChildArmature(armature);
+            armature->setParentBone(_bone);
         }
         else if (ParticleSystemQuad *particle = dynamic_cast<ParticleSystemQuad *>(_displayRenderNode))
         {

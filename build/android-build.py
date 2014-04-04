@@ -1,33 +1,32 @@
 #!/usr/bin/python
 # android-build.py
-# Build android 
+# Build android
 
 import sys
 import os, os.path
 import shutil
 from optparse import OptionParser
 
-CPP_SAMPLES = ['testcpp']
-LUA_SAMPLES = []
-JSB_SAMPLES = []
-ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
+CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests']
+LUA_SAMPLES = ['lua-empty-test', 'lua-tests']
+ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
 
 def get_num_of_cpu():
-	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
-	'''
-	try:
-		platform = sys.platform
-		if platform == 'win32':
-			if 'NUMBER_OF_PROCESSORS' in os.environ:
-				return int(os.environ['NUMBER_OF_PROCESSORS'])
-			else:
-				return 1
-		else:
-			from numpy.distutils import cpuinfo
-			return cpuinfo.cpu._getNCPUs()
-	except Exception:
-		print "Can't know cpuinfo, use default 1 cpu"
-		return 1
+    ''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
+    '''
+    try:
+        platform = sys.platform
+        if platform == 'win32':
+            if 'NUMBER_OF_PROCESSORS' in os.environ:
+                return int(os.environ['NUMBER_OF_PROCESSORS'])
+            else:
+                return 1
+        else:
+            from numpy.distutils import cpuinfo
+            return cpuinfo.cpu._getNCPUs()
+    except Exception:
+        print "Can't know cpuinfo, use default 1 cpu"
+        return 1
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
@@ -40,7 +39,7 @@ def check_environment_variables():
         sys.exit(1)
 
     return NDK_ROOT
-    
+
 def check_environment_variables_sdk():
     ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building
     '''
@@ -75,8 +74,7 @@ def select_toolchain_version():
 def caculate_built_samples(args):
     ''' Compute the sampels to be built
     'cpp' for short of all cpp tests
-    'lua' for short of all lua tests 
-    'jsb' for short of all javascript tests
+    'lua' for short of all lua tests
     '''
 
     if 'all' in args:
@@ -89,9 +87,6 @@ def caculate_built_samples(args):
     if 'lua' in args:
         targets += LUA_SAMPLES
         args.remove('lua')
-    if 'jsb' in args:
-        targets += JSB_SAMPLES
-        args.remove('jsb')
 
     targets += args
 
@@ -120,17 +115,17 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,an
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
     elif android_platform is not None:
-    	  sdk_tool_path = os.path.join(sdk_root, "tools/android")
-    	  cocoslib_path = os.path.join(cocos_root, "cocos/2d/platform/android/java")
-    	  command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path) 
-    	  if os.system(command) != 0:
-    	  	  raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")  	  
-    	  command = '%s update project -t %s -p %s -s' % (sdk_tool_path,android_platform,app_android_root)
-    	  if os.system(command) != 0:
-    	  	  raise Exception("update project [ " + app_android_root + " ] fails!")    	  	  
-    	  buildfile_path = os.path.join(app_android_root, "build.xml")
-    	  command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
-    	  os.system(command)
+        sdk_tool_path = os.path.join(sdk_root, "tools/android")
+        cocoslib_path = os.path.join(cocos_root, "cocos/2d/platform/android/java")
+        command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path)
+        if os.system(command) != 0:
+            raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")
+        command = '%s update project -t %s -p %s -s' % (sdk_tool_path,android_platform,app_android_root)
+        if os.system(command) != 0:
+            raise Exception("update project [ " + app_android_root + " ] fails!")
+        buildfile_path = os.path.join(app_android_root, "build.xml")
+        command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
+        os.system(command)
 
 def copy_files(src, dst):
 
@@ -151,32 +146,48 @@ def copy_resources(target, app_android_root):
     if os.path.isdir(assets_dir):
         shutil.rmtree(assets_dir)
 
-    # copy resources(cpp samples and lua samples)
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../Resources")
-    if os.path.isdir(resources_dir):
-        copy_files(resources_dir, assets_dir)
 
-    # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    if target in JSB_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/javascript/script")
-        copy_files(resources_dir, assets_dir)
-
-        if target == "testjavascript":
-            resources_dir = os.path.join(app_android_root, "../tests/")
-
-        copy_files(resources_dir, assets_dir)
+    # copy resources(cpp samples)
+    if target in CPP_SAMPLES:
+        resources_dir = os.path.join(app_android_root, "../Resources")
+        if os.path.isdir(resources_dir):
+            copy_files(resources_dir, assets_dir)
 
 
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/lua/script")
-        copy_files(resources_dir, assets_dir)
+        resources_dir = os.path.join(app_android_root, "../../res")
+        assets_res_dir = os.path.join(assets_dir, "res")
+        os.mkdir(assets_res_dir)
 
-        # TestLua shared resources with TestCpp
-        if target == "testlua":
-            resources_dir = os.path.join(app_android_root, "../../test-cpp/Resources")
-            copy_files(resources_dir, assets_dir)
+        if target != "lua-tests":
+            copy_files(resources_dir, assets_res_dir)
+
+        src_dir = os.path.join(app_android_root, "../../src")
+        assets_src_dir = os.path.join(assets_dir, "src")
+        os.mkdir(assets_src_dir)
+        copy_files(src_dir, assets_src_dir)
+
+        common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
+        copy_files(common_script_dir, assets_dir)
+
+        luasocket_script_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
+        for root, dirs, files in os.walk(luasocket_script_dir):
+            for f in files:
+                if os.path.splitext(f)[1] == '.lua':
+                    fall = os.path.join(root, f)
+                    shutil.copy(fall, assets_dir)
+
+        # lua-tests shared resources with cpp-tests
+        if target == "lua-tests":
+            resources_cocosbuilder_res_dir = os.path.join(resources_dir, "cocosbuilderRes")
+            assets_cocosbuilder_res_dir = os.path.join(assets_res_dir, "cocosbuilderRes")
+            os.mkdir(assets_cocosbuilder_res_dir)
+            copy_files(resources_cocosbuilder_res_dir, assets_cocosbuilder_res_dir)
+
+            resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
+            copy_files(resources_dir, assets_res_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
 
@@ -187,28 +198,32 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(current_dir, "..")
-    
+
     if android_platform is not None:
-		sdk_root = check_environment_variables_sdk()
-		if android_platform.isdigit():
-			android_platform = 'android-'+android_platform
-		else:
-			print 'please use vaild android platform'
-			exit(1)
-    	  
+        sdk_root = check_environment_variables_sdk()
+        if android_platform.isdigit():
+            android_platform = 'android-'+android_platform
+        else:
+            print 'please use vaild android platform'
+            exit(1)
+
     if build_mode is None:
-    	  build_mode = 'debug'
+        build_mode = 'debug'
     elif build_mode != 'release':
         build_mode = 'debug'
-       
+
     app_android_root = ''
+
+    target_proj_path_map = {
+        "cpp-empty-test": "tests/cpp-empty-test/proj.android",
+        "cpp-tests": "tests/cpp-tests/proj.android",
+        "lua-empty-test": "tests/lua-empty-test/project/proj.android",
+        "lua-tests": "tests/lua-tests/project/proj.android"
+    }
+
     for target in build_targets:
-        if target == 'testcpp':
-            app_android_root = os.path.join(cocos_root, 'tests/proj.android')
-        elif target == 'testlua':
-            app_android_root = os.path.join(cocos_root, 'tests/test-lua/proj.android')
-        elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'tests/test-javascript/proj.android')
+        if target in target_proj_path_map:
+            app_android_root = os.path.join(cocos_root, target_proj_path_map[target])
         else:
             print 'unknown target: %s' % target
             continue
@@ -222,42 +237,31 @@ if __name__ == '__main__':
     #parse the params
     usage = """
     This script is mainy used for building tests built-in with cocos2d-x.
-    
-    Usage: %prog [options] target
 
-    Valid targets are: [testcpp|testlua|testjavascript]. You can combine them arbitrarily with a whitespace among two valid targets.
+    Usage: %prog [options] [cpp-empty-test|cpp-tests|lua-empty-test|lua-tests|cpp|lua|all]
 
-    You can use [all|cpp|lua|jsb], to build all the tests, or all the c++ tests, or all the Lua tests, or all the JavaScript tests respectevely.
-
-    cpp = ['testcpp']
-    lua = ['testlua']
-    jsb = ['testjavascript']
-    all  = cpp + lua + jsb  // be careful with the all target, it may took a very long time to compile all the projects, do it under your own risk.
-
-    If you are new to cocos2d-x, I recommend you start with testcpp, testlua or testjavascript.
+    If you are new to cocos2d-x, I recommend you start with cpp-empty-test, lua-empty-test.
 
     You can combine these targets like this:
 
-    //1. to build simplegame and assetsmanager 
-    python android-build.py -p 10 testcpp testlua
+    python android-build.py -p 10 cpp-empty-test lua-empty-test
 
-    //2. to build testlua and all the jsb tests 
-    python android-build.py -p 19 testlua jsb
 
     Note: You should install ant to generate apk while building the andriod tests. But it is optional. You can generate apk with eclipse.
     """
 
     parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--ndk", dest="ndk_build_param", 
+    parser.add_option("-n", "--ndk", dest="ndk_build_param",
     help='Parameter for ndk-build')
-    parser.add_option("-p", "--platform", dest="android_platform", 
+    parser.add_option("-p", "--platform", dest="android_platform",
     help='Parameter for android-update. Without the parameter,the script just build dynamic library for the projects. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
-    parser.add_option("-b", "--build", dest="build_mode", 
+    parser.add_option("-b", "--build", dest="build_mode",
     help='The build mode for java project,debug[default] or release. Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
 
     if len(args) == 0:
         parser.print_help()
+        sys.exit(1)
     else:
         try:
             build_samples(args, opts.ndk_build_param,opts.android_platform,opts.build_mode)

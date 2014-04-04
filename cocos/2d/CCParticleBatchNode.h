@@ -75,12 +75,6 @@ public:
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     static ParticleBatchNode* create(const std::string& fileImage, int capacity = kParticleDefaultCapacity);
 
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ParticleBatchNode();
-
     /** Inserts a child into the ParticleBatchNode */
     void insertChild(ParticleSystem* system, int index);
 
@@ -97,13 +91,13 @@ public:
     inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
     
     // Overrides
-    void visit();
+    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
 
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
-    virtual void draw(void) override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
     virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
     /**
@@ -120,18 +114,23 @@ public:
     */
     virtual const BlendFunc& getBlendFunc(void) const override;
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
     ParticleBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ParticleBatchNode();
     
     /** initializes the particle system with Texture2D, a capacity of particles */
     bool initWithTexture(Texture2D *tex, int capacity);
     
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     bool initWithFile(const std::string& fileImage, int capacity);
-
+    
 private:
     void updateAllAtlasIndexes();
     void increaseAtlasCapacityTo(ssize_t quantity);
@@ -142,7 +141,6 @@ private:
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;
 
-private:
     /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
     // quad command

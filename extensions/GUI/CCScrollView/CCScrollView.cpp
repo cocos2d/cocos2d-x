@@ -41,6 +41,7 @@ NS_CC_EXT_BEGIN
 #define BOUNCE_DURATION      0.15f
 #define INSET_RATIO          0.2f
 #define MOVE_INCH            7.0f/160.0f
+#define BOUNCE_BACK_FACTOR   0.35f
 
 static float convertDistanceFromPointToInch(float pointDis)
 {
@@ -237,7 +238,7 @@ void ScrollView::setContentOffsetInDuration(Point offset, float dt)
     
     scroll = MoveTo::create(dt, offset);
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
-    _container->runAction(Sequence::create(scroll, expire, NULL));
+    _container->runAction(Sequence::create(scroll, expire, nullptr));
     this->schedule(schedule_selector(ScrollView::performedAnimatedScroll));
 }
 
@@ -552,7 +553,7 @@ void ScrollView::onAfterDraw()
     }
 }
 
-void ScrollView::visit()
+void ScrollView::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
 {
 	// quick return if not visible
 	if (!isVisible())
@@ -560,9 +561,17 @@ void ScrollView::visit()
 		return;
     }
 
-	kmGLPushMatrix();
+    bool dirty = parentTransformUpdated || _transformUpdated;
+    if(dirty)
+        _modelViewTransform = this->transform(parentTransform);
+    _transformUpdated = false;
 
-	this->transform();
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the kmGL stack,
+    // but it is deprecated and your code should not rely on it
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+
     this->beforeDraw();
 
 	if (!_children.empty())
@@ -575,7 +584,7 @@ void ScrollView::visit()
 			Node *child = _children.at(i);
 			if ( child->getLocalZOrder() < 0 )
             {
-				child->visit();
+				child->visit(renderer, _modelViewTransform, dirty);
 			}
             else
             {
@@ -584,19 +593,19 @@ void ScrollView::visit()
 		}
 		
 		// this draw
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
         
 		// draw children zOrder >= 0
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			child->visit();
+			child->visit(renderer, _modelViewTransform, dirty);
 		}
         
 	}
     else
     {
-		this->draw();
+		this->draw(renderer, _modelViewTransform, dirty);
     }
 
     this->afterDraw();
@@ -671,14 +680,32 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
             if (_direction == Direction::VERTICAL)
             {
                 dis = moveDistance.y;
+                float pos = _container->getPosition().y;
+                if (!(minContainerOffset().y <= pos && pos <= maxContainerOffset().y)) {
+                    moveDistance.y *= BOUNCE_BACK_FACTOR;
+                }
             }
             else if (_direction == Direction::HORIZONTAL)
             {
                 dis = moveDistance.x;
+                float pos = _container->getPosition().x;
+                if (!(minContainerOffset().x <= pos && pos <= maxContainerOffset().x)) {
+                    moveDistance.x *= BOUNCE_BACK_FACTOR;
+                }
             }
             else
             {
                 dis = sqrtf(moveDistance.x*moveDistance.x + moveDistance.y*moveDistance.y);
+                
+                float pos = _container->getPosition().y;
+                if (!(minContainerOffset().y <= pos && pos <= maxContainerOffset().y)) {
+                    moveDistance.y *= BOUNCE_BACK_FACTOR;
+                }
+                
+                pos = _container->getPosition().x;
+                if (!(minContainerOffset().x <= pos && pos <= maxContainerOffset().x)) {
+                    moveDistance.x *= BOUNCE_BACK_FACTOR;
+                }
             }
 
             if (!_touchMoved && fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
@@ -695,7 +722,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
             _touchPoint = newPoint;
             _touchMoved = true;
             
-            if (frame.containsPoint(this->convertToWorldSpace(newPoint)))
+            if (_dragging)
             {
                 switch (_direction)
                 {

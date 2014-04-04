@@ -68,16 +68,27 @@ int Application::run()
     {
         return 0;
     }
-    GLView* glview = Director::getInstance()->getOpenGLView();
+    
+    long lastTime = 0L;
+    long curTime = 0L;
+    
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    
+    // Retain glview to avoid glview being released in the while loop
+    glview->retain();
     
     while (!glview->windowShouldClose())
     {
-        long iLastTime = getCurrentMillSecond();
-        Director::getInstance()->mainLoop();
+        lastTime = getCurrentMillSecond();
+        
+        director->mainLoop();
         glview->pollEvents();
-        long iCurTime = getCurrentMillSecond();
-        if (iCurTime-iLastTime<_animationInterval){
-            usleep(static_cast<useconds_t>((_animationInterval - iCurTime+iLastTime)*1000));
+
+        curTime = getCurrentMillSecond();
+        if (curTime - lastTime < _animationInterval)
+        {
+            usleep(static_cast<useconds_t>((_animationInterval - curTime + lastTime)*1000));
         }
     }
 
@@ -86,8 +97,14 @@ int Application::run()
     *  when we want to close the window, we should call Director::end();
     *  then call Director::mainLoop to do release of internal resources
     */
-    Director::getInstance()->end();
-    Director::getInstance()->mainLoop();
+    if (glview->isOpenGLReady())
+    {
+        director->end();
+        director->mainLoop();
+    }
+    
+    glview->release();
+    
     return true;
 }
 
@@ -115,6 +132,21 @@ Application* Application::getInstance()
 Application* Application::sharedApplication()
 {
     return Application::getInstance();
+}
+
+const char * Application::getCurrentLanguageCode()
+{
+    static char code[3]={0};
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+    NSString *currentLanguage = [languages objectAtIndex:0];
+    
+    // get the current language code.(such as English is "en", Chinese is "zh" and so on)
+    NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
+    NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
+    [languageCode getCString:code maxLength:2 encoding:NSASCIIStringEncoding];
+    code[2]='\0';
+    return code;
 }
 
 LanguageType Application::getCurrentLanguage()

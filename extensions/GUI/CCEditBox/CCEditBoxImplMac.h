@@ -107,6 +107,7 @@ public:
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
+    virtual void updatePosition(float dt) override;
     /**
      * @js NA
      * @lua NA

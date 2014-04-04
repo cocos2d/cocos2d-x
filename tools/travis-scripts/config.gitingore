@@ -1,0 +1,115 @@
+#This configure file use .gitingore rules.
+#So you can config this file like config .gitingore
+#
+
+# Ignore thumbnails created by windows
+Thumbs.db
+.git
+
+# ignore copy files
+/lib
+/linux-build
+/samples
+/templates
+/tests
+/plugin/samples
+/tools/cocos2d-console
+/tools/jenkins-scripts
+/tools/make-package
+/tools/travis-scripts
+
+.gitattributes
+.gitignore
+.gitmodules
+.travis.yml
+setup.py
+
+# Ignore files build by Visual Studio
+win32-msvc-vs201*-x86
+*.obj
+*.exe
+*.pdb
+*.aps
+*.vcproj.*.user
+*.vspscc
+*_i.c
+*.i
+*.icf
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug/
+[Dd]ebug.win32/
+*.sbr
+*.sdf
+obj/
+[Rr]elease/
+[Rr]elease.win32/
+_ReSharper*/
+[Tt]est[Rr]esult*
+ipch/
+*.opensdf
+
+# Ignore files build by ndk and eclipse
+libs/
+bin/
+obj/
+gen/
+assets/
+local.properties
+
+# Ignore python compiled files
+*.pyc
+
+# Ignore files build by airplay and marmalade
+build_*_xcode/
+build_*_vc10/
+
+# Ignore files build by xcode
+*.mode*v*
+*.pbxuser
+*.xcbkptlist
+*.xcscheme
+*.xcworkspacedata
+*.xcuserstate
+*.xccheckout
+xcschememanagement.plist
+.DS_Store
+._.*
+xcuserdata/
+DerivedData/
+
+# Ignore files built by AppCode
+.idea/
+
+# Ignore files built by bada
+.Simulator-Debug/
+.Target-Debug/
+.Target-Release/
+
+# Ignore files built by blackberry
+Simulator/
+Device-Debug/
+Device-Release/
+
+# Ignore vim swaps
+*.swp
+*.swo
+
+# Ignore files created by create_project.py
+/projects
+
+# CTags
+tags
+
+#include
+!/tools/cocos2d-console/console/bin/
+!/plugin-x/plugin-x_ios.xcworkspace/
+!/cocos/2d/platform/android/java/res/

@@ -45,7 +45,7 @@ install_nacl_sdk()
 
 if [ "$GEN_COCOS_FILES"x = "YES"x ]; then
     exit 0
-elif [ "$GEN_JSB"x = "YES"x ]; then
+elif [ "$GEN_BINDING"x = "YES"x ]; then
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         exit 0
     fi

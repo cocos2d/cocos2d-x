@@ -125,17 +125,18 @@ void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void Skeleton::draw()
+void Skeleton::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_customCommand);
 }
     
-void Skeleton::onDraw ()
+void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
-	CC_NODE_DRAW_SETUP();
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(transform);
 
     GL::blendFunc(blendFunc.src, blendFunc.dst);
 	Color3B color = getColor();
@@ -193,7 +194,7 @@ void Skeleton::onDraw ()
 
     if(debugBones || debugSlots) {
         kmGLPushMatrix();
-        kmGLLoadMatrix(&_modelViewTransform);
+        kmGLLoadMatrix(&transform);
 
         if (debugSlots) {
             // Slots.

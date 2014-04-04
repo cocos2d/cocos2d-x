@@ -44,11 +44,11 @@ PhysicsContact::PhysicsContact()
 , _eventCode(EventCode::NONE)
 , _info(nullptr)
 , _notificationEnable(true)
-, _begin(false)
 , _result(true)
 , _data(nullptr)
 , _contactInfo(nullptr)
 , _contactData(nullptr)
+, _preContactData(nullptr)
 {
     
 }
@@ -57,6 +57,7 @@ PhysicsContact::~PhysicsContact()
 {
     CC_SAFE_DELETE(_info);
     CC_SAFE_DELETE(_contactData);
+    CC_SAFE_DELETE(_preContactData);
 }
 
 PhysicsContact* PhysicsContact::construct(PhysicsShape* a, PhysicsShape* b)
@@ -96,6 +97,8 @@ void PhysicsContact::generateContactData()
     }
     
     cpArbiter* arb = static_cast<cpArbiter*>(_contactInfo);
+    CC_SAFE_DELETE(_preContactData);
+    _preContactData = _contactData;
     _contactData = new PhysicsContactData();
     _contactData->count = cpArbiterGetCount(arb);
     for (int i=0; i<_contactData->count && i<PhysicsContactData::POINT_MAX; ++i)
@@ -107,15 +110,13 @@ void PhysicsContact::generateContactData()
 }
 
 // PhysicsContactPreSolve implementation
-PhysicsContactPreSolve::PhysicsContactPreSolve(PhysicsContactData* data, void* contactInfo)
-: _preContactData(data)
-, _contactInfo(contactInfo)
+PhysicsContactPreSolve::PhysicsContactPreSolve(void* contactInfo)
+: _contactInfo(contactInfo)
 {
 }
 
 PhysicsContactPreSolve::~PhysicsContactPreSolve()
 {
-    CC_SAFE_DELETE(_preContactData);
 }
 
 float PhysicsContactPreSolve::getRestitution() const
@@ -216,18 +217,8 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             if (onContactBegin != nullptr
                 && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                contact->_begin = true;
                 contact->generateContactData();
-                
-                // the mask has high priority than _listener->onContactBegin.
-                // so if the mask test is false, the two bodies won't have collision.
-                if (ret)
-                {
-                    ret = onContactBegin(*contact);
-                }else
-                {
-                    onContactBegin(*contact);
-                }
+                ret = onContactBegin(*contact);
             }
             
             contact->setResult(ret);
@@ -240,8 +231,7 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             if (onContactPreSolve != nullptr
                 && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                PhysicsContactPreSolve solve(contact->_begin ? nullptr : contact->_contactData, contact->_contactInfo);
-                contact->_begin = false;
+                PhysicsContactPreSolve solve(contact->_contactInfo);
                 contact->generateContactData();
                 
                 ret = onContactPreSolve(*contact, solve);

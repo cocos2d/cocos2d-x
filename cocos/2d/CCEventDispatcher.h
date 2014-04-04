@@ -56,6 +56,8 @@ dispatched.
 class EventDispatcher : public Ref
 {
 public:
+    // Adds event listener
+    
     /** Adds a event listener for a specified event with the priority of scene graph.
      *  @param listener The listener of a specified event.
      *  @param node The priority of the listener is based on the draw order of this node.
@@ -76,22 +78,41 @@ public:
      It will use a fixed priority of 1.
      @return the generated event. Needed in order to remove the event from the dispather
      */
-    EventListenerCustom* addCustomEventListener(const std::string &eventName, std::function<void(EventCustom*)> callback);
+    EventListenerCustom* addCustomEventListener(const std::string &eventName, const std::function<void(EventCustom*)>& callback);
 
+    /////////////////////////////////////////////
+    
+    // Removes event listener
+    
     /** Remove a listener
      *  @param listener The specified event listener which needs to be removed.
      */
     void removeEventListener(EventListener* listener);
 
     /** Removes all listeners with the same event listener type */
-    void removeEventListeners(EventListener::Type listenerType);
+    void removeEventListenersForType(EventListener::Type listenerType);
 
+    /** Removes all listeners which are associated with the specified target. */
+    void removeEventListenersForTarget(Node* target, bool recursive = false);
+    
     /** Removes all custom listeners with the same event name */
     void removeCustomEventListeners(const std::string& customEventName);
 
     /** Removes all listeners */
     void removeAllEventListeners();
 
+    /////////////////////////////////////////////
+    
+    // Pauses / Resumes event listener
+    
+    /** Pauses all listeners which are associated the specified target. */
+    void pauseEventListenersForTarget(Node* target, bool recursive = false);
+    
+    /** Resumes all listeners which are associated the specified target. */
+    void resumeEventListenersForTarget(Node* target, bool recursive = false);
+    
+    /////////////////////////////////////////////
+    
     /** Sets listener's priority with fixed value. */
     void setPriority(EventListener* listener, int fixedPriority);
 
@@ -101,6 +122,8 @@ public:
     /** Checks whether dispatching events is enabled */
     bool isEnabled() const;
 
+    /////////////////////////////////////////////
+    
     /** Dispatches the event
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
@@ -110,25 +133,28 @@ public:
     /** Dispatches a Custom Event with a event name an optional user data */
     void dispatchCustomEvent(const std::string &eventName, void *optionalUserData = nullptr);
 
+    /////////////////////////////////////////////
+    
     /** Constructor of EventDispatcher */
     EventDispatcher();
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
+
+#if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
+    
+    /**
+     * To help track down event listener issues in debug builds.
+     * Verifies that the node has no event listeners associated with it when destroyed.
+     */
+    void debugCheckNodeHasNoEventListenersOnDestruction(Node* node);
+    
+#endif
 
 protected:
     friend class Node;
     
     /** Sets the dirty flag for a node. */
     void setDirtyForNode(Node* node);
-    
-    /** Notifys event dispatcher that the node has been paused. */
-    void pauseTarget(Node* node);
-    
-    /** Notifys event dispatcher that the node has been resumed. */
-    void resumeTarget(Node* node);
-    
-    /** Notifys event dispatcher that the node has been deleted. */
-    void cleanTarget(Node* node);
     
     /**
      *  The vector to store event listeners with scene graph based priority and fixed priority.
@@ -202,7 +228,7 @@ protected:
     void dissociateNodeAndEventListener(Node* node, EventListener* listener);
     
     /** Dispatches event to listeners with a specified listener type */
-    void dispatchEventToListeners(EventListenerVector* listeners, std::function<bool(EventListener*)> onEvent);
+    void dispatchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     
     /// Priority dirty flag
     enum class DirtyFlag

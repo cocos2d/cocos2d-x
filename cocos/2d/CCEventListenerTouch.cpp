@@ -61,6 +61,11 @@ void EventListenerTouchOneByOne::setSwallowTouches(bool needSwallow)
     _needSwallow = needSwallow;
 }
 
+bool EventListenerTouchOneByOne::isSwallowTouches()
+{
+    return _needSwallow;
+}
+
 EventListenerTouchOneByOne* EventListenerTouchOneByOne::create()
 {
     auto ret = new EventListenerTouchOneByOne();

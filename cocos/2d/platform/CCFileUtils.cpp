@@ -401,8 +401,13 @@ static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxm
         node->LinkEndChild(content);
         return node;
     }
+    
+    //object is bool
+    if (value.getType() == Value::Type::BOOLEAN) {
+		tinyxml2::XMLElement* node = doc->NewElement(value.asString().c_str());
+		return node;
+    }
 
-    //FIXME:XXX How to deal with Boolean ??
 
     // object is Array
     if (value.getType() == Value::Type::VECTOR)
@@ -628,7 +633,7 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
     return buffer;
 }
 
-std::string FileUtils::getNewFilename(const std::string &filename)
+std::string FileUtils::getNewFilename(const std::string &filename) const
 {
     std::string newFileName;
     
@@ -688,15 +693,16 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
     
 	std::string fullpath;
     
-    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt) {
-        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt) {
-            
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    {
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        {
             fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
             
             if (fullpath.length() > 0)
             {
                 // Using the filename passed in as key.
-                _fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
+                _fullPathCache.insert(std::make_pair(filename, fullpath));
                 return fullpath;
             }
         }
@@ -742,7 +748,11 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
 
 void FileUtils::addSearchResolutionsOrder(const std::string &order)
 {
-    _searchResolutionsOrderArray.push_back(order);
+    std::string resOrder = order;
+    if (!resOrder.empty() && resOrder[resOrder.length()-1] != '/')
+        resOrder.append("/");
+        
+    _searchResolutionsOrderArray.push_back(resOrder);
 }
 
 const std::vector<std::string>& FileUtils::getSearchResolutionsOrder()
@@ -839,10 +849,47 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
     ret += filename;
     
     // if the file doesn't exist, return an empty string
-    if (!isFileExist(ret)) {
+    if (!isFileExistInternal(ret)) {
         ret = "";
     }
     return ret;
+}
+
+bool FileUtils::isFileExist(const std::string& filename) const
+{
+    // If filename is absolute path, we don't need to consider 'search paths' and 'resolution orders'.
+    if (isAbsolutePath(filename))
+    {
+        return isFileExistInternal(filename);
+    }
+    
+    // Already Cached ?
+    auto cacheIter = _fullPathCache.find(filename);
+    if( cacheIter != _fullPathCache.end() )
+    {
+        return true;
+    }
+    
+    // Get the new file name.
+    const std::string newFilename( getNewFilename(filename) );
+    
+	std::string fullpath;
+    
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    {
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        {
+            fullpath = const_cast<FileUtils*>(this)->getPathForFilename(newFilename, *resolutionIt, *searchIt);
+            
+            if (!fullpath.empty())
+            {
+                // Using the filename passed in as key.
+                const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(filename, fullpath));
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 bool FileUtils::isAbsolutePath(const std::string& path) const

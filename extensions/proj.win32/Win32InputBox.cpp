@@ -210,7 +210,7 @@ INT_PTR CWin32InputBox::InputBox(
   param.szResult = szResult;
   param.nResultSize = nResultSize;
   param.bMultiline = bMultiLine;
-
+  param.hwndOwner = hwndParent;
   return InputBoxEx(&param);
 }
 

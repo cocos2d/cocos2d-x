@@ -38,11 +38,10 @@ NS_CC_BEGIN
 class EventListenerCustom;
 class QuadCommand;
 
-/** Class that knows how to sort the Commands.
- Since the commands that have z==0 are "pushed back" in
- the correct order, the only Commands that need to be sorted, 
- are the ones that have z <0 and z >0.
- And that is what this class does.
+/** Class that knows how to sort `RenderCommand` objects.
+ Since the commands that have `z == 0` are "pushed back" in
+ the correct order, the only `RenderCommand` objects that need to be sorted,
+ are the ones that have `z < 0` and `z > 0`.
 */
 class RenderQueue {
 
@@ -65,7 +64,9 @@ struct RenderStackElement
     ssize_t currentIndex;
 };
 
-/* Class reponsible for the rendering in cocos2d
+/* Class responsible for the rendering in.
+
+Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
  */
 class Renderer
 {
@@ -79,13 +80,22 @@ public:
     //TODO manage GLView inside Render itself
     void initGLView();
     
-    //TODO support multiple viewport
+    /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
+
+    /** Adds a `RenderComamnd` into the renderer specifying a particular render queue ID */
     void addCommand(RenderCommand* command, int renderQueue);
+
+    /** Pushes a group into the render queue */
     void pushGroup(int renderQueueID);
+
+    /** Pops a group from the render queue */
     void popGroup();
-    
+
+    /** Creates a render queue and returns its Id */
     int createRenderQueue();
+
+    /** Renders into the GLView all the queued `RenderCommand` objects */
     void render();
 
     /* returns the number of drawn batches in the last frame */
@@ -118,7 +128,7 @@ protected:
     std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
-    uint64_t _lastMaterialID;
+    uint32_t _lastMaterialID;
 
     std::vector<QuadCommand*> _batchedQuadCommands;
 

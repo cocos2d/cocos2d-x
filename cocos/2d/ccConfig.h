@@ -161,17 +161,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL    1
 #endif
 
-/** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
- Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
- It seems it is the recommend way, but it is much slower, so, enable it at your own risk
- 
- To enable set it to a value different than 0. Disabled by default.
-
- */
-#ifndef CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
-#endif
-
 /** @def CC_TEXTURE_ATLAS_USE_VAO
  By default, TextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).
  Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
@@ -251,6 +240,17 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_LABELATLAS_DEBUG_DRAW 0
 #endif
 
+/** @def CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
+ If enabled (in conjunction with assertion macros) will verify on Node destruction that the node being destroyed has no event
+ listeners still associated with it in the event dispatcher. This can be used to track down problems where the event dispatch 
+ system has dangling pointers to destroyed nodes.
+ 
+ Note: event listener verification will always be disabled in builds where assertions are disabled regardless of this setting.
+ */
+#ifndef CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
+#define CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS 0
+#endif
+
 /** @def CC_ENABLE_PROFILERS
  If enabled, will activate various profilers within cocos2d. This statistical data will be output to the console
  once per second showing average time (in milliseconds) required to execute the specific routine(s).
@@ -275,6 +275,16 @@ To enable set it to a value different than 0. Disabled by default.
 /** Enable Script binding */
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1
+#endif
+
+/** @def CC_CONSTRUCTOR_ACCESS
+ Indicate the init functions access modifier. If value equals to protected, then these functions are protected. 
+ If value equals to public, these functions are public
+ 
+ protected by default.
+ */
+#ifndef CC_CONSTRUCTOR_ACCESS
+#define CC_CONSTRUCTOR_ACCESS protected
 #endif
 
 #endif // __CCCONFIG_H__

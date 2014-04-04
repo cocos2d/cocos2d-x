@@ -524,7 +524,7 @@ EaseElasticIn* EaseElasticIn::clone() const
 
 void EaseElasticIn::update(float time)
 {
-    _inner->update(tweenfunc::elasticEaseIn(time, NULL));
+    _inner->update(tweenfunc::elasticEaseIn(time, _period));
 }
 
 EaseElastic* EaseElasticIn::reverse() const
@@ -570,7 +570,7 @@ EaseElasticOut* EaseElasticOut::clone() const
 
 void EaseElasticOut::update(float time)
 {
-    _inner->update(tweenfunc::elasticEaseOut(time, NULL));
+    _inner->update(tweenfunc::elasticEaseOut(time, _period));
 }
 
 EaseElastic* EaseElasticOut::reverse() const
@@ -616,7 +616,7 @@ EaseElasticInOut* EaseElasticInOut::clone() const
 
 void EaseElasticInOut::update(float time)
 {
-    _inner->update(tweenfunc::elasticEaseInOut(time, NULL));
+    _inner->update(tweenfunc::elasticEaseInOut(time, _period));
 }
 
 EaseElasticInOut* EaseElasticInOut::reverse() const

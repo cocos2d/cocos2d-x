@@ -41,8 +41,8 @@ bool CC_DLL cc_assert_script_compatible(const char *msg)
 
 NS_CC_BEGIN
 
-// #pragma mark -
-// #pragma mark ScriptHandlerEntry
+// 
+// // ScriptHandlerEntry
 
 ScriptHandlerEntry* ScriptHandlerEntry::create(int handler)
 {
@@ -61,8 +61,8 @@ ScriptHandlerEntry::~ScriptHandlerEntry(void)
     }
 }
 
-// #pragma mark -
-// #pragma mark SchedulerScriptHandlerEntry
+// 
+// // SchedulerScriptHandlerEntry
 
 SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int handler, float interval, bool paused)
 {
@@ -74,10 +74,8 @@ SchedulerScriptHandlerEntry* SchedulerScriptHandlerEntry::create(int handler, fl
 
 bool SchedulerScriptHandlerEntry::init(float interval, bool paused)
 {
-    _timer = new Timer();
+    _timer = new TimerScriptHandler();
     _timer->initWithScriptHandler(_handler, interval);
-    _timer->autorelease();
-    _timer->retain();
     _paused = paused;
     LUALOG("[LUA] ADD script schedule: %d, entryID: %d", _handler, _entryId);
     return true;
@@ -90,8 +88,8 @@ SchedulerScriptHandlerEntry::~SchedulerScriptHandlerEntry(void)
 }
 
 
-// #pragma mark -
-// #pragma mark TouchScriptHandlerEntry
+// 
+// // TouchScriptHandlerEntry
 
 TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int handler,
                                                              bool isMultiTouches,
@@ -117,8 +115,8 @@ bool TouchScriptHandlerEntry::init(bool isMultiTouches, int priority, bool swall
     return true;
 }
 
-// #pragma mark -
-// #pragma mark ScriptEngineManager
+// 
+// // ScriptEngineManager
 
 static ScriptEngineManager* s_pSharedScriptEngineManager = nullptr;
 

@@ -79,12 +79,16 @@ int Application::run()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
 
+    // Retain glview to avoid glview being released in the while loop
+    glview->retain();
+
     while(!glview->windowShouldClose())
     {
         QueryPerformanceCounter(&nNow);
         if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
             nLast.QuadPart = nNow.QuadPart;
+            
             director->mainLoop();
             glview->pollEvents();
         }
@@ -101,6 +105,7 @@ int Application::run()
         director->mainLoop();
         director = nullptr;
     }
+    glview->release();
     return true;
 }
 
@@ -183,6 +188,16 @@ LanguageType Application::getCurrentLanguage()
     }
 
     return ret;
+}
+
+const char * Application::getCurrentLanguageCode()
+{
+	LANGID lid = GetUserDefaultUILanguage();
+	const LCID locale_id = MAKELCID(lid, SORT_DEFAULT);
+	static char code[3] = { 0 };
+	GetLocaleInfoA(locale_id, LOCALE_SISO639LANGNAME, code, sizeof(code));
+	code[2] = '\0';
+	return code;
 }
 
 Application::Platform Application::getTargetPlatform()

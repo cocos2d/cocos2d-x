@@ -199,6 +199,18 @@ typedef struct
     
 } tImageInfo;
 
+static bool s_isIOS7OrHigher = false;
+
+static inline void lazyCheckIOS7()
+{
+    static bool isInited = false;
+    if (!isInited)
+    {
+        s_isIOS7OrHigher = [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
+        isInited = true;
+    }
+}
+
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
     NSArray *listItems = [str componentsSeparatedByString: @"\n"];
@@ -208,7 +220,6 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     : 0x7fffffff;
     textRect.height = constrainSize->height > 0 ? constrainSize->height
     : 0x7fffffff;
-    
     
     for (NSString *s in listItems)
     {
@@ -222,6 +233,9 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
         dim.height += tmp.height;
     }
     
+    dim.width = ceilf(dim.width);
+    dim.height = ceilf(dim.height);
+    
     return dim;
 }
 
@@ -230,8 +244,12 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
+
 static bool _initWithString(const char * text, cocos2d::Device::TextAlign align, const char * fontName, int size, tImageInfo* info)
 {
+    // lazy check whether it is iOS7 device
+    lazyCheckIOS7();
+    
     bool bRet = false;
     do
     {
@@ -315,15 +333,9 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
             shadowStrokePaddingY = ceilf(info->strokeSize);
         }
         
-        if ( info->hasShadow )
-        {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(info->shadowOffset.width));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(info->shadowOffset.height));
-        }
-        
         // add the padding (this could be 0 if no shadow and no stroke)
-        dim.width  += shadowStrokePaddingX;
-        dim.height += shadowStrokePaddingY;
+        dim.width  += shadowStrokePaddingX*2;
+        dim.height += shadowStrokePaddingY*2;
         
         
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * (int)(dim.width * dim.height * 4));
@@ -356,83 +368,68 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         
         // measure text size with specified font and determine the rectangle to draw text in
         unsigned uHoriFlag = (int)align & 0x0f;
-        UITextAlignment testAlign = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
-                                                      : (3 == uHoriFlag) ? UITextAlignmentCenter
-                                                      : UITextAlignmentLeft);
-        
-        
-        // take care of stroke if needed
-        if ( info->hasStroke )
-        {
-            CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-            CGContextSetRGBStrokeColor(context, info->strokeColorR, info->strokeColorG, info->strokeColorB, 1);
-            CGContextSetLineWidth(context, info->strokeSize);
-        }
-        
-        // take care of shadow if needed
-        if ( info->hasShadow )
-        {
-            CGSize offset;
-            offset.height = info->shadowOffset.height;
-            offset.width  = info->shadowOffset.width;
-            CGFloat shadowColorValues[] = {0, 0, 0, info->shadowOpacity};
-            CGColorRef shadowColor = CGColorCreate (colorSpace, shadowColorValues);
-            
-            CGContextSetShadowWithColor(context, offset, info->shadowBlur, shadowColor);
-            
-            CGColorRelease (shadowColor);
-        }
+        NSTextAlignment nsAlign = (2 == uHoriFlag) ? NSTextAlignmentRight
+                                                  : (3 == uHoriFlag) ? NSTextAlignmentCenter
+                                                  : NSTextAlignmentLeft;
+         
         
         CGColorSpaceRelease(colorSpace);
-        
-        
-        // normal fonts
-        //if( [font isKindOfClass:[UIFont class] ] )
-        //{
-        //    [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
-        //}
-        //else // ZFont class
-        //{
-        //    [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap
-        ////alignment:align];
-        //}
-        
-        
         
         // compute the rect used for rendering the text
         // based on wether shadows or stroke are enabled
         
-        float textOriginX  = 0.0;
-        float textOrigingY = 0.0;
+        float textOriginX  = 0;
+        float textOrigingY = startH;
         
-        float textWidth    = dim.width  - shadowStrokePaddingX;
-        float textHeight   = dim.height - shadowStrokePaddingY;
-        
-        
-        if ( info->shadowOffset.width < 0 )
-        {
-            textOriginX = shadowStrokePaddingX;
-        }
-        else
-        {
-            textOriginX = 0.0;
-        }
-        
-        if (info->shadowOffset.height > 0)
-        {
-            textOrigingY = startH;
-        }
-        else
-        {
-            textOrigingY = startH - shadowStrokePaddingY;
-        }
+        float textWidth    = dim.width;
+        float textHeight   = dim.height;
         
         CGRect rect = CGRectMake(textOriginX, textOrigingY, textWidth, textHeight);
         
-        CGContextBeginTransparencyLayerWithRect(context, rect, nullptr);
+        CGContextSetShouldSubpixelQuantizeFonts(context, false);
+        
+        CGContextBeginTransparencyLayerWithRect(context, rect, NULL);
+        
+        if ( info->hasStroke )
+        {
+            CGContextSetTextDrawingMode(context, kCGTextStroke);
+            
+            if(s_isIOS7OrHigher)
+            {
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.alignment = nsAlign;
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                [str drawInRect:rect withAttributes:@{
+                                                      NSFontAttributeName: font,
+                                                      NSStrokeWidthAttributeName: [NSNumber numberWithFloat: info->strokeSize / size * 100 ],
+                                                      NSForegroundColorAttributeName:[UIColor colorWithRed:info->tintColorR
+                                                                                                     green:info->tintColorG
+                                                                                                      blue:info->tintColorB
+                                                                                                     alpha:1.0f],
+                                                      NSParagraphStyleAttributeName:paragraphStyle,
+                                                      NSStrokeColorAttributeName: [UIColor colorWithRed:info->strokeColorR
+                                                                                                  green:info->strokeColorG
+                                                                                                   blue:info->strokeColorB
+                                                                                                  alpha:1.0f]
+                                                      }
+                 ];
+                
+                [paragraphStyle release];
+            }
+            else
+            {
+                CGContextSetRGBStrokeColor(context, info->strokeColorR, info->strokeColorG, info->strokeColorB, 1);
+                CGContextSetLineWidth(context, info->strokeSize);
+                
+                //original code that was not working in iOS 7
+                [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
+            }
+        }
+        
+        CGContextSetTextDrawingMode(context, kCGTextFill);
+        
         // actually draw the text in the context
-		// XXX: ios7 casting
-        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)testAlign];
+        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
         
         CGContextEndTransparencyLayer(context);
         

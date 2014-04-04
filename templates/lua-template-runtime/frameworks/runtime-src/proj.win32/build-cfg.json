@@ -1,0 +1,7 @@
+{
+    "copy_files" :[
+		"../../../src",
+		"../../../res",
+		"../../cocos2d-x/cocos/scripting/lua-bindings/script/"
+	]
+}

@@ -1,0 +1,5 @@
+{
+    "copy_files" :[
+		"../Resources/"
+	]
+}

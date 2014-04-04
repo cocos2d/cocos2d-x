@@ -37,7 +37,7 @@ NS_CC_BEGIN
 class CC_DLL FontAtlasCache
 {  
 public:
-    static FontAtlas * getFontAtlasTTF(const std::string& fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs = 0, bool useDistanceField = false);
+    static FontAtlas * getFontAtlasTTF(const TTFConfig & config);
     static FontAtlas * getFontAtlasFNT(const std::string& fontFileName, const Point& imageOffset = Point::ZERO);
 
     static FontAtlas * getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
@@ -45,6 +45,11 @@ public:
     static FontAtlas * getFontAtlasCharMap(const std::string& plistFile);
     
     static bool releaseFontAtlas(FontAtlas *atlas);
+
+    /** Removes cached data.
+     It will purge the textures atlas and if multiple texture exist in one FontAtlas.
+     */
+    static void purgeCachedData();
     
 private: 
     static std::string generateFontName(const std::string& fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField);

@@ -39,10 +39,6 @@ class PhysicsBodyInfo
 public:
     inline cpBody* getBody() const { return _body; }
     inline void setBody(cpBody* body) { _body = body; }
-    inline cpVect getPosition() const { return _position; }
-    inline void setPosition(cpVect& vect) { _position = vect; }
-    inline cpVect getRotation() const { return _rotation; }
-    inline void setRotation(cpVect& vect) { _rotation = vect; }
     
 private:
     PhysicsBodyInfo();
@@ -50,8 +46,6 @@ private:
     
 private:
     cpBody* _body;
-    cpVect _position;
-    cpVect _rotation;
     
     friend class PhysicsBody;
 };
