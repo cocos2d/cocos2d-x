@@ -36,35 +36,14 @@ namespace cocostudio
         WidgetReader::setPropsFromJsonDictionary(widget, options);
         
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
         
         ImageView* imageView = static_cast<ImageView*>(widget);
         
         const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
         int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-        switch (imageFileNameType)
-        {
-            case 0:
-            {
-                std::string tp_i = jsonPath;
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                const char* imageFileName_tp = nullptr;
-                if (imageFileName && (strcmp(imageFileName, "") != 0))
-                {
-                    imageFileName_tp = tp_i.append(imageFileName).c_str();
-                    imageView->loadTexture(imageFileName_tp);
-                }
-                break;
-            }
-            case 1:
-            {
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                imageView->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (TextureResType)imageFileNameType);
+        imageView->loadTexture(imageFileName, (TextureResType)imageFileNameType);
+        
         
         bool scale9EnableExist = DICTOOL->checkObjectExist_json(options, "scale9Enable");
         bool scale9Enable = false;

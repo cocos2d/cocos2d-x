@@ -56,14 +56,16 @@ public:
      */
     static TextBMFont* create();
     
+    static TextBMFont* create(const std::string& text, const std::string& filename);
+    
     /** init a bitmap font atlas with an initial string and the FNT file */
-    void setFntFile(const char* fileName);
+    void setFntFile(const std::string& fileName);
     
     /** set string value for labelbmfont*/
-    void setText(const char* value);
+    void setText(const std::string& value);
     
     /** get string value for labelbmfont*/
-    const char* getStringValue();
+    const std::string getStringValue();
     virtual void setAnchorPoint(const Point &pt) override;
     virtual const Size& getContentSize() const override;
     virtual Node* getVirtualRenderer() override;

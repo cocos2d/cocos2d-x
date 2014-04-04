@@ -55,19 +55,35 @@ public:
      * Allocates and initializes.
      */
     static Button* create();
+    
+    /**
+     * create a button with custom textures
+     * @normalImage normal state texture name
+     * @selectedImage  selected state texture name
+     * @disableImage disabled state texture name
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    static Button* create(const std::string& normalImage,
+                          const std::string& selectedImage = "",
+                          const std::string& disableImage = "",
+                          TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
 
     /**
      * Load textures for button.
      *
-     * @param normal    normal state texture.
+     * @param normal    normal state texture name.
      *
-     * @param selected    selected state texture.
+     * @param selected    selected state texture name.
      *
-     * @param disabled    dark state texture.
+     * @param disabled    disabled state texture name.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextures(const std::string& normal,
+                      const std::string& selected,
+                      const std::string& disabled = "",
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Load normal state texture for button.
@@ -76,7 +92,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureNormal(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureNormal(const std::string& normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Load selected state texture for button.
@@ -85,7 +101,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTexturePressed(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexturePressed(const std::string& selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Load dark state texture for button.
@@ -94,7 +110,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTextureDisabled(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureDisabled(const std::string& disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
@@ -169,11 +185,16 @@ public:
     const Color3B& getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
-    void setTitleFontName(const char* fontName);
-    const char* getTitleFontName() const;
+    void setTitleFontName(const std::string& fontName);
+    const std::string& getTitleFontName() const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
+    virtual bool init(const std::string& normalImage,
+                      const std::string& selectedImage = "",
+                      const std::string& disableImage = "",
+                      TextureResType texType = UI_TEX_TYPE_LOCAL);
+
 
 protected:
     virtual void initRenderer() override;
