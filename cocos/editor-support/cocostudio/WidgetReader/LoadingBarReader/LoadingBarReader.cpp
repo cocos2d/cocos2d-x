@@ -36,35 +36,13 @@ namespace cocostudio
         WidgetReader::setPropsFromJsonDictionary(widget, options);
         
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
-        
         LoadingBar* loadingBar = static_cast<LoadingBar*>(widget);
         
         const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "textureData");
         int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-        switch (imageFileNameType)
-        {
-            case 0:
-            {
-                std::string tp_i = jsonPath;
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                const char* imageFileName_tp = nullptr;
-                if (imageFileName && (strcmp(imageFileName, "") != 0))
-                {
-                    imageFileName_tp = tp_i.append(imageFileName).c_str();
-                    loadingBar->loadTexture(imageFileName_tp);
-                }
-                break;
-            }
-            case 1:
-            {
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                loadingBar->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (TextureResType)imageFileNameType);
+        loadingBar->loadTexture(imageFileName, (TextureResType)imageFileNameType);
+
         
         /* gui mark add load bar scale9 parse */
         bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
