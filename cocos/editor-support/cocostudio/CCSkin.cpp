@@ -201,7 +201,7 @@ void Skin::updateTransform()
     }
 }
 
-kmMat4 Skin::getNodeToWorldTransform() const
+Matrix Skin::getNodeToWorldTransform() const
 {
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(), _transform);
 }

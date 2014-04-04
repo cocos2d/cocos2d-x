@@ -112,7 +112,7 @@ public:
     virtual void setPosition(const Point &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
-    virtual const kmMat4& getNodeToParentTransform() const override;
+    virtual const Matrix& getNodeToParentTransform() const override;
 
 protected:
     const Point& getPosFromPhysics() const;

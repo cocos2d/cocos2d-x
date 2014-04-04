@@ -1323,7 +1323,7 @@ AffineTransform Node::getNodeToParentAffineTransform() const
     return ret;
 }
 
-const kmMat4& Node::getNodeToParentTransform() const
+const Matrix& Node::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -1477,12 +1477,14 @@ AffineTransform Node::getNodeToWorldAffineTransform() const
     return t;
 }
 
-kmMat4 Node::getNodeToWorldTransform() const
+Matrix Node::getNodeToWorldTransform() const
 {
-    kmMat4 t = this->getNodeToParentTransform();
+    Matrix t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != nullptr; p = p->getParent())
-        kmMat4Multiply(&t, &p->getNodeToParentTransform(), &t);
+    {
+        t = p->getNodeToParentTransform() * t;
+    }
 
     return t;
 }

@@ -385,7 +385,7 @@ kmMat4 Bone::getNodeToArmatureTransform() const
     return _worldTransform;
 }
 
-kmMat4 Bone::getNodeToWorldTransform() const
+Matrix Bone::getNodeToWorldTransform() const
 {
     return TransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
 }
