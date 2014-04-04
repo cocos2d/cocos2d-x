@@ -61,6 +61,8 @@ public:
      */
     static LoadingBar* create();
     
+    static LoadingBar* create(const char* textureName, int percentage = 0);
+    
     /**
      * Changes the progress direction of loadingbar.
      *
