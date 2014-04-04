@@ -117,11 +117,12 @@ void DemoFlower::onEnter()
     _emitter->setEmissionRate(50);
     _emitter->setRotation(-30);
     _emitter->setAngleVar(0);
-    _emitter->setAngle(60);
+    //_emitter->setAngle(60);
     _emitter->setRadialAccel(0);
     _emitter->setTangentialAccel(0);
     _emitter->retain();
     _background->addChild(_emitter, 10);
+    _background->setRotation(30);
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
 
     setEmitterPosition();

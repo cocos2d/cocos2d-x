@@ -777,12 +777,30 @@ void ParticleSystem::update(float dt)
 
                 Point    newPos;
 
-                if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
+                if (_positionType == PositionType::FREE)
                 {
                     Point diff = currentPosition - p->startPos;
                     Point worldPos = this->convertToWorldSpace(p->pos);
                     newPos = this->convertToNodeSpace(worldPos - diff);
-                } 
+                }
+                else if (_positionType == PositionType::RELATIVE)
+                {
+                    // transform to parent
+                    Point diff = currentPosition - p->startPos;
+                    kmMat4 tmp = getNodeToParentTransform();
+                    kmVec3 vec3 = {p->pos.x, p->pos.y, 0};
+                    kmVec3 transformed;
+                    kmVec3Transform(&transformed, &vec3, &tmp);
+                    
+                    Point parentPos = Point(transformed.x, transformed.y);
+                    newPos = parentPos - diff;
+                    
+                    //transform to this particle
+                    tmp = getParentToNodeTransform();
+                    kmVec3 vec3Back = {newPos.x, newPos.y, 0};
+                    kmVec3Transform(&transformed, &vec3Back, &tmp);
+                    newPos = Point(transformed.x, transformed.y);
+                }
                 else
                 {
                     newPos = p->pos;
