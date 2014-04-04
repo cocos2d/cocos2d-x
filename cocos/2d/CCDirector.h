@@ -94,8 +94,6 @@ enum class MATRIX_STACK_TYPE
     MATRIX_STACK_TEXTURE
 };
 
-kmMat4 matrixToKmMat4(const Matrix& mat);
-
 class CC_DLL Director : public Ref
 {
 private:

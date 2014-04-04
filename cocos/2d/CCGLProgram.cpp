@@ -633,14 +633,14 @@ void GLProgram::setUniformsForBuiltins()
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
 	kmMat4 matrixMV;
-    matrixMV = matrixToKmMat4(director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
+    matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     setUniformsForBuiltins(matrixMV);
 }
 
 void GLProgram::setUniformsForBuiltins(const kmMat4 &matrixMV)
 {
-    kmMat4 matrixP = matrixToKmMat4(Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION));
+    kmMat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);

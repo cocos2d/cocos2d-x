@@ -92,13 +92,6 @@ const char *Director::EVENT_AFTER_DRAW = "director_after_draw";
 const char *Director::EVENT_AFTER_VISIT = "director_after_visit";
 const char *Director::EVENT_AFTER_UPDATE = "director_after_update";
 
-kmMat4 matrixToKmMat4(const Matrix& mat)
-{
-    kmMat4 result;
-    kmMat4Fill(&result, mat.m);
-    return result;
-}
-
 Director* Director::getInstance()
 {
     if (!s_SharedDirector)
@@ -730,7 +723,7 @@ static void GLToClipTransform(kmMat4 *transformOut)
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
 	kmMat4 projection;
-    projection = matrixToKmMat4(director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION));
+    projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
@@ -738,7 +731,7 @@ static void GLToClipTransform(kmMat4 *transformOut)
 #endif
 
 	kmMat4 modelview;
-    modelview = matrixToKmMat4(director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
+    modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 

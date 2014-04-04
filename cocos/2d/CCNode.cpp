@@ -934,7 +934,7 @@ void Node::visit()
 {
     auto renderer = Director::getInstance()->getRenderer();
     Matrix parentTransform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    visit(renderer, matrixToKmMat4(parentTransform), true);
+    visit(renderer, parentTransform, true);
 }
 
 void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
