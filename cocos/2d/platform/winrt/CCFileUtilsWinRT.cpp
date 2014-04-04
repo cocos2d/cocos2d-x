@@ -100,7 +100,7 @@ std::string CCFileUtilsWinRT::getFullPathForDirectoryAndFilename(const std::stri
     return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
 }
 
-bool CCFileUtilsWinRT::isFileExist(const std::string& strFilePath) const
+bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 {
     bool ret = false;
     FILE * pf = 0;

@@ -40,12 +40,29 @@ using namespace cocos2d::extension;
     
 void GLNode::draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated)
 {
+    _renderCmd.init(_globalZOrder);
+    _renderCmd.func = CC_CALLBACK_0(GLNode::onDraw, this, transform, transformUpdated);
+    renderer->addCommand(&_renderCmd);
+}
+
+void GLNode::onDraw(const kmMat4 &transform, bool transformUpdated)
+{
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
     if (0 != handler)
     {
-            CommonScriptData data(handler,"");
-            ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        lua_State* L = stack->getLuaState();
+        
+        lua_newtable(L);
+        for (int i =0; i < 16; i++)
+        {
+            stack->pushFloat(transform.mat[i]);
+            lua_rawseti(L, -2, i + 1);
+        }
+        stack->pushBoolean(transformUpdated);
+        stack->executeFunctionByHandler(handler, 2);
+        stack->clean();
     }
 }
 
