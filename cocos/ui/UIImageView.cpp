@@ -79,15 +79,15 @@ ImageView* ImageView::create()
     
 bool ImageView::init()
 {
-    bool bRet = true;
+    bool ret = true;
     do {
         if (!Widget::init()) {
-            bRet = false;
+            ret = false;
             break;
         }
         _imageTexType = UI_TEX_TYPE_LOCAL;
     } while (0);
-    return bRet;
+    return ret;
 }
     
 bool ImageView::init(const std::string &imageFileName, TextureResType texType)

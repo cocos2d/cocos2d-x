@@ -105,10 +105,10 @@ bool CheckBox::init(const std::string& backGround,
                     const std::string& frontCrossDisabled,
                     TextureResType texType)
 {
-    bool bRet = true;
+    bool ret = true;
     do {
         if (!Widget::init()) {
-            bRet = false;
+            ret = false;
             break;
         }
         
@@ -116,7 +116,7 @@ bool CheckBox::init(const std::string& backGround,
         setTouchEnabled(true);
         loadTextures(backGround, backGroundSeleted, cross, backGroundDisabled, frontCrossDisabled,texType);
     } while (0);
-    return bRet;
+    return ret;
 }
 
 bool CheckBox::init()
