@@ -23,7 +23,7 @@ enum
 // PongScene
 //
 //------------------------------------------------------------------
-PongScene::PongScene()
+void PongScene::onEnter()
 {
     auto pongLayer = new PongLayer();//PongLayer::create();
     addChild(pongLayer);

@@ -9,9 +9,10 @@ USING_NS_CC;
 class PongScene : public TestScene
 {
 public:
-    PongScene();
+//    PongScene();
 
     virtual void runThisTest();
+    virtual void onEnter() override;
 };
 
 class Ball;
