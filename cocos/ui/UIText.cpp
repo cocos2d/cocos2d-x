@@ -71,8 +71,8 @@ bool Text::init()
 
 void Text::initRenderer()
 {
-    _labelRenderer = LabelTTF::create();
-    Node::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
+    _labelRenderer = Label::create();
+    addProtectedChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
 void Text::setText(const std::string& text)
@@ -117,7 +117,7 @@ const std::string& Text::getFontName()
 
 void Text::setTextAreaSize(const Size &size)
 {
-    _labelRenderer->setDimensions(size);
+    _labelRenderer->setDimensions(size.width,size.height);
     labelScaleChangedWithSize();
 }
     
@@ -164,7 +164,8 @@ void Text::onPressStateChangedToNormal()
     {
         return;
     }
-    _labelRenderer->setScale(_normalScaleValueX, _normalScaleValueY);
+    _labelRenderer->setScaleX(_normalScaleValueX);
+    _labelRenderer->setScaleY(_normalScaleValueY);
 }
 
 void Text::onPressStateChangedToPressed()
@@ -173,7 +174,8 @@ void Text::onPressStateChangedToPressed()
     {
         return;
     }
-    _labelRenderer->setScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
+    _labelRenderer->setScaleX(_normalScaleValueX + _onSelectedScaleOffset);
+    _labelRenderer->setScaleY(_normalScaleValueY + _onSelectedScaleOffset);
 }
 
 void Text::onPressStateChangedToDisabled()
@@ -183,13 +185,26 @@ void Text::onPressStateChangedToDisabled()
 
 void Text::updateFlippedX()
 {
-    _labelRenderer->setFlippedX(_flippedX);
-
+     if (_flippedX)
+    {
+        _labelRenderer->setScaleX(-1.0f);
+    } 
+    else
+    {
+        _labelRenderer->setScaleX(1.0f);
+    }
 }
     
 void Text::updateFlippedY()
 {
-    _labelRenderer->setFlippedY(_flippedY);
+    if (_flippedY)
+    {
+        _labelRenderer->setScaleY(-1.0f);
+    } 
+    else
+    {
+        _labelRenderer->setScaleY(1.0f);
+    }
 }
 
 void Text::setAnchorPoint(const Point &pt)
@@ -218,14 +233,14 @@ void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _labelRenderer->setDimensions(Size::ZERO);
+        _labelRenderer->setDimensions(0,0);
         _labelRenderer->setScale(1.0f);
         _size = _labelRenderer->getContentSize();
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
     else
     {
-        _labelRenderer->setDimensions(_size);
+        _labelRenderer->setDimensions(_size.width,_size.height);
         Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {

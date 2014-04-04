@@ -1,0 +1,1244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="base_nodes">
+      <UniqueIdentifier>{cc64f5ad-2234-494c-9c51-b7a20c8887aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effects">
+      <UniqueIdentifier>{736cf4ab-e0d6-40ba-912a-b062d28d318a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="actions">
+      <UniqueIdentifier>{1c7c61b8-3d36-4ba0-a87c-457eb4c782d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{0b3a64bd-79fa-476a-a461-6b97e5072453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="label_nodes">
+      <UniqueIdentifier>{e455af5e-da09-4f41-b79f-df4dd311820d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="layers_scenes_transitions_nodes">
+      <UniqueIdentifier>{206bd96b-f80e-4722-8675-d7c6ff9b3639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="menu_nodes">
+      <UniqueIdentifier>{075492ba-08bc-404c-92da-32029797a600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="misc_nodes">
+      <UniqueIdentifier>{41abe422-1602-4fe0-ac1c-6b04a14c1abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="particle_nodes">
+      <UniqueIdentifier>{8bf0f517-2ac3-4fc3-a1ad-999d9ea103cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{926fc31c-8742-4984-9940-c972dd02fc8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sprite_nodes">
+      <UniqueIdentifier>{755e5282-111e-46a5-9169-7c12b37f5ffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support">
+      <UniqueIdentifier>{d94bbf20-8de9-49a7-ae20-6a1140cf633b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\data_support">
+      <UniqueIdentifier>{4a64789e-cc8d-4f84-a869-e6dae2e0d58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\image_support">
+      <UniqueIdentifier>{bb98a889-9a48-4e31-af2f-117f14da388a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\zip_support">
+      <UniqueIdentifier>{fdea327e-b905-47db-8c33-b70d7866166b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="textures">
+      <UniqueIdentifier>{46c8d130-b8b5-47f5-a063-ca700e1c32cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tilemap_parallax_nodes">
+      <UniqueIdentifier>{f2671200-b2d8-4d2e-9728-06719cf6f835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="text_input_node">
+      <UniqueIdentifier>{535c04b0-fe2b-44c9-9a8c-9029e2b6de5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script_support">
+      <UniqueIdentifier>{5b082c5c-d396-43ca-b3b1-997d0f6247d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath">
+      <UniqueIdentifier>{7751500e-ac9e-4604-a96d-670b30b7d8bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{163895ae-8a8e-46bf-bdf2-98bb2c1347fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="draw_nodes">
+      <UniqueIdentifier>{1179d205-d065-49f0-8457-bc4c3f1d0cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\tinyxml2">
+      <UniqueIdentifier>{cc25bb83-527d-4218-8d68-ebf963ce7698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\user_default">
+      <UniqueIdentifier>{c45b97e8-fa1f-4e58-8ec5-d46371c2dd26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\component">
+      <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\etc">
+      <UniqueIdentifier>{47fda93e-6eb4-4abc-b5bc-725bf667a395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="event_dispatcher">
+      <UniqueIdentifier>{3ff2746c-a91b-4b86-93b7-43a9ec14825b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{08593631-5bf5-46aa-9436-62595c4f7bf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\chipmunk">
+      <UniqueIdentifier>{aeadfa95-9c89-4212-98ae-89ad57db596a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\include">
+      <UniqueIdentifier>{05e27e68-7574-4a8b-af68-553dd3bafdfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\src">
+      <UniqueIdentifier>{b797075f-7437-46d5-b4ee-2aa2c108e98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\src\GL">
+      <UniqueIdentifier>{c755509d-1610-4e6c-b01b-e01d4d0de46e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{aec8225f-81a7-4213-b97b-7004d5535398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{cba0f362-878c-438b-ad0f-43d287516357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\winrt">
+      <UniqueIdentifier>{66fe0560-cca4-4b0c-a192-44aca8ad82af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kazmath\include\GL">
+      <UniqueIdentifier>{7c71abeb-8b4b-4be8-a23c-e32fedc65fc9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\physics\CCPhysicsBody.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\CCPhysicsContact.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\CCPhysicsJoint.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\CCPhysicsShape.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\CCPhysicsWorld.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CCNode.cpp">
+      <Filter>base_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCAtlasNode.cpp">
+      <Filter>base_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCGrabber.cpp">
+      <Filter>effects</Filter>
+    </ClCompile>
+    <ClCompile Include="CCGrid.cpp">
+      <Filter>effects</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventDispatcher.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventKeyboard.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventListener.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventListenerAcceleration.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventListenerCustom.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventListenerKeyboard.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventListenerTouch.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventTouch.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEvent.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventAcceleration.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventCustom.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTouch.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\GL\mat4stack.c">
+      <Filter>kazmath\src\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\GL\matrix.c">
+      <Filter>kazmath\src\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLayer.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCScene.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTransition.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTransitionPageTurn.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTransitionProgress.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCMenuItem.cpp">
+      <Filter>menu_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCMenu.cpp">
+      <Filter>menu_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCClippingNode.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCMotionStreak.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCProgressTimer.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCRenderTexture.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCParticleBatchNode.cpp">
+      <Filter>particle_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCParticleExamples.cpp">
+      <Filter>particle_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCParticleSystem.cpp">
+      <Filter>particle_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCParticleSystemQuad.cpp">
+      <Filter>particle_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCScriptSupport.cpp">
+      <Filter>script_support</Filter>
+    </ClCompile>
+    <ClCompile Include="CCAction.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionCamera.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionCatmullRom.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionEase.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionGrid.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionGrid3D.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionInstant.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionInterval.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionManager.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionPageTurn3D.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionProgressTimer.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionTiledGrid.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCActionTween.cpp">
+      <Filter>actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CCDrawNode.cpp">
+      <Filter>draw_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCDrawingPrimitives.cpp">
+      <Filter>draw_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFont.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFontAtlas.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFontAtlasCache.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFontFNT.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFontFreeType.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLabel.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLabelAtlas.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLabelBMFont.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLabelTextFormatter.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLabelTTF.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\etc1.cpp">
+      <Filter>platform\etc</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CCGLViewProtocol.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CCFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CCSAXParser.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CCThread.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\atitc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\s3tc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="CCGLProgram.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ccGLStateCache.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="CCShaderCache.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ccShaders.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSpriteBatchNode.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSpriteFrame.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSpriteFrameCache.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSprite.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCAnimation.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCAnimationCache.cpp">
+      <Filter>sprite_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCIMEDispatcher.cpp">
+      <Filter>text_input_node</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTextFieldTTF.cpp">
+      <Filter>text_input_node</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTexture2D.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTextureAtlas.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTextureCache.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTMXLayer.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTMXObjectGroup.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTMXTiledMap.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTMXXMLParser.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTileMapAtlas.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCParallaxNode.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCConfiguration.cpp" />
+    <ClCompile Include="CCDeprecated.cpp" />
+    <ClCompile Include="CCDirector.cpp" />
+    <ClCompile Include="ccFPSImages.c" />
+    <ClCompile Include="CCScheduler.cpp" />
+    <ClCompile Include="ccTypes.cpp" />
+    <ClCompile Include="cocos2d.cpp" />
+    <ClCompile Include="base64.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="CCNotificationCenter.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="CCProfiling.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="ccUTF8.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="CCVertex.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformUtils.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="CCComponent.cpp">
+      <Filter>support\component</Filter>
+    </ClCompile>
+    <ClCompile Include="CCComponentContainer.cpp">
+      <Filter>support\component</Filter>
+    </ClCompile>
+    <ClCompile Include="ccCArray.cpp">
+      <Filter>support\data_support</Filter>
+    </ClCompile>
+    <ClCompile Include="TGAlib.cpp">
+      <Filter>support\image_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp">
+      <Filter>support\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="CCUserDefault.cpp">
+      <Filter>support\user_default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\unzip\ioapi.cpp">
+      <Filter>support\zip_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\unzip\unzip.cpp">
+      <Filter>support\zip_support</Filter>
+    </ClCompile>
+    <ClCompile Include="ZipUtils.cpp">
+      <Filter>support\zip_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCAffineTransform.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCArray.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCAutoreleasePool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCData.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCDataVisitor.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCDictionary.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCGeometry.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCNS.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCRef.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCSet.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCString.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="ccUtils.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventListenerMouse.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="CCEventMouse.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
+      <Filter>physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCValue.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="CCNodeGrid.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCCustomCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCFrustum.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCGroupCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCMaterialManager.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCQuadCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderMaterial.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCBatchCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFontCharMap.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\CCImage.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTweenFunction.cpp" />
+    <ClCompile Include="platform\winrt\CCApplication.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCCommon.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCDevice.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCFileUtilsWinRT.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCFreeTypeFont.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCGLView.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCPrecompiledShaders.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCPThreadWinRT.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCStdC.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\CCWinRTUtils.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\DirectXBase.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\sha1.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCConsole.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\aabb.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\mat3.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\mat4.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\neon_matrix_impl.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\plane.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\ray2.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\utility.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec2.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec3.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec4.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\ray3.c">
+      <Filter>kazmath\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\physics\CCPhysicsBody.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\CCPhysicsContact.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\CCPhysicsJoint.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\CCPhysicsShape.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\CCPhysicsWorld.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CCNode.h">
+      <Filter>base_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCAtlasNode.h">
+      <Filter>base_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCGrabber.h">
+      <Filter>effects</Filter>
+    </ClInclude>
+    <ClInclude Include="CCGrid.h">
+      <Filter>effects</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventDispatcher.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventKeyboard.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventListener.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventListenerAcceleration.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventListenerCustom.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventListenerKeyboard.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventListenerTouch.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventTouch.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEvent.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventAcceleration.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventCustom.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTouch.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="ccConfig.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="CCDeprecated.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventType.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="ccMacros.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="CCProtocols.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="ccTypes.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="cocos2d.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\GL\mat4stack.h">
+      <Filter>kazmath\include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\GL\matrix.h">
+      <Filter>kazmath\include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLayer.h">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCScene.h">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTransition.h">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTransitionPageTurn.h">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTransitionProgress.h">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCMenu.h">
+      <Filter>menu_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCMenuItem.h">
+      <Filter>menu_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCClippingNode.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCMotionStreak.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCProgressTimer.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCRenderTexture.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCParticleBatchNode.h">
+      <Filter>particle_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCParticleExamples.h">
+      <Filter>particle_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCParticleSystem.h">
+      <Filter>particle_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCParticleSystemQuad.h">
+      <Filter>particle_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCScriptSupport.h">
+      <Filter>script_support</Filter>
+    </ClInclude>
+    <ClInclude Include="CCAction.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionCamera.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionCatmullRom.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionEase.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionGrid.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionGrid3D.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionInstant.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionInterval.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionManager.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionPageTurn3D.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionProgressTimer.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionTiledGrid.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCActionTween.h">
+      <Filter>actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CCDrawNode.h">
+      <Filter>draw_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCDrawingPrimitives.h">
+      <Filter>draw_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFont.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontAtlas.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontAtlasCache.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontFNT.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontFreeType.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLabel.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLabelAtlas.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLabelBMFont.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLabelTextFormatter.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLabelTTF.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\etc1.h">
+      <Filter>platform\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCApplicationProtocol.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCCommon.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCDevice.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCGLViewProtocol.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCFileUtils.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCImage.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCSAXParser.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\CCThread.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\atitc.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCPlatformConfig.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCPlatformMacros.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\s3tc.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_Position_uColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_Position_uColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionColorLengthTexture_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionColorLengthTexture_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTexture_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTexture_uColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTexture_uColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTexture_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTextureA8Color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTextureA8Color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTextureColor_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTextureColor_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShader_PositionTextureColorAlphaTest_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="CCGLProgram.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccGLStateCache.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="CCShaderCache.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShaderEx_SwitchMask_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ccShaders.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSpriteBatchNode.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSpriteFrame.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSpriteFrameCache.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSprite.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCAnimation.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCAnimationCache.h">
+      <Filter>sprite_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCIMEDelegate.h">
+      <Filter>text_input_node</Filter>
+    </ClInclude>
+    <ClInclude Include="CCIMEDispatcher.h">
+      <Filter>text_input_node</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTextFieldTTF.h">
+      <Filter>text_input_node</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTexture2D.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTextureAtlas.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTextureCache.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTMXLayer.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTMXObjectGroup.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTMXTiledMap.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTMXXMLParser.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTileMapAtlas.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCParallaxNode.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCConfiguration.h" />
+    <ClInclude Include="CCDirector.h" />
+    <ClInclude Include="ccFPSImages.h" />
+    <ClInclude Include="CCScheduler.h" />
+    <ClInclude Include="base64.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="CCNotificationCenter.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="CCProfiling.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="ccUTF8.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="ccUtils.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="CCVertex.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformUtils.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="CCComponent.h">
+      <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="CCComponentContainer.h">
+      <Filter>support\component</Filter>
+    </ClInclude>
+    <ClInclude Include="ccCArray.h">
+      <Filter>support\data_support</Filter>
+    </ClInclude>
+    <ClInclude Include="utlist.h">
+      <Filter>support\data_support</Filter>
+    </ClInclude>
+    <ClInclude Include="uthash.h">
+      <Filter>support\data_support</Filter>
+    </ClInclude>
+    <ClInclude Include="TGAlib.h">
+      <Filter>support\image_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h">
+      <Filter>support\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="CCUserDefault.h">
+      <Filter>support\user_default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\unzip\ioapi.h">
+      <Filter>support\zip_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\unzip\unzip.h">
+      <Filter>support\zip_support</Filter>
+    </ClInclude>
+    <ClInclude Include="ZipUtils.h">
+      <Filter>support\zip_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCAffineTransform.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCArray.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCAutoreleasePool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCBool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCData.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCDataVisitor.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCDictionary.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCDouble.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCFloat.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCGeometry.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCInteger.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCNS.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCRef.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCSet.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCString.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventListenerMouse.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="CCEventMouse.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
+      <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCMap.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCValue.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCVector.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCNodeGrid.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCCustomCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCFrustum.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCGroupCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCMaterialManager.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCQuadCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommandPool.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderMaterial.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCBatchCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontCharMap.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTweenFunction.h" />
+    <ClInclude Include="platform\winrt\CCApplication.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCFileUtilsWinRT.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCFreeTypeFont.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCGL.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCGL_Angle.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCGLView.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCPlatformDefine.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCPrecompiledShaders.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCPThreadWinRT.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCStdC.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\CCWinRTUtils.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\DirectXBase.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\DirectXHelper.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\sha1.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCConsole.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\kazmath.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\aabb.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\mat3.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\mat4.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\neon_matrix_impl.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\plane.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\quaternion.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\ray2.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\utility.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\vec2.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\vec3.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\vec4.h">
+      <Filter>kazmath\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\kazmath\kazmath\ray3.h">
+      <Filter>kazmath\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -40,7 +40,7 @@ bool UIPageViewTest_Editor::init()
                                        left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
-        left_button->setZOrder(_layout->getZOrder() + 1);
+        left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         _layout->addChild(left_button);
         
         Button* right_button = Button::create();
@@ -48,7 +48,7 @@ bool UIPageViewTest_Editor::init()
         right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
                                         right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
-        right_button->setZOrder(_layout->getZOrder() + 1);
+        right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::nextCallback));
         _layout->addChild(right_button);
         

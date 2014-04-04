@@ -103,6 +103,9 @@
     <Filter Include="kazmath\GL">
       <UniqueIdentifier>{465965df-dc31-471a-887f-e430125b8ba0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xxhash">
+      <UniqueIdentifier>{b4e2b1e5-2d79-44a3-af45-728d47b7bdb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -589,6 +592,9 @@
     </ClCompile>
     <ClCompile Include="..\math\kazmath\kazmath\vec4.c">
       <Filter>kazmath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\xxhash\xxhash.c">
+      <Filter>xxhash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1193,6 +1199,9 @@
     </ClInclude>
     <ClInclude Include="..\math\kazmath\kazmath\vec4.h">
       <Filter>kazmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\xxhash\xxhash.h">
+      <Filter>xxhash</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -18,9 +18,9 @@ USING_NS_CC_EXT;
 using namespace ui;
 using namespace cocostudio;
 
-#pragma mark -
-#pragma mark CustomParticleWidgetLayer
-#pragma mark -
+
+// CustomParticleWidgetLayer
+
 
 void CustomParticleWidgetLayer::onEnter()
 {
@@ -38,9 +38,9 @@ void CustomParticleWidgetLayer::onEnter()
     addChild(custom, 10, -1);
 }
 
-#pragma mark -
-#pragma mark CustomImageScene
-#pragma mark -
+
+// CustomImageScene
+
 
 void CustomParticleWidgetScene::onEnter()
 {
@@ -50,7 +50,7 @@ void CustomParticleWidgetScene::onEnter()
     addChild(pLayer);
     pLayer->release();
     
-    LabelTTF* label = LabelTTF::create("Back", "Arial", 20);
+    auto label = Label::create("Back", "fonts/arial.ttf", 20);
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CustomParticleWidgetScene::BackCallback, this));
     

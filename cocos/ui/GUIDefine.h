@@ -30,9 +30,9 @@
 #include <string>
 #include "cocostudio/ObjectFactory.h"
 
-//#pragma mark -
-//#pragma mark Widget macro
-//#pragma mark -
+//
+//// Widget macro
+//
 
 #define DECLARE_CLASS_GUI_INFO \
     public: \
@@ -50,9 +50,9 @@
     cocostudio::ObjectFactory::TInfo(#className, &className::createInstance) \
 
 
-//#pragma mark -
-//#pragma mark Reader macro
-//#pragma mark -
+//
+//// Reader macro
+//
 
 #define DECLARE_CLASS_WIDGET_READER_INFO \
     public: \

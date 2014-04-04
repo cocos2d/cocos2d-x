@@ -6,11 +6,11 @@
 class IntervalLayer : public Layer
 {
 protected:
-    LabelBMFont*    _label0;
-    LabelBMFont*    _label1;
-    LabelBMFont*    _label2;
-    LabelBMFont*    _label3;
-    LabelBMFont*    _label4;
+    Label*    _label0;
+    Label*    _label1;
+    Label*    _label2;
+    Label*    _label3;
+    Label*    _label4;
     
     float        _time0, _time1, _time2, _time3, _time4;
 

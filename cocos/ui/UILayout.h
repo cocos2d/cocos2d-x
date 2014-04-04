@@ -55,6 +55,8 @@ typedef enum {
  *  @js NA
  *  @lua NA
  */
+class LayoutExecutant;
+    
 class Layout : public Widget
 {
     
@@ -299,6 +301,7 @@ protected:
     void updateBackGroundImageColor();
     void updateBackGroundImageOpacity();
     void updateBackGroundImageRGBA();
+    LayoutExecutant* createCurrentLayoutExecutant();
 protected:
     bool _clippingEnabled;
     
@@ -345,6 +348,8 @@ protected:
     
     Color3B _backGroundImageColor;
     GLubyte _backGroundImageOpacity;
+    
+    LayoutExecutant* _curLayoutExecutant;
     
     GLint _mask_layer_le;
     GroupCommand _groupCommand;

@@ -1,0 +1,832 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2330EDF4-5596-4B53-8BA5-158DDDE713D9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>libcocos2d</ProjectName>
+    <RootNamespace>cocos2d-x.win32</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d_winrt_headers.props" />
+    <Import Project="cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d_winrt_headers.props" />
+    <Import Project="cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d_winrt_headers.props" />
+    <Import Project="cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d_winrt_headers.props" />
+    <Import Project="cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d_winrt_headers.props" />
+    <Import Project="cocos2d_winrt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="cocos2d_winrt_headers.props" />
+    <Import Project="cocos2d_winrt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)\winrt$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>winrt\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)\winrt$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>winrt\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)\winrt$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>winrt\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)\winrt$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>winrt\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)\winrt$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>winrt\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)\winrt$(Configuration)\$(MSBuildProjectName)\</OutDir>
+    <IntDir>winrt\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINRT;_DEBUG;_LIB;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINRT;NDEBUG;_LIB;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINRT;_DEBUG;_LIB;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINRT;NDEBUG;_LIB;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINRT;_DEBUG;_LIB;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINRT;NDEBUG;_LIB;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
+    <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
+    <ClCompile Include="..\..\external\unzip\unzip.cpp" />
+    <ClCompile Include="..\base\atitc.cpp" />
+    <ClCompile Include="..\base\CCAffineTransform.cpp" />
+    <ClCompile Include="..\base\CCArray.cpp" />
+    <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\base\CCConsole.cpp" />
+    <ClCompile Include="..\base\CCData.cpp" />
+    <ClCompile Include="..\base\CCDataVisitor.cpp" />
+    <ClCompile Include="..\base\CCDictionary.cpp" />
+    <ClCompile Include="..\base\CCGeometry.cpp" />
+    <ClCompile Include="..\base\CCNS.cpp" />
+    <ClCompile Include="..\base\CCRef.cpp" />
+    <ClCompile Include="..\base\CCSet.cpp" />
+    <ClCompile Include="..\base\CCString.cpp" />
+    <ClCompile Include="..\base\CCValue.cpp" />
+    <ClCompile Include="..\base\etc1.cpp" />
+    <ClCompile Include="..\base\s3tc.cpp" />
+    <ClCompile Include="..\math\kazmath\kazmath\aabb.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\GL\mat4stack.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\GL\matrix.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\mat3.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\mat4.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\neon_matrix_impl.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\plane.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\quaternion.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\ray2.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\ray3.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\utility.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec2.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec3.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\math\kazmath\kazmath\vec4.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
+    <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
+    <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
+    <ClCompile Include="..\physics\CCPhysicsShape.cpp" />
+    <ClCompile Include="..\physics\CCPhysicsWorld.cpp" />
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp" />
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp" />
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp" />
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp" />
+    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
+    <ClCompile Include="base64.cpp" />
+    <ClCompile Include="CCAction.cpp" />
+    <ClCompile Include="CCActionCamera.cpp" />
+    <ClCompile Include="CCActionCatmullRom.cpp" />
+    <ClCompile Include="CCActionEase.cpp" />
+    <ClCompile Include="CCActionGrid.cpp" />
+    <ClCompile Include="CCActionGrid3D.cpp" />
+    <ClCompile Include="CCActionInstant.cpp" />
+    <ClCompile Include="CCActionInterval.cpp" />
+    <ClCompile Include="CCActionManager.cpp" />
+    <ClCompile Include="CCActionPageTurn3D.cpp" />
+    <ClCompile Include="CCActionProgressTimer.cpp" />
+    <ClCompile Include="CCActionTiledGrid.cpp" />
+    <ClCompile Include="CCActionTween.cpp" />
+    <ClCompile Include="CCAnimation.cpp" />
+    <ClCompile Include="CCAnimationCache.cpp" />
+    <ClCompile Include="CCAtlasNode.cpp" />
+    <ClCompile Include="ccCArray.cpp" />
+    <ClCompile Include="CCClippingNode.cpp" />
+    <ClCompile Include="CCComponent.cpp" />
+    <ClCompile Include="CCComponentContainer.cpp" />
+    <ClCompile Include="CCConfiguration.cpp" />
+    <ClCompile Include="CCDeprecated.cpp" />
+    <ClCompile Include="CCDirector.cpp" />
+    <ClCompile Include="CCDrawingPrimitives.cpp" />
+    <ClCompile Include="CCDrawNode.cpp" />
+    <ClCompile Include="CCEvent.cpp" />
+    <ClCompile Include="CCEventAcceleration.cpp" />
+    <ClCompile Include="CCEventCustom.cpp" />
+    <ClCompile Include="CCEventDispatcher.cpp" />
+    <ClCompile Include="CCEventKeyboard.cpp" />
+    <ClCompile Include="CCEventListener.cpp" />
+    <ClCompile Include="CCEventListenerAcceleration.cpp" />
+    <ClCompile Include="CCEventListenerCustom.cpp" />
+    <ClCompile Include="CCEventListenerKeyboard.cpp" />
+    <ClCompile Include="CCEventListenerMouse.cpp" />
+    <ClCompile Include="CCEventListenerTouch.cpp" />
+    <ClCompile Include="CCEventMouse.cpp" />
+    <ClCompile Include="CCEventTouch.cpp" />
+    <ClCompile Include="CCFont.cpp" />
+    <ClCompile Include="CCFontAtlas.cpp" />
+    <ClCompile Include="CCFontAtlasCache.cpp" />
+    <ClCompile Include="CCFontCharMap.cpp" />
+    <ClCompile Include="CCFontFNT.cpp" />
+    <ClCompile Include="CCFontFreeType.cpp" />
+    <ClCompile Include="ccFPSImages.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="CCGLProgram.cpp" />
+    <ClCompile Include="ccGLStateCache.cpp" />
+    <ClCompile Include="CCGrabber.cpp" />
+    <ClCompile Include="CCGrid.cpp" />
+    <ClCompile Include="CCNodeGrid.cpp" />
+    <ClCompile Include="CCIMEDispatcher.cpp" />
+    <ClCompile Include="CCLabel.cpp" />
+    <ClCompile Include="CCLabelAtlas.cpp" />
+    <ClCompile Include="CCLabelBMFont.cpp" />
+    <ClCompile Include="CCLabelTextFormatter.cpp" />
+    <ClCompile Include="CCLabelTTF.cpp" />
+    <ClCompile Include="CCLayer.cpp" />
+    <ClCompile Include="CCMenu.cpp" />
+    <ClCompile Include="CCMenuItem.cpp" />
+    <ClCompile Include="CCMotionStreak.cpp" />
+    <ClCompile Include="CCNode.cpp" />
+    <ClCompile Include="CCNotificationCenter.cpp" />
+    <ClCompile Include="CCParallaxNode.cpp" />
+    <ClCompile Include="CCParticleBatchNode.cpp" />
+    <ClCompile Include="CCParticleExamples.cpp" />
+    <ClCompile Include="CCParticleSystem.cpp" />
+    <ClCompile Include="CCParticleSystemQuad.cpp" />
+    <ClCompile Include="CCProfiling.cpp" />
+    <ClCompile Include="CCProgressTimer.cpp" />
+    <ClCompile Include="CCRenderTexture.cpp" />
+    <ClCompile Include="CCScene.cpp" />
+    <ClCompile Include="CCScheduler.cpp" />
+    <ClCompile Include="CCScriptSupport.cpp" />
+    <ClCompile Include="CCShaderCache.cpp" />
+    <ClCompile Include="ccShaders.cpp" />
+    <ClCompile Include="CCSprite.cpp" />
+    <ClCompile Include="CCSpriteBatchNode.cpp" />
+    <ClCompile Include="CCSpriteFrame.cpp" />
+    <ClCompile Include="CCSpriteFrameCache.cpp" />
+    <ClCompile Include="CCTextFieldTTF.cpp" />
+    <ClCompile Include="CCTexture2D.cpp" />
+    <ClCompile Include="CCTextureAtlas.cpp" />
+    <ClCompile Include="CCTextureCache.cpp" />
+    <ClCompile Include="CCTileMapAtlas.cpp" />
+    <ClCompile Include="CCTMXLayer.cpp" />
+    <ClCompile Include="CCTMXObjectGroup.cpp" />
+    <ClCompile Include="CCTMXTiledMap.cpp" />
+    <ClCompile Include="CCTMXXMLParser.cpp" />
+    <ClCompile Include="CCTouch.cpp" />
+    <ClCompile Include="CCTransition.cpp" />
+    <ClCompile Include="CCTransitionPageTurn.cpp" />
+    <ClCompile Include="CCTransitionProgress.cpp" />
+    <ClCompile Include="ccTypes.cpp" />
+    <ClCompile Include="CCTweenFunction.cpp" />
+    <ClCompile Include="CCUserDefault.cpp" />
+    <ClCompile Include="ccUTF8.cpp" />
+    <ClCompile Include="ccUtils.cpp" />
+    <ClCompile Include="CCVertex.cpp" />
+    <ClCompile Include="cocos2d.cpp" />
+    <ClCompile Include="platform\CCGLViewProtocol.cpp" />
+    <ClCompile Include="platform\CCFileUtils.cpp" />
+    <ClCompile Include="platform\CCImage.cpp" />
+    <ClCompile Include="platform\CCSAXParser.cpp" />
+    <ClCompile Include="platform\CCThread.cpp" />
+    <ClCompile Include="platform\winrt\CCApplication.cpp" />
+    <ClCompile Include="platform\winrt\CCCommon.cpp" />
+    <ClCompile Include="platform\winrt\CCDevice.cpp" />
+    <ClCompile Include="platform\winrt\CCFileUtilsWinRT.cpp" />
+    <ClCompile Include="platform\winrt\CCFreeTypeFont.cpp" />
+    <ClCompile Include="platform\winrt\CCGLView.cpp" />
+    <ClCompile Include="platform\winrt\CCPrecompiledShaders.cpp" />
+    <ClCompile Include="platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="platform\winrt\CCStdC.cpp" />
+    <ClCompile Include="platform\winrt\CCWinRTUtils.cpp" />
+    <ClCompile Include="platform\winrt\DirectXBase.cpp" />
+    <ClCompile Include="platform\winrt\sha1.cpp" />
+    <ClCompile Include="renderer\CCBatchCommand.cpp" />
+    <ClCompile Include="renderer\CCCustomCommand.cpp" />
+    <ClCompile Include="renderer\CCFrustum.cpp" />
+    <ClCompile Include="renderer\CCGroupCommand.cpp" />
+    <ClCompile Include="renderer\CCMaterialManager.cpp" />
+    <ClCompile Include="renderer\CCQuadCommand.cpp" />
+    <ClCompile Include="renderer\CCRenderCommand.cpp" />
+    <ClCompile Include="renderer\CCRenderer.cpp" />
+    <ClCompile Include="renderer\CCRenderMaterial.cpp" />
+    <ClCompile Include="TGAlib.cpp" />
+    <ClCompile Include="TransformUtils.cpp" />
+    <ClCompile Include="ZipUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h" />
+    <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="..\..\external\unzip\ioapi.h" />
+    <ClInclude Include="..\..\external\unzip\unzip.h" />
+    <ClInclude Include="..\base\atitc.h" />
+    <ClInclude Include="..\base\CCAffineTransform.h" />
+    <ClInclude Include="..\base\CCArray.h" />
+    <ClInclude Include="..\base\CCAutoreleasePool.h" />
+    <ClInclude Include="..\base\CCBool.h" />
+    <ClInclude Include="..\base\CCConsole.h" />
+    <ClInclude Include="..\base\CCData.h" />
+    <ClInclude Include="..\base\CCDataVisitor.h" />
+    <ClInclude Include="..\base\CCDictionary.h" />
+    <ClInclude Include="..\base\CCDouble.h" />
+    <ClInclude Include="..\base\CCFloat.h" />
+    <ClInclude Include="..\base\CCGeometry.h" />
+    <ClInclude Include="..\base\CCInteger.h" />
+    <ClInclude Include="..\base\CCMap.h" />
+    <ClInclude Include="..\base\CCNS.h" />
+    <ClInclude Include="..\base\CCRef.h" />
+    <ClInclude Include="..\base\CCPlatformConfig.h" />
+    <ClInclude Include="..\base\CCPlatformMacros.h" />
+    <ClInclude Include="..\base\CCSet.h" />
+    <ClInclude Include="..\base\CCString.h" />
+    <ClInclude Include="..\base\CCValue.h" />
+    <ClInclude Include="..\base\CCVector.h" />
+    <ClInclude Include="..\base\etc1.h" />
+    <ClInclude Include="..\base\s3tc.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\aabb.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\GL\mat4stack.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\GL\matrix.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\kazmath.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\mat3.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\mat4.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\neon_matrix_impl.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\plane.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\quaternion.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\ray2.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\ray3.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\utility.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\vec2.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\vec3.h" />
+    <ClInclude Include="..\math\kazmath\kazmath\vec4.h" />
+    <ClInclude Include="..\physics\CCPhysicsBody.h" />
+    <ClInclude Include="..\physics\CCPhysicsContact.h" />
+    <ClInclude Include="..\physics\CCPhysicsJoint.h" />
+    <ClInclude Include="..\physics\CCPhysicsShape.h" />
+    <ClInclude Include="..\physics\CCPhysicsWorld.h" />
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h" />
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h" />
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper_chipmunk.h" />
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h" />
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h" />
+    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h" />
+    <ClInclude Include="base64.h" />
+    <ClInclude Include="CCAction.h" />
+    <ClInclude Include="CCActionCamera.h" />
+    <ClInclude Include="CCActionCatmullRom.h" />
+    <ClInclude Include="CCActionEase.h" />
+    <ClInclude Include="CCActionGrid.h" />
+    <ClInclude Include="CCActionGrid3D.h" />
+    <ClInclude Include="CCActionInstant.h" />
+    <ClInclude Include="CCActionInterval.h" />
+    <ClInclude Include="CCActionManager.h" />
+    <ClInclude Include="CCActionPageTurn3D.h" />
+    <ClInclude Include="CCActionProgressTimer.h" />
+    <ClInclude Include="CCActionTiledGrid.h" />
+    <ClInclude Include="CCActionTween.h" />
+    <ClInclude Include="CCAnimation.h" />
+    <ClInclude Include="CCAnimationCache.h" />
+    <ClInclude Include="CCAtlasNode.h" />
+    <ClInclude Include="ccCArray.h" />
+    <ClInclude Include="CCClippingNode.h" />
+    <ClInclude Include="CCComponent.h" />
+    <ClInclude Include="CCComponentContainer.h" />
+    <ClInclude Include="ccConfig.h" />
+    <ClInclude Include="CCConfiguration.h" />
+    <ClInclude Include="CCDeprecated.h" />
+    <ClInclude Include="CCDirector.h" />
+    <ClInclude Include="CCDrawingPrimitives.h" />
+    <ClInclude Include="CCDrawNode.h" />
+    <ClInclude Include="CCEvent.h" />
+    <ClInclude Include="CCEventAcceleration.h" />
+    <ClInclude Include="CCEventCustom.h" />
+    <ClInclude Include="CCEventDispatcher.h" />
+    <ClInclude Include="CCEventKeyboard.h" />
+    <ClInclude Include="CCEventListener.h" />
+    <ClInclude Include="CCEventListenerAcceleration.h" />
+    <ClInclude Include="CCEventListenerCustom.h" />
+    <ClInclude Include="CCEventListenerKeyboard.h" />
+    <ClInclude Include="CCEventListenerMouse.h" />
+    <ClInclude Include="CCEventListenerTouch.h" />
+    <ClInclude Include="CCEventMouse.h" />
+    <ClInclude Include="CCEventTouch.h" />
+    <ClInclude Include="CCEventType.h" />
+    <ClInclude Include="CCFont.h" />
+    <ClInclude Include="CCFontAtlas.h" />
+    <ClInclude Include="CCFontAtlasCache.h" />
+    <ClInclude Include="CCFontCharMap.h" />
+    <ClInclude Include="CCFontFNT.h" />
+    <ClInclude Include="CCFontFreeType.h" />
+    <ClInclude Include="ccFPSImages.h" />
+    <ClInclude Include="CCGLProgram.h" />
+    <ClInclude Include="ccGLStateCache.h" />
+    <ClInclude Include="CCGrabber.h" />
+    <ClInclude Include="CCGrid.h" />
+    <ClInclude Include="CCNodeGrid.h" />
+    <ClInclude Include="CCIMEDelegate.h" />
+    <ClInclude Include="CCIMEDispatcher.h" />
+    <ClInclude Include="CCLabel.h" />
+    <ClInclude Include="CCLabelAtlas.h" />
+    <ClInclude Include="CCLabelBMFont.h" />
+    <ClInclude Include="CCLabelTextFormatter.h" />
+    <ClInclude Include="CCLabelTTF.h" />
+    <ClInclude Include="CCLayer.h" />
+    <ClInclude Include="ccMacros.h" />
+    <ClInclude Include="CCMenu.h" />
+    <ClInclude Include="CCMenuItem.h" />
+    <ClInclude Include="CCMotionStreak.h" />
+    <ClInclude Include="CCNode.h" />
+    <ClInclude Include="CCNotificationCenter.h" />
+    <ClInclude Include="CCParallaxNode.h" />
+    <ClInclude Include="CCParticleBatchNode.h" />
+    <ClInclude Include="CCParticleExamples.h" />
+    <ClInclude Include="CCParticleSystem.h" />
+    <ClInclude Include="CCParticleSystemQuad.h" />
+    <ClInclude Include="CCProfiling.h" />
+    <ClInclude Include="CCProgressTimer.h" />
+    <ClInclude Include="CCProtocols.h" />
+    <ClInclude Include="CCRenderTexture.h" />
+    <ClInclude Include="CCScene.h" />
+    <ClInclude Include="CCScheduler.h" />
+    <ClInclude Include="CCScriptSupport.h" />
+    <ClInclude Include="CCShaderCache.h" />
+    <ClInclude Include="ccShaderEx_SwitchMask_frag.h" />
+    <ClInclude Include="ccShaders.h" />
+    <ClInclude Include="ccShader_PositionColorLengthTexture_frag.h" />
+    <ClInclude Include="ccShader_PositionColorLengthTexture_vert.h" />
+    <ClInclude Include="ccShader_PositionColor_frag.h" />
+    <ClInclude Include="ccShader_PositionColor_vert.h" />
+    <ClInclude Include="ccShader_PositionTextureA8Color_frag.h" />
+    <ClInclude Include="ccShader_PositionTextureA8Color_vert.h" />
+    <ClInclude Include="ccShader_PositionTextureColorAlphaTest_frag.h" />
+    <ClInclude Include="ccShader_PositionTextureColor_frag.h" />
+    <ClInclude Include="ccShader_PositionTextureColor_vert.h" />
+    <ClInclude Include="ccShader_PositionTexture_frag.h" />
+    <ClInclude Include="ccShader_PositionTexture_uColor_frag.h" />
+    <ClInclude Include="ccShader_PositionTexture_uColor_vert.h" />
+    <ClInclude Include="ccShader_PositionTexture_vert.h" />
+    <ClInclude Include="ccShader_Position_uColor_frag.h" />
+    <ClInclude Include="ccShader_Position_uColor_vert.h" />
+    <ClInclude Include="CCSprite.h" />
+    <ClInclude Include="CCSpriteBatchNode.h" />
+    <ClInclude Include="CCSpriteFrame.h" />
+    <ClInclude Include="CCSpriteFrameCache.h" />
+    <ClInclude Include="CCTextFieldTTF.h" />
+    <ClInclude Include="CCTexture2D.h" />
+    <ClInclude Include="CCTextureAtlas.h" />
+    <ClInclude Include="CCTextureCache.h" />
+    <ClInclude Include="CCTileMapAtlas.h" />
+    <ClInclude Include="CCTMXLayer.h" />
+    <ClInclude Include="CCTMXObjectGroup.h" />
+    <ClInclude Include="CCTMXTiledMap.h" />
+    <ClInclude Include="CCTMXXMLParser.h" />
+    <ClInclude Include="CCTouch.h" />
+    <ClInclude Include="CCTransition.h" />
+    <ClInclude Include="CCTransitionPageTurn.h" />
+    <ClInclude Include="CCTransitionProgress.h" />
+    <ClInclude Include="ccTypes.h" />
+    <ClInclude Include="CCTweenFunction.h" />
+    <ClInclude Include="CCUserDefault.h" />
+    <ClInclude Include="ccUTF8.h" />
+    <ClInclude Include="ccUtils.h" />
+    <ClInclude Include="CCVertex.h" />
+    <ClInclude Include="cocos2d.h" />
+    <ClInclude Include="platform\CCApplicationProtocol.h" />
+    <ClInclude Include="platform\CCCommon.h" />
+    <ClInclude Include="platform\CCDevice.h" />
+    <ClInclude Include="platform\CCGLViewProtocol.h" />
+    <ClInclude Include="platform\CCFileUtils.h" />
+    <ClInclude Include="platform\CCImage.h" />
+    <ClInclude Include="platform\CCSAXParser.h" />
+    <ClInclude Include="platform\CCThread.h" />
+    <ClInclude Include="platform\winrt\CCApplication.h" />
+    <ClInclude Include="platform\winrt\CCFileUtilsWinRT.h" />
+    <ClInclude Include="platform\winrt\CCFreeTypeFont.h" />
+    <ClInclude Include="platform\winrt\CCGL.h" />
+    <ClInclude Include="platform\winrt\CCGLView.h" />
+    <ClInclude Include="platform\winrt\CCGL_Angle.h" />
+    <ClInclude Include="platform\winrt\CCPlatformDefine.h" />
+    <ClInclude Include="platform\winrt\CCPrecompiledShaders.h" />
+    <ClInclude Include="platform\winrt\CCPThreadWinRT.h" />
+    <ClInclude Include="platform\winrt\CCStdC.h" />
+    <ClInclude Include="platform\winrt\CCWinRTUtils.h" />
+    <ClInclude Include="platform\winrt\DirectXBase.h" />
+    <ClInclude Include="platform\winrt\DirectXHelper.h" />
+    <ClInclude Include="platform\winrt\sha1.h" />
+    <ClInclude Include="renderer\CCBatchCommand.h" />
+    <ClInclude Include="renderer\CCCustomCommand.h" />
+    <ClInclude Include="renderer\CCFrustum.h" />
+    <ClInclude Include="renderer\CCGroupCommand.h" />
+    <ClInclude Include="renderer\CCMaterialManager.h" />
+    <ClInclude Include="renderer\CCQuadCommand.h" />
+    <ClInclude Include="renderer\CCRenderCommand.h" />
+    <ClInclude Include="renderer\CCRenderCommandPool.h" />
+    <ClInclude Include="renderer\CCRenderer.h" />
+    <ClInclude Include="renderer\CCRenderMaterial.h" />
+    <ClInclude Include="TGAlib.h" />
+    <ClInclude Include="TransformUtils.h" />
+    <ClInclude Include="uthash.h" />
+    <ClInclude Include="utlist.h" />
+    <ClInclude Include="ZipUtils.h" />
+  </ItemGroup>
+</Project>

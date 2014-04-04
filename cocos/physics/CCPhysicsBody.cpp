@@ -623,7 +623,7 @@ float PhysicsBody::getVelocityLimit()
 
 void PhysicsBody::setAngularVelocityLimit(float limit)
 {
-    cpBodySetVelLimit(_info->getBody(), PhysicsHelper::float2cpfloat(limit));
+    cpBodySetAngVelLimit(_info->getBody(), PhysicsHelper::float2cpfloat(limit));
 }
 
 float PhysicsBody::getAngularVelocityLimit()

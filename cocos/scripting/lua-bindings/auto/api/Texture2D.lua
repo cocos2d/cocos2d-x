@@ -40,6 +40,16 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- @function [parent=#Texture2D] updateWithData 
+-- @param self
+-- @param #void void
+-- @param #int int
+-- @param #int int
+-- @param #int int
+-- @param #int int
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Texture2D] hasPremultipliedAlpha 
 -- @param self
 -- @return bool#bool ret (return value: bool)

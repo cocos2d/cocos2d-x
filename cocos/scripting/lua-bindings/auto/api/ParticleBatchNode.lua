@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ParticleBatchNode
--- @extend Node,TextureProtocol,
+-- @extend Node,TextureProtocol
 
 --------------------------------
 -- @function [parent=#ParticleBatchNode] setTexture 

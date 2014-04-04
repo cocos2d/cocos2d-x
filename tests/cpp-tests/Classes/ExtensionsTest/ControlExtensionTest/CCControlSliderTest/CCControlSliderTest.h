@@ -33,7 +33,7 @@ public:
     bool init();
     void valueChanged(Ref *sender, Control::EventType controlEvent);
 protected:
-    LabelTTF* _displayValueLabel;
+    Label* _displayValueLabel;
     CONTROL_SCENE_CREATE_FUNC(ControlSliderTest)
 };
 

@@ -45,7 +45,7 @@ bool Bug1159Layer::init()
         sprite_b->setPosition(Point(s.width/2, s.height/2));
         addChild(sprite_b);
 
-        auto label = MenuItemLabel::create(LabelTTF::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
+        auto label = MenuItemLabel::create(Label::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
         auto menu = Menu::create(label, NULL);
         menu->setPosition(Point(s.width - 200.0f, 50.0f));
         addChild(menu);

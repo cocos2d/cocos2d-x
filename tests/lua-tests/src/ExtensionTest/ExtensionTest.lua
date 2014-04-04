@@ -78,8 +78,8 @@ local function runNotificationCenterTest()
     		cc.NotificationCenter:getInstance():postNotification(NotificationCenterParam.MSG_SWITCH_STATE,selectedItem)
     	end
     	
-    	local switchlabel1 = cc.LabelTTF:create("switch off", "Marker Felt", 26)
-    	local switchlabel2 = cc.LabelTTF:create("switch on", "Marker Felt", 26)
+    	local switchlabel1 = cc.Label:create("switch off", "Marker Felt", 26)
+    	local switchlabel2 = cc.Label:create("switch on", "Marker Felt", 26)
     	local switchitem1  = cc.MenuItemLabel:create(switchlabel1)
     	local switchitem2 = cc.MenuItemLabel:create(switchlabel2)
     	local switchitem = cc.MenuItemToggle:create(switchitem1)
@@ -144,9 +144,9 @@ local function runNotificationCenterTest()
         	lightArray[i]:setPosition(cc.p(100, s.height / 4 * i) )
         	pLayer:addChild(lightArray[i])
 			
-        	local connectlabel1 = cc.LabelTTF:create("not connected", "Marker Felt", 26)
+        	local connectlabel1 = cc.Label:create("not connected", "Marker Felt", 26)
         	
-        	local connectlabel2 = cc.LabelTTF:create("connected", "Marker Felt", 26)
+        	local connectlabel2 = cc.Label:create("connected", "Marker Felt", 26)
         	local connectitem1 = cc.MenuItemLabel:create(connectlabel1)
         	local connectitem2 = cc.MenuItemLabel:create(connectlabel2)
         	local connectitem = cc.MenuItemToggle:create(connectitem1)
@@ -348,7 +348,7 @@ local function runCCControlTest()
         pLayer:addChild(pRibbon)
         
         --Add the title
-        pSceneTitleLabel = cc.LabelTTF:create("Title", "Arial", 12)
+        pSceneTitleLabel = cc.Label:create("Title", "Arial", 12)
         pSceneTitleLabel:setPosition(cc.p (VisibleRect:center().x, VisibleRect:top().y - pSceneTitleLabel:getContentSize().height / 2 - 5))
         pLayer:addChild(pSceneTitleLabel, 1)
         pSceneTitleLabel:setString(pStrTitle)
@@ -366,7 +366,7 @@ local function runCCControlTest()
 		
 		local screenSize = cc.Director:getInstance():getWinSize()
 		--Add a label in which the slider value will be displayed
-		local pDisplayValueLabel = cc.LabelTTF:create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32)
+		local pDisplayValueLabel = cc.Label:create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32)
         pDisplayValueLabel:retain()
         pDisplayValueLabel:setAnchorPoint(cc.p(0.5, -1.0))
         pDisplayValueLabel:setPosition(cc.p(screenSize.width / 1.7, screenSize.height / 2.0))
@@ -453,7 +453,7 @@ local function runCCControlTest()
         pNode:addChild(pBackground)
         dLayer_width = dLayer_width + pBackground:getContentSize().width
         
-        pColorLabel = cc.LabelTTF:create("#color", "Marker Felt", 30)
+        pColorLabel = cc.Label:create("#color", "Marker Felt", 30)
         pColorLabel:retain()
 		pColorLabel:setPosition(pBackground:getPosition())
         pNode:addChild(pColorLabel)
@@ -487,7 +487,7 @@ local function runCCControlTest()
         pNode:addChild(pBackground)       
         dLayer_width = dLayer_width + pBackground:getContentSize().width
         
-        local pDisplayValueLabel  = cc.LabelTTF:create("#color" ,"Marker Felt" ,30)
+        local pDisplayValueLabel  = cc.Label:create("#color" ,"Marker Felt" ,30)
         pDisplayValueLabel:retain()
 
         pDisplayValueLabel:setPosition(pBackground:getPosition())
@@ -511,8 +511,8 @@ local function runCCControlTest()
                 cc.Sprite:create("extensions/switch-on.png"),
                 cc.Sprite:create("extensions/switch-off.png"),
                 cc.Sprite:create("extensions/switch-thumb.png"),
-                cc.LabelTTF:create("On", "Arial-BoldMT", 16),
-                cc.LabelTTF:create("Off", "Arial-BoldMT", 16)
+                cc.Label:create("On", "Arial-BoldMT", 16),
+                cc.Label:create("Off", "Arial-BoldMT", 16)
             )
         pSwitchControl:setPosition(cc.p (dLayer_width + 10 + pSwitchControl:getContentSize().width / 2, 0))
         pNode:addChild(pSwitchControl)
@@ -532,7 +532,7 @@ local function runCCControlTest()
     	local pBackgroundButton = cc.Scale9Sprite:create("extensions/button.png")
     	local pBackgroundHighlightedButton = cc.Scale9Sprite:create("extensions/buttonHighlighted.png")
     
-    	pTitleButton = cc.LabelTTF:create(pStrTitle, "Marker Felt", 30)
+    	pTitleButton = cc.Label:create(pStrTitle, "Marker Felt", 30)
 
     	pTitleButton:setColor(cc.c3b(159, 168, 176))
     
@@ -587,7 +587,7 @@ local function runCCControlTest()
     	local pBackgroundHighlightedButton = cc.Scale9Sprite:create("extensions/buttonHighlighted.png")
     	pBackgroundHighlightedButton:setPreferredSize(cc.size(45, 45)) 
     
-        local pTitleButton = cc.LabelTTF:create(pStrTitle, "Marker Felt", 30)
+        local pTitleButton = cc.Label:create(pStrTitle, "Marker Felt", 30)
 
     	pTitleButton:setColor(cc.c3b(159, 168, 176))
     
@@ -651,7 +651,7 @@ local function runCCControlTest()
 
         --Add a label in which the button events will be displayed
         local pDisplayValueLabel = nil
-        pDisplayValueLabel = cc.LabelTTF:create("No Event", "Marker Felt", 32)
+        pDisplayValueLabel = cc.Label:create("No Event", "Marker Felt", 32)
         pDisplayValueLabel:setAnchorPoint(cc.p(0.5, -1))
        	pDisplayValueLabel:setPosition(cc.p(screenSize.width / 2.0, screenSize.height / 2.0))
         pLayer:addChild(pDisplayValueLabel, 1)
@@ -660,7 +660,7 @@ local function runCCControlTest()
         local pBackgroundButton            = cc.Scale9Sprite:create("extensions/button.png")
         local pBackgroundHighlightedButton = cc.Scale9Sprite:create("extensions/buttonHighlighted.png")
         
-        local pTitleButtonLabel = cc.LabelTTF:create("Touch Me!", "Marker Felt", 30)
+        local pTitleButtonLabel = cc.Label:create("Touch Me!", "Marker Felt", 30)
         pTitleButtonLabel:setColor(cc.c3b(159, 168, 176))
         
         local pControlButton = cc.ControlButton:create(pTitleButtonLabel, pBackgroundButton)
@@ -764,7 +764,7 @@ local function runCCControlTest()
         
         dLayer_width = dLayer_width + pBackground:getContentSize().width
         
-        local pDisplayValueLabel = cc.LabelTTF:create("", "HelveticaNeue-Bold", 30)
+        local pDisplayValueLabel = cc.Label:create("", "HelveticaNeue-Bold", 30)
         pDisplayValueLabel:setPosition(pBackground:getPosition())
         pNode:addChild(pDisplayValueLabel)
 		
@@ -816,7 +816,7 @@ local function runCCControlTest()
         background:setPosition(cc.p(layer_width + background:getContentSize().width / 2.0, 0))
         pNode:addChild(background)
         
-        local pDisplayValueLabel =  cc.LabelTTF:create("0", "HelveticaNeue-Bold", 30)
+        local pDisplayValueLabel =  cc.Label:create("0", "HelveticaNeue-Bold", 30)
 
         pDisplayValueLabel:setPosition(background:getPosition())
         pNode:addChild(pDisplayValueLabel)
@@ -901,7 +901,7 @@ local function runEditBoxTest()
     pBg:setPosition(cc.p(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2))
     newLayer:addChild(pBg)
     
-    local TTFShowEditReturn = cc.LabelTTF:create("No edit control return!", "", 30)
+    local TTFShowEditReturn = cc.Label:create("No edit control return!", "", 30)
     TTFShowEditReturn:setPosition(cc.p(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50))
     newLayer:addChild(TTFShowEditReturn)
     
@@ -1032,7 +1032,7 @@ function TableViewTestLayer.tableCellAtIndex(table, idx)
         sprite:setPosition(cc.p(0, 0))
         cell:addChild(sprite)
 
-        label = cc.LabelTTF:create(strValue, "Helvetica", 20.0)
+        label = cc.Label:create(strValue, "Helvetica", 20.0)
         label:setPosition(cc.p(0,0))
         label:setAnchorPoint(cc.p(0,0))
         label:setTag(123)
