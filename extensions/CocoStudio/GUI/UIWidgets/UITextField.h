@@ -110,6 +110,10 @@ public:
     TextField();
     virtual ~TextField();
     static TextField* create();
+    static TextField* create(const std::string& placeHolder,
+                             const std::string& fontName,
+                             int fontSize);
+    
     void setTouchSize(const CCSize &size);
     CCSize getTouchSize();
     void setTouchAreaEnabled(bool enable);
@@ -162,6 +166,9 @@ public:
     
 protected:
     virtual bool init();
+    virtual bool init(const std::string& placeHolder,
+                      const std::string& fontName,
+                      int fontSize);
     virtual void initRenderer();
     // event
     void attachWithIMEEvent();
