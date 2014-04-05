@@ -38,6 +38,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class TMXImageLayerInfo;
 class TMXLayerInfo;
 class TMXObjectGroup;
 class TMXTilesetInfo;
@@ -65,10 +66,12 @@ enum {
 enum {
     TMXPropertyNone,
     TMXPropertyMap,
+    TMXPropertyImageLayer,
     TMXPropertyLayer,
     TMXPropertyObjectGroup,
     TMXPropertyObject,
-    TMXPropertyTile
+    TMXPropertyTile,
+    TMXPropertyTileSet
 };
 
 typedef enum TMXTileFlags_ {
@@ -80,6 +83,37 @@ typedef enum TMXTileFlags_ {
 } TMXTileFlags;
 
 // Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
+
+/** @brief TMXImageLayerInfo contains the information about the image layers like:
+- Layer name
+- Layer size
+- Source image
+- Whether the layer is visible (if it's not visible, then the CocosNode won't be created)
+
+This information is obtained from the TMX file.
+*/
+class CC_DLL TMXImageLayerInfo : public Ref
+{
+public:
+    /**
+     * @js ctor
+     */
+    TMXImageLayerInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~TMXImageLayerInfo();
+
+    void setProperties(ValueMap properties);
+    ValueMap& getProperties();
+
+    ValueMap            _properties;
+    std::string         _name;
+    Size                _layerSize;
+    std::string         _sourceImage;
+    bool                _visible;
+};
 
 /** @brief TMXLayerInfo contains the information about the layers like:
 - Layer name
@@ -211,6 +245,13 @@ public:
     inline const Size& getTileSize() const { return _tileSize; };
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
     
+    /// Image layers
+    inline const Vector<TMXImageLayerInfo*>& getImageLayers() const { return _imageLayers; };
+    inline Vector<TMXImageLayerInfo*>& getImageLayers() { return _imageLayers; };
+    inline void setImageLayers(const Vector<TMXImageLayerInfo*>& imageLayers) {
+        _imageLayers = imageLayers;
+    };
+    
     /// Layers
     inline const Vector<TMXLayerInfo*>& getLayers() const { return _layers; };
     inline Vector<TMXLayerInfo*>& getLayers() { return _layers; };
@@ -287,6 +328,8 @@ protected:
     Size _mapSize;
     /// tiles width & height
     Size _tileSize;
+    /// Image layers
+    Vector<TMXImageLayerInfo*> _imageLayers;
     /// Layers
     Vector<TMXLayerInfo*> _layers;
     /// tilesets

@@ -40,6 +40,28 @@ using namespace std;
 
 NS_CC_BEGIN
 
+// implementation TMXImageLayerInfo
+TMXImageLayerInfo::TMXImageLayerInfo()
+: _name("")
+, _sourceImage("")
+{
+}
+
+TMXImageLayerInfo::~TMXImageLayerInfo()
+{
+    CCLOGINFO("deallocing TMXImageLayerInfo: %p", this);
+}
+
+ValueMap& TMXImageLayerInfo::getProperties()
+{
+    return _properties;
+}
+
+void TMXImageLayerInfo::setProperties(ValueMap var)
+{
+    _properties = var;
+}
+
 // implementation TMXLayerInfo
 TMXLayerInfo::TMXLayerInfo()
 : _name("")
@@ -63,6 +85,7 @@ ValueMap& TMXLayerInfo::getProperties()
 {
     return _properties;
 }
+
 void TMXLayerInfo::setProperties(ValueMap var)
 {
     _properties = var;
@@ -307,6 +330,10 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             tmxMapInfo->getTilesets().pushBack(tileset);
             tileset->release();
         }
+
+        // The parent element is now "tileset"
+        tmxMapInfo->setParentElement(TMXPropertyTileSet);
+
     }
     else if (elementName == "tile")
     {
@@ -330,6 +357,25 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             tmxMapInfo->setParentElement(TMXPropertyTile);
         }
     }
+    else if (elementName == "imagelayer")
+    {
+        TMXImageLayerInfo *layer = new TMXImageLayerInfo();
+        layer->_name = attributeDict["name"].asString();
+
+        Size s;
+        s.width = attributeDict["width"].asFloat();
+        s.height = attributeDict["height"].asFloat();
+        layer->_layerSize = s;
+
+        layer->_visible = attributeDict["visible"].asBool();
+
+        tmxMapInfo->getImageLayers().pushBack(layer);
+        layer->release();
+
+        // The parent element is now "imagelayer"
+        tmxMapInfo->setParentElement(TMXPropertyImageLayer);
+
+    } 
     else if (elementName == "layer")
     {
         TMXLayerInfo *layer = new TMXLayerInfo();
@@ -382,20 +428,46 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "image")
     {
-        TMXTilesetInfo* tileset = tmxMapInfo->getTilesets().back();
-
-        // build full path
-        std::string imagename = attributeDict["source"].asString();
-
-        if (_TMXFileName.find_last_of("/") != string::npos)
+        const auto parent = tmxMapInfo->getParentElement();
+        if (parent == TMXPropertyTileSet)
         {
-            string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
-            tileset->_sourceImage = dir + imagename;
+            TMXTilesetInfo* tileset = tmxMapInfo->getTilesets().back();
+            // build full path
+            const std::string imagename = attributeDict["source"].asString();
+            if (_TMXFileName.find_last_of("/") != string::npos)
+            {
+                const std::string dir =
+                    _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
+                tileset->_sourceImage = dir + imagename;
+            }
+            else 
+            {
+                tileset->_sourceImage =
+                    _resources + (_resources.size() ? "/" : "") + imagename;
+            }
         }
-        else 
+        else if (parent == TMXPropertyImageLayer)
         {
-            tileset->_sourceImage = _resources + (_resources.size() ? "/" : "") + imagename;
+            TMXImageLayerInfo* info = tmxMapInfo->getImageLayers().back();
+            // build full path
+            const std::string imagename = attributeDict["source"].asString();
+            if (_TMXFileName.find_last_of("/") != string::npos)
+            {
+                const std::string dir =
+                    _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
+                info->_sourceImage = dir + imagename;
+            }
+            else 
+            {
+                info->_sourceImage =
+                    _resources + (_resources.size() ? "/" : "") + imagename;
+            }
         }
+        else
+        {
+            CCASSERT( false, "Parent element is unsupported." );
+        }
+
     } 
     else if (elementName == "data")
     {
@@ -682,6 +754,11 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
         // The map element has ended
         tmxMapInfo->setParentElement(TMXPropertyNone);
     }    
+    else if (elementName == "imagelayer")
+    {
+        // The imagelayer element has ended
+        tmxMapInfo->setParentElement(TMXPropertyNone);
+    }
     else if (elementName == "layer")
     {
         // The layer element has ended
