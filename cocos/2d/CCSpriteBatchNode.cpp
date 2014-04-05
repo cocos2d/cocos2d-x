@@ -356,7 +356,7 @@ void SpriteBatchNode::reorderBatch(bool reorder)
 void SpriteBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
-    if( _textureAtlas->getTotalQuads() == 0 )
+    if( !_textureAtlas || (_textureAtlas->getTotalQuads() == 0) )
     {
         return;
     }

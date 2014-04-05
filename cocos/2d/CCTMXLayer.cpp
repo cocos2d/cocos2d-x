@@ -62,7 +62,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
     }
 
-    if (SpriteBatchNode::initWithTexture(texture, static_cast<ssize_t>(capacity)))
+    if ( !texture || SpriteBatchNode::initWithTexture(texture, static_cast<ssize_t>(capacity)) )
     {
         // layerInfo
         _layerName = layerInfo->_name;
@@ -143,6 +143,8 @@ void TMXLayer::releaseMap()
 // TMXLayer - setup Tiles
 void TMXLayer::setupTiles()
 {    
+    if ( !_textureAtlas ) { return; }
+
     // Optimization: quick hack that sets the image size on the tileset
     _tileSet->_imageSize = _textureAtlas->getTexture()->getContentSizeInPixels();
 
