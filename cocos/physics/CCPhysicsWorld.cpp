@@ -275,7 +275,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     
     if (shapeA->getGroup() != 0 && shapeA->getGroup() == shapeB->getGroup())
     {
-        ret = shapeA->getGroup() > 0;
+        ret = false;
     }
     else
     {
