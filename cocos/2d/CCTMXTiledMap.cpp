@@ -65,12 +65,12 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
     setContentSize(Size::ZERO);
 
     TMXMapInfo *mapInfo = TMXMapInfo::create(tmxFile);
-
-    if (! mapInfo)
+    if ( !mapInfo )
     {
+        CCASSERT( false, "TMXTiledMap: Map not found. Please check the filename.");
         return false;
     }
-    CCASSERT( !mapInfo->getTilesets().empty(), "TMXTiledMap: Map not found. Please check the filename.");
+
     buildWithMapInfo(mapInfo);
 
     return true;
