@@ -27,7 +27,7 @@ enum
 
 static int sceneIdx = -1;
 
-#define MAX_LAYER    29
+#define MAX_LAYER    31
 
 static std::function<Layer*()> createFunctions[] = {
     CLN(TMXIsoZorder),
@@ -59,7 +59,8 @@ static std::function<Layer*()> createFunctions[] = {
     CLN(TMXBug987),
     CLN(TMXBug787),
     CLN(TMXGIDObjectsTest),
-
+    CLN(TMXOrthoBackgroundOnlyTest),
+    CLN(TMXOrthoBackgroundWithSpritesTest),
 };
 
 Layer* createTileMalayer(int nIndex)
@@ -1558,4 +1559,62 @@ std::string TMXGIDObjectsTest::title() const
 std::string TMXGIDObjectsTest::subtitle() const
 {
     return "Tiles are created from an object group";
+}
+
+//------------------------------------------------------------------
+//
+// TMXOrthoBackgroundOnlyTest
+//
+//------------------------------------------------------------------
+TMXOrthoBackgroundOnlyTest::TMXOrthoBackgroundOnlyTest()
+{
+    const std::string file = "TileMaps/ortho-bg-only-test.tmx";
+    auto map = TMXTiledMap::create( file.c_str() );
+    CCAssert( map, "Unable to open map" );
+    addChild( map, 0, kTagTileMap );
+
+    const Size CC_UNUSED s = map->getContentSize();
+    log( "ContentSize: %f, %f", s.width, s.height );
+
+    map->setScale( 0.75f );
+}
+
+std::string TMXOrthoBackgroundOnlyTest::title() const
+{
+    return "TMX background only test";
+}
+
+std::string TMXOrthoBackgroundOnlyTest::subtitle() const
+{
+    return "You should see a color image only";
+}
+
+//------------------------------------------------------------------
+//
+// TMXOrthoBackgroundWithSpritesTest
+//
+//------------------------------------------------------------------
+TMXOrthoBackgroundWithSpritesTest::TMXOrthoBackgroundWithSpritesTest()
+{
+    const std::string file = "TileMaps/ortho-bg-with-sprite-test.tmx";
+    auto map = TMXTiledMap::create( file.c_str() );
+    CCAssert( map, "Unable to open map" );
+    addChild( map, 0, kTagTileMap );
+
+    const Size CC_UNUSED s = map->getContentSize();
+    log( "ContentSize: %f, %f", s.width, s.height );
+
+    auto action = ScaleBy::create( 2, 0.5f );
+    map->runAction( action );
+}
+
+std::string TMXOrthoBackgroundWithSpritesTest::title() const
+{
+    return "TMX background with sprites test";
+}
+
+std::string TMXOrthoBackgroundWithSpritesTest::subtitle() const
+{
+    return "You should see a color image, sprites\n"
+           "in the corners and two in the center";
 }

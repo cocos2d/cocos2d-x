@@ -306,4 +306,20 @@ public:
     virtual void runThisTest();
 };
 
+class TMXOrthoBackgroundOnlyTest : public TileDemo 
+{
+public:
+    TMXOrthoBackgroundOnlyTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TMXOrthoBackgroundWithSpritesTest : public TileDemo 
+{
+public:
+    TMXOrthoBackgroundWithSpritesTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
