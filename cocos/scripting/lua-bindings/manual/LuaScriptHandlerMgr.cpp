@@ -124,10 +124,12 @@ ScriptHandlerMgr::ScriptHandlerMgr()
 {
     
 }
+
 ScriptHandlerMgr::~ScriptHandlerMgr()
 {
     CC_SAFE_DELETE(_scriptHandlerMgr);
 }
+
 ScriptHandlerMgr* ScriptHandlerMgr::getInstance()
 {
     if (NULL == _scriptHandlerMgr)
@@ -136,6 +138,11 @@ ScriptHandlerMgr* ScriptHandlerMgr::getInstance()
         _scriptHandlerMgr->init();
     }
     return _scriptHandlerMgr;
+}
+
+void ScriptHandlerMgr::destroyInstance()
+{
+    CC_SAFE_DELETE(_scriptHandlerMgr);
 }
 
 void ScriptHandlerMgr::init()
