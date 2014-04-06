@@ -284,6 +284,12 @@ public:
     virtual std::string getWritablePath() const = 0;
     
     /**
+     *  Gets the cache path.
+     *  @return  The cache path that can be write/read a file in
+     */
+    virtual std::string getCachePath() const = 0;
+
+    /**
      *  Checks whether a file exists.
      *
      *  @note If a relative path was passed in, it will be inserted a default root path at the beginning.
