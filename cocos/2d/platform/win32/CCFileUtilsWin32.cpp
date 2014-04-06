@@ -321,11 +321,13 @@ string FileUtilsWin32::getWritablePath() const
 
 string FileUtilsWin32::getCachePath() const
 {
-    char path[CC_MAX_PATH];
-    GetTempPath(CC_MAX_PATH, path);
-    string ret((char*)path);
-    ret = convertPathFormatToUnixStyle(ret);
-    return ret;
+    WCHAR utf16Path[CC_MAX_PATH] = {0};
+    GetTempPathW(sizeof(utf16Path)-1, utf16Path);
+
+    char utf8Path[CC_MAX_PATH] = {0};
+    int nNum = WideCharToMultiByte(CP_UTF8, 0, utf16Path, -1, utf8Path, sizeof(utf8Path), NULL, NULL);
+
+    return convertPathFormatToUnixStyle(utf8Path);
 }
 
 NS_CC_END
