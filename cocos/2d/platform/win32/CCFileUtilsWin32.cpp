@@ -319,6 +319,15 @@ string FileUtilsWin32::getWritablePath() const
     return ret;
 }
 
+string FileUtilsWin32::getCachePath() const
+{
+    char path[CC_MAX_PATH];
+    GetTempPath(CC_MAX_PATH, path);
+    string ret((char*)path);
+    ret = convertPathFormatToUnixStyle(ret);
+    return ret;
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

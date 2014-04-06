@@ -50,6 +50,7 @@ public:
     /* override funtions */
     bool init();
     virtual std::string getWritablePath() const;
+    virtual std::string getCachePath() const;
     virtual bool isAbsolutePath(const std::string& strPath) const;
 protected:
 
