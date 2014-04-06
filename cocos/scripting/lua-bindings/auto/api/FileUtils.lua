@@ -90,6 +90,11 @@
 -- @function [parent=#FileUtils] getWritablePath 
 -- @param self
 -- @return string#string ret (return value: string)
+
+--------------------------------
+-- @function [parent=#FileUtils] getCachePath 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#FileUtils] destroyInstance 
