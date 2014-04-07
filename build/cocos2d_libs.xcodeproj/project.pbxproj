@@ -1147,8 +1147,6 @@
 		1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3C842184F14F700CF29B5 /* CCValue.cpp */; };
 		1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
 		1AE3C847184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
-		1F33634518E379670074764D /* CCRefPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634318E379670074764D /* CCRefPtr.cpp */; };
-		1F33634618E379670074764D /* CCRefPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634318E379670074764D /* CCRefPtr.cpp */; };
 		1F33634718E379670074764D /* CCRefPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F33634418E379670074764D /* CCRefPtr.h */; };
 		1F33634818E379670074764D /* CCRefPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F33634418E379670074764D /* CCRefPtr.h */; };
 		2905FA4018CF08D100240AA3 /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9E918CF08D000240AA3 /* CocosGUI.cpp */; };
@@ -2338,7 +2336,6 @@
 		1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		1AE3C842184F14F700CF29B5 /* CCValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCValue.cpp; path = ../base/CCValue.cpp; sourceTree = "<group>"; };
 		1AE3C843184F14F700CF29B5 /* CCValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCValue.h; path = ../base/CCValue.h; sourceTree = "<group>"; };
-		1F33634318E379670074764D /* CCRefPtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCRefPtr.cpp; path = ../base/CCRefPtr.cpp; sourceTree = "<group>"; };
 		1F33634418E379670074764D /* CCRefPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCRefPtr.h; path = ../base/CCRefPtr.h; sourceTree = "<group>"; };
 		2905F9E918CF08D000240AA3 /* CocosGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUI.cpp; sourceTree = "<group>"; };
 		2905F9EA18CF08D000240AA3 /* CocosGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUI.h; sourceTree = "<group>"; };
@@ -3071,7 +3068,6 @@
 				1A5700BC180BC6060088DEC7 /* CCPlatformMacros.h */,
 				1A5700B9180BC6060088DEC7 /* CCRef.cpp */,
 				1A5700BA180BC6060088DEC7 /* CCRef.h */,
-				1F33634318E379670074764D /* CCRefPtr.cpp */,
 				1F33634418E379670074764D /* CCRefPtr.h */,
 				1A5700BD180BC6060088DEC7 /* CCSet.cpp */,
 				1A5700BE180BC6060088DEC7 /* CCSet.h */,
@@ -6375,7 +6371,6 @@
 				2905FA4A18CF08D100240AA3 /* UICheckBox.cpp in Sources */,
 				1A9DCA23180E6955007A3AD4 /* ccFPSImages.c in Sources */,
 				1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
-				1F33634518E379670074764D /* CCRefPtr.cpp in Sources */,
 				1A9DCA2F180E6955007A3AD4 /* CCScheduler.cpp in Sources */,
 				1A9DCA37180E6955007A3AD4 /* cocos2d.cpp in Sources */,
 				2905FA5E18CF08D100240AA3 /* UILayoutParameter.cpp in Sources */,
@@ -6655,7 +6650,6 @@
 				1A570147180BC9460088DEC7 /* CCEventDispatcher.cpp in Sources */,
 				1A57014B180BC9460088DEC7 /* CCEventKeyboard.cpp in Sources */,
 				1A57014F180BC9460088DEC7 /* CCEventListener.cpp in Sources */,
-				1F33634618E379670074764D /* CCRefPtr.cpp in Sources */,
 				1A570153180BC9460088DEC7 /* CCEventListenerAcceleration.cpp in Sources */,
 				1A570157180BC9460088DEC7 /* CCEventListenerCustom.cpp in Sources */,
 				06C0F2F0186AD824003594D5 /* ObjectFactory.cpp in Sources */,

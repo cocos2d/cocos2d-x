@@ -26,23 +26,48 @@
 #ifndef __CC_REF_PTR_H__
 #define __CC_REF_PTR_H__
 
-#include "CCPlatformMacros.h"
-#include "ccConfig.h"
+#include "CCRef.h"
 #include <type_traits>
 
 NS_CC_BEGIN
 
-class Ref;
-
 /**
- * Utility/support functions for RefPtr.
+ * Utility/support macros. Defined to enable RefPtr<T> to contain types like 'const T' because we do not
+ * regard retain()/release() as affecting mutability of state.
  */
-namespace RefPtrSupportFunctions
-{
-    void safeRetainRef(const void * refPtr);
-    
-    void safeReleaseRef(const void * refPtr);
-}
+#define CC_REF_PTR_SAFE_RETAIN(ptr)\
+    \
+    do\
+    {\
+        if (ptr)\
+        {\
+            const_cast<Ref*>(static_cast<const Ref*>(ptr))->retain();\
+        }\
+    \
+    }   while (0);
+
+#define CC_REF_PTR_SAFE_RELEASE(ptr)\
+    \
+    do\
+    {\
+        if (ptr)\
+        {\
+            const_cast<Ref*>(static_cast<const Ref*>(ptr))->release();\
+        }\
+    \
+    }   while (0);
+
+#define CC_REF_PTR_SAFE_RELEASE_NULL(ptr)\
+    \
+    do\
+    {\
+        if (ptr)\
+        {\
+            const_cast<Ref*>(static_cast<const Ref*>(ptr))->release();\
+            ptr = nullptr;\
+        }\
+    \
+    }   while (0);
 
 /**
  * Wrapper class which maintains a strong reference to a cocos2dx cocos2d::Ref* type object.
@@ -57,38 +82,52 @@ namespace RefPtrSupportFunctions
 template <typename T> class RefPtr
 {
 public:
+    RefPtr()
+	: _ptr(nullptr)
+	{
+	}
 
-    RefPtr() = default;
-    
     inline RefPtr(T * ptr)
     :
-        _ptr(ptr)
+        _ptr(const_cast<typename std::remove_const<T>::type*>(ptr))     // Const cast allows RefPtr<T> to reference objects marked const too.
     {
-        RefPtrSupportFunctions::safeRetainRef(_ptr);
+        CC_REF_PTR_SAFE_RETAIN(_ptr);
+    }
+    
+    inline RefPtr(std::nullptr_t ptr)
+    :
+        _ptr(nullptr)
+    {
+        
     }
     
     inline RefPtr(const RefPtr<T> & other)
     :
         _ptr(other._ptr)
     {
-        RefPtrSupportFunctions::safeRetainRef(_ptr);
+        CC_REF_PTR_SAFE_RETAIN(_ptr);
     }
     
     inline ~RefPtr()
     {
-        RefPtrSupportFunctions::safeReleaseRef(_ptr);
-        _ptr = nullptr;
+        CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
     }
     
     inline RefPtr & operator = (const RefPtr<T> & other)
     {
         if (other._ptr != _ptr)
         {
-            RefPtrSupportFunctions::safeRetainRef(other._ptr);
-            RefPtrSupportFunctions::safeReleaseRef(_ptr);
+            CC_REF_PTR_SAFE_RETAIN(other._ptr);
+            CC_REF_PTR_SAFE_RELEASE(_ptr);
             _ptr = other._ptr;
         }
         
+        return *this;
+    }
+    
+    inline RefPtr & operator = (std::nullptr_t other)
+    {
+        CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
         return *this;
     }
     
@@ -96,27 +135,35 @@ public:
     {
         if (other != _ptr)
         {
-            RefPtrSupportFunctions::safeRetainRef(other);
-            RefPtrSupportFunctions::safeReleaseRef(_ptr);
-            _ptr = other;
+            CC_REF_PTR_SAFE_RETAIN(other);
+            CC_REF_PTR_SAFE_RELEASE(_ptr);
+            _ptr = const_cast<typename std::remove_const<T>::type*>(other);     // Const cast allows RefPtr<T> to reference objects marked const too.
         }
         
         return *this;
     }
     
-    inline operator T * () const { return _ptr; }
+    // Note: using reinterpret_cast<> instead of static_cast<> here because it doesn't require type info.
+    // Since we verify the correct type cast at compile time on construction/assign we don't need to know the type info
+    // here. Not needing the type info here enables us to use these operations in inline functions in header files when
+    // the type pointed to by this class is only forward referenced.
+    
+    inline operator T * () const { return reinterpret_cast<T*>(_ptr); }
     
     inline T & operator * () const
     {
         CCASSERT(_ptr, "Attempt to dereference a null pointer!");
-        return *_ptr;
+        return reinterpret_cast<T&>(*_ptr);
     }
     
     inline T * operator->() const
     {
         CCASSERT(_ptr, "Attempt to dereference a null pointer!");
-        return _ptr;
+        return reinterpret_cast<T*>(_ptr);
     }
+    
+    inline T * get() const { return reinterpret_cast<T*>(_ptr); }
+    
     
     inline bool operator == (const RefPtr<T> & other) const { return _ptr == other._ptr; }
     
@@ -174,19 +221,16 @@ public:
         
     inline operator bool() const { return _ptr != nullptr; }
         
-    inline T * get() const { return _ptr; }
-        
     inline void reset()
     {
-        RefPtrSupportFunctions::safeReleaseRef(_ptr);
-        _ptr = nullptr;
+        CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
     }
         
     inline void swap(RefPtr<T> & other)
     {
         if (&other != this)
         {
-            T * tmp = _ptr;
+            Ref * tmp = _ptr;
             _ptr = other._ptr;
             other._ptr = tmp;
         }
@@ -208,13 +252,12 @@ public:
      */
     inline void weakAssign(const RefPtr<T> & other)
     {
-        RefPtrSupportFunctions::safeReleaseRef(_ptr);
+        CC_REF_PTR_SAFE_RELEASE(_ptr);
         _ptr = other._ptr;
     }
     
 private:
-
-    T * _ptr = nullptr;
+    Ref * _ptr;
 };
     
 /**
@@ -232,6 +275,13 @@ template<class T, class U> RefPtr<T> dynamic_pointer_cast(const RefPtr<U> & r)
 {
     return RefPtr<T>(dynamic_cast<T*>(r.get()));
 }
+
+/**
+ * Done with these macros.
+ */
+#undef CC_REF_PTR_SAFE_RETAIN
+#undef CC_REF_PTR_SAFE_RELEASE
+#undef CC_REF_PTR_SAFE_RELEASE_NULL
 
 NS_CC_END
 
