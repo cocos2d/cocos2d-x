@@ -223,9 +223,37 @@ std::string NewSpriteTest::subtitle() const
     return "SpriteTest";
 }
 
+class SpriteInGroupCommand : public Sprite
+{
+protected:
+    GroupCommand _spriteWrapperCommand;
+public:
+    static SpriteInGroupCommand* create(const std::string& filename);
+    
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+};
+
+SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
+{
+    SpriteInGroupCommand* sprite = new SpriteInGroupCommand();
+    sprite->initWithFile(filename);
+    sprite->autorelease();
+    return sprite;
+}
+
+void SpriteInGroupCommand::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+{
+    CCASSERT(renderer, "Render is null");
+    _spriteWrapperCommand.init(_globalZOrder);
+    renderer->addCommand(&_spriteWrapperCommand);
+    renderer->pushGroup(_spriteWrapperCommand.getRenderQueueID());
+    Sprite::draw(renderer, transform, transformUpdated);
+    renderer->popGroup();
+}
+
 GroupCommandTest::GroupCommandTest()
 {
-    auto sprite = Sprite::create("Images/grossini.png");
+    auto sprite = SpriteInGroupCommand::create("Images/grossini.png");
     Size winSize = Director::getInstance()->getWinSize();
     sprite->setPosition(winSize.width/2,winSize.height/2);
     addChild(sprite);
