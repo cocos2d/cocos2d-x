@@ -35,6 +35,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(NewSpriteTest),
     CL(NewSpriteBatchTest),
+    CL(GroupCommandTest),
     CL(NewClippingNodeTest),
     CL(NewDrawNodeTest),
     CL(NewCullingTest),
@@ -220,6 +221,28 @@ std::string NewSpriteTest::title() const
 std::string NewSpriteTest::subtitle() const
 {
     return "SpriteTest";
+}
+
+GroupCommandTest::GroupCommandTest()
+{
+    auto sprite = Sprite::create("Images/grossini.png");
+    Size winSize = Director::getInstance()->getWinSize();
+    sprite->setPosition(winSize.width/2,winSize.height/2);
+    addChild(sprite);
+}
+
+GroupCommandTest::~GroupCommandTest()
+{
+}
+
+std::string GroupCommandTest::title() const
+{
+    return "Renderer";
+}
+
+std::string GroupCommandTest::subtitle() const
+{
+    return "GroupCommandTest: You should see a sprite";
 }
 
 //-------- New Sprite Batch Test
