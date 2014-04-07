@@ -340,6 +340,26 @@ void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive
         }
     }
     
+    // Bug fix: ensure there are no references to the node in the list of listeners to be added.
+    // If we find any listeners associated with the destroyed node in this list then remove them.
+    // This is to catch the scenario where the node gets destroyed before it's listener
+    // is added into the event dispatcher fully. This could happen if a node registers a listener
+    // and gets destroyed while we are dispatching an event (touch etc.)
+    for (auto iter = _toAddedListeners.begin(); iter != _toAddedListeners.end(); )
+    {
+        EventListener * listener = *iter;
+            
+        if (listener->getSceneGraphPriority() == target)
+        {
+            listener->release();
+            iter = _toAddedListeners.erase(iter);
+        }
+        else
+        {
+            ++iter;
+        }
+    }
+    
     if (recursive)
     {
         const auto& children = target->getChildren();
