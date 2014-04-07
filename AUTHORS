@@ -801,6 +801,9 @@ Developers:
         
     zukkun
         Fixed incorrect function invocation in PhysicsBody::setAngularVelocityLimit
+        
+    dbaack
+        Fixed a bug that removing and re-adding an event listener will trigger assert
     
 Retired Core Developers:
     WenSheng Yang
