@@ -807,6 +807,9 @@ Developers:
         
     zakmandhro
         A typo fix in RELEASE_NOTES.md
+        
+    mgcL
+        A potential memory leak fix in value's default constructor
     
 Retired Core Developers:
     WenSheng Yang
