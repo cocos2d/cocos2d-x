@@ -804,6 +804,9 @@ Developers:
         
     dbaack
         Fixed a bug that removing and re-adding an event listener will trigger assert
+        
+    zakmandhro
+        A typo fix in RELEASE_NOTES.md
     
 Retired Core Developers:
     WenSheng Yang
