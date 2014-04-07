@@ -123,6 +123,8 @@ protected:
 
     //Draw the previews queued quads and flush previous context
     void flush();
+    
+    void visitRenderQueue(const RenderQueue& queue);
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
