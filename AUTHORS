@@ -807,6 +807,7 @@ Developers:
         
     mgcL
         A potential memory leak fix in value's default constructor
+        Added ScriptHandlerMgr::destroyInstance to avoid memory leak
     
 Retired Core Developers:
     WenSheng Yang
