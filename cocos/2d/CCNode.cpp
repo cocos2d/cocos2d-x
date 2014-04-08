@@ -1451,13 +1451,13 @@ void Node::setAdditionalTransform(kmMat4* additionalTransform)
 AffineTransform Node::getParentToNodeAffineTransform() const
 {
     AffineTransform ret;
-    kmMat4 ret4 = getParentToNodeTransform();
+    Matrix ret4 = getParentToNodeTransform();
 
-    GLToCGAffine(ret4.mat,&ret);
+    GLToCGAffine(ret4.m,&ret);
     return ret;
 }
 
-const kmMat4& Node::getParentToNodeTransform() const
+const Matrix& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
         kmMat4Inverse(&_inverse, &_transform);
