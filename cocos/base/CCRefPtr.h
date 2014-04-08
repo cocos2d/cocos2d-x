@@ -90,7 +90,7 @@ public:
         
     }
     
-    inline RefPtr(RefPtr && other)
+    inline RefPtr(RefPtr<T> && other)
     {
         _ptr = other._ptr;
         other._ptr = nullptr;
