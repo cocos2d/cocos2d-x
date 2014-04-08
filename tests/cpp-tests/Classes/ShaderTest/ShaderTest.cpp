@@ -6,7 +6,7 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    9
+#define MAX_LAYER    8
 
 static Layer* createShaderLayer(int nIndex)
 {
@@ -20,7 +20,6 @@ static Layer* createShaderLayer(int nIndex)
     case 5: return new ShaderPlasma();
     case 6: return new ShaderBlur();
     case 7: return new ShaderRetroEffect();
-    case 8: return new ShaderFail();
     }
 
     return NULL;
@@ -743,58 +742,6 @@ std::string ShaderRetroEffect::title() const
 std::string ShaderRetroEffect::subtitle() const
 {
     return "sin() effect with moving colors";
-}
-
-// ShaderFail
-const GLchar *shader_frag_fail = "\n\
-#ifdef GL_ES					\n\
-precision lowp float;			\n\
-#endif							\n\
-\n\
-varying vec2 v_texCoord;				\n\
-uniform sampler2D CC_Texture0;			\n\
-\n\
-vec4 colors[10];						\n\
-\n\
-void main(void)								\n\
-{											\n\
-colors[0] = vec4(1,0,0,1);				\n\
-colors[1] = vec4(0,1,0,1);				\n\
-colors[2] = vec4(0,0,1,1);				\n\
-colors[3] = vec4(0,1,1,1);				\n\
-colors[4] = vec4(1,0,1,1);				\n\
-colors[5] = vec4(1,1,0,1);				\n\
-colors[6] = vec4(1,1,1,1);				\n\
-colors[7] = vec4(1,0.5,0,1);			\n\
-colors[8] = vec4(1,0.5,0.5,1);			\n\
-colors[9] = vec4(0.5,0.5,1,1);			\n\
-\n\
-int y = int( mod(gl_FragCoord.y / 3.0, 10.0 ) );						\n\
-gl_FragColor = colors[y] * texture2D(CC_Texture0, v_texCoord);			\n\
-}																			\n\
-\n";
-
-ShaderFail::ShaderFail()
-{
-    auto p = new GLProgram();
-    p->initWithByteArrays(ccPositionTexture_vert, shader_frag_fail);
-    
-    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
-    
-    p->link();
-    p->updateUniforms();
-    p->release();
-}
-
-std::string ShaderFail::title() const
-{
-    return "Shader: Invalid shader";
-}
-
-std::string ShaderFail::subtitle() const
-{
-    return "See console for output with useful error log";
 }
 
 ///---------------------------------------
