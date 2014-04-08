@@ -981,7 +981,7 @@ void Label::drawShadowWithoutBlur()
     setColor(oldColor);
 }
 
-void Label::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Label::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);

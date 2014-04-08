@@ -134,7 +134,7 @@ public:
     TMXOrthoObjectsTest(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     virtual std::string subtitle() const override;
 protected:
     CustomCommand _renderCmd;
@@ -147,7 +147,7 @@ public:
     TMXIsoObjectsTest(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     virtual std::string subtitle() const override;
 protected:
     CustomCommand _renderCmd;
@@ -292,7 +292,7 @@ public:
     TMXGIDObjectsTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 protected:
     CustomCommand _renderCmd;

@@ -213,7 +213,7 @@ Atlas1::~Atlas1()
     _textureAtlas->release();
 }
 
-void Atlas1::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Atlas1::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this, transform, transformUpdated);
@@ -532,7 +532,7 @@ Atlas4::Atlas4()
     schedule( schedule_selector(Atlas4::step), 0.1f);
 }
 
-void Atlas4::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Atlas4::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this, transform, transformUpdated);
@@ -1660,7 +1660,7 @@ std::string LabelBMFontBounds::subtitle() const
     return "You should see string enclosed by a box";
 }
 
-void LabelBMFontBounds::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void LabelBMFontBounds::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this, transform, transformUpdated);

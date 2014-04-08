@@ -923,7 +923,7 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Matrix& transform, bool transformUpdated);
     virtual void draw() final;
 
     /**

@@ -160,7 +160,7 @@ public:
      * @lua NA
      */
     virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     virtual void update(float dt) override;
 
     virtual void onEnter() override;

@@ -137,7 +137,7 @@ void Box2DTestLayer::createResetButton()
 
 }
 
-void Box2DTestLayer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Box2DTestLayer::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     //
     // IMPORTANT:

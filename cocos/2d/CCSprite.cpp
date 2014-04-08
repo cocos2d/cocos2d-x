@@ -588,7 +588,7 @@ void Sprite::updateTransform(void)
 
 // draw
 
-void Sprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Sprite::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     // Don't do calculate the culling if the transform was not updated
     _insideBounds = transformUpdated ? isInsideBounds() : _insideBounds;

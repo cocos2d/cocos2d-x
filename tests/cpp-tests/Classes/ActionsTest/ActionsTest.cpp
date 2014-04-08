@@ -1349,7 +1349,7 @@ void ActionFollow::onEnter()
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
 }
 
-void ActionFollow::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ActionFollow::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this, transform, transformUpdated);
@@ -1663,7 +1663,7 @@ ActionCatmullRomStacked::~ActionCatmullRomStacked()
     CC_SAFE_RELEASE(_array2);
 }
 
-void ActionCatmullRomStacked::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ActionCatmullRomStacked::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
@@ -1783,7 +1783,7 @@ ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
     CC_SAFE_RELEASE(_array);
 }
 
-void ActionCardinalSplineStacked::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ActionCardinalSplineStacked::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
@@ -2165,7 +2165,7 @@ ActionCatmullRom::~ActionCatmullRom()
     _array2->release();
 }
 
-void ActionCatmullRom::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ActionCatmullRom::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     
@@ -2270,7 +2270,7 @@ ActionCardinalSpline::~ActionCardinalSpline()
     _array->release();
 }
 
-void ActionCardinalSpline::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ActionCardinalSpline::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     ActionsDemo::draw(renderer, transform, transformUpdated);
     

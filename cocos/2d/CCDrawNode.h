@@ -92,7 +92,7 @@ public:
     void onDraw(const kmMat4 &transform, bool transformUpdated);
     
     // Overrides
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();

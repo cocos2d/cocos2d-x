@@ -85,7 +85,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     /**
     * @js NA
     * @lua NA

@@ -403,7 +403,7 @@ void MotionStreak::onDraw(const kmMat4 &transform, bool transformUpdated)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
 }
 
-void MotionStreak::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void MotionStreak::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if(_nuPoints <= 1)
         return;

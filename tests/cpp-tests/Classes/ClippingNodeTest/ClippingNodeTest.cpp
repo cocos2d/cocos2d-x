@@ -596,7 +596,7 @@ void RawStencilBufferTest::setup()
     Director::getInstance()->setAlphaBlending(true);
 }
 
-void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void RawStencilBufferTest::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {    
     auto winPoint = Point(Director::getInstance()->getWinSize());
     

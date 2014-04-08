@@ -378,7 +378,7 @@ void Armature::update(float dt)
     _armatureTransformDirty = false;
 }
 
-void Armature::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Armature::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if (_parentBone == nullptr && _batchNode == nullptr)
     {

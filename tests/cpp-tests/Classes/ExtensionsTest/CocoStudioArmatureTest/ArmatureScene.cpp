@@ -1068,7 +1068,7 @@ void TestColliderDetector::update(float delta)
         }
     }
 }
-void TestColliderDetector::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, transformUpdated);
@@ -1109,7 +1109,7 @@ std::string TestBoundingBox::title() const
 {
     return "Test BoundingBox";
 }
-void TestBoundingBox::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TestBoundingBox::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, transformUpdated);

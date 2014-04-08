@@ -205,7 +205,7 @@ bool DrawNode::init()
     return true;
 }
 
-void DrawNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void DrawNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, transformUpdated);
