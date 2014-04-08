@@ -49,12 +49,20 @@ Developers:
         Asynchronous Image loading for Emscripten
         
     DarraghCoy
-        Fix a potential crash SimpleAudioEngineOpenSL::playEffect
-        Fix some bugs with Set class
-        Add ccDrawSolidCircle
-        Add Rect::unionWithRect
-        Fix a memory leak in Set::removeAllObjects.
-        Fixed potential crashes in event dispatch while using SceneGraphPriroity listeners and added helper function to check it
+        Fixed a potential crash SimpleAudioEngineOpenSL::playEffect
+        Fixed some bugs with Set class
+        Added ccDrawSolidCircle
+        Added Rect::unionWithRect
+        Fixed a memory leak in Set::removeAllObjects
+        Fixed for unaligned memory access crash in CCBReader::readFloat()
+        Fixed for loading custom fonts on iOS when referenced from a CCB file
+        Fixed CCUserDefault.cpp compiling on Android.
+        Fixed CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue
+        Added CCDirector::popToSceneStackLevel(int level)
+        Fixed a bug that custom font can't be loaded correctly if using full path of filename on android
+        Fixed potential crashes in EventDispatch while using SceneGraphPriroity listeners and added helper function to check it
+        Fixed a protential crash in EventDispatch while unregistering listener right after it was registered
+        Adding an extra verification in Node's destructor
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -115,13 +123,6 @@ Developers:
 
     Jimmy Sambuo
         fix the bug that SimpleAudioEngine::playEffect() and playBackgroundMusic() play twice on linux
-
-    DarraghCoy
-        fix for loading custom fonts on iOS when referenced from a CCB file
-        Fix CCUserDefault.cpp compiling on Android.
-        Fixing CCFileUtils 'createXXXXWithContentsOfFile' path lookup issue.
-        Add CCDirector::popToSceneStackLevel(int level).
-        Fixing a bug that custom font can't be loaded correctly if using full path of filename on android.
 
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
@@ -348,9 +349,6 @@ Developers:
         Adds VS2012 Express template installing support.
         Fixing a logical error in CCDrawNode::drawPolygon.
         Fixing a bug that Jsb function getCPBody return type is not right.
-
-    DarraghCoy
-        Fix for unaligned memory access crash in CCBReader::readFloat().
 
     Sergej Tatarincev (SevInf)
         Making ScriptingCore.cpp compiled fine with C++11 on iOS.
@@ -810,6 +808,7 @@ Developers:
         
     mgcL
         A potential memory leak fix in value's default constructor
+        Added ScriptHandlerMgr::destroyInstance to avoid memory leak
     
 Retired Core Developers:
     WenSheng Yang

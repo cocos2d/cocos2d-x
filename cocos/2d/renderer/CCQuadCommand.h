@@ -52,7 +52,6 @@ public:
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() const { return true; }
 
-    void generateMaterialID();
     inline uint32_t getMaterialID() const { return _materialID; }
 
     inline GLuint getTextureID() const { return _textureID; }
@@ -66,6 +65,9 @@ public:
     inline BlendFunc getBlendType() const { return _blendType; }
 
     inline const kmMat4& getModelView() const { return _mv; }
+    
+private:
+    void generateMaterialID();
     
 protected:    
     uint32_t _materialID;
