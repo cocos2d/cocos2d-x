@@ -85,7 +85,7 @@ def main():
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/merge"
     ret = os.system(git_fetch_pr)
     if(ret != 0):
-        return(1)
+        return(2)
  
     #checkout
     git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"
@@ -99,7 +99,7 @@ def main():
     git_update_submodule = "git submodule update --init --force"
     ret = os.system(git_update_submodule)
     if(ret != 0):
-        return(1)
+        return(2)
 
     # Generate binding glue codes
     if(branch == 'develop'):
