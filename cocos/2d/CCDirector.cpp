@@ -395,7 +395,10 @@ void Director::setOpenGLView(GLView *openGLView)
 
         CHECK_GL_ERROR_DEBUG();
 
-//        _touchDispatcher->setDispatchEvents(true);
+        if (_eventDispatcher)
+        {
+            _eventDispatcher->setEnabled(true);
+        }
     }
 }
 
@@ -906,9 +909,11 @@ void Director::purgeDirector()
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     
-    // don't release the event handlers
-    // They are needed in case the director is run again
-//    _touchDispatcher->removeAllDelegates();
+    // Disable event dispatching
+    if (_eventDispatcher)
+    {
+        _eventDispatcher->setEnabled(false);
+    }
 
     if (_runningScene)
     {
