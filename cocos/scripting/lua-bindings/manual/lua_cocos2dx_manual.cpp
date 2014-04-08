@@ -26,7 +26,12 @@
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
+
+#if defined(_MSC_VER) || defined(__MINGW32__)
+#include <WS2tcpip.h>
+#else
 #include <sys/socket.h>
+#endif
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
