@@ -1005,12 +1005,6 @@ void Console::log(const char* buf)
     }
 }
 
-void Console::sendSocket(int fd, const std::string& str)
-{
-    CCLOG("fd: %d, str:%s.", fd, str.c_str());
-    send(fd, str.c_str(), str.length(), 0);
-}
-
 //
 // Main Loop
 //
