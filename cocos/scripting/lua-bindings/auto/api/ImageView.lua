@@ -6,7 +6,7 @@
 --------------------------------
 -- @function [parent=#ImageView] loadTexture 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
@@ -35,10 +35,16 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#ImageView] create 
+-- overload function: create(string, ccui.TextureResType)
+--          
+-- overload function: create()
+--          
+-- @function [parent=#ImageView] create
 -- @param self
--- @return ImageView#ImageView ret (return value: ccui.ImageView)
-        
+-- @param #string str
+-- @param #ccui.TextureResType texturerestype
+-- @return ImageView#ImageView ret (retunr value: ccui.ImageView)
+
 --------------------------------
 -- @function [parent=#ImageView] createInstance 
 -- @param self

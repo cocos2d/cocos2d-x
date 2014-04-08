@@ -31,9 +31,9 @@ NS_CC_BEGIN
 const Value Value::Null;
 
 Value::Value()
-: _vectorData(new ValueVector())
-, _mapData(new ValueMap())
-, _intKeyMapData(new ValueMapIntKey())
+: _vectorData(nullptr)
+, _mapData(nullptr)
+, _intKeyMapData(nullptr)
 , _type(Type::NONE)
 {
     

@@ -43,8 +43,16 @@ namespace cocostudio
         static WidgetReader* getInstance();
         static void purge();
         
-        virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
-        virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
+        virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
+                                                const rapidjson::Value& options);
+        
+        virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
+                                                     const rapidjson::Value& options);
+        
+    protected:
+        std::string getResourcePath(const rapidjson::Value& dict,
+                                    const std::string& key,
+                                    cocos2d::ui::TextureResType texType);
     };
 }
 
