@@ -61,7 +61,8 @@ Developers:
         Added CCDirector::popToSceneStackLevel(int level)
         Fixed a bug that custom font can't be loaded correctly if using full path of filename on android
         Fixed potential crashes in EventDispatch while using SceneGraphPriroity listeners and added helper function to check it
-        Fixed a protential crash in EventDispatch while unregistering listener right after it was registered.
+        Fixed a protential crash in EventDispatch while unregistering listener right after it was registered
+        Adding an extra verification in Node's destructor
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
