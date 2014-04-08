@@ -79,7 +79,7 @@ public:
 
     //TODO manage GLView inside Render itself
     void initGLView();
-    
+
     /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
 
@@ -97,6 +97,9 @@ public:
 
     /** Renders into the GLView all the queued `RenderCommand` objects */
     void render();
+
+    /** Cleans all `RenderCommand`s in the queue */
+    void clean();
 
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }

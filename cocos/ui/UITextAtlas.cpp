@@ -64,6 +64,23 @@ void TextAtlas::initRenderer()
     _labelAtlasRenderer = LabelAtlas::create();
     addProtectedChild(_labelAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
+    
+TextAtlas* TextAtlas::create(const std::string &stringValue,
+                             const std::string &charMapFile,
+                             int itemWidth,
+                             int itemHeight,
+                             const std::string &startCharMap)
+{
+    TextAtlas* widget = new TextAtlas();
+    if (widget && widget->init())
+    {
+        widget->autorelease();
+        widget->setProperty(stringValue, charMapFile, itemWidth, itemHeight, startCharMap);
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
 
 void TextAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
 {

@@ -137,14 +137,6 @@ protected:
     CustomCommand _customCommand;
 };
 
-class ShaderFail : public ShaderTestDemo
-{
-public:
-    ShaderFail();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
-
 class ShaderTestScene : public TestScene
 {
 public:

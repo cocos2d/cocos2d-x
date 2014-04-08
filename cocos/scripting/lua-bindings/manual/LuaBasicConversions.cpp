@@ -780,6 +780,44 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue )
     return ok;
 }
 
+bool luaval_to_kmMat4(lua_State* L, int lo, kmMat4* outValue )
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+        ok = false;
+#endif
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L,i + 1);
+            lua_gettable(L,lo);
+            if (tolua_isnumber(L, -1, 0, &tolua_err))
+            {
+                outValue->mat[i] = tolua_tonumber(L, -1, 0);
+            }
+            else
+            {
+                outValue->mat[i] = 0;
+            }
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
 bool luaval_to_array(lua_State* L,int lo, __Array** outValue)
 {
     if (NULL == L || NULL == outValue)
