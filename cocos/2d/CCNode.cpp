@@ -137,10 +137,7 @@ Node::Node(void)
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
-    
-    kmMat4Identity(&_transform);
-    kmMat4Identity(&_inverse);
-    kmMat4Identity(&_additionalTransform);
+    _transform = _inverse = _additionalTransform = Matrix::identity();
 }
 
 Node::~Node()
@@ -992,11 +989,10 @@ void Node::visit(Renderer* renderer, const Matrix &parentTransform, bool parentT
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-kmMat4 Node::transform(const kmMat4& parentTransform)
+Matrix Node::transform(const Matrix& parentTransform)
 {
-    kmMat4 ret = this->getNodeToParentTransform();
-    kmMat4Multiply(&ret, &parentTransform, &ret);
-
+    Matrix ret = this->getNodeToParentTransform();
+    ret  = parentTransform * ret;
     return ret;
 }
 
@@ -1368,13 +1364,13 @@ const Matrix& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        kmScalar mat[] = {
+        float mat[] = {
                         cy * _scaleX,   sy * _scaleX,   0,          0,
                         -sx * _scaleY,  cx * _scaleY,   0,          0,
                         0,              0,              _scaleZ,    0,
                         x,              y,              z,          1 };
         
-        kmMat4Fill(&_transform, mat);
+        _transform.set(mat);
 
         // XXX
         // FIX ME: Expensive operation.
@@ -1382,12 +1378,12 @@ const Matrix& Node::getNodeToParentTransform() const
         if(_rotationY) {
             kmMat4 rotY;
             kmMat4RotationY(&rotY,CC_DEGREES_TO_RADIANS(_rotationY));
-            kmMat4Multiply(&_transform, &_transform, &rotY);
+            _transform = _transform * rotY;
         }
         if(_rotationX) {
             kmMat4 rotX;
             kmMat4RotationX(&rotX,CC_DEGREES_TO_RADIANS(_rotationX));
-            kmMat4Multiply(&_transform, &_transform, &rotX);
+            _transform = _transform * rotX;
         }
 
         // XXX: Try to inline skew
@@ -1399,21 +1395,21 @@ const Matrix& Node::getNodeToParentTransform() const
                                   0,  0,  1, 0,
                                   0,  0,  0, 1};
 
-            kmMat4Multiply(&_transform, &_transform, &skewMatrix);
+            _transform = _transform * skewMatrix;
 
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
                 // XXX: Argh, kmMat needs a "translate" method.
                 // XXX: Although this is faster than multiplying a vec4 * mat4
-                _transform.mat[12] += _transform.mat[0] * -_anchorPointInPoints.x + _transform.mat[4] * -_anchorPointInPoints.y;
-                _transform.mat[13] += _transform.mat[1] * -_anchorPointInPoints.x + _transform.mat[5] * -_anchorPointInPoints.y;
+                _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
+                _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
             }
         }
 
         if (_useAdditionalTransform)
         {
-            kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
+            _transform = _transform * _additionalTransform;
         }
 
         _transformDirty = false;
@@ -1422,7 +1418,7 @@ const Matrix& Node::getNodeToParentTransform() const
     return _transform;
 }
 
-void Node::setNodeToParentTransform(const kmMat4& transform)
+void Node::setNodeToParentTransform(const Matrix& transform)
 {
     _transform = transform;
     _transformDirty = false;
@@ -1431,12 +1427,12 @@ void Node::setNodeToParentTransform(const kmMat4& transform)
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
-    kmMat4 tmp;
-    CGAffineToGL(additionalTransform, tmp.mat);
+    Matrix tmp;
+    CGAffineToGL(additionalTransform, tmp.m);
     setAdditionalTransform(&tmp);
 }
 
-void Node::setAdditionalTransform(kmMat4* additionalTransform)
+void Node::setAdditionalTransform(Matrix* additionalTransform)
 {
     if(additionalTransform == nullptr) {
         _useAdditionalTransform = false;
@@ -1460,7 +1456,7 @@ AffineTransform Node::getParentToNodeAffineTransform() const
 const Matrix& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        kmMat4Inverse(&_inverse, &_transform);
+        _transform.invert(&_inverse);
         _inverseDirty = false;
     }
 
@@ -1495,13 +1491,11 @@ AffineTransform Node::getWorldToNodeAffineTransform() const
     return AffineTransformInvert(this->getNodeToWorldAffineTransform());
 }
 
-kmMat4 Node::getWorldToNodeTransform() const
+Matrix Node::getWorldToNodeTransform() const
 {
-    kmMat4 tmp, tmp2;
-
-    tmp2 = this->getNodeToWorldTransform();
-    kmMat4Inverse(&tmp, &tmp2);
-    return tmp;
+    Matrix result = getNodeToWorldTransform();
+    result.invert();
+    return result;
 }
 
 

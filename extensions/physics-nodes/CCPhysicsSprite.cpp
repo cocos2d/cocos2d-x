@@ -348,13 +348,12 @@ const Matrix& PhysicsSprite::getNodeToParentTransform() const
 	}
 
     
-    kmScalar mat[] = {  (kmScalar)rot.x * _scaleX, (kmScalar)rot.y * _scaleX, 0,  0,
+    float mat[] = {  (kmScalar)rot.x * _scaleX, (kmScalar)rot.y * _scaleX, 0,  0,
                         (kmScalar)-rot.y * _scaleY, (kmScalar)rot.x * _scaleY,  0,  0,
                         0,  0,  1,  0,
                         x,	y,  0,  1};
-
-
-    kmMat4Fill(&_transform, mat);
+    
+    _transform.set(mat);
     
     return _transform;
 

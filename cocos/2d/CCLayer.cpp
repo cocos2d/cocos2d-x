@@ -591,7 +591,8 @@ void LayerColor::draw(Renderer *renderer, const Matrix &transform, bool transfor
     {
         kmVec3 pos;
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
-        kmVec3TransformCoord(&pos, &pos, &_modelViewTransform);
+        kmMat4 modelViewTransformInKazmath = _modelViewTransform;
+        kmVec3TransformCoord(&pos, &pos, &modelViewTransformInKazmath);
         _noMVPVertices[i] = Vector3(pos.x,pos.y,pos.z);
     }
 }
