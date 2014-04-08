@@ -393,10 +393,10 @@ void Director::setOpenGLView(GLView *openGLView)
 
         CHECK_GL_ERROR_DEBUG();
 
-		if (_eventDispatcher)
-		{
-			_eventDispatcher->setEnabled(true);
-		}
+        if (_eventDispatcher)
+        {
+            _eventDispatcher->setEnabled(true);
+        }
     }
 }
 
@@ -751,10 +751,10 @@ void Director::purgeDirector()
     getScheduler()->unscheduleAll();
     
     // Disable event dispatching
-	if (_eventDispatcher)
-	{
-		_eventDispatcher->setEnabled(false);
-	}
+    if (_eventDispatcher)
+    {
+        _eventDispatcher->setEnabled(false);
+    }
 
     if (_runningScene)
     {
