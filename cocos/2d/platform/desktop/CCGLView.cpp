@@ -260,7 +260,7 @@ GLView::GLView()
 , _retinaFactor(1)
 , _frameZoomFactor(1.0f)
 , _mainWindow(nullptr)
-, _primaryMonitor(nullptr)
+, _monitor(nullptr)
 , _mouseX(0.0f)
 , _mouseY(0.0f)
 {
@@ -328,6 +328,17 @@ GLView* GLView::createWithFullScreen(const std::string& viewName, Size size)
     return nullptr;
 }
 
+GLView* GLView::createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
+{
+    auto ret = new GLView();
+    if(ret && ret->initWithFullscreen(viewName, videoMode, monitor)) {
+        ret->autorelease();
+        return ret;
+    }
+    
+    return nullptr;
+}
+
 
 bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
@@ -340,7 +351,7 @@ bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoo
     _mainWindow = glfwCreateWindow(rect.size.width * _frameZoomFactor,
                                    rect.size.height * _frameZoomFactor,
                                    _viewName.c_str(),
-                                   _primaryMonitor,
+                                   _monitor,
                                    nullptr);
     glfwMakeContextCurrent(_mainWindow);
 
@@ -378,21 +389,39 @@ bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoo
 
 bool GLView::initWithFullScreen(const std::string& viewName)
 {
-    _primaryMonitor = glfwGetPrimaryMonitor();
-    if (nullptr == _primaryMonitor)
+    //Create fullscreen window on primary monitor at its current video mode.
+    _monitor = glfwGetPrimaryMonitor();
+    if (nullptr == _monitor)
         return false;
 
-    const GLFWvidmode* videoMode = glfwGetVideoMode(_primaryMonitor);
+    const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
     return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f);
 }
 
 bool GLView::initWithFullScreen(const std::string &viewName, cocos2d::Size size)
 {
-    _primaryMonitor = glfwGetPrimaryMonitor();
-    if (nullptr == _primaryMonitor)
+    //Create fullscreen window on primary monitor with the video mode closest to the specified size (refresh rate and bit depth will be at GLFW defaults).
+    _monitor = glfwGetPrimaryMonitor();
+    if (nullptr == _monitor)
         return false;
     
     return initWithRect(viewName, Rect(0, 0, size.width, size.height), 1.0f);
+}
+
+bool GLView::initWithFullscreen(const std::string &viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
+{
+    //Create fullscreen on specified monitor at the specified video mode.
+    _monitor = monitor;
+    if (nullptr == _monitor)
+        return false;
+    
+    //These are soft contraints. If the video mode is retrieved at runtime, the resulting window and context should match these exactly. If invalid attribs are passed (eg. from an outdated cache), window creation will NOT fail but the actual window/context may differ.
+    glfwWindowHint(GLFW_REFRESH_RATE, videoMode.refreshRate);
+    glfwWindowHint(GLFW_RED_BITS, videoMode.redBits);
+    glfwWindowHint(GLFW_BLUE_BITS, videoMode.blueBits);
+    glfwWindowHint(GLFW_GREEN_BITS, videoMode.greenBits);
+    
+    return initWithRect(viewname, Rect(0, 0, videoMode.width, videoMode.height), 1.0f);
 }
 
 bool GLView::isOpenGLReady()
