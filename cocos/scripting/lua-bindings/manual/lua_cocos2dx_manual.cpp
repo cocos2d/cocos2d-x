@@ -4763,6 +4763,14 @@ static int lua_cocos2dx_Console_sendSocket(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
 #endif
+    cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_sendSocket'", NULL);
+        return 0;
+    }
+#endif
     
     argc = lua_gettop(tolua_S)-1;
     
@@ -4774,10 +4782,9 @@ static int lua_cocos2dx_Console_sendSocket(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 3,&arg1);
         if(!ok)
             return 0;
-        cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
         
         cobj->sendSocket(arg0, arg1.c_str());
-        return 1;
+        return 0;
     }
     ok  = true;
     CCLOG("%s has wrong number of arguments: %d, was expecting %d", "sendSocket",argc, 2);
@@ -4802,6 +4809,14 @@ static int lua_cocos2dx_Console_listenOnTCP(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
 #endif
+    cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_listenOnTCP'", NULL);
+        return 0;
+    }
+#endif
     
     argc = lua_gettop(tolua_S)-1;
     
@@ -4811,10 +4826,9 @@ static int lua_cocos2dx_Console_listenOnTCP(lua_State* tolua_S)
         ok &= luaval_to_int32(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
         
         cobj->listenOnTCP(arg0);
-        return 1;
+        return 0;
     }
     ok  = true;
     CCLOG("%s has wrong number of arguments: %d, was expecting %d", "sendSocket",argc, 2);
@@ -4839,11 +4853,18 @@ static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
 #endif
+    cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_addCommand'", NULL);
+        return 0;
+    }
+#endif
     
     argc = lua_gettop(tolua_S)-1;
     if (ok && argc == 2)
     {
-        cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
         ValueMap arg0;
         ok &= luaval_to_ccvaluemap(tolua_S, 2, &arg0);
         //
@@ -4870,7 +4891,7 @@ static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
             };
             cobj->addCommand(outValue);
         }
-        return 1;
+        return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d", "addCommand",argc, 2);
     return 0;
