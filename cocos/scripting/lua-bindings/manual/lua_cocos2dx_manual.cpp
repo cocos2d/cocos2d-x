@@ -4837,11 +4837,11 @@ static int lua_cocos2dx_Console_listenOnTCP(lua_State* tolua_S)
         return 0;
     }
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "sendSocket",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "listenOnTCP",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_sendSocket'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_listenOnTCP'.",&tolua_err);
 #endif
     
     return 0;
@@ -4916,7 +4916,7 @@ static void extendConsole(lua_State* tolua_S)
     
     tolua_beginmodule(tolua_S,"Console");
         tolua_function(tolua_S,"listenOnTCP", lua_cocos2dx_Console_listenOnTCP);
-        tolua_function(tolua_S,"sendSocket", lua_cocos2dx_Console_send);
+        tolua_function(tolua_S,"send", lua_cocos2dx_Console_send);
         tolua_function(tolua_S,"addCommand", lua_cocos2dx_Console_addCommand);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Console).name();
