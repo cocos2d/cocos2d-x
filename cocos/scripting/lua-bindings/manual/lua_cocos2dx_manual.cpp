@@ -4884,8 +4884,8 @@ static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
             ScriptHandlerMgr::getInstance()->addCustomHandler((void*)cobj, handler);
             
             struct Console::Command outValue = {
-                name.c_str(),
-                help.c_str(),
+                name,
+                help,
                 [=](int fd, const std::string& args)
                 {
                     //lua-callback, the third param;
