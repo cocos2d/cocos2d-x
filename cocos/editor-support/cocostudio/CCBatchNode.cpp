@@ -101,7 +101,7 @@ void BatchNode::removeChild(Node* child, bool cleanup)
     Node::removeChild(child, cleanup);
 }
 
-void BatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void BatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)

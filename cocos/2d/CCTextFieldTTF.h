@@ -165,7 +165,7 @@ public:
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();
 
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
 protected:
     //////////////////////////////////////////////////////////////////////////

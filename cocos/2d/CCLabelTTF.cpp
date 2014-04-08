@@ -262,7 +262,7 @@ void LabelTTF::setFlippedY(bool flippedY)
     }
 }
 
-void LabelTTF::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void LabelTTF::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if (_contentDirty)
     {

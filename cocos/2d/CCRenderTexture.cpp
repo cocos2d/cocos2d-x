@@ -383,7 +383,7 @@ void RenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
-void RenderTexture::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void RenderTexture::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     // override visit.
 	// Don't call visit on its children

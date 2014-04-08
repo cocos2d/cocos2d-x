@@ -240,7 +240,7 @@ public:
 
     virtual Rect getBoundingBox() const override;
 
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     /** Listen "come to background" message

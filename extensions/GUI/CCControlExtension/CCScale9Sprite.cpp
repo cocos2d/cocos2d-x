@@ -764,7 +764,7 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
     this->updateCapInset();
 }
 
-void Scale9Sprite::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Scale9Sprite::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if(this->_positionsAreDirty)
     {

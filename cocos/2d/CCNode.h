@@ -929,7 +929,7 @@ public:
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
     virtual void visit() final;
 
 

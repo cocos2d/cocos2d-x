@@ -553,7 +553,7 @@ void ScrollView::onAfterDraw()
     }
 }
 
-void ScrollView::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void ScrollView::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
 	// quick return if not visible
 	if (!isVisible())

@@ -108,7 +108,7 @@ void Widget::onExit()
     ProtectedNode::onExit();
 }
 
-void Widget::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Widget::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if (_enabled)
     {

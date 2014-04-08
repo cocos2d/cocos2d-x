@@ -120,7 +120,7 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 
 // override visit.
 // Don't call visit on it's children
-void ParticleBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void ParticleBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     // CAREFUL:
     // This visit is almost identical to Node#visit

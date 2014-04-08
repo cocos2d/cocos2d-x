@@ -200,7 +200,7 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     
 }
 
-void ClippingNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void ClippingNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;

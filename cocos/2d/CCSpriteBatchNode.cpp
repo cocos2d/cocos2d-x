@@ -131,7 +131,7 @@ SpriteBatchNode::~SpriteBatchNode()
 
 // override visit
 // don't call visit on it's children
-void SpriteBatchNode::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void SpriteBatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
