@@ -420,7 +420,7 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
     _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
 }
 
-void RichText::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void RichText::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if (_enabled)
     {

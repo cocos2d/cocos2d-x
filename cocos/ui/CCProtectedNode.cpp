@@ -272,7 +272,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
     child->_setLocalZOrder(localZOrder);
 }
 
-void ProtectedNode::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void ProtectedNode::visit(Renderer* renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)

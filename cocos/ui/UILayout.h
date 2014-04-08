@@ -240,7 +240,7 @@ public:
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
 
     virtual void removeChild(Node* child, bool cleanup = true) override;
     

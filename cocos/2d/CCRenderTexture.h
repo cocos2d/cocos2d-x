@@ -154,7 +154,7 @@ public:
     };
     
     // Overrides
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
 
     //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix

@@ -263,7 +263,7 @@ void TextFieldTTF::setTextColor(const Color4B &color)
     Label::setTextColor(_colorText);
 }
 
-void TextFieldTTF::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void TextFieldTTF::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if (_delegate && _delegate->onVisit(this,renderer,parentTransform,parentTransformUpdated))
     {

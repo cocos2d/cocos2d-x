@@ -938,7 +938,7 @@ void Node::visit()
     visit(renderer, parentTransform, true);
 }
 
-void Node::visit(Renderer* renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Node::visit(Renderer* renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)

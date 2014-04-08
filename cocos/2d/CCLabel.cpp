@@ -1098,7 +1098,7 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     _textSprite->visit(renderer, _modelViewTransform, parentTransformUpdated);
 }
 
-void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Label::visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if (! _visible || _originalUTF8String.empty())
     {
