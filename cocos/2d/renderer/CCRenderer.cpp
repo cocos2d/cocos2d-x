@@ -110,8 +110,6 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    RenderStackElement elelment = {DEFAULT_RENDER_QUEUE, 0};
-    _renderStack.push(elelment);
     _batchedQuadCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
 }
 
@@ -353,15 +351,6 @@ void Renderer::clean()
     _batchedQuadCommands.clear();
     _numQuads = 0;
 
-    // Clear the stack incase gl view hasn't been initialized yet
-    while(!_renderStack.empty())
-    {
-        _renderStack.pop();
-    }
-
-    // Reset render stack
-    RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
-    _renderStack.push(element);
     _lastMaterialID = 0;
 }
 

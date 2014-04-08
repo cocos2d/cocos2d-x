@@ -130,7 +130,6 @@ protected:
 
     std::stack<int> _commandGroupStack;
     
-    std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
     uint32_t _lastMaterialID;
