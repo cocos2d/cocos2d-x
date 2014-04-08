@@ -173,7 +173,8 @@ public:
     ScriptHandlerMgr(void);
     virtual ~ScriptHandlerMgr(void);
     static ScriptHandlerMgr* getInstance(void);
-        
+    static void destroyInstance(void);
+
     void addObjectHandler(void* object,int handler,ScriptHandlerMgr::HandlerType handlerType);
     void removeObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
