@@ -82,10 +82,19 @@ NS_CC_BEGIN
 template <typename T> class RefPtr
 {
 public:
-    RefPtr()
-	: _ptr(nullptr)
+    
+    inline RefPtr()
+	:
+        _ptr(nullptr)
 	{
+        
 	}
+    
+    inline RefPtr(RefPtr && other)
+    {
+        _ptr = other._ptr;
+        other._ptr = nullptr;
+    }
 
     inline RefPtr(T * ptr)
     :
@@ -113,7 +122,7 @@ public:
         CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
     }
     
-    inline RefPtr & operator = (const RefPtr<T> & other)
+    inline RefPtr<T> & operator = (const RefPtr<T> & other)
     {
         if (other._ptr != _ptr)
         {
@@ -125,13 +134,19 @@ public:
         return *this;
     }
     
-    inline RefPtr & operator = (std::nullptr_t other)
+    inline RefPtr<T> & operator = (RefPtr<T> && other)
     {
-        CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
+        if (&other != this)
+        {
+            CC_REF_PTR_SAFE_RELEASE(_ptr);
+            _ptr = other._ptr;
+            other._ptr = nullptr;
+        }
+        
         return *this;
     }
     
-    inline RefPtr & operator = (T * other)
+    inline RefPtr<T> & operator = (T * other)
     {
         if (other != _ptr)
         {
@@ -140,6 +155,12 @@ public:
             _ptr = const_cast<typename std::remove_const<T>::type*>(other);     // Const cast allows RefPtr<T> to reference objects marked const too.
         }
         
+        return *this;
+    }
+    
+    inline RefPtr<T> & operator = (std::nullptr_t other)
+    {
+        CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
         return *this;
     }
     

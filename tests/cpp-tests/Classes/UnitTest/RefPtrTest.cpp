@@ -279,6 +279,41 @@ void RefPtrTest::onEnter()
         CC_ASSERT(false == (ref1 <= ref2));
         CC_ASSERT(true == (ref1 >= ref2));
     }
+    
+    // TEST(moveConstructor)
+    {
+        auto someFunc = []() -> RefPtr<__String>
+        {
+            return __String::create("Hello world!");
+        };
+        
+        // Note: std::move will turn the rvalue into an rvalue reference and thus cause the move constructor to be invoked.
+        // Have to use this because the compiler will try and optimize how we handle the return value otherwise and skip the move constructor.
+        RefPtr<__String> theString(std::move(someFunc()));
+        CC_ASSERT(theString->getReferenceCount() == 2);
+        CC_ASSERT(theString->compare("Hello world!") == 0);
+        
+        __String * theStringPtr = theString;
+        theString.reset();
+        CC_ASSERT(theStringPtr->getReferenceCount() == 1);
+        CC_ASSERT(theStringPtr->compare("Hello world!") == 0);
+    }
+    
+    // TEST(moveAssignmentOperator)
+    {
+        auto someFunc = []() -> RefPtr<__String>
+        {
+            return __String::create("Hello world!");
+        };
+        
+        RefPtr<__String> theString(someFunc());
+        CC_ASSERT(theString->getReferenceCount() == 2);
+        CC_ASSERT(theString->compare("Hello world!") == 0);
+        
+        theString = someFunc();                             // No need to use std::move here, compiler should figure out that move semantics are appropriate for this statement.
+        CC_ASSERT(theString->getReferenceCount() == 2);
+        CC_ASSERT(theString->compare("Hello world!") == 0);
+    }
 }
 
 std::string RefPtrTest::subtitle() const
