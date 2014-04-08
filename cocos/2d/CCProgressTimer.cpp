@@ -552,7 +552,7 @@ void ProgressTimer::onDraw(const kmMat4 &transform, bool transformUpdated)
     }
 }
 
-void ProgressTimer::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void ProgressTimer::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if( ! _vertexData || ! _sprite)
         return;

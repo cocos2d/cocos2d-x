@@ -241,7 +241,7 @@ public:
     virtual Rect getBoundingBox() const override;
 
     virtual void visit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
     /** Listen "come to background" message
      It only has effect on Android.

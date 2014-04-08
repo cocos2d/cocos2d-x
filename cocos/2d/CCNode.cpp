@@ -927,7 +927,7 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const kmMat4 &transform, bool transformUpdated)
+void Node::draw(Renderer* renderer, const Matrix &transform, bool transformUpdated)
 {
 }
 

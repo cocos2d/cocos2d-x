@@ -646,7 +646,7 @@ void RenderTexture::onClearDepth()
     glClearDepth(depthClearValue);
 }
 
-void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void RenderTexture::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if (_autoDraw)
     {

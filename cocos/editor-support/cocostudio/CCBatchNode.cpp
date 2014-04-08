@@ -131,7 +131,7 @@ void BatchNode::visit(Renderer *renderer, const Matrix &parentTransform, bool pa
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void BatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void BatchNode::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     if (_children.empty())
     {

@@ -202,7 +202,7 @@ std::string Box2DView::title() const
     return std::string(m_entry->name);
 }
 
-void Box2DView::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Box2DView::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     Layer::draw(renderer, transform, transformUpdated);
 

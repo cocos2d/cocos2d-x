@@ -1794,7 +1794,7 @@ std::string TextureDrawAtPoint::subtitle() const
     return "draws 2 textures using drawAtPoint";
 }
 
-void TextureDrawAtPoint::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     TextureDemo::draw(renderer, transform, transformUpdated);
     
@@ -1837,7 +1837,7 @@ TextureDrawInRect::~TextureDrawInRect()
     _Tex2F->release();
 }
 
-void TextureDrawInRect::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TextureDrawInRect::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     TextureDemo::draw(renderer, transform, transformUpdated);
 

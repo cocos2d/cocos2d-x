@@ -219,7 +219,7 @@ kmMat4 Skin::getNodeToWorldTransformAR() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
-void Skin::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void Skin::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     kmMat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 

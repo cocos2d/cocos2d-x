@@ -211,7 +211,7 @@ public:
 	virtual void onEnter() override;
 	virtual void onExit() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+	virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 	virtual void update(float delta);
 
 	void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
@@ -270,7 +270,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual void update(float delta);
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
     void onDraw(const kmMat4 &transform, bool transformUpdated);
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
@@ -293,7 +293,7 @@ class TestBoundingBox : public ArmatureTestLayer
 public:
 	virtual void onEnter() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+	virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 	cocostudio::Armature *armature;
 	Rect rect;

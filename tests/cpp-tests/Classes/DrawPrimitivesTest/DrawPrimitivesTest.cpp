@@ -114,7 +114,7 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 {
 }
 
-void DrawPrimitivesTest::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void DrawPrimitivesTest::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this, transform, transformUpdated);

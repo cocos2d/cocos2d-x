@@ -42,7 +42,7 @@ public:
 
     bool initWithEntryID(int entryId);
     std::string title() const;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 //    virtual void registerWithTouchDispatcher();
     bool onTouchBegan(Touch* touch, Event* event);
