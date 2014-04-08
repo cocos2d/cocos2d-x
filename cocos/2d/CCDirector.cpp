@@ -162,6 +162,8 @@ bool Director::init(void)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     _console = new Console;
 #endif
+    
+    _dirty = true;
     return true;
 }
 
@@ -267,11 +269,18 @@ void Director::drawScene()
         _openGLView->pollInputEvents();
     }
 
+   
+    
     //tick before glClear: issue #533
     if (! _paused)
     {
         _scheduler->update(_deltaTime);
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
+    }
+
+    if(!_dirty) 
+    {
+        return;
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -293,6 +302,7 @@ void Director::drawScene()
     if (_runningScene)
     {
         _runningScene->visit(_renderer, identity, false);
+        _dirty = false;
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
@@ -323,7 +333,9 @@ void Director::drawScene()
     if (_displayStats)
     {
         calculateMPF();
-    }
+    } 
+
+    
 }
 
 void Director::calculateDeltaTime()
@@ -1050,6 +1062,11 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
         CC_SAFE_RELEASE(_eventDispatcher);
         _eventDispatcher = dispatcher;
     }
+}
+
+void Director::setDirty(bool dirty)
+{
+    _dirty = dirty;
 }
 
 /***************************************************
