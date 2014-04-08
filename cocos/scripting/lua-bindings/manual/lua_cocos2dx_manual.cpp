@@ -4751,7 +4751,7 @@ static void extendTMXTiledMap(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static int lua_cocos2dx_CCConsole_sendSocket(lua_State* tolua_S)
+static int lua_cocos2dx_Console_sendSocket(lua_State* tolua_S)
 {
     cocos2d::Console* cobj = nullptr;
     int argc = 0;
@@ -4790,7 +4790,7 @@ tolua_lerror:
     return 0;
 }
 
-static int lua_cocos2dx_CCConsole_listenOnTCP(lua_State* tolua_S)
+static int lua_cocos2dx_Console_listenOnTCP(lua_State* tolua_S)
 {
     cocos2d::Console* cobj = nullptr;
     int argc = 0;
@@ -4827,7 +4827,7 @@ tolua_lerror:
     return 0;
 }
 
-static int lua_cocos2dx_CCConsole_addCommand(lua_State* tolua_S)
+static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
 {
     cocos2d::Console* cobj = nullptr;
     int argc = 0;
@@ -4885,16 +4885,16 @@ tolua_lerror:
 static void extendConsole(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Console");
-    tolua_cclass(tolua_S,"CCConsole","cc.Console","",NULL);
+    tolua_cclass(tolua_S,"Console","cc.Console","",NULL);
     
-    tolua_beginmodule(tolua_S,"CCConsole");
-        tolua_function(tolua_S,"listenOnTCP", lua_cocos2dx_CCConsole_listenOnTCP);
-        tolua_function(tolua_S,"sendSocket", lua_cocos2dx_CCConsole_sendSocket);
-        tolua_function(tolua_S,"addCommand", lua_cocos2dx_CCConsole_addCommand);
+    tolua_beginmodule(tolua_S,"Console");
+        tolua_function(tolua_S,"listenOnTCP", lua_cocos2dx_Console_listenOnTCP);
+        tolua_function(tolua_S,"sendSocket", lua_cocos2dx_Console_sendSocket);
+        tolua_function(tolua_S,"addCommand", lua_cocos2dx_Console_addCommand);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Console).name();
     g_luaType[typeName] = "cc.Console";
-    g_typeCast["CCConsole"] = "cc.CCConsole";
+    g_typeCast["Console"] = "cc.Console";
 }
 
 int register_all_cocos2dx_manual(lua_State* tolua_S)
