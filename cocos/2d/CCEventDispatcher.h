@@ -207,7 +207,7 @@ protected:
     void sortEventListeners(const EventListener::ListenerID& listenerID);
     
     /** Sorts the listeners of specified type by scene graph priority */
-    void sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID);
+    void sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID, Node* rootNode);
     
     /** Sorts the listeners of specified type by fixed priority */
     void sortEventListenersOfFixedPriority(const EventListener::ListenerID& listenerID);
