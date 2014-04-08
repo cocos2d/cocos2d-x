@@ -217,4 +217,14 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class RegisterAndUnregisterWhileEventHanldingTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(RegisterAndUnregisterWhileEventHanldingTest);
+    RegisterAndUnregisterWhileEventHanldingTest();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif /* defined(__samples__NewEventDispatcherTest__) */

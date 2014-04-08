@@ -112,7 +112,10 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
     WCHAR utf16Buf[CC_MAX_PATH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, strPath.c_str(), -1, utf16Buf, sizeof(utf16Buf)/sizeof(utf16Buf[0]));
 
-    return GetFileAttributesW(utf16Buf) != -1 ? true : false;
+    DWORD attr = GetFileAttributesW(utf16Buf);
+    if(attr == INVALID_FILE_ATTRIBUTES || (attr & FILE_ATTRIBUTE_DIRECTORY))
+        return false;   //  not a file
+    return true;
 }
 
 bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const

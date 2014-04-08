@@ -125,7 +125,7 @@ int lua_cocos2dx_spine_Skeleton_onDraw(lua_State* tolua_S)
         kmMat4 arg0;
         bool arg1;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR kmMat4;
+        ok &= luaval_to_kmMat4(tolua_S, 2, &arg0);
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1);
         if(!ok)

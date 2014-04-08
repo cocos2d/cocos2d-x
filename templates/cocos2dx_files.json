@@ -4241,6 +4241,7 @@
         "tools/bindings-generator/targets/spidermonkey/templates/apidoc_function.script", 
         "tools/bindings-generator/targets/spidermonkey/templates/apidoc_function_overload.script", 
         "tools/bindings-generator/targets/spidermonkey/templates/apidoc_ns.script", 
+        "tools/bindings-generator/targets/spidermonkey/templates/constructor.c", 
         "tools/bindings-generator/targets/spidermonkey/templates/function.h", 
         "tools/bindings-generator/targets/spidermonkey/templates/ifunction.c", 
         "tools/bindings-generator/targets/spidermonkey/templates/ifunction_overloaded.c", 
