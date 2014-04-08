@@ -351,7 +351,7 @@ void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive
             
         if (listener->getSceneGraphPriority() == target)
         {
-        	listener->setSceneGraphPriority(nullptr);   // Ensure no dangling ptr to the target node.
+            listener->setSceneGraphPriority(nullptr);   // Ensure no dangling ptr to the target node.
             listener->setRegistered(false);
             listener->release();
             iter = _toAddedListeners.erase(iter);
