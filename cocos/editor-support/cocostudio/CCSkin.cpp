@@ -169,13 +169,13 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
-        float x = _transform.mat[12];
-        float y = _transform.mat[13];
+        float x = _transform.m[12];
+        float y = _transform.m[13];
 
-        float cr = _transform.mat[0];
-        float sr = _transform.mat[1];
-        float cr2 = _transform.mat[5];
-        float sr2 = -_transform.mat[4];
+        float cr = _transform.m[0];
+        float sr = _transform.m[1];
+        float cr2 = _transform.m[5];
+        float sr2 = -_transform.m[4];
         float ax = x1 * cr - y1 * sr2 + x;
         float ay = x1 * sr + y1 * cr2 + y;
 

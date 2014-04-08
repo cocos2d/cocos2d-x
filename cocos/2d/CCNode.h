@@ -1200,7 +1200,7 @@ public:
     /** 
      * Sets the Transformation matrix manually.
      */
-    virtual void setNodeToParentTransform(const kmMat4& transform);
+    virtual void setNodeToParentTransform(const Matrix& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
@@ -1227,7 +1227,7 @@ public:
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual kmMat4 getWorldToNodeTransform() const;
+    virtual Matrix getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
 
@@ -1280,7 +1280,7 @@ public:
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
      */
-    void setAdditionalTransform(kmMat4* additionalTransform);
+    void setAdditionalTransform(Matrix* additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
@@ -1361,7 +1361,7 @@ protected:
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
 
-    kmMat4 transform(const kmMat4 &parentTransform);
+    Matrix transform(const Matrix &parentTransform);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1391,14 +1391,14 @@ protected:
 
     Size _contentSize;              ///< untransformed size of the node
 
-    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
+    Matrix  _modelViewTransform;    ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable kmMat4 _transform;      ///< transform
+    mutable Matrix _transform;      ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable kmMat4 _inverse;        ///< inverse transform
+    mutable Matrix _inverse;        ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable kmMat4 _additionalTransform; ///< transform
+    mutable Matrix _additionalTransform; ///< transform
     bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 

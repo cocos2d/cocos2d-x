@@ -637,16 +637,16 @@ bool Sprite::isInsideBounds() const
     float hcsy = _contentSize.height / 2;
 
     // convert to world coordinates
-    float x = hcsx * _modelViewTransform.mat[0] + hcsy * _modelViewTransform.mat[4] + _modelViewTransform.mat[12];
-    float y = hcsx * _modelViewTransform.mat[1] + hcsy * _modelViewTransform.mat[5] + _modelViewTransform.mat[13];
+    float x = hcsx * _modelViewTransform.m[0] + hcsy * _modelViewTransform.m[4] + _modelViewTransform.m[12];
+    float y = hcsx * _modelViewTransform.m[1] + hcsy * _modelViewTransform.m[5] + _modelViewTransform.m[13];
 
     // center of screen is (0,0)
     x -= screen_half.width;
     y -= screen_half.height;
 
     // convert content size to world coordinates
-    float wchw = hcsx * std::max(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
-    float wchh = hcsy * std::max(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
+    float wchw = hcsx * std::max(fabsf(_modelViewTransform.m[0] + _modelViewTransform.m[4]), fabsf(_modelViewTransform.m[0] - _modelViewTransform.m[4]));
+    float wchh = hcsy * std::max(fabsf(_modelViewTransform.m[1] + _modelViewTransform.m[5]), fabsf(_modelViewTransform.m[1] - _modelViewTransform.m[5]));
 
     // compare if it in the positive quadrant of the screen
     float tmpx = (fabsf(x)-wchw);
