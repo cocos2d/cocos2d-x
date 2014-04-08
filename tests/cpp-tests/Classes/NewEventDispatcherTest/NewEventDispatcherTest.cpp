@@ -8,6 +8,7 @@
 
 #include "NewEventDispatcherTest.h"
 #include "testResource.h"
+#include "CCAutoreleasePool.h"
 
 namespace {
     
@@ -27,7 +28,8 @@ std::function<Layer*()> createFunctions[] =
     CL(PauseResumeTargetTest),
     CL(Issue4129),
     CL(Issue4160),
-    CL(DanglingNodePointersTest)
+    CL(DanglingNodePointersTest),
+    CL(RegisterAndUnregisterWhileEventHanldingTest)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -1412,4 +1414,45 @@ std::string DanglingNodePointersTest::subtitle() const
     return  "For test to work, must be compiled with:\n"
             "CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1\n&& COCOS2D_DEBUG > 0";
 #endif
+}
+
+
+RegisterAndUnregisterWhileEventHanldingTest::RegisterAndUnregisterWhileEventHanldingTest()
+{
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto callback1 = [=](DanglingNodePointersTestSprite * sprite)
+    {
+        auto callback2 = [](DanglingNodePointersTestSprite * sprite)
+        {
+            CCASSERT(false, "This should never get called!");
+        };
+        
+        {
+            AutoreleasePool pool;
+            
+            auto sprite2 = DanglingNodePointersTestSprite::create(callback2);
+            sprite2->setTexture("Images/CyanSquare.png");
+            sprite2->setPosition(origin+Point(size.width/2, size.height/2));
+            
+            addChild(sprite2, 0);
+            removeChild(sprite2);
+        }
+    };
+    
+    auto sprite1 = DanglingNodePointersTestSprite::create(callback1);
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Point(size.width/2, size.height/2));
+    addChild(sprite1, -10);
+}
+
+std::string RegisterAndUnregisterWhileEventHanldingTest::title() const
+{
+    return "RegisterAndUnregisterWhileEventHanldingTest";
+}
+
+std::string RegisterAndUnregisterWhileEventHanldingTest::subtitle() const
+{
+    return  "Tap the square multiple times - should not crash!";
 }
