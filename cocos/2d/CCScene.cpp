@@ -37,6 +37,7 @@ NS_CC_BEGIN
 Scene::Scene()
 #if CC_USE_PHYSICS
 : _physicsWorld(nullptr)
+, _physicsSimulateEnabled(true)
 #endif
 {
     _ignoreAnchorPointForPosition = true;
@@ -99,7 +100,7 @@ void Scene::addChild(Node* child, int zOrder, int tag)
 void Scene::update(float delta)
 {
     Node::update(delta);
-    if (nullptr != _physicsWorld)
+    if (nullptr != _physicsWorld && _physicsSimulateEnabled)
     {
         _physicsWorld->update(delta);
     }
