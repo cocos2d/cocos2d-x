@@ -26,6 +26,7 @@
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
+#include <sys/socket.h>
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
@@ -4751,7 +4752,7 @@ static void extendTMXTiledMap(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static int lua_cocos2dx_Console_sendSocket(lua_State* tolua_S)
+static int lua_cocos2dx_Console_send(lua_State* tolua_S)
 {
     cocos2d::Console* cobj = nullptr;
     int argc = 0;
@@ -4767,7 +4768,7 @@ static int lua_cocos2dx_Console_sendSocket(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_sendSocket'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_send'", NULL);
         return 0;
     }
 #endif
@@ -4783,15 +4784,15 @@ static int lua_cocos2dx_Console_sendSocket(lua_State* tolua_S)
         if(!ok)
             return 0;
         
-        cobj->sendSocket(arg0, arg1.c_str());
+        send(arg0, arg1.c_str(), arg1.length(), 0);
         return 0;
     }
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "sendSocket",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "send",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_sendSocket'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_send'.",&tolua_err);
 #endif
     
     return 0;
@@ -4910,7 +4911,7 @@ static void extendConsole(lua_State* tolua_S)
     
     tolua_beginmodule(tolua_S,"Console");
         tolua_function(tolua_S,"listenOnTCP", lua_cocos2dx_Console_listenOnTCP);
-        tolua_function(tolua_S,"sendSocket", lua_cocos2dx_Console_sendSocket);
+        tolua_function(tolua_S,"sendSocket", lua_cocos2dx_Console_send);
         tolua_function(tolua_S,"addCommand", lua_cocos2dx_Console_addCommand);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Console).name();

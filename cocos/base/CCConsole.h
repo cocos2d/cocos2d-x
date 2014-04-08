@@ -98,9 +98,6 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
-    /** send socket **/
-    void sendSocket(int fd, const std::string& str);
- 
 protected:
     void loop();
     ssize_t readline(int fd, char *buf, size_t maxlen);
