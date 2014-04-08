@@ -317,17 +317,6 @@ GLView* GLView::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
-GLView* GLView::createWithFullScreen(const std::string& viewName, Size size)
-{
-    auto ret = new GLView();
-    if(ret && ret->initWithFullScreen(viewName, size)) {
-        ret->autorelease();
-        return ret;
-    }
-    
-    return nullptr;
-}
-
 GLView* GLView::createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
 {
     auto ret = new GLView();
@@ -396,16 +385,6 @@ bool GLView::initWithFullScreen(const std::string& viewName)
 
     const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
     return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f);
-}
-
-bool GLView::initWithFullScreen(const std::string &viewName, cocos2d::Size size)
-{
-    //Create fullscreen window on primary monitor with the video mode closest to the specified size (refresh rate and bit depth will be at GLFW defaults).
-    _monitor = glfwGetPrimaryMonitor();
-    if (nullptr == _monitor)
-        return false;
-    
-    return initWithRect(viewName, Rect(0, 0, size.width, size.height), 1.0f);
 }
 
 bool GLView::initWithFullscreen(const std::string &viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor)

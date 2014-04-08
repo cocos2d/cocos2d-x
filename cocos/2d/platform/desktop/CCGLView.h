@@ -84,7 +84,6 @@ protected:
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
-    bool initWithFullScreen(const std::string& viewName, Size rect);
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
     bool initGlew();
