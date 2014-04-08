@@ -31,7 +31,7 @@
 #include "CCEventListenerKeyboard.h"
 #include "CCEventListenerCustom.h"
 
-#include "CCNode.h"
+#include "CCScene.h"
 #include "CCDirector.h"
 #include "CCEventType.h"
 
@@ -191,7 +191,7 @@ void EventDispatcher::EventListenerVector::clear()
 
 EventDispatcher::EventDispatcher()
 : _inDispatch(0)
-, _isEnabled(true)
+, _isEnabled(false)
 , _nodePriorityIndex(0)
 {
     _toAddedListeners.reserve(50);
@@ -1125,6 +1125,9 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
     
     if (dirtyFlag != DirtyFlag::NONE)
     {
+        // Clear the dirty flag first, if `rootNode` is nullptr, then set its dirty flag of scene graph priority
+        dirtyIter->second = DirtyFlag::NONE;
+
         if ((int)dirtyFlag & (int)DirtyFlag::FIXED_PRIORITY)
         {
             sortEventListenersOfFixedPriority(listenerID);
@@ -1132,14 +1135,20 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
         
         if ((int)dirtyFlag & (int)DirtyFlag::SCENE_GRAPH_PRIORITY)
         {
-            sortEventListenersOfSceneGraphPriority(listenerID);
+            auto rootNode = Director::getInstance()->getRunningScene();
+            if (rootNode)
+            {
+                sortEventListenersOfSceneGraphPriority(listenerID, rootNode);
+            }
+            else
+            {
+                dirtyIter->second = DirtyFlag::SCENE_GRAPH_PRIORITY;
+            }
         }
-        
-        dirtyIter->second = DirtyFlag::NONE;
     }
 }
 
-void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID)
+void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID, Node* rootNode)
 {
     auto listeners = getListeners(listenerID);
     
@@ -1149,8 +1158,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     
     if (sceneGraphListeners == nullptr)
         return;
-    
-    Node* rootNode = (Node*)Director::getInstance()->getRunningScene();
+
     // Reset priority index
     _nodePriorityIndex = 0;
     _nodePriorityMap.clear();
@@ -1158,7 +1166,6 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     visitTarget(rootNode, true);
     
     // After sort: priority < 0, > 0
-
     std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
         return _nodePriorityMap[l1->getSceneGraphPriority()] > _nodePriorityMap[l2->getSceneGraphPriority()];
     });
@@ -1350,7 +1357,6 @@ void EventDispatcher::setEnabled(bool isEnabled)
 {
     _isEnabled = isEnabled;
 }
-
 
 bool EventDispatcher::isEnabled() const
 {
