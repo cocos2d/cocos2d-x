@@ -84,11 +84,11 @@ template <typename T> class RefPtr
 public:
     
     inline RefPtr()
-	:
+    :
         _ptr(nullptr)
-	{
+    {
         
-	}
+    }
     
     inline RefPtr(RefPtr && other)
     {
