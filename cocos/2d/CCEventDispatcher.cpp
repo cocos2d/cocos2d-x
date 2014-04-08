@@ -351,6 +351,7 @@ void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive
             
         if (listener->getSceneGraphPriority() == target)
         {
+            listener->setRegistered(false);
             listener->release();
             iter = _toAddedListeners.erase(iter);
         }
