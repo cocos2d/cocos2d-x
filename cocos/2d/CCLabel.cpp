@@ -914,7 +914,7 @@ void Label::setFontScale(float fontScale)
     Node::setScale(_fontScale);
 }
 
-void Label::onDraw(const kmMat4& transform, bool transformUpdated)
+void Label::onDraw(const Matrix& transform, bool transformUpdated)
 {
     CC_PROFILER_START("Label - draw");
 

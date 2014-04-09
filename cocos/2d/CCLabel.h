@@ -260,7 +260,7 @@ public:
 
     CC_DEPRECATED_ATTRIBUTE void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
 protected:
-    void onDraw(const kmMat4& transform, bool transformUpdated);
+    void onDraw(const Matrix& transform, bool transformUpdated);
 
     struct LetterInfo
     {
@@ -375,7 +375,7 @@ protected:
     bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
-    kmMat4  _shadowTransform;
+    Matrix  _shadowTransform;
     Color3B _shadowColor;
     float   _shadowOpacity;
     Sprite*   _shadowNode;
