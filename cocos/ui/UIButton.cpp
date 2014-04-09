@@ -699,12 +699,12 @@ float Button::getTitleFontSize() const
 
 void Button::setTitleFontName(const std::string& fontName)
 {
-    _titleRenderer->setFontName(fontName);
+    _titleRenderer->setFont(fontName);
 }
 
 const std::string& Button::getTitleFontName() const
 {
-    return _titleRenderer->getFontName();
+    return _titleRenderer->getFont();
 }
     
 std::string Button::getDescription() const

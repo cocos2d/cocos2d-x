@@ -297,15 +297,15 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto size = Director::getInstance()->getWinSize();
-    auto label = Label::create("vertexZ = 50", "fonts/Marker Felt.ttf", 64);
+    auto label = Label::createWithFont("vertexZ = 50", "fonts/Marker Felt.ttf", 64);
     label->setPosition(Point(size.width / 2, size.height * 0.25f));
     this->addChild(label);
 
-    auto label2 = Label::create("vertexZ = 0", "fonts/Marker Felt.ttf", 64);
+    auto label2 = Label::createWithFont("vertexZ = 0", "fonts/Marker Felt.ttf", 64);
     label2->setPosition(Point(size.width / 2, size.height * 0.5f));
     this->addChild(label2);
 
-    auto label3 = Label::create("vertexZ = -50", "fonts/Marker Felt.ttf", 64);
+    auto label3 = Label::createWithFont("vertexZ = -50", "fonts/Marker Felt.ttf", 64);
     label3->setPosition(Point(size.width / 2, size.height * 0.75f));
     this->addChild(label3);
 

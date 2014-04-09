@@ -40,7 +40,7 @@ void LabelTTFLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, con
 
 void LabelTTFLoader::onHandlePropTypeFontTTF(Node * pNode, Node * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_FONTNAME) == 0) {
-        ((Label *)pNode)->setFontName(pFontTTF);
+        ((Label *)pNode)->setFont(pFontTTF);
     } else {
         NodeLoader::onHandlePropTypeFontTTF(pNode, pParent, pPropertyName, pFontTTF, ccbReader);
     }

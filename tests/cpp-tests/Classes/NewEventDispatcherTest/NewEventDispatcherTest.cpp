@@ -384,7 +384,7 @@ void RemoveListenerWhenDispatching::onEnter()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
     
-    auto statusLabel = Label::create("The sprite could be touched!", "", 20);
+    auto statusLabel = Label::createWithFont("The sprite could be touched!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
     std::shared_ptr<bool> enable(new bool(true));
@@ -433,7 +433,7 @@ void CustomEventTest::onEnter()
     
     MenuItemFont::setFontSize(20);
     
-    auto statusLabel = Label::create("No custom event 1 received!", "", 20);
+    auto statusLabel = Label::createWithFont("No custom event 1 received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
@@ -459,7 +459,7 @@ void CustomEventTest::onEnter()
     });
     sendItem->setPosition(origin + Point(size.width/2, size.height/2));
     
-    auto statusLabel2 = Label::create("No custom event 2 received!", "", 20);
+    auto statusLabel2 = Label::createWithFont("No custom event 2 received!", "", 20);
     statusLabel2->setPosition(origin + Point(size.width/2, size.height-120));
     addChild(statusLabel2);
     
@@ -516,7 +516,7 @@ void LabelKeyboardEventTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto statusLabel = Label::create("No keyboard event received!", "", 20);
+    auto statusLabel = Label::createWithFont("No keyboard event received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height/2));
     addChild(statusLabel);
         
@@ -1189,7 +1189,7 @@ Issue4129::Issue4129()
 {
     _customlistener = _eventDispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
         
-        auto label = Label::create("Yeah, this issue was fixed.", "", 20);
+        auto label = Label::createWithFont("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Point(0, 0.5f));
         label->setPosition(Point(VisibleRect::left()));
         this->addChild(label);

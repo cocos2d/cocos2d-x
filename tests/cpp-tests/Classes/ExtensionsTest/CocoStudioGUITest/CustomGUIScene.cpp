@@ -118,7 +118,7 @@ void CustomGUITestScene::onEnter()
 {
     CCScene::onEnter();
     
-    auto label = Label::create("Back", "fonts/arial.ttf", 20);
+    auto label = Label::createWithFont("Back", "fonts/arial.ttf", 20);
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CustomGUITestScene::BackCallback, this));
     
