@@ -280,10 +280,10 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point
     // vertices
     GLfloat size_w_2 = particle->size/2;
     GLfloat size_h_2 = particle->size/2;
-    if (_batchNode)
+    if (_batchNode != nullptr)
     {
-        size_w_2 = particle->size/2 * _scaleX;
-        size_h_2 = particle->size/2 * _scaleY;
+        size_w_2 *= _scaleX;
+        size_h_2 *= _scaleY;
     }
     if (particle->rotation) 
     {
