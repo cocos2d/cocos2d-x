@@ -30,7 +30,6 @@ CCClippingNode.cpp \
 CCComponent.cpp \
 CCComponentContainer.cpp \
 CCConfiguration.cpp \
-CCDeprecated.cpp \
 CCDirector.cpp \
 CCDrawingPrimitives.cpp \
 CCDrawNode.cpp \
@@ -128,20 +127,21 @@ renderer/CCRenderer.cpp \
 renderer/CCRenderMaterial.cpp \
 ../base/atitc.cpp \
 ../base/CCAffineTransform.cpp \
-../base/CCArray.cpp \
 ../base/CCAutoreleasePool.cpp \
 ../base/CCConsole.cpp \
 ../base/CCData.cpp \
 ../base/CCDataVisitor.cpp \
-../base/CCDictionary.cpp \
 ../base/CCGeometry.cpp \
 ../base/CCNS.cpp \
 ../base/CCRef.cpp \
-../base/CCSet.cpp \
-../base/CCString.cpp \
 ../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
+../deprecated/CCArray.cpp \
+../deprecated/CCSet.cpp \
+../deprecated/CCString.cpp \
+../deprecated/CCDictionary.cpp \
+../deprecated/CCDeprecated.cpp \
 ../math/kazmath/kazmath/aabb.c \
 ../math/kazmath/kazmath/mat3.c \
 ../math/kazmath/kazmath/mat4.c \
@@ -174,22 +174,26 @@ renderer/CCRenderMaterial.cpp \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
+                    $(LOCAL_PATH)/../deprecated \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
                     $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../../external/xxhash
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
+                    $(LOCAL_PATH)/../deprecated \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
                     $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
