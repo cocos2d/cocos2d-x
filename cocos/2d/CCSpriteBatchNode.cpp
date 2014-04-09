@@ -81,6 +81,7 @@ SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t c
 */
 bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 {
+    CCASSERT(tex, "Texture must be");
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -356,7 +357,7 @@ void SpriteBatchNode::reorderBatch(bool reorder)
 void SpriteBatchNode::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
-    if( !_textureAtlas || (_textureAtlas->getTotalQuads() == 0) )
+    if( _textureAtlas->getTotalQuads() == 0 )
     {
         return;
     }

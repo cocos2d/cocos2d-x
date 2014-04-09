@@ -62,7 +62,10 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
     }
 
-    if ( !texture || SpriteBatchNode::initWithTexture(texture, static_cast<ssize_t>(capacity)) )
+    const bool r = texture ?
+        SpriteBatchNode::initWithTexture( texture, static_cast< ssize_t >( capacity ) ) :
+        SpriteBatchNode::init();
+    if ( r )
     {
         // layerInfo
         _layerName = layerInfo->_name;
