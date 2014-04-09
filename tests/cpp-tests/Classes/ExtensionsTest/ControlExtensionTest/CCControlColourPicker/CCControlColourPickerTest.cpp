@@ -66,7 +66,7 @@ bool ControlColourPickerTest::init()
 
         layer_width += background->getContentSize().width;
 
-        _colorLabel = Label::create("#color", "fonts/Marker Felt.ttf", 30);
+        _colorLabel = Label::createWithFont("#color", "fonts/Marker Felt.ttf", 30);
         _colorLabel->retain();
 
         _colorLabel->setPosition(background->getPosition());

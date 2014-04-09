@@ -23,7 +23,7 @@ EditBoxTest::EditBoxTest()
     pBg->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
     addChild(pBg);
     
-    _TTFShowEditReturn = Label::create("No edit control return!", "", 30);
+    _TTFShowEditReturn = Label::createWithFont("No edit control return!", "", 30);
     _TTFShowEditReturn->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
     addChild(_TTFShowEditReturn);
     

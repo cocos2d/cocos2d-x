@@ -114,7 +114,7 @@ void SceneEditorTestLayer::onEnter()
     // add title and subtitle
     std::string str = title();
     const char *pTitle = str.c_str();
-    auto label = Label::create(pTitle, "fonts/arial.ttf", 18);
+    auto label = Label::createWithFont(pTitle, "fonts/arial.ttf", 18);
     label->setTextColor(Color4B::WHITE);
     addChild(label, 1, 10000);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
@@ -122,7 +122,7 @@ void SceneEditorTestLayer::onEnter()
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        auto l = Label::create(strSubtitle.c_str(), "fonts/arial.ttf", 18);
+        auto l = Label::createWithFont(strSubtitle.c_str(), "fonts/arial.ttf", 18);
         l->setTextColor(Color4B::BLACK);
         addChild(l, 1, 10001);
         l->setPosition(Point(VisibleRect::center().x, VisibleRect::top().y - 60) );

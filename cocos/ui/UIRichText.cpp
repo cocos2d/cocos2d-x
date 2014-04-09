@@ -210,7 +210,7 @@ void RichText::formatText()
                     case RICH_TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
-                        elementRenderer = Label::create(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize);
+                        elementRenderer = Label::createWithFont(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize);
                         break;
                     }
                     case RICH_IMAGE:
@@ -272,7 +272,7 @@ void RichText::formatText()
     
 void RichText::handleTextRenderer(const char *text, const char *fontName, float fontSize, const Color3B &color, GLubyte opacity)
 {
-    Label* textRenderer = Label::create(text, fontName, fontSize);
+    Label* textRenderer = Label::createWithFont(text, fontName, fontSize);
     float textRendererWidth = textRenderer->getContentSize().width;
     _leftSpaceWidth -= textRendererWidth;
     if (_leftSpaceWidth < 0.0f)
@@ -285,7 +285,7 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
         std::string cutWords = curText.substr(leftLength, curText.length()-1);
         if (leftLength > 0)
         {
-            Label* leftRenderer = Label::create(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+            Label* leftRenderer = Label::createWithFont(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
             leftRenderer->setColor(color);
             leftRenderer->setOpacity(opacity);
             pushToContainer(leftRenderer);

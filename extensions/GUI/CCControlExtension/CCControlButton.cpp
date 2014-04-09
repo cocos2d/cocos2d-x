@@ -64,7 +64,7 @@ ControlButton::~ControlButton()
 
 bool ControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(Label::create("", "Helvetica", 12), Scale9Sprite::create());
+    return this->initWithLabelAndBackgroundSprite(Label::createWithFont("", "Helvetica", 12), Scale9Sprite::create());
 }
 
 bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* backgroundSprite)
@@ -131,8 +131,7 @@ ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite
 
 bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    Label *label = Label::create(title, fontName, fontSize);
-    return initWithLabelAndBackgroundSprite(label, Scale9Sprite::create());
+    return initWithLabelAndBackgroundSprite(Label::createWithFont(title, fontName, fontSize), Scale9Sprite::create());
 }
 
 ControlButton* ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
@@ -145,7 +144,7 @@ ControlButton* ControlButton::create(const std::string& title, const std::string
 
 bool ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
 {
-    Label *label = Label::create("", "Arial", 30);//
+    Label *label = Label::createWithFont("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
@@ -359,10 +358,9 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
     }
 }
 
-void ControlButton::setTitleTTFForState(const std::string& fntFile, State state)
+void ControlButton::setTitleTTFForState(const std::string& fontName, State state)
 {
-    std::string title = this->getTitleForState(state);
-    this->setTitleLabelForState(Label::create(title, fntFile, 12), state);
+    this->setTitleLabelForState(Label::createWithFont(getTitleForState(state), fontName, 12), state);
 }
 
 const std::string& ControlButton::getTitleTTFForState(State state)
@@ -371,7 +369,7 @@ const std::string& ControlButton::getTitleTTFForState(State state)
     Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontName();
+        return labelTTF->getFont();
     }
 
     static std::string ret("");
