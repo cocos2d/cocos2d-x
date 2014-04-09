@@ -296,7 +296,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithColor(const Color4B& color);
 
 protected:
-    void onDraw(const kmMat4& transform, bool transformUpdated);
+    void onDraw(const Matrix& transform, bool transformUpdated);
 
     virtual void updateColor() override;
 
