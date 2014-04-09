@@ -35,17 +35,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
-    
-
+   
 #ifdef COCOS2D_DEBUG
-	startRuntime();
-#else
+	if (startRuntime())
+		return true;
+#endif
+
 	auto engine = LuaEngine::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	engine->executeScriptFile("src/main.lua");
-#endif
-
     return true;
 }
 

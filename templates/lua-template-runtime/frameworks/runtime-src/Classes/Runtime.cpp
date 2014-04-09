@@ -751,8 +751,22 @@ private:
     FileServer* _fileserver;
 };
 
-void startRuntime()
+bool startRuntime()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef _DEBUG
+	return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#ifdef NDEBUG
+	return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#ifndef DEBUG
+	return false;
+#endif
+#endif
+
 	vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -789,6 +803,7 @@ void startRuntime()
     auto director = Director::getInstance();
     scene->addChild(layer);
     director->runWithScene(scene);
+	return true;
 }
 
 

@@ -30,7 +30,7 @@ THE SOFTWARE.
 using namespace std;
 
 
-void startRuntime();
+bool startRuntime();
 
 bool reloadScript(const string& modulefile);
 
