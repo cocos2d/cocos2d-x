@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "utlist.h"
 #include "ccCArray.h"
-#include "CCArray.h"
 #include "CCScriptSupport.h"
 
 NS_CC_BEGIN

@@ -1618,7 +1618,7 @@ void PhysicsSetGravityEnableTest::onEnter()
     
     // wall
     auto wall = Node::create();
-    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1, 1, 0.0)));
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
     wall->setPosition(VisibleRect::center());
     addChild(wall);
     

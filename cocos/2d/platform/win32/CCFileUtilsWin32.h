@@ -64,7 +64,7 @@ protected:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
+    virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
 
     /**
      *  Gets string from a file.

@@ -36,8 +36,6 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
-#include "CCArray.h"
-#include "CCDictionary.h"
 #include "CCDirector.h"
 #include <vector>
 
