@@ -35,9 +35,6 @@ namespace cocostudio
     {
         WidgetReader::setPropsFromJsonDictionary(widget, options);
         
-        
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
-        
         Layout* panel = static_cast<Layout*>(widget);
         
         /* adapt screen gui */
@@ -86,25 +83,9 @@ namespace cocostudio
         
         const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "backGroundImageData");
         int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-        switch (imageFileNameType)
-        {
-            case 0:
-            {
-                std::string tp_b = jsonPath;
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
-                panel->setBackGroundImage(imageFileName_tp);
-                break;
-            }
-            case 1:
-            {
-                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                panel->setBackGroundImage(imageFileName,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, "path", (TextureResType)imageFileNameType);
+        panel->setBackGroundImage(imageFileName, (TextureResType)imageFileNameType);
+        
         
         if (backGroundScale9Enable)
         {

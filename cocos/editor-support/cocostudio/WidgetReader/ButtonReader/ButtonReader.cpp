@@ -41,75 +41,30 @@ namespace cocostudio
         WidgetReader::setPropsFromJsonDictionary(widget, options);
         
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
-        
         Button* button = static_cast<Button*>(widget);
         bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
         button->setScale9Enabled(scale9Enable);
         
+        
         const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, "normalData");
         int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");
-        switch (normalType)
-        {
-            case 0:
-            {
-                std::string tp_n = jsonPath;
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-                const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():nullptr;
-                button->loadTextureNormal(normalFileName_tp);
-                break;
-            }
-            case 1:
-            {
-                const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-                button->loadTextureNormal(normalFileName,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        std::string normalTexturePath = this->getResourcePath(normalDic, "path", (TextureResType)normalType);
+        button->loadTextureNormal(normalTexturePath, (TextureResType)normalType);
+        
+        
         const rapidjson::Value& pressedDic = DICTOOL->getSubDictionary_json(options, "pressedData");
         int pressedType = DICTOOL->getIntValue_json(pressedDic, "resourceType");
-        switch (pressedType)
-        {
-            case 0:
-            {
-                std::string tp_p = jsonPath;
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-                const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():nullptr;
-                button->loadTexturePressed(pressedFileName_tp);
-                break;
-            }
-            case 1:
-            {
-                const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-                button->loadTexturePressed(pressedFileName,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        
+        std::string pressedTexturePath = this->getResourcePath(pressedDic, "path", (TextureResType)pressedType);
+        button->loadTexturePressed(pressedTexturePath, (TextureResType)pressedType);
+        
+        
         const rapidjson::Value& disabledDic = DICTOOL->getSubDictionary_json(options, "disabledData");
         int disabledType = DICTOOL->getIntValue_json(disabledDic, "resourceType");
-        switch (disabledType)
-        {
-            case 0:
-            {
-                std::string tp_d = jsonPath;
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-                const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
-                button->loadTextureDisabled(disabledFileName_tp);
-                break;
-            }
-            case 1:
-            {
-                const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-                button->loadTextureDisabled(disabledFileName,UI_TEX_TYPE_PLIST);
-                break;
-            }
-            default:
-                break;
-        }
+        
+        std::string disabledTexturePath = this->getResourcePath(disabledDic, "path", (TextureResType)disabledType);
+        button->loadTextureDisabled(disabledTexturePath, (TextureResType)disabledType);
+       
         if (scale9Enable)
         {
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");

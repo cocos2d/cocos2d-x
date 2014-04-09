@@ -62,6 +62,11 @@ public:
     static LoadingBar* create();
     
     /**
+     * create a LoadingBar with a texture and a percentage
+     **/
+    static LoadingBar* create(const std::string& textureName, int percentage = 0);
+    
+    /**
      * Changes the progress direction of loadingbar.
      *
      * @see LoadingBarType  LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
@@ -86,7 +91,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexture(const std::string& texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Changes the progress direction of loadingbar.

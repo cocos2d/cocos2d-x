@@ -414,13 +414,13 @@ void Console::commandHelp(int fd, const std::string &args)
     for(auto it=_commands.begin();it!=_commands.end();++it)
     {
         auto cmd = it->second;
-        mydprintf(fd, "\t%s", cmd.name);
-        ssize_t tabs = strlen(cmd.name) / 8;
+        mydprintf(fd, "\t%s", cmd.name.c_str());
+        ssize_t tabs = strlen(cmd.name.c_str()) / 8;
         tabs = 3 - tabs;
         for(int j=0;j<tabs;j++){
              mydprintf(fd, "\t");
         }
-        mydprintf(fd,"%s\n", cmd.help);
+        mydprintf(fd,"%s\n", cmd.help.c_str());
     } 
 }
 
@@ -765,6 +765,8 @@ void Console::commandTouch(int fd, const std::string& args)
     }
 }
 
+static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', '"', '|', '\r', '\n', '\t'};
+
 void Console::commandUpload(int fd)
 {
     ssize_t n, rc;
@@ -775,11 +777,20 @@ void Console::commandUpload(int fd)
     {
         if( (rc = recv(fd, &c, 1, 0)) ==1 ) 
         {
-            *ptr++ = c;
+            for(char x : invalid_filename_char)
+            {
+                if(c == x)
+                {
+                    const char err[] = "upload: invalid file name!\n";
+                    send(fd, err, sizeof(err),0);
+                    return;
+                }
+            }
             if(c == ' ') 
             {
                 break;
             }
+            *ptr++ = c;
         } 
         else if( rc == 0 ) 
         {
@@ -875,10 +886,10 @@ bool Console::parseCommand(int fd)
         }
         else
         {
-            const char err[] = "Unknown Command!\n";
-            sendPrompt(fd);
+            const char err[] = "upload: invalid args! Type 'help' for options\n";
             send(fd, err, sizeof(err),0);
-            return false;
+            sendPrompt(fd);
+            return true;
             
         }
     }
@@ -909,7 +920,7 @@ bool Console::parseCommand(int fd)
         const char err[] = "Unknown command. Type 'help' for options\n";
         send(fd, err, sizeof(err),0);
         sendPrompt(fd);
-        return false;
+        return true;
     }
 
     auto it = _commands.find(trim(args[0]));

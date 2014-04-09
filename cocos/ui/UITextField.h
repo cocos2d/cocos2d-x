@@ -110,6 +110,9 @@ public:
     TextField();
     virtual ~TextField();
     static TextField* create();
+    static TextField* create(const std::string& placeholder,
+                             const std::string& fontName,
+                             int fontSize);
     void setTouchSize(const Size &size);
     Size getTouchSize();
     void setTouchAreaEnabled(bool enable);

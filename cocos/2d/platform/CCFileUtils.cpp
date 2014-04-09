@@ -500,7 +500,9 @@ void FileUtils::purgeCachedEntries()
 
 static Data getData(const std::string& filename, bool forString)
 {
-    CCASSERT(!filename.empty(), "Invalid filename!");
+    // getData is used indirectly in Image::initWithImageFileThreadSafe(), but CCASSERT is not thread-safe
+//    CCASSERT(!filename.empty(), "Invalid filename!");
+    assert(!(filename.empty()));
     
     Data ret;
     unsigned char* buffer = nullptr;
