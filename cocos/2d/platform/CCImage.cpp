@@ -1552,7 +1552,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
     }
     else
     {
-        if (tgaData->imageData != nullptr)
+        if (tgaData && tgaData->imageData != nullptr)
         {
             free(tgaData->imageData);
             _data = nullptr;
