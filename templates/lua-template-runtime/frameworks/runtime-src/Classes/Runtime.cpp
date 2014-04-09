@@ -649,6 +649,11 @@ public:
 								bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
                             }
 						}
+						if (0 == objectfiles.Size())
+						{
+							reloadScript("");
+						}
+						
 						dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
 					}
 					dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
