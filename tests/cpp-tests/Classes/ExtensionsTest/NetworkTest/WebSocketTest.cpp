@@ -13,12 +13,12 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 WebSocketTestLayer::WebSocketTestLayer()
-: _wsiSendText(NULL)
-, _wsiSendBinary(NULL)
-, _wsiError(NULL)
-, _sendTextStatus(NULL)
-, _sendBinaryStatus(NULL)
-, _errorStatus(NULL)
+: _wsiSendText(nullptr)
+, _wsiSendBinary(nullptr)
+, _wsiError(nullptr)
+, _sendTextStatus(nullptr)
+, _sendBinaryStatus(nullptr)
+, _errorStatus(nullptr)
 , _sendTextTimes(0)
 , _sendBinaryTimes(0)
 {

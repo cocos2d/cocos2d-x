@@ -7,7 +7,7 @@ USING_NS_CC_EXT;
 using namespace cocos2d::network;
 
 HttpClientTest::HttpClientTest() 
-: _labelStatusCode(NULL)
+: _labelStatusCode(nullptr)
 {
     auto winSize = Director::getInstance()->getWinSize();
 

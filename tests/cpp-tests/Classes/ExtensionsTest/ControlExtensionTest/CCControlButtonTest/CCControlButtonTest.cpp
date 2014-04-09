@@ -106,8 +106,8 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
 }
 
 ControlButtonTest_Event::ControlButtonTest_Event()
-: _displayValueLabel(NULL)
-, _displayBitmaskLabel(NULL)
+: _displayValueLabel(nullptr)
+, _displayBitmaskLabel(nullptr)
 {
 
 }

@@ -90,7 +90,7 @@ public:
     
     LuaValue(void)
     : _type(LuaValueTypeInt)
-    , _ccobjectType(NULL)
+    , _ccobjectType(nullptr)
     {
         memset(&_field, 0, sizeof(_field));
     }

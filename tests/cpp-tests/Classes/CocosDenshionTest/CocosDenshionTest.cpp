@@ -66,7 +66,7 @@ public:
 
 private:
     Button()
-        : _child(NULL)
+        : _child(nullptr)
     {
 //        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
         
@@ -198,9 +198,9 @@ public:
 private:
     AudioSlider(Direction direction)
         : _direction(direction)
-        , _slider(NULL)
-        , _lblMinValue(NULL)
-        , _lblMaxValue(NULL)
+        , _slider(nullptr)
+        , _lblMinValue(nullptr)
+        , _lblMaxValue(nullptr)
     {
     }
 
@@ -224,11 +224,11 @@ CocosDenshionTest::CocosDenshionTest()
 : _soundId(0),
 _musicVolume(1),
 _effectsVolume(1),
-_sliderPitch(NULL),
-_sliderPan(NULL),
-_sliderGain(NULL),
-_sliderEffectsVolume(NULL),
-_sliderMusicVolume(NULL)
+_sliderPitch(nullptr),
+_sliderPan(nullptr),
+_sliderGain(nullptr),
+_sliderEffectsVolume(nullptr),
+_sliderMusicVolume(nullptr)
 {
     addButtons();
     addSliders();

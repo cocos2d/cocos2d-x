@@ -151,7 +151,7 @@ end
 -- private:
 
 -- Lens3DTarget()
--- : m_pLens3D(NULL)
+-- : m_pLens3D(nullptr)
 -- {}
 
 -- cc.Lens3D* m_pLens3D

@@ -56,10 +56,10 @@ class BitmapDC
 {
 public:
     BitmapDC(HWND hWnd = NULL)
-        : _DC(NULL)
-        , _bmp(NULL)
+        : _DC(nullptr)
+        , _bmp(nullptr)
         , _font((HFONT)GetStockObject(DEFAULT_GUI_FONT))
-        , _wnd(NULL)
+        , _wnd(nullptr)
     {
         _wnd = hWnd;
         HDC hdc = GetDC(hWnd);

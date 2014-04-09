@@ -273,10 +273,10 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 
 EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 : EditBoxImpl(pEditText)
-, _label(NULL)
-, _labelPlaceHolder(NULL)
+, _label(nullptr)
+, _labelPlaceHolder(nullptr)
 , _anchorPoint(Point(0.5f, 0.5f))
-, _systemControl(NULL)
+, _systemControl(nullptr)
 , _maxTextLength(-1)
 {
     auto view = cocos2d::Director::getInstance()->getOpenGLView();

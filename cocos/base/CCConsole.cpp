@@ -650,7 +650,7 @@ void Console::commandTouch(int fd, const std::string& args)
                 float x = std::atof(argv[1].c_str());
                 float y = std::atof(argv[2].c_str());
 
-                srand ((unsigned)time(NULL));
+                srand ((unsigned)time(nullptr));
                 _touchId = rand();
                 Scheduler *sched = Director::getInstance()->getScheduler();
                 sched->performFunctionInCocosThread( [&](){
@@ -678,7 +678,7 @@ void Console::commandTouch(int fd, const std::string& args)
                 float x2 = std::atof(argv[3].c_str());
                 float y2 = std::atof(argv[4].c_str());
 
-                srand ((unsigned)time(NULL));
+                srand ((unsigned)time(nullptr));
                 _touchId = rand();
 
                 Scheduler *sched = Director::getInstance()->getScheduler();
