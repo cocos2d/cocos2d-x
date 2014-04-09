@@ -84,6 +84,10 @@
 		1A01C69D18F57BE800EFE3A6 /* CCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C68218F57BE800EFE3A6 /* CCString.cpp */; };
 		1A01C69E18F57BE800EFE3A6 /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C68318F57BE800EFE3A6 /* CCString.h */; };
 		1A01C69F18F57BE800EFE3A6 /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C68318F57BE800EFE3A6 /* CCString.h */; };
+		1A01C6A418F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C6A218F58F7500EFE3A6 /* CCNotificationCenter.cpp */; };
+		1A01C6A518F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C6A218F58F7500EFE3A6 /* CCNotificationCenter.cpp */; };
+		1A01C6A618F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C6A318F58F7500EFE3A6 /* CCNotificationCenter.h */; };
+		1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C6A318F58F7500EFE3A6 /* CCNotificationCenter.h */; };
 		1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AE61860400400196EF5 /* edtaa3func.cpp */; };
 		1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AE61860400400196EF5 /* edtaa3func.cpp */; };
 		1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A087AE71860400400196EF5 /* edtaa3func.h */; };
@@ -428,10 +432,6 @@
 		1A57029E180BCD890088DEC7 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57029B180BCD890088DEC7 /* base64.cpp */; };
 		1A57029F180BCD890088DEC7 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57029C180BCD890088DEC7 /* base64.h */; };
 		1A5702A0180BCD890088DEC7 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57029C180BCD890088DEC7 /* base64.h */; };
-		1A5702A3180BCD980088DEC7 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5702A1180BCD980088DEC7 /* CCNotificationCenter.cpp */; };
-		1A5702A4180BCD980088DEC7 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5702A1180BCD980088DEC7 /* CCNotificationCenter.cpp */; };
-		1A5702A5180BCD980088DEC7 /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702A2180BCD980088DEC7 /* CCNotificationCenter.h */; };
-		1A5702A6180BCD980088DEC7 /* CCNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702A2180BCD980088DEC7 /* CCNotificationCenter.h */; };
 		1A5702A9180BCDAA0088DEC7 /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5702A7180BCDAA0088DEC7 /* CCProfiling.cpp */; };
 		1A5702AA180BCDAA0088DEC7 /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5702A7180BCDAA0088DEC7 /* CCProfiling.cpp */; };
 		1A5702AB180BCDAA0088DEC7 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702A8180BCDAA0088DEC7 /* CCProfiling.h */; };
@@ -1897,6 +1897,8 @@
 		1A01C68118F57BE800EFE3A6 /* CCSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSet.h; sourceTree = "<group>"; };
 		1A01C68218F57BE800EFE3A6 /* CCString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCString.cpp; sourceTree = "<group>"; };
 		1A01C68318F57BE800EFE3A6 /* CCString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCString.h; sourceTree = "<group>"; };
+		1A01C6A218F58F7500EFE3A6 /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
+		1A01C6A318F58F7500EFE3A6 /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
 		1A087AE61860400400196EF5 /* edtaa3func.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edtaa3func.cpp; sourceTree = "<group>"; };
 		1A087AE71860400400196EF5 /* edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edtaa3func.h; sourceTree = "<group>"; };
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
@@ -2069,8 +2071,6 @@
 		1A570291180BCCAB0088DEC7 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
 		1A57029B180BCD890088DEC7 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
 		1A57029C180BCD890088DEC7 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		1A5702A1180BCD980088DEC7 /* CCNotificationCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNotificationCenter.cpp; sourceTree = "<group>"; };
-		1A5702A2180BCD980088DEC7 /* CCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotificationCenter.h; sourceTree = "<group>"; };
 		1A5702A7180BCDAA0088DEC7 /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProfiling.cpp; sourceTree = "<group>"; };
 		1A5702A8180BCDAA0088DEC7 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		1A5702AD180BCDBC0088DEC7 /* ccUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUTF8.cpp; sourceTree = "<group>"; };
@@ -3009,6 +3009,8 @@
 				1A01C67D18F57BE800EFE3A6 /* CCDouble.h */,
 				1A01C67E18F57BE800EFE3A6 /* CCFloat.h */,
 				1A01C67F18F57BE800EFE3A6 /* CCInteger.h */,
+				1A01C6A218F58F7500EFE3A6 /* CCNotificationCenter.cpp */,
+				1A01C6A318F58F7500EFE3A6 /* CCNotificationCenter.h */,
 				1A01C68018F57BE800EFE3A6 /* CCSet.cpp */,
 				1A01C68118F57BE800EFE3A6 /* CCSet.h */,
 				1A01C68218F57BE800EFE3A6 /* CCString.cpp */,
@@ -3331,8 +3333,6 @@
 				1A570307180BCEFB0088DEC7 /* component */,
 				1A57029B180BCD890088DEC7 /* base64.cpp */,
 				1A57029C180BCD890088DEC7 /* base64.h */,
-				1A5702A1180BCD980088DEC7 /* CCNotificationCenter.cpp */,
-				1A5702A2180BCD980088DEC7 /* CCNotificationCenter.h */,
 				1A5702A7180BCDAA0088DEC7 /* CCProfiling.cpp */,
 				1A5702A8180BCDAA0088DEC7 /* CCProfiling.h */,
 				1A5702AD180BCDBC0088DEC7 /* ccUTF8.cpp */,
@@ -5098,6 +5098,7 @@
 				1A5701F9180BCBAD0088DEC7 /* CCMenu.h in Headers */,
 				1A5701FD180BCBAD0088DEC7 /* CCMenuItem.h in Headers */,
 				1A570204180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
+				1A01C6A618F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				1A57020A180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				1A570212180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
 				1A570216180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
@@ -5142,7 +5143,6 @@
 				50FCEB9D18C72017004AD434 /* ImageViewReader.h in Headers */,
 				50FCEBA918C72017004AD434 /* LoadingBarReader.h in Headers */,
 				1A57029F180BCD890088DEC7 /* base64.h in Headers */,
-				1A5702A5180BCD980088DEC7 /* CCNotificationCenter.h in Headers */,
 				1A5702AB180BCDAA0088DEC7 /* CCProfiling.h in Headers */,
 				1A5702B1180BCDBC0088DEC7 /* ccUTF8.h in Headers */,
 				1A5702B7180BCDF40088DEC7 /* CCVertex.h in Headers */,
@@ -5630,7 +5630,6 @@
 				1A570295180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				1A570299180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				1A5702A0180BCD890088DEC7 /* base64.h in Headers */,
-				1A5702A6180BCD980088DEC7 /* CCNotificationCenter.h in Headers */,
 				1A5702AC180BCDAA0088DEC7 /* CCProfiling.h in Headers */,
 				1A5702B2180BCDBC0088DEC7 /* ccUTF8.h in Headers */,
 				1A5702B8180BCDF40088DEC7 /* CCVertex.h in Headers */,
@@ -5787,6 +5786,7 @@
 				1A8C59BE180E930E00EF57C3 /* CCComAttribute.h in Headers */,
 				1A8C59C2180E930E00EF57C3 /* CCComAudio.h in Headers */,
 				1A01C68718F57BE800EFE3A6 /* CCArray.h in Headers */,
+				1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				1A8C59C6180E930E00EF57C3 /* CCComController.h in Headers */,
 				1A8C59CA180E930E00EF57C3 /* CCComRender.h in Headers */,
 				1A8C59CE180E930E00EF57C3 /* CCDataReaderHelper.h in Headers */,
@@ -6186,6 +6186,7 @@
 				2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */,
 				2AC795DE1862870F005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
 				46A170501807CC1C005B8026 /* CCApplication.mm in Sources */,
+				1A01C6A418F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170141807CBFC005B8026 /* CCFileUtilsApple.mm in Sources */,
 				46A1701D1807CBFC005B8026 /* CCFileUtils.cpp in Sources */,
@@ -6307,7 +6308,6 @@
 				1A570292180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
 				1A570296180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				1A57029D180BCD890088DEC7 /* base64.cpp in Sources */,
-				1A5702A3180BCD980088DEC7 /* CCNotificationCenter.cpp in Sources */,
 				1A5702A9180BCDAA0088DEC7 /* CCProfiling.cpp in Sources */,
 				2905FA8C18CF08D100240AA3 /* UIWidget.cpp in Sources */,
 				2905FA8018CF08D100240AA3 /* UITextAtlas.cpp in Sources */,
@@ -6634,6 +6634,7 @@
 				46A171051807CECB005B8026 /* CCPhysicsWorld.cpp in Sources */,
 				46A1703E1807CC07005B8026 /* CCDevice.mm in Sources */,
 				46A171031807CECB005B8026 /* CCPhysicsShape.cpp in Sources */,
+				1A01C6A518F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
 				46A170371807CBFE005B8026 /* CCSAXParser.cpp in Sources */,
 				46A1702B1807CBFE005B8026 /* CCThread.mm in Sources */,
 				50E6D33918E174130051CA34 /* UIRelativeBox.cpp in Sources */,
@@ -6748,7 +6749,6 @@
 				1A570293180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
 				1A570297180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				1A57029E180BCD890088DEC7 /* base64.cpp in Sources */,
-				1A5702A4180BCD980088DEC7 /* CCNotificationCenter.cpp in Sources */,
 				50FCEBC418C72017004AD434 /* TextReader.cpp in Sources */,
 				1A5702AA180BCDAA0088DEC7 /* CCProfiling.cpp in Sources */,
 				59A79D561821E26E00F19697 /* CCEventMouse.cpp in Sources */,
