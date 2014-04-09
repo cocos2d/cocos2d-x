@@ -71,7 +71,7 @@ cocos_console_dir = 'tools/cocos2d-console/bin/'
 
 # now cocos2d-console suport different run on Platforms, e.g: only run android on win
 runSupport = {
-	'darwin' : {'mac':1,'ios':1,'android':0},
+	'darwin' : {'mac':1,'ios':1,'android'===:0},
 	'win' : {'mac':0,'ios':0,'android':1},
 	'linux' : {'mac':0,'ios':0,'android':1}
 }
