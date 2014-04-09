@@ -39,7 +39,6 @@ public:
     static GLView* create(const std::string& viewName);
     static GLView* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
     static GLView* createWithFullScreen(const std::string& viewName);
-    static GLView* createWithFullScreen(const std::string& viewName, Size size);
     static GLView* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
     /*
