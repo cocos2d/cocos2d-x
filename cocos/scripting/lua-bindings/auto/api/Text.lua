@@ -79,10 +79,17 @@
 -- @param #size_table size
         
 --------------------------------
--- @function [parent=#Text] create 
+-- overload function: create(string, string, int)
+--          
+-- overload function: create()
+--          
+-- @function [parent=#Text] create
 -- @param self
--- @return Text#Text ret (return value: ccui.Text)
-        
+-- @param #string str
+-- @param #string str
+-- @param #int int
+-- @return Text#Text ret (retunr value: ccui.Text)
+
 --------------------------------
 -- @function [parent=#Text] createInstance 
 -- @param self
