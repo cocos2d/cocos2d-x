@@ -597,7 +597,7 @@ void LayerColor::draw(Renderer *renderer, const Matrix &transform, bool transfor
     }
 }
 
-void LayerColor::onDraw(const kmMat4& transform, bool transformUpdated)
+void LayerColor::onDraw(const Matrix& transform, bool transformUpdated)
 {
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);
