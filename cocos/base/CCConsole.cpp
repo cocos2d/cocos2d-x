@@ -414,13 +414,13 @@ void Console::commandHelp(int fd, const std::string &args)
     for(auto it=_commands.begin();it!=_commands.end();++it)
     {
         auto cmd = it->second;
-        mydprintf(fd, "\t%s", cmd.name);
-        ssize_t tabs = strlen(cmd.name) / 8;
+        mydprintf(fd, "\t%s", cmd.name.c_str());
+        ssize_t tabs = strlen(cmd.name.c_str()) / 8;
         tabs = 3 - tabs;
         for(int j=0;j<tabs;j++){
              mydprintf(fd, "\t");
         }
-        mydprintf(fd,"%s\n", cmd.help);
+        mydprintf(fd,"%s\n", cmd.help.c_str());
     } 
 }
 
