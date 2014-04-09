@@ -34,6 +34,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class TMXObjectGroup;
+class TMXImageLayer;
+class TMXImageLayerInfo;
 class TMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
@@ -117,6 +119,9 @@ public:
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
     static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
+    /** return the TMXImageLayer for the specific layer */
+    TMXImageLayer* getImageLayer(const std::string& layerName) const;
+
     /** return the TMXLayer for the specific layer */
     TMXLayer* getLayer(const std::string& layerName) const;
     /**
@@ -195,6 +200,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
 
 protected:
+    TMXImageLayer * parseImageLayer(TMXImageLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);

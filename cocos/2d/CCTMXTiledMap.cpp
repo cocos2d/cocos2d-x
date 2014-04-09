@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer.h"
+#include "CCTMXImageLayer.h"
 #include "CCSprite.h"
 #include <algorithm>
 
@@ -70,7 +71,9 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
     {
         return false;
     }
+    /* - Correct: TMX-file with the background (imagelayer) only.
     CCASSERT( !mapInfo->getTilesets().empty(), "TMXTiledMap: Map not found. Please check the filename.");
+    */
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -99,6 +102,10 @@ TMXTiledMap::~TMXTiledMap()
 }
 
 // private
+TMXImageLayer * TMXTiledMap::parseImageLayer( TMXImageLayerInfo* layerInfo, TMXMapInfo* mapInfo ) {
+    return TMXImageLayer::create( layerInfo, mapInfo );
+}
+
 TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     TMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
@@ -169,26 +176,70 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 
     int idx=0;
 
-    auto& layers = mapInfo->getLayers();
-    for(const auto &layerInfo : layers) {
-        if (layerInfo->_visible)
-        {
-            TMXLayer *child = parseLayer(layerInfo, mapInfo);
-            addChild(child, idx, idx);
+    // image layers
+    {
+        auto& layers = mapInfo->getImageLayers();
+        for (const auto& layerInfo : layers) {
+            if (layerInfo->_visible)
+            {
+                TMXImageLayer *child = parseImageLayer( layerInfo, mapInfo );
+                addChild( child, idx, idx );
             
-            // update content size with the max size
-            const Size& childSize = child->getContentSize();
-            Size currentSize = this->getContentSize();
-            currentSize.width = std::max( currentSize.width, childSize.width );
-            currentSize.height = std::max( currentSize.height, childSize.height );
-            this->setContentSize(currentSize);
+                // update content size with the max size
+                const Size& childSize = child->getContentSize();
+                Size currentSize = getContentSize();
+                currentSize.width = std::max( currentSize.width, childSize.width );
+                currentSize.height = std::max( currentSize.height, childSize.height );
+                setContentSize( currentSize );
             
-            idx++;
+                idx++;
+            }
+        }
+    }
+
+    // layers
+    {
+        auto& layers = mapInfo->getLayers();
+        for(const auto &layerInfo : layers) {
+            if (layerInfo->_visible)
+            {
+                TMXLayer *child = parseLayer(layerInfo, mapInfo);
+                addChild(child, idx, idx);
+            
+                // update content size with the max size
+                const Size& childSize = child->getContentSize();
+                Size currentSize = this->getContentSize();
+                currentSize.width = std::max( currentSize.width, childSize.width );
+                currentSize.height = std::max( currentSize.height, childSize.height );
+                this->setContentSize(currentSize);
+            
+                idx++;
+            }
         }
     }
 }
 
 // public
+TMXImageLayer * TMXTiledMap::getImageLayer(const std::string& layerName) const
+{
+    CCASSERT( layerName.size() > 0, "Invalid image layer name!" );
+    
+    for (const auto& child : _children)
+    {
+        TMXImageLayer* layer = dynamic_cast< TMXImageLayer* >( child );
+        if ( layer )
+        {
+            if (layerName.compare( layer->getImageLayerName() ) == 0)
+            {
+                return layer;
+            }
+        }
+    }
+
+    // image layer not found
+    return nullptr;
+}
+
 TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
 {
     CCASSERT(layerName.size() > 0, "Invalid layer name!");

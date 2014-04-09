@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="32" tileheight="32">
+ <imagelayer name="bg" width="40" height="30">
+  <image source="uv-1280x960.jpg"/>
+ </imagelayer>
+</map>
