@@ -29,8 +29,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-const ssize_t CC_INVALID_INDEX = -1;
-
 /** Allocates and initializes a new array with specified capacity */
 ccArray* ccArrayNew(ssize_t capacity)
 {
