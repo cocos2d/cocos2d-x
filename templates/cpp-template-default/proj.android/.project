@@ -35,31 +35,38 @@
 	<natures>
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.eclipse.cdt.core.cnature</nature>
-		<nature>org.eclipse.cdt.core.ccnature</nature>
-		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
-		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
 		<link>
 			<name>Classes</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/projects/HelloCpp/Classes</locationURI>
+			<locationURI>PROJECT_DIR/Classes</locationURI>
 		</link>
 		<link>
 			<name>cocos2dx</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/cocos2dx</locationURI>
+			<locationURI>PROJECT_DIR/cocos2d/cocos</locationURI>
 		</link>
 		<link>
 			<name>extensions</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/extensions</locationURI>
+			<locationURI>PROJECT_DIR/cocos2d/extensions</locationURI>
 		</link>
 		<link>
-			<name>scripting</name>
+			<name>external</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/scripting</locationURI>
+			<locationURI>PROJECT_DIR/cocos2d/external</locationURI>
+		</link>
+		<link>
+			<name>plugin</name>
+			<type>2</type>
+			<locationURI>PROJECT_DIR/cocos2d/plugin</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>PROJECT_DIR</name>
+			<value>$%7BPARENT-1-PROJECT_LOC%7D</value>
+		</variable>
+	</variableList>
 </projectDescription>
