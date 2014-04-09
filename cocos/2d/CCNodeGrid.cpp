@@ -105,7 +105,7 @@ void NodeGrid::visit(Renderer *renderer, const kmMat4 &parentTransform, bool par
     kmGLPushMatrix();
     kmGLLoadMatrix(&_modelViewTransform);
 
-    Director::Projection beforeProjectionType;
+    Director::Projection beforeProjectionType = Director::Projection::DEFAULT;
     if(_nodeGrid && _nodeGrid->isActive())
     {
         beforeProjectionType = Director::getInstance()->getProjection();
