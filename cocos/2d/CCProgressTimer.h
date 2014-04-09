@@ -133,7 +133,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithSprite(Sprite* sp);
     
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
     
     Tex2F textureCoordFromAlphaPoint(Point alpha);
     Vector2 vertexFromAlphaPoint(Point alpha);

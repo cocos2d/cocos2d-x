@@ -120,7 +120,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //renderer callback
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     bool _fastMode;
     bool _startingPositionInitialized;
