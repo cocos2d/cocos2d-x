@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "CCInteger.h"
 #include "CCDirector.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include <sstream>
 
 NS_CC_BEGIN

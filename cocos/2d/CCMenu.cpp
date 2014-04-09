@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCStdC.h"
 #include "CCInteger.h"
 #include "CCEventListenerTouch.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 
 #include <vector>
 #include <stdarg.h>

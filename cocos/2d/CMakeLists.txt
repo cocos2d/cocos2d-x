@@ -103,7 +103,6 @@ set(COCOS2D_SRC
   base64.cpp
   ccUtils.cpp
   CCVertex.cpp
-  CCNotificationCenter.cpp
   TGAlib.cpp
   ZipUtils.cpp
   ccCArray.cpp
@@ -145,6 +144,7 @@ set(COCOS2D_SRC
   renderer/CCRenderer.cpp
   renderer/CCRenderMaterial.cpp
   ../deprecated/CCDeprecated.cpp
+  ../deprecated/CCNotificationCenter.cpp
   ../../external/edtaa3func/edtaa3func.cpp
 )
 

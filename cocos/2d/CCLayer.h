@@ -45,6 +45,7 @@ NS_CC_BEGIN
  * @{
  */
 
+class __Set;
 class TouchScriptHandlerEntry;
 
 class EventListenerTouch;
@@ -77,10 +78,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
-	/* Callback function should not be deprecated, it will generate lots of warnings.
-	Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
+    /* Callback function should not be deprecated, it will generate lots of warnings.
+       Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
-	virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
     virtual void onTouchMoved(Touch *touch, Event *unused_event); 
     virtual void onTouchEnded(Touch *touch, Event *unused_event); 
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
