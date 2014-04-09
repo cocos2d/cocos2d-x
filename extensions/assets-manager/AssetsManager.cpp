@@ -83,9 +83,9 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _packageUrl(packageUrl)
 , _versionFileUrl(versionFileUrl)
 , _downloadedVersion("")
-, _curl(NULL)
+, _curl(nullptr)
 , _connectionTimeout(0)
-, _delegate(NULL)
+, _delegate(nullptr)
 , _isDownloading(false)
 , _shouldDeleteDelegateWhenExit(false)
 {

@@ -77,7 +77,7 @@ DictElement::~DictElement()
 // __Dictionary
 
 __Dictionary::__Dictionary()
-: _elements(NULL)
+: _elements(nullptr)
 , _dictType(kDictUnknown)
 {
 
