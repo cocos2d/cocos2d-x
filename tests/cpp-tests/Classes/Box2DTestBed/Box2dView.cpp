@@ -59,7 +59,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     view->setScale(15);
     view->setAnchorPoint( Point(0,0) );
     view->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );  
-    auto label = Label::createWithFont(view->title().c_str(), "fonts/arial.ttf", 28);
+    auto label = Label::createWithTTF(view->title().c_str(), "fonts/arial.ttf", 28);
     addChild(label, 1);
     label->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
 

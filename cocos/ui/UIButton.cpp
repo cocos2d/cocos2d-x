@@ -689,22 +689,22 @@ const Color3B& Button::getTitleColor() const
 
 void Button::setTitleFontSize(float size)
 {
-    _titleRenderer->setFontSize(size);
+    _titleRenderer->setSystemFontSize(size);
 }
 
 float Button::getTitleFontSize() const
 {
-    return _titleRenderer->getFontSize();
+    return _titleRenderer->getSystemFontSize();
 }
 
 void Button::setTitleFontName(const std::string& fontName)
 {
-    _titleRenderer->setFont(fontName);
+    _titleRenderer->setSystemFont(fontName);
 }
 
 const std::string& Button::getTitleFontName() const
 {
-    return _titleRenderer->getFont();
+    return _titleRenderer->getSystemFont();
 }
     
 std::string Button::getDescription() const

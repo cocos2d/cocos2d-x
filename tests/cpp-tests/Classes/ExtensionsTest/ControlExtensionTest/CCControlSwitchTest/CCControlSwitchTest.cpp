@@ -51,7 +51,7 @@ bool ControlSwitchTest::init()
         
         layer_width += background->getContentSize().width;
         
-        _displayValueLabel  = Label::createWithFont("#color" ,"fonts/Marker Felt.ttf" ,30);
+        _displayValueLabel  = Label::createWithTTF("#color" ,"fonts/Marker Felt.ttf" ,30);
         _displayValueLabel->retain();
 
         _displayValueLabel->setPosition(background->getPosition());
@@ -64,8 +64,8 @@ bool ControlSwitchTest::init()
                 Sprite::create("extensions/switch-on.png"),
                 Sprite::create("extensions/switch-off.png"),
                 Sprite::create("extensions/switch-thumb.png"),
-                Label::createWithFont("On", "Arial-BoldMT", 16),
-                Label::createWithFont("Off", "Arial-BoldMT", 16)
+                Label::createWithSystemFont("On", "Arial-BoldMT", 16),
+                Label::createWithSystemFont("Off", "Arial-BoldMT", 16)
             );
         switchControl->setPosition(Point(layer_width + 10 + switchControl->getContentSize().width / 2, 0));
         layer->addChild(switchControl);

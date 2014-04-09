@@ -266,12 +266,12 @@ TestLayer1::TestLayer1(void)
     bg1->setPosition( Point(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    auto title = Label::createWithFont( (transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
+    auto title = Label::createWithTTF( (transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Point(x/2, y-100) );
 
-    auto label = Label::createWithFont("SCENE 1", "fonts/Marker Felt.ttf", 38);
+    auto label = Label::createWithTTF("SCENE 1", "fonts/Marker Felt.ttf", 38);
     label->setColor( Color3B(16,16,255));
     label->setPosition( Point(x/2,y/2));    
     addChild( label);
@@ -395,12 +395,12 @@ TestLayer2::TestLayer2()
     bg1->setPosition( Point(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    auto title = Label::createWithFont((transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
+    auto title = Label::createWithTTF((transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Point(x/2, y-100) );
 
-    auto label = Label::createWithFont("SCENE 2", "fonts/Marker Felt.ttf", 38);
+    auto label = Label::createWithTTF("SCENE 2", "fonts/Marker Felt.ttf", 38);
     label->setColor( Color3B(16,16,255));
     label->setPosition( Point(x/2,y/2));    
     addChild( label);

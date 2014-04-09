@@ -64,7 +64,7 @@ ControlButton::~ControlButton()
 
 bool ControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(Label::createWithFont("", "Helvetica", 12), Scale9Sprite::create());
+    return this->initWithLabelAndBackgroundSprite(Label::createWithSystemFont("", "Helvetica", 12), Scale9Sprite::create());
 }
 
 bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* backgroundSprite)
@@ -131,7 +131,7 @@ ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite
 
 bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    return initWithLabelAndBackgroundSprite(Label::createWithFont(title, fontName, fontSize), Scale9Sprite::create());
+    return initWithLabelAndBackgroundSprite(Label::createWithSystemFont(title, fontName, fontSize), Scale9Sprite::create());
 }
 
 ControlButton* ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
@@ -144,7 +144,7 @@ ControlButton* ControlButton::create(const std::string& title, const std::string
 
 bool ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
 {
-    Label *label = Label::createWithFont("", "Arial", 30);//
+    Label *label = Label::createWithSystemFont("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
@@ -360,7 +360,7 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
 
 void ControlButton::setTitleTTFForState(const std::string& fontName, State state)
 {
-    this->setTitleLabelForState(Label::createWithFont(getTitleForState(state), fontName, 12), state);
+    this->setTitleLabelForState(Label::createWithSystemFont(getTitleForState(state), fontName, 12), state);
 }
 
 const std::string& ControlButton::getTitleTTFForState(State state)
@@ -369,7 +369,7 @@ const std::string& ControlButton::getTitleTTFForState(State state)
     Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFont();
+        return labelTTF->getSystemFont();
     }
 
     static std::string ret("");
@@ -384,7 +384,7 @@ void ControlButton::setTitleTTFSizeForState(float size, State state)
         Label* labelTTF = dynamic_cast<Label*>(label);
         if(labelTTF != 0)
         {
-            return labelTTF->setFontSize(size);
+            return labelTTF->setSystemFontSize(size);
         }
     }
 }
@@ -395,7 +395,7 @@ float ControlButton::getTitleTTFSizeForState(State state)
     Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontSize();
+        return labelTTF->getSystemFontSize();
     }
     else
     {

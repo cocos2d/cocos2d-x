@@ -120,7 +120,7 @@ ssize_t Text::getStringLength()
 void Text::setFontSize(int size)
 {
     _fontSize = size;
-    _labelRenderer->setFontSize(size);
+    _labelRenderer->setSystemFontSize(size);
     labelScaleChangedWithSize();
 }
     
@@ -132,7 +132,7 @@ int Text::getFontSize()
 void Text::setFontName(const std::string& name)
 {
     _fontName = name;
-    _labelRenderer->setFont(name);
+    _labelRenderer->setSystemFont(name);
     labelScaleChangedWithSize();
 }
     
@@ -314,7 +314,7 @@ void Text::copySpecialProperties(Widget *widget)
     if (label)
     {
         setFontName(label->_fontName);
-        setFontSize(label->_labelRenderer->getFontSize());
+        setFontSize(label->_labelRenderer->getSystemFontSize());
         setText(label->getStringValue());
         setTouchScaleChangeEnabled(label->_touchScaleChangeEnabled);
         setTextHorizontalAlignment(label->_labelRenderer->getHorizontalAlignment());

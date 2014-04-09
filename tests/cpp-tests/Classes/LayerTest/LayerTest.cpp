@@ -588,8 +588,8 @@ LayerGradientTest::LayerGradientTest()
     listener->onTouchesMoved = CC_CALLBACK_2(LayerGradientTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    auto label1 = Label::createWithFont("Compressed Interpolation: Enabled", "fonts/Marker Felt.ttf", 26);
-    auto label2 = Label::createWithFont("Compressed Interpolation: Disabled", "fonts/Marker Felt.ttf", 26);
+    auto label1 = Label::createWithTTF("Compressed Interpolation: Enabled", "fonts/Marker Felt.ttf", 26);
+    auto label2 = Label::createWithTTF("Compressed Interpolation: Disabled", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
     auto item2 = MenuItemLabel::create(label2);
     auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradientTest::toggleItem, this), item1, item2, NULL);

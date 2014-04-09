@@ -333,7 +333,7 @@ void GUIEditorTestScene::onEnter()
 {
     Scene::onEnter();
     
-    auto label = Label::createWithFont("Back", "fonts/arial.ttf", 20);
+    auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     
     auto pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(GUIEditorTestScene::BackCallback, this));
     

@@ -210,7 +210,15 @@ void RichText::formatText()
                     case RICH_TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
-                        elementRenderer = Label::createWithFont(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize);
+                        if (FileUtils::getInstance()->isFileExist(elmtText->_fontName))
+                        {
+                            elementRenderer = Label::createWithTTF(elmtText->_text.c_str(), elmtText->_fontName, elmtText->_fontSize);
+                        } 
+                        else
+                        {
+                            elementRenderer = Label::createWithSystemFont(elmtText->_text.c_str(), elmtText->_fontName, elmtText->_fontSize);
+                        }
+                        
                         break;
                     }
                     case RICH_IMAGE:
@@ -272,7 +280,16 @@ void RichText::formatText()
     
 void RichText::handleTextRenderer(const char *text, const char *fontName, float fontSize, const Color3B &color, GLubyte opacity)
 {
-    Label* textRenderer = Label::createWithFont(text, fontName, fontSize);
+    auto fileExist = FileUtils::getInstance()->isFileExist(fontName);
+    Label* textRenderer = nullptr;
+    if (fileExist)
+    {
+        textRenderer = Label::createWithTTF(text, fontName, fontSize);
+    } 
+    else
+    {
+        textRenderer = Label::createWithSystemFont(text, fontName, fontSize);
+    }
     float textRendererWidth = textRenderer->getContentSize().width;
     _leftSpaceWidth -= textRendererWidth;
     if (_leftSpaceWidth < 0.0f)
@@ -285,10 +302,21 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
         std::string cutWords = curText.substr(leftLength, curText.length()-1);
         if (leftLength > 0)
         {
-            Label* leftRenderer = Label::createWithFont(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
-            leftRenderer->setColor(color);
-            leftRenderer->setOpacity(opacity);
-            pushToContainer(leftRenderer);
+            Label* leftRenderer = nullptr;
+            if (fileExist)
+            {
+                leftRenderer = Label::createWithTTF(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+            } 
+            else
+            {
+                leftRenderer = Label::createWithSystemFont(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+            }
+            if (leftRenderer)
+            {
+                leftRenderer->setColor(color);
+                leftRenderer->setOpacity(opacity);
+                pushToContainer(leftRenderer);
+            }
         }
 
         addNewLine();

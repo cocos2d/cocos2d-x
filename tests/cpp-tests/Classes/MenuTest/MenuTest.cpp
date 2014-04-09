@@ -509,7 +509,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
 {
     auto s = Director::getInstance()->getWinSize();
     
-    auto label = Label::createWithFont("click item and move, should not crash", "fonts/arial.ttf", 20);
+    auto label = Label::createWithTTF("click item and move, should not crash", "fonts/arial.ttf", 20);
     label->setPosition(Point(s.width/2, s.height - 30));
     addChild(label);
     

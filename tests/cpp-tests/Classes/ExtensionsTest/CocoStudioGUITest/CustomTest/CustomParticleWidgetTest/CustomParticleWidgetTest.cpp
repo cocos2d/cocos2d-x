@@ -50,7 +50,7 @@ void CustomParticleWidgetScene::onEnter()
     addChild(pLayer);
     pLayer->release();
     
-    auto label = Label::createWithFont("Back", "fonts/arial.ttf", 20);
+    auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CustomParticleWidgetScene::BackCallback, this));
     

@@ -198,7 +198,7 @@ void PauseTest::onEnter()
     ActionManagerTest::onEnter();
     
 
-    auto l = Label::createWithFont("After 5 seconds grossini should move", "fonts/Thonburi.ttf", 16.0f);
+    auto l = Label::createWithTTF("After 5 seconds grossini should move", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-75) );
     
@@ -240,7 +240,7 @@ void StopActionTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    auto l = Label::createWithFont("Should not crash", "fonts/Thonburi.ttf", 16.0f);
+    auto l = Label::createWithTTF("Should not crash", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
@@ -281,7 +281,7 @@ void ResumeTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    auto l = Label::createWithFont("Grossini only rotate/scale in 3 seconds", "fonts/Thonburi.ttf", 16.0f);
+    auto l = Label::createWithTTF("Grossini only rotate/scale in 3 seconds", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75));
 
