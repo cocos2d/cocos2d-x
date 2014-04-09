@@ -28,12 +28,13 @@ THE SOFTWARE.
 #define __CCNOTIFICATIONCENTER_H__
 
 #include "CCRef.h"
-#include "CCArray.h"
 #include "ccTypes.h"
 
 NS_CC_BEGIN
 
+class __Array;
 class ScriptHandlerMgr;
+
 class CC_DLL __NotificationCenter : public Ref
 {
     friend class ScriptHandlerMgr;
