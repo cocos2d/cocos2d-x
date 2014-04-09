@@ -252,16 +252,9 @@ function TouchableSpriteTest:onEnter()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener1, sprite1)
 
     local listener2 = listener1:clone()
-    -- listener2:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
-    -- listener2:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED)
-    -- listener2:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener2, sprite2)
 
-
     local listener3 = listener1:clone()
-    -- listener3:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
-    -- listener3:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
-    -- listener3:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener3, sprite3)
 
     local function removeAllTouchItem(tag, sender)
@@ -1212,7 +1205,6 @@ function StopPropagationTest:onEnter()
 
         eventDispatcher:addEventListenerWithSceneGraphPriority(touchOneByOneListener:clone(), sprite)
         eventDispatcher:addEventListenerWithSceneGraphPriority(keyboardEventListener:clone(), sprite)
-
 
         eventDispatcher:addEventListenerWithSceneGraphPriority(touchAllAtOnceListener:clone(), sprite2)
         eventDispatcher:addEventListenerWithSceneGraphPriority(keyboardEventListener:clone(), sprite2)
