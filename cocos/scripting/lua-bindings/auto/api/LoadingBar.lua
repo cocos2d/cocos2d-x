@@ -11,7 +11,7 @@
 --------------------------------
 -- @function [parent=#LoadingBar] loadTexture 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
@@ -50,10 +50,16 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#LoadingBar] create 
+-- overload function: create(string, int)
+--          
+-- overload function: create()
+--          
+-- @function [parent=#LoadingBar] create
 -- @param self
--- @return LoadingBar#LoadingBar ret (return value: ccui.LoadingBar)
-        
+-- @param #string str
+-- @param #int int
+-- @return LoadingBar#LoadingBar ret (retunr value: ccui.LoadingBar)
+
 --------------------------------
 -- @function [parent=#LoadingBar] createInstance 
 -- @param self

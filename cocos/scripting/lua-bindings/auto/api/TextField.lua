@@ -168,10 +168,17 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- @function [parent=#TextField] create 
+-- overload function: create(string, string, int)
+--          
+-- overload function: create()
+--          
+-- @function [parent=#TextField] create
 -- @param self
--- @return TextField#TextField ret (return value: ccui.TextField)
-        
+-- @param #string str
+-- @param #string str
+-- @param #int int
+-- @return TextField#TextField ret (retunr value: ccui.TextField)
+
 --------------------------------
 -- @function [parent=#TextField] createInstance 
 -- @param self

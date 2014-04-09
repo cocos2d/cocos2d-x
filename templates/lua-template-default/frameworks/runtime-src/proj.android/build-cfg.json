@@ -5,9 +5,18 @@
         "../../cocos2d-x/external",
         "../../cocos2d-x/cocos/scripting"
     ],
-    "copy_to_assets" :[
-        "../../../src",
-        "../../../res",
-        "../../cocos2d-x/cocos/scripting/lua-bindings/script/"
+    "copy_resources": [
+        {
+            "from": "../../../src",
+            "to": "src"
+        },
+        {
+            "from": "../../../res",
+            "to": "res"
+        },
+        {
+            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script",
+            "to": ""
+        }
     ]
 }
