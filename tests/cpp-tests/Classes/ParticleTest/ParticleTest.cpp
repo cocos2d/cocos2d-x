@@ -19,17 +19,28 @@ void DemoFirework::onEnter()
     ParticleDemo::onEnter();
 
     _emitter = ParticleFireworks::create();
-    _emitter->retain();
-    _background->addChild(_emitter, 10);
-
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
+    
+    _emitter->setEmissionRate(50);
+    _emitter->setRotation(-30);
+    _emitter->setAngleVar(0);
+    _emitter->setAngle(60);
+    _emitter->setRadialAccel(0);
+    _emitter->setTangentialAccel(0);
+    _emitter->setScale(2.0f);
+    _emitter->retain();
+    
+    auto batch = ParticleBatchNode::createWithTexture(_emitter->getTexture());
+    batch->addChild(_emitter);
+    _background->addChild(batch, 10);
+    _background->setRotation(30);
 
     setEmitterPosition();
 }
 
 std::string DemoFirework::subtitle() const
 {
-    return "ParticleFireworks";
+    return "Batch ParticleFireworks\nMove the particle to see the effects";
 }
 
 
@@ -1137,6 +1148,11 @@ void ParticleDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *ev
     auto touch = touches[0];
 
     auto location = touch->getLocation();
+    
+    if (_background != nullptr)
+    {
+        location = _background->convertTouchToNodeSpace(touch);
+    }
 
     auto pos = Point::ZERO;
     if (_background)
@@ -1146,7 +1162,7 @@ void ParticleDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *ev
 
     if (_emitter != NULL)
     {
-        _emitter->setPosition(location -pos);
+        _emitter->setPosition(location);
     }
 }
 

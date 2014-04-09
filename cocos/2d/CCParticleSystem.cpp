@@ -774,13 +774,15 @@ void ParticleSystem::update(float dt)
                 //
                 // update values in quad
                 //
+                
+                Point pos = Point(p->pos.x, p->pos.y);
 
                 Point    newPos;
-
+                
                 if (_positionType == PositionType::FREE)
                 {
                     Point diff = currentPosition - p->startPos;
-                    Point worldPos = this->convertToWorldSpace(p->pos);
+                    Point worldPos = this->convertToWorldSpace(pos);
                     newPos = this->convertToNodeSpace(worldPos - diff);
                 }
                 else if (_positionType == PositionType::RELATIVE)
@@ -788,7 +790,7 @@ void ParticleSystem::update(float dt)
                     // transform to parent
                     Point diff = currentPosition - p->startPos;
                     kmMat4 tmp = getNodeToParentTransform();
-                    kmVec3 vec3 = {p->pos.x, p->pos.y, 0};
+                    kmVec3 vec3 = {pos.x, pos.y, 0};
                     kmVec3 transformed;
                     kmVec3Transform(&transformed, &vec3, &tmp);
                     
@@ -803,15 +805,18 @@ void ParticleSystem::update(float dt)
                 }
                 else
                 {
-                    newPos = p->pos;
+                    newPos = pos;
                 }
-
+                
                 // translate newPos to correct position, since matrix transform isn't performed in batchnode
                 // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
                 if (_batchNode)
                 {
-                    newPos.x+=_position.x;
-                    newPos.y+=_position.y;
+                    kmVec3 vec3 = {newPos.x, newPos.y, 0};
+                    kmVec3 transformed;
+                    kmMat4 parentTransform = getNodeToParentTransform();
+                    kmVec3Transform(&transformed, &vec3, &parentTransform);
+                    newPos = Point(transformed.x, transformed.y);
                 }
 
                 updateQuadWithParticle(p, newPos);
