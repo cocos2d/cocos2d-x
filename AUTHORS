@@ -809,6 +809,9 @@ Developers:
     mgcL
         A potential memory leak fix in value's default constructor
         Added ScriptHandlerMgr::destroyInstance to avoid memory leak
+        
+    Mazyod
+        Fixed a bug that HTTPClient reports 2xx status codes as errors
     
 Retired Core Developers:
     WenSheng Yang

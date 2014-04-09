@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 namespace CocosDenshion {
     namespace android {
-        bool is_buggy_device(void);
         std::string getFullPathWithoutAssetsPrefix(const char* pszFilename);
     }
 }
