@@ -89,7 +89,7 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
