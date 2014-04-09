@@ -1003,7 +1003,7 @@ const Rect& Layout::getClippingRect()
         float scissorHeight = _size.height*t.d;
         Rect parentClippingRect;
         Layout* parent = this;
-        bool firstClippingParentFounded = false;
+
         while (parent)
         {
             parent = dynamic_cast<Layout*>(parent->getParent());
@@ -1011,12 +1011,8 @@ const Rect& Layout::getClippingRect()
             {
                 if (parent->isClippingEnabled())
                 {
-                    if (!firstClippingParentFounded)
-                    {
-                        _clippingParent = parent;
-                        firstClippingParentFounded = true;
-                        break;
-                    }
+                    _clippingParent = parent;
+                    break;
                 }
             }
         }
