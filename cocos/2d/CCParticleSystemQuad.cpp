@@ -280,12 +280,14 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point
     // vertices
     GLfloat size_w_2 = particle->size/2;
     GLfloat size_h_2 = particle->size/2;
+    GLfloat rotation = particle->rotation;
     if (_batchNode != nullptr)
     {
         size_w_2 *= _scaleX;
         size_h_2 *= _scaleY;
+        rotation += _rotationZ_X;
     }
-    if (particle->rotation) 
+    if (std::abs(rotation) > std::numeric_limits<GLfloat>::min())
     {
         GLfloat x1 = -size_w_2;
         GLfloat y1 = -size_h_2;
@@ -295,7 +297,7 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point
         GLfloat x = newPosition.x;
         GLfloat y = newPosition.y;
 
-        GLfloat r = (GLfloat)-CC_DEGREES_TO_RADIANS(particle->rotation);
+        GLfloat r = static_cast<GLfloat>(-CC_DEGREES_TO_RADIANS(rotation));
         GLfloat cr = cosf(r);
         GLfloat sr = sinf(r);
         GLfloat ax = x1 * cr - y1 * sr + x;
