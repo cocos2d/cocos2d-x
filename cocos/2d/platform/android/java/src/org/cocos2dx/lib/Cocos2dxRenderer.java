@@ -92,6 +92,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 		// should render a frame when onDrawFrame() is called or there is a
 		// "ghost"
 		Cocos2dxRenderer.nativeRender();
+		Cocos2dxHelper.dispatchPendingRunnables();
 
 		/*
 		// fps controlling
