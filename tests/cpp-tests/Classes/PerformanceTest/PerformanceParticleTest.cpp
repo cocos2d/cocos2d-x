@@ -103,7 +103,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     menu->setPosition(Point(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
-    auto infoLabel = Label::createWithFont("0 nodes", "fonts/Marker Felt.ttf", 30);
+    auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
@@ -142,7 +142,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pSubMenu->setPosition(Point(s.width/2, 80));
     addChild(pSubMenu, 2);
 
-    auto label = Label::createWithFont(title().c_str(), "fonts/arial.ttf", 32);
+    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 

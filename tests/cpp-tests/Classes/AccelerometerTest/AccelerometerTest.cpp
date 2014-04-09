@@ -37,7 +37,7 @@ void AccelerometerTest::onEnter()
     auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(AccelerometerTest::onAcceleration, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    auto label = Label::createWithFont(title().c_str(), "fonts/arial.ttf", 32.0f);
+    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32.0f);
     addChild(label, 1);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 

@@ -55,30 +55,36 @@ Label* Label::create()
     return ret;
 }
 
-Label* Label::createWithFont(const std::string& text, const std::string& fontNameOrFontFile, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
+Label* Label::createWithSystemFont(const std::string& text, const std::string& font, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
     auto ret = new Label(nullptr,hAlignment,vAlignment);
 
     if (ret)
     {
-        if (FileUtils::getInstance()->isFileExist(fontNameOrFontFile))
-        {
-            TTFConfig ttfConfig(fontNameOrFontFile.c_str(),fontSize,GlyphCollection::DYNAMIC);
-            if (ret->setTTFConfig(ttfConfig))
-            {
-                ret->setDimensions(dimensions.width,dimensions.height);
-                ret->setString(text);
+        ret->setSystemFont(font);
+        ret->setSystemFontSize(fontSize);
+        ret->setDimensions(dimensions.width, dimensions.height);
+        ret->setString(text);
 
-                ret->autorelease();
+        ret->autorelease();
 
-                return ret;
-            }
-        }
-        else
+        return ret;
+    }
+
+    delete ret;
+    return nullptr;
+}
+
+Label* Label::createWithTTF(const std::string& text, const std::string& fontFile, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
+{
+    auto ret = new Label(nullptr,hAlignment,vAlignment);
+
+    if (ret && FileUtils::getInstance()->isFileExist(fontFile))
+    {
+        TTFConfig ttfConfig(fontFile.c_str(),fontSize,GlyphCollection::DYNAMIC);
+        if (ret->setTTFConfig(ttfConfig))
         {
-            ret->setFont(fontNameOrFontFile);
-            ret->setFontSize(fontSize);
-            ret->setDimensions(dimensions.width, dimensions.height);
+            ret->setDimensions(dimensions.width,dimensions.height);
             ret->setString(text);
 
             ret->autorelease();
@@ -105,15 +111,6 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     }
 
     delete ret;
-    return nullptr;
-}
-
-Label* Label::createWithTTF(const std::string& text, const std::string& fontFile, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
-{
-    if (FileUtils::getInstance()->isFileExist(fontFile))
-    {
-        return createWithFont(text, fontFile, fontSize, dimensions, hAlignment, vAlignment);
-    }
     return nullptr;
 }
 
@@ -292,8 +289,8 @@ void Label::reset()
     _fontConfig = temp;
 
     _fontDirty = false;
-    _fontNameOrFontFile = "Helvetica";
-    _fontSize = 12;
+    _systemFont = "Helvetica";
+    _systemFontSize = 12;
 
     _batchNodes.clear();
     _batchNodes.push_back(this);
@@ -958,8 +955,8 @@ void Label::updateContent()
     }
     else
     {
-        _fontDefinition._fontName = _fontNameOrFontFile;
-        _fontDefinition._fontSize = _fontSize;
+        _fontDefinition._fontName = _systemFont;
+        _fontDefinition._fontSize = _systemFontSize;
 
         _fontDefinition._alignment = _hAlignment;
         _fontDefinition._vertAlignment = _vAlignment;
@@ -1001,13 +998,7 @@ void Label::updateContent()
 
 void Label::updateFont()
 {
-    if (FileUtils::getInstance()->isFileExist(_fontNameOrFontFile))
-    {
-        _fontConfig.fontFilePath = _fontNameOrFontFile;
-        _fontConfig.fontSize = _fontSize;
-        setTTFConfig(_fontConfig);
-    }
-    else if (_fontAtlas)
+    if (_fontAtlas)
     {
         _batchNodes.clear();
         _batchNodes.push_back(this);
@@ -1108,32 +1099,22 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
     setOrderOfArrival(0);
 }
 
-void Label::setFont(const std::string& fontNameOrFileFile)
+void Label::setSystemFont(const std::string& systemFont)
 {
-    if (fontNameOrFileFile != _fontNameOrFontFile)
+    if (systemFont != _systemFont)
     {
-        _fontNameOrFontFile = fontNameOrFileFile;
+        _systemFont = systemFont;
         _fontDirty = true;
     }
 }
 
-const std::string& Label::getFont() const
+void Label::setSystemFontSize(float fontSize)
 {
-    return _fontNameOrFontFile;
-}
-
-void Label::setFontSize(float fontSize)
-{
-    if (_fontSize != fontSize)
+    if (_systemFontSize != fontSize)
     {
-        _fontSize = fontSize;
+        _systemFontSize = fontSize;
         _fontDirty = true;
     }
-}
-
-float Label::getFontSize() const
-{
-    return _fontSize;
 }
 
 ///// PROTOCOL STUFF
@@ -1142,7 +1123,9 @@ Sprite * Label::getLetter(int letterIndex)
     if (_fontDirty)
     {
         updateFont();
+        return nullptr;
     }
+
     if (_contentDirty)
     {
         updateContent();

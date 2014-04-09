@@ -83,14 +83,21 @@ public:
     static Label* create();
 
     /** Creates a label with an initial string,font[font name or font file],font size, dimension in points, horizontal alignment and vertical alignment.
-     * 
+     * @warning It will generate texture by the platform-dependent code
      */
-    static Label * createWithFont(const std::string& text, const std::string& fontNameOrFontFile, float fontSize,
+    static Label* createWithSystemFont(const std::string& text, const std::string& font, float fontSize,
+        const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
+        TextVAlignment vAlignment = TextVAlignment::TOP);
+
+    /** Creates a label with an initial string,font file,font size, dimension in points, horizontal alignment and vertical alignment.
+     * @warning Not support font name.
+     */
+    static Label * createWithTTF(const std::string& text, const std::string& fontFile, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
 
     /** Create a label with TTF configuration
-     * It not support font name.
+     * @warning Not support font name.
      */
     static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::LEFT, int maxLineWidth = 0);
     
@@ -105,6 +112,7 @@ public:
 
     /** set TTF configuration for Label */
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
+    virtual TTFConfig& getTTFConfig() { return _fontConfig;}
 
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
@@ -112,6 +120,12 @@ public:
     virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     virtual bool setCharMap(const std::string& plistFile);
+
+    virtual void setSystemFont(const std::string& systemFont);
+    virtual const std::string& getSystemFont() const { return _systemFont;}
+
+    virtual void setSystemFontSize(float fontSize);
+    virtual float getSystemFontSize() const { return _systemFontSize;}
 
     /** changes the string to render
     * @warning It is as expensive as changing the string if you haven't set up TTF/BMFont/CharMap for the label.
@@ -177,12 +191,6 @@ public:
     /** update content immediately.*/
     virtual void updateContent();
 
-    virtual void setFont(const std::string& fontNameOrFileFile);
-    virtual const std::string& getFont() const;
-
-    virtual void setFontSize(float fontSize);
-    virtual float getFontSize() const;
-
     /** Sets the text color
      *
      */
@@ -229,22 +237,6 @@ public:
 
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
-
-    CC_DEPRECATED_ATTRIBUTE static Label * create(const std::string& text, const std::string& fontNameOrFontFile, float fontSize,
-        const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
-        TextVAlignment vAlignment = TextVAlignment::TOP) {
-           return createWithFont(text, fontNameOrFontFile, fontSize, dimensions, hAlignment, vAlignment);
-    }
-
-     /** creates a Label from a font name, horizontal alignment, dimension in points, and font size in points.
-     * @warning It will generate texture by the platform-dependent code if [fontName] not a font file.
-     */
-    CC_DEPRECATED_ATTRIBUTE static Label * createWithTTF(const std::string& text, const std::string& fontFile, float fontSize,
-        const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
-        TextVAlignment vAlignment = TextVAlignment::TOP);
-
-    CC_DEPRECATED_ATTRIBUTE virtual void setFontName(const std::string& fontName) { setFont(fontName);}
-    CC_DEPRECATED_ATTRIBUTE virtual const std::string& getFontName() const { return getFont();}
 
     CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
@@ -308,15 +300,14 @@ protected:
     void updateFont();
     void reset();
 
-    
-
     std::string _bmFontPath;
 
     bool _isOpacityModifyRGB;
     bool _contentDirty;
+
     bool _fontDirty;
-    std::string _fontNameOrFontFile;
-    float         _fontSize;
+    std::string _systemFont;
+    float         _systemFontSize;
     LabelType _currentLabelType;
 
     std::vector<SpriteBatchNode*> _batchNodes;

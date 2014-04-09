@@ -391,7 +391,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     menu->setPosition(Point(s.width/2, s.height-65));
     addChild(menu, 1);
 
-    auto infoLabel = Label::createWithFont("0 nodes", "fonts/Marker Felt.ttf", 30);
+    auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
@@ -450,7 +450,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(subMenu, 2);
 
     // add title label
-    auto label = Label::createWithFont(title(), "fonts/arial.ttf", 32);
+    auto label = Label::createWithTTF(title(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 
@@ -459,7 +459,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        auto l = Label::createWithFont(strSubtitle.c_str(), "fonts/Thonburi.ttf", 16);
+        auto l = Label::createWithTTF(strSubtitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 9999);
         l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }

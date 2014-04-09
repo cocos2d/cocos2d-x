@@ -48,7 +48,7 @@ void TextureMenuLayer::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     // Title
-    auto label = Label::createWithFont(title().c_str(), "fonts/arial.ttf", 32);
+    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 
@@ -56,7 +56,7 @@ void TextureMenuLayer::onEnter()
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        auto l = Label::createWithFont(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
+        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1);
         l->setPosition(Point(s.width/2, s.height-80));
     }
