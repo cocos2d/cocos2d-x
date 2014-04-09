@@ -277,7 +277,7 @@ THE SOFTWARE.
 #include "CCComponentContainer.h"
 
 // Deprecated include
-#include "CCDeprecated.h"
+#include "deprecated/CCDeprecated.h"
 
 NS_CC_BEGIN
 
