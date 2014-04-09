@@ -133,7 +133,7 @@ void Skeleton::draw(cocos2d::Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_customCommand);
 }
     
-void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
+void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
 {
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);

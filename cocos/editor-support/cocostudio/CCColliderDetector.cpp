@@ -334,7 +334,7 @@ ColliderFilter *ColliderDetector::getColliderFilter()
 
 Point helpPoint;
 
-void ColliderDetector::updateTransform(kmMat4 &t)
+void ColliderDetector::updateTransform(Matrix &t)
 {
     if (!_active)
     {

@@ -744,7 +744,7 @@ void Layout::sortAllChildren()
     doLayout();
 }
     
-void Layout::stencilClippingVisit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
+void Layout::stencilClippingVisit(Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated)
 {
     if(!_visible)
         return;
@@ -902,7 +902,7 @@ void Layout::onAfterVisitScissor()
     glDisable(GL_SCISSOR_TEST);
 }
     
-void Layout::scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
+void Layout::scissorClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated)
 {
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);

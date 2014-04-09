@@ -86,7 +86,7 @@ Skin::Skin()
     , _armature(nullptr)
     , _displayName("")
 {
-    kmMat4Identity(&_skinTransform);
+    _skinTransform = Matrix::identity();
 }
 
 bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
@@ -206,7 +206,7 @@ Matrix Skin::getNodeToWorldTransform() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(), _transform);
 }
 
-kmMat4 Skin::getNodeToWorldTransformAR() const
+Matrix Skin::getNodeToWorldTransformAR() const
 {
     kmMat4 displayTransform = _transform;
     Point anchorPoint =  _anchorPointInPoints;

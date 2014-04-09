@@ -284,8 +284,8 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
     
-    void stencilClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
-    void scissorClippingVisit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    void stencilClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
+    void scissorClippingVisit(Renderer *renderer, const Matrix& parentTransform, bool parentTransformUpdated);
     
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
