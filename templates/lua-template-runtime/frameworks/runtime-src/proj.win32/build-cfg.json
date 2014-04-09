@@ -13,6 +13,13 @@
 		{
             "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script",
             "to": ""
-        }
+        },
+		{
+			"from": "../../cocos2d-x/external/lua/luasocket",
+			"to": "",
+			"include": [
+				"*.lua"
+			]
+		}
 	]
 }
