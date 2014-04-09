@@ -64,7 +64,6 @@ public class Cocos2dxHelper {
 	private static Activity sActivity = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
 	private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
-	private static ConcurrentLinkedQueue<Runnable> jobs = new ConcurrentLinkedQueue<Runnable>();
 
     /**
      * Optional meta-that can be in the manifest for this component, specifying
