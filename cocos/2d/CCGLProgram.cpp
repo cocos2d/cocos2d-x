@@ -638,20 +638,19 @@ void GLProgram::setUniformsForBuiltins()
     setUniformsForBuiltins(matrixMV);
 }
 
-void GLProgram::setUniformsForBuiltins(const kmMat4 &matrixMV)
+void GLProgram::setUniformsForBuiltins(const Matrix &matrixMV)
 {
-    kmMat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Matrix matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
 
     if(_flags.usesMV)
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.mat, 1);
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
 
     if(_flags.usesMVP) {
-        kmMat4 matrixMVP;
-        kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixMVP.mat, 1);
+        Matrix matrixMVP = matrixP * matrixMV;
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 
 	if(_flags.usesTime) {

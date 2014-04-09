@@ -35,7 +35,7 @@ ViewTransform::ViewTransform()
     kmVec3Fill(&_focus,0,0,-1);
     kmVec3Fill(&_up,0,1,0);
     _dirty = true;
-    kmMat4Identity(&_matrix);
+    _matrix = Matrix::identity();
 }
 
 ViewTransform::~ViewTransform()
@@ -342,10 +342,10 @@ void Frustum::setupProjectionPerspectiveFov(const ViewTransform& view, float fov
     setupProjectionPerspective(view, -width/2, width/2, height/2, -height/2, nearPlane, farPlane);
 }
 
-void Frustum::setupFromMatrix(const kmMat4 &view, const kmMat4 &projection)
+void Frustum::setupFromMatrix(const Matrix &view, const Matrix &projection)
 {
-    kmMat4 mvp;
-    kmMat4Multiply(&mvp, &projection, &view);
+    Matrix mvp2 = projection * view;
+    kmMat4 mvp = mvp2;
     
     kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_NEAR], &mvp, KM_PLANE_NEAR);
     kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_FAR], &mvp, KM_PLANE_FAR);

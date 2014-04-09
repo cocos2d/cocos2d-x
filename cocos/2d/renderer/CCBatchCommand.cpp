@@ -39,7 +39,7 @@ BatchCommand::BatchCommand()
     _shader = nullptr;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Matrix& modelViewTransform)
 {
     CCASSERT(shader, "shader cannot be nill");
     CCASSERT(textureAtlas, "textureAtlas cannot be nill");

@@ -27,8 +27,11 @@
 
 #include "CCPlatformMacros.h"
 #include "kazmath/kazmath.h"
+#include "CCMath.h"
 
 NS_CC_BEGIN
+
+USING_NS_CC_MATH;
 
 class ViewTransform
 {
@@ -51,7 +54,7 @@ protected:
     kmVec3 _up;
     
     mutable bool _dirty;
-    mutable kmMat4 _matrix;
+    mutable Matrix _matrix;
     mutable kmVec3 _adjustDir;
     mutable kmVec3 _adjustRight;
     mutable kmVec3 _adjustUp;
@@ -96,7 +99,7 @@ public:
     void setupProjectionPerspective(const ViewTransform& view, float left, float right, float top, float bottom, float near, float far);
     void setupProjectionPerspectiveFov(const ViewTransform& view, float fov, float ratio, float near, float far);
     
-    void setupFromMatrix(const kmMat4& view, const kmMat4& projection);
+    void setupFromMatrix(const Matrix& view, const Matrix& projection);
     
     IntersectResult intersectPoint(const kmVec3& point) const;
     IntersectResult intersectAABB(const AABB& aabb) const;
