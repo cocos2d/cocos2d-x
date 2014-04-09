@@ -168,12 +168,14 @@ namespace cocos2d {
         jclass classID = _getClassID(className);
         if (! classID) {
             LOGD("Failed to find class %s", className);
+            pEnv->ExceptionClear();
             return false;
         }
 
         jmethodID methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
         if (! methodID) {
             LOGD("Failed to find static method id of %s", methodName);
+            pEnv->ExceptionClear();
             return false;
         }
             
