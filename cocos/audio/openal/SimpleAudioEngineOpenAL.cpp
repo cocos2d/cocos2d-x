@@ -462,7 +462,7 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
     {
         ALuint      buffer = AL_NONE;
         ALuint      source = AL_NONE;
-        soundData  *data = new soundData;
+        
 
         checkALError("preloadEffect:init");
         OpenALFile file;
@@ -472,7 +472,7 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
             fprintf(stderr, "Cannot read file: '%s'\n", fullPath.data());
             return;
         }
-
+        soundData  *data = new soundData;
         bool success = false;
         const std::vector<OpenALDecoder *> &decoders = OpenALDecoder::getDecoders();
         for (size_t i = 0, n = decoders.size(); !success && i < n; ++i)
