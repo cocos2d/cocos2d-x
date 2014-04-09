@@ -386,6 +386,22 @@ TextField* TextField::create()
     return nullptr;
 }
     
+TextField* TextField::create(const std::string &placeholder, const std::string &fontName, int fontSize)
+{
+    TextField* widget = new TextField();
+    if (widget && widget->init())
+    {
+        widget->setTouchEnabled(true);
+        widget->setPlaceHolder(placeholder);
+        widget->setFontName(fontName);
+        widget->setFontSize(fontSize);
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
+    
 bool TextField::init()
 {
     if (Widget::init())

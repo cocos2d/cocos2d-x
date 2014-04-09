@@ -172,4 +172,26 @@ namespace cocostudio
         widget->setFlippedX(flipX);
         widget->setFlippedY(flipY);
     }
+    
+    std::string WidgetReader::getResourcePath(const rapidjson::Value &dict,
+                                              const std::string &key,
+                                              cocos2d::ui::TextureResType texType)
+    {
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        const char* imageFileName = DICTOOL->getStringValue_json(dict, key.c_str());
+        std::string imageFileName_tp;
+        if (nullptr != imageFileName)
+        {
+            if (texType == UI_TEX_TYPE_LOCAL) {
+                imageFileName_tp = jsonPath + imageFileName;
+            }
+            else if(texType == UI_TEX_TYPE_PLIST){
+                imageFileName_tp = imageFileName;
+            }
+            else{
+                CCASSERT(0, "invalid TextureResType!!!");
+            }
+        }
+        return imageFileName_tp;
+    }
 }

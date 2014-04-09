@@ -56,8 +56,21 @@ public:
      */
     static TextAtlas* create();
     
+    /**
+     * create a LabelAtlas from a char map file
+     */
+    static TextAtlas* create(const std::string& stringValue,
+                             const std::string& charMapFile,
+                             int itemWidth,
+                             int itemHeight,
+                             const std::string& startCharMap);
+    
     /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    void setProperty(const std::string& stringValue,const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap);
+    void setProperty(const std::string& stringValue,
+                     const std::string& charMapFile,
+                     int itemWidth,
+                     int itemHeight,
+                     const std::string& startCharMap);
     
     //set string value for labelatlas.
     void setStringValue(const std::string& value);

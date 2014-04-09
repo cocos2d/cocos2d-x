@@ -41,7 +41,7 @@
 --------------------------------
 -- @function [parent=#Button] loadTextureDisabled 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
@@ -57,13 +57,13 @@
 --------------------------------
 -- @function [parent=#Button] loadTexturePressed 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#Button] setTitleFontName 
 -- @param self
--- @param #char char
+-- @param #string str
         
 --------------------------------
 -- @function [parent=#Button] getCapInsetsNormalRenderer 
@@ -78,9 +78,9 @@
 --------------------------------
 -- @function [parent=#Button] loadTextures 
 -- @param self
--- @param #char char
--- @param #char char
--- @param #char char
+-- @param #string str
+-- @param #string str
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
@@ -91,7 +91,7 @@
 --------------------------------
 -- @function [parent=#Button] loadTextureNormal 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
@@ -107,7 +107,7 @@
 --------------------------------
 -- @function [parent=#Button] getTitleFontName 
 -- @param self
--- @return char#char ret (return value: char)
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Button] getTitleColor 
@@ -120,10 +120,18 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Button] create 
+-- overload function: create(string, string, string, ccui.TextureResType)
+--          
+-- overload function: create()
+--          
+-- @function [parent=#Button] create
 -- @param self
--- @return Button#Button ret (return value: ccui.Button)
-        
+-- @param #string str
+-- @param #string str
+-- @param #string str
+-- @param #ccui.TextureResType texturerestype
+-- @return Button#Button ret (retunr value: ccui.Button)
+
 --------------------------------
 -- @function [parent=#Button] createInstance 
 -- @param self

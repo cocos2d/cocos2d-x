@@ -31,7 +31,7 @@
 #include "CCEventListenerKeyboard.h"
 #include "CCEventListenerCustom.h"
 
-#include "CCNode.h"
+#include "CCScene.h"
 #include "CCDirector.h"
 #include "CCEventType.h"
 
@@ -191,7 +191,7 @@ void EventDispatcher::EventListenerVector::clear()
 
 EventDispatcher::EventDispatcher()
 : _inDispatch(0)
-, _isEnabled(true)
+, _isEnabled(false)
 , _nodePriorityIndex(0)
 {
     _toAddedListeners.reserve(50);
@@ -337,6 +337,28 @@ void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive
         for (auto& l : listenersCopy)
         {
             removeEventListener(l);
+        }
+    }
+    
+    // Bug fix: ensure there are no references to the node in the list of listeners to be added.
+    // If we find any listeners associated with the destroyed node in this list then remove them.
+    // This is to catch the scenario where the node gets destroyed before it's listener
+    // is added into the event dispatcher fully. This could happen if a node registers a listener
+    // and gets destroyed while we are dispatching an event (touch etc.)
+    for (auto iter = _toAddedListeners.begin(); iter != _toAddedListeners.end(); )
+    {
+        EventListener * listener = *iter;
+            
+        if (listener->getSceneGraphPriority() == target)
+        {
+            listener->setSceneGraphPriority(nullptr);   // Ensure no dangling ptr to the target node.
+            listener->setRegistered(false);
+            listener->release();
+            iter = _toAddedListeners.erase(iter);
+        }
+        else
+        {
+            ++iter;
         }
     }
     
@@ -637,6 +659,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         {
             if (*iter == listener)
             {
+                listener->setRegistered(false);
                 listener->release();
                 _toAddedListeners.erase(iter);
                 break;
@@ -688,7 +711,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
             for (; i < listeners->getGt0Index(); ++i)
             {
                 auto l = fixedPriorityListeners->at(i);
-                if (!l->isPaused() && l->isRegistered() && onEvent(l))
+                if (l->isEnabled() && !l->isPaused() && l->isRegistered() && onEvent(l))
                 {
                     shouldStopPropagation = true;
                     break;
@@ -704,7 +727,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
             // priority == 0, scene graph priority
             for (auto& l : *sceneGraphPriorityListeners)
             {
-                if (!l->isPaused() && l->isRegistered() && onEvent(l))
+                if (l->isEnabled() && !l->isPaused() && l->isRegistered() && onEvent(l))
                 {
                     shouldStopPropagation = true;
                     break;
@@ -723,7 +746,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
             {
                 auto l = fixedPriorityListeners->at(i);
                 
-                if (!l->isPaused() && l->isRegistered() && onEvent(l))
+                if (l->isEnabled() && !l->isPaused() && l->isRegistered() && onEvent(l))
                 {
                     shouldStopPropagation = true;
                     break;
@@ -1103,6 +1126,9 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
     
     if (dirtyFlag != DirtyFlag::NONE)
     {
+        // Clear the dirty flag first, if `rootNode` is nullptr, then set its dirty flag of scene graph priority
+        dirtyIter->second = DirtyFlag::NONE;
+
         if ((int)dirtyFlag & (int)DirtyFlag::FIXED_PRIORITY)
         {
             sortEventListenersOfFixedPriority(listenerID);
@@ -1110,14 +1136,20 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
         
         if ((int)dirtyFlag & (int)DirtyFlag::SCENE_GRAPH_PRIORITY)
         {
-            sortEventListenersOfSceneGraphPriority(listenerID);
+            auto rootNode = Director::getInstance()->getRunningScene();
+            if (rootNode)
+            {
+                sortEventListenersOfSceneGraphPriority(listenerID, rootNode);
+            }
+            else
+            {
+                dirtyIter->second = DirtyFlag::SCENE_GRAPH_PRIORITY;
+            }
         }
-        
-        dirtyIter->second = DirtyFlag::NONE;
     }
 }
 
-void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID)
+void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID, Node* rootNode)
 {
     auto listeners = getListeners(listenerID);
     
@@ -1127,8 +1159,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     
     if (sceneGraphListeners == nullptr)
         return;
-    
-    Node* rootNode = (Node*)Director::getInstance()->getRunningScene();
+
     // Reset priority index
     _nodePriorityIndex = 0;
     _nodePriorityMap.clear();
@@ -1136,7 +1167,6 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     visitTarget(rootNode, true);
     
     // After sort: priority < 0, > 0
-
     std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
         return _nodePriorityMap[l1->getSceneGraphPriority()] > _nodePriorityMap[l2->getSceneGraphPriority()];
     });
@@ -1252,6 +1282,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
     {
         if ((*iter)->getListenerID() == listenerID)
         {
+            (*iter)->setRegistered(false);
             (*iter)->release();
             iter = _toAddedListeners.erase(iter);
         }
@@ -1327,7 +1358,6 @@ void EventDispatcher::setEnabled(bool isEnabled)
 {
     _isEnabled = isEnabled;
 }
-
 
 bool EventDispatcher::isEnabled() const
 {

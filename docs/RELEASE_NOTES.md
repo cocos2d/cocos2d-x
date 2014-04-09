@@ -141,7 +141,7 @@ Please refer to [ReadMe](../README.md)
 
 # Highlights of v3.0
 
-* Replaced Objective-C patters with C++ (C++11) patterns and best practices
+* Replaced Objective-C patterns with C++ (C++11) patterns and best practices
 * Improved Labels
 * Improved renderer (much faster than in v2.2!!)
 * New Event Dispatcher
