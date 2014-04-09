@@ -156,7 +156,7 @@ public:
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
-    virtual kmMat4 getNodeToArmatureTransform() const;
+    virtual Matrix getNodeToArmatureTransform() const;
     virtual Matrix getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
@@ -250,7 +250,7 @@ protected:
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    kmMat4 _worldTransform;
+    Matrix _worldTransform;
 
     BaseData *_worldInfo;
     
