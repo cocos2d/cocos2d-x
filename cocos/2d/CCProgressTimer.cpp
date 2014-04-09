@@ -501,7 +501,7 @@ Point ProgressTimer::boundaryTexCoord(char index)
     return Point::ZERO;
 }
 
-void ProgressTimer::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ProgressTimer::onDraw(const Matrix &transform, bool transformUpdated)
 {
 
     getShaderProgram()->use();

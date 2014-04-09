@@ -373,7 +373,7 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::onDraw(const kmMat4 &transform, bool transformUpdated)
+void MotionStreak::onDraw(const Matrix &transform, bool transformUpdated)
 {  
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);
