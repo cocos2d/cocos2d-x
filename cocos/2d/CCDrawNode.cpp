@@ -212,7 +212,7 @@ void DrawNode::draw(Renderer *renderer, const Matrix &transform, bool transformU
     renderer->addCommand(&_customCommand);
 }
 
-void DrawNode::onDraw(const kmMat4 &transform, bool transformUpdated)
+void DrawNode::onDraw(const Matrix &transform, bool transformUpdated)
 {
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);
