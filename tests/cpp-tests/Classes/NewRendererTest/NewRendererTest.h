@@ -56,6 +56,19 @@ protected:
     virtual ~NewSpriteTest();
 };
 
+class GroupCommandTest : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(GroupCommandTest);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    GroupCommandTest();
+    virtual ~GroupCommandTest();
+};
+
 class NewSpriteBatchTest : public MultiSceneTest
 {
 public:
