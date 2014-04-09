@@ -10,6 +10,11 @@ local testArray =
     SpriteAccelerationEvent = 6,
     RemoveAndRetainNode = 7,
     RemoveListenerAfterAdding = 8,
+    GlobalZTouchTest = 9,
+    StopPropagationTest = 10,
+    PauseResumeTargetTest = 11,
+    Issue4129Test = 12,
+    Issue4160Test = 13,
 }
 
 local curLayerIdx   = testArray.TouchableSprite
@@ -60,6 +65,16 @@ function EventDispatcherTestDemo.title(idx)
         return "RemoveAndRetainNodeTest"
     elseif testArray.RemoveListenerAfterAdding == idx then
         return "RemoveListenerAfterAddingTest"
+    elseif testArray.GlobalZTouchTest == idx then
+        return "Global Z Value, Try touch blue sprite"
+    elseif testArray.StopPropagationTest == idx then
+        return "Stop Propagation Test"
+    elseif testArray.PauseResumeTargetTest == idx then
+        return "PauseResumeTargetTest"
+    elseif testArray.Issue4129Test == idx then
+        return "Issue 4129: Remove All Listeners"
+    elseif testArray.Issue4160Test == idx then
+        return "Issue 4160: Out of range exception"
     end
 end
 
@@ -80,6 +95,16 @@ function EventDispatcherTestDemo.subTitle(idx)
         return "Sprite should be removed after 5s, add to scene again after 5s"
     elseif testArray.RemoveListenerAfterAdding == idx then
         return "Should not crash!"
+    elseif testArray.GlobalZTouchTest == idx then
+        return "Blue Sprite should change go from foreground to background"
+    elseif testArray.StopPropagationTest == idx then
+        return "Shouldn't crash and only blue block could be clicked"
+    elseif testArray.PauseResumeTargetTest == idx then
+        return ""
+    elseif testArray.Issue4129Test == idx then
+        return "Should see 'Yeah, this issue was fixed.'"
+    elseif testArray.Issue4160Test == idx then
+        return "Touch the red block twice \n should not crash and the red one couldn't be touched"
     end
 end
 
@@ -136,7 +161,7 @@ function EventDispatcherTestDemo:createMenu()
 
     menu:setPosition(cc.p(0, 0))
 
-    self:addChild(menu)
+    self:addChild(menu, 9999)
 end
 
 function EventDispatcherTestDemo:creatTitleAndSubTitle(idx)
@@ -227,16 +252,16 @@ function TouchableSpriteTest:onEnter()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener1, sprite1)
 
     local listener2 = listener1:clone()
-    listener2:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
-    listener2:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED)
-    listener2:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+    -- listener2:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
+    -- listener2:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED)
+    -- listener2:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener2, sprite2)
 
 
     local listener3 = listener1:clone()
-    listener3:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
-    listener3:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
-    listener3:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+    -- listener3:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    -- listener3:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    -- listener3:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener3, sprite3)
 
     local function removeAllTouchItem(tag, sender)
@@ -286,6 +311,7 @@ TouchableSpriteWithFixedPriority.__index = TouchableSpriteWithFixedPriority
 TouchableSpriteWithFixedPriority._listener = nil
 TouchableSpriteWithFixedPriority._fixedPriority = 0
 TouchableSpriteWithFixedPriority._useNodePriority = false
+TouchableSpriteWithFixedPriority._removeListenerOnTouchEnded = false
 
 function TouchableSpriteWithFixedPriority.extend(target)
     local t = tolua.getpeer(target)
@@ -298,6 +324,8 @@ function TouchableSpriteWithFixedPriority.extend(target)
 end
 
 function TouchableSpriteWithFixedPriority:onEnter()
+    local eventDispatcher = self:getEventDispatcher()
+
     local function onTouchBegan(touch, event)
         local locationInNode = self:convertToNodeSpace(touch:getLocation())
         local s = self:getContentSize()
@@ -317,6 +345,10 @@ function TouchableSpriteWithFixedPriority:onEnter()
 
     local  function onTouchEnded(touch, event)
         self:setColor(cc.c3b(255, 255, 255))
+        if self._removeListenerOnTouchEnded then
+            eventDispatcher:removeEventListener(self._listener)
+        end
+
     end
 
     local listener = cc.EventListenerTouchOneByOne:create()
@@ -327,8 +359,7 @@ function TouchableSpriteWithFixedPriority:onEnter()
     listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
     listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
 
-    local eventDispatcher = self:getEventDispatcher()
-    if self._useNodePriority then
+    if 0 == self._fixedPriority then
         eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
     else
         eventDispatcher:addEventListenerWithFixedPriority(listener,self._fixedPriority)
@@ -343,6 +374,10 @@ end
 function TouchableSpriteWithFixedPriority:setPriority(fixedPriority)
     self._fixedPriority = fixedPriority
     self._useNodePriority = false
+end
+
+function TouchableSpriteWithFixedPriority:removeListenerOnTouchEnded(toRemove)
+    self._removeListenerOnTouchEnded = toRemove
 end
 
 function TouchableSpriteWithFixedPriority:setPriorityWithThis(useNodePriority)
@@ -970,6 +1005,508 @@ function RemoveListenerAfterAddingTest.create()
     return layer
 end
 
+local GlobalZTouchTest = class("GlobalZTouchTest",EventDispatcherTestDemo)
+GlobalZTouchTest.__index = GlobalZTouchTest
+GlobalZTouchTest._sprite = nil
+GlobalZTouchTest._accum  = 0
+GlobalZTouchTest._layer  = nil
+
+function GlobalZTouchTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, GlobalZTouchTest)
+    return target
+end
+
+function GlobalZTouchTest:onEnter()
+    local function onTouchBegan(touch, event)
+        local target = event:getCurrentTarget()
+        
+        local locationInNode = target:convertToNodeSpace(touch:getLocation())
+        local s = target:getContentSize()
+        local rect = cc.rect(0, 0, s.width, s.height)
+        
+        if cc.rectContainsPoint(rect, locationInNode) then
+            print(string.format("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y))
+            target:setOpacity(180)
+            return true
+        end
+        return false
+    end
+
+    local function onTouchMoved(touch, event)
+        local target = event:getCurrentTarget()
+        local posX,posY = target:getPosition()
+        local delta = touch:getDelta()
+        target:setPosition(cc.p(posX + delta.x, posY + delta.y))
+    end
+
+    local function onTouchEnded(touch, event)
+        local target = event:getCurrentTarget()
+        print("sprite onTouchesEnded..")
+        target:setOpacity(255)
+    end
+
+    local listener = cc.EventListenerTouchOneByOne:create()
+    listener:setSwallowTouches(true)
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+
+    local SPRITE_COUNT = 8
+    for i = 0, SPRITE_COUNT - 1 do
+        local sprite = nil
+        if 4 == i then
+            sprite = cc.Sprite:create("Images/CyanSquare.png")
+            self._sprite = sprite
+            self._sprite:setGlobalZOrder(-1)
+        else
+            sprite = cc.Sprite:create("Images/YellowSquare.png")
+        end
+
+        local eventDispatcher = self:getEventDispatcher()
+        eventDispatcher:addEventListenerWithSceneGraphPriority(listener:clone(), sprite)
+        self._layer:addChild(sprite)
+        local visibleSize = cc.Director:getInstance():getVisibleSize()
+        sprite:setPosition(VisibleRect:left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect:center().y)
+    end
+
+    local function update(dt)
+        self._accum = self._accum + dt
+        if self._accum > 2.0 then
+            local z = self._sprite:getGlobalZOrder()
+            self._sprite:setGlobalZOrder(-z)
+            self._accum = 0
+        end
+    end
+    self._layer:scheduleUpdateWithPriorityLua(update, 0)
+end
+
+function GlobalZTouchTest:onExit()
+    self._layer:unscheduleUpdate()
+end
+
+function GlobalZTouchTest.create()
+    local layer = GlobalZTouchTest.extend(cc.Layer:create())
+
+    local function onNodeEvent(event)
+        if event == "enter" then
+            layer:onEnter()
+        elseif event == "exit" then
+            layer:onExit()
+        end
+    end
+    
+    layer:createMenu()
+    layer:creatTitleAndSubTitle(curLayerIdx)
+    layer:registerScriptHandler(onNodeEvent)
+    GlobalZTouchTest._layer  = layer
+    return layer
+end
+
+
+local StopPropagationTest = class("StopPropagationTest",EventDispatcherTestDemo)
+local TAG_BLUE_SPRITE = 101
+local TAG_BLUE_SPRITE2 = 102
+local SPRITE_COUNT    = 8
+
+function StopPropagationTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, StopPropagationTest)
+    return target
+end
+
+function StopPropagationTest:onEnter()
+
+    local function onTouchBegan(touch, event)
+        if not self:isPointInTopHalfAreaOfScreen(touch:getLocation()) then
+            return false
+        end
+        local target = event:getCurrentTarget()
+        assert(target:getTag() == TAG_BLUE_SPRITE, "Yellow blocks shouldn't response event.")
+        if self:isPointInNode(touch:getLocation(), target) then
+            target:setOpacity(180)
+            return true
+        end
+        event:stopPropagation()
+        return false
+    end
+
+    local function onTouchEnded(touch, event)
+        local target = event:getCurrentTarget()
+        target:setOpacity(255)
+    end
+
+    local touchOneByOneListener = cc.EventListenerTouchOneByOne:create()
+    touchOneByOneListener:setSwallowTouches(true)
+    touchOneByOneListener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    touchOneByOneListener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+
+    local function onTouchesBegan(touches, event)
+        if self:isPointInTopHalfAreaOfScreen(touches[1]:getLocation()) then
+            return
+        end
+        local target = event:getCurrentTarget()
+        assert(target:getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.")
+
+        if self:isPointInNode(touches[1]:getLocation(), target) then
+            target:setOpacity(180)
+        end
+        event:stopPropagation()
+    end
+
+    local function onTouchesEnd(touches, event)
+        if self:isPointInTopHalfAreaOfScreen(touches[1]:getLocation()) then
+            return
+        end
+        local target = event:getCurrentTarget()
+        assert(target:getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.")
+
+        if self:isPointInNode(touches[1]:getLocation(), target) then
+            target:setOpacity(255)
+        end
+        event:stopPropagation()
+    end
+
+    local touchAllAtOnceListener = cc.EventListenerTouchAllAtOnce:create()
+    touchAllAtOnceListener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    touchAllAtOnceListener:registerScriptHandler(onTouchesEnd,cc.Handler.EVENT_TOUCHES_ENDED )
+
+    local function onKeyPressed(key, event)
+        local target = event:getCurrentTarget()
+        assert(target:getTag() == TAG_BLUE_SPRITE or target:getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.")
+        event:stopPropagation()
+    end
+
+    local keyboardEventListener = cc.EventListenerKeyboard:create()
+    keyboardEventListener:registerScriptHandler(onKeyPressed, cc.Handler.EVENT_KEYBOARD_PRESSED )
+
+    local eventDispatcher = self:getEventDispatcher()
+
+    for i = 0, SPRITE_COUNT - 1 do
+        local sprite = nil
+        local sprite2 = nil
+
+        if 4 == i then
+            sprite = cc.Sprite:create("Images/CyanSquare.png")
+            sprite:setTag(TAG_BLUE_SPRITE)
+            self:addChild(sprite, 100)
+            
+            sprite2 = cc.Sprite:create("Images/CyanSquare.png")
+            sprite2:setTag(TAG_BLUE_SPRITE2)
+            self:addChild(sprite2, 100)
+        else
+            sprite = cc.Sprite:create("Images/YellowSquare.png")
+            self:addChild(sprite, 0)
+            
+            sprite2 = cc.Sprite:create("Images/YellowSquare.png")
+            self:addChild(sprite2, 0)
+        end
+
+        eventDispatcher:addEventListenerWithSceneGraphPriority(touchOneByOneListener:clone(), sprite)
+        eventDispatcher:addEventListenerWithSceneGraphPriority(keyboardEventListener:clone(), sprite)
+
+
+        eventDispatcher:addEventListenerWithSceneGraphPriority(touchAllAtOnceListener:clone(), sprite2)
+        eventDispatcher:addEventListenerWithSceneGraphPriority(keyboardEventListener:clone(), sprite2)
+
+        local visibleSize = cc.Director:getInstance():getVisibleSize()
+        sprite:setPosition(VisibleRect:left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect:center().y + sprite2:getContentSize().height / 2 + 10)
+        sprite2:setPosition(VisibleRect:left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect:center().y - sprite2:getContentSize().height / 2 - 10)
+
+    end
+
+
+end
+
+function StopPropagationTest:onExit()
+    
+end
+
+function StopPropagationTest:isPointInNode(pt, node)
+    local locationInNode = node:convertToNodeSpace(pt)
+    local s = node:getContentSize()
+    local rect = cc.rect(0, 0, s.width, s.height)
+    if cc.rectContainsPoint(rect, locationInNode) then
+        return true
+    end
+    return false
+end
+
+function StopPropagationTest:isPointInTopHalfAreaOfScreen(pt)
+    local winSize = cc.Director:getInstance():getWinSize()
+    if pt.y >= winSize.height / 2 then
+        return true
+    end
+    
+    return false
+end
+
+function StopPropagationTest.create()
+    local layer = StopPropagationTest.extend(cc.Layer:create())
+
+    local function onNodeEvent(event)
+        if event == "enter" then
+            layer:onEnter()
+        elseif event == "exit" then
+            layer:onExit()
+        end
+    end
+
+    layer:createMenu()
+    layer:creatTitleAndSubTitle(curLayerIdx)
+    layer:registerScriptHandler(onNodeEvent)
+    
+    return layer
+end
+
+local PauseResumeTargetTest = class("PauseResumeTargetTest",EventDispatcherTestDemo)
+
+function PauseResumeTargetTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, PauseResumeTargetTest)
+    return target
+end
+
+function PauseResumeTargetTest:onEnter()
+    local origin = cc.Director:getInstance():getVisibleOrigin()
+    local size = cc.Director:getInstance():getVisibleSize()
+    
+    local sprite1 = TouchableSpriteWithFixedPriority.create()
+    sprite1:setTexture("Images/CyanSquare.png")
+    sprite1:setPosition(cc.p(origin.x + size.width/2 - 80, origin.y + size.height/2 +  40))
+    self:addChild(sprite1, -10)
+    
+    local sprite2 = TouchableSpriteWithFixedPriority.create()
+    sprite2:setTexture("Images/MagentaSquare.png")
+    sprite2:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2))
+    self:addChild(sprite2, -20)
+    
+    local sprite3 = TouchableSpriteWithFixedPriority.create()
+    sprite3:setTexture("Images/YellowSquare.png")
+    sprite3:setPosition(cc.p(0, 0))
+    sprite2:addChild(sprite3, -1)
+
+
+    local function popUp(tag, sender)
+        local eventDispatcher = self:getEventDispatcher()
+        eventDispatcher:pauseEventListenersForTarget(self, true)
+
+        local colorLayer = cc.LayerColor:create(cc.c4b(0, 0, 255, 100))
+        self:addChild(colorLayer, 99999)
+
+        local function closePopUp(tag, sender)
+            colorLayer:removeFromParent()
+            eventDispatcher:resumeEventListenersForTarget(self, true)
+        end
+        local closeItem = cc.MenuItemFont:create("close")
+        closeItem:registerScriptTapHandler(closePopUp)
+        closeItem:setPosition(VisibleRect:center())
+        
+        local closeMenu = cc.Menu:create(closeItem)
+        closeMenu:setAnchorPoint(cc.p(0.0, 0.0))
+        closeMenu:setPosition(cc.p(0.0, 0.0))
+        
+        colorLayer:addChild(closeMenu)
+
+    end
+    local popUpItem = cc.MenuItemFont:create("Popup")
+    popUpItem:registerScriptTapHandler(popUp)    
+    popUpItem:setAnchorPoint(cc.p(1.0, 0.5))
+    popUpItem:setPosition(VisibleRect:right())
+    
+    local menu = cc.Menu:create(popUpItem)
+    menu:setAnchorPoint(cc.p(0.0, 0.0))
+    menu:setPosition(cc.p(0.0, 0.0))
+    
+    self:addChild(menu)
+end
+
+function PauseResumeTargetTest:onExit()
+    
+end
+
+function PauseResumeTargetTest.create()
+    local layer = PauseResumeTargetTest.extend(cc.Layer:create())
+
+    local function onNodeEvent(event)
+        if event == "enter" then
+            layer:onEnter()
+        elseif event == "exit" then
+            layer:onExit()
+        end
+    end
+
+    layer:createMenu()
+    layer:creatTitleAndSubTitle(curLayerIdx)
+    layer:registerScriptHandler(onNodeEvent)
+    
+    return layer
+end
+
+local Issue4129Test = class("Issue4129Test",EventDispatcherTestDemo)
+Issue4129Test._customListener = nil
+
+function Issue4129Test.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, Issue4129Test)
+    return target
+end
+
+function Issue4129Test:onEnter()
+    local bugFixed = false
+    local eventDispatcher = self:getEventDispatcher()
+
+    local function eventCustomListener(event)
+        local label = cc.Label:create("Yeah, this issue was fixed.", "", 20)
+        label:setAnchorPoint(cc.p(0, 0.5))
+        label:setPosition(VisibleRect:left())
+        self:addChild(label)
+        
+        eventDispatcher:removeEventListener(self._customListener)
+        self._customListener = nil
+
+        bugFixed = true
+    end
+
+    self._customListener = cc.EventListenerCustom:create("event_come_to_background",eventCustomListener)
+    eventDispatcher:addEventListenerWithFixedPriority(self._customListener, 1)
+
+    local function removeAllTouch(tag, sender)
+        local senderItem = sender
+        senderItem:setString("Only 'Reset' item could be clicked")
+        
+        eventDispatcher:removeAllEventListeners()
+        
+        local function next(tag, sender)
+            assert(bugFixed, "This issue was not fixed!")
+            self.restartCallback()
+        end
+        local nextItem = cc.MenuItemFont:create("Reset")
+        nextItem:registerScriptTapHandler(next)
+        nextItem:setFontSizeObj(16)
+        nextItem:setPosition(cc.p(VisibleRect:right().x - 100 , VisibleRect:right().y - 30))
+        
+        local menu2 = cc.Menu:create(nextItem)
+        menu2:setPosition(cc.p(0, 0))
+        menu2:setAnchorPoint(cc.p(0, 0))
+        self:addChild(menu2)
+        
+        --Simulate to dispatch 'come to background' event
+        local event = cc.EventCustom:new("event_come_to_background")
+        eventDispatcher:dispatchEvent(event)
+    end
+
+    local removeAllTouchItem = cc.MenuItemFont:create("Remove All Listeners")
+    removeAllTouchItem:registerScriptTapHandler(removeAllTouch)
+    removeAllTouchItem:setFontSizeObj(16)
+    removeAllTouchItem:setPosition(cc.p(VisibleRect:right().x - 100, VisibleRect:right().y))
+    
+    local menu = cc.Menu:create(removeAllTouchItem)
+    menu:setPosition(cc.p(0, 0))
+    menu:setAnchorPoint(cc.p(0, 0))
+    self:addChild(menu)
+end
+
+function Issue4129Test:onExit()
+    if nil ~= self._customListener then
+        local eventDispatcher = self:getEventDispatcher()
+        eventDispatcher:removeEventListener(self._customListener)
+    end
+end
+
+function Issue4129Test.create()
+    local layer = Issue4129Test.extend(cc.Layer:create())
+
+    local function onNodeEvent(event)
+        if event == "enter" then
+            layer:onEnter()
+        elseif event == "exit" then
+            layer:onExit()
+        end
+    end
+
+    layer:createMenu()
+    layer:creatTitleAndSubTitle(curLayerIdx)
+    layer:registerScriptHandler(onNodeEvent)
+    
+    return layer
+end
+
+local Issue4160Test = class("Issue4160Test",EventDispatcherTestDemo)
+Issue4160Test._customListener = nil
+
+function Issue4160Test.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, Issue4160Test)
+    return target
+end
+
+function Issue4160Test:onEnter()
+    local origin = cc.Director:getInstance():getVisibleOrigin()
+    local size = cc.Director:getInstance():getVisibleSize()
+    
+    local sprite1 = TouchableSpriteWithFixedPriority.create()
+    sprite1:setPriority(-30)
+    sprite1:setTexture("Images/CyanSquare.png")
+    sprite1:setPosition(cc.p(origin.x + size.width/2 - 80, origin.y + size.height/2 + 40))
+    self:addChild(sprite1, -10)
+    
+    local sprite2 = TouchableSpriteWithFixedPriority.create()
+    sprite2:setPriority(-20)
+    sprite2:setTexture("Images/MagentaSquare.png")
+    sprite2:removeListenerOnTouchEnded(true)
+    sprite2:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2))
+    self:addChild(sprite2, -20)
+    
+    local sprite3 = TouchableSpriteWithFixedPriority.create()
+    sprite3:setPriority(-10)
+    sprite3:setTexture("Images/YellowSquare.png")
+    sprite3:setPosition(cc.p(0, 0))
+    sprite2:addChild(sprite3, -1)
+end
+
+function Issue4160Test:onExit()
+
+end
+
+function Issue4160Test.create()
+    local layer = Issue4160Test.extend(cc.Layer:create())
+
+    local function onNodeEvent(event)
+        if event == "enter" then
+            layer:onEnter()
+        elseif event == "exit" then
+            layer:onExit()
+        end
+    end
+
+    layer:createMenu()
+    layer:creatTitleAndSubTitle(curLayerIdx)
+    layer:registerScriptHandler(onNodeEvent)
+    
+    return layer
+end
+
 
 local createFunction =
 {
@@ -981,6 +1518,11 @@ local createFunction =
     SpriteAccelerationEventTest.create,
     RemoveAndRetainNodeTest.create,
     RemoveListenerAfterAddingTest.create,
+    GlobalZTouchTest.create,
+    StopPropagationTest.create,
+    PauseResumeTargetTest.create,
+    Issue4129Test.create,
+    Issue4160Test.create,
 }
 
 function nextEventDispatcherTest()
