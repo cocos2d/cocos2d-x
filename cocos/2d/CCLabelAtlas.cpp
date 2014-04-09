@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "TransformUtils.h"
-#include "CCInteger.h"
 #include "platform/CCFileUtils.h"
 // external
 #include "kazmath/GL/matrix.h"

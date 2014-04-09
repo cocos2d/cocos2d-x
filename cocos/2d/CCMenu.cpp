@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCTouch.h"
 #include "CCStdC.h"
-#include "CCInteger.h"
 #include "CCEventListenerTouch.h"
 #include "deprecated/CCString.h"
 

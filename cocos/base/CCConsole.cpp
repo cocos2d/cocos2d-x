@@ -844,7 +844,8 @@ void Console::commandUpload(int fd)
 
 ssize_t Console::readBytes(int fd, char* buffer, size_t maxlen, bool* more)
 {
-    ssize_t n, rc;
+    size_t n;
+	int rc;
     char c, *ptr = buffer;
     *more = false;
     for( n = 0; n < maxlen; n++ ) {
@@ -927,7 +928,7 @@ bool Console::parseCommand(int fd)
     if(it != _commands.end())
     {
         std::string args2;
-        for(int i = 1; i < args.size(); ++i)
+        for(size_t i = 1; i < args.size(); ++i)
         {   
             if(i > 1)
             {
@@ -954,7 +955,8 @@ bool Console::parseCommand(int fd)
 
 ssize_t Console::readline(int fd, char* ptr, size_t maxlen)
 {
-    ssize_t n, rc;
+    size_t n;
+	int rc;
     char c;
 
     for( n = 0; n < maxlen - 1; n++ ) {
