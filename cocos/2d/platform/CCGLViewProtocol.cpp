@@ -250,7 +250,6 @@ void GLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], flo
         y = ys[i];
 
         auto iter = g_touchIdReorderMap.find(id);
-        unusedIndex = 0;
 
         // it is a new touch
         if (iter == g_touchIdReorderMap.end())
