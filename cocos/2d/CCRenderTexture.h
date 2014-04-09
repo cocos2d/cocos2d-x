@@ -225,8 +225,8 @@ protected:
 
     void onSaveToFile(const std::string& fileName);
     
-    kmMat4 _oldTransMatrix, _oldProjMatrix;
-    kmMat4 _transformMatrix, _projectionMatrix;
+    Matrix _oldTransMatrix, _oldProjMatrix;
+    Matrix _transformMatrix, _projectionMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
 

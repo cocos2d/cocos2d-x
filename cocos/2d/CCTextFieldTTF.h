@@ -86,7 +86,7 @@ public:
     /**
     @brief    If the sender doesn't want to draw, return true.
     */
-    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Matrix &transform, bool transformUpdated)
     {
         CC_UNUSED_PARAM(sender);
         return false;
