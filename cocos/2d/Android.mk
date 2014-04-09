@@ -70,7 +70,6 @@ CCMenu.cpp \
 CCMenuItem.cpp \
 CCMotionStreak.cpp \
 CCNode.cpp \
-CCNotificationCenter.cpp \
 CCParallaxNode.cpp \
 CCParticleBatchNode.cpp \
 CCParticleExamples.cpp \
@@ -142,6 +141,7 @@ renderer/CCRenderMaterial.cpp \
 ../deprecated/CCString.cpp \
 ../deprecated/CCDictionary.cpp \
 ../deprecated/CCDeprecated.cpp \
+../deprecated/CCNotificationCenter.cpp \
 ../math/kazmath/kazmath/aabb.c \
 ../math/kazmath/kazmath/mat3.c \
 ../math/kazmath/kazmath/mat4.c \

@@ -39,9 +39,9 @@ namespace CocosDenshion {
             // Removing `assets` since it isn't needed for the API of playing sound.
             size_t pos = fullPath.find("assets/");
             if (pos == 0)
-                {
-                    fullPath = fullPath.substr(strlen("assets/"));
-                }
+            {
+                fullPath = fullPath.substr(strlen("assets/"));
+            }
             return fullPath;
         }
     }

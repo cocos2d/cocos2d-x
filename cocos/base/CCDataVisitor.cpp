@@ -27,7 +27,7 @@
 #include "CCInteger.h"
 #include "CCFloat.h"
 #include "CCDouble.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "CCArray.h"
 #include "CCDictionary.h"
 #include "CCSet.h"

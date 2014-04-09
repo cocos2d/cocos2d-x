@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "TransformUtils.h"
 #include "platform/CCFileUtils.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "CCArray.h"
 #include "CCDictionary.h"
 #include "CCDirector.h"
