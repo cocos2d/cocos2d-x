@@ -4194,6 +4194,7 @@
         "external/lua/tolua/tolua_map.c", 
         "external/lua/tolua/tolua_push.c", 
         "external/lua/tolua/tolua_to.c", 
+        "tools/bindings-generator/AUTHORS", 
         "tools/bindings-generator/README.md", 
         "tools/bindings-generator/backup/clang-llvm-3.3-pybinding/__init__.py", 
         "tools/bindings-generator/backup/clang-llvm-3.3-pybinding/cindex.py", 
