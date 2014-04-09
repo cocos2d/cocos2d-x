@@ -397,7 +397,8 @@ void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quanti
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
 //    kmMat4Multiply(&mvp, &matrixP, &modelView);
     kmMat4 modelView2 = modelView;
-    for(ssize_t i=0; i<quantity; ++i) {
+    for(ssize_t i=0; i<quantity; ++i)
+    {
         V3F_C4B_T2F_Quad *q = &quads[i];
 
         kmVec3 *vec1 = (kmVec3*)&q->bl.vertices;
