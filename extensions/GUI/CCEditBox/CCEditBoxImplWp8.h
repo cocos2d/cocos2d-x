@@ -66,8 +66,8 @@ private:
 	std::string PlatformStringTostring(Platform::String^ strSrc);
 private:
 
-	LabelTTF* m_pLabel;
-	LabelTTF* m_pLabelPlaceHolder;
+	Label* m_pLabel;
+	Label* m_pLabelPlaceHolder;
 	EditBox::InputMode    m_eEditBoxInputMode;
 	EditBox::InputFlag    m_eEditBoxInputFlag;
 	(EditBox::KeyboardReturnType  m_eKeyboardReturnType;
