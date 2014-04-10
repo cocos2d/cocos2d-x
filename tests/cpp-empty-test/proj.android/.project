@@ -103,28 +103,32 @@
 		<link>
 			<name>cocos2dx</name>
 			<type>2</type>
-			<locationURI>PROJECT_DIR/../../cocos</locationURI>
+			<locationURI>COCOS_DIR/cocos</locationURI>
 		</link>
 		<link>
 			<name>extensions</name>
 			<type>2</type>
-			<locationURI>PROJECT_DIR/../../extensions</locationURI>
+			<locationURI>COCOS_DIR/extensions</locationURI>
 		</link>
 		<link>
 			<name>external</name>
 			<type>2</type>
-			<locationURI>PROJECT_DIR/../../external</locationURI>
+			<locationURI>COCOS_DIR/external</locationURI>
 		</link>
 		<link>
 			<name>plugin</name>
 			<type>2</type>
-			<locationURI>PROJECT_DIR/../../plugin</locationURI>
+			<locationURI>COCOS_DIR/plugin</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>PROJECT_DIR</name>
 			<value>$%7BPARENT-1-PROJECT_LOC%7D</value>
+		</variable>
+		<variable>
+			<name>COCOS_DIR</name>
+			<value>$%7BPARENT-3-PROJECT_LOC%7D</value>
 		</variable>
 	</variableList>
 </projectDescription>
