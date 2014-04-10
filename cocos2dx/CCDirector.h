@@ -194,7 +194,7 @@ public:
     // window size
     /** set the size of the OpenGL view in points.
     */
-    void setWinSize(CCSize wsize);
+    void setWinSize(const CCSize& wsize);
 
     /** returns the size of the OpenGL view in pixels.
     */
