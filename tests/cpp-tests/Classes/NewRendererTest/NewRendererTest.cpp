@@ -230,7 +230,7 @@ protected:
 public:
     static SpriteInGroupCommand* create(const std::string& filename);
     
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 };
 
 SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
@@ -241,7 +241,7 @@ SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
     return sprite;
 }
 
-void SpriteInGroupCommand::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void SpriteInGroupCommand::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     CCASSERT(renderer, "Render is null");
     _spriteWrapperCommand.init(_globalZOrder);
