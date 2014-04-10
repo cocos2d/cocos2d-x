@@ -5377,17 +5377,15 @@ tolua_lerror:
 
 static void extendConsole(lua_State* tolua_S)
 {
-    tolua_usertype(tolua_S,"cc.Console");
-    tolua_cclass(tolua_S,"Console","cc.Console","",NULL);
-    
-    tolua_beginmodule(tolua_S,"Console");
-    tolua_function(tolua_S,"wait", lua_cocos2dx_Console_wait);
-    tolua_function(tolua_S,"send", lua_cocos2dx_Console_send);
-    tolua_function(tolua_S,"addCommand", lua_cocos2dx_Console_addCommand);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::Console).name();
-    g_luaType[typeName] = "cc.Console";
-    g_typeCast["Console"] = "cc.Console";
+    lua_pushstring(tolua_S, "cc.Console");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S,"wait", lua_cocos2dx_Console_wait);
+        tolua_function(tolua_S,"send", lua_cocos2dx_Console_send);
+        tolua_function(tolua_S,"addCommand", lua_cocos2dx_Console_addCommand);
+    }
+    lua_pop(tolua_S, 1);
 }
 
 int register_all_cocos2dx_manual(lua_State* tolua_S)
