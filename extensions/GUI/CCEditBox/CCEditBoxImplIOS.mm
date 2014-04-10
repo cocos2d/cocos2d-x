@@ -395,9 +395,9 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 		[_systemControl.textField setFont:textFont];
     }
 
-	_label->setSystemFont(pFontName);
+	_label->setSystemFontName(pFontName);
 	_label->setSystemFontSize(fontSize);
-	_labelPlaceHolder->setSystemFont(pFontName);
+	_labelPlaceHolder->setSystemFontName(pFontName);
 	_labelPlaceHolder->setSystemFontSize(fontSize);
 }
 

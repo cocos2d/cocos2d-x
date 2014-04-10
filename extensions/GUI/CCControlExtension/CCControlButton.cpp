@@ -369,7 +369,7 @@ const std::string& ControlButton::getTitleTTFForState(State state)
     Label* labelTTF = dynamic_cast<Label*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getSystemFont();
+        return labelTTF->getSystemFontName();
     }
 
     static std::string ret("");

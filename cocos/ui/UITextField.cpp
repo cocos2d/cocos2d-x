@@ -542,13 +542,13 @@ int TextField::getFontSize()
 
 void TextField::setFontName(const std::string& name)
 {
-    _textFieldRenderer->setSystemFont(name);
+    _textFieldRenderer->setSystemFontName(name);
     textfieldRendererScaleChangedWithSize();
 }
     
 const std::string& TextField::getFontName()
 {
-    return _textFieldRenderer->getSystemFont();
+    return _textFieldRenderer->getSystemFontName();
 }
 
 void TextField::didNotSelectSelf()
@@ -807,7 +807,7 @@ void TextField::copySpecialProperties(Widget *widget)
         setText(textField->_textFieldRenderer->getString());
         setPlaceHolder(textField->getStringValue());
         setFontSize(textField->_textFieldRenderer->getSystemFontSize());
-        setFontName(textField->_textFieldRenderer->getSystemFont());
+        setFontName(textField->_textFieldRenderer->getSystemFontName());
         setMaxLengthEnabled(textField->isMaxLengthEnabled());
         setMaxLength(textField->getMaxLength());
         setPasswordEnabled(textField->isPasswordEnabled());

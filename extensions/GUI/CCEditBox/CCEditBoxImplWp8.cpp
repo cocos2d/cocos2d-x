@@ -118,12 +118,12 @@ bool CCEditBoxImplWp8::initWithSize( const Size& size )
 void CCEditBoxImplWp8::setFont( const char* pFontName, int fontSize )
 {
 	if(m_pLabel != NULL) {
-		m_pLabel->setSystemFont(pFontName);
+		m_pLabel->setSystemFontName(pFontName);
 		m_pLabel->setSystemFontSize(fontSize);
 	}
 
 	if(m_pLabelPlaceHolder != NULL) {
-		m_pLabelPlaceHolder->setSystemFont(pFontName);
+		m_pLabelPlaceHolder->setSystemFontName(pFontName);
 		m_pLabelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }
@@ -137,7 +137,7 @@ void CCEditBoxImplWp8::setFontColor( const Color3B& color )
 void CCEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
 {
 	if(m_pLabelPlaceHolder != NULL) {
-		m_pLabelPlaceHolder->setSystemFont(pFontName);
+		m_pLabelPlaceHolder->setSystemFontName(pFontName);
 		m_pLabelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }

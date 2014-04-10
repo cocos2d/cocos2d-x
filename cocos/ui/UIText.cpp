@@ -132,7 +132,7 @@ int Text::getFontSize()
 void Text::setFontName(const std::string& name)
 {
     _fontName = name;
-    _labelRenderer->setSystemFont(name);
+    _labelRenderer->setSystemFontName(name);
     labelScaleChangedWithSize();
 }
     
