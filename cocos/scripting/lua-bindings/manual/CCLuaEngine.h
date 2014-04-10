@@ -131,7 +131,7 @@ public:
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:
     LuaEngine(void)
-    : _stack(NULL)
+    : _stack(nullptr)
     {
     }
     bool init(void);

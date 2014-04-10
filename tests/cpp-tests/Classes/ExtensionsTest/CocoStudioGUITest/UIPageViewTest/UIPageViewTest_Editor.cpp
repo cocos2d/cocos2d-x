@@ -6,7 +6,7 @@
 // UIPageViewTest_Editor
 
 UIPageViewTest_Editor::UIPageViewTest_Editor()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }

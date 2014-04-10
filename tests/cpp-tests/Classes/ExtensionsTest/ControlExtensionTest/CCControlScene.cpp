@@ -28,7 +28,7 @@
 #include "../ExtensionsTest.h"
 
 ControlScene::ControlScene()
-: _sceneTitleLabel(NULL)
+: _sceneTitleLabel(nullptr)
 {
 
 }

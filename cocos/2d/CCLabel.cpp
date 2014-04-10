@@ -38,6 +38,7 @@
 #include "CCEventType.h"
 #include "CCEventCustom.h"
 #include "platform/CCFileUtils.h"
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

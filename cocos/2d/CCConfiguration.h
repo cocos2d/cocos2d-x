@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include "CCRef.h"
 #include "CCGL.h"
-#include "CCString.h"
 #include "CCValue.h"
 #include <string>
 

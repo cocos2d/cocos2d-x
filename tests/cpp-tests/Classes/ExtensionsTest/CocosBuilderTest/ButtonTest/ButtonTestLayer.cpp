@@ -5,7 +5,7 @@ USING_NS_CC_EXT;
 using namespace cocosbuilder;
 
 ButtonTestLayer::ButtonTestLayer()
-: mControlEventLabel(NULL)
+: mControlEventLabel(nullptr)
 {}
 
 ButtonTestLayer::~ButtonTestLayer()

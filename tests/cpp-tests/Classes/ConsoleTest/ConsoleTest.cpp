@@ -180,7 +180,7 @@ std::string ConsoleCustomCommand::subtitle() const
 
 ConsoleUploadFile::ConsoleUploadFile()
 {
-    srand ((unsigned)time(NULL));
+    srand ((unsigned)time(nullptr));
     int _id = rand()%100000;
     char buf[32];
     sprintf(buf, "%d", _id);

@@ -29,10 +29,11 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-//typedef SSIZE_T ssize_t;
-// ssize_t was redefined as int in libwebsockets.h.
-// Therefore, to avoid conflict, we needs the same definition.
-typedef int ssize_t;
+#include <BaseTsd.h>
+#ifndef __SSIZE_T
+#define __SSIZE_T
+typedef SSIZE_T ssize_t;
+#endif // __SSIZE_T
 
 #include "CCPlatformMacros.h"
 #include <float.h>

@@ -6,7 +6,7 @@
 // UITextFieldTest_Editor
 
 UITextFieldTest_Editor::UITextFieldTest_Editor()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }

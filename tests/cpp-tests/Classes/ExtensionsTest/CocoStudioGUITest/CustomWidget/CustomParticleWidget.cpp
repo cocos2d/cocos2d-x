@@ -12,7 +12,7 @@ USING_NS_CC;
 using namespace ui;
 
 CustomParticleWidget::CustomParticleWidget()
-: _emitter(NULL)
+: _emitter(nullptr)
 , _emitterPlist("")
 {
     
