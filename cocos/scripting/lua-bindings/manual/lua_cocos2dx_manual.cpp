@@ -5129,8 +5129,8 @@ static int lua_cocos2dx_Label_create_deprecated(lua_State* tolua_S)
         else
         {
             CCLOG("The create(text, ...) was deprecated,please use create createWithTTF(text, ...) instead");
-            std::string text = tolua_tostring(tolua_S, 2, "");
-            std::string fontFile = tolua_tostring(tolua_S, 3, "");
+            std::string text = tolua_tocppstring(tolua_S, 2, "");
+            std::string fontFile = tolua_tocppstring(tolua_S, 3, "");
             float fontSize   = tolua_tonumber(tolua_S, 4, 0);
             cocos2d::Size dimensions = cocos2d::Size::ZERO;
             if (lua_istable(tolua_S, 5))
