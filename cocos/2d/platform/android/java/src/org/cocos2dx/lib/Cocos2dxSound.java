@@ -65,6 +65,7 @@ public class Cocos2dxSound {
 	private Semaphore mSemaphore;
 
 	private static final int MAX_SIMULTANEOUS_STREAMS_DEFAULT = 5;
+	private static final int MAX_SIMULTANEOUS_STREAMS_I9100 = 3;
 	private static final float SOUND_RATE = 1.0f;
 	private static final int SOUND_PRIORITY = 1;
 	private static final int SOUND_QUALITY = 5;
@@ -83,7 +84,13 @@ public class Cocos2dxSound {
 	}
 
 	private void initData() {
-		this.mSoundPool = new SoundPool(Cocos2dxSound.MAX_SIMULTANEOUS_STREAMS_DEFAULT, AudioManager.STREAM_MUSIC, Cocos2dxSound.SOUND_QUALITY);
+		if (Cocos2dxHelper.getDeviceModel().indexOf("GT-I9100") != -1) {
+			this.mSoundPool = new SoundPool(Cocos2dxSound.MAX_SIMULTANEOUS_STREAMS_I9100, AudioManager.STREAM_MUSIC, Cocos2dxSound.SOUND_QUALITY);
+		}
+		else {
+			this.mSoundPool = new SoundPool(Cocos2dxSound.MAX_SIMULTANEOUS_STREAMS_DEFAULT, AudioManager.STREAM_MUSIC, Cocos2dxSound.SOUND_QUALITY);
+		}
+		
 		this.mSoundPool.setOnLoadCompleteListener(new OnLoadCompletedListener());
 
 		this.mLeftVolume = 0.5f;
