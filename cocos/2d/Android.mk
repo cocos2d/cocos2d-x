@@ -94,6 +94,7 @@ CCTexture2D.cpp \
 CCTextureAtlas.cpp \
 CCTextureCache.cpp \
 CCTileMapAtlas.cpp \
+CCTMXImageLayer.cpp \
 CCTMXLayer.cpp \
 CCTMXObjectGroup.cpp \
 CCTMXTiledMap.cpp \

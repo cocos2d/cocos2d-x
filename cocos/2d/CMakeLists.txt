@@ -115,6 +115,7 @@ set(COCOS2D_SRC
   CCTextureAtlas.cpp
   CCTextureCache.cpp
   CCParallaxNode.cpp
+  CCTMXImageLayer.cpp
   CCTMXLayer.cpp
   CCTMXObjectGroup.cpp
   CCTMXTiledMap.cpp

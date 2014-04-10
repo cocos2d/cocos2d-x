@@ -640,6 +640,7 @@
     <ClCompile Include="CCTextureAtlas.cpp" />
     <ClCompile Include="CCTextureCache.cpp" />
     <ClCompile Include="CCTileMapAtlas.cpp" />
+    <ClCompile Include="CCTMXImageLayer.cpp" />
     <ClCompile Include="CCTMXLayer.cpp" />
     <ClCompile Include="CCTMXObjectGroup.cpp" />
     <ClCompile Include="CCTMXTiledMap.cpp" />
@@ -852,6 +853,7 @@
     <ClInclude Include="CCTextureAtlas.h" />
     <ClInclude Include="CCTextureCache.h" />
     <ClInclude Include="CCTileMapAtlas.h" />
+    <ClInclude Include="CCTMXImageLayer.h" />
     <ClInclude Include="CCTMXLayer.h" />
     <ClInclude Include="CCTMXObjectGroup.h" />
     <ClInclude Include="CCTMXTiledMap.h" />
