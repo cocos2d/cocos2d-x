@@ -288,8 +288,7 @@ void Director::drawScene()
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     // global identity matrix is needed... come on kazmath!    
-    kmMat4 identity;
-    kmMat4Identity(&identity);
+    Matrix identity = Matrix::identity();
 
     // draw the scene
     if (_runningScene)
@@ -606,6 +605,7 @@ void Director::setProjection(Projection projection)
     switch (projection)
     {
         case Projection::_2D:
+        {
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             if(getOpenGLView() != nullptr)
@@ -613,17 +613,18 @@ void Director::setProjection(Projection projection)
                 multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
             }
 #endif
-            kmMat4 orthoMatrix;
-            kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);
+            Matrix orthoMatrix;
+            Matrix::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
-
+        }
+            
         case Projection::_3D:
         {
             float zeye = this->getZEye();
 
-            kmMat4 matrixPerspective, matrixLookup;
+            Matrix matrixPerspective, matrixLookup;
 
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
             
@@ -636,16 +637,12 @@ void Director::setProjection(Projection projection)
             }
 #endif
             // issue #1334
-            kmMat4PerspectiveProjection(&matrixPerspective, 60, (GLfloat)size.width/size.height, 10, zeye+size.height/2);
-//            kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+            Matrix::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
 
-            kmVec3 eye, center, up;
-            kmVec3Fill(&eye, size.width/2, size.height/2, zeye);
-            kmVec3Fill(&center, size.width/2, size.height/2, 0.0f);
-            kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
-            kmMat4LookAt(&matrixLookup, &eye, &center, &up);
+            Vector3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
+            Matrix::createLookAt(eye, center, up, &matrixLookup);
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
             
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -720,12 +717,14 @@ void Director::setDepthTest(bool on)
     CHECK_GL_ERROR_DEBUG();
 }
 
-static void GLToClipTransform(kmMat4 *transformOut)
+static void GLToClipTransform(Matrix *transformOut)
 {
+    if(nullptr == transformOut) return;
+    
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-	kmMat4 projection;
+	Matrix projection;
     projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
@@ -733,43 +732,45 @@ static void GLToClipTransform(kmMat4 *transformOut)
 	kmMat4Multiply(&projection, Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix(), &projection);
 #endif
 
-	kmMat4 modelview;
+	Matrix modelview;
     modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-	kmMat4Multiply(transformOut, &projection, &modelview);
+    *transformOut = projection * modelview;
 }
 
 Point Director::convertToGL(const Point& uiPoint)
 {
-    kmMat4 transform;
+    Matrix transform;
 	GLToClipTransform(&transform);
 
-	kmMat4 transformInv;
-	kmMat4Inverse(&transformInv, &transform);
+	Matrix transformInv;
+    transform.invert(&transformInv);
 
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = transform.mat[14]/transform.mat[15];
+	float zClip = transform.m[14]/transform.m[15];
 
     Size glSize = _openGLView->getDesignResolutionSize();
-	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
+	Vector4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
 
-	kmVec3 glCoord;
-	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-
-	return Point(glCoord.x, glCoord.y);
+	Vector4 glCoord;
+    //transformInv.transformPoint(clipCoord, &glCoord);
+    transformInv.transformVector(clipCoord, &glCoord);
+    float factor = 1.0/glCoord.w;
+	return Point(glCoord.x * factor, glCoord.y * factor);
 }
 
 Point Director::convertToUI(const Point& glPoint)
 {
-    kmMat4 transform;
+    Matrix transform;
 	GLToClipTransform(&transform);
 
-	kmVec3 clipCoord;
+	Vector4 clipCoord;
 	// Need to calculate the zero depth from the transform.
-	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
-	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
+	Vector4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
+    transform.transformVector(glCoord, &clipCoord);
 
 	Size glSize = _openGLView->getDesignResolutionSize();
-	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
+    float factor = 1.0/glCoord.w;
+	return Point(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
 }
 
 const Size& Director::getWinSize(void) const
@@ -1074,8 +1075,7 @@ void Director::showStats()
         }
 
         // global identity matrix is needed... come on kazmath!
-        kmMat4 identity;
-        kmMat4Identity(&identity);
+        Matrix identity = Matrix::identity();
 
         _drawnVerticesLabel->visit(_renderer, identity, false);
         _drawnBatchesLabel->visit(_renderer, identity, false);
