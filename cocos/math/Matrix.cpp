@@ -153,10 +153,11 @@ void Matrix::createOrthographicOffCenter(float left, float right, float bottom, 
     memset(dst, 0, MATRIX_SIZE);
     dst->m[0] = 2 / (right - left);
     dst->m[5] = 2 / (top - bottom);
+    dst->m[10] = 2 / (zNearPlane - zFarPlane);
+
     dst->m[12] = (left + right) / (left - right);
-    dst->m[10] = 1 / (zNearPlane - zFarPlane);
     dst->m[13] = (top + bottom) / (bottom - top);
-    dst->m[14] = zNearPlane / (zNearPlane - zFarPlane);
+    dst->m[14] = (zNearPlane ＋ zFarPlane) / (zNearPlane - zFarPlane);
     dst->m[15] = 1;
 }
     
