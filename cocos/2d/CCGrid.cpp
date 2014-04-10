@@ -188,8 +188,8 @@ void GridBase::set2DProjection()
     glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
-    kmMat4 orthoMatrix;
-    kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1, 1);
+    Matrix orthoMatrix;
+    Matrix::createOrthographicOffCenter(0, size.width, 0, size.height, -1, 1, &orthoMatrix);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
 
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);

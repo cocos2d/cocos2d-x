@@ -359,22 +359,20 @@ void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quanti
 //    kmMat4 matrixP, mvp;
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
 //    kmMat4Multiply(&mvp, &matrixP, &modelView);
-    kmMat4 modelView2 = modelView;
     for(ssize_t i=0; i<quantity; ++i)
     {
         V3F_C4B_T2F_Quad *q = &quads[i];
+        Vector3 *vec1 = (Vector3*)&q->bl.vertices;
+        modelView.transformPoint(vec1);
 
-        kmVec3 *vec1 = (kmVec3*)&q->bl.vertices;
-        kmVec3Transform(vec1, vec1, &modelView2);
+        Vector3 *vec2 = (Vector3*)&q->br.vertices;
+        modelView.transformPoint(vec2);
 
-        kmVec3 *vec2 = (kmVec3*)&q->br.vertices;
-        kmVec3Transform(vec2, vec2, &modelView2);
+        Vector3 *vec3 = (Vector3*)&q->tr.vertices;
+        modelView.transformPoint(vec3);
 
-        kmVec3 *vec3 = (kmVec3*)&q->tr.vertices;
-        kmVec3Transform(vec3, vec3, &modelView2);
-
-        kmVec3 *vec4 = (kmVec3*)&q->tl.vertices;
-        kmVec3Transform(vec4, vec4, &modelView2);
+        Vector3 *vec4 = (Vector3*)&q->tl.vertices;
+        modelView.transformPoint(vec4);
     }
 }
 
