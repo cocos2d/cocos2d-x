@@ -243,6 +243,9 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
 std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
+    if (data.isNull())
+        return "";
+
     std::string ret((const char*)data.getBytes());
     return ret;
 }
