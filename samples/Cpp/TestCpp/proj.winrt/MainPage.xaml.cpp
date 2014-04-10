@@ -117,6 +117,6 @@ void TestCpp::MainPage::OnOpenEditBox(Object^ sender, Object^ args)
 		grid->Children->Append(overlay);
 		grid->Children->Append(editBox);
 
-		SwapChainPanel->Children->Append(grid);
+		this->SwapChainPanel->Children->Append(grid);
 	}));
 }

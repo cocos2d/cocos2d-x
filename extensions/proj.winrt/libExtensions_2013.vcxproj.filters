@@ -133,6 +133,9 @@
     <Filter Include="CocoStudio\Reader\WidgetReader\TextFieldReader">
       <UniqueIdentifier>{67bb7162-1b43-4930-badd-de904ba81ed8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\CCEditBox">
+      <UniqueIdentifier>{3c3b569d-0c8d-486d-b0d9-bbd32c07961c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
@@ -543,6 +546,12 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIRichText.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWinrt.cpp">
+      <Filter>GUI\CCEditBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1022,6 +1031,15 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWinrt.h">
+      <Filter>GUI\CCEditBox</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
