@@ -138,9 +138,9 @@ public:
      * If the file image hasn't loaded before, load it.
      * Otherwise the texture will be reloaded from the file image.
      * The "filenName" parameter is the related/absolute path of the file image.
-     * Return true if the reloading is succeed, otherwise return false.
+     * Return true and image width and Height if the reloading is succeed, otherwise return false.
      */
-    bool reloadTexture(const char* fileName);
+    bool reloadTexture(const char* fileName, unsigned int &imageWidth, unsigned int &imageHeight);
 
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"

@@ -592,7 +592,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
     return texture;
 }
 
-bool CCTextureCache::reloadTexture(const char* fileName)
+bool CCTextureCache::reloadTexture(const char* fileName, unsigned int &imageWidth, unsigned int &imageHeight)
 {
     std::string fullpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
     if (fullpath.size() == 0)
@@ -617,6 +617,8 @@ bool CCTextureCache::reloadTexture(const char* fileName)
             CC_BREAK_IF(!bRet);
             
             ret = texture->initWithImage(image);
+            imageWidth = image->getWidth();
+            imageHeight = image->getHeight();
         } while (0);
     }
     
