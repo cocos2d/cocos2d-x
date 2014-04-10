@@ -48,7 +48,7 @@ jclass _getClassID(const char *className) {
 
     if (NULL == _clazz) {
         LOGE("Classloader failed to find class of %s", className);
-        pEnv->ExceptionClear();
+        env->ExceptionClear();
     }
 
     env->DeleteLocalRef(_jstrClassName);
