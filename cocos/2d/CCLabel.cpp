@@ -1081,15 +1081,17 @@ void Label::drawTextSprite(Renderer *renderer, bool parentTransformUpdated)
     if (_shadowEnabled && _shadowNode == nullptr)
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
-        if (_shadowNode && _blendFuncDirty)
+        if (_shadowNode)
         {
-            _shadowNode->setBlendFunc(_blendFunc);
+            if (_blendFuncDirty)
+                _shadowNode->setBlendFunc(_blendFunc);
+            
+            _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+            _shadowNode->setColor(_shadowColor);
+            _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
+            _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
+            Node::addChild(_shadowNode,0,Node::INVALID_TAG);
         }
-        _shadowNode->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-        _shadowNode->setColor(_shadowColor);
-        _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
-        _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
-        Node::addChild(_shadowNode,0,Node::INVALID_TAG);  
     }
     if (_shadowNode)
     {
@@ -1240,7 +1242,7 @@ void Label::computeStringNumLines()
 {
     int quantityOfLines = 1;
 
-    unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : -1;
+    int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : -1;
     if (stringLen < 1)
     {
         _currNumLines = stringLen;
@@ -1248,7 +1250,7 @@ void Label::computeStringNumLines()
     }
 
     // count number of lines
-    for (unsigned int i = 0; i < stringLen - 1; ++i)
+    for (int i = 0; i < stringLen - 1; ++i)
     {
         if (_currentUTF16String[i] == '\n')
         {

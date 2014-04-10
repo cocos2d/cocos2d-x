@@ -237,7 +237,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
     bool existNewLetter = false;
     int bottomHeight = _commonLineHeight - _fontAscender;
-    float startX = _currentPageOrigX;
+
     float startY = _currentPageOrigY;
 
     for (int i = 0; i < length; ++i)
@@ -268,7 +268,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                         auto data = _currentPageData + CacheTextureWidth * (int)startY;
                         _atlasTextures[_currentPage]->updateWithData(data, 0, startY, 
                             CacheTextureWidth, CacheTextureHeight - startY);
-                        startX = 0.0f;
+
                         startY = 0.0f;
 
                         _currentPageOrigY = 0;
