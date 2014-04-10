@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCDIRECTOR_H__
 
 #include "CCPlatformMacros.h"
-
+#include "platform/CCImage.h"
 #include "CCRef.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
@@ -382,6 +382,14 @@ public:
      *  get Frame Rate
      */
     float getFrameRate() const { return _frameRate; }
+
+    /** 
+     *  takes a screenshot and saves it into a file. The format could be JPG or PNG. 
+     *  The file will be saved in the Documents folder.
+     *  The 'callback' will be called after taking the screenshot.
+     */
+    void saveScreenshot(const std::string& fileName,const std::function<void(const std::string&)>& callback);
+
 
 protected:
     void purgeDirector();
