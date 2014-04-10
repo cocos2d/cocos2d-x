@@ -110,8 +110,6 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    RenderStackElement elelment = {DEFAULT_RENDER_QUEUE, 0};
-    _renderStack.push(elelment);
     _batchedQuadCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
 }
 
@@ -260,6 +258,58 @@ int Renderer::createRenderQueue()
     return (int)_renderGroups.size() - 1;
 }
 
+void Renderer::visitRenderQueue(const RenderQueue& queue)
+{
+    ssize_t size = queue.size();
+    for (auto index = 0; index < size; ++index)
+    {
+        auto command = queue[index];
+        auto commandType = command->getType();
+        if(RenderCommand::Type::QUAD_COMMAND == commandType)
+        {
+            auto cmd = static_cast<QuadCommand*>(command);
+            //Batch quads
+            if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
+            {
+                CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                
+                //Draw batched quads if VBO is full
+                drawBatchedQuads();
+            }
+            
+            _batchedQuadCommands.push_back(cmd);
+            
+            memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+            convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
+            
+            _numQuads += cmd->getQuadCount();
+
+        }
+        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
+        {
+            flush();
+            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+            visitRenderQueue(_renderGroups[renderQueueID]);
+        }
+        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
+        {
+            flush();
+            auto cmd = static_cast<CustomCommand*>(command);
+            cmd->execute();
+        }
+        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
+        {
+            flush();
+            auto cmd = static_cast<BatchCommand*>(command);
+            cmd->execute();
+        }
+        else
+        {
+            CCLOGERROR("Unknown commands in renderQueue");
+        }
+    }
+}
+
 void Renderer::render()
 {
     //Uncomment this once everything is rendered by new renderer
@@ -278,87 +328,9 @@ void Renderer::render()
         {
             renderqueue.sort();
         }
-        
-        while(!_renderStack.empty())
-        {
-            RenderQueue currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
-            size_t len = currRenderQueue.size();
-            
-            //Process RenderQueue
-            for(size_t i = _renderStack.top().currentIndex; i < len; i++)
-            {
-                _renderStack.top().currentIndex = i;
-                auto command = currRenderQueue[i];
-
-                auto commandType = command->getType();
-                
-                if(commandType == RenderCommand::Type::QUAD_COMMAND)
-                {
-                    auto cmd = static_cast<QuadCommand*>(command);
-                    CCASSERT(nullptr!= cmd, "Illegal command for RenderCommand Taged as QUAD_COMMAND");
-                    
-                    //Batch quads
-                    if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
-                    {
-                        CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
-
-                        //Draw batched quads if VBO is full
-                        drawBatchedQuads();
-                    }
-                    
-                    _batchedQuadCommands.push_back(cmd);
-                    
-                    memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-                    convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
-
-                    _numQuads += cmd->getQuadCount();
-                }
-                else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
-                {
-                    flush();
-                    auto cmd = static_cast<CustomCommand*>(command);
-                    cmd->execute();
-                }
-                else if(commandType == RenderCommand::Type::BATCH_COMMAND)
-                {
-                    flush();
-                    auto cmd = static_cast<BatchCommand*>(command);
-                    cmd->execute();
-                }
-                else if(commandType == RenderCommand::Type::GROUP_COMMAND)
-                {
-                    flush();
-                    auto cmd = static_cast<GroupCommand*>(command);
-                    
-                    _renderStack.top().currentIndex = i + 1;
-                    
-                    //push new renderQueue to renderStack
-                    RenderStackElement element = {cmd->getRenderQueueID(), 0};
-                    _renderStack.push(element);
-                    
-                    //Exit current loop
-                    break;
-                }
-                else
-                {
-                    CCASSERT(true, "Invalid command");
-                    flush();
-                }
-            }
-            
-            //Draw the batched quads
-            drawBatchedQuads();
-            
-            currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
-            len = currRenderQueue.size();
-            //If pop the render stack if we already processed all the commands
-            if(_renderStack.top().currentIndex + 1 >= len)
-            {
-                _renderStack.pop();
-            }
-        }
+        visitRenderQueue(_renderGroups[0]);
+        flush();
     }
-
     clean();
 }
 
@@ -379,15 +351,6 @@ void Renderer::clean()
     _batchedQuadCommands.clear();
     _numQuads = 0;
 
-    // Clear the stack incase gl view hasn't been initialized yet
-    while(!_renderStack.empty())
-    {
-        _renderStack.pop();
-    }
-
-    // Reset render stack
-    RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
-    _renderStack.push(element);
     _lastMaterialID = 0;
 }
 

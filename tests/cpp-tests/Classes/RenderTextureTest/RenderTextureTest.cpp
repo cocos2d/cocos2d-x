@@ -232,14 +232,12 @@ RenderTextureIssue937::RenderTextureIssue937()
     auto background = LayerColor::create(Color4B(200,200,200,255));
     addChild(background);
 
+    auto s = Director::getInstance()->getWinSize();
     auto spr_premulti = Sprite::create("Images/fire.png");
-    spr_premulti->setPosition(Point(16,48));
+    spr_premulti->setPosition(Point(s.width/2-16, s.height/2+16));
 
     auto spr_nonpremulti = Sprite::create("Images/fire.png");
-    spr_nonpremulti->setPosition(Point(16,16));
-
-
-    
+    spr_nonpremulti->setPosition(Point(s.width/2-16, s.height/2-16));
     
     /* A2 & B2 setup */
     auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
@@ -249,20 +247,17 @@ RenderTextureIssue937::RenderTextureIssue937()
         return;
     }
 
+    auto spr_size = spr_premulti->getContentSize();
+    rend->setKeepMatrix(true);
+    Size pixelSize = Director::getInstance()->getWinSizeInPixels();
+    rend->setVirtualViewport(Point(s.width/2-32, s.height/2-32),Rect(0,0,s.width,s.height),Rect(0,0,pixelSize.width,pixelSize.height));
+
     // It's possible to modify the RenderTexture blending function by
     //        [[rend sprite] setBlendFunc:(BlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-
     rend->begin();
     spr_premulti->visit();
     spr_nonpremulti->visit();
-    rend->end(); 
-
-    auto s = Director::getInstance()->getWinSize();
-
-    /* A1: setup */
-    spr_premulti->setPosition(Point(s.width/2-16, s.height/2+16));
-    /* B1: setup */
-    spr_nonpremulti->setPosition(Point(s.width/2-16, s.height/2-16));
+    rend->end();
 
     rend->setPosition(Point(s.width/2+16, s.height/2));
 
