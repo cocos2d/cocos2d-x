@@ -459,7 +459,7 @@ void Armature::visit(cocos2d::Renderer *renderer, const Matrix &parentTransform,
     _transformUpdated = false;
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmMat4 stack,
+    // To ease the migration to v3.0, we still support the Matrix stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

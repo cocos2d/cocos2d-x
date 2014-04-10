@@ -401,7 +401,7 @@ void RenderTexture::visit(Renderer *renderer, const Matrix &parentTransform, boo
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the kmMat4 stack,
+    // To ease the migration to v3.0, we still support the Matrix stack,
     // but it is deprecated and your code should not rely on it
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
