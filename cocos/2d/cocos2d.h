@@ -88,6 +88,7 @@ THE SOFTWARE.
 #include "CCLabelTTF.h"
 #include "CCLabelBMFont.h"
 #include "CCLabel.h"
+#include "CCFontFNT.h"
 
 // layers_scenes_transitions_nodes
 #include "CCLayer.h"
