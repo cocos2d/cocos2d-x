@@ -762,7 +762,7 @@ bool startRuntime()
 	return false;
 #endif
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#ifndef DEBUG
+#ifndef COCOS2D_DEBUG
 	return false;
 #endif
 #endif
