@@ -657,6 +657,7 @@
 		375BD47818683FBB0024609E /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		375BD47918683FBB0024609E /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		375BD47A18683FBB0024609E /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
+		37C62BFD18E1540D00D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		37FFCAC318606F5F0078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAC418606F5F0078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		37FFCAC718606F760078F312 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
@@ -848,6 +849,7 @@
 				1A82F5E3169AC86100C4B13A /* LocalStorage */,
 				15A3D21D1682EE48002FB0C5 /* cocos-ext.h */,
 				15A3D21E1682EE48002FB0C5 /* ExtensionMacros.h */,
+				37C62BFD18E1540D00D16FC4 /* ExtensionExport.h */,
 			);
 			name = extensions;
 			path = ../../../../extensions;

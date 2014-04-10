@@ -756,6 +756,7 @@
 		379BB99217F03F3700829B88 /* GUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIReader.h; sourceTree = "<group>"; };
 		379BB99317F03F3700829B88 /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
 		379BB99417F03F3700829B88 /* SceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneReader.h; sourceTree = "<group>"; };
+		37C62C0718E156AE00D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		46513EAF187BFBA200B5ABE1 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		46513EB0187BFBA200B5ABE1 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
@@ -1089,6 +1090,7 @@
 				15A3D9B51682F826002FB0C5 /* CCBReader */,
 				15A3D9EA1682F826002FB0C5 /* cocos-ext.h */,
 				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
+				37C62C0718E156AE00D16FC4 /* ExtensionExport.h */,
 				15A3D9EC1682F826002FB0C5 /* GUI */,
 				15A3DA1A1682F826002FB0C5 /* network */,
 				15A3DA1F1682F826002FB0C5 /* physics_nodes */,

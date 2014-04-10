@@ -37,7 +37,7 @@ namespace cocos2d
 
 NS_CC_EXT_BEGIN
 
-class WidgetReaderProtocol
+class CC_EX_DLL WidgetReaderProtocol
 {
 public:
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options) = 0;

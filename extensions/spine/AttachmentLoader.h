@@ -42,10 +42,10 @@ struct AttachmentLoader {
 #endif
 };
 
-void AttachmentLoader_dispose (AttachmentLoader* self);
+CC_EX_DLL void AttachmentLoader_dispose (AttachmentLoader* self);
 
 /* Returns 0 to not load an attachment. If 0 is returned and AttachmentLoader.error1 is set, an error occurred. */
-Attachment* AttachmentLoader_newAttachment (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name);
+CC_EX_DLL Attachment* AttachmentLoader_newAttachment (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name);
 
 }} // namespace cocos2d { namespace extension {
 

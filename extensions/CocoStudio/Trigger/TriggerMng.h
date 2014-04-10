@@ -34,7 +34,7 @@ NS_CC_EXT_BEGIN
 
 class TriggerObj;
 
-class ArmatureMovementDispatcher : public CCObject
+class CC_EX_DLL ArmatureMovementDispatcher : public CCObject
 {
 public:
 	ArmatureMovementDispatcher(void);
@@ -47,7 +47,7 @@ public:
 
 };
 
-class TriggerMng
+class CC_EX_DLL TriggerMng
 {
 public:
 	TriggerMng(void);

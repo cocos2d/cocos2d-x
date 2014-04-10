@@ -35,7 +35,7 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */    
-class LabelBMFont : public Widget
+class CC_EX_DLL LabelBMFont : public Widget
 {
     DECLARE_CLASS_GUI_INFO
     

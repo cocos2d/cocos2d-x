@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCEditBoxImplWp8.h"
 #include "CCEditBox.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 
 NS_CC_EXT_BEGIN
 
@@ -274,10 +275,10 @@ void CCEditBoxImplWp8::onEnter( void )
 Platform::String^ CCEditBoxImplWp8::stringToPlatformString( std::string strSrc )
 {
 	// to wide char
-	int nStrLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);  
-	wchar_t* pWStr = new wchar_t[nStrLen + 1];  
-	memset(pWStr, 0, nStrLen + 1);  
-	MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, pWStr, nStrLen);  
+	int nStrLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);
+	wchar_t* pWStr = new wchar_t[nStrLen + 1];
+	memset(pWStr, 0, nStrLen + 1);
+	MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, pWStr, nStrLen);
 	Platform::String^ strDst = ref new Platform::String(pWStr);
 	delete[] pWStr;
 	return strDst;
@@ -286,10 +287,10 @@ Platform::String^ CCEditBoxImplWp8::stringToPlatformString( std::string strSrc )
 std::string CCEditBoxImplWp8::PlatformStringTostring( Platform::String^ strSrc )
 {
 	const wchar_t* pWStr = strSrc->Data();
-	int nStrLen = WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, NULL, 0, NULL, NULL);  
-	char* pStr = new char[nStrLen + 1];  
-	memset(pStr, 0, nStrLen + 1);  
-	WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, pStr, nStrLen, NULL, NULL);  ;  
+	int nStrLen = WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, NULL, 0, NULL, NULL);
+	char* pStr = new char[nStrLen + 1];
+	memset(pStr, 0, nStrLen + 1);
+	WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, pStr, nStrLen, NULL, NULL);  ;
 
 	std::string strDst = std::string(pStr);
 
@@ -298,3 +299,5 @@ std::string CCEditBoxImplWp8::PlatformStringTostring( Platform::String^ strSrc )
 }
 
 NS_CC_EXT_END
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)

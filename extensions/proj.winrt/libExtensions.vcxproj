@@ -286,6 +286,7 @@
     <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h" />
     <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h" />
     <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h" />
+	<ClInclude Include="..\ExtensionExport.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />

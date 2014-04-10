@@ -11,7 +11,7 @@ NS_CC_EXT_BEGIN
  *  @js NA
  *  @lua NA
  */
-class CCBSequence : public CCObject
+class CC_EX_DLL CCBSequence : public CCObject
 {
 private:
     float mDuration;

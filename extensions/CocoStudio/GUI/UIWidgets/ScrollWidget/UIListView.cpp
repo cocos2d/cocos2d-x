@@ -51,6 +51,7 @@ ListView::~ListView()
     _listViewEventSelector = NULL;
     _items->removeAllObjects();
     CC_SAFE_RELEASE(_items);
+    CC_SAFE_RELEASE(_model);
 }
 
 ListView* ListView::create()
