@@ -1314,8 +1314,7 @@ void Node::update(float fDelta)
 AffineTransform Node::getNodeToParentAffineTransform() const
 {
     AffineTransform ret;
-    kmMat4 ret4 = getNodeToParentTransform();
-    GLToCGAffine(ret4.mat, &ret);
+    GLToCGAffine(getNodeToParentTransform().m, &ret);
 
     return ret;
 }
@@ -1376,13 +1375,13 @@ const Matrix& Node::getNodeToParentTransform() const
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
         if(_rotationY) {
-            kmMat4 rotY;
-            kmMat4RotationY(&rotY,CC_DEGREES_TO_RADIANS(_rotationY));
+            Matrix rotY;
+            Matrix::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
             _transform = _transform * rotY;
         }
         if(_rotationX) {
-            kmMat4 rotX;
-            kmMat4RotationX(&rotX,CC_DEGREES_TO_RADIANS(_rotationX));
+            Matrix rotX;
+            Matrix::createRotationY(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
             _transform = _transform * rotX;
         }
 
@@ -1390,10 +1389,10 @@ const Matrix& Node::getNodeToParentTransform() const
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            kmMat4 skewMatrix = { 1, (float)tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
-                                  (float)tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
-                                  0,  0,  1, 0,
-                                  0,  0,  0, 1};
+            Matrix skewMatrix(1, (float)tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                              (float)tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
+                              0,  0,  1, 0,
+                              0,  0,  0, 1);
 
             _transform = _transform * skewMatrix;
 
@@ -1501,19 +1500,19 @@ Matrix Node::getWorldToNodeTransform() const
 
 Point Node::convertToNodeSpace(const Point& worldPoint) const
 {
-    kmMat4 tmp = getWorldToNodeTransform();
-    kmVec3 vec3 = {worldPoint.x, worldPoint.y, 0};
-    kmVec3 ret;
-    kmVec3Transform(&ret, &vec3, &tmp);
+    Matrix tmp = getWorldToNodeTransform();
+    Vector3 vec3(worldPoint.x, worldPoint.y, 0);
+    Vector3 ret;
+    tmp.transformPoint(vec3,&ret);
     return Point(ret.x, ret.y);
 }
 
 Point Node::convertToWorldSpace(const Point& nodePoint) const
 {
-    kmMat4 tmp = getNodeToWorldTransform();
-    kmVec3 vec3 = {nodePoint.x, nodePoint.y, 0};
-    kmVec3 ret;
-    kmVec3Transform(&ret, &vec3, &tmp);
+    Matrix tmp = getNodeToWorldTransform();
+    Vector3 vec3(nodePoint.x, nodePoint.y, 0);
+    Vector3 ret;
+    tmp.transformPoint(vec3,&ret);
     return Point(ret.x, ret.y);
 
 }
