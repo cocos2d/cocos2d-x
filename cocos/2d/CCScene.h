@@ -80,6 +80,7 @@ public:
     virtual void update(float delta) override;
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
     static Scene *createWithPhysics();
+    CC_SYNTHESIZE(bool, _physicsSimulateEnabled, PhysicsSimulateEnabled);
     
 CC_CONSTRUCTOR_ACCESS:
     bool initWithPhysics();
