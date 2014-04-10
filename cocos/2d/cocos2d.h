@@ -248,6 +248,7 @@ THE SOFTWARE.
 
 // tilemap_parallax_nodes
 #include "CCParallaxNode.h"
+#include "CCTMXImageLayer.h"
 #include "CCTMXLayer.h"
 #include "CCTMXObjectGroup.h"
 #include "CCTMXTiledMap.h"
