@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include "CCApplication.h"
 #include "CCEGLView.h"
+#include "EditBox.xaml.h"
 
 USING_NS_CC;
 
@@ -43,7 +44,10 @@ using namespace Windows::Graphics::Display;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace Windows::UI::ViewManagement;
 
 // Cocos2D application delegate
 
@@ -56,7 +60,8 @@ MainPage::MainPage()
     CCEGLView* eglView = new CCEGLView();
 	eglView->Create(Window::Current->CoreWindow, SwapChainPanel);
     eglView->setViewName("TestCpp");
-    CCApplication::sharedApplication()->run();
+	eglView->SetCocosEditBoxHandler(ref new EventHandler<Object^>(this, &MainPage::OnOpenEditBox));
+	CCApplication::sharedApplication()->run();
 }
 
 
@@ -79,3 +84,39 @@ void MainPage::LoadInternalState(IPropertySet^ state)
 	//m_renderer->LoadInternalState(state);
 }
 
+
+void TestCpp::MainPage::OnOpenEditBox(Object^ sender, Object^ args)
+{
+	// get Main thread
+	Windows::UI::Core::CoreWindow^ wnd = Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow;
+	assert(wnd != nullptr);
+
+	wnd->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, 
+		ref new DispatchedHandler([=]()
+	{
+		CCEditBoxParam^ params = (CCEditBoxParam^)args;
+		EditBox^ editBox = ref new EditBox(params);
+		editBox->HorizontalAlignment = Windows::UI::Xaml::HorizontalAlignment::Center;
+
+		// grid
+		Grid^ grid = ref new Grid();
+		grid->IsHitTestVisible = true;
+		grid->IsTapEnabled = true;
+		grid->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Stretch;
+		grid->HorizontalAlignment = Windows::UI::Xaml::HorizontalAlignment::Stretch;
+
+		// background
+		Border^ overlay = ref new Border();
+		overlay->IsHitTestVisible = false;
+		overlay->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Stretch;
+		overlay->HorizontalAlignment = Windows::UI::Xaml::HorizontalAlignment::Stretch;
+		overlay->Background = ref new SolidColorBrush(Windows::UI::Colors::Gray);
+		overlay->Opacity = 0.5;
+		overlay->IsTapEnabled = true;
+
+		grid->Children->Append(overlay);
+		grid->Children->Append(editBox);
+
+		this->SwapChainPanel->Children->Append(grid);
+	}));
+}
