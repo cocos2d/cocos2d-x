@@ -131,9 +131,11 @@ void TouchableSpriteTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
+    auto containerForSprite1 = Node::create();
     auto sprite1 = Sprite::create("Images/CyanSquare.png");
     sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 80));
-    addChild(sprite1, 10);
+    containerForSprite1->addChild(sprite1);
+    addChild(containerForSprite1, 10);
     
     auto sprite2 = Sprite::create("Images/MagentaSquare.png");
     sprite2->setPosition(origin+Point(size.width/2, size.height/2));
@@ -174,11 +176,11 @@ void TouchableSpriteTest::onEnter()
         target->setOpacity(255);
         if (target == sprite2)
         {
-            sprite1->setLocalZOrder(100);
+            containerForSprite1->setLocalZOrder(100);
         }
         else if(target == sprite1)
         {
-            sprite1->setLocalZOrder(0);
+            containerForSprite1->setLocalZOrder(0);
         }
     };
     
