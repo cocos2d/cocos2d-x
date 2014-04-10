@@ -1464,6 +1464,7 @@ void TestChangeAnimationInternal::onEnter()
 void TestChangeAnimationInternal::onExit()
 {
     Director::getInstance()->setAnimationInterval(1/60.0f);
+    ArmatureTestLayer::onExit();
 }
 std::string TestChangeAnimationInternal::title() const
 {
