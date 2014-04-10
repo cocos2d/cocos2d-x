@@ -22,11 +22,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-	auto glview = director->getOpenGLView();
-	if(!glview) {
-		glview = GLView::createWithRect("HelloLua", Rect(0,0,900,640));
-		director->setOpenGLView(glview);
-	}
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLView::createWithRect("HelloLua", Rect(0,0,900,640));
+        director->setOpenGLView(glview);
+    }
 
     glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
@@ -37,13 +37,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
    
 #ifdef COCOS2D_DEBUG
-	if (startRuntime())
-		return true;
+    if (startRuntime())
+        return true;
 #endif
 
-	auto engine = LuaEngine::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	engine->executeScriptFile("src/main.lua");
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    engine->executeScriptFile("src/main.lua");
     return true;
 }
 
