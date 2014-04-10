@@ -348,7 +348,7 @@ void CocosGUITestScene::onEnter()
 {
     Scene::onEnter();
     
-    auto label = Label::create("Back", "fonts/arial.ttf", 20);
+    auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
     auto pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocosGUITestScene::BackCallback, this));
     

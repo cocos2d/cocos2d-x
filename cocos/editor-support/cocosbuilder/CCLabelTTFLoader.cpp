@@ -40,7 +40,7 @@ void LabelTTFLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, con
 
 void LabelTTFLoader::onHandlePropTypeFontTTF(Node * pNode, Node * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_FONTNAME) == 0) {
-        ((Label *)pNode)->setFontName(pFontTTF);
+        ((Label *)pNode)->setSystemFontName(pFontTTF);
     } else {
         NodeLoader::onHandlePropTypeFontTTF(pNode, pParent, pPropertyName, pFontTTF, ccbReader);
     }
@@ -56,7 +56,7 @@ void LabelTTFLoader::onHandlePropTypeText(Node * pNode, Node * pParent, const ch
 
 void LabelTTFLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParent, const char * pPropertyName, float pFloatScale, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_FONTSIZE) == 0) {
-        ((Label *)pNode)->setFontSize(pFloatScale);
+        ((Label *)pNode)->setSystemFontSize(pFloatScale);
     } else {
         NodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pFloatScale, ccbReader);
     }

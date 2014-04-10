@@ -94,7 +94,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto s = Director::getInstance()->getWinSize();
 
     // Title
-    auto label = Label::create(title().c_str(), "fonts/arial.ttf", 32);
+    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 
@@ -102,7 +102,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        auto l = Label::create(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
+        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1);
         l->setPosition(Point(s.width/2, s.height-80));
     }
@@ -142,7 +142,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     menu->setPosition(Point(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
-    auto infoLabel = Label::create("0 nodes", "fonts/Marker Felt.ttf", 30);
+    auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
