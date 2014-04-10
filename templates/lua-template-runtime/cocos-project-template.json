@@ -22,6 +22,128 @@
         ],
         "append_file": [
             {
+                "from": "external/lua/luasocket/ftp.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/ftp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/headers.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/headers.lua"
+            },
+            {
+                "from": "external/lua/luasocket/http.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/http.lua"
+            },
+            {
+                "from": "external/lua/luasocket/ltn12.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/ltn12.lua"
+            },
+            {
+                "from": "external/lua/luasocket/mbox.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/mbox.lua"
+            },
+            {
+                "from": "external/lua/luasocket/mime.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/mime.lua"
+            },
+            {
+                "from": "external/lua/luasocket/smtp.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/smtp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/socket.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/socket.lua"
+            },
+            {
+                "from": "external/lua/luasocket/tp.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/tp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/url.lua",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/url.lua"
+            },
+            
+            {
+                "from": "external/lua/luasocket/ftp.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/ftp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/headers.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/headers.lua"
+            },
+            {
+                "from": "external/lua/luasocket/http.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/http.lua"
+            },
+            {
+                "from": "external/lua/luasocket/ltn12.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/ltn12.lua"
+            },
+            {
+                "from": "external/lua/luasocket/mbox.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/mbox.lua"
+            },
+            {
+                "from": "external/lua/luasocket/mime.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/mime.lua"
+            },
+            {
+                "from": "external/lua/luasocket/smtp.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/smtp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/socket.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/socket.lua"
+            },
+            {
+                "from": "external/lua/luasocket/tp.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/tp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/url.lua",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app/url.lua"
+            },
+            
+            {
+                "from": "external/lua/luasocket/ftp.lua",
+                "to": "runtime/win32/ftp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/headers.lua",
+                "to": "runtime/win32/headers.lua"
+            },
+            {
+                "from": "external/lua/luasocket/http.lua",
+                "to": "runtime/win32/http.lua"
+            },
+            {
+                "from": "external/lua/luasocket/ltn12.lua",
+                "to": "runtime/win32/ltn12.lua"
+            },
+            {
+                "from": "external/lua/luasocket/mbox.lua",
+                "to": "runtime/win32/mbox.lua"
+            },
+            {
+                "from": "external/lua/luasocket/mime.lua",
+                "to": "runtime/win32/mime.lua"
+            },
+            {
+                "from": "external/lua/luasocket/smtp.lua",
+                "to": "runtime/win32/smtp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/socket.lua",
+                "to": "runtime/win32/socket.lua"
+            },
+            {
+                "from": "external/lua/luasocket/tp.lua",
+                "to": "runtime/win32/tp.lua"
+            },
+            {
+                "from": "external/lua/luasocket/url.lua",
+                "to": "runtime/win32/url.lua"
+            },
+            {
                 "from": "external/win32-specific/gles/prebuilt/glew32.dll",
                 "to": "runtime/win32/glew32.dll"
             },
