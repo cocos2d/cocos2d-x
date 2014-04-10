@@ -24,16 +24,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLView.h"
-
-#include <unordered_map>
-
 #include "CCDirector.h"
-#include "CCSet.h"
 #include "CCTouch.h"
 #include "CCEventDispatcher.h"
 #include "CCEventKeyboard.h"
 #include "CCEventMouse.h"
 #include "CCIMEDispatcher.h"
+
+#include <unordered_map>
 
 NS_CC_BEGIN
 

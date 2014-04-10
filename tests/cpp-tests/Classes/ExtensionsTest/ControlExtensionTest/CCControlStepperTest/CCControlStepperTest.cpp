@@ -26,7 +26,7 @@
 #include "CCControlStepperTest.h"
 
 ControlStepperTest::ControlStepperTest()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
 
 }

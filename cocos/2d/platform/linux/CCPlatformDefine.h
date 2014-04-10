@@ -31,11 +31,7 @@ THE SOFTWARE.
 
 #include <string.h>
 
-#if defined(_USRDLL)
-#define CC_DLL __attribute__ ((visibility ("default")))
-#else         /* use a DLL library */
-#define CC_DLL __attribute__ ((visibility ("default")))
-#endif
+#define CC_DLL 
 
 #include <assert.h>
 #define CC_ASSERT(cond)    assert(cond)

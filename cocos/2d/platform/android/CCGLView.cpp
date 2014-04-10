@@ -27,7 +27,6 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "CCGLView.h"
-#include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "jni/IMEJni.h"

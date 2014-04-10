@@ -11,8 +11,8 @@ CCBSequence::CCBSequence()
 , _name("")
 , mSequenceId(0)
 , mChainedSequenceId(0)
-, mCallbackChannel(NULL)
-, mSoundChannel(NULL)
+, mCallbackChannel(nullptr)
+, mSoundChannel(nullptr)
 {}
 
 CCBSequence::~CCBSequence() {

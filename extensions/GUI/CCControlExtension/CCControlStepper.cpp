@@ -49,10 +49,10 @@ ControlStepper::ControlStepper()
 , _touchInsideFlag(false)
 , _touchedPart(Part::NONE)
 , _autorepeatCount(0)
-, _minusSprite(NULL)
-, _plusSprite(NULL)
-, _minusLabel(NULL)
-, _plusLabel(NULL)
+, _minusSprite(nullptr)
+, _plusSprite(nullptr)
+, _minusLabel(nullptr)
+, _plusLabel(nullptr)
 {
 
 }

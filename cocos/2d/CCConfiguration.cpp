@@ -28,12 +28,7 @@ THE SOFTWARE.
 #include <string.h>
 #include "ccMacros.h"
 #include "ccConfig.h"
-#include "CCDictionary.h"
-#include "CCInteger.h"
-#include "CCBool.h"
 #include "platform/CCFileUtils.h"
-
-using namespace std;
 
 NS_CC_BEGIN
 
@@ -179,7 +174,7 @@ void Configuration::purgeConfiguration()
 }
 
 
-bool Configuration::checkForGLExtension(const string &searchName) const
+bool Configuration::checkForGLExtension(const std::string &searchName) const
 {
    return  (_glExtensions && strstr(_glExtensions, searchName.c_str() ) ) ? true : false;
 }

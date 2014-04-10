@@ -5,7 +5,7 @@
 // UIListViewTest_Vertical_Editor
 
 UIListViewTest_Vertical_Editor::UIListViewTest_Vertical_Editor()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }
@@ -64,7 +64,7 @@ bool UIListViewTest_Vertical_Editor::init()
 // UIListViewTest_Horizontal_Editor
 
 UIListViewTest_Horizontal_Editor::UIListViewTest_Horizontal_Editor()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }

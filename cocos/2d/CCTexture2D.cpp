@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
 #include "platform/CCDevice.h"
+#include "deprecated/CCString.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "CCTextureCache.h"

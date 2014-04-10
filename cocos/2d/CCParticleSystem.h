@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCNode.h"
 #include "CCValue.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

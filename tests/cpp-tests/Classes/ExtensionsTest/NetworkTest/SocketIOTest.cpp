@@ -15,8 +15,8 @@ USING_NS_CC_EXT;
 using namespace  cocos2d::network;
 
 SocketIOTestLayer::SocketIOTestLayer(void)
-	: _sioClient(NULL)
-	, _sioEndpoint(NULL)
+	: _sioClient(nullptr)
+	, _sioEndpoint(nullptr)
 {
 	//set the clients to NULL until we are ready to connect
 

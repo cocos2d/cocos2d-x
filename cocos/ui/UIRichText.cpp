@@ -126,11 +126,9 @@ bool RichElementCustomNode::init(int tag, const Color3B &color, GLubyte opacity,
     
 RichText::RichText():
 _formatTextDirty(true),
-_richElements(NULL),
-_elementRenders(NULL),
 _leftSpaceWidth(0.0f),
 _verticalSpace(0.0f),
-_elementRenderersContainer(NULL)
+_elementRenderersContainer(nullptr)
 {
     
 }

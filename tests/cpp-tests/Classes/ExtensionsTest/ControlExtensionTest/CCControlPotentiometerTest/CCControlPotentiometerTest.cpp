@@ -25,7 +25,7 @@
 #include "CCControlPotentiometerTest.h"
 
 ControlPotentiometerTest::ControlPotentiometerTest()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
 
 }

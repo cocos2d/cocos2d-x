@@ -43,7 +43,6 @@
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 #include "CCDrawNode.h"
-#include "CCArray.h"
 #include "CCScene.h"
 #include "CCDirector.h"
 #include "CCEventDispatcher.h"

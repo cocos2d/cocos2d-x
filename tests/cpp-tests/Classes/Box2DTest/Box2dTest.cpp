@@ -13,8 +13,8 @@ enum {
 };
 
 Box2DTestLayer::Box2DTestLayer()
-: _spriteTexture(NULL)
-, world(NULL)
+: _spriteTexture(nullptr)
+, world(nullptr)
 {
 #if CC_ENABLE_BOX2D_INTEGRATION
     auto dispatcher = Director::getInstance()->getEventDispatcher();
