@@ -755,6 +755,9 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -1378,12 +1381,16 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="TestCpp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
+    <Page Include="EditBox.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\WideLogo.png">
