@@ -809,6 +809,12 @@ Developers:
     mgcL
         A potential memory leak fix in value's default constructor
         Added ScriptHandlerMgr::destroyInstance to avoid memory leak
+        
+    Mazyod
+        Fixed a bug that HTTPClient reports 2xx status codes as errors
+        
+    iSevenDays
+        Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
     
 Retired Core Developers:
     WenSheng Yang

@@ -497,7 +497,7 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
         {
             long bitmap_y = y * bitmapWidth;
 
-            for (int x = 0; x < bitmapWidth; ++x)
+            for (long x = 0; x < bitmapWidth; ++x)
             {    
                 /* Dual channel 16-bit output (more complicated, but good precision and range) */
                 /*int index = (iX + ( iY * destSize )) * 3;                

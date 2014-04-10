@@ -353,86 +353,83 @@ void TestController::addConsoleAutoTest()
                 for (int i = 0; i < g_testCount; i++)
                 {
                     // create the test scene and run it
-                    auto scene = g_aTestNames[i].callback();
+                    std::string  msg("autotest: running test:");
+                    msg += g_aTestNames[i].test_name;
+                    send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                    send(fd, "\n",1,0);
 
-                    if (scene)
+                    currentController = &g_aTestNames[i];
+                    sched->performFunctionInCocosThread( [&](){
+                        auto scene = currentController->callback();
+                        if(scene)
+                        {
+                            scene->runThisTest();
+                            scene->release();
+                        }
+                    } );
+                    wait(1);
+                    BaseTest* firstTest = app->getCurrentTest();
+                    if(firstTest == nullptr)
                     {
-                        std::string  msg("autotest: running test:");
-                        msg += g_aTestNames[i].test_name;
-                        send(fd, msg.c_str(), strlen(msg.c_str()),0);
-                        send(fd, "\n",1,0);
+                        continue;
+                    }
+                    std::string  t1("");
+                    t1 += firstTest->subtitle();
+                    send(fd, t1.c_str(), strlen(t1.c_str()),0);
+                    send(fd, "\n",1,0);
+                    wait(2);
 
-                        currentController = &g_aTestNames[i];
+                    while(1)
+                    {
+                        //currentTest->nextCallback(nullptr);
                         sched->performFunctionInCocosThread( [&](){
-                            currentController->callback()->runThisTest();
-                            currentController->callback()->release();
+                            BaseTest *t = app->getCurrentTest();
+                            if(t != nullptr)
+                            {
+                                t->nextCallback(nullptr);
+                            }
                         } );
                         wait(1);
-                        BaseTest* firstTest = app->getCurrentTest();
-                        if(firstTest == nullptr)
+                        BaseTest * curTest = app->getCurrentTest();
+                        if(curTest == nullptr)
                         {
-                            continue;
+                            break;
                         }
-                        std::string  t1("");
-                        t1 += firstTest->subtitle();
-                        send(fd, t1.c_str(), strlen(t1.c_str()),0);
+                        std::string  title("");
+                        title += curTest->subtitle();
+                        send(fd, title.c_str(), strlen(title.c_str()),0);
                         send(fd, "\n",1,0);
                         wait(2);
-                        
-                                                //printf("rtti:%s", typeid(firstTest).name());
-                        while(1)
+
+                        if(t1 == title)
                         {
-                            //currentTest->nextCallback(nullptr);
-                            sched->performFunctionInCocosThread( [&](){
-                                BaseTest *t = app->getCurrentTest();
-                                if(t != nullptr)
-                                {
-                                    t->nextCallback(nullptr);
-                                }
-                            } );
-                            wait(1);
-                            BaseTest * curTest = app->getCurrentTest();
-                            if(curTest == nullptr)
-                            {
-                                break;
-                            }
-                            std::string  title("");
-                            title += curTest->subtitle();
-                            send(fd, title.c_str(), strlen(title.c_str()),0);
-                            send(fd, "\n",1,0);
-                            wait(2);
-
-                            if(t1 == title)
-                            {
-                                break;
-                            }
-
+                            break;
                         }
                     }
-
                 }
+                return;
             }
 
             for(int i = 0; i < g_testCount; i++)
             {
                 if(args == g_aTestNames[i].test_name)
                 {
-                    // create the test scene and run it
-                    auto scene = g_aTestNames[i].callback();
-                    if (scene)
-                    {
-                        std::string  msg("autotest: running test:");
-                        msg += args;
-                        send(fd, msg.c_str(), strlen(msg.c_str()),0);
-                        send(fd, "\n",1,0);
+                    currentController = &g_aTestNames[i];
+                    std::string  msg("autotest: running test:");
+                    msg += args;
+                    send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                    send(fd, "\n",1,0);
 
-                        currentController = &g_aTestNames[i];
-                        sched->performFunctionInCocosThread( [&](){
-                            currentController->callback()->runThisTest();
-                            currentController->callback()->release();
-                        } );
-                        return;
-                    }
+                        
+                    sched->performFunctionInCocosThread( [&](){
+                        auto scene = currentController->callback();
+                        if(scene)
+                        {
+                            scene->runThisTest();
+                            scene->release();
+                        }
+                    } );
+                    return;
                 }
             }
 
