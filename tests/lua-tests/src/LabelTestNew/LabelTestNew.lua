@@ -1478,13 +1478,6 @@ function LabelFontNameTest.create()
     label1:setPosition( cc.p(size.width/2, size.height * 0.7) )
     layer:addChild(label1)
 
-    local fontDef = {}
-    fontDef.fontName = "fonts/Marker Felt.ttf"
-    fontDef.fontSize = 32
-    local label2 = cc.Label:createWithFontDefinition("Create with FontDefinition",fontDef)
-    label2:setPosition( cc.p(size.width/2, size.height * 0.6) )
-    layer:addChild(label2)
-
     local label3 = cc.Label:create("fonts/Marker Felt.ttf","fonts/Marker Felt.ttf",32)
     label3:setPosition( cc.p(size.width/2, size.height * 0.5) )
     layer:addChild(label3)
