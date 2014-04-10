@@ -154,5 +154,11 @@ Config of cocos2d-x project, per target platform.
 #endif 
 #endif  // CC_PLATFORM_WIN32
 
+#ifdef __CDT_PARSER__
+    #define override
+    #define final
+    #define nullptr NULL
+#endif
+
 #endif  // __CC_PLATFORM_CONFIG_H__
 
