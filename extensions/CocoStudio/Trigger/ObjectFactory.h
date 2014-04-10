@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include <string>
-#include <unordered_map>
+#include <map>
 
 namespace cocos2d
 {
