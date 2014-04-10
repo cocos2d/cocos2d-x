@@ -96,14 +96,14 @@ void CCEditBoxImplWp8::openKeyboard()
 bool CCEditBoxImplWp8::initWithSize( const Size& size )
 {
 	//! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
-	m_pLabel = LabelTTF::create("", "", size.height-12);
+	m_pLabel = Label::createWithSystemFont("", "", size.height-12);
 	// align the text vertically center
 	m_pLabel->setAnchorPoint(Point(0.0f, 0.5f));
 	m_pLabel->setPosition(Point(5.0, size.height / 2.0f));
 	m_pLabel->setColor(m_colText);
 	_editBox->addChild(m_pLabel);
 
-	m_pLabelPlaceHolder = LabelTTF::create("", "", size.height-12);
+	m_pLabelPlaceHolder = Label::createWithSystemFont("", "", size.height-12);
 	// align the text vertically center
 	m_pLabelPlaceHolder->setAnchorPoint(Point(0.0f, 0.5f));
 	m_pLabelPlaceHolder->setPosition(Point(5.0f, size.height / 2.0f));

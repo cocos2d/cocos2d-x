@@ -42,12 +42,18 @@ NS_CC_BEGIN
 const unsigned int kSceneFade = 0xFADEFADE;
 
 TransitionScene::TransitionScene()
+: _inScene(nullptr)
+, _outScene(nullptr)
+, _duration(0.0f)
+, _isInSceneOnTop(false)
+, _isSendCleanupToScene(false)
 {
 }
+
 TransitionScene::~TransitionScene()
 {
-    _inScene->release();
-    _outScene->release();
+    CC_SAFE_RELEASE(_inScene);
+    CC_SAFE_RELEASE(_outScene);
 }
 
 TransitionScene * TransitionScene::create(float t, Scene *scene)
