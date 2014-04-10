@@ -60,7 +60,7 @@ public:
         Instance _fun;
         unsigned int _classid;
     };
-    typedef std::unordered_map<unsigned int, TInfo>  FactoryMap;
+    typedef std::map<unsigned int, TInfo>  FactoryMap;
     ObjectFactory(void);
     virtual ~ObjectFactory(void);
     static ObjectFactory* getInstance();

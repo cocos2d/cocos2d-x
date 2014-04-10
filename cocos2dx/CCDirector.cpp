@@ -565,11 +565,6 @@ CCSize CCDirector::getWinSize(void)
     return m_obWinSizeInPoints;
 }
 
-void CCDirector::setWinSize(const CCSize& wsize)
-{
-    m_obWinSizeInPoints = wsize;
-}
-
 CCSize CCDirector::getWinSizeInPixels()
 {
     return CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
