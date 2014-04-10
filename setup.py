@@ -69,7 +69,8 @@ class SetEnvVar(object):
     RESULT_UPDATED = 1
     RESULT_ADDED = 2
 
-    UNIX_CHECK_FILES = [ '.bash_profile', '.bash_login', '.profile' ]
+    MAC_CHECK_FILES = [ '.bash_profile', '.bash_login', '.profile' ]
+    LINUX_CHECK_FILES = [ '.bashrc' ]
     RE_FORMAT = r'^export[ \t]+%s=(.+)'
 
     def __init__(self):
@@ -84,20 +85,33 @@ class SetEnvVar(object):
     def _isLinux(self):
         return sys.platform.startswith('linux')
 
+    def _is_mac(self):
+        return sys.platform == 'darwin'
+
     def _get_filepath_for_setup(self):
 
+        file_list = None
+        if self._isLinux():
+            file_list = SetEnvVar.LINUX_CHECK_FILES
+        elif self._is_mac():
+            file_list = SetEnvVar.MAC_CHECK_FILES
+
+        file_to_write = None
+        if file_list is None:
+            return ''
+
         home = os.path.expanduser('~')
-        if os.path.exists(os.path.join(home, '.bash_profile')):
-            file_to_write = os.path.join(home, '.bash_profile')
-        elif os.path.exists(os.path.join(home, '.bash_login')):
-            file_to_write = os.path.join(home, '.bash_login')
-        elif os.path.exists(os.path.join(home, '.profile')):
-            file_to_write = os.path.join(home, '.profile')
-        else:
+        for file_name in file_list:
+            file_path = os.path.join(home, file_name)
+            if os.path.exists(file_path):
+                file_to_write = file_path
+                break
+
+        if file_to_write is None:
             self.need_backup = False
-            file_to_write = os.path.join(home, '.bash_profile')
-            file = open(file_to_write, 'w')
-            file.close()
+            file_to_write = os.path.join(home, file_list[0])
+            file_obj = open(file_to_write, 'w')
+            file_obj.close()
 
         return file_to_write
 
@@ -191,12 +205,19 @@ class SetEnvVar(object):
             ret = os.environ[var]
         except Exception:
             if not self._isWindows():
-                home = os.path.expanduser('~')
-                for name in SetEnvVar.UNIX_CHECK_FILES:
-                    path = os.path.join(home, name)
-                    ret = self._search_unix_variable(var, path)
-                    if ret is not None:
-                        break
+                file_list = None
+                if self._isLinux():
+                    file_list = SetEnvVar.LINUX_CHECK_FILES
+                elif self._is_mac():
+                    file_list = SetEnvVar.MAC_CHECK_FILES
+
+                if file_list is not None:
+                    home = os.path.expanduser('~')
+                    for name in file_list:
+                        path = os.path.join(home, name)
+                        ret = self._search_unix_variable(var, path)
+                        if ret is not None:
+                            break
             else:
                 import _winreg
                 try:
@@ -434,9 +455,13 @@ class SetEnvVar(object):
         patten = re.compile(str_re)
         replace_str = 'export %s=%s\n' % (var_name, value)
 
-        print "  ->Update variable %s in files %s" % (var_name, str(SetEnvVar.UNIX_CHECK_FILES))
+        file_list = SetEnvVar.MAC_CHECK_FILES
+        if self._isLinux():
+            file_list = SetEnvVar.LINUX_CHECK_FILES
+
+        print "  ->Update variable %s in files %s" % (var_name, str(file_list))
         variable_updated = False
-        for file_name in SetEnvVar.UNIX_CHECK_FILES:
+        for file_name in file_list:
             path = os.path.join(home, file_name)
             if os.path.isfile(path):
                 lines = []

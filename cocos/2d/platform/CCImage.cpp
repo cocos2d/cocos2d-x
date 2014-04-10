@@ -1552,7 +1552,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
     }
     else
     {
-        if (tgaData->imageData != nullptr)
+        if (tgaData && tgaData->imageData != nullptr)
         {
             free(tgaData->imageData);
             _data = nullptr;
@@ -2023,7 +2023,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         {
             if (isToRGB)
             {
-                unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char*)));
+                unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
                 if (nullptr == pTempData)
                 {
                     fclose(fp);

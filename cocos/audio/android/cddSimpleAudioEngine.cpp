@@ -25,7 +25,6 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "jni/cddandroidAndroidJavaEngine.h"
-#include "opensl/cddandroidOpenSLEngine.h"
 #include "ccdandroidUtils.h"
 
 namespace CocosDenshion {
@@ -34,12 +33,7 @@ namespace CocosDenshion {
 
     SimpleAudioEngine* SimpleAudioEngine::getInstance() {
         if (! s_pEngine) {
-            // if (CocosDenshion::android::is_buggy_device()) {
-                // use the Java Audio implementation until compatibility is confirmed
-                s_pEngine = new CocosDenshion::android::AndroidJavaEngine();
-            // } else {
-            //     s_pEngine = new CocosDenshion::android::OpenSLEngine();
-            // }
+            s_pEngine = new CocosDenshion::android::AndroidJavaEngine();
         }
     
         return s_pEngine;
