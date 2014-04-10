@@ -32,11 +32,12 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 #include <float.h>
+#include <BaseTsd.h>
 
-//typedef SSIZE_T ssize_t;
-// ssize_t was redefined as int in libwebsockets.h.
-// Therefore, to avoid conflict, we needs the same definition.
-typedef int ssize_t;
+#ifndef __SSIZE_T
+#define __SSIZE_T
+typedef SSIZE_T ssize_t;
+#endif // __SSIZE_T
 
 // for math.h on win32 platform
 
