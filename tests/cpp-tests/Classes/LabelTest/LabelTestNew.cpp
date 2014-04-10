@@ -316,7 +316,7 @@ void LabelFNTSpriteActions::draw(Renderer *renderer, const Matrix &transform, bo
 
 }
 
-void LabelFNTSpriteActions::onDraw(const kmMat4 &transform, bool transformUpdated)
+void LabelFNTSpriteActions::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -911,7 +911,7 @@ void LabelFNTBounds::draw(Renderer *renderer, const Matrix &transform, bool tran
     renderer->addCommand(&_renderCmd);
 }
 
-void LabelFNTBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
+void LabelFNTBounds::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1518,7 +1518,7 @@ LabelTTFOldNew::LabelTTFOldNew()
     label2->setPosition(Point(s.width/2, delta * 2));
 }
 
-void LabelTTFOldNew::onDraw(const kmMat4 &transform, bool transformUpdated)
+void LabelTTFOldNew::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

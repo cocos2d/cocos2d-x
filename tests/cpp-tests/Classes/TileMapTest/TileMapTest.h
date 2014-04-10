@@ -138,7 +138,7 @@ public:
     virtual std::string subtitle() const override;
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 };
 
 class TMXIsoObjectsTest : public TileDemo
@@ -151,7 +151,7 @@ public:
     virtual std::string subtitle() const override;
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 };
 
 class TMXResizeTest : public TileDemo
@@ -296,7 +296,7 @@ public:
 
 protected:
     CustomCommand _renderCmd;
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
     
 };
 

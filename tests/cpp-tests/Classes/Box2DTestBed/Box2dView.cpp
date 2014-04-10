@@ -211,7 +211,7 @@ void Box2DView::draw(Renderer *renderer, const Matrix &transform, bool transform
     renderer->addCommand(&_customCmd);
 }
 
-void Box2DView::onDraw(const kmMat4 &transform, bool transformUpdated)
+void Box2DView::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

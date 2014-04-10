@@ -220,7 +220,7 @@ void Atlas1::draw(Renderer *renderer, const Matrix &transform, bool transformUpd
     renderer->addCommand(&_customCommand);
 }
 
-void Atlas1::onDraw(const kmMat4 &transform, bool transformUpdated)
+void Atlas1::onDraw(const Matrix &transform, bool transformUpdated)
 {
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);
@@ -539,7 +539,7 @@ void Atlas4::draw(Renderer *renderer, const Matrix &transform, bool transformUpd
     renderer->addCommand(&_customCommand);
 }
 
-void Atlas4::onDraw(const kmMat4 &transform, bool transformUpdated)
+void Atlas4::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1667,7 +1667,7 @@ void LabelBMFontBounds::draw(Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_customCommand);
 }
 
-void LabelBMFontBounds::onDraw(const kmMat4 &transform, bool transformUpdated)
+void LabelBMFontBounds::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

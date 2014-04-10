@@ -1075,7 +1075,7 @@ void TestColliderDetector::draw(Renderer *renderer, const Matrix &transform, boo
     renderer->addCommand(&_customCommand);
 }
 
-void TestColliderDetector::onDraw(const kmMat4 &transform, bool transformUpdated)
+void TestColliderDetector::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1117,7 +1117,7 @@ void TestBoundingBox::draw(Renderer *renderer, const Matrix &transform, bool tra
 
 }
 
-void TestBoundingBox::onDraw(const kmMat4 &transform, bool transformUpdated)
+void TestBoundingBox::onDraw(const Matrix &transform, bool transformUpdated)
 {
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);

@@ -25,7 +25,7 @@ public:
 
 #if CC_ENABLE_BOX2D_INTEGRATION
 protected:
-    kmMat4 _modelViewMV;
+    Matrix _modelViewMV;
     void onDraw();
     CustomCommand _customCommand;
 #endif

@@ -55,7 +55,7 @@ public:
 
     static Box2DView* viewWithEntryID(int entryId);
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     CustomCommand _customCmd;
 };

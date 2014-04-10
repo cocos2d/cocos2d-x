@@ -30,7 +30,7 @@ public:
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
     CustomCommand _customCommand;
 };
 

@@ -1357,7 +1357,7 @@ void ActionFollow::draw(Renderer *renderer, const Matrix &transform, bool transf
     renderer->addCommand(&_customCommand);
 }
 
-void ActionFollow::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ActionFollow::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1687,7 +1687,7 @@ void ActionCatmullRomStacked::draw(Renderer *renderer, const Matrix &transform, 
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCatmullRomStacked::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ActionCatmullRomStacked::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1817,7 +1817,7 @@ void ActionCardinalSplineStacked::draw(Renderer *renderer, const Matrix &transfo
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSplineStacked::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ActionCardinalSplineStacked::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -2190,7 +2190,7 @@ void ActionCatmullRom::draw(Renderer *renderer, const Matrix &transform, bool tr
 }
 
 
-void ActionCatmullRom::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ActionCatmullRom::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -2302,7 +2302,7 @@ void ActionCardinalSpline::draw(Renderer *renderer, const Matrix &transform, boo
     renderer->addCommand(&_customCommand);
 }
 
-void ActionCardinalSpline::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ActionCardinalSpline::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
