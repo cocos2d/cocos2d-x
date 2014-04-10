@@ -1804,7 +1804,7 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Matrix &transform, bool 
 
 }
 
-void TextureDrawAtPoint::onDraw(const kmMat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1846,7 +1846,7 @@ void TextureDrawInRect::draw(Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_renderCmd);
 }
 
-void TextureDrawInRect::onDraw(const kmMat4 &transform, bool transformUpdated)
+void TextureDrawInRect::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

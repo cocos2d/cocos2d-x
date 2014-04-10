@@ -762,7 +762,7 @@ void TMXOrthoObjectsTest::draw(Renderer *renderer, const Matrix &transform, bool
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXOrthoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
+void TMXOrthoObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -837,7 +837,7 @@ void TMXIsoObjectsTest::draw(Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXIsoObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
+void TMXIsoObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1522,7 +1522,7 @@ void TMXGIDObjectsTest::draw(Renderer *renderer, const Matrix &transform, bool t
     renderer->addCommand(&_renderCmd);
 }
 
-void TMXGIDObjectsTest::onDraw(const kmMat4 &transform, bool transformUpdated)
+void TMXGIDObjectsTest::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

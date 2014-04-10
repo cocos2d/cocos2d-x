@@ -121,7 +121,7 @@ void DrawPrimitivesTest::draw(Renderer *renderer, const Matrix &transform, bool 
     renderer->addCommand(&_customCommand);
 }
 
-void DrawPrimitivesTest::onDraw(const kmMat4 &transform, bool transformUpdated)
+void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

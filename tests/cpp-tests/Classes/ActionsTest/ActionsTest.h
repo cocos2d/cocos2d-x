@@ -380,7 +380,7 @@ public:
     virtual std::string subtitle() const override;
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     CustomCommand _customCommand;
 };
@@ -457,11 +457,11 @@ public:
     virtual std::string subtitle() const override;
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     //cached data and callback
-    kmMat4 _modelViewMV1;
-    kmMat4 _modelViewMV2;
+    Matrix _modelViewMV1;
+    Matrix _modelViewMV2;
     PointArray* _array1;
     PointArray* _array2;
     CustomCommand _customCommand;
@@ -479,10 +479,10 @@ public:
     virtual std::string subtitle() const override;
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
-    kmMat4 _modelViewMV1;
-    kmMat4 _modelViewMV2;
+    Matrix _modelViewMV1;
+    Matrix _modelViewMV2;
     CustomCommand _customCommand;
     PointArray* _array;
 };
@@ -574,10 +574,10 @@ public:
     virtual std::string title() const override;
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
-    kmMat4 _modelViewMV1;
-    kmMat4 _modelViewMV2;
+    Matrix _modelViewMV1;
+    Matrix _modelViewMV2;
     CustomCommand _customCommand;
     PointArray *_array1;
     PointArray *_array2;
@@ -596,11 +596,11 @@ public:
     virtual std::string title() const override;
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     PointArray *_array;
-    kmMat4 _modelViewMV1;
-    kmMat4 _modelViewMV2;
+    Matrix _modelViewMV1;
+    Matrix _modelViewMV2;
     CustomCommand _customCommand;
 };
 

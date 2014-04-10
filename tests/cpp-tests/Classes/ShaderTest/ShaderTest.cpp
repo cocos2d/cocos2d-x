@@ -197,7 +197,7 @@ void ShaderNode::draw(Renderer *renderer, const Matrix &transform, bool transfor
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Matrix &transform, bool transformUpdated)
 {
     auto shader = getShaderProgram();
     shader->use();
