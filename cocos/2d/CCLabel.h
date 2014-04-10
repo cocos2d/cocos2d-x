@@ -112,7 +112,7 @@ public:
 
     /** set TTF configuration for Label */
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
-    virtual TTFConfig& getTTFConfig() { return _fontConfig;}
+    virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
@@ -121,9 +121,11 @@ public:
     virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     virtual bool setCharMap(const std::string& plistFile);
 
-    virtual void setSystemFont(const std::string& systemFont);
-    virtual const std::string& getSystemFont() const { return _systemFont;}
+    /* Sets the system font[font name or font file] of label*/
+    virtual void setSystemFontName(const std::string& systemFont);
+    virtual const std::string& getSystemFontName() const { return _systemFont;}
 
+    /* Sets the system font size of label.*/
     virtual void setSystemFontSize(float fontSize);
     virtual float getSystemFontSize() const { return _systemFontSize;}
 

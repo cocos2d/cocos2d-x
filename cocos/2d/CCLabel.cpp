@@ -61,7 +61,7 @@ Label* Label::createWithSystemFont(const std::string& text, const std::string& f
 
     if (ret)
     {
-        ret->setSystemFont(font);
+        ret->setSystemFontName(font);
         ret->setSystemFontSize(fontSize);
         ret->setDimensions(dimensions.width, dimensions.height);
         ret->setString(text);
@@ -1099,7 +1099,7 @@ void Label::visit(Renderer *renderer, const kmMat4 &parentTransform, bool parent
     setOrderOfArrival(0);
 }
 
-void Label::setSystemFont(const std::string& systemFont)
+void Label::setSystemFontName(const std::string& systemFont)
 {
     if (systemFont != _systemFont)
     {
