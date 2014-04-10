@@ -3495,6 +3495,7 @@
         "cocos/scripting/lua-bindings/auto/api/ComController.lua", 
         "cocos/scripting/lua-bindings/auto/api/ComRender.lua", 
         "cocos/scripting/lua-bindings/auto/api/Component.lua", 
+        "cocos/scripting/lua-bindings/auto/api/Console.lua", 
         "cocos/scripting/lua-bindings/auto/api/ContourData.lua", 
         "cocos/scripting/lua-bindings/auto/api/Control.lua", 
         "cocos/scripting/lua-bindings/auto/api/ControlButton.lua", 
