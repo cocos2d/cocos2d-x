@@ -32,7 +32,7 @@ NS_CC_EXT_BEGIN
 /**
  *  @lua NA
  */
-class CCComController : public cocos2d::CCComponent, public CCInputDelegate
+class CC_EX_DLL CCComController : public cocos2d::CCComponent, public CCInputDelegate
 {
 	DECLARE_CLASS_COMPONENT_INFO
 public:

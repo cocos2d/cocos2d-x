@@ -52,7 +52,7 @@ typedef enum
 typedef void (CCObject::*SEL_ListViewEvent)(CCObject*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
-class ListView : public ScrollView
+class CC_EX_DLL ListView : public ScrollView
 {
     
     DECLARE_CLASS_GUI_INFO

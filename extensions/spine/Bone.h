@@ -44,15 +44,15 @@ struct Bone {
 	float const worldScaleX, worldScaleY;
 };
 
-void Bone_setYDown (int/*bool*/yDown);
+CC_EX_DLL void Bone_setYDown (int/*bool*/yDown);
 
 /* @param parent May be 0. */
-Bone* Bone_create (BoneData* data, Bone* parent);
-void Bone_dispose (Bone* self);
+CC_EX_DLL Bone* Bone_create (BoneData* data, Bone* parent);
+CC_EX_DLL void Bone_dispose (Bone* self);
 
-void Bone_setToSetupPose (Bone* self);
+CC_EX_DLL void Bone_setToSetupPose (Bone* self);
 
-void Bone_updateWorldTransform (Bone* self, int/*bool*/flipX, int/*bool*/flipY);
+CC_EX_DLL void Bone_updateWorldTransform (Bone* self, int/*bool*/flipX, int/*bool*/flipY);
 
 }} // namespace cocos2d { namespace extension {
 

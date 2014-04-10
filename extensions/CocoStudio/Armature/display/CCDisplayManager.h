@@ -37,7 +37,7 @@ class CCBone;
  *  @js NA
  *  @lua NA
  */
-class  CCDisplayManager : public CCObject
+class  CC_EX_DLL CCDisplayManager : public CCObject
 {
 public:
     static CCDisplayManager *create(CCBone *bone);

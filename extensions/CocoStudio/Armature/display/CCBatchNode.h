@@ -31,7 +31,7 @@ NS_CC_EXT_BEGIN
 /**
  *  @lua NA
  */
-class CCBatchNode : public CCNode
+class CC_EX_DLL CCBatchNode : public CCNode
 {
 public:
     static CCBatchNode *create();

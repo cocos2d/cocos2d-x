@@ -120,7 +120,7 @@ bool CCComRender::serialize(void* r)
         int nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
         if (nResType == 0)
         {
-            if (strcmp(pClassName, "CCSprite") == 0 && strFilePath.find(".png") != strFilePath.npos)
+            if (strcmp(pClassName, "CCSprite") == 0 && (strFilePath.find(".png") != strFilePath.npos || strFilePath.find(".pvr.ccz") != strFilePath.npos))
             {
                 m_pRender = CCSprite::create(strFilePath.c_str());
                 m_pRender->retain();

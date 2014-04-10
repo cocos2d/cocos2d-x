@@ -50,7 +50,7 @@ enum AnimationType
  *  @js NA
  *  @lua NA
  */
-class  CCProcessBase : public CCObject
+class  CC_EX_DLL CCProcessBase : public CCObject
 {
 public:
     CCProcessBase(void);

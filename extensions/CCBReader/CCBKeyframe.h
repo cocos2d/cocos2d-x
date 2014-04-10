@@ -9,7 +9,7 @@ NS_CC_EXT_BEGIN
  *  @js NA
  *  @lua NA
  */
-class CCBKeyframe : public CCObject
+class CC_EX_DLL CCBKeyframe : public CCObject
 {
 private:
     CCObject *mValue;

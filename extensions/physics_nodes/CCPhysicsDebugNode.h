@@ -44,7 +44,7 @@ NS_CC_EXT_BEGIN
  @lua NA
  */
 
-class CCPhysicsDebugNode : public CCDrawNode
+class CC_EX_DLL CCPhysicsDebugNode : public CCDrawNode
 {
 protected:
     cpSpace *m_pSpacePtr;

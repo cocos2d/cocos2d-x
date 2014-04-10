@@ -35,7 +35,7 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */
-class ImageView : public Widget
+class CC_EX_DLL ImageView : public Widget
 {
     DECLARE_CLASS_GUI_INFO
     

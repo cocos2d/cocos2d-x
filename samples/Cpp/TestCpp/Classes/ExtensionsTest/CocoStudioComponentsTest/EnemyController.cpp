@@ -19,6 +19,7 @@ bool EnemyController::init()
 
 void EnemyController::onEnter()
 {
+    CCComController::onEnter();
    // Determine where to spawn the target along the Y axis
 	CCSize winSize = CCDirector::sharedDirector()->getVisibleSize();
 	float minY = getOwner()->getContentSize().height/2;

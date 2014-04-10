@@ -22,6 +22,7 @@ bool PlayerController::init()
 
 void PlayerController::onEnter()
 {
+    CCComController::onEnter();
     setTouchEnabled(true);
 }
 
