@@ -30238,6 +30238,59 @@ int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Sprite* arg0;
+        int arg1;
+        int arg2;
+
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
+        if(!ok)
+            return 0;
+        cocos2d::SpriteBatchNode* ret = cobj->addSpriteWithoutQuad(arg0, arg1, arg2);
+        object_to_luaval<cocos2d::SpriteBatchNode>(tolua_S, "cc.SpriteBatchNode",(cocos2d::SpriteBatchNode*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSpriteWithoutQuad",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_SpriteBatchNode_reorderBatch(lua_State* tolua_S)
 {
     int argc = 0;
@@ -30280,6 +30333,195 @@ int lua_cocos2dx_SpriteBatchNode_reorderBatch(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_reorderBatch'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->removeAllChildrenWithCleanup(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeAllChildrenWithCleanup",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Sprite* arg0;
+
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        if(!ok)
+            return 0;
+        ssize_t ret = cobj->lowestAtlasIndexInChild(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "lowestAtlasIndexInChild",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_atlasIndexForChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Sprite* arg0;
+        int arg1;
+
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+            return 0;
+        ssize_t ret = cobj->atlasIndexForChild(arg0, arg1);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "atlasIndexForChild",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_atlasIndexForChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::TextureAtlas* arg0;
+
+        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0);
+        if(!ok)
+            return 0;
+        cobj->setTextureAtlas(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTextureAtlas",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'.",&tolua_err);
 #endif
 
     return 0;
@@ -30328,6 +30570,142 @@ int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->increaseAtlasCapacity();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "increaseAtlasCapacity",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_getTextureAtlas'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
+        object_to_luaval<cocos2d::TextureAtlas>(tolua_S, "cc.TextureAtlas",(cocos2d::TextureAtlas*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTextureAtlas",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_getTextureAtlas'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Sprite* arg0;
+        ssize_t arg1;
+
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+
+        ok &= luaval_to_ssize(tolua_S, 3, &arg1);
+        if(!ok)
+            return 0;
+        cobj->insertQuadFromSprite(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "insertQuadFromSprite",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
@@ -30370,6 +30748,103 @@ int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_setTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Sprite* arg0;
+        ssize_t arg1;
+
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+
+        ok &= luaval_to_ssize(tolua_S, 3, &arg1);
+        if(!ok)
+            return 0;
+        ssize_t ret = cobj->rebuildIndexInOrder(arg0, arg1);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "rebuildIndexInOrder",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteBatchNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Sprite* arg0;
+
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        if(!ok)
+            return 0;
+        ssize_t ret = cobj->highestAtlasIndexInChild(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "highestAtlasIndexInChild",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'.",&tolua_err);
 #endif
 
     return 0;
@@ -30469,586 +30944,6 @@ int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 3) 
-    {
-        cocos2d::Sprite* arg0;
-        int arg1;
-        int arg2;
-
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
-
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
-        if(!ok)
-            return 0;
-        cocos2d::SpriteBatchNode* ret = cobj->addSpriteWithoutQuad(arg0, arg1, arg2);
-        object_to_luaval<cocos2d::SpriteBatchNode>(tolua_S, "cc.SpriteBatchNode",(cocos2d::SpriteBatchNode*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSpriteWithoutQuad",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_atlasIndexForChild'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        cocos2d::Sprite* arg0;
-        int arg1;
-
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
-        if(!ok)
-            return 0;
-        ssize_t ret = cobj->atlasIndexForChild(arg0, arg1);
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "atlasIndexForChild",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_atlasIndexForChild'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->increaseAtlasCapacity();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "increaseAtlasCapacity",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_init(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_init'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 0) {
-            bool ret = cobj->init();
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-            if (!ok) { break; }
-            ssize_t arg1;
-            ok &= luaval_to_ssize(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithFile(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "initWithFile",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_init'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Sprite* arg0;
-
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
-        if(!ok)
-            return 0;
-        ssize_t ret = cobj->lowestAtlasIndexInChild(arg0);
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "lowestAtlasIndexInChild",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_initWithTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        cocos2d::Texture2D* arg0;
-        ssize_t arg1;
-
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
-
-        ok &= luaval_to_ssize(tolua_S, 3, &arg1);
-        if(!ok)
-            return 0;
-        bool ret = cobj->initWithTexture(arg0, arg1);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "initWithTexture",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_initWithTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::TextureAtlas* arg0;
-
-        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0);
-        if(!ok)
-            return 0;
-        cobj->setTextureAtlas(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setTextureAtlas",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cobj->removeAllChildrenWithCleanup(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "removeAllChildrenWithCleanup",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        cocos2d::Sprite* arg0;
-        ssize_t arg1;
-
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
-
-        ok &= luaval_to_ssize(tolua_S, 3, &arg1);
-        if(!ok)
-            return 0;
-        cobj->insertQuadFromSprite(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "insertQuadFromSprite",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        cocos2d::Sprite* arg0;
-        ssize_t arg1;
-
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
-
-        ok &= luaval_to_ssize(tolua_S, 3, &arg1);
-        if(!ok)
-            return 0;
-        ssize_t ret = cobj->rebuildIndexInOrder(arg0, arg1);
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "rebuildIndexInOrder",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_getTextureAtlas'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
-        object_to_luaval<cocos2d::TextureAtlas>(tolua_S, "cc.TextureAtlas",(cocos2d::TextureAtlas*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTextureAtlas",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_getTextureAtlas'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Sprite* arg0;
-
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
-        if(!ok)
-            return 0;
-        ssize_t ret = cobj->highestAtlasIndexInChild(arg0);
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "highestAtlasIndexInChild",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -31139,40 +31034,6 @@ int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_SpriteBatchNode_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SpriteBatchNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj = new cocos2d::SpriteBatchNode();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.SpriteBatchNode");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "SpriteBatchNode",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteBatchNode_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
 static int lua_cocos2dx_SpriteBatchNode_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (SpriteBatchNode)");
@@ -31186,24 +31047,21 @@ int lua_register_cocos2dx_SpriteBatchNode(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"SpriteBatchNode");
         tolua_function(tolua_S,"appendChild",lua_cocos2dx_SpriteBatchNode_appendChild);
+        tolua_function(tolua_S,"addSpriteWithoutQuad",lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad);
         tolua_function(tolua_S,"reorderBatch",lua_cocos2dx_SpriteBatchNode_reorderBatch);
+        tolua_function(tolua_S,"removeAllChildrenWithCleanup",lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup);
+        tolua_function(tolua_S,"lowestAtlasIndexInChild",lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild);
+        tolua_function(tolua_S,"atlasIndexForChild",lua_cocos2dx_SpriteBatchNode_atlasIndexForChild);
+        tolua_function(tolua_S,"setTextureAtlas",lua_cocos2dx_SpriteBatchNode_setTextureAtlas);
         tolua_function(tolua_S,"getTexture",lua_cocos2dx_SpriteBatchNode_getTexture);
+        tolua_function(tolua_S,"increaseAtlasCapacity",lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity);
+        tolua_function(tolua_S,"getTextureAtlas",lua_cocos2dx_SpriteBatchNode_getTextureAtlas);
+        tolua_function(tolua_S,"insertQuadFromSprite",lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite);
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_SpriteBatchNode_setTexture);
+        tolua_function(tolua_S,"rebuildIndexInOrder",lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder);
+        tolua_function(tolua_S,"highestAtlasIndexInChild",lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild);
         tolua_function(tolua_S,"removeChildAtIndex",lua_cocos2dx_SpriteBatchNode_removeChildAtIndex);
         tolua_function(tolua_S,"removeSpriteFromAtlas",lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas);
-        tolua_function(tolua_S,"addSpriteWithoutQuad",lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad);
-        tolua_function(tolua_S,"atlasIndexForChild",lua_cocos2dx_SpriteBatchNode_atlasIndexForChild);
-        tolua_function(tolua_S,"increaseAtlasCapacity",lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity);
-        tolua_function(tolua_S,"init",lua_cocos2dx_SpriteBatchNode_init);
-        tolua_function(tolua_S,"lowestAtlasIndexInChild",lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild);
-        tolua_function(tolua_S,"initWithTexture",lua_cocos2dx_SpriteBatchNode_initWithTexture);
-        tolua_function(tolua_S,"setTextureAtlas",lua_cocos2dx_SpriteBatchNode_setTextureAtlas);
-        tolua_function(tolua_S,"removeAllChildrenWithCleanup",lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup);
-        tolua_function(tolua_S,"insertQuadFromSprite",lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite);
-        tolua_function(tolua_S,"rebuildIndexInOrder",lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder);
-        tolua_function(tolua_S,"getTextureAtlas",lua_cocos2dx_SpriteBatchNode_getTextureAtlas);
-        tolua_function(tolua_S,"highestAtlasIndexInChild",lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild);
-        tolua_function(tolua_S,"new",lua_cocos2dx_SpriteBatchNode_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_SpriteBatchNode_create);
         tolua_function(tolua_S,"createWithTexture", lua_cocos2dx_SpriteBatchNode_createWithTexture);
     tolua_endmodule(tolua_S);
