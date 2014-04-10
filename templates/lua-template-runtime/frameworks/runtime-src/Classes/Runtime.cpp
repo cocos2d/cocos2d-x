@@ -209,8 +209,6 @@ public:
         menu->setPosition( Point::ZERO );
         menuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
         addChild(menu, 1);
-        //_scheduler = CCDirector::sharedDirector()->getScheduler();
-        //scheduleUpdate();
     }
     
     void playerCallback(Object* sender)
@@ -251,7 +249,7 @@ public:
     void stop();
     
 private:
-    bool recv_file(int fd);
+    bool receiveFile(int fd);
     void addClient();
     void loop();
  
@@ -425,7 +423,7 @@ static void readResFileFinfo()
     }
 }
 
-bool FileServer::recv_file(int fd)
+bool FileServer::receiveFile(int fd)
 {
     char headlen[5]={0};
     if (recv(fd, headlen, 4,0)<=0) {
@@ -550,7 +548,7 @@ void FileServer::loop()
             std::vector<int> to_remove;
             for(const auto &fd: _fds) {
                 if(FD_ISSET(fd,&copy_set)) {
-                    if( ! recv_file(fd) ) {
+                    if( ! receiveFile(fd) ) {
                         to_remove.push_back(fd);
                     }
                     if(--nready <= 0)
@@ -625,7 +623,6 @@ public:
                 rapidjson::Document dReplyParse;
                 dReplyParse.SetObject();
                 dReplyParse.AddMember("cmd",strcmd.c_str(),dReplyParse.GetAllocator());
-                //dReplyParse.AddMember("cmd",dArgParse["cmd"]);
                 if (dArgParse.HasMember("seq")) {
                     dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
                 }
