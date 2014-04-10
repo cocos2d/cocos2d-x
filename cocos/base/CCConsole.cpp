@@ -48,6 +48,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <sys/ioctl.h>
 #endif
 
 #include "CCDirector.h"
@@ -1058,6 +1059,19 @@ void Console::loop()
             for(const auto &fd: _fds) {
                 if(FD_ISSET(fd,&copy_set)) 
                 {
+                    //fix Bug #4302 Test case ConsoleTest--ConsoleUploadFile crashed on Linux
+                    //On linux, if you send data to a closed socket, the sending process will 
+                    //receive a SIGPIPE, which will cause linux system shutdown the sending process.
+                    //Add this ioctl code to check if the socket has been closed by peer.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+                    int n = 0;
+                    ioctl(fd, FIONREAD, &n);
+                    if(n == 0)
+                    {
+                        //no data received, or fd is closed
+                        continue;
+                    }
+#endif
                     if( ! parseCommand(fd) )
                     {
                         to_remove.push_back(fd);
