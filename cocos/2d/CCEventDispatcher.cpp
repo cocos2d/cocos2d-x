@@ -1371,6 +1371,13 @@ void EventDispatcher::setDirtyForNode(Node* node)
     {
         _dirtyNodes.insert(node);
     }
+
+    // Also set the dirty flag for node's children
+    const auto& children = node->getChildren();
+    for (const auto& child : children)
+    {
+        setDirtyForNode(child);
+    }
 }
 
 void EventDispatcher::setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag)
