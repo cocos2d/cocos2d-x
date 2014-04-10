@@ -67,11 +67,12 @@ static const int CC_EDIT_BOX_PADDING = 5;
 -(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox
 {
     self = [super init];
-    if(self){
+    
+    if (self)
+    {
         editState_ = NO;
         self.textField = [[[CCCustomUITextField alloc] initWithFrame: frameRect] autorelease];
-        //TODO: what is the line below doing?
-        //if (!textField_) break;
+
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
 		textField_.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
