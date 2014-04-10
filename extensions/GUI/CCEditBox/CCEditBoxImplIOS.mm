@@ -68,12 +68,11 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     self = [super init];
     
-    do
+    if (self)
     {
-        if (self == nil) break;
         editState_ = NO;
         self.textField = [[[CCCustomUITextField alloc] initWithFrame: frameRect] autorelease];
-        if (!textField_) break;
+
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
 		textField_.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -84,13 +83,9 @@ static const int CC_EDIT_BOX_PADDING = 5;
 		textField_.returnKeyType = UIReturnKeyDefault;
         [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
         self.editBox = editBox;
-        
-		
-        
-        return self;
-    }while(0);
+    }
     
-    return nil;
+    return self;
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
