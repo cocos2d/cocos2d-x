@@ -55,6 +55,18 @@ Label* Label::create()
     return ret;
 }
 
+Label* Label::create(const std::string& text, const std::string& font, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
+{
+    if (FileUtils::getInstance()->isFileExist(font))
+    {
+        return createWithTTF(text,font,fontSize,dimensions,hAlignment,vAlignment);
+    } 
+    else
+    {
+        return createWithSystemFont(text,font,fontSize,dimensions,hAlignment,vAlignment);
+    }
+}
+
 Label* Label::createWithSystemFont(const std::string& text, const std::string& font, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
     auto ret = new Label(nullptr,hAlignment,vAlignment);
