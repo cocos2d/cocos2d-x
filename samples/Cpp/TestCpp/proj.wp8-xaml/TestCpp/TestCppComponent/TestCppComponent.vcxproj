@@ -79,12 +79,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libcurl;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libwebsockets\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -92,66 +92,70 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurld.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libcurl;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libwebsockets\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurl.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libcurl;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libwebsockets\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurld.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libwebsockets\lib;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libcurl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libcurl.lib;libwebsocket_lib.lib;libeay32_lib.lib;ssleay32_lib.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(SolutionDir)cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -172,6 +176,7 @@
     <ClInclude Include="..\..\..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\..\..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\..\..\Classes\ConfigurationTest\ConfigurationTest.h" />
+    <ClInclude Include="..\..\..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\..\..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
@@ -232,6 +237,8 @@
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h" />
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h" />
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h" />
+    <ClInclude Include="..\..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
+    <ClInclude Include="..\..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h" />
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
     <ClInclude Include="..\..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
@@ -387,6 +394,7 @@
     <ClCompile Include="..\..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
+    <ClCompile Include="..\..\..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\..\..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
@@ -447,6 +455,8 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />

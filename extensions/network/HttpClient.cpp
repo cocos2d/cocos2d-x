@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2014 Martell Malone < martell malone at g mail dot com >
  Copyright (c) 2012 greathqy
  
  http://www.cocos2d-x.org
@@ -24,14 +25,20 @@
  ****************************************************************************/
 
 #include "HttpClient.h"
-// #include "platform/CCThread.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) //only temperary until curl is fully supported on rt. May take a week or so
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#include <pthread.h>
+#else
+#include "CCPThreadWinRT.h"
+#include <ppl.h>
+#include <ppltasks.h>
+using namespace concurrency;
+#endif
 
 #include <queue>
-#include <pthread.h>
 #include <errno.h>
-
 #include "curl/curl.h"
 
 NS_CC_EXT_BEGIN
@@ -93,38 +100,8 @@ static int processPutTask(CCHttpRequest *request, write_callback callback, void 
 static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
-
-// Worker thread
-static void* networkThread(void *data)
-{    
-    CCHttpRequest *request = NULL;
-    
-    while (true) 
-    {
-        if (need_quit)
-        {
-            break;
-        }
-        
-        // step 1: send http request if the requestQueue isn't empty
-        request = NULL;
-        
-        pthread_mutex_lock(&s_requestQueueMutex); //Get request task from queue
-        if (0 != s_requestQueue->count())
-        {
-            request = dynamic_cast<CCHttpRequest*>(s_requestQueue->objectAtIndex(0));
-            s_requestQueue->removeObjectAtIndex(0);  
-            // request's refcount = 1 here
-        }
-        pthread_mutex_unlock(&s_requestQueueMutex);
-        
-        if (NULL == request)
-        {
-        	// Wait for http request tasks from main thread
-        	pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
-            continue;
-        }
-        
+static void sendRequest(CCHttpRequest * request)
+{
         // step 2: libcurl sync access
         
         // Create a HttpResponse object, the default setting is http access failed
@@ -177,7 +154,7 @@ static void* networkThread(void *data)
                 break;
             
             default:
-                CCAssert(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+                //CCAssert(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
                 
@@ -202,32 +179,71 @@ static void* networkThread(void *data)
         
         // resume dispatcher selector
         CCDirector::sharedDirector()->getScheduler()->resumeTarget(CCHttpClient::getInstance());
-    }
     
-    // cleanup: if worker thread received quit signal, clean up un-completed request queue
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->removeAllObjects();
-    pthread_mutex_unlock(&s_requestQueueMutex);
-    s_asyncRequestCount -= s_requestQueue->count();
-    
-    if (s_requestQueue != NULL) {
-        
-        pthread_mutex_destroy(&s_requestQueueMutex);
-        pthread_mutex_destroy(&s_responseQueueMutex);
-        
-        pthread_mutex_destroy(&s_SleepMutex);
-        pthread_cond_destroy(&s_SleepCondition);
-
-        s_requestQueue->release();
-        s_requestQueue = NULL;
-        s_responseQueue->release();
-        s_responseQueue = NULL;
-    }
-
-    pthread_exit(NULL);
-    
-    return 0;
 }
+
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+
+// Worker thread
+static void* networkThread(void *data)
+{
+	CCHttpRequest *request = NULL;
+
+	while (true)
+	{
+		if (need_quit)
+		{
+			break;
+		}
+
+		// step 1: send http request if the requestQueue isn't empty
+		request = NULL;
+
+		pthread_mutex_lock(&s_requestQueueMutex); //Get request task from queue
+		if (0 != s_requestQueue->count())
+		{
+			request = dynamic_cast<CCHttpRequest*>(s_requestQueue->objectAtIndex(0));
+			s_requestQueue->removeObjectAtIndex(0);
+			// request's refcount = 1 here
+		}
+		pthread_mutex_unlock(&s_requestQueueMutex);
+
+		if (NULL == request)
+		{
+			// Wait for http request tasks from main thread
+			pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
+			continue;
+		}
+		sendRequest(request);
+	}
+
+	// cleanup: if worker thread received quit signal, clean up un-completed request queue
+	pthread_mutex_lock(&s_requestQueueMutex);
+	s_requestQueue->removeAllObjects();
+	pthread_mutex_unlock(&s_requestQueueMutex);
+	s_asyncRequestCount -= s_requestQueue->count();
+
+	if (s_requestQueue != NULL) {
+
+		pthread_mutex_destroy(&s_requestQueueMutex);
+		pthread_mutex_destroy(&s_responseQueueMutex);
+
+		pthread_mutex_destroy(&s_SleepMutex);
+		pthread_cond_destroy(&s_SleepCondition);
+
+		s_requestQueue->release();
+		s_requestQueue = NULL;
+		s_responseQueue->release();
+		s_responseQueue = NULL;
+	}
+
+	pthread_exit(NULL);
+
+	return 0;
+
+}
+//#endif
+
 
 //Configure curl's timeout property
 static bool configureCURL(CURL *handle)
@@ -392,7 +408,7 @@ CCHttpClient* CCHttpClient::getInstance()
 
 void CCHttpClient::destroyInstance()
 {
-    CCAssert(s_pHttpClient, "");
+    //CCAssert(s_pHttpClient, "");
     CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCHttpClient::dispatchResponseCallbacks), s_pHttpClient);
     s_pHttpClient->release();
 }
@@ -461,13 +477,18 @@ void CCHttpClient::send(CCHttpRequest* request)
     ++s_asyncRequestCount;
     
     request->retain();
-        
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->addObject(request);
-    pthread_mutex_unlock(&s_requestQueueMutex);
-    
-    // Notify thread start to work
-    pthread_cond_signal(&s_SleepCondition);
+
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+	pthread_mutex_lock(&s_requestQueueMutex);
+	s_requestQueue->addObject(request);
+	pthread_mutex_unlock(&s_requestQueueMutex);
+	// Notify thread start to work
+	pthread_cond_signal(&s_SleepCondition);
+//#else
+//	create_task([this,request] {
+//		sendRequest(request);	
+//	});
+//#endif
 }
 
 // Poll and notify main thread if responses exists in queue
@@ -510,7 +531,4 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
 
 NS_CC_EXT_END
 
-#endif // CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-
-
-
+#endif // end of temp #define to protect winrt until release

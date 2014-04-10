@@ -29,28 +29,37 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 
 #include <Windows.h>
+#include <mutex>
+#include <thread>
+#include <condition_variable>
+using namespace std;
 
 NS_CC_BEGIN
+    
+#define pthread_mutex_t std::mutex
+#define pthread_cond_t std::condition_variable
+#define pthread_t std::thread*
 
-typedef HANDLE pthread_t;
-typedef HANDLE pthread_mutex_t;
-typedef int pthread_cond_t;
-#define pthread_cond_wait(x, y)
-
-void pthread_mutex_init(pthread_mutex_t* m, void* attributes);
-
-int pthread_mutex_lock(pthread_mutex_t* m);
-
-int pthread_mutex_unlock(pthread_mutex_t* m);
-
-void pthread_mutex_destroy(pthread_mutex_t* m);
+void pthread_cond_wait(pthread_cond_t *condition, pthread_mutex_t *mutex);
 
 #define pthread_cond_destroy(x)
-#define pthread_cond_signal(x)
+#define pthread_exit(x)
+#define pthread_cond_signal(x) ((std::condition_variable*)x)->notify_one()
 #define pthread_cond_init(x, y)
 
+#define pthread_detach(x) ((std::thread*)x)->detach()
+
+#define pthread_attr_t int
+#define pthread_attr_init(x)
 
 
+#define pthread_mutex_init(m, attributes) 
+#define pthread_mutex_lock(m) ((std::mutex*)m)->lock()
+#define pthread_mutex_unlock(m) ((std::mutex*)m)->unlock()
+#define pthread_mutex_destroy(m) 
+
+int pthread_create(pthread_t *threadInstance,pthread_attr_t* attr, void *(*start) (void *), void *arg);
+#define pthread_join(ThreadInstance,ret) if(ThreadInstance->joinable()) ThreadInstance->join();
 
 NS_CC_END
 

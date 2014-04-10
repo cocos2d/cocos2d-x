@@ -505,6 +505,9 @@
     <ClCompile Include="..\CocoStudio\GUI\System\UITouchGroup.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
+    <ClCompile Include="..\network\WebSocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
     <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp">
       <Filter>GUI\CCEditBox</Filter>
     </ClCompile>
@@ -1007,6 +1010,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Components\CCComBase.h">
       <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\WebSocket.h">
+      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h">
       <Filter>GUI\CCEditBox</Filter>

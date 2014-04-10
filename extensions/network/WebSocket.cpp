@@ -26,12 +26,21 @@
 (http://libwebsockets.org)"
 
  ****************************************************************************/
-
 #include "WebSocket.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
+#else
+#include "CCPThreadWinRT.h"
+#include <ppl.h>
+#include <ppltasks.h>
+using namespace concurrency;
+#endif
 #include <queue>
 #include <signal.h>
 #include <errno.h>
+
+#include "cocos2d.h"
 
 NS_CC_EXT_BEGIN
 
@@ -73,8 +82,10 @@ public:
 protected:
     friend class WsThreadEntry;
     void* wsThreadEntryFunc(void* arg);
-    
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 private:
+#endif
     std::list<WsMessage*>* _UIWsMessageQueue;
     std::list<WsMessage*>* _subThreadWsMessageQueue;
     pthread_mutex_t _UIWsMessageQueueMutex;
@@ -84,6 +95,8 @@ private:
     bool _needQuit;
     friend class WebSocket;
 };
+
+//#endif
 
 // Wrapper for converting websocket callback from static function to member function of WebSocket class.
 class WebSocketCallbackWrapper {
@@ -103,6 +116,8 @@ public:
         return 0;
     }
 };
+
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 
 // Implementation of WsThreadHelper
 WsThreadHelper::WsThreadHelper()
@@ -152,6 +167,8 @@ bool WsThreadHelper::createThread(const WebSocket& ws)
     return false;
 }
 
+
+
 void WsThreadHelper::quitSubThread()
 {
     _needQuit = true;
@@ -173,6 +190,8 @@ void* WsThreadHelper::wsThreadEntryFunc(void* arg)
 
     return (void*)0;
 }
+
+
 
 void WsThreadHelper::sendMessageToUIThread(WsMessage *msg)
 {
@@ -219,6 +238,7 @@ void WsThreadHelper::update(float dt)
     CC_SAFE_DELETE(msg);
 }
 
+
 enum WS_MSG {
     WS_MSG_TO_SUBTRHEAD_SENDING_STRING = 0,
     WS_MSG_TO_SUBTRHEAD_SENDING_BINARY,
@@ -243,8 +263,9 @@ WebSocket::WebSocket()
 WebSocket::~WebSocket()
 {
     close();
+
     CC_SAFE_RELEASE_NULL(_wsHelper);
-    
+
     for (int i = 0; _wsProtocols[i].callback != NULL; ++i) {
         CC_SAFE_DELETE_ARRAY(_wsProtocols[i].name);
     }
@@ -328,10 +349,23 @@ bool WebSocket::init(const Delegate& delegate,
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
     }
-    
-    // WebSocket thread needs to be invoked at the end of this method.
-    _wsHelper = new WsThreadHelper();
+	// WebSocket thread needs to be invoked at the end of this method.
+	_wsHelper = new WsThreadHelper();
+
+	
+
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     ret = _wsHelper->createThread(*this);
+//#else
+//	_wsHelper->_ws = this;
+//	create_task([this] {
+//		onSubThreadStarted();
+//		while (!_wsHelper->_needQuit)
+//			if (onSubThreadLoop())
+//				break;
+//		onSubThreadEnded();
+//	});	
+//#endif
     
     return ret;
 }
@@ -349,12 +383,13 @@ void WebSocket::send(const std::string& message)
         data->len = message.length();
         msg->obj = data;
         _wsHelper->sendMessageToSubThread(msg);
+
     }
 }
 
 void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 {
-    CCAssert(binaryMsg != NULL && len > 0, "parameter invalid.");
+    //CCAssert(binaryMsg != NULL && len > 0, "parameter invalid.");
 
     if (_readyState == kStateOpen)
     {
@@ -366,6 +401,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
         memcpy((void*)data->bytes, (void*)binaryMsg, len);
         data->len = len;
         msg->obj = data;
+
         _wsHelper->sendMessageToSubThread(msg);
     }
 }
@@ -373,15 +409,13 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 void WebSocket::close()
 {
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(_wsHelper);
-    
+
     if (_readyState == kStateClosing || _readyState == kStateClosed)
         return;
 
-    CCLOG("websocket (%p) connection closed by client", this);
+    //CCLOG("websocket (%p) connection closed by client", this);
     _readyState = kStateClosed;
-
     _wsHelper->joinSubThread();
-    
     // onClose callback needs to be invoked at the end of this method
     // since websocket instance may be deleted in 'onClose'.
     _delegate->onClose(this);
@@ -405,12 +439,14 @@ int WebSocket::onSubThreadLoop()
     {
         libwebsocket_service(_wsContext, 0);
     }
-    
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // Sleep 50 ms
 #ifdef WIN32
 	Sleep(50);
 #else
     usleep(50000);
+#endif
 #endif
     // return 0 to continue the loop.
     return 0;
@@ -467,8 +503,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                      void *user, void *in, size_t len)
 {
 	//CCLOG("socket callback for %d reason", reason);
-    CCAssert(_wsContext == NULL || ctx == _wsContext, "Invalid context.");
-    CCAssert(_wsInstance == NULL || wsi == NULL || wsi == _wsInstance, "Invaild websocket instance.");
+    //CCAssert(_wsContext == NULL || ctx == _wsContext, "Invalid context.");
+    //CCAssert(_wsInstance == NULL || wsi == NULL || wsi == _wsInstance, "Invaild websocket instance.");
 
 	switch (reason)
     {
@@ -568,12 +604,12 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                 /* get notified as soon as we can write again */
                 
                 libwebsocket_callback_on_writable(ctx, wsi);
-            }
+		}
             break;
             
         case LWS_CALLBACK_CLOSED:
             {
-                
+              
                 CCLOG("%s", "connection closing..");
 
                 _wsHelper->quitSubThread();
@@ -616,8 +652,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                     data->bytes = bytes;
                     data->len = len;
                     msg->obj = (void*)data;
-                    
-                    _wsHelper->sendMessageToUIThread(msg);
+
+					_wsHelper->sendMessageToUIThread(msg);
                 }
             }
             break;

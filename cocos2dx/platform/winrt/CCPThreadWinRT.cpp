@@ -27,24 +27,16 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-void pthread_mutex_init(pthread_mutex_t* m, void* attributes) {
-	*m = CreateMutexEx(NULL,FALSE,0,NULL);
-}
-
-int pthread_mutex_lock(pthread_mutex_t* m) {
-	return WaitForSingleObjectEx(*m,INFINITE,FALSE);
-}
-
-int pthread_mutex_unlock(pthread_mutex_t* m) {
-	return ReleaseMutex(*m);
-}
-
-void pthread_mutex_destroy(pthread_mutex_t* m) 
+int pthread_create( pthread_t *threadInstance,pthread_attr_t* attr, void *(*start) (void *), void *arg )
 {
-	if(m)
-	{
-		CloseHandle(*m);
-	}
+    *threadInstance = new std::thread(start, arg);
+    return 0; // 0 is success
+}
+
+void pthread_cond_wait( pthread_cond_t *condition, pthread_mutex_t *mutex )
+{
+    std::unique_lock<std::mutex> lk(*mutex); 
+    condition->wait(lk);
 }
 
 
