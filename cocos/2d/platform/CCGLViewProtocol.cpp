@@ -367,7 +367,7 @@ void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode,
         } 
         else
         {
-            CCLOG("Ending touches with id: %ld error", id);
+            CCLOG("Ending touches with id: %ld error", static_cast<long>(id));
             return;
         } 
 
