@@ -49,21 +49,18 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, B
 {
     _globalOrder = globalOrder;
 
-    _textureID = textureID;
-    _blendType = blendType;
-    _shader = shader;
-
     _quadsCount = quadCount;
     _quads = quad;
 
     _mv = mv;
 
-    if( _textureID != _lastTextureID || _blendType.src != _lastBlendType.src || _blendType.dst != _lastBlendType.dst || _shader != _lastShader) {
+    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _shader != shader) {
+        
+        _textureID = textureID;
+        _blendType = blendType;
+        _shader = shader;
+        
         generateMaterialID();
-
-        _lastShader = _shader;
-        _lastBlendType = _blendType;
-        _lastTextureID = _textureID;
     }
 }
 
