@@ -815,6 +815,7 @@ Developers:
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
+        Fixed a potential memory leak in CCEditBoxImplIOS.mm
     
 Retired Core Developers:
     WenSheng Yang
