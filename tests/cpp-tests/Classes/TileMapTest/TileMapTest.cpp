@@ -120,7 +120,7 @@ void TileDemo::onEnter()
 
 void TileMapTestScene::onExit()
 {
-    Layer::onExit();
+    TileDemo::onExit();
     Director::getInstance()->setDepthTest(false);
 }
 void TileDemo::restartCallback(Ref* sender)
