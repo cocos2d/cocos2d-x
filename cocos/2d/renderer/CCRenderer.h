@@ -148,6 +148,8 @@ protected:
     // stats
     ssize_t _drawnBatches;
     ssize_t _drawnVertices;
+    //flags to indicate rendering
+    bool _isRendering;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;
