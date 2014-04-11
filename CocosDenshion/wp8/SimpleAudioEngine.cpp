@@ -55,7 +55,7 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 void SimpleAudioEngine::end()
 {
     sharedAudioController()->StopBackgroundMusic(true);
-    sharedAudioController()->StopAllSoundEffects();
+    sharedAudioController()->StopAllSoundEffects(true);
     sharedAudioController()->ReleaseResources();
 }
 
@@ -149,7 +149,7 @@ void SimpleAudioEngine::resumeAllEffects()
 
 void SimpleAudioEngine::stopAllEffects()
 {
-    sharedAudioController()->StopAllSoundEffects();
+    sharedAudioController()->StopAllSoundEffects(false);
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
