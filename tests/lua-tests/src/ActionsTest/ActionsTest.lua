@@ -204,8 +204,8 @@ local function ActionRotationalSkewVSStandardSkew()
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(s.width/2, s.height - 250 + label:getContentSize().height/2));
     layer:addChild(label);
-    local actionTo2 = cc.RotateBy:create(2, 360);
-    local actionToBack2 = cc.RotateBy:create(2, -360);
+    local actionTo2 = cc.RotateBy:create(2, 360, 0);
+    local actionToBack2 = cc.RotateBy:create(2, -360, 0);
     seq = cc.Sequence:create(actionTo2, actionToBack2)
     box:runAction(seq);
 
