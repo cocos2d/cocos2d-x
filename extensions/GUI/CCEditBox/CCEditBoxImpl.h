@@ -38,7 +38,7 @@ public:
     /**
      * @js NA
      */
-    EditBoxImpl(EditBox* pEditBox) : _delegate(NULL),_editBox(pEditBox) {}
+    EditBoxImpl(EditBox* pEditBox) : _delegate(nullptr),_editBox(pEditBox) {}
     /**
      * @js NA
      * @lua NA

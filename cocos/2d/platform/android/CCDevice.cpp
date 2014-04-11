@@ -70,7 +70,7 @@ class BitmapDC
 public:
 
     BitmapDC()
-    : _data(NULL)
+    : _data(nullptr)
     , _width(0)
     , _height(0)
     {

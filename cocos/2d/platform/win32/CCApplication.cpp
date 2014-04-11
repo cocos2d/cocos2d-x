@@ -43,10 +43,10 @@ NS_CC_BEGIN
 Application * Application::sm_pSharedApplication = 0;
 
 Application::Application()
-: _instance(NULL)
-, _accelTable(NULL)
+: _instance(nullptr)
+, _accelTable(nullptr)
 {
-    _instance    = GetModuleHandle(NULL);
+    _instance    = GetModuleHandle(nullptr);
     _animationInterval.QuadPart = 0;
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;

@@ -141,6 +141,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/renderer
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/deprecated
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/physics
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/editor-support
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/math/kazmath

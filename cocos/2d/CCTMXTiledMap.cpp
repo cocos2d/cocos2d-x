@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer.h"
 #include "CCSprite.h"
+#include "deprecated/CCString.h" // For StringUtils::format
+
 #include <algorithm>
 
 NS_CC_BEGIN

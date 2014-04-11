@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCAnimation.h"
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;

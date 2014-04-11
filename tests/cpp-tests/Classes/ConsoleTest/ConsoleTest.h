@@ -83,7 +83,6 @@ protected:
     void uploadFile();
     std::string _src_file_path;
     std::string _target_file_name;
-    std::thread _thread;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleUploadFile);
 };

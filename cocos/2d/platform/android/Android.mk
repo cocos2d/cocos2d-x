@@ -26,6 +26,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../.. \
+                    $(LOCAL_PATH)/../../.. \
                     $(LOCAL_PATH)/../../../base \
                     $(LOCAL_PATH)/../../../math/kazmath \
                     $(LOCAL_PATH)/../../../physics

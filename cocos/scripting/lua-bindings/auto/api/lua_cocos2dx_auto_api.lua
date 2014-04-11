@@ -7,6 +7,11 @@
 
 
 --------------------------------------------------------
+-- the cc Console
+-- @field [parent=#cc] Console#Console Console preloaded module
+
+
+--------------------------------------------------------
 -- the cc Action
 -- @field [parent=#cc] Action#Action Action preloaded module
 

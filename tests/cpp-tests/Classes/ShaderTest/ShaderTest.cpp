@@ -136,7 +136,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-            this->setShaderProgram(NULL);
+            this->setShaderProgram(nullptr);
             loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
         });
 
@@ -479,7 +479,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-                setShaderProgram(NULL);
+                setShaderProgram(nullptr);
                 initProgram();
             });
 
@@ -677,7 +677,7 @@ void ShaderBlur::sliderAction(Ref* sender, Control::EventType controlEvent)
 // ShaderRetroEffect
 
 ShaderRetroEffect::ShaderRetroEffect()
-: _label(NULL)
+: _label(nullptr)
 , _accum(0.0f)
 {
     init();

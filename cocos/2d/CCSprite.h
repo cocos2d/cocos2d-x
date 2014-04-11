@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccTypes.h"
-#include "CCDictionary.h"
 #include <string>
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
