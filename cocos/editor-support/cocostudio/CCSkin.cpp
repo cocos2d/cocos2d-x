@@ -208,20 +208,20 @@ Matrix Skin::getNodeToWorldTransform() const
 
 Matrix Skin::getNodeToWorldTransformAR() const
 {
-    kmMat4 displayTransform = _transform;
+    Matrix displayTransform = _transform;
     Point anchorPoint =  _anchorPointInPoints;
 
     anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
 
-    displayTransform.mat[12] = anchorPoint.x;
-    displayTransform.mat[13] = anchorPoint.y;
+    displayTransform.m[12] = anchorPoint.x;
+    displayTransform.m[13] = anchorPoint.y;
 
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
 void Skin::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
-    kmMat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Matrix mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     //TODO implement z order
     _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
