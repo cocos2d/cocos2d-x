@@ -38,7 +38,7 @@
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
 #include <WS2tcpip.h>
-
+#include <Winsock2.h>
 #define bzero(a, b) memset(a, 0, b);
 
 #else
@@ -1063,15 +1063,17 @@ void Console::loop()
                     //On linux, if you send data to a closed socket, the sending process will 
                     //receive a SIGPIPE, which will cause linux system shutdown the sending process.
                     //Add this ioctl code to check if the socket has been closed by peer.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
                     int n = 0;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    ioctlsocket(fd, FIONREAD, &n);
+#else
                     ioctl(fd, FIONREAD, &n);
+#endif
                     if(n == 0)
                     {
                         //no data received, or fd is closed
                         continue;
                     }
-#endif
                     if( ! parseCommand(fd) )
                     {
                         to_remove.push_back(fd);
