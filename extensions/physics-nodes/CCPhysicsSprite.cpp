@@ -353,7 +353,7 @@ const Matrix& PhysicsSprite::getNodeToParentTransform() const
                         0,  0,  1,  0,
                         x,	y,  0,  1};
     
-    _transform.set(mat);
+    
     
     return _transform;
 
@@ -384,13 +384,12 @@ const Matrix& PhysicsSprite::getNodeToParentTransform() const
 
 	// Rot, Translate Matrix
     
-    kmScalar mat[] = {  (kmScalar)c * _scaleX, (kmScalar)s * _scaleX, 0,  0,
-        (kmScalar)-s * _scaleY, (kmScalar)c * _scaleY,  0,  0,
+    float mat[] = {  (float)c * _scaleX, (float)s * _scaleX, 0,  0,
+        (float)-s * _scaleY, (float)c * _scaleY,  0,  0,
         0,  0,  1,  0,
         x,	y,  0,  1};
     
-    
-    kmMat4Fill(&_transform, mat);
+    _transform.set(mat);
 
 	return _transform;
 #endif
