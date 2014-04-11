@@ -245,13 +245,13 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
 
 void Renderer::pushGroup(int renderQueueID)
 {
-    CCASSERT(!_isRendering, "Cannot add command while rendering");
+    CCASSERT(!_isRendering, "Cannot change render queue while rendering");
     _commandGroupStack.push(renderQueueID);
 }
 
 void Renderer::popGroup()
 {
-    CCASSERT(!_isRendering, "Cannot add command while rendering");
+    CCASSERT(!_isRendering, "Cannot change render queue while rendering");
     _commandGroupStack.pop();
 }
 
