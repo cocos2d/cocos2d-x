@@ -48,9 +48,8 @@ Point __CCPointApplyAffineTransform(const Point& point, const AffineTransform& t
 
 Point PointApplyTransform(const Point& point, const Matrix& transform)
 {
-    kmVec3 vec = {point.x, point.y, 0};
-    kmMat4 transform2 = transform;
-    kmVec3Transform(&vec, &vec, &transform2);
+    Vector3 vec(point.x, point.y, 0);
+    transform.transformPoint(&vec);
     return Point(vec.x, vec.y);
 }
 
@@ -99,17 +98,14 @@ Rect RectApplyTransform(const Rect& rect, const Matrix& transform)
     float right  = rect.getMaxX();
     float bottom = rect.getMaxY();
     
-    kmMat4 transform2 = transform;
-    
-    kmVec3 topLeft = {left, top};
-    kmVec3 topRight = {right, top};
-    kmVec3 bottomLeft = {left, bottom};
-    kmVec3 bottomRight = {right, bottom};
-
-    kmVec3Transform(&topLeft, &topLeft, &transform2);
-    kmVec3Transform(&topRight, &topRight, &transform2);
-    kmVec3Transform(&bottomLeft, &bottomLeft, &transform2);
-    kmVec3Transform(&bottomRight, &bottomRight, &transform2);
+    Vector3 topLeft(left, top, 0);
+    Vector3 topRight(right, top, 0);
+    Vector3 bottomLeft(left, bottom, 0);
+    Vector3 bottomRight(right, bottom, 0);
+    transform.transformPoint(&topLeft);
+    transform.transformPoint(&topRight);
+    transform.transformPoint(&bottomLeft);
+    transform.transformPoint(&bottomRight);
 
     float minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
     float maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));
