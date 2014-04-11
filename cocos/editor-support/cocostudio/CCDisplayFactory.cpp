@@ -113,11 +113,11 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
                 CC_BREAK_IF(!detector->getBody());
 #endif
 
-                kmMat4 displayTransform = display->getNodeToParentTransform();
+                Matrix displayTransform = display->getNodeToParentTransform();
                 Point anchorPoint =  display->getAnchorPointInPoints();
                 anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
-                displayTransform.mat[12] = anchorPoint.x;
-                displayTransform.mat[13] = anchorPoint.y;
+                displayTransform.m[12] = anchorPoint.x;
+                displayTransform.m[13] = anchorPoint.y;
                 Matrix t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
                 detector->updateTransform(t);
             }
