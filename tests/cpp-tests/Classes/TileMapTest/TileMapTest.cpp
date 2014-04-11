@@ -118,6 +118,11 @@ void TileDemo::onEnter()
     BaseTest::onEnter();
 }
 
+void TileMapTestScene::onExit()
+{
+    Layer::onExit();
+    Director::getInstance()->setDepthTest(false);
+}
 void TileDemo::restartCallback(Ref* sender)
 {
     auto s = new TileMapTestScene();
@@ -165,6 +170,7 @@ void TileMapTestScene::runThisTest()
 
     Director::getInstance()->replaceScene(this);
 }
+
 
 //------------------------------------------------------------------
 //
