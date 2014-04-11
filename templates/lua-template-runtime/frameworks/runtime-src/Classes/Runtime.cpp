@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "lua_debugger.h"
 #include "CCLuaEngine.h"
 #include "cocos2d.h"
-#include "CCFontFNT.h"
 #include "json/document.h"
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
@@ -45,7 +44,7 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-rapidjson::Document g_filecfgjson; 
+static rapidjson::Document g_filecfgjson; 
 
 extern string getIPAddress();
 const char* getRuntimeVersion()
