@@ -148,7 +148,7 @@ protected:
     // stats
     ssize_t _drawnBatches;
     ssize_t _drawnVertices;
-    //flags to indicate rendering
+    //the flag for checking whether renderer is rendering
     bool _isRendering;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
