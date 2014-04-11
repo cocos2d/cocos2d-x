@@ -91,28 +91,28 @@ void ActionCamera::setUp(const kmVec3& up)
 
 void ActionCamera::updateTransform()
 {
-    kmMat4 lookupMatrix;
-    kmMat4LookAt(&lookupMatrix, &_eye, &_center, &_up);
+    Matrix lookupMatrix;
+    Matrix::createLookAt(_eye.x, _eye.y, _eye.z, _center.x, _center.y, _center.z, _up.x, _up.y, _up.z, &lookupMatrix);
 
     Point anchorPoint = _target->getAnchorPointInPoints();
 
     bool needsTranslation = !anchorPoint.equals(Point::ZERO);
 
-    kmMat4 mv;
-    kmMat4Identity(&mv);
+    Matrix mv = Matrix::identity();
 
     if(needsTranslation) {
-        kmMat4 t;
-        kmMat4Translation(&t, anchorPoint.x, anchorPoint.y, 0);
-        kmMat4Multiply(&mv, &mv, &t);
+        Matrix t;
+        Matrix::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
+        mv = mv * t;
     }
-
-    kmMat4Multiply(&mv, &mv, &lookupMatrix);
+    
+    mv = mv * lookupMatrix;
 
     if(needsTranslation) {
-        kmMat4 t;
-        kmMat4Translation(&t, -anchorPoint.x, -anchorPoint.y, 0);
-        kmMat4Multiply(&mv, &mv, &t);
+        
+        Matrix t;
+        Matrix::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
+        mv = mv * t;
     }
 
     // XXX FIXME TODO
@@ -122,8 +122,7 @@ void ActionCamera::updateTransform()
     // But that operation needs to be done after all the 'updates'.
     // So the Director should emit an 'director_after_update' event.
     // And this object should listen to it
-    Matrix mv2 = mv;
-    _target->setAdditionalTransform(&mv2);
+    _target->setAdditionalTransform(&mv);
 }
 
 //
