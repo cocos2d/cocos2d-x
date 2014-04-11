@@ -142,6 +142,12 @@ renderer/CCRenderMaterial.cpp \
 ../deprecated/CCDictionary.cpp \
 ../deprecated/CCDeprecated.cpp \
 ../deprecated/CCNotificationCenter.cpp \
+../math/MathUtil.cpp \
+../math/Matrix.cpp \
+../math/Quaternion.cpp \
+../math/Vector2.cpp \
+../math/Vector3.cpp \
+../math/Vector4.cpp \
 ../math/kazmath/kazmath/aabb.c \
 ../math/kazmath/kazmath/mat3.c \
 ../math/kazmath/kazmath/mat4.c \
@@ -177,6 +183,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath \
+                    $(LOCAL_PATH)/../math \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
@@ -190,6 +197,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath \
+                    $(LOCAL_PATH)/../math \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
