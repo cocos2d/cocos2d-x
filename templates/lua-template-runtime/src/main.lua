@@ -119,7 +119,7 @@ local function main()
         local touchBeginPoint = nil
         local function onTouchBegan(touch, event)
             local location = touch:getLocation()
-            cclog("onTouchBegan: %0.2f, %0.2f", location.x, location.y)
+            --cclog("onTouchBegan: %0.2f, %0.2f", location.x, location.y)
             touchBeginPoint = {x = location.x, y = location.y}
             spriteDog.isPaused = true
             -- CCTOUCHBEGAN event must return true
@@ -128,7 +128,7 @@ local function main()
 
         local function onTouchMoved(touch, event)
             local location = touch:getLocation()
-            cclog("onTouchMoved: %0.2f, %0.2f", location.x, location.y)
+            --cclog("onTouchMoved: %0.2f, %0.2f", location.x, location.y)
             if touchBeginPoint then
                 local cx, cy = layerFarm:getPosition()
                 layerFarm:setPosition(cx + location.x - touchBeginPoint.x,
@@ -139,7 +139,7 @@ local function main()
 
         local function onTouchEnded(touch, event)
             local location = touch:getLocation()
-            cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
+            --cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
             touchBeginPoint = nil
             spriteDog.isPaused = false
         end
