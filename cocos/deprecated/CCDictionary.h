@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "uthash.h"
 #include "CCRef.h"
 #include "CCArray.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include "CCPlatformConfig.h"
 #include "CCRef.h"
-#include "CCArray.h"
 #include "CCValue.h"
 #include "CCGeometry.h"
 #include "CCSpriteFrame.h"

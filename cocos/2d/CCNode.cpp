@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include <algorithm>
 
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "ccCArray.h"
 #include "TransformUtils.h"
 #include "CCGrid.h"

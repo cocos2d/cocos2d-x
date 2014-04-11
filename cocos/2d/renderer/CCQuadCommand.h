@@ -73,13 +73,10 @@ protected:
     uint32_t _materialID;
 
     GLuint _textureID;
-    GLuint _lastTextureID;
 
     GLProgram* _shader;
-    GLProgram* _lastShader;
 
     BlendFunc _blendType;
-    BlendFunc _lastBlendType;
 
     V3F_C4B_T2F_Quad* _quads;
     ssize_t _quadsCount;

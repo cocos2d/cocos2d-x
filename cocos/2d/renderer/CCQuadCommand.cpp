@@ -36,11 +36,12 @@ static  void convertIntToByteArray(int value, int* output)
 }
 
 QuadCommand::QuadCommand()
-:_textureID(0)
-,_blendType(BlendFunc::DISABLE)
-,_quadsCount(0)
+:_materialID(0)
+,_textureID(0)
 ,_shader(nullptr)
+,_blendType(BlendFunc::DISABLE)
 ,_quads(nullptr)
+,_quadsCount(0)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
@@ -49,21 +50,18 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, B
 {
     _globalOrder = globalOrder;
 
-    _textureID = textureID;
-    _blendType = blendType;
-    _shader = shader;
-
     _quadsCount = quadCount;
     _quads = quad;
 
     _mv = mv;
 
-    if( _textureID != _lastTextureID || _blendType.src != _lastBlendType.src || _blendType.dst != _lastBlendType.dst || _shader != _lastShader) {
+    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _shader != shader) {
+        
+        _textureID = textureID;
+        _blendType = blendType;
+        _shader = shader;
+        
         generateMaterialID();
-
-        _lastShader = _shader;
-        _lastBlendType = _blendType;
-        _lastTextureID = _textureID;
     }
 }
 

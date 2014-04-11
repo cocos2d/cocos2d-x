@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ccUtils.h"
 #include "CCScheduler.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 
 
 #ifdef EMSCRIPTEN

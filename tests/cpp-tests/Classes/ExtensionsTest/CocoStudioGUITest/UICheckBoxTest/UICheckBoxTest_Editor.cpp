@@ -6,7 +6,7 @@
 // UICheckBoxTest_Editor
 
 UICheckBoxTest_Editor::UICheckBoxTest_Editor()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }

@@ -31,8 +31,8 @@ NS_CC_EXT_BEGIN
 static const float CHECK_EDITBOX_POSITION_INTERVAL = 0.1f;
 
 EditBox::EditBox(void)
-: _editBoxImpl(NULL)
-, _delegate(NULL)
+: _editBoxImpl(nullptr)
+, _delegate(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
 , _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(KeyboardReturnType::DEFAULT)

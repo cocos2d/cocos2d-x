@@ -42,8 +42,6 @@ extern "C" {
 #define strcasecmp stricmp
 #define getdtablesize() 30000
 
-typedef int ssize_t;
-
 #define LWS_VISIBLE
 
 #ifdef LWS_DLL

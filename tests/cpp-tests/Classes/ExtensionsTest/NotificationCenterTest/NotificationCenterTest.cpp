@@ -1,6 +1,5 @@
 #include "NotificationCenterTest.h"
 #include "../ExtensionsTest.h"
-#include "CCNotificationCenter.h"
 
 #define kTagLight 100
 #define kTagConnect 200
@@ -88,8 +87,8 @@ NotificationCenterTest::NotificationCenterTest()
     pBackMenu->setPosition( Point::ZERO );
     addChild(pBackMenu);
 
-    auto label1 = Label::create("switch off", "fonts/Marker Felt.ttf", 26);
-    auto label2 = Label::create("switch on", "fonts/Marker Felt.ttf", 26);
+    auto label1 = Label::createWithTTF("switch off", "fonts/Marker Felt.ttf", 26);
+    auto label2 = Label::createWithTTF("switch on", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
     auto item2 = MenuItemLabel::create(label2);
     auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::toggleSwitch, this), item1, item2, NULL);
@@ -110,8 +109,8 @@ NotificationCenterTest::NotificationCenterTest()
         light->setPosition(Point(100, s.height/4*i));
         addChild(light);
 
-        auto label1 = Label::create("not connected", "fonts/Marker Felt.ttf", 26);
-        auto label2 = Label::create("connected", "fonts/Marker Felt.ttf", 26);
+        auto label1 = Label::createWithTTF("not connected", "fonts/Marker Felt.ttf", 26);
+        auto label2 = Label::createWithTTF("connected", "fonts/Marker Felt.ttf", 26);
         auto item1 = MenuItemLabel::create(label1);
         auto item2 = MenuItemLabel::create(label2);
         auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::connectToSwitch, this), item1, item2, NULL);

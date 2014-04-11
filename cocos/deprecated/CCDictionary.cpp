@@ -24,10 +24,10 @@
  ****************************************************************************/
 
 #include "CCDictionary.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "CCBool.h"
 #include "CCInteger.h"
 #include "CCFloat.h"
@@ -77,7 +77,7 @@ DictElement::~DictElement()
 // __Dictionary
 
 __Dictionary::__Dictionary()
-: _elements(NULL)
+: _elements(nullptr)
 , _dictType(kDictUnknown)
 {
 

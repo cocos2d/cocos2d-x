@@ -23,7 +23,7 @@ Copyright (c) 2013-2014 Chukong Technologies
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 #include "ccMacros.h"
 #include <stdlib.h>

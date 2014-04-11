@@ -56,6 +56,7 @@ const char* SceneReader::sceneReaderVersion()
 
 cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent /*= AttachComponentType::EMPTY_NODE*/)
 {
+    _node = nullptr;
     rapidjson::Document jsonDict;
     do {
           CC_BREAK_IF(!readJson(fileName, jsonDict));

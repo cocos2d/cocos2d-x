@@ -7,9 +7,9 @@
 
 
 UIScene_Editor::UIScene_Editor()
-: _sceneTitle(NULL)
-, _touchGroup(NULL)
-, _layout(NULL)
+: _sceneTitle(nullptr)
+, _touchGroup(nullptr)
+, _layout(nullptr)
 {
     
 }

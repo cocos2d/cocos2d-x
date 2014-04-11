@@ -476,6 +476,7 @@ public:
 };
 
 extern const std::string STD_STRING_EMPTY;
+extern const ssize_t CC_INVALID_INDEX;
 
 NS_CC_END
 
