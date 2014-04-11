@@ -845,7 +845,7 @@ void TestColliderDetector::onExit()
 
     ArmatureTestLayer::onExit();
 }
-void TestColliderDetector::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     Director* director = Director::getInstance();

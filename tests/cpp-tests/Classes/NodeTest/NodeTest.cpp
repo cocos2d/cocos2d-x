@@ -992,7 +992,7 @@ public:
         return sprite;
     }
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
 protected:
     CustomCommand _customCommand;
@@ -1006,7 +1006,7 @@ void MySprite::draw(Renderer *renderer, const Matrix &transform, bool transformU
     renderer->addCommand(&_customCommand);
 }
 
-void MySprite::onDraw(const kmMat4 &transform, bool transformUpdated)
+void MySprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins(transform);
@@ -1117,14 +1117,10 @@ CameraTest2::CameraTest2()
     _sprite2->setPosition( Point(3*s.width/4, s.height/2) );
     _sprite2->setScale(0.5);
 
-    kmVec3 eye, center, up;
+    Vector3 eye(150, 0, 200), center(0, 0, 0), up(0, 1, 0);
 
-    kmVec3Fill(&eye, 150, 0, 200);
-    kmVec3Fill(&center, 0, 0, 0);
-    kmVec3Fill(&up, 0, 1, 0);
-
-    kmMat4 lookupMatrix;
-    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
+    Matrix lookupMatrix;
+    Matrix::createLookAt(eye, center, up, &lookupMatrix);
 
     Matrix lookupMatrix2 = lookupMatrix;
 

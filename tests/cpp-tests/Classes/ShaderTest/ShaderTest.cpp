@@ -436,7 +436,7 @@ public:
     static SpriteBlur* create(const char *pszFileName);
 
 protected:
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
     int       _blurRadius;
     Point     _pixelSize;
@@ -536,7 +536,7 @@ void SpriteBlur::draw(Renderer *renderer, const Matrix &transform, bool transfor
     renderer->addCommand(&_customCommand);
 }
 
-void SpriteBlur::onDraw(const kmMat4 &transform, bool transformUpdated)
+void SpriteBlur::onDraw(const Matrix &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
