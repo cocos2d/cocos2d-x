@@ -35,7 +35,6 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 #include "CCNS.h"
 #include "CCScene.h"
-#include "CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "CCTransition.h"

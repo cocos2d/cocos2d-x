@@ -26,9 +26,7 @@ THE SOFTWARE.
 #include "CCGLViewProtocol.h"
 #include "CCTouch.h"
 #include "CCDirector.h"
-#include "CCSet.h"
 #include "CCEventDispatcher.h"
-
 
 NS_CC_BEGIN
 
@@ -369,7 +367,7 @@ void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode,
         } 
         else
         {
-            CCLOG("Ending touches with id: %ld error", id);
+            CCLOG("Ending touches with id: %ld error", static_cast<long>(id));
             return;
         } 
 

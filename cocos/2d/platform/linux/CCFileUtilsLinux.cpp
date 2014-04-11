@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "ccMacros.h"
 #include "CCApplication.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>

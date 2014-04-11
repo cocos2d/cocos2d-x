@@ -475,7 +475,7 @@ end
 
 -- -- SpriteRenderTextureBug
 
--- local function SimpleSprite() : rt(NULL) {}
+-- local function SimpleSprite() : rt(nullptr) {}
 
 --     local function SimpleSprite* SpriteRenderTextureBug:SimpleSprite:create(const char* filename, const cc.rect &rect)
 

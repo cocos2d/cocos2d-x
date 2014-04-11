@@ -180,14 +180,15 @@ std::string ConsoleCustomCommand::subtitle() const
 
 ConsoleUploadFile::ConsoleUploadFile()
 {
-    srand ((unsigned)time(NULL));
+    srand ((unsigned)time(nullptr));
     int _id = rand()%100000;
     char buf[32];
     sprintf(buf, "%d", _id);
     _target_file_name = std::string("grossini") + buf;
 
-   _src_file_path = FileUtils::getInstance()->fullPathForFilename(s_pathGrossini);
-    _thread = std::thread( &ConsoleUploadFile::uploadFile, this);
+    _src_file_path = FileUtils::getInstance()->fullPathForFilename(s_pathGrossini);
+    std::thread t = std::thread( &ConsoleUploadFile::uploadFile, this);
+    t.detach();
 }
 
 void ConsoleUploadFile::onEnter()
@@ -198,7 +199,7 @@ void ConsoleUploadFile::onEnter()
 
 ConsoleUploadFile::~ConsoleUploadFile()
 {
-    _thread.join();
+    
 }
 
 void ConsoleUploadFile::uploadFile()

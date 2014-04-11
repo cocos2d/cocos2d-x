@@ -31,7 +31,10 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "CCEventKeyboard.h"
 #include "CCEventListener.h"
-#include "CCSet.h"
+
+namespace cocos2d {
+    class __Set;
+}
 
 namespace cocostudio {
 

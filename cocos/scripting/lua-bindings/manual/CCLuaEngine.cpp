@@ -26,8 +26,6 @@
 #include "CCLuaEngine.h"
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "CCArray.h"
-#include "CCScheduler.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 #include "LuaOpengl.h"
 #include "lua_cocos2dx_manual.hpp"
@@ -37,7 +35,7 @@
 
 NS_CC_BEGIN
 
-LuaEngine* LuaEngine::_defaultEngine = NULL;
+LuaEngine* LuaEngine::_defaultEngine = nullptr;
 
 LuaEngine* LuaEngine::getInstance(void)
 {
@@ -52,7 +50,7 @@ LuaEngine* LuaEngine::getInstance(void)
 LuaEngine::~LuaEngine(void)
 {
     CC_SAFE_RELEASE(_stack);
-    _defaultEngine = NULL;
+    _defaultEngine = nullptr;
 }
 
 bool LuaEngine::init(void)

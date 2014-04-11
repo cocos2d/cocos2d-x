@@ -29,7 +29,7 @@
 #include "CCDirector.h"
 #include "CCFontAtlas.h"
 #include "CCMap.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "CCTextureCache.h"
 #include "ccUTF8.h"
 #include "platform/CCFileUtils.h"

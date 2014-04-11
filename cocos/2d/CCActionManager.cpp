@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "ccCArray.h"
 #include "uthash.h"
-#include "CCSet.h"
 
 NS_CC_BEGIN
 //

@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 // support
 #include "CCTexture2D.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include <stdlib.h>
 #include "CCEventDispatcher.h"
 #include "CCEventListenerCustom.h"

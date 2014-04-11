@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "JniHelper.h"
 #include "CCFileUtilsAndroid.h"
 #include "android/asset_manager_jni.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 #define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"

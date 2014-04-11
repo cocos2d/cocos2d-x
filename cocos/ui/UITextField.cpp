@@ -531,24 +531,24 @@ const std::string& TextField::getPlaceHolder()
 
 void TextField::setFontSize(int size)
 {
-    _textFieldRenderer->setFontSize(size);
+    _textFieldRenderer->setSystemFontSize(size);
     textfieldRendererScaleChangedWithSize();
 }
     
 int TextField::getFontSize()
 {
-    return _textFieldRenderer->getFontSize();
+    return _textFieldRenderer->getSystemFontSize();
 }
 
 void TextField::setFontName(const std::string& name)
 {
-    _textFieldRenderer->setFontName(name);
+    _textFieldRenderer->setSystemFontName(name);
     textfieldRendererScaleChangedWithSize();
 }
     
 const std::string& TextField::getFontName()
 {
-    return _textFieldRenderer->getFontName();
+    return _textFieldRenderer->getSystemFontName();
 }
 
 void TextField::didNotSelectSelf()
@@ -806,8 +806,8 @@ void TextField::copySpecialProperties(Widget *widget)
     {
         setText(textField->_textFieldRenderer->getString());
         setPlaceHolder(textField->getStringValue());
-        setFontSize(textField->_textFieldRenderer->getFontSize());
-        setFontName(textField->_textFieldRenderer->getFontName().c_str());
+        setFontSize(textField->_textFieldRenderer->getSystemFontSize());
+        setFontName(textField->_textFieldRenderer->getSystemFontName());
         setMaxLengthEnabled(textField->isMaxLengthEnabled());
         setMaxLength(textField->getMaxLength());
         setPasswordEnabled(textField->isPasswordEnabled());

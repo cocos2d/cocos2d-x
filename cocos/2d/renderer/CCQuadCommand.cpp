@@ -36,11 +36,15 @@ static  void convertIntToByteArray(int value, int* output)
 }
 
 QuadCommand::QuadCommand()
-:_textureID(0)
-,_blendType(BlendFunc::DISABLE)
-,_quadsCount(0)
+:_materialID(0)
+,_textureID(0)
+,_lastTextureID(0)
 ,_shader(nullptr)
+,_lastShader(nullptr)
+,_blendType(BlendFunc::DISABLE)
+,_lastBlendType(BlendFunc::DISABLE)
 ,_quads(nullptr)
+,_quadsCount(0)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
