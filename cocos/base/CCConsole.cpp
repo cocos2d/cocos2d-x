@@ -38,7 +38,7 @@
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
 #include <WS2tcpip.h>
-
+#include <Winsock2.h>
 #define bzero(a, b) memset(a, 0, b);
 
 #else
@@ -463,7 +463,7 @@ void Console::commandFileUtils(int fd, const std::string &args)
 void Console::commandConfig(int fd, const std::string& args)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
-    sched->performFunctionInCocosThread( [&](){
+    sched->performFunctionInCocosThread( [=](){
         mydprintf(fd, "%s", Configuration::getInstance()->getInfo().c_str());
         sendPrompt(fd);
     }
@@ -504,7 +504,7 @@ void Console::commandResolution(int fd, const std::string& args)
         stream >> width >> height>> policy;
 
         Scheduler *sched = Director::getInstance()->getScheduler();
-        sched->performFunctionInCocosThread( [&](){
+        sched->performFunctionInCocosThread( [=](){
             Director::getInstance()->getOpenGLView()->setDesignResolutionSize(width, height, static_cast<ResolutionPolicy>(policy));
         } );
     }
@@ -538,13 +538,13 @@ void Console::commandProjection(int fd, const std::string& args)
     }
     else if( args.compare("2d") == 0)
     {
-        sched->performFunctionInCocosThread( [&](){
+        sched->performFunctionInCocosThread( [=](){
             director->setProjection(Director::Projection::_2D);
         } );
     }
     else if( args.compare("3d") == 0)
     {
-        sched->performFunctionInCocosThread( [&](){
+        sched->performFunctionInCocosThread( [=](){
             director->setProjection(Director::Projection::_3D);
         } );
     }
@@ -560,14 +560,14 @@ void Console::commandTextures(int fd, const std::string& args)
 
     if( args.compare("flush")== 0)
     {
-        sched->performFunctionInCocosThread( [&](){
+        sched->performFunctionInCocosThread( [](){
             Director::getInstance()->getTextureCache()->removeAllTextures();
         }
                                             );
     }
     else if(args.length()==0)
     {
-        sched->performFunctionInCocosThread( [&](){
+        sched->performFunctionInCocosThread( [=](){
             mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
             sendPrompt(fd);
         }
@@ -596,7 +596,7 @@ void Console::commandDirector(int fd, const std::string& args)
     else if(args == "pause")
     {
         Scheduler *sched = director->getScheduler();
-            sched->performFunctionInCocosThread( [&](){
+            sched->performFunctionInCocosThread( [](){
             Director::getInstance()->pause();
         }
                                         );
@@ -609,7 +609,7 @@ void Console::commandDirector(int fd, const std::string& args)
     else if(args == "stop")
     {
         Scheduler *sched = director->getScheduler();
-        sched->performFunctionInCocosThread( [&](){
+        sched->performFunctionInCocosThread( [](){
             Director::getInstance()->stopAnimation();
         }
                                         );
@@ -1063,15 +1063,20 @@ void Console::loop()
                     //On linux, if you send data to a closed socket, the sending process will 
                     //receive a SIGPIPE, which will cause linux system shutdown the sending process.
                     //Add this ioctl code to check if the socket has been closed by peer.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+                    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    u_long n = 0;
+                    ioctlsocket(fd, FIONREAD, &n);
+#else
                     int n = 0;
                     ioctl(fd, FIONREAD, &n);
+#endif
                     if(n == 0)
                     {
                         //no data received, or fd is closed
                         continue;
                     }
-#endif
+
                     if( ! parseCommand(fd) )
                     {
                         to_remove.push_back(fd);
