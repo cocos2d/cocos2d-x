@@ -203,8 +203,10 @@ void Audio::StopBackgroundMusic(bool bReleaseData)
 
     StopSoundEffect(m_backgroundID);
 
-    if (bReleaseData)
+    if (bReleaseData){
         UnloadSoundEffect(m_backgroundID);
+        RemoveFromList(m_backgroundID);
+    }
 }
 
 void Audio::PauseBackgroundMusic()
@@ -406,7 +408,8 @@ void Audio::PauseAllSoundEffects()
     EffectList::iterator iter;
 	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
 	{
-        PauseSoundEffect(iter->first);
+        if (iter->first != m_backgroundID)
+            PauseSoundEffect(iter->first);
 	}
 }
 
@@ -419,11 +422,12 @@ void Audio::ResumeAllSoundEffects()
     EffectList::iterator iter;
 	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
 	{
-        ResumeSoundEffect(iter->first);
+        if (iter->first != m_backgroundID)
+            ResumeSoundEffect(iter->first);
 	}
 }
 
-void Audio::StopAllSoundEffects()
+void Audio::StopAllSoundEffects(bool bReleaseData)
 {
     if (m_engineExperiencedCriticalError) {
         return;
@@ -432,8 +436,27 @@ void Audio::StopAllSoundEffects()
     EffectList::iterator iter;
 	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
 	{
-        StopSoundEffect(iter->first);
+        if (iter->first != m_backgroundID){
+            StopSoundEffect(iter->first);
+            if (bReleaseData)
+            {
+                UnloadSoundEffect(iter->first);  
+            }            
+        }
 	}
+    if (bReleaseData)
+    {
+        for (iter = m_soundEffects.begin(); iter != m_soundEffects.end();)
+        {
+            if (iter->first != m_backgroundID){                
+                m_soundEffects.erase(iter++);
+            }
+            else
+            {
+                iter++;
+            }
+        }
+    }  
 }
 
 bool Audio::IsSoundEffectStarted(unsigned int sound)
@@ -556,6 +579,8 @@ void Audio::UnloadSoundEffect(const char* pszFilePath)
     int sound = Hash(pszFilePath);
 
     UnloadSoundEffect(sound);
+
+    RemoveFromList(sound);
 }
 
 void Audio::UnloadSoundEffect(unsigned int sound)
@@ -576,6 +601,9 @@ void Audio::UnloadSoundEffect(unsigned int sound)
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;
 	m_soundEffects[sound].m_soundEffectStarted = false;
     ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
+}
 
+void Audio::RemoveFromList( unsigned int sound )
+{
     m_soundEffects.erase(sound);
 }
