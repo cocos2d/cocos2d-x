@@ -19,6 +19,7 @@ actions/CCActionGrid.cpp \
 actions/CCActionGrid3D.cpp \
 actions/CCActionInstant.cpp \
 actions/CCActionInterval.cpp \
+actions/CCActionIntervalForJs.cpp \
 actions/CCActionManager.cpp \
 actions/CCActionPageTurn3D.cpp \
 actions/CCActionProgressTimer.cpp \
