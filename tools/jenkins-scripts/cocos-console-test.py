@@ -137,7 +137,8 @@ def getAndroidDevices():
 	del arrDevices[0]
 	count = 0
 	for device in arrDevices:
-		if len(device) > 0:
+		# e.g: emulator-5554	device, contains 'device', so, min length is len('device')
+		if len(device) > len('device') and (device.find('device') >= 0):
 			count += 1
 	return count
 
@@ -207,6 +208,7 @@ def cocos_project(level):
 						appendToResult('	'+cmd +': ' + str(not info_cmd) + ".\n\r\t")
 				else:
 					if runSupport[curPlat][phone]:
+						print 'in desploy or run:', phone, getAndroidDevices()
 						if phone == 'android' and getAndroidDevices() == 0:
 							strInfo = 'no android device, please checkout the device is running ok.'
 							print strInfo

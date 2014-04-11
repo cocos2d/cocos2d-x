@@ -102,7 +102,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     menu->setPosition(Point(s.width/2, s.height-65));
     addChild(menu, 1);
 
-    auto infoLabel = Label::create("0 nodes", "fonts/Marker Felt.ttf", 30);
+    auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
@@ -136,7 +136,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     menuAutoTest->addChild(autoTestItem);
     addChild( menuAutoTest, 3, kTagAutoTestMenu );
     
-    _title = Label::create(title().c_str(), "fonts/arial.ttf", 32);
+    _title = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(_title, 1);
     _title->setPosition(Point(s.width/2, s.height-50));
 
@@ -194,7 +194,7 @@ void LabelMainScene::onIncrease(Ref* sender)
     case kCaseLabelTTFUpdate:
         for( int i=0;i< kNodesIncrease;i++)
         {
-            auto label = Label::create("LabelTTF", "Marker Felt", 30);
+            auto label = Label::createWithSystemFont("LabelTTF", "Marker Felt", 30);
             label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 

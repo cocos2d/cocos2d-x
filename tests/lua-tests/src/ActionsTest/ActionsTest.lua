@@ -184,7 +184,7 @@ local function ActionRotationalSkewVSStandardSkew()
     box:ignoreAnchorPointForPosition(false);
     box:setPosition(cc.p(s.width/2, s.height - 100 - box:getContentSize().height/2));
     layer:addChild(box);
-    local label = cc.Label:create("Standard cocos2d Skew", s_MarkerFeltFontPath, 16);
+    local label = cc.Label:create("Standard cocos2d Skew", s_markerFeltFontPath, 16);
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(s.width/2, s.height - 100 + label:getContentSize().height));
     layer:addChild(label);
@@ -200,7 +200,7 @@ local function ActionRotationalSkewVSStandardSkew()
     box:ignoreAnchorPointForPosition(false);
     box:setPosition(cc.p(s.width/2, s.height - 250 - box:getContentSize().height/2));
     layer:addChild(box);
-    label = cc.Label:create("Rotational Skew", s_MarkerFeltFontPath, 16);
+    label = cc.Label:create("Rotational Skew", s_markerFeltFontPath, 16);
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(s.width/2, s.height - 250 + label:getContentSize().height/2));
     layer:addChild(label);
@@ -590,7 +590,7 @@ end
 local actionSequenceLayer = nil
 
 local function ActionSequenceCallback1()
-	local label = cc.Label:create("callback 1 called", s_MarkerFeltFontPath, 16)
+	local label = cc.Label:create("callback 1 called", s_markerFeltFontPath, 16)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4, size.height / 2)
 
@@ -598,7 +598,7 @@ local function ActionSequenceCallback1()
 end
 
 local function ActionSequenceCallback2(sender)
-	local label = cc.Label:create("callback 2 called", s_MarkerFeltFontPath, 16)
+	local label = cc.Label:create("callback 2 called", s_markerFeltFontPath, 16)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(size.width / 4 * 2, size.height / 2))
 
@@ -606,7 +606,7 @@ local function ActionSequenceCallback2(sender)
 end
 
 local function ActionSequenceCallback3(sender)
-	local label = cc.Label:create("callback 3 called", s_MarkerFeltFontPath, 16)
+	local label = cc.Label:create("callback 3 called", s_markerFeltFontPath, 16)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(size.width / 4 * 3, size.height / 2))
 
@@ -789,7 +789,7 @@ end
 local callFuncLayer = nil
 
 local function CallFucnCallback1()
-	local label = cc.Label:create("callback 1 called", s_MarkerFeltFontPath, 16)
+	local label = cc.Label:create("callback 1 called", s_markerFeltFontPath, 16)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4, size.height / 2)
 
@@ -797,7 +797,7 @@ local function CallFucnCallback1()
 end
 
 local function CallFucnCallback2(sender)
-	local label = cc.Label:create("callback 2 called", s_MarkerFeltFontPath, 16)
+	local label = cc.Label:create("callback 2 called", s_markerFeltFontPath, 16)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4 * 2, size.height / 2)
 
@@ -805,7 +805,7 @@ local function CallFucnCallback2(sender)
 end
 
 local function CallFucnCallback3(sender)
-	local label = cc.Label:create("callback 3 called", s_MarkerFeltFontPath, 16)
+	local label = cc.Label:create("callback 3 called", s_markerFeltFontPath, 16)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4 * 3, size.height / 2)
 

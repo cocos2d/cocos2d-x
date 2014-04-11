@@ -24,14 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
+#include "CCSprite.h"
 #include "CCSpriteBatchNode.h"
-#include <string.h>
-#include <algorithm>
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
 #include "ccConfig.h"
-#include "CCSprite.h"
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
 #include "CCTextureCache.h"
@@ -52,9 +49,10 @@ THE SOFTWARE.
 // external
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
+#include "deprecated/CCString.h"
 
-
-using namespace std;
+#include <string.h>
+#include <algorithm>
 
 NS_CC_BEGIN
 

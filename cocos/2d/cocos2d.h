@@ -59,19 +59,11 @@ THE SOFTWARE.
 
 // cocoa
 #include "CCAffineTransform.h"
-#include "CCDictionary.h"
 #include "CCRef.h"
-#include "CCArray.h"
 #include "CCVector.h"
 #include "CCMap.h"
 #include "CCGeometry.h"
-#include "CCSet.h"
 #include "CCAutoreleasePool.h"
-#include "CCInteger.h"
-#include "CCFloat.h"
-#include "CCDouble.h"
-#include "CCBool.h"
-#include "CCString.h"
 #include "CCNS.h"
 #include "CCData.h"
 #include "CCValue.h"
@@ -96,6 +88,7 @@ THE SOFTWARE.
 #include "CCLabelTTF.h"
 #include "CCLabelBMFont.h"
 #include "CCLabel.h"
+#include "CCFontFNT.h"
 
 // layers_scenes_transitions_nodes
 #include "CCLayer.h"
@@ -230,7 +223,6 @@ THE SOFTWARE.
 
 // support
 #include "ccUTF8.h"
-#include "CCNotificationCenter.h"
 #include "CCProfiling.h"
 #include "CCConsole.h"
 #include "CCUserDefault.h"
@@ -277,7 +269,18 @@ THE SOFTWARE.
 #include "CCComponentContainer.h"
 
 // Deprecated include
-#include "CCDeprecated.h"
+#include "deprecated/CCDictionary.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCSet.h"
+#include "deprecated/CCInteger.h"
+#include "deprecated/CCFloat.h"
+#include "deprecated/CCDouble.h"
+#include "deprecated/CCBool.h"
+#include "deprecated/CCString.h"
+#include "deprecated/CCNotificationCenter.h"
+// CCDeprecated.h must be included at the end
+#include "deprecated/CCDeprecated.h"
+
 
 NS_CC_BEGIN
 

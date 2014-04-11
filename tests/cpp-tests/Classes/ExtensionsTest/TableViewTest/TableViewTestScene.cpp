@@ -80,7 +80,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
         sprite->setPosition(Point(0, 0));
         cell->addChild(sprite);
 
-        auto label = Label::create(string->getCString(), "Helvetica", 20.0);
+        auto label = Label::createWithSystemFont(string->getCString(), "Helvetica", 20.0);
         label->setPosition(Point::ZERO);
 		label->setAnchorPoint(Point::ZERO);
         label->setTag(123);

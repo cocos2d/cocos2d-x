@@ -34,6 +34,8 @@ THE SOFTWARE.
 #include "ccCArray.h"
 #include "CCDirector.h"
 
+#include "deprecated/CCString.h" // For StringUtils::format
+
 NS_CC_BEGIN
 
 

@@ -31,7 +31,6 @@
 
 #include "ccMacros.h"
 #include "CCAffineTransform.h"
-#include "CCArray.h"
 #include "CCGL.h"
 #include "ccGLStateCache.h"
 #include "CCGLProgram.h"

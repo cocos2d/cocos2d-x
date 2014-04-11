@@ -39,10 +39,10 @@ ControlSlider::ControlSlider()
 , _maximumValue(0.0f)
 , _minimumAllowedValue(0.0f)
 , _maximumAllowedValue(0.0f)
-, _thumbSprite(NULL)
-, _selectedThumbSprite(NULL)
-, _progressSprite(NULL)
-, _backgroundSprite(NULL)
+, _thumbSprite(nullptr)
+, _selectedThumbSprite(nullptr)
+, _progressSprite(nullptr)
+, _backgroundSprite(nullptr)
 {
 
 }

@@ -68,17 +68,17 @@ void RenderQueue::sort()
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
-    if(index < _queueNegZ.size())
+    if(index < static_cast<ssize_t>(_queueNegZ.size()))
         return _queueNegZ[index];
 
     index -= _queueNegZ.size();
 
-    if(index < _queue0.size())
+    if(index < static_cast<ssize_t>(_queue0.size()))
         return _queue0[index];
 
     index -= _queue0.size();
 
-    if(index < _queuePosZ.size())
+    if(index < static_cast<ssize_t>(_queuePosZ.size()))
         return _queuePosZ[index];
 
     CCASSERT(false, "invalid index");

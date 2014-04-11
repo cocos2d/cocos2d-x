@@ -160,7 +160,7 @@ void ArmatureTestLayer::onEnter()
     // add title and subtitle
     std::string str = title();
     const char *pTitle = str.c_str();
-    auto label = Label::create(pTitle, "fonts/arial.ttf", 18);
+    auto label = Label::createWithTTF(pTitle, "fonts/arial.ttf", 18);
     label->setColor(Color3B::BLACK);
     addChild(label, 1, 10000);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
@@ -168,7 +168,7 @@ void ArmatureTestLayer::onEnter()
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        auto l = Label::create(strSubtitle.c_str(), "fonts/arial.ttf", 18);
+        auto l = Label::createWithTTF(strSubtitle.c_str(), "fonts/arial.ttf", 18);
         l->setColor(Color3B::BLACK);
         addChild(l, 1, 10001);
         l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
@@ -703,7 +703,7 @@ void TestUseMutiplePicture::onEnter()
     // 		armature->getBone("weapon")->addDisplay(&displayData, i);
     // 	}
 
-    auto l = Label::create("This is a weapon!", "fonts/arial.ttf", 18);
+    auto l = Label::createWithTTF("This is a weapon!", "fonts/arial.ttf", 18);
     l->setAnchorPoint(Point(0.2f, 0.5f));
     armature->getBone("weapon")->addDisplay(l, 7);
 }
@@ -1280,7 +1280,7 @@ void TestArmatureNesting2::onEnter()
 
     touchedMenu = false;
 
-    auto label = Label::create("Change Mount", "fonts/arial.ttf", 20);
+    auto label = Label::createWithTTF("Change Mount", "fonts/arial.ttf", 20);
     MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::changeMountCallback, this));
 
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
@@ -1469,6 +1469,7 @@ void TestChangeAnimationInternal::onEnter()
 void TestChangeAnimationInternal::onExit()
 {
     Director::getInstance()->setAnimationInterval(1/60.0f);
+    ArmatureTestLayer::onExit();
 }
 std::string TestChangeAnimationInternal::title() const
 {

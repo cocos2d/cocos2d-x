@@ -77,28 +77,7 @@ public:
      The file will be loaded using the TextureMgr.
      */
     static SpriteBatchNode* create(const std::string& fileImage, ssize_t capacity = DEFAULT_CAPACITY);
-    /**
-     * @js ctor
-     */
-    SpriteBatchNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~SpriteBatchNode();
 
-    /** initializes a SpriteBatchNode with a texture2d and capacity of children.
-     The capacity will be increased in 33% in runtime if it run out of space.
-     */
-    bool initWithTexture(Texture2D *tex, ssize_t capacity);
-    /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
-     The capacity will be increased in 33% in runtime if it run out of space.
-     The file will be loaded using the TextureMgr.
-     * @js init
-     * @lua init
-     */
-    bool initWithFile(const std::string& fileImage, ssize_t capacity);
-    bool init();
 
     /** returns the TextureAtlas object */
     inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
@@ -176,6 +155,31 @@ public:
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
     SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
+    
+CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js ctor
+     */
+    SpriteBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~SpriteBatchNode();
+    
+    /** initializes a SpriteBatchNode with a texture2d and capacity of children.
+     The capacity will be increased in 33% in runtime if it run out of space.
+     */
+    bool initWithTexture(Texture2D *tex, ssize_t capacity);
+    /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
+     The capacity will be increased in 33% in runtime if it run out of space.
+     The file will be loaded using the TextureMgr.
+     * @js init
+     * @lua init
+     */
+    bool initWithFile(const std::string& fileImage, ssize_t capacity);
+    bool init();
+    
 protected:
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.

@@ -19,14 +19,14 @@
 -- @param #unsigned int int
         
 --------------------------------
--- @function [parent=#Label] getFontSize 
--- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
 -- @function [parent=#Label] getString 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Label] getHeight 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 -- @function [parent=#Label] disableEffect 
@@ -46,11 +46,6 @@
 -- @function [parent=#Label] setWidth 
 -- @param self
 -- @param #unsigned int int
-        
---------------------------------
--- @function [parent=#Label] setFontName 
--- @param self
--- @param #string str
         
 --------------------------------
 -- @function [parent=#Label] getMaxLineWidth 
@@ -73,9 +68,9 @@
 -- @param #string str
         
 --------------------------------
--- @function [parent=#Label] getHeight 
+-- @function [parent=#Label] setSystemFontName 
 -- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
+-- @param #string str
         
 --------------------------------
 -- @function [parent=#Label] setBMFontFilePath 
@@ -90,14 +85,9 @@
 -- @return FontAtlas#FontAtlas ret (return value: cc.FontAtlas)
         
 --------------------------------
--- @function [parent=#Label] getFontDefinition 
+-- @function [parent=#Label] setSystemFontSize 
 -- @param self
--- @return FontDefinition#FontDefinition ret (return value: cc.FontDefinition)
-        
---------------------------------
--- @function [parent=#Label] getFontName 
--- @param self
--- @return string#string ret (return value: string)
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Label] updateContent 
@@ -150,14 +140,19 @@
 -- @param #unsigned int int
         
 --------------------------------
+-- @function [parent=#Label] getSystemFontName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- @function [parent=#Label] setVerticalAlignment 
 -- @param self
 -- @param #cc.TextVAlignment textvalignment
         
 --------------------------------
--- @function [parent=#Label] setFontSize 
+-- @function [parent=#Label] getTTFConfig 
 -- @param self
--- @param #float float
+-- @return _ttfConfig#_ttfConfig ret (return value: cc._ttfConfig)
         
 --------------------------------
 -- @function [parent=#Label] getVerticalAlignment 
@@ -191,6 +186,11 @@
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
+-- @function [parent=#Label] getSystemFontSize 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- @function [parent=#Label] getTextAlignment 
 -- @param self
 -- @return TextHAlignment#TextHAlignment ret (return value: cc.TextHAlignment)
@@ -204,11 +204,6 @@
 -- @function [parent=#Label] setHorizontalAlignment 
 -- @param self
 -- @param #cc.TextHAlignment texthalignment
-        
---------------------------------
--- @function [parent=#Label] setFontDefinition 
--- @param self
--- @param #cc.FontDefinition fontdefinition
         
 --------------------------------
 -- overload function: setAlignment(cc.TextHAlignment, cc.TextVAlignment)
@@ -231,20 +226,10 @@
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
--- overload function: create(string, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
---          
--- overload function: create()
---          
--- @function [parent=#Label] create
+-- @function [parent=#Label] create 
 -- @param self
--- @param #string str
--- @param #string str
--- @param #float float
--- @param #size_table size
--- @param #cc.TextHAlignment texthalignment
--- @param #cc.TextVAlignment textvalignment
--- @return Label#Label ret (retunr value: cc.Label)
-
+-- @return Label#Label ret (return value: cc.Label)
+        
 --------------------------------
 -- overload function: createWithCharMap(cc.Texture2D, int, int, int)
 --          
@@ -261,10 +246,14 @@
 -- @return Label#Label ret (retunr value: cc.Label)
 
 --------------------------------
--- @function [parent=#Label] createWithFontDefinition 
+-- @function [parent=#Label] createWithSystemFont 
 -- @param self
 -- @param #string str
--- @param #cc.FontDefinition fontdefinition
+-- @param #string str
+-- @param #float float
+-- @param #size_table size
+-- @param #cc.TextHAlignment texthalignment
+-- @param #cc.TextVAlignment textvalignment
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------

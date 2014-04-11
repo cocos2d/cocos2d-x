@@ -52,8 +52,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-extern const ssize_t CC_INVALID_INDEX;
-
 // Easy integration
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
 __object__=__array__->arr[0]; for(ssize_t i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
