@@ -26,7 +26,7 @@
 #ifndef _ACTIONS__PROGRESS_TEST_H_
 #define _ACTIONS__PROGRESS_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class SpriteDemo : public BaseTest
@@ -96,6 +96,7 @@ public:
 class ProgressActionsTestScene : public TestScene
 {
 public:
+    ProgressActionsTestScene();
     virtual void runThisTest();
 };
 

@@ -1,12 +1,13 @@
 #ifndef _EFFECTS_TEST_H_
 #define _EFFECTS_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class EffectTestScene : public TestScene
 {
 public:
+    EffectTestScene();
     virtual void runThisTest();
 };
 

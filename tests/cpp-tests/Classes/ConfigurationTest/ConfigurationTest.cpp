@@ -40,6 +40,11 @@ static Layer* restartAction()
     return layer;
 }
 
+ConfigurationTestScene::ConfigurationTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void ConfigurationTestScene::runThisTest()
 {
     sceneIdx = -1;

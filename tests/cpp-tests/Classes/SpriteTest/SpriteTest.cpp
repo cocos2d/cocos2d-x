@@ -3734,13 +3734,6 @@ std::string SpriteBatchBug1217::subtitle() const
 }
 
 
-void SpriteTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
 
 //
 // SpriteOffsetAnchorSkew
@@ -4995,3 +4988,24 @@ std::string SpriteCullTest2::subtitle() const
 {
     return "Look at the GL calls";
 }
+
+
+//------------------------------------------------------------------
+//
+// SpriteTestScene
+//
+//------------------------------------------------------------------
+
+SpriteTestScene::SpriteTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
+void SpriteTestScene::runThisTest()
+{
+    auto layer = nextSpriteTestAction();
+    addChild(layer);
+
+    Director::getInstance()->replaceScene(this);
+}
+

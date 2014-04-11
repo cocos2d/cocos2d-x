@@ -264,15 +264,7 @@ void TestController::addConsoleAutoTest()
             Scheduler *sched = Director::getInstance()->getScheduler();
             if(args == "help" || args == "-h")
             {
-                const char msg[] = "usage: autotest ActionsTest\n\tavailable tests: ";
-                send(fd, msg, sizeof(msg),0);
-                send(fd, "\n",1,0);
-                for(int i = 0; i < g_testCount; i++)
-                {
-                    send(fd, "\t",1,0);
-                    send(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1,0);
-                    send(fd, "\n",1,0);
-                }
+ 
                 const char help_main[] = "\tmain, return to main menu\n";
                 send(fd, help_main, sizeof(help_main),0);
 
@@ -284,8 +276,25 @@ void TestController::addConsoleAutoTest()
                 
                 const char help_restart[] = "\trestart, restart current test\n";
                 send(fd, help_restart, sizeof(help_restart),0);
+
+                const char help_list[] = "\tlist, list available tests";
+                send(fd, help_list, sizeof(help_list), 0);
+
+                const char help_count[] = "\t calculate total tests";
+                send(fd, help_count, sizeof(help_count), 0);
                 return;
             }
+            if(args == "list")
+            {
+                send(fd, "\n",1,0);
+                for(int i = 0; i < g_testCount; i++)
+                {
+                    send(fd, "\t",1,0);
+                    send(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1,0);
+                    send(fd, "\n",1,0);
+                }
+            }
+
             if(args == "main")
             {
                 

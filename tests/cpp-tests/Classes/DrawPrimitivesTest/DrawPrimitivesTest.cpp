@@ -321,6 +321,11 @@ string DrawNodeTest::subtitle() const
     return "Testing DrawNode - batched draws. Concave polygons are BROKEN";
 }
 
+DrawPrimitivesTestScene::DrawPrimitivesTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void DrawPrimitivesTestScene::runThisTest()
 {
     auto layer = nextAction();

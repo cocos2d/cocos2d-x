@@ -2,7 +2,7 @@
 #define _PHYSICS_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 #include <map>

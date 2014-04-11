@@ -112,6 +112,10 @@ static Layer* restartAction()
     auto layer = (createFunctions[sceneIdx])();
     return layer;
 }
+ActionsTestScene::ActionsTestScene()
+{
+    _testCount = MAX_LAYER;
+}
 
 void ActionsTestScene::runThisTest()
 {
@@ -121,7 +125,11 @@ void ActionsTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-
+//------------------------------------------------------------------
+//
+// ActionDemo
+//
+//------------------------------------------------------------------
 std::string ActionsDemo::title() const
 {
     return "ActionsTest";

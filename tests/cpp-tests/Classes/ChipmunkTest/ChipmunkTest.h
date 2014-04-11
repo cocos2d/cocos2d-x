@@ -6,7 +6,7 @@
 
 #include "cocos2d.h"
 #include "chipmunk.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "extensions/cocos-ext.h"
 
 USING_NS_CC_EXT;

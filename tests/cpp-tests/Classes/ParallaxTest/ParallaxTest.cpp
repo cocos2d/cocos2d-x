@@ -326,6 +326,11 @@ void ParallaxDemo::backCallback(Ref* sender)
     s->release();
 } 
 
+ParallaxTestScene::ParallaxTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void ParallaxTestScene::runThisTest()
 {
     auto layer = nextParallaxAction();

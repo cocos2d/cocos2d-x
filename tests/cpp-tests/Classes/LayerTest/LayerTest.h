@@ -2,7 +2,7 @@
 #define _LAYER_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class LayerTest : public BaseTest
@@ -218,6 +218,7 @@ private:
 class LayerTestScene : public TestScene
 {
 public:
+    LayerTestScene();
     virtual void runThisTest();
 };
 

@@ -1,6 +1,6 @@
 #ifndef _SHADER_TEST2_H_
 #define _SHADER_TEST2_H_
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 
@@ -20,6 +20,7 @@ class ShaderTestScene2 : public TestScene
 {
 public:
     CREATE_FUNC(ShaderTestScene2);
+    ShaderTestScene2();
     virtual void runThisTest();
 };
 

@@ -164,6 +164,10 @@ void FontTest::restartCallback(Ref* sender)
 // DirectorTestScene
 // 
 ///---------------------------------------
+FontTestScene::FontTestScene()
+{
+    _testCount = fontCount;
+}
 void FontTestScene::runThisTest()
 {
     auto layer = FontTest::create();

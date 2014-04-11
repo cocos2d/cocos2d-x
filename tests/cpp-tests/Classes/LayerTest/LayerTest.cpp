@@ -57,6 +57,21 @@ static Layer* restartAction()
     return layer;
 }
 
+LayerTestScene::LayerTestScene()
+{
+  _testCount = MAX_LAYER;
+}
+
+void LayerTestScene::runThisTest()
+{
+    sceneIdx = -1;
+    auto layer = nextAction();
+    addChild(layer);
+
+    Director::getInstance()->replaceScene(this);
+}
+
+
 //------------------------------------------------------------------
 //
 // LayerTest
@@ -821,15 +836,6 @@ std::string LayerIgnoreAnchorPointScale::title() const
 std::string LayerIgnoreAnchorPointScale::subtitle() const
 {
     return "Ignoring Anchor Point for scale";
-}
-
-void LayerTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    auto layer = nextAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()

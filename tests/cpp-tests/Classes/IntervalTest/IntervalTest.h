@@ -1,7 +1,7 @@
 #ifndef _INTERVAL_TEST_H_
 #define _INTERVAL_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class IntervalLayer : public Layer
 {

@@ -328,6 +328,11 @@ ActionInterval* getAction()
     return pEffect;
 } 
 
+EffectTestScene::EffectTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void EffectTestScene::runThisTest()
 {
     addChild(TextLayer::create());

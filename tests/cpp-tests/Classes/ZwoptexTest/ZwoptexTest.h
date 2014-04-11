@@ -1,7 +1,7 @@
 #ifndef __ZWOPTEX_TEST_H__
 #define __ZWOPTEX_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class ZwoptexTest : public BaseTest
@@ -37,6 +37,7 @@ protected:
 class ZwoptexTestScene : public TestScene
 {
 public:
+    ZwoptexTestScene();
     virtual void runThisTest();
 
     CREATE_FUNC(ZwoptexTestScene);

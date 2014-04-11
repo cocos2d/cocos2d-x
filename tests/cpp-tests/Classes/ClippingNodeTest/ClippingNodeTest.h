@@ -1,7 +1,7 @@
 #ifndef __CLIPPINGNODETEST_H__
 #define __CLIPPINGNODETEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 #include <list>
@@ -225,7 +225,7 @@ class ClippingNodeTestScene : public TestScene
 {
 public:
     CREATE_FUNC(ClippingNodeTestScene);
-
+    ClippingNodeTestScene();
     virtual void runThisTest();
 };
 

@@ -109,6 +109,11 @@ Layer* restartAtlasActionNew()
     return layer;
 }
 
+AtlasTestSceneNew::AtlasTestSceneNew()
+{
+    _testCount = MAX_LAYER;
+}
+
 void AtlasTestSceneNew::runThisTest()
 {
     sceneIdx = -1;

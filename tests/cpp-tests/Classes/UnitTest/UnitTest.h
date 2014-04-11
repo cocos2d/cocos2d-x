@@ -1,12 +1,13 @@
 #ifndef __UNIT_TEST__
 #define __UNIT_TEST__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class UnitTestScene : public TestScene
 {
 public:
+    UnitTestScene();
     virtual void runThisTest() override;
 };
 

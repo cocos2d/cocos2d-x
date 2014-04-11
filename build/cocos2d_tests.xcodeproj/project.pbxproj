@@ -595,8 +595,6 @@
 		1AC35C4E18CECF0C00F37B72 /* SpineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AF218CECF0C00F37B72 /* SpineTest.cpp */; };
 		1AC35C4F18CECF0C00F37B72 /* SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AF518CECF0C00F37B72 /* SpriteTest.cpp */; };
 		1AC35C5018CECF0C00F37B72 /* SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AF518CECF0C00F37B72 /* SpriteTest.cpp */; };
-		1AC35C5118CECF0C00F37B72 /* testBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AF718CECF0C00F37B72 /* testBasic.cpp */; };
-		1AC35C5218CECF0C00F37B72 /* testBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AF718CECF0C00F37B72 /* testBasic.cpp */; };
 		1AC35C5318CECF0C00F37B72 /* TextInputTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AFC18CECF0C00F37B72 /* TextInputTest.cpp */; };
 		1AC35C5418CECF0C00F37B72 /* TextInputTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AFC18CECF0C00F37B72 /* TextInputTest.cpp */; };
 		1AC35C5518CECF0C00F37B72 /* Texture2dTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AFF18CECF0C00F37B72 /* Texture2dTest.cpp */; };
@@ -843,6 +841,10 @@
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		D82D88B518F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
+		D82D88B618F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
+		D82D88B718F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
+		D82D88B818F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -1709,8 +1711,6 @@
 		1AC35AF318CECF0C00F37B72 /* SpineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineTest.h; sourceTree = "<group>"; };
 		1AC35AF518CECF0C00F37B72 /* SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteTest.cpp; sourceTree = "<group>"; };
 		1AC35AF618CECF0C00F37B72 /* SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteTest.h; sourceTree = "<group>"; };
-		1AC35AF718CECF0C00F37B72 /* testBasic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testBasic.cpp; sourceTree = "<group>"; };
-		1AC35AF818CECF0C00F37B72 /* testBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBasic.h; sourceTree = "<group>"; };
 		1AC35AF918CECF0C00F37B72 /* testResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testResource.h; sourceTree = "<group>"; };
 		1AC35AFA18CECF0C00F37B72 /* tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tests.h; sourceTree = "<group>"; };
 		1AC35AFC18CECF0C00F37B72 /* TextInputTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextInputTest.cpp; sourceTree = "<group>"; };
@@ -1867,6 +1867,8 @@
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		D82D88B318F78C480075929C /* testScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testScene.cpp; sourceTree = "<group>"; };
+		D82D88B418F78C480075929C /* testScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testScene.h; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -2206,6 +2208,8 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D82D88B318F78C480075929C /* testScene.cpp */,
+				D82D88B418F78C480075929C /* testScene.h */,
 				1AC3592518CECF0A00F37B72 /* AccelerometerTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
@@ -2259,8 +2263,6 @@
 				1AC35AEC18CECF0C00F37B72 /* ShaderTest */,
 				1AC35AF118CECF0C00F37B72 /* SpineTest */,
 				1AC35AF418CECF0C00F37B72 /* SpriteTest */,
-				1AC35AF718CECF0C00F37B72 /* testBasic.cpp */,
-				1AC35AF818CECF0C00F37B72 /* testBasic.h */,
 				1AC35AF918CECF0C00F37B72 /* testResource.h */,
 				1AC35AFA18CECF0C00F37B72 /* tests.h */,
 				1AC35AFB18CECF0C00F37B72 /* TextInputTest */,
@@ -4488,6 +4490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82D88B618F78C480075929C /* testScene.cpp in Sources */,
 				1AC358C218CEC1BF00F37B72 /* HelloWorldScene.cpp in Sources */,
 				1AC358C018CEC1BF00F37B72 /* AppDelegate.cpp in Sources */,
 				1AC358F918CEC1D400F37B72 /* main.cpp in Sources */,
@@ -4509,6 +4512,7 @@
 			files = (
 				1AC358DA18CEC1CB00F37B72 /* AppController.mm in Sources */,
 				1AC358EB18CEC1CB00F37B72 /* RootViewController.mm in Sources */,
+				D82D88B818F78C480075929C /* testScene.cpp in Sources */,
 				1AC358C318CEC1BF00F37B72 /* HelloWorldScene.cpp in Sources */,
 				1AC358EA18CEC1CB00F37B72 /* main.m in Sources */,
 				1AC358C118CEC1BF00F37B72 /* AppDelegate.cpp in Sources */,
@@ -4608,7 +4612,6 @@
 				1AC35BDB18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
 				1AC35B8718CECF0C00F37B72 /* CustomGUIScene.cpp in Sources */,
 				1AC35B4B18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
-				1AC35C5118CECF0C00F37B72 /* testBasic.cpp in Sources */,
 				1AC35B7918CECF0C00F37B72 /* EnemyController.cpp in Sources */,
 				1AC35B6B18CECF0C00F37B72 /* CocosBuilderTest.cpp in Sources */,
 				1AC35B4118CECF0C00F37B72 /* QuestionContainerSprite.cpp in Sources */,
@@ -4671,6 +4674,7 @@
 				1AC35C1B18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */,
 				1AC35B8318CECF0C00F37B72 /* CocosGUIScene.cpp in Sources */,
 				1AC35C2D18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp in Sources */,
+				D82D88B518F78C480075929C /* testScene.cpp in Sources */,
 				1AC35BDD18CECF0C00F37B72 /* acts.cpp in Sources */,
 				1AC35B7518CECF0C00F37B72 /* ArmatureScene.cpp in Sources */,
 				1AC35B8D18CECF0C00F37B72 /* CustomImageView.cpp in Sources */,
@@ -4784,7 +4788,6 @@
 				1AC35BDC18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
 				1AC35B8818CECF0C00F37B72 /* CustomGUIScene.cpp in Sources */,
 				1AC35B4C18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
-				1AC35C5218CECF0C00F37B72 /* testBasic.cpp in Sources */,
 				1AC35B7A18CECF0C00F37B72 /* EnemyController.cpp in Sources */,
 				1AC35B6C18CECF0C00F37B72 /* CocosBuilderTest.cpp in Sources */,
 				1AC35B4218CECF0C00F37B72 /* QuestionContainerSprite.cpp in Sources */,
@@ -4824,6 +4827,7 @@
 				1AC35BF418CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
 				1AC35BC218CECF0C00F37B72 /* UIScrollViewTest_Editor.cpp in Sources */,
 				1AC35BB218CECF0C00F37B72 /* UIPageViewTest.cpp in Sources */,
+				D82D88B718F78C480075929C /* testScene.cpp in Sources */,
 				1AC35B3618CECF0C00F37B72 /* TestEntries.cpp in Sources */,
 				1AC35B2E18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				1AC35C1218CECF0C00F37B72 /* LabelTestNew.cpp in Sources */,

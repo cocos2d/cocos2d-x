@@ -244,6 +244,10 @@ TransitionScene* createTransition(int index, float t, Scene* s)
     return transitions[index].function(t,s);
 }
 
+TransitionsTestScene::TransitionsTestScene()
+{
+    _testCount = MAX_LAYER;
+}
 
 void TransitionsTestScene::runThisTest()
 {

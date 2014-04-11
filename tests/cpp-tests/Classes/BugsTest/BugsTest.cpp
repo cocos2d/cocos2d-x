@@ -136,6 +136,11 @@ void BugsTestBaseLayer::backCallback(Ref* sender)
 // BugsTestScene
 //
 ////////////////////////////////////////////////////////
+BugsTestScene::BugsTestScene()
+{
+    _testCount = g_maxitems;
+}
+
 void BugsTestScene::runThisTest()
 {
     auto layer = new BugsTestMainLayer();

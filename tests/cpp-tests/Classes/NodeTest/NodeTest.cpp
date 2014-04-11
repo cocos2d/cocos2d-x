@@ -1144,6 +1144,12 @@ std::string CameraTest2::subtitle() const
 ///
 /// main
 ///
+
+CocosNodeTestScene::CocosNodeTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void CocosNodeTestScene::runThisTest()
 {
     auto layer = nextCocosNodeAction();

@@ -27,7 +27,7 @@
 #define _NODE_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class TestCocosNodeDemo : public BaseTest
@@ -272,6 +272,7 @@ protected:
 class CocosNodeTestScene : public TestScene
 {
 public:
+    CocosNodeTestScene();
     virtual void runThisTest();
 };
 

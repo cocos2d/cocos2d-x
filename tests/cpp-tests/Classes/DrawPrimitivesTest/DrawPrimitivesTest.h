@@ -2,7 +2,7 @@
 #define _DRAW_PRIMITIVES_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 #include <string>
@@ -46,6 +46,7 @@ public:
 class DrawPrimitivesTestScene : public TestScene
 {
 public:
+    DrawPrimitivesTestScene();
     virtual void runThisTest();
 };
 

@@ -69,6 +69,11 @@ Layer* restartAction()
 
 }
 
+EventDispatcherTestScene::EventDispatcherTestScene()
+{
+    _testCount = TEST_CASE_COUNT;
+}
+
 void EventDispatcherTestScene::runThisTest()
 {
     auto layer = nextAction();

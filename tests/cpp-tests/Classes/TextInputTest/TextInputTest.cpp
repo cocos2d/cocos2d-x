@@ -449,6 +449,11 @@ void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * node)
 // implement TextInputTestScene
 //////////////////////////////////////////////////////////////////////////
 
+TextInputTestScene::TextInputTestScene()
+{
+    _testCount = kTextInputTestsCount;
+}
+
 void TextInputTestScene::runThisTest()
 {
     auto layer = nextTextInputTest();

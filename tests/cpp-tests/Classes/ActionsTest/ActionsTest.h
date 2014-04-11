@@ -26,7 +26,7 @@
 #ifndef _ActionsTest_H_
 #define _ActionsTest_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 ////----#include "cocos2d.h"
 
@@ -39,6 +39,7 @@ USING_NS_CC;
 class ActionsTestScene : public TestScene
 {
 public:
+    ActionsTestScene();
     virtual void runThisTest();
 };
 

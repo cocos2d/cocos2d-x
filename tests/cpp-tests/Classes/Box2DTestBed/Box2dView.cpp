@@ -290,6 +290,10 @@ void Box2DView::onKeyReleased(EventKeyboard::KeyCode code, Event* event)
 //     //}
 // } 
 
+Box2dTestBedScene::Box2dTestBedScene()
+{
+    _testCount = g_totalEntries;
+}
 
 void Box2dTestBedScene::runThisTest()
 {

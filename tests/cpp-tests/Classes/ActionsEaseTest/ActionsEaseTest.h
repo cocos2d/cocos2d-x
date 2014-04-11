@@ -27,7 +27,7 @@
 #define _ACTIONS__EASE_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 USING_NS_CC;
@@ -232,6 +232,7 @@ public:
 class ActionsEaseTestScene : public TestScene
 {
 public:
+    ActionsEaseTestScene();
     virtual void runThisTest();
 };
 

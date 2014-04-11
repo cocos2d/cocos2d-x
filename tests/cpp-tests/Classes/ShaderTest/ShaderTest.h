@@ -1,7 +1,7 @@
 #ifndef _SHADER_TEST_H_
 #define _SHADER_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 
@@ -140,6 +140,7 @@ protected:
 class ShaderTestScene : public TestScene
 {
 public:
+    ShaderTestScene();
     virtual void runThisTest();
 };
 

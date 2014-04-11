@@ -881,6 +881,10 @@ void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
 }
 
 //#endif // COCOS2D_DEBUG > 1
+ClippingNodeTestScene::ClippingNodeTestScene()
+{
+    _testCount = MAX_LAYER;
+}
 
 void ClippingNodeTestScene::runThisTest()
 {

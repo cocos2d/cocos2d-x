@@ -37,6 +37,11 @@ static Layer* restartAction()
     return layer;
 }
 
+UnitTestScene::UnitTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void UnitTestScene::runThisTest()
 {
     sceneIdx = -1;

@@ -1,7 +1,7 @@
 #ifndef _ACTION_MANAGER_TEST_H_
 #define _ACTION_MANAGER_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class ActionManagerTest: public BaseTest
@@ -65,6 +65,7 @@ public:
 class ActionManagerTestScene : public TestScene
 {
 public:
+    ActionManagerTestScene();
     virtual void runThisTest();
 };
 

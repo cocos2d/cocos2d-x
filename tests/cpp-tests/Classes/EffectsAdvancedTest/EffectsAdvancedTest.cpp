@@ -412,6 +412,11 @@ void EffectAdvanceTextLayer::backCallback(Ref* sender)
     s->release();
 } 
 
+EffectAdvanceScene::EffectAdvanceScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void EffectAdvanceScene::runThisTest()
 {
     auto layer = nextEffectAdvanceAction();

@@ -253,6 +253,11 @@ void MotionStreakTest::backCallback(Ref* sender)
     s->release();
 } 
 
+MotionStreakTestScene::MotionStreakTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void MotionStreakTestScene::runThisTest()
 {
     auto layer = nextMotionAction();

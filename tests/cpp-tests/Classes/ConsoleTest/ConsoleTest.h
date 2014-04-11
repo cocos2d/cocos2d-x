@@ -26,7 +26,7 @@
 #define _CONSOLE_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 USING_NS_CC;
@@ -90,6 +90,7 @@ private:
 class ConsoleTestScene : public TestScene
 {
 public:
+    ConsoleTestScene();
     virtual void runThisTest();
 };
 

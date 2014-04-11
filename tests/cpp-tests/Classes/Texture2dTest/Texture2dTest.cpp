@@ -1870,17 +1870,7 @@ std::string TextureDrawInRect::subtitle() const
     return "draws 2 textures using drawInRect";
 }
 
-//------------------------------------------------------------------
-//
-// TextureTestScene
-//
-//------------------------------------------------------------------
-void TextureTestScene::runThisTest()
-{
-    auto layer = nextTextureTest();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
-}
+
 
 //------------------------------------------------------------------
 //
@@ -2355,3 +2345,21 @@ std::string TextureConvertAI88::subtitle() const
 {
     return "RGBA8888,RGB888,RGB565,A8,I8,AI88,RGBA4444,RGB5A1";
 }
+
+//------------------------------------------------------------------
+//
+// TextureTestScene
+//
+//------------------------------------------------------------------
+
+TextureTestScene::TextureTestScene()
+{
+    _testCount = TEST_CASE_COUNT;
+}
+void TextureTestScene::runThisTest()
+{
+    auto layer = nextTextureTest();
+    addChild(layer);
+    Director::getInstance()->replaceScene(this);
+}
+

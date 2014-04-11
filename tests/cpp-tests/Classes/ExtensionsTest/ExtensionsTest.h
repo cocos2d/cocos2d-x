@@ -1,7 +1,7 @@
 #ifndef __EXTENSIONS_TEST_H__
 #define __EXTENSIONS_TEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class ExtensionsMainLayer : public Layer
 {
@@ -23,6 +23,7 @@ protected:
 class ExtensionsTestScene : public TestScene
 {
 public:
+	ExtensionsTestScene();
     virtual void runThisTest();
 };
 

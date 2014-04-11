@@ -10,7 +10,7 @@ LOCAL_SRC_FILES := \
 Classes/AppDelegate.cpp \
 Classes/BaseTest.cpp \
 Classes/controller.cpp \
-Classes/testBasic.cpp \
+Classes/testScene.cpp \
 Classes/VisibleRect.cpp \
 Classes/AccelerometerTest/AccelerometerTest.cpp \
 Classes/ActionManagerTest/ActionManagerTest.cpp \

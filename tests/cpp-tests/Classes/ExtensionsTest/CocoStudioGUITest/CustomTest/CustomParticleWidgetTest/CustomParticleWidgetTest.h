@@ -11,7 +11,7 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "../../../../testBasic.h"
+#include "../../../../testScene.h"
 
 class CustomParticleWidgetLayer : public cocos2d::Layer
 {

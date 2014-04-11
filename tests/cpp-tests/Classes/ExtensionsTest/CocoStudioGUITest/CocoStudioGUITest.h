@@ -3,7 +3,7 @@
 #ifndef __TestCpp__CocoStudioGUITest__
 #define __TestCpp__CocoStudioGUITest__
 
-#include "../../testBasic.h"
+#include "../../testScene.h"
 
 class CocoStudioGUIMainLayer : public Layer
 {

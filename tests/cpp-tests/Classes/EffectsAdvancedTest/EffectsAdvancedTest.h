@@ -2,7 +2,7 @@
 #define _EFFECT_ADVANCED_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 class EffectAdvanceTextLayer: public BaseTest
@@ -75,6 +75,7 @@ public:
 class EffectAdvanceScene : public TestScene
 {
 public:
+    EffectAdvanceScene();
     virtual void runThisTest();
 };
 

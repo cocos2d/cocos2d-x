@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "../../VisibleRect.h"
-#include "../../testBasic.h"
+#include "../../testScene.h"
 #include "cocostudio/CocoStudio.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

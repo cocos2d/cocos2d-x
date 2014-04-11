@@ -1,7 +1,7 @@
 #ifndef _ACCELEROMETER_TEST_H_
 #define _ACCELEROMETER_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 USING_NS_CC;
 
@@ -24,6 +24,7 @@ public:
 class AccelerometerTestScene : public TestScene
 {
 public:
+	AccelerometerTestScene();
     virtual void runThisTest();
 };
 

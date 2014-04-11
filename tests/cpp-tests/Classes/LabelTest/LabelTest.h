@@ -1,7 +1,7 @@
 #ifndef _ATLAS_TEST_H_
 #define _ATLAS_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -218,7 +218,7 @@ class AtlasTestScene : public TestScene
 {
 public:
     CREATE_FUNC(AtlasTestScene);
-
+    AtlasTestScene();
     virtual void runThisTest();
 };
 

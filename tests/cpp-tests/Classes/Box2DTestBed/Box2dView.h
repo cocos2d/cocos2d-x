@@ -2,7 +2,7 @@
 #define _BOX2D_VIEW_H_
 
 //#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "renderer/CCCustomCommand.h"
 
 class MenuLayer : public Layer
@@ -63,6 +63,7 @@ protected:
 class Box2dTestBedScene : public TestScene
 {
 public:
+    Box2dTestBedScene();
     virtual void runThisTest();
 };
 

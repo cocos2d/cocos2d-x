@@ -174,7 +174,7 @@ set(SAMPLE_SRC
   Classes/ConsoleTest/ConsoleTest.cpp
   Classes/UnitTest/UnitTest.cpp
   Classes/controller.cpp
-  Classes/testBasic.cpp
+  Classes/testScene.cpp
   Classes/AppDelegate.cpp
   Classes/BaseTest.cpp
   Classes/VisibleRect.cpp

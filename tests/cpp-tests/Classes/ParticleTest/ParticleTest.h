@@ -1,7 +1,7 @@
 #ifndef _PARTICLE_TEST_H_
 #define _PARTICLE_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 ////----#include "cocos2d.h"
 // #include "event_dispatcher/CCTouch.h"
@@ -10,6 +10,7 @@
 class ParticleTestScene : public TestScene
 {
 public:
+    ParticleTestScene();
     virtual void runThisTest();
 };
 

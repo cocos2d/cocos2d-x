@@ -1,7 +1,7 @@
 #ifndef __MUTITOUCHTEST_H__
 #define __MUTITOUCHTEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class MutiTouchTestLayer : public Layer
 {

@@ -1,7 +1,7 @@
 #ifndef __CONFIGURATIONTEST_H__
 #define __CONFIGURATIONTEST_H__
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 USING_NS_CC;
@@ -13,6 +13,7 @@ USING_NS_CC;
 class ConfigurationTestScene : public TestScene
 {
 public:
+    ConfigurationTestScene();
     virtual void runThisTest();
 };
 

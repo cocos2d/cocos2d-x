@@ -2,7 +2,7 @@
 #define _KEYBOARD_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class KeyboardTest : public Layer
 {

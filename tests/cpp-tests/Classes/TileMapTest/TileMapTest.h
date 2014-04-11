@@ -1,7 +1,7 @@
 #ifndef _TILEMAP_TEST_H_
 #define _TILEMAP_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 
@@ -303,6 +303,7 @@ protected:
 class TileMapTestScene : public TestScene
 {
 public:
+    TileMapTestScene();
     virtual void runThisTest();
 };
 

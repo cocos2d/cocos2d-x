@@ -65,7 +65,9 @@ PhysicsTestScene::PhysicsTestScene()
 : TestScene()
 #endif
 , _debugDraw(false)
-{}
+{
+    _testCount = MAX_LAYER;
+}
 
 void PhysicsTestScene::runThisTest()
 {

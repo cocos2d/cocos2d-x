@@ -1,7 +1,7 @@
 #ifndef _CLICK_AND_MOVE_TEST_H_
 #define _CLICK_AND_MOVE_TEST_H_
 
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class ClickAndMoveTestScene : public TestScene
 {

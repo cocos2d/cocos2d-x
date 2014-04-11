@@ -153,6 +153,11 @@ void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
     node->setPosition(currentPos + diff);
 }
 
+TileMapTestScene::TileMapTestScene()
+{
+    _testCount = MAX_LAYER;
+}
+
 void TileMapTestScene::runThisTest()
 {
     auto layer = nextTileMapAction();

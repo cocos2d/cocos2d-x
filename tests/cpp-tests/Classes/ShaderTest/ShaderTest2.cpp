@@ -82,6 +82,11 @@ void ShaderTestDemo2::restartCallback(Ref* sender)
     Director::getInstance()->replaceScene(s);
 }
 
+ShaderTestScene2::ShaderTestScene2()
+{
+    _testCount = ShaderTest2::TEST_CASE_COUNT;
+}
+
 void ShaderTestScene2::runThisTest()
 {
     auto layer = ShaderTest2::nextAction();

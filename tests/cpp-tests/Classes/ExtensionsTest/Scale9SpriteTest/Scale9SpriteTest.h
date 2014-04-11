@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "testBasic.h"
+#include "testScene.h"
 #include "BaseTest.h"
 
 

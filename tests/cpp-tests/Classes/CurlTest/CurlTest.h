@@ -2,7 +2,7 @@
 #define _CURL_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class CurlTest : public Layer
 {

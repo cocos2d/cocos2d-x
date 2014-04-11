@@ -8,7 +8,7 @@
 #define __NewRendererTest_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 #include "../BaseTest.h"
 
 #define kTagSpriteBatchNode 100
@@ -18,6 +18,7 @@
 class NewRendererTestScene : public TestScene
 {
 public:
+    NewRendererTestScene();
     virtual void runThisTest();
 };
 

@@ -2,7 +2,7 @@
 #define __MOUSE_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../testScene.h"
 
 class MouseTest : public Layer
 {
