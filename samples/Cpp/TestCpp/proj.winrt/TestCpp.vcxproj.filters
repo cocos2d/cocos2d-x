@@ -765,6 +765,7 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -1400,6 +1401,7 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1410,6 +1412,10 @@
     <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\D3Dcompiler_46.dll">
       <Filter>Common</Filter>
     </None>
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\libEGL.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\libGLESv2.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\libEGL.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\libGLESv2.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\WideLogo.png">
