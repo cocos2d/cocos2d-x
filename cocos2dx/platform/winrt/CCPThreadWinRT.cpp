@@ -23,28 +23,94 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCPThreadWinRT.h"
+#include <algorithm>
 
 
 NS_CC_BEGIN
 
-void pthread_mutex_init(pthread_mutex_t* m, void* attributes) {
-	*m = CreateMutexEx(NULL,FALSE,0,NULL);
+void pthread_mutex_init(pthread_mutex_t* m, void* attributes) 
+{
 }
 
 int pthread_mutex_lock(pthread_mutex_t* m) {
-	return WaitForSingleObjectEx(*m,INFINITE,FALSE);
-}
+    m->lock();
+    return 0;}
 
 int pthread_mutex_unlock(pthread_mutex_t* m) {
-	return ReleaseMutex(*m);
+    m->unlock();
+    return 0;
 }
 
 void pthread_mutex_destroy(pthread_mutex_t* m) 
 {
-	if(m)
-	{
-		CloseHandle(*m);
-	}
+
+}
+
+int pthread_detach(pthread_t thread)
+{
+    if(!thread || !thread->joinable())
+    {
+        return -1;
+    }
+
+    thread->detach();
+    return 0;
+}
+
+int pthread_join(pthread_t thread, void** ret)
+{
+    if(!thread || !thread->joinable())
+    {
+        return -1;
+    }
+
+    thread->join();
+    *ret = 0;
+    return 0;
+}
+
+int pthread_attr_init(pthread_attr_t *attr)
+{
+    if(attr)
+    {
+        attr->foo = 0;
+    }
+    return 0;
+
+}
+
+void pthread_exit(void *value_ptr)
+{
+
+
+}
+
+void Sleep(DWORD dwMilliseconds)
+{
+    static HANDLE singletonEvent = nullptr;
+
+    HANDLE sleepEvent = singletonEvent;
+
+    // Demand create the event.
+    if (!sleepEvent)
+    {
+        sleepEvent = CreateEventEx(nullptr, nullptr, CREATE_EVENT_MANUAL_RESET, EVENT_ALL_ACCESS);
+
+        if (!sleepEvent)
+            return;
+
+        HANDLE previousEvent = InterlockedCompareExchangePointerRelease(&singletonEvent, sleepEvent, nullptr);
+            
+        if (previousEvent)
+        {
+            // Back out if multiple threads try to demand create at the same time.
+            CloseHandle(sleepEvent);
+            sleepEvent = previousEvent;
+        }
+    }
+
+    // Emulate sleep by waiting with timeout on an event that is never signalled.
+    WaitForSingleObjectEx(sleepEvent, dwMilliseconds, false);
 }
 
 
