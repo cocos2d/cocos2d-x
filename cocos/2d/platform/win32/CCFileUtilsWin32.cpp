@@ -131,8 +131,13 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 
 static Data getData(const std::string& filename, bool forString)
 {
+    if (filename.empty())
+    {
+        return Data::Null;
+    }
+
     unsigned char *buffer = nullptr;
-    CCASSERT(!filename.empty(), "Invalid parameters.");
+
     size_t size = 0;
     do
     {
@@ -195,6 +200,7 @@ std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
 	{
 		return "";
 	}
+
     std::string ret((const char*)data.getBytes());
     return ret;
 }

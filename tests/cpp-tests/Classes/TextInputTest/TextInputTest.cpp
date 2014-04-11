@@ -371,7 +371,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const 
     }
 
     // create a insert text sprite and do some action
-    auto label = Label::create(text, FONT_NAME, FONT_SIZE);
+    auto label = Label::createWithSystemFont(text, FONT_NAME, FONT_SIZE);
     this->addChild(label);
     Color3B color(226, 121, 7);
     label->setColor(color);
@@ -404,7 +404,7 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const 
 bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen)
 {
     // create a delete text sprite and do some action
-    auto label = Label::create(delText, FONT_NAME, FONT_SIZE);
+    auto label = Label::createWithSystemFont(delText, FONT_NAME, FONT_SIZE);
     this->addChild(label);
 
     // move the sprite to fly out

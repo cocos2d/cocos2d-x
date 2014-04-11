@@ -68,12 +68,11 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     self = [super init];
     
-    do
+    if (self)
     {
-        if (self == nil) break;
         editState_ = NO;
         self.textField = [[[CCCustomUITextField alloc] initWithFrame: frameRect] autorelease];
-        if (!textField_) break;
+
         [textField_ setTextColor:[UIColor whiteColor]];
         textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
 		textField_.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -84,13 +83,9 @@ static const int CC_EDIT_BOX_PADDING = 5;
 		textField_.returnKeyType = UIReturnKeyDefault;
         [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
         self.editBox = editBox;
-        
-		
-        
-        return self;
-    }while(0);
+    }
     
-    return nil;
+    return self;
 }
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
@@ -273,10 +268,10 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 
 EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 : EditBoxImpl(pEditText)
-, _label(NULL)
-, _labelPlaceHolder(NULL)
+, _label(nullptr)
+, _labelPlaceHolder(nullptr)
 , _anchorPoint(Point(0.5f, 0.5f))
-, _systemControl(NULL)
+, _systemControl(nullptr)
 , _maxTextLength(-1)
 {
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
@@ -395,10 +390,10 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 		[_systemControl.textField setFont:textFont];
     }
 
-	_label->setFontName(pFontName);
-	_label->setFontSize(fontSize);
-	_labelPlaceHolder->setFontName(pFontName);
-	_labelPlaceHolder->setFontSize(fontSize);
+	_label->setSystemFontName(pFontName);
+	_label->setSystemFontSize(fontSize);
+	_labelPlaceHolder->setSystemFontName(pFontName);
+	_labelPlaceHolder->setSystemFontSize(fontSize);
 }
 
 void EditBoxImplIOS::setFontColor(const Color3B& color)

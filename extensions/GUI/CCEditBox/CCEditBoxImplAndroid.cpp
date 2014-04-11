@@ -41,8 +41,8 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 
 EditBoxImplAndroid::EditBoxImplAndroid(EditBox* pEditText)
 : EditBoxImpl(pEditText)
-, _label(NULL)
-, _labelPlaceHolder(NULL)
+, _label(nullptr)
+, _labelPlaceHolder(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
 , _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
@@ -69,7 +69,7 @@ bool EditBoxImplAndroid::initWithSize(const Size& size)
 {
     int fontSize = getFontSizeAccordingHeightJni(size.height-12);
     _label = Label::create();
-    _label->setFontSize(size.height-12);
+    _label->setSystemFontSize(size.height-12);
 	// align the text vertically center
     _label->setAnchorPoint(Point(0, 0.5f));
     _label->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
@@ -77,7 +77,7 @@ bool EditBoxImplAndroid::initWithSize(const Size& size)
     _editBox->addChild(_label);
 	
     _labelPlaceHolder = Label::create();
-    _labelPlaceHolder->setFontSize(size.height-12);
+    _labelPlaceHolder->setSystemFontSize(size.height-12);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
     _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
@@ -92,13 +92,13 @@ bool EditBoxImplAndroid::initWithSize(const Size& size)
 void EditBoxImplAndroid::setFont(const char* pFontName, int fontSize)
 {
 	if(_label != NULL) {
-		_label->setFontName(pFontName);
-		_label->setFontSize(fontSize);
+		_label->setSystemFontName(pFontName);
+		_label->setSystemFontSize(fontSize);
 	}
 	
 	if(_labelPlaceHolder != NULL) {
-		_labelPlaceHolder->setFontName(pFontName);
-		_labelPlaceHolder->setFontSize(fontSize);
+		_labelPlaceHolder->setSystemFontName(pFontName);
+		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }
 
@@ -111,8 +111,8 @@ void EditBoxImplAndroid::setFontColor(const Color3B& color)
 void EditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)
 {
 	if(_labelPlaceHolder != NULL) {
-		_labelPlaceHolder->setFontName(pFontName);
-		_labelPlaceHolder->setFontSize(fontSize);
+		_labelPlaceHolder->setSystemFontName(pFontName);
+		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }
 

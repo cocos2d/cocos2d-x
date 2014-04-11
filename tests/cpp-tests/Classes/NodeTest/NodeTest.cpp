@@ -729,7 +729,7 @@ void CameraCenterTest::onEnter()
 
 void CameraCenterTest::onExit()
 {
-    TestCocosNodeDemo::onEnter();
+    TestCocosNodeDemo::onExit();
     Director::getInstance()->setProjection(_preProjection);
 }
 

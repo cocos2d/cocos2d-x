@@ -3,7 +3,7 @@
 KeyboardTest::KeyboardTest()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = Label::create("Keyboard Test", "fonts/arial.ttf", 28);
+    auto label = Label::createWithTTF("Keyboard Test", "fonts/arial.ttf", 28);
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
@@ -14,7 +14,7 @@ KeyboardTest::KeyboardTest()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // create a label to display the tip string
-    _label = Label::create("Please press any key and see console log...", "fonts/arial.ttf", 22);
+    _label = Label::createWithTTF("Please press any key and see console log...", "fonts/arial.ttf", 22);
     _label->setPosition(Point(s.width / 2, s.height / 2));
     addChild(_label, 0);
     

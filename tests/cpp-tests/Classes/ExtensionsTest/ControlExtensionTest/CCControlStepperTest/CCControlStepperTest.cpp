@@ -26,7 +26,7 @@
 #include "CCControlStepperTest.h"
 
 ControlStepperTest::ControlStepperTest()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
 
 }
@@ -54,7 +54,7 @@ bool ControlStepperTest::init()
         background->setPosition(Point(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);
         
-        this->setDisplayValueLabel(Label::create("0", "HelveticaNeue-Bold", 30));
+        this->setDisplayValueLabel(Label::createWithSystemFont("0", "HelveticaNeue-Bold", 30));
 
         _displayValueLabel->setPosition(background->getPosition());
         layer->addChild(_displayValueLabel);

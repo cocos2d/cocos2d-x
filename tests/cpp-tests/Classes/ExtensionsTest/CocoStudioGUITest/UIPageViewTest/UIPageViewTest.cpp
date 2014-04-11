@@ -5,7 +5,7 @@
 
 // UIPageViewTest
 UIPageViewTest::UIPageViewTest()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }

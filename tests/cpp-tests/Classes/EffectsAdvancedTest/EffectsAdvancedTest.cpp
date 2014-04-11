@@ -146,7 +146,7 @@ public:
 private:
 
     Lens3DTarget()
-        : _lens3D(NULL)
+        : _lens3D(nullptr)
     {}
 
     Lens3D* _lens3D;

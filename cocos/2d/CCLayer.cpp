@@ -46,7 +46,7 @@ THE SOFTWARE.
 #include "CCScene.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

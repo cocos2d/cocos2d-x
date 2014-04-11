@@ -6,7 +6,7 @@ USING_NS_CC_EXT;
 using namespace cocosbuilder;
 
 TimelineCallbackTestLayer::TimelineCallbackTestLayer()
-: _helloLabel(NULL)
+: _helloLabel(nullptr)
 {}
 
 TimelineCallbackTestLayer::~TimelineCallbackTestLayer()

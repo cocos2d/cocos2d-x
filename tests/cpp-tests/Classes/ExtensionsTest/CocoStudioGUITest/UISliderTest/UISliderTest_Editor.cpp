@@ -6,7 +6,7 @@
 // UISliderTest_Editor
 
 UISliderTest_Editor::UISliderTest_Editor()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }
