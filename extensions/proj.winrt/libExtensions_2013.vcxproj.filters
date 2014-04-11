@@ -324,9 +324,6 @@
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp">
       <Filter>GUI\CCScrollView</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\HttpClient.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\CCArmature.cpp">
       <Filter>CocoStudio\Armature</Filter>
     </ClCompile>
@@ -553,6 +550,7 @@
     <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWinrt.cpp">
       <Filter>GUI\CCEditBox</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -760,15 +758,6 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h">
       <Filter>GUI\CCScrollView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpClient.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpRequest.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpResponse.h">
-      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\CCArmature.h">
       <Filter>CocoStudio\Armature</Filter>
@@ -1041,5 +1030,6 @@
     <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWinrt.h">
       <Filter>GUI\CCEditBox</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
 </Project>
