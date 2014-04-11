@@ -18,7 +18,7 @@
 
 #include "Audio.h"
 #include "MediaStreamer.h"
-//#include "CCCommon.h"
+#include <string>
 
 inline void ThrowIfFailed(HRESULT hr)
 {
@@ -497,10 +497,19 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
         return;
     }
 
+    std::string path(pszFilePath);
+
+	// no MP3 support for CC_PLATFORM_WP8
+	std::string::size_type pos = path.find(".mp3");
+	if (pos  != path.npos)
+	{
+		path.replace(pos, path.length(), ".wav");
+	}
+
     int sound = Hash(pszFilePath);
 
 	MediaStreamer mediaStreamer;
-	mediaStreamer.Initialize(CCUtf8ToUnicode(pszFilePath).c_str());
+	mediaStreamer.Initialize(CCUtf8ToUnicode(path.c_str()).c_str());
 	m_soundEffects[sound].m_soundID = sound;	
 	
 	uint32 bufferLength = mediaStreamer.GetMaxStreamLengthInBytes();
