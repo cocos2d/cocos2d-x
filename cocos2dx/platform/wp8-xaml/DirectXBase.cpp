@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "DirectXBase.h"
+#include "DirectXHelper.h"
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -38,6 +39,7 @@ DirectXBase::DirectXBase()
     , m_eglContext(nullptr)
     , m_eglWindow(nullptr)
     , m_eglPhoneWindow(nullptr)
+    , m_device(nullptr)
 {
 }
 
@@ -51,16 +53,25 @@ void DirectXBase::CreateDeviceResources()
 {
 }
 
+void DirectXBase::SetDevice(ID3D11Device1* device)
+{
+    if(m_device)
+    {
+        m_device->Release();
+        m_device = nullptr;
+    }
+
+    m_device = nullptr;
+}
+
 void DirectXBase::UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView)
 {
-    m_d3dContext = context;
-    m_d3dRenderTargetView = renderTargetView;
-    m_featureLevel = device->GetFeatureLevel();
-
-    if (m_d3dDevice.Get() != device)
+    if (m_device != device)
     {
         CloseAngle();
-        m_d3dDevice = device;
+        device->AddRef();
+        m_device = device;
+
         CreateDeviceResources();
 
         // Force call to CreateWindowSizeDependentResources
@@ -68,8 +79,11 @@ void DirectXBase::UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* cont
         m_renderTargetSize.Height = -1;
     }
 
+    m_featureLevel = device->GetFeatureLevel();
+
+
     ComPtr<ID3D11Resource> renderTargetViewResource;
-    m_d3dRenderTargetView->GetResource(&renderTargetViewResource);
+    renderTargetView->GetResource(&renderTargetViewResource);
 
     ComPtr<ID3D11Texture2D> backBuffer;
     DX::ThrowIfFailed(
@@ -90,12 +104,12 @@ void DirectXBase::UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* cont
 
     if(!m_bAngleInitialized)
     {
-        InitializeAngle();
+        InitializeAngle(device, context, renderTargetView);
         CreateGLResources();
     }
     else
     {
-        m_eglPhoneWindow->Update(WINRT_EGL_IUNKNOWN(m_d3dDevice.Get()), WINRT_EGL_IUNKNOWN(m_d3dContext.Get()), WINRT_EGL_IUNKNOWN(m_d3dRenderTargetView.Get()));
+        m_eglPhoneWindow->Update(device, context, renderTargetView);
     }
 
     OnUpdateDevice();
@@ -154,6 +168,7 @@ void DirectXBase::Render()
 
 void DirectXBase::CloseAngle()
 {
+
 	if(m_eglDisplay && m_eglSurface)
     {
         eglDestroySurface(m_eglDisplay, m_eglSurface);
@@ -172,13 +187,29 @@ void DirectXBase::CloseAngle()
         m_eglDisplay = nullptr;
     }
 
+    if(m_eglPhoneWindow != nullptr)
+    {
+         m_eglPhoneWindow->Update(nullptr, nullptr, nullptr);
+    }
+
+    eglMakeCurrent(NULL, NULL, NULL, NULL);
+
+    if(m_device)
+    {
+        m_device->Release();
+        m_device = nullptr;
+    }
+
+#if 0
     m_eglPhoneWindow = nullptr;
-    m_eglWindow = nullptr;
+    m_eglWindow = nullptr;  
+#endif // 0
+
 
     m_bAngleInitialized = false;
 }
 
-bool DirectXBase::InitializeAngle()
+bool DirectXBase::InitializeAngle(ID3D11Device1* d3dDevice, ID3D11DeviceContext1* d3dContext, ID3D11RenderTargetView* d3dRenderTargetView)
 {
 	// setup EGL
 	EGLint configAttribList[] = {
@@ -223,15 +254,24 @@ bool DirectXBase::InitializeAngle()
 		break;
 	}		
 
-	DX::ThrowIfFailed(
-        CreateWinPhone8XamlWindow(&m_eglPhoneWindow)
-        );
+    if(m_eglPhoneWindow == nullptr)
+    {
+	    DX::ThrowIfFailed(
+            CreateWinPhone8XamlWindow(&m_eglPhoneWindow)
+            );
+    }
 
-    m_eglPhoneWindow->Update(WINRT_EGL_IUNKNOWN(m_d3dDevice.Get()), WINRT_EGL_IUNKNOWN(m_d3dContext.Get()), WINRT_EGL_IUNKNOWN(m_d3dRenderTargetView.Get()));
+    m_eglPhoneWindow->Update(d3dDevice, d3dContext, d3dRenderTargetView);
 
- 	DX::ThrowIfFailed(
-        CreateWinrtEglWindow(WINRT_EGL_IUNKNOWN(m_eglPhoneWindow.Get()), featureLevel, m_eglWindow.GetAddressOf())
+    ComPtr<IUnknown> u;
+    HRESULT r = m_eglPhoneWindow.As(&u);
+
+    if(m_eglWindow == nullptr)
+    { 	DX::ThrowIfFailed(
+        CreateWinrtEglWindow(u.Get(), featureLevel, m_eglWindow.GetAddressOf())
         );
+    }
+
 
 	display = eglGetDisplay(m_eglWindow);
 	if(display == EGL_NO_DISPLAY){
