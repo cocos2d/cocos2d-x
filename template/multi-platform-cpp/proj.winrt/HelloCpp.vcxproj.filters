@@ -61,6 +61,10 @@
     <None Include="HelloCpp_TemporaryKey.pfx" />
     <None Include="..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\D3Dcompiler_46.dll" />
     <None Include="..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\D3Dcompiler_46.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\libEGL.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\Win32\libGLESv2.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\libEGL.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2012\ARM\libGLESv2.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
