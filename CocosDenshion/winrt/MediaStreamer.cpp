@@ -105,11 +105,11 @@ void MediaStreamer::Initialize(__in const WCHAR* url)
         m_reader->GetPresentationAttribute(MF_SOURCE_READER_MEDIASOURCE, MF_PD_DURATION, &var)
         );
     LONGLONG duration = var.uhVal.QuadPart;
-    double durationInSeconds = (duration / static_cast<double>(10000000)); // duration is in 100ns units, convert to seconds
-    m_maxStreamLengthInBytes = static_cast<unsigned int>(durationInSeconds * m_waveFormat.nAvgBytesPerSec);
+	double durationInSeconds = ceil(((double)duration / (double)(10000000))); // duration is in 100ns units, convert to seconds
+	m_maxStreamLengthInBytes = ((double)durationInSeconds * (double)m_waveFormat.nAvgBytesPerSec);
 
     // Round up the buffer size to the nearest four bytes
-    m_maxStreamLengthInBytes = (m_maxStreamLengthInBytes + 3) / 4 * 4;
+	m_maxStreamLengthInBytes = ((double)m_maxStreamLengthInBytes + ceil((double)3) / (double)4) * (double)4;
 }
 
 bool MediaStreamer::GetNextBuffer(uint8* buffer, uint32 maxBufferSize, uint32* bufferLength)

@@ -244,6 +244,9 @@
     <None Include="HelloCpp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\ipadhd\CloseNormal.png" />
+    <Image Include="..\Resources\ipadhd\CloseSelected.png" />
+    <Image Include="..\Resources\ipadhd\HelloWorld.png" />
     <Image Include="Assets\Logo.png" />
     <Image Include="Assets\SmallLogo.png" />
     <Image Include="Assets\StoreLogo.png" />
