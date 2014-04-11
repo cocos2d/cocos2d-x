@@ -14,6 +14,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
+    virtual void onExit()override;
 
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
