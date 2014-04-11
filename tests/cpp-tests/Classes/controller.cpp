@@ -410,8 +410,8 @@ void TestController::addConsoleAutoTest()
                     //send end information.
                     if ( i == g_testCount-1 )
                     {
-                        std::string strEnd = "TestEnd" 
-                        send(fd, strEnd.c_str(), strlen(strEnd.c_str()), 0)
+                        std::string strEnd = "TestEnd";
+                        send(fd, strEnd.c_str(), strEnd.length(), 0);
                     }
                 }
                 return;
