@@ -1412,9 +1412,7 @@
     <Xml Include="WMAppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libcurl.dll" />
     <None Include="..\..\..\..\external\libwebsockets\wp8\lib\x86\libwebsockets.dll" />
-    <None Include="..\..\..\..\external\libwebsockets\wp8\lib\arm\libwebsockets.dll" />
     <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libeay32.dll" />
     <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\ssleay32.dll" />
     <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libeay32.dll" />
@@ -1423,5 +1421,8 @@
     <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libGLESv2_phone.dll" />
     <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libEGL_phone.dll" />
     <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libGLESv2_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libcurl.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libcurl.dll" />
+    <None Include="..\..\..\..\external\libwebsockets\wp8\lib\arm\libwebsockets.dll" />
   </ItemGroup>
 </Project>
