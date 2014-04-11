@@ -489,6 +489,7 @@
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\kazmath\include\kazmath\GL\mat4stack.h">
@@ -955,5 +956,6 @@
     <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
 </Project>
