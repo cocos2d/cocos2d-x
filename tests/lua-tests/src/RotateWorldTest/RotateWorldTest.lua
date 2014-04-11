@@ -54,7 +54,7 @@ local function CreateTestLayer()
     x = size.width
     y = size.height
 
-    local label = cc.Label:create("cocos2d", s_tahomaPath, 64)
+    local label = cc.Label:createWithTTF("cocos2d", s_tahomaPath, 64)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(x / 2, y / 2)
     layer:addChild(label)

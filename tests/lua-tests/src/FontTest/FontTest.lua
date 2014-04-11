@@ -37,12 +37,12 @@ local function showFont(ret, pFont)
     ret:removeChildByTag(kTagLabel3, true)
     ret:removeChildByTag(kTagLabel4, true)
 
-    local top = cc.Label:create(pFont, pFont, 24)
-    local left = cc.Label:create("alignment left", pFont, fontSize,
+    local top = cc.Label:createWithSystemFont(pFont, pFont, 24)
+    local left = cc.Label:createWithSystemFont("alignment left", pFont, fontSize,
                                    blockSize, cc.TEXT_ALIGNMENT_LEFT, verticalAlignment[vAlignIdx])
-    local center = cc.Label:create("alignment center", pFont, fontSize,
+    local center = cc.Label:createWithSystemFont("alignment center", pFont, fontSize,
                                      blockSize, cc.TEXT_ALIGNMENT_CENTER, verticalAlignment[vAlignIdx])
-    local right = cc.Label:create("alignment right", pFont, fontSize,
+    local right = cc.Label:createWithSystemFont("alignment right", pFont, fontSize,
                                     blockSize, cc.TEXT_ALIGNMENT_RIGHT, verticalAlignment[vAlignIdx])
 
     local leftColor = cc.LayerColor:create(cc.c4b(100, 100, 100, 255), blockSize.width, blockSize.height)
