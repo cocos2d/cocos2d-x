@@ -539,9 +539,8 @@ void RenderTexture::onBegin()
         // Calculate the adjustment ratios based on the old and new projections
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
-        kmMat4 orthoMatrix;
-        kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-            (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+        Matrix orthoMatrix;
+        Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
         director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
     }
     //calculate viewport
@@ -695,9 +694,8 @@ void RenderTexture::begin()
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
-        kmMat4 orthoMatrix;
-        kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-                                     (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+        Matrix orthoMatrix;
+        Matrix::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
         director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, orthoMatrix);
     }
 
