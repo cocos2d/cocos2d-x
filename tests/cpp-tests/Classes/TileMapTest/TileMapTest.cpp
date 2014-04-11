@@ -118,9 +118,9 @@ void TileDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void TileMapTestScene::onExit()
+void TileDemo::onExit()
 {
-    TileDemo::onExit();
+    BaseTest::onExit();
     Director::getInstance()->setDepthTest(false);
 }
 void TileDemo::restartCallback(Ref* sender)
