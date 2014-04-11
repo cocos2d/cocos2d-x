@@ -241,9 +241,9 @@ ClosestPointsNew(const struct MinkowskiPoint v0, const struct MinkowskiPoint v1)
 		return points;
 	} else {
 		cpFloat d2 = cpvlength(p);
-		cpVect n = cpvmult(p, 1.0f/(d2 + CPFLOAT_MIN));
+		cpVect n2 = cpvmult(p, 1.0f/(d2 + CPFLOAT_MIN));
 		
-		struct ClosestPoints points = {pa, pb, n, d2, id};
+		struct ClosestPoints points = {pa, pb, n2, d2, id};
 		return points;
 	}
 }
