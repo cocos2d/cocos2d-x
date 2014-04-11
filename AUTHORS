@@ -820,6 +820,9 @@ Developers:
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
+        
+    gaoxiaosong
+        Fixed a warning in cpCollision.c
     
 Retired Core Developers:
     WenSheng Yang

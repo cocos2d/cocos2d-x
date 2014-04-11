@@ -261,7 +261,8 @@ int Renderer::createRenderQueue()
 void Renderer::visitRenderQueue(const RenderQueue& queue)
 {
     ssize_t size = queue.size();
-    for (auto index = 0; index < size; ++index)
+    
+    for (ssize_t index = 0; index < size; ++index)
     {
         auto command = queue[index];
         auto commandType = command->getType();
