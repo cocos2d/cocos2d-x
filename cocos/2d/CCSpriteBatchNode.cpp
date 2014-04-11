@@ -27,9 +27,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCSpriteBatchNode.h"
-
-#include <algorithm>
-
 #include "ccConfig.h"
 #include "CCSprite.h"
 #include "CCGrid.h"
@@ -47,6 +44,10 @@ THE SOFTWARE.
 #include "renderer/CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
+
+#include "deprecated/CCString.h" // For StringUtils::format
+
+#include <algorithm>
 
 NS_CC_BEGIN
 

@@ -33,8 +33,8 @@ ControlPotentiometer::ControlPotentiometer()
 : _value(0.0f)
 , _minimumValue(0.0f)
 , _maximumValue(0.0f)
-, _thumbSprite(NULL)
-, _progressTimer(NULL)
+, _thumbSprite(nullptr)
+, _progressTimer(nullptr)
 {
 
 }

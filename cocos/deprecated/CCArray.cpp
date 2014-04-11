@@ -25,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCArray.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -37,7 +37,7 @@ NS_CC_BEGIN
 //  ----------------------------------------------------------------------------------
 
 __Array::__Array()
-: data(NULL)
+: data(nullptr)
 {
     init();
 }

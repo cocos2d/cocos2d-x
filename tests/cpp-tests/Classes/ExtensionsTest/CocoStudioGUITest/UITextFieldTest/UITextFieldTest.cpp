@@ -245,7 +245,7 @@ void UITextFieldTest_Password::textFieldEvent(Ref *pSender, TextFiledEventType t
 
 // UITextFieldTest_LineWrap
 UITextFieldTest_LineWrap::UITextFieldTest_LineWrap()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }

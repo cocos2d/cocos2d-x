@@ -71,7 +71,7 @@ void BaseTest::onEnter()
 void BaseTest::onExit()
 {
     AppDelegate* app = (AppDelegate *)Application::getInstance();
-    app->setCurrentTest(NULL);
+    app->setCurrentTest(nullptr);
 	Layer::onExit();
 }
 

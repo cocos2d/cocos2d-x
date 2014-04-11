@@ -6,7 +6,7 @@
 // UIButtonTest_Editor
 
 UIButtonTest_Editor::UIButtonTest_Editor()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }

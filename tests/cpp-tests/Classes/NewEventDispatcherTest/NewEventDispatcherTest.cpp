@@ -131,9 +131,11 @@ void TouchableSpriteTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
+    auto containerForSprite1 = Node::create();
     auto sprite1 = Sprite::create("Images/CyanSquare.png");
     sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 80));
-    addChild(sprite1, 10);
+    containerForSprite1->addChild(sprite1);
+    addChild(containerForSprite1, 10);
     
     auto sprite2 = Sprite::create("Images/MagentaSquare.png");
     sprite2->setPosition(origin+Point(size.width/2, size.height/2));
@@ -174,11 +176,11 @@ void TouchableSpriteTest::onEnter()
         target->setOpacity(255);
         if (target == sprite2)
         {
-            sprite1->setLocalZOrder(100);
+            containerForSprite1->setLocalZOrder(100);
         }
         else if(target == sprite1)
         {
-            sprite1->setLocalZOrder(0);
+            containerForSprite1->setLocalZOrder(0);
         }
     };
     
@@ -384,7 +386,7 @@ void RemoveListenerWhenDispatching::onEnter()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
     
-    auto statusLabel = Label::create("The sprite could be touched!", "", 20);
+    auto statusLabel = Label::createWithSystemFont("The sprite could be touched!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
     std::shared_ptr<bool> enable(new bool(true));
@@ -433,7 +435,7 @@ void CustomEventTest::onEnter()
     
     MenuItemFont::setFontSize(20);
     
-    auto statusLabel = Label::create("No custom event 1 received!", "", 20);
+    auto statusLabel = Label::createWithSystemFont("No custom event 1 received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height-90));
     addChild(statusLabel);
 
@@ -459,7 +461,7 @@ void CustomEventTest::onEnter()
     });
     sendItem->setPosition(origin + Point(size.width/2, size.height/2));
     
-    auto statusLabel2 = Label::create("No custom event 2 received!", "", 20);
+    auto statusLabel2 = Label::createWithSystemFont("No custom event 2 received!", "", 20);
     statusLabel2->setPosition(origin + Point(size.width/2, size.height-120));
     addChild(statusLabel2);
     
@@ -516,7 +518,7 @@ void LabelKeyboardEventTest::onEnter()
     Point origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
-    auto statusLabel = Label::create("No keyboard event received!", "", 20);
+    auto statusLabel = Label::createWithSystemFont("No keyboard event received!", "", 20);
     statusLabel->setPosition(origin + Point(size.width/2, size.height/2));
     addChild(statusLabel);
         
@@ -1189,7 +1191,7 @@ Issue4129::Issue4129()
 {
     _customlistener = _eventDispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
         
-        auto label = Label::create("Yeah, this issue was fixed.", "", 20);
+        auto label = Label::createWithSystemFont("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Point(0, 0.5f));
         label->setPosition(Point(VisibleRect::left()));
         this->addChild(label);

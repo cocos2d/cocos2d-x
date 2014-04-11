@@ -36,8 +36,8 @@ NS_CC_EXT_BEGIN
 ControlHuePicker::ControlHuePicker()
 : _hue(0.0f)
 , _huePercentage(0.0f)
-, _background(NULL)
-, _slider(NULL)
+, _background(nullptr)
+, _slider(nullptr)
 {
 
 }

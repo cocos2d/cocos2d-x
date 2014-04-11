@@ -763,6 +763,7 @@ Developers:
         
     wefiends
         s3tc compressed textures with no mipmaps fail to be loaded.
+        Added createWithFullscreen overloaded method that sets video mode
         
     floatinghotpot
         Fixed a bug that no callback is invoked when websocket connection fails
@@ -815,6 +816,10 @@ Developers:
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
+        Fixed a potential memory leak in CCEditBoxImplIOS.mm
+        
+    ololomax
+        Fixed a potential crash in SceneReader::createNodeWithSceneFile
     
 Retired Core Developers:
     WenSheng Yang
