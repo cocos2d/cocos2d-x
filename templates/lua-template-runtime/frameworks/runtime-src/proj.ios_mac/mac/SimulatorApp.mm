@@ -52,6 +52,11 @@ using namespace cocos2d;
 
 @synthesize menu;
 
+std::string getCurAppPath(void)
+{
+    return [[[NSBundle mainBundle] bundlePath] UTF8String];
+}
+
 -(void) dealloc
 {
     Director::getInstance()->end();
@@ -63,8 +68,15 @@ using namespace cocos2d;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    NSArray *args = [[NSProcessInfo processInfo] arguments];
+
+    if (args!=nullptr && [args count]>=2) {
+        extern std::string g_resourcePath;
+        g_resourcePath = [[args objectAtIndex:1]UTF8String];
+    }
+
     AppDelegate app;
-	[self createSimulator:[NSString stringWithUTF8String:"HelloLua"] viewWidth:960 viewHeight:640 factor:1.0];
+    [self createSimulator:[NSString stringWithUTF8String:"HelloLua"] viewWidth:960 viewHeight:640 factor:1.0];
     Application::getInstance()->run();
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
@@ -77,20 +89,20 @@ using namespace cocos2d;
 - (void) createSimulator:(NSString*)viewName viewWidth:(float)width viewHeight:(float)height factor:(float)frameZoomFactor
 {
     if (g_eglView)
-	{
-		return;
-	}
+    {
+        return;
+    }
     
-	g_eglView = GLView::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
-	auto director = Director::getInstance();
-	director->setOpenGLView(g_eglView);
-	g_landscape = false;
-	g_screenSize.width = width;
-	g_screenSize.height = height;
-	if (width  > height)
-	{
-		g_landscape = true;
-	}
+    g_eglView = GLView::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
+    auto director = Director::getInstance();
+    director->setOpenGLView(g_eglView);
+    g_landscape = false;
+    g_screenSize.width = width;
+    g_screenSize.height = height;
+    if (width  > height)
+    {
+        g_landscape = true;
+    }
 
     window = glfwGetCocoaWindow(g_eglView->getWindow());
     [NSApp setDelegate: self];
@@ -166,26 +178,26 @@ using namespace cocos2d;
     }
 
     int width = g_screenSize.width;
-	int height = g_screenSize.height;
-	if (height > width)
-	{
-		int w = width;
-		width = height;
-		height = w;
-	}
+    int height = g_screenSize.height;
+    if (height > width)
+    {
+        int w = width;
+        width = height;
+        height = w;
+    }
     
-	int count = SimulatorConfig::getInstance()->getScreenSizeCount();
-	for (int i = 0; i < count; ++i)
-	{
-		bool bSel = false;
+    int count = SimulatorConfig::getInstance()->getScreenSizeCount();
+    for (int i = 0; i < count; ++i)
+    {
+        bool bSel = false;
         SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(i);
-		if (size.width == width && size.height == height)
-		{
-			bSel = true;
-		}
+        if (size.width == width && size.height == height)
+        {
+            bSel = true;
+        }
         NSMenuItem *itemView = [menuScreen itemWithTitle:[NSString stringWithUTF8String:size.title.c_str()]];
         [itemView setState:(bSel? NSOnState : NSOffState)];
-	}
+    }
     
 
     //[window setTitle:[NSString stringWithFormat:@"quick-x-player (%0.0f%%)", projectConfig.getFrameScale() * 100]];
@@ -197,14 +209,14 @@ using namespace cocos2d;
     auto policy = g_eglView->getResolutionPolicy();
     auto designSize = g_eglView->getDesignResolutionSize();
     
-	if (g_landscape)
-	{
+    if (g_landscape)
+    {
         g_eglView->setFrameSize(g_screenSize.width, g_screenSize.height);
-	}
-	else
-	{
+    }
+    else
+    {
         g_eglView->setFrameSize(g_screenSize.height, g_screenSize.width);
-	}
+    }
     
     g_eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
     
@@ -268,13 +280,13 @@ using namespace cocos2d;
 - (IBAction) onViewChangeFrameSize:(id)sender
 {
     NSInteger index = [sender tag];
-	if (index >= 0 && index < SimulatorConfig::getInstance()->getScreenSizeCount())
-	{
+    if (index >= 0 && index < SimulatorConfig::getInstance()->getScreenSizeCount())
+    {
         SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(index);
-		g_screenSize.width = size.width;
-		g_screenSize.height = size.height;
-		[self updateView];
-	}
+        g_screenSize.width = size.width;
+        g_screenSize.height = size.height;
+        [self updateView];
+    }
 }
 
 
