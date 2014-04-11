@@ -520,7 +520,7 @@ local function RemoveMenuItemWhenMove()
     local ret = cc.Layer:create()
     local s = cc.Director:getInstance():getWinSize()
 
-    local  label = cc.Label:create("click item and move, should not crash", s_arialPath, 20)
+    local  label = cc.Label:createWithTTF("click item and move, should not crash", s_arialPath, 20)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(s.width/2, s.height - 30))
     ret:addChild(label)
