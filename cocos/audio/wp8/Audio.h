@@ -156,9 +156,12 @@ public:
 
     void PauseAllSoundEffects();
     void ResumeAllSoundEffects();
-    void StopAllSoundEffects();
+    void StopAllSoundEffects(bool bReleaseData);
 
     void PreloadSoundEffect(const char* pszFilePath, bool isMusic = false);
     void UnloadSoundEffect(const char* pszFilePath);
     void UnloadSoundEffect(unsigned int sound);
+
+private:
+    void RemoveFromList(unsigned int sound);
 };
