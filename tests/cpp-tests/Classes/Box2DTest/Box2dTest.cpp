@@ -168,7 +168,7 @@ void Box2DTestLayer::onDraw()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    kmMat4 oldMV;
+    Matrix oldMV;
     oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV);
     world->DrawDebugData();

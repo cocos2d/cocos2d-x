@@ -123,7 +123,7 @@ protected:
     
 protected:
     CustomCommand _renderCommand;
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    void onDraw(const Matrix &transform, bool transformUpdated);
 
 };
 
@@ -184,7 +184,7 @@ void ShaderSprite::draw(Renderer *renderer, const Matrix &transform, bool transf
 
 }
 
-void ShaderSprite::onDraw(const kmMat4 &transform, bool transformUpdated)
+void ShaderSprite::onDraw(const Matrix &transform, bool transformUpdated)
 {
     auto shader = getShaderProgram();
     shader->use();
