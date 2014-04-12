@@ -56,7 +56,7 @@ EditBoxTest::EditBoxTest()
 	_editPassword->setFont("American Typewriter", 30);
 #else
     _editPassword->setFont("American Typewriter", 80);
-	_editPassword->setPlaceholderFont("American Typewriter", 80);
+    _editPassword->setPlaceholderFont("American Typewriter", 80);
 #endif
     _editPassword->setFontColor(Color3B::GREEN);
     _editPassword->setPlaceHolder("Password:");
