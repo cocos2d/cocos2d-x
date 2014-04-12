@@ -2028,6 +2028,9 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
                 {
                     fclose(fp);
                     png_destroy_write_struct(&png_ptr, &info_ptr);
+                    
+                    free(row_pointers);
+                    row_pointers = nullptr;
                     break;
                 }
 
