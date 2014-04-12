@@ -59,6 +59,7 @@ public class Cocos2dxHelper {
 	private static AssetManager sAssetManager;
 	private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
 	private static boolean sAccelerometerEnabled;
+	private static boolean sActivityVisible;
 	private static String sPackageName;
 	private static String sFileDirectory;
 	private static Activity sActivity = null;
@@ -133,6 +134,10 @@ public class Cocos2dxHelper {
     
     public static Set<OnActivityResultListener> getOnActivityResultListeners() {
         return onActivityResultListeners;
+    }
+    
+    public static boolean isActivityVisible(){
+    	return sActivityVisible;
     }
 
 	// ===========================================================
@@ -274,12 +279,14 @@ public class Cocos2dxHelper {
 	}
 
 	public static void onResume() {
+		sActivityVisible = true;
 		if (Cocos2dxHelper.sAccelerometerEnabled) {
 			Cocos2dxHelper.sCocos2dxAccelerometer.enable();
 		}
 	}
 
 	public static void onPause() {
+		sActivityVisible = false;
 		if (Cocos2dxHelper.sAccelerometerEnabled) {
 			Cocos2dxHelper.sCocos2dxAccelerometer.disable();
 		}
