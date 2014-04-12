@@ -579,6 +579,7 @@ bool Node::isRunning() const
 void Node::setParent(Node * var)
 {
     _parent = var;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// isRelativeAnchorPoint getter
