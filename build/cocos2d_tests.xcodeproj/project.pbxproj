@@ -844,7 +844,6 @@
 		D82D88B518F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
 		D82D88B618F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
 		D82D88B718F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
-		D82D88B818F78C480075929C /* testScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82D88B318F78C480075929C /* testScene.cpp */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -4512,7 +4511,6 @@
 			files = (
 				1AC358DA18CEC1CB00F37B72 /* AppController.mm in Sources */,
 				1AC358EB18CEC1CB00F37B72 /* RootViewController.mm in Sources */,
-				D82D88B818F78C480075929C /* testScene.cpp in Sources */,
 				1AC358C318CEC1BF00F37B72 /* HelloWorldScene.cpp in Sources */,
 				1AC358EA18CEC1CB00F37B72 /* main.m in Sources */,
 				1AC358C118CEC1BF00F37B72 /* AppDelegate.cpp in Sources */,
