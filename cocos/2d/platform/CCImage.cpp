@@ -804,7 +804,14 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 
         _dataLen = cinfo.output_width*cinfo.output_height*cinfo.output_components;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
-        CC_BREAK_IF(! _data);
+        if(!_data)
+        {
+            if (row_pointers != nullptr)
+            {
+                free(row_pointers);
+            }
+            break;
+        }
 
         /* now actually read the jpeg into the raw buffer */
         /* read one scan line at a time */
