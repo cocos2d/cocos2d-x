@@ -55,7 +55,8 @@ EditBoxTest::EditBoxTest()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	_editPassword->setFont("American Typewriter", 30);
 #else
-	_editPassword->setFont("fonts/American Typewriter.ttf", 30);
+    _editPassword->setFont("American Typewriter", 80);
+	_editPassword->setPlaceholderFont("American Typewriter", 80);
 #endif
     _editPassword->setFontColor(Color3B::GREEN);
     _editPassword->setPlaceHolder("Password:");

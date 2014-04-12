@@ -61,6 +61,7 @@
 @implementation CCEditBoxImplMac
 
 @synthesize textField = textField_;
+@synthesize placeholderAttributes = placeholderAttributes_;
 @synthesize editState = editState_;
 @synthesize editBox = editBox_;
 
@@ -75,6 +76,7 @@
     [textField_ resignFirstResponder];
     [textField_ removeFromSuperview];
     self.textField = NULL;
+    [placeholderAttributes_ release];
     [super dealloc];
 }
 
@@ -88,13 +90,17 @@
         editState_ = NO;
         self.textField = [[[CCCustomNSTextField alloc] initWithFrame: frameRect] autorelease];
         if (!textField_) break;
-        [textField_ setTextColor:[NSColor whiteColor]];
-        textField_.font = [NSFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+        NSFont *font = [NSFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+        textField_.textColor = [NSColor whiteColor];
+        textField_.font = font;
         textField_.backgroundColor = [NSColor clearColor];
         [textField_ setup];
         textField_.delegate = self;
-        [textField_ setDelegate:self];
         self.editBox = editBox;
+        self.placeholderAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                      font, NSFontAttributeName,
+                                      [NSColor grayColor], NSForegroundColorAttributeName,
+                                      nil];
         
         [[[self getNSWindow] contentView] addSubview:textField_];
         
@@ -293,18 +299,29 @@ bool EditBoxImplMac::initWithSize(const Size& size)
 
 void EditBoxImplMac::setFont(const char* pFontName, int fontSize)
 {
-    //TODO:
-//	if(pFontName == NULL)
-//		return;
-//	NSString * fntName = [NSString stringWithUTF8String:pFontName];
-//	UIFont *textFont = [UIFont fontWithName:fntName size:fontSize];
-//	if(textFont != nil)
-//		[_sysEdit.textField setFont:textFont];
+	NSString * fntName = [NSString stringWithUTF8String:pFontName];
+	NSFont *textFont = [NSFont fontWithName:fntName size:fontSize];
+	if(textFont != nil)
+		[_sysEdit.textField setFont:textFont];
 }
 
 void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	// TODO need to be implemented.
+    NSString *fontName = [NSString stringWithUTF8String:pFontName];
+    NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+    
+    if (!font) {
+        CCLOGWARN("Font not found: %s", pFontName);
+        return;
+    }
+    
+    _sysEdit.placeholderAttributes[NSFontAttributeName] = font;
+    
+    /* reload placeholder */
+    const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
+    if (placeholder) {
+        setPlaceHolder(placeholder);
+    }
 }
 
 void EditBoxImplMac::setFontColor(const Color3B& color)
@@ -314,7 +331,14 @@ void EditBoxImplMac::setFontColor(const Color3B& color)
 
 void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
 {
-    // TODO need to be implemented.
+    NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:1.0f];
+    _sysEdit.placeholderAttributes[NSForegroundColorAttributeName] = nsColor;
+    
+    /* reload placeholder */
+    const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
+    if (placeholder) {
+        setPlaceHolder(placeholder);
+    }
 }
 
 void EditBoxImplMac::setInputMode(EditBox::InputMode inputMode)
@@ -357,7 +381,11 @@ const char*  EditBoxImplMac::getText(void)
 
 void EditBoxImplMac::setPlaceHolder(const char* pText)
 {
-    [[_sysEdit.textField cell] setPlaceholderString:[NSString stringWithUTF8String:pText]];
+    NSAttributedString *as = [[NSAttributedString alloc] initWithString:[NSString stringWithUTF8String:pText]
+                                                             attributes:_sysEdit.placeholderAttributes];
+    
+    [[_sysEdit.textField cell] setPlaceholderAttributedString:as];
+    [as release];
 }
 
 NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
