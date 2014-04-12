@@ -125,6 +125,9 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    _trackedObjectPool.reserve(256);
+#endif
 }
 
 PoolManager::~PoolManager()
@@ -175,5 +178,20 @@ void PoolManager::pop()
         _curReleasePool = _releasePoolStack.back();
     }
 }
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+void PoolManager::track(Ref* obj)
+{
+    _trackedObjectPool.insert(obj);
+}
 
+void PoolManager::untrack(Ref* obj)
+{
+    _trackedObjectPool.erase(obj);
+}
+
+size_t PoolManager::getTrackedPoolSize()
+{
+    return _trackedObjectPool.size();
+}
+#endif
 NS_CC_END

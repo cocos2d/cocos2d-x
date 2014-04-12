@@ -28,7 +28,6 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 #include "ccConfig.h"
-
 NS_CC_BEGIN
 
 /**
@@ -131,6 +130,7 @@ public:
 protected:
     /// count of references
     unsigned int _referenceCount;
+
     
     friend class AutoreleasePool;
     
