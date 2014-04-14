@@ -116,7 +116,6 @@ THE SOFTWARE.
 
 // new renderer
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCFrustum.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCMaterialManager.h"
 #include "renderer/CCQuadCommand.h"

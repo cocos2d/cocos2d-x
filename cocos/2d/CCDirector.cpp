@@ -59,7 +59,6 @@ THE SOFTWARE.
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCFrustum.h"
 #include "CCConsole.h"
 
 #include "kazmath/kazmath.h"
