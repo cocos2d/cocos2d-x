@@ -15,11 +15,6 @@ public:
     
 public:
     virtual void runThisTest();
-    
-    void toggleDebug();
-    
-private:
-    bool _debugDraw;
 };
 
 #if CC_USE_PHYSICS == 0
@@ -32,10 +27,26 @@ public:
 };
 #else
 
+#define CREATE_WITH_PHYSICS_FUNC(__TYPE__) \
+static __TYPE__* createWithPhysics() \
+{ \
+__TYPE__ *pRet = new __TYPE__(); \
+if (pRet && pRet->initWithPhysics()) \
+{ \
+pRet->autorelease(); \
+return pRet; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}
 class PhysicsDemo : public BaseTest
 {
 public:
-    CREATE_FUNC(PhysicsDemo);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemo);
 
     PhysicsDemo();
     virtual ~PhysicsDemo();
@@ -58,17 +69,21 @@ public:
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
     
+    void toggleDebug();
+    
 protected:
-    PhysicsTestScene* _scene;
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
     std::unordered_map<int, Node*> _mouses;
+    
+private:
+    bool _debugDraw;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoClickAdd);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoClickAdd);
 
     virtual ~PhysicsDemoClickAdd();
     void onEnter() override;
@@ -81,7 +96,7 @@ public:
 class PhysicsDemoLogoSmash : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoLogoSmash);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoLogoSmash);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -90,7 +105,7 @@ public:
 class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoPyramidStack);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoPyramidStack);
 
     void onEnter() override;
     void updateOnce(float delta);
@@ -100,7 +115,7 @@ public:
 class PhysicsDemoRayCast : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoRayCast);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoRayCast);
 
     PhysicsDemoRayCast();
 
@@ -122,7 +137,7 @@ private:
 class PhysicsDemoJoints : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoJoints);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoJoints);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -131,7 +146,7 @@ public:
 class PhysicsDemoActions : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoActions);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoActions);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -140,7 +155,7 @@ public:
 class PhysicsDemoPump : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoPump);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoPump);
 
     void onEnter() override;
     void update(float delta) override;
@@ -159,7 +174,7 @@ private:
 class PhysicsDemoOneWayPlatform : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoOneWayPlatform);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoOneWayPlatform);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -170,7 +185,7 @@ public:
 class PhysicsDemoSlice : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoSlice);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoSlice);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -188,7 +203,7 @@ private:
 class PhysicsDemoBug3988 : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsDemoBug3988);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsDemoBug3988);
 
     void onEnter() override;
     virtual std::string title() const override;
@@ -198,7 +213,7 @@ public:
 class PhysicsContactTest : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsContactTest);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsContactTest);
     
     void onEnter() override;
     void resetTest();
@@ -219,7 +234,7 @@ private:
 class PhysicsPositionRotationTest : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsPositionRotationTest);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsPositionRotationTest);
     
     void onEnter() override;
     virtual std::string title() const override;
@@ -228,7 +243,7 @@ public:
 class PhysicsSetGravityEnableTest : public PhysicsDemo
 {
 public:
-    CREATE_FUNC(PhysicsSetGravityEnableTest);
+    CREATE_WITH_PHYSICS_FUNC(PhysicsSetGravityEnableTest);
     
     void onEnter() override;
     void onScheduleOnce(float delta);
