@@ -278,18 +278,26 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point
     quad->tr.colors = color;
 
     // vertices
-    GLfloat size_2 = particle->size/2;
-    if (particle->rotation) 
+    GLfloat size_w_2 = particle->size/2;
+    GLfloat size_h_2 = particle->size/2;
+    GLfloat rotation = particle->rotation;
+    if (_batchNode != nullptr)
     {
-        GLfloat x1 = -size_2;
-        GLfloat y1 = -size_2;
+        size_w_2 *= _scaleX;
+        size_h_2 *= _scaleY;
+        rotation += _rotationZ_X;
+    }
+    if (std::abs(rotation) > std::numeric_limits<GLfloat>::min())
+    {
+        GLfloat x1 = -size_w_2;
+        GLfloat y1 = -size_h_2;
 
-        GLfloat x2 = size_2;
-        GLfloat y2 = size_2;
+        GLfloat x2 = size_w_2;
+        GLfloat y2 = size_h_2;
         GLfloat x = newPosition.x;
         GLfloat y = newPosition.y;
 
-        GLfloat r = (GLfloat)-CC_DEGREES_TO_RADIANS(particle->rotation);
+        GLfloat r = static_cast<GLfloat>(-CC_DEGREES_TO_RADIANS(rotation));
         GLfloat cr = cosf(r);
         GLfloat sr = sinf(r);
         GLfloat ax = x1 * cr - y1 * sr + x;
@@ -320,20 +328,20 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Point
     else 
     {
         // bottom-left vertex:
-        quad->bl.vertices.x = newPosition.x - size_2;
-        quad->bl.vertices.y = newPosition.y - size_2;
+        quad->bl.vertices.x = newPosition.x - size_w_2;
+        quad->bl.vertices.y = newPosition.y - size_h_2;
 
         // bottom-right vertex:
-        quad->br.vertices.x = newPosition.x + size_2;
-        quad->br.vertices.y = newPosition.y - size_2;
+        quad->br.vertices.x = newPosition.x + size_w_2;
+        quad->br.vertices.y = newPosition.y - size_h_2;
 
         // top-left vertex:
-        quad->tl.vertices.x = newPosition.x - size_2;
-        quad->tl.vertices.y = newPosition.y + size_2;
+        quad->tl.vertices.x = newPosition.x - size_w_2;
+        quad->tl.vertices.y = newPosition.y + size_h_2;
 
         // top-right vertex:
-        quad->tr.vertices.x = newPosition.x + size_2;
-        quad->tr.vertices.y = newPosition.y + size_2;                
+        quad->tr.vertices.x = newPosition.x + size_w_2;
+        quad->tr.vertices.y = newPosition.y + size_h_2;
     }
 }
 void ParticleSystemQuad::postStep()

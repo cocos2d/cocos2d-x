@@ -774,25 +774,49 @@ void ParticleSystem::update(float dt)
                 //
                 // update values in quad
                 //
+                
+                Point pos = Point(p->pos.x, p->pos.y);
 
                 Point    newPos;
-
-                if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
+                
+                if (_positionType == PositionType::FREE)
                 {
                     Point diff = currentPosition - p->startPos;
-                    newPos = p->pos - diff;
-                } 
+                    Point worldPos = this->convertToWorldSpace(pos);
+                    newPos = this->convertToNodeSpace(worldPos - diff);
+                }
+                else if (_positionType == PositionType::RELATIVE)
+                {
+                    // transform to parent
+                    Point diff = currentPosition - p->startPos;
+                    kmMat4 tmp = getNodeToParentTransform();
+                    kmVec3 vec3 = {pos.x, pos.y, 0};
+                    kmVec3 transformed;
+                    kmVec3Transform(&transformed, &vec3, &tmp);
+                    
+                    Point parentPos = Point(transformed.x, transformed.y);
+                    newPos = parentPos - diff;
+                    
+                    //transform to this particle
+                    tmp = getParentToNodeTransform();
+                    kmVec3 vec3Back = {newPos.x, newPos.y, 0};
+                    kmVec3Transform(&transformed, &vec3Back, &tmp);
+                    newPos = Point(transformed.x, transformed.y);
+                }
                 else
                 {
-                    newPos = p->pos;
+                    newPos = pos;
                 }
-
+                
                 // translate newPos to correct position, since matrix transform isn't performed in batchnode
                 // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
                 if (_batchNode)
                 {
-                    newPos.x+=_position.x;
-                    newPos.y+=_position.y;
+                    kmVec3 vec3 = {newPos.x, newPos.y, 0};
+                    kmVec3 transformed;
+                    kmMat4 parentTransform = getNodeToParentTransform();
+                    kmVec3Transform(&transformed, &vec3, &parentTransform);
+                    newPos = Point(transformed.x, transformed.y);
                 }
 
                 updateQuadWithParticle(p, newPos);
