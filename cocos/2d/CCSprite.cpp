@@ -631,6 +631,7 @@ void Sprite::setCullingEnabled(bool enabled)
 bool Sprite::isInsideBounds() const
 {
     if(!_cullingEnabled) return true;
+    
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
     screen_half.width /= 2;

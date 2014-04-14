@@ -426,6 +426,8 @@ public:
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
+     //set culling enabled
+    void setCullingEnabled(bool enabled);
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -518,11 +520,6 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
-
-    /**
-     * set use auto culling or not
-     **/
-    void setCullingEnabled(bool enabled);
 
 protected:
 
