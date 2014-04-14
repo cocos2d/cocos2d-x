@@ -728,7 +728,7 @@ static void GLToClipTransform(Matrix *transformOut)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
-	kmMat4Multiply(&projection, Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix(), &projection);
+    projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
 #endif
 
 	Matrix modelview;

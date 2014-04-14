@@ -1399,7 +1399,7 @@ const Matrix& Node::getNodeToParentTransform() const
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
-                // XXX: Argh, kmMat needs a "translate" method.
+                // XXX: Argh, Matrix needs a "translate" method.
                 // XXX: Although this is faster than multiplying a vec4 * mat4
                 _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
                 _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
