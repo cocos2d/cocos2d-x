@@ -31,6 +31,9 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <vector>
+#include <memory>
+#include <algorithm>
 
 using namespace std;
 
@@ -39,20 +42,32 @@ NS_CC_BEGIN
 static map<std::string, FontBufferInfo> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = nullptr;
 
-
-CCFreeTypeFont::CCFreeTypeFont() :
-    m_space(" ")
+CCFreeTypeFont::CCFreeTypeFont() 
+    :m_space(" ")
+    , m_face(nullptr)
 {
-	m_face = nullptr;
-    CCSize size = CCDirector::sharedDirector()->getWinSizeInPixels();
-    m_windowWidth = (int)size.width;
+
 }
 
 CCFreeTypeFont::~CCFreeTypeFont() 
 {
+    reset();
+}
+
+void CCFreeTypeFont::reset()
+{
+    for(auto line:m_lines)
+    {
+        line->glyphs.clear();
+        delete line;
+    }
+
+    m_lines.clear();
+
 	if(m_face)
 	{
 		FT_Done_Face(m_face);
+	    m_face = nullptr;
 	}
 
 }
@@ -67,17 +82,24 @@ bool CCFreeTypeFont::initWithString(
 	FT_Error error = 0;
 	unsigned long size = 0;
     unsigned char* pBuffer = nullptr;
+    unsigned char* data = nullptr;
+
+    CCSize winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
+    m_windowWidth = (int)winSize.width;
 
     m_inWidth = inWidth;
     m_inHeight = inHeight;
 
+#if 0
     // check the cache for the font file buffer
     auto ittFontNames = s_fontsNames.find(pFontName);
     if(ittFontNames != s_fontsNames.end()) 
     {
         pBuffer = ittFontNames->second.pBuffer;
         size = ittFontNames->second.size;
-    }
+    }  
+#endif // 0
+
     
 	if(!pBuffer)
     {
@@ -102,11 +124,13 @@ bool CCFreeTypeFont::initWithString(
         if(!pBuffer) // font not found!
             return false;
 
+#if 0
         // cache the font file buffer
         FontBufferInfo info;
         info.pBuffer = pBuffer;
         info.size = size;
         s_fontsNames[pFontName]=info;
+#endif // 0
     }
 
     m_fontName = pFontName;
@@ -133,6 +157,9 @@ bool CCFreeTypeFont::initWithString(
 
     if(!error)
 	    error = initGlyphs(pText);
+	
+    delete [] pBuffer;
+
 
 	return error == 0;
 }
@@ -161,6 +188,8 @@ unsigned char* CCFreeTypeFont::getBitmap(CCImage::ETextAlign eAlignMask, int* ou
     }
     *outWidth = m_width;
     *outHeight = m_height;
+
+    reset();
 
     return pBuffer;
 }

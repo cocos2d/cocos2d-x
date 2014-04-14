@@ -74,11 +74,12 @@
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;websockets.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -106,11 +107,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;websockets.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -283,6 +285,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\Box2DTestBed\Test.cpp" />
     <ClCompile Include="..\Classes\Box2DTestBed\TestEntries.cpp" />
     <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h" />
@@ -496,6 +504,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\VerticalStack.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Web.h" />
     <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\cocos2dx\proj.win32\cocos2d.vcxproj">

@@ -145,7 +145,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -166,7 +166,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -184,7 +184,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -204,7 +204,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -222,7 +222,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -242,7 +242,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\cocos2dx;$(ProjectDir)..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;$(ProjectDir)..\..\..\extensions\network;$(ProjectDir)..\tolua;$(ProjectDir)..\luajit\include;$(ProjectDir)..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\scripting\lua\cocos2dx_support</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;WINRT;_WINRT;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>

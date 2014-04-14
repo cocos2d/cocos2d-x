@@ -525,6 +525,7 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIRichText.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -956,6 +957,7 @@
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\ExtensionExport.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\spine\Animation.h">

@@ -70,15 +70,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;WP8;_WP8;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\zlib;$(ProjectDir)..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -86,18 +87,21 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\x86;..\..\cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\zlib;$(ProjectDir)..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,19 +109,22 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\x86;..\..\cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;WP8;_WP8;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\zlib;$(ProjectDir)..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,18 +132,21 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\arm;..\..\cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\zlib;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\external\sqlite3\include;$(ProjectDir)..\..\external;$(ProjectDir)..\..\cocos2dx;$(ProjectDir)..\..\cocos2dx\include;$(ProjectDir)..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\cocos2dx\platform\third_party\wp8\zlib;$(ProjectDir)..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\CocosDenshion\include;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +154,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\arm;..\..\cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -272,6 +284,7 @@
     <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
+    <ClCompile Include="..\network\WebSocketWinRT.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\physics_nodes\CCPhysicsSprite.cpp" />
     <ClCompile Include="..\spine\Animation.cpp" />
@@ -296,6 +309,12 @@
     <ClCompile Include="..\spine\SlotData.cpp" />
     <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
     <ClCompile Include="EditBoxEvent.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
@@ -361,19 +380,15 @@
     <ClInclude Include="..\CocoStudio\Components\CCComController.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComRender.h" />
     <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h" />
-    <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h" />
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h" />
-    <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h" />
-    <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UITouchGroup.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h" />
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollInterface.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.h" />
@@ -386,7 +401,6 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UIRichText.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
     <ClInclude Include="..\CocoStudio\Json\rapidjson\document.h" />
@@ -420,7 +434,7 @@
     <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h" />
     <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h" />
     <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h" />
-	<ClInclude Include="..\ExtensionExport.h" />
+    <ClInclude Include="..\ExtensionExport.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
@@ -445,6 +459,8 @@
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
+    <ClInclude Include="..\network\WebSocket.h" />
+    <ClInclude Include="..\network\WebSocketWinRT.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\physics_nodes\CCPhysicsSprite.h" />
     <ClInclude Include="..\spine\Animation.h" />
@@ -470,6 +486,7 @@
     <ClInclude Include="..\spine\spine-cocos2dx.h" />
     <ClInclude Include="..\spine\spine.h" />
     <ClInclude Include="EditBoxEvent.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

@@ -89,9 +89,11 @@ CCEGLView::CCEGLView()
     , m_isXamlWindow(false)
     , m_delegate(nullptr)
     , m_messageBoxDelegate(nullptr)
+    , m_orientation(DisplayOrientations::Landscape)
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8");
+	UpdateOrientationMatrix();
 }
 
 CCEGLView::~CCEGLView()

@@ -43,6 +43,7 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelloCpp.h" />
@@ -55,8 +56,23 @@
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\external\libwebsockets\wp8\lib\x86\libwebsockets.dll" />
+    <None Include="..\..\..\external\libwebsockets\wp8\lib\arm\libwebsockets.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libcurl.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libeay32.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\ssleay32.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libcurl.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libeay32.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\ssleay32.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libEGL_phone.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libGLESv2_phone.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libEGL_phone.dll" />
+    <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libGLESv2_phone.dll" />
   </ItemGroup>
 </Project>

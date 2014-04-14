@@ -67,74 +67,82 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\extensions\network;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libEGL_phone.lib;libGLESv2_phone.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\extensions\network;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libEGL_phone.lib;libGLESv2_phone.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\extensions\network;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libEGL_phone.lib;libGLESv2_phone.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_WINRT_DLL;WP8;_WP8;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\winrt\angle\include;$(ProjectDir)..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\extensions\network;$(ProjectDir)..\..\..\..\..\cocos2dx\platform\third_party\wp8\libcurl;$(ProjectDir)..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\external\libwebsockets\wp8\include;$(ProjectDir)..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libEGL_phone.lib;libGLESv2_phone.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -146,20 +154,18 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.h" />
     <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.h" />
     <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.h" />
     <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.h" />
-    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.h" />
     <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEventTypes.h" />
     <ClInclude Include="..\..\..\Classes\AppDelegate.h" />
     <ClInclude Include="..\..\..\Classes\AppMacros.h" />
     <ClInclude Include="..\..\..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.cpp" />
     <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
     <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp" />
     <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.cpp" />
@@ -175,17 +181,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_phone.vcxproj">
-      <Project>{d2d857bf-346e-4014-b9cf-50d5e1f8a357}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libEGL\libEGL_phone.vcxproj">
-      <Project>{ab42a170-e370-4707-8cc6-1c51349c146f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
-      <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
       <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
     </ProjectReference>
@@ -201,6 +204,62 @@
     <ProjectReference Include="..\..\..\..\..\external\chipmunk\proj.wp8\chipmunk.vcxproj">
       <Project>{3ad76ea1-d698-40d2-b04d-d9ab8171f40b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libcurl.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libeay32.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libEGL_phone.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libGLESv2_phone.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\ssleay32.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libcurl.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libeay32.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libEGL_phone.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libGLESv2_phone.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\ssleay32.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\external\libwebsockets\wp8\lib\arm\libwebsockets.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\..\..\external\libwebsockets\wp8\lib\x86\libwebsockets.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

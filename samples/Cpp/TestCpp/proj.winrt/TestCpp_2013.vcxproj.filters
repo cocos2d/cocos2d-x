@@ -758,6 +758,8 @@
     <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
       <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClCompile>
+    <ClCompile Include="EditBox.xaml.cpp" />
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -1384,9 +1386,14 @@
     <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
       <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
     </ClInclude>
+    <ClInclude Include="EditBox.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TestCpp_TemporaryKey.pfx" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\Win32\libEGL.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\Win32\libGLESv2.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\ARM\libEGL.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\winrt\libraries\vs2013\ARM\libGLESv2.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

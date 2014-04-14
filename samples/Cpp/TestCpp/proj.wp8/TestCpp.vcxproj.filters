@@ -296,6 +296,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget">
       <UniqueIdentifier>{957735d0-6d58-4031-9e56-0930a4132fd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\CurlTest">
+      <UniqueIdentifier>{f16af028-d373-4926-8aac-afbde82c1f7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\ApplicationIcon.png">
@@ -759,6 +762,16 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
+      <Filter>Classes\CurlTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1228,24 +1241,6 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesEquipScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesMapScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesPageScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesRegisterScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesWeaponScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
     </ClInclude>
@@ -1402,8 +1397,32 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget\CustomReader.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\CustomWidget</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\external\libwebsockets\wp8\lib\x86\libwebsockets.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libeay32.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\ssleay32.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libeay32.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\ssleay32.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libEGL_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libGLESv2_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libEGL_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libGLESv2_phone.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libcurl.dll" />
+    <None Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libcurl.dll" />
+    <None Include="..\..\..\..\external\libwebsockets\wp8\lib\arm\libwebsockets.dll" />
   </ItemGroup>
 </Project>
