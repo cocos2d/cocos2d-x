@@ -37,17 +37,14 @@ NS_CC_BEGIN
 class GroupCommandManager : public Ref
 {
 public:
-    static GroupCommandManager* getInstance();
-
-    ~GroupCommandManager();
-
-    bool init();
-
     int getGroupID();
     void releaseGroupID(int groupID);
 
 protected:
+    friend class Renderer;
     GroupCommandManager();
+    ~GroupCommandManager();
+    bool init();
     std::unordered_map<int, bool> _groupMapping;
 };
 

@@ -107,6 +107,8 @@ Renderer::Renderer()
 ,_cacheTextureListener(nullptr)
 #endif
 {
+    _groupCommandManager = new GroupCommandManager();
+    
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
     
     RenderQueue defaultRenderQueue;
@@ -117,6 +119,7 @@ Renderer::Renderer()
 Renderer::~Renderer()
 {
     _renderGroups.clear();
+    _groupCommandManager->release();
     
     glDeleteBuffers(2, _buffersVBO);
     
