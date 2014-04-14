@@ -94,4 +94,12 @@ public:
     virtual std::string subtitle() const {return "CelShadingSpriteTest";}
 };
 
+class OutlineShadingSpriteTest : public ShaderTestDemo2
+{
+public:
+    CREATE_FUNC(OutlineShadingSpriteTest);
+    OutlineShadingSpriteTest();
+    virtual std::string subtitle() const {return "OutlineShadingSpriteTest";}
+};
+
 #endif
