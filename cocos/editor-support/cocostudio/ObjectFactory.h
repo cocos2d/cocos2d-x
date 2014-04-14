@@ -56,8 +56,9 @@ public:
         TInfo& operator= (const TInfo &t);
         std::string _class;
         Instance _fun;
+        unsigned int _classid;
     };
-    typedef std::unordered_map<std::string, TInfo>  FactoryMap;
+    typedef std::unordered_map<unsigned int, TInfo>  FactoryMap;
 
     static ObjectFactory* getInstance();
     static void destroyInstance();
