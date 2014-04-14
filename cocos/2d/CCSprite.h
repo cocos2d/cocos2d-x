@@ -426,7 +426,10 @@ public:
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
-     //set culling enabled
+    /**set culling enabled
+    * default vaule is disabled
+    * the fast culling method has a limitation that if the sprite rotates, the culling may behave uncorrectly
+    **/
     void setCullingEnabled(bool enabled);
 
 CC_CONSTRUCTOR_ACCESS:
