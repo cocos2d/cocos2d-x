@@ -791,7 +791,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Matrix &parentTransf
     {
         auto node = _children.at(i);
         
-        if ( node && node->getZOrder() < 0 )
+        if ( node && node->getLocalZOrder() < 0 )
             node->visit(renderer, _modelViewTransform, dirty);
         else
             break;
@@ -801,7 +801,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Matrix &parentTransf
     {
         auto node = _protectedChildren.at(j);
         
-        if ( node && node->getZOrder() < 0 )
+        if ( node && node->getLocalZOrder() < 0 )
             node->visit(renderer, _modelViewTransform, dirty);
         else
             break;

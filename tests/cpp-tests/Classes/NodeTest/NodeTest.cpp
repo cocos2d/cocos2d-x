@@ -584,11 +584,13 @@ void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
     _preProjection = Director::getInstance()->getProjection();
+    Director::getInstance()->setDepthTest(true);
     Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraOrbitTest::onExit()
 {
+    Director::getInstance()->setDepthTest(false);
     Director::getInstance()->setProjection(_preProjection);
     TestCocosNodeDemo::onExit();
 }
@@ -1053,6 +1055,7 @@ void CameraTest1::onEnter()
 void CameraTest1::onExit()
 {
     Director::getInstance()->setProjection(_preProjection);
+    Director::getInstance()->setDepthTest(false);
     TestCocosNodeDemo::onExit();
 }
 
@@ -1100,6 +1103,7 @@ void CameraTest2::onEnter()
 void CameraTest2::onExit()
 {
     Director::getInstance()->setProjection(_preProjection);
+    Director::getInstance()->setDepthTest(false);
     TestCocosNodeDemo::onExit();
 }
 

@@ -7,7 +7,7 @@ local function AccelerometerMainLayer()
 
     local function onEnter()
         layer:setAccelerometerEnabled(true)
-        local label = cc.Label:create(title(), "fonts/arial.ttf", 32)
+        local label = cc.Label:createWithTTF(title(), "fonts/arial.ttf", 32)
         layer:addChild(label, 1)
         label:setAnchorPoint(cc.p(0.5, 0.5))
         label:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 50) )

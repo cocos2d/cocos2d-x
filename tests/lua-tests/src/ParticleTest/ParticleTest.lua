@@ -98,12 +98,12 @@ local function getBaseLayer()
 
     emitter = nil
 
-    titleLabel = cc.Label:create("", s_arialPath, 28)
+    titleLabel = cc.Label:createWithTTF("", s_arialPath, 28)
     layer:addChild(titleLabel, 100, 1000)
     titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     titleLabel:setPosition(s.width / 2, s.height - 50)
 
-    subtitleLabel = cc.Label:create("", s_arialPath, 16)
+    subtitleLabel = cc.Label:createWithTTF("", s_arialPath, 16)
     layer:addChild(subtitleLabel, 100)
     subtitleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     subtitleLabel:setPosition(s.width / 2, s.height - 80)

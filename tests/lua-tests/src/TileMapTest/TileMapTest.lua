@@ -180,7 +180,7 @@ local function TMXOrthoTest()
         if event == "enter" then
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D )
         elseif event == "exit" then
-            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT )
         end
     end
 
@@ -941,8 +941,7 @@ local function TMXIsoVertexZ()
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
         elseif event == "exit" then
             -- At exit use any other projection.
-            --    cc.Director:getInstance():setProjection:cc.DIRECTOR_PROJECTION3_D )
-
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT )
             if m_tamara ~= nil then
                 m_tamara:release()
             end
@@ -996,7 +995,7 @@ local function TMXOrthoVertexZ()
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
         elseif event == "exit" then
             -- At exit use any other projection.
-            --    cc.Director:getInstance():setProjection:cc.DIRECTOR_PROJECTION3_D )
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT )
             if m_tamara ~= nil then
                 m_tamara:release()
             end
