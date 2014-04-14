@@ -519,6 +519,11 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
 
+    /**
+     * set use auto culling or not
+     **/
+    void setCullingEnabled(bool enabled);
+
 protected:
 
     void updateColor(void);
@@ -574,7 +579,7 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
-
+    bool _cullingEnabled;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };
