@@ -34,10 +34,10 @@ NS_CC_BEGIN
 // CameraAction
 //
 ActionCamera::ActionCamera()
+: _center(0, 0, 0)
+, _eye(0, 0, FLT_EPSILON)
+, _up(0, 1, 0)
 {
-    kmVec3Fill(&_center, 0, 0, 0);
-    kmVec3Fill(&_eye, 0, 0, FLT_EPSILON);
-    kmVec3Fill(&_up, 0, 1, 0);
 }
 void ActionCamera::startWithTarget(Node *target)
 {
@@ -60,12 +60,12 @@ ActionCamera * ActionCamera::reverse() const
 
 void ActionCamera::restore()
 {
-    kmVec3Fill(&_center, 0, 0, 0);
-    kmVec3Fill(&_eye, 0, 0, FLT_EPSILON);
-    kmVec3Fill(&_up, 0, 1, 0);
+    _center = Vector3(0, 0, 0);
+    _eye = Vector3(0, 0, FLT_EPSILON);
+    _up = Vector3(0, 1, 0);
 }
 
-void ActionCamera::setEye(const kmVec3& eye)
+void ActionCamera::setEye(const Vector3& eye)
 {
     _eye = eye;
     updateTransform();
@@ -73,17 +73,17 @@ void ActionCamera::setEye(const kmVec3& eye)
 
 void ActionCamera::setEye(float x, float y, float z)
 {
-    kmVec3Fill(&_eye, x, y, z);
+    _eye = Vector3(x, y, z);
     updateTransform();
 }
 
-void ActionCamera::setCenter(const kmVec3& center)
+void ActionCamera::setCenter(const Vector3& center)
 {
     _center = center;
     updateTransform();
 }
 
-void ActionCamera::setUp(const kmVec3& up)
+void ActionCamera::setUp(const Vector3& up)
 {
     _up = up;
     updateTransform();
