@@ -1,7 +1,4 @@
 /* 
-  myshader.vert
-  MyCppGame
-
   Created by guanghui on 4/8/14.
 
 */
