@@ -380,6 +380,7 @@ void TestLayer1::onExitTransitionDidStart()
 void TestLayer1::onExit()
 {
     Layer::onExit();
+    Director::getInstance()->setDepthTest(false);
     log("Scene 1 onExit");
 }
 
@@ -509,5 +510,6 @@ void TestLayer2::onExitTransitionDidStart()
 void TestLayer2::onExit()
 {
     Layer::onExit();
+    Director::getInstance()->setDepthTest(false);
     log("Scene 2 onExit");
 }

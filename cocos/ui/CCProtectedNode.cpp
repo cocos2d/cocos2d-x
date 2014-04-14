@@ -307,7 +307,7 @@ void ProtectedNode::visit(Renderer* renderer, const Matrix &parentTransform, boo
     {
         auto node = _children.at(i);
         
-        if ( node && node->getZOrder() < 0 )
+        if ( node && node->getLocalZOrder() < 0 )
             node->visit(renderer, _modelViewTransform, dirty);
         else
             break;
@@ -317,7 +317,7 @@ void ProtectedNode::visit(Renderer* renderer, const Matrix &parentTransform, boo
     {
         auto node = _protectedChildren.at(j);
         
-        if ( node && node->getZOrder() < 0 )
+        if ( node && node->getLocalZOrder() < 0 )
             node->visit(renderer, _modelViewTransform, dirty);
         else
             break;

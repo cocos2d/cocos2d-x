@@ -102,6 +102,7 @@ Renderer::Renderer()
 :_lastMaterialID(0)
 ,_numQuads(0)
 ,_glViewAssigned(false)
+,_isRendering(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
 #endif
@@ -236,6 +237,7 @@ void Renderer::addCommand(RenderCommand* command)
 
 void Renderer::addCommand(RenderCommand* command, int renderQueue)
 {
+    CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
     _renderGroups[renderQueue].push_back(command);
@@ -243,11 +245,13 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
 
 void Renderer::pushGroup(int renderQueueID)
 {
+    CCASSERT(!_isRendering, "Cannot change render queue while rendering");
     _commandGroupStack.push(renderQueueID);
 }
 
 void Renderer::popGroup()
 {
+    CCASSERT(!_isRendering, "Cannot change render queue while rendering");
     _commandGroupStack.pop();
 }
 
@@ -261,7 +265,8 @@ int Renderer::createRenderQueue()
 void Renderer::visitRenderQueue(const RenderQueue& queue)
 {
     ssize_t size = queue.size();
-    for (auto index = 0; index < size; ++index)
+    
+    for (ssize_t index = 0; index < size; ++index)
     {
         auto command = queue[index];
         auto commandType = command->getType();
@@ -316,7 +321,8 @@ void Renderer::render()
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //TODO setup camera or MVP
-
+    _isRendering = true;
+    
     if (_glViewAssigned)
     {
         // cleanup
@@ -332,6 +338,7 @@ void Renderer::render()
         flush();
     }
     clean();
+    _isRendering = false;
 }
 
 void Renderer::clean()

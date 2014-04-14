@@ -1076,22 +1076,22 @@ local function PhysicsContactTest()
         
         local s = cc.size(VisibleRect:getVisibleRect().width, VisibleRect:getVisibleRect().height);
         
-        local label = cc.Label:create(tostring(layer.yellowBoxNum), s_arialPath, 32);
+        local label = cc.Label:createWithTTF(tostring(layer.yellowBoxNum), s_arialPath, 32);
         root:addChild(label, 1);
         label:setAnchorPoint(cc.p(0.5, 0.5));
         label:setPosition(cc.p(s.width/2, s.height-50));
         
-        label = cc.Label:create(tostring(layer.blueBoxNum), s_arialPath, 32);
+        label = cc.Label:createWithTTF(tostring(layer.blueBoxNum), s_arialPath, 32);
         root:addChild(label, 1);
         label:setAnchorPoint(cc.p(0.5, 0.5));
         label:setPosition(cc.p(s.width/2, s.height-90));
         
-        label = cc.Label:create(tostring(layer.yellowTriangleNum), s_arialPath, 32);
+        label = cc.Label:createWithTTF(tostring(layer.yellowTriangleNum), s_arialPath, 32);
         root:addChild(label, 1);
         label:setAnchorPoint(cc.p(0.5, 0.5));
         label:setPosition(cc.p(s.width/2, s.height-130));
         
-        label = cc.Label:create(tostring(layer.blueTriangleNum), s_arialPath, 32);
+        label = cc.Label:createWithTTF(tostring(layer.blueTriangleNum), s_arialPath, 32);
         root:addChild(label, 1);
         label:setAnchorPoint(cc.p(0.5, 0.5));
         label:setPosition(cc.p(s.width/2, s.height-170));
@@ -1213,7 +1213,7 @@ local function PhysicsContactTest()
       menu1:setPosition(cc.p(s.width/2, s.height-50));
       layer:addChild(menu1, 1);
       
-      local label = cc.Label:create("yellow box", s_arialPath, 32);
+      local label = cc.Label:createWithTTF("yellow box", s_arialPath, 32);
       layer:addChild(label, 1);
       label:setAnchorPoint(cc.p(0.5, 0.5));
       label:setPosition(cc.p(s.width/2 - 150, s.height-50));
@@ -1232,7 +1232,7 @@ local function PhysicsContactTest()
       menu2:setPosition(cc.p(s.width/2, s.height-90));
       layer:addChild(menu2, 1);
       
-      label = cc.Label:create("blue box", s_arialPath, 32);
+      label = cc.Label:createWithTTF("blue box", s_arialPath, 32);
       layer:addChild(label, 1);
       label:setAnchorPoint(cc.p(0.5, 0.5));
       label:setPosition(cc.p(s.width/2 - 150, s.height-90));
@@ -1251,7 +1251,7 @@ local function PhysicsContactTest()
       menu3:setPosition(cc.p(s.width/2, s.height-130));
       layer:addChild(menu3, 1);
       
-      label = cc.Label:create("yellow triangle", s_arialPath, 32);
+      label = cc.Label:createWithTTF("yellow triangle", s_arialPath, 32);
       layer:addChild(label, 1);
       label:setAnchorPoint(cc.p(0.5, 0.5));
       label:setPosition(cc.p(s.width/2 - 150, s.height-130));
@@ -1270,7 +1270,7 @@ local function PhysicsContactTest()
       menu4:setPosition(cc.p(s.width/2, s.height-170));
       layer:addChild(menu4, 1);
       
-      label = cc.Label:create("blue triangle", s_arialPath, 32);
+      label = cc.Label:createWithTTF("blue triangle", s_arialPath, 32);
       layer:addChild(label, 1);
       label:setAnchorPoint(cc.p(0.5, 0.5));
       label:setPosition(cc.p(s.width/2 - 150, s.height-170));
