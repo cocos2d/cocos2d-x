@@ -117,7 +117,7 @@ public:
     * Supported image extensions: .png, .jpg
     * @since v0.8
     */
-    virtual void addImageAsync(const std::string &filepath, std::function<void(Texture2D*)> callback);
+    virtual void addImageAsync(const std::string &filepath, const std::function<void(Texture2D*)>& callback);
 
     /** Returns a Texture2D object given an Image.
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
