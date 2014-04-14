@@ -44,7 +44,6 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCFrustum.h"
 
 // external
 #include "kazmath/GL/matrix.h"
