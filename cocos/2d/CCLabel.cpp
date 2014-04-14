@@ -258,7 +258,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _textSprite(nullptr)
 , _contentDirty(false)
 , _shadowDirty(false)
-, _compatibilityMode(false)
+, _compatibleMode(false)
 {
     setAnchorPoint(Point::ANCHOR_MIDDLE);
     reset();
@@ -944,7 +944,7 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
         _fontDefinition._shadow._shadowEnabled = false;
         enableShadow(Color4B(0,0,0,255 * _fontDefinition._shadow._shadowOpacity),_fontDefinition._shadow._shadowOffset,_fontDefinition._shadow._shadowBlur);
     }
-    _compatibilityMode = true;
+    _compatibleMode = true;
 }
 
 void Label::updateContent()
@@ -970,7 +970,7 @@ void Label::updateContent()
     }
     else
     {
-        if (!_compatibilityMode)
+        if (!_compatibleMode)
         {
             _fontDefinition._fontName = _systemFont;
             _fontDefinition._fontSize = _systemFontSize;
