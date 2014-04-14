@@ -227,7 +227,7 @@ class SetEnvVar(object):
                                 0,
                                 _winreg.KEY_READ)
 
-                    ret = _winreg.QueryValueEx(env, var)
+                    ret = _winreg.QueryValueEx(env, var)[0]
                     _winreg.CloseKey(env)
                 except Exception:
                     if env:
