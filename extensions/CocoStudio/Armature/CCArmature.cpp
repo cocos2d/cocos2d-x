@@ -138,6 +138,8 @@ bool CCArmature::init(const char *name)
         m_sBlendFunc.src = CC_BLEND_SRC;
         m_sBlendFunc.dst = CC_BLEND_DST;
 
+        m_pAtlas = NULL;
+
 
         m_strName = name == NULL ? "" : name;
 

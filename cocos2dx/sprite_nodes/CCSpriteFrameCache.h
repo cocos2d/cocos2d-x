@@ -99,6 +99,14 @@ public:
      */
     void addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName);
 
+     /** Reload texture from the plist file
+     * If the file image hasn't loaded before, load it.
+     * Otherwise the texture will be reloaded from the plist file.
+     * The "pszPlist" parameter is the related/absolute path of the file image.
+     * Return pszPlist if the reloading is succeed, otherwise return false.
+     */
+    bool reloadTexture(const char* pszPlist);
+
     /** Purges the dictionary of loaded sprite frames.
      * Call this method if you receive the "Memory Warning".
      * In the short term: it will free some resources preventing your app from being killed.
