@@ -488,37 +488,33 @@ NewCullingTest::NewCullingTest()
     addChild(sprite2);
     
     auto listener = EventListenerTouchOneByOne::create();
-	listener->setSwallowTouches(true);
+    listener->setSwallowTouches(true);
     
-	listener->onTouchBegan = CC_CALLBACK_2(NewCullingTest::onTouchBegan, this);
-	listener->onTouchMoved = CC_CALLBACK_2(NewCullingTest::onTouchMoved, this);
+    listener->onTouchBegan = CC_CALLBACK_2(NewCullingTest::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(NewCullingTest::onTouchMoved, this);
     
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
 }
 
 bool NewCullingTest::onTouchBegan(Touch* touch, Event  *event)
 {
-	auto pos = touch->getLocation();
-	_lastPos = pos;
-	return true;
+    auto pos = touch->getLocation();
+    _lastPos = pos;
+    return true;
 }
 
 void NewCullingTest::onTouchMoved(Touch* touch, Event  *event)
-{
-	//Point pos = touch->getLocationInView();  //ªÒ»°¥•√˛Œª÷√
-	//pos = Director::getInstance()->convertToGL(pos);//◊¯±Í◊™ªª
-	//setPosition(pos);
+{    
+    auto pos = touch->getLocation();
     
-	auto pos = touch->getLocation();
+    auto offset = pos - _lastPos;
     
-	auto offset = pos - _lastPos;
+    auto layerPos = getPosition();
+    auto newPos = layerPos + offset;
     
-	auto layerPos = getPosition();
-	auto newPos = layerPos + offset;
-    
-	setPosition(newPos);
-	_lastPos = pos;
+    setPosition(newPos);
+    _lastPos = pos;
 }
 
 NewCullingTest::~NewCullingTest()
