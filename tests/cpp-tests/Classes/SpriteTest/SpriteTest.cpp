@@ -4941,6 +4941,7 @@ SpriteCullTest1::SpriteCullTest1()
 
     auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, nullptr);
     grossini->runAction(seq);
+    grossini->setCullingEnabled(true);
     this->addChild(grossini);
 }
 
@@ -4982,6 +4983,7 @@ SpriteCullTest2::SpriteCullTest2()
     
     auto seq = Sequence::create(right, back1, left, back2, up, back3, down, back4, nullptr);
     grossini->runAction(seq);
+    grossini->setCullingEnabled(true);
     this->addChild(grossini);
 }
 
