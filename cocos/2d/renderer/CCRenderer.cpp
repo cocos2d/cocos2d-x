@@ -23,6 +23,9 @@
  ****************************************************************************/
 
 #include "renderer/CCRenderer.h"
+
+#include <algorithm>
+
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
@@ -34,14 +37,18 @@
 #include "CCEventDispatcher.h"
 #include "CCEventListenerCustom.h"
 #include "CCEventType.h"
-#include <algorithm>
+
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
+// helper
 bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 {
     return a->getGlobalOrder() < b->getGlobalOrder();
 }
+
+// queue
 
 void RenderQueue::push_back(RenderCommand* command)
 {
@@ -92,12 +99,14 @@ void RenderQueue::clear()
     _queuePosZ.clear();
 }
 
+//
+//
+//
+static const int DEFAULT_RENDER_QUEUE = 0;
 
 //
+// constructors, destructors, init
 //
-//
-#define DEFAULT_RENDER_QUEUE 0
-
 Renderer::Renderer()
 :_lastMaterialID(0)
 ,_numQuads(0)
@@ -495,6 +504,38 @@ void Renderer::flush()
 {
     drawBatchedQuads();
     _lastMaterialID = 0;
+}
+
+// helpers
+
+bool Renderer::checkVisibility(const kmMat4 &transform, const Size &size)
+{
+    // half size of the screen
+    Size screen_half = Director::getInstance()->getWinSize();
+    screen_half.width /= 2;
+    screen_half.height /= 2;
+
+    float hSizeX = size.width/2;
+    float hSizeY = size.height/2;
+
+    kmVec4 v4world;
+    kmVec4 v4local = (kmVec4) {hSizeX, hSizeY, 0, 1};
+    kmVec4MultiplyMat4(&v4world, &v4local, &transform);
+
+    // center of screen is (0,0)
+    v4world.x -= screen_half.width;
+    v4world.y -= screen_half.height;
+
+    // convert content size to world coordinates
+    float wshw = std::max(fabsf(hSizeX * transform.mat[0] + hSizeY * transform.mat[4]), fabsf(hSizeX * transform.mat[0] - hSizeY * transform.mat[4]));
+    float wshh = std::max(fabsf(hSizeX * transform.mat[1] + hSizeY * transform.mat[5]), fabsf(hSizeX * transform.mat[1] - hSizeY * transform.mat[5]));
+
+    // compare if it in the positive quadrant of the screen
+    float tmpx = (fabsf(v4world.x)-wshw);
+    float tmpy = (fabsf(v4world.y)-wshh);
+    bool ret = (tmpx < screen_half.width && tmpy < screen_half.height);
+
+    return ret;
 }
 
 NS_CC_END

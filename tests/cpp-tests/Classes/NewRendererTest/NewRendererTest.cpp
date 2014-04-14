@@ -474,9 +474,8 @@ NewCullingTest::NewCullingTest()
 {
     Size size = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create("Images/btn-about-normal-vertical.png");
-    sprite->setRotation(-85);
+    sprite->setRotation(5);
     sprite->setPosition(Point(size.width/2,size.height/3));
-    sprite->setCullingEnabled(true);
     sprite->setScale(2);
     addChild(sprite);
     
@@ -484,7 +483,6 @@ NewCullingTest::NewCullingTest()
     sprite2->setRotation(-85);
     sprite2->setPosition(Point(size.width/2,size.height * 2/3));
     sprite2->setScale(2);
-    sprite2->setCullingEnabled(false);
     addChild(sprite2);
     
     auto listener = EventListenerTouchOneByOne::create();
