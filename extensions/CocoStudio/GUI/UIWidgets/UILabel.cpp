@@ -59,6 +59,32 @@ Label* Label::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
+    
+Label* Label::create(const std::string &text, const std::string &fontName, int fontSize)
+{
+    Label *label = new Label;
+    if (label && label->init(text, fontName, fontSize)) {
+        label->autorelease();
+        return label;
+    }
+    CC_SAFE_DELETE(label);
+    return NULL;
+}
+    
+bool Label::init(const std::string &textContent, const std::string &fontName, int fontSize)
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        this->setText(textContent);
+        this->setFontName(fontName);
+        this->setFontSize(fontSize);
+    } while (0);
+    return bRet;
+}
 
 bool Label::init()
 {

@@ -75,6 +75,43 @@ CheckBox* CheckBox::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
+    
+CheckBox* CheckBox::create(const char *backGround,
+                           const char *backGroundSelected,
+                           const char *cross,
+                           const char *backGroundDisabled,
+                           const char *frontCrossDisabled,
+                           TextureResType texType)
+{
+    CheckBox *widget = new CheckBox;
+    if (widget && widget->init(backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled,texType)) {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return NULL;
+}
+    
+bool CheckBox::init(const char *backGround,
+                const char *backGroundSelected,
+                const char *cross,
+                const char *backGroundDisabled,
+                const char *frontCrossDisabled,
+                    TextureResType texType)
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        setSelectedState(false);
+        setTouchEnabled(true);
+        loadTextures(backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled,texType);
+    } while (0);
+    
+    return bRet;
+}
 
 bool CheckBox::init()
 {

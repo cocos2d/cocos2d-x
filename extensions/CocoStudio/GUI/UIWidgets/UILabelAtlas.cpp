@@ -52,6 +52,7 @@ UICCLabelAtlas* UICCLabelAtlas::create()
     
     return NULL;
 }
+    
 
 void UICCLabelAtlas::setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
@@ -112,6 +113,21 @@ LabelAtlas* LabelAtlas::create()
     return NULL;
 }
 
+LabelAtlas* LabelAtlas::create(const std::string &string,
+                                       const std::string &charMapFile,
+                                       unsigned int itemWidth,
+                                       unsigned int itemHeight,
+                               const std::string& startCharMap)
+{
+    LabelAtlas *widget = new LabelAtlas;
+    if (widget && widget->init()){
+        widget->autorelease();
+        widget->setProperty(string, charMapFile, itemWidth, itemHeight, startCharMap);
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return NULL;
+}
 void LabelAtlas::initRenderer()
 {
     _labelAtlasRenderer = UICCLabelAtlas::create();

@@ -52,7 +52,11 @@ public:
      * Allocates and initializes.
      */
     static UICCLabelAtlas* create();
-    void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    void setProperty(const std::string& string,
+                     const std::string& charMapFile,
+                     unsigned int itemWidth,
+                     unsigned int itemHeight,
+                     unsigned int startCharMap);
     void setProperty(const std::string& string, CCTexture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     virtual void updateDisplayedOpacity(GLubyte opacity);
     virtual void draw(void);
@@ -80,9 +84,18 @@ public:
      * Allocates and initializes.
      */
     static LabelAtlas* create();
+    static LabelAtlas* create(const std::string& string,
+                                  const std::string& charMapFile,
+                                  unsigned int itemWidth,
+                                  unsigned int itemHeight,
+                              const std::string& startCharMap);
     
     /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    void setProperty(const std::string& stringValue,const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap);
+    void setProperty(const std::string& stringValue,
+                     const std::string& charMapFile,
+                     int itemWidth,
+                     int itemHeight,
+                     const std::string& startCharMap);
     
     //set string value for labelatlas.
     void setStringValue(const std::string& value);

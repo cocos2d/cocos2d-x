@@ -20,21 +20,18 @@ bool UIListViewExTest_Vertical::init()
     {
         CCSize widgetSize = m_pWidget->getSize();
         
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move by vertical direction");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("Move by vertical direction","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         
-        UILabel* alert = UILabel::create();
-        alert->setText("ListView vertical");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("ListView vertical","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         Layout* background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -69,10 +66,9 @@ bool UIListViewExTest_Vertical::init()
         
         
         // create model
-        UIButton* default_button = UIButton::create();
+        UIButton* default_button = UIButton::create("cocosgui/backtotoppressed.png",
+                                                    "cocosgui/backtotopnormal.png");
         default_button->setName("TextButton");
-        default_button->setTouchEnabled(true);
-        default_button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
         
         Layout* default_item = Layout::create();
         default_item->setTouchEnabled(true);
@@ -98,10 +94,8 @@ bool UIListViewExTest_Vertical::init()
         // add custom item
         for (int i = 0; i < count / 4; ++i)
         {
-            UIButton* custom_button = UIButton::create();
+            UIButton* custom_button = UIButton::create("cocosgui/button.png", "cocosgui/buttonHighlighted.png");
             custom_button->setName("TextButton");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -117,10 +111,8 @@ bool UIListViewExTest_Vertical::init()
         int items_count = items->count();
         for (int i = 0; i < count / 4; ++i)
         {
-            UIButton* custom_button = UIButton::create();
+            UIButton* custom_button = UIButton::create("cocosgui/button.png", "cocosgui/buttonHighlighted.png");
             custom_button->setName("TextButton");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -200,21 +192,18 @@ bool UIListViewExTest_Horizontal::init()
     {
         CCSize widgetSize = m_pWidget->getSize();
         
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move by horizontal direction");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("Move by horizontal direction","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         
-        UILabel* alert = UILabel::create();
-        alert->setText("ListView horizontal");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("ListView horizontal","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         Layout* background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -249,10 +238,9 @@ bool UIListViewExTest_Horizontal::init()
         
         
         // create model
-        UIButton* default_button = UIButton::create();
+        UIButton* default_button = UIButton::create("cocosgui/backtotoppressed.png",
+                                                    "cocosgui/backtotopnormal.png");
         default_button->setName("TextButton");
-        default_button->setTouchEnabled(true);
-        default_button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
         
         Layout* default_item = Layout::create();
         default_item->setTouchEnabled(true);
@@ -278,10 +266,8 @@ bool UIListViewExTest_Horizontal::init()
         // add custom item
         for (int i = 0; i < count / 4; ++i)
         {
-            UIButton* custom_button = UIButton::create();
+            UIButton* custom_button = UIButton::create("cocosgui/button.png", "cocosgui/buttonHighlighted.png");
             custom_button->setName("TextButton");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             
@@ -297,10 +283,8 @@ bool UIListViewExTest_Horizontal::init()
         int items_count = items->count();
         for (int i = 0; i < count / 4; ++i)
         {
-            UIButton* custom_button = UIButton::create();
+            UIButton* custom_button = UIButton::create("cocosgui/button.png", "cocosgui/buttonHighlighted.png");
             custom_button->setName("TextButton");
-            custom_button->setTouchEnabled(true);
-            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
             custom_button->setScale9Enabled(true);
             custom_button->setSize(default_button->getSize());
             

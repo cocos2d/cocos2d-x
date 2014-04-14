@@ -25,21 +25,20 @@ bool UILoadingBarTest_Left::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("LoadingBar left");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("LoadingBar left","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        
         m_pUiLayer->addWidget(alert);
         
         // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
+        UILoadingBar* loadingBar = UILoadingBar::create("cocosgui/sliderProgress.png");
         loadingBar->setName("LoadingBar");
-        loadingBar->loadTexture("cocosgui/sliderProgress.png");        
-        loadingBar->setPercent(0);
         
-        loadingBar->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        loadingBar->setPosition(ccp(widgetSize.width / 2.0f,
+                                    widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        
         m_pUiLayer->addWidget(loadingBar);
         
         return true;
@@ -108,22 +107,22 @@ bool UILoadingBarTest_Right::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("LoadingBar right");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("LoadingBar right","LoadingBar right",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        
         m_pUiLayer->addWidget(alert);
         
-        // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
-        loadingBar->setName("LoadingBar");
-        loadingBar->loadTexture("cocosgui/sliderProgress.png");
-        loadingBar->setDirection(LoadingBarTypeRight);
-        loadingBar->setPercent(0);
         
-        loadingBar->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        // Create the loading bar
+        UILoadingBar* loadingBar = UILoadingBar::create("cocosgui/sliderProgress.png");
+        loadingBar->setName("LoadingBar");
+        loadingBar->setDirection(LoadingBarTypeRight);
+        
+        loadingBar->setPosition(ccp(widgetSize.width / 2.0f,
+                                    widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        
         m_pUiLayer->addWidget(loadingBar);
         
         return true;
@@ -192,26 +191,23 @@ bool UILoadingBarTest_Left_Scale9::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("LoadingBar left scale9 render");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(20);
+        UILabel *alert = UILabel::create("LoadingBar left scale9 render","Marker Felt",20);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.7));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 2.7));
+        
         m_pUiLayer->addWidget(alert);
         
         // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
+        UILoadingBar* loadingBar = UILoadingBar::create("cocosgui/slider_bar_active_9patch.png");
         loadingBar->setName("LoadingBar");
-        loadingBar->loadTexture("cocosgui/slider_bar_active_9patch.png");
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(CCRectMake(0, 0, 0, 0));
-        /*===*/
         loadingBar->setSize(CCSizeMake(300, loadingBar->getContentSize().height));
-        /*=*/
-        loadingBar->setPercent(0);
         
-        loadingBar->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        loadingBar->setPosition(ccp(widgetSize.width / 2.0f,
+                                    widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        
         m_pUiLayer->addWidget(loadingBar);
         
         return true;
@@ -280,27 +276,24 @@ bool UILoadingBarTest_Right_Scale9::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("LoadingBar right scale9 render");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(20);
+        UILabel *alert = UILabel::create("LoadingBar right scale9 render","Marker Felt",20);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.7));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 2.7));
+        
         m_pUiLayer->addWidget(alert);
         
         // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
+        UILoadingBar* loadingBar = UILoadingBar::create("cocosgui/slider_bar_active_9patch.png");
         loadingBar->setName("LoadingBar");
-        loadingBar->loadTexture("cocosgui/slider_bar_active_9patch.png");
         loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(CCRectMake(0, 0, 0, 0));
-        /*===*/
         loadingBar->setSize(CCSizeMake(300, loadingBar->getContentSize().height));
-        /*=*/
-        loadingBar->setDirection(LoadingBarTypeRight);        
-        loadingBar->setPercent(0);
+        loadingBar->setDirection(LoadingBarTypeRight);
         
-        loadingBar->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        loadingBar->setPosition(ccp(widgetSize.width / 2.0f,
+                                    widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
+        
         m_pUiLayer->addWidget(loadingBar);
         
         return true;

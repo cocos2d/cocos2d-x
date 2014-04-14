@@ -21,29 +21,22 @@ bool UITextFieldTest::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the textfield events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(30);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",30);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);        
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("TextField");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("TextField","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         // Create the textfield
-        UITextField* textField = UITextField::create();
-        textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
-        textField->setFontSize(30);
-        textField->setPlaceHolder("input words here");
+        UITextField* textField = UITextField::create("input words here","Marker Felt",30);
         textField->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
         m_pUiLayer->addWidget(textField);
@@ -107,31 +100,24 @@ bool UITextFieldTest_MaxLength::init()
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         
         // Add a label in which the textfield events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f,
+                                              screenSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("TextField max length");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("TextField max length","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(screenSize.width / 2.0f,
+                               screenSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         // Create the textfield
-        UITextField* textField = UITextField::create();
+        UITextField* textField = UITextField::create("input words here","Marker Felt",30);
         textField->setMaxLengthEnabled(true);
         textField->setMaxLength(10);
-        textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
-        textField->setFontSize(30);
-        textField->setPlaceHolder("input words here");
         textField->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
         m_pUiLayer->addWidget(textField);
@@ -203,31 +189,24 @@ bool UITextFieldTest_Password::init()
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         
         // Add a label in which the textfield events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f,
+                                              screenSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("TextField password");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("TextField password","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 3.0f));
+        alert->setPosition(ccp(screenSize.width / 2.0f,
+                               screenSize.height / 2.0f - alert->getSize().height * 3.0f));
         m_pUiLayer->addWidget(alert);
         
         // Create the textfield
-        UITextField* textField = UITextField::create();
+        UITextField* textField = UITextField::create("input password here","Marker Felt",30);
         textField->setPasswordEnabled(true);
         textField->setPasswordStyleText("*");
-        textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
-        textField->setFontSize(30);
-        textField->setPlaceHolder("input password here");
         textField->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
         m_pUiLayer->addWidget(textField);
@@ -292,33 +271,26 @@ bool UITextFieldTest_LineWrap::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the textfield events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(30);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",30);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("TextField line wrap");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("TextField line wrap","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         // Create the textfield
-        UITextField* textField = UITextField::create();
+        UITextField* textField = UITextField::create("input words here","Marker Felt",30);
         textField->ignoreContentAdaptWithSize(false);
         textField->setSize(CCSizeMake(240, 160));
         textField->setTextHorizontalAlignment(kCCTextAlignmentCenter);
         textField->setTextVerticalAlignment(kCCVerticalTextAlignmentCenter);
-        textField->setTouchEnabled(true);
-        textField->setFontName("Marker Felt");
-        textField->setFontSize(30);
-        textField->setPlaceHolder("input words here");
         textField->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_LineWrap::textFieldEvent));
         m_pUiLayer->addWidget(textField);

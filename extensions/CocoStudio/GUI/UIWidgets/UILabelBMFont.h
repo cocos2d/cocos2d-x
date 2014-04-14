@@ -54,6 +54,12 @@ public:
      * Allocates and initializes.
      */
     static LabelBMFont* create();
+    /**
+     * Create a LabelBMFont 
+     * @text  the text to be displayed
+     * @fntFileName the fnt file to be used by the font
+     */
+    static LabelBMFont* create(const char* text, const char* fntFileName);
     
     /** init a bitmap font atlas with an initial string and the FNT file */
     void setFntFile(const char* fileName);

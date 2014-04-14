@@ -55,6 +55,8 @@ public:
      */
     static ImageView* create();
     
+    static ImageView* create(const char* imageFileName, TextureResType type = UI_TEX_TYPE_LOCAL);
+    
     /**
      * Load texture for imageview.
      *
@@ -103,6 +105,8 @@ public:
     virtual CCNode* getVirtualRenderer();
 protected:
     virtual void initRenderer();
+    virtual bool init() override;
+    virtual bool init(const char* imageFileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
     virtual void onSizeChanged();
     virtual void updateTextureColor();
     virtual void updateTextureOpacity();

@@ -11,20 +11,18 @@ bool UILabelTest::init()
     {
         CCSize widgetSize = m_pWidget->getSize();
         
-        UILabel* alert = UILabel::create();
-        alert->setText("Label");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("Label","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        
         m_pUiLayer->addWidget(alert);        
         
         // Create the label
-        UILabel* label = UILabel::create();
-        label->setText("Label");
-        label->setFontName("AmericanTypewriter");
-        label->setFontSize(30);
-        label->setPosition(ccp(widgetSize.width / 2, widgetSize.height / 2 + label->getSize().height / 4));
+        UILabel* label = UILabel::create("Label","AmericanTypewriter",30);
+        label->setPosition(ccp(widgetSize.width / 2,
+                               widgetSize.height / 2 + label->getSize().height / 4));
+        
         m_pUiLayer->addWidget(label);
         
         return true;
@@ -40,23 +38,21 @@ bool UILabelTest_LineWrap::init()
     {
         CCSize widgetSize = m_pWidget->getSize();
         
-        UILabel* alert = UILabel::create();
-        alert->setText("Label line wrap");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("Label line wrap","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        
         m_pUiLayer->addWidget(alert);
         
         // Create the line wrap
-        UILabel* label = UILabel::create();
+        UILabel* label = UILabel::create("Label can line wrap","AmericanTypewriter",32);
         label->ignoreContentAdaptWithSize(false);
         label->setSize(CCSizeMake(280, 150));
         label->setTextHorizontalAlignment(kCCTextAlignmentCenter);
-        label->setText("Label can line wrap");
-        label->setFontName("AmericanTypewriter");
-        label->setFontSize(32);
-        label->setPosition(ccp(widgetSize.width / 2, widgetSize.height / 2 - label->getSize().height / 8));
+        label->setPosition(ccp(widgetSize.width / 2,
+                               widgetSize.height / 2 - label->getSize().height / 8));
+        
         m_pUiLayer->addWidget(label);
         
         return true;
@@ -172,20 +168,18 @@ bool UILabelTest_TTF::init()
     {
         CCSize widgetSize = m_pWidget->getSize();
         
-        UILabel* alert = UILabel::create();
-        alert->setText("Label set TTF font");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("Label set TTF font","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        
         m_pUiLayer->addWidget(alert);
         
         // Create the label
-        UILabel* label = UILabel::create();
-        label->setText("Label");
-        label->setFontName("fonts/A Damn Mess.ttf");
-        label->setFontSize(30);
-        label->setPosition(ccp(widgetSize.width / 2, widgetSize.height / 2 + label->getSize().height / 4));
+        UILabel* label = UILabel::create("Label","fonts/A Damn Mess.ttf",30);
+        label->setPosition(ccp(widgetSize.width / 2,
+                               widgetSize.height / 2 + label->getSize().height / 4));
+        
         m_pUiLayer->addWidget(label);
         
         return true;

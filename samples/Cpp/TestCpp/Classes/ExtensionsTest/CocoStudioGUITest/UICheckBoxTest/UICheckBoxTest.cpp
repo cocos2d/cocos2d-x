@@ -21,31 +21,23 @@ bool UICheckBoxTest::init()
         CCSize widgetSize = m_pWidget->getSize();;
         
         // Add a label in which the checkbox events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel* alert = UILabel::create();
-        alert->setText("CheckBox");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("CheckBox","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
         m_pUiLayer->addWidget(alert);        
         
         // Create the checkbox
-        UICheckBox* checkBox = UICheckBox::create();
-        checkBox->setTouchEnabled(true);
-        checkBox->loadTextures("cocosgui/check_box_normal.png",
-                              "cocosgui/check_box_normal_press.png",
-                              "cocosgui/check_box_active.png",
-                              "cocosgui/check_box_normal_disable.png",
-                              "cocosgui/check_box_active_disable.png");
+        UICheckBox* checkBox = UICheckBox::create("cocosgui/check_box_normal.png",
+                                                  "cocosgui/check_box_normal_press.png",
+                                                  "cocosgui/check_box_active.png",
+                                                  "cocosgui/check_box_normal_disable.png",
+                                                  "cocosgui/check_box_active_disable.png");
         checkBox->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         checkBox->addEventListenerCheckBox(this, checkboxselectedeventselector(UICheckBoxTest::selectedStateEvent));
         m_pUiLayer->addWidget(checkBox);

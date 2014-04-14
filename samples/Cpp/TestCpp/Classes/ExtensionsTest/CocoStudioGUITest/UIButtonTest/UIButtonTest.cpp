@@ -20,28 +20,20 @@ bool UIButtonTest::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel* alert = UILabel::create();
-        alert->setText("Button");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
-        alert->setColor(ccc3(159, 168, 176));                
+        UILabel* alert = UILabel::create("Button","Marker Felt",30);
+        alert->setColor(ccc3(159, 168, 176));
         
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
         m_pUiLayer->addWidget(alert);
         
         // Create the button
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        UIButton* button = UIButton::create("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         m_pUiLayer->addWidget(button);
@@ -109,29 +101,21 @@ bool UIButtonTest_Scale9::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel* alert = UILabel::create();
-        alert->setText("Button scale9 render");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("Button scale9 render","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
         m_pUiLayer->addWidget(alert);
         
         // Create the button
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
+        UIButton* button = UIButton::create("cocosgui/button.png", "cocosgui/buttonHighlighted.png");
         // open scale9 render
         button->setScale9Enabled(true);
-        button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setSize(CCSizeMake(150, button->getContentSize().height * 1.5f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
@@ -184,29 +168,21 @@ bool UIButtonTest_PressedAction::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel* alert = UILabel::create();
-        alert->setText("Button Pressed Action");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("Button Pressed Action","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
         
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
         m_pUiLayer->addWidget(alert);
         
         // Create the button
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
+        UIButton* button = UIButton::create("cocosgui/animationbuttonnormal.png");
         button->setPressedActionEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "", "");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));
         m_pUiLayer->addWidget(button);
@@ -260,27 +236,19 @@ bool UIButtonTest_Title::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the text button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel* alert = UILabel::create();
-        alert->setText("Button with title");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel* alert = UILabel::create("Button with title","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
         m_pUiLayer->addWidget(alert);
         
         // Create the button with title
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
+        UIButton* button = UIButton::create("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png");
         button->setTitleText("Title Button");
         button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Title::touchEvent));

@@ -56,6 +56,11 @@ public:
     static Label* create();
     
     /**
+     * create a Label
+     */
+    static Label* create(const std::string& text, const std::string& fontName, int fontSize);
+    
+    /**
      * Changes the string value of label.
      *
      * @param text  string value.
@@ -134,6 +139,9 @@ public:
     CCVerticalTextAlignment getTextVerticalAlignment();
 protected:
     virtual bool init();
+    virtual bool init(const std::string& textContent,
+                      const std::string& fontName,
+                      int fontSize);
     virtual void initRenderer();
     virtual void onPressStateChangedToNormal();
     virtual void onPressStateChangedToPressed();

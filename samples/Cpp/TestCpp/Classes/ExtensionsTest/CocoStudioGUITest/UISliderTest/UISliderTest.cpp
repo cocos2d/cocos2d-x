@@ -23,21 +23,16 @@ bool UISliderTest::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the slider alert will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move the slider thumb");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("Move the slider thumb","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("Slider");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("Slider","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 1.75));
         m_pUiLayer->addWidget(alert);
         
         // Create the slider
@@ -110,21 +105,16 @@ bool UISliderTest_Scale9::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the slider alert will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move the slider thumb");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("Move the slider thumb","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("Slider scale9 render");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("Slider scale9 render","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 1.75));
         m_pUiLayer->addWidget(alert);
         
         // Create the slider

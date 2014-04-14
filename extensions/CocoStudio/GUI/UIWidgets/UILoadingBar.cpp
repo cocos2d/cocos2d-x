@@ -63,6 +63,19 @@ LoadingBar* LoadingBar::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
+    
+LoadingBar* LoadingBar::create(const char *textureName, int percentage)
+{
+    LoadingBar* widget = new LoadingBar;
+    if (widget && widget->init()) {
+        widget->loadTexture(textureName);
+        widget->setPercent(percentage);
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return widget;
+}
 
 void LoadingBar::initRenderer()
 {

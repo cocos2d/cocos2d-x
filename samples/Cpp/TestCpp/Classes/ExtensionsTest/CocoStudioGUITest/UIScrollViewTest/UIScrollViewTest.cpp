@@ -21,21 +21,18 @@ bool UIScrollViewTest_Vertical::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the scrollview alert will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move by vertical direction");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("Move by vertical direction","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("ScrollView vertical");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("ScrollView vertical","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -62,25 +59,23 @@ bool UIScrollViewTest_Vertical::init()
         scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
         
         
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
-        button->setPosition(ccp(innerWidth / 2, scrollView->getInnerContainerSize().height - button->getSize().height / 2));
+        UIButton* button = UIButton::create("cocosgui/animationbuttonnormal.png",
+                                            "cocosgui/animationbuttonpressed.png");
+        button->setPosition(ccp(innerWidth / 2,
+                                scrollView->getInnerContainerSize().height - button->getSize().height / 2));
         scrollView->addChild(button);
         
-        UIButton* titleButton = UIButton::create();
-        titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        UIButton* titleButton = UIButton::create("cocosgui/backtotopnormal.png",
+                                                 "cocosgui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(ccp(innerWidth / 2, button->getBottomInParent() - button->getSize().height));
         scrollView->addChild(titleButton);
         
-        UIButton* button_scale9 = UIButton::create();
-        button_scale9->setTouchEnabled(true);
+        UIButton* button_scale9 = UIButton::create("cocosgui/button.png", "cocosgui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
         button_scale9->setSize(CCSizeMake(100, button_scale9->getContentSize().height));
-        button_scale9->setPosition(ccp(innerWidth / 2, titleButton->getBottomInParent() - titleButton->getSize().height));
+        button_scale9->setPosition(ccp(innerWidth / 2,
+                                       titleButton->getBottomInParent() - titleButton->getSize().height));
         scrollView->addChild(button_scale9);
         
         imageView->setPosition(ccp(innerWidth / 2, imageView->getSize().height / 2));
@@ -135,20 +130,17 @@ bool UIScrollViewTest_Horizontal::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the scrollview alert will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move by horizontal direction");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("Move by horizontal direction","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);            
         
-        UILabel *alert = UILabel::create();
-        alert->setText("ScrollView horizontal");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("ScrollView horizontal","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -167,33 +159,28 @@ bool UIScrollViewTest_Horizontal::init()
                                     (backgroundSize.height - scrollView->getSize().height) / 2));
         m_pUiLayer->addWidget(scrollView);
         
-        UIImageView* imageView = UIImageView::create();
-        imageView->loadTexture("cocosgui/ccicon.png");
+        UIImageView* imageView = UIImageView::create("cocosgui/ccicon.png");
         
         float innerWidth = scrollView->getSize().width + imageView->getSize().width * 2;
         float innerHeight = scrollView->getSize().height;
         
         scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
         
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        UIButton* button = UIButton::create("cocosgui/animationbuttonnormal.png",
+                                            "cocosgui/animationbuttonpressed.png");
         button->setPosition(ccp(button->getSize().width / 2,
                                 scrollView->getInnerContainerSize().height - button->getSize().height / 2));
         scrollView->addChild(button);
         
-        UIButton* titleButton = UIButton::create();
-        titleButton->setTouchEnabled(true);
-        titleButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        UIButton* titleButton = UIButton::create("cocosgui/backtotopnormal.png",
+                                                 "cocosgui/backtotoppressed.png");
         titleButton->setTitleText("Title Button");
         titleButton->setPosition(ccp(button->getRightInParent() + button->getSize().width / 2,
                                     button->getBottomInParent() - button->getSize().height / 2));
         scrollView->addChild(titleButton);
         
-        UIButton* button_scale9 = UIButton::create();
-        button_scale9->setTouchEnabled(true);
+        UIButton* button_scale9 = UIButton::create("cocosgui/button.png", "cocosgui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
         button_scale9->setSize(CCSizeMake(100, button_scale9->getContentSize().height));
         button_scale9->setPosition(ccp(titleButton->getRightInParent() + titleButton->getSize().width / 2,
                                        titleButton->getBottomInParent() - titleButton->getSize().height / 2));
@@ -228,21 +215,18 @@ bool UIScrollViewTest_Both::init()
         CCSize widgetSize = m_pWidget->getSize();;
         
         // Add a label in which the dragpanel events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move by any direction");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("Move by any direction","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("ScrollView both");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("ScrollView both","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -260,9 +244,7 @@ bool UIScrollViewTest_Both::init()
                                     (backgroundSize.width - scrollView->getSize().width) / 2,
                                     (widgetSize.height - backgroundSize.height) / 2 +
                                     (backgroundSize.height - scrollView->getSize().height) / 2));
-        UIImageView* imageView = UIImageView::create();
-        imageView->setTouchEnabled(true);
-        imageView->loadTexture("cocosgui/b11.png");
+        UIImageView* imageView = UIImageView::create("cocosgui/b11.png");
         scrollView->addChild(imageView);
         
         scrollView->setInnerContainerSize(imageView->getContentSize());
@@ -295,21 +277,18 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-//        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("ScrollView scroll to percent both directrion");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(20);
+        UILabel *alert = UILabel::create("ScrollView scroll to percent both directrion","Marker Felt",20);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 4.5));
         m_pUiLayer->addWidget(alert);
         
         UILayout* background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -326,8 +305,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
                             (widgetSize.height - backgroundSize.height) / 2 +
                             (backgroundSize.height - sc->getSize().height) / 2));
         sc->scrollToPercentBothDirection(ccp(50, 50), 1, true);
-        UIImageView* iv = UIImageView::create();
-        iv->loadTexture("cocosgui/Hello.png");
+        UIImageView* iv = UIImageView::create("cocosgui/Hello.png");
         iv->setPosition(ccp(240, 160));
         sc->addChild(iv);
         m_pUiLayer->addWidget(sc);
@@ -355,21 +333,18 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-//        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
-        m_pDisplayValueLabel->setFontSize(32);
+        m_pDisplayValueLabel = UILabel::create("No Event","Marker Felt",32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              m_pDisplayValueLabel->getSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("ScrollView scroll to percent both directrion bounce");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(20);
+        UILabel *alert = UILabel::create("ScrollView scroll to percent both directrion bounce","Marker Felt",20);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 4.5));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 4.5));
         m_pUiLayer->addWidget(alert);
         
         UILayout* background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -387,8 +362,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
                             (widgetSize.height - backgroundSize.height) / 2 +
                             (backgroundSize.height - sc->getSize().height) / 2));
         sc->scrollToPercentBothDirection(ccp(50, 50), 1, true);
-        UIImageView* iv = UIImageView::create();
-        iv->loadTexture("cocosgui/Hello.png");
+        UIImageView* iv = UIImageView::create("cocosgui/Hello.png");
         iv->setPosition(ccp(240, 160));
         sc->addChild(iv);
         m_pUiLayer->addWidget(sc);

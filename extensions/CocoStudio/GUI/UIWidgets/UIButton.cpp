@@ -83,6 +83,38 @@ Button* Button::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
+    
+Button* Button::create(const char* normalImage,
+                       const char* selectedImage,
+                       const char* disableImage,
+                       TextureResType texType)
+{
+    Button *btn = new Button;
+    if (btn && btn->init(normalImage, selectedImage, disableImage, texType)) {
+        btn->autorelease();
+        return btn;
+    }
+    CC_SAFE_DELETE(btn);
+    return NULL;
+}
+
+bool Button::init(const char* normalImage,
+                  const char* selectedImage,
+                  const char* disableImage,
+                  TextureResType texType)
+{
+    bool bRet = true;
+    do {
+        if(!Widget::init())
+        {
+            bRet = false;
+            break;
+        }
+        setTouchEnabled(true);
+        this->loadTextures(normalImage, selectedImage, disableImage,texType);
+    } while (0);
+    return bRet;
+}
 
 bool Button::init()
 {

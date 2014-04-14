@@ -19,20 +19,18 @@ bool UIRichTextTest::init()
         CCSize widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("RichText");
-        alert->setFontName("Marker Felt");
-        alert->setFontSize(30);
+        UILabel *alert = UILabel::create("RichText","Marker Felt",30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.125));
+        alert->setPosition(ccp(widgetSize.width / 2.0f,
+                               widgetSize.height / 2.0f - alert->getSize().height * 3.125));
         m_pUiLayer->addWidget(alert);
         
         
-        UIButton* button = UIButton::create();
-        button->setTouchEnabled(true);
-        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        UIButton* button = UIButton::create("cocosgui/animationbuttonnormal.png",
+                                            "cocosgui/animationbuttonpressed.png");
         button->setTitleText("switch");
-        button->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getSize().height * 2.5));
+        button->setPosition(ccp(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f + button->getSize().height * 2.5));
         button->addTouchEventListener(this, toucheventselector(UIRichTextTest::touchEvent));
         m_pUiLayer->addWidget(button);
         

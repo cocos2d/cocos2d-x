@@ -78,6 +78,8 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
     
     return NULL;
 }
+    
+    
 
 void UICCTextField::onEnter()
 {
@@ -385,6 +387,34 @@ TextField* TextField::create()
     }
     CC_SAFE_DELETE(widget);
     return NULL;
+}
+    
+    
+TextField* TextField::create(const std::string &placeHolder, const std::string &fontName, int fontSize)
+{
+    TextField *widget = new TextField;
+    if (widget && widget->init(placeHolder, fontName, fontSize)) {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return NULL;
+}
+    
+bool TextField::init(const std::string &placeHolder, const std::string &fontName, int fontSize)
+{
+    bool bRet = true;
+    do {
+        if (!Widget::init()) {
+            bRet = false;
+            break;
+        }
+        setTouchEnabled(true);
+        this->setPlaceHolder(placeHolder);
+        this->setFontName(fontName);
+        this->setFontSize(fontSize);
+    } while (0);
+    return bRet;
 }
     
 bool TextField::init()
