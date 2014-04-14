@@ -64,6 +64,8 @@ struct RenderStackElement
     ssize_t currentIndex;
 };
 
+class GroupCommandManager;
+
 /* Class responsible for the rendering in.
 
 Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
@@ -110,6 +112,8 @@ public:
     /* RenderCommands (except) QuadCommand should update this value */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
 
+    inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
+    
 protected:
 
     void setupIndices();
@@ -148,6 +152,10 @@ protected:
     // stats
     ssize_t _drawnBatches;
     ssize_t _drawnVertices;
+    //the flag for checking whether renderer is rendering
+    bool _isRendering;
+    
+    GroupCommandManager* _groupCommandManager;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;

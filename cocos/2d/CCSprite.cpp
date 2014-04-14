@@ -276,6 +276,7 @@ Sprite::Sprite(void)
 : _shouldBeHidden(false)
 , _texture(nullptr)
 , _insideBounds(true)
+, _cullingEnabled(false)
 {
 }
 
@@ -621,9 +622,16 @@ void Sprite::drawDebugData()
 }
 #endif //CC_SPRITE_DEBUG_DRAW
 
+void Sprite::setCullingEnabled(bool enabled)
+{
+    _cullingEnabled = enabled;
+}
+
 // Culling function from cocos2d-iphone CCSprite.m file
 bool Sprite::isInsideBounds() const
 {
+    if(!_cullingEnabled) return true;
+    
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
     screen_half.width /= 2;
