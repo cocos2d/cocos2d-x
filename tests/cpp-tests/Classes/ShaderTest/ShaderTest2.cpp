@@ -678,7 +678,7 @@ void OutlineSprite::buildCustomUniforms()
 void OutlineSprite::setCustomUniforms()
 {
     GLfloat color[3] = {1.0, 0.2, 0.3};
-    GLfloat radius = 0.5;
+    GLfloat radius = 0.01;
     GLfloat threshold = 1.75;
     
     getShaderProgram()->setUniformLocationWith3fv(_outlineColorUniformLocation, color, 1);
