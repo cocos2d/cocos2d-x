@@ -817,9 +817,16 @@ Developers:
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
         Fixed a potential memory leak in CCEditBoxImplIOS.mm
+        Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
+        
+    gaoxiaosong
+        Fixed a warning in cpCollision.c
+        
+    sachingarg05
+        Re-added orientation change callback in java activity
     
 Retired Core Developers:
     WenSheng Yang

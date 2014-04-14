@@ -198,7 +198,7 @@ local function SpriteProgressBarTintAndFade()
     left:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.TintTo:create(1, 255, 0, 0), cc.TintTo:create(1, 0, 255, 0), cc.TintTo:create(1, 0, 0, 255))))
 	layer:addChild(left)
 
-    left:addChild(cc.Label:create("Tint", "fonts/Marker Felt.ttf", 20.0))
+    left:addChild(cc.Label:createWithTTF("Tint", "fonts/Marker Felt.ttf", 20.0))
 
     local middle = cc.ProgressTimer:create(cc.Sprite:create(s_pPathSister2))
     middle:setType(cc.PROGRESS_TIMER_TYPE_BAR)
@@ -213,7 +213,7 @@ local function SpriteProgressBarTintAndFade()
     middle:runAction(cc.RepeatForever:create(fade2))
 	layer:addChild(middle)
 
-    middle:addChild(cc.Label:create("Fade", "fonts/Marker Felt.ttf", 20.0))
+    middle:addChild(cc.Label:createWithTTF("Fade", "fonts/Marker Felt.ttf", 20.0))
 
     local right = cc.ProgressTimer:create(cc.Sprite:create(s_pPathSister2))
     right:setType(cc.PROGRESS_TIMER_TYPE_BAR)
@@ -227,7 +227,7 @@ local function SpriteProgressBarTintAndFade()
     right:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.FadeTo:create(1.0, 0), cc.FadeTo:create(1.0, 255))))
 	layer:addChild(right)
 
-    right:addChild(cc.Label:create("Tint and Fade", "fonts/Marker Felt.ttf", 20.0))
+    right:addChild(cc.Label:createWithTTF("Tint and Fade", "fonts/Marker Felt.ttf", 20.0))
 
 	Helper.subtitleLabel:setString("ProgressTo Bar Mid")
 	return layer

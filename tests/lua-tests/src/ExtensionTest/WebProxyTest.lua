@@ -15,7 +15,7 @@
     local receiveTextTimes = 0
     local receiveBinaryTimes = 0
     
-    local label = cc.Label:create("WebSocket Test", s_arialPath, 28)
+    local label = cc.Label:createWithTTF("WebSocket Test", s_arialPath, 28)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p( winSize.width / 2, winSize.height - MARGIN))
     layer:addChild(label, 0)
@@ -37,7 +37,7 @@
             end
         end
     end
-    local labelSendText = cc.Label:create("Send Text", s_arialPath, 22)
+    local labelSendText = cc.Label:createWithTTF("Send Text", s_arialPath, 22)
     labelSendText:setAnchorPoint(0.5, 0.5)
     local itemSendText  = cc.MenuItemLabel:create(labelSendText)
     itemSendText:registerScriptTapHandler(onMenuSendTextClicked)
@@ -56,7 +56,7 @@
             end
         end
     end
-    local labelSendBinary = cc.Label:create("Send Binary", s_arialPath, 22)
+    local labelSendBinary = cc.Label:createWithTTF("Send Binary", s_arialPath, 22)
     labelSendBinary:setAnchorPoint(cc.p(0.5, 0.5))
     local itemSendBinary = cc.MenuItemLabel:create(labelSendBinary)
     itemSendBinary:registerScriptTapHandler(onMenuSendBinaryClicked)
@@ -64,19 +64,19 @@
     menuRequest:addChild(itemSendBinary)
 
     --Send Text Status Label
-    sendTextStatus = cc.Label:create("Send Text WS is waiting...", s_arialPath, 14,cc.size(160, 100),cc.VERTICAL_TEXT_ALIGNMENT_CENTER,cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+    sendTextStatus = cc.Label:createWithTTF("Send Text WS is waiting...", s_arialPath, 14,cc.size(160, 100),cc.VERTICAL_TEXT_ALIGNMENT_CENTER,cc.VERTICAL_TEXT_ALIGNMENT_TOP)
     sendTextStatus:setAnchorPoint(cc.p(0, 0))
     sendTextStatus:setPosition(cc.p(0, 25))
     layer:addChild(sendTextStatus)
 
     --Send Binary Status Label
-    sendBinaryStatus = cc.Label:create("Send Binary WS is waiting...", s_arialPath, 14, cc.size(160, 100), cc.VERTICAL_TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+    sendBinaryStatus = cc.Label:createWithTTF("Send Binary WS is waiting...", s_arialPath, 14, cc.size(160, 100), cc.VERTICAL_TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP)
     sendBinaryStatus:setAnchorPoint(cc.p(0, 0))
     sendBinaryStatus:setPosition(cc.p(160, 25))
     layer:addChild(sendBinaryStatus)
 
     --Error Label
-    errorStatus = cc.Label:create("Error WS is waiting...", s_arialPath, 14, cc.size(160, 100), cc.VERTICAL_TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+    errorStatus = cc.Label:createWithTTF("Error WS is waiting...", s_arialPath, 14, cc.size(160, 100), cc.VERTICAL_TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP)
     errorStatus:setAnchorPoint(cc.p(0, 0))
     errorStatus:setPosition(cc.p(320, 25))
     layer:addChild(errorStatus)
