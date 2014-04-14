@@ -72,7 +72,7 @@ end
 function UserDefaultTestMain()
     local ret = cc.Scene:create()
     local s = cc.Director:getInstance():getWinSize()
-    local  label = cc.Label:create("UserDefault test see log", s_arialPath, 28)
+    local  label = cc.Label:createWithTTF("UserDefault test see log", s_arialPath, 28)
     ret:addChild(label, 0)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition( cc.p(s.width/2, s.height-50) )
