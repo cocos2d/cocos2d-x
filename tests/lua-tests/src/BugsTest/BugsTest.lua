@@ -382,7 +382,7 @@ local function BugTest1159()
        pScene:addChild(pLayer)
        cc.Director:getInstance():replaceScene(cc.TransitionPageTurn:create(1.0, pScene, false))
 	end
-    local label = cc.MenuItemLabel:createWithSystemFont(cc.Label:createWithSystemFont("Flip Me", "Helvetica", 24))
+    local label = cc.MenuItemLabel:create(cc.Label:createWithSystemFont("Flip Me", "Helvetica", 24))
     label:setAnchorPoint(cc.p(0.5, 0.5))
     label:registerScriptTapHandler(menuCallback)
     local menu = cc.Menu:create()
