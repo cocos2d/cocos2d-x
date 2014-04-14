@@ -150,18 +150,19 @@ void ShaderSprite::setBackgroundNotification()
 
 void ShaderSprite::initShader()
 {
-    GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
-                                                                     FileUtils::getInstance()->fullPathForFilename(_fragSourceFile).c_str())->getCString();
-    const GLchar* vertSource;
+    auto fileUtiles = FileUtils::getInstance();
+    auto fragmentFilePath = fileUtiles->fullPathForFilename(_fragSourceFile);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFilePath);
+    std::string vertSource;
     if (_vertSourceFile.empty()) {
         vertSource = ccPositionTextureColor_vert;
     }else{
-        vertSource = (GLchar*)String::createWithContentsOfFile(
-                                                               FileUtils::getInstance()->fullPathForFilename(_vertSourceFile).c_str())->getCString();
+        std::string vertexFilePath = fileUtiles->fullPathForFilename(_vertSourceFile);
+        vertSource = fileUtiles->getStringFromFile(vertexFilePath);
     }
 
     auto program = new GLProgram();
-    program->initWithByteArrays(vertSource, fragSource);
+    program->initWithByteArrays(vertSource.c_str(), fragSource.c_str());
     setShaderProgram(program);
     program->release();
     
