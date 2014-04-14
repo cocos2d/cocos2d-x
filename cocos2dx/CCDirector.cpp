@@ -460,7 +460,7 @@ void CCDirector::purgeCachedData(void)
     {
         CCSpriteFrameCache::sharedSpriteFrameCache()->purgeSharedSpriteFrameCache();
         CCTextureCache::sharedTextureCache()->removeUnusedTextures();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
         CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 #endif
     }
