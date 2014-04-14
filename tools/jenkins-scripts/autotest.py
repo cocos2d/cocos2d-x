@@ -4,6 +4,8 @@ import sys
 import subprocess
 import socket
 import time
+import smtplib
+from email.mime.text import MIMEText
 
 HOST_MAC = 'localhost'
 HOST_ANDROID = ''
@@ -29,7 +31,9 @@ def getADBDeviceIP():
 			if(items[2] != '127.0.0.1'):
 				return items[2]
 
+lastTestInfo = 'last test:'
 def autotest(type):
+	print 'will run autotest on (0:mac, 1:android, 2:ios):', type
 	soc = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
 	if type == TYPE_MAC:
 		soc.connect((HOST_MAC, PORT))
@@ -45,6 +49,12 @@ def autotest(type):
 	while True:
 		data = soc.recv(1024)
 		print data
+		if data == 'TestEnd':
+			lastTestInfo = True
+			break
+		global lastTestInfo
+		if len(data) > len('\n') :
+			lastTestInfo = data
 		if not data: break
 	
 	print 'test end and close socket.'
@@ -150,10 +160,73 @@ def ANDROID_BUILD():
 		return openProj()
 	return buildAndRun()
 #----------------autotest-android build and run end----------------#
+EMAIL_KEYS={
+	0:'EMAIL_HOST',
+	1:'EMAIL_USER',
+	2:'EMAIL_PWD',
+	3:'EMAIL_POSTFIX',
+	4:'EMAIL_LIST',
+	5:'NEED_SEND_EMAIL'
+}
+
+OBJ_EMAIL_INFO = {}
+print 'will get env info.'
+for key in EMAIL_KEYS:
+	if os.environ.has_key(EMAIL_KEYS[key]):
+		OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = os.environ[EMAIL_KEYS[key]]
+		if key == 4:
+			# string to list by ' ', for separate users.
+			OBJ_EMAIL_INFO[EMAIL_KEYS[4]] = OBJ_EMAIL_INFO[EMAIL_KEYS[4]].split(' ')
+
+if len(sys.argv) > EMAIL_KEYS[NEED_SEND_EMAIL]:
+	argvInput = sys.argv
+	print 'argvInput:', argvInput
+	for key in EMAIL_KEYS:
+		OBJ_EMAIL_INFO[EMAIL_KEYS[key]] = argvInput[key+1]
+		if key == 4:
+			OBJ_EMAIL_INFO[EMAIL_KEYS[4]] = OBJ_EMAIL_INFO[EMAIL_KEYS[4]].split(' ')
+
+print 'OBJ_EMAIL_INFO:', OBJ_EMAIL_INFO
+def send_mail(to_list,sub,title,content):
+	print 'send email begin---'
+	mail_user = OBJ_EMAIL_INFO[ EMAIL_KEYS[1] ]
+	mail_postfix = OBJ_EMAIL_INFO[ EMAIL_KEYS[3] ]
+	mail_host = OBJ_EMAIL_INFO[ EMAIL_KEYS[0] ]
+	mail_pass = OBJ_EMAIL_INFO[ EMAIL_KEYS[2] ]
+	me = mail_user+"<"+mail_user+"@"+mail_postfix+">"
+	msg = MIMEText(content,_subtype='plain',_charset='gb2312')
+	msg['Subject'] = sub
+	msg['From'] = me
+	msg['To'] = " ".join(to_list)
+	print 'to users:', msg['To']
+	msg['Content'] = 'test'
+	try:
+		print 'try send email:'
+		s = smtplib.SMTP()
+		stConnectEmail = s.connect(mail_host)
+		print 'status of connect email:', stConnectEmail
+		s.login(mail_user,mail_pass)
+		s.sendmail(me, to_list, str(msg))
+		print 'info:', me, to_list, str(msg)
+		s.close()
+		appendToResult( 'send email true:' + str(msg) )
+		return True
+	except Exception, e:
+		print 'send email false.'
+		appendToResult( 'send email false:' + str(e) )
+        print str(e)
+        return False
+
+def sendEmail():
+	strContent = 'last test is:' + lastTestInfo
+	print 'in send email, lastTestInfo:', lastTestInfo
+	send_mail(OBJ_EMAIL_INFO[EMAIL_KEYS[4]], "autotest result", 'for error.', strContent)
+	print 'send email end.'
 
 def main():
 	print 'will build mac project.'
 	suc_build_mac = MAC_BUILD()
+	print 'suc_build_mac is:', suc_build_mac
 	# print 'will build android project.'
 	# suc_build_android = ANDROID_BUILD()
 	if suc_build_mac:
@@ -161,6 +234,9 @@ def main():
 	if suc_build_android:
 		print 'will run android autotest.'
 		autotest(TYPE_ANDROID)
+	print 'lastTestInfo:', lastTestInfo
+	if lastTestInfo != True:
+		sendEmail()
 
 
 # -------------- main --------------
