@@ -116,7 +116,6 @@ platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCImage.cpp \
 renderer/CCCustomCommand.cpp \
-renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCMaterialManager.cpp \
 renderer/CCQuadCommand.cpp \
