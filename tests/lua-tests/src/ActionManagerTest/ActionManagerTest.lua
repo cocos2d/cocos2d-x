@@ -68,7 +68,7 @@ local function PauseTest()
     local function onNodeEvent(event)
         if event == "enter" then
             local  s = cc.Director:getInstance():getWinSize()
-            local  l = cc.Label:create("After 3 seconds grossini should move", "fonts/Thonburi.ttf", 16)
+            local  l = cc.Label:createWithTTF("After 3 seconds grossini should move", "fonts/Thonburi.ttf", 16)
             ret:addChild(l)
             l:setAnchorPoint(cc.p(0.5, 0.5))
             l:setPosition( cc.p(s.width / 2, 245) )
@@ -102,7 +102,7 @@ end
 --------------------------------------------------------------------
 local function RemoveTest()
     local ret = createTestLayer("Remove Test")
-    local  l = cc.Label:create("Should not crash", "fonts/Thonburi.ttf", 16)
+    local  l = cc.Label:createWithTTF("Should not crash", "fonts/Thonburi.ttf", 16)
     local  s = cc.Director:getInstance():getWinSize()
     ret:addChild(l)
     l:setAnchorPoint(cc.p(0.5, 0.5))
@@ -147,7 +147,7 @@ local function ResumeTest()
 
     local function onNodeEvent(event)
         if event == "enter" then
-            local  l = cc.Label:create("Grossini only rotate/scale in 3 seconds", "fonts/Thonburi.ttf", 16)
+            local  l = cc.Label:createWithTTF("Grossini only rotate/scale in 3 seconds", "fonts/Thonburi.ttf", 16)
             ret:addChild(l)
             local  s = cc.Director:getInstance():getWinSize()
             l:setAnchorPoint(cc.p(0.5, 0.5))

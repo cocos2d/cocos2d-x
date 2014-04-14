@@ -357,7 +357,7 @@ local function initWithMainTest(scene, asubtest, nNodes)
     menu:setPosition(s.width / 2, s.height - 65)
     scene:addChild(menu, 1)
 
-    infoLabel = cc.Label:create("0 nodes", s_markerFeltFontPath, 30)
+    infoLabel = cc.Label:createWithTTF("0 nodes", s_markerFeltFontPath, 30)
     infoLabel:setColor(cc.c3b(0, 200, 20))
     infoLabel:setAnchorPoint(cc.p(0.5, 0.5))
     infoLabel:setPosition(s.width / 2, s.height - 90)
@@ -389,7 +389,7 @@ local function initWithMainTest(scene, asubtest, nNodes)
     scene:addChild(subMenu, 1)
 
     --  add title label
-    titleLabel = cc.Label:create("No title", s_arialPath, 40)
+    titleLabel = cc.Label:createWithTTF("No title", s_arialPath, 40)
     scene:addChild(titleLabel, 1)
     titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     titleLabel:setPosition(s.width / 2, s.height - 32)

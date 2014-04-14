@@ -35,7 +35,7 @@ local function updateLayer()
     cc.MenuItemFont:setFontName("Arial")
     cc.MenuItemFont:setFontSize(24)
 
-    local progressLable = cc.Label:create("",s_arialPath,30)
+    local progressLable = cc.Label:createWithTTF("",s_arialPath,30)
     progressLable:setAnchorPoint(cc.p(0.5, 0.5))
     progressLable:setPosition(cc.p(140,50))
     layer:addChild(progressLable)
