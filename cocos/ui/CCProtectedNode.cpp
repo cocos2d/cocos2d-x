@@ -33,7 +33,7 @@
 #if CC_USE_PHYSICS
 #include "CCPhysicsBody.h"
 #endif
-#include "CCScene.h"
+#include "CCLayer.h"
 
 NS_CC_BEGIN
 
@@ -96,16 +96,12 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     this->insertProtectedChild(child, zOrder);
     
 #if CC_USE_PHYSICS
-    if (child->getPhysicsBody() != nullptr)
-    {
-        child->getPhysicsBody()->setPosition(this->convertToWorldSpace(child->getPosition()));
-    }
-    
     for (Node* node = this->getParent(); node != nullptr; node = node->getParent())
     {
-        if (dynamic_cast<Scene*>(node) != nullptr)
+        Layer* layer = dynamic_cast<Layer*>(node);
+        if (layer != nullptr && layer->getPhysicsWorld() != nullptr)
         {
-            (dynamic_cast<Scene*>(node))->addChildToPhysicsWorld(child);
+            (dynamic_cast<Layer*>(node))->addChildToPhysicsWorld(child);
             break;
         }
     }
