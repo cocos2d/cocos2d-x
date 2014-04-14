@@ -823,6 +823,9 @@ Developers:
         
     gaoxiaosong
         Fixed a warning in cpCollision.c
+        
+    sachingarg05
+        Re-added orientation change callback in java activity
     
 Retired Core Developers:
     WenSheng Yang
