@@ -5,6 +5,8 @@ cocos2d-x-3.0final ?.? 2014
      [FIX]          Android: Cocos2dxHelper.runOnGLThread() can't work
      [FIX]          Animation: Added 'loops' parameter to Animation::createWithSpriteFrames
      [FIX]          Audio: can not resume after pausing on windows
+     [FIX]          Audio: stopalleffect lead to stop background music on WP8
+     [FIX]          Audio: play effect may lead to memory leak on WP8
      [FIX]          CocoStudio: Potential crash in SceneReader::createNodeWithSceneFile
      [FIX]          Control: ControlButton can't swallow touch event
      [FIX]          Event: Removing and re-adding an event listener will trigger an assert
