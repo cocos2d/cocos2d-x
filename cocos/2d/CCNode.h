@@ -1253,23 +1253,23 @@ public:
      * Converts a Point to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Point convertToNodeSpaceAR(const Point& worldPoint) const;
+    Vector2 convertToNodeSpaceAR(const Vector2& worldPoint) const;
 
     /**
      * Converts a local Point to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
-    Point convertToWorldSpaceAR(const Point& nodePoint) const;
+    Vector2 convertToWorldSpaceAR(const Vector2& nodePoint) const;
 
     /**
      * convenience methods which take a Touch instead of Point
      */
-    Point convertTouchToNodeSpace(Touch * touch) const;
+    Vector2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
      * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
      */
-    Point convertTouchToNodeSpaceAR(Touch * touch) const;
+    Vector2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
      *  Sets an additional transform matrix to the node.

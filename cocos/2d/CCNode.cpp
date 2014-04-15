@@ -1517,15 +1517,15 @@ Vector2 Node::convertToWorldSpace(const Vector2& nodePoint) const
 
 }
 
-Point Node::convertToNodeSpaceAR(const Point& worldPoint) const
+Vector2 Node::convertToNodeSpaceAR(const Vector2& worldPoint) const
 {
-    Point nodePoint = convertToNodeSpace(worldPoint);
+    Vector2 nodePoint = convertToNodeSpace(worldPoint);
     return nodePoint - _anchorPointInPoints;
 }
 
-Point Node::convertToWorldSpaceAR(const Point& nodePoint) const
+Vector2 Node::convertToWorldSpaceAR(const Vector2& nodePoint) const
 {
-    Point pt = nodePoint + _anchorPointInPoints;
+    Vector2 pt = nodePoint + _anchorPointInPoints;
     return convertToWorldSpace(pt);
 }
 
@@ -1536,12 +1536,13 @@ Point Node::convertToWindowSpace(const Point& nodePoint) const
 }
 
 // convenience methods which take a Touch instead of Point
-Point Node::convertTouchToNodeSpace(Touch *touch) const
+Vector2 Node::convertTouchToNodeSpace(Touch *touch) const
 {
     Point point = touch->getLocation();
     return this->convertToNodeSpace(point);
 }
-Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
+
+Vector2 Node::convertTouchToNodeSpaceAR(Touch *touch) const
 {
     Point point = touch->getLocation();
     return this->convertToNodeSpaceAR(point);
