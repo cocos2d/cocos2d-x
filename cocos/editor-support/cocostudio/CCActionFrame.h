@@ -238,7 +238,7 @@ public:
 	*
 	* @return the move action position.
 	*/
-	cocos2d::Point getPosition();
+	Vector2 getPosition();
 
 	/**
 	* Gets the ActionInterval of ActionFrame.
@@ -249,7 +249,7 @@ public:
 	*/
 	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
-	cocos2d::Point _position;
+    Vector2 _position;
 };
 
 /**

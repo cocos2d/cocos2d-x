@@ -188,7 +188,7 @@ public:
     inline int getGroup() const { return _group; }
     
     /** get the body position. */
-    Point getPosition() const;
+    Vector2 getPosition() const;
     /** get the body rotation. */
     float getRotation() const;
     

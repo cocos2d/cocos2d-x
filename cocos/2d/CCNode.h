@@ -296,7 +296,7 @@ public:
      * In js and lua return value is table which contains x,y
      * @endcode
      */
-    virtual const Point& getPosition() const;
+    virtual const Vector2& getPosition() const;
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
@@ -1379,7 +1379,7 @@ protected:
     float _scaleY;                  ///< scaling factor on y-axis
     float _scaleZ;                  ///< scaling factor on z-axis
 
-    Point _position;                ///< position of the node
+    Vector2 _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
 
     float _skewX;                   ///< skew angle on x-axis

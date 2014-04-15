@@ -410,7 +410,7 @@ void Node::setScaleY(float scaleY)
 
 
 /// position getter
-const Point& Node::getPosition() const
+const Vector2& Node::getPosition() const
 {
     return _position;
 }

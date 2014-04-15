@@ -361,7 +361,7 @@ void PhysicsBody::setRotation(float rotation)
     }
 }
 
-Point PhysicsBody::getPosition() const
+Vector2 PhysicsBody::getPosition() const
 {
     cpVect vec = cpBodyGetPos(_info->getBody());
     return PhysicsHelper::cpv2point(vec) - _positionOffset;

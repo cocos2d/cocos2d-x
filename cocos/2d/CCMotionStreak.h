@@ -75,7 +75,7 @@ public:
     // Overrides
     virtual void setPosition(const Vector2& position) override;
     virtual void setPosition(float x, float y) override;
-    virtual const Point& getPosition() const override;
+    virtual const Vector2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual void setPositionX(float x) override;
     virtual void setPositionY(float y) override;
@@ -128,7 +128,7 @@ protected:
     /** texture used for the motion streak */
     Texture2D* _texture;
     BlendFunc _blendFunc;
-    Point _positionR;
+    Vector2 _positionR;
 
     float _stroke;
     float _fadeDelta;
