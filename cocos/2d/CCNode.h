@@ -44,7 +44,6 @@
 NS_CC_BEGIN
 
 class GridBase;
-class Point;
 class Touch;
 class Action;
 class LabelProtocol;

@@ -47,7 +47,6 @@ class SpriteBatchNode;
 class SpriteFrame;
 class Animation;
 class Rect;
-class Point;
 class Size;
 class Texture2D;
 struct transformValues_;
@@ -319,7 +318,7 @@ public:
     /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const Point& getOffsetPosition(void) const { return _offsetPosition; }
+    inline const Vector2& getOffsetPosition(void) const { return _offsetPosition; }
 
 
     /**
@@ -560,8 +559,8 @@ protected:
     bool   _rectRotated;                    /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)
-    Point _offsetPosition;
-    Point _unflippedOffsetPositionFromCenter;
+    Vector2 _offsetPosition;
+    Vector2 _unflippedOffsetPositionFromCenter;
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;
