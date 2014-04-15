@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-const Point CCPointZero = Point::ZERO;
+const Vector2 CCPointZero = Vector2::ZERO;
 
 /* The "zero" size -- equivalent to Size(0, 0). */
 const Size CCSizeZero = Size::ZERO;
@@ -83,7 +83,7 @@ void ccDrawFree()
     DrawPrimitives::free();
 }
 
-void ccDrawPoint( const Point& point )
+void ccDrawPoint( const Vector2& point )
 {
     DrawPrimitives::drawPoint(point);
 }
@@ -93,17 +93,17 @@ void ccDrawPoints( const Vector2 *points, unsigned int numberOfPoints )
     DrawPrimitives::drawPoints(points, numberOfPoints);
 }
 
-void ccDrawLine( const Point& origin, const Point& destination )
+void ccDrawLine( const Vector2& origin, const Vector2& destination )
 {
     DrawPrimitives::drawLine(origin, destination);
 }
 
-void ccDrawRect( Point origin, Point destination )
+void ccDrawRect( Vector2 origin, Vector2 destination )
 {
     DrawPrimitives::drawRect(origin, destination);
 }
 
-void ccDrawSolidRect( Point origin, Point destination, Color4F color )
+void ccDrawSolidRect( Vector2 origin, Vector2 destination, Color4F color )
 {
     DrawPrimitives::drawSolidRect(origin, destination, color);
 }
@@ -118,32 +118,32 @@ void ccDrawSolidPoly( const Vector2 *poli, unsigned int numberOfPoints, Color4F 
     DrawPrimitives::drawSolidPoly(poli, numberOfPoints, color);
 }
 
-void ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void ccDrawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter, scaleX, scaleY);
 }
 
-void ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void ccDrawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
     DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter);
 }
 
-void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void ccDrawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
 {
     DrawPrimitives::drawSolidCircle(center, radius, angle, segments, scaleX, scaleY);
 }
 
-void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+void ccDrawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments)
 {
     DrawPrimitives::drawSolidCircle(center, radius, angle, segments);
 }
 
-void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
+void ccDrawQuadBezier(const Vector2& origin, const Vector2& control, const Vector2& destination, unsigned int segments)
 {
     DrawPrimitives::drawQuadBezier(origin, control, destination, segments);
 }
 
-void ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
+void ccDrawCubicBezier(const Vector2& origin, const Vector2& control1, const Vector2& control2, const Vector2& destination, unsigned int segments)
 {
     DrawPrimitives::drawCubicBezier(origin, control1, control2, destination, segments);
 }

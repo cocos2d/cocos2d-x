@@ -83,11 +83,11 @@ Node::Node(void)
 , _scaleY(1.0f)
 , _scaleZ(1.0f)
 , _positionZ(0.0f)
-, _position(Point::ZERO)
+, _position(Vector2::ZERO)
 , _skewX(0.0f)
 , _skewY(0.0f)
-, _anchorPointInPoints(Point::ZERO)
-, _anchorPoint(Point::ZERO)
+, _anchorPointInPoints(Vector2::ZERO)
+, _anchorPoint(Vector2::ZERO)
 , _contentSize(Size::ZERO)
 , _useAdditionalTransform(false)
 , _transformDirty(true)
@@ -442,13 +442,13 @@ void Node::getPosition(float* x, float* y) const
 
 void Node::setPosition(float x, float y)
 {
-    setPosition(Point(x, y));
+    setPosition(Vector2(x, y));
 }
 
 void Node::setPosition3D(const Vector3& position)
 {
     _positionZ = position.z;
-    setPosition(Point(position.x, position.y));
+    setPosition(Vector2(position.x, position.y));
 }
 
 Vector3 Node::getPosition3D() const
@@ -467,7 +467,7 @@ float Node::getPositionX() const
 
 void Node::setPositionX(float x)
 {
-    setPosition(Point(x, _position.y));
+    setPosition(Vector2(x, _position.y));
 }
 
 float Node::getPositionY() const
@@ -477,7 +477,7 @@ float Node::getPositionY() const
 
 void Node::setPositionY(float y)
 {
-    setPosition(Point(_position.x, y));
+    setPosition(Vector2(_position.x, y));
 }
 
 float Node::getPositionZ() const
@@ -534,7 +534,7 @@ const Vector2& Node::getAnchorPoint() const
 void Node::setAnchorPoint(const Vector2& point)
 {
 #if CC_USE_PHYSICS
-    if (_physicsBody != nullptr && !point.equals(Point::ANCHOR_MIDDLE))
+    if (_physicsBody != nullptr && !point.equals(Vector2::ANCHOR_MIDDLE))
     {
         CCLOG("Node warning: This node has a physics body, the anchor must be in the middle, you cann't change this to other value.");
         return;
@@ -544,7 +544,7 @@ void Node::setAnchorPoint(const Vector2& point)
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
@@ -561,7 +561,7 @@ void Node::setContentSize(const Size & size)
     {
         _contentSize = size;
 
-        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
+        _anchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y );
         _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
@@ -1354,7 +1354,7 @@ const Matrix& Node::getNodeToParentTransform() const
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Point::ZERO))
+        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vector2::ZERO))
         {
             x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
             y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
@@ -1397,7 +1397,7 @@ const Matrix& Node::getNodeToParentTransform() const
             _transform = _transform * skewMatrix;
 
             // adjust anchor point
-            if (!_anchorPointInPoints.equals(Point::ZERO))
+            if (!_anchorPointInPoints.equals(Vector2::ZERO))
             {
                 // XXX: Argh, Matrix needs a "translate" method.
                 // XXX: Although this is faster than multiplying a vec4 * mat4
@@ -1535,16 +1535,16 @@ Vector2 Node::convertToWindowSpace(const Vector2& nodePoint) const
     return Director::getInstance()->convertToUI(worldPoint);
 }
 
-// convenience methods which take a Touch instead of Point
+// convenience methods which take a Touch instead of Vector2
 Vector2 Node::convertTouchToNodeSpace(Touch *touch) const
 {
-    Point point = touch->getLocation();
+    Vector2 point = touch->getLocation();
     return this->convertToNodeSpace(point);
 }
 
 Vector2 Node::convertTouchToNodeSpaceAR(Touch *touch) const
 {
-    Point point = touch->getLocation();
+    Vector2 point = touch->getLocation();
     return this->convertToNodeSpaceAR(point);
 }
 
@@ -1593,10 +1593,10 @@ void Node::setPhysicsBody(PhysicsBody* body)
         
         // physics rotation based on body position, but node rotation based on node anthor point
         // it cann't support both of them, so I clear the anthor point to default.
-        if (!getAnchorPoint().equals(Point::ANCHOR_MIDDLE))
+        if (!getAnchorPoint().equals(Vector2::ANCHOR_MIDDLE))
         {
-            CCLOG("Node warning: setPhysicsBody sets anchor point to Point::ANCHOR_MIDDLE.");
-            setAnchorPoint(Point::ANCHOR_MIDDLE);
+            CCLOG("Node warning: setPhysicsBody sets anchor point to Vector2::ANCHOR_MIDDLE.");
+            setAnchorPoint(Vector2::ANCHOR_MIDDLE);
         }
     }
     

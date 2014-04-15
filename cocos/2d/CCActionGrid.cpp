@@ -103,19 +103,19 @@ GridBase* Grid3DAction::getGrid()
     return Grid3D::create(_gridSize);
 }
 
-Vector3 Grid3DAction::getVertex(const Point& position) const
+Vector3 Grid3DAction::getVertex(const Vector2& position) const
 {
     Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     return g->getVertex(position);
 }
 
-Vector3 Grid3DAction::getOriginalVertex(const Point& position) const
+Vector3 Grid3DAction::getOriginalVertex(const Vector2& position) const
 {
     Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     return g->getOriginalVertex(position);
 }
 
-void Grid3DAction::setVertex(const Point& position, const Vector3& vertex)
+void Grid3DAction::setVertex(const Vector2& position, const Vector3& vertex)
 {
     Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     g->setVertex(position, vertex);
@@ -128,19 +128,19 @@ GridBase* TiledGrid3DAction::getGrid(void)
     return TiledGrid3D::create(_gridSize);
 }
 
-Quad3 TiledGrid3DAction::getTile(const Point& pos) const
+Quad3 TiledGrid3DAction::getTile(const Vector2& pos) const
 {
     TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getGrid();
     return g->getTile(pos);
 }
 
-Quad3 TiledGrid3DAction::getOriginalTile(const Point& pos) const
+Quad3 TiledGrid3DAction::getOriginalTile(const Vector2& pos) const
 {
     TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getGrid();
     return g->getOriginalTile(pos);
 }
 
-void TiledGrid3DAction::setTile(const Point& pos, const Quad3& coords)
+void TiledGrid3DAction::setTile(const Vector2& pos, const Quad3& coords)
 {
     TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getGrid();
     return g->setTile(pos, coords);

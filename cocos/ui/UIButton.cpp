@@ -132,7 +132,7 @@ void Button::initRenderer()
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = Label::create();
-    _titleRenderer->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    _titleRenderer->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
 
     addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
     addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
@@ -523,7 +523,7 @@ void Button::setAnchorPoint(const Vector2 &pt)
     _buttonNormalRenderer->setAnchorPoint(pt);
     _buttonClickedRenderer->setAnchorPoint(pt);
     _buttonDisableRenderer->setAnchorPoint(pt);
-    _titleRenderer->setPosition(Point(_size.width*(0.5f-_anchorPoint.x), _size.height*(0.5f-_anchorPoint.y)));
+    _titleRenderer->setPosition(Vector2(_size.width*(0.5f-_anchorPoint.x), _size.height*(0.5f-_anchorPoint.y)));
 }
 
 void Button::onSizeChanged()

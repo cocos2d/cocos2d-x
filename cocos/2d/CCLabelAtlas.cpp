@@ -251,9 +251,9 @@ void LabelAtlas::draw()
     AtlasNode::draw();
 
     const Size& s = this->getContentSize();
-    Point vertices[4]={
-        Point(0,0),Point(s.width,0),
-        Point(s.width,s.height),Point(0,s.height),
+    Vector2 vertices[4]={
+        Vector2(0,0),Vector2(s.width,0),
+        Vector2(s.width,s.height),Vector2(0,s.height),
     };
     ccDrawPoly(vertices, 4, true);
 }

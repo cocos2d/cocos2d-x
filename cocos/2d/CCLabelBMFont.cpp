@@ -60,7 +60,7 @@ LabelBMFont * LabelBMFont::create()
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Point& imageOffset /* = Point::ZERO */)
+LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vector2& imageOffset /* = Vector2::ZERO */)
 {
     LabelBMFont *ret = new LabelBMFont();
     if(ret && ret->initWithString(str, fntFile, width, alignment,imageOffset))
@@ -72,7 +72,7 @@ LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntF
     return nullptr;
 }
 
-bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Point& imageOffset /* = Point::ZERO */)
+bool LabelBMFont::initWithString(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vector2& imageOffset /* = Vector2::ZERO */)
 {
     if (_label->setBMFontFilePath(fntFile,imageOffset))
     {
@@ -90,9 +90,9 @@ bool LabelBMFont::initWithString(const std::string& str, const std::string& fntF
 LabelBMFont::LabelBMFont()
 {
     _label = Label::create();
-    _label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _label->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     this->addChild(_label);
-    this->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    this->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
     _cascadeOpacityEnabled = true;
 }
 
@@ -147,7 +147,7 @@ void LabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 }
 
 // LabelBMFont - FntFile
-void LabelBMFont::setFntFile(const std::string& fntFile, const Point& imageOffset /* = Point::ZERO */)
+void LabelBMFont::setFntFile(const std::string& fntFile, const Vector2& imageOffset /* = Vector2::ZERO */)
 {
     if (_fntFile.compare(fntFile) != 0)
     {
@@ -207,9 +207,9 @@ Rect LabelBMFont::getBoundingBox() const
 void LabelBMFont::draw()
 {
     const Size& s = this->getContentSize();
-    Point vertices[4]={
-        Point(0,0),Point(s.width,0),
-        Point(s.width,s.height),Point(0,s.height),
+    Vector2 vertices[4]={
+        Vector2(0,0),Vector2(s.width,0),
+        Vector2(s.width,s.height),Vector2(0,s.height),
     };
     ccDrawPoly(vertices, 4, true);
 }

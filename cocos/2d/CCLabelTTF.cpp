@@ -39,9 +39,9 @@ NS_CC_BEGIN
 LabelTTF::LabelTTF()
 {
     _renderLabel = Label::create();
-    _renderLabel->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _renderLabel->setAnchorPoint(Vector2::ANCHOR_BOTTOM_LEFT);
     this->addChild(_renderLabel);
-    this->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    this->setAnchorPoint(Vector2::ANCHOR_MIDDLE);
 
     _contentDirty = false;
     _cascadeColorEnabled = true;

@@ -454,7 +454,7 @@ Vector2 Vector2::getIntersectPoint(const Vector2& A, const Vector2& B, const Vec
     
     if (isLineIntersect(A, B, C, D, &S, &T))
     {
-        // Point of intersection
+        // Vector2 of intersection
         Vector2 P;
         P.x = A.x + S * (B.x - A.x);
         P.y = A.y + S * (B.y - A.y);

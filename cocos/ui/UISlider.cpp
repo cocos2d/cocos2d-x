@@ -96,7 +96,7 @@ void Slider::initRenderer()
 {
     _barRenderer = Sprite::create();
     _progressBarRenderer = Sprite::create();
-    _progressBarRenderer->setAnchorPoint(Point(0.0f, 0.5f));
+    _progressBarRenderer->setAnchorPoint(Vector2(0.0f, 0.5f));
     addProtectedChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
     addProtectedChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     _slidBallNormalRenderer = Sprite::create();
@@ -183,7 +183,7 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
             break;
     }
     updateRGBAToRenderer(_progressBarRenderer);
-    _progressBarRenderer->setAnchorPoint(Point(0.0f, 0.5f));
+    _progressBarRenderer->setAnchorPoint(Vector2(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
     progressBarRendererScaleChangedWithSize();
 }
@@ -364,7 +364,7 @@ void Slider::setPercent(int percent)
     _percent = percent;
     float res = percent / 100.0f;
     float dis = _barLength * res;
-    _slidBallRenderer->setPosition(Point(-_barLength/2.0f + dis, 0.0f));
+    _slidBallRenderer->setPosition(Vector2(-_barLength/2.0f + dis, 0.0f));
     if (_scale9Enabled)
     {
         static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setPreferredSize(Size(dis,_progressBarTextureSize.height));
@@ -378,9 +378,9 @@ void Slider::setPercent(int percent)
     }
 }
     
-bool Slider::hitTest(const cocos2d::Point &pt)
+bool Slider::hitTest(const cocos2d::Vector2 &pt)
 {
-    Point nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
+    Vector2 nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
     Rect ballRect = this->_slidBallNormalRenderer->getTextureRect();
     if (ballRect.containsPoint(nsp)) {
         return true;
@@ -393,7 +393,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        Point nsp = convertToNodeSpace(_touchStartPos);
+        Vector2 nsp = convertToNodeSpace(_touchStartPos);
         setPercent(getPercentWithBallPos(nsp.x));
         percentChangedEvent();
     }
@@ -403,8 +403,8 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
 void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePos = touch->getLocation();
-    Point nsp = convertToNodeSpace(_touchMovePos);
-    _slidBallRenderer->setPosition(Point(nsp.x,0));
+    Vector2 nsp = convertToNodeSpace(_touchMovePos);
+    _slidBallRenderer->setPosition(Vector2(nsp.x,0));
     setPercent(getPercentWithBallPos(nsp.x));
     percentChangedEvent();
 }
@@ -527,7 +527,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
             _progressBarRenderer->setScaleY(pscaleY);
         }
     }
-    _progressBarRenderer->setPosition(Point(-_barLength * 0.5f, 0.0f));
+    _progressBarRenderer->setPosition(Vector2(-_barLength * 0.5f, 0.0f));
     setPercent(_percent);
 }
 

@@ -236,10 +236,10 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _flippedX = _flippedY = false;
         
         // default transform anchor: center
-        setAnchorPoint(Point(0.5f, 0.5f));
+        setAnchorPoint(Vector2(0.5f, 0.5f));
         
         // zwoptex default values
-        _offsetPosition = Point::ZERO;
+        _offsetPosition = Vector2::ZERO;
 
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
@@ -369,7 +369,7 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     setVertexRect(rect);
     setTextureCoords(rect);
 
-    Point relativeOffset = _unflippedOffsetPositionFromCenter;
+    Vector2 relativeOffset = _unflippedOffsetPositionFromCenter;
 
     // issue #732
     if (_flippedX)
@@ -610,11 +610,11 @@ void Sprite::drawDebugData()
     oldModelView = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     // draw bounding box
-    Point vertices[4] = {
-        Point( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-        Point( _quad.br.vertices.x, _quad.br.vertices.y ),
-        Point( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-        Point( _quad.tl.vertices.x, _quad.tl.vertices.y ),
+    Vector2 vertices[4] = {
+        Vector2( _quad.bl.vertices.x, _quad.bl.vertices.y ),
+        Vector2( _quad.br.vertices.x, _quad.br.vertices.y ),
+        Vector2( _quad.tr.vertices.x, _quad.tr.vertices.y ),
+        Vector2( _quad.tl.vertices.x, _quad.tl.vertices.y ),
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
     

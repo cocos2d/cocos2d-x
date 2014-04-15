@@ -5,9 +5,9 @@ using namespace cocos2d;
 
 namespace cocosbuilder {
 
-Point getAbsolutePosition(const Point &pt, CCBReader::PositionType type, const Size &containerSize, const std::string& propName)
+Vector2 getAbsolutePosition(const Vector2 &pt, CCBReader::PositionType type, const Size &containerSize, const std::string& propName)
 {
-    Point absPt = Point(0,0);
+    Vector2 absPt = Vector2(0,0);
     if (type == CCBReader::PositionType::RELATIVE_BOTTOM_LEFT)
     {
         absPt = pt;

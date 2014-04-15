@@ -162,7 +162,7 @@ bool RichText::init()
 void RichText::initRenderer()
 {
     _elementRenderersContainer = Node::create();
-    _elementRenderersContainer->setAnchorPoint(Point(0.5f, 0.5f));
+    _elementRenderersContainer->setAnchorPoint(Vector2(0.5f, 0.5f));
     addProtectedChild(_elementRenderersContainer, 0, -1);
 }
 
@@ -368,8 +368,8 @@ void RichText::formarRenderers()
         for (ssize_t j=0; j<row->size(); j++)
         {
             Node* l = row->at(j);
-            l->setAnchorPoint(Point::ZERO);
-            l->setPosition(Point(nextPosX, 0.0f));
+            l->setAnchorPoint(Vector2::ZERO);
+            l->setPosition(Vector2(nextPosX, 0.0f));
             _elementRenderersContainer->addChild(l, 1, (int)j);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
@@ -407,8 +407,8 @@ void RichText::formarRenderers()
             for (ssize_t j=0; j<row->size(); j++)
             {
                 Node* l = row->at(j);
-                l->setAnchorPoint(Point::ZERO);
-                l->setPosition(Point(nextPosX, nextPosY));
+                l->setAnchorPoint(Vector2::ZERO);
+                l->setPosition(Vector2(nextPosX, nextPosY));
                 _elementRenderersContainer->addChild(l, 1, (int)(i*10 + j));
                 nextPosX += l->getContentSize().width;
             }

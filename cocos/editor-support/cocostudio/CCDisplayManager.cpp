@@ -361,7 +361,7 @@ void DisplayManager::initDisplayList(BoneData *boneData)
 }
 
 
-bool DisplayManager::containPoint(Point &point)
+bool DisplayManager::containPoint(Vector2 &point)
 {
     if(!_visible || _displayIndex < 0)
     {
@@ -380,7 +380,7 @@ bool DisplayManager::containPoint(Point &point)
          *
          */
 
-        Point outPoint = Point(0, 0);
+        Vector2 outPoint = Vector2(0, 0);
 
         Sprite *sprite = (Sprite *)_currentDecoDisplay->getDisplay();
         sprite = (Sprite *)sprite->getChildByTag(0);
@@ -398,7 +398,7 @@ bool DisplayManager::containPoint(Point &point)
 
 bool DisplayManager::containPoint(float x, float y)
 {
-    Point p = Point(x, y);
+    Vector2 p = Vector2(x, y);
     return containPoint(p);
 }
 
@@ -433,13 +433,13 @@ Rect DisplayManager::getBoundingBox() const
 
 Vector2 DisplayManager::getAnchorPoint() const
 {
-    CS_RETURN_IF(!_displayRenderNode) Point(0, 0);
+    CS_RETURN_IF(!_displayRenderNode) Vector2(0, 0);
     return _displayRenderNode->getAnchorPoint();
 }
 
 Vector2 DisplayManager::getAnchorPointInPoints() const
 {
-    CS_RETURN_IF(!_displayRenderNode) Point(0, 0);
+    CS_RETURN_IF(!_displayRenderNode) Vector2(0, 0);
     return _displayRenderNode->getAnchorPointInPoints();
 }
 

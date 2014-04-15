@@ -62,7 +62,7 @@ Layer::Layer()
 , _swallowsTouches(true)
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(Point(0.5f, 0.5f));
+    setAnchorPoint(Vector2(0.5f, 0.5f));
 }
 
 Layer::~Layer()
@@ -637,7 +637,7 @@ LayerGradient::LayerGradient()
 , _endColor(Color4B::BLACK)
 , _startOpacity(255)
 , _endOpacity(255)
-, _alongVector(Point(0, -1))
+, _alongVector(Vector2(0, -1))
 , _compressedInterpolation(true)
 {
     
@@ -659,7 +659,7 @@ LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
     return nullptr;
 }
 
-LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Point& v)
+LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Vector2& v)
 {
     LayerGradient * layer = new LayerGradient();
     if( layer && layer->initWithColor(start, end, v))
@@ -692,10 +692,10 @@ bool LayerGradient::init()
 
 bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end)
 {
-    return initWithColor(start, end, Point(0, -1));
+    return initWithColor(start, end, Vector2(0, -1));
 }
 
-bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const Point& v)
+bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const Vector2& v)
 {
     _endColor.r  = end.r;
     _endColor.g  = end.g;
@@ -719,7 +719,7 @@ void LayerGradient::updateColor()
         return;
 
     float c = sqrtf(2.0f);
-    Point u = Point(_alongVector.x / h, _alongVector.y / h);
+    Vector2 u = Vector2(_alongVector.x / h, _alongVector.y / h);
 
     // Compressed Interpolation mode
     if (_compressedInterpolation)
@@ -809,13 +809,13 @@ GLubyte LayerGradient::getEndOpacity() const
     return _endOpacity;
 }
 
-void LayerGradient::setVector(const Point& var)
+void LayerGradient::setVector(const Vector2& var)
 {
     _alongVector = var;
     updateColor();
 }
 
-const Point& LayerGradient::getVector() const
+const Vector2& LayerGradient::getVector() const
 {
     return _alongVector;
 }

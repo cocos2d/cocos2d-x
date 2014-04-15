@@ -109,7 +109,7 @@ const std::string& TextAtlas::getStringValue() const
 void TextAtlas::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
-    _labelAtlasRenderer->setAnchorPoint(Point(pt.x, pt.y));
+    _labelAtlasRenderer->setAnchorPoint(Vector2(pt.x, pt.y));
 }
 
 void TextAtlas::onSizeChanged()

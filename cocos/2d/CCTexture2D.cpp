@@ -1151,7 +1151,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 
 // implementation Texture2D (Drawing)
 
-void Texture2D::drawAtPoint(const Point& point)
+void Texture2D::drawAtPoint(const Vector2& point)
 {
     GLfloat    coordinates[] = {
         0.0f,    _maxT,

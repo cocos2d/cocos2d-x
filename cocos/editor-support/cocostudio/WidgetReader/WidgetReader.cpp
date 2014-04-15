@@ -46,8 +46,8 @@ namespace cocostudio
         widget->setSizeType((SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
         widget->setPositionType((PositionType)DICTOOL->getIntValue_json(options, "positionType"));
         
-        widget->setSizePercent(Point(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
-        widget->setPositionPercent(Point(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
+        widget->setSizePercent(Vector2(DICTOOL->getFloatValue_json(options, "sizePercentX"), DICTOOL->getFloatValue_json(options, "sizePercentY")));
+        widget->setPositionPercent(Vector2(DICTOOL->getFloatValue_json(options, "positionPercentX"), DICTOOL->getFloatValue_json(options, "positionPercentY")));
         
         /* adapt screen */
         float w = 0, h = 0;
@@ -80,7 +80,7 @@ namespace cocostudio
         widget->setName(widgetName);
         float x = DICTOOL->getFloatValue_json(options, "x");
         float y = DICTOOL->getFloatValue_json(options, "y");
-        widget->setPosition(Point(x,y));
+        widget->setPosition(Vector2(x,y));
         bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
         if (sx)
         {
@@ -166,7 +166,7 @@ namespace cocostudio
         float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
         bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
         float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
-        widget->setAnchorPoint(Point(apxf, apyf));
+        widget->setAnchorPoint(Vector2(apxf, apyf));
         bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
         bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
         widget->setFlippedX(flipX);
