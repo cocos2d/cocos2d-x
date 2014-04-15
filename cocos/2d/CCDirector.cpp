@@ -735,7 +735,7 @@ static void GLToClipTransform(Matrix *transformOut)
     *transformOut = projection * modelview;
 }
 
-Point Director::convertToGL(const Point& uiPoint)
+Vector2 Director::convertToGL(const Vector2& uiPoint)
 {
     Matrix transform;
 	GLToClipTransform(&transform);
@@ -753,10 +753,10 @@ Point Director::convertToGL(const Point& uiPoint)
     //transformInv.transformPoint(clipCoord, &glCoord);
     transformInv.transformVector(clipCoord, &glCoord);
     float factor = 1.0/glCoord.w;
-	return Point(glCoord.x * factor, glCoord.y * factor);
+	return Vector2(glCoord.x * factor, glCoord.y * factor);
 }
 
-Point Director::convertToUI(const Point& glPoint)
+Vector2 Director::convertToUI(const Vector2& glPoint)
 {
     Matrix transform;
 	GLToClipTransform(&transform);
@@ -768,7 +768,7 @@ Point Director::convertToUI(const Point& glPoint)
 
 	Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0/glCoord.w;
-	return Point(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
+	return Vector2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
 }
 
 const Size& Director::getWinSize(void) const
@@ -793,7 +793,7 @@ Size Director::getVisibleSize() const
     }
 }
 
-Point Director::getVisibleOrigin() const
+Vector2 Director::getVisibleOrigin() const
 {
     if (_openGLView)
     {
@@ -801,7 +801,7 @@ Point Director::getVisibleOrigin() const
     }
     else
     {
-        return Point::ZERO;
+        return Vector2::ZERO;
     }
 }
 
