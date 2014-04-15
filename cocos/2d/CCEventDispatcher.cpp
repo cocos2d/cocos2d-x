@@ -349,9 +349,9 @@ void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive
     {
         EventListener * listener = *iter;
             
-        if (listener->getSceneGraphPriority() == target)
+        if (listener->getAssociatedNode() == target)
         {
-            listener->setSceneGraphPriority(nullptr);   // Ensure no dangling ptr to the target node.
+            listener->setAssociatedNode(nullptr);   // Ensure no dangling ptr to the target node.
             listener->setRegistered(false);
             listener->release();
             iter = _toAddedListeners.erase(iter);
@@ -446,7 +446,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     {
         setDirty(listenerID, DirtyFlag::SCENE_GRAPH_PRIORITY);
         
-        auto node = listener->getSceneGraphPriority();
+        auto node = listener->getAssociatedNode();
         CCASSERT(node != nullptr, "Invalid scene graph priority!");
         
         associateNodeAndEventListener(node, listener);
@@ -470,7 +470,7 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     if (!listener->checkAvailable())
         return;
     
-    listener->setSceneGraphPriority(node);
+    listener->setAssociatedNode(node);
     listener->setFixedPriority(0);
     listener->setRegistered(true);
     
@@ -493,7 +493,7 @@ void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
                 for (EventListener * listener : *eventListenerVector->getSceneGraphPriorityListeners())
                 {
                     CCASSERT(!listener ||
-                             listener->getSceneGraphPriority() != node,
+                             listener->getAssociatedNode() != node,
                              "Node should have no event listeners registered for it upon destruction!");
                 }
             }
@@ -509,7 +509,7 @@ void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
         {
             for (EventListener * listener : *keyValuePair.second)
             {
-                CCASSERT(listener->getSceneGraphPriority() != node,
+                CCASSERT(listener->getAssociatedNode() != node,
                          "Node should have no event listeners registered for it upon destruction!");
             }
         }
@@ -525,7 +525,7 @@ void EventDispatcher::debugCheckNodeHasNoEventListenersOnDestruction(Node* node)
     // Check the to be added list
     for (EventListener * listener : _toAddedListeners)
     {
-        CCASSERT(listener->getSceneGraphPriority() != node,
+        CCASSERT(listener->getAssociatedNode() != node,
                  "Node should have no event listeners registered for it upon destruction!");
     }
     
@@ -549,7 +549,7 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
     if (!listener->checkAvailable())
         return;
     
-    listener->setSceneGraphPriority(nullptr);
+    listener->setAssociatedNode(nullptr);
     listener->setFixedPriority(fixedPriority);
     listener->setRegistered(true);
     listener->setPaused(false);
@@ -582,10 +582,10 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             {
                 CC_SAFE_RETAIN(l);
                 l->setRegistered(false);
-                if (l->getSceneGraphPriority() != nullptr)
+                if (l->getAssociatedNode() != nullptr)
                 {
-                    dissociateNodeAndEventListener(l->getSceneGraphPriority(), l);
-                    l->setSceneGraphPriority(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
+                    dissociateNodeAndEventListener(l->getAssociatedNode(), l);
+                    l->setAssociatedNode(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
@@ -681,7 +681,7 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
             auto found = std::find(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener);
             if (found != fixedPriorityListeners->end())
             {
-                CCASSERT(listener->getSceneGraphPriority() == nullptr, "Can't set fixed priority with scene graph based listener.");
+                CCASSERT(listener->getAssociatedNode() == nullptr, "Can't set fixed priority with scene graph based listener.");
                 
                 if (listener->getFixedPriority() != fixedPriority)
                 {
@@ -782,7 +782,7 @@ void EventDispatcher::dispatchEvent(Event* event)
         auto listeners = iter->second;
         
         auto onEvent = [&event](EventListener* listener) -> bool{
-            event->setCurrentTarget(listener->getSceneGraphPriority());
+            event->setCurrentTarget(listener->getAssociatedNode());
             listener->_onEvent(event);
             return event->isStopped();
         };
@@ -1168,7 +1168,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     
     // After sort: priority < 0, > 0
     std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
-        return _nodePriorityMap[l1->getSceneGraphPriority()] > _nodePriorityMap[l2->getSceneGraphPriority()];
+        return _nodePriorityMap[l1->getAssociatedNode()] > _nodePriorityMap[l2->getAssociatedNode()];
     });
     
 #if DUMP_LISTENER_ITEM_PRIORITY_INFO
@@ -1245,10 +1245,10 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
             {
                 auto l = *iter;
                 l->setRegistered(false);
-                if (l->getSceneGraphPriority() != nullptr)
+                if (l->getAssociatedNode() != nullptr)
                 {
-                    dissociateNodeAndEventListener(l->getSceneGraphPriority(), l);
-                    l->setSceneGraphPriority(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
+                    dissociateNodeAndEventListener(l->getAssociatedNode(), l);
+                    l->setAssociatedNode(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
