@@ -441,36 +441,28 @@ std::string Layer::getDescription() const
 }
 
 #if CC_USE_PHYSICS
-void Layer::addChild(Node* child)
-{
-    Node::addChild(child);
-}
-void Layer::addChild(Node* child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
-void Layer::addChild(Node* child, int zOrder, int tag)
-{
-    Node::addChild(child, zOrder, tag);
-    //addChildToPhysicsWorld(child);
-}
-
 void Layer::onEnter()
 {
     Node::onEnter();
-    this->scheduleUpdate();
+    
+    if (_physicsWorld != nullptr)
+    {
+        this->schedule(schedule_selector(Layer::updatePhysics));
+    }
 }
 
 void Layer::onExit()
 {
     Node::onExit();
-    this->unscheduleUpdate();
+    
+    if (_physicsWorld != nullptr)
+    {
+        this->unschedule(schedule_selector(Layer::updatePhysics));
+    }
 }
 
-void Layer::update(float delta)
+void Layer::updatePhysics(float delta)
 {
-    Node::update(delta);
     if (nullptr != _physicsWorld)
     {
         _physicsWorld->update(delta);
@@ -519,8 +511,8 @@ void Layer::addChildToPhysicsWorld(Node* child)
             {
                 _physicsWorld->addBody(node->getPhysicsBody());
                 
-                node->transformPhysicsBodyPosition(this);
-                node->transformPhysicsBodyRotation(this);
+                node->updatePhysicsBodyPosition(this);
+                node->updatePhysicsBodyRotation(this);
             }
             
             auto& children = node->getChildren();

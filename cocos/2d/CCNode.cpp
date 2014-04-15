@@ -272,7 +272,7 @@ void Node::setRotation(float rotation)
     if (_physicsBody && !_physicsBody->_rotationResetTag)
     {
         Layer* layer = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getLayer() : nullptr;
-        transformPhysicsBodyRotation(layer);
+        updatePhysicsBodyRotation(layer);
     }
 #endif
 }
@@ -432,7 +432,7 @@ void Node::setPosition(const Point& position)
     if (_physicsBody != nullptr && !_physicsBody->_positionResetTag)
     {
         Layer* layer = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getLayer() : nullptr;
-        transformPhysicsBodyPosition(layer);
+        updatePhysicsBodyPosition(layer);
     }
 #endif
 }
@@ -1585,7 +1585,7 @@ void Node::removeAllComponents()
 
 #if CC_USE_PHYSICS
 
-void Node::transformPhysicsBodyPosition(Layer* layer)
+void Node::updatePhysicsBodyPosition(Layer* layer)
 {
     if (_physicsBody != nullptr)
     {
@@ -1601,7 +1601,7 @@ void Node::transformPhysicsBodyPosition(Layer* layer)
     }
 }
 
-void Node::transformPhysicsBodyRotation(Layer* layer)
+void Node::updatePhysicsBodyRotation(Layer* layer)
 {
     if (_physicsBody != nullptr)
     {
@@ -1666,8 +1666,8 @@ void Node::setPhysicsBody(PhysicsBody* body)
             }
         }
         
-        transformPhysicsBodyPosition(layer);
-        transformPhysicsBodyRotation(layer);
+        updatePhysicsBodyPosition(layer);
+        updatePhysicsBodyRotation(layer);
     }
 }
 

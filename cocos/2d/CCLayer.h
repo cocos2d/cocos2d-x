@@ -173,10 +173,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 #if CC_USE_PHYSICS
 public:
-    virtual void addChild(Node* child) override;
-    virtual void addChild(Node* child, int zOrder) override;
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void update(float delta) override;
+    virtual void updatePhysics(float delta);
     virtual void onEnter() override;
     virtual void onExit() override;
 

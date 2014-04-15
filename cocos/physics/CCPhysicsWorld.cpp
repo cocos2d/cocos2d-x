@@ -867,8 +867,7 @@ void PhysicsWorld::setGravity(const Vect& gravity)
             // reset gravity for body
             if (!body->isGravityEnabled())
             {
-                body->applyForce(_gravity * body->getMass());
-                body->applyForce(- gravity * body->getMass());
+                body->applyForce((_gravity - gravity) * body->getMass());
             }
         }
     }

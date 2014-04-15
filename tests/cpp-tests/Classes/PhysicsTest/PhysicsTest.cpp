@@ -516,7 +516,7 @@ std::string PhysicsDemoPyramidStack::title() const
 }
 
 PhysicsDemoRayCast::PhysicsDemoRayCast()
-: _angle(0.0f)
+: _angle(0.0f)             
 , _node(nullptr)
 , _mode(0)
 {}
@@ -528,6 +528,7 @@ void PhysicsDemoRayCast::onEnter()
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoRayCast::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    scheduleUpdate();
     
     getPhysicsWorld()->setGravity(Point::ZERO);
     
@@ -573,8 +574,6 @@ bool PhysicsDemoRayCast::anyRay(PhysicsWorld& world, const PhysicsRayCastInfo& i
 
 void PhysicsDemoRayCast::update(float delta)
 {
-    Layer::update(delta);
-    
     float L = 150.0f;
     Point point1 = VisibleRect::center();
     Point d(L * cosf(_angle), L * sinf(_angle));
@@ -949,6 +948,7 @@ void PhysicsDemoPump::onEnter()
     touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoPump::onTouchMoved, this);
     touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoPump::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    scheduleUpdate();
     
     auto node = Node::create();
     auto body = PhysicsBody::create();
@@ -1040,7 +1040,6 @@ void PhysicsDemoPump::onEnter()
 
 void PhysicsDemoPump::update(float delta)
 {
-    Layer::update(delta);
     for (const auto& body : getPhysicsWorld()->getAllBodies())
     {
         if (body->getTag() == DRAG_BODYS_TAG && body->getPosition().y < 0.0f)
