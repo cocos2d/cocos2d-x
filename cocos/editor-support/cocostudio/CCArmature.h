@@ -271,7 +271,7 @@ protected:
 
     cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
-    cocos2d::Point _offsetPoint;
+    cocos2d::Vector2 _offsetPoint;
     Vector2 _realAnchorPointInPoints;
 
     ArmatureAnimation *_animation;

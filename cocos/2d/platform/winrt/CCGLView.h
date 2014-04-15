@@ -55,7 +55,7 @@ public:
 
 
 private:
-	cocos2d::Point GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
+	cocos2d::Vector2 GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
 
 	void OnTextKeyDown(Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e); 
 	void OnTextKeyUp(Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e); 
@@ -78,7 +78,7 @@ private:
 
 	Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
 
-	Windows::Foundation::Point m_lastPoint;
+	Windows::Foundation::Vector2 m_lastPoint;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	bool m_lastPointValid;
 	bool m_textInputEnabled;
@@ -113,7 +113,7 @@ public:
 
 private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;
-	Windows::Foundation::Point m_lastPoint;
+	Windows::Foundation::Vector2 m_lastPoint;
 	bool m_lastPointValid;
 
 public:

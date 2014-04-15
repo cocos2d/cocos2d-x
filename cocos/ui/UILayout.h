@@ -152,9 +152,9 @@ public:
      *
      * @param vector
      */
-    void setBackGroundColorVector(const Point &vector);
+    void setBackGroundColorVector(const Vector2 &vector);
     
-    const Point& getBackGroundColorVector();
+    const Vector2& getBackGroundColorVector();
     
     void setBackGroundImageColor(const Color3B& color);
     
@@ -266,7 +266,7 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
     
-    virtual bool hitTest(const Point &pt);
+    virtual bool hitTest(const Vector2 &pt);
     
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
@@ -317,7 +317,7 @@ protected:
     Color3B _cColor;
     Color3B _gStartColor;
     Color3B _gEndColor;
-    Point _alongVector;
+    Vector2 _alongVector;
     GLubyte _cOpacity;
     Size _backGroundImageTextureSize;
     LayoutType _layoutType;

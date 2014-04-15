@@ -167,7 +167,7 @@ public:
     /**
      * Scroll inner container to both direction percent position of scrollview.
      */
-    void scrollToPercentBothDirection(const Point& percent, float time, bool attenuated);
+    void scrollToPercentBothDirection(const Vector2& percent, float time, bool attenuated);
     
     /**
      * Move inner container to bottom boundary of scrollview.
@@ -222,7 +222,7 @@ public:
     /**
      * Move inner container to both direction percent position of scrollview.
      */
-    void jumpToPercentBothDirection(const Point& percent);
+    void jumpToPercentBothDirection(const Vector2& percent);
     
     /**
      * Changes inner container size of scrollview.
@@ -336,9 +336,9 @@ protected:
     void bounceChildren(float dt);
     void checkBounceBoundary();
     bool checkNeedBounce();
-    void startAutoScrollChildrenWithOriginalSpeed(const Point& dir, float v, bool attenuated, float acceleration);
-    void startAutoScrollChildrenWithDestination(const Point& des, float time, bool attenuated);
-    void jumpToDestination(const Point& des);
+    void startAutoScrollChildrenWithOriginalSpeed(const Vector2& dir, float v, bool attenuated, float acceleration);
+    void startAutoScrollChildrenWithDestination(const Vector2& des, float time, bool attenuated);
+    void jumpToDestination(const Vector2& des);
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();
@@ -347,11 +347,11 @@ protected:
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
-    virtual void handlePressLogic(const Point &touchPoint) override;
-    virtual void handleMoveLogic(const Point &touchPoint) override;
-    virtual void handleReleaseLogic(const Point &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState,Widget* sender,const Point &touchPoint) override;
-    virtual void checkChildInfo(int handleState,Widget* sender,const Point &touchPoint) override;
+    virtual void handlePressLogic(const Vector2 &touchPoint) override;
+    virtual void handleMoveLogic(const Vector2 &touchPoint) override;
+    virtual void handleReleaseLogic(const Vector2 &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const Vector2 &touchPoint) override;
+    virtual void checkChildInfo(int handleState,Widget* sender,const Vector2 &touchPoint) override;
     void recordSlidTime(float dt);
     void scrollToTopEvent();
     void scrollToBottomEvent();
@@ -373,11 +373,11 @@ protected:
     
     SCROLLVIEW_DIR _direction;
 
-    Point _touchBeganPoint;
-    Point _touchMovedPoint;
-    Point _touchEndedPoint;
-    Point _touchMovingPoint;
-    Point _autoScrollDir;
+    Vector2 _touchBeganPoint;
+    Vector2 _touchMovedPoint;
+    Vector2 _touchEndedPoint;
+    Vector2 _touchMovingPoint;
+    Vector2 _autoScrollDir;
     
     float _topBoundary;
     float _bottomBoundary;
@@ -397,11 +397,11 @@ protected:
     float _autoScrollAcceleration;
     bool _isAutoScrollSpeedAttenuated;
     bool _needCheckAutoScrollDestination;
-    Point _autoScrollDestination;
+    Vector2 _autoScrollDestination;
     
     bool _bePressed;
     float _slidTime;
-    Point _moveChildPoint;
+    Vector2 _moveChildPoint;
     float _childFocusCancelOffset;
     
     bool _leftBounceNeeded;
@@ -411,7 +411,7 @@ protected:
     
     bool _bounceEnabled;
     bool _bouncing;
-    Point _bounceDir;
+    Vector2 _bounceDir;
     float _bounceOriginalSpeed;
     bool _inertiaScrollEnabled;
 

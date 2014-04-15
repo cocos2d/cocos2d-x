@@ -53,7 +53,7 @@ public:
     // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
 
-    void addChild(Node * child, int z, const Point& parallaxRatio, const Point& positionOffset);
+    void addChild(Node * child, int z, const Vector2& parallaxRatio, const Vector2& positionOffset);
 
     /** Sets an array of layers for the Parallax node */
     void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
@@ -82,9 +82,9 @@ protected:
      */
     virtual ~ParallaxNode();
 
-    Point absolutePosition();
+    Vector2 absolutePosition();
 
-    Point    _lastPosition;
+    Vector2    _lastPosition;
     struct _ccArray* _parallaxArray;
 
 private:

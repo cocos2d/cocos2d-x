@@ -194,7 +194,7 @@ struct Tex2F {
 };
 
  
-//! Point Sprite component
+//! Vector2 Sprite component
 struct PointSprite
 {
     Vector2   pos;        // 8 bytes
@@ -220,7 +220,7 @@ struct Quad3 {
     Vector3        tr;
 };
 
-//! a Point with a vertex point, a tex coord point and a color 4B
+//! a Vector2 with a vertex point, a tex coord point and a color 4B
 struct V2F_C4B_T2F
 {
     //! vertices (2F)
@@ -231,7 +231,7 @@ struct V2F_C4B_T2F
     Tex2F          texCoords;
 };
 
-//! a Point with a vertex point, a tex coord point and a color 4F
+//! a Vector2 with a vertex point, a tex coord point and a color 4F
 struct V2F_C4F_T2F
 {
     //! vertices (2F)
@@ -242,7 +242,7 @@ struct V2F_C4F_T2F
     Tex2F          texCoords;
 };
 
-//! a Point with a vertex point, a tex coord point and a color 4B
+//! a Vector2 with a vertex point, a tex coord point and a color 4B
 struct V3F_C4B_T2F
 {
     //! vertices (3F)
@@ -258,11 +258,11 @@ struct V3F_C4B_T2F
 //! A Triangle of V2F_C4B_T2F
 struct V2F_C4B_T2F_Triangle
 {
-	//! Point A
+	//! Vector2 A
 	V2F_C4B_T2F a;
-	//! Point B
+	//! Vector2 B
 	V2F_C4B_T2F b;
-	//! Point B
+	//! Vector2 B
 	V2F_C4B_T2F c;
 };
 

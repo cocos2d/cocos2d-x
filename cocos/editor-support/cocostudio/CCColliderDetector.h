@@ -107,7 +107,7 @@ public:
     virtual void setShape(cpShape *shape) { _shape = shape; }
     virtual cpShape *getShape() const { return _shape; }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    virtual const std::vector<cocos2d::Point> &getCalculatedVertexList() const { return _calculatedVertexList; }
+    virtual const std::vector<cocos2d::Vector2> &getCalculatedVertexList() const { return _calculatedVertexList; }
 #endif
 
 private:
@@ -119,7 +119,7 @@ private:
     cpShape *_shape;
     ColliderFilter *_filter;
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    std::vector<cocos2d::Point> _calculatedVertexList;
+    std::vector<cocos2d::Vector2> _calculatedVertexList;
 #endif
 
     ContourData *_contourData;

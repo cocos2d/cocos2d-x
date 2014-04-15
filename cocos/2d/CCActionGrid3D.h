@@ -120,7 +120,7 @@ class CC_DLL Lens3D : public Grid3DAction
 {
 public:
     /** creates the action with center position, radius, a grid size and duration */
-    static Lens3D* create(float duration, const Size& gridSize, const Point& position, float radius);
+    static Lens3D* create(float duration, const Size& gridSize, const Vector2& position, float radius);
 
     /** Get lens center position */
     inline float getLensEffect() const { return _lensEffect; }
@@ -141,7 +141,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Lens3D() {}
 
     /** initializes the action with center position, radius, a grid size and duration */
-    bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius);
+    bool initWithDuration(float duration, const Size& gridSize, const Vector2& position, float radius);
 
 protected:
     /* lens center position */
@@ -163,7 +163,7 @@ class CC_DLL Ripple3D : public Grid3DAction
 {
 public:
     /** creates the action with radius, number of waves, amplitude, a grid size and duration */
-    static Ripple3D* create(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
+    static Ripple3D* create(float duration, const Size& gridSize, const Vector2& position, float radius, unsigned int waves, float amplitude);
 
     /** get center position */
     inline const Vector2& getPosition() const { return _position; }
@@ -185,7 +185,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Ripple3D() {}
 
     /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
-    bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
+    bool initWithDuration(float duration, const Size& gridSize, const Vector2& position, float radius, unsigned int waves, float amplitude);
 
 protected:
     /* center position */
@@ -298,7 +298,7 @@ class CC_DLL Twirl : public Grid3DAction
 {
 public:
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
-    static Twirl* create(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
+    static Twirl* create(float duration, const Size& gridSize, Vector2 position, unsigned int twirls, float amplitude);
 
     /** get twirl center */
     inline const Vector2& getPosition() const { return _position; }
@@ -321,7 +321,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Twirl() {}
     
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
-    bool initWithDuration(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
+    bool initWithDuration(float duration, const Size& gridSize, Vector2 position, unsigned int twirls, float amplitude);
 
 protected:
     /* twirl center */

@@ -82,14 +82,14 @@ public:
     virtual ~LabelBMFont();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Point& imageOffset = Point::ZERO);
+    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vector2& imageOffset = Vector2::ZERO);
 
     /** Creates an label.
      */
     static LabelBMFont * create();
 
     /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Point& imageOffset = Point::ZERO);
+    bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vector2& imageOffset = Vector2::ZERO);
 
     // super method
     virtual void setString(const std::string& newString) override;
@@ -104,7 +104,7 @@ public:
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
-    void setFntFile(const std::string& fntFile, const Point& imageOffset = Point::ZERO);
+    void setFntFile(const std::string& fntFile, const Vector2& imageOffset = Vector2::ZERO);
     const std::string& getFntFile() const;
 
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;

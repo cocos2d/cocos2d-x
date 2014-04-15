@@ -164,7 +164,7 @@ public:
     //fullRect: the total size of screen
     //fullViewport: the total viewportSize
     */
-    void setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport);
+    void setVirtualViewport(const Vector2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
     // XXX should be procted.
