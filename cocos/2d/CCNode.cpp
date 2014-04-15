@@ -428,7 +428,7 @@ void Node::setPosition(const Point& position)
     if (_physicsBody)
     {
         Node* parent = getParent();
-        Point pos = parent != nullptr ? parent->convertToWorldSpace(getPosition()) : getPosition();
+        Vector2 pos = parent != nullptr ? parent->convertToWorldSpace(Vector2(getPosition())) : Vector2(getPosition());
         _physicsBody->setPosition(pos);
     }
 #endif
@@ -1498,22 +1498,22 @@ Matrix Node::getWorldToNodeTransform() const
 }
 
 
-Point Node::convertToNodeSpace(const Point& worldPoint) const
+Vector2 Node::convertToNodeSpace(const Vector2& worldPoint) const
 {
     Matrix tmp = getWorldToNodeTransform();
     Vector3 vec3(worldPoint.x, worldPoint.y, 0);
     Vector3 ret;
     tmp.transformPoint(vec3,&ret);
-    return Point(ret.x, ret.y);
+    return Vector2(ret.x, ret.y);
 }
 
-Point Node::convertToWorldSpace(const Point& nodePoint) const
+Vector2 Node::convertToWorldSpace(const Vector2& nodePoint) const
 {
     Matrix tmp = getNodeToWorldTransform();
     Vector3 vec3(nodePoint.x, nodePoint.y, 0);
     Vector3 ret;
     tmp.transformPoint(vec3,&ret);
-    return Point(ret.x, ret.y);
+    return Vector2(ret.x, ret.y);
 
 }
 
@@ -1616,7 +1616,7 @@ void Node::setPhysicsBody(PhysicsBody* body)
     if (body != nullptr)
     {
         Node* parent = getParent();
-        Point pos = parent != nullptr ? parent->convertToWorldSpace(getPosition()) : getPosition();
+        Vector2 pos = parent != nullptr ? parent->convertToWorldSpace(Vector2(getPosition())) : Vector2(getPosition());
         _physicsBody->setPosition(pos);
         _physicsBody->setRotation(getRotation());
     }

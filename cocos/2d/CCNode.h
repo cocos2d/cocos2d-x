@@ -1242,12 +1242,12 @@ public:
     /**
      * Converts a Point to node (local) space coordinates. The result is in Points.
      */
-    Point convertToNodeSpace(const Point& worldPoint) const;
+    Vector2 convertToNodeSpace(const Vector2& worldPoint) const;
 
     /**
      * Converts a Point to world space coordinates. The result is in Points.
      */
-    Point convertToWorldSpace(const Point& nodePoint) const;
+    Vector2 convertToWorldSpace(const Vector2& nodePoint) const;
 
     /**
      * Converts a Point to node (local) space coordinates. The result is in Points.
