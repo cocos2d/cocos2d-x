@@ -576,7 +576,7 @@ void CCArmature::drawContour()
             const std::vector<Point> &vertexList = body->getCalculatedVertexList();
 
             unsigned long length = vertexList.size();
-            Point *points = new Point[length];
+            Vector2 *points = new Vector2[length];
             for (unsigned long i = 0; i<length; i++)
             {
                 Point p = vertexList.at(i);

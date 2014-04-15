@@ -1680,12 +1680,12 @@ void LabelBMFontBounds::onDraw(const Matrix &transform, bool transformUpdated)
     origin.width = origin.width / 2 - (labelSize.width / 2);
     origin.height = origin.height / 2 - (labelSize.height / 2);
     
-    Point vertices[4]=
+    Vector2 vertices[4]=
     {
-        Point(origin.width, origin.height),
-        Point(labelSize.width + origin.width, origin.height),
-        Point(labelSize.width + origin.width, labelSize.height + origin.height),
-        Point(origin.width, labelSize.height + origin.height)
+        Vector2(origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, labelSize.height + origin.height),
+        Vector2(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
 

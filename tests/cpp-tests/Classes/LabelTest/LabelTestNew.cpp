@@ -924,12 +924,12 @@ void LabelFNTBounds::onDraw(const Matrix &transform, bool transformUpdated)
     origin.width = origin.width   / 2 - (labelSize.width / 2);
     origin.height = origin.height / 2 - (labelSize.height / 2);
     
-    Point vertices[4]=
+    Vector2 vertices[4]=
     {
-        Point(origin.width, origin.height),
-        Point(labelSize.width + origin.width, origin.height),
-        Point(labelSize.width + origin.width, labelSize.height + origin.height),
-        Point(origin.width, labelSize.height + origin.height)
+        Vector2(origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, labelSize.height + origin.height),
+        Vector2(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
     
@@ -1532,12 +1532,12 @@ void LabelTTFOldNew::onDraw(const Matrix &transform, bool transformUpdated)
     origin.width = origin.width   / 2 - (labelSize.width / 2);
     origin.height = origin.height / 2 - (labelSize.height / 2);
     
-    Point vertices[4]=
+    Vector2 vertices[4]=
     {
-        Point(origin.width, origin.height),
-        Point(labelSize.width + origin.width, origin.height),
-        Point(labelSize.width + origin.width, labelSize.height + origin.height),
-        Point(origin.width, labelSize.height + origin.height)
+        Vector2(origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, labelSize.height + origin.height),
+        Vector2(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::setDrawColor4B(Color4B::RED.r,Color4B::RED.g,Color4B::RED.b,Color4B::RED.a);
     DrawPrimitives::drawPoly(vertices, 4, true);
@@ -1549,12 +1549,12 @@ void LabelTTFOldNew::onDraw(const Matrix &transform, bool transformUpdated)
     origin.width = origin.width   / 2 - (labelSize.width / 2);
     origin.height = origin.height / 2 - (labelSize.height / 2);
 
-    Point vertices2[4]=
+    Vector2 vertices2[4]=
     {
-        Point(origin.width, origin.height),
-        Point(labelSize.width + origin.width, origin.height),
-        Point(labelSize.width + origin.width, labelSize.height + origin.height),
-        Point(origin.width, labelSize.height + origin.height)
+        Vector2(origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, origin.height),
+        Vector2(labelSize.width + origin.width, labelSize.height + origin.height),
+        Vector2(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::setDrawColor4B(Color4B::WHITE.r,Color4B::WHITE.g,Color4B::WHITE.b,Color4B::WHITE.a);
     DrawPrimitives::drawPoly(vertices2, 4, true);
