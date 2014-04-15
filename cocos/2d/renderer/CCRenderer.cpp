@@ -507,7 +507,7 @@ void Renderer::flush()
 
 // helpers
 
-bool Renderer::checkVisibility(const kmMat4 &transform, const Size &size)
+bool Renderer::checkVisibility(const Matrix &transform, const Size &size)
 {
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
@@ -517,17 +517,17 @@ bool Renderer::checkVisibility(const kmMat4 &transform, const Size &size)
     float hSizeX = size.width/2;
     float hSizeY = size.height/2;
 
-    kmVec4 v4world, v4local;
-    kmVec4Fill(&v4local, hSizeX, hSizeY, 0, 1);
-    kmVec4MultiplyMat4(&v4world, &v4local, &transform);
+    Vector4 v4world, v4local;
+    v4local.set(hSizeX, hSizeY, 0, 1);
+    transform.transformVector(v4local, &v4world);
 
     // center of screen is (0,0)
     v4world.x -= screen_half.width;
     v4world.y -= screen_half.height;
 
     // convert content size to world coordinates
-    float wshw = std::max(fabsf(hSizeX * transform.mat[0] + hSizeY * transform.mat[4]), fabsf(hSizeX * transform.mat[0] - hSizeY * transform.mat[4]));
-    float wshh = std::max(fabsf(hSizeX * transform.mat[1] + hSizeY * transform.mat[5]), fabsf(hSizeX * transform.mat[1] - hSizeY * transform.mat[5]));
+    float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
+    float wshh = std::max(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5]));
 
     // compare if it in the positive quadrant of the screen
     float tmpx = (fabsf(v4world.x)-wshw);
