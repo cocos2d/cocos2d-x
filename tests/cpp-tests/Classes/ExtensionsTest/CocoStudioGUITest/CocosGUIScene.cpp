@@ -271,7 +271,7 @@ g_guisTests[] =
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
 
-static Point s_tCurPos = Point::ZERO;
+static Vector2 s_tCurPos = Vector2::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -291,7 +291,7 @@ void CocosGUITestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Vector2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -319,17 +319,17 @@ void CocosGUITestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, E
     float nMoveY = touchLocation.y - _beginPos.y;
     
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
     
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Point::ZERO);
+        _itemMenu->setPosition(Vector2::ZERO);
         return;
     }
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Point(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(Vector2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
         return;
     }
     
@@ -354,8 +354,8 @@ void CocosGUITestScene::onEnter()
     
     Menu* pMenu =Menu::create(pMenuItem, NULL);
     
-    pMenu->setPosition( Point::ZERO );
-    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Vector2::ZERO );
+    pMenuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
     addChild(pMenu, 1);
 }
@@ -404,14 +404,14 @@ void CocosGUITestScene::runThisTest()
     Size s = Director::getInstance()->getWinSize();
     
     _itemMenu = Menu::create();
-    _itemMenu->setPosition(Point::ZERO);
+    _itemMenu->setPosition(Vector2::ZERO);
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < sizeof(gui_scene_names) / sizeof(gui_scene_names[0]); ++i)
     {
         auto item = MenuItemFont::create(gui_scene_names[i],
                                          CC_CALLBACK_1( CocosGUITestScene::menuCallback, this));
-        item->setPosition(Point(s.width / 2, s.height - s.height / 4 - (i + 1) * 40));
+        item->setPosition(Vector2(s.width / 2, s.height - s.height / 4 - (i + 1) * 40));
         item->setTag(i);
         _itemMenu->addChild(item);
     }

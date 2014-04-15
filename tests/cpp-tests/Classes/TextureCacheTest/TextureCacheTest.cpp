@@ -15,8 +15,8 @@ TextureCacheTest::TextureCacheTest()
     _labelLoading = Label::createWithTTF("loading...", "fonts/arial.ttf", 15);
     _labelPercent = Label::createWithTTF("%0", "fonts/arial.ttf", 15);
 
-    _labelLoading->setPosition(Point(size.width / 2, size.height / 2 - 20));
-    _labelPercent->setPosition(Point(size.width / 2, size.height / 2 + 20));
+    _labelLoading->setPosition(Vector2(size.width / 2, size.height / 2 - 20));
+    _labelPercent->setPosition(Vector2(size.width / 2, size.height / 2 + 20));
 
     this->addChild(_labelLoading);
     this->addChild(_labelPercent);
@@ -66,7 +66,7 @@ void TextureCacheTest::addSprite()
     // create sprites
 
     auto bg = Sprite::create("Images/HelloWorld.png");
-    bg->setPosition(Point(size.width / 2, size.height / 2));
+    bg->setPosition(Vector2(size.width / 2, size.height / 2));
 
     auto s1 = Sprite::create("Images/grossini.png");
     auto s2 = Sprite::create("Images/grossini_dance_01.png");
@@ -90,23 +90,23 @@ void TextureCacheTest::addSprite()
     Sprite::create("Images/background3.png");
     Sprite::create("Images/blocks.png");
 
-    s1->setPosition(Point(50, 50));
-    s2->setPosition(Point(60, 50));
-    s3->setPosition(Point(70, 50));
-    s4->setPosition(Point(80, 50));
-    s5->setPosition(Point(90, 50));
-    s6->setPosition(Point(100, 50));
+    s1->setPosition(Vector2(50, 50));
+    s2->setPosition(Vector2(60, 50));
+    s3->setPosition(Vector2(70, 50));
+    s4->setPosition(Vector2(80, 50));
+    s5->setPosition(Vector2(90, 50));
+    s6->setPosition(Vector2(100, 50));
 
-    s7->setPosition(Point(50, 180));
-    s8->setPosition(Point(60, 180));
-    s9->setPosition(Point(70, 180));
-    s10->setPosition(Point(80, 180));
-    s11->setPosition(Point(90, 180));
-    s12->setPosition(Point(100, 180));
+    s7->setPosition(Vector2(50, 180));
+    s8->setPosition(Vector2(60, 180));
+    s9->setPosition(Vector2(70, 180));
+    s10->setPosition(Vector2(80, 180));
+    s11->setPosition(Vector2(90, 180));
+    s12->setPosition(Vector2(100, 180));
 
-    s13->setPosition(Point(50, 270));
-    s14->setPosition(Point(60, 270));
-    s15->setPosition(Point(70, 270));
+    s13->setPosition(Vector2(50, 270));
+    s14->setPosition(Vector2(60, 270));
+    s15->setPosition(Vector2(70, 270));
 
     this->addChild(bg);
    

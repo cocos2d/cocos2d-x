@@ -80,7 +80,7 @@ public:
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 
-    void updateSize(Point &touchLocation);
+    void updateSize(Vector2 &touchLocation);
 
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);

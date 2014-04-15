@@ -24,8 +24,8 @@ public:
     void setParticlePlist(const char* plist);
     const char* getParticlePlist() const;
     
-    void setParticlePosition(const cocos2d::Point& pos);
-    const cocos2d::Point& getParticlePosition() const;
+    void setParticlePosition(const cocos2d::Vector2& pos);
+    const cocos2d::Vector2& getParticlePosition() const;
     
     void playParticle();
     
@@ -40,7 +40,7 @@ protected:
 protected:
     cocos2d::ParticleSystem* _emitter;
     const char* _emitterPlist;
-    cocos2d::Point _emitterPostion;
+    cocos2d::Vector2 _emitterPostion;
     
 };
 

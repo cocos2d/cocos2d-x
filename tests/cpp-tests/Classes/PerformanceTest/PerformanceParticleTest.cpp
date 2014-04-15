@@ -100,18 +100,18 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 
     auto menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(Point(s.width/2, s.height/2+15));
+    menu->setPosition(Vector2(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
-    infoLabel->setPosition(Point(s.width/2, s.height - 90));
+    infoLabel->setPosition(Vector2(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // particles on stage
     auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 0, kTagLabelAtlas);
-    labelAtlas->setPosition(Point(s.width-66,50));
+    labelAtlas->setPosition(Vector2(s.width-66,50));
 
     // Next Prev Test
     auto menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
@@ -139,12 +139,12 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
         }
     }
     pSubMenu->alignItemsHorizontally();
-    pSubMenu->setPosition(Point(s.width/2, 80));
+    pSubMenu->setPosition(Vector2(s.width/2, 80));
     addChild(pSubMenu, 2);
 
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-50));
+    label->setPosition(Vector2(s.width/2, s.height-50));
 
     updateQuantityLabel();
     createParticleSystem();
@@ -173,10 +173,10 @@ void ParticleMainScene::createParticleSystem()
 
     /*
     * Tests:
-    * 1: Point Particle System using 32-bit textures (PNG)
-    * 2: Point Particle System using 16-bit textures (PNG)
-    * 3: Point Particle System using 8-bit textures (PNG)
-    * 4: Point Particle System using 4-bit textures (PVRTC)
+    * 1: Vector2 Particle System using 32-bit textures (PNG)
+    * 2: Vector2 Particle System using 16-bit textures (PNG)
+    * 3: Vector2 Particle System using 8-bit textures (PNG)
+    * 4: Vector2 Particle System using 4-bit textures (PVRTC)
 
     * 5: Quad Particle System using 32-bit textures (PNG)
     * 6: Quad Particle System using 16-bit textures (PNG)
@@ -289,7 +289,7 @@ void ParticlePerformTest1::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(Point(0,-90));
+    particleSystem->setGravity(Vector2(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -304,8 +304,8 @@ void ParticlePerformTest1::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(Point(s.width/2, 100));
-    particleSystem->setPosVar(Point(s.width/2,0));
+    particleSystem->setPosition(Vector2(s.width/2, 100));
+    particleSystem->setPosVar(Vector2(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -359,7 +359,7 @@ void ParticlePerformTest2::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(Point(0,-90));
+    particleSystem->setGravity(Vector2(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -374,8 +374,8 @@ void ParticlePerformTest2::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(Point(s.width/2, 100));
-    particleSystem->setPosVar(Point(s.width/2,0));
+    particleSystem->setPosition(Vector2(s.width/2, 100));
+    particleSystem->setPosVar(Vector2(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -429,7 +429,7 @@ void ParticlePerformTest3::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(Point(0,-90));
+    particleSystem->setGravity(Vector2(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -444,8 +444,8 @@ void ParticlePerformTest3::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(Point(s.width/2, 100));
-    particleSystem->setPosVar(Point(s.width/2,0));
+    particleSystem->setPosition(Vector2(s.width/2, 100));
+    particleSystem->setPosVar(Vector2(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);
@@ -499,7 +499,7 @@ void ParticlePerformTest4::doTest()
     particleSystem->setDuration(-1);
 
     // gravity
-    particleSystem->setGravity(Point(0,-90));
+    particleSystem->setGravity(Vector2(0,-90));
 
     // angle
     particleSystem->setAngle(90);
@@ -514,8 +514,8 @@ void ParticlePerformTest4::doTest()
     particleSystem->setSpeedVar(50);
 
     // emitter position
-    particleSystem->setPosition(Point(s.width/2, 100));
-    particleSystem->setPosVar(Point(s.width/2,0));
+    particleSystem->setPosition(Vector2(s.width/2, 100));
+    particleSystem->setPosVar(Vector2(s.width/2,0));
 
     // life of particles
     particleSystem->setLife(2.0f);

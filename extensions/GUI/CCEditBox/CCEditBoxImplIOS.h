@@ -126,8 +126,8 @@ private:
     Label*     _label;
     Label*     _labelPlaceHolder;
     Size          _contentSize;
-    Point         _position;
-    Point         _anchorPoint;
+    Vector2         _position;
+    Vector2         _anchorPoint;
     CCEditBoxImplIOS_objc* _systemControl;
     int             _maxTextLength;
     bool            _inRetinaMode;

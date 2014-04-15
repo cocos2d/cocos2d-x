@@ -22,7 +22,7 @@ public:
     void touchEvent(Ref* pSender, TouchEventType type);
     
 private:
-    Point _beginPos;
+    Vector2 _beginPos;
     Menu* _itemMenu;
 };
 

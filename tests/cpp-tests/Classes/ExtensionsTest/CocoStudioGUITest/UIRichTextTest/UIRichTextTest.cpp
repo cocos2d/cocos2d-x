@@ -23,14 +23,14 @@ bool UIRichTextTest::init()
         // Add the alert
         Text *alert = Text::create("RichText", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.125));
+        alert->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.125));
         _widget->addChild(alert);
         
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getSize().height * 2.5));
+        button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getSize().height * 2.5));
         button->addTouchEventListener(this, toucheventselector(UIRichTextTest::touchEvent));
         button->setLocalZOrder(10);
         _widget->addChild(button);
@@ -64,7 +64,7 @@ bool UIRichTextTest::init()
         _richText->pushBackElement(recustom);
         _richText->pushBackElement(re6);
         
-        _richText->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2));
+        _richText->setPosition(Vector2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
         
         

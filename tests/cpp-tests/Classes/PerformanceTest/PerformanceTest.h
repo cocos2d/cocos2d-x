@@ -13,10 +13,10 @@ public:
     
     void onMouseScroll(Event *event);
 protected:
-    Point _beginPos;
+    Vector2 _beginPos;
     Menu* _itemMenu;
     
-    static Point _CurrentPos;
+    static Vector2 _CurrentPos;
 };
 
 class PerformBasicLayer : public Layer

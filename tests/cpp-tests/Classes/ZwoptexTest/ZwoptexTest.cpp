@@ -107,22 +107,22 @@ void ZwoptexGenericTest::onEnter()
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
     
     auto layer1 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
-    layer1->setPosition(Point(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
+    layer1->setPosition(Vector2(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
     sprite1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini_dance_01.png"));
-    sprite1->setPosition(Point( s.width/2-80, s.height/2));
+    sprite1->setPosition(Vector2( s.width/2-80, s.height/2));
     addChild(sprite1);
 
     sprite1->setFlippedX(false);
     sprite1->setFlippedY(false);
 
     auto layer2 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
-    layer2->setPosition(Point(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
+    layer2->setPosition(Vector2(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     
     sprite2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini_dance_generic_01.png"));
-    sprite2->setPosition(Point( s.width/2 + 80, s.height/2));
+    sprite2->setPosition(Vector2( s.width/2 + 80, s.height/2));
     addChild(sprite2);
 
     sprite2->setFlippedX(false);

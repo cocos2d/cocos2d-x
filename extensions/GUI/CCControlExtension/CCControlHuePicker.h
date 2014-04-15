@@ -48,7 +48,7 @@ NS_CC_EXT_BEGIN
 class ControlHuePicker : public Control
 {
 public:
-    static ControlHuePicker* create(Node* target, Point pos);
+    static ControlHuePicker* create(Node* target, Vector2 pos);
     /**
      * @js ctor
      */
@@ -58,7 +58,7 @@ public:
      * @lua NA
      */
     virtual ~ControlHuePicker();
-    virtual bool initWithTargetAndPos(Node* target, Point pos);
+    virtual bool initWithTargetAndPos(Node* target, Vector2 pos);
 
     virtual void setEnabled(bool enabled);
 
@@ -67,8 +67,8 @@ public:
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
 
 protected:
-    void updateSliderPosition(Point location);
-    bool checkSliderPosition(Point location);
+    void updateSliderPosition(Vector2 location);
+    bool checkSliderPosition(Vector2 location);
 
     //maunally put in the setters
     CC_SYNTHESIZE_READONLY(float, _hue, Hue);
@@ -79,7 +79,7 @@ protected:
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
     CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background);
     CC_SYNTHESIZE_RETAIN(Sprite*, _slider, Slider);
-    CC_SYNTHESIZE_READONLY(Point, _startPos, StartPos);
+    CC_SYNTHESIZE_READONLY(Vector2, _startPos, StartPos);
 };
 
 // end of GUI group
