@@ -449,6 +449,10 @@ class SetEnvVar(object):
 
             self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root)
         else:
+            if old_dir == cocos_consle_root:
+                # is same with before, nothing to do
+                return
+
             # update the environment variable
             if self._isWindows(): 
                 self.remove_dir_from_win_path(old_dir)
@@ -597,3 +601,12 @@ if __name__ == '__main__':
     # set environment variables
     env = SetEnvVar()
     env.set_environment_variables(opts.ndk_root, opts.android_sdk_root, opts.ant_root)
+
+    if env._isWindows():
+        import ctypes
+        HWND_BROADCAST = 0xFFFF
+        WM_SETTINGCHANGE = 0x1A
+        SMTO_ABORTIFHUNG = 0x0002
+        result = ctypes.c_long()
+        SendMessageTimeoutW = ctypes.windll.user32.SendMessageTimeoutW
+        SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, 0, u'Environment', SMTO_ABORTIFHUNG, 5000, ctypes.byref(result))
