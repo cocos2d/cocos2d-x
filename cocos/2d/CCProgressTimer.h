@@ -91,24 +91,24 @@ public:
      *    If you're using radials type then the midpoint changes the center point
      *    If you're using bar type the the midpoint changes the bar growth
      *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to Point(0,y)
-     *        you want a right to left then set the midpoint all the way to Point(1,y)
-     *        you want a bottom to top then set the midpoint all the way to Point(x,0)
-     *        you want a top to bottom then set the midpoint all the way to Point(x,1)
+     *        you want a left to right then set the midpoint all the way to Vector2(0,y)
+     *        you want a right to left then set the midpoint all the way to Vector2(1,y)
+     *        you want a bottom to top then set the midpoint all the way to Vector2(x,0)
+     *        you want a top to bottom then set the midpoint all the way to Vector2(x,1)
      */
-    void setMidpoint(const Point& point);
+    void setMidpoint(const Vector2& point);
     /** Returns the Midpoint */
-    Point getMidpoint() const;
+    Vector2 getMidpoint() const;
 
     /**
      *    This allows the bar type to move the component at a specific rate
      *    Set the component to 0 to make sure it stays at 100%.
      *    For example you want a left to right bar but not have the height stay 100%
-     *    Set the rate to be Point(0,1); and set the midpoint to = Point(0,.5f);
+     *    Set the rate to be Vector2(0,1); and set the midpoint to = Vector2(0,.5f);
      */
-    inline void setBarChangeRate(const Point& barChangeRate ) { _barChangeRate = barChangeRate; }
+    inline void setBarChangeRate(const Vector2& barChangeRate ) { _barChangeRate = barChangeRate; }
     /** Returns the BarChangeRate */
-    inline Point getBarChangeRate() const { return _barChangeRate; }
+    inline Vector2 getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
@@ -135,17 +135,17 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     void onDraw(const Matrix &transform, bool transformUpdated);
     
-    Tex2F textureCoordFromAlphaPoint(Point alpha);
-    Vector2 vertexFromAlphaPoint(Point alpha);
+    Tex2F textureCoordFromAlphaPoint(Vector2 alpha);
+    Vector2 vertexFromAlphaPoint(Vector2 alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
     virtual void updateColor(void) override;
-    Point boundaryTexCoord(char index);
+    Vector2 boundaryTexCoord(char index);
 
     Type _type;
-    Point _midpoint;
-    Point _barChangeRate;
+    Vector2 _midpoint;
+    Vector2 _barChangeRate;
     float _percentage;
     Sprite *_sprite;
     int _vertexDataCount;

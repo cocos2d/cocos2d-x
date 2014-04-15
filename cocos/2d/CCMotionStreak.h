@@ -139,7 +139,7 @@ protected:
     unsigned int _previousNuPoints;
 
     /** Pointers */
-    Point* _pointVertexes;
+    Vector2* _pointVertexes;
     float* _pointState;
 
     // Opengl

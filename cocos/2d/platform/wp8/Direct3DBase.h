@@ -24,7 +24,7 @@ public:
     virtual void Present();
     virtual float ConvertDipsToPixels(float dips);
     virtual void ComputeOrientationMatrices();
-    virtual Windows::Foundation::Point TransformToOrientation(Windows::Foundation::Point point, bool dipsToPixels=true);
+    virtual Windows::Foundation::Vector2 TransformToOrientation(Windows::Foundation::Vector2 point, bool dipsToPixels=true);
 
 	float getOrientedWindowWidth() {return m_orientedScreenSize.Width;};
 	float getOrientedWindowHeight() {return m_orientedScreenSize.Height;};

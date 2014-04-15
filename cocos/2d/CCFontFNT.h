@@ -37,7 +37,7 @@ class FontFNT : public Font
     
 public:
     
-    static FontFNT * create(const std::string& fntFilePath, const Point& imageOffset = Point::ZERO);
+    static FontFNT * create(const std::string& fntFilePath, const Vector2& imageOffset = Vector2::ZERO);
     /** Purges the cached data.
     Removes from memory the cached configurations and the atlas name dictionary.
     */
@@ -47,7 +47,7 @@ public:
     
 protected:
     
-    FontFNT(BMFontConfiguration *theContfig, const Point& imageOffset = Point::ZERO);
+    FontFNT(BMFontConfiguration *theContfig, const Vector2& imageOffset = Vector2::ZERO);
     /**
      * @js NA
      * @lua NA
@@ -59,7 +59,7 @@ private:
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
     
     BMFontConfiguration * _configuration;
-    Point                   _imageOffset;
+    Vector2                   _imageOffset;
     
 };
 

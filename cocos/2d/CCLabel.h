@@ -104,7 +104,7 @@ public:
     /* Creates a label with an FNT file,an initial string,horizontal alignment,max line width and the offset of image*/
     static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,
         const TextHAlignment& alignment = TextHAlignment::LEFT, int maxLineWidth = 0, 
-        const Point& imageOffset = Point::ZERO);
+        const Vector2& imageOffset = Vector2::ZERO);
     
     static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
@@ -114,7 +114,7 @@ public:
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
-    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Point& imageOffset = Point::ZERO);
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vector2& imageOffset = Vector2::ZERO);
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
     virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
@@ -254,7 +254,7 @@ protected:
     {
         FontLetterDefinition def;
 
-        Point position;
+        Vector2 position;
         Size  contentSize;
         int   atlasIndex;
     };
@@ -279,7 +279,7 @@ protected:
 
     virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
-    bool recordLetterInfo(const cocos2d::Point& point,const FontLetterDefinition& letterDef, int spriteIndex);
+    bool recordLetterInfo(const cocos2d::Vector2& point,const FontLetterDefinition& letterDef, int spriteIndex);
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);

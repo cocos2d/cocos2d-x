@@ -343,7 +343,7 @@ public:
     static LayerGradient* create(const Color4B& start, const Color4B& end);
 
     /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
-    static LayerGradient* create(const Color4B& start, const Color4B& end, const Point& v);
+    static LayerGradient* create(const Color4B& start, const Color4B& end, const Vector2& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: true
@@ -374,9 +374,9 @@ public:
     /** Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
      */
-    void setVector(const Point& alongVector);
+    void setVector(const Vector2& alongVector);
     /** Returns the directional vector used for the gradient */
-    const Point& getVector() const;
+    const Vector2& getVector() const;
 
     virtual std::string getDescription() const override;
     
@@ -395,7 +395,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @js init
      * @lua init
      */
-    bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
+    bool initWithColor(const Color4B& start, const Color4B& end, const Vector2& v);
 
 protected:
     virtual void updateColor() override;
@@ -404,7 +404,7 @@ protected:
     Color3B _endColor;
     GLubyte _startOpacity;
     GLubyte _endOpacity;
-    Point   _alongVector;
+    Vector2   _alongVector;
     bool    _compressedInterpolation;
 };
 

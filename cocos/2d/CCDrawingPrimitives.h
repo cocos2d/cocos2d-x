@@ -63,7 +63,7 @@ THE SOFTWARE.
  - ccPointSize()
  - glLineWidth()
  
- @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use DrawNode
+ @warning These functions draws the Line, Vector2, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use DrawNode
  
  */
 
