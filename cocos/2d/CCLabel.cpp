@@ -258,6 +258,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _textSprite(nullptr)
 , _contentDirty(false)
 , _shadowDirty(false)
+, _compatibleMode(false)
 {
     setAnchorPoint(Vector2::ANCHOR_MIDDLE);
     reset();
@@ -943,6 +944,7 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
         _fontDefinition._shadow._shadowEnabled = false;
         enableShadow(Color4B(0,0,0,255 * _fontDefinition._shadow._shadowOpacity),_fontDefinition._shadow._shadowOffset,_fontDefinition._shadow._shadowBlur);
     }
+    _compatibleMode = true;
 }
 
 void Label::updateContent()
@@ -968,41 +970,44 @@ void Label::updateContent()
     }
     else
     {
-        _fontDefinition._fontName = _systemFont;
-        _fontDefinition._fontSize = _systemFontSize;
-
-        _fontDefinition._alignment = _hAlignment;
-        _fontDefinition._vertAlignment = _vAlignment;
-
-        _fontDefinition._dimensions.width = _labelWidth;
-        _fontDefinition._dimensions.height = _labelHeight;
-
-        _fontDefinition._fontFillColor.r = _textColor.r;
-        _fontDefinition._fontFillColor.g = _textColor.g;
-        _fontDefinition._fontFillColor.b = _textColor.b;
-
-        _fontDefinition._shadow._shadowEnabled = false;
-
-        if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0)
+        if (!_compatibleMode)
         {
-            _fontDefinition._stroke._strokeEnabled = true;
-            _fontDefinition._stroke._strokeSize = _outlineSize;
-            _fontDefinition._stroke._strokeColor.r = _effectColor.r;
-            _fontDefinition._stroke._strokeColor.g = _effectColor.g;
-            _fontDefinition._stroke._strokeColor.b = _effectColor.b;
-        }
-        else
-        {
-            _fontDefinition._stroke._strokeEnabled = false;
-        }
+            _fontDefinition._fontName = _systemFont;
+            _fontDefinition._fontSize = _systemFontSize;
+
+            _fontDefinition._alignment = _hAlignment;
+            _fontDefinition._vertAlignment = _vAlignment;
+
+            _fontDefinition._dimensions.width = _labelWidth;
+            _fontDefinition._dimensions.height = _labelHeight;
+
+            _fontDefinition._fontFillColor.r = _textColor.r;
+            _fontDefinition._fontFillColor.g = _textColor.g;
+            _fontDefinition._fontFillColor.b = _textColor.b;
+
+            _fontDefinition._shadow._shadowEnabled = false;
+
+            if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0)
+            {
+                _fontDefinition._stroke._strokeEnabled = true;
+                _fontDefinition._stroke._strokeSize = _outlineSize;
+                _fontDefinition._stroke._strokeColor.r = _effectColor.r;
+                _fontDefinition._stroke._strokeColor.g = _effectColor.g;
+                _fontDefinition._stroke._strokeColor.b = _effectColor.b;
+            }
+            else
+            {
+                _fontDefinition._stroke._strokeEnabled = false;
+            }
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-        if (_fontDefinition._stroke._strokeEnabled)
-        {
-            CCLOGERROR("Currently only supported on iOS and Android!");
-        }
-        _fontDefinition._stroke._strokeEnabled = false;
+            if (_fontDefinition._stroke._strokeEnabled)
+            {
+                CCLOGERROR("Currently only supported on iOS and Android!");
+            }
+            _fontDefinition._stroke._strokeEnabled = false;
 #endif
+        }
 
         createSpriteWithFontDefinition();
     }
