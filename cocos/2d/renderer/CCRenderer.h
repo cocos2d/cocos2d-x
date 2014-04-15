@@ -113,7 +113,10 @@ public:
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
 
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
-    
+
+    /** returns whether or not a rectangle is visible or not */
+    bool checkVisibility(const kmMat4& transform, const Size& size);
+
 protected:
 
     void setupIndices();
