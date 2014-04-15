@@ -79,7 +79,7 @@ def mapIP():
 		device['ip'] = ip_d
 
 info_empty_test = {}
-apk_name = test_name[gIdx]+'_'+str(pr_num)+'.apk'
+apk_name = 'apk/'+test_name[gIdx]+'/'+test_name[gIdx]+'_'+str(pr_num)+'.apk'
 def install_apk():
 	print 'will install apk:', apk_name
 	if len(arrDevices) == 0:
