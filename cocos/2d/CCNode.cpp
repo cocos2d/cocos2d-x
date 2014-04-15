@@ -416,7 +416,7 @@ const Point& Node::getPosition() const
 }
 
 /// position setter
-void Node::setPosition(const Point& position)
+void Node::setPosition(const Vector2& position)
 {
     if (_position.equals(position))
         return;

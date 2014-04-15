@@ -571,7 +571,7 @@ static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bI
     return screenPos;
 }
 
-void EditBoxImplIOS::setPosition(const Point& pos)
+void EditBoxImplIOS::setPosition(const Vector2& pos)
 {
 	_position = pos;
 	adjustTextFieldPosition();

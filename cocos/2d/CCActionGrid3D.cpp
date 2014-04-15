@@ -341,7 +341,7 @@ Lens3D* Lens3D::clone() const
 	return a;
 }
 
-void Lens3D::setPosition(const Point& pos)
+void Lens3D::setPosition(const Vector2& pos)
 {
     if( !pos.equals(_position))
     {
@@ -430,7 +430,7 @@ bool Ripple3D::initWithDuration(float duration, const Size& gridSize, const Poin
     return false;
 }
 
-void Ripple3D::setPosition(const Point& position)
+void Ripple3D::setPosition(const Vector2& position)
 {
     _position = position;
 }
@@ -701,7 +701,7 @@ bool Twirl::initWithDuration(float duration, const Size& gridSize, Point positio
     return false;
 }
 
-void Twirl::setPosition(const Point& position)
+void Twirl::setPosition(const Vector2& position)
 {
     _position = position;
 }

@@ -275,7 +275,7 @@ const Point& PhysicsSprite::getPosFromPhysics() const
     return s_physicPosion;
 }
 
-void PhysicsSprite::setPosition(const Point &pos)
+void PhysicsSprite::setPosition(const Vector2 &pos)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 

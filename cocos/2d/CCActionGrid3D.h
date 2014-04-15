@@ -130,7 +130,7 @@ public:
     inline void setConcave(bool concave) { _concave = concave; }
   
     inline const Point& getPosition() const { return _position; }
-    void setPosition(const Point& position);
+    void setPosition(const Vector2& position);
 
     // Overrides
 	virtual Lens3D* clone() const override;
@@ -168,7 +168,7 @@ public:
     /** get center position */
     inline const Point& getPosition() const { return _position; }
     /** set center position */
-    void setPosition(const Point& position);
+    void setPosition(const Vector2& position);
 
     inline float getAmplitude() const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
@@ -303,7 +303,7 @@ public:
     /** get twirl center */
     inline const Point& getPosition() const { return _position; }
     /** set twirl center */
-    void setPosition(const Point& position);
+    void setPosition(const Vector2& position);
 
     inline float getAmplitude() const { return _amplitude; }
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }

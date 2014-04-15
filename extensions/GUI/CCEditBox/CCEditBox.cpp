@@ -282,7 +282,7 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 }
 
 /* override function */
-void EditBox::setPosition(const Point& pos)
+void EditBox::setPosition(const Vector2& pos)
 {
     ControlButton::setPosition(pos);
     if (_editBoxImpl != NULL)

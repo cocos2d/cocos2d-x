@@ -183,7 +183,7 @@ void ShaderNode::update(float dt)
     _time += dt;
 }
 
-void ShaderNode::setPosition(const Point &newPosition)
+void ShaderNode::setPosition(const Vector2 &newPosition)
 {
     Node::setPosition(newPosition);
     auto position = getPosition();

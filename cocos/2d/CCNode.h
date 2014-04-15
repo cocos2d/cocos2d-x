@@ -276,20 +276,20 @@ public:
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Usually we use `Point(x,y)` to compose Point object.
+     * Usually we use `Vector2(x,y)` to compose Vector2 object.
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Point(size.width/2, size.height/2) )
+     node->setPosition( Vector2(size.width/2, size.height/2) )
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
-    virtual void setPosition(const Point &position);
+    virtual void setPosition(const Vector2 &position);
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
-     * @see setPosition(const Point&)
+     * @see setPosition(const Vector2&)
      *
      * @return The position (x,y) of the node in OpenGL coordinates
      * @code
@@ -300,13 +300,13 @@ public:
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Passing two numbers (x,y) is much efficient than passing Point object.
+     * Passing two numbers (x,y) is much efficient than passing Vector2 object.
      * This method is bound to Lua and JavaScript.
      * Passing a number is 10 times faster than passing a object from Lua to c++
      *
      @code
      // sample code in Lua
-     local pos  = node::getPosition()  -- returns Point object from C++
+     local pos  = node::getPosition()  -- returns Vector2 object from C++
      node:setPosition(x, y)            -- pass x, y coordinate to C++
      @endcode
      *
@@ -315,7 +315,7 @@ public:
      */
     virtual void setPosition(float x, float y);
     /**
-     * Gets position in a more efficient way, returns two number instead of a Point object
+     * Gets position in a more efficient way, returns two number instead of a Vector2 object
      *
      * @see `setPosition(float, float)`
      * In js,out value not return
@@ -426,7 +426,7 @@ public:
     /**
      * Returns the anchor point in percent.
      *
-     * @see `setAnchorPoint(const Point&)`
+     * @see `setAnchorPoint(const Vector2&)`
      *
      * @return The anchor point of node.
      */
@@ -1240,29 +1240,29 @@ public:
     /// @name Coordinate Converters
 
     /**
-     * Converts a Point to node (local) space coordinates. The result is in Points.
+     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
      */
     Vector2 convertToNodeSpace(const Vector2& worldPoint) const;
 
     /**
-     * Converts a Point to world space coordinates. The result is in Points.
+     * Converts a Vector2 to world space coordinates. The result is in Points.
      */
     Vector2 convertToWorldSpace(const Vector2& nodePoint) const;
 
     /**
-     * Converts a Point to node (local) space coordinates. The result is in Points.
+     * Converts a Vector2 to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
     Vector2 convertToNodeSpaceAR(const Vector2& worldPoint) const;
 
     /**
-     * Converts a local Point to world space coordinates.The result is in Points.
+     * Converts a local Vector2 to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
     Vector2 convertToWorldSpaceAR(const Vector2& nodePoint) const;
 
     /**
-     * convenience methods which take a Touch instead of Point
+     * convenience methods which take a Touch instead of Vector2
      */
     Vector2 convertTouchToNodeSpace(Touch * touch) const;
 
@@ -1311,7 +1311,7 @@ public:
 #if CC_USE_PHYSICS
     /**
      *   set the PhysicsBody that let the sprite effect with physics
-     * @note This method will set anchor point to Point::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
+     * @note This method will set anchor point to Vector2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
      */
     void setPhysicsBody(PhysicsBody* body);
 
@@ -1428,7 +1428,7 @@ protected:
 
     bool _visible;                  ///< is this node visible
 
-    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Point will be (0,0) when you position the Node, false otherwise.
+    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vector2 will be (0,0) when you position the Node, false otherwise.
                                           ///< Used by Layer and Scene.
 
     bool _reorderChildDirty;          ///< children order dirty flag
