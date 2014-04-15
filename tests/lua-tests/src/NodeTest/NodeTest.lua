@@ -426,8 +426,10 @@ end
 local function CameraOrbitTest_onEnterOrExit(tag)
 	if tag == "enter" then
 		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D)
+        cc.Director:getInstance():setDepthTest(true)
 	elseif tag == "exit" then
-		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D)
+		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT)
+        cc.Director:getInstance():setDepthTest(false)
 	end
 end
 
@@ -470,7 +472,7 @@ local function CameraOrbitTest()
     p:runAction(cc.RepeatForever:create(orbit))
 
     layer:setScale(1)
-
+    layer:registerScriptHandler(CameraOrbitTest_onEnterOrExit)
 	Helper.titleLabel:setString("Camera Orbit test")
 	return layer
 end
@@ -499,7 +501,7 @@ local function CameraZoomTest_onEnterOrExit(tag)
 		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D)
 		CameraZoomTest_entry = scheduler:scheduleScriptFunc(CameraZoomTest_update, 0.0, false)
 	elseif tag == "exit" then
-		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D)
+		cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT)
 		scheduler:unscheduleScriptEntry(CameraZoomTest_entry)
 	end
 end
@@ -693,7 +695,7 @@ function CocosNodeTest()
         StressTest2,
         NodeToWorld,
         CameraOrbitTest,
-        CameraZoomTest,
+        -- CameraZoomTest,
         ConvertToNode,
         NodeOpaqueTest,
         NodeNonOpaqueTest,
