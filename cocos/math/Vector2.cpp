@@ -4,6 +4,49 @@
 
 NS_CC_MATH_BEGIN
 
+// returns true if segment A-B intersects with segment C-D. S->E is the ovderlap part
+bool isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, float * E)
+{
+    float ABmin = MIN(A, B);
+    float ABmax = MAX(A, B);
+    float CDmin = MIN(C, D);
+    float CDmax = MAX(C, D);
+    
+    if (ABmax < CDmin || CDmax < ABmin)
+    {
+        // ABmin->ABmax->CDmin->CDmax or CDmin->CDmax->ABmin->ABmax
+        return false;
+    }
+    else
+    {
+        if (ABmin >= CDmin && ABmin <= CDmax)
+        {
+            // CDmin->ABmin->CDmax->ABmax or CDmin->ABmin->ABmax->CDmax
+            if (S != nullptr) *S = ABmin;
+            if (E != nullptr) *E = CDmax < ABmax ? CDmax : ABmax;
+        }
+        else if (ABmax >= CDmin && ABmax <= CDmax)
+        {
+            // ABmin->CDmin->ABmax->CDmax
+            if (S != nullptr) *S = CDmin;
+            if (E != nullptr) *E = ABmax;
+        }
+        else
+        {
+            // ABmin->CDmin->CDmax->ABmax
+            if (S != nullptr) *S = CDmin;
+            if (E != nullptr) *E = CDmax;
+        }
+        return true;
+    }
+}
+
+// cross procuct of 2 vector. A->B X C->D
+float crossProduct2Vector(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D)
+{
+    return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y);
+}
+
 Vector2::Vector2()
     : x(0.0f), y(0.0f)
 {
@@ -276,5 +319,160 @@ void Vector2::smooth(const Vector2& target, float elapsedTime, float responseTim
         *this += (target - *this) * (elapsedTime / (elapsedTime + responseTime));
     }
 }
+
+NS_CC_MATH_END
+
+NS_CC_MATH_BEGIN
+
+void Vector2::setPoint(float xx, float yy)
+{
+    this->x = xx;
+    this->y = yy;
+}
+
+bool Vector2::equals(const Vector2& target) const
+{
+    return (fabs(this->x - target.x) < FLT_EPSILON)
+        && (fabs(this->y - target.y) < FLT_EPSILON);
+}
+
+bool Vector2::fuzzyEquals(const Vector2& b, float var) const
+{
+    if(x - var <= b.x && b.x <= x + var)
+        if(y - var <= b.y && b.y <= y + var)
+            return true;
+    return false;
+}
+
+float Vector2::getAngle(const Vector2& other) const
+{
+    Vector2 a2 = normalize();
+    Vector2 b2 = other.normalize();
+    float angle = atan2f(a2.cross(b2), a2.dot(b2));
+    if( fabs(angle) < FLT_EPSILON ) return 0.f;
+    return angle;
+}
+
+Vector2 Vector2::rotateByAngle(const Vector2& pivot, float angle) const
+{
+    return pivot + (*this - pivot).rotate(Vector2::forAngle(angle));
+}
+
+bool Vector2::isLineIntersect(const Vector2& A, const Vector2& B,
+                            const Vector2& C, const Vector2& D,
+                            float *S, float *T)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+    
+    const float denom = crossProduct2Vector(A, B, C, D);
+    
+    if (denom == 0)
+    {
+        // Lines parallel or overlap
+        return false;
+    }
+    
+    if (S != nullptr) *S = crossProduct2Vector(C, D, C, A) / denom;
+    if (T != nullptr) *T = crossProduct2Vector(A, B, C, A) / denom;
+    
+    return true;
+}
+
+bool Vector2::isLineParallel(const Vector2& A, const Vector2& B,
+                           const Vector2& C, const Vector2& D)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+    
+    if (crossProduct2Vector(A, B, C, D) == 0)
+    {
+        // line overlap
+        if (crossProduct2Vector(C, D, C, A) == 0 || crossProduct2Vector(A, B, C, A) == 0)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool Vector2::isLineOverlap(const Vector2& A, const Vector2& B,
+                            const Vector2& C, const Vector2& D)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+    
+    if (crossProduct2Vector(A, B, C, D) == 0 &&
+        (crossProduct2Vector(C, D, C, A) == 0 || crossProduct2Vector(A, B, C, A) == 0))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+bool Vector2::isSegmentOverlap(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D, Vector2* S, Vector2* E)
+{
+    
+    if (isLineOverlap(A, B, C, D))
+    {
+        return isOneDimensionSegmentOverlap(A.x, B.x, C.x, D.x, &S->x, &E->x) &&
+        isOneDimensionSegmentOverlap(A.y, B.y, C.y, D.y, &S->y, &E->y);
+    }  
+    
+    return false;
+}
+
+bool Vector2::isSegmentIntersect(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D)
+{
+    float S, T;
+    
+    if (isLineIntersect(A, B, C, D, &S, &T )&&
+        (S >= 0.0f && S <= 1.0f && T >= 0.0f && T <= 1.0f))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+Vector2 Vector2::getIntersectPoint(const Vector2& A, const Vector2& B, const Vector2& C, const Vector2& D)
+{
+    float S, T;
+    
+    if (isLineIntersect(A, B, C, D, &S, &T))
+    {
+        // Point of intersection
+        Vector2 P;
+        P.x = A.x + S * (B.x - A.x);
+        P.y = A.y + S * (B.y - A.y);
+        return P;
+    }
+    
+    return Vector2::ZERO;
+}
+
+const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
+const Vector2 Vector2::ANCHOR_MIDDLE = Vector2(0.5f, 0.5f);
+const Vector2 Vector2::ANCHOR_BOTTOM_LEFT = Vector2(0.0f, 0.0f);
+const Vector2 Vector2::ANCHOR_TOP_LEFT = Vector2(0.0f, 1.0f);
+const Vector2 Vector2::ANCHOR_BOTTOM_RIGHT = Vector2(1.0f, 0.0f);
+const Vector2 Vector2::ANCHOR_TOP_RIGHT = Vector2(1.0f, 1.0f);
+const Vector2 Vector2::ANCHOR_MIDDLE_RIGHT = Vector2(1.0f, 0.5f);
+const Vector2 Vector2::ANCHOR_MIDDLE_LEFT = Vector2(0.0f, 0.5f);
+const Vector2 Vector2::ANCHOR_MIDDLE_TOP = Vector2(0.5f, 1.0f);
+const Vector2 Vector2::ANCHOR_MIDDLE_BOTTOM = Vector2(0.5f, 0.0f);
 
 NS_CC_MATH_END

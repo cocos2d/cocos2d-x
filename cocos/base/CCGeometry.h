@@ -31,19 +31,11 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 #include "ccMacros.h"
+#include "CCMath.h"
 
 NS_CC_BEGIN
 
-/** Clamp a value between from and to.
- @since v0.99.1
- */
-inline float clampf(float value, float min_inclusive, float max_inclusive)
-{
-    if (min_inclusive > max_inclusive) {
-        CC_SWAP(min_inclusive, max_inclusive, float);
-    }
-    return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
-}
+USING_NS_CC_MATH;
 
 /**
  * @addtogroup data_structures
