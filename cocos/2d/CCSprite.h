@@ -526,8 +526,6 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
-    bool isInsideBounds() const;
-
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -573,7 +571,6 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
-
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };
