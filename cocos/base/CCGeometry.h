@@ -51,6 +51,10 @@ public:
     float x;
     float y;
 
+//conversion to and from Vector2
+public:
+    operator Vector2() const { return Vector2(x, y); }
+    Point(const Vector2& v):x(v.x), y(v.y) {}
 public:
     /**
      * @js NA
