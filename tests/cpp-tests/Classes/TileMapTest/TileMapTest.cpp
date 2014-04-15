@@ -118,6 +118,11 @@ void TileDemo::onEnter()
     BaseTest::onEnter();
 }
 
+void TileDemo::onExit()
+{
+    BaseTest::onExit();
+    Director::getInstance()->setDepthTest(false);
+}
 void TileDemo::restartCallback(Ref* sender)
 {
     auto s = new TileMapTestScene();
@@ -165,6 +170,7 @@ void TileMapTestScene::runThisTest()
 
     Director::getInstance()->replaceScene(this);
 }
+
 
 //------------------------------------------------------------------
 //
@@ -1095,12 +1101,14 @@ void TMXIsoVertexZ::onEnter()
     
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setDepthTest(true);
 }
 
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setDepthTest(false);
     TileDemo::onExit();
 }
 

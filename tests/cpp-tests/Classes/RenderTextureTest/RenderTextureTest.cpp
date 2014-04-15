@@ -670,6 +670,10 @@ std::string RenderTextureTargetNode::subtitle() const
 // SpriteRenderTextureBug
 
 SpriteRenderTextureBug::SimpleSprite::SimpleSprite() : _rt(nullptr) {}
+SpriteRenderTextureBug::SimpleSprite::~SimpleSprite()
+{
+    CC_SAFE_RELEASE(_rt);
+}
 
 SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const Rect &rect)
 {
@@ -688,16 +692,6 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
-    renderer->addCommand(&_customCommand);
-
-    Sprite::draw(renderer, transform, transformUpdated);
-    
-}
-
-void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
-{
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
@@ -706,6 +700,9 @@ void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	_rt->end();
+
+    Sprite::draw(renderer, transform, transformUpdated);
+    
 }
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()

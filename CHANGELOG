@@ -1,10 +1,12 @@
-cocos2d-x-3.0final ?.? 2014
+cocos2d-x-3.0rc2 Apr.15 2014
      [NEW]          Event: Adds `EventListener::setEnabled/isEnabled` to support enable/disable event listeners
      [NEW]          GLView: Added createWithFullscreen overloaded method for selecting monitor and setting video mode
      
      [FIX]          Android: Cocos2dxHelper.runOnGLThread() can't work
      [FIX]          Animation: Added 'loops' parameter to Animation::createWithSpriteFrames
      [FIX]          Audio: can not resume after pausing on windows
+     [FIX]          Audio: stopalleffect lead to stop background music on WP8
+     [FIX]          Audio: play effect may lead to memory leak on WP8
      [FIX]          CocoStudio: Potential crash in SceneReader::createNodeWithSceneFile
      [FIX]          Control: ControlButton can't swallow touch event
      [FIX]          Event: Removing and re-adding an event listener will trigger an assert
@@ -18,6 +20,8 @@ cocos2d-x-3.0final ?.? 2014
      [FIX]          Physics: Skips one frame when delta time is equal to zero
      [FIX]          Physics: PhysicsShapeEdgeChain::init() always return false
      [FIX]          Setup: Force updating environment variables in setup.py
+     [FIX]          Sprite: disable auto-culling by default, and add a function to enable it. Because  current implementation 
+                    can not work correctly when a sprite is rotated.
      [FIX]          Value: A potential memory leak in value's default constructor
 
 cocos2d-x-3.0rc1 April.2 2014

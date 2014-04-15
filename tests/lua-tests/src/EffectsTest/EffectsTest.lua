@@ -352,7 +352,7 @@ function CreateEffectsTestLayer()
 
     local x, y = size.width, size.height
 
-    titleLabel = cc.Label:create(EffectsList[ActionIdx], s_markerFeltFontPath, 32)
+    titleLabel = cc.Label:createWithTTF(EffectsList[ActionIdx], s_markerFeltFontPath, 32)
     titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     titleLabel:setPosition(x / 2, y - 80)
     testLayer:addChild(titleLabel)

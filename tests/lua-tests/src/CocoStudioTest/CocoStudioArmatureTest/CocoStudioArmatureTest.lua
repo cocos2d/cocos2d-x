@@ -195,14 +195,14 @@ function ArmatureTestLayer:createToExtensionMenu()
 end
 
 function ArmatureTestLayer:creatTitleAndSubTitle(idx)
-    local title = cc.Label:create(ArmatureTestLayer.title(idx), s_arialPath, 18)
+    local title = cc.Label:createWithTTF(ArmatureTestLayer.title(idx), s_arialPath, 18)
     title:setColor(cc.c3b(0,0,0))
     self:addChild(title, 1, 10000)
     title:setAnchorPoint(cc.p(0.5, 0.5))
     title:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 30))
     local subTitle = nil
     if "" ~= ArmatureTestLayer.subTitle(idx) then
-        local subTitle = cc.Label:create(ArmatureTestLayer.subTitle(idx), s_arialPath, 18)
+        local subTitle = cc.Label:createWithTTF(ArmatureTestLayer.subTitle(idx), s_arialPath, 18)
         subTitle:setColor(cc.c3b(0,0,0))
         self:addChild(subTitle, 1, 10001)
         subTitle:setAnchorPoint(cc.p(0.5, 0.5))
@@ -228,7 +228,7 @@ function TestAsynchronousLoading:onEnter()
     self._restarItem:setEnabled(false)
     self._nextItem:setEnabled(false)
 
-    local title = cc.Label:create(ArmatureTestLayer.title(1), s_arialPath, 18)
+    local title = cc.Label:createWithTTF(ArmatureTestLayer.title(1), s_arialPath, 18)
     title:setColor(cc.c3b(0,0,0))
     self:addChild(title, 1, 10000)
     title:setAnchorPoint(cc.p(0.5, 0.5))
@@ -236,7 +236,7 @@ function TestAsynchronousLoading:onEnter()
     local subTitle = nil
     if "" ~= ArmatureTestLayer.subTitle(1) then
         local subInfo  = ArmatureTestLayer.subTitle(1) .. 0.0
-        local subTitle = cc.Label:create(subInfo, s_arialPath, 18)
+        local subTitle = cc.Label:createWithTTF(subInfo, s_arialPath, 18)
         subTitle:setColor(cc.c3b(0,0,0))
         self:addChild(subTitle, 1, 10001)
         subTitle:setAnchorPoint(cc.p(0.5, 0.5))
@@ -1164,7 +1164,7 @@ function TestArmatureNesting2:onEnter()
     end
 
     self._touchedMenu = false
-    local label = cc.Label:create("Change Mount", s_arialPath, 20)
+    local label = cc.Label:createWithTTF("Change Mount", s_arialPath, 20)
     label:setAnchorPoint(cc.p(0.5, 0.5))
     local menuItem = cc.MenuItemLabel:create(label)
     menuItem:registerScriptTapHandler(changeMountCallback)

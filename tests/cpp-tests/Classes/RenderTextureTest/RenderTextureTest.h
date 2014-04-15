@@ -139,14 +139,10 @@ public:
     public:
         static SimpleSprite* create(const char* filename, const Rect &rect);
         SimpleSprite();
+        ~SimpleSprite();
         virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
-        
-    protected:
-        void onBeforeDraw();
     public:
         RenderTexture *_rt;
-    protected:
-        CustomCommand _customCommand;
     };
         
 public:

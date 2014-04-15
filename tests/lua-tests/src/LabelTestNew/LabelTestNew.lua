@@ -1478,7 +1478,7 @@ function LabelFontNameTest.create()
     label1:setPosition( cc.p(size.width/2, size.height * 0.7) )
     layer:addChild(label1)
 
-    local label3 = cc.Label:create("fonts/Marker Felt.ttf","fonts/Marker Felt.ttf",32)
+    local label3 = cc.Label:createWithTTF("fonts/Marker Felt.ttf","fonts/Marker Felt.ttf",32)
     label3:setPosition( cc.p(size.width/2, size.height * 0.5) )
     layer:addChild(label3)
 
@@ -1673,7 +1673,7 @@ function LabelTTFOldNew.create()
     local s = cc.Director:getInstance():getWinSize()
     local delta = s.height/4
 
-    local label1 = cc.Label:create("Cocos2d-x Label Test", "arial", 24)
+    local label1 = cc.Label:createWithSystemFont("Cocos2d-x Label Test", "arial", 24)
     layer:addChild(label1, 0, kTagBitmapAtlas1)
     label1:setPosition(cc.p(s.width/2, delta * 2))
     label1:setColor(cc.c3b(255, 0, 0))

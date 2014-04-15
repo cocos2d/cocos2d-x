@@ -129,6 +129,9 @@ public:
 protected:
     NewCullingTest();
     virtual ~NewCullingTest();
+    bool onTouchBegan(Touch* touch, Event  *event);
+    void onTouchMoved(Touch* touch, Event  *event);
+    Point _lastPos;
 };
 
 class VBOFullTest : public MultiSceneTest
