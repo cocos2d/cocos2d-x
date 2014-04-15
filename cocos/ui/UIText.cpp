@@ -233,7 +233,7 @@ void Text::updateFlippedY()
     }
 }
 
-void Text::setAnchorPoint(const Point &pt)
+void Text::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _labelRenderer->setAnchorPoint(pt);

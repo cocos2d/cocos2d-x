@@ -598,7 +598,7 @@ void EditBoxImplIOS::setContentSize(const Size& size)
     [_systemControl setContentSize:controlSize];
 }
 
-void EditBoxImplIOS::setAnchorPoint(const Point& anchorPoint)
+void EditBoxImplIOS::setAnchorPoint(const Vector2& anchorPoint)
 {
     CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
 	_anchorPoint = anchorPoint;

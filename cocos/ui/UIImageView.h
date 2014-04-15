@@ -100,7 +100,7 @@ public:
     const Rect& getCapInsets();
 
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Point &pt) override;
+    virtual void setAnchorPoint(const Vector2 &pt) override;
 
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;

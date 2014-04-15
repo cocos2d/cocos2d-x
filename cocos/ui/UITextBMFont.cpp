@@ -107,7 +107,7 @@ const std::string TextBMFont::getStringValue()
     return _stringValue;
 }
 
-void TextBMFont::setAnchorPoint(const Point &pt)
+void TextBMFont::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _labelBMFontRenderer->setAnchorPoint(pt);

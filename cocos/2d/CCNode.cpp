@@ -531,7 +531,7 @@ const Point& Node::getAnchorPoint() const
     return _anchorPoint;
 }
 
-void Node::setAnchorPoint(const Point& point)
+void Node::setAnchorPoint(const Vector2& point)
 {
 #if CC_USE_PHYSICS
     if (_physicsBody != nullptr && !point.equals(Point::ANCHOR_MIDDLE))

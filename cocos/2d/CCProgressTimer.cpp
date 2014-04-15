@@ -218,7 +218,7 @@ void ProgressTimer::updateProgress(void)
     }
 }
 
-void ProgressTimer::setAnchorPoint(const Point& anchorPoint)
+void ProgressTimer::setAnchorPoint(const Vector2& anchorPoint)
 {
     Node::setAnchorPoint(anchorPoint);
 }

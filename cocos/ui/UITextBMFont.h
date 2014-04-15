@@ -66,7 +66,7 @@ public:
     
     /** get string value for labelbmfont*/
     const std::string getStringValue();
-    virtual void setAnchorPoint(const Point &pt) override;
+    virtual void setAnchorPoint(const Vector2 &pt) override;
     virtual const Size& getContentSize() const override;
     virtual Node* getVirtualRenderer() override;
     /**

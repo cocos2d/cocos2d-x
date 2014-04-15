@@ -422,7 +422,7 @@ public:
      *
      * @param anchorPoint   The anchor point of node.
      */
-    virtual void setAnchorPoint(const Point& anchorPoint);
+    virtual void setAnchorPoint(const Vector2& anchorPoint);
     /**
      * Returns the anchor point in percent.
      *

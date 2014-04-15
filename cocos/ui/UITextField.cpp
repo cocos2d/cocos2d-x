@@ -723,7 +723,7 @@ void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent seleco
     _textFieldEventSelector = selecor;
 }
 
-void TextField::setAnchorPoint(const Point &pt)
+void TextField::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _textFieldRenderer->setAnchorPoint(pt);

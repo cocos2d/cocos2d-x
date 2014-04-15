@@ -112,7 +112,7 @@ public:
 
     // Overrides
     virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
-    virtual void setAnchorPoint(const Point& anchorPoint) override;
+    virtual void setAnchorPoint(const Vector2& anchorPoint) override;
     virtual void setColor(const Color3B &color) override;
     virtual const Color3B& getColor() const override;
     virtual void setOpacity(GLubyte opacity) override;

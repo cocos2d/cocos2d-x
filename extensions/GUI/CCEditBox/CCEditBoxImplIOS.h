@@ -100,7 +100,7 @@ public:
     virtual void setPosition(const Vector2& pos);
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
-	virtual void setAnchorPoint(const Point& anchorPoint);
+	virtual void setAnchorPoint(const Vector2& anchorPoint);
     virtual void updatePosition(float dt) override;
     /**
      * @js NA

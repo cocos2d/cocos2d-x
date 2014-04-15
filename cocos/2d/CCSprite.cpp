@@ -846,7 +846,7 @@ void Sprite::setPositionZ(float fVertexZ)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setAnchorPoint(const Point& anchor)
+void Sprite::setAnchorPoint(const Vector2& anchor)
 {
     Node::setAnchorPoint(anchor);
     SET_DIRTY_RECURSIVELY();

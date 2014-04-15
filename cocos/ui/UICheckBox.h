@@ -165,7 +165,7 @@ public:
     bool getSelectedState();
 
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Point &pt) override;
+    virtual void setAnchorPoint(const Vector2 &pt) override;
 
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);

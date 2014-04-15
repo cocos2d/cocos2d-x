@@ -146,7 +146,7 @@ public:
     void setDeleteBackward(bool deleteBackward);
     void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
 
-    virtual void setAnchorPoint(const Point &pt) override;
+    virtual void setAnchorPoint(const Vector2 &pt) override;
     
     /**
      * Returns the "class name" of widget.
