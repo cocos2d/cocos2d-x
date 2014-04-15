@@ -41,8 +41,26 @@ def getDevices():
 			print 'device ', count,device
 			deviceInfo = device.split('	')
 			global arrDevices
-			arrDevices.append(deviceInfo[0])
+			obj = {}
+			obj['name']  = deviceInfo[0]
+			arrDevices.append(obj)
 	return count
+
+def getADBDeviceIP(device_name):
+	output = os.popen("adb -s "+device_name+" shell netcfg")
+	configs = output.read().split('\r\n')
+	for l in configs:
+		items = l.split()
+		if len(items)>1 and items[1] == 'UP':
+			if items[2].find('127.0.0.1') < 0 and items[2].find('0.0.0.0') < 0:
+				return items[2]
+	return False
+
+def mapIP():
+	for device in arrDevices:
+		ip_d = getADBDeviceIP(device['name'])
+		ip_d = ip_d.replace('.30.', '.40.')
+		device['ip'] = ip_d
 
 apk_name = 'cppProj-debug-unaligned.apk'
 info_empty_test = {}
@@ -53,9 +71,9 @@ def install_apk():
 		return False
 	info_of_install = []
 	for device in arrDevices:
-		print 'device:', device
-		cmd = 'adb -s '+device+' install '+str(pr_num)+'/'+apk_name
-		print 'install on '+device,':', cmd
+		name = device['name']
+		cmd = 'adb -s '+name+' install '+str(pr_num)+'/'+apk_name
+		print 'install on '+name
 		info_install = os.popen(cmd).read()
 		print 'info_install:', info_install
 		info_of_install.append(info_install.split('\r\n'))
@@ -72,9 +90,9 @@ activity_name = {
 }
 
 def open_apk(type_of_apk):
-	print 'in open_apk111:'
+	print 'in open_apk:'
 	for device in arrDevices:
-		cmd = 'adb -s '+device+' shell am start -n '+package_name[type_of_apk]+'/'+activity_name[type_of_apk]
+		cmd = 'adb -s '+device['name']+' shell am start -n '+package_name[type_of_apk]+'/'+activity_name[type_of_apk]
 		print 'start activity:', cmd
 		info_start = os.popen(cmd).read()
 		info_start = info_start.split('\n')
@@ -96,45 +114,54 @@ def socket_status():
 	try:
 		print 'will connect socket:'
 		soc.connect((IP_PHONE, PORT))
-		cmd = 'director -h\r\n'
-		print 'cmd director:', cmd
+		cmd = 'resolution\r\n'
+		print 'socket cmd :', cmd
 		soc.send(cmd)
 		while True:
 			data = soc.recv(1024)
-			print data
 			if len(data):
-				return True
+				print data
+				if data.find('size:') > -1:
+					return True
 	except Exception, e:
 		print 'socket is not connect.'
 		return False
 
 def uninstall_apk(apk_name):
 	# adb shell pm uninstall -n org.cocos2dx.hellolua
-	cmd = 'adb shell pm uninstall -n '+package_name[apk_name]
-	info_uninstall = os.system(cmd)
-	print 'info_uninstall:',info_uninstall
+	for device in arrDevices:
+		cmd = 'adb -s '+device['name']+' shell pm uninstall -n '+package_name[apk_name]
+		info_uninstall = os.system(cmd)
+		print 'uninstall apk:', not info_uninstall
 	return True
 
 def main():
 	print 'in main:'
 	getDevices()
-	print 'arrDevices:',arrDevices
+	if len(arrDevices):
+		mapIP()
+		print 'arrDevices:',arrDevices
+	print 'empty test start:'
 	install_info = install_apk()
+	print 'install ', install_info
 	open_info = open_apk(TYPE_NAME)
-	print 'open_info:', open_info
+	print 'open apk:', open_info
 	info_empty_test['open_info'] = open_info
 	if open_info:
 		time.sleep(5)
+		print 'socket start:'
 		socket_info = socket_status()
 		info_empty_test['socket_info'] = socket_info
 		print 'socket_info:', socket_info
 		if not socket_info:
 			print 'app run is not correct'
+		print 'socket end'
 	if install_info:
 		time.sleep(5)
-		uninstall_apk(TYPE_NAME)
+		print 'will uninstall apk:'
+		info_uninstall = uninstall_apk(TYPE_NAME)
 	print 'info_empty_test:', info_empty_test
-	print 'end run_step.'
+	print 'empty test end'
 
 # -------------- main --------------
 if __name__ == '__main__':
