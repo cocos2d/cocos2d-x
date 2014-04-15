@@ -518,8 +518,8 @@ bool Renderer::checkVisibility(const kmMat4 &transform, const Size &size)
     float hSizeX = size.width/2;
     float hSizeY = size.height/2;
 
-    kmVec4 v4world;
-    kmVec4 v4local = (kmVec4) {hSizeX, hSizeY, 0, 1};
+    kmVec4 v4world, v4local;
+    kmVec4Fill(&v4local, hSizeX, hSizeY, 0, 1);
     kmVec4MultiplyMat4(&v4world, &v4local, &transform);
 
     // center of screen is (0,0)
