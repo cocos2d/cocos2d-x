@@ -1529,9 +1529,9 @@ Vector2 Node::convertToWorldSpaceAR(const Vector2& nodePoint) const
     return convertToWorldSpace(pt);
 }
 
-Point Node::convertToWindowSpace(const Point& nodePoint) const
+Vector2 Node::convertToWindowSpace(const Vector2& nodePoint) const
 {
-    Point worldPoint = this->convertToWorldSpace(nodePoint);
+    Vector2 worldPoint = this->convertToWorldSpace(nodePoint);
     return Director::getInstance()->convertToUI(worldPoint);
 }
 
