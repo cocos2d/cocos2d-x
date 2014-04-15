@@ -1358,7 +1358,7 @@ protected:
     void detachChild(Node *child, ssize_t index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
-    Point convertToWindowSpace(const Point& nodePoint) const;
+    Vector2 convertToWindowSpace(const Vector2& nodePoint) const;
 
     Matrix transform(const Matrix &parentTransform);
 
