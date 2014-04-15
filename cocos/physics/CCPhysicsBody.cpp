@@ -770,8 +770,7 @@ void PhysicsBody::update(float delta)
     if (_node != nullptr)
     {
         Node* parent = _node->getParent();
-        
-        Point position = parent != nullptr ? parent->convertToNodeSpace(getPosition()) : getPosition();
+        Vector2 position = parent != nullptr ? parent->convertToNodeSpace(Vector2(getPosition())) : Vector2(getPosition());
         _positionResetTag = true;
         _rotationResetTag = true;
         _node->setPosition(position);
