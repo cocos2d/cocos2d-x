@@ -258,7 +258,7 @@ const Rect& ImageView::getCapInsets()
     return _capInsets;
 }
     
-void ImageView::setAnchorPoint(const Point &pt)
+void ImageView::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _imageRenderer->setAnchorPoint(pt);

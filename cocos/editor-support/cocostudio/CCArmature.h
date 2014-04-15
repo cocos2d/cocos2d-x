@@ -183,7 +183,7 @@ public:
      * Set contentsize and Calculate anchor point.
      */
     virtual void updateOffsetPoint();
-    virtual void setAnchorPoint(const cocos2d::Point& point) override;
+    virtual void setAnchorPoint(const Vector2& point) override;
     virtual const cocos2d::Point& getAnchorPointInPoints() const override;
 
     virtual void setAnimation(ArmatureAnimation *animation);

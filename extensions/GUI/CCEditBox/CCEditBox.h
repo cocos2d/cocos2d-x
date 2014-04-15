@@ -374,7 +374,7 @@ public:
     virtual void setPosition(const Vector2& pos) override;
     virtual void setVisible(bool visible) override;
     virtual void setContentSize(const Size& size) override;
-	virtual void setAnchorPoint(const Point& anchorPoint) override;
+	virtual void setAnchorPoint(const Vector2& anchorPoint) override;
     /**
      * @js NA
      * @lua NA

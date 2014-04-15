@@ -336,7 +336,7 @@ void Armature::updateOffsetPoint()
     }
 }
 
-void Armature::setAnchorPoint(const Point& point)
+void Armature::setAnchorPoint(const Vector2& point)
 {
     if( ! point.equals(_anchorPoint))
     {

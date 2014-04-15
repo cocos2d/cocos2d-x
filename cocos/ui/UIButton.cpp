@@ -517,7 +517,7 @@ void Button::updateFlippedY()
     }
 }
 
-void Button::setAnchorPoint(const Point &pt)
+void Button::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _buttonNormalRenderer->setAnchorPoint(pt);

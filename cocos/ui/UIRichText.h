@@ -104,7 +104,7 @@ public:
     void removeElement(RichElement* element);
     virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
     void setVerticalSpace(float space);
-    virtual void setAnchorPoint(const Point &pt);
+    virtual void setAnchorPoint(const Vector2 &pt);
     virtual const Size& getContentSize() const;
     void formatText();
     virtual void ignoreContentAdaptWithSize(bool ignore);

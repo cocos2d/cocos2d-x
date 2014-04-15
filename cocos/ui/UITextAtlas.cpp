@@ -106,7 +106,7 @@ const std::string& TextAtlas::getStringValue() const
     return _labelAtlasRenderer->getString();
 }
 
-void TextAtlas::setAnchorPoint(const Point &pt)
+void TextAtlas::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _labelAtlasRenderer->setAnchorPoint(Point(pt.x, pt.y));

@@ -79,7 +79,7 @@ public:
     const std::string& getStringValue() const;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Point &pt) override;
+    virtual void setAnchorPoint(const Vector2 &pt) override;
     
     //override "getContentSize" method of widget.
     virtual const Size& getContentSize() const override;

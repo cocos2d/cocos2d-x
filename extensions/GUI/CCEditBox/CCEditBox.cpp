@@ -309,7 +309,7 @@ void EditBox::setContentSize(const Size& size)
     }
 }
 
-void EditBox::setAnchorPoint(const Point& anchorPoint)
+void EditBox::setAnchorPoint(const Vector2& anchorPoint)
 {
     ControlButton::setAnchorPoint(anchorPoint);
     if (_editBoxImpl != NULL)

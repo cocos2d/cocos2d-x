@@ -147,7 +147,7 @@ public:
     const Rect& getCapInsetsDisabledRenderer();
 
     //override "setAnchorPoint" of widget.
-    virtual void setAnchorPoint(const Point &pt) override;
+    virtual void setAnchorPoint(const Vector2 &pt) override;
 
     /**
      * Sets if button is using scale9 renderer.

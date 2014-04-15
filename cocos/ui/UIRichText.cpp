@@ -460,7 +460,7 @@ void RichText::setVerticalSpace(float space)
     _verticalSpace = space;
 }
     
-void RichText::setAnchorPoint(const Point &pt)
+void RichText::setAnchorPoint(const Vector2 &pt)
 {
     Widget::setAnchorPoint(pt);
     _elementRenderersContainer->setAnchorPoint(pt);
