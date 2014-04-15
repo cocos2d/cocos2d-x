@@ -520,13 +520,13 @@ void Node::setVisible(bool var)
     }
 }
 
-const Point& Node::getAnchorPointInPoints() const
+const Vector2& Node::getAnchorPointInPoints() const
 {
     return _anchorPointInPoints;
 }
 
 /// anchorPoint getter
-const Point& Node::getAnchorPoint() const
+const Vector2& Node::getAnchorPoint() const
 {
     return _anchorPoint;
 }

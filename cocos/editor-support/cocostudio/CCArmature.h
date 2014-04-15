@@ -184,7 +184,7 @@ public:
      */
     virtual void updateOffsetPoint();
     virtual void setAnchorPoint(const Vector2& point) override;
-    virtual const cocos2d::Point& getAnchorPointInPoints() const override;
+    virtual const Vector2& getAnchorPointInPoints() const override;
 
     virtual void setAnimation(ArmatureAnimation *animation);
     virtual ArmatureAnimation *getAnimation() const;
@@ -272,7 +272,7 @@ protected:
     cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
     cocos2d::Point _offsetPoint;
-    cocos2d::Point _realAnchorPointInPoints;
+    Vector2 _realAnchorPointInPoints;
 
     ArmatureAnimation *_animation;
 

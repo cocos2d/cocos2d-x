@@ -347,7 +347,7 @@ void Armature::setAnchorPoint(const Vector2& point)
     }
 }
 
-const Point& Armature::getAnchorPointInPoints() const
+const Vector2& Armature::getAnchorPointInPoints() const
 {
     return _realAnchorPointInPoints;
 }
