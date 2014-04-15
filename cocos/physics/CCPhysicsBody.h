@@ -301,7 +301,7 @@ protected:
     
     bool init();
     
-    virtual void setPosition(Point position);
+    virtual void setPosition(Vector2 position);
     virtual void setRotation(float rotation);
     
     void update(float delta);

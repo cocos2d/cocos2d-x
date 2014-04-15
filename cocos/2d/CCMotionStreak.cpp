@@ -137,7 +137,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     return true;
 }
 
-void MotionStreak::setPosition(const Point& position)
+void MotionStreak::setPosition(const Vector2& position)
 {
     if (!_startingPositionInitialized) {
         _startingPositionInitialized = true;

@@ -773,7 +773,7 @@ void Sprite::setDirtyRecursively(bool bValue)
                         }                               \
                     }
 
-void Sprite::setPosition(const Point& pos)
+void Sprite::setPosition(const Vector2& pos)
 {
     Node::setPosition(pos);
     SET_DIRTY_RECURSIVELY();

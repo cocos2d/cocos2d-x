@@ -371,7 +371,7 @@ public:
     void setReturnType(EditBox::KeyboardReturnType returnType);
     
     /* override functions */
-    virtual void setPosition(const Point& pos) override;
+    virtual void setPosition(const Vector2& pos) override;
     virtual void setVisible(bool visible) override;
     virtual void setContentSize(const Size& size) override;
 	virtual void setAnchorPoint(const Point& anchorPoint) override;

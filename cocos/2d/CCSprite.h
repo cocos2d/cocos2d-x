@@ -404,7 +404,7 @@ public:
     * @js  NA
     * @lua NA
     */
-    virtual void setPosition(const Point& pos) override;
+    virtual void setPosition(const Vector2& pos) override;
     virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationSkewX(float rotationX) override;

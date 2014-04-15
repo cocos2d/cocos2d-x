@@ -229,7 +229,7 @@ ActionMoveFrame::~ActionMoveFrame()
 {
 
 }
-void ActionMoveFrame::setPosition(Point pos)
+void ActionMoveFrame::setPosition(Vector2 pos)
 {
 	_position = pos;
 }

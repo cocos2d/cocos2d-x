@@ -226,7 +226,7 @@ public:
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    virtual void setPosition(const Point &pos) override;
+    virtual void setPosition(const Vector2 &pos) override;
 
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -241,7 +241,7 @@ public:
     /**
      * Gets the percent (x,y) of the widget in OpenGL coordinates
      *
-     * @see setPosition(const Point&)
+     * @see setPosition(const Vector2&)
      *
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */

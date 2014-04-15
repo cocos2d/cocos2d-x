@@ -676,7 +676,7 @@ void Widget::checkChildInfo(int handleState, Widget *sender, const Point &touchP
     }
 }
 
-void Widget::setPosition(const Point &pos)
+void Widget::setPosition(const Vector2 &pos)
 {
     if (_running)
     {

@@ -345,7 +345,7 @@ void PhysicsBody::setGravityEnable(bool enable)
     }
 }
 
-void PhysicsBody::setPosition(Point position)
+void PhysicsBody::setPosition(Vector2 position)
 {
     if (!_positionResetTag)
     {
