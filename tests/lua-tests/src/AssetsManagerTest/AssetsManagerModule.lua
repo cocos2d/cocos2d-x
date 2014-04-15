@@ -26,7 +26,7 @@ function AssetManagerModule.newScene(backfunc)
     backMenu:addChild(backMenuItem)
     layer:addChild(backMenu,6)
 
-    local helloLabel =  cc.Label:create("Hello World", s_arialPath, 38)
+    local helloLabel =  cc.Label:createWithTTF("Hello World", s_arialPath, 38)
     helloLabel:setAnchorPoint(cc.p(0.5, 0.5))
     helloLabel:setPosition(cc.p(winSize.width / 2, winSize.height - 40))
     layer:addChild(helloLabel, 5)

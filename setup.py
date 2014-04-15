@@ -60,6 +60,14 @@ NDK_ROOT = 'NDK_ROOT'
 ANDROID_SDK_ROOT = 'ANDROID_SDK_ROOT'
 ANT_ROOT = 'ANT_ROOT'
 
+def _check_python_version():
+    major_ver = sys.version_info[0]
+    if major_ver > 2:
+        print ("The python version is %d.%d. But python 2.x is required. (Version 2.7 is well tested)\n"
+               "Download it here: https://www.python.org/" % (major_ver, sys.version_info[1]))
+        return False
+
+    return True
 
 class SetEnvVar(object):
 
@@ -168,7 +176,7 @@ class SetEnvVar(object):
 
     def _set_environment_variable(self, key, value):
 
-        print "  -> Add %s environment variable..." % key
+        print("  -> Add %s environment variable..." % key)
         ret = False
         if self._isWindows():
             ret = self._set_environment_variable_win32(key, value)
@@ -176,9 +184,9 @@ class SetEnvVar(object):
             ret = self._set_environment_variable_unix(key, value)
 
         if ret:
-            print "    ->Added %s=%s\n" % (key, value)
+            print("    ->Added %s=%s\n" % (key, value))
         else:
-            print "    ->Add failed\n"
+            print("    ->Add failed\n")
 
         return ret
 
@@ -199,7 +207,7 @@ class SetEnvVar(object):
         return ret
 
     def _find_environment_variable(self, var):
-        print "  ->Find environment variable %s..." % var
+        print("  ->Find environment variable %s..." % var)
         ret = None
         try:
             ret = os.environ[var]
@@ -227,7 +235,7 @@ class SetEnvVar(object):
                                 0,
                                 _winreg.KEY_READ)
 
-                    ret = _winreg.QueryValueEx(env, var)
+                    ret = _winreg.QueryValueEx(env, var)[0]
                     _winreg.CloseKey(env)
                 except Exception:
                     if env:
@@ -235,9 +243,9 @@ class SetEnvVar(object):
                     ret = None
 
         if ret is None:
-            print "    ->%s not found\n" % var
+            print("    ->%s not found\n" % var)
         else:
-            print "    ->%s is found : %s\n" % (var, ret)
+            print("    ->%s is found : %s\n" % (var, ret))
 
         return ret
 
@@ -320,7 +328,7 @@ class SetEnvVar(object):
             ret = False
 
         if not ret:
-            print '    ->Error: "%s" is not a valid path of %s. Ignoring it.' % (value, var_name)
+            print('    ->Error: "%s" is not a valid path of %s. Ignoring it.' % (value, var_name))
 
         return ret
 
@@ -384,9 +392,9 @@ class SetEnvVar(object):
                 _winreg.FlushKey(env)
             _winreg.CloseKey(env)
 
-            print '  ->Remove directory \"%s\" from PATH!\n' % remove_dir
+            print('  ->Remove directory \"%s\" from PATH!\n' % remove_dir)
         except Exception:
-            print '  ->Remove directory \"%s\" from PATH failed!\n' % remove_dir
+            print('  ->Remove directory \"%s\" from PATH failed!\n' % remove_dir)
 
     def set_windows_path(self, add_dir):
         ret = False
@@ -425,13 +433,13 @@ class SetEnvVar(object):
                 _winreg.CloseKey(env)
 
         if ret:
-            print "  ->Add directory \"%s\" into PATH succeed!\n" % add_dir
+            print("  ->Add directory \"%s\" into PATH succeed!\n" % add_dir)
         else:
-            print "  ->Add directory \"%s\" into PATH failed!\n" % add_dir
+            print("  ->Add directory \"%s\" into PATH failed!\n" % add_dir)
 
 
     def set_console_root(self):
-        print "->Check environment variable %s" % COCOS_CONSOLE_ROOT
+        print("->Check environment variable %s" % COCOS_CONSOLE_ROOT)
         cocos_consle_root = os.path.join(self.current_absolute_path, 'tools', 'cocos2d-console', 'bin')
         old_dir = self._find_environment_variable(COCOS_CONSOLE_ROOT)
         if old_dir is None:
@@ -441,6 +449,10 @@ class SetEnvVar(object):
 
             self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root)
         else:
+            if old_dir == cocos_consle_root:
+                # is same with before, nothing to do
+                return
+
             # update the environment variable
             if self._isWindows(): 
                 self.remove_dir_from_win_path(old_dir)
@@ -459,7 +471,7 @@ class SetEnvVar(object):
         if self._isLinux():
             file_list = SetEnvVar.LINUX_CHECK_FILES
 
-        print "  ->Update variable %s in files %s" % (var_name, str(file_list))
+        print("  ->Update variable %s in files %s" % (var_name, str(file_list)))
         variable_updated = False
         for file_name in file_list:
             path = os.path.join(home, file_name)
@@ -484,11 +496,11 @@ class SetEnvVar(object):
                     file_obj = open(path, 'w')
                     file_obj.writelines(lines)
                     file_obj.close()
-                    print "    ->File %s updated!" % path
+                    print("    ->File %s updated!" % path)
 
         # nothing updated, should add variable
         if not variable_updated:
-            print "\n  ->No files updated, add variable %s instead!" % var_name
+            print("\n  ->No files updated, add variable %s instead!" % var_name)
             ret = self._set_environment_variable(var_name, value)
         else:
             ret = True
@@ -499,18 +511,18 @@ class SetEnvVar(object):
     def _force_update_env(self, var_name, value):
         ret = False
         if self._isWindows():
-            print "  ->Force update environment variable %s" % var_name
+            print("  ->Force update environment variable %s" % var_name)
             ret = self._set_environment_variable_win32(var_name, value)
             if not ret:
-                print "    ->Failed!"
+                print("    ->Failed!")
             else:
-                print "    ->Succeed : %s=%s" % (var_name, value)
+                print("    ->Succeed : %s=%s" % (var_name, value))
         else:
             ret = self._force_update_unix_env(var_name, value)
         return ret
 
     def set_variable(self, var_name, value):
-        print "->Check environment variable %s" % var_name
+        print("->Check environment variable %s" % var_name)
         find_value = self._find_environment_variable(var_name)
         var_found = (find_value is not None)
         action_none = 0
@@ -558,7 +570,7 @@ class SetEnvVar(object):
 
     def set_environment_variables(self, ndk_root, android_sdk_root, ant_root):
 
-        print '\nSetting up cocos2d-x...'
+        print('\nSetting up cocos2d-x...')
 
         self.file_used_for_setup = self._get_filepath_for_setup()
         
@@ -569,15 +581,17 @@ class SetEnvVar(object):
 
         # tip the backup file
         if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
-            print '\nA backup file \"%s\" is created for \"%s\".' % (self.backup_file, self.file_used_for_setup)
+            print('\nA backup file \"%s\" is created for \"%s\".' % (self.backup_file, self.file_used_for_setup))
 
         if self._isWindows():
-            print '\nPlease restart the terminal or restart computer to make added system variables take effect\n'
+            print('\nPlease restart the terminal or restart computer to make added system variables take effect\n')
         else:
-            print '\nPlease execute command: "source %s" to make added system variables take effect\n' % self.file_used_for_setup
-
+            print('\nPlease execute command: "source %s" to make added system variables take effect\n' % self.file_used_for_setup)
 
 if __name__ == '__main__':
+    if not _check_python_version():
+        exit()
+
     parser = OptionParser()
     parser.add_option('-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
     parser.add_option('-a', '--androidsdkroot', dest='android_sdk_root', help='directory of android sdk root')
@@ -587,3 +601,12 @@ if __name__ == '__main__':
     # set environment variables
     env = SetEnvVar()
     env.set_environment_variables(opts.ndk_root, opts.android_sdk_root, opts.ant_root)
+
+    if env._isWindows():
+        import ctypes
+        HWND_BROADCAST = 0xFFFF
+        WM_SETTINGCHANGE = 0x1A
+        SMTO_ABORTIFHUNG = 0x0002
+        result = ctypes.c_long()
+        SendMessageTimeoutW = ctypes.windll.user32.SendMessageTimeoutW
+        SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, 0, u'Environment', SMTO_ABORTIFHUNG, 5000, ctypes.byref(result))
