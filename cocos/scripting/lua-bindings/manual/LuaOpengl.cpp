@@ -2228,6 +2228,7 @@ static int tolua_Cocos2d_glGetUniformfv00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
+    memset(&tolua_err, 0, sizeof(tolua_Error));
     if (
         !tolua_isnumber(tolua_S, 1,0,&tolua_err)            ||
         !tolua_isnumber(tolua_S, 2,0, &tolua_err)          ||
