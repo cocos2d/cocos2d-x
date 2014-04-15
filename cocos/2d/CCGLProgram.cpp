@@ -33,9 +33,6 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "uthash.h"
 #include "deprecated/CCString.h"
-// extern
-#include "kazmath/GL/matrix.h"
-#include "kazmath/kazmath.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "CCPrecompiledShaders.h"

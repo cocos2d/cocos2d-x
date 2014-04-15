@@ -39,7 +39,6 @@ THE SOFTWARE.
 #include "CCPhysicsBody.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
-#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 

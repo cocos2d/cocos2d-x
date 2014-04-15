@@ -45,9 +45,6 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
 
-// external
-#include "kazmath/GL/matrix.h"
-#include "kazmath/kazmath.h"
 #include "deprecated/CCString.h"
 
 #include <string.h>
