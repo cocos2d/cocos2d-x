@@ -65,7 +65,7 @@ bool ControlButtonTest_HelloVariableSize::init()
                 button->setColor(Color3B(0, 0, 255));
             }
             
-            button->setPosition(Point (total_width + button->getContentSize().width / 2, button->getContentSize().height / 2));
+            button->setPosition(Vector2 (total_width + button->getContentSize().width / 2, button->getContentSize().height / 2));
             layer->addChild(button);
             
             // Compute the size of the layer
@@ -74,14 +74,14 @@ bool ControlButtonTest_HelloVariableSize::init()
             i++;
         }
 
-        layer->setAnchorPoint(Point (0.5, 0.5));
+        layer->setAnchorPoint(Vector2 (0.5, 0.5));
         layer->setContentSize(Size(total_width, height));
-        layer->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        layer->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         
         // Add the black background
         auto background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(total_width + 14, height + 14));
-        background->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        background->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(background);
         return true;
     }
@@ -126,13 +126,13 @@ bool ControlButtonTest_Event::init()
 
         // Add a label in which the button events will be displayed
         setDisplayValueLabel(Label::createWithTTF("No Event", "fonts/Marker Felt.ttf", 32));
-        _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
-        _displayValueLabel->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        _displayValueLabel->setAnchorPoint(Vector2(0.5f, -1));
+        _displayValueLabel->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(_displayValueLabel, 1);
 
         setDisplayBitmaskLabel(Label::createWithTTF("No bitmask event", "fonts/Marker Felt.ttf", 24));
-        _displayBitmaskLabel->setAnchorPoint(Point(0.5f, -1));
-        Point bitmaskLabelPos = _displayValueLabel->getPosition() - Point(0, _displayBitmaskLabel->getBoundingBox().size.height);
+        _displayBitmaskLabel->setAnchorPoint(Vector2(0.5f, -1));
+        Vector2 bitmaskLabelPos = _displayValueLabel->getPosition() - Vector2(0, _displayBitmaskLabel->getBoundingBox().size.height);
         _displayBitmaskLabel->setPosition(bitmaskLabelPos);
         addChild(_displayBitmaskLabel, 1);
 
@@ -148,14 +148,14 @@ bool ControlButtonTest_Event::init()
         controlButton->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
         controlButton->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
         
-        controlButton->setAnchorPoint(Point(0.5f, 1));
-        controlButton->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        controlButton->setAnchorPoint(Vector2(0.5f, 1));
+        controlButton->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(controlButton, 1);
 
         // Add the black background
         auto background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(300, 170));
-        background->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        background->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(background);
         
         // Sets up event handlers
@@ -244,7 +244,7 @@ bool ControlButtonTest_Styling::init()
                 ControlButton *button = standardButtonWithTitle(String::createWithFormat("%d",rand() % 30)->getCString());
                 button->setAdjustBackgroundImage(false);  // Tells the button that the background image must not be adjust
                                                     // It'll use the prefered size of the background image
-                button->setPosition(Point(button->getContentSize().width / 2 + (button->getContentSize().width + space) * i,
+                button->setPosition(Vector2(button->getContentSize().width / 2 + (button->getContentSize().width + space) * i,
                                        button->getContentSize().height / 2 + (button->getContentSize().height + space) * j));
                 layer->addChild(button);
                 
@@ -253,14 +253,14 @@ bool ControlButtonTest_Styling::init()
             }
         }
         
-        layer->setAnchorPoint(Point(0.5, 0.5));
+        layer->setAnchorPoint(Vector2(0.5, 0.5));
         layer->setContentSize(Size(max_w, max_h));
-        layer->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        layer->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         
         // Add the black background
         auto backgroundButton = Scale9Sprite::create("extensions/buttonBackground.png");
         backgroundButton->setContentSize(Size(max_w + 14, max_h + 14));
-        backgroundButton->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        backgroundButton->setPosition(Vector2(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(backgroundButton);
         return true;
     }

@@ -98,7 +98,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     // Title
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1, TAG_TITLE);
-    label->setPosition(Point(s.width/2, s.height-50));
+    label->setPosition(Vector2(s.width/2, s.height-50));
 
     // Subtitle
     std::string strSubTitle = subtitle();
@@ -106,7 +106,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     {
         auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
         addChild(l, 1, TAG_SUBTITLE);
-        l->setPosition(Point(s.width/2, s.height-80));
+        l->setPosition(Vector2(s.width/2, s.height-80));
     }
 
     lastRenderedCount = 0;
@@ -144,12 +144,12 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
 
     auto menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
-    menu->setPosition(Point(s.width/2, s.height/2+15));
+    menu->setPosition(Vector2(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
     auto infoLabel = Label::createWithTTF("0 nodes", "fonts/Marker Felt.ttf", 30);
     infoLabel->setColor(Color3B(0,200,20));
-    infoLabel->setPosition(Point(s.width/2, s.height/2-15));
+    infoLabel->setPosition(Vector2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     auto menuLayer = new ContainerBasicLayer(true, MAX_LAYER, g_curCase);
@@ -181,7 +181,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
         this->updateProfilerName();
     }, toggleItems);
     
-    toggle->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    toggle->setAnchorPoint(Vector2::ANCHOR_MIDDLE_LEFT);
     toggle->setPosition(VisibleRect::left());
     _toggle = toggle;
     
@@ -200,8 +200,8 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
         this->_increase->setEnabled(false);
         this->_decrease->setEnabled(false);
     });
-    start->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-    start->setPosition(VisibleRect::right() + Point(0, 40));
+    start->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
+    start->setPosition(VisibleRect::right() + Vector2(0, 40));
     _startItem = start;
     
     auto stop = MenuItemFont::create("stop", [this](Ref* sender){
@@ -219,12 +219,12 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     });
     
     stop->setEnabled(false);
-    stop->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-    stop->setPosition(VisibleRect::right() + Point(0, -40));
+    stop->setAnchorPoint(Vector2::ANCHOR_MIDDLE_RIGHT);
+    stop->setPosition(VisibleRect::right() + Vector2(0, -40));
     _stopItem = stop;
     
     auto menu2 = Menu::create(toggle, start, stop, NULL);
-    menu2->setPosition(Point::ZERO);
+    menu2->setPosition(Vector2::ZERO);
     addChild(menu2);
     
     MenuItemFont::setFontSize(oldFontSize);

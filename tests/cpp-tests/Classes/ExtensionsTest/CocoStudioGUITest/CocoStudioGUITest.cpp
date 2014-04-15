@@ -57,7 +57,7 @@ static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
 //
 ////////////////////////////////////////////////////////
 
-static Point _curPos = Point::ZERO;
+static Vector2 _curPos = Vector2::ZERO;
 
 void CocoStudioGUIMainLayer::onEnter()
 {
@@ -68,13 +68,13 @@ void CocoStudioGUIMainLayer::onEnter()
     Size s = Director::getInstance()->getWinSize();
     
     _itemMenu = CCMenu::create();
-    _itemMenu->setPosition(Point::ZERO);
+    _itemMenu->setPosition(Vector2::ZERO);
     CCMenuItemFont::setFontName("fonts/arial.ttf");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Point(s.width / 2, s.height / 4 * 3 - (i + 1) * LINE_SPACE));
+        pItem->setPosition(Vector2(s.width / 2, s.height / 4 * 3 - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -102,18 +102,18 @@ void CocoStudioGUIMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, 
     float nMoveY = touchLocation.y - _beginPos.y;
     
     auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    auto nextPos = Vector2(curPos.x, curPos.y + nMoveY);
     
     if (nextPos.y < 0.0f)
     {
-        _itemMenu->setPosition(Point::ZERO);
+        _itemMenu->setPosition(Vector2::ZERO);
         return;
     }
     
     float y = (g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height;
     if (nextPos.y > y)
     {
-        _itemMenu->setPosition(Point(0, y));
+        _itemMenu->setPosition(Vector2(0, y));
         return;
     }
     
@@ -139,8 +139,8 @@ void CocoStudioGUITestScene::onEnter()
     
     Menu* pMenu = Menu::create(pMenuItem, NULL);
     
-    pMenu->setPosition( Point::ZERO );
-    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Vector2::ZERO );
+    pMenuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
     addChild(pMenu, 1);
 }

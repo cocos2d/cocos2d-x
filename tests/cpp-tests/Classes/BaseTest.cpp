@@ -40,7 +40,7 @@ void BaseTest::onEnter()
     TTFConfig ttfConfig("fonts/arial.ttf", 32);
     auto label = Label::createWithTTF(ttfConfig,pTitle);
     addChild(label, 9999);
-    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
+    label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
@@ -49,7 +49,7 @@ void BaseTest::onEnter()
         ttfConfig.fontSize = 16;
         auto l = Label::createWithTTF(ttfConfig,strSubtitle.c_str());
         addChild(l, 9999);
-        l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
+        l->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
 
     // add menu
@@ -60,10 +60,10 @@ void BaseTest::onEnter()
 
     auto menu = Menu::create(item1, item2, item3, NULL);
 
-    menu->setPosition(Point::ZERO);
-    item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    menu->setPosition(Vector2::ZERO);
+    item1->setPosition(Vector2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item2->setPosition(Vector2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item3->setPosition(Vector2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
 
     addChild(menu, 9999);
 }

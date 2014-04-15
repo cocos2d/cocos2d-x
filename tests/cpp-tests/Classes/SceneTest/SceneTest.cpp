@@ -30,7 +30,7 @@ SceneTestLayer1::SceneTestLayer1()
     auto s = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
-    sprite->setPosition( Point(s.width-40, s.height/2) );
+    sprite->setPosition( Vector2(s.width-40, s.height/2) );
     auto rotate = RotateBy::create(2, 360);
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
@@ -115,7 +115,7 @@ SceneTestLayer2::SceneTestLayer2()
     auto s = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
-    sprite->setPosition( Point(s.width-40, s.height/2) );
+    sprite->setPosition( Vector2(s.width-40, s.height/2) );
     auto rotate = RotateBy::create(2, 360);
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
@@ -184,7 +184,7 @@ bool SceneTestLayer3::init()
 
         auto sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);
-        sprite->setPosition( Point(s.width/2, 40) );
+        sprite->setPosition( Vector2(s.width/2, 40) );
         auto rotate = RotateBy::create(2, 360);
         auto repeat = RepeatForever::create(rotate);
         sprite->runAction(repeat);

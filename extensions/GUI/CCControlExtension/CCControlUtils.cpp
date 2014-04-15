@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-Sprite* ControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Point pos, Point anchor)
+Sprite* ControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Vector2 pos, Vector2 anchor)
 {
     Sprite *sprite =Sprite::createWithSpriteFrameName(spriteName);
     
@@ -163,7 +163,7 @@ Rect ControlUtils::RectUnion(const Rect& src1, const Rect& src2)
     float x2 = MAX(src1.getMaxX(), src2.getMaxX());
     float y2 = MAX(src1.getMaxY(), src2.getMaxY());
     
-    result.origin=Point(x1,y1);
+    result.origin=Vector2(x1,y1);
     result.size=Size(x2-x1, y2-y1);
     return result;
 }

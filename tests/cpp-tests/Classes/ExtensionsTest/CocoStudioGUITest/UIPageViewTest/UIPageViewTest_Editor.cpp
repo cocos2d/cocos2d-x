@@ -24,7 +24,7 @@ bool UIPageViewTest_Editor::init()
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
         Size rootSize = _layout->getSize();
-        _touchGroup->setPosition(Point((screenSize.width - rootSize.width) / 2,
+        _touchGroup->setPosition(Vector2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         
         Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
@@ -36,7 +36,7 @@ bool UIPageViewTest_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Point(_layout->getSize().width / 2 - left_button->getSize().width,
+        left_button->setPosition(Vector2(_layout->getSize().width / 2 - left_button->getSize().width,
                                        left_button->getSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(this, toucheventselector(UIScene_Editor::previousCallback));
@@ -45,7 +45,7 @@ bool UIPageViewTest_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Point(_layout->getSize().width / 2 + right_button->getSize().width,
+        right_button->setPosition(Vector2(_layout->getSize().width / 2 + right_button->getSize().width,
                                         right_button->getSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);

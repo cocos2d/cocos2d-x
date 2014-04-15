@@ -21,11 +21,11 @@ void PrettyPrinterDemo::addSprite()
     auto s4 = Sprite::create("Images/grossini_dance_03.png");
     auto s5 = Sprite::create("Images/grossini_dance_04.png");
     
-    s1->setPosition(Point(50, 50));
-    s2->setPosition(Point(60, 50));
-    s3->setPosition(Point(70, 50));
-    s4->setPosition(Point(80, 50));
-    s5->setPosition(Point(90, 50));
+    s1->setPosition(Vector2(50, 50));
+    s2->setPosition(Vector2(60, 50));
+    s3->setPosition(Vector2(70, 50));
+    s4->setPosition(Vector2(80, 50));
+    s5->setPosition(Vector2(90, 50));
     
     this->addChild(s1);
     this->addChild(s2);
@@ -40,14 +40,14 @@ void PrettyPrinterDemo::onEnter()
     auto s = Director::getInstance()->getWinSize();
     
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 28);
-    label->setPosition( Point(s.width/2, s.height * 4/5) );
+    label->setPosition( Vector2(s.width/2, s.height * 4/5) );
     this->addChild(label, 1);
     
     std::string strSubtitle = subtitle();
     if(strSubtitle.empty() == false)
     {
         auto subLabel = Label::createWithTTF(strSubtitle.c_str(), "fonts/Thonburi.ttf", 16);
-        subLabel->setPosition( Point(s.width/2, s.height * 3/5) );
+        subLabel->setPosition( Vector2(s.width/2, s.height * 3/5) );
         this->addChild(subLabel, 1);
     }
     

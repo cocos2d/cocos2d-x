@@ -39,10 +39,10 @@ void AccelerometerTest::onEnter()
 
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32.0f);
     addChild(label, 1);
-    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition( Vector2(VisibleRect::center().x, VisibleRect::top().y-50) );
 
     _ball = Sprite::create("Images/ball.png");
-    _ball->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));
+    _ball->setPosition(Vector2(VisibleRect::center().x, VisibleRect::center().y));
     addChild(_ball);
 
     _ball->retain();

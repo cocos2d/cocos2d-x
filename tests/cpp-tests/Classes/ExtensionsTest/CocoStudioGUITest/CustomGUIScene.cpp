@@ -47,7 +47,7 @@ static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
 //
 ////////////////////////////////////////////////////////
 
-static Point _curPos = Point::ZERO;
+static Vector2 _curPos = Vector2::ZERO;
 
 
 void CustomGUITestMainLayer::onEnter()
@@ -63,8 +63,8 @@ void CustomGUITestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-//        pItem->setPosition(Point(s.width / 2, s.height / 2));
-        pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+//        pItem->setPosition(Vector2(s.width / 2, s.height / 2));
+        pItem->setPosition(Vector2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -93,8 +93,8 @@ void CustomGUITestMainLayer::onTouchesMoved(const std::vector<Touch *> &touches,
     
     float nMoveY = touchLocation.y - _beginPos.y;
     
-    Point curPos  = _itemMenu->getPosition();
-    Point nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    Vector2 curPos  = _itemMenu->getPosition();
+    Vector2 nextPos = ccp(curPos.x, curPos.y + nMoveY);
     
     if (nextPos.y < 0.0f)
     {
@@ -124,8 +124,8 @@ void CustomGUITestScene::onEnter()
     
     Menu* pMenu = Menu::create(pMenuItem, NULL);
     
-    pMenu->setPosition( Point::ZERO );
-    pMenuItem->setPosition( Point( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenu->setPosition( Vector2::ZERO );
+    pMenuItem->setPosition( Vector2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
     
     addChild(pMenu, 1);
 }

@@ -82,9 +82,9 @@ NotificationCenterTest::NotificationCenterTest()
     auto s = Director::getInstance()->getWinSize();
 
     auto pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
-    pBackItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    pBackItem->setPosition(Vector2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
     auto pBackMenu = Menu::create(pBackItem, NULL);
-    pBackMenu->setPosition( Point::ZERO );
+    pBackMenu->setPosition( Vector2::ZERO );
     addChild(pBackMenu);
 
     auto label1 = Label::createWithTTF("switch off", "fonts/Marker Felt.ttf", 26);
@@ -95,18 +95,18 @@ NotificationCenterTest::NotificationCenterTest()
     // turn on
     item->setSelectedIndex(1);
     auto menu = Menu::create(item, NULL);
-    menu->setPosition(Point(s.width/2+100, s.height/2));
+    menu->setPosition(Vector2(s.width/2+100, s.height/2));
     addChild(menu);
 
     auto menuConnect = Menu::create();
-    menuConnect->setPosition(Point::ZERO);
+    menuConnect->setPosition(Vector2::ZERO);
     addChild(menuConnect);
 
     for (int i = 1; i <= 3; i++)
     {
         Light* light = Light::lightWithFile("Images/Pea.png");
         light->setTag(kTagLight+i);
-        light->setPosition(Point(100, s.height/4*i));
+        light->setPosition(Vector2(100, s.height/4*i));
         addChild(light);
 
         auto label1 = Label::createWithTTF("not connected", "fonts/Marker Felt.ttf", 26);
@@ -115,7 +115,7 @@ NotificationCenterTest::NotificationCenterTest()
         auto item2 = MenuItemLabel::create(label2);
         auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::connectToSwitch, this), item1, item2, NULL);
         item->setTag(kTagConnect+i);
-        item->setPosition(Point(light->getPosition().x, light->getPosition().y+50));
+        item->setPosition(Vector2(light->getPosition().x, light->getPosition().y+50));
         menuConnect->addChild(item, 0);
         if (i == 2)
         {

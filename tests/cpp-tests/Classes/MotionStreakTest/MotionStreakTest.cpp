@@ -62,12 +62,12 @@ void MotionStreakTest1::onEnter()
     // the root object just rotates around
     _root = Sprite::create(s_pathR1);
     addChild(_root, 1);
-    _root->setPosition(Point(s.width/2, s.height/2));
+    _root->setPosition(Vector2(s.width/2, s.height/2));
   
     // the target object is offset from root, and the streak is moved to follow it
     _target = Sprite::create(s_pathR1);
     _root->addChild(_target);
-    _target->setPosition(Point(s.width/4, 0));
+    _target->setPosition(Vector2(s.width/4, 0));
 
     // create the streak object and add it to the scene
     streak = MotionStreak::create(2, 3, 32, Color3B::GREEN, s_streak);
@@ -78,7 +78,7 @@ void MotionStreakTest1::onEnter()
     auto a1 = RotateBy::create(2, 360);
 
     auto action1 = RepeatForever::create(a1);
-    auto motion = MoveBy::create(2, Point(100,0) );
+    auto motion = MoveBy::create(2, Vector2(100,0) );
     _root->runAction( RepeatForever::create(Sequence::create(motion, motion->reverse(), NULL) ) );
     _root->runAction( action1 );
 
@@ -97,7 +97,7 @@ void MotionStreakTest1::onEnter()
 
 void MotionStreakTest1::onUpdate(float delta)
 {
-    streak->setPosition( _target->convertToWorldSpace(Point::ZERO) );
+    streak->setPosition( _target->convertToWorldSpace(Vector2::ZERO) );
 }
 
 std::string MotionStreakTest1::title() const
@@ -125,7 +125,7 @@ void MotionStreakTest2::onEnter()
     streak = MotionStreak::create(3, 3, 64, Color3B::WHITE, s_streak );
     addChild(streak);
     
-    streak->setPosition( Point(s.width/2, s.height/2) ); 
+    streak->setPosition( Vector2(s.width/2, s.height/2) ); 
 }
 
 void MotionStreakTest2::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
@@ -157,7 +157,7 @@ void Issue1358::onEnter()
     addChild(streak);
     
     
-    _center  = Point(size.width/2, size.height/2);
+    _center  = Vector2(size.width/2, size.height/2);
     _radius = size.width/3;
     _angle = 0.0f;
     
@@ -167,7 +167,7 @@ void Issue1358::onEnter()
 void Issue1358::update(float dt)
 {
     _angle += 1.0f;
-    streak->setPosition(Point(_center.x + cosf(_angle/180 * M_PI)*_radius,
+    streak->setPosition(Vector2(_center.x + cosf(_angle/180 * M_PI)*_radius,
                             _center.y + sinf(_angle/ 180 * M_PI)*_radius));
 }
 
@@ -219,7 +219,7 @@ void MotionStreakTest::onEnter()
     auto menuMode = Menu::create(itemMode, NULL);
     addChild(menuMode);
 
-    menuMode->setPosition(Point(s.width/2, s.height/4));
+    menuMode->setPosition(Vector2(s.width/2, s.height/4));
 }
 
 void MotionStreakTest::modeCallback(Ref *pSender)

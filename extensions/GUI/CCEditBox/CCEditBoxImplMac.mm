@@ -252,7 +252,7 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 
 EditBoxImplMac::EditBoxImplMac(EditBox* pEditText)
 : EditBoxImpl(pEditText)
-, _anchorPoint(Point(0.5f, 0.5f))
+, _anchorPoint(Vector2(0.5f, 0.5f))
 , _maxTextLength(-1)
 , _sysEdit(nullptr)
 {
@@ -360,15 +360,15 @@ void EditBoxImplMac::setPlaceHolder(const char* pText)
     [[_sysEdit.textField cell] setPlaceholderString:[NSString stringWithUTF8String:pText]];
 }
 
-NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
+NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Vector2& designCoord, bool bInRetinaMode)
 {
     NSRect frame = [_sysEdit.textField frame];
     CGFloat height = frame.size.height;
     
     GLViewProtocol* eglView = Director::getInstance()->getOpenGLView();
 
-    Point visiblePos = Point(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    Point screenGLPos = visiblePos + eglView->getViewPortRect().origin;
+    Vector2 visiblePos = Vector2(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
+    Vector2 screenGLPos = visiblePos + eglView->getViewPortRect().origin;
     
     //TODO: I don't know why here needs to substract `height`.
     NSPoint screenPos = NSMakePoint(screenGLPos.x, screenGLPos.y-height);
@@ -397,11 +397,11 @@ void EditBoxImplMac::adjustTextFieldPosition()
 
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
 	
-	Point designCoord = Point(rect.origin.x, rect.origin.y + rect.size.height);
+	Vector2 designCoord = Vector2(rect.origin.x, rect.origin.y + rect.size.height);
     [_sysEdit setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 
-void EditBoxImplMac::setPosition(const Point& pos)
+void EditBoxImplMac::setPosition(const Vector2& pos)
 {
     _position = pos;
     adjustTextFieldPosition();
@@ -418,7 +418,7 @@ void EditBoxImplMac::setContentSize(const Size& size)
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
 }
 
-void EditBoxImplMac::setAnchorPoint(const Point& anchorPoint)
+void EditBoxImplMac::setAnchorPoint(const Vector2& anchorPoint)
 {
     CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
 	_anchorPoint = anchorPoint;

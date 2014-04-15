@@ -25,14 +25,14 @@ bool TableViewTestLayer::init()
 
     TableView* tableView = TableView::create(this, Size(250, 60));
     tableView->setDirection(ScrollView::Direction::HORIZONTAL);
-    tableView->setPosition(Point(20,winSize.height/2-30));
+    tableView->setPosition(Vector2(20,winSize.height/2-30));
     tableView->setDelegate(this);
     this->addChild(tableView);
     tableView->reloadData();
 
 	tableView = TableView::create(this, Size(60, 250));
 	tableView->setDirection(ScrollView::Direction::VERTICAL);
-	tableView->setPosition(Point(winSize.width-150,winSize.height/2-120));
+	tableView->setPosition(Vector2(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
 	tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
 	this->addChild(tableView);
@@ -40,9 +40,9 @@ bool TableViewTestLayer::init()
 
 	// Back Menu
 	MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
-	itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+	itemBack->setPosition(Vector2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
 	Menu *menuBack = Menu::create(itemBack, NULL);
-	menuBack->setPosition(Point::ZERO);
+	menuBack->setPosition(Vector2::ZERO);
 	addChild(menuBack);
 
     return true;
@@ -76,13 +76,13 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
         cell = new CustomTableViewCell();
         cell->autorelease();
         auto sprite = Sprite::create("Images/Icon.png");
-        sprite->setAnchorPoint(Point::ZERO);
-        sprite->setPosition(Point(0, 0));
+        sprite->setAnchorPoint(Vector2::ZERO);
+        sprite->setPosition(Vector2(0, 0));
         cell->addChild(sprite);
 
         auto label = Label::createWithSystemFont(string->getCString(), "Helvetica", 20.0);
-        label->setPosition(Point::ZERO);
-		label->setAnchorPoint(Point::ZERO);
+        label->setPosition(Vector2::ZERO);
+		label->setAnchorPoint(Vector2::ZERO);
         label->setTag(123);
         cell->addChild(label);
     }

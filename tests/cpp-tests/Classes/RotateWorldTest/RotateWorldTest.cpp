@@ -21,7 +21,7 @@ void TestLayer::onEnter()
     //    NSLog( s );
     auto label = Label::createWithSystemFont("cocos2d", "Tahoma", 64);
 
-    label->setPosition( Point(x/2,y/2) );
+    label->setPosition( Vector2(x/2,y/2) );
     
     addChild(label);
 }
@@ -49,9 +49,9 @@ void SpriteLayer::onEnter()
     spriteSister1->setScale(1.5f);
     spriteSister2->setScale(1.5f);
     
-    sprite->setPosition(Point(x/2,y/2));
-    spriteSister1->setPosition(Point(40,y/2));
-    spriteSister2->setPosition(Point(x-40,y/2));
+    sprite->setPosition(Vector2(x/2,y/2));
+    spriteSister1->setPosition(Vector2(40,y/2));
+    spriteSister2->setPosition(Vector2(x-40,y/2));
 
     auto rot = RotateBy::create(16, -3600);
     
@@ -61,7 +61,7 @@ void SpriteLayer::onEnter()
     
     sprite->runAction(rot);
 
-    auto jump1 = JumpBy::create(4, Point(-400,0), 100, 4);
+    auto jump1 = JumpBy::create(4, Vector2(-400,0), 100, 4);
     auto jump2 = jump1->reverse();
     
     auto rot1 = RotateBy::create(4, 360*2);
@@ -96,20 +96,20 @@ void RotateWorldMainLayer::onEnter()
     auto white = LayerColor::create(Color4B(255,255,255,255));
 
     blue->setScale(0.5f);
-    blue->setPosition(Point(-x/4,-y/4));
+    blue->setPosition(Vector2(-x/4,-y/4));
     blue->addChild( SpriteLayer::create() );
     
     red->setScale(0.5f);
-    red->setPosition(Point(x/4,-y/4));
+    red->setPosition(Vector2(x/4,-y/4));
 
     green->setScale(0.5f);
-    green->setPosition(Point(-x/4,y/4));
+    green->setPosition(Vector2(-x/4,y/4));
     green->addChild(TestLayer::create());
 
     white->setScale(0.5f);
-    white->setPosition(Point(x/4,y/4));
+    white->setPosition(Vector2(x/4,y/4));
     white->ignoreAnchorPointForPosition(false);
-    white->setPosition(Point(x/4*3,y/4*3));
+    white->setPosition(Vector2(x/4*3,y/4*3));
 
     addChild(blue, -1);
     addChild(white);

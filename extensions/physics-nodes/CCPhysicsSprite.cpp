@@ -175,7 +175,7 @@ void PhysicsSprite::getPosition(float* x, float* y) const
     if (x == NULL || y == NULL) {
         return;
     }
-    const Point& pos = getPosFromPhysics();
+    const Vector2& pos = getPosFromPhysics();
     *x = pos.x;
     *y = pos.y;
 }
@@ -263,14 +263,14 @@ const Vector2& PhysicsSprite::getPosFromPhysics() const
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);
-    s_physicPosion = Point(cpPos.x, cpPos.y);
+    s_physicPosion = Vector2(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
-    s_physicPosion = Point(x,y);
+    s_physicPosion = Vector2(x,y);
 #endif
     return s_physicPosion;
 }
@@ -376,7 +376,7 @@ const Matrix& PhysicsSprite::getNodeToParentTransform() const
 	float c = cosf(radians);
 	float s = sinf(radians);
 
-	if (!_anchorPointInPoints.equals(Point::ZERO))
+	if (!_anchorPointInPoints.equals(Vector2::ZERO))
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));
