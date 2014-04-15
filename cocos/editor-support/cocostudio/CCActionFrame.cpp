@@ -233,7 +233,7 @@ void ActionMoveFrame::setPosition(Vector2 pos)
 {
 	_position = pos;
 }
-Point ActionMoveFrame::getPosition()
+Vector2 ActionMoveFrame::getPosition()
 {
 	return _position;
 }

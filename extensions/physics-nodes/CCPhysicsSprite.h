@@ -108,7 +108,7 @@ public:
     void setPTMRatio(float fPTMRatio);
 
     // overrides
-    virtual const Point& getPosition() const override;
+    virtual const Vector2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual float getPositionX() const override;
     virtual float getPositionY() const override;
@@ -118,7 +118,7 @@ public:
     virtual const Matrix& getNodeToParentTransform() const override;
 
 protected:
-    const Point& getPosFromPhysics() const;
+    const Vector2& getPosFromPhysics() const;
 
 protected:
     bool    _ignoreBodyRotation;

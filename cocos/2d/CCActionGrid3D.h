@@ -129,7 +129,7 @@ public:
     /** Set whether lens is concave */
     inline void setConcave(bool concave) { _concave = concave; }
   
-    inline const Point& getPosition() const { return _position; }
+    inline const Vector2& getPosition() const { return _position; }
     void setPosition(const Vector2& position);
 
     // Overrides
@@ -145,7 +145,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     /* lens center position */
-    Point _position;
+    Vector2 _position;
     float _radius;
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
     float _lensEffect;
@@ -166,7 +166,7 @@ public:
     static Ripple3D* create(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
 
     /** get center position */
-    inline const Point& getPosition() const { return _position; }
+    inline const Vector2& getPosition() const { return _position; }
     /** set center position */
     void setPosition(const Vector2& position);
 
@@ -189,7 +189,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     /* center position */
-    Point _position;
+    Vector2 _position;
     float _radius;
     unsigned int _waves;
     float _amplitude;
@@ -301,7 +301,7 @@ public:
     static Twirl* create(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
 
     /** get twirl center */
-    inline const Point& getPosition() const { return _position; }
+    inline const Vector2& getPosition() const { return _position; }
     /** set twirl center */
     void setPosition(const Vector2& position);
 
@@ -325,7 +325,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     /* twirl center */
-    Point _position;
+    Vector2 _position;
     unsigned int _twirls;
     float _amplitude;
     float _amplitudeRate;

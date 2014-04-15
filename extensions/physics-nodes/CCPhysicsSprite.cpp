@@ -165,7 +165,7 @@ void PhysicsSprite::setIgnoreBodyRotation(bool bIgnoreBodyRotation)
 }
 
 // Override the setters and getters to always reflect the body's properties.
-const Point& PhysicsSprite::getPosition() const
+const Vector2& PhysicsSprite::getPosition() const
 {
     return getPosFromPhysics();
 }
@@ -257,9 +257,9 @@ void PhysicsSprite::setPTMRatio(float fRatio)
 // Common to Box2d and Chipmunk
 //
 
-const Point& PhysicsSprite::getPosFromPhysics() const
+const Vector2& PhysicsSprite::getPosFromPhysics() const
 {
-    static Point s_physicPosion;
+    static Vector2 s_physicPosion;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);

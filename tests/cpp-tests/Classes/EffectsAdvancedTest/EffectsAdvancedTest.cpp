@@ -131,7 +131,7 @@ public:
         _lens3D->setPosition(var);
     }
     
-    virtual const Point& getPosition() const
+    virtual const Vector2& getPosition() const
     {
         return _lens3D->getPosition();
     }

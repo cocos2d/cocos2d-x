@@ -154,7 +154,7 @@ void MotionStreak::setPosition(float x, float y)
     _positionR.y = y;
 }
 
-const Point& MotionStreak::getPosition() const
+const Vector2& MotionStreak::getPosition() const
 {
     return _positionR;
 }
