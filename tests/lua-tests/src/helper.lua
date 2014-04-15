@@ -31,7 +31,6 @@ end
 
 -- back menu callback
 local function MainMenuCallback()
-    Helper.usePhysics = false
     local scene = cc.Scene:create()
     scene:addChild(CreateTestMenu())
 
@@ -84,12 +83,7 @@ function Helper.restartAction()
 end
 
 function Helper.newScene()
-    local scene
-    if Helper.usePhysics then
-       scene = cc.Scene:createWithPhysics()
-    else
-       scene = cc.Scene:create()
-    end
+    local scene = cc.Scene:create()
     Helper.currentLayer = Helper.createFunctionTable[Helper.index]()
     scene:addChild(Helper.currentLayer)
     scene:addChild(CreateBackMenuItem())

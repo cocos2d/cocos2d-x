@@ -1366,8 +1366,8 @@ protected:
     virtual void updateColor() {}
     
 #if CC_USE_PHYSICS
-    virtual void transformPhysicsBodyPosition(Layer* layer);
-    virtual void transformPhysicsBodyRotation(Layer* layer);
+    virtual void updatePhysicsBodyPosition(Layer* layer);
+    virtual void updatePhysicsBodyRotation(Layer* layer);
 #endif // CC_USE_PHYSICS
 
     float _rotationX;               ///< rotation on the X-axis
