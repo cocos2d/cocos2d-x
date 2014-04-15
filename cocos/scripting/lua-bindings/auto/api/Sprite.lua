@@ -129,11 +129,6 @@
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
         
 --------------------------------
--- @function [parent=#Sprite] setCullingEnabled 
--- @param self
--- @param #bool bool
-        
---------------------------------
 -- @function [parent=#Sprite] isFlippedX 
 -- @param self
 -- @return bool#bool ret (return value: bool)
