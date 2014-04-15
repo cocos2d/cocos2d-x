@@ -35,9 +35,6 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "TransformUtils.h"
 
-#include "kazmath/kazmath.h"
-#include "kazmath/GL/matrix.h"
-
 NS_CC_BEGIN
 // implementation of GridBase
 

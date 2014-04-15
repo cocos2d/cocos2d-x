@@ -131,10 +131,6 @@ THE SOFTWARE.
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
 
-// kazmath
-#include "kazmath/kazmath.h"
-#include "kazmath/GL/matrix.h"
-
 // platform
 #include "platform/CCDevice.h"
 #include "platform/CCCommon.h"

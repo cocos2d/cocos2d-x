@@ -61,8 +61,6 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "CCConsole.h"
 
-#include "kazmath/kazmath.h"
-#include "kazmath/GL/matrix.h"
 #include "CCMath.h"
 
 /**

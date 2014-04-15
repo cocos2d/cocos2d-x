@@ -31,10 +31,6 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "CCConfiguration.h"
 
-// extern
-#include "kazmath/GL/matrix.h"
-#include "kazmath/kazmath.h"
-
 NS_CC_BEGIN
 
 namespace

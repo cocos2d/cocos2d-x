@@ -38,8 +38,6 @@
 #include "CCEventListenerCustom.h"
 #include "CCEventType.h"
 
-#include "kazmath/kazmath.h"
-
 NS_CC_BEGIN
 
 // helper

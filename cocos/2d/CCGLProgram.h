@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCRef.h"
 #include "CCGL.h"
-#include "kazmath/kazmath.h"
 #include "CCMath.h"
 #include <set>
 

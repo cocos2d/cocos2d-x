@@ -28,7 +28,6 @@
 #include "CCRenderCommand.h"
 #include "CCGLProgram.h"
 #include "CCRenderCommandPool.h"
-#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 

@@ -38,7 +38,6 @@
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
-#include "kazmath/kazmath.h"
 #include "CCMath.h"
 
 NS_CC_BEGIN
