@@ -430,7 +430,7 @@ public:
      *
      * @return The anchor point of node.
      */
-    virtual const Point& getAnchorPoint() const;
+    virtual const Vector2& getAnchorPoint() const;
     /**
      * Returns the anchorPoint in absolute pixels.
      *
@@ -439,7 +439,7 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
-    virtual const Point& getAnchorPointInPoints() const;
+    virtual const Vector2& getAnchorPointInPoints() const;
 
 
     /**
@@ -1385,8 +1385,8 @@ protected:
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Point _anchorPointInPoints;     ///< anchor point in points
-    Point _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vector2 _anchorPointInPoints;     ///< anchor point in points
+    Vector2 _anchorPoint;             ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
 
