@@ -88,7 +88,7 @@ void ccDrawPoint( const Point& point )
     DrawPrimitives::drawPoint(point);
 }
 
-void ccDrawPoints( const Point *points, unsigned int numberOfPoints )
+void ccDrawPoints( const Vector2 *points, unsigned int numberOfPoints )
 {
     DrawPrimitives::drawPoints(points, numberOfPoints);
 }
@@ -108,12 +108,12 @@ void ccDrawSolidRect( Point origin, Point destination, Color4F color )
     DrawPrimitives::drawSolidRect(origin, destination, color);
 }
 
-void ccDrawPoly( const Point *vertices, unsigned int numOfVertices, bool closePolygon )
+void ccDrawPoly( const Vector2 *vertices, unsigned int numOfVertices, bool closePolygon )
 {
     DrawPrimitives::drawPoly(vertices, numOfVertices, closePolygon);
 }
 
-void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
+void ccDrawSolidPoly( const Vector2 *poli, unsigned int numberOfPoints, Color4F color )
 {
     DrawPrimitives::drawSolidPoly(poli, numberOfPoints, color);
 }

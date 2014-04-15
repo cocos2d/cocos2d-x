@@ -202,7 +202,7 @@ void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
             // Slots.
             DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
             glLineWidth(1);
-            Point points[4];
+            Vector2 points[4];
             V3F_C4B_T2F_Quad tmpQuad;
             for (int i = 0, n = skeleton->slotCount; i < n; i++) {
                 spSlot* slot = skeleton->drawOrder[i];

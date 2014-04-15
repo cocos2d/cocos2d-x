@@ -165,7 +165,7 @@ void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
     CHECK_GL_ERROR_DEBUG();
     
     // draw 4 small points
-    Point points[] = { Point(60,60), Point(70,70), Point(60,70), Point(70,60) };
+    Vector2 points[] = { Vector2(60,60), Vector2(70,70), Vector2(60,70), Vector2(70,60) };
     DrawPrimitives::setPointSize(4);
     DrawPrimitives::setDrawColor4B(0,255,255,255);
     DrawPrimitives::drawPoints( points, 4);
@@ -196,21 +196,21 @@ void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
     // open yellow poly
     DrawPrimitives::setDrawColor4B(255, 255, 0, 255);
     glLineWidth(10);
-    Point vertices[] = { Point(0,0), Point(50,50), Point(100,50), Point(100,100), Point(50,100) };
+    Vector2 vertices[] = { Vector2(0,0), Vector2(50,50), Vector2(100,50), Vector2(100,100), Vector2(50,100) };
     DrawPrimitives::drawPoly( vertices, 5, false);
     
     CHECK_GL_ERROR_DEBUG();
     
     // filled poly
     glLineWidth(1);
-    Point filledVertices[] = { Point(0,120), Point(50,120), Point(50,170), Point(25,200), Point(0,170) };
+    Vector2 filledVertices[] = { Vector2(0,120), Vector2(50,120), Vector2(50,170), Vector2(25,200), Vector2(0,170) };
     DrawPrimitives::drawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
     
     
     // closed purble poly
     DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
     glLineWidth(2);
-    Point vertices2[] = { Point(30,130), Point(30,230), Point(50,200) };
+    Vector2 vertices2[] = { Vector2(30,130), Vector2(30,230), Vector2(50,200) };
     DrawPrimitives::drawPoly( vertices2, 3, true);
     
     CHECK_GL_ERROR_DEBUG();
@@ -226,7 +226,7 @@ void DrawPrimitivesTest::onDraw(const Matrix &transform, bool transformUpdated)
     CHECK_GL_ERROR_DEBUG();
     
     //draw a solid polygon
-    Point vertices3[] = {Point(60,160), Point(70,190), Point(100,190), Point(90,160)};
+    Vector2 vertices3[] = {Vector2(60,160), Vector2(70,190), Vector2(100,190), Vector2(90,160)};
     DrawPrimitives::drawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
     
     // restore original values

@@ -123,7 +123,7 @@ void free()
 	s_initialized = false;
 }
 
-void drawPoint( const Point& point )
+void drawPoint( const Vector2& point )
 {
     lazy_init();
 
@@ -150,7 +150,7 @@ void drawPoint( const Point& point )
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,1);
 }
 
-void drawPoints( const Point *points, unsigned int numberOfPoints )
+void drawPoints( const Vector2 *points, unsigned int numberOfPoints )
 {
     lazy_init();
 
@@ -198,7 +198,7 @@ void drawPoints( const Point *points, unsigned int numberOfPoints )
 }
 
 
-void drawLine( const Point& origin, const Point& destination )
+void drawLine( const Vector2& origin, const Vector2& destination )
 {
     lazy_init();
 
@@ -223,7 +223,7 @@ void drawLine( const Point& origin, const Point& destination )
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,2);
 }
 
-void drawRect( Point origin, Point destination )
+void drawRect( Vector2 origin, Vector2 destination )
 {
     drawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
     drawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
@@ -231,9 +231,9 @@ void drawRect( Point origin, Point destination )
     drawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
 }
 
-void drawSolidRect( Point origin, Point destination, Color4F color )
+void drawSolidRect( Vector2 origin, Vector2 destination, Color4F color )
 {
-    Point vertices[] = {
+    Vector2 vertices[] = {
         origin,
         Point(destination.x, origin.y),
         destination,
@@ -243,7 +243,7 @@ void drawSolidRect( Point origin, Point destination, Color4F color )
     drawSolidPoly(vertices, 4, color );
 }
 
-void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon )
+void drawPoly( const Vector2 *poli, unsigned int numberOfPoints, bool closePolygon )
 {
     lazy_init();
 
@@ -295,7 +295,7 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
-void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
+void drawSolidPoly( const Vector2 *poli, unsigned int numberOfPoints, Color4F color )
 {
     lazy_init();
 
@@ -339,7 +339,7 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
-void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void drawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     lazy_init();
 
@@ -383,12 +383,12 @@ void drawCircle( const Point& center, float radius, float angle, unsigned int se
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+additionalSegment);
 }
 
-void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void drawCircle( const Vector2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
     drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
-void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void drawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
 {
     lazy_init();
     
@@ -429,12 +429,12 @@ void drawSolidCircle( const Point& center, float radius, float angle, unsigned i
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
-void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+void drawSolidCircle( const Vector2& center, float radius, float angle, unsigned int segments)
 {
     drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
 }
 
-void drawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
+void drawQuadBezier(const Vector2& origin, const Vector2& control, const Vector2& destination, unsigned int segments)
 {
     lazy_init();
 
@@ -525,7 +525,7 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
-void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
+void drawCubicBezier(const Vector2& origin, const Vector2& control1, const Vector2& control2, const Vector2& destination, unsigned int segments)
 {
     lazy_init();
 

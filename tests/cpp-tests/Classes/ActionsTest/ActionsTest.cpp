@@ -1369,7 +1369,7 @@ void ActionFollow::onDraw(const Matrix &transform, bool transformUpdated)
     float x = winSize.width*2 - 100;
     float y = winSize.height;
     
-    Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
+    Vector2 vertices[] = { Vector2(5,5), Vector2(x-5,5), Vector2(x-5,y-5), Vector2(5,y-5) };
     DrawPrimitives::drawPoly(vertices, 4, true);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
