@@ -138,10 +138,10 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         Size s = Director::getInstance()->getWinSize();
 
         this->ignoreAnchorPointForPosition(true);
-        setAnchorPoint(Point(0.5f, 0.5f));
+        setAnchorPoint(Vector2(0.5f, 0.5f));
         this->setContentSize(s);
 
-        setPosition(Point(s.width/2, s.height/2));
+        setPosition(Vector2(s.width/2, s.height/2));
         
         int z=0;
         
@@ -315,7 +315,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
     float y = height / 2.0f;
     
     for(const auto &child : _children) {
-        child->setPosition(Point(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
+        child->setPosition(Vector2(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
         y -= child->getContentSize().height * child->getScaleY() + padding;
     }
 }
@@ -334,7 +334,7 @@ void Menu::alignItemsHorizontallyWithPadding(float padding)
     float x = -width / 2.0f;
     
     for(const auto &child : _children) {
-        child->setPosition(Point(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
+        child->setPosition(Vector2(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
         x += child->getContentSize().width * child->getScaleX() + padding;
     }
 }
@@ -413,7 +413,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
         float tmp = child->getContentSize().height;
         rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
-        child->setPosition(Point(x - winSize.width / 2,
+        child->setPosition(Vector2(x - winSize.width / 2,
                                y - child->getContentSize().height / 2));
 
         x += w;
@@ -514,7 +514,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
         float tmp = child->getContentSize().width;
         columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-        child->setPosition(Point(x + columnWidths[column] / 2,
+        child->setPosition(Vector2(x + columnWidths[column] / 2,
                                y - winSize.height / 2));
 
         y -= child->getContentSize().height + 10;
@@ -533,7 +533,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
 
 MenuItem* Menu::getItemForTouch(Touch *touch)
 {
-    Point touchLocation = touch->getLocation();
+    Vector2 touchLocation = touch->getLocation();
 
     if (!_children.empty())
     {
@@ -542,9 +542,9 @@ MenuItem* Menu::getItemForTouch(Touch *touch)
             MenuItem* child = dynamic_cast<MenuItem*>(*iter);
             if (child && child->isVisible() && child->isEnabled())
             {
-                Point local = child->convertToNodeSpace(touchLocation);
+                Vector2 local = child->convertToNodeSpace(touchLocation);
                 Rect r = child->rect();
-                r.origin = Point::ZERO;
+                r.origin = Vector2::ZERO;
                 
                 if (r.containsPoint(local))
                 {

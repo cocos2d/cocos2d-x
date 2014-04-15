@@ -144,9 +144,9 @@ Rect RectFromString(const std::string& str)
     return result;
 }
 
-Point PointFromString(const std::string& str)
+Vector2 PointFromString(const std::string& str)
 {
-    Point ret = Point::ZERO;
+    Vector2 ret = Vector2::ZERO;
 
     do 
     {
@@ -156,7 +156,7 @@ Point PointFromString(const std::string& str)
         float x = (float) atof(strs[0].c_str());
         float y = (float) atof(strs[1].c_str());
 
-        ret = Point(x, y);
+        ret = Vector2(x, y);
     } while (0);
 
     return ret;

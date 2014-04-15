@@ -41,7 +41,7 @@ MotionStreak::MotionStreak()
 , _startingPositionInitialized(false)
 , _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _positionR(Point::ZERO)
+, _positionR(Vector2::ZERO)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
 , _minSeg(0.0f)
@@ -102,12 +102,12 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
 bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    Node::setPosition(Point::ZERO);
-    setAnchorPoint(Point::ZERO);
+    Node::setPosition(Vector2::ZERO);
+    setAnchorPoint(Vector2::ZERO);
     ignoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
-    _positionR = Point::ZERO;
+    _positionR = Vector2::ZERO;
     _fastMode = true;
     _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
     _minSeg *= _minSeg;
@@ -118,7 +118,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _maxPoints = (int)(fade*60.0f)+2;
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
-    _pointVertexes = (Point*)malloc(sizeof(Point) * _maxPoints);
+    _pointVertexes = (Vector2*)malloc(sizeof(Vector2) * _maxPoints);
 
     _vertices = (Vector2*)malloc(sizeof(Vector2) * _maxPoints * 2);
     _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _maxPoints * 2);

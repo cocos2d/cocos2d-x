@@ -94,9 +94,9 @@ void ActionCamera::updateTransform()
     Matrix lookupMatrix;
     Matrix::createLookAt(_eye.x, _eye.y, _eye.z, _center.x, _center.y, _center.z, _up.x, _up.y, _up.z, &lookupMatrix);
 
-    Point anchorPoint = _target->getAnchorPointInPoints();
+    Vector2 anchorPoint = _target->getAnchorPointInPoints();
 
-    bool needsTranslation = !anchorPoint.equals(Point::ZERO);
+    bool needsTranslation = !anchorPoint.equals(Vector2::ZERO);
 
     Matrix mv = Matrix::identity();
 

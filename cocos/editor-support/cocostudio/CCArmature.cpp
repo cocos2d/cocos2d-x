@@ -329,10 +329,10 @@ void Armature::updateOffsetPoint()
     // Set contentsize and Calculate anchor point.
     Rect rect = getBoundingBox();
     setContentSize(rect.size);
-    _offsetPoint = Point(-rect.origin.x,  -rect.origin.y);
+    _offsetPoint = Vector2(-rect.origin.x,  -rect.origin.y);
     if (rect.size.width != 0 && rect.size.height != 0)
     {
-        setAnchorPoint(Point(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
+        setAnchorPoint(Vector2(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
     }
 }
 
@@ -341,8 +341,8 @@ void Armature::setAnchorPoint(const Vector2& point)
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
-        _realAnchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
+        _anchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
+        _realAnchorPointInPoints = Vector2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformDirty = _inverseDirty = true;
     }
 }
@@ -573,13 +573,13 @@ void CCArmature::drawContour()
         for (auto& object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
-            const std::vector<Point> &vertexList = body->getCalculatedVertexList();
+            const std::vector<Vector2> &vertexList = body->getCalculatedVertexList();
 
             unsigned long length = vertexList.size();
             Vector2 *points = new Vector2[length];
             for (unsigned long i = 0; i<length; i++)
             {
-                Point p = vertexList.at(i);
+                Vector2 p = vertexList.at(i);
                 points[i].x = p.x;
                 points[i].y = p.y;
             }

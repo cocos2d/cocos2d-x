@@ -389,7 +389,7 @@ bool ContourData::init()
     return true;
 }
 
-void ContourData::addVertex(Point &vertex)
+void ContourData::addVertex(Vector2 &vertex)
 {
     vertexList.push_back(vertex);
 }

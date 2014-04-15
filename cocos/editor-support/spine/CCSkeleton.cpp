@@ -209,10 +209,10 @@ void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
                 if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
                 spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
                 spRegionAttachment_updateQuad(attachment, slot, &tmpQuad);
-                points[0] = Point(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
-                points[1] = Point(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
-                points[2] = Point(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
-                points[3] = Point(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
+                points[0] = Vector2(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y);
+                points[1] = Vector2(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y);
+                points[2] = Vector2(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y);
+                points[3] = Vector2(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y);
                 DrawPrimitives::drawPoly(points, 4, true);
             }
         }
@@ -224,14 +224,14 @@ void Skeleton::onDraw(const Matrix &transform, bool transformUpdated)
                 spBone *bone = skeleton->bones[i];
                 float x = bone->data->length * bone->m00 + bone->worldX;
                 float y = bone->data->length * bone->m10 + bone->worldY;
-                DrawPrimitives::drawLine(Point(bone->worldX, bone->worldY), Point(x, y));
+                DrawPrimitives::drawLine(Vector2(bone->worldX, bone->worldY), Vector2(x, y));
             }
             // Bone origins.
             DrawPrimitives::setPointSize(4);
             DrawPrimitives::setDrawColor4B(0, 0, 255, 255); // Root bone is blue.
             for (int i = 0, n = skeleton->boneCount; i < n; i++) {
                 spBone *bone = skeleton->bones[i];
-                DrawPrimitives::drawPoint(Point(bone->worldX, bone->worldY));
+                DrawPrimitives::drawPoint(Vector2(bone->worldX, bone->worldY));
                 if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
             }
         }
@@ -271,7 +271,7 @@ Rect Skeleton::getBoundingBox () const {
 		maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
 		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
 	}
-	Point position = getPosition();
+	Vector2 position = getPosition();
 	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
 }
 

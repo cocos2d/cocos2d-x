@@ -306,7 +306,7 @@ void RenderTexture::setKeepMatrix(bool keepMatrix)
     _keepMatrix = keepMatrix;
 }
 
-void RenderTexture::setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport)
+void RenderTexture::setVirtualViewport(const Vector2& rtBegin, const Rect& fullRect, const Rect& fullViewport)
 {
     _rtTextureRect.origin.x = rtBegin.x;
     _rtTextureRect.origin.y = rtBegin.y;

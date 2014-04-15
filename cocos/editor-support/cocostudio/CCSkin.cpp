@@ -128,7 +128,7 @@ void Skin::setSkinData(const BaseData &var)
     setScaleY(_skinData.scaleY);
     setRotationSkewX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
     setRotationSkewY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
-    setPosition(Point(_skinData.x, _skinData.y));
+    setPosition(Vector2(_skinData.x, _skinData.y));
 
     _skinTransform = getNodeToParentTransform();
     updateArmatureTransform();
@@ -209,7 +209,7 @@ Matrix Skin::getNodeToWorldTransform() const
 Matrix Skin::getNodeToWorldTransformAR() const
 {
     Matrix displayTransform = _transform;
-    Point anchorPoint =  _anchorPointInPoints;
+    Vector2 anchorPoint =  _anchorPointInPoints;
 
     anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
 

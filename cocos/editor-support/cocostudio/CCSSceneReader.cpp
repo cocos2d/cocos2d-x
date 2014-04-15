@@ -220,7 +220,7 @@ void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d:
 {
     float x = DICTOOL->getFloatValue_json(root, "x");
     float y = DICTOOL->getFloatValue_json(root, "y");
-    node->setPosition(Point(x, y));
+    node->setPosition(Vector2(x, y));
     
     const bool bVisible = (DICTOOL->getIntValue_json(root, "visible", 1) != 0);
     node->setVisible(bVisible);

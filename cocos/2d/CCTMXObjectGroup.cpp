@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 TMXObjectGroup::TMXObjectGroup()
     : _groupName("")
-    , _positionOffset(Point::ZERO)
+    , _positionOffset(Vector2::ZERO)
 {
 }
 

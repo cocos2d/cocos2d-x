@@ -197,7 +197,7 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     
-    DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Vector2(-1,-1), Vector2(1,1), Color4F(1, 1, 1, 1));
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -383,7 +383,7 @@ void ClippingNode::onBeforeVisit()
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
 
     // draw a fullscreen solid rectangle to clear the stencil buffer
-    //ccDrawSolidRect(Point::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
+    //ccDrawSolidRect(Vector2::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
     drawFullScreenQuadClearStencil();
 
     ///////////////////////////////////

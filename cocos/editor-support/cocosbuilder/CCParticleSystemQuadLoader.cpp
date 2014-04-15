@@ -35,7 +35,7 @@ void ParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * ccbReader) {
+void ParticleSystemQuadLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Vector2 pPoint, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_POSVAR) == 0) {
         ((ParticleSystemQuad *)pNode)->setPosVar(pPoint);
     } else if(strcmp(pPropertyName, PROPERTY_GRAVITY) == 0) {

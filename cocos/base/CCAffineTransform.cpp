@@ -38,19 +38,19 @@ AffineTransform __CCAffineTransformMake(float a, float b, float c, float d, floa
   return t;
 }
 
-Point __CCPointApplyAffineTransform(const Point& point, const AffineTransform& t)
+Vector2 __CCPointApplyAffineTransform(const Vector2& point, const AffineTransform& t)
 {
-  Point p;
+  Vector2 p;
   p.x = (float)((double)t.a * point.x + (double)t.c * point.y + t.tx);
   p.y = (float)((double)t.b * point.x + (double)t.d * point.y + t.ty);
   return p;
 }
 
-Point PointApplyTransform(const Point& point, const Matrix& transform)
+Vector2 PointApplyTransform(const Vector2& point, const Matrix& transform)
 {
     Vector3 vec(point.x, point.y, 0);
     transform.transformPoint(&vec);
-    return Point(vec.x, vec.y);
+    return Vector2(vec.x, vec.y);
 }
 
 
@@ -78,10 +78,10 @@ Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineT
     float right  = rect.getMaxX();
     float bottom = rect.getMaxY();
     
-    Point topLeft = PointApplyAffineTransform(Point(left, top), anAffineTransform);
-    Point topRight = PointApplyAffineTransform(Point(right, top), anAffineTransform);
-    Point bottomLeft = PointApplyAffineTransform(Point(left, bottom), anAffineTransform);
-    Point bottomRight = PointApplyAffineTransform(Point(right, bottom), anAffineTransform);
+    Vector2 topLeft = PointApplyAffineTransform(Vector2(left, top), anAffineTransform);
+    Vector2 topRight = PointApplyAffineTransform(Vector2(right, top), anAffineTransform);
+    Vector2 bottomLeft = PointApplyAffineTransform(Vector2(left, bottom), anAffineTransform);
+    Vector2 bottomRight = PointApplyAffineTransform(Vector2(right, bottom), anAffineTransform);
 
     float minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
     float maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));

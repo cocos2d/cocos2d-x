@@ -81,7 +81,7 @@ void LoadingBar::initRenderer()
 {
     _barRenderer = Sprite::create();
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
-    _barRenderer->setAnchorPoint(Point(0.0,0.5));
+    _barRenderer->setAnchorPoint(Vector2(0.0,0.5));
 }
 
 void LoadingBar::setDirection(LoadingBarType dir)
@@ -95,16 +95,16 @@ void LoadingBar::setDirection(LoadingBarType dir)
     switch (_barType)
     {
         case LoadingBarTypeLeft:
-            _barRenderer->setAnchorPoint(Point(0.0f,0.5f));
-            _barRenderer->setPosition(Point(-_totalLength*0.5f,0.0f));
+            _barRenderer->setAnchorPoint(Vector2(0.0f,0.5f));
+            _barRenderer->setPosition(Vector2(-_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
                 static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
             }
             break;
         case LoadingBarTypeRight:
-            _barRenderer->setAnchorPoint(Point(1.0f,0.5f));
-            _barRenderer->setPosition(Point(_totalLength*0.5f,0.0f));
+            _barRenderer->setAnchorPoint(Vector2(1.0f,0.5f));
+            _barRenderer->setPosition(Vector2(_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
                 static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
@@ -161,14 +161,14 @@ int LoadingBar::getDirection()
     switch (_barType)
     {
     case LoadingBarTypeLeft:
-        _barRenderer->setAnchorPoint(Point(0.0f,0.5f));
+        _barRenderer->setAnchorPoint(Vector2(0.0f,0.5f));
         if (!_scale9Enabled)
         {
             static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
         }
         break;
     case LoadingBarTypeRight:
-        _barRenderer->setAnchorPoint(Point(1.0f,0.5f));
+        _barRenderer->setAnchorPoint(Vector2(1.0f,0.5f));
         if (!_scale9Enabled)
         {
             static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
@@ -323,10 +323,10 @@ void LoadingBar::barRendererScaleChangedWithSize()
     switch (_barType)
     {
         case LoadingBarTypeLeft:
-            _barRenderer->setPosition(Point(-_totalLength * 0.5f, 0.0f));
+            _barRenderer->setPosition(Vector2(-_totalLength * 0.5f, 0.0f));
             break;
         case LoadingBarTypeRight:
-            _barRenderer->setPosition(Point(_totalLength * 0.5f, 0.0f));
+            _barRenderer->setPosition(Vector2(_totalLength * 0.5f, 0.0f));
             break;
         default:
             break;

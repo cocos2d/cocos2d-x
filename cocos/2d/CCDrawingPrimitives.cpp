@@ -164,10 +164,10 @@ void drawPoints( const Vector2 *points, unsigned int numberOfPoints )
     Vector2* newPoints = new Vector2[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(Vector2) )
+    if( sizeof(Vector2) == sizeof(Vector2) )
     {
 #ifdef EMSCRIPTEN
-        setGLBufferData((void*) points, numberOfPoints * sizeof(Point));
+        setGLBufferData((void*) points, numberOfPoints * sizeof(Vector2));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, points);
@@ -225,19 +225,19 @@ void drawLine( const Vector2& origin, const Vector2& destination )
 
 void drawRect( Vector2 origin, Vector2 destination )
 {
-    drawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
-    drawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
-    drawLine(Point(destination.x, destination.y), Point(origin.x, destination.y));
-    drawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
+    drawLine(Vector2(origin.x, origin.y), Vector2(destination.x, origin.y));
+    drawLine(Vector2(destination.x, origin.y), Vector2(destination.x, destination.y));
+    drawLine(Vector2(destination.x, destination.y), Vector2(origin.x, destination.y));
+    drawLine(Vector2(origin.x, destination.y), Vector2(origin.x, origin.y));
 }
 
 void drawSolidRect( Vector2 origin, Vector2 destination, Color4F color )
 {
     Vector2 vertices[] = {
         origin,
-        Point(destination.x, origin.y),
+        Vector2(destination.x, origin.y),
         destination,
-        Point(origin.x, destination.y)
+        Vector2(origin.x, destination.y)
     };
 
     drawSolidPoly(vertices, 4, color );
@@ -254,10 +254,10 @@ void drawPoly( const Vector2 *poli, unsigned int numberOfPoints, bool closePolyg
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(Vector2) )
+    if( sizeof(Vector2) == sizeof(Vector2) )
     {
 #ifdef EMSCRIPTEN
-        setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
+        setGLBufferData((void*) poli, numberOfPoints * sizeof(Vector2));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
@@ -309,10 +309,10 @@ void drawSolidPoly( const Vector2 *poli, unsigned int numberOfPoints, Color4F co
     Vector2* newPoli = new Vector2[numberOfPoints];
 
     // iPhone and 32-bit machines optimization
-    if( sizeof(Point) == sizeof(Vector2) )
+    if( sizeof(Vector2) == sizeof(Vector2) )
     {
 #ifdef EMSCRIPTEN
-        setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
+        setGLBufferData((void*) poli, numberOfPoints * sizeof(Vector2));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
@@ -497,12 +497,12 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
         }
 
         // Interpolate
-        Point pp0 = config->getControlPointAtIndex(p-1);
-        Point pp1 = config->getControlPointAtIndex(p+0);
-        Point pp2 = config->getControlPointAtIndex(p+1);
-        Point pp3 = config->getControlPointAtIndex(p+2);
+        Vector2 pp0 = config->getControlPointAtIndex(p-1);
+        Vector2 pp1 = config->getControlPointAtIndex(p+0);
+        Vector2 pp2 = config->getControlPointAtIndex(p+1);
+        Vector2 pp3 = config->getControlPointAtIndex(p+2);
 
-        Point newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
+        Vector2 newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
         vertices[i].x = newPos.x;
         vertices[i].y = newPos.y;
     }

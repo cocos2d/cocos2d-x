@@ -81,11 +81,11 @@ static inline Vector2 v2fforangle(float _a_)
 
 static inline Vector2 v2fnormalize(const Vector2 &p)
 {
-	Point r = Point(p.x, p.y).normalize();
+	Vector2 r = Vector2(p.x, p.y).normalize();
 	return v2f(r.x, r.y);
 }
 
-static inline Vector2 __v2f(const Point &v)
+static inline Vector2 __v2f(const Vector2 &v)
 {
 //#ifdef __LP64__
 	return v2f(v.x, v.y);
@@ -251,7 +251,7 @@ void DrawNode::onDraw(const Matrix &transform, bool transformUpdated)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawNode::drawDot(const Point &pos, float radius, const Color4F &color)
+void DrawNode::drawDot(const Vector2 &pos, float radius, const Color4F &color)
 {
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
@@ -272,7 +272,7 @@ void DrawNode::drawDot(const Point &pos, float radius, const Color4F &color)
 	_dirty = true;
 }
 
-void DrawNode::drawSegment(const Point &from, const Point &to, float radius, const Color4F &color)
+void DrawNode::drawSegment(const Vector2 &from, const Vector2 &to, float radius, const Color4F &color)
 {
     unsigned int vertex_count = 6*3;
     ensureCapacity(vertex_count);
@@ -345,7 +345,7 @@ void DrawNode::drawSegment(const Point &from, const Point &to, float radius, con
 	_dirty = true;
 }
 
-void DrawNode::drawPolygon(Point *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
+void DrawNode::drawPolygon(Vector2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
 {
     CCASSERT(count >= 0, "invalid count value");
 
@@ -453,7 +453,7 @@ void DrawNode::drawPolygon(Point *verts, int count, const Color4F &fillColor, fl
     free(extrude);
 }
 
-void DrawNode::drawTriangle(const Point &p1, const Point &p2, const Point &p3, const Color4F &color)
+void DrawNode::drawTriangle(const Vector2 &p1, const Vector2 &p2, const Vector2 &p3, const Color4F &color)
 {
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
@@ -471,7 +471,7 @@ void DrawNode::drawTriangle(const Point &p1, const Point &p2, const Point &p3, c
     _dirty = true;
 }
 
-void DrawNode::drawCubicBezier(const Point& from, const Point& control1, const Point& control2, const Point& to, unsigned int segments, const Color4F &color)
+void DrawNode::drawCubicBezier(const Vector2& from, const Vector2& control1, const Vector2& control2, const Vector2& to, unsigned int segments, const Color4F &color)
 {
     unsigned int vertex_count = (segments + 1) * 3;
     ensureCapacity(vertex_count);
@@ -502,7 +502,7 @@ void DrawNode::drawCubicBezier(const Point& from, const Point& control1, const P
     _dirty = true;
 }
 
-void DrawNode::drawQuadraticBezier(const Point& from, const Point& control, const Point& to, unsigned int segments, const Color4F &color)
+void DrawNode::drawQuadraticBezier(const Vector2& from, const Vector2& control, const Vector2& to, unsigned int segments, const Color4F &color)
 {
     unsigned int vertex_count = (segments + 1) * 3;
     ensureCapacity(vertex_count);
