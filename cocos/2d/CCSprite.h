@@ -426,8 +426,6 @@ public:
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}
-     //set culling enabled
-    void setCullingEnabled(bool enabled);
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -529,8 +527,6 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
-    bool isInsideBounds() const;
-
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -576,7 +572,6 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
-    bool _cullingEnabled;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };
