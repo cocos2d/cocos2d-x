@@ -26,7 +26,6 @@
  */
 
 #include "CCClippingNode.h"
-#include "kazmath/GL/matrix.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
 #include "CCDirector.h"

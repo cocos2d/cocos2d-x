@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "TransformUtils.h"
 // extern
-#include "kazmath/GL/matrix.h"
 #include "CCEventDispatcher.h"
 #include "CCEventListenerTouch.h"
 #include "CCEventTouch.h"

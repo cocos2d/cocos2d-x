@@ -4,8 +4,6 @@
 #include "Vector3.h"
 #include "Vector4.h"
 
-#include "kazmath/kazmath/kazmath.h"
-
 NS_CC_MATH_BEGIN
 
 //class Plane;

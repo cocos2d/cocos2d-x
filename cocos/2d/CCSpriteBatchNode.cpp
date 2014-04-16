@@ -43,7 +43,6 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 // external
-#include "kazmath/GL/matrix.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
 

@@ -283,7 +283,6 @@ void Director::drawScene()
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    // global identity matrix is needed... come on kazmath!    
     Matrix identity = Matrix::identity();
 
     // draw the scene
@@ -1070,7 +1069,6 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        // global identity matrix is needed... come on kazmath!
         Matrix identity = Matrix::identity();
 
         _drawnVerticesLabel->visit(_renderer, identity, false);

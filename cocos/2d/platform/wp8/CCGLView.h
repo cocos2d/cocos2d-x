@@ -37,7 +37,6 @@ THE SOFTWARE.
 
 #include <agile.h>
 #include <DirectXMath.h>
-#include "kazmath/mat4.h"
 #include "../wp8-xaml/cpp/InputEvent.h"
 
 #include <EGL/egl.h>

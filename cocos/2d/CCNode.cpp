@@ -50,7 +50,6 @@ THE SOFTWARE.
 #endif
 
 // externals
-#include "kazmath/GL/matrix.h"
 #include "CCComponent.h"
 #include "CCComponentContainer.h"
 
