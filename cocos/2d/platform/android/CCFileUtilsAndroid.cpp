@@ -342,14 +342,23 @@ unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const 
 
 string FileUtilsAndroid::getWritablePath() const
 {
+    return getDirPath(getFileDirectoryJNI());
+}
+
+string FileUtilsAndroid::getCachePath() const
+{
+    return getDirPath(getCacheDirectoryJNI());
+}
+
+string FileUtilsAndroid::getDirPath(string filedir) const
+{
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method
     string dir("");
-    string tmp = getFileDirectoryJNI();
 
-    if (tmp.length() > 0)
+    if (filedir.length() > 0)
     {
-        dir.append(tmp).append("/");
+        dir.append(filedir).append("/");
 
         return dir;
     }

@@ -324,8 +324,18 @@ FileUtils* FileUtils::getInstance()
 
 std::string FileUtilsApple::getWritablePath() const
 {
+    return getDirPath(NSDocumentDirectory);
+}
+
+std::string FileUtilsApple::getCachePath() const
+{
+    return getDirPath(NSCachesDirectory);
+}
+
+std::string FileUtilsApple::getDirPath(NSSearchPathDirectory dir) const
+{
     // save to document folder
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(dir, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     std::string strRet = [documentsDirectory UTF8String];
     strRet.append("/");
