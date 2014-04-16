@@ -44,11 +44,11 @@ public:
     /**
      * Constructs a new vector initialized to the specified values.
      *
-     * @param x The x coordinate.
-     * @param y The y coordinate.
-     * @param z The z coordinate.
+     * @param xx The x coordinate.
+     * @param yy The y coordinate.
+     * @param zz The z coordinate.
      */
-    Vector3(float x, float y, float z);
+    Vector3(float xx, float yy, float zz);
 
     /**
      * Constructs a new vector from the values in the specified array.
@@ -305,11 +305,11 @@ public:
     /**
      * Sets the elements of this vector to the specified values.
      *
-     * @param x The new x coordinate.
-     * @param y The new y coordinate.
-     * @param z The new z coordinate.
+     * @param xx The new x coordinate.
+     * @param yy The new y coordinate.
+     * @param zz The new z coordinate.
      */
-    void set(float x, float y, float z);
+    void set(float xx, float yy, float zz);
 
     /**
      * Sets the elements of this vector from the values in the specified array.

@@ -9,8 +9,8 @@ Vector4::Vector4()
 {
 }
 
-Vector4::Vector4(float x, float y, float z, float w)
-    : x(x), y(y), z(z), w(w)
+Vector4::Vector4(float xx, float yy, float zz, float ww)
+    : x(xx), y(yy), z(zz), w(ww)
 {
 }
 
@@ -276,12 +276,12 @@ void Vector4::scale(float scalar)
     w *= scalar;
 }
 
-void Vector4::set(float x, float y, float z, float w)
+void Vector4::set(float xx, float yy, float zz, float ww)
 {
-    this->x = x;
-    this->y = y;
-    this->z = z;
-    this->w = w;
+    this->x = xx;
+    this->y = yy;
+    this->z = zz;
+    this->w = ww;
 }
 
 void Vector4::set(const float* array)
