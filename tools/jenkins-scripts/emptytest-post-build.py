@@ -12,7 +12,7 @@ payload = json.loads(payload_str)
 #pr = payload['pull_request']
 url = payload['html_url']
 print "build pr:" + url
-#get statuses url
+#get comments url
 comments_url = payload['comments_url']
 
 J = Jenkins(os.environ['JENKINS_URL'])
@@ -29,4 +29,4 @@ if(result == STATUS_SUCCESS):
 else:
     data['body'] = "Emptytest run Failure: " + target_url
 
-requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+requests.post(comments_url, data=json.dumps(data), headers=Headers)
