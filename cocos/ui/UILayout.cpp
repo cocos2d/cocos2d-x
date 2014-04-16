@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
-#include "kazmath/GL/matrix.h"
 #include "CCGLProgram.h"
 #include "CCShaderCache.h"
 #include "CCDirector.h"

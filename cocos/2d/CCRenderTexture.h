@@ -28,7 +28,6 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCSprite.h"
-#include "kazmath/mat4.h"
 #include "platform/CCImage.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"

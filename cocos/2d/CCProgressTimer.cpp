@@ -37,8 +37,6 @@ THE SOFTWARE.
 #include "renderer/CCCustomCommand.h"
 
 // extern
-#include "kazmath/GL/matrix.h"
-
 #include <float.h>
 
 NS_CC_BEGIN

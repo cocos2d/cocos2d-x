@@ -41,7 +41,6 @@
 #include "base64.h"
 #include "ZipUtils.h"
 #include "platform/CCFileUtils.h"
-#include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderer.h"

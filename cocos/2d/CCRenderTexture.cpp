@@ -43,7 +43,6 @@ THE SOFTWARE.
 #include "renderer/CCCustomCommand.h"
 
 // extern
-#include "kazmath/GL/matrix.h"
 #include "CCEventListenerCustom.h"
 #include "CCEventDispatcher.h"
 

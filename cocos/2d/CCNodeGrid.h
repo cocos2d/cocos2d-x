@@ -26,7 +26,6 @@
 #define __MISCNODE_CCGRID_NODE_H__
 
 #include "CCNode.h"
-#include "kazmath/GL/matrix.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 

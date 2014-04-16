@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "CCTexture2D.h"
 #include "CCDirector.h"
-#include "kazmath/mat4.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN

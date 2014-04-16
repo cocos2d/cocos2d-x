@@ -36,7 +36,6 @@ THE SOFTWARE.
 #include "CCVector.h"
 #include "CCGL.h"
 #include "CCLabelAtlas.h"
-#include "kazmath/mat4.h"
 #include <stack>
 #include "CCMath.h"
 

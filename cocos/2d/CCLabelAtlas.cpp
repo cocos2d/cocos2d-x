@@ -36,7 +36,6 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "platform/CCFileUtils.h"
 // external
-#include "kazmath/GL/matrix.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN

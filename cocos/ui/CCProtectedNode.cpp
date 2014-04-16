@@ -28,7 +28,6 @@
 
 #include "CCProtectedNode.h"
 
-#include "kazmath/GL/matrix.h"
 #include "CCDirector.h"
 
 #if CC_USE_PHYSICS

@@ -36,9 +36,6 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "renderer/CCRenderer.h"
 
-// external
-#include "kazmath/GL/matrix.h"
-
 NS_CC_BEGIN
 
 // implementation AtlasNode
