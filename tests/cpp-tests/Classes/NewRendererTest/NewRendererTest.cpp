@@ -475,13 +475,13 @@ NewCullingTest::NewCullingTest()
     Size size = Director::getInstance()->getWinSize();
     auto sprite = Sprite::create("Images/btn-about-normal-vertical.png");
     sprite->setRotation(5);
-    sprite->setPosition(Point(size.width/2,size.height/3));
+    sprite->setPosition(Vector2(size.width/2,size.height/3));
     sprite->setScale(2);
     addChild(sprite);
 
     auto sprite2 = Sprite::create("Images/btn-about-normal-vertical.png");
     sprite2->setRotation(-85);
-    sprite2->setPosition(Point(size.width/2,size.height * 2/3));
+    sprite2->setPosition(Vector2(size.width/2,size.height * 2/3));
     sprite2->setScale(2);
     addChild(sprite2);
     
