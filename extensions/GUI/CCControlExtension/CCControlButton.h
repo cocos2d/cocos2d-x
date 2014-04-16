@@ -181,10 +181,10 @@ public:
     virtual void onTouchMoved(Touch *touch, Event *event) override;
     virtual void onTouchEnded(Touch *touch, Event *event) override;
     virtual void onTouchCancelled(Touch *touch, Event *event) override;
-    virtual GLubyte getOpacity(void) const override;
     virtual void setOpacity(GLubyte var) override;
-	virtual const Color3B& getColor(void) const override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
 	virtual void setColor(const Color3B&) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
 
 
     const std::string& getCurrentTitle() const { return _currentTitle; };
