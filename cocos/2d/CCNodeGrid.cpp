@@ -158,7 +158,6 @@ void NodeGrid::visit(Renderer *renderer, const Matrix &parentTransform, bool par
     if(_nodeGrid && _nodeGrid->isActive())
     {
         // restore projection
-        Director *director = Director::getInstance();
         director->setProjection(beforeProjectionType);
     }
 
