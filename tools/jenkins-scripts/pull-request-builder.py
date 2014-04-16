@@ -141,8 +141,22 @@ def main():
     node_name = os.environ['NODE_NAME']
     if(branch == 'develop'):
       if(node_name == 'android_mac') or (node_name == 'android_win7'):
+        #modify tests/cpp-empty-test/Classes/AppDelegate.cpp to support Console
+        modify_file = 'tests/cpp-empty-test/Classes/AppDelegate.cpp'
+        data = codecs.open(modify_file, encoding='UTF-8').read()
+        data = re.sub("director->setDisplayStats\(true\);", "director->setDisplayStats(true); director->getConsole()->listenOnTCP(5678);", data)
+        codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
         print "Start build android..."
         ret = os.system("python build/android-build.py -n -j10 all")
+        # create and save apk
+        if(ret == 0):
+          sample_dir = 'tests/cpp-empty-test/proj.android/'
+          os.system('android update project -p cocos/2d/platform/android/java/ -t android-13')
+          os.system('android update project -p ' + sample_dir + ' -t android-13')
+          os.system('ant debug -f ' + sample_dir + 'build.xml')
+          local_apk = sample_dir + 'bin/CppEmptyTest-debug.apk'
+          remote_apk = 'apks/cpp_empty_test/cpp_empty_test_' + str(pr_num) + '.apk'
+          os.system('tools/jenkins-scripts/upload_apk.sh ' + local_apk + ' ' + remote_apk)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
