@@ -438,6 +438,9 @@
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClCompile>
@@ -948,6 +951,9 @@
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
