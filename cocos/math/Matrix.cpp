@@ -24,9 +24,9 @@ Matrix::Matrix(float m11, float m12, float m13, float m14, float m21, float m22,
     set(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
 }
 
-Matrix::Matrix(const float* m)
+Matrix::Matrix(const float* mat)
 {
-    set(m);
+    set(mat);
 }
 
 Matrix::Matrix(const Matrix& copy)
@@ -118,7 +118,7 @@ void Matrix::createPerspective(float fieldOfView, float aspectRatio,
     float theta = MATH_DEG_TO_RAD(fieldOfView) * 0.5f;
     if (fabs(fmod(theta, MATH_PIOVER2)) < MATH_EPSILON)
     {
-        CCLOGERROR("Invalid field of view value (%d) causes attempted calculation tan(%d), which is undefined.", fieldOfView, theta);
+        CCLOGERROR("Invalid field of view value (%f) causes attempted calculation tan(%f), which is undefined.", fieldOfView, theta);
         return;
     }
     float divisor = tan(theta);
@@ -426,9 +426,9 @@ void Matrix::add(float scalar, Matrix* dst)
     MathUtil::addMatrix(m, scalar, dst->m);
 }
 
-void Matrix::add(const Matrix& m)
+void Matrix::add(const Matrix& mat)
 {
-    add(*this, m, this);
+    add(*this, mat, this);
 }
 
 void Matrix::add(const Matrix& m1, const Matrix& m2, Matrix* dst)
@@ -710,9 +710,9 @@ void Matrix::multiply(const Matrix& m, float scalar, Matrix* dst)
     MathUtil::multiplyMatrix(m.m, scalar, dst->m);
 }
 
-void Matrix::multiply(const Matrix& m)
+void Matrix::multiply(const Matrix& mat)
 {
-    multiply(*this, m, this);
+    multiply(*this, mat, this);
 }
 
 void Matrix::multiply(const Matrix& m1, const Matrix& m2, Matrix* dst)
@@ -847,15 +847,15 @@ void Matrix::set(float m11, float m12, float m13, float m14, float m21, float m2
     m[15] = m44;
 }
 
-void Matrix::set(const float* m)
+void Matrix::set(const float* mat)
 {
-    GP_ASSERT(m);
-    memcpy(this->m, m, MATRIX_SIZE);
+    GP_ASSERT(mat);
+    memcpy(this->m, mat, MATRIX_SIZE);
 }
 
-void Matrix::set(const Matrix& m)
+void Matrix::set(const Matrix& mat)
 {
-    memcpy(this->m, m.m, MATRIX_SIZE);
+    memcpy(this->m, mat.m, MATRIX_SIZE);
 }
 
 void Matrix::setIdentity()
@@ -868,9 +868,9 @@ void Matrix::setZero()
     memset(m, 0, MATRIX_SIZE);
 }
 
-void Matrix::subtract(const Matrix& m)
+void Matrix::subtract(const Matrix& mat)
 {
-    subtract(*this, m, this);
+    subtract(*this, mat, this);
 }
 
 void Matrix::subtract(const Matrix& m1, const Matrix& m2, Matrix* dst)

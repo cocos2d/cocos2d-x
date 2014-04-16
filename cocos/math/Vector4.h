@@ -42,12 +42,12 @@ public:
     /**
      * Constructs a new vector initialized to the specified values.
      *
-     * @param x The x coordinate.
-     * @param y The y coordinate.
-     * @param z The z coordinate.
-     * @param w The w coordinate.
+     * @param xx The x coordinate.
+     * @param yy The y coordinate.
+     * @param zz The z coordinate.
+     * @param ww The w coordinate.
      */
-    Vector4(float x, float y, float z, float w);
+    Vector4(float xx, float yy, float zz, float ww);
 
     /**
      * Constructs a new vector from the values in the specified array.
@@ -296,12 +296,12 @@ public:
     /**
      * Sets the elements of this vector to the specified values.
      *
-     * @param x The new x coordinate.
-     * @param y The new y coordinate.
-     * @param z The new z coordinate.
-     * @param w The new w coordinate.
+     * @param xx The new x coordinate.
+     * @param yy The new y coordinate.
+     * @param zz The new z coordinate.
+     * @param ww The new w coordinate.
      */
-    void set(float x, float y, float z, float w);
+    void set(float xx, float yy, float zz, float ww);
 
     /**
      * Sets the elements of this vector from the values in the specified array.

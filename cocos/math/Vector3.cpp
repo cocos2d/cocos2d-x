@@ -9,8 +9,8 @@ Vector3::Vector3()
 {
 }
 
-Vector3::Vector3(float x, float y, float z)
-    : x(x), y(y), z(z)
+Vector3::Vector3(float xx, float yy, float zz)
+    : x(xx), y(yy), z(zz)
 {
 }
 
@@ -263,11 +263,11 @@ void Vector3::scale(float scalar)
     z *= scalar;
 }
 
-void Vector3::set(float x, float y, float z)
+void Vector3::set(float xx, float yy, float zz)
 {
-    this->x = x;
-    this->y = y;
-    this->z = z;
+    this->x = xx;
+    this->y = yy;
+    this->z = zz;
 }
 
 void Vector3::set(const float* array)
