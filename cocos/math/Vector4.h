@@ -393,28 +393,28 @@ public:
      * 
      * Note: this does not modify this vector.
      * 
-     * @param x The value to scale by.
+     * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vector4 operator*(float x) const;
+    inline const Vector4 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
      * 
-     * @param x The value to scale by.
+     * @param s The value to scale by.
      * @return This vector, after the scale occurs.
      */
-    inline Vector4& operator*=(float x);
+    inline Vector4& operator*=(float s);
     
     /**
      * Returns the components of this vector divided by the given constant
      *
      * Note: this does not modify this vector.
      *
-     * @param x the constant to divide this vector with
+     * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vector4 operator/(float x) const;
+    inline const Vector4 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.

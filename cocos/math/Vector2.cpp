@@ -52,8 +52,8 @@ Vector2::Vector2()
 {
 }
 
-Vector2::Vector2(float x, float y)
-    : x(x), y(y)
+Vector2::Vector2(float xx, float yy)
+    : x(xx), y(yy)
 {
 }
 
@@ -272,10 +272,10 @@ void Vector2::rotate(const Vector2& point, float angle)
     }
 }
 
-void Vector2::set(float x, float y)
+void Vector2::set(float xx, float yy)
 {
-    this->x = x;
-    this->y = y;
+    this->x = xx;
+    this->y = yy;
 }
 
 void Vector2::set(const float* array)
@@ -319,10 +319,6 @@ void Vector2::smooth(const Vector2& target, float elapsedTime, float responseTim
         *this += (target - *this) * (elapsedTime / (elapsedTime + responseTime));
     }
 }
-
-NS_CC_MATH_END
-
-NS_CC_MATH_BEGIN
 
 void Vector2::setPoint(float xx, float yy)
 {
