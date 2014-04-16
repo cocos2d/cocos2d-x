@@ -234,35 +234,6 @@ void EditBoxImplWin::visit(void)
 {   
 }
 
-static void editBoxCallbackFunc(const char* pText, void* ctx)
-{
-    EditBoxImplWin* thiz = (EditBoxImplWin*)ctx;
-    thiz->setText(pText);
-
-    if (thiz->getDelegate() != NULL)
-    {
-        thiz->getDelegate()->editBoxTextChanged(thiz->getEditBox(), thiz->getText());
-        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getEditBox());
-        thiz->getDelegate()->editBoxReturn(thiz->getEditBox());
-    }
-    
-    EditBox* pEditBox = thiz->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        ScriptEvent event(kCommonEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-        memset(data.eventName,0,64*sizeof(char));
-        strncpy(data.eventName,"ended",64);
-        event.data = (void*)&data;
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-        memset(data.eventName,0,64*sizeof(char));
-        strncpy(data.eventName,"return",64);
-        event.data = (void*)&data;
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-}
-
 void EditBoxImplWin::openKeyboard()
 {
     if (_delegate != NULL)
@@ -300,6 +271,26 @@ void EditBoxImplWin::openKeyboard()
 		_delegate->editBoxEditingDidEnd(_editBox);
 		_delegate->editBoxReturn(_editBox);
 	}
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (nullptr != _editBox && 0 != _editBox->getScriptEditBoxHandler())
+    {
+        CommonScriptData data(_editBox->getScriptEditBoxHandler(), "changed",_editBox);
+        ScriptEvent event(kCommonEvent,(void*)&data);
+        if (didChange)
+        {
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        }
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"ended",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"return",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
 }
 
 void EditBoxImplWin::closeKeyboard()
