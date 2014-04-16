@@ -69,12 +69,12 @@ public:
     /**
      * Constructs a quaternion initialized to (0, 0, 0, 1).
      *
-     * @param x The x component of the quaternion.
-     * @param y The y component of the quaternion.
-     * @param z The z component of the quaternion.
-     * @param w The w component of the quaternion.
+     * @param xx The x component of the quaternion.
+     * @param yy The y component of the quaternion.
+     * @param zz The z component of the quaternion.
+     * @param ww The w component of the quaternion.
      */
-    Quaternion(float x, float y, float z, float w);
+    Quaternion(float xx, float yy, float zz, float ww);
 
     /**
      * Constructs a new quaternion from the values in the specified array.
@@ -233,12 +233,12 @@ public:
     /**
      * Sets the elements of the quaternion to the specified values.
      *
-     * @param x The new x-value.
-     * @param y The new y-value.
-     * @param z The new z-value.
-     * @param w The new w-value.
+     * @param xx The new x-value.
+     * @param yy The new y-value.
+     * @param zz The new z-value.
+     * @param ww The new w-value.
      */
-    void set(float x, float y, float z, float w);
+    void set(float xx, float yy, float zz, float ww);
 
     /**
      * Sets the elements of the quaternion from the values in the specified array.
