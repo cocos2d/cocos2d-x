@@ -24,13 +24,13 @@ def main():
     #get comment body
     comment_body = comment['body']
     print comment_body
-    pattern = re.compile("\[ci(\s+)rebuild\]", re.I)
-    result = pattern.search(comment_body)
+    #will check 'ci' comment
+    searchCI = re.search("\[ci.*\]", comment_body)
 
-    # will check console/console create
+    #will check console/console create
     searchConsole = re.search('\[console.*\]', comment_body)
 
-    if result is None and searchConsole is None:
+    if searchCI is None and searchConsole is None:
         print 'skip build for pull request #' + str(pr_num)
         return(0)
     
@@ -80,11 +80,15 @@ def main():
         traceback.print_exc()
 
     job_trigger_url = ''
-    if result:
-        job_trigger_url = os.environ['JOB_TRIGGER_URL']
+    if searchCI:
+        ciOper = searchCI.group()
+        if('build' in ciOper):
+          job_trigger_url = os.environ['JOB_PULL_REQUEST_BUILD_TRIGGER_URL']
+        if('emptytest' in ciOper):
+          job_trigger_url = os.environ['JOB_EMPTYTEST_TRIGGER_URL']
     if searchConsole:
         consoleOper = searchConsole.group()
-        job_trigger_url = os.environ['JOB_CONSOLE_TEST_URL']
+        job_trigger_url = os.environ['JOB_CONSOLE_TEST_TRIGGER_URL']
         payload_forword['console'] = consoleOper
     print 'job_trigger_url is: ', job_trigger_url
 
