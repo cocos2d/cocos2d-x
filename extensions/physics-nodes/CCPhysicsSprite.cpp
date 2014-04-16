@@ -353,7 +353,7 @@ const Matrix& PhysicsSprite::getNodeToParentTransform() const
                         0,  0,  1,  0,
                         x,	y,  0,  1};
     
-    
+    _transform.set(mat);
     
     return _transform;
 
