@@ -1,5 +1,5 @@
 #!/bin/sh
-calfile=$1
+localfile=$1
 remotefile=$2
 
 sftp $FTP_HOME << EOF
