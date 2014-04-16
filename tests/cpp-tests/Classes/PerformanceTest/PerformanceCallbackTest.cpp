@@ -42,16 +42,6 @@ static std::function<PerformanceCallbackScene*()> createFunctions[] =
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-enum {
-    kTagInfoLayer = 1,
-    
-    kTagBase = 20000,
-};
-
-enum {
-    kMaxNodes = 15000,
-    kNodesIncrease = 500,
-};
 
 static int g_curCase = 0;
 
