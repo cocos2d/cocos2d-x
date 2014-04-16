@@ -2,49 +2,49 @@
 
 NS_CC_MATH_BEGIN
 
-inline const Matrix Matrix::operator+(const Matrix& m) const
+inline const Matrix Matrix::operator+(const Matrix& mat) const
 {
     Matrix result(*this);
-    result.add(m);
+    result.add(mat);
     return result;
 }
 
-inline Matrix& Matrix::operator+=(const Matrix& m)
+inline Matrix& Matrix::operator+=(const Matrix& mat)
 {
-    add(m);
+    add(mat);
     return *this;
 }
 
-inline const Matrix Matrix::operator-(const Matrix& m) const
+inline const Matrix Matrix::operator-(const Matrix& mat) const
 {
     Matrix result(*this);
-    result.subtract(m);
+    result.subtract(mat);
     return result;
 }
 
-inline Matrix& Matrix::operator-=(const Matrix& m)
+inline Matrix& Matrix::operator-=(const Matrix& mat)
 {
-    subtract(m);
+    subtract(mat);
     return *this;
 }
 
 inline const Matrix Matrix::operator-() const
 {
-    Matrix m(*this);
-    m.negate();
-    return m;
+    Matrix mat(*this);
+    mat.negate();
+    return mat;
 }
 
-inline const Matrix Matrix::operator*(const Matrix& m) const
+inline const Matrix Matrix::operator*(const Matrix& mat) const
 {
     Matrix result(*this);
-    result.multiply(m);
+    result.multiply(mat);
     return result;
 }
 
-inline Matrix& Matrix::operator*=(const Matrix& m)
+inline Matrix& Matrix::operator*=(const Matrix& mat)
 {
-    multiply(m);
+    multiply(mat);
     return *this;
 }
 

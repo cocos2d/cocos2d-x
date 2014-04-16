@@ -104,9 +104,9 @@ public:
      *     2   6   10  14
      *     3   7   11  15
      *
-     * @param m An array containing 16 elements in column-major order.
+     * @param mat An array containing 16 elements in column-major order.
      */
-    Matrix(const float* m);
+    Matrix(const float* mat);
 
     /**
      * Constructs a new matrix by copying the values from the specified matrix.
@@ -365,9 +365,9 @@ public:
     /**
      * Adds the specified matrix to this matrix.
      *
-     * @param m The matrix to add.
+     * @param mat The matrix to add.
      */
-    void add(const Matrix& m);
+    void add(const Matrix& mat);
 
     /**
      * Adds the specified matrices and stores the result in dst.
@@ -505,18 +505,18 @@ public:
     /**
      * Multiplies the components of the specified matrix by a scalar and stores the result in dst.
      *
-     * @param m The matrix.
+     * @param mat The matrix.
      * @param scalar The scalar value.
      * @param dst A matrix to store the result in.
      */
-    static void multiply(const Matrix& m, float scalar, Matrix* dst);
+    static void multiply(const Matrix& mat, float scalar, Matrix* dst);
 
     /**
      * Multiplies this matrix by the specified one.
      *
-     * @param m The matrix to multiply.
+     * @param mat The matrix to multiply.
      */
-    void multiply(const Matrix& m);
+    void multiply(const Matrix& mat);
 
     /**
      * Multiplies m1 by m2 and stores the result in dst.
@@ -707,16 +707,16 @@ public:
     /**
      * Sets the values of this matrix to those in the specified column-major array.
      *
-     * @param m An array containing 16 elements in column-major format.
+     * @param mat An array containing 16 elements in column-major format.
      */
-    void set(const float* m);
+    void set(const float* mat);
 
     /**
      * Sets the values of this matrix to those of the specified matrix.
      *
-     * @param m The source matrix.
+     * @param mat The source matrix.
      */
-    void set(const Matrix& m);
+    void set(const Matrix& mat);
 
     /**
      * Sets this matrix to the identity matrix.
@@ -731,9 +731,9 @@ public:
     /**
      * Subtracts the specified matrix from the current matrix.
      *
-     * @param m The matrix to subtract.
+     * @param mat The matrix to subtract.
      */
-    void subtract(const Matrix& m);
+    void subtract(const Matrix& mat);
 
     /**
      * Subtracts the specified matrix from the current matrix.
@@ -865,36 +865,36 @@ public:
      * 
      * Note: this does not modify this matrix.
      * 
-     * @param m The matrix to add.
+     * @param mat The matrix to add.
      * @return The matrix sum.
      */
-    inline const Matrix operator+(const Matrix& m) const;
+    inline const Matrix operator+(const Matrix& mat) const;
     
     /**
      * Adds the given matrix to this matrix.
      * 
-     * @param m The matrix to add.
+     * @param mat The matrix to add.
      * @return This matrix, after the addition occurs.
      */
-    inline Matrix& operator+=(const Matrix& m);
+    inline Matrix& operator+=(const Matrix& mat);
 
     /**
      * Calculates the difference of this matrix with the given matrix.
      * 
      * Note: this does not modify this matrix.
      * 
-     * @param m The matrix to subtract.
+     * @param mat The matrix to subtract.
      * @return The matrix difference.
      */
-    inline const Matrix operator-(const Matrix& m) const;
+    inline const Matrix operator-(const Matrix& mat) const;
 
     /**
      * Subtracts the given matrix from this matrix.
      * 
-     * @param m The matrix to subtract.
+     * @param mat The matrix to subtract.
      * @return This matrix, after the subtraction occurs.
      */
-    inline Matrix& operator-=(const Matrix& m);
+    inline Matrix& operator-=(const Matrix& mat);
 
     /**
      * Calculates the negation of this matrix.
@@ -910,18 +910,18 @@ public:
      * 
      * Note: this does not modify this matrix.
      * 
-     * @param m The matrix to multiply by.
+     * @param mat The matrix to multiply by.
      * @return The matrix product.
      */
-    inline const Matrix operator*(const Matrix& m) const;
+    inline const Matrix operator*(const Matrix& mat) const;
 
     /**
      * Right-multiplies this matrix by the given matrix.
      * 
-     * @param m The matrix to multiply by.
+     * @param mat The matrix to multiply by.
      * @return This matrix, after the multiplication occurs.
      */
-    inline Matrix& operator*=(const Matrix& m);
+    inline Matrix& operator*=(const Matrix& mat);
     
 private:
 
