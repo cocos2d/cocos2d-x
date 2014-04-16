@@ -684,7 +684,6 @@ void RenderTexture::begin()
     
     if(!_keepMatrix)
     {
-        Director *director = Director::getInstance();
         director->setProjection(director->getProjection());
         
         const Size& texSize = _texture->getContentSizeInPixels();
