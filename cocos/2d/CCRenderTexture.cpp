@@ -280,7 +280,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         setSprite(Sprite::createWithTexture(_texture));
 
         _texture->release();
-        _sprite->setScaleY(-1);
+        _sprite->setFlippedY(true);
 
         _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
 
