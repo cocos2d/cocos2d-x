@@ -8,8 +8,8 @@ Quaternion::Quaternion()
 {
 }
 
-Quaternion::Quaternion(float x, float y, float z, float w)
-    : x(x), y(y), z(z), w(w)
+Quaternion::Quaternion(float xx, float yy, float zz, float ww)
+    : x(xx), y(yy), z(zz), w(ww)
 {
 }
 
@@ -182,12 +182,12 @@ void Quaternion::normalize(Quaternion* dst) const
     dst->w *= n;
 }
 
-void Quaternion::set(float x, float y, float z, float w)
+void Quaternion::set(float xx, float yy, float zz, float ww)
 {
-    this->x = x;
-    this->y = y;
-    this->z = z;
-    this->w = w;
+    this->x = xx;
+    this->y = yy;
+    this->z = zz;
+    this->w = ww;
 }
 
 void Quaternion::set(float* array)
