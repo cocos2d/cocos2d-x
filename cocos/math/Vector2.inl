@@ -35,22 +35,22 @@ inline const Vector2 Vector2::operator-() const
     return result;
 }
 
-inline const Vector2 Vector2::operator*(float x) const
+inline const Vector2 Vector2::operator*(float s) const
 {
     Vector2 result(*this);
-    result.scale(x);
+    result.scale(s);
     return result;
 }
 
-inline Vector2& Vector2::operator*=(float x)
+inline Vector2& Vector2::operator*=(float s)
 {
-    scale(x);
+    scale(s);
     return *this;
 }
 
-inline const Vector2 Vector2::operator/(const float x) const
+inline const Vector2 Vector2::operator/(const float s) const
 {
-    return Vector2(this->x / x, this->y / x);
+    return Vector2(this->x / s, this->y / s);
 }
 
 inline bool Vector2::operator<(const Vector2& v) const

@@ -45,10 +45,10 @@ public:
     /**
      * Constructs a new vector initialized to the specified values.
      *
-     * @param x The x coordinate.
-     * @param y The y coordinate.
+     * @param xx The x coordinate.
+     * @param yy The y coordinate.
      */
-    Vector2(float x, float y);
+    Vector2(float xx, float yy);
 
     /**
      * Constructs a new vector from the values in the specified array.
@@ -286,10 +286,10 @@ public:
     /**
      * Sets the elements of this vector to the specified values.
      *
-     * @param x The new x coordinate.
-     * @param y The new y coordinate.
+     * @param xx The new x coordinate.
+     * @param yy The new y coordinate.
      */
-    void set(float x, float y);
+    void set(float xx, float yy);
 
     /**
      * Sets the elements of this vector from the values in the specified array.
@@ -394,28 +394,28 @@ public:
      * 
      * Note: this does not modify this vector.
      * 
-     * @param x The value to scale by.
+     * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vector2 operator*(float x) const;
+    inline const Vector2 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
      * 
-     * @param x The value to scale by.
+     * @param s The value to scale by.
      * @return This vector, after the scale occurs.
      */
-    inline Vector2& operator*=(float x);
+    inline Vector2& operator*=(float s);
     
     /**
      * Returns the components of this vector divided by the given constant
      *
      * Note: this does not modify this vector.
      *
-     * @param x the constant to divide this vector with
+     * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vector2 operator/(float x) const;
+    inline const Vector2 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -450,7 +450,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void setPoint(float x, float y);
+    void setPoint(float xx, float yy);
     /**
      * @js NA
      */

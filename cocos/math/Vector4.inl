@@ -36,22 +36,22 @@ inline const Vector4 Vector4::operator-() const
     return result;
 }
 
-inline const Vector4 Vector4::operator*(float x) const
+inline const Vector4 Vector4::operator*(float s) const
 {
     Vector4 result(*this);
-    result.scale(x);
+    result.scale(s);
     return result;
 }
 
-inline Vector4& Vector4::operator*=(float x)
+inline Vector4& Vector4::operator*=(float s)
 {
-    scale(x);
+    scale(s);
     return *this;
 }
 
-inline const Vector4 Vector4::operator/(const float x) const
+inline const Vector4 Vector4::operator/(const float s) const
 {
-    return Vector4(this->x / x, this->y / x, this->z / x, this->w / x);
+    return Vector4(this->x / s, this->y / s, this->z / s, this->w / s);
 }
 
 inline bool Vector4::operator<(const Vector4& v) const
