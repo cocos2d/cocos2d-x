@@ -1922,6 +1922,7 @@ void Issue3990::onEnter()
     
     _emitter->setPositionType(ParticleSystem::PositionType::GROUPED);
     _emitter->setTotalParticles(1000);
+    _emitter->setEmissionRate(_emitter->getTotalParticles() / _emitter->getLife());
     
     _emitter->setPosition(VisibleRect::center());
     
