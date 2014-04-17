@@ -121,7 +121,6 @@ protected:
     void handleCustomRenderer(Node* renderer);
     void formarRenderers();
     void addNewLine();
-//    virtual void adaptRenderers() override;
 protected:
     bool _formatTextDirty;
     Vector<RichElement*> _richElements;
