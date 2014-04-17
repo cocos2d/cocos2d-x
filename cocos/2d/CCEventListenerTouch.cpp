@@ -82,6 +82,8 @@ EventListenerTouchOneByOne* EventListenerTouchOneByOne::create()
 
 bool EventListenerTouchOneByOne::checkAvailable()
 {
+    // EventDispatcher will use the return value of 'onTouchBegan' to determine whether to pass following 'move', 'end'
+    // message to 'EventListenerTouchOneByOne' or not. So 'onTouchBegan' needs to be set.
     if (onTouchBegan == nullptr)
     {
         CCASSERT(false, "Invalid EventListenerTouchOneByOne!");
