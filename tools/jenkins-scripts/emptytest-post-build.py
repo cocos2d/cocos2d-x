@@ -19,7 +19,7 @@ J = Jenkins(os.environ['JENKINS_URL'])
 target_url = os.environ['BUILD_URL']
 build_number = int(os.environ['BUILD_NUMBER'])
 data = {}
-access_token = os.environ['GITHUB_ACCESS_TOKEN']
+access_token = os.environ['GITHUB_COMMENT_ACCESS_TOKEN']
 Headers = {"Authorization":"token " + access_token} 
 
 result = J[os.environ['JOB_NAME']].get_build(build_number).get_status()
