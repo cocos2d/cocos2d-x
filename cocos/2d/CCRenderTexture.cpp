@@ -722,6 +722,7 @@ void RenderTexture::end()
     Renderer *renderer = Director::getInstance()->getRenderer();
     renderer->addCommand(&_endCommand);
     renderer->popGroup();
+    renderer->visitRenderQueue(_groupCommand.getRenderQueueID());
     
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
