@@ -146,6 +146,11 @@ def main():
         data = codecs.open(modify_file, encoding='UTF-8').read()
         data = re.sub("director->setDisplayStats\(true\);", "director->setDisplayStats(true); director->getConsole()->listenOnTCP(5678);", data)
         codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
+        #modify tests/cpp-empty-test/proj.android/AndroidManifest.xml to support Console
+        modify_file = 'tests/cpp-empty-test/proj.android/AndroidManifest.xml'
+        data = codecs.open(modify_file, encoding='UTF-8').read()
+        data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
+        codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
         print "Start build android..."
         ret = os.system("python build/android-build.py -n -j10 all")
         # create and save apk
