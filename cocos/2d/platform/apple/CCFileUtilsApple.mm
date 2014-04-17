@@ -324,12 +324,30 @@ FileUtils* FileUtils::getInstance()
 
 std::string FileUtilsApple::getWritablePath() const
 {
-    // save to document folder
+    //Use Docs folder on iOS to allow any user settings or generated content to be backed up.
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    // Save to Documents folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     std::string strRet = [documentsDirectory UTF8String];
     strRet.append("/");
     return strRet;
+#else
+    // Save to Application Support folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *appSupportDirectory = [paths objectAtIndex:0];
+    
+    //Create a subdir using the bundleId, and store our files there. This is not necessary but follows Cocoa best practices.
+    NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *bundleDirectory = [appSupportDirectory stringByAppendingPathComponent:bundleID];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:bundleDirectory]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:bundleDirectory withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    std::string strRet = [bundleDirectory UTF8String];
+    strRet.append("/");
+    return strRet;
+#endif
 }
 
 bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
