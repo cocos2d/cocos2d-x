@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ccUtils.h"
 #include "CCScheduler.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 
 
 #ifdef EMSCRIPTEN
@@ -93,7 +93,7 @@ std::string TextureCache::getDescription() const
     return StringUtils::format("<TextureCache | Number of textures = %d>", static_cast<int>(_textures.size()));
 }
 
-void TextureCache::addImageAsync(const std::string &path, std::function<void(Texture2D*)> callback)
+void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback)
 {
     Texture2D *texture = nullptr;
 

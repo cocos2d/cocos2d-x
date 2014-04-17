@@ -45,8 +45,15 @@ def autotest(type):
 	while True:
 		data = soc.recv(1024)
 		print data
+		if data == 'TestEnd':
+			lastTestInfo = True
+			break
+		global lastTestInfo
+		if len(data) > len('\n') :
+			lastTestInfo = data
 		if not data: break
 	
+	soc.send('director end\r\n')
 	print 'test end and close socket.'
 	soc.close()
 
@@ -154,8 +161,8 @@ def ANDROID_BUILD():
 def main():
 	print 'will build mac project.'
 	suc_build_mac = MAC_BUILD()
-	print 'will build android project.'
-	suc_build_android = ANDROID_BUILD()
+	# print 'will build android project.'
+	# suc_build_android = ANDROID_BUILD()
 	if suc_build_mac:
 		autotest(TYPE_MAC)
 	if suc_build_android:

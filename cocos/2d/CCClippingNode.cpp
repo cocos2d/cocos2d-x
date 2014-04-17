@@ -76,7 +76,11 @@ ClippingNode::ClippingNode()
 
 ClippingNode::~ClippingNode()
 {
-    CC_SAFE_RELEASE(_stencil);
+    if (_stencil)
+    {
+        _stencil->stopAllActions();
+        _stencil->release();
+    }
 }
 
 ClippingNode* ClippingNode::create()
@@ -291,9 +295,9 @@ Node* ClippingNode::getStencil() const
 
 void ClippingNode::setStencil(Node *stencil)
 {
+    CC_SAFE_RETAIN(stencil);
     CC_SAFE_RELEASE(_stencil);
     _stencil = stencil;
-    CC_SAFE_RETAIN(_stencil);
 }
 
 GLfloat ClippingNode::getAlphaThreshold() const

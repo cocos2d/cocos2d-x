@@ -5,7 +5,7 @@ USING_NS_CC_EXT;
 using namespace cocosbuilder;
 
 AnimationsTestLayer::AnimationsTestLayer()
-: mAnimationManager(NULL)
+: mAnimationManager(nullptr)
 {}
 
 AnimationsTestLayer::~AnimationsTestLayer()

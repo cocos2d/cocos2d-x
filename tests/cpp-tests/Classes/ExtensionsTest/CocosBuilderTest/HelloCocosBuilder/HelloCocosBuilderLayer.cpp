@@ -15,8 +15,8 @@ USING_NS_CC_EXT;
 using namespace cocosbuilder;
 
 HelloCocosBuilderLayer::HelloCocosBuilderLayer()
-: mBurstSprite(NULL)
-, mTestTitleLabelTTF(NULL)
+: mBurstSprite(nullptr)
+, mTestTitleLabelTTF(nullptr)
 {}
 
 HelloCocosBuilderLayer::~HelloCocosBuilderLayer()

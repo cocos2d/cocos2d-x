@@ -26,6 +26,11 @@
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
+#if defined(_MSC_VER) || defined(__MINGW32__)
+#include <WS2tcpip.h>
+#else
+#include <sys/socket.h>
+#endif
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
@@ -3863,6 +3868,91 @@ tolua_lerror:
 #endif
 }
 
+static void cloneKeyboardHandler(const EventListenerKeyboard* src,EventListenerKeyboard* dst,  ScriptHandlerMgr::HandlerType type)
+{
+    if (nullptr == src || nullptr == dst)
+        return;
+    
+    LUA_FUNCTION handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)src, type);
+    if (0 != handler)
+    {
+        int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)dst, newscriptHandler, type);
+        switch (type)
+        {
+            case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED:
+                {
+                    dst->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event){
+                        LuaEventKeyboarData listenerData((int)keyCode, event);
+                        BasicScriptData data((void*)dst,(void*)&listenerData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASED:
+                {
+                    dst->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event){
+                        LuaEventKeyboarData listenerData((int)keyCode, event);
+                        BasicScriptData data((void*)dst,(void*)&listenerData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+static int tolua_cocos2dx_EventListenerKeyboard_clone(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    EventListenerKeyboard* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.EventListenerKeyboard", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    self = static_cast<EventListenerKeyboard*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_EventListenerKeyboard_clone'\n", nullptr);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 0)
+    {
+        cocos2d::EventListenerKeyboard* tolua_ret = cocos2d::EventListenerKeyboard::create();
+        if(nullptr == tolua_ret)
+            return 0;
+        
+        cloneKeyboardHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED);
+        cloneKeyboardHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASED);
+        
+        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerKeyboard");
+        
+        return 1;
+    }
+    
+    CCLOG("'clone' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'clone'.",&tolua_err);
+    return 0;
+#endif
+}
+
 static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
@@ -3943,6 +4033,7 @@ static void extendEventListenerKeyboard(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "create",tolua_cocos2dx_EventListenerKeyboard_create);
         tolua_function(tolua_S, "registerScriptHandler", tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler);
+        tolua_function(tolua_S, "clone", tolua_cocos2dx_EventListenerKeyboard_clone);
     }
     lua_pop(tolua_S, 1);
 }
@@ -3979,6 +4070,112 @@ static int tolua_cocos2dx_EventListenerTouchOneByOne_create(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void cloneTouchOneByOneHandler(const EventListenerTouchOneByOne* src,EventListenerTouchOneByOne* dst,  ScriptHandlerMgr::HandlerType type)
+{
+    if (nullptr == src || nullptr == dst)
+        return;
+    
+    LUA_FUNCTION handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)src, type);
+    if (0 != handler)
+    {
+        int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)dst, newscriptHandler, type);
+        switch (type)
+        {
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_BEGAN:
+                {
+                    dst->onTouchBegan = [=](Touch* touch, Event* event){
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)dst,(void*)&touchData);
+                        return LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_MOVED:
+                {
+                    dst->onTouchMoved = [=](Touch* touch, Event* event){
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)dst,(void*)&touchData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                        };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_ENDED:
+                {
+                    dst->onTouchEnded = [=](Touch* touch, Event* event){
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)dst,(void*)&touchData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_CANCELLED:
+                {
+                    dst->onTouchCancelled = [=](Touch* touch, Event* event){
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)dst,(void*)&touchData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+static int tolua_cocos2dx_EventListenerTouchOneByOne_clone(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    EventListenerTouchOneByOne* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.EventListenerTouchOneByOne", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    self = static_cast<EventListenerTouchOneByOne*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_EventListenerTouchOneByOne_clone'\n", nullptr);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 0)
+    {
+        cocos2d::EventListenerTouchOneByOne* tolua_ret = cocos2d::EventListenerTouchOneByOne::create();
+        if(nullptr == tolua_ret)
+            return 0;
+        
+        cloneTouchOneByOneHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCH_BEGAN);
+        cloneTouchOneByOneHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCH_MOVED);
+        cloneTouchOneByOneHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCH_ENDED);
+        cloneTouchOneByOneHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCH_CANCELLED);
+        tolua_ret->setSwallowTouches(self->isSwallowTouches());
+        
+        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerTouchOneByOne");
+        
+        return 1;
+    }
+    
+    CCLOG("'clone' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'clone'.",&tolua_err);
     return 0;
 #endif
 }
@@ -4085,6 +4282,7 @@ static void extendEventListenerTouchOneByOne(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "create", tolua_cocos2dx_EventListenerTouchOneByOne_create);
         tolua_function(tolua_S, "registerScriptHandler", tolua_cocos2dx_EventListenerTouchOneByOne_registerScriptHandler);
+        tolua_function(tolua_S, "clone", tolua_cocos2dx_EventListenerTouchOneByOne_clone);
     }
     lua_pop(tolua_S, 1);
 }
@@ -4121,6 +4319,111 @@ static int tolua_cocos2dx_EventListenerTouchAllAtOnce_create(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void cloneTouchAllAtOnceHandler(const EventListenerTouchAllAtOnce* src,EventListenerTouchAllAtOnce* dst,  ScriptHandlerMgr::HandlerType type)
+{
+    if (nullptr == src || nullptr == dst)
+        return;
+    
+    LUA_FUNCTION handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)src, type);
+    if (0 != handler)
+    {
+        int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)dst, newscriptHandler, type);
+        switch (type)
+        {
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_BEGAN:
+                {
+                    dst->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
+                        LuaEventTouchesData touchesData(touches, event);
+                        BasicScriptData data((void*)dst,(void*)&touchesData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_MOVED:
+                {
+                    dst->onTouchesMoved = [=](const std::vector<Touch*>& touches, Event* event){
+                        LuaEventTouchesData touchesData(touches, event);
+                        BasicScriptData data((void*)dst,(void*)&touchesData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_ENDED:
+                {
+                    dst->onTouchesEnded = [=](const std::vector<Touch*>& touches, Event* event){
+                        LuaEventTouchesData touchesData(touches, event);
+                        BasicScriptData data((void*)dst,(void*)&touchesData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_CANCELLED:
+                {
+                    dst->onTouchesCancelled = [=](const std::vector<Touch*>& touches, Event* event){
+                        LuaEventTouchesData touchesData(touches, event);
+                        BasicScriptData data((void*)dst,(void*)&touchesData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+static int tolua_cocos2dx_EventListenerTouchAllAtOnce_clone(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    EventListenerTouchAllAtOnce* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.EventListenerTouchAllAtOnce", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    self = static_cast<EventListenerTouchAllAtOnce*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_EventListenerTouchAllAtOnce_clone'\n", nullptr);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 0)
+    {
+        cocos2d::EventListenerTouchAllAtOnce* tolua_ret = cocos2d::EventListenerTouchAllAtOnce::create();
+        if(nullptr == tolua_ret)
+            return 0;
+        
+        cloneTouchAllAtOnceHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_BEGAN);
+        cloneTouchAllAtOnceHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_MOVED);
+        cloneTouchAllAtOnceHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_ENDED);
+        cloneTouchAllAtOnceHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_CANCELLED);
+        
+        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerTouchAllAtOnce");
+        
+        return 1;
+    }
+    
+    CCLOG("'clone' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'clone'.",&tolua_err);
     return 0;
 #endif
 }
@@ -4227,6 +4530,7 @@ static void extendEventListenerTouchAllAtOnce(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "create", tolua_cocos2dx_EventListenerTouchAllAtOnce_create);
         tolua_function(tolua_S, "registerScriptHandler", tolua_cocos2dx_EventListenerTouchAllAtOnce_registerScriptHandler);
+        tolua_function(tolua_S, "clone", tolua_cocos2dx_EventListenerTouchAllAtOnce_clone);
     }
     lua_pop(tolua_S, 1);
 }
@@ -4266,6 +4570,112 @@ tolua_lerror:
     return 0;
 #endif
 }
+
+static void cloneMouseHandler(const EventListenerMouse* src,EventListenerMouse* dst,  ScriptHandlerMgr::HandlerType type)
+{
+    if (nullptr == src || nullptr == dst)
+        return;
+    
+    LUA_FUNCTION handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)src, type);
+    if (0 != handler)
+    {
+        int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)dst, newscriptHandler, type);
+        switch (type)
+        {
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_DOWN:
+                {
+                    dst->onMouseDown = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)dst,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_UP:
+                {
+                    dst->onMouseUp = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)dst,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_MOVE:
+                {
+                    dst->onMouseMove = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)dst,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_SCROLL:
+                {
+                    dst->onMouseScroll = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)dst,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+static int tolua_cocos2dx_EventListenerMouse_clone(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    EventListenerMouse* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.EventListenerMouse", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    self = static_cast<EventListenerMouse*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_EventListenerMouse_clone'\n", nullptr);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 0)
+    {
+        cocos2d::EventListenerMouse* tolua_ret = cocos2d::EventListenerMouse::create();
+        if(nullptr == tolua_ret)
+            return 0;
+        
+        cloneMouseHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_MOUSE_DOWN);
+        cloneMouseHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_MOUSE_MOVE);
+        cloneMouseHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_MOUSE_SCROLL);
+        cloneMouseHandler(self, tolua_ret, ScriptHandlerMgr::HandlerType::EVENT_MOUSE_UP);
+        
+        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerMouse");
+        
+        return 1;
+    }
+    
+    CCLOG("'clone' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'clone'.",&tolua_err);
+    return 0;
+#endif
+}
+
 
 static int tolua_cocos2dx_EventListenerMouse_registerScriptHandler(lua_State* tolua_S)
 {
@@ -4370,6 +4780,7 @@ static void extendEventListenerMouse(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "create", tolua_cocos2dx_EventListenerMouse_create);
         tolua_function(tolua_S, "registerScriptHandler", tolua_cocos2dx_EventListenerMouse_registerScriptHandler);
+        tolua_function(tolua_S, "clone", tolua_cocos2dx_EventListenerMouse_clone);
     }
     lua_pop(tolua_S, 1);
 }
@@ -4646,41 +5057,100 @@ static int lua_cocos2dx_Label_createWithTTF01(lua_State* L)
     if (nullptr == L)
         return 0;
     
-    tolua_Error tolua_err;
+    int argc = 0;
     
-    if (!tolua_isusertable(L, 1, "cc.Label", 0, &tolua_err) ||
-        !tolua_isstring(L, 2, 0, &tolua_err) ||
-        !tolua_isstring(L, 3, 0, &tolua_err) ||
-        !tolua_isnumber(L, 4, 0, &tolua_err) ||
-        !tolua_isnumber(L, 5, 1, &tolua_err) ||
-        !tolua_isnumber(L, 6, 1, &tolua_err) ||
-        !tolua_isnumber(L, 7, 1, &tolua_err) ||
-        !tolua_isstring(L, 8, 1, &tolua_err) ||
-        !tolua_isboolean(L, 9, 1, &tolua_err)
-        )
-        goto tolua_lerror;
-    else
+    tolua_Error tolua_err;
+    if (!tolua_isusertable(L,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (argc >= 3 && argc <= 6)
     {
-        CCLOG("The createWithTTF(text, ...) was deprecated,please use create createWithTTF(ttfConfig, ...) instead");
-        std::string text = tolua_tostring(L, 2, "");
-        std::string fontFilePath = tolua_tostring(L, 3, "");
-        int fontSize = (int)tolua_tonumber(L, 4, 0);
-        int lineSize = (int)tolua_tonumber(L, 5, 0);
-        TextHAlignment alignment = static_cast<TextHAlignment>((int)tolua_tonumber(L, 6, 1));
-        GlyphCollection glyphs   = static_cast<GlyphCollection>((int)tolua_tonumber(L, 7, 1));
-        const char* customGlyphs = tolua_tostring(L, 8, "");
-        bool useDistanceField = tolua_toboolean(L, 9, false);
-        
-        TTFConfig ttfConfig(fontFilePath.c_str(), fontSize, glyphs, customGlyphs, useDistanceField);
-        
-        cocos2d::Label* ret = cocos2d::Label::createWithTTF(ttfConfig, text,alignment, lineSize);
-        int ID = ret ? (int)(ret->_ID) : -1;
-        int* luaID = ret ? &(ret->_luaID) : nullptr;
-        toluafix_pushusertype_ccobject(L,ID, luaID, (void*)ret,"cc.Label");
-        return 1;
+        if (!tolua_isstring(L, 2, 0, &tolua_err)  ||
+            !tolua_isstring(L, 3, 0, &tolua_err)  ||
+            !tolua_isnumber(L, 4, 0, &tolua_err)  ||
+            !tolua_istable(L, 5, 1, &tolua_err)   ||
+            !tolua_isnumber(L, 6, 1, &tolua_err)  ||
+            !tolua_isnumber(L, 7, 1, &tolua_err) )
+        {
+            goto tolua_lerror;
+        }
+        else
+        {
+            std::string text = tolua_tostring(L, 2, "");
+            std::string fontFile = tolua_tostring(L, 3, "");
+            float fontSize   = tolua_tonumber(L, 4, 0);
+            cocos2d::Size dimensions = cocos2d::Size::ZERO;
+            if (lua_istable(L, 5))
+            {
+                luaval_to_size(L, 5, &dimensions);
+            }
+            TextHAlignment hAlignment = static_cast<TextHAlignment>((int)tolua_tonumber(L, 6, 0));
+            TextVAlignment vAlignment = static_cast<TextVAlignment>((int)tolua_tonumber(L, 7, 0));
+            
+            cocos2d::Label* ret = cocos2d::Label::createWithTTF(text, fontFile, fontSize, dimensions, hAlignment, vAlignment);
+            
+            int ID = ret ? (int)(ret->_ID) : -1;
+            int* luaID = ret ? &(ret->_luaID) : nullptr;
+            toluafix_pushusertype_ccobject(L,ID, luaID, (void*)ret,"cc.Label");
+            return 1;
+        }
     }
+    
 tolua_lerror:
     return lua_cocos2dx_Label_createWithTTF00(L);
+}
+
+extern int lua_cocos2dx_Label_create(lua_State* tolua_S);
+
+static int lua_cocos2dx_Label_create_deprecated(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isusertable(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc >= 3 && argc <= 6)
+    {
+        if (!tolua_isstring(tolua_S, 2, 0, &tolua_err)  ||
+            !tolua_isstring(tolua_S, 3, 0, &tolua_err)  ||
+            !tolua_isnumber(tolua_S, 4, 0, &tolua_err)  ||
+            !tolua_istable(tolua_S, 5, 1, &tolua_err)   ||
+            !tolua_isnumber(tolua_S, 6, 1, &tolua_err)  ||
+            !tolua_isnumber(tolua_S, 7, 1, &tolua_err) )
+        {
+            goto tolua_lerror;
+        }
+        else
+        {
+            CCLOG("The create(text, ...) was deprecated,please use create createWithTTF(text, ...) instead");
+            std::string text = tolua_tocppstring(tolua_S, 2, "");
+            std::string fontFile = tolua_tocppstring(tolua_S, 3, "");
+            float fontSize   = tolua_tonumber(tolua_S, 4, 0);
+            cocos2d::Size dimensions = cocos2d::Size::ZERO;
+            if (lua_istable(tolua_S, 5))
+            {
+                luaval_to_size(tolua_S, 5, &dimensions);
+            }
+            TextHAlignment hAlignment = static_cast<TextHAlignment>((int)tolua_tonumber(tolua_S, 6, 0));
+            TextVAlignment vAlignment = static_cast<TextVAlignment>((int)tolua_tonumber(tolua_S, 7, 0));
+            
+            cocos2d::Label* ret = cocos2d::Label::create(text, fontFile, fontSize, dimensions, hAlignment, vAlignment);
+            
+            int ID = ret ? (int)(ret->_ID) : -1;
+            int* luaID = ret ? &(ret->_luaID) : nullptr;
+            toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"cc.Label");
+            return 1;
+        }
+    }
+    
+tolua_lerror:
+    return lua_cocos2dx_Label_create(tolua_S);
 }
 
 static void extendLabel(lua_State* tolua_S)
@@ -4692,6 +5162,7 @@ static void extendLabel(lua_State* tolua_S)
         tolua_function(tolua_S, "createWithTTF", lua_cocos2dx_Label_createWithTTF00);
         tolua_function(tolua_S, "setTTFConfig",  lua_cocos2dx_Label_setTTFConfig);
         tolua_function(tolua_S, "createWithTTF", lua_cocos2dx_Label_createWithTTF01);
+        tolua_function(tolua_S, "create", lua_cocos2dx_Label_create_deprecated);
     }
     lua_pop(tolua_S, 1);
 }
@@ -4751,6 +5222,172 @@ static void extendTMXTiledMap(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+static int lua_cocos2dx_Console_send(lua_State* tolua_S)
+{
+    cocos2d::Console* cobj = nullptr;
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_send'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    
+    if (argc == 2)
+    {
+        int arg0;
+        ok &= luaval_to_int32(tolua_S, 2,&arg0);
+        std::string arg1;
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        
+        send(arg0, arg1.c_str(), arg1.length(), 0);
+        return 0;
+    }
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "send",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_send'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static int lua_cocos2dx_Console_wait(lua_State* tolua_S)
+{
+    cocos2d::Console* cobj = nullptr;
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_wait'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    
+    if (argc == 1)
+    {
+        int arg0;
+        ok &= luaval_to_int32(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        
+        std::chrono::milliseconds dura( arg0 * 1000 );
+        std::this_thread::sleep_for( dura );
+        return 0;
+    }
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "wait",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_wait'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
+{
+    cocos2d::Console* cobj = nullptr;
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_addCommand'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (ok && argc == 2)
+    {
+        ValueMap arg0;
+        ok &= luaval_to_ccvaluemap(tolua_S, 2, &arg0);
+        //
+        std::string name = std::string(arg0["name"].asString());
+        std::string help = std::string(arg0["help"].asString());
+        
+        ok &= toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err);
+        LUA_FUNCTION handler = 0;
+        if (ok) {
+            handler = (  toluafix_ref_function(tolua_S,3,0));
+            ScriptHandlerMgr::getInstance()->addCustomHandler((void*)cobj, handler);
+            
+            struct Console::Command outValue = {
+                name,
+                help,
+                [=](int fd, const std::string& args)
+                {
+                    //lua-callback, the third param;
+                    tolua_pushnumber(tolua_S, fd);
+                    tolua_pushstring(tolua_S, args.c_str());
+                    
+                    LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
+                }
+            };
+            cobj->addCommand(outValue);
+        }
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "addCommand",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_addCommand'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendConsole(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.Console");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S,"wait", lua_cocos2dx_Console_wait);
+        tolua_function(tolua_S,"send", lua_cocos2dx_Console_send);
+        tolua_function(tolua_S,"addCommand", lua_cocos2dx_Console_addCommand);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -4798,5 +5435,6 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendParticleBatchNode(tolua_S);
     extendLabel(tolua_S);
     extendTMXTiledMap(tolua_S);
+    extendConsole(tolua_S);
     return 0;
 }

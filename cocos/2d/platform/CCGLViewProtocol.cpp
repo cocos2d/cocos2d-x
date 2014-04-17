@@ -26,9 +26,7 @@ THE SOFTWARE.
 #include "CCGLViewProtocol.h"
 #include "CCTouch.h"
 #include "CCDirector.h"
-#include "CCSet.h"
 #include "CCEventDispatcher.h"
-
 
 NS_CC_BEGIN
 
@@ -250,7 +248,6 @@ void GLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], flo
         y = ys[i];
 
         auto iter = g_touchIdReorderMap.find(id);
-        unusedIndex = 0;
 
         // it is a new touch
         if (iter == g_touchIdReorderMap.end())
@@ -370,7 +367,7 @@ void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode,
         } 
         else
         {
-            CCLOG("Ending touches with id: %ld error", id);
+            CCLOG("Ending touches with id: %ld error", static_cast<long>(id));
             return;
         } 
 

@@ -338,14 +338,14 @@ local function runNodeChildrenTest()
         local s = cc.Director:getInstance():getWinSize()
             
         --Title
-        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
+        local pLabel = cc.Label:createWithTTF(GetTitle(), s_arialPath, 40)
         pNewscene:addChild(pLabel, 1)
         pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
         pLabel:setColor(cc.c3b(255,255,40))     
         
         if (nil ~= GetSubTitle()) and ("" ~= GetSubTitle()) then
-            local pSubLabel = cc.Label:create(GetSubTitle(), s_thonburiPath, 16)
+            local pSubLabel = cc.Label:createWithTTF(GetSubTitle(), s_thonburiPath, 16)
             pNewscene:addChild(pSubLabel, 1)
             pSubLabel:setAnchorPoint(cc.p(0.5, 0.5))
             pSubLabel:setPosition(cc.p(s.width/2, s.height-80))
@@ -372,7 +372,7 @@ local function runNodeChildrenTest()
         pNewscene:addChild(pMenuAddOrSub,1)
         
         --InfoLayer
-        local pInfoLabel = cc.Label:create("0 nodes", s_markerFeltFontPath, 30)
+        local pInfoLabel = cc.Label:createWithTTF("0 nodes", s_markerFeltFontPath, 30)
         pInfoLabel:setColor(cc.c3b(0,200,20))
         pInfoLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pInfoLabel:setPosition(cc.p(s.width/2, s.height/2-15))
@@ -828,7 +828,7 @@ local function runParticleTest()
         pMenuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
         pNewScene:addChild(pMenuAddOrSub,1)
         
-        local pInfoLabel = cc.Label:create("0 nodes", s_markerFeltFontPath, 30)
+        local pInfoLabel = cc.Label:createWithTTF("0 nodes", s_markerFeltFontPath, 30)
         pInfoLabel:setColor(cc.c3b(0,200,20))
         pInfoLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pInfoLabel:setPosition(cc.p(s.width/2, s.height - 90))
@@ -867,7 +867,7 @@ local function runParticleTest()
         pSubMenu:setPosition(cc.p(s.width/2, 80))
         pNewScene:addChild(pSubMenu, 2)
         
-        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
+        local pLabel = cc.Label:createWithTTF(GetTitle(), s_arialPath, 40)
         pNewScene:addChild(pLabel, 1)
         pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
@@ -1274,7 +1274,7 @@ local function runSpriteTest()
         pMenuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
         pNewScene:addChild(pMenuAddOrSub,1)
         
-        local pInfoLabel = cc.Label:create("0 nodes", s_markerFeltFontPath, 30)
+        local pInfoLabel = cc.Label:createWithTTF("0 nodes", s_markerFeltFontPath, 30)
         pInfoLabel:setColor(cc.c3b(0,200,20))
         pInfoLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pInfoLabel:setPosition(cc.p(s.width/2, s.height - 90))
@@ -1313,7 +1313,7 @@ local function runSpriteTest()
         pSubMenu:setPosition(cc.p(s.width/2, 80))
         pNewScene:addChild(pSubMenu, 2)
         
-        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
+        local pLabel = cc.Label:createWithTTF(GetTitle(), s_arialPath, 40)
         pNewScene:addChild(pLabel, 1)
         pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
@@ -1438,14 +1438,14 @@ local function runTextureTest()
         end
         
         --Title
-        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
+        local pLabel = cc.Label:createWithTTF(GetTitle(), s_arialPath, 40)
         pLayer:addChild(pLabel, 1)
         pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
         pLabel:setColor(cc.c3b(255,255,40))
 
         --Subtitle
-        local pSubLabel = cc.Label:create(GetSubtitle(), s_thonburiPath, 16)
+        local pSubLabel = cc.Label:createWithTTF(GetSubtitle(), s_thonburiPath, 16)
         pLayer:addChild(pSubLabel, 1)
         pSubLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pSubLabel:setPosition(cc.p(s.width/2, s.height-80))
@@ -1605,7 +1605,7 @@ local function runTouchesTest()
         pLayer:addChild(pTouchesTestMenu)
         
         --Title
-        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
+        local pLabel = cc.Label:createWithTTF(GetTitle(), s_arialPath, 40)
         pLayer:addChild(pLabel, 1)
         pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
@@ -1697,13 +1697,13 @@ local function runFuncRelateWithTable()
     end
 
     --Title
-    local title = cc.Label:create(GetTitle(), s_arialPath, 28)
+    local title = cc.Label:createWithTTF(GetTitle(), s_arialPath, 28)
     layer:addChild(title, 1)
     title:setAnchorPoint(cc.p(0.5, 0.5))
     title:setPosition(cc.p(s.width/2, s.height-32))
     title:setColor(cc.c3b(255,255,40)) 
     --Subtitle
-    local subTitle = cc.Label:create(GetSubtitle(), s_thonburiPath, 16)
+    local subTitle = cc.Label:createWithTTF(GetSubtitle(), s_thonburiPath, 16)
     layer:addChild(subTitle, 1)
     subTitle:setAnchorPoint(cc.p(0.5, 0.5))
     subTitle:setPosition(cc.p(s.width/2, s.height-80))
@@ -1742,7 +1742,7 @@ local function runFuncRelateWithTable()
     layer:addChild(menuAddOrSub,1)
 
     --num
-    local numLabel = cc.Label:create("10000", s_markerFeltFontPath, 30)
+    local numLabel = cc.Label:createWithTTF("10000", s_markerFeltFontPath, 30)
     numLabel:setColor(cc.c3b(0,200,20))
     numLabel:setAnchorPoint(cc.p(0.5, 0.5))
     numLabel:setPosition(cc.p(s.width/2, s.height/2-15))

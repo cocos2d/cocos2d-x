@@ -131,7 +131,7 @@ public:
     
 protected:
     LuaStack(void)
-    : _state(NULL)
+    : _state(nullptr)
     , _callFromLua(0)
     {
     }

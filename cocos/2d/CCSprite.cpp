@@ -24,14 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
+#include "CCSprite.h"
 #include "CCSpriteBatchNode.h"
-#include <string.h>
-#include <algorithm>
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
 #include "ccConfig.h"
-#include "CCSprite.h"
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
 #include "CCTextureCache.h"
@@ -52,9 +49,10 @@ THE SOFTWARE.
 // external
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
+#include "deprecated/CCString.h"
 
-
-using namespace std;
+#include <string.h>
+#include <algorithm>
 
 NS_CC_BEGIN
 
@@ -591,7 +589,7 @@ void Sprite::updateTransform(void)
 void Sprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     // Don't do calculate the culling if the transform was not updated
-    _insideBounds = transformUpdated ? isInsideBounds() : _insideBounds;
+    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
     if(_insideBounds)
     {
@@ -622,35 +620,6 @@ void Sprite::drawDebugData()
     kmGLLoadMatrix(&oldModelView);
 }
 #endif //CC_SPRITE_DEBUG_DRAW
-
-// Culling function from cocos2d-iphone CCSprite.m file
-bool Sprite::isInsideBounds() const
-{
-    // half size of the screen
-    Size screen_half = Director::getInstance()->getWinSize();
-    screen_half.width /= 2;
-    screen_half.height /= 2;
-
-    float hcsx = _contentSize.width / 2;
-    float hcsy = _contentSize.height / 2;
-
-    // convert to world coordinates
-    float x = hcsx * _modelViewTransform.mat[0] + hcsy * _modelViewTransform.mat[4] + _modelViewTransform.mat[12];
-    float y = hcsx * _modelViewTransform.mat[1] + hcsy * _modelViewTransform.mat[5] + _modelViewTransform.mat[13];
-
-    // center of screen is (0,0)
-    x -= screen_half.width;
-    y -= screen_half.height;
-
-    // convert content size to world coordinates
-    float wchw = hcsx * std::max(fabsf(_modelViewTransform.mat[0] + _modelViewTransform.mat[4]), fabsf(_modelViewTransform.mat[0] - _modelViewTransform.mat[4]));
-    float wchh = hcsy * std::max(fabsf(_modelViewTransform.mat[1] + _modelViewTransform.mat[5]), fabsf(_modelViewTransform.mat[1] - _modelViewTransform.mat[5]));
-
-    // compare if it in the positive quadrant of the screen
-    float tmpx = (fabsf(x)-wchw);
-    float tmpy = (fabsf(y)-wchh);
-    return (tmpx < screen_half.width && tmpy < screen_half.height);
-}
 
 // Node overrides
 void Sprite::addChild(Node *child, int zOrder, int tag)

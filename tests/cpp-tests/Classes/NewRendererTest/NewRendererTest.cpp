@@ -35,6 +35,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(NewSpriteTest),
     CL(NewSpriteBatchTest),
+    CL(GroupCommandTest),
     CL(NewClippingNodeTest),
     CL(NewDrawNodeTest),
     CL(NewCullingTest),
@@ -220,6 +221,56 @@ std::string NewSpriteTest::title() const
 std::string NewSpriteTest::subtitle() const
 {
     return "SpriteTest";
+}
+
+class SpriteInGroupCommand : public Sprite
+{
+protected:
+    GroupCommand _spriteWrapperCommand;
+public:
+    static SpriteInGroupCommand* create(const std::string& filename);
+    
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+};
+
+SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
+{
+    SpriteInGroupCommand* sprite = new SpriteInGroupCommand();
+    sprite->initWithFile(filename);
+    sprite->autorelease();
+    return sprite;
+}
+
+void SpriteInGroupCommand::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+{
+    CCASSERT(renderer, "Render is null");
+    _spriteWrapperCommand.init(_globalZOrder);
+    renderer->addCommand(&_spriteWrapperCommand);
+    renderer->pushGroup(_spriteWrapperCommand.getRenderQueueID());
+    Sprite::draw(renderer, transform, transformUpdated);
+    renderer->popGroup();
+}
+
+GroupCommandTest::GroupCommandTest()
+{
+    auto sprite = SpriteInGroupCommand::create("Images/grossini.png");
+    Size winSize = Director::getInstance()->getWinSize();
+    sprite->setPosition(winSize.width/2,winSize.height/2);
+    addChild(sprite);
+}
+
+GroupCommandTest::~GroupCommandTest()
+{
+}
+
+std::string GroupCommandTest::title() const
+{
+    return "Renderer";
+}
+
+std::string GroupCommandTest::subtitle() const
+{
+    return "GroupCommandTest: You should see a sprite";
 }
 
 //-------- New Sprite Batch Test
@@ -421,54 +472,47 @@ std::string NewDrawNodeTest::subtitle() const
 
 NewCullingTest::NewCullingTest()
 {
-    auto s = Director::getInstance()->getWinSize();
+    Size size = Director::getInstance()->getWinSize();
+    auto sprite = Sprite::create("Images/btn-about-normal-vertical.png");
+    sprite->setRotation(5);
+    sprite->setPosition(Point(size.width/2,size.height/3));
+    sprite->setScale(2);
+    addChild(sprite);
     
-    std::vector<std::string> images;
-    images.push_back("Images/grossini_dance_01.png");
-    images.push_back("Images/grossini_dance_02.png");
-    images.push_back("Images/grossini_dance_03.png");
-    images.push_back("Images/grossini_dance_04.png");
-    images.push_back("Images/grossini_dance_05.png");
-    images.push_back("Images/grossini_dance_06.png");
-    images.push_back("Images/grossini_dance_07.png");
-    images.push_back("Images/grossini_dance_08.png");
-    images.push_back("Images/grossini_dance_09.png");
-    images.push_back("Images/grossini_dance_10.png");
-    images.push_back("Images/grossini_dance_11.png");
-    images.push_back("Images/grossini_dance_12.png");
-    images.push_back("Images/grossini_dance_13.png");
-    images.push_back("Images/grossini_dance_14.png");
-    images.push_back("Images/grossini.png");
-    auto parent = Node::create();
-    parent->setPosition(s.width/2, s.height/2);
-    addChild(parent);
-    for(int index = 0; index < 500; ++index)
-    {
-        auto parent2 = Node::create();
-        parent2->setPosition(0,0);
-        parent->addChild(parent2);
-        parent2->setPosition(-50,0);
-        parent2->runAction(RepeatForever::create((JumpBy::create(10, Point(0,0), 400, 1))));
-        Sprite* sprite = Sprite::create(images[index % images.size()].c_str());
-        sprite->setPosition(Point(0,0));
-        //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
-        sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
-        parent2->addChild(sprite);
-    }
+    auto sprite2 = Sprite::create("Images/btn-about-normal-vertical.png");
+    sprite2->setRotation(-85);
+    sprite2->setPosition(Point(size.width/2,size.height * 2/3));
+    sprite2->setScale(2);
+    addChild(sprite2);
     
-    for(int index = 0; index < 500; ++index)
-    {
-        auto parent2 = Node::create();
-        parent->addChild(parent2);
-        parent2->setPosition(50,0);
-        parent2->runAction(RepeatForever::create((JumpBy::create(7, Point(0,0), 400, 1))));
-        Sprite* sprite = Sprite::create(images[index % images.size()].c_str());
-        sprite->setPosition(Point(0,0));
-        //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
-        sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
-        parent2->addChild(sprite);
-    }
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(NewCullingTest::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(NewCullingTest::onTouchMoved, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+}
 
+bool NewCullingTest::onTouchBegan(Touch* touch, Event  *event)
+{
+    auto pos = touch->getLocation();
+    _lastPos = pos;
+    return true;
+}
+
+void NewCullingTest::onTouchMoved(Touch* touch, Event  *event)
+{    
+    auto pos = touch->getLocation();
+    
+    auto offset = pos - _lastPos;
+    
+    auto layerPos = getPosition();
+    auto newPos = layerPos + offset;
+    
+    setPosition(newPos);
+    _lastPos = pos;
 }
 
 NewCullingTest::~NewCullingTest()
@@ -483,7 +527,7 @@ std::string NewCullingTest::title() const
 
 std::string NewCullingTest::subtitle() const
 {
-    return "Culling";
+    return "Drag the layer to test the result of culling";
 }
 
 VBOFullTest::VBOFullTest()

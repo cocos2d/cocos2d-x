@@ -60,6 +60,14 @@ NDK_ROOT = 'NDK_ROOT'
 ANDROID_SDK_ROOT = 'ANDROID_SDK_ROOT'
 ANT_ROOT = 'ANT_ROOT'
 
+def _check_python_version():
+    major_ver = sys.version_info[0]
+    if major_ver > 2:
+        print ("The python version is %d.%d. But python 2.x is required. (Version 2.7 is well tested)\n"
+               "Download it here: https://www.python.org/" % (major_ver, sys.version_info[1]))
+        return False
+
+    return True
 
 class SetEnvVar(object):
 
@@ -69,7 +77,8 @@ class SetEnvVar(object):
     RESULT_UPDATED = 1
     RESULT_ADDED = 2
 
-    UNIX_CHECK_FILES = [ '.bash_profile', '.bash_login', '.profile' ]
+    MAC_CHECK_FILES = [ '.bash_profile', '.bash_login', '.profile' ]
+    LINUX_CHECK_FILES = [ '.bashrc' ]
     RE_FORMAT = r'^export[ \t]+%s=(.+)'
 
     def __init__(self):
@@ -84,20 +93,33 @@ class SetEnvVar(object):
     def _isLinux(self):
         return sys.platform.startswith('linux')
 
+    def _is_mac(self):
+        return sys.platform == 'darwin'
+
     def _get_filepath_for_setup(self):
 
+        file_list = None
+        if self._isLinux():
+            file_list = SetEnvVar.LINUX_CHECK_FILES
+        elif self._is_mac():
+            file_list = SetEnvVar.MAC_CHECK_FILES
+
+        file_to_write = None
+        if file_list is None:
+            return ''
+
         home = os.path.expanduser('~')
-        if os.path.exists(os.path.join(home, '.bash_profile')):
-            file_to_write = os.path.join(home, '.bash_profile')
-        elif os.path.exists(os.path.join(home, '.bash_login')):
-            file_to_write = os.path.join(home, '.bash_login')
-        elif os.path.exists(os.path.join(home, '.profile')):
-            file_to_write = os.path.join(home, '.profile')
-        else:
+        for file_name in file_list:
+            file_path = os.path.join(home, file_name)
+            if os.path.exists(file_path):
+                file_to_write = file_path
+                break
+
+        if file_to_write is None:
             self.need_backup = False
-            file_to_write = os.path.join(home, '.bash_profile')
-            file = open(file_to_write, 'w')
-            file.close()
+            file_to_write = os.path.join(home, file_list[0])
+            file_obj = open(file_to_write, 'w')
+            file_obj.close()
 
         return file_to_write
 
@@ -154,7 +176,7 @@ class SetEnvVar(object):
 
     def _set_environment_variable(self, key, value):
 
-        print "  -> Add %s environment variable..." % key
+        print("  -> Add %s environment variable..." % key)
         ret = False
         if self._isWindows():
             ret = self._set_environment_variable_win32(key, value)
@@ -162,9 +184,9 @@ class SetEnvVar(object):
             ret = self._set_environment_variable_unix(key, value)
 
         if ret:
-            print "    ->Added %s=%s\n" % (key, value)
+            print("    ->Added %s=%s\n" % (key, value))
         else:
-            print "    ->Add failed\n"
+            print("    ->Add failed\n")
 
         return ret
 
@@ -185,18 +207,25 @@ class SetEnvVar(object):
         return ret
 
     def _find_environment_variable(self, var):
-        print "  ->Find environment variable %s..." % var
+        print("  ->Find environment variable %s..." % var)
         ret = None
         try:
             ret = os.environ[var]
         except Exception:
             if not self._isWindows():
-                home = os.path.expanduser('~')
-                for name in SetEnvVar.UNIX_CHECK_FILES:
-                    path = os.path.join(home, name)
-                    ret = self._search_unix_variable(var, path)
-                    if ret is not None:
-                        break
+                file_list = None
+                if self._isLinux():
+                    file_list = SetEnvVar.LINUX_CHECK_FILES
+                elif self._is_mac():
+                    file_list = SetEnvVar.MAC_CHECK_FILES
+
+                if file_list is not None:
+                    home = os.path.expanduser('~')
+                    for name in file_list:
+                        path = os.path.join(home, name)
+                        ret = self._search_unix_variable(var, path)
+                        if ret is not None:
+                            break
             else:
                 import _winreg
                 try:
@@ -206,7 +235,7 @@ class SetEnvVar(object):
                                 0,
                                 _winreg.KEY_READ)
 
-                    ret = _winreg.QueryValueEx(env, var)
+                    ret = _winreg.QueryValueEx(env, var)[0]
                     _winreg.CloseKey(env)
                 except Exception:
                     if env:
@@ -214,9 +243,9 @@ class SetEnvVar(object):
                     ret = None
 
         if ret is None:
-            print "    ->%s not found\n" % var
+            print("    ->%s not found\n" % var)
         else:
-            print "    ->%s is found : %s\n" % (var, ret)
+            print("    ->%s is found : %s\n" % (var, ret))
 
         return ret
 
@@ -299,7 +328,7 @@ class SetEnvVar(object):
             ret = False
 
         if not ret:
-            print '    ->Error: "%s" is not a valid path of %s. Ignoring it.' % (value, var_name)
+            print('    ->Error: "%s" is not a valid path of %s. Ignoring it.' % (value, var_name))
 
         return ret
 
@@ -363,9 +392,9 @@ class SetEnvVar(object):
                 _winreg.FlushKey(env)
             _winreg.CloseKey(env)
 
-            print '  ->Remove directory \"%s\" from PATH!\n' % remove_dir
+            print('  ->Remove directory \"%s\" from PATH!\n' % remove_dir)
         except Exception:
-            print '  ->Remove directory \"%s\" from PATH failed!\n' % remove_dir
+            print('  ->Remove directory \"%s\" from PATH failed!\n' % remove_dir)
 
     def set_windows_path(self, add_dir):
         ret = False
@@ -404,13 +433,13 @@ class SetEnvVar(object):
                 _winreg.CloseKey(env)
 
         if ret:
-            print "  ->Add directory \"%s\" into PATH succeed!\n" % add_dir
+            print("  ->Add directory \"%s\" into PATH succeed!\n" % add_dir)
         else:
-            print "  ->Add directory \"%s\" into PATH failed!\n" % add_dir
+            print("  ->Add directory \"%s\" into PATH failed!\n" % add_dir)
 
 
     def set_console_root(self):
-        print "->Check environment variable %s" % COCOS_CONSOLE_ROOT
+        print("->Check environment variable %s" % COCOS_CONSOLE_ROOT)
         cocos_consle_root = os.path.join(self.current_absolute_path, 'tools', 'cocos2d-console', 'bin')
         old_dir = self._find_environment_variable(COCOS_CONSOLE_ROOT)
         if old_dir is None:
@@ -420,6 +449,10 @@ class SetEnvVar(object):
 
             self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root)
         else:
+            if old_dir == cocos_consle_root:
+                # is same with before, nothing to do
+                return
+
             # update the environment variable
             if self._isWindows(): 
                 self.remove_dir_from_win_path(old_dir)
@@ -434,9 +467,13 @@ class SetEnvVar(object):
         patten = re.compile(str_re)
         replace_str = 'export %s=%s\n' % (var_name, value)
 
-        print "  ->Update variable %s in files %s" % (var_name, str(SetEnvVar.UNIX_CHECK_FILES))
+        file_list = SetEnvVar.MAC_CHECK_FILES
+        if self._isLinux():
+            file_list = SetEnvVar.LINUX_CHECK_FILES
+
+        print("  ->Update variable %s in files %s" % (var_name, str(file_list)))
         variable_updated = False
-        for file_name in SetEnvVar.UNIX_CHECK_FILES:
+        for file_name in file_list:
             path = os.path.join(home, file_name)
             if os.path.isfile(path):
                 lines = []
@@ -459,11 +496,11 @@ class SetEnvVar(object):
                     file_obj = open(path, 'w')
                     file_obj.writelines(lines)
                     file_obj.close()
-                    print "    ->File %s updated!" % path
+                    print("    ->File %s updated!" % path)
 
         # nothing updated, should add variable
         if not variable_updated:
-            print "\n  ->No files updated, add variable %s instead!" % var_name
+            print("\n  ->No files updated, add variable %s instead!" % var_name)
             ret = self._set_environment_variable(var_name, value)
         else:
             ret = True
@@ -474,18 +511,39 @@ class SetEnvVar(object):
     def _force_update_env(self, var_name, value):
         ret = False
         if self._isWindows():
-            print "  ->Force update environment variable %s" % var_name
+            print("  ->Force update environment variable %s" % var_name)
             ret = self._set_environment_variable_win32(var_name, value)
             if not ret:
-                print "    ->Failed!"
+                print("    ->Failed!")
             else:
-                print "    ->Succeed : %s=%s" % (var_name, value)
+                print("    ->Succeed : %s=%s" % (var_name, value))
         else:
             ret = self._force_update_unix_env(var_name, value)
         return ret
 
+    def _get_ant_path(self):
+        print("  ->Find command ant in system...")
+        ret = None
+        if not self._isWindows():
+            import commands
+            state, result = commands.getstatusoutput("which ant")
+            if state == 0:
+                ret = os.path.dirname(result)
+
+        if ret is not None:
+            print("    ->Path \"%s\" was found\n" % ret)
+        else:
+            print("    ->Command ant not found\n")
+        return ret
+
+    def _find_value_from_sys(self, var_name):
+        if var_name == ANT_ROOT:
+            return self._get_ant_path()
+        else:
+            return None
+
     def set_variable(self, var_name, value):
-        print "->Check environment variable %s" % var_name
+        print("->Check environment variable %s" % var_name)
         find_value = self._find_environment_variable(var_name)
         var_found = (find_value is not None)
         action_none = 0
@@ -501,6 +559,10 @@ class SetEnvVar(object):
                 # do nothing
                 need_action = action_none
         else:
+            if not value:
+                # find the command path in system
+                value = self._find_value_from_sys(var_name)
+
             if not value:
                 value = self._get_input_value(var_name)
 
@@ -533,7 +595,7 @@ class SetEnvVar(object):
 
     def set_environment_variables(self, ndk_root, android_sdk_root, ant_root):
 
-        print '\nSetting up cocos2d-x...'
+        print('\nSetting up cocos2d-x...')
 
         self.file_used_for_setup = self._get_filepath_for_setup()
         
@@ -544,15 +606,17 @@ class SetEnvVar(object):
 
         # tip the backup file
         if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
-            print '\nA backup file \"%s\" is created for \"%s\".' % (self.backup_file, self.file_used_for_setup)
+            print('\nA backup file \"%s\" is created for \"%s\".' % (self.backup_file, self.file_used_for_setup))
 
         if self._isWindows():
-            print '\nPlease restart the terminal or restart computer to make added system variables take effect\n'
+            print('\nPlease restart the terminal or restart computer to make added system variables take effect\n')
         else:
-            print '\nPlease execute command: "source %s" to make added system variables take effect\n' % self.file_used_for_setup
-
+            print('\nPlease execute command: "source %s" to make added system variables take effect\n' % self.file_used_for_setup)
 
 if __name__ == '__main__':
+    if not _check_python_version():
+        exit()
+
     parser = OptionParser()
     parser.add_option('-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
     parser.add_option('-a', '--androidsdkroot', dest='android_sdk_root', help='directory of android sdk root')
@@ -562,3 +626,12 @@ if __name__ == '__main__':
     # set environment variables
     env = SetEnvVar()
     env.set_environment_variables(opts.ndk_root, opts.android_sdk_root, opts.ant_root)
+
+    if env._isWindows():
+        import ctypes
+        HWND_BROADCAST = 0xFFFF
+        WM_SETTINGCHANGE = 0x1A
+        SMTO_ABORTIFHUNG = 0x0002
+        result = ctypes.c_long()
+        SendMessageTimeoutW = ctypes.windll.user32.SendMessageTimeoutW
+        SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, 0, u'Environment', SMTO_ABORTIFHUNG, 5000, ctypes.byref(result))

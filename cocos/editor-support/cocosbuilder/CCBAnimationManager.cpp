@@ -4,10 +4,12 @@
 #include "CCBReader.h"
 #include "CCBKeyframe.h"
 #include "CCNode+CCBRelativePositioning.h"
-#include <string>
-#include <set>
 #include "SimpleAudioEngine.h"
 #include "CCBSelectorResolver.h"
+
+#include <string>
+#include <sstream>
+#include <set>
 
 using namespace cocos2d;
 using namespace std;

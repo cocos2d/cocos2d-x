@@ -29,20 +29,6 @@
 
 NS_CC_BEGIN
 
-static GroupCommandManager* s_instance;
-GroupCommandManager *GroupCommandManager::getInstance()
-{
-    if(!s_instance)
-    {
-        s_instance = new GroupCommandManager();
-        if(!s_instance->init())
-        {
-            CC_SAFE_DELETE(s_instance);
-        }
-    }
-    return s_instance;
-}
-
 GroupCommandManager::GroupCommandManager()
 {
 
@@ -50,7 +36,7 @@ GroupCommandManager::GroupCommandManager()
 
 GroupCommandManager::~GroupCommandManager()
 {
-    CC_SAFE_RELEASE_NULL(s_instance);
+    
 }
 
 bool GroupCommandManager::init()
@@ -88,19 +74,20 @@ void GroupCommandManager::releaseGroupID(int groupID)
 GroupCommand::GroupCommand()
 {
     _type = RenderCommand::Type::GROUP_COMMAND;
-    _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
+    _renderQueueID = Director::getInstance()->getRenderer()->getGroupCommandManager()->getGroupID();
 }
 
 void GroupCommand::init(float globalOrder)
 {
     _globalOrder = globalOrder;
-    GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
-    _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
+    auto manager = Director::getInstance()->getRenderer()->getGroupCommandManager();
+    manager->releaseGroupID(_renderQueueID);
+    _renderQueueID = manager->getGroupID();
 }
 
 GroupCommand::~GroupCommand()
 {
-    GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
+    Director::getInstance()->getRenderer()->getGroupCommandManager()->releaseGroupID(_renderQueueID);
 }
 
 NS_CC_END

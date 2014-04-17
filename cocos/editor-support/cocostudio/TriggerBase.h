@@ -40,7 +40,9 @@ THE SOFTWARE.
 #define IMPLEMENT_CLASS_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \
         { \
-            return new className; \
+            auto ret = new className; \
+            ret->autorelease(); \
+            return ret; \
         } \
         cocostudio::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 

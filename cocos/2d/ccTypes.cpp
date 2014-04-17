@@ -28,7 +28,9 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 #include "ccTypes.h"
 
 NS_CC_BEGIN
+
 const std::string STD_STRING_EMPTY("");
+const ssize_t CC_INVALID_INDEX = -1;
 
 /**
  * Color3B

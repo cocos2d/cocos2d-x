@@ -763,6 +763,7 @@ Developers:
         
     wefiends
         s3tc compressed textures with no mipmaps fail to be loaded.
+        Added createWithFullscreen overloaded method that sets video mode
         
     floatinghotpot
         Fixed a bug that no callback is invoked when websocket connection fails
@@ -809,6 +810,23 @@ Developers:
     mgcL
         A potential memory leak fix in value's default constructor
         Added ScriptHandlerMgr::destroyInstance to avoid memory leak
+        
+    Mazyod
+        Fixed a bug that HTTPClient reports 2xx status codes as errors
+        
+    iSevenDays
+        Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
+        Fixed a potential memory leak in CCEditBoxImplIOS.mm
+        Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
+        
+    ololomax
+        Fixed a potential crash in SceneReader::createNodeWithSceneFile
+        
+    gaoxiaosong
+        Fixed a warning in cpCollision.c
+        
+    sachingarg05
+        Re-added orientation change callback in java activity
     
 Retired Core Developers:
     WenSheng Yang

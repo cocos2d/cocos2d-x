@@ -64,6 +64,8 @@ struct RenderStackElement
     ssize_t currentIndex;
 };
 
+class GroupCommandManager;
+
 /* Class responsible for the rendering in.
 
 Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
@@ -110,6 +112,11 @@ public:
     /* RenderCommands (except) QuadCommand should update this value */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
 
+    inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
+
+    /** returns whether or not a rectangle is visible or not */
+    bool checkVisibility(const kmMat4& transform, const Size& size);
+
 protected:
 
     void setupIndices();
@@ -123,12 +130,13 @@ protected:
 
     //Draw the previews queued quads and flush previous context
     void flush();
+    
+    void visitRenderQueue(const RenderQueue& queue);
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
     std::stack<int> _commandGroupStack;
     
-    std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
     uint32_t _lastMaterialID;
@@ -147,6 +155,10 @@ protected:
     // stats
     ssize_t _drawnBatches;
     ssize_t _drawnVertices;
+    //the flag for checking whether renderer is rendering
+    bool _isRendering;
+    
+    GroupCommandManager* _groupCommandManager;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;

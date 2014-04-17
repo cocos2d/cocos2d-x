@@ -31,7 +31,7 @@ cpArrayNew(int size)
 	
 	arr->num = 0;
 	arr->max = (size ? size : 4);
-	arr->arr = (void **)cpcalloc(arr->max, sizeof(void**));
+	arr->arr = (void **)cpcalloc(arr->max, sizeof(void*));
 	
 	return arr;
 }
@@ -52,7 +52,7 @@ cpArrayPush(cpArray *arr, void *object)
 {
 	if(arr->num == arr->max){
 		arr->max *= 2;
-		arr->arr = (void **)cprealloc(arr->arr, arr->max*sizeof(void**));
+		arr->arr = (void **)cprealloc(arr->arr, arr->max*sizeof(void*));
 	}
 	
 	arr->arr[arr->num] = object;

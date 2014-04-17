@@ -36,9 +36,9 @@
 NS_CC_EXT_BEGIN
 
 ControlColourPicker::ControlColourPicker()
-: _colourPicker(NULL)
-, _huePicker(NULL)
-, _background(NULL)
+: _colourPicker(nullptr)
+, _huePicker(nullptr)
+, _background(nullptr)
 {
 
 }

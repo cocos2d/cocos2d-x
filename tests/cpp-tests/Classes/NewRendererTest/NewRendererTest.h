@@ -56,6 +56,19 @@ protected:
     virtual ~NewSpriteTest();
 };
 
+class GroupCommandTest : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(GroupCommandTest);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    GroupCommandTest();
+    virtual ~GroupCommandTest();
+};
+
 class NewSpriteBatchTest : public MultiSceneTest
 {
 public:
@@ -116,6 +129,9 @@ public:
 protected:
     NewCullingTest();
     virtual ~NewCullingTest();
+    bool onTouchBegan(Touch* touch, Event  *event);
+    void onTouchMoved(Touch* touch, Event  *event);
+    Point _lastPos;
 };
 
 class VBOFullTest : public MultiSceneTest

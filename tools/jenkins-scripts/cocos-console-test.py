@@ -13,6 +13,7 @@ import time
 import socket
 import smtplib
 from email.mime.text import MIMEText
+from os.path import join, getsize
 
 # default console_param.
 console_param = '[console run]'
@@ -71,7 +72,7 @@ cocos_console_dir = 'tools/cocos2d-console/bin/'
 
 # now cocos2d-console suport different run on Platforms, e.g: only run android on win
 runSupport = {
-	'darwin' : {'mac':1,'ios':1,'android':0},
+	'darwin' : {'mac':1,'ios':1,'android':1},
 	'win' : {'mac':0,'ios':0,'android':1},
 	'linux' : {'mac':0,'ios':0,'android':1}
 }
@@ -136,7 +137,8 @@ def getAndroidDevices():
 	del arrDevices[0]
 	count = 0
 	for device in arrDevices:
-		if len(device) > 0:
+		# e.g: emulator-5554	device, contains 'device', so, min length is len('device')
+		if len(device) > len('device') and (device.find('device') >= 0):
 			count += 1
 	return count
 
@@ -174,8 +176,11 @@ def appendToResult(content):
 	global console_result
 	console_result = console_result + content
 
+# if any error 
+ANY_ERROR_IN_RUN = 0
 # excute cocos command
 def cocos_project(level):
+	global ANY_ERROR_IN_RUN
 	print 'will excute cocos_command: ', COCOS_CMD[level], level
 	appendToResult('will excute ' + COCOS_CMD[level] + ' command:'+"\n\r\t")
 	for proj in project_types:
@@ -188,6 +193,7 @@ def cocos_project(level):
 				time.sleep(12)
 				addConsoleListenOnTCP(proj)
 			print 'create project',proj,' is:', not info_create
+			ANY_ERROR_IN_RUN = ANY_ERROR_IN_RUN + info_create
 			appendToResult('	'+cmd +': ' + str(not info_create) + ".\n\r\t")
 		else:
 			for phone in phonePlats:
@@ -199,18 +205,22 @@ def cocos_project(level):
 					if runSupport[curPlat][phone]:
 						info_cmd = os.system(cmd)
 						print 'info '+COCOS_CMD[level]+':', not info_cmd
-				else :
+						appendToResult('	'+cmd +': ' + str(not info_cmd) + ".\n\r\t")
+				else:
 					if runSupport[curPlat][phone]:
+						print 'in desploy or run:', phone, getAndroidDevices()
 						if phone == 'android' and getAndroidDevices() == 0:
-							print 'no android device, please checkout the device is running ok.'
-							continue
-						info_cmd = os.system(cmd)
-						print 'info '+COCOS_CMD[level]+':', not info_cmd
-						if level == ENUM_PARAM.run:
-							time.sleep(20)
-							strClose = close_proj(proj, phone)
-							appendToResult('	'+strClose+"\n\r\t")
-				appendToResult('	'+cmd +': ' + str(not info_cmd) + ".\n\r\t")
+							strInfo = 'no android device, please checkout the device is running ok.'
+							print strInfo
+							# appendToResult('	'+strInfo+"\n\r\t")
+						else:
+							info_cmd = os.system(cmd)
+							print 'info '+COCOS_CMD[level]+':', not info_cmd
+							if level == ENUM_PARAM.run:
+								time.sleep(20)
+								strClose = close_proj(proj, phone)
+								appendToResult('	'+strClose+"\n\r\t")
+							appendToResult('	'+cmd +': ' + str(not info_cmd) + ".\n\r\t")
 
 # build and run according to params of provided.(lv_ignore: e.g:ignore new)
 def build_run(lv_ignore):
@@ -232,9 +242,9 @@ def start_android_simulator():
 		return
 	if cocos_param >= LEVEL_COCOS[ENUM_PARAM.deploy]:
 		cmd_start = [ 'emulator -avd '+ANDROID_SIMULATOR_NAME ]
-		print 'cmd_start:', cmd_start
-		info_start = subprocess.Popen(cmd_start, stdin=subprocess.PIPE, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		print 'start an android simulator:', not info_start
+		# print 'cmd_start:', cmd_start
+		# info_start = subprocess.Popen(cmd_start, stdin=subprocess.PIPE, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		# print 'start an android simulator:', not info_start
 
 # send email
 EMAIL_KEYS={
@@ -285,16 +295,48 @@ def send_mail(to_list,sub,title,content):
 def sendEmail(msg):
 	send_mail(OBJ_EMAIL_INFO[EMAIL_KEYS[4]], "cocos-console-test result", 'for error.', msg)
 
+# get package size 
+def getdirsize(dir):  
+	size = 0L  
+	for root, dirs, files in os.walk(dir):  
+		size += sum([getsize(join(root, name)) for name in files])  
+	return size
+APP_FILE_DIR = {
+	'cpp':'bin/debug/',
+	'lua':'runtime/'
+}
+APP_FILE_SUFFIX = {
+	'mac':'.app',
+	'ios':'.app',
+	'android':'-debug-unaligned.apk'
+}
+def getPackageSize():
+	for proj in project_types:
+		for phone in phonePlats:
+			# if runSupport[curPlat][phone]:
+			package_path = './'+proj+PROJ_SUFFIX+'/'+APP_FILE_DIR[proj]+phone+'/'+proj+PROJ_SUFFIX+APP_FILE_SUFFIX[phone]
+			print 'package_path', package_path
+			package_size = 0
+			if os.path.isfile(package_path):
+				package_size = os.path.getsize(package_path);
+			else:
+				package_size = getdirsize(package_path);
+			strSize = 'size of '+proj+PROJ_SUFFIX+' '+phone+' is:'+str(package_size/(1024))+'KB'+'\n\t'
+			print 'strSize:', strSize
+			appendToResult(strSize)
+
 def main():
 	print 'in main:'
 	# start_android_simulator()
 	print 'will build_run:'
 	build_run(-1)
-	print 'end build run.'
+	print 'ANY_ERROR_IN_RUN:', ANY_ERROR_IN_RUN
+	print 'end build run. and get package size.'
+	getPackageSize()
 	print 'will send email:'
-	if OBJ_EMAIL_INFO[ EMAIL_KEYS[5] ]:
-		sendEmail(console_result)
 	print 'console_result:', console_result
+	if OBJ_EMAIL_INFO[ EMAIL_KEYS[5] ] or ANY_ERROR_IN_RUN:
+		sendEmail(console_result)
 
 # -------------- main --------------
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 // support
 #include "CCTexture2D.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include <stdlib.h>
 #include "CCEventDispatcher.h"
 #include "CCEventListenerCustom.h"
@@ -483,6 +483,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
         {
             memset(tmpQuads+oldCapactiy, 0, (_capacity - oldCapactiy)*sizeof(_quads[0]) );
         }
+        _quads = nullptr;
     }
 
     if (_indices == nullptr)
@@ -492,7 +493,6 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
         {
             memset( tmpIndices, 0, _capacity * 6 * sizeof(_indices[0]) );
         }
-        
     }
     else
     {
@@ -501,6 +501,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
         {
             memset( tmpIndices+oldCapactiy, 0, (_capacity-oldCapactiy) * 6 * sizeof(_indices[0]) );
         }
+        _indices = nullptr;
     }
 
     if( ! ( tmpQuads && tmpIndices) ) {

@@ -232,14 +232,12 @@ RenderTextureIssue937::RenderTextureIssue937()
     auto background = LayerColor::create(Color4B(200,200,200,255));
     addChild(background);
 
+    auto s = Director::getInstance()->getWinSize();
     auto spr_premulti = Sprite::create("Images/fire.png");
-    spr_premulti->setPosition(Point(16,48));
+    spr_premulti->setPosition(Point(s.width/2-16, s.height/2+16));
 
     auto spr_nonpremulti = Sprite::create("Images/fire.png");
-    spr_nonpremulti->setPosition(Point(16,16));
-
-
-    
+    spr_nonpremulti->setPosition(Point(s.width/2-16, s.height/2-16));
     
     /* A2 & B2 setup */
     auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
@@ -249,20 +247,17 @@ RenderTextureIssue937::RenderTextureIssue937()
         return;
     }
 
+    auto spr_size = spr_premulti->getContentSize();
+    rend->setKeepMatrix(true);
+    Size pixelSize = Director::getInstance()->getWinSizeInPixels();
+    rend->setVirtualViewport(Point(s.width/2-32, s.height/2-32),Rect(0,0,s.width,s.height),Rect(0,0,pixelSize.width,pixelSize.height));
+
     // It's possible to modify the RenderTexture blending function by
     //        [[rend sprite] setBlendFunc:(BlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-
     rend->begin();
     spr_premulti->visit();
     spr_nonpremulti->visit();
-    rend->end(); 
-
-    auto s = Director::getInstance()->getWinSize();
-
-    /* A1: setup */
-    spr_premulti->setPosition(Point(s.width/2-16, s.height/2+16));
-    /* B1: setup */
-    spr_nonpremulti->setPosition(Point(s.width/2-16, s.height/2-16));
+    rend->end();
 
     rend->setPosition(Point(s.width/2+16, s.height/2));
 
@@ -302,15 +297,15 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto size = Director::getInstance()->getWinSize();
-    auto label = Label::create("vertexZ = 50", "fonts/Marker Felt.ttf", 64);
+    auto label = Label::createWithTTF("vertexZ = 50", "fonts/Marker Felt.ttf", 64);
     label->setPosition(Point(size.width / 2, size.height * 0.25f));
     this->addChild(label);
 
-    auto label2 = Label::create("vertexZ = 0", "fonts/Marker Felt.ttf", 64);
+    auto label2 = Label::createWithTTF("vertexZ = 0", "fonts/Marker Felt.ttf", 64);
     label2->setPosition(Point(size.width / 2, size.height * 0.5f));
     this->addChild(label2);
 
-    auto label3 = Label::create("vertexZ = -50", "fonts/Marker Felt.ttf", 64);
+    auto label3 = Label::createWithTTF("vertexZ = -50", "fonts/Marker Felt.ttf", 64);
     label3->setPosition(Point(size.width / 2, size.height * 0.75f));
     this->addChild(label3);
 
@@ -675,6 +670,10 @@ std::string RenderTextureTargetNode::subtitle() const
 // SpriteRenderTextureBug
 
 SpriteRenderTextureBug::SimpleSprite::SimpleSprite() : _rt(nullptr) {}
+SpriteRenderTextureBug::SimpleSprite::~SimpleSprite()
+{
+    CC_SAFE_RELEASE(_rt);
+}
 
 SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const Rect &rect)
 {
@@ -693,16 +692,6 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
-    renderer->addCommand(&_customCommand);
-
-    Sprite::draw(renderer, transform, transformUpdated);
-    
-}
-
-void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
-{
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
@@ -711,6 +700,9 @@ void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	_rt->end();
+
+    Sprite::draw(renderer, transform, transformUpdated);
+    
 }
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()

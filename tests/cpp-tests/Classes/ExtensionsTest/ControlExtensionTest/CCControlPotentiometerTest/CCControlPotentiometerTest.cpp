@@ -25,7 +25,7 @@
 #include "CCControlPotentiometerTest.h"
 
 ControlPotentiometerTest::ControlPotentiometerTest()
-: _displayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
 
 }
@@ -55,7 +55,7 @@ bool ControlPotentiometerTest::init()
         
         layer_width += background->getContentSize().width;
         
-        this->setDisplayValueLabel(Label::create("", "HelveticaNeue-Bold", 30));
+        this->setDisplayValueLabel(Label::createWithSystemFont("", "HelveticaNeue-Bold", 30));
 
         _displayValueLabel->setPosition(background->getPosition());
         layer->addChild(_displayValueLabel);
