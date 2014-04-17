@@ -25,8 +25,8 @@ Headers = {"Authorization":"token " + access_token}
 result = J[os.environ['JOB_NAME']].get_build(build_number).get_status()
 
 if(result == STATUS_SUCCESS):
-    data['body'] = "Emptytest run Success: " + target_url
+    data['body'] = "Emptytest run successfully: " + target_url
 else:
-    data['body'] = "Emptytest run Failure: " + target_url
+    data['body'] = "Emptytest failed: " + target_url
 
 requests.post(comments_url, data=json.dumps(data), headers=Headers)
