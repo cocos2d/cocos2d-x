@@ -325,6 +325,7 @@ protected:
     //compatibility with older LabelTTF
     Sprite* _textSprite;
     FontDefinition _fontDefinition;
+    bool  _compatibleMode;
 
     //! used for optimization
     Sprite *_reusedLetter;
