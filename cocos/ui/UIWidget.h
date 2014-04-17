@@ -501,12 +501,15 @@ public:
      */
     virtual Node* getVirtualRenderer();
 
-    /**
-     * Gets the content size of widget.
-     *
-     * Content size is widget's texture size.
-     */
-    virtual const Size& getContentSize() const;
+//    /**
+//     * Gets the content size of widget.
+//     *
+//     * Content size is widget's texture size.
+//     */
+//    virtual const Size& getContentSize() const;
+    virtual const Size& getVirtualRendererSize() const;
+    
+    
 
     /**
      * Returns the "class name" of widget.
@@ -549,7 +552,6 @@ protected:
     void moveEvent();
     void releaseUpEvent();
     void cancelUpEvent();
-    void updateAnchorPoint();
     virtual void updateTextureColor(){};
     virtual void updateTextureOpacity(){};
     virtual void updateTextureRGBA(){};
@@ -563,6 +565,8 @@ protected:
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
     Widget* getWidgetParent();
+    void updateContentSizeWithTextureSize(const Size& size);
+    virtual void adaptRenderers(){};
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
