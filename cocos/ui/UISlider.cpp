@@ -381,7 +381,8 @@ void Slider::setPercent(int percent)
 bool Slider::hitTest(const cocos2d::Point &pt)
 {
     Point nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
-    Rect ballRect = this->_slidBallNormalRenderer->getTextureRect();
+    Size ballSize = this->_slidBallNormalRenderer->getContentSize();
+    Rect ballRect = Rect(0,0, ballSize.width, ballSize.height);
     if (ballRect.containsPoint(nsp)) {
         return true;
     }
