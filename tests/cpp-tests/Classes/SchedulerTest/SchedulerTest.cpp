@@ -1076,7 +1076,7 @@ void SchedulerIssue2268::onEnter()
 
 void SchedulerIssue2268::update(float dt)
 {
-	if ( testNode != NULL ) {
+	if ( testNode != nullptr ) {
 		// do something with testNode
 
 		// at some point we are done, pause the nodes actions and schedulers
@@ -1085,13 +1085,13 @@ void SchedulerIssue2268::update(float dt)
 		// at some other point we are completely done with the node and want to clear it
 		testNode->unscheduleAllSelectors();
 		testNode->release();
-		testNode = NULL;
+		testNode = nullptr;
 
 	}
 }
 SchedulerIssue2268::~SchedulerIssue2268()
 {
-
+    CC_SAFE_RELEASE(testNode);
 }
 
 std::string SchedulerIssue2268::title() const

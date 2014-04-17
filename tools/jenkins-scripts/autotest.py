@@ -45,8 +45,15 @@ def autotest(type):
 	while True:
 		data = soc.recv(1024)
 		print data
+		if data == 'TestEnd':
+			lastTestInfo = True
+			break
+		global lastTestInfo
+		if len(data) > len('\n') :
+			lastTestInfo = data
 		if not data: break
 	
+	soc.send('director end\r\n')
 	print 'test end and close socket.'
 	soc.close()
 
