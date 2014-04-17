@@ -129,7 +129,7 @@ local function CocosDenshionTest()
         if event == "enter" then
 
         elseif event == "exit" then
-            --SimpleAudioEngine:getInstance():endToLua()
+            AudioEngine.destroyInstance()
         end
     end
 
