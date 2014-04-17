@@ -57,6 +57,10 @@ def main():
     statuses_url = repository['statuses_url']
     payload_forword['statuses_url'] = statuses_url
     print 'statuses_url: ' + statuses_url
+    #get comments url
+    comments_url = repository['comments_url']
+    payload_forword['comments_url'] = comments_url
+    print 'comments_url: ' + comments_url
 
     #get pr target branch
     branch = repository['base']['ref']
@@ -75,14 +79,17 @@ def main():
     Headers = {"Authorization":"token " + access_token} 
 
     try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+        if searchCI:
+          ciOper = searchCI.group()
+          if('rebuild' in ciOper):
+            requests.post(statuses_url, data=json.dumps(data), headers=Headers)
     except:
         traceback.print_exc()
 
     job_trigger_url = ''
     if searchCI:
         ciOper = searchCI.group()
-        if('build' in ciOper):
+        if('rebuild' in ciOper):
           job_trigger_url = os.environ['JOB_PULL_REQUEST_BUILD_TRIGGER_URL']
         if('emptytest' in ciOper):
           job_trigger_url = os.environ['JOB_EMPTYTEST_TRIGGER_URL']
