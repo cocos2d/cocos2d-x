@@ -62,7 +62,7 @@ public class AppActivity extends Cocos2dxActivity{
 		
 		//2.Set the format of window
 		
-		// Check the wifi is open when the android:debuggable is "true".
+		// Check the wifi is opened when the android:debuggable is "true".
 		if(0!=((this.getApplicationInfo().flags) & ApplicationInfo.FLAG_DEBUGGABLE))
 		{
 			if(!isWifiConnected())
