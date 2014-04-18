@@ -20,10 +20,6 @@
 -- @param #ccui.RichElement richelement
         
 --------------------------------
--- @function [parent=#RichText] formatText 
--- @param self
-        
---------------------------------
 -- @function [parent=#RichText] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool bool
@@ -34,9 +30,8 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#RichText] getContentSize 
+-- @function [parent=#RichText] formatText 
 -- @param self
--- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- overload function: removeElement(ccui.RichElement)
@@ -56,6 +51,11 @@
 -- @function [parent=#RichText] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#RichText] getVirtualRendererSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#RichText] RichText 

@@ -76,7 +76,7 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#LoadingBar] getContentSize 
+-- @function [parent=#LoadingBar] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         

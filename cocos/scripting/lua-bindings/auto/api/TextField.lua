@@ -185,11 +185,6 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- @function [parent=#TextField] setAnchorPoint 
--- @param self
--- @param #point_table point
-        
---------------------------------
 -- @function [parent=#TextField] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
@@ -205,7 +200,7 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#TextField] getContentSize 
+-- @function [parent=#TextField] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         

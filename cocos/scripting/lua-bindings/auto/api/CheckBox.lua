@@ -74,11 +74,6 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- @function [parent=#CheckBox] setAnchorPoint 
--- @param self
--- @param #point_table point
-        
---------------------------------
 -- @function [parent=#CheckBox] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
@@ -89,7 +84,7 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#CheckBox] getContentSize 
+-- @function [parent=#CheckBox] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
