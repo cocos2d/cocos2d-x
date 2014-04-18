@@ -104,7 +104,9 @@ Skeleton::Skeleton (const char* skeletonDataFile, const char* atlasFile, float s
 
 	spSkeletonJson* json = spSkeletonJson_create(atlas);
 	json->scale = scale == 0 ? (1 / Director::getInstance()->getContentScaleFactor()) : scale;
-	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
+	//setScale(scale == 0 ? (1 / Director::getInstance()->getContentScaleFactor()) : scale);
+    spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
+    
 	CCAssert(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
 	spSkeletonJson_dispose(json);
 
@@ -129,6 +131,16 @@ void Skeleton::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool t
     renderer->addCommand(&_customCommand);
 }
     
+void resizeUntilLimit(TriangleTextureAtlas * atlas, int limit)
+{
+    // resizing logic
+    while (atlas->getCapacity() <= limit) {
+        atlas->drawTriangles();
+        atlas->removeAllTriangles();
+        if (!atlas->resizeCapacity(atlas->getCapacity() * 2)) return;
+    }
+}
+    
 void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     getShaderProgram()->use();
@@ -147,46 +159,84 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
 	}
 
 	int additive = 0;
-	TextureAtlas* textureAtlas = 0;
-	V3F_C4B_T2F_Quad quad;
-	quad.tl.vertices.z = 0;
-	quad.tr.vertices.z = 0;
-	quad.bl.vertices.z = 0;
-	quad.br.vertices.z = 0;
-	for (int i = 0, n = skeleton->slotCount; i < n; i++) {
+	TriangleTextureAtlas* textureAtlas = nullptr;
+    
+    V3F_C4B_T2F_Triangle triangle;
+    triangle.a.vertices.z = 0;
+    triangle.b.vertices.z = 0;
+    triangle.c.vertices.z = 0;
+    int quadTriangleIds[6] = {
+            0, 1, 2,
+            2, 3, 0
+        };
+	
+    for (int i = 0, n = skeleton->slotCount; i < n; i++) {
 		spSlot* slot = skeleton->drawOrder[i];
-		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-		spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-		TextureAtlas* regionTextureAtlas = getTextureAtlas(attachment);
+        if (!slot->attachment) continue;
+        if (slot->attachment->type == ATTACHMENT_REGION)
+        {
+            spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
+            textureAtlas = getTextureAtlas(attachment);
+            
+            if (slot->data->additiveBlending != additive) {
+                if (textureAtlas) {
+                    textureAtlas->drawTriangles();
+                    textureAtlas->removeAllTriangles();
+                }
+                additive = !additive;
+                GL::blendFunc(blendFunc.src, additive ? GL_ONE : blendFunc.dst);
+            }
+            
+            setFittedBlendingFunc(textureAtlas);
+            
+            resizeUntilLimit(textureAtlas, textureAtlas->getTotalTriangles());
+            
+            V3F_C4B_T2F vertices[4];
+            float verticesPos[8];
+            unsigned int startVerticle = textureAtlas->getTotalVertices();
 
-		if (slot->data->additiveBlending != additive) {
-			if (textureAtlas) {
-				textureAtlas->drawQuads();
-				textureAtlas->removeAllQuads();
-			}
-			additive = !additive;
-            GL::blendFunc(blendFunc.src, additive ? GL_ONE : blendFunc.dst);
-		} else if (regionTextureAtlas != textureAtlas && textureAtlas) {
-			textureAtlas->drawQuads();
-			textureAtlas->removeAllQuads();
-		}
-		textureAtlas = regionTextureAtlas;
-        setFittedBlendingFunc(textureAtlas);
+            spRegionAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, verticesPos);
 
-		ssize_t quadCount = textureAtlas->getTotalQuads();
-		if (textureAtlas->getCapacity() == quadCount) {
-			textureAtlas->drawQuads();
-			textureAtlas->removeAllQuads();
-			if (!textureAtlas->resizeCapacity(textureAtlas->getCapacity() * 2)) return;
-		}
+            spRegionAttachment_updateVertices(attachment, slot, vertices, premultipliedAlpha, verticesPos);
+            textureAtlas->updateVertices(vertices, textureAtlas->getTotalVertices(), 4);
+            
+            textureAtlas->setCurrentTriangles(2 + textureAtlas->getCurrentTriangles());
+            textureAtlas->updateTrianglesIndices(quadTriangleIds, 6, startVerticle);
+        }
+        else if (slot->attachment->type == ATTACHMENT_MESH)
+        {
+            spMeshAttachment * attachment = (spMeshAttachment*)slot->attachment;
+            textureAtlas = getTextureAtlas(attachment);
 
-		spRegionAttachment_updateQuad(attachment, slot, &quad, premultipliedAlpha);
-		textureAtlas->updateQuad(&quad, quadCount);
+            unsigned int verticesCount = attachment->verticesLength / 2;
+            unsigned int trianglesCount = attachment->trianglesIndicesLength / 3;
+            
+            // Resizing when buffer is too small.
+            resizeUntilLimit(textureAtlas, trianglesCount + textureAtlas->getTotalTriangles());
+            
+            spMeshAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone);
+            
+            unsigned int initVertexCount = textureAtlas->getTotalVertices();
+            V3F_C4B_T2F * vertices = new V3F_C4B_T2F[attachment->verticesLength / 2];
+            
+            spMeshAttachment_updateVertices(attachment, slot, vertices, premultipliedAlpha);
+            textureAtlas->updateVertices(vertices, textureAtlas->getTotalVertices(), verticesCount);
+
+            textureAtlas->setCurrentTriangles(trianglesCount + textureAtlas->getCurrentTriangles());
+            textureAtlas->updateTrianglesIndices(attachment->trianglesIndices, attachment->trianglesIndicesLength, initVertexCount);
+            
+            delete [] vertices;
+        }
+
 	}
 	if (textureAtlas) {
-		textureAtlas->drawQuads();
-		textureAtlas->removeAllQuads();
+        setFittedBlendingFunc(textureAtlas);
+        textureAtlas->drawTriangles();
+        textureAtlas->removeAllVertices();
+		textureAtlas->removeAllTriangles();
+        textureAtlas->setCurrentTriangles(0);
 	}
+    
 
     if(debugBones || debugSlots) {
         kmGLPushMatrix();
@@ -234,10 +284,15 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
     }
 }
 
-TextureAtlas* Skeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
-	return (TextureAtlas*)((spAtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
+TriangleTextureAtlas* Skeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
+	return (TriangleTextureAtlas*)((spAtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 }
 
+TriangleTextureAtlas* Skeleton::getTextureAtlas (spMeshAttachment* meshAttachment) const {
+    return (TriangleTextureAtlas*)((spAtlasRegion*)meshAttachment->rendererObject)->page->rendererObject;
+}
+
+    
 Rect Skeleton::getBoundingBox () const {
 	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	float scaleX = getScaleX();
@@ -324,7 +379,7 @@ void Skeleton::setBlendFunc (const cocos2d::BlendFunc& aBlendFunc) {
     this->blendFunc = aBlendFunc;
 }
     
-void Skeleton::setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture)
+void Skeleton::setFittedBlendingFunc(TriangleTextureAtlas * nextRenderedTexture)
 {
     if(nextRenderedTexture->getTexture() && nextRenderedTexture->getTexture()->hasPremultipliedAlpha())
     {

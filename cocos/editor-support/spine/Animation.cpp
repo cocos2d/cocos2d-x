@@ -26,6 +26,9 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
+//
+// Added support for FFD by Wojciech Trzasko CodingFingers on 24.02.2014.
+//
 #include <spine/Animation.h>
 #include <limits.h>
 #include <spine/extension.h>
@@ -631,4 +634,118 @@ void spDrawOrderTimeline_setFrame (spDrawOrderTimeline* self, int frameIndex, fl
 		self->drawOrders[frameIndex] = MALLOC(int, self->slotCount);
 		memcpy(CONST_CAST(int*, self->drawOrders[frameIndex]), drawOrder, self->slotCount * sizeof(int));
 	}
+}
+
+
+/**/
+
+void _FFDTimeline_dispose (spTimeline* timeline)
+{
+    spFFDTimeline* self = SUB_CAST(spFFDTimeline, timeline);
+    int i;
+    
+    _spCurveTimeline_deinit(SUPER(self));
+    
+    for(i = 0; i < self -> framesLength; ++i)
+    {
+        FREE(self->frameVertices[i]);
+    }
+    FREE(self->frameVertices);
+    
+    FREE(self->frames);
+    FREE(self->frameVerticesLength);
+}
+
+#include <stdio.h>
+
+void _spFFDTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
+                           spEvent** firedEvents, int* eventCount, float alpha)
+{
+    spFFDTimeline* self = (spFFDTimeline*)timeline;
+    spSlot* slot = skeleton -> slots[self->slotIndex];
+    
+    if(slot->attachment != (spAttachment*)self->meshAttachment) {
+        return;
+    }
+    
+    float verticesLength = 0;
+    
+    // Time is before firts frame
+    if(time < self->frames[0])
+        return;
+    
+    int vertexCount = self->frameVerticesLength[0];
+    
+    int sizeNeeded = vertexCount;
+    if (sizeNeeded > self->meshAttachment->verticesLength) {
+        // TODO: Check if realloc data don't leak.
+        realloc(self->meshAttachment->vertices, sizeNeeded * sizeof(float));
+    }
+    verticesLength = vertexCount;
+    float * vertices = self->meshAttachment->vertices;
+    
+    // Time is after last frame
+    if(time >= self->frames[self->framesLength - 1])
+    {
+        /**
+         * TODO: Check if coping data don't leak.
+         */
+        float * lastVertices = self->frameVertices[self->framesLength - 1];
+        if (alpha < 1)
+        {
+            for (int i = 0; i < vertexCount; i++)
+                vertices[i] += (lastVertices[i] - vertices[i]) * alpha;
+        }
+        else
+        {
+            memcpy(vertices, lastVertices, vertexCount * sizeof(float));
+        }
+        return;
+    }
+    
+    // Interpolate between the previous frame and current frame
+    int frameIndex = binarySearch(self->frames, self->framesLength, time, 1);
+    float frameTime = self->frames[frameIndex];
+    float percent = 1 - (time - frameTime) / (self->frames[frameIndex - 1] - frameTime);
+    percent = spCurveTimeline_getCurvePercent(SUPER(self), frameIndex - 1, percent < 0 ? 0 : (percent > 1 ? 1 : percent));
+    
+    float* prevVertices         = self->frameVertices[frameIndex - 1];
+    float* nextVertices         = self->frameVertices[frameIndex];
+
+    if (alpha < 1)
+    {
+        for (int i = 0; i < vertexCount; ++i)
+        {
+            float prev = prevVertices[i];
+            vertices[i] = (prev + (nextVertices[i] - prev) * percent - vertices[i]) * alpha;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < vertexCount; ++i) {
+            float prev = prevVertices[i];
+            vertices[i] = prev + (nextVertices[i] - prev) * percent;
+        }
+    }    
+}
+
+spFFDTimeline* spFFDTimeline_create(int frameCount)
+{
+    spFFDTimeline* self = NEW(spFFDTimeline);
+    _spCurveTimeline_init(SUPER(self), TIMELINE_FFD, frameCount, _FFDTimeline_dispose, _spFFDTimeline_apply);
+    
+    CONST_CAST(int, self->framesLength) = frameCount;
+    CONST_CAST(float*, self->frames) = CALLOC(float, frameCount);
+    CONST_CAST(float**, self->frameVertices) = CALLOC(float*, frameCount);
+    CONST_CAST(int*, self->frameVerticesLength) = CALLOC(int, frameCount);
+    self -> meshAttachment = NULL;
+    
+    return self;
+}
+
+void spFFDTimeline_setFrame(spFFDTimeline* self, int frameIndex, float time, float* vertices, int verticesLength)
+{
+    self -> frames[frameIndex] = time;
+    self -> frameVertices[frameIndex] = vertices;
+    self -> frameVerticesLength[frameIndex] = verticesLength;
 }

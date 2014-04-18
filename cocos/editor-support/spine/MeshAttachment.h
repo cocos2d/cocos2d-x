@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2
- * 
+ *
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
- * 
+ *
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to install, execute and perform the Spine Runtimes
  * Software (the "Software") solely for internal use. Without the written
@@ -26,20 +26,66 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_COCOS2DX_H_
-#define SPINE_COCOS2DX_H_
+//
+//  MeshAttachment.h
+//  spine-cocos2d-iphone-ios
+//
+//  Created by Wojciech Trzasko CodingFingers on 18.02.2014.
+//
 
-#include <spine/spine.h>
-#include "cocos2d.h"
-#include <spine/CCSkeleton.h>
-#include <spine/CCSkeletonAnimation.h>
-
-void spRegionAttachment_updateQuad (spRegionAttachment* self, spSlot* slot, cocos2d::V3F_C4B_T2F_Quad* quad, bool premultiplied = false);
-
-// new version
-void spRegionAttachment_updateVertices (spRegionAttachment* self, spSlot* slot, cocos2d::V3F_C4B_T2F* vertices, bool premultipliedAlpha, float* calculatedVertices);
-void spMeshAttachment_updateVertices (spMeshAttachment* self, spSlot* slot, cocos2d::V3F_C4B_T2F* vertices, bool premultipliedAlpha);
+#ifndef spine_cocos2d_iphone_ios_MeshAttachment_h
+#define spine_cocos2d_iphone_ios_MeshAttachment_h
 
 
+#include <spine/Attachment.h>
+#include <spine/Atlas.h>
+#include <spine/Slot.h>
 
-#endif /* SPINE_COCOS2DX_H_ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
+typedef struct spMeshAttachment spMeshAttachment;
+struct spMeshAttachment {
+    
+    spAttachment super;
+    
+    float x, y, scaleX, scaleY, rotation, width, height;
+    
+    void* rendererObject;
+    
+    float* vertices;
+    int verticesLength;
+    
+    int* trianglesIndices;
+    int trianglesIndicesLength;
+    
+    float* worldVertices;
+    int worldVerticesLength;
+    
+    float u;
+    float v;
+    float u2;
+    float v2;
+    int hullLength;
+    float* edges;
+};
+
+spMeshAttachment* spMeshAttachment_create(const char* name);
+void spMeshAttachment_setUVs(spMeshAttachment* self, float u, float v, float u2, float v2, int /*bool*/ rotate);
+void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verticesLength, int* triangles, int trianglesLength, float* uvs);
+void spMeshAttachment_computeWorldVertices(spMeshAttachment* self, float x, float y, spBone* bone);
+    
+#ifdef SPINE_SHORT_NAMES
+    typedef spMeshAttachment MeshAttachment;
+#define MeshAttachment_create(...)                  spMeshAttachment_create(__VA_ARGS__)
+#define MeshAttachment_setUVs(...)                  spMeshAttachment_setUVs(__VA_ARGS__)
+#define MeshAttachment_updateOffset(...)            spMeshAttachment_updateOffset(__VA_ARGS__)
+#define MeshAttachment_computeWorldVertices(...)    spMeshAttachment_computeWorldVertices(__VA_ARGS__)
+#endif
+    
+#ifdef __cplusplus
+}
+#endif
+
+#endif

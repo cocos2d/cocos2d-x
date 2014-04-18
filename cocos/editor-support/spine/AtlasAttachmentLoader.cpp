@@ -53,7 +53,19 @@ spAttachment* _spAtlasAttachmentLoader_newAttachment (spAttachmentLoader* loader
 	}
 	case ATTACHMENT_BOUNDING_BOX:
 		return SUPER(spBoundingBoxAttachment_create(name));
-	default:
+    case ATTACHMENT_MESH: {
+        spMeshAttachment* attachment;
+        spAtlasRegion* region = spAtlas_findRegion(self->atlas, name);
+        if (!region) {
+            _spAttachmentLoader_setError(loader, "Region not found: ", name);
+            return 0;
+        }
+        attachment = spMeshAttachment_create(name);
+        attachment->rendererObject = region;
+        spMeshAttachment_setUVs(attachment, region->u, region->v, region->u2, region->v2, region->rotate);
+        return SUPER(attachment);
+	}
+    default:
 		_spAttachmentLoader_setUnknownTypeError(loader, type);
 		return 0;
 	}

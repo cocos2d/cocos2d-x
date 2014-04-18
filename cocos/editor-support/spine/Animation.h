@@ -26,10 +26,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
+//
+// Added support for FFD by Wojciech Trzasko CodingFingers on 24.02.2014.
+//
 #ifndef SPINE_ANIMATION_H_
 #define SPINE_ANIMATION_H_
 
 #include <spine/Event.h>
+#include <spine/MeshAttachment.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -73,7 +77,7 @@ typedef spAnimation Animation;
 /**/
 
 typedef enum {
-	TIMELINE_SCALE, TIMELINE_ROTATE, TIMELINE_TRANLATE, TIMELINE_COLOR, TIMELINE_ATTACHMENT, TIMELINE_EVENT, TIMELINE_DRAWORDER
+	TIMELINE_SCALE, TIMELINE_ROTATE, TIMELINE_TRANLATE, TIMELINE_COLOR, TIMELINE_ATTACHMENT, TIMELINE_EVENT, TIMELINE_DRAWORDER, TIMELINE_FFD
 } spTimelineType;
 
 struct spTimeline {
@@ -242,6 +246,29 @@ typedef spDrawOrderTimeline DrawOrderTimeline;
 #define DrawOrderTimeline_setFrame(...) spDrawOrderTimeline_setFrame(__VA_ARGS__)
 #endif
 
+/**/
+typedef struct {
+    spCurveTimeline super;
+    int const framesLength;
+    float* const frames;
+    float** const frameVertices;
+    int* frameVerticesLength;
+    int slotIndex;
+    spMeshAttachment* meshAttachment;
+} spFFDTimeline;
+
+spFFDTimeline* spFFDTimeline_create(int frameCount);
+void spFFDTimeline_setFrame(spFFDTimeline* self, int frameIndex, float time, float* vertices, int verticesLength);
+    
+#ifdef SPINE_SHORT_NAMES
+
+typedef spFFDTimeline FFDTimeline;
+#define FFDTimeline_create(...) spFFDTimeline_create(__VA_ARGS__)
+#define FFDTimeline_setFrame(...) spFFDTimeline_setFrame(__VA_ARGS__)
+    
+#endif
+
+    
 #ifdef __cplusplus
 }
 #endif

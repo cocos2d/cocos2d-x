@@ -34,6 +34,7 @@
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
+#include "CCTriangleTextureAtlas.h"
 #include "renderer/CCCustomCommand.h"
 
 namespace spine {
@@ -97,14 +98,14 @@ public:
 protected:
 	Skeleton ();
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
-	virtual cocos2d::TextureAtlas* getTextureAtlas (spRegionAttachment* regionAttachment) const;
-
+	virtual TriangleTextureAtlas* getTextureAtlas (spRegionAttachment* regionAttachment) const;
+    virtual TriangleTextureAtlas* getTextureAtlas (spMeshAttachment* meshAttachment) const;
 private:
 	bool ownsSkeletonData;
 	spAtlas* atlas;
 	void initialize ();
     // Util function that setting blend-function by nextRenderedTexture's premultiplied flag
-    void setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture);
+    void setFittedBlendingFunc(TriangleTextureAtlas * nextRenderedTexture);
     
     cocos2d::CustomCommand _customCommand;    
 };

@@ -29,18 +29,21 @@
 #include <spine/spine-cocos2dx.h>
 #include <spine/extension.h>
 
+#include "CCTriangleTextureAtlas.h"
+
 USING_NS_CC;
 
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
     Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
-    TextureAtlas* textureAtlas = TextureAtlas::createWithTexture(texture, 4);
+    TriangleTextureAtlas* textureAtlas = TriangleTextureAtlas::createWithTexture(texture, 256);
     textureAtlas->retain();
     self->rendererObject = textureAtlas;
     // Using getContentSize to make it supports the strategy of loading resources in cocos2d-x.
-    // self->width = texture->getPixelsWide();
-    // self->height = texture->getPixelsHigh();
-    self->width = texture->getContentSize().width;
-    self->height = texture->getContentSize().height;
+    // self->width = texture->getContentSize().width;
+    // self->height = texture->getContentSize().height;
+    // getPixel series are much better choice.
+    self->width = texture->getPixelsWide();
+    self->height = texture->getPixelsHigh();
 }
 
 void _spAtlasPage_disposeTexture (spAtlasPage* self) {
@@ -116,4 +119,89 @@ void spRegionAttachment_updateQuad (spRegionAttachment* self, spSlot* slot, V3F_
 	quad->tr.texCoords.v = self->uvs[VERTEX_Y3];
 	quad->br.texCoords.u = self->uvs[VERTEX_X4];
 	quad->br.texCoords.v = self->uvs[VERTEX_Y4];
+}
+
+void spRegionAttachment_updateVertices (spRegionAttachment* self, spSlot* slot, V3F_C4B_T2F* vertices, bool premultipliedAlpha, float* calculatedVertices)
+{
+    GLubyte r = slot->skeleton->r * slot->r * 255;
+    GLubyte g = slot->skeleton->g * slot->g * 255;
+    GLubyte b = slot->skeleton->b * slot->b * 255;
+    float normalizedAlpha = slot->skeleton->a * slot->a;
+    if (premultipliedAlpha) {
+        r *= normalizedAlpha;
+        g *= normalizedAlpha;
+        b *= normalizedAlpha;
+    }
+    GLubyte a = normalizedAlpha * 255;
+    
+    vertices[0].colors.r = r;
+    vertices[0].colors.g = g;
+    vertices[0].colors.b = b;
+    vertices[0].colors.a = a;
+    vertices[0].vertices.x = calculatedVertices[VERTEX_X1];
+    vertices[0].vertices.y = calculatedVertices[VERTEX_Y1];
+    vertices[0].vertices.z = 0.0f;
+    vertices[0].texCoords.u = self->uvs[VERTEX_X1];
+    vertices[0].texCoords.v = self->uvs[VERTEX_Y1];
+    
+    vertices[1].colors.r = r;
+    vertices[1].colors.g = g;
+    vertices[1].colors.b = b;
+    vertices[1].colors.a = a;
+    vertices[1].vertices.x = calculatedVertices[VERTEX_X2];
+    vertices[1].vertices.y = calculatedVertices[VERTEX_Y2];
+    vertices[1].vertices.z = 0.0f;
+    vertices[1].texCoords.u = self->uvs[VERTEX_X2];
+    vertices[1].texCoords.v = self->uvs[VERTEX_Y2];
+    
+    vertices[2].colors.r = r;
+    vertices[2].colors.g = g;
+    vertices[2].colors.b = b;
+    vertices[2].colors.a = a;
+    vertices[2].vertices.x = calculatedVertices[VERTEX_X3];
+    vertices[2].vertices.y = calculatedVertices[VERTEX_Y3];
+    vertices[2].vertices.z = 0.0f;
+    vertices[2].texCoords.u = self->uvs[VERTEX_X3];
+    vertices[2].texCoords.v = self->uvs[VERTEX_Y3];
+    
+    vertices[3].colors.r = r;
+    vertices[3].colors.g = g;
+    vertices[3].colors.b = b;
+    vertices[3].colors.a = a;
+    vertices[3].vertices.x = calculatedVertices[VERTEX_X4];
+    vertices[3].vertices.y = calculatedVertices[VERTEX_Y4];
+    vertices[3].vertices.z = 0.0f;
+    vertices[3].texCoords.u = self->uvs[VERTEX_X4];
+    vertices[3].texCoords.v = self->uvs[VERTEX_Y4];
+}
+
+void spMeshAttachment_updateVertices (spMeshAttachment* self, spSlot* slot, V3F_C4B_T2F* vertices, bool premultipliedAlpha)
+{
+    GLubyte r = slot->skeleton->r * slot->r * 255;
+	GLubyte g = slot->skeleton->g * slot->g * 255;
+	GLubyte b = slot->skeleton->b * slot->b * 255;
+	float normalizedAlpha = slot->skeleton->a * slot->a;
+	if (premultipliedAlpha) {
+		r *= normalizedAlpha;
+		g *= normalizedAlpha;
+		b *= normalizedAlpha;
+	}
+	GLubyte a = normalizedAlpha * 255;
+    
+    for (int i = 0; i < self->verticesLength / 2; i++)
+    {
+        int vertexDataId = i * 4;
+        
+        vertices[i].vertices.x = self->worldVertices[vertexDataId];
+        vertices[i].vertices.y = self->worldVertices[vertexDataId + 1];
+        vertices[i].vertices.z = 0.0f;
+        
+        vertices[i].texCoords.u = self->worldVertices[vertexDataId + 2];
+        vertices[i].texCoords.v = self->worldVertices[vertexDataId + 3];
+        
+        vertices[i].colors.r = r;
+        vertices[i].colors.g = g;
+        vertices[i].colors.b = b;
+        vertices[i].colors.a = a;
+    }
 }
