@@ -128,13 +128,13 @@ protected:
      */
     inline int getFixedPriority() const { return _fixedPriority; };
 
-    /** Sets scene graph priority for this listener */
-    inline void setSceneGraphPriority(Node* node) { _node = node; };
+    /** Sets the node associated with this listener */
+    inline void setAssociatedNode(Node* node) { _node = node; };
 
-    /** Gets scene graph priority of this listener
-     *  @return nullptr if it's a fixed priority listener, non-nullptr for scene graph priority listener
+    /** Gets the node associated with this listener
+     *  @return nullptr if it's a fixed priority listener, otherwise return non-nullptr
      */
-    inline Node* getSceneGraphPriority() const { return _node; };
+    inline Node* getAssociatedNode() const { return _node; };
 
     ///////////////
     // Properties

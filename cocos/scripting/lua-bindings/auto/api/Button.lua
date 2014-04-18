@@ -138,11 +138,6 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- @function [parent=#Button] setAnchorPoint 
--- @param self
--- @param #point_table point
-        
---------------------------------
 -- @function [parent=#Button] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
@@ -153,7 +148,7 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#Button] getContentSize 
+-- @function [parent=#Button] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
