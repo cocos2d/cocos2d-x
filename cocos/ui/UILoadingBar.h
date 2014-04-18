@@ -128,8 +128,8 @@ public:
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
-    //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const override;
+    //override "getVirtualRendererSize" method of widget.
+    virtual const Size& getVirtualRendererSize() const override;
     
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
@@ -148,6 +148,7 @@ protected:
     void barRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    virtual void adaptRenderers() override;
 protected:
     LoadingBarType _barType;
     int _percent;
@@ -159,6 +160,7 @@ protected:
     bool _prevIgnoreSize;
     Rect _capInsets;
     std::string _textureFile;
+    bool _barRendererAdaptDirty;
 };
 
 }
