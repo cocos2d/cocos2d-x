@@ -761,6 +761,8 @@ void EventDispatcher::dispatchEvent(Event* event)
     if (!_isEnabled)
         return;
     
+    auto director = Director::getInstance();
+
     updateDirtyFlagForSceneGraph();
     
     
@@ -768,6 +770,7 @@ void EventDispatcher::dispatchEvent(Event* event)
     
     if (event->getType() == Event::Type::TOUCH)
     {
+        director->setDirty(true);
         dispatchTouchEvent(static_cast<EventTouch*>(event));
         return;
     }
@@ -788,6 +791,7 @@ void EventDispatcher::dispatchEvent(Event* event)
         };
         
         dispatchEventToListeners(listeners, onEvent);
+        director->setDirty(true);
     }
     
     updateListeners(event);

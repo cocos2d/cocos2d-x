@@ -383,6 +383,11 @@ public:
      */
     float getFrameRate() const { return _frameRate; }
 
+    /**
+     * set Dirty
+     */
+    void setDirty(bool dirty);
+
 protected:
     void purgeDirector();
     bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
@@ -486,7 +491,10 @@ protected:
     /* Console for the director */
     Console *_console;
 #endif
-
+    
+    bool _dirty;
+    /* skip draw frame if idle frames is larger then 3 */
+    int _idleFrames;
     // GLViewProtocol will recreate stats labels to fit visible rect
     friend class GLViewProtocol;
 };

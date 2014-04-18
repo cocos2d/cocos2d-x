@@ -32,6 +32,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "ccCArray.h"
 #include "uthash.h"
+#include "CCSet.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 //
@@ -339,6 +341,8 @@ ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) con
 // main loop
 void ActionManager::update(float dt)
 {
+    auto director = Director::getInstance();
+    
     for (tHashElement *elt = _targets; elt != nullptr; )
     {
         _currentTarget = elt;
@@ -359,7 +363,7 @@ void ActionManager::update(float dt)
                 _currentTarget->currentActionSalvaged = false;
 
                 _currentTarget->currentAction->step(dt);
-
+                director->setDirty(true);
                 if (_currentTarget->currentActionSalvaged)
                 {
                     // The currentAction told the node to remove it. To prevent the action from
