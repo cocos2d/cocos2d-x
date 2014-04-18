@@ -491,9 +491,10 @@ protected:
     /* Console for the director */
     Console *_console;
 #endif
-    /* skip draw frame if _dirty is false */
+    
     bool _dirty;
-
+    /* skip draw frame if idle frames is larger then 3 */
+    int _idleFrames;
     // GLViewProtocol will recreate stats labels to fit visible rect
     friend class GLViewProtocol;
 };

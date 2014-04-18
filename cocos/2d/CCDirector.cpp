@@ -163,6 +163,7 @@ bool Director::init(void)
 #endif
     
     _dirty = true;
+    _idleFrames = 0;
     return true;
 }
 
@@ -278,6 +279,10 @@ void Director::drawScene()
     }
 
     if(!_dirty) 
+    {
+        _idleFrames++;
+    }
+    if(_idleFrames > 3)
     {
         return;
     }
@@ -1066,6 +1071,10 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
 void Director::setDirty(bool dirty)
 {
     _dirty = dirty;
+    if(dirty == true)
+    {
+        _idleFrames = 0;
+    }
 }
 
 /***************************************************
