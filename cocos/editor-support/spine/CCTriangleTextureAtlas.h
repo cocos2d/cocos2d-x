@@ -73,14 +73,14 @@ public:
      * Streaming buffers
      */
     void transferBuffers();
-
+    
     /**
      * Drawing methods
      */
     void drawTriangles();
     void drawTriangles(ssize_t n);
     void drawTriangles(ssize_t fromIndex, ssize_t triangleNr);
-
+    
     // get sets
     ssize_t         getCapacity() const;
     ssize_t         getTotalTriangles() const;
@@ -93,7 +93,7 @@ public:
     
 private:
     void            listenBackToForeground(EventCustom* event);
-
+    
     
     void            setupIndices();
     void            mapBuffers();
@@ -104,20 +104,20 @@ protected:
     GLushort*           _indices;
     GLuint              _VAOname;
     GLuint              _buffersVBO[2]; //0: vertex  1: indices
-
+    
     /** quantity of quads that can be stored with the current texture atlas size */
     ssize_t _capacity;
     /** Texture of the texture atlas */
     Texture2D* _texture;
-
-    V3F_C4B_T2F         *_vertices;
-    int                 _totalVertices;
-    int                 _totalTriangles;
-    int                 _currentTriangles;
-    bool                _dirtyVertices;
-    bool                _dirtyIndices;
+    
+    V3F_C4B_T2F             *_vertices;
+    int                     _totalVertices;
+    int                     _totalTriangles;
+    int                     _currentTriangles;
+    bool                    _dirtyVertices;
+    bool                    _dirtyIndices;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _backToForegroundlistener;
+    EventListenerCustom*    _backToForegroundlistener;
 #endif
 };
 

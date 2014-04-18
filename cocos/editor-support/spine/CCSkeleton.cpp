@@ -217,15 +217,13 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
             spMeshAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone);
             
             unsigned int initVertexCount = textureAtlas->getTotalVertices();
-            V3F_C4B_T2F * vertices = new V3F_C4B_T2F[attachment->verticesLength / 2];
+            V3F_C4B_T2F * vertices = (V3F_C4B_T2F *)alloca(sizeof(V3F_C4B_T2F) * attachment->verticesLength / 2);
             
             spMeshAttachment_updateVertices(attachment, slot, vertices, premultipliedAlpha);
             textureAtlas->updateVertices(vertices, textureAtlas->getTotalVertices(), verticesCount);
 
             textureAtlas->setCurrentTriangles(trianglesCount + textureAtlas->getCurrentTriangles());
             textureAtlas->updateTrianglesIndices(attachment->trianglesIndices, attachment->trianglesIndicesLength, initVertexCount);
-            
-            delete [] vertices;
         }
 
 	}

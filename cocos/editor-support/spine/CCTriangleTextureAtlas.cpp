@@ -1,30 +1,30 @@
 /******************************************************************************
-* Spine Runtimes Software License
-* Version 2
-*
-* Copyright (c) 2013, Esoteric Software
-* All rights reserved.
-*
-* You are granted a perpetual, non-exclusive, non-sublicensable and
-* non-transferable license to install, execute and perform the Spine Runtimes
-* Software (the "Software") solely for internal use. Without the written
-* permission of Esoteric Software, you may not (a) modify, translate, adapt or
-* otherwise create derivative works, improvements of the Software or develop
-* new applications using the Software or (b) remove, delete, alter or obscure
-* any trademarks or any copyright, trademark, patent or other intellectual
-* property or proprietary rights notices on or in the Software, including
-* any copy thereof. Redistributions in binary or source form must include
-* this license and terms. THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE
-* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-* TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-* PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-   * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-* THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*****************************************************************************/
+ * Spine Runtimes Software License
+ * Version 2
+ *
+ * Copyright (c) 2013, Esoteric Software
+ * All rights reserved.
+ *
+ * You are granted a perpetual, non-exclusive, non-sublicensable and
+ * non-transferable license to install, execute and perform the Spine Runtimes
+ * Software (the "Software") solely for internal use. Without the written
+ * permission of Esoteric Software, you may not (a) modify, translate, adapt or
+ * otherwise create derivative works, improvements of the Software or develop
+ * new applications using the Software or (b) remove, delete, alter or obscure
+ * any trademarks or any copyright, trademark, patent or other intellectual
+ * property or proprietary rights notices on or in the Software, including
+ * any copy thereof. Redistributions in binary or source form must include
+ * this license and terms. THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
 
 //
 //  CCTriangleTextureAtlas.m
@@ -33,14 +33,19 @@
 //  Created by Wojciech Trzasko CodingFingers on 24.02.2014.
 //
 
-#import "CCTriangleTextureAtlas.h"
+#include "CCTriangleTextureAtlas.h"
 
-#import "CCGLProgram.h"
-#import "ccGLStateCache.h"
-#import "CCDirector.h"
-#import "CCConfiguration.h"
+#include "CCGLProgram.h"
+#include "ccGLStateCache.h"
+#include "CCDirector.h"
+#include "CCConfiguration.h"
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
+#include "CCEventType.h"
+
+#include "CCEventDispatcher.h"
+#include "CCEventListenerCustom.h"
+
 
 #include <stdlib.h>
 
@@ -93,7 +98,7 @@ TriangleTextureAtlas::~TriangleTextureAtlas()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
-
+    
 }
 
 bool TriangleTextureAtlas::initWithTexture(Texture2D * texture, ssize_t capacity)
@@ -108,10 +113,10 @@ bool TriangleTextureAtlas::initWithTexture(Texture2D * texture, ssize_t capacity
     // retained in property
     this->_texture = texture;
     CC_SAFE_RETAIN(_texture);
-
+    
     // Re-initialization is not allowed
     CCASSERT(_vertices == nullptr && _indices == nullptr, "");
-
+    
     _vertices = (V3F_C4B_T2F*)malloc( sizeof(_vertices[0]) * _capacity * 3 );
     _indices = (GLushort *)malloc( sizeof(_indices[0]) * _capacity * 3 );
     
@@ -129,7 +134,7 @@ bool TriangleTextureAtlas::initWithTexture(Texture2D * texture, ssize_t capacity
     
     memset( _vertices, 0,  sizeof(_vertices[0]) * _capacity * 3 );
     memset( _indices, 0,  sizeof(_indices[0]) * _capacity * 3 );
-
+    
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(TriangleTextureAtlas::listenBackToForeground, this));
@@ -146,7 +151,7 @@ bool TriangleTextureAtlas::initWithTexture(Texture2D * texture, ssize_t capacity
     {
         setupVBO();
     }
-
+    
     _dirtyVertices = true;
     _dirtyIndices = true;
     
@@ -203,16 +208,16 @@ void TriangleTextureAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &_VAOname);
     GL::bindVAO(_VAOname);
-        
+    
     glGenBuffers(2, &_buffersVBO[0]);
     
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, kVerticleSize * _capacity * 3, _vertices, GL_DYNAMIC_DRAW);
-        
+    
     // vertices
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kVerticleSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
-        
+    
     // colors
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kVerticleSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
@@ -220,22 +225,22 @@ void TriangleTextureAtlas::setupVBOandVAO()
     // tex coords
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kVerticleSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-        
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 3, _indices, GL_STATIC_DRAW);
-        
+    
     // Must unbind the VAO before changing the element buffer.
     GL::bindVAO(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
+    
     CHECK_GL_ERROR_DEBUG();
 }
 
 void TriangleTextureAtlas::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
-
+    
     mapBuffers();
 }
 
@@ -257,7 +262,7 @@ void TriangleTextureAtlas::removeTrianglesFrom(ssize_t triangleNr)
 bool TriangleTextureAtlas::resizeCapacity(ssize_t n)
 {
     if (n == _capacity) return true;
-  
+    
     _totalTriangles = MIN(_totalTriangles, n);
     _totalVertices = MIN(_totalVertices, n * 3);
     _capacity = n;
@@ -374,7 +379,7 @@ void TriangleTextureAtlas::drawTriangles(ssize_t start, ssize_t n)
         //
         // Using VBO and VAO
         //
-
+        
         GL::bindVAO(_VAOname);
         
 #if CC_REBIND_INDICES_BUFFER
@@ -389,7 +394,7 @@ void TriangleTextureAtlas::drawTriangles(ssize_t start, ssize_t n)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
         
-//        GL::bindVAO(0);
+        //        GL::bindVAO(0);
     }
     else
     {
