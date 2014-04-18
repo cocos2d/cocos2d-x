@@ -145,15 +145,13 @@ public:
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
     void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
-
-    virtual void setAnchorPoint(const Vector2 &pt) override;
     
     /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
 
-    virtual const Size& getContentSize() const override;
+    virtual const Size& getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     void attachWithIME();
     virtual void onEnter() override;
@@ -178,6 +176,7 @@ protected:
     void textfieldRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    virtual void adaptRenderers() override;
 protected:
     UICCTextField* _textFieldRenderer;
 
@@ -189,6 +188,7 @@ protected:
     SEL_TextFieldEvent _textFieldEventSelector;
     
     std::string _passwordStyleText;
+    bool _textFieldRendererAdaptDirty;
 };
 
 }

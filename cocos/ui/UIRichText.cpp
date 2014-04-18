@@ -211,12 +211,11 @@ void RichText::formatText()
                         if (FileUtils::getInstance()->isFileExist(elmtText->_fontName))
                         {
                             elementRenderer = Label::createWithTTF(elmtText->_text.c_str(), elmtText->_fontName, elmtText->_fontSize);
-                        } 
+                        }
                         else
                         {
                             elementRenderer = Label::createWithSystemFont(elmtText->_text.c_str(), elmtText->_fontName, elmtText->_fontSize);
                         }
-                        
                         break;
                     }
                     case RICH_IMAGE:
@@ -428,13 +427,15 @@ void RichText::formarRenderers()
     
     if (_ignoreSize)
     {
-        Size s = getContentSize();
+        Size s = getVirtualRendererSize();
         _size = s;
     }
     else
     {
         _size = _customSize;
     }
+    updateContentSizeWithTextureSize(_size);
+    _elementRenderersContainer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
     
 void RichText::pushToContainer(cocos2d::Node *renderer)
@@ -466,7 +467,7 @@ void RichText::setAnchorPoint(const Vector2 &pt)
     _elementRenderersContainer->setAnchorPoint(pt);
 }
     
-const Size& RichText::getContentSize() const
+const Size& RichText::getVirtualRendererSize() const
 {
     return _elementRenderersContainer->getContentSize();
 }

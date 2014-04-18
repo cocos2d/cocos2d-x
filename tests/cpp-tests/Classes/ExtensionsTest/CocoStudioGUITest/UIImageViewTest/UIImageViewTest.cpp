@@ -21,7 +21,7 @@ bool UIImageViewTest::init()
         // Create the imageview
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
         imageView->setPosition(Vector2(widgetSize.width / 2.0f,
-                                     widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
+                                     widgetSize.height / 2.0f));
         
         _uiLayer->addChild(imageView);
         
@@ -53,7 +53,7 @@ bool UIImageViewTest_Scale9::init()
         imageView->setScale9Enabled(true);
         imageView->setSize(Size(300, 115));
         imageView->setPosition(Vector2(widgetSize.width / 2.0f,
-                                     widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
+                                     widgetSize.height / 2.0f));
         
         _uiLayer->addChild(imageView);                
         

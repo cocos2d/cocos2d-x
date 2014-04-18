@@ -118,7 +118,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Slider] getContentSize 
+-- @function [parent=#Slider] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         

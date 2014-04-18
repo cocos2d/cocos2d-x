@@ -63,7 +63,10 @@ _pressedTextureScaleXInSize(1.0f),
 _pressedTextureScaleYInSize(1.0f),
 _normalTextureLoaded(false),
 _pressedTextureLoaded(false),
-_disabledTextureLoaded(false)
+_disabledTextureLoaded(false),
+_normalTextureAdaptDirty(true),
+_pressedTextureAdaptDirty(true),
+_disabledTextureAdaptDirty(true)
 {
 
 }
@@ -253,12 +256,12 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
         }
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    normalTextureScaleChangedWithSize();
-    updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_buttonNormalRenderer);
+    updateContentSizeWithTextureSize(_normalTextureSize);
     _normalTextureLoaded = true;
+    _normalTextureAdaptDirty = true;
 }
 
 void Button::loadTexturePressed(const std::string& selected,TextureResType texType)
@@ -301,12 +304,11 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
         }
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
-    pressedTextureScaleChangedWithSize();
-    updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_buttonDisableRenderer);
     _pressedTextureLoaded = true;
+    _pressedTextureAdaptDirty = true;
 }
 
 void Button::loadTextureDisabled(const std::string& disabled,TextureResType texType)
@@ -349,12 +351,11 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
         }
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
-    disabledTextureScaleChangedWithSize();
-    updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_buttonDisableRenderer);
     _disabledTextureLoaded = true;
+    _disabledTextureAdaptDirty = true;
 }
 
 void Button::setCapInsets(const Rect &capInsets)
@@ -516,25 +517,41 @@ void Button::updateFlippedY()
         static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(_flippedY);
     }
 }
-
-void Button::setAnchorPoint(const Vector2 &pt)
+    
+void Button::updateTitleLocation()
 {
-    Widget::setAnchorPoint(pt);
-    _buttonNormalRenderer->setAnchorPoint(pt);
-    _buttonClickedRenderer->setAnchorPoint(pt);
-    _buttonDisableRenderer->setAnchorPoint(pt);
-    _titleRenderer->setPosition(Vector2(_size.width*(0.5f-_anchorPoint.x), _size.height*(0.5f-_anchorPoint.y)));
+    _titleRenderer->setPosition(Vector2(_contentSize.width * 0.5f, _contentSize.height * 0.5f));
 }
 
 void Button::onSizeChanged()
 {
     Widget::onSizeChanged();
-    normalTextureScaleChangedWithSize();
-    pressedTextureScaleChangedWithSize();
-    disabledTextureScaleChangedWithSize();
+    updateTitleLocation();
+    _normalTextureAdaptDirty = true;
+    _pressedTextureAdaptDirty = true;
+    _disabledTextureAdaptDirty = true;
+}
+    
+void Button::adaptRenderers()
+{
+    if (_normalTextureAdaptDirty)
+    {
+        normalTextureScaleChangedWithSize();
+        _normalTextureAdaptDirty = false;
+    }
+    if (_pressedTextureAdaptDirty)
+    {
+        pressedTextureScaleChangedWithSize();
+        _pressedTextureAdaptDirty = false;
+    }
+    if (_disabledTextureAdaptDirty)
+    {
+        disabledTextureScaleChangedWithSize();
+        _disabledTextureAdaptDirty = false;
+    }
 }
 
-const Size& Button::getContentSize() const
+const Size& Button::getVirtualRendererSize() const
 {
     return _normalTextureSize;
 }
@@ -567,7 +584,6 @@ void Button::normalTextureScaleChangedWithSize()
         {
             _buttonNormalRenderer->setScale(1.0f);
             _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
-            _size = _normalTextureSize;
         }
     }
     else
@@ -593,6 +609,7 @@ void Button::normalTextureScaleChangedWithSize()
             _normalTextureScaleYInSize = scaleY;
         }
     }
+    _buttonNormalRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 void Button::pressedTextureScaleChangedWithSize()
@@ -628,6 +645,7 @@ void Button::pressedTextureScaleChangedWithSize()
             _pressedTextureScaleYInSize = scaleY;
         }
     }
+    _buttonClickedRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 void Button::disabledTextureScaleChangedWithSize()
@@ -659,6 +677,7 @@ void Button::disabledTextureScaleChangedWithSize()
             _buttonDisableRenderer->setScaleY(scaleY);
         }
     }
+    _buttonDisableRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 void Button::setPressedActionEnabled(bool enabled)
