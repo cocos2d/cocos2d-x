@@ -102,7 +102,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender)
     // test 3   
     {
         HttpRequest* request = new HttpRequest();
-        request->setUrl("http://httpbin.org/get");
+        request->setUrl("https://httpbin.org/get");
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("GET test3");
