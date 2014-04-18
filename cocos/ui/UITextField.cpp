@@ -364,7 +364,8 @@ _touchHeight(0.0f),
 _useTouchArea(false),
 _textFieldEventListener(nullptr),
 _textFieldEventSelector(nullptr),
-_passwordStyleText("")
+_passwordStyleText(""),
+_textFieldRendererAdaptDirty(true)
 {
 }
 
@@ -514,14 +515,15 @@ void TextField::setText(const std::string& text)
     {
         _textFieldRenderer->setString(content);
     }
-    
-    textfieldRendererScaleChangedWithSize();
+    _textFieldRendererAdaptDirty = true;
+    updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
 
 void TextField::setPlaceHolder(const std::string& value)
 {
     _textFieldRenderer->setPlaceHolder(value);
-    textfieldRendererScaleChangedWithSize();
+    _textFieldRendererAdaptDirty = true;
+    updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
 const std::string& TextField::getPlaceHolder()
@@ -532,7 +534,8 @@ const std::string& TextField::getPlaceHolder()
 void TextField::setFontSize(int size)
 {
     _textFieldRenderer->setSystemFontSize(size);
-    textfieldRendererScaleChangedWithSize();
+    _textFieldRendererAdaptDirty = true;
+    updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
 int TextField::getFontSize()
@@ -543,7 +546,8 @@ int TextField::getFontSize()
 void TextField::setFontName(const std::string& name)
 {
     _textFieldRenderer->setSystemFontName(name);
-    textfieldRendererScaleChangedWithSize();
+    _textFieldRendererAdaptDirty = true;
+    updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
 const std::string& TextField::getFontName()
@@ -634,14 +638,16 @@ void TextField::update(float dt)
         insertTextEvent();
         setInsertText(false);
         
-        textfieldRendererScaleChangedWithSize();
+        _textFieldRendererAdaptDirty = true;
+        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
     }
     if (getDeleteBackward())
     {
         deleteBackwardEvent();
         setDeleteBackward(false);
         
-        textfieldRendererScaleChangedWithSize();
+        _textFieldRendererAdaptDirty = true;
+        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
     }
 }
 
@@ -723,16 +729,19 @@ void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent seleco
     _textFieldEventSelector = selecor;
 }
 
-void TextField::setAnchorPoint(const Point &pt)
-{
-    Widget::setAnchorPoint(pt);
-    _textFieldRenderer->setAnchorPoint(pt);
-}
-
 void TextField::onSizeChanged()
 {
     Widget::onSizeChanged();
-    textfieldRendererScaleChangedWithSize();
+    _textFieldRendererAdaptDirty = true;
+}
+    
+void TextField::adaptRenderers()
+{
+    if (_textFieldRendererAdaptDirty)
+    {
+        textfieldRendererScaleChangedWithSize();
+        _textFieldRendererAdaptDirty = false;
+    }
 }
 
 void TextField::textfieldRendererScaleChangedWithSize()
@@ -741,7 +750,6 @@ void TextField::textfieldRendererScaleChangedWithSize()
     {
         _textFieldRenderer->setDimensions(0,0);
         _textFieldRenderer->setScale(1.0f);
-        _size = getContentSize();
     }
     else
     {
@@ -757,9 +765,10 @@ void TextField::textfieldRendererScaleChangedWithSize()
         _textFieldRenderer->setScaleX(scaleX);
         _textFieldRenderer->setScaleY(scaleY);
     }
+    _textFieldRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
-const Size& TextField::getContentSize() const
+const Size& TextField::getVirtualRendererSize() const
 {
     return _textFieldRenderer->getContentSize();
 }
