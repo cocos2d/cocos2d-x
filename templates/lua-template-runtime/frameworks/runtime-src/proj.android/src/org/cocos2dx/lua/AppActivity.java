@@ -76,6 +76,7 @@ public class AppActivity extends Cocos2dxActivity{
 					public void onClick(DialogInterface dialog, int which) {
 						startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
 						finish();
+						System.exit(0);
 					}
 				});
 				builder.setCancelable(false);
