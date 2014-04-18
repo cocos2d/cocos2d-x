@@ -37,6 +37,8 @@
     <ClInclude Include="..\SlotData.h" />
     <ClInclude Include="..\spine-cocos2dx.h" />
     <ClInclude Include="..\spine.h" />
+	<ClInclude Include="..\MeshAttachment.h" />
+	<ClInclude Include="..\CCTriangleTextureAtlas.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Animation.cpp" />
@@ -64,6 +66,8 @@
     <ClCompile Include="..\Slot.cpp" />
     <ClCompile Include="..\SlotData.cpp" />
     <ClCompile Include="..\spine-cocos2dx.cpp" />
+	<ClCompile Include="..\MeshAttachment.cpp" />
+	<ClCompile Include="..\CCTriangleTextureAtlas.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}</ProjectGuid>
