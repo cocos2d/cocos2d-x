@@ -39,7 +39,8 @@ _normalScaleValueY(1.0f),
 _fontName("Thonburi"),
 _fontSize(10),
 _onSelectedScaleOffset(0.5),
-_labelRenderer(nullptr)
+_labelRenderer(nullptr),
+_labelRendererAdaptDirty(true)
 {
 }
 
@@ -104,7 +105,8 @@ void Text::initRenderer()
 void Text::setText(const std::string& text)
 {
     _labelRenderer->setString(text);
-    labelScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
 
 const std::string& Text::getStringValue()
@@ -121,7 +123,8 @@ void Text::setFontSize(int size)
 {
     _fontSize = size;
     _labelRenderer->setSystemFontSize(size);
-    labelScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
     
 int Text::getFontSize()
@@ -133,7 +136,8 @@ void Text::setFontName(const std::string& name)
 {
     _fontName = name;
     _labelRenderer->setSystemFontName(name);
-    labelScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
     
 const std::string& Text::getFontName()
@@ -144,7 +148,8 @@ const std::string& Text::getFontName()
 void Text::setTextAreaSize(const Size &size)
 {
     _labelRenderer->setDimensions(size.width,size.height);
-    labelScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
     
 const Size& Text::getTextAreaSize()
@@ -155,7 +160,8 @@ const Size& Text::getTextAreaSize()
 void Text::setTextHorizontalAlignment(TextHAlignment alignment)
 {
     _labelRenderer->setHorizontalAlignment(alignment);
-    labelScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
     
 TextHAlignment Text::getTextHorizontalAlignment()
@@ -166,7 +172,8 @@ TextHAlignment Text::getTextHorizontalAlignment()
 void Text::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
-    labelScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
     
 TextVAlignment Text::getTextVerticalAlignment()
@@ -233,19 +240,22 @@ void Text::updateFlippedY()
     }
 }
 
-void Text::setAnchorPoint(const Point &pt)
-{
-    Widget::setAnchorPoint(pt);
-    _labelRenderer->setAnchorPoint(pt);
-}
-
 void Text::onSizeChanged()
 {
     Widget::onSizeChanged();
-    labelScaleChangedWithSize();
+    _labelRendererAdaptDirty = true;
+}
+    
+void Text::adaptRenderers()
+{
+    if (_labelRendererAdaptDirty)
+    {
+        labelScaleChangedWithSize();
+        _labelRendererAdaptDirty = false;
+    }
 }
 
-const Size& Text::getContentSize() const
+const Size& Text::getVirtualRendererSize() const
 {
     return _labelRenderer->getContentSize();
 }
@@ -261,7 +271,6 @@ void Text::labelScaleChangedWithSize()
     {
         _labelRenderer->setDimensions(0,0);
         _labelRenderer->setScale(1.0f);
-        _size = _labelRenderer->getContentSize();
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
     else
@@ -280,7 +289,7 @@ void Text::labelScaleChangedWithSize()
         _normalScaleValueX = scaleX;
         _normalScaleValueY = scaleY;
     }
-    
+    _labelRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 std::string Text::getDescription() const

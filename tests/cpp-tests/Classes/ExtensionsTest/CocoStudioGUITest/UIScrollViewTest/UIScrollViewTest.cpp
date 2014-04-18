@@ -65,7 +65,7 @@ bool UIScrollViewTest_Vertical::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Point(innerWidth / 2.0f, titleButton->getBottomInParent() - titleButton->getSize().height));
         scrollView->addChild(button_scale9);
         
@@ -143,7 +143,7 @@ bool UIScrollViewTest_Horizontal::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Point(titleButton->getRightInParent() + titleButton->getSize().width / 2.0f,
                                        titleButton->getBottomInParent() - titleButton->getSize().height / 2.0f));
         scrollView->addChild(button_scale9);                
