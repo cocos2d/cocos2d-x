@@ -194,9 +194,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     void *data = nullptr;
     do 
     {
-        _fullviewPort = _rtTextureRect = Rect(0,0,w,h);
-        Size size = Director::getInstance()->getWinSizeInPixels();
-        _fullRect = Rect(0,0,size.width,size.height);
+        _fullRect = _fullviewPort = _rtTextureRect = Rect(0,0,w,h);
         
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
         h = (int)(h * CC_CONTENT_SCALE_FACTOR());
