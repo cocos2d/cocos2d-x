@@ -64,11 +64,6 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Widget] getActionTag 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
 -- @function [parent=#Widget] getLayoutParameter 
 -- @param self
 -- @param #ccui.LayoutParameterType layoutparametertype
@@ -101,14 +96,19 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @function [parent=#Widget] getVirtualRendererSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- @function [parent=#Widget] isTouchEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Widget] getContentSize 
+-- @function [parent=#Widget] getActionTag 
 -- @param self
--- @return size_table#size_table ret (return value: size_table)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Widget] getWorldPosition 
