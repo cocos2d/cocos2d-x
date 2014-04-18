@@ -4,7 +4,7 @@ cocos2d-x-3.0 ?? 2014
      [FIX]          cocos console: Zipalign the apk generated with release mode
      [FIX]          Director: Application crashes on closing if CC_ENABLE_CACHE_TEXTURE_DATA is enabled
      [FIX]          Image: memoery leak
-     [FIX]          Lua: 'EditBox' can't response 'changed','ended' and 'return' event
+     [FIX]          Lua: 'EditBox' can't response 'changed','ended' and 'return' event on Windows
 
 cocos2d-x-3.0rc2 Apr.15 2014
      [NEW]          Event: Adds `EventListener::setEnabled/isEnabled` to support enable/disable event listeners
