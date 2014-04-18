@@ -274,8 +274,9 @@ int Renderer::createRenderQueue()
     return (int)_renderGroups.size() - 1;
 }
 
-void Renderer::visitRenderQueue(const RenderQueue& queue)
+void Renderer::visitRenderQueue(int renderQueueID)
 {
+    RenderQueue& queue = _renderGroups[renderQueueID];
     ssize_t size = queue.size();
     
     for (ssize_t index = 0; index < size; ++index)
@@ -306,7 +307,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         {
             flush();
             int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
+            visitRenderQueue(renderQueueID);
         }
         else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
         {
@@ -325,6 +326,8 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             CCLOGERROR("Unknown commands in renderQueue");
         }
     }
+    flush();
+    queue.clear();
 }
 
 void Renderer::render()
@@ -346,7 +349,7 @@ void Renderer::render()
         {
             renderqueue.sort();
         }
-        visitRenderQueue(_renderGroups[0]);
+        visitRenderQueue(0);
         flush();
     }
     clean();

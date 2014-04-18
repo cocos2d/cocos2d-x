@@ -99,6 +99,7 @@ public:
 
     /** Renders into the GLView all the queued `RenderCommand` objects */
     void render();
+    void visitRenderQueue(int renderQueueID);
 
     /** Cleans all `RenderCommand`s in the queue */
     void clean();
@@ -131,8 +132,6 @@ protected:
     //Draw the previews queued quads and flush previous context
     void flush();
     
-    void visitRenderQueue(const RenderQueue& queue);
-
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
     std::stack<int> _commandGroupStack;
