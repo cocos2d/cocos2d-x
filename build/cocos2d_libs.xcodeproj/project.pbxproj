@@ -1418,7 +1418,6 @@
 		46A170431807CC07005B8026 /* CCES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AAC1807B038005B8026 /* CCES2Renderer.h */; };
 		46A170441807CC07005B8026 /* CCES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AAD1807B038005B8026 /* CCES2Renderer.m */; };
 		46A170451807CC07005B8026 /* CCESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AAE1807B038005B8026 /* CCESRenderer.h */; };
-		46A170471807CC07005B8026 /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB01807B038005B8026 /* CCImage.mm */; };
 		46A170481807CC07005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB11807B038005B8026 /* CCPlatformDefine.h */; };
 		46A170491807CC07005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB21807B038005B8026 /* CCStdC.h */; };
 		46A1704B1807CC07005B8026 /* CCEAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB41807B038005B8026 /* CCEAGLView.mm */; };
@@ -2660,7 +2659,6 @@
 		46A16AAC1807B038005B8026 /* CCES2Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCES2Renderer.h; sourceTree = "<group>"; };
 		46A16AAD1807B038005B8026 /* CCES2Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCES2Renderer.m; sourceTree = "<group>"; };
 		46A16AAE1807B038005B8026 /* CCESRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCESRenderer.h; sourceTree = "<group>"; };
-		46A16AB01807B038005B8026 /* CCImage.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		46A16AB11807B038005B8026 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		46A16AB21807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		46A16AB41807B038005B8026 /* CCEAGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEAGLView.mm; sourceTree = "<group>"; };
@@ -4585,7 +4583,6 @@
 				46A16AAD1807B038005B8026 /* CCES2Renderer.m */,
 				46A16AAE1807B038005B8026 /* CCESRenderer.h */,
 				1A0DB7301823827C0025743D /* CCGL.h */,
-				46A16AB01807B038005B8026 /* CCImage.mm */,
 				46A16AB11807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AB21807B038005B8026 /* CCStdC.h */,
 				1A0DB7311823827C0025743D /* CCEAGLView.h */,
@@ -6625,7 +6622,6 @@
 				2AC795E618628746005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
 				A044DED218C6A58700B6CCBD /* vec3.c in Sources */,
 				46A1703C1807CC07005B8026 /* CCApplication.mm in Sources */,
-				46A170471807CC07005B8026 /* CCImage.mm in Sources */,
 				46A1704B1807CC07005B8026 /* CCEAGLView.mm in Sources */,
 				46A171001807CECB005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170441807CC07005B8026 /* CCES2Renderer.m in Sources */,
