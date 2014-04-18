@@ -109,6 +109,10 @@ TMXImageLayer * TMXTiledMap::parseImageLayer( TMXImageLayerInfo* layerInfo, TMXM
 TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     TMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
+    if ( !tileset )
+    {
+        return nullptr;
+    }
     TMXLayer *layer = TMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
@@ -183,17 +187,19 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
             if (layerInfo->_visible)
             {
                 TMXImageLayer *child = parseImageLayer( layerInfo, mapInfo );
-                addChild( child, idx, idx );
+                if ( child ) {
+                    addChild( child, idx, idx );
             
-                // update content size with the max size
-                const Size& childSize = child->getContentSize();
-                Size currentSize = getContentSize();
-                currentSize.width = std::max( currentSize.width, childSize.width );
-                currentSize.height = std::max( currentSize.height, childSize.height );
-                setContentSize( currentSize );
+                    // update content size with the max size
+                    const Size& childSize = child->getContentSize();
+                    Size currentSize = getContentSize();
+                    currentSize.width = std::max( currentSize.width, childSize.width );
+                    currentSize.height = std::max( currentSize.height, childSize.height );
+                    setContentSize( currentSize );
             
-                idx++;
-            }
+                    idx++;
+                }
+            } // if (layerInfo->_visible)
         }
     }
 
@@ -204,17 +210,19 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
             if (layerInfo->_visible)
             {
                 TMXLayer *child = parseLayer(layerInfo, mapInfo);
-                addChild(child, idx, idx);
+                if ( child ) {
+                    addChild(child, idx, idx);
             
-                // update content size with the max size
-                const Size& childSize = child->getContentSize();
-                Size currentSize = this->getContentSize();
-                currentSize.width = std::max( currentSize.width, childSize.width );
-                currentSize.height = std::max( currentSize.height, childSize.height );
-                this->setContentSize(currentSize);
+                    // update content size with the max size
+                    const Size& childSize = child->getContentSize();
+                    Size currentSize = this->getContentSize();
+                    currentSize.width = std::max( currentSize.width, childSize.width );
+                    currentSize.height = std::max( currentSize.height, childSize.height );
+                    this->setContentSize(currentSize);
             
-                idx++;
-            }
+                    idx++;
+                }
+            } // if (layerInfo->_visible)
         }
     }
 }
