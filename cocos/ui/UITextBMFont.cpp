@@ -36,7 +36,8 @@ TextBMFont::TextBMFont():
 _labelBMFontRenderer(nullptr),
 _fntFileHasInit(false),
 _fntFileName(""),
-_stringValue("")
+_stringValue(""),
+_labelBMFontRendererAdaptDirty(true)
 {
 }
 
@@ -85,8 +86,7 @@ void TextBMFont::setFntFile(const std::string& fileName)
     }
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
-    updateAnchorPoint();
-    labelBMFontScaleChangedWithSize();
+    updateRGBAToRenderer(_labelBMFontRenderer);
     _fntFileHasInit = true;
     setText(_stringValue);
 }
@@ -99,7 +99,8 @@ void TextBMFont::setText(const std::string& value)
         return;
     }
     _labelBMFontRenderer->setString(value);
-    labelBMFontScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
+    _labelBMFontRendererAdaptDirty = true;
 }
 
 const std::string TextBMFont::getStringValue()
@@ -107,19 +108,22 @@ const std::string TextBMFont::getStringValue()
     return _stringValue;
 }
 
-void TextBMFont::setAnchorPoint(const Vector2 &pt)
-{
-    Widget::setAnchorPoint(pt);
-    _labelBMFontRenderer->setAnchorPoint(pt);
-}
-
 void TextBMFont::onSizeChanged()
 {
     Widget::onSizeChanged();
-    labelBMFontScaleChangedWithSize();
+    _labelBMFontRendererAdaptDirty = true;
+}
+    
+void TextBMFont::adaptRenderers()
+{
+    if (_labelBMFontRendererAdaptDirty)
+    {
+        labelBMFontScaleChangedWithSize();
+        _labelBMFontRendererAdaptDirty = false;
+    }
 }
 
-const Size& TextBMFont::getContentSize() const
+const Size& TextBMFont::getVirtualRendererSize() const
 {
     return _labelBMFontRenderer->getContentSize();
 }
@@ -134,7 +138,6 @@ void TextBMFont::labelBMFontScaleChangedWithSize()
     if (_ignoreSize)
     {
         _labelBMFontRenderer->setScale(1.0f);
-        _size = _labelBMFontRenderer->getContentSize();
     }
     else
     {
@@ -149,6 +152,7 @@ void TextBMFont::labelBMFontScaleChangedWithSize()
         _labelBMFontRenderer->setScaleX(scaleX);
         _labelBMFontRenderer->setScaleY(scaleY);
     }
+    _labelBMFontRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 std::string TextBMFont::getDescription() const

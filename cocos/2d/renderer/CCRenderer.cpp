@@ -41,7 +41,7 @@
 NS_CC_BEGIN
 
 // helper
-bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
+static bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 {
     return a->getGlobalOrder() < b->getGlobalOrder();
 }

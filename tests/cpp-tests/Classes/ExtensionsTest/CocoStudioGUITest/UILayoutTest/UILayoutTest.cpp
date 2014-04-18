@@ -53,7 +53,7 @@ bool UILayoutTest::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vector2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
                                          button_scale9->getSize().height / 2.0f));
         
@@ -118,7 +118,7 @@ bool UILayoutTest_Color::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vector2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
                                          button_scale9->getSize().height / 2.0f));
         
@@ -182,7 +182,7 @@ bool UILayoutTest_Gradient::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vector2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
                                          button_scale9->getSize().height / 2.0f));
         
@@ -243,7 +243,7 @@ bool UILayoutTest_BackGroundImage::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vector2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
                                          button_scale9->getSize().height / 2.0f));
         
@@ -305,7 +305,7 @@ bool UILayoutTest_BackGroundImage_Scale9::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vector2(layout->getSize().width - button_scale9->getSize().width / 2.0f,
                                          button_scale9->getSize().height / 2.0f));
         layout->addChild(button_scale9);
@@ -376,7 +376,7 @@ bool UILayoutTest_Layout_Linear_Vertical::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         layout->addChild(button_scale9);
         
         LinearLayoutParameter* lp3 = LinearLayoutParameter::create();
@@ -450,7 +450,7 @@ bool UILayoutTest_Layout_Linear_Horizontal::init()
         
         Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         button_scale9->setScale9Enabled(true);
-        button_scale9->setSize(Size(100.0f, button_scale9->getContentSize().height));
+        button_scale9->setSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         layout->addChild(button_scale9);
         
         LinearLayoutParameter* lp3 = LinearLayoutParameter::create();

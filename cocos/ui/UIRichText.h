@@ -105,11 +105,11 @@ public:
     virtual void visit(cocos2d::Renderer *renderer, const Matrix &parentTransform, bool parentTransformUpdated) override;
     void setVerticalSpace(float space);
     virtual void setAnchorPoint(const Vector2 &pt);
-    virtual const Size& getContentSize() const;
+    virtual const Size& getVirtualRendererSize() const override;
     void formatText();
     virtual void ignoreContentAdaptWithSize(bool ignore);
     virtual std::string getDescription() const override;
-	
+    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     

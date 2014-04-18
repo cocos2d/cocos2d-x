@@ -99,9 +99,6 @@ public:
 
     const Rect& getCapInsets();
 
-    //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Vector2 &pt) override;
-
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
 
@@ -110,7 +107,7 @@ public:
      */
     virtual std::string getDescription() const override;
 
-    virtual const Size& getContentSize() const override;
+    virtual const Size& getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -129,6 +126,7 @@ protected:
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    virtual void adaptRenderers() override;
 protected:
     bool _scale9Enabled;
     bool _prevIgnoreSize;
@@ -137,6 +135,7 @@ protected:
     std::string _textureFile;
     TextureResType _imageTexType;
     Size _imageTextureSize;
+    bool _imageRendererAdaptDirty;
 };
 
 }

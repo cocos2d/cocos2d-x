@@ -43,7 +43,8 @@ _barRendererTextureSize(Size::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
-_textureFile("")
+_textureFile(""),
+_barRendererAdaptDirty(true)
 {
 }
 
@@ -175,7 +176,9 @@ int LoadingBar::getDirection()
         }
         break;
     }
-    barRendererScaleChangedWithSize();
+//    barRendererScaleChangedWithSize();
+    updateContentSizeWithTextureSize(_barRendererTextureSize);
+    _barRendererAdaptDirty = true;
 }
 
 void LoadingBar::setScale9Enabled(bool enabled)
@@ -265,7 +268,16 @@ int LoadingBar::getPercent()
 void LoadingBar::onSizeChanged()
 {
     Widget::onSizeChanged();
-    barRendererScaleChangedWithSize();
+    _barRendererAdaptDirty = true;
+}
+    
+void LoadingBar::adaptRenderers()
+{
+    if (_barRendererAdaptDirty)
+    {
+        barRendererScaleChangedWithSize();
+        _barRendererAdaptDirty = false;
+    }
 }
 
 void LoadingBar::ignoreContentAdaptWithSize(bool ignore)
@@ -277,7 +289,7 @@ void LoadingBar::ignoreContentAdaptWithSize(bool ignore)
     }
 }
 
-const Size& LoadingBar::getContentSize() const
+const Size& LoadingBar::getVirtualRendererSize() const
 {
     return _barRendererTextureSize;
 }
@@ -295,7 +307,6 @@ void LoadingBar::barRendererScaleChangedWithSize()
         {
             _totalLength = _barRendererTextureSize.width;
             _barRenderer->setScale(1.0f);
-            _size = _barRendererTextureSize;
         }
     }
     else
@@ -323,10 +334,10 @@ void LoadingBar::barRendererScaleChangedWithSize()
     switch (_barType)
     {
         case LoadingBarTypeLeft:
-            _barRenderer->setPosition(Vector2(-_totalLength * 0.5f, 0.0f));
+            _barRenderer->setPosition(Vector2(0.0f, _contentSize.height / 2.0f));
             break;
         case LoadingBarTypeRight:
-            _barRenderer->setPosition(Vector2(_totalLength * 0.5f, 0.0f));
+            _barRenderer->setPosition(Vector2(_totalLength, _contentSize.height / 2.0f));
             break;
         default:
             break;

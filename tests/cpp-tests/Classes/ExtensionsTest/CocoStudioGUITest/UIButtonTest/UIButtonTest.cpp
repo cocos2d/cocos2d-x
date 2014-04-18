@@ -40,7 +40,7 @@ bool UIButtonTest::init()
                                         "cocosui/animationbuttonpressed.png");
         button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
-        _uiLayer->addChild(button);        
+        _uiLayer->addChild(button);
 
         return true;
     }
@@ -109,7 +109,7 @@ bool UIButtonTest_Scale9::init()
         // open scale9 render
         button->setScale9Enabled(true);
         button->setPosition(Vector2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        button->setSize(Size(150, button->getContentSize().height * 1.5f));
+        button->setSize(Size(150, 70));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
         _uiLayer->addChild(button);
         

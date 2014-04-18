@@ -44,7 +44,8 @@ _capInsets(Rect::ZERO),
 _imageRenderer(nullptr),
 _textureFile(""),
 _imageTexType(UI_TEX_TYPE_LOCAL),
-_imageTextureSize(_size)
+_imageTextureSize(_size),
+_imageRendererAdaptDirty(true)
 {
 
 }
@@ -150,11 +151,11 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
-    imageTextureScaleChangedWithSize();
-    updateAnchorPoint();
     updateFlippedX();
     updateFlippedY();
     updateRGBAToRenderer(_imageRenderer);
+    updateContentSizeWithTextureSize(_imageTextureSize);
+    _imageRendererAdaptDirty = true;
 }
 
 void ImageView::setTextureRect(const Rect &rect)
@@ -257,20 +258,23 @@ const Rect& ImageView::getCapInsets()
 {
     return _capInsets;
 }
-    
-void ImageView::setAnchorPoint(const Vector2 &pt)
-{
-    Widget::setAnchorPoint(pt);
-    _imageRenderer->setAnchorPoint(pt);
-}
 
 void ImageView::onSizeChanged()
 {
     Widget::onSizeChanged();
-    imageTextureScaleChangedWithSize();
+    _imageRendererAdaptDirty = true;
+}
+    
+void ImageView::adaptRenderers()
+{
+    if (_imageRendererAdaptDirty)
+    {
+        imageTextureScaleChangedWithSize();
+        _imageRendererAdaptDirty = false;
+    }
 }
 
-const Size& ImageView::getContentSize() const
+const Size& ImageView::getVirtualRendererSize() const
 {
     return _imageTextureSize;
 }
@@ -287,7 +291,6 @@ void ImageView::imageTextureScaleChangedWithSize()
         if (!_scale9Enabled)
         {
             _imageRenderer->setScale(1.0f);
-            _size = _imageTextureSize;
         }
     }
     else
@@ -310,6 +313,7 @@ void ImageView::imageTextureScaleChangedWithSize()
             _imageRenderer->setScaleY(scaleY);
         }
     }
+    _imageRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 std::string ImageView::getDescription() const

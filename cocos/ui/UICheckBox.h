@@ -164,17 +164,14 @@ public:
      */
     bool getSelectedState();
 
-    //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const Vector2 &pt) override;
-
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
 
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
 
-    //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const override;
+    //override "getVirtualRendererSize" method of widget.
+    virtual const Size& getVirtualRendererSize() const override;
 
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
@@ -213,6 +210,7 @@ protected:
     void frontCrossDisabledTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    virtual void adaptRenderers() override;
 protected:
     Sprite* _backGroundBoxRenderer;
     Sprite* _backGroundSelectedBoxRenderer;
@@ -235,6 +233,12 @@ protected:
     std::string _frontCrossFileName;
     std::string _backGroundDisabledFileName;
     std::string _frontCrossDisabledFileName;
+    
+    bool _backGroundBoxRendererAdaptDirty;
+    bool _backGroundSelectedBoxRendererAdaptDirty;
+    bool _frontCrossRendererAdaptDirty;
+    bool _backGroundBoxDisabledRendererAdaptDirty;
+    bool _frontCrossDisabledRendererAdaptDirty;
 };
 
 }
