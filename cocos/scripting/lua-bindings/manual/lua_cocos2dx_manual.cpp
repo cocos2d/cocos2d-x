@@ -5325,7 +5325,9 @@ static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
 #endif
+    
     cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+    
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
@@ -5343,7 +5345,12 @@ static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
         std::string name = std::string(arg0["name"].asString());
         std::string help = std::string(arg0["help"].asString());
         
-        ok &= toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err);
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
         LUA_FUNCTION handler = 0;
         if (ok) {
             handler = (  toluafix_ref_function(tolua_S,3,0));
