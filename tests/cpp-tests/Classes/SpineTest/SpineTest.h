@@ -38,7 +38,9 @@ public:
 
 class SpineTestLayer: public cocos2d::Layer {
 private:
-	spine::SkeletonAnimation* skeletonNode;
+	spine::SkeletonAnimation* spineboy;
+	spine::SkeletonAnimation* monster;
+	spine::SkeletonAnimation* goblin;
 
 public:
 

@@ -1,0 +1,12 @@
+
+skeleton.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+blocks_violet_basic
+  rotate: false
+  xy: 2, 2
+  size: 118, 111
+  orig: 128, 128
+  offset: 5, 9
+  index: -1

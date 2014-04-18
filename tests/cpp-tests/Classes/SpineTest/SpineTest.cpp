@@ -49,29 +49,33 @@ void SpineTestScene::runThisTest()
 bool SpineTestLayer::init () {
     if (!Layer::init()) return false;
     
-    skeletonNode = SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
-    skeletonNode->setMix("walk", "jump", 0.2f);
-    skeletonNode->setMix("jump", "walk", 0.4f);
     
-    skeletonNode->setAnimationListener(this, animationStateEvent_selector(SpineTestLayer::animationStateEvent));
-    skeletonNode->setAnimation(0, "walk", false);
-    skeletonNode->addAnimation(0, "jump", false);
-    skeletonNode->addAnimation(0, "walk", true);
-    skeletonNode->addAnimation(0, "jump", true, 4);
-    // skeletonNode->addAnimation(1, "drawOrder", true);
+    spineboy = SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
+    spineboy->setAnimation(0, "walk", false);
+    spineboy->addAnimation(0, "jump", true);
+    spineboy->addAnimation(0, "walk", true, 3);
+    spineboy->timeScale = 1.f;
+    spineboy->update(0);
     
-    skeletonNode->timeScale = 0.3f;
-    skeletonNode->debugBones = true;
-    skeletonNode->update(0);
+    monster = SkeletonAnimation::createWithFile("spine/skeleton.json", "spine/skeleton.atlas");
+    monster->setAnimation(0, "animation", true);
+    monster->timeScale = 1.f;
+    monster->update(0);
     
-    skeletonNode->runAction(CCRepeatForever::create(CCSequence::create(CCFadeOut::create(1),
-                                                                       CCFadeIn::create(1),
-                                                                       CCDelayTime::create(5),
-                                                                       NULL)));
-    
+    goblin = SkeletonAnimation::createWithFile("spine/goblins.json", "spine/goblins.atlas");
+    goblin->setSkin("goblin");
+    goblin->setSlotsToSetupPose();
+    goblin->timeScale = 1.f;
+    goblin->update(0);
+    goblin->setAnimation(0, "walk", true);
+
     Size windowSize = Director::getInstance()->getWinSize();
-    skeletonNode->setPosition(Point(windowSize.width / 2, 20));
-    addChild(skeletonNode);
+    spineboy->setPosition(Point(1 * windowSize.width / 4, windowSize.height / 5));
+    addChild(spineboy);
+    monster->setPosition(Point(2 * windowSize.width / 4, windowSize.height / 5));
+    addChild(monster);
+    goblin->setPosition(Point(3 *windowSize.width / 4, windowSize.height / 5));
+    addChild(goblin);
     
     scheduleUpdate();
     
