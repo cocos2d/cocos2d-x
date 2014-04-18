@@ -104,7 +104,6 @@ Skeleton::Skeleton (const char* skeletonDataFile, const char* atlasFile, float s
 
 	spSkeletonJson* json = spSkeletonJson_create(atlas);
 	json->scale = scale == 0 ? (1 / Director::getInstance()->getContentScaleFactor()) : scale;
-	//setScale(scale == 0 ? (1 / Director::getInstance()->getContentScaleFactor()) : scale);
     spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile);
     
 	CCAssert(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
@@ -125,7 +124,6 @@ void Skeleton::update (float deltaTime) {
 
 void Skeleton::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
