@@ -17,33 +17,32 @@ payload = {}
 if os.environ.has_key('payload'):
 	payload_str = os.environ['payload']
 	#parse to json obj
-	global payload
 	payload = json.loads(payload_str)
 print 'payload:',payload
 pr_num = 1
 #get pull number
-if payload.has_key('issue'):
-	issue = payload['issue']
-	if issue.has_key('number'):
-		pr_num = issue['number']
+if payload.has_key('number'):
+	pr_num = payload['number']
 print 'pr_num:' + str(pr_num)
 
 test_name = ['cpp_empty_test']
 if os.environ.has_key('TESTS_NAME'):
-	temp_var = os.environ('TESTS_NAME')
+	temp_var = os.environ['TESTS_NAME']
 	test_name = temp_var.split(', ')
 package_name = ['org.cocos2dx.hellocpp']
 if os.environ.has_key('PACKAGE_NAME'):
-	temp_var = os.environ('PACKAGE_NAME')
+	temp_var = os.environ['PACKAGE_NAME']
 	package_name = temp_var.split(', ')
 activity_name = ['org.cocos2dx.cpp.AppActivity']
 if os.environ.has_key('ACTIVITY_NAME'):
-	temp_var = os.environ('ACTIVITY_NAME')
+	temp_var = os.environ['ACTIVITY_NAME']
 	activity_name = temp_var.split(', ')
 gIdx = 0
 if os.environ.has_key('TEST_INDEX'):
 	gIdx = os.environ('TEST_INDEX')
 
+empty_test_result = True
+empty_test_result_info = ''
 arrDevices = []
 def getDevices():
 	cmd = 'adb devices'
@@ -79,13 +78,19 @@ def mapIP():
 		device['ip'] = ip_d
 
 info_empty_test = {}
-apk_name = 'apk/'+test_name[gIdx]+'/'+test_name[gIdx]+'_'+str(pr_num)+'.apk'
+apk_name = 'apks/'+test_name[gIdx]+'/'+test_name[gIdx]+'_'+str(pr_num)+'.apk'
 def install_apk():
 	print 'will install apk:', apk_name
 	if len(arrDevices) == 0:
-		print 'no android device.'
+		empty_test_result = False
+		empty_test_result_info = 'no android device.'
+		print empty_test_result_info
 		return False
 	info_of_install = []
+	if not os.path.isfile(apk_name):
+		print apk_name, 'is not exist!'
+		empty_test_result = False
+		return False
 	for device in arrDevices:
 		name = device['name']
 		cmd = 'adb -s '+name+' install '+apk_name
@@ -107,46 +112,79 @@ def open_apk(type_of_apk):
 		for info in info_start:
 			if info.find('Error:') > -1:
 				print 'infomation of open activity:',info
+				empty_test_result = False
+				empty_test_result_info = 'open :'+info
 				return info
-	print 'activity is opened.'
+	if len(arrDevices):
+		print 'activity is opened.'
+	else:
+		print 'no device.'
 	return True
 
 PORT = 5678
 def socket_status(device_name):
 	soc = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
+	status_socket = False
 	try:
-		print 'will check status of app:', device_name
+		print 'telnet ', device_name['ip'], PORT
 		soc.connect((device_name['ip'], PORT))
 		cmd = 'resolution\r\n'
 		# print 'socket cmd :', cmd
+		print 'connected successfully.'
+		print 'send console command: resolution'
 		soc.send(cmd)
 		while True:
 			data = soc.recv(1024)
 			if len(data):
 				print data
 				if data.find('size:') > -1:
-					print test_name[gIdx]+' is successful!'
-					return True
+					print 'OK'
+					print 'close', test_name[gIdx]
+					soc.send('director end')
+					print 'OK'
+					status_socket = True
+					break
 			if not data:
-				print test_name[gIdx]+' is crashed!'
+				empty_test_result = False
+				empty_test_result_info = test_name[gIdx]+' is crashed!'
+				print empty_test_result_info
 				break
 	except Exception, e:
-		print test_name[gIdx]+' is crashed!'
-		return False
+		empty_test_result = False
+		empty_test_result_info = test_name[gIdx]+' is crashed!'
+		print empty_test_result_info
+	time.sleep(2)
+	soc.close()
+	return status_socket
 
 def uninstall_apk(idx):
 	# adb shell pm uninstall -n org.cocos2dx.hellolua
-	print 'will uninstall apk:', package_name[idx]
+	print 'uninstall ', test_name[idx]
 	for device in arrDevices:
 		cmd = 'adb -s '+device['name']+' shell pm uninstall -n '+package_name[idx]
 		info_uninstall = os.popen(cmd).read()
-		print 'uninstall apk:', info_uninstall
+		if info_uninstall.find('Success') > -1:
+			print 'OK'
+		else:
+			empty_test_result = False
+			empty_test_result_info = 'uninstall Failed!'
+			print empty_test_result_info
 	return True
+
+def wakeup_device(idx):
+	file_wakeup = 'wakeup.py'
+	if not os.path.isfile(file_wakeup):
+		print file_wakeup, 'is not file_wakeup'
+		return False
+	info_wake = os.popen('monkeyrunner '+file_wakeup).read()
+	print 'info_wake:', info_wake
 
 def main():
 	print 'in main:'
 	getDevices()
 	if len(arrDevices):
+		wakeup_device(gIdx)
+		time.sleep(2)
 		mapIP()
 		print 'arrDevices:',arrDevices
 	print 'empty test start:'
@@ -161,7 +199,12 @@ def main():
 		time.sleep(5)
 		info_uninstall = uninstall_apk(gIdx)
 	print 'info_empty_test:', info_empty_test
-	print 'empty test end'
+	print 'empty test end', empty_test_result
+	if empty_test_result:
+		return 0
+	else:
+		print 'empty_test_result_info:', empty_test_result_info
+		return 1
 
 # -------------- main --------------
 if __name__ == '__main__':
