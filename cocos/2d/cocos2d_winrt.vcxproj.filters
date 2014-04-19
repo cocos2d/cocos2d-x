@@ -625,6 +625,9 @@
     <ClCompile Include="..\..\external\xxhash\xxhash.c">
       <Filter>xxhash</Filter>
     </ClCompile>
+    <ClCompile Include="platform\winrt\InputEvent.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1256,6 +1259,12 @@
     </ClInclude>
     <ClInclude Include="..\..\external\xxhash\xxhash.h">
       <Filter>xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\InputEvent.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\InputEventTypes.h">
+      <Filter>platform\winrt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
