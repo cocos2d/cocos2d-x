@@ -24,7 +24,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLView.h"
-#include "CCSet.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
