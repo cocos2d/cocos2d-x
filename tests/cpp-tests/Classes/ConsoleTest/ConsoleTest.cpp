@@ -26,7 +26,7 @@
 #include "../testResource.h"
 #include <stdio.h>
 #include <stdlib.h>
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -36,6 +36,11 @@
 #include <WS2tcpip.h>
 #endif
 #include "base64.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#include "CCWinRTUtils.h"
+#include <sstream>
+#endif
 
 //------------------------------------------------------------------
 //
@@ -131,7 +136,6 @@ void ConsoleTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-
 //------------------------------------------------------------------
 //
 // ConsoleCustomCommand
@@ -150,6 +154,24 @@ ConsoleCustomCommand::ConsoleCustomCommand()
         }},
     };
     _console->addCommand(commands[0]);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+
+    std::stringstream ss;
+    ss << "WP8 Device IP Addresses:" << std::endl;
+    ss << getDeviceIPAddresses();
+
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto label = LabelTTF::create(ss.str(), "Arial", 12);
+
+    // position the label on the center of the screen
+    label->setPosition(Point(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height/2 + (label->getContentSize().height/2)));
+    
+    // add the label as a child to this layer
+    this->addChild(label, 1);
+#endif
 }
 
 ConsoleCustomCommand::~ConsoleCustomCommand()
@@ -168,7 +190,11 @@ std::string ConsoleCustomCommand::title() const
 
 std::string ConsoleCustomCommand::subtitle() const
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    return "telnet [ip address] 5678";
+#else
     return "telnet localhost 5678";
+#endif
 }
 
 
@@ -216,7 +242,7 @@ void ConsoleUploadFile::uploadFile()
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
@@ -242,7 +268,7 @@ void ConsoleUploadFile::uploadFile()
         if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;                  /* Success */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(sfd);
 #else
         close(sfd);
@@ -302,7 +328,7 @@ void ConsoleUploadFile::uploadFile()
     // terminate
     fclose (fp);
    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(sfd);
         WSACleanup();
 #else
