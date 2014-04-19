@@ -29,7 +29,7 @@
 #if defined(_DEBUG)
 #define DEBUGASSERT(x) assert(x)
 #else
-#define DEBUGASSERT(x) do { } WHILE_FALSE
+#define DEBUGASSERT(x)
 #endif
 
 #define ERRNO         ((int)GetLastError())
