@@ -139,7 +139,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_DEBUG;_LIB;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -159,7 +159,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;NDEBUG;_LIB;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -179,7 +179,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_DEBUG;_LIB;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -199,7 +199,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;NDEBUG;_LIB;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -219,7 +219,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_DEBUG;_LIB;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -239,7 +239,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\winrt;$(EngineRoot)external\jpeg\include\winrt;$(EngineRoot)external\tiff\include\winrt;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\winrt;$(EngineRoot)external\winrt-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;NDEBUG;_LIB;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -262,7 +262,6 @@
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
     <ClCompile Include="..\..\external\unzip\unzip.cpp" />
-    <ClCompile Include="..\..\external\xxhash\xxhash.c" />
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\CCAffineTransform.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
@@ -602,7 +601,6 @@
     <ClCompile Include="platform\winrt\CCStdC.cpp" />
     <ClCompile Include="platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="platform\winrt\DirectXBase.cpp" />
-    <ClCompile Include="platform\winrt\InputEvent.cpp" />
     <ClCompile Include="platform\winrt\sha1.cpp" />
     <ClCompile Include="renderer\CCBatchCommand.cpp" />
     <ClCompile Include="renderer\CCCustomCommand.cpp" />
@@ -622,7 +620,6 @@
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
-    <ClInclude Include="..\..\external\xxhash\xxhash.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\CCAffineTransform.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
@@ -816,8 +813,6 @@
     <ClInclude Include="platform\winrt\CCWinRTUtils.h" />
     <ClInclude Include="platform\winrt\DirectXBase.h" />
     <ClInclude Include="platform\winrt\DirectXHelper.h" />
-    <ClInclude Include="platform\winrt\InputEvent.h" />
-    <ClInclude Include="platform\winrt\InputEventTypes.h" />
     <ClInclude Include="platform\winrt\sha1.h" />
     <ClInclude Include="renderer\CCBatchCommand.h" />
     <ClInclude Include="renderer\CCCustomCommand.h" />
