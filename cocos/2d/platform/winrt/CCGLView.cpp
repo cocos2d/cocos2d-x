@@ -515,4 +515,10 @@ void GLView::UpdateForWindowSizeChange()
    }
 }
 
+void GLView::QueueEvent(std::shared_ptr<InputEvent>& event)
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    mInputEvents.push(event);
+}
+
 NS_CC_END
