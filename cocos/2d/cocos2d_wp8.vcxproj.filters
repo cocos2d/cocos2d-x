@@ -501,9 +501,6 @@
     <ClCompile Include="renderer\CCRenderer.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="renderer\CCRenderMaterial.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="renderer\CCBatchCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -615,6 +612,12 @@
     </ClCompile>
     <ClCompile Include="..\deprecated\CCString.cpp">
       <Filter>deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\InputEvent.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\winrt\inet_ntop_winrt.cpp">
+      <Filter>platform\winrt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -861,51 +864,6 @@
     <ClInclude Include="..\base\s3tc.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="ccShader_Position_uColor_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_Position_uColor_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionColor_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionColor_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionColorLengthTexture_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionColorLengthTexture_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTexture_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTexture_uColor_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTexture_uColor_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTexture_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTextureA8Color_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTextureA8Color_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTextureColor_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTextureColor_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShader_PositionTextureColorAlphaTest_frag.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
     <ClInclude Include="CCGLProgram.h">
       <Filter>shaders</Filter>
     </ClInclude>
@@ -913,9 +871,6 @@
       <Filter>shaders</Filter>
     </ClInclude>
     <ClInclude Include="CCShaderCache.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ccShaderEx_SwitchMask_frag.h">
       <Filter>shaders</Filter>
     </ClInclude>
     <ClInclude Include="ccShaders.h">
@@ -1243,6 +1198,15 @@
     </ClInclude>
     <ClInclude Include="..\deprecated\CCString.h">
       <Filter>deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\InputEvent.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\InputEventTypes.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\winrt\inet_ntop_winrt.h">
+      <Filter>platform\winrt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
