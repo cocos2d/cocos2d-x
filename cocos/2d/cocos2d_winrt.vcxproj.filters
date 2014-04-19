@@ -110,10 +110,7 @@
       <UniqueIdentifier>{7c71abeb-8b4b-4be8-a23c-e32fedc65fc9}</UniqueIdentifier>
     </Filter>
     <Filter Include="deprecated">
-      <UniqueIdentifier>{b8c383b0-8a60-4b5e-aca1-932c80742ee6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="xxhash">
-      <UniqueIdentifier>{12a39964-6ccf-438c-9ff6-5acc9f443945}</UniqueIdentifier>
+      <UniqueIdentifier>{6e394a3e-2c57-4988-bc51-bea18e491559}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -621,12 +618,6 @@
     </ClCompile>
     <ClCompile Include="..\deprecated\CCString.cpp">
       <Filter>deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\xxhash\xxhash.c">
-      <Filter>xxhash</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\winrt\InputEvent.cpp">
-      <Filter>platform\winrt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1256,15 +1247,6 @@
     </ClInclude>
     <ClInclude Include="..\deprecated\CCString.h">
       <Filter>deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\xxhash\xxhash.h">
-      <Filter>xxhash</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\winrt\InputEvent.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\winrt\InputEventTypes.h">
-      <Filter>platform\winrt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
