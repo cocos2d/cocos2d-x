@@ -580,9 +580,9 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
         lowerCase[i] = tolower(lowerCase[i]);
     }
 
-    if (std::string::npos == lowerCase.find("fonts\\"))
+    if (std::string::npos == lowerCase.find("fonts/"))
     {
-        path = "fonts\\";
+        path = "fonts/";
         path += pFontName;
     }
 
