@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+
 NS_CC_EXT_BEGIN
 
 class CCEditBox;
@@ -83,5 +85,7 @@ private:
 };
 
 NS_CC_EXT_END
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 
 #endif

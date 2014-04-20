@@ -465,6 +465,12 @@ Developers:
     xhcnb
         Fixed a bug that it will get wrong custom properties when use different count custom properties in CocosBuilder.
 
+    lewellyn
+        Updated BlackBerry project template.
+        
+    kienvn
+        Fixed CCLabelBMFont crashes when there are invalid characters which aren't in fnt file
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

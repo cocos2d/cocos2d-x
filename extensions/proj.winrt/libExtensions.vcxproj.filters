@@ -91,6 +91,9 @@
     <Filter Include="CocoStudio\Trigger">
       <UniqueIdentifier>{8e8f5262-1681-4699-8d16-d2ad81ad0ece}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\CCEditBox">
+      <UniqueIdentifier>{8c25bb67-dcd8-4501-876d-e13e033dc731}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CocoStudio\Reader\WidgetReader">
       <UniqueIdentifier>{a196e518-3a69-47a1-a4fc-6dbb3e164450}</UniqueIdentifier>
     </Filter>
@@ -498,6 +501,12 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\System\UITouchGroup.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWinrt.cpp">
+      <Filter>GUI\CCEditBox</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Reader\WidgetReader\WidgetReader.cpp">
       <Filter>CocoStudio\Reader\WidgetReader</Filter>
@@ -977,6 +986,15 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\System\UITouchGroup.h">
       <Filter>CocoStudio\GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h">
+      <Filter>GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWinrt.h">
+      <Filter>GUI\CCEditBox</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Reader\WidgetReader\WidgetReader.h">
       <Filter>CocoStudio\Reader\WidgetReader</Filter>
