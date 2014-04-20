@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "base_nodes/CCNode.h"
 #include "CCTMXObjectGroup.h"
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -166,6 +167,8 @@ private:
 protected:
     //! tile properties
     CCDictionary* m_pTileProperties;
+public:
+    std::vector<std::string> _vecTextures;
 
 };
 

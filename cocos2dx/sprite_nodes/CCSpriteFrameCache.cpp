@@ -345,6 +345,7 @@ bool CCSpriteFrameCache::reloadTexture(const char* pszPlist)
     else
     {
         CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
+        return false;
     }
 
     dict->release();
