@@ -1,29 +1,28 @@
 --Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
 local M = {}
-local audioEngineInstance = cc.SimpleAudioEngine:getInstance()
 
 function M.stopAllEffects()
-    audioEngineInstance:stopAllEffects()
+    cc.SimpleAudioEngine:getInstance():stopAllEffects()
 end
 
 function M.getMusicVolume()
-    return audioEngineInstance:getMusicVolume()
+    return cc.SimpleAudioEngine:getInstance():getMusicVolume()
 end
 
 function M.isMusicPlaying()
-    return audioEngineInstance:isMusicPlaying()
+    return cc.SimpleAudioEngine:getInstance():isMusicPlaying()
 end
 
 function M.getEffectsVolume()
-    return audioEngineInstance:getEffectsVolume()
+    return cc.SimpleAudioEngine:getInstance():getEffectsVolume()
 end
 
 function M.setMusicVolume(volume)
-    audioEngineInstance:setMusicVolume(volume)
+    cc.SimpleAudioEngine:getInstance():setMusicVolume(volume)
 end
 
 function M.stopEffect(handle)
-    audioEngineInstance:stopEffect(handle)
+    cc.SimpleAudioEngine:getInstance():stopEffect(handle)
 end
 
 function M.stopMusic(isReleaseData)
@@ -31,7 +30,7 @@ function M.stopMusic(isReleaseData)
     if nil ~= isReleaseData then
         releaseDataValue = isReleaseData
     end
-    audioEngineInstance:stopMusic(releaseDataValue)
+    cc.SimpleAudioEngine:getInstance():stopMusic(releaseDataValue)
 end
 
 function M.playMusic(filename, isLoop)
@@ -39,19 +38,19 @@ function M.playMusic(filename, isLoop)
     if nil ~= isLoop then
         loopValue = isLoop
     end
-    audioEngineInstance:playMusic(filename, loopValue)
+    cc.SimpleAudioEngine:getInstance():playMusic(filename, loopValue)
 end
 
 function M.pauseAllEffects()
-    audioEngineInstance:pauseAllEffects()
+    cc.SimpleAudioEngine:getInstance():pauseAllEffects()
 end
 
 function M.preloadMusic(filename)
-    audioEngineInstance:preloadMusic(filename)
+    cc.SimpleAudioEngine:getInstance():preloadMusic(filename)
 end
 
 function M.resumeMusic()
-    audioEngineInstance:resumeMusic()
+    cc.SimpleAudioEngine:getInstance():resumeMusic()
 end
 
 function M.playEffect(filename, isLoop)
@@ -59,43 +58,51 @@ function M.playEffect(filename, isLoop)
     if nil ~= isLoop then
         loopValue = isLoop
     end
-    return audioEngineInstance:playEffect(filename, loopValue)
+    return cc.SimpleAudioEngine:getInstance():playEffect(filename, loopValue)
 end
 
 function M.rewindMusic()
-    audioEngineInstance:rewindMusic()
+    cc.SimpleAudioEngine:getInstance():rewindMusic()
 end
 
 function M.willPlayMusic()
-    return audioEngineInstance:willPlayMusic()
+    return cc.SimpleAudioEngine:getInstance():willPlayMusic()
 end
 
 function M.unloadEffect(filename)
-    audioEngineInstance:unloadEffect(filename)
+    cc.SimpleAudioEngine:getInstance():unloadEffect(filename)
 end
 
 function M.preloadEffect(filename)
-    audioEngineInstance:preloadEffect(filename)
+    cc.SimpleAudioEngine:getInstance():preloadEffect(filename)
 end
 
 function M.setEffectsVolume(volume)
-    audioEngineInstance:setEffectsVolume(volume)
+    cc.SimpleAudioEngine:getInstance():setEffectsVolume(volume)
 end
 
 function M.pauseEffect(handle)
-    audioEngineInstance:pauseEffect(handle)
+    cc.SimpleAudioEngine:getInstance():pauseEffect(handle)
 end
 
 function M.resumeAllEffects(handle)
-    audioEngineInstance:resumeAllEffects()
+    cc.SimpleAudioEngine:getInstance():resumeAllEffects()
 end
 
 function M.pauseMusic()
-    audioEngineInstance:pauseMusic()
+    cc.SimpleAudioEngine:getInstance():pauseMusic()
 end
 
 function M.resumeEffect(handle)
-    audioEngineInstance:resumeEffect(handle)
+    cc.SimpleAudioEngine:getInstance():resumeEffect(handle)
+end
+
+function M.getInstance()
+    return cc.SimpleAudioEngine:getInstance()
+end
+
+function M.destroyInstance()
+    return cc.SimpleAudioEngine:destroyInstance()
 end
 
 local modename = "AudioEngine"

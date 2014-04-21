@@ -414,8 +414,8 @@ _G.BRIGHT_HIGHLIGHT          = ccui.BrightStyle.highlight
 _G.WidgetTypeWidget                = ccui.WidgetType.widget
 _G.WidgetTypeContainer             = ccui.WidgetType.container
 
-_G.UI_TEX_TYPE_LOCAL               = ccui.TextureResType.UI_TEX_TYPE_LOCAL
-_G.UI_TEX_TYPE_PLIST               = ccui.TextureResType.UI_TEX_TYPE_PLIST
+_G.UI_TEX_TYPE_LOCAL               = ccui.TextureResType.localType
+_G.UI_TEX_TYPE_PLIST               = ccui.TextureResType.plistType
 
 _G.TOUCH_EVENT_BEGAN                = ccui.TouchEventType.began
 _G.TOUCH_EVENT_MOVED                = ccui.TouchEventType.moved
@@ -449,15 +449,15 @@ _G.SCROLLVIEW_DIR_VERTICAL                = ccui.ScrollViewDir.vertical
 _G.SCROLLVIEW_DIR_HORIZONTAL                 = ccui.ScrollViewDir.horizontal
 _G.SCROLLVIEW_DIR_BOTH             = ccui.ScrollViewDir.both
 
-_G.SCROLLVIEW_EVENT_SCROLL_TO_TOP                = ccui.ScrollviewEventType.SCROLL_TO_TOP
-_G.SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM             = ccui.ScrollviewEventType.SCROLL_TO_BOTTOM
-_G.SCROLLVIEW_EVENT_SCROLL_TO_LEFT               = ccui.ScrollviewEventType.SCROLL_TO_LEFT
-_G.SCROLLVIEW_EVENT_SCROLL_TO_RIGHT              = ccui.ScrollviewEventType.SCROLL_TO_RIGHT
-_G.SCROLLVIEW_EVENT_SCROLLING                    = ccui.ScrollviewEventType.SCROLLING
-_G.SCROLLVIEW_EVENT_BOUNCE_TOP                   = ccui.ScrollviewEventType.BOUNCE_TOP
-_G.SCROLLVIEW_EVENT_BOUNCE_BOTTOM                = ccui.ScrollviewEventType.BOUNCE_BOTTOM
-_G.SCROLLVIEW_EVENT_BOUNCE_LEFT                  = ccui.ScrollviewEventType.BOUNCE_LEFT
-_G.SCROLLVIEW_EVENT_BOUNCE_RIGHT                 = ccui.ScrollviewEventType.BOUNCE_RIGHT
+_G.SCROLLVIEW_EVENT_SCROLL_TO_TOP                = ccui.ScrollviewEventType.scrollToTop
+_G.SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM             = ccui.ScrollviewEventType.scrollToBottom
+_G.SCROLLVIEW_EVENT_SCROLL_TO_LEFT               = ccui.ScrollviewEventType.scrollToLeft
+_G.SCROLLVIEW_EVENT_SCROLL_TO_RIGHT              = ccui.ScrollviewEventType.scrollToRight
+_G.SCROLLVIEW_EVENT_SCROLLING                    = ccui.ScrollviewEventType.scrolling
+_G.SCROLLVIEW_EVENT_BOUNCE_TOP                   = ccui.ScrollviewEventType.bounceTop
+_G.SCROLLVIEW_EVENT_BOUNCE_BOTTOM                = ccui.ScrollviewEventType.bounceBottom
+_G.SCROLLVIEW_EVENT_BOUNCE_LEFT                  = ccui.ScrollviewEventType.bounceLeft
+_G.SCROLLVIEW_EVENT_BOUNCE_RIGHT                 = ccui.ScrollviewEventType.bounceRight
 
 _G.PAGEVIEW_EVENT_TURNING                 = ccui.PageViewEventType.turning
 

@@ -18,42 +18,42 @@ public:
     void Close();
 
     /**
-    @brief 播放声音文件
-    @param pFileName 播放的声音文件名称，需要包含文件的路径
-    @param nTimes    播放声音文件的循环次数，默认值为 1，即播放一次
+    @brief  Play sound file
+    @param pFileName    Sound's file name,include the file path.
+    @param nTimes    Play mode，default value is 1,paly once
     */
     void Open(const char* pFileName, UINT uId);
 
     void Play(UINT uTimes = 1);
 
     /**
-    @brief 暂停播放声音
+    @brief Pause play
     */
     void Pause();
 
     /**
-    @brief 继续播放声音
+    @brief Resume play
     */
     void Resume();
 
     /**
-    @brief 停止播放声音
+    @brief Stop play
     */
     void Stop();
 
     /**
-    @brief 重新播放
+    @brief Replay
     */
     void Rewind();
 
     /**
-    @brief 获取播放器当前是否正在播放中
+    @brief Is Playing
     */
     bool IsPlaying();
 
     /**
-    @brief 获取当前播放的音效 ID
-    @return 当前播放的音效ID
+    @brief  Get playing sound's ID
+    @return Sound's ID
     */
     UINT GetSoundID();
 

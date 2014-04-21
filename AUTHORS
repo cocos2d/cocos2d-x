@@ -712,6 +712,7 @@ Developers:
         
     kicktheken (Kenneth Chan)
         Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
+        Fix lua project template crash on iOS5.1 device
         
     andyque
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
@@ -813,6 +814,7 @@ Developers:
         
     Mazyod
         Fixed a bug that HTTPClient reports 2xx status codes as errors
+        Added missing Text Font and Placeholder feature of EditBox for Mac platform
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG

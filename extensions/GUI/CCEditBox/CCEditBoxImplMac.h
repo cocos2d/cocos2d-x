@@ -50,6 +50,7 @@
 }
 
 @property(nonatomic, retain) NSTextField* textField;
+@property(nonatomic, retain) NSMutableDictionary* placeholderAttributes;
 @property(nonatomic, readonly, getter = isEditState) BOOL editState;
 @property(nonatomic, assign) void* editBox;
 

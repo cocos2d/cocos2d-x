@@ -2732,8 +2732,6 @@
 		A0053F4F189B2BEA0035A564 /* CCGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGLView.h; sourceTree = "<group>"; };
 		A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		A0053F52189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = nativeactivity.cpp; sourceTree = "<group>"; };
-		A0053FA6189B2BEA0035A564 /* nativeactivity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nativeactivity.h; sourceTree = "<group>"; };
 		A0053FA8189B2BEA0035A564 /* CCApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
 		A0053FA9189B2BEA0035A564 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		A0053FAA189B2BEA0035A564 /* CCCommon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCCommon.cpp; sourceTree = "<group>"; };
@@ -4815,8 +4813,6 @@
 				A0053F4F189B2BEA0035A564 /* CCGLView.h */,
 				A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */,
 				A0053F52189B2BEA0035A564 /* CCStdC.h */,
-				A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */,
-				A0053FA6189B2BEA0035A564 /* nativeactivity.h */,
 			);
 			path = android;
 			sourceTree = "<group>";
