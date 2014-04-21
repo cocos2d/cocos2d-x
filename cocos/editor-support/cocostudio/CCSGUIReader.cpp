@@ -1111,7 +1111,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                 {
                     if (!dynamic_cast<Layout*>(widget))
                     {
-                        child->setPosition(Point(child->getPositionX() + widget->getSize().width / 2.0f, child->getPositionY() + widget->getSize().height / 2.0f));
+                        child->setPosition(Vector2(child->getPositionX() + widget->getSize().width / 2.0f, child->getPositionY() + widget->getSize().height / 2.0f));
                     }
                     widget->addChild(child);
                 }
