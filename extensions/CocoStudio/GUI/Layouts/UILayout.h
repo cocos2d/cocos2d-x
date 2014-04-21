@@ -251,6 +251,8 @@ public:
     virtual void sortAllChildren();
     
     void requestDoLayout();
+
+    void forceDoLayout();
     
     virtual void onEnter();
     virtual void onExit();
