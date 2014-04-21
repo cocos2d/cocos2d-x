@@ -68,6 +68,7 @@ public:
 	void onEnter() override;
 	void onExit() override;
 	virtual cocos2d::Rect getBoundingBox () const override;
+    cocos2d::Rect getLocalBounds() const;
 
 	// --- Convenience methods for common Skeleton_* functions.
 	void updateWorldTransform ();

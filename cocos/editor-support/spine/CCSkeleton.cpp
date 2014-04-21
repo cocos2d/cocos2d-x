@@ -317,34 +317,14 @@ TriangleTextureAtlas* Skeleton::getTextureAtlas (spMeshAttachment* meshAttachmen
 
     
 Rect Skeleton::getBoundingBox () const {
-	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	float scaleX = getScaleX();
 	float scaleY = getScaleY();
-	float vertices[8];
-	for (int i = 0; i < skeleton->slotCount; ++i) {
-		spSlot* slot = skeleton->slots[i];
-		if (!slot->attachment || slot->attachment->type != ATTACHMENT_REGION) continue;
-		spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-		spRegionAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
-		minX = min(minX, vertices[VERTEX_X1] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y1] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X1] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y1] * scaleY);
-		minX = min(minX, vertices[VERTEX_X4] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y4] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X4] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y4] * scaleY);
-		minX = min(minX, vertices[VERTEX_X2] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y2] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X2] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y2] * scaleY);
-		minX = min(minX, vertices[VERTEX_X3] * scaleX);
-		minY = min(minY, vertices[VERTEX_Y3] * scaleY);
-		maxX = max(maxX, vertices[VERTEX_X3] * scaleX);
-		maxY = max(maxY, vertices[VERTEX_Y3] * scaleY);
-	}
+	Rect localBounds = getLocalBounds();
 	Point position = getPosition();
-	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+    return Rect(position.x + localBounds.getMinX() * scaleX,
+                position.y + localBounds.getMinY() * scaleY,
+                localBounds.size.width * scaleX,
+                localBounds.size.height * scaleY);
 }
 
 void Skeleton::onEnter() {
@@ -357,6 +337,90 @@ void Skeleton::onExit() {
 	unscheduleUpdate();
 }
 
+Rect Skeleton::getLocalBounds() const
+{
+    bool first = true;
+    float minX = 0, minY = 0, maxX = 0, maxY = 0;
+    
+    for (int i = 0, n = skeleton->slotCount; i < n; i++) {
+		spSlot* slot = skeleton->drawOrder[i];
+        if (!slot->attachment) continue;
+        if (slot->attachment->type == ATTACHMENT_REGION)
+        {
+            spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
+            
+            float verticesPos[8];
+            
+            spRegionAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone, verticesPos);
+            
+            float regionMinX, regionMinY, regionMaxX, regionMaxY;
+            regionMinX = min(verticesPos[0], min(verticesPos[2], min(verticesPos[4], verticesPos[6])));
+            regionMinY = min(verticesPos[1], min(verticesPos[3], min(verticesPos[5], verticesPos[7])));
+            regionMaxX = max(verticesPos[0], max(verticesPos[2], max(verticesPos[4], verticesPos[6])));
+            regionMaxY = max(verticesPos[1], max(verticesPos[3], max(verticesPos[5], verticesPos[7])));
+            
+            if (first)
+            {
+                minX = regionMinX;
+                minY = regionMinY;
+                maxX = regionMaxX;
+                maxY = regionMaxY;
+                first = false;
+            }
+            else
+            {
+                minX = min(minX, regionMinX);
+                minY = min(minY, regionMinY);
+                maxX = max(maxX, regionMaxX);
+                maxY = max(maxY, regionMaxY);
+            }
+        }
+        else if (slot->attachment->type == ATTACHMENT_MESH)
+        {
+            spMeshAttachment * attachment = (spMeshAttachment*)slot->attachment;
+            
+            unsigned int verticesCount = attachment->verticesLength / 2;
+            if (verticesCount == 0) continue;
+            spMeshAttachment_computeWorldVertices(attachment, slot->skeleton->x, slot->skeleton->y, slot->bone);
+            
+            V3F_C4B_T2F * vertices = (V3F_C4B_T2F *)alloca(sizeof(V3F_C4B_T2F) * verticesCount);
+            
+            spMeshAttachment_updateVertices(attachment, slot, vertices, premultipliedAlpha);
+            
+            float meshMinX = vertices[0].vertices.x
+            , meshMinY = vertices[0].vertices.y
+            , meshMaxX = vertices[0].vertices.x
+            , meshMaxY = vertices[0].vertices.y;
+            
+            for (int j = 1; j < verticesCount; j++)
+            {
+                meshMinX = min(meshMinX, vertices[j].vertices.x);
+                meshMinY = min(meshMinY, vertices[j].vertices.y);
+                meshMaxX = max(meshMaxX, vertices[j].vertices.x);
+                meshMaxY = max(meshMaxY, vertices[j].vertices.y);
+            }
+            
+            if (first)
+            {
+                minX = meshMinX;
+                minY = meshMinY;
+                maxX = meshMaxX;
+                maxY = meshMaxY;
+                first = false;
+            }
+            else
+            {
+                minX = min(minX, meshMinX);
+                minY = min(minY, meshMinY);
+                maxX = max(maxX, meshMaxX);
+                maxY = max(maxY, meshMaxY);
+            }
+        }
+	}
+    
+    return Rect(minX, minY, maxX-minX, maxY-minY);
+}
+    
 // --- Convenience methods for Skeleton_* functions.
 
 void Skeleton::updateWorldTransform () {
