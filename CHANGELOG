@@ -6,6 +6,7 @@ cocos2d-x-3.0 ?? 2014
      [FIX]          Image: memoery leak
      [FIX]          Image: crashes when save a jpg file
      [FIX]          Lua: 'EditBox' can't response 'changed','ended' and 'return' event on Windows
+     [FIX]          Lua: new project will crash on iOS 5.1 devices
      
      [3rd]          libcurl: support ssl again on iOS
 
