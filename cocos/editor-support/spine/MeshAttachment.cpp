@@ -67,10 +67,20 @@ spMeshAttachment* spMeshAttachment_create(const char* name)
 
 void spMeshAttachment_setUVs(spMeshAttachment* self, float u, float v, float u2, float v2, int /*bool*/ rotate)
 {
-    self -> u = u;
-    self -> v = v;
-    self -> u2 = u2;
-    self -> v2 = v2;
+    if (rotate)
+    {
+        self -> u = u;
+        self -> v = v2;
+        self -> u2 = u2;
+        self -> v2 = v;
+    }
+    else
+    {
+        self -> u = u;
+        self -> v = v;
+        self -> u2 = u2;
+        self -> v2 = v2;
+    }
 };
 
 void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verticesLength, int* triangles, int trianglesLength, float* uvs)
@@ -94,14 +104,23 @@ void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verti
     }
     
     float u, v, w, h;
+    spAtlasRegion* region = NULL;
     if (self -> rendererObject != NULL) {
-        
-        spAtlasRegion* region = ((spAtlasRegion*)self -> rendererObject);
-        
-        u = region -> u;
-        v = region -> v;
-        w = region -> u2 - u;
-        h = region -> v2 - v;
+        region = ((spAtlasRegion*)self -> rendererObject);
+        if ( region -> rotate)
+        {
+            u = region -> u;
+            v = region -> v2;
+            w = region -> u2 - u;
+            h = v - region -> v;
+        }
+        else
+        {
+            u = region -> u;
+            v = region -> v;
+            w = region -> u2 - u;
+            h = region -> v2 - v;
+        }
     }
     else
     {
@@ -113,8 +132,16 @@ void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verti
          i < n;
          i += 2, ii += 4)
     {
-        self -> worldVertices[ii] = self -> u + uvs[i] * w;
-        self -> worldVertices[ii + 1] = self -> v + uvs[i + 1] * h;
+        if (region && region -> rotate)
+        {
+            self -> worldVertices[ii] = self -> u + uvs[i + 1] * w;
+            self -> worldVertices[ii + 1] = self -> v - uvs[i] * h;
+        }
+        else
+        {
+            self -> worldVertices[ii] = self -> u + uvs[i] * w;
+            self -> worldVertices[ii + 1] = self -> v + uvs[i + 1] * h;
+        }
     }
 };
 
