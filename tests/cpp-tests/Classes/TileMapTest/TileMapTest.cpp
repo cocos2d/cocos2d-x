@@ -1176,12 +1176,14 @@ void TMXOrthoVertexZ::onEnter()
     
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setDepthTest(true);
 }
 
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setDepthTest(false);
     TileDemo::onExit();
 }
 
