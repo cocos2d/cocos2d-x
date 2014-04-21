@@ -156,8 +156,10 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
 		skeleton->b *= skeleton->a;
 	}
 
-	int additive = 0;
-	TriangleTextureAtlas* textureAtlas = nullptr;
+	bool additive = false;
+	bool isPremultipliedAlpha = false;
+    setFittedBlendingFunc(false, false);
+    TriangleTextureAtlas* textureAtlas = nullptr;
     
     V3F_C4B_T2F_Triangle triangle;
     triangle.a.vertices.z = 0;
@@ -171,22 +173,51 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
     for (int i = 0, n = skeleton->slotCount; i < n; i++) {
 		spSlot* slot = skeleton->drawOrder[i];
         if (!slot->attachment) continue;
+        TriangleTextureAtlas* nextTextureAtlas = nullptr;
         if (slot->attachment->type == ATTACHMENT_REGION)
         {
             spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-            textureAtlas = getTextureAtlas(attachment);
-            
-            if (slot->data->additiveBlending != additive) {
-                if (textureAtlas) {
-                    textureAtlas->drawTriangles();
-                    textureAtlas->removeAllTriangles();
-                }
-                additive = !additive;
-                GL::blendFunc(blendFunc.src, additive ? GL_ONE : blendFunc.dst);
+            nextTextureAtlas = getTextureAtlas(attachment);
+        }
+        else if (slot->attachment->type == ATTACHMENT_MESH)
+        {
+            spMeshAttachment * attachment = (spMeshAttachment*)slot->attachment;
+            nextTextureAtlas = getTextureAtlas(attachment);
+        }
+        else
+        {
+            continue;
+        }
+
+        if (!nextTextureAtlas || !nextTextureAtlas->getTexture()) continue;
+        
+        // If different atlas then draw existsing one
+        if (nextTextureAtlas != textureAtlas)
+        {
+            if (textureAtlas) {
+                drawAndClear(textureAtlas);
             }
-            
-            setFittedBlendingFunc(textureAtlas);
-            
+            textureAtlas = nullptr;
+        }
+        
+        bool wonderAdditive = slot->data->additiveBlending;
+        bool wonderPremultipliedAlpha = nextTextureAtlas->getTexture()->hasPremultipliedAlpha();
+        // If current blending mode is not same then change mode
+        if ( additive != wonderAdditive || isPremultipliedAlpha != wonderPremultipliedAlpha) {
+            if (textureAtlas) {
+                drawAndClear(textureAtlas);
+            }
+            additive = wonderAdditive;
+            isPremultipliedAlpha = wonderPremultipliedAlpha;
+            setFittedBlendingFunc(additive, isPremultipliedAlpha);
+        }
+        
+        textureAtlas = nextTextureAtlas;
+
+        if (slot->attachment->type == ATTACHMENT_REGION)
+        {
+            spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
+
             resizeUntilLimit(textureAtlas, textureAtlas->getTotalTriangles());
             
             V3F_C4B_T2F vertices[4];
@@ -204,7 +235,6 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
         else if (slot->attachment->type == ATTACHMENT_MESH)
         {
             spMeshAttachment * attachment = (spMeshAttachment*)slot->attachment;
-            textureAtlas = getTextureAtlas(attachment);
 
             unsigned int verticesCount = attachment->verticesLength / 2;
             unsigned int trianglesCount = attachment->trianglesIndicesLength / 3;
@@ -225,12 +255,9 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
         }
 
 	}
+
 	if (textureAtlas) {
-        setFittedBlendingFunc(textureAtlas);
-        textureAtlas->drawTriangles();
-        textureAtlas->removeAllVertices();
-		textureAtlas->removeAllTriangles();
-        textureAtlas->setCurrentTriangles(0);
+        drawAndClear(textureAtlas);
 	}
     
 
@@ -375,16 +402,23 @@ void Skeleton::setBlendFunc (const cocos2d::BlendFunc& aBlendFunc) {
     this->blendFunc = aBlendFunc;
 }
     
-void Skeleton::setFittedBlendingFunc(TriangleTextureAtlas * nextRenderedTexture)
+void Skeleton::setFittedBlendingFunc(bool isPremultipliedAlpha, bool additive)
 {
-    if(nextRenderedTexture->getTexture() && nextRenderedTexture->getTexture()->hasPremultipliedAlpha())
+    if(isPremultipliedAlpha)
     {
-        GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
+        GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, additive ? GL_ONE : BlendFunc::ALPHA_PREMULTIPLIED.dst);
     }
     else
     {
-        GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+        GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, additive ? GL_ONE : BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
     }
 }
-
+    
+void Skeleton::drawAndClear(TriangleTextureAtlas *atlas)
+{
+    atlas->drawTriangles();
+    atlas->removeAllVertices();
+    atlas->removeAllTriangles();
+    atlas->setCurrentTriangles(0);
+}
 }

@@ -105,7 +105,8 @@ private:
 	spAtlas* atlas;
 	void initialize ();
     // Util function that setting blend-function by nextRenderedTexture's premultiplied flag
-    void setFittedBlendingFunc(TriangleTextureAtlas * nextRenderedTexture);
+    void setFittedBlendingFunc(bool isPremultipliedAlpha, bool additive);
+    void drawAndClear(TriangleTextureAtlas * atlas);
     
     cocos2d::CustomCommand _customCommand;    
 };
