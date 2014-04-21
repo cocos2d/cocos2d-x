@@ -1051,6 +1051,11 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
     }
 }
 
+std::string Director::getVersion() const
+{
+    return cocos2dVersion();
+}
+
 /***************************************************
 * implementation of DisplayLinkDirector
 **************************************************/
