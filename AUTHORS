@@ -814,7 +814,7 @@ Developers:
         
     Mazyod
         Fixed a bug that HTTPClient reports 2xx status codes as errors
-        Added missing Text Font and Placeholder feature for Mac platform
+        Added missing Text Font and Placeholder feature of EditBox for Mac platform
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
