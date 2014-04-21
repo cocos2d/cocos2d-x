@@ -663,6 +663,13 @@ void Director::replaceScene(Scene *scene)
 {
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
+	
+    if (_nextScene)
+    {
+        _nextScene->onExit();
+        _nextScene->cleanup();
+        _nextScene = nullptr;
+    }
 
     ssize_t index = _scenesStack.size();
 
