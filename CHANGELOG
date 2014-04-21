@@ -4,6 +4,7 @@ cocos2d-x-3.0 ?? 2014
      [FIX]          cocos console: Zipalign the apk generated with release mode
      [FIX]          Director: Application crashes on closing if CC_ENABLE_CACHE_TEXTURE_DATA is enabled
      [FIX]          Image: memoery leak
+     [FIX]          Image: crashes when save a jpg file
      [FIX]          Lua: 'EditBox' can't response 'changed','ended' and 'return' event on Windows
      
      [3rd]          libcurl: support ssl again on iOS
