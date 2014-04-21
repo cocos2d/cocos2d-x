@@ -300,7 +300,8 @@ void Node::setRotation3D(const Vertex3F& rotation)
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
-        _physicsBody->setRotation(_rotationZ_X);
+        Layer* layer = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getLayer() : nullptr;
+        updatePhysicsBodyRotation(layer);
     }
 #endif
 }

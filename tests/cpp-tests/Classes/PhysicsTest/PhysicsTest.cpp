@@ -22,7 +22,7 @@ namespace
         CLPHYSICS(PhysicsDemoSlice),
         CLPHYSICS(PhysicsDemoBug3988),
         CLPHYSICS(PhysicsContactTest),
-        CLPHYSICS(PhysicsPositionRotationTest),
+        CL(PhysicsPositionRotationTest),
         CLPHYSICS(PhysicsSetGravityEnableTest),
 #else
         CL(PhysicsDemoDisabled),
@@ -91,6 +91,7 @@ PhysicsDemo::PhysicsDemo()
 : _spriteTexture(nullptr)
 , _ball(nullptr)
 , _debugDraw(false)
+, _isRoot(true)
 {
 }
 
@@ -141,17 +142,26 @@ void PhysicsDemo::backCallback(Ref* sender)
 
 void PhysicsDemo::onEnter()
 {
-    BaseTest::onEnter();
+    if (_isRoot)
+    {
+        BaseTest::onEnter();
+    }
+    else
+    {
+        Layer::onEnter();
+    }
     
     _spriteTexture = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100)->getTexture();
     
-    // menu for debug layer
-    MenuItemFont::setFontSize(18);
-    auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
-    
-    auto menu = Menu::create(item, NULL);
-    this->addChild(menu);
-    menu->setPosition(Point(VisibleRect::right().x-50, VisibleRect::top().y-10));
+    if (this->_physicsWorld != nullptr)
+    {
+        // menu for debug layer
+        MenuItemFont::setFontSize(18);
+        auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
+        auto menu = Menu::create(item, nullptr);
+        this->addChild(menu);
+        menu->setPosition(Point(getContentSize().width-50, getContentSize().height/2));
+    }
 }
 
 Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
@@ -370,7 +380,7 @@ Sprite* PhysicsDemo::makeTriangle(Point point, Size size, int color, PhysicsMate
 
 bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
 {
-    auto location = touch->getLocation();
+    auto location = this->convertTouchToNodeSpace(touch);
     auto arr = getPhysicsWorld()->getShapes(location);
     
     PhysicsBody* body = nullptr;
@@ -407,7 +417,7 @@ void PhysicsDemo::onTouchMoved(Touch* touch, Event* event)
     
     if (it != _mouses.end())
     {
-        it->second->setPosition(touch->getLocation());
+        it->second->setPosition(this->convertTouchToNodeSpace(touch));
     }
 }
 
@@ -453,7 +463,6 @@ void PhysicsDemoLogoSmash::onEnter()
             }
         }
     }
-    
     
     auto bullet = makeBall(Point(400, 0), 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
     bullet->getPhysicsBody()->setVelocity(Point(200, 0));
@@ -1536,36 +1545,51 @@ std::string PhysicsContactTest::subtitle() const
 void PhysicsPositionRotationTest::onEnter()
 {
     PhysicsDemo::onEnter();
-    toggleDebug();
-    getPhysicsWorld()->setGravity(Point::ZERO);
     
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemo::onTouchBegan, this);
-    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemo::onTouchMoved, this);
-    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemo::onTouchEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    PhysicsDemo* layers[2] = {PhysicsDemo::createWithPhysics(), PhysicsDemo::createWithPhysics()};
+    Size halfSize = VisibleRect::getVisibleRect().size;
+    halfSize.width /= 2;
+    halfSize.height -= 40;
     
-    auto wall = Node::create();
-    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size));
-    wall->setPosition(VisibleRect::center());
-    addChild(wall);
+    for (int i = 0; i < sizeof(layers) / sizeof(layers[0]); ++i)
+    {
+        layers[i]->ignoreAnchorPointForPosition(false);
+        layers[i]->setContentSize(halfSize);
+        layers[i]->setRoot(false);
+        layers[i]->getPhysicsWorld()->setGravity(Point::ZERO);
+        layers[i]->toggleDebug();
+        
+        auto touchListener = EventListenerTouchOneByOne::create();
+        touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemo::onTouchBegan, layers[i]);
+        touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemo::onTouchMoved, layers[i]);
+        touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemo::onTouchEnded, layers[i]);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, layers[i]);
+        
+        auto wall = Node::create();
+        wall->setPhysicsBody(PhysicsBody::createEdgeBox(layers[i]->getContentSize(), PhysicsMaterial(0.1f, 1, 0.0f)));
+        wall->setPosition(Point(halfSize/2));
+        layers[i]->addChild(wall);
+        this->addChild(layers[i]);
+    }
+    layers[0]->setPosition(Point(halfSize.width/2, halfSize.height/2 + 60));
+    layers[1]->setPosition(Point(halfSize.width/2*3, halfSize.height/2 + 60));
     
     // anchor test
     auto anchorNode = Sprite::create("Images/YellowSquare.png");
     anchorNode->setAnchorPoint(Point(0.1f, 0.9f));
-    anchorNode->setPosition(100, 100);
+    anchorNode->setPosition(100, 50);
     anchorNode->setScale(0.25);
     anchorNode->setPhysicsBody(PhysicsBody::createBox(anchorNode->getContentSize()*anchorNode->getScale()));
     anchorNode->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-    addChild(anchorNode);
+    layers[0]->addChild(anchorNode);
     
     //parent test
     auto parent = Sprite::create("Images/YellowSquare.png");
-    parent->setPosition(200, 100);
+    parent->setPosition(160, 50);
     parent->setScale(0.25);
     parent->setPhysicsBody(PhysicsBody::createBox(parent->getContentSize()*anchorNode->getScale()));
     parent->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-    addChild(parent);
+    layers[0]->addChild(parent);
     
     auto leftBall = Sprite::create("Images/ball.png");
     leftBall->setPosition(-30, 0);
@@ -1576,12 +1600,37 @@ void PhysicsPositionRotationTest::onEnter()
     
     // offset position rotation test
     auto offsetPosNode = Sprite::create("Images/YellowSquare.png");
-    offsetPosNode->setPosition(100, 200);
+    offsetPosNode->setPosition(100, 100);
     offsetPosNode->setPhysicsBody(PhysicsBody::createBox(offsetPosNode->getContentSize()/2));
     offsetPosNode->getPhysicsBody()->setPositionOffset(-Point(offsetPosNode->getContentSize()/2));
     offsetPosNode->getPhysicsBody()->setRotationOffset(45);
     offsetPosNode->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-    addChild(offsetPosNode);
+    layers[0]->addChild(offsetPosNode);
+    
+    
+    for (int i = 0; i < 30; ++i)
+    {
+        Size size(10 + CCRANDOM_0_1()*10, 10 + CCRANDOM_0_1()*10);
+        Point position = Point(halfSize.width, halfSize.height) - Point(size.width, size.height);
+        position.x = position.x * CCRANDOM_0_1();
+        position.y = position.y * CCRANDOM_0_1();
+        position = position + Point(size.width/2, size.height/2);
+        Vect velocity((CCRANDOM_0_1() - 0.5)*200, (CCRANDOM_0_1() - 0.5)*200);
+        auto box = makeBox(position, size, 0, PhysicsMaterial(0.1f, 1, 0.0f));
+        box->getPhysicsBody()->setVelocity(velocity);
+        box->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+        layers[1]->addChild(box);
+    }
+    
+    MoveTo* moveTo = MoveTo::create(1.0f, Point(halfSize.width/2, halfSize.height/2 + 60));
+    MoveTo* moveBack = MoveTo::create(1.0f, Point(halfSize.width/2*3, halfSize.height/2 + 60));
+    ScaleTo* thrink = ScaleTo::create(1.0f, 0.5f);
+    ScaleTo* amplify = ScaleTo::create(1.0f, 2.0f);
+    ScaleTo* scaleBack = ScaleTo::create(1.0f, 1.0f);
+    RotateTo* rotateTo = RotateTo::create(1.0f, 180.0f);
+    RotateTo* rotateBack = RotateTo::create(1.0f, 360.0f);
+    
+    layers[1]->runAction(Sequence::create(moveTo, thrink, rotateTo, amplify, rotateBack, scaleBack, moveBack, nullptr));
     
     return;
 }
@@ -1589,6 +1638,11 @@ void PhysicsPositionRotationTest::onEnter()
 std::string PhysicsPositionRotationTest::title() const
 {
     return "Position/Rotation Test";
+}
+
+std::string PhysicsPositionRotationTest::subtitle() const
+{
+    return "Two Physics Worlds";
 }
 
 
