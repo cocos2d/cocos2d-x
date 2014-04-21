@@ -712,6 +712,7 @@ Developers:
         
     kicktheken (Kenneth Chan)
         Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
+        Fix lua project template crash on iOS5.1 device
         
     andyque
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
