@@ -74,7 +74,7 @@
 * gcc 4.7 for Linux or Android. For Android ndk-r9 or newer is required.
 * Visual Studio 2012 (for Windows)
 
-## How to run TestCpp
+## How to run tests
 
 ### Mac OSX & iOS
 
