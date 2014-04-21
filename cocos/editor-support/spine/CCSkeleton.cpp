@@ -209,7 +209,7 @@ void Skeleton::onDraw(const kmMat4 &transform, bool transformUpdated)
             }
             additive = wonderAdditive;
             isPremultipliedAlpha = wonderPremultipliedAlpha;
-            setFittedBlendingFunc(additive, isPremultipliedAlpha);
+            setFittedBlendingFunc(isPremultipliedAlpha, additive);
         }
         
         textureAtlas = nextTextureAtlas;
