@@ -136,7 +136,7 @@ Run
     
 ## How to start a new game
 
-Please refer to [ReadMe](../README.md)
+Please refer to [ReadMe](../README.md). And there is a [document](https://github.com/chukong/cocos-docs/blob/master/manual/framework/native/getting-started/v3.0/how-to-start-a-new-game/en.md) for it.
     
 
 # Highlights of v3.0
@@ -149,6 +149,7 @@ Please refer to [ReadMe](../README.md)
 * New UI objects
 * [JavaScript remote debugger](https://github.com/cocos2d/cocos-docs/blob/master/manual/framework/native/scripting/javascript/js-remote-debugger/en.md)
 * Remote Console support
+* Use [cocos console](https://github.com/cocos2d/cocos2d-console) to create and run project
 * Refactor Image - release memory in time and uniform the api of supported file format
 * Automatically generated Lua bindings, add LuaJavaBridge and LuaObjcBridge
 * Templated containers
