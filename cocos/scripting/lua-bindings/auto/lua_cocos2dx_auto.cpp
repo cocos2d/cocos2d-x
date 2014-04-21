@@ -64476,7 +64476,7 @@ int lua_register_cocos2dx_SimpleAudioEngine(lua_State* tolua_S)
         tolua_function(tolua_S,"pauseAllEffects",lua_cocos2dx_SimpleAudioEngine_pauseAllEffects);
         tolua_function(tolua_S,"unloadEffect",lua_cocos2dx_SimpleAudioEngine_unloadEffect);
         tolua_function(tolua_S,"resumeEffect",lua_cocos2dx_SimpleAudioEngine_resumeEffect);
-        tolua_function(tolua_S,"end", lua_cocos2dx_SimpleAudioEngine_end);
+        tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_SimpleAudioEngine_end);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_SimpleAudioEngine_getInstance);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(CocosDenshion::SimpleAudioEngine).name();
