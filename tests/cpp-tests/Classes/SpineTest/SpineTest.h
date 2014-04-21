@@ -41,6 +41,10 @@ private:
 	spine::SkeletonAnimation* spineboy;
 	spine::SkeletonAnimation* monster;
 	spine::SkeletonAnimation* goblin;
+    
+    cocos2d::Sprite * spineboy_back;
+    cocos2d::Sprite * monster_back;
+    cocos2d::Sprite * goblin_back;
 
 public:
 
