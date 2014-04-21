@@ -61,8 +61,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     
     // The data has alpha channel, and want to save it with an RGB png file,
     // or want to save as jpg,  remove the alpha channel.
-    if ((saveToPNG && hasAlpha() && isToRGB)
-       || (! saveToPNG))
+    if (hasAlpha() && bitsPerPixel == 24)
     {
         pixels = new unsigned char[myDataLength];
         
