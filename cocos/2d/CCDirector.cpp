@@ -666,7 +666,11 @@ void Director::replaceScene(Scene *scene)
 	
     if (_nextScene)
     {
-        _nextScene->onExit();
+        if (_nextScene->isRunning())
+        {
+            _nextScene->onExitTransitionDidStart();
+            _nextScene->onExit();
+        }
         _nextScene->cleanup();
         _nextScene = nullptr;
     }
