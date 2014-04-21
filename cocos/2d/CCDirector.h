@@ -382,6 +382,11 @@ public:
      *  get Frame Rate
      */
     float getFrameRate() const { return _frameRate; }
+    
+    /** Gets the engine version
+     @since v3.0
+     */
+    std::string getVersion() const;
 
 protected:
     void purgeDirector();
