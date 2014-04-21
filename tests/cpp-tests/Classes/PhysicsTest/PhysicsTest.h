@@ -30,24 +30,23 @@ public:
 #define CREATE_WITH_PHYSICS_FUNC(__TYPE__) \
 static __TYPE__* createWithPhysics() \
 { \
-__TYPE__ *pRet = new __TYPE__(); \
-if (pRet && pRet->initWithPhysics()) \
+__TYPE__ *ret = new __TYPE__(); \
+if (ret && ret->initWithPhysics()) \
 { \
-pRet->autorelease(); \
-return pRet; \
+ret->autorelease(); \
+return ret; \
 } \
 else \
 { \
-delete pRet; \
-pRet = NULL; \
-return NULL; \
+delete ret; \
+ret = nullptr; \
+return nullptr; \
 } \
 }
 class PhysicsDemo : public BaseTest
 {
 public:
     CREATE_WITH_PHYSICS_FUNC(PhysicsDemo);
-
     PhysicsDemo();
     virtual ~PhysicsDemo();
     
@@ -70,6 +69,7 @@ public:
     void onTouchEnded(Touch* touch, Event* event);
     
     void toggleDebug();
+    inline void setRoot(bool isRoot) { _isRoot = isRoot; }
     
 protected:
     Texture2D* _spriteTexture;    // weak ref
@@ -78,6 +78,7 @@ protected:
     
 private:
     bool _debugDraw;
+    bool _isRoot;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
@@ -234,10 +235,11 @@ private:
 class PhysicsPositionRotationTest : public PhysicsDemo
 {
 public:
-    CREATE_WITH_PHYSICS_FUNC(PhysicsPositionRotationTest);
+    CREATE_FUNC(PhysicsPositionRotationTest);
     
     void onEnter() override;
     virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class PhysicsSetGravityEnableTest : public PhysicsDemo
