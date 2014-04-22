@@ -28,10 +28,10 @@ static std::function<Layer*()> createFunctions[] = {
     CL(NestedTest),
     CL(RawStencilBufferTest),
     CL(RawStencilBufferTest2),
-    CL(RawStencilBufferTest3)
-//  CL(RawStencilBufferTest4),
-//  CL(RawStencilBufferTest5),
-//  CL(RawStencilBufferTest6)
+    CL(RawStencilBufferTest3),
+    CL(RawStencilBufferTest4),
+    CL(RawStencilBufferTest5),
+    CL(RawStencilBufferTest6)
 };
 
 static int sceneIdx=-1;
