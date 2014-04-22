@@ -591,6 +591,11 @@ void RawStencilBufferTest::setup()
         sprite->setAnchorPoint(  Point(0.5, 0) );
         sprite->setScale( 2.5f );
         _sprites.pushBack(sprite);
+
+        Sprite* sprite2 = Sprite::create(s_pathGrossini);
+        sprite2->setAnchorPoint(  Point(0.5, 0) );
+        sprite2->setScale( 2.5f );
+        _spritesStencil.pushBack(sprite2);
     }
 
     Director::getInstance()->setAlphaBlending(true);
@@ -624,7 +629,8 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
         _sprites.at(i)->setPosition( spritePoint );
-        
+        _spritesStencil.at(i)->setPosition( spritePoint );
+
         iter->init(_globalZOrder);
         iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
         renderer->addCommand(&(*iter));
@@ -632,7 +638,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const kmMat4 &transform, boo
         
         kmGLPushMatrix();
         _modelViewTransform = this->transform(transform);
-        _sprites.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
+        _spritesStencil.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
         kmGLPopMatrix();
         
         iter->init(_globalZOrder);
@@ -736,6 +742,15 @@ void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
+void RawStencilBufferTestAlphaTest::setup()
+{
+    RawStencilBufferTest::setup();
+    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _spritesStencil.at(i)->setShaderProgram(program );
+    }
+}
 //@implementation RawStencilBufferTest4
 
 std::string RawStencilBufferTest4::subtitle() const
@@ -752,14 +767,10 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+    program->use();
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    for(int i = 0; i < _planeCount; ++i)
-    {
-        _sprites.at(i)->setShaderProgram(program );
-    }
-    
 #endif
 }
 
@@ -789,13 +800,10 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+    program->use();
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    for(int i = 0; i < _planeCount; ++i)
-    {
-        _sprites.at(i)->setShaderProgram(program );
-    }
 #endif
 }
 
@@ -818,6 +826,7 @@ std::string RawStencilBufferTest6::subtitle() const
 
 void RawStencilBufferTest6::setup()
 {
+    RawStencilBufferTestAlphaTest::setup();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     auto winPoint = Point(Director::getInstance()->getWinSize());
     //by default, glReadPixels will pack data with 4 bytes allignment
@@ -840,7 +849,6 @@ void RawStencilBufferTest6::setup()
     this->addChild(clearToMaskLabel);
 #endif
     glStencilMask(~0);
-    RawStencilBufferTest::setup();
 }
 
 void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
@@ -858,13 +866,10 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+    program->use();
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    for(int i = 0; i < _planeCount; ++i)
-    {
-        _sprites.at(i)->setShaderProgram(program );
-    }
 #endif
     glFlush();
 }
