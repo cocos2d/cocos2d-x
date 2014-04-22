@@ -93,6 +93,12 @@ def main():
           job_trigger_url = os.environ['JOB_PULL_REQUEST_BUILD_TRIGGER_URL']
         if('emptytest' in ciOper):
           job_trigger_url = os.environ['JOB_EMPTYTEST_TRIGGER_URL']
+        if('release' in ciOper):
+          searchTag = re.search('\[ci release (.*)\]', ciOper)
+          if searchTag:
+            ci_tag = searchTag.group(1)
+            payload_forword['tag'] = ci_tag
+            job_trigger_url = os.environ['JOB_RELEASE_TRIGGER_URL']
     if searchConsole:
         consoleOper = searchConsole.group()
         job_trigger_url = os.environ['JOB_CONSOLE_TEST_TRIGGER_URL']
