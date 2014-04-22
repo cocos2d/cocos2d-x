@@ -212,24 +212,17 @@ def uninstall_apk(idx):
 			print empty_test_result_info
 	return True
 
-def wakeup_device(idx):
-	file_wakeup = 'wakeup.py'
-	# if not os.path.isfile(file_wakeup):
-	# 	print file_wakeup, 'is not exist!'
-	# 	return False
-	# info_wake = os.popen('monkeyrunner '+file_wakeup).read()
-	# print 'info_wake:', info_wake
-
 def main():
 	print 'in main:'
 	getDevices()
 	if len(arrDevices):
-		wakeup_device(gIdx)
-		time.sleep(2)
 		mapIP()
 		print 'arrDevices:',arrDevices
 		uninstall_apk(gIdx)
 		time.sleep(1)
+	else:
+		print 'there is no device for emptytest, please check devices!'
+		return 1
 	print 'empty test start:'
 	print 'device infomation:'
 	if len(arrDevices):
