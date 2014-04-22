@@ -26,6 +26,27 @@ def set_description(desc, url):
         urllib2.urlopen(req)
     except:
         traceback.print_exc()
+
+def make_temp_dir():
+    #make temp dir
+    print "current dir is: " + os.environ['WORKSPACE']
+    os.system("cd " + os.environ['WORKSPACE']);
+    os.mkdir("android_build_objs")
+    #add symbol link
+    PROJECTS=["cpp-empty-test", "cpp-tests"]
+
+    print platform.system()
+    if(platform.system() == 'Darwin'):
+        for item in PROJECTS:
+          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"  
+          os.system(cmd)
+    elif(platform.system() == 'Windows'):
+        for item in PROJECTS:
+          p = item.replace("/", os.sep)
+          cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
+          print cmd
+          os.system(cmd)
+
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -80,31 +101,6 @@ def main():
     if(ret != 0):
         return(2)
 
-    # Generate binding glue codes
-    if(branch == 'develop'):
-      ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
-    if(ret != 0):
-        return(1)
-
-    #make temp dir
-    print "current dir is: " + os.environ['WORKSPACE']
-    os.system("cd " + os.environ['WORKSPACE']);
-    os.mkdir("android_build_objs")
-    #add symbol link
-    PROJECTS=["cpp-empty-test", "cpp-tests"]
-
-    print platform.system()
-    if(platform.system() == 'Darwin'):
-        for item in PROJECTS:
-          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"  
-          os.system(cmd)
-    elif(platform.system() == 'Windows'):
-        for item in PROJECTS:
-          p = item.replace("/", os.sep)
-          cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
-          print cmd
-          os.system(cmd)
- 
     #build
     #TODO: add android-linux build
     #TODO: add mac build
@@ -117,7 +113,14 @@ def main():
     tests_names = ['cpp-empty-test', 'cpp-tests', 'lua-empty-test', 'lua-tests']
     remote_home = os.environ['REMOTE_HOME']
     for mode in build_mode:
+        os.system('git reset --hard')
+        os.system("git clean -xdf -f")
+        make_temp_dir()
         if(branch == 'develop'):
+          # Generate binding glue codes
+          ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
+          if(ret != 0):
+            return(1)
           if(node_name == 'android_mac') or (node_name == 'android_win7'):
             print "Start build android..."
             ret = os.system("python build/android-build.py -b " + mode + " -n -j10 all")
