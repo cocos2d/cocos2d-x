@@ -90,10 +90,21 @@ def main():
     os.system('git reset --hard')
     os.system("git clean -xdf -f")
     os.system("git checkout develop")
+    os.system("git branch -D " + tag)
     os.system("git clean -xdf -f")
-    ret = os.system('git pull origin develop')
+    #fetch tag to local repo
+    git_fetch_pr = "git fetch origin tag " + tag
+    ret = os.system(git_fetch_pr)
     if(ret != 0):
         return(2)
+
+    #checkout
+    git_checkout = "git checkout -b " + tag + " FETCH_HEAD"
+    os.system(git_checkout)
+
+    # After checkout a new branch, clean workspace again
+    print "After checkout: git clean -xdf -f"    
+    os.system("git clean -xdf -f")
     
     #update submodule
     git_update_submodule = "git submodule update --init --force"
