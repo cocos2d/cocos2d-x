@@ -27,7 +27,7 @@ Sprite1.__index = Sprite1
 function Sprite1.addNewSpriteWithCoords(layer, point)
     local idx = math.floor(math.random() * 1400 / 100)
     local x = math.floor(math.mod(idx,5) * 85)
-    local y = math.floor(idx / 5 * 121)
+    local y = math.floor(idx / 5) * 121
 
     local sprite = cc.Sprite:create("Images/grossini_dance_atlas.png", cc.rect(x,y,85,121) )
     layer:addChild( sprite )
@@ -88,7 +88,7 @@ function SpriteBatchNode1.addNewSpriteWithCoords(layer, point)
     local BatchNode = layer:getChildByTag( kTagSpriteBatchNode )
     local idx = math.floor(math.random() * 1400 / 100)
     local x = math.floor(math.mod(idx,5) * 85)
-    local y = math.floor(idx / 5 * 121)
+    local y = math.floor(idx / 5) * 121
 
     local sprite = cc.Sprite:createWithTexture(BatchNode:getTexture(), cc.rect(x,y,85,121) )
     layer:addChild( sprite )
