@@ -600,6 +600,12 @@ class SetEnvVar(object):
         self.file_used_for_setup = self._get_filepath_for_setup()
         
         self.set_console_root()
+
+        if self._isWindows():
+            print('->Configuration for Android platform only, you can also skip and manually edit your environment variables\n')
+        else:
+            print('->Configuration for Android platform only, you can also skip and manually edit "%s"\n' % self.file_used_for_setup)
+
         ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
         sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
         ant_ret = self.set_variable(ANT_ROOT, ant_root)
