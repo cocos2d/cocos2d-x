@@ -1023,7 +1023,7 @@ void MoveBy::update(float t)
         _target->setPosition(newPos);
         _previousPosition = newPos;
 #else
-        _target->setPosition(ccpAdd( _startPosition, ccpMult(_positionDelta, t)));
+        _target->setPosition(_startPosition + (_positionDelta * t));
 #endif // CC_ENABLE_STACKABLE_ACTIONS
     }
 }
@@ -1310,7 +1310,7 @@ void JumpBy::update(float t)
 
         _previousPos = newPos;
 #else
-        _target->setPosition(ccpAdd( _startPosition, Point(x,y)));
+        _target->setPosition(_startPosition + Point(x,y));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
@@ -1433,7 +1433,7 @@ void BezierBy::update(float time)
 
         _previousPosition = newPos;
 #else
-        _target->setPosition(ccpAdd( _startPosition, Point(x,y)));
+        _target->setPosition(_startPosition + Point(x,y));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
     }
 }
