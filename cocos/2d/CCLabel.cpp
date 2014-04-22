@@ -39,6 +39,7 @@
 #include "CCEventCustom.h"
 #include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
+#include "CCProfiling.h"
 
 NS_CC_BEGIN
 
