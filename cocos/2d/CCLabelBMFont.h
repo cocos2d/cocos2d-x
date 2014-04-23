@@ -35,6 +35,9 @@ Use any of these editors to generate BMFonts:
 #define __CCBITMAP_FONT_ATLAS_H__
 
 #include "CCLabel.h"
+#if CC_LABELBMFONT_DEBUG_DRAW
+#include "renderer/CCCustomCommand.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -120,11 +123,13 @@ public:
     virtual Rect getBoundingBox() const override;
 
     virtual std::string getDescription() const override;
+    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+private:
 
 #if CC_LABELBMFONT_DEBUG_DRAW
-    virtual void draw();
+    CustomCommand   _customDebugDrawCommand;
+    void drawDebugData(const kmMat4& transform, bool transformUpdated);
 #endif // CC_LABELBMFONT_DEBUG_DRAW
-private:
     
     // name of fntFile
     std::string _fntFile;
