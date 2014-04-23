@@ -206,18 +206,16 @@ Rect LabelBMFont::getBoundingBox() const
 {
     return _label->getBoundingBox();
 }
-
+#if CC_LABELBMFONT_DEBUG_DRAW
 void LabelBMFont::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     Node::draw(renderer, transform, transformUpdated);
-#if CC_LABELBMFONT_DEBUG_DRAW
+
     _customDebugDrawCommand.init(_globalZOrder);
     _customDebugDrawCommand.func = CC_CALLBACK_0(LabelBMFont::drawDebugData, this,transform,transformUpdated);
     renderer->addCommand(&_customDebugDrawCommand);
-#endif
 }
 
-#if CC_LABELBMFONT_DEBUG_DRAW
 void LabelBMFont::drawDebugData(const kmMat4& transform, bool transformUpdated)
 {
     kmGLPushMatrix();
