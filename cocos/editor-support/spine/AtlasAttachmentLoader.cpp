@@ -62,7 +62,6 @@ spAttachment* _spAtlasAttachmentLoader_newAttachment (spAttachmentLoader* loader
         }
         attachment = spMeshAttachment_create(name);
         attachment->rendererObject = region;
-        spMeshAttachment_setUVs(attachment, region->u, region->v, region->u2, region->v2, region->rotate);
         return SUPER(attachment);
 	}
     default:

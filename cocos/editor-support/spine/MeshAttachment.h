@@ -63,23 +63,17 @@ struct spMeshAttachment {
     float* worldVertices;
     int worldVerticesLength;
     
-    float u;
-    float v;
-    float u2;
-    float v2;
     int hullLength;
     float* edges;
 };
 
 spMeshAttachment* spMeshAttachment_create(const char* name);
-void spMeshAttachment_setUVs(spMeshAttachment* self, float u, float v, float u2, float v2, int /*bool*/ rotate);
 void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verticesLength, int* triangles, int trianglesLength, float* uvs);
 void spMeshAttachment_computeWorldVertices(spMeshAttachment* self, float x, float y, spBone* bone);
     
 #ifdef SPINE_SHORT_NAMES
     typedef spMeshAttachment MeshAttachment;
 #define MeshAttachment_create(...)                  spMeshAttachment_create(__VA_ARGS__)
-#define MeshAttachment_setUVs(...)                  spMeshAttachment_setUVs(__VA_ARGS__)
 #define MeshAttachment_updateOffset(...)            spMeshAttachment_updateOffset(__VA_ARGS__)
 #define MeshAttachment_computeWorldVertices(...)    spMeshAttachment_computeWorldVertices(__VA_ARGS__)
 #endif

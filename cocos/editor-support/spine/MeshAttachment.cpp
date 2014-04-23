@@ -56,32 +56,9 @@ spMeshAttachment* spMeshAttachment_create(const char* name)
 {
     spMeshAttachment* self = NEW(spMeshAttachment);
     
-    self -> u = 0;
-    self -> v = 0;
-    self -> u2 = 1;
-    self -> v2 = 1;
-    
     _spAttachment_init(SUPER(self), name, ATTACHMENT_MESH, _spMeshAttachment_dispose);
     return self;
 }
-
-void spMeshAttachment_setUVs(spMeshAttachment* self, float u, float v, float u2, float v2, int /*bool*/ rotate)
-{
-    if (rotate)
-    {
-        self -> u = u;
-        self -> v = v2;
-        self -> u2 = u2;
-        self -> v2 = v;
-    }
-    else
-    {
-        self -> u = u;
-        self -> v = v;
-        self -> u2 = u2;
-        self -> v2 = v2;
-    }
-};
 
 void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verticesLength, int* triangles, int trianglesLength, float* uvs)
 {
@@ -134,13 +111,13 @@ void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verti
     {
         if (region && region -> rotate)
         {
-            self -> worldVertices[ii] = self -> u + uvs[i + 1] * w;
-            self -> worldVertices[ii + 1] = self -> v - uvs[i] * h;
+            self -> worldVertices[ii] = u + uvs[i + 1] * w;
+            self -> worldVertices[ii + 1] = v - uvs[i] * h;
         }
         else
         {
-            self -> worldVertices[ii] = self -> u + uvs[i] * w;
-            self -> worldVertices[ii + 1] = self -> v + uvs[i + 1] * h;
+            self -> worldVertices[ii] = u + uvs[i] * w;
+            self -> worldVertices[ii + 1] = v + uvs[i + 1] * h;
         }
     }
 };
