@@ -226,6 +226,7 @@ def excute_test_on_device(device):
 	print 'uninstall:', info_uninstall
 	allThreadIsRunning[device['name']] = 0
 
+address_of_result_html = ''
 def send_result_to_master():
 	if not os.environ.has_key('REMOTE_IP'):
 		return false
@@ -234,6 +235,7 @@ def send_result_to_master():
 	remote_user = os.environ['REMOTE_USER']
 	remote_pwd = os.environ['REMOTE_PWD']
 	remote_dir = os.environ['REMOTE_DIR']
+	remote_dir = remote_dir + str(pr_num)+'/'
 	print remote_dir
 	ssh = paramiko.SSHClient()
 	print 'ssh:',ssh
@@ -249,7 +251,9 @@ def send_result_to_master():
 	localpath = 'html/cpp_empty_test/cpp_empty_test_'+str(pr_num)+'.html'
 	sftp.put(localpath, remotepath)
 	sftp.close()
-
+	global address_of_result_html
+	address_of_result_html = 'http://'+remote_ip+':9000/download/test_reports/'+str(pr_num)+'/'+test_name[gIdx]+'_'+str(pr_num)+'.html'
+	
 def check_thread_is_running():
 	while 1:
 		in_running = 0
@@ -264,6 +268,7 @@ def check_thread_is_running():
 	print 'will send result:'
 	send_result_to_master()
 	print 'end of check thread is running.'
+	print 'address of result is:',address_of_result_html
 
 def generate_html_with_result(result):
 	target_path = 'html/cpp_empty_test/cpp_empty_test_'+str(pr_num)+'.html'
@@ -291,8 +296,8 @@ def log_emptytest_result():
 		appendToResult('uninstall: ' + str(info_empty_test['uninstall'][name]))
 		if not info_empty_test['install'][name] or not info_empty_test['open'][name] or not info_empty_test['socket'][name] or not info_empty_test['uninstall'][name]:
 			empty_test_result = False
-			appendToResult('empty test is failed!')
-		else: appendToResult('empty test is successfully!')
+			appendToResult('run failed!')
+		else: appendToResult('run successfully!')
 		appendToResult('')
 	appendToResult('empty test end.</pre>')
 	generate_html_with_result(str_result)
