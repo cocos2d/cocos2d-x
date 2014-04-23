@@ -82,7 +82,7 @@ public:
     virtual void setString(const std::string &label) override;
     virtual const std::string& getString(void) const override;
     virtual std::string getDescription() const override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Matrix &transform, bool transformUpdated) override;
 
 protected:
     LabelAtlas()
@@ -97,7 +97,7 @@ protected:
 
 #if CC_LABELATLAS_DEBUG_DRAW
     CustomCommand   _customDebugDrawCommand;
-    void drawDebugData(const kmMat4& transform, bool transformUpdated);
+    void drawDebugData(const Matrix& transform, bool transformUpdated);
 #endif //CC_SPRITE_DEBUG_DRAW
 
     // string to render

@@ -249,7 +249,7 @@ void LabelAtlas::updateColor()
 
 //CCLabelAtlas - draw
 
-void LabelAtlas::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void LabelAtlas::draw(Renderer *renderer, const Matrix &transform, bool transformUpdated)
 {
     AtlasNode::draw(renderer, transform, transformUpdated);
 #if CC_LABELATLAS_DEBUG_DRAW
@@ -260,10 +260,11 @@ void LabelAtlas::draw(Renderer *renderer, const kmMat4 &transform, bool transfor
 }
 
 #if CC_LABELATLAS_DEBUG_DRAW
-void LabelAtlas::drawDebugData(const kmMat4& transform, bool transformUpdated)
+void LabelAtlas::drawDebugData(const Matrix& transform, bool transformUpdated)
 {
-    kmGLPushMatrix();
-    kmGLLoadMatrix(&transform);
+    Director* director = Director::getInstance();
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto size = getContentSize();
 
@@ -277,7 +278,7 @@ void LabelAtlas::drawDebugData(const kmMat4& transform, bool transformUpdated)
 
     DrawPrimitives::drawPoly(vertices, 4, true);
 
-    kmGLPopMatrix();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 #endif
 
