@@ -35,10 +35,21 @@ ObjectFactory::TInfo::TInfo(void)
 {
 }
 
+static unsigned long hash(const char *str) 
+{ 
+   unsigned int h; 
+   unsigned char *p;
+
+    for(h=0, p = (unsigned char *)str; *p ; p++) 
+        h = 31 * h + *p;
+    return h;  
+}
+
 ObjectFactory::TInfo::TInfo(const std::string& type, Instance ins)
 :_class(type)
 ,_fun(ins)
 {
+    _classid = hash(type.c_str());
     cocos2d::extension::ObjectFactory::getInstance()->registerType(*this);
 }
 
@@ -46,18 +57,21 @@ ObjectFactory::TInfo::TInfo(const TInfo &t)
 {
     _class = t._class;
     _fun = t._fun;
+    _classid = t._classid;
 }
 
 ObjectFactory::TInfo::~TInfo(void)
 {
    _class = "";
    _fun = NULL;
+   _classid = 0;
 }
 
 ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
 {
     _class = t._class;
     _fun = t._fun;
+    _classid = t._classid;
     return *this;
 }
 
@@ -93,7 +107,7 @@ CCObject* ObjectFactory::createObject(std::string name)
 	CCObject *o = NULL;
 	do 
 	{
-		const TInfo t = _typeMap[name];
+		const TInfo t = _typeMap[hash(name.c_str())];
 		CC_BREAK_IF(t._fun == NULL);
 		o = t._fun();
 	} while (0);
@@ -131,7 +145,7 @@ CCComponent* ObjectFactory::createComponent(std::string name)
 	CCObject *o = NULL;
 	do 
 	{
-		const TInfo t = _typeMap[name];
+		const TInfo t = _typeMap[hash(name.c_str())];
 		CC_BREAK_IF(t._fun == NULL);
 		o = t._fun();
 	} while (0);
@@ -159,7 +173,7 @@ ui::Widget* ObjectFactory::createGUI(std::string name)
     
     do
     {
-        const TInfo t = _typeMap[name];
+        const TInfo t = _typeMap[hash(name.c_str())];
         CC_BREAK_IF(t._fun == NULL);
         object = t._fun();
     } while (0);
@@ -173,7 +187,7 @@ WidgetReaderProtocol* ObjectFactory::createWidgetReaderProtocol(std::string name
     
     do
     {
-        const TInfo t = _typeMap[name];
+        const TInfo t = _typeMap[hash(name.c_str())];
         CC_BREAK_IF(t._fun == NULL);
         object = t._fun();
     } while (0);
@@ -183,6 +197,6 @@ WidgetReaderProtocol* ObjectFactory::createWidgetReaderProtocol(std::string name
 
 void ObjectFactory::registerType(const TInfo &t)
 {
-    _typeMap.insert(FactoryMap::value_type(t._class, t));
+    _typeMap.insert(FactoryMap::value_type(t._classid, t));
 }
 NS_CC_EXT_END
