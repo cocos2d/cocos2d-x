@@ -36,6 +36,11 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "deprecated/CCString.h"
 #include "CCSprite.h"
 
+#if CC_LABELBMFONT_DEBUG_DRAW
+#include "renderer/CCRenderer.h"
+#include "CCDirector.h"
+#endif
+
 using namespace std;
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -202,19 +207,37 @@ Rect LabelBMFont::getBoundingBox() const
     return _label->getBoundingBox();
 }
 
-//LabelBMFont - Debug draw
-#if CC_LABELBMFONT_DEBUG_DRAW
-void LabelBMFont::draw()
+void LabelBMFont::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
-    const Size& s = this->getContentSize();
-    Vector2 vertices[4]={
-        Vector2(0,0),Vector2(s.width,0),
-        Vector2(s.width,s.height),Vector2(0,s.height),
-    };
-    ccDrawPoly(vertices, 4, true);
+    Node::draw(renderer, transform, transformUpdated);
+#if CC_LABELBMFONT_DEBUG_DRAW
+    _customDebugDrawCommand.init(_globalZOrder);
+    _customDebugDrawCommand.func = CC_CALLBACK_0(LabelBMFont::drawDebugData, this,transform,transformUpdated);
+    renderer->addCommand(&_customDebugDrawCommand);
+#endif
 }
 
-#endif // CC_LABELBMFONT_DEBUG_DRAW
+#if CC_LABELBMFONT_DEBUG_DRAW
+void LabelBMFont::drawDebugData(const kmMat4& transform, bool transformUpdated)
+{
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&transform);
+
+    auto size = getContentSize();
+
+    Vector2 vertices[4]=
+    {
+        Vector2::ZERO,
+        Vector2(size.width, 0),
+        Vector2(size.width, size.height),
+        Vector2(0, size.height)
+    };
+    
+    DrawPrimitives::drawPoly(vertices, 4, true);
+
+    kmGLPopMatrix();
+}
+#endif
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
