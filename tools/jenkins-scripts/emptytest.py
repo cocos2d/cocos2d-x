@@ -251,8 +251,9 @@ def send_result_to_master():
 	localpath = 'html/cpp_empty_test/cpp_empty_test_'+str(pr_num)+'.html'
 	sftp.put(localpath, remotepath)
 	sftp.close()
+	result_dir = remote_dir.replace('/data',':9000')
 	global address_of_result_html
-	address_of_result_html = 'http://'+remote_ip+':9000/download/test_reports/'+str(pr_num)+'/'+test_name[gIdx]+'_'+str(pr_num)+'.html'
+	address_of_result_html = 'http://'+remote_ip+result_dir+test_name[gIdx]+'_'+str(pr_num)+'.html'
 	
 def check_thread_is_running():
 	while 1:
