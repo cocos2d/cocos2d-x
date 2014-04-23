@@ -1,4 +1,4 @@
-cocos2d-x-3.0 ?? 2014
+cocos2d-x-3.0 Apr.23 2014
      [NEW]          Lua: add `RichText` test cases
      [NEW]          EditBox: Added missing Text Font and Placeholder feature for Mac platform
      
@@ -8,6 +8,7 @@ cocos2d-x-3.0 ?? 2014
      [FIX]          Image: crashes when save a jpg file
      [FIX]          Lua: 'EditBox' can't response 'changed','ended' and 'return' event on Windows
      [FIX]          Lua: new project will crash on iOS 5.1 devices
+     [FIX]          Others: compiling error when CC_LABELBMFONT_DEBUG_DRAW or CC_LABELATLAS_DEBUG_DRAW is enabled
      
      [3rd]          libcurl: support ssl again on iOS
 
