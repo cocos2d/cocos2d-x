@@ -50,6 +50,13 @@
 -- @return LabelAtlas#LabelAtlas ret (retunr value: cc.LabelAtlas)
 
 --------------------------------
+-- @function [parent=#LabelAtlas] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#LabelAtlas] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)

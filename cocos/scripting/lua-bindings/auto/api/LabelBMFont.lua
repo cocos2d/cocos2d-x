@@ -90,19 +90,21 @@
 -- @return LabelBMFont#LabelBMFont ret (retunr value: cc.LabelBMFont)
 
 --------------------------------
--- @function [parent=#LabelBMFont] getBoundingBox 
+-- @function [parent=#LabelBMFont] draw 
 -- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
-        
---------------------------------
--- @function [parent=#LabelBMFont] getDescription 
--- @param self
--- @return string#string ret (return value: string)
+-- @param #cc.Renderer renderer
+-- @param #kmMat4 kmmat4
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#LabelBMFont] setColor 
 -- @param self
 -- @param #color3B_table color3b
+        
+--------------------------------
+-- @function [parent=#LabelBMFont] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#LabelBMFont] getChildByTag 
@@ -114,6 +116,11 @@
 -- @function [parent=#LabelBMFont] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#LabelBMFont] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- @function [parent=#LabelBMFont] LabelBMFont 
