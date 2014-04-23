@@ -109,15 +109,19 @@ void spMeshAttachment_setMesh(spMeshAttachment* self, float* vertices, int verti
          i < n;
          i += 2, ii += 4)
     {
+        // relative coordinate
+        float ru = (uvs[i] * region -> originalWidth - region -> offsetX) / (region -> width);
+        float rv = (uvs[i + 1] * region -> originalHeight - (region -> originalHeight - region -> offsetY - region -> height)) / (region -> height);
+        
         if (region && region -> rotate)
         {
-            self -> worldVertices[ii] = u + uvs[i + 1] * w;
-            self -> worldVertices[ii + 1] = v - uvs[i] * h;
+            self -> worldVertices[ii] = u + rv * w;
+            self -> worldVertices[ii + 1] = v - ru * h;
         }
         else
         {
-            self -> worldVertices[ii] = u + uvs[i] * w;
-            self -> worldVertices[ii + 1] = v + uvs[i + 1] * h;
+            self -> worldVertices[ii] = u + ru * w;
+            self -> worldVertices[ii + 1] = v + rv * h;
         }
     }
 };
